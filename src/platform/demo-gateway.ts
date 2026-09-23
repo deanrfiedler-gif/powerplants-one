@@ -13,6 +13,7 @@ type Gateway = {
   finishLogin: (url: URL, loginToken: string | undefined, previousToken?: string) => Promise<string>;
   endSession: (token: string | undefined) => Promise<void>;
   resolveIdentity: (token: string | undefined) => Promise<unknown>;
+  authorizeDevelopment?: (token: string | undefined) => Promise<boolean>;
   handleApplication: (req: IncomingMessage, res: ServerResponse) => Promise<unknown>;
 };
 
@@ -89,6 +90,12 @@ export function demoGateway(config: Gateway) {
       res.writeHead(403); res.end("This feature is unavailable in the hosted demo."); return;
     }
     req.headers["x-ppo-local-gateway"] = config.gatewayKey;
+    if (url.pathname === "/development" || url.pathname.startsWith("/development/") || url.pathname.startsWith("/api/development/")) {
+      if (!await config.authorizeDevelopment?.(token)) {
+        res.writeHead(404); res.end("Not found"); return;
+      }
+      if (url.pathname === "/development/component-preview") res.setHeader("X-Frame-Options", "SAMEORIGIN");
+    }
     await config.handleApplication(req, res);
   };
 }

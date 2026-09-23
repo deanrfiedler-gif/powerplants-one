@@ -28,6 +28,7 @@ coverage/
 /backups/
 /tmp/
 .next/
+.ppo-development/
 *.tsbuildinfo
 test-results/
 playwright-report/

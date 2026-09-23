@@ -68585,6 +68585,17 @@
           "steps": [],
           "headers": [],
           "rows": []
+        },
+        {
+          "section_id": "hosted-access",
+          "title": "Protected hosted access and release",
+          "paragraphs": [
+            "Open Design & Development from the shell while signed in with the authorised owner account. Other testers cannot access its pages, examples or references. Expired access requires sign-in or the existing invitation renewal process.",
+            "The hosted workspace displays its deployed Git commit. Refresh reads that release; GitHub changes appear after deployment. Local refresh reads working files. Examples and theme previews are temporary and do not save business data or repository edits."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
         }
       ],
       "reviewed_content_hash": null,
@@ -68739,6 +68750,17 @@
           "steps": [],
           "headers": [],
           "rows": []
+        },
+        {
+          "section_id": "hosted-access",
+          "title": "Protected hosted access and release",
+          "paragraphs": [
+            "Open Design & Development from the shell while signed in with the authorised owner account. Other testers cannot access its pages, examples or references. Expired access requires sign-in or the existing invitation renewal process.",
+            "The hosted workspace displays its deployed Git commit. Refresh reads that release; GitHub changes appear after deployment. Local refresh reads working files. Examples and theme previews are temporary and do not save business data or repository edits."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
         }
       ],
       "reviewed_content_hash": null,
@@ -68884,6 +68906,17 @@
           "title": "Review status",
           "paragraphs": [
             "Draft guidance for the local catalogue. Individual visual alignment, physical-device review and operational acceptance remain separate."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "hosted-access",
+          "title": "Protected hosted access and release",
+          "paragraphs": [
+            "Open Design & Development from the shell while signed in with the authorised owner account. Other testers cannot access its pages, examples or references. Expired access requires sign-in or the existing invitation renewal process.",
+            "The hosted workspace displays its deployed Git commit. Refresh reads that release; GitHub changes appear after deployment. Local refresh reads working files. Examples and theme previews are temporary and do not save business data or repository edits."
           ],
           "steps": [],
           "headers": [],

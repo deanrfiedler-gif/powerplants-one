@@ -144,7 +144,7 @@ if ($PpoDemoSha -ne $PpoDemoCommit) { throw 'Source commit mismatch.' }
 $PpoDemoRegistry = (az acr show --name ppodemo90deea5d --resource-group rg-ppo-demo-aue --query loginServer --output tsv).Trim()
 if ($LASTEXITCODE -ne 0 -or -not $PpoDemoRegistry) { throw 'Could not read the registry hostname.' }
 $PpoDemoImage = "$PpoDemoRegistry/ppo-demo:$PpoDemoSha"
-docker build --platform linux/amd64 --label "org.opencontainers.image.revision=$PpoDemoSha" --file infra/azure-demo/Dockerfile --tag $PpoDemoImage .
+docker build --build-arg "PPO_BUILD_COMMIT=$PpoDemoCommit" --platform linux/amd64 --label "org.opencontainers.image.revision=$PpoDemoSha" --file infra/azure-demo/Dockerfile --tag $PpoDemoImage .
 if ($LASTEXITCODE -ne 0) { throw 'Image build failed; do not push or bootstrap.' }
 docker push $PpoDemoImage
 if ($LASTEXITCODE -ne 0) { throw 'Image push failed; do not bootstrap.' }
@@ -270,3 +270,7 @@ At the end of evaluation, remove app tester access and the deployment federation
 Local lint, type/unit/build checks and focused operator-definition tests are recorded in the PR. The `Azure demo preparation checks` workflow additionally exercises a disposable PostgreSQL identity/CRM persistence case, compiles Bicep and builds the container. Existing full application checks remain unchanged. Local PostgreSQL/Docker are unavailable in this execution environment, so those checks require CI. Core provisioning is confirmed by Dean's Cloud Shell result. Actual OIDC exchange, Blob integration, post-deployment startup, billed cost and invited phone/desktop acceptance remain unverified until executed. Prepared code and provisioned infrastructure do not establish a working app or P12/production acceptance.
 
 Sources: [Microsoft authorization code flow](https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-auth-code-flow), [redirect URI setup](https://learn.microsoft.com/en-us/entra/identity-platform/reply-url), [Container Apps networking](https://learn.microsoft.com/en-us/azure/container-apps/vnet-custom), [jobs](https://learn.microsoft.com/en-us/azure/container-apps/jobs), [OIDC client](https://github.com/panva/openid-client). Dependencies added: `openid-client` 6.8.8 and `@azure/storage-blob` 12.33.0, exact versions/lockfile retained; runtime remains Node 24.20.0/npm 11.19.0.
+
+## Design workspace release option
+
+The [protected hosted workspace runbook](hosted-design-workspace.md) governs the owner-only catalogue. Image builders must provide `--build-arg PPO_BUILD_COMMIT=<exact full source commit>`; the Docker build validates and packages its register. GitHub and ACR operator builds supply this automatically. The ppo-demo environment variables `PPO_DEVELOPMENT_WORKSPACE` (on/off; default off) and `PPO_DEVELOPMENT_OWNER_OBJECT_ID` (one verified Entra object ID in the existing tenant) control web access without altering business grants or tester expiry.

@@ -4,7 +4,7 @@
 
 **Owner:** Dean Fiedler · **Schema:** 2 · **Date:** 23 September 2026.
 
-This folder is the Git master for the local development workspace. Open `/development/page-register` through the local application or the **Design and build workspace** icon next to global search. `/development/design-system` is the component catalogue: real tables, cards, Gantt, scheduling, forms, navigation, overlays, feedback and mobile examples, linked references and alignment records. See the [component maintenance contract](components/README.md). These routes and supporting endpoints are unavailable in hosted/production mode. Set `PPO_DEVELOPMENT_WORKSPACE=off` to disable them locally.
+This folder is the Git master for the local and protected hosted Design & Development workspace. Open `/development/page-register` through the local application or the **Design and build workspace** icon next to global search. `/development/design-system` is the component catalogue: real tables, cards, Gantt, scheduling, forms, navigation, overlays, feedback and mobile examples, linked references and alignment records. See the [component maintenance contract](components/README.md). Local mode retains its loopback gateway. The private hosted demo permits only the configured owner through an active Microsoft session; every page, preview and reference endpoint checks access. Set `PPO_DEVELOPMENT_WORKSPACE=off` to disable the workspace. See the [hosted access and release decision](../../decisions/hosted-design-workspace.md).
 
 ## What is maintained
 
@@ -41,7 +41,7 @@ Each entry separates retained scope assessment, source presence, visual review, 
 
 Local defaults to `http://127.0.0.1:3000`; hosted defaults to the verified sign-in origin from the Azure runbook. Per-visit overrides must be plain HTTP(S) origins. Record UUIDs are separate for each environment and cleared when the reader closes. Planned routes remain available as future references. The same UUID is not assumed to exist in both environments.
 
-The global information icon retains released help and adds a **Development draft guide for this page** section locally. A canonical static route wins before a dynamic record route; unknown routes get an honest unavailable message. The full register supplies scope-specific articles and related design references. Publishing these drafts into hosted operational help, permission-bound SOPs, query-specific variants and release-bound approval requires the existing HELP-01–HELP-14 review; it is not implied by this development preview.
+The global information icon retains released help and adds a **Development draft guide for this page** section for authorised design-workspace users. A canonical static route wins before a dynamic record route; unknown routes get an honest unavailable message. The full register supplies scope-specific articles and related design references. Publishing these drafts as operational help for other users, permission-bound SOPs, query-specific variants and release-bound approval requires the existing HELP-01–HELP-14 review; it is not implied by this development preview.
 
 Guides use Australian English and thirteen sections: purpose, prerequisites, quick start, page tour, information, tasks, completion/handover, states, example, recovery, mobile/keyboard/offline, resources and review. Explain actual controls, required/conditional fields, save states and observable outcomes as each page is verified. Keep planned behaviour explicit. Do not invent permission grants, financial definitions, offline support or completed handovers.
 
@@ -76,3 +76,7 @@ The repository-wide naming policy and retained-record boundary are documented in
 ## Component catalogue extension
 
 `components.json` is the stable component master; `components/*.md` supplies desktop/mobile rules. The catalogue includes 19 runnable examples, one host-shell entry and four reference-only entries. Its internal renderer adds one source route, taking the page register to 267 entries and 263 draft guides. `studio:check` also validates component categories, renderer/export bindings, reference anchors, consumer keys and review records. Automatic fingerprints mark reviews stale; no test pass grants design approval.
+
+## Hosted release model
+
+The image build packages the validated catalogue, component library and guides against its exact source commit. References stay in the immutable image outside public assets and are served only by the protected allowlisted reader. The hosted label links to that commit; file-level history is labelled unavailable when the image has no Git history, with links to the pinned GitHub history. Refresh rereads the deployed snapshot, not unmerged work. Local mode still discovers and fingerprints working files. No browser edit is saved to the repository or business records.

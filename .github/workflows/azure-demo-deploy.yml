@@ -24,6 +24,8 @@ jobs:
     env:
       AZURE_RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
       PPO_DEMO_SUFFIX: ${{ vars.PPO_DEMO_SUFFIX }}
+      PPO_DEVELOPMENT_WORKSPACE: ${{ vars.PPO_DEVELOPMENT_WORKSPACE || 'off' }}
+      PPO_DEVELOPMENT_OWNER_OBJECT_ID: ${{ vars.PPO_DEVELOPMENT_OWNER_OBJECT_ID }}
       AZURE_DEMO_DEPLOY_CLIENT_ID: ${{ secrets.AZURE_DEMO_DEPLOY_CLIENT_ID }}
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
@@ -46,6 +48,14 @@ jobs:
           done
           if [[ "$AZURE_RESOURCE_GROUP" != rg-ppo-demo-aue ]]; then
             echo '::error::AZURE_RESOURCE_GROUP must be rg-ppo-demo-aue.'
+            exit 1
+          fi
+          if [[ "$PPO_DEVELOPMENT_WORKSPACE" != off && "$PPO_DEVELOPMENT_WORKSPACE" != on ]]; then
+            echo '::error::Design workspace must be on or off.'
+            exit 1
+          fi
+          if [[ "$PPO_DEVELOPMENT_WORKSPACE" == on && ! "$PPO_DEVELOPMENT_OWNER_OBJECT_ID" =~ $guid ]]; then
+            echo '::error::The protected design workspace requires one verified owner object ID.'
             exit 1
           fi
       - uses: azure/login@a641126d1b8aa4d1fa005f4f92df94a3a4c4c906 # v3.1.0
@@ -130,6 +140,7 @@ jobs:
           # A unique run tag prevents concurrent retries from replacing a selected image.
           tag="ppo-demo:$GITHUB_SHA-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
           docker build --platform linux/amd64 \
+            --build-arg "PPO_BUILD_COMMIT=$GITHUB_SHA" \
             --label "org.opencontainers.image.revision=$GITHUB_SHA" \
             --file infra/azure-demo/Dockerfile --tag "$PPO_REGISTRY/$tag" .
           docker push "$PPO_REGISTRY/$tag"
@@ -157,7 +168,8 @@ jobs:
           PPO_FQDN: ${{ steps.target.outputs.fqdn }}
         run: |
           set -euo pipefail
-          az containerapp update -g "$AZURE_RESOURCE_GROUP" -n "ca-ppo-demo-$PPO_DEMO_SUFFIX" --image "$PPO_IMAGE" --output none
+          az containerapp update -g "$AZURE_RESOURCE_GROUP" -n "ca-ppo-demo-$PPO_DEMO_SUFFIX" --image "$PPO_IMAGE" \
+            --set-env-vars "PPO_DEVELOPMENT_WORKSPACE=$PPO_DEVELOPMENT_WORKSPACE" "PPO_DEVELOPMENT_OWNER_OBJECT_ID=$PPO_DEVELOPMENT_OWNER_OBJECT_ID" --output none
           python3 infra/azure-demo/verify_revision.py "$AZURE_RESOURCE_GROUP" "ca-ppo-demo-$PPO_DEMO_SUFFIX" "$PPO_IMAGE"
           # A failed web rollout leaves the worker configuration untouched.
           az containerapp job update -g "$AZURE_RESOURCE_GROUP" -n "job-ppo-worker-$PPO_DEMO_SUFFIX" --image "$PPO_IMAGE" --output none
@@ -168,6 +180,10 @@ jobs:
           [[ "$health" == 200 ]]
           status=$(curl --silent --show-error --connect-timeout 10 --max-time 30 --output /dev/null --write-out '%{http_code}' "https://$PPO_FQDN/api/v1/crm/opportunities")
           [[ "$status" == 401 ]]
+          for path in /development/page-register /development/design-system '/development/component-preview?component=gantt' /api/development/catalog '/api/development/reference?id=unavailable'; do
+            status=$(curl --silent --show-error --connect-timeout 10 --max-time 30 --output /dev/null --write-out '%{http_code}' "https://$PPO_FQDN$path")
+            [[ "$status" == 401 ]]
+          done
           {
             echo '### Demo image update completed'
             echo "Source: $GITHUB_SHA"

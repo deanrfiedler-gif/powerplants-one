@@ -17,6 +17,7 @@ import {
   grantRuntimePrivileges,
 } from "../../scripts/demo-database";
 import { createInvitedSession } from "../../src/platform/demo-auth";
+import { hostedDevelopmentAccess } from "../../src/development/access";
 import { hasPermission } from "../../src/platform/permissions";
 import { createOpportunity } from "../../src/crm/opportunities";
 import { readOpportunity } from "../../src/crm/reads";
@@ -55,6 +56,26 @@ before(async () => {
 // leave the next case with an intentionally disabled actor.
 beforeEach(async () => {
   await reconcileTesters(tenant, [{ object_id: first, expires_at }, { object_id: second, expires_at }]);
+});
+
+test("design workspace uses the owner's active Entra membership across roles and refuses revocation", async () => {
+  const token = await transaction(c => createInvitedSession(c, tenant, first));
+  const otherToken = await transaction(c => createInvitedSession(c, tenant, second));
+  const access = () => hostedDevelopmentAccess(database(), token, tenant, first);
+  assert.equal(await access(), true);
+  assert.equal(await hostedDevelopmentAccess(database(), otherToken, tenant, first), false);
+  assert.equal(await hostedDevelopmentAccess(database(), token, randomUUID(), first), false);
+  await switchHostedRole(database(), token, tenant, "pack-reviewer");
+  assert.equal(await access(), true);
+  await database().query("UPDATE ppo.demo_tester_roles SET enabled=false WHERE tenant_id=$1 AND object_id=$2", [tenant, first]);
+  assert.equal(await access(), false);
+  await reconcileTesters(tenant, [{object_id:first, expires_at}, {object_id:second, expires_at}]);
+  assert.equal(await access(), true);
+  await database().query("UPDATE ppo.demo_testers SET expires_at=clock_timestamp()-interval '1 minute' WHERE tenant_id=$1 AND object_id=$2", [tenant, first]);
+  assert.equal(await access(), false);
+  await reconcileTesters(tenant, [{object_id:first, expires_at}, {object_id:second, expires_at}]);
+  await database().query("UPDATE ppo.sessions SET expires_at=clock_timestamp()-interval '1 minute' WHERE token_hash=$1", [createHash("sha256").update(token).digest("hex")]);
+  assert.equal(await access(), false);
 });
 
 test("each invited tester retains a private mailbox, CRM follow-up and calendar across reconciliation", async () => {

@@ -405,3 +405,5 @@ PPO-SH-DEL,My Work and platform SH-01–SH-06 handover,docs/delivery/sh-platform
 PPO-SH-EVID,SH platform verification evidence,docs/testing/evidence/sh-platform/README.md,r01,Implemented; local verification recorded; CI and owner acceptance separate,Dean Fiedler,ccc2251bbba9df266cac9027ddaa9418ab9abc1d,,,retained-record,
 ADR-0042,Customer location workflows,docs/decisions/ADR-0042-customer-location-workflows.md,,Implemented; synthetic verification recorded; owner acceptance separate,Dean Fiedler,25170bf83008727f005e36b5603841a7b9359027,,,git,
 PPO-CS-NATIVE-CONTRACTS,Customer location server contracts,docs/delivery/cs-native-contracts.md,,Synthetic implementation; native pages in dependent PR,Dean Fiedler,25170bf83008727f005e36b5603841a7b9359027,,,git,
+PPO-HOSTED-DESIGN-DEC,Protected hosted Design and Development workspace,docs/decisions/hosted-design-workspace.md,,Authorised implementation and deployment; verification separate,Dean Fiedler,6c7df0c,,,git,
+PPO-HOSTED-DESIGN-DEL,Hosted Design and Development delivery record,docs/delivery/hosted-design-workspace.md,,Implementation and verification in progress,Dean Fiedler,6c7df0c,,,git,
