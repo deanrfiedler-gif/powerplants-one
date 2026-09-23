@@ -64,7 +64,16 @@ test("CR01/04 scoped insights drill through eight workspace views and preserve w
 }, info) => {
   const o = await deal(page, `SYN Sales workspace ${randomUUID()}`),
     query = `?pipeline_definition_id=${o.pipeline_definition_id}&q=${encodeURIComponent(o.title)}&view=list`;
+  const worklistRead = page.waitForResponse((response) => {
+    const url = new URL(response.url());
+    return (
+      url.pathname === "/api/v1/crm/opportunities" &&
+      url.searchParams.get("q") === o.title &&
+      response.request().method() === "GET"
+    );
+  });
   await page.goto(`/sales/opportunities${query}`);
+  expect((await worklistRead).ok()).toBe(true);
   await expect(
     page.getByRole("link", { name: o.title, exact: true }).first(),
   ).toBeVisible();
