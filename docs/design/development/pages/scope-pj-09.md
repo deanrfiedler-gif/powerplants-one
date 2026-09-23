@@ -6,7 +6,7 @@ This is an editable working specification. Existing accepted page baselines take
 
 ## Purpose and task
 
-Implement staged acceptance, training/manual handover, open-defect ownership and distinct technical/customer/commercial closeout.
+The native workflow exists at the root and six supporting routes. Refine and integrate it from [ADR-0033](../../../decisions/ADR-0033-staged-acceptance.md), the [implementation handover](../../../delivery/pj09-staged-acceptance-handover.md) and [executed PJ09-01–56 evidence](../../../testing/evidence/project-acceptance-r01/README.md). The stale unbuilt scope classification is corrected to refine; this grants no owner acceptance or deployment claim.
 
 1. Review stage-specific completion and exceptions
 2. Record receiving decisions with exact evidence
@@ -32,7 +32,12 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-No exact image or HTML reference is linked. Keep this gap visible.
+- [Supplied desktop composition](../../../reference/project-acceptance/PPO-PJ-09-Staged-Acceptance-and-Closeout-Desktop-UI-Mockup-r01.png), SHA-256 `9d3cf7edb1d6184d14bc9d1a4c42c97a4d3ba2ddc2c2d2004ca6e54febe3b242`.
+- [Written r02 build contract](../../../reference/project-acceptance/PPO-PJ-09-Staged-Acceptance-and-Closeout-Build-Plan-r02.md) and ADR-0033 adaptations govern beyond the raster composition. An exact accepted phone mockup is not supplied; prior implementation captures remain evidence, not a replacement design baseline.
+
+Page type: Register / worklist, supporting record detail, review, evidence workspace and focused forms. Reuse the actual shared shell, module menu, Button controls and global information guide. Preserve full-bleed layout, the documented 220px white module menu and 464px inspector only when at least 760px of list space remains. Six default columns, 14/20 typography and natural wrapped rows are deliberate PJ-09 geometry; do not replace them with newer shared defaults merely for uniformity.
+
+Incoming handover is exact permitted EN-08 technical/test/configuration evidence plus labelled synthetic supplementary sources. Outgoing handovers are exact OUT-13, recorded customer responses, independently accepted Service receiving and owned residual obligations. Neither Project progress nor Activity completion grants technical/customer/commercial acceptance. Original-operation recovery uses server-held intents and current authority.
 
 ## Behaviour, handovers and verification
 

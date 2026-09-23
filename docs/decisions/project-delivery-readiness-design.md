@@ -9,6 +9,8 @@ versioning: git
 
 # Projects — Delivery Readiness & Change Control
 
+**24 September 2026 source reconciliation:** the retained r02 change record describes SHA-256 `fce055ba5c2f750751ad5eceb33a930e0edd5881b177ec218829abdd95c66741`, but the r02-named HTML on main contains the exact r01 bytes (`a830eebb…e841b`). Its reachable path history and maintained source do not recover the described successor. See the [programme audit](../delivery/projects-completion-programme.md). The r01 below remains a predecessor; no implementation reference or owner acceptance is silently substituted for the missing verified r02. Issued snapshots are unchanged.
+
 The [r01 interactive HTML](../reference/ui/projects/PPO-Project-Delivery-Readiness-and-Change-Control-r01.html) implements the authorised six-view workspace from the [preserved build plan](../reference/ui/projects/PPO-Project-Delivery-Readiness-and-Change-Control-Plan-r01.md). It answers three questions: what is stopping delivery, what a proposed change affects, and who needs to decide or act next.
 
 This is a standalone design contribution under [issue #12](https://github.com/deanrfiedler-gif/powerplants-one/issues/12), with receiving dependencies on [Engineering #11](https://github.com/deanrfiedler-gif/powerplants-one/issues/11) and [Supply #13](https://github.com/deanrfiedler-gif/powerplants-one/issues/13). It changes no application route, database, dependency pin, hosted service or business adapter. It is not an accepted application baseline. Existing UI baselines and all issued predecessor designs remain unchanged.

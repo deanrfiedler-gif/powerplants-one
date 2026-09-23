@@ -1,6 +1,6 @@
 import { test, expect, type Page } from "@playwright/test";
 import { randomUUID } from "node:crypto";
-import { writeFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import { crmBase, crmCreate } from "../helpers/crm";
 import { discoveryInput } from "../helpers/estimating-discovery";
 import type { Scope } from "../../src/estimating/fertigation/types";
@@ -1247,4 +1247,88 @@ test("FN-T107 guidance cockpit, calculation trace and a previewed conflict resol
   const saved = await call(page, `estimating/fertigation/${id}`);
   expect(saved.revision.version).toBe(1);
   expect(saved.revision.proposal.groups).toHaveLength(1);
+});
+
+test("FN-T112 a genuine r02 file imports only after every held field is placed and the placement is confirmed", async ({
+  page,
+}, info) => {
+  const discovery = await savedDiscovery(page);
+  await page.goto(
+    `/estimating/fertigation/new?estimating_workspace_id=${discovery.id}&option_id=${discovery.option_id}`,
+  );
+  await page
+    .getByRole("textbox", { name: "Scope name", exact: true })
+    .fill("SYN placed r02 sample");
+  const imported = page.getByRole("region", {
+    name: "Import portable scope",
+    exact: true,
+  });
+  await imported
+    .getByLabel("Portable scope JSON or valve CSV", { exact: true })
+    .setInputFiles({
+      name: "SYN-r02-sample.json",
+      mimeType: "application/json",
+      buffer: await readFile(
+        "tests/fixtures/fertigation-r02-sample-export.json",
+      ),
+    });
+  await imported
+    .getByRole("button", { name: "Preview import mapping", exact: true })
+    .click();
+  const placement = imported.getByRole("region", {
+    name: /^Place \d+ held legacy fields$/,
+  });
+  await expect(placement).toBeVisible();
+  const confirm = imported.getByRole("button", {
+    name: "Confirm import as new native draft",
+    exact: true,
+  });
+  await expect(confirm).toBeDisabled();
+  const identity = placement.getByLabel("Placement for Project identity", {
+    exact: true,
+  });
+  await expect(identity).toHaveValue("covered_by_discovery_binding");
+  // Only project identity may be left to the Discovery binding.
+  await expect(
+    placement
+      .getByLabel("Placement for Block geometry", { exact: true })
+      .locator("option"),
+  ).toHaveCount(1);
+  const reviewed = placement.getByRole("checkbox", {
+    name: /^I have reviewed where each of the \d+ held fields goes$/,
+  });
+  await reviewed.check();
+  await expect(confirm).toBeEnabled();
+  // Changing a placement withdraws the confirmation.
+  await identity.selectOption("keep_as_note");
+  await expect(reviewed).not.toBeChecked();
+  await expect(confirm).toBeDisabled();
+  await identity.selectOption("covered_by_discovery_binding");
+  await reviewed.check();
+  await placement.scrollIntoViewIfNeeded();
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await page.screenshot({
+    path: info.outputPath("native-r02-held-placement.png"),
+  });
+  await confirm.click();
+  await expect(page).toHaveURL(/\/estimating\/fertigation\/[0-9a-f-]+$/);
+  const id = new URL(page.url()).pathname.split("/").at(-1)!,
+    saved = await call(page, `estimating/fertigation/${id}`);
+  expect(saved.revision.version).toBe(1);
+  expect(saved.revision.source_revision_id).toBe(discovery.revision_id);
+  const legacy = saved.revision.proposal.evidence.filter(
+    (e: { label: string }) => e.label.startsWith("Legacy r02 source values"),
+  );
+  expect(legacy.length).toBeGreaterThan(0);
+  for (const e of legacy) {
+    expect(e.kind).toBe("assumption");
+    expect(e.notes).toMatch(/\(unverified source value\)/);
+    expect(e.notes).not.toMatch(
+      /Legacy r02 (project\.)?(reference|customer|site):/,
+    );
+  }
 });

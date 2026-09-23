@@ -33,10 +33,10 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-No exact image or HTML reference is linked. Keep this gap visible.
+The [PJ-09 scope design](scope-pj-09.md) links the supplied desktop composition, written r02 contract, ADR-0033 adaptations and prior native evidence. Preserve the documented module geometry. Exact accepted phone mockup remains unavailable.
 
 ## Behaviour, handovers and verification
 
 The draft User Guide `guide.page.projects.acceptance.outstanding` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
-Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+Prior component and compiled visual evidence is retained in the [PJ-09 verification record](../../../testing/evidence/project-acceptance-r01/README.md). A0 performs source reconciliation only. Fresh family regression, native guide walkthrough, owner/device acceptance and deployment remain separate. Do not replace a comparison image simply to make a test pass.
