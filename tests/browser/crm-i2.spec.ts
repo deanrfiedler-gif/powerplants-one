@@ -296,13 +296,14 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
   await expect.poll(() => ids(page)).toHaveLength(10);
   const relatedRead = page.waitForResponse(response => {
     const url = new URL(response.url());
-    return response.request().method() === "GET" && url.pathname === "/api/v1/activities"
-      && url.searchParams.get("object_type") === "Organisation"
-      && url.searchParams.get("object_id") === CRM.org;
+    return response.request().method() === "GET"
+      && url.pathname === `/api/v1/customers/${CRM.org}/workspace`;
   });
   await page.goto(`/customers/${CRM.org}`);
-  await page.getByRole("tab", { name: "Timeline", exact: true }).click();
-  expect((await relatedRead).ok()).toBe(true);
+  await page.getByRole("tab", { name: "Activity & documents", exact: true }).click();
+  const projection = await relatedRead;
+  expect(projection.ok()).toBe(true);
+  expect((await projection.json()).context.id).toBe(CRM.org);
   const related = page.locator(`a[href="/work/${inputs[0].initial_action.id}"]`);
   await expect(related).toHaveText(inputs[0].initial_action.summary);
   await related.focus();
