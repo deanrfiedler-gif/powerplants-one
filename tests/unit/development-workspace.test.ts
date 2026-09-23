@@ -35,17 +35,17 @@ const env = {
     "postgresql://fixture:fixture@127.0.0.1:5432/ppo_synthetic_test",
   PPO_LOCAL_GATEWAY: "temporary-test-gateway",
 };
-test("development gate requires local configuration and the trusted gateway", () => {
+test("development gate requires local configuration and the trusted gateway", async () => {
   assert(developmentAvailable(env));
   assert(
-    developmentRequest(
+    await developmentRequest(
       new Headers({ "x-ppo-local-gateway": env.PPO_LOCAL_GATEWAY }),
       env,
     ),
   );
-  assert(!developmentRequest(new Headers(), env));
+  assert(!(await developmentRequest(new Headers(), env)));
   assert(
-    !developmentRequest(new Headers({ "x-ppo-local-gateway": "wrong" }), env),
+    !(await developmentRequest(new Headers({ "x-ppo-local-gateway": "wrong" }), env)),
   );
   for (const override of [
     { NODE_ENV: "production" },
@@ -55,10 +55,10 @@ test("development gate requires local configuration and the trusted gateway", ()
     { PPO_DEVELOPMENT_WORKSPACE: "off" },
   ])
     assert(
-      !developmentRequest(
+      !(await developmentRequest(
         new Headers({ "x-ppo-local-gateway": env.PPO_LOCAL_GATEWAY }),
         { ...env, ...override },
-      ),
+      )),
     );
 });
 test("environment links require correct record context and reject hostile origins", () => {

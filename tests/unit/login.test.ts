@@ -17,13 +17,14 @@ async function fixture(run: (f: Awaited<ReturnType<typeof start>>) => Promise<vo
 }
 async function start() {
   let beginError: unknown, finishError: unknown, beginCount = 0, appCount = 0, identityCount = 0;
-  let callbackTokens: unknown[] = [], ended: string | undefined;
+  let callbackTokens: unknown[] = [], ended: string | undefined, developmentOwner = false;
   const gateway = demoGateway({
     origin, gatewayKey: "synthetic-gateway", sessionCookie: "__Host-ppo_session", loginCookie: "__Host-ppo_login",
     beginLogin: async () => { beginCount++; if (beginError) throw beginError; return { token: "a".repeat(64), url: "https://microsoft.example.invalid/authorize?state=synthetic" }; },
     finishLogin: async (_url, login, session) => { callbackTokens = [login, session]; if (finishError) throw finishError; return "b".repeat(64); },
     endSession: async token => { ended = token; },
     resolveIdentity: async token => { identityCount++; if (token !== "valid") throw new AppError(401, "AuthenticationRequired", "Internal fixture diagnostic"); return {}; },
+    authorizeDevelopment: async () => developmentOwner,
     handleApplication: async (req, res) => { appCount++; assert.equal(req.headers["x-ppo-local-gateway"], "synthetic-gateway"); res.end(`Synthetic application served ${(req.url ?? "").split("?")[0]}`); },
   });
   const server = createServer((req, res) => { void gateway(req, res).catch(() => { res.writeHead(503); res.end("Test handler error"); }); });
@@ -36,8 +37,28 @@ async function start() {
     }); req.on("error", reject); req.end();
   });
   return { server, call, failBegin: (error: unknown) => { beginError = error; }, failFinish: (error: unknown) => { finishError = error; },
-    counts: () => ({ beginCount, appCount, identityCount }), callback: () => callbackTokens, ended: () => ended };
+    counts: () => ({ beginCount, appCount, identityCount }), callback: () => callbackTokens, ended: () => ended,
+    setDevelopmentOwner: (value: boolean) => { developmentOwner = value; } };
 }
+
+test("hosted workspace pages, examples and references recheck owner access on direct HTTP requests", async () => fixture(async f => {
+  const paths = ["/development/page-register", "/development/design-system", "/development/component-preview?component=gantt", "/api/development/catalog", "/api/development/catalog?pathname=/work", "/api/development/reference?id=fixture", "/api/development/reference?id=fixture&download=1"];
+  for (const path of paths) {
+    assert.equal((await f.call(path)).status, 401, path);
+    assert.equal((await f.call(path, "GET", {cookie: "__Host-ppo_session=valid"})).status, 404, path);
+    assert.equal((await f.call(path, "HEAD", {cookie: "__Host-ppo_session=valid"})).status, 404, path);
+  }
+  assert.equal(f.counts().appCount, 0);
+  f.setDevelopmentOwner(true);
+  for (const path of paths) {
+    const response = await f.call(path, "GET", {cookie: "__Host-ppo_session=valid"});
+    assert.equal(response.status, 200, path);
+    assert.equal(response.headers["cache-control"], "private, no-store");
+    assert.equal(response.headers["x-frame-options"], path.startsWith("/development/component-preview?") ? "SAMEORIGIN" : "DENY");
+  }
+  f.setDevelopmentOwner(false);
+  assert.equal((await f.call(paths[0], "GET", {cookie: "__Host-ppo_session=valid"})).status, 404);
+}));
 
 test("public login and protected routes retain distinct HTTP and access boundaries", async () => fixture(async f => {
   const login = await f.call("/login?returnTo=https://attacker.invalid&status=%3Cscript%3E");

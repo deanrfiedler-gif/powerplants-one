@@ -23,7 +23,7 @@ type Membership = {
   current_role: HostedRoleKey;
 };
 
-async function membership(
+export async function readHostedMembership(
   client: QueryClient,
   token: string | undefined,
   tenant: string,
@@ -56,7 +56,7 @@ export async function readHostedRoles(
   token: string | undefined,
   tenant: string,
 ) {
-  const current = await membership(client, token, tenant);
+  const current = await readHostedMembership(client, token, tenant);
   const roles = await client.query(
     `SELECT role_key FROM ppo.demo_tester_roles r JOIN ppo.users u
        ON (u.workspace_id,u.id)=(r.workspace_id,r.user_id)
@@ -79,7 +79,7 @@ export async function switchHostedRole(
 ): Promise<Principal> {
   if (!hostedRoleKeys.includes(role))
     throw new AppError(422, "InvalidRole", "Choose an available hosted demonstration role.");
-  const current = await membership(client, token, tenant);
+  const current = await readHostedMembership(client, token, tenant);
   const target = role === "tester"
     ? await client.query(
         `SELECT u.id,u.workspace_id,u.display_name FROM ppo.demo_testers t

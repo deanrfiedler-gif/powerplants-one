@@ -4,7 +4,8 @@ import { demoConfig } from "../src/platform/demo-config";
 import { demoGateway } from "../src/platform/demo-gateway";
 import { beginDemoLogin, finishDemoLogin, loginCookie } from "../src/platform/demo-auth";
 import { endSession, resolveIdentity, sessionCookie } from "../src/platform/identity";
-import { closeDatabase } from "../src/platform/database";
+import { closeDatabase, database } from "../src/platform/database";
+import { developmentAvailable, hostedDevelopmentAccess } from "../src/development/access";
 import { AppError } from "../src/platform/errors";
 
 const config = demoConfig();
@@ -17,6 +18,7 @@ const gateway = demoGateway({
   origin: config.origin, gatewayKey: process.env.PPO_LOCAL_GATEWAY,
   sessionCookie, loginCookie, beginLogin: beginDemoLogin, finishLogin: finishDemoLogin,
   endSession, resolveIdentity, handleApplication: handler,
+  authorizeDevelopment: async token => developmentAvailable() && hostedDevelopmentAccess(database(), token, config.tenant_id, process.env.PPO_DEVELOPMENT_OWNER_OBJECT_ID),
 });
 const server = createServer((req, res) => {
   void gateway(req, res).catch(error => {

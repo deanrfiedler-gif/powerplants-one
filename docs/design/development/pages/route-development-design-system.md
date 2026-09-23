@@ -22,4 +22,8 @@ Use real Button/ButtonLink, RecordTabs/RecordPanel and runtime components named 
 
 ## Verification and recovery
 
-Run catalogue integrity, source/dependency drift tests, browser interaction tests and the affected application checks. Record results in the component catalogue handover. Reset discards fixture edits; Refresh rereads sources. Original HTML, page permissions and production deployment remain unchanged.
+Run catalogue integrity, source/dependency drift tests, browser interaction tests and the affected application checks. Record results in the component catalogue handover. Reset discards fixture edits; Refresh rereads sources. Original HTML and business permissions remain separate from development access.
+
+## Protected hosted workspace
+
+In the private hosted app, show the Design & Development shell entry only for the configured owner with an active Microsoft session. Authorise direct pages, previews, guides and reference downloads on the server too. Show the exact deployed Git commit. Hosted refresh reads that release; local refresh reads working files. Temporary examples and theme proposals never save business data or Git edits. Other testers retain their existing help and business access. Verify denied and expired sessions as well as owner access, desktop/mobile wrapping, reference isolation and preview framing. See [release and access decision](../../../decisions/hosted-design-workspace.md).
