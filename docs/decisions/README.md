@@ -1,6 +1,6 @@
 # Decision control
 
-[Service requests native refinement](service-requests-native-refinement.md) is a **proposed** SV-01/SV-02 design: the r02 Service Cases & Triage workspace refined as a module interior for the shared shell, with a separate register and record, less chrome, collapsible empty lanes and "Service request" as the label. Recorded 23 September 2026; decisions D1–D6 open; not accepted.
+[Service requests native refinement](service-requests-native-refinement.md) is a **proposed** SV-01/SV-02 design: the r02 Service Cases & Triage workspace refined as a module interior for the shared shell, with a separate register and record, less chrome, collapsible empty lanes and "Service request" as the label. Recorded 23 September 2026. Presentation decisions D1, D2, D5 and D6 are applied under Dean's delegation; D3 and D4 are open; not an accepted baseline.
 
 [Notice accent rule departure](notice-accent-rule-departure.md) is a **proposed** design-system decision: whether notices keep the 3 px coloured left rule used by theme board r22 and Job Pack r03. Raised from the field work timer concept on 23 September 2026; not accepted.
 

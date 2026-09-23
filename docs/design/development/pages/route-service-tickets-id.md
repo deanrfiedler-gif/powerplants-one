@@ -1,6 +1,6 @@
 # Service request detail — design reference
 
-Stable entry: `route:/service/tickets/[id]`. Owner: Dean Fiedler. Status: **Draft for visual review**. A proposed native refinement was recorded on 23 September 2026 and is not accepted.
+Stable entry: `route:/service/tickets/[id]`. Owner: Dean Fiedler. Status: **Draft for visual review**. A proposed native refinement was recorded on 23 September 2026. Its presentation decisions are applied under Dean's delegation; it is not an accepted baseline.
 Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/service/tickets/{id}`.
 This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
 
@@ -18,7 +18,7 @@ This route is the SV-02 record. The proposed refinement gives it a record header
 Follow the [SV-02 contract](scope-sv-02.md#desktop). The route-specific points are:
 
 - The shell's breadcrumb ends with the request reference.
-- Register the route in `src/shell/module-workspaces.ts` as `padded` with `navigation: "workspace"` (open decision D6).
+- Register the route in `src/shell/module-workspaces.ts` as `padded` with `navigation: "workspace"` (D6, applied under delegation).
 - The existing *← Service requests* link stays as the back link in the record header.
 - The record keeps its heading, because it carries name, reference, stage, priority and revision. The existing-modules rule keeps record headings.
 
@@ -33,7 +33,7 @@ See the [SV-02 contract](scope-sv-02.md#shared-components-and-states).
 ## Visual references
 
 - [PPO-Service-Cases-and-Triage-Workspace-r02.html](../../../reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html). Retained design reference.
-- Design board frames 3, 4, 5, 7 and 8 (private claude.ai design canvas "Page Refinement Audit"). Proposed.
+- Design board frames 4, 5, 6, 8 and 9 (private claude.ai design canvas "Page Refinement Audit"). Proposed.
 - **Missing:** there is no repository image of the proposed frames, and no current native capture of this route.
 
 ## Behaviour, handovers and verification

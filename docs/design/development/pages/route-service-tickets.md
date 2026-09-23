@@ -1,6 +1,6 @@
 # Service request register — design reference
 
-Stable entry: `route:/service/tickets`. Owner: Dean Fiedler. Status: **Draft for visual review**. A proposed native refinement was recorded on 23 September 2026 and is not accepted.
+Stable entry: `route:/service/tickets`. Owner: Dean Fiedler. Status: **Draft for visual review**. A proposed native refinement was recorded on 23 September 2026. Its presentation decisions are applied under Dean's delegation; it is not an accepted baseline.
 Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/service/tickets`.
 This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
 
@@ -19,7 +19,7 @@ Follow the [SV-01 contract](scope-sv-01.md#desktop). The route-specific points a
 - Remove the current `PageHeader` register band (eyebrow *SC-04 / Service intake* and the visible title). The breadcrumb carries identity, and the description moves to the page-information panel.
 - Rename the existing *New service request* action *Log a request* and keep it as the only primary action.
 - Present Board and List over one collection, following the flush-register rules: full bleed, one scroll owner, compact toolbar.
-- Register the route in `src/shell/module-workspaces.ts` as `full-bleed` with `navigation: "workspace"` (open decision D6). The module interior is then 1364 × 896 at a 1440 × 960 window.
+- Register the route in `src/shell/module-workspaces.ts` as `full-bleed` with `navigation: "workspace"` (D6, applied under delegation). The module interior is then 1364 × 896 at a 1440 × 960 window.
 
 ## Mobile
 
@@ -32,7 +32,7 @@ See the [SV-01 contract](scope-sv-01.md#shared-components-and-states). Keep the 
 ## Visual references
 
 - [PPO-Service-Cases-and-Triage-Workspace-r02.html](../../../reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html). Retained design reference.
-- Design board frames 1, 2 and 6 (private claude.ai design canvas "Page Refinement Audit"). Proposed.
+- Design board frames 1, 2, 3 and 7 (private claude.ai design canvas "Page Refinement Audit"). Proposed.
 - **Missing:** there is no repository image of the proposed frames, and no current native capture of this route.
 
 ## Behaviour, handovers and verification
