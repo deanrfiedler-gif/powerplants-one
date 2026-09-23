@@ -1232,3 +1232,62 @@
   font-size: 12px;
   color: #40495a;
 }
+/* Held-field placement on import (ADR-0044). */
+#ppo-fertigation .fn-placement {
+  margin: 14px 0;
+  padding: 14px 16px;
+  border: 1px solid var(--line, #d8dee6);
+  border-radius: 8px;
+  background: var(--neutral-surface, #f7f9fb);
+}
+#ppo-fertigation .fn-placement h3 {
+  margin: 0 0 6px;
+  font-size: 15px;
+}
+#ppo-fertigation .fn-placement tbody th {
+  background: none;
+  font-weight: 600;
+  min-width: 170px;
+  text-align: left;
+}
+#ppo-fertigation .fn-placement tbody th small,
+#ppo-fertigation .fn-placement td small {
+  display: block;
+  font-weight: 400;
+  color: var(--text-secondary, #596779);
+  overflow-wrap: anywhere;
+}
+#ppo-fertigation .fn-placement select {
+  min-width: 220px;
+}
+@media (max-width: 780px) {
+  #ppo-fertigation .fn-placement {
+    padding: 12px;
+  }
+  #ppo-fertigation .fn-placement thead {
+    display: none;
+  }
+  #ppo-fertigation .fn-placement table,
+  #ppo-fertigation .fn-placement tbody,
+  #ppo-fertigation .fn-placement tr,
+  #ppo-fertigation .fn-placement tbody th,
+  #ppo-fertigation .fn-placement td {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+  #ppo-fertigation .fn-placement tr {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line-soft, #e6eaef);
+  }
+  #ppo-fertigation .fn-placement tbody th,
+  #ppo-fertigation .fn-placement td {
+    padding: 2px 0;
+    border: 0;
+  }
+  #ppo-fertigation .fn-placement select {
+    width: 100%;
+    min-width: 0;
+    margin-top: 6px;
+  }
+}

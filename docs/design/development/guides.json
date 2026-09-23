@@ -63073,6 +63073,14 @@
             [
               "Guide and design",
               "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
+            ],
+            [
+              "Import a portable scope",
+              "Previews a native JSON, standalone r02 JSON or native valve CSV file against the selected saved Discovery source and shows the identity mapping before anything is created. Confirm creates a separate native draft; the original file is never changed."
+            ],
+            [
+              "Place held legacy fields",
+              "Appears when a standalone r02 file holds fields that have no native field. Each family of held fields is placed as a source note, or, for the project reference, customer and site only, left to the Discovery binding. Kept values are labelled unverified r02 source values; none becomes a native technical value."
             ]
           ],
           "headers": [
@@ -63102,7 +63110,8 @@
             "Search the related register for an existing record before creating another.",
             "Complete the information requested by the creation form; keep unknown values explicit.",
             "Review the entered context, save through the page action and inspect the resulting record/confirmation.",
-            "Then continue the wider workflow: Inspect calculated results and review evidence before preparing a controlled report"
+            "Then continue the wider workflow: Inspect calculated results and review evidence before preparing a controlled report",
+            "To import an r02 project, preview the file, place every held field family, tick that you have reviewed the placements, then confirm. Resolve the imported draft's findings from its Next actions list."
           ],
           "rows": [],
           "headers": []
@@ -63148,6 +63157,10 @@
             [
               "Planned / not available",
               "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
+            ],
+            [
+              "Import held",
+              "The file contains fields with no native mapping. For a standalone r02 file, place each held field to continue; changing any placement clears the review tick. A held native export references attachments whose bytes a portable file does not carry; it cannot be placed here, and each listed reason names what is missing."
             ]
           ],
           "headers": [
@@ -63195,6 +63208,10 @@
             [
               "Guide differs from the page",
               "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
+            ],
+            [
+              "Confirm import stays disabled",
+              "Every held field needs a placement and the review tick must be set after the last change. If the preview is stale, preview the file again; placements are not carried to a new preview."
             ]
           ],
           "headers": [
