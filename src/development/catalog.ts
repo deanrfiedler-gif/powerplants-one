@@ -103,6 +103,23 @@ export async function buildCatalog(root: string): Promise<Catalog> {
       );
     return cache.get(path)!;
   };
+  const hashCache = new Map<string, Promise<string | null>>();
+  const sourceHash = (path: string) => {
+    if (!hashCache.has(path))
+      hashCache.set(
+        path,
+        raw(path).then((bytes) =>
+          bytes
+            ? digest(
+                /\.(png|jpe?g|webp)$/i.test(path)
+                  ? bytes
+                  : bytes.toString().replace(/\r\n/g, "\n"),
+              )
+            : null,
+        ),
+      );
+    return hashCache.get(path)!;
+  };
   const imports = new Map<string, Promise<string[]>>();
   const importsOf = (path: string): Promise<string[]> => {
     if (!imports.has(path))
@@ -202,19 +219,9 @@ export async function buildCatalog(root: string): Promise<Catalog> {
       ]);
       const hashes = await Promise.all(
         paths.map(async (path) => {
-          const bytes = await raw(path);
-          if (!bytes) issues.push("Missing reference: " + path);
-          return (
-            path +
-            ":" +
-            (bytes
-              ? digest(
-                  /\.(png|jpe?g|webp)$/i.test(path)
-                    ? bytes
-                    : bytes.toString().replace(/\r\n/g, "\n"),
-                )
-              : "missing")
-          );
+          const hash = await sourceHash(path);
+          if (!hash) issues.push("Missing reference: " + path);
+          return path + ":" + (hash || "missing");
         }),
       );
       const fingerprint = digest(
