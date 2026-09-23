@@ -142,6 +142,11 @@ test("SH search keyboard entry, full results, authorised preview and personal sa
   isMobile,
 }, info) => {
   await page.goto("/work");
+  // The shortcut listener belongs to the hydrated shell. An immediate key
+  // after navigation can arrive before the initial session read completes.
+  await expect(
+    page.getByRole("region", { name: "Local demonstration identity", exact: true }),
+  ).toHaveAttribute("aria-busy", "false");
   await page.keyboard.press("Control+k");
   const search = page.getByRole("combobox", { name: /Search/ });
   await search.fill("SYN");
