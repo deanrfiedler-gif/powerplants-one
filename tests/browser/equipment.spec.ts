@@ -324,10 +324,25 @@ test("EQ06 native bulletin retains candidate and reviewed disposition separately
   });
   await expect(
     card.getByText(
-      "1 permitted candidates. Matching does not establish applicability.",
+      /\d+ permitted candidates. Matching does not establish applicability\./,
     ),
   ).toBeVisible();
   await card.getByText("Review Asset applicability", { exact: true }).click();
+  await expect(
+    card.getByText("Source: SYN supplier bulletin · 2026-09-15", {
+      exact: true,
+    }),
+  ).toBeVisible();
+  const candidates = await card
+    .getByLabel("Candidate equipment")
+    .locator("option")
+    .evaluateAll((options) =>
+      options
+        .map((option) => (option as HTMLOptionElement).value)
+        .filter(Boolean),
+    );
+  expect(candidates).toContain(id);
+  expect(candidates.length).toBeGreaterThan(1); // Unknown serials remain candidates, never automatic exclusions.
   await card.getByLabel("Candidate equipment").selectOption(id);
   await card
     .getByLabel("Applicability", { exact: true })
@@ -347,15 +362,18 @@ test("EQ06 native bulletin retains candidate and reviewed disposition separately
     .getByRole("button", { name: "Close bulletin after all dispositions" })
     .click();
   await expect(
-    page.getByRole("heading", {
-      name: `${reference} · r01 · Closed`,
-      exact: true,
-    }),
+    card
+      .getByRole("alert")
+      .filter({
+        hasText:
+          "Every candidate and previously reviewed Asset needs a current definitive disposition.",
+      })
+      .first(),
   ).toBeVisible();
   await page.reload();
   await expect(
     page.getByRole("heading", {
-      name: `${reference} · r01 · Closed`,
+      name: `${reference} · r01 · Open`,
       exact: true,
     }),
   ).toBeVisible();

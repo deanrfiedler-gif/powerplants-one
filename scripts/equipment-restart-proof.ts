@@ -132,7 +132,15 @@ try {
       proof.databaseStarted,
       "PostgreSQL must have restarted",
     );
-    assert.deepEqual(await call(`equipment/${proof.id}`), proof.detail);
+    const detail = await call(`equipment/${proof.id}`);
+    // Read-envelope observation time describes this request, not retained
+    // business evidence. Every persisted field is still compared exactly.
+    assert.ok(
+      Date.parse(detail.history.observed_at) >=
+        Date.parse(proof.detail.history.observed_at),
+    );
+    detail.history.observed_at = proof.detail.history.observed_at;
+    assert.deepEqual(detail, proof.detail);
     assert.deepEqual(
       await call(`operations/${proof.apply.operation_id}`),
       proof.receipt,

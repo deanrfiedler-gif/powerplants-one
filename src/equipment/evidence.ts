@@ -48,6 +48,17 @@ const tables = {
   bulletins: "equipment_bulletins",
   support: "equipment_support",
 };
+// Calendar dates are not instants. Keep PostgreSQL DATE values as exact text
+// instead of letting the driver's local-midnight Date shift across timezones.
+function dateColumns(table: string, alias = "") {
+  const fields =
+    table === "equipment_bulletins"
+      ? ["published_on"]
+      : table === "equipment_support"
+        ? ["source_date", "support_end", "software_support_end"]
+        : [];
+  return fields.map((field) => `,${alias}${field}::text AS ${field}`).join("");
+}
 export const evidenceTypes = {
   backups: "EquipmentBackup",
   bulletins: "EquipmentBulletin",
@@ -75,7 +86,7 @@ async function insert(
   });
   return (
     await c.query(
-      `INSERT INTO ppo.${table}(${entries.map(([key]) => key).join(",")}) VALUES(${entries.map((_, i) => `$${i + 1}`).join(",")}) RETURNING *`,
+      `INSERT INTO ppo.${table}(${entries.map(([key]) => key).join(",")}) VALUES(${entries.map((_, i) => `$${i + 1}`).join(",")}) RETURNING *${dateColumns(table)}`,
       entries.map(([, value]) => value),
     )
   ).rows[0];
@@ -89,7 +100,7 @@ export async function equipmentEvidenceRecord(
 ) {
   const row = (
     await c.query(
-      `SELECT * FROM ppo.${tables[kind]} WHERE workspace_id=$1 AND id=$2`,
+      `SELECT *${dateColumns(tables[kind])} FROM ppo.${tables[kind]} WHERE workspace_id=$1 AND id=$2`,
       [p.workspace_id, uuid(id, "id")],
     )
   ).rows[0];
@@ -723,7 +734,7 @@ export async function equipmentEvidence(
   if (asset) await visible(c, p, "Asset", asset);
   const rows = (
     await c.query(
-      `SELECT e.*,u.display_name AS actor${kind !== "bulletins" ? ",a.display_number,a.description,a.version AS asset_version" : ""} FROM ppo.${tables[kind]} e JOIN ppo.users u ON (u.workspace_id,u.id)=(e.workspace_id,e.created_by) ${kind !== "bulletins" ? "JOIN ppo.assets a ON (a.workspace_id,a.id)=(e.workspace_id,e.asset_id)" : ""} WHERE e.workspace_id=$1 AND ${scopeSql("e.company_id", "e.site_id")} ${kind !== "bulletins" ? `AND ${visibility("Asset", "a")} AND ($3::uuid IS NULL OR e.asset_id=$3)` : "AND ($3::uuid IS NULL OR EXISTS(SELECT 1 FROM ppo.assets a WHERE a.workspace_id=e.workspace_id AND a.company_id=e.company_id AND a.id=$3))"} ORDER BY e.created_at DESC,e.id LIMIT 201`,
+      `SELECT e.*${dateColumns(tables[kind], "e.")},u.display_name AS actor${kind !== "bulletins" ? ",a.display_number,a.description,a.version AS asset_version" : ""} FROM ppo.${tables[kind]} e JOIN ppo.users u ON (u.workspace_id,u.id)=(e.workspace_id,e.created_by) ${kind !== "bulletins" ? "JOIN ppo.assets a ON (a.workspace_id,a.id)=(e.workspace_id,e.asset_id)" : ""} WHERE e.workspace_id=$1 AND ${scopeSql("e.company_id", "e.site_id")} ${kind !== "bulletins" ? `AND ${visibility("Asset", "a")} AND ($3::uuid IS NULL OR e.asset_id=$3)` : "AND ($3::uuid IS NULL OR EXISTS(SELECT 1 FROM ppo.assets a WHERE a.workspace_id=e.workspace_id AND a.company_id=e.company_id AND a.id=$3))"} ORDER BY e.created_at DESC,e.id LIMIT 201`,
       [p.workspace_id, p.actor_id, asset],
     )
   ).rows;

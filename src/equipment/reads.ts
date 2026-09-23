@@ -141,16 +141,24 @@ export async function equipmentWorkspace(p: Principal, id: string) {
     ])
   ).rows[0];
   const savedAsset = await assetContext(p, id);
+  const dates = (
+    await c.query<{
+      installed_on: string | null;
+      commissioned_on: string | null;
+      warranty_start: string | null;
+      warranty_end: string | null;
+    }>(
+      "SELECT installed_on::text,commissioned_on::text,warranty_start::text,warranty_end::text FROM ppo.assets WHERE workspace_id=$1 AND id=$2",
+      [p.workspace_id, id],
+    )
+  ).rows[0];
   const asset = {
     ...savedAsset,
     parent_asset_id: a.parent_asset_id as string | null,
     predecessor_asset_id: ("predecessor_asset_id" in savedAsset
       ? savedAsset.predecessor_asset_id
       : null) as string | null,
-    installed_on: a.installed_on as string | null,
-    commissioned_on: a.commissioned_on as string | null,
-    warranty_start: a.warranty_start as string | null,
-    warranty_end: a.warranty_end as string | null,
+    ...dates,
   };
   return {
     context,

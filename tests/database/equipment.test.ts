@@ -11,7 +11,11 @@ import { localConfig } from "../../src/platform/config";
 import { createSession } from "../../src/platform/identity";
 import { createAsset } from "../../src/shared/commands";
 import { readOperation } from "../../src/shared/receipts";
-import { equipmentLookup, equipmentRegister } from "../../src/equipment/reads";
+import {
+  equipmentLookup,
+  equipmentRegister,
+  equipmentWorkspace,
+} from "../../src/equipment/reads";
 import {
   currentConfiguration,
   previewEquipmentChange,
@@ -84,7 +88,18 @@ async function proposal(id: string, extra: Record<string, unknown> = {}) {
   return { actor, change, command, result };
 }
 test("EQ-01/02 permission-scoped register, exact counts and read-only lookup outcomes", async () => {
-  const { actor, id } = await asset({ serial: "SYN-DUPLICATE-45" });
+  const { actor, id } = await asset({
+    serial: "SYN-DUPLICATE-45",
+    installed_on: "2026-09-15",
+    commissioned_on: "2026-09-16",
+    warranty_start: "2026-09-16",
+    warranty_end: "2027-09-15",
+  });
+  const workspace = await equipmentWorkspace(actor, id);
+  assert.equal(workspace.asset.installed_on, "2026-09-15");
+  assert.equal(workspace.asset.commissioned_on, "2026-09-16");
+  assert.equal(workspace.asset.warranty_start, "2026-09-16");
+  assert.equal(workspace.asset.warranty_end, "2027-09-15");
   await asset({ serial: "SYN-DUPLICATE-45" });
   const before = await rows("SELECT * FROM ppo.assets WHERE id=$1", [id]);
   const register = await equipmentRegister(actor, { q: "SYN-DUPLICATE-45" });
@@ -402,6 +417,7 @@ test("EQ-06 candidate is not applicability; per-Asset follow-up, retry and incom
     model: "Pump45",
   });
   const view = await bulletinWorkspace(actor, bulletin);
+  assert.equal(view.record.published_on, "2026-09-01");
   assert.ok(view.candidates.some((a) => a.id === id));
   assert.equal(view.reviews.length, 0);
   const review = {
@@ -436,6 +452,28 @@ test("EQ-06 candidate is not applicability; per-Asset follow-up, retry and incom
     closeBulletin(actor, bulletin, { ...base(), expected_version: 1 }),
     code("InvalidData"),
   );
+  // Unknown identity facts stay candidates. Only an explicit current decision
+  // for every candidate permits closure; matching alone never does.
+  for (const candidate of after.candidates) {
+    await reviewBulletin(actor, bulletin, {
+      ...base(),
+      expected_version: 1,
+      asset_id: candidate.id,
+      expected_asset_version: candidate.version,
+      expected_review_version: candidate.id === id ? 2 : 1,
+      disposition: "NotApplicable",
+      evidence_reference:
+        "SYN independently compared physical identity with supplier exclusions",
+      evidence_revision: "r02",
+      owner_id: null,
+      due_at: null,
+    });
+  }
+  await closeBulletin(actor, bulletin, { ...base(), expected_version: 1 });
+  assert.equal(
+    (await bulletinWorkspace(actor, bulletin)).record.state,
+    "Closed",
+  );
 });
 test("EQ-07 source-backed Unknown never changes physical lifecycle", async () => {
   const { actor, id } = await asset();
@@ -452,6 +490,11 @@ test("EQ-07 source-backed Unknown never changes physical lifecycle", async () =>
     uncertainty: "Supplier evidence not available; no inference from age",
   };
   await createEquipmentEvidence(actor, "support", input);
+  assert.equal(
+    (await equipmentEvidence(actor, "support", { asset_id: id })).items[0]
+      .source_date,
+    "2026-09-20",
+  );
   await assert.rejects(
     createEquipmentEvidence(actor, "support", {
       ...input,
