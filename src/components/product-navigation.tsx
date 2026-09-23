@@ -433,7 +433,7 @@ export function ProductHeader() {
   const path = usePathname(),
     page = pageForPath(path),
     shell = useShell();
-  const label = path === "/" ? "" : path.startsWith("/estimating/configurations") ? "Specialist configurations" : /^\/estimating\/discovery\/[^/]+$/.test(path) && !path.endsWith("/new") ? "Estimation Wizard" : (page?.id === "engineering" ? "Engineering" : page?.label ?? "Page unavailable");
+  const label = path === "/" ? "" : path === "/development/page-register" ? "Design & build" : path === "/development/design-system" ? "Theme & shared controls" : path.startsWith("/estimating/configurations") ? "Specialist configurations" : /^\/estimating\/discovery\/[^/]+$/.test(path) && !path.endsWith("/new") ? "Estimation Wizard" : (page?.id === "engineering" ? "Engineering" : page?.label ?? "Page unavailable");
   // My Work names its current view beside the module, as its secondary menu does. EN-06 names its module
   // there, and its destination after it for as long as its own menu is hidden (desktop-shell.css).
   const materials = page?.workspace === "engineering" ? materialsPath(path) : undefined;

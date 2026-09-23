@@ -34,6 +34,14 @@ A new `Capability` in `src/platform/permissions.ts` is not confined to permissio
 
 ## Validation and handover
 
+### Maintain the live design register
+
+For page, shell, shared-control, guide or theme work, update the working master in `docs/design/development/` in the same PR. Run `npm run studio:sync` for new routes, then replace discovery stubs with page-specific guidance and desktop/mobile design requirements. Add exact mockup/HTML references when available; record missing images explicitly. Preserve stable keys, source provenance and existing scope IDs. Keep source presence, visual review, functional proof and deployment separate.
+
+Use shared tokens and reusable controls for new surfaces; document accepted legacy exceptions. Review the impact of changes to shared files and imported components. Run `npm run studio:check` and relevant application checks. Never copy a current fingerprint into a review record without an actual review and evidence. Update guides when workflows change. Git files are the authority; the local workspace reads them, and exported proposals are not saved edits. Follow `docs/design/development/README.md` for the workflow and global information-icon mapping.
+
+Do not rewrite issued r04/r05 snapshots as routine maintenance. The one-time import/build tools are not the daily update process. A missing page registration fails CI; draft or stale review remains visible and must be reported rather than silently labelled accepted.
+
 Run `python3 scripts/check_foundation.py` for foundation changes and `python3 scripts/check_prototype.py` for PP-01 package changes. Run `python3 scripts/check_naming.py` for naming/guidance changes. Add meaningful application tests only when application behaviour exists. The current check is documentation assurance, not business acceptance.
 
 The database suites refuse to run against any database but `ppo_synthetic_test`. A local environment without a document renderer or the hosted-only identity migration produces failures that are not regressions: `RenderOrStorageFailure` in the report-producing tests, and `relation "ppo.demo_testers" does not exist` in `tests/demo/database.test.ts`. Confirm any failure against an unmodified `main` before attributing it to the change in hand.

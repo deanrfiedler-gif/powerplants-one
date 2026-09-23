@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { navigateWithReview } from "./navigation-intent";
 import {
   useEffect,
@@ -13,6 +13,7 @@ import { useShell } from "./shell-provider";
 import { ShellAccountProfile, accountInitials } from "./shell-account-profile";
 import { canOpen, destination, menuGroups, workspaces } from "../shell/navigation";
 import { ShellPageGuide } from "./shell-page-guide";
+import { DevelopmentPageGuide } from "../development/page-guide";
 import { ShellIcon as ProductIcon } from "./shell-icon";
 import { businessViewChannel, sessionLockEvent } from "./session-signal";
 import { openShellPanel, shellPanelEvent } from "./shell-events";
@@ -65,7 +66,8 @@ export function ShellControls({
   page: string;
 }) {
   const router = useRouter();
-  const { context, error: contextError, reload, hosted, preview } = useShell();
+  const pathname = usePathname();
+  const { context, error: contextError, reload, hosted, preview, development } = useShell();
   const wide = useSyncExternalStore(
     subscribe,
     () => window.matchMedia("(min-width: 781px)").matches,
@@ -337,6 +339,7 @@ export function ShellControls({
         </button>
       </div>
       <div className="ppo-header-utilities" data-shell-header-control>
+        {development && <button className="ppo-top-action ppo-studio-link" aria-label="Design and build workspace" title="Design & build · local development" onClick={()=>navigateWithReview(()=>router.push('/development/page-register'))}><ProductIcon name="engineering" /></button>}
         {!wide && (
           <button
             id="shell-mobile-search"
@@ -530,7 +533,7 @@ export function ShellControls({
           </button>
         </div>
         <div className="ppo-panel-body">
-          {panel === "guide" && <ShellPageGuide key={page} page={page} />}
+          {panel === "guide" && <>{development && <DevelopmentPageGuide key={pathname} />}<ShellPageGuide key={page} page={page} /></>}
           {panel === "quick" && (
             <>
               <p className="ppo-panel-hint">

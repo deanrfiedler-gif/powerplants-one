@@ -4,6 +4,11 @@ import next from "@next/eslint-plugin-next";
 import hooks from "eslint-plugin-react-hooks";
 export default defineConfig([
   ...tseslint.configs.recommended,
+  {
+    files: ["docs/design/app-page-register/register-r05.js"],
+    // Issued builder fragment deliberately strips image data from portable exports.
+    rules: { "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^data_url$" }] },
+  },
   // These fragments are assembled into one script by the pinned design builder.
   // Only bindings consumed by another fragment are exempt from unused checks.
   ...[

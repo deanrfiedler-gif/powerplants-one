@@ -44,6 +44,7 @@ type State = {
   error: string;
   reload: () => void;
   hosted: boolean;
+  development: boolean;
   preview: WorkspaceId;
   selectPreview: (id: WorkspaceId) => boolean;
   resetPreview: () => boolean;
@@ -57,9 +58,11 @@ export function useShell() {
 export function ShellProvider({
   children,
   hosted = false,
+  development = false,
 }: {
   children: ReactNode;
   hosted?: boolean;
+  development?: boolean;
 }) {
   const [context, setContext] = useState<ShellContext | null>(null),
     [error, setError] = useState(""),
@@ -143,6 +146,7 @@ export function ShellProvider({
         error,
         reload: () => setRetry((n) => n + 1),
         hosted,
+        development,
         preview,
         selectPreview,
         resetPreview: () => {

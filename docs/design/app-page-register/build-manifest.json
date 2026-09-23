@@ -1,0 +1,16 @@
+{
+  "revision": "r05",
+  "date": "2026-09-23",
+  "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+  "original_sha256": "b049869ac8b500cced535360ebb86650c55bbc5cd3ee4a18872ef83ea0b4b16e",
+  "html_sha256": "b07890f2cec602847af41bb4a790407ff3a6456a1842846520e0aede61233b93",
+  "scopes": 150,
+  "routes": 110,
+  "guides": 260,
+  "source_route_additions": 45,
+  "planned_destinations": 110,
+  "images": 8,
+  "entries_with_images": 15,
+  "source_keys_preserved": true,
+  "guide_review": "Draft; business review and workflow walkthrough pending"
+}

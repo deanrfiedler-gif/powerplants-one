@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "environment": "http://127.0.0.1:3006",
+  "source": "Working branch feat/design-development-workspace",
+  "date": "2026-09-23",
+  "results": [
+    {
+      "name": "Live local catalog reads 266 entries without structural errors",
+      "status": "passed"
+    },
+    {
+      "name": "Information icon lookup resolves exact creation route",
+      "status": "passed"
+    },
+    {
+      "name": "Information icon lookup resolves dynamic record route",
+      "status": "passed"
+    },
+    {
+      "name": "Unknown guide, route and arbitrary reference paths fail closed",
+      "status": "passed"
+    },
+    {
+      "name": "Known Markdown reference returns exact content and restrictive headers",
+      "status": "passed"
+    },
+    {
+      "name": "Changed reference hash is refused",
+      "status": "passed"
+    },
+    {
+      "name": "Launcher refuses a caller-supplied internal gateway header",
+      "status": "passed"
+    }
+  ]
+}

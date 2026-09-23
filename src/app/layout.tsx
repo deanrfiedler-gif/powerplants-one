@@ -3,6 +3,7 @@ import { ProductHeader, ProductNavigation } from "../components/product-navigati
 import { appleTouchIconPath, navy } from "../platform/installation";
 import { SessionViewBoundary } from "../components/session-view-boundary";
 import { ShellProvider } from "../components/shell-provider";
+import { developmentAvailable } from "../development/access";
 import "./globals.css";
 import "./shared-layout.css";
 import "./mobile-layout.css";
@@ -28,6 +29,8 @@ import "./styles/project-acceptance.css";
 import "./module-workspaces.css";
 import "./styles/facilities.css";
 import "./styles/planner-demand.css";
+import "../components/ui/controls.css";
+import "./styles/development.css";
 export const metadata: Metadata = {
   title: "Powerplants One | Private prototype",
   description: "Private synthetic application foundation for Powerplants One",
@@ -65,7 +68,7 @@ export default function RootLayout({
         <a className="skip-link" href="#main">
           Skip to main content
         </a>
-        <ShellProvider hosted={process.env.PPO_ENV === "azure-demo"}><div className="app-frame">
+        <ShellProvider hosted={process.env.PPO_ENV === "azure-demo"} development={developmentAvailable()}><div className="app-frame">
           <ProductNavigation />
           <div className="workspace">
             <ProductHeader />

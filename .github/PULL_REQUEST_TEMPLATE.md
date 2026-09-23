@@ -21,6 +21,7 @@ Explain effects on data, interfaces, permissions, documents, offline operations 
 
 - [ ] Scope and evidence are explicit; source facts and proposals remain distinct.
 - [ ] Relevant documentation and register links are current.
+- [ ] Page/shell/theme changes update the working design register, guide and desktop/mobile reference; `npm run studio:check` passes. Any missing image or pending/stale review is reported.
 - [ ] Applicable checks passed, or a specific unresolved failure is explained.
 - [ ] No credentials or unauthorised operational data are included.
 - [ ] Production readiness and business approvals are not inferred from this PR.

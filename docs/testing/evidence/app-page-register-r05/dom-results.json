@@ -1,0 +1,73 @@
+{
+  "status": "passed",
+  "count": 16,
+  "engine": "jsdom 30.1.1",
+  "html_sha256": "b07890f2cec602847af41bb4a790407ff3a6456a1842846520e0aede61233b93",
+  "visual_browser_checks": "Not performed: browser tool URL policy blocked file preview. DOM tests do not establish layout or native keyboard/print behaviour.",
+  "results": [
+    {
+      "name": "Initialisation and source preservation",
+      "status": "passed"
+    },
+    {
+      "name": "Complete article, route, source and image references",
+      "status": "passed"
+    },
+    {
+      "name": "All 260 guide windows render their complete content",
+      "status": "passed"
+    },
+    {
+      "name": "All local/live destinations are usable or require correct record context",
+      "status": "passed"
+    },
+    {
+      "name": "Local and live record IDs are independent and unsafe/invalid inputs are rejected",
+      "status": "passed"
+    },
+    {
+      "name": "Specialist views validate against the source enumeration",
+      "status": "passed"
+    },
+    {
+      "name": "Guide close preserves record input, review note, shortlist and opener",
+      "status": "passed"
+    },
+    {
+      "name": "Related guide back navigation and section search retain reading state",
+      "status": "passed"
+    },
+    {
+      "name": "Deep links and browser history close and restore the correct guide",
+      "status": "passed"
+    },
+    {
+      "name": "Nested image/guide dialogs restore focus in opening order",
+      "status": "passed"
+    },
+    {
+      "name": "Guide printing includes all sections despite an active search",
+      "status": "passed"
+    },
+    {
+      "name": "Combined image, guide and route filters plus cards work",
+      "status": "passed"
+    },
+    {
+      "name": "Preferences validate server origins and update open link builders",
+      "status": "passed"
+    },
+    {
+      "name": "CSV, review backup and portable guide library exports retain information",
+      "status": "passed"
+    },
+    {
+      "name": "Stable help resolution handles exact/new/dynamic/query/unknown pages",
+      "status": "passed"
+    },
+    {
+      "name": "Plain content escapes markup and all dialogs have accessible names",
+      "status": "passed"
+    }
+  ]
+}
