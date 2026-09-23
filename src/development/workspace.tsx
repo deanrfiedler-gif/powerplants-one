@@ -1,4 +1,5 @@
 "use client";
+import { ReleaseLabel } from "./release-label";
 /* Original design images must retain their exact bytes; no image optimisation proxy. */
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useRef, useState } from "react";
@@ -82,7 +83,7 @@ export function DevelopmentWorkspace({
         .then(async (r) => {
           if (!r.ok)
             throw Error(
-              "Automatic refresh failed. The previous snapshot is retained; use Refresh working copy to retry.",
+              "Automatic refresh failed. The previous snapshot is retained; use Refresh to retry.",
             );
           return r.json() as Promise<Catalog>;
         })
@@ -336,7 +337,7 @@ export function DevelopmentWorkspace({
     <div id="ppo-development" className="studio">
       <header className="studio-heading">
         <div>
-          <p className="studio-eyebrow">Local development · working copy</p>
+          <p className="studio-eyebrow">{catalog.release ? "Hosted development workspace" : "Local development · working copy"}</p>
           <h1 tabIndex={-1} ref={pageHeading}>
             Design & build
           </h1>
@@ -355,10 +356,11 @@ export function DevelopmentWorkspace({
             Export register
           </Button>
           <Button busy={refreshing} onClick={() => void refresh()}>
-            Refresh working copy
+            {catalog.release ? "Refresh deployed register" : "Refresh working copy"}
           </Button>
         </div>
       </header>
+      <ReleaseLabel catalog={catalog} />
       <div className="studio-summary">
         <span>
           <strong>
@@ -382,8 +384,8 @@ export function DevelopmentWorkspace({
         </span>
       </div>
       <p className="studio-note">
-        Git files are the master. Refresh reads the current working copy;
-        published environments change after their normal deployment. Guidance
+        GitHub holds the master documents. Local refresh reads working files;
+        hosted refresh reads the deployed release. Guidance
         and design review remain separate from source presence.
       </p>
       {error && !reader && (
