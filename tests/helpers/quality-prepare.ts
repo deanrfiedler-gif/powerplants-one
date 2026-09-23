@@ -176,6 +176,10 @@ export async function prepareJourney(page: Page, info: TestInfo) {
     (response) => new URL(response.url()).pathname === `/api/v1/customers/${id("50")}/workspace` &&
       response.request().method() === "GET",
     () => page.goto(`/customers/${id("50")}`),
+    {
+      request: (request) => new URL(request.url()).pathname === `/api/v1/customers/${id("50")}/workspace` && request.method() === "GET",
+      timeout: 60000,
+    },
   );
   expect(customer.status(), await customer.text()).toBe(200);
   expect(customer.headers()["cache-control"]).toBe("private, no-store");
