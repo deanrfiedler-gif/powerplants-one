@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { AppError } from "../../platform/errors";
-import { uuid } from "../../shared/validation";
+import { invalid, uuid } from "../../shared/validation";
 import {
   blankScope,
   blankArea,
@@ -17,6 +17,7 @@ import {
 import { validateScope } from "./validation";
 import { PORTABLE_BYTES } from "./portable-limits";
 import { validateLegacyProject } from "./legacy-validation";
+import { placeHeldImport, type Placement } from "./import-placement";
 import { mapValveCsv } from "./valve-csv";
 import type { Scope, Phase, Emitter, Control, Family } from "./types";
 
@@ -39,7 +40,8 @@ export interface ImportPreview {
   scope: Scope;
   identity_map: Record<string, string>;
   warnings: string[];
-  losses: { path: string; reason: string }[];
+  /** value: the legacy value held, for explicit placement (ADR-0044). */
+  losses: { path: string; reason: string; value?: unknown }[];
   held: boolean;
   provenance: {
     original_project_id: string | null;
@@ -492,6 +494,7 @@ export function previewImport(
             path: `${path}.${key}`,
             reason:
               "Populated legacy field has no verified native mapping; import is held, not silently truncated.",
+            value,
           });
     };
     const usedCore = ["id", "name", "phase", "notes", "evidence_status"];
@@ -628,6 +631,7 @@ export function previewImport(
           path: `${r.id}.${key}`,
           reason:
             "Unassigned/unrepresented legacy signal remains unknown; physical channel compatibility is not inferred.",
+          value: raw,
         });
       return mapping[raw] ?? "unknown";
     };
@@ -704,6 +708,9 @@ export function previewImport(
           path: `cohorts.${r.id}.emitter`,
           reason:
             "Emitter details belong to an unallocated crop group; the native valve emitter cannot preserve them until an explicit valve allocation is supplied.",
+          value: Object.fromEntries(
+            emitterFields.filter((k) => populated(r[k])).map((k) => [k, r[k]]),
+          ),
         });
       unused(
         r,
@@ -861,6 +868,7 @@ export function previewImport(
           path: `valves.${r.id}.allocations`,
           reason:
             "Mixed cohort emitters need per-allocation emitter mapping; import is held.",
+          value: r.allocations,
         });
       return {
         ...blankValve(allocate(txt(r, "id"))),
@@ -915,6 +923,7 @@ export function previewImport(
           path: `groups.${r.id}.other_path`,
           reason:
             "The legacy free-text water path needs an explicit native pump/unit path mapping before confirmation.",
+          value: r.other_path,
         });
       return {
         ...blankGroup(allocate(txt(r, "id"))),
@@ -1116,6 +1125,7 @@ export function previewImport(
           path: `stocks.${r.id}.function`,
           reason:
             "Legacy stock function has no exact native counterpart; confirm its explicit role.",
+          value: fn,
         });
       return {
         ...base(r),
@@ -1251,6 +1261,7 @@ export function previewImport(
           path: `sensors.${r.id}.cohort_ids`,
           reason:
             "This sensor represents multiple cohorts; the current single-crop reference cannot preserve that coverage as a confirmed mapping.",
+          value: r.cohort_ids,
         });
       return {
         ...base(r),
@@ -1383,6 +1394,7 @@ export function previewImport(
         path: "alarms",
         reason:
           "The detailed alarm cause/effect register needs its own lossless native mapping; legacy controls must not become operational instructions.",
+        value: list("alarms"),
       });
     const hydraulic = object(source.hydraulics, "hydraulics");
     unused(
@@ -1444,6 +1456,12 @@ export function previewImport(
         path: "history",
         reason:
           "Legacy history and local acknowledgements remain unverified source records; exact-byte migration is required before confirm.",
+        value: {
+          activity: source.activity,
+          review: source.review,
+          review_history: source.review_history,
+          snapshots: (source.snapshots as unknown[]).length,
+        },
       });
     scope.hydraulics.curve_points = (source.curve_points as unknown[]).map(
       (v, i) => {
@@ -1477,6 +1495,7 @@ export function previewImport(
         path: "system_curve_points",
         reason:
           "Legacy system-curve boundary and points require a separate native model; retained in original source.",
+        value: source.system_curve_points,
       });
     const topKeys = [
       "schema_version",
@@ -1533,6 +1552,7 @@ export function requireConfirmableImport(
   preview: ImportPreview,
   expectedSourceHash: string,
   expectedPreviewHash: string,
+  placements?: Placement[],
 ): Scope {
   if (
     preview.source_hash !== expectedSourceHash ||
@@ -1550,11 +1570,15 @@ export function requireConfirmableImport(
       "ChangedFertigationImport",
       "The import preview has changed; regenerate it from the original source.",
     );
-  if (preview.held)
+  if (preview.held && !placements)
     throw new AppError(
       422,
       "HeldFertigationImport",
       "This import has unmapped data. Resolve every listed mapping before creating a native revision.",
     );
+  if (preview.held)
+    return validateScope(placeHeldImport(preview, placements!).scope);
+  if (placements?.length)
+    invalid("placements", "This preview holds no fields to place.");
   return validateScope(preview.scope);
 }
