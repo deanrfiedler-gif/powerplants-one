@@ -1,41 +1,42 @@
 # Service request register — design reference
 
-Stable entry: `route:/service/tickets`. Owner: Dean Fiedler. Status: **Draft for visual review**.
+Stable entry: `route:/service/tickets`. Owner: Dean Fiedler. Status: **Draft for visual review**. A proposed native refinement was recorded on 23 September 2026. Dean accepted its recommendations (D1–D8) that day. His visual review is still to be recorded, so it is not an accepted baseline.
 Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/service/tickets`.
 This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
 
 ## Purpose and task
 
-An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.
+This route is the SV-01 register. Today it runs the bounded P03 intake list (`TicketList`): search, a status filter for New, NeedsInformation and Triaged, and *New service request*. The proposed refinement replaces that presentation with the SV-01 Board and List. Its first native increment covers New, NeedsInformation and Triaged; the later stages wait for the proposed [ADR-0043](../../../decisions/ADR-0043-service-request-lifecycle.md) (D3).
 
-1. Find or capture the request without duplicating an existing case
-2. Review impact and missing context
-3. Assign triage and the next contact or assessment action
+1. Find or capture the request without duplicating an existing request.
+2. Review impact, missing context and overdue commitments.
+3. Triage, or assign the next contact or assessment action.
 
 ## Desktop
 
-Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
+Follow the [SV-01 contract](scope-sv-01.md#desktop). The route-specific points are:
 
-At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
+- Remove the current `PageHeader` register band (eyebrow *SC-04 / Service intake* and the visible title). The breadcrumb carries identity, and the description moves to the page-information panel.
+- Rename the existing *New service request* action *Log a request* and keep it as the only primary action.
+- Present Board and List over one collection, following the flush-register rules: full bleed, one scroll owner, compact toolbar.
+- Register the route in `src/shell/module-workspaces.ts` as `full-bleed` with `navigation: "workspace"` (D6, accepted). The module interior is then 1364 × 896 at a 1440 × 960 window, and 948 × 704 at 1024 × 768 (frame 16).
+- The first native increment presents the three existing states (frame 14). The list shows only the twelve columns with a native source (see the SV-01 contract).
 
 ## Mobile
 
-At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
-
-The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+Follow the [SV-01 contract](scope-sv-01.md#mobile): List only, queue chips, a full-screen filter sheet (frame 19), a no-matches state (frame 20), a 44 px search field with 16 px text, and the 320 px layout (frame 23).
 
 ## Shared components and states
 
-Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared Button component for new controls; preserve documented existing page-specific exceptions until deliberately migrated. Use consistent primary/secondary/quiet/danger meanings. Include hover, visible focus, disabled and loading states.
-
-Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
+See the [SV-01 contract](scope-sv-01.md#shared-components-and-states). Keep the existing `ReadState` loading, error and retry behaviour and the `Observed` envelope notice until they are replaced by the shared read-state component.
 
 ## Visual references
 
-- [PPO-Service-Cases-and-Triage-Workspace-r02.html](../../../reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html)
+- [PPO-Service-Cases-and-Triage-Workspace-r02.html](../../../reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html). Retained design reference.
+- [Board images r01](../../../reference/ui/service-cases/native-refinement-r01/README.md): `01-register-board.png`, `02-register-list-scrolled.png`, `03-register-list-preview.png`, `06-register-states.png` and `11-phone-register.png`. These are renders of the private claude.ai design canvas "Page Refinement Audit", version 7. Proposed.
+- [Board images r02](../../../reference/ui/service-cases/native-refinement-r02/README.md): `14-native-register-board.png`, `16-register-list-1024.png`, `19-phone-filters.png`, `20-phone-no-matches.png` and `23-narrow-register-320.png`. Renders of canvas version 8. Proposed.
+- **Missing:** a current native capture of this route.
 
 ## Behaviour, handovers and verification
 
-The draft User Guide `guide.page.service.tickets` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
-
-Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+The draft User Guide `guide.page.service.tickets` describes the running page and remains Draft. Source presence, visual review, functional testing, owner acceptance and deployment stay separate. Acceptance evidence is pending; see the [proposed refinement record](../../../decisions/service-requests-native-refinement.md).

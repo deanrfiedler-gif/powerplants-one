@@ -204,6 +204,10 @@ Dean accepted the [full Job Pack design](../decisions/job-pack-design.md) on 10 
 
 [Field Technicians r04](../decisions/field-technicians-design.md) is Dean’s accepted presentation baseline for `/service/technicians`. Preserve its 24 px desktop / 16 px phone outer padding, white bordered workspace, compact Roboto table typography, green selected-tab underline and four-tab right drawer inside the shared application shell. Do not duplicate global navigation or the logo. The [handover](../delivery/field-technicians-handover.md) records bounded data adaptations and verification status.
 
+## Accepted field work timer r05 — 23 September 2026
+
+Dean accepted the [field work timer r05 baseline](../reference/ui/field-work-timer/powerplants-one-field-work-timer-r05.html) for FI-01 ([decision](../decisions/field-work-timer-design.md)). Preserve the record header that carries the state tag and timer controls, with the main action on the right. Preserve the job menu that matches the shared secondary menu, the 96 px figure with three readouts (four on multi-visit jobs), and the single visit track with the plan above the rail and the record on it. Keep Time recorded and Activity edge-to-edge, the notices as stripe-free banner rows, and the phone control dock. It reuses the 43 tokens of Field Technicians r05 and adds none. Acceptance is of presentation only; the timer is not implemented.
+
 Revision r07: #121 records bounded-scroll mechanics and a scale reconciled to existing shell layering; 14 September 2026. No CSS or domain authority change.
 
 

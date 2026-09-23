@@ -2,11 +2,17 @@
 
 [Priva fertigation workbench refinement](fertigation-workbench-refinement.md) raised seven presentation departures (D1–D7), audit findings A1–A9 and twelve features (F1–F12) on 23 September 2026. Dean directed the same day that the improvements be applied; D1, D7, F2–F7 and F9 are built, and the rest remain proposed. No calculation changes; visual review and acceptance are not yet recorded.
 
+[Service requests native refinement](service-requests-native-refinement.md) is a **proposed** SV-01/SV-02 design: the r02 Service Cases & Triage workspace refined as a module interior for the shared shell, with a separate register and record, less chrome, collapsible empty lanes and "Service request" as the label. Recorded 23 September 2026. Dean accepted all eight of its recommendations (D1–D8) the same day. His visual review is still to be recorded, so it is not an accepted baseline. [ADR-0043](ADR-0043-service-request-lifecycle.md) is its **proposed** lifecycle extension, drafted for his review; it authorises no migration.
+
 [Notice accent rule departure](notice-accent-rule-departure.md) is a **proposed** design-system decision: whether notices keep the 3 px coloured left rule used by theme board r22 and Job Pack r03. Raised from the field work timer concept on 23 September 2026; not accepted.
+
+[Field work timer design](field-work-timer-design.md) records Dean's acceptance on 23 September 2026 of the FI-01 work timer presentation baseline r05 (record header with the state and controls, job menu, one visit track, edge-to-edge time and activity lists, multi-day allowance). Presentation only; the timer is not implemented.
 
 [Department navigation icons](department-navigation-icons.md) implements seven ordered department rails, semantic SVG pairs and bounded existing-service landings. It amends r17's no-shortcuts choice; readiness and permissions control live links.
 
 [ES-08 Screen Geometry Study architecture proposal](es08-screen-geometry-study.md) retains the quantity engine and proposes an owned versioned study with explicit mapping, source adoption and immutable drawings. Audit only at `0c95c5a`; no migration slot or native implementation is authorised by that session.
+
+[ES-08 design board owner decision](es08-design-board.md) records Dean's 23 September 2026 acceptance of the merged Screen Configurator Workbench board: departures D1–D15, rulings DEC-R1 (rounding) and DEC-R2 (roll fit) and a five-profile structure drawing standard. The board has [retained captures](../reference/ui/specialist/design-board-r01/README.md). It states the changes that WP-G00 must carry into the geometry build plan. It is design direction only: no implementation, migration, UI baseline entry or engineering acceptance.
 
 [decision-register.csv](decision-register.csv) retains the 29 original questions and closure evidence. D-003 is resolved for the personal prototype under ADR-0005. D-004/D-022/D-029 remain partially resolved; 25 other decisions remain open. Proposed roles are not assigned staff.
 
@@ -90,3 +96,5 @@ The [PPO Assistant direction and architecture decision](ppo-assistant-direction.
 - [ADR-0041 — SH platform coordination](ADR-0041-sh-platform-coordination.md): shared search, Activity notifications, personal views and source-owned review projections; canonical teams and providers remain dependent.
 
 - [ADR-0042 — Customer location readiness, survey and account development](ADR-0042-customer-location-workflows.md): additive exact-scope aggregates, immutable evidence and shared SH coordination adapters; existing CS-05 retained.
+
+- [ADR-0043 — Service request lifecycle](ADR-0043-service-request-lifecycle.md): **proposed**, not accepted. Intent-specific TR-15 commands for work, waiting, resolution review, closure, reopening and cancellation on the existing Ticket. It reuses Activity for owned actions and the customer-update commitment, and adds typed evidence, contact, waiting and resolution records. No new state values; one future migration.

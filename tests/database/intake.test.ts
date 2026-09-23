@@ -18,6 +18,7 @@ import {
   triageTicket,
   readIntake,
   listTickets,
+  ticketQueues,
 } from "../../src/service/intake";
 import { saveDraft } from "../../src/service/tickets";
 import {
@@ -38,7 +39,7 @@ import {
   listShared,
   mappingViews,
 } from "../../src/shared/reads";
-import { createOrganisation, recordHistory } from "../../src/shared/commands";
+import { addAffiliation, createOrganisation, recordHistory } from "../../src/shared/commands";
 import { readOperation } from "../../src/shared/receipts";
 const id = (type: number, n = 1) =>
   `${type}000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
@@ -820,4 +821,128 @@ test("unlisted authority fields, invalid dates, out-of-scope requester/site and 
     relationship_status: "Prospect",
     owner_id: actor,
   });
+});
+
+test("SV-01 I1 register read model: permitted context, a customer never guessed, urgency order and queue counts from the same filters", async () => {
+  const p = await principal();
+  // A request at the seeded site with an overdue owned clarification.
+  const overdue = ticket();
+  await createTicket(p, overdue);
+  await requestInformation(p, overdue.id, {
+    ...information(),
+    follow_up: { id: randomUUID(), owner_id: actor, due_needed: false, due_at: "2026-09-01T00:00:00Z" },
+  });
+  // A site-less request whose only customer evidence is the requester's relationship.
+  const siteless = {
+    ...ticket(),
+    site_id: null,
+    site_identification_needed: true,
+    asset_id: null,
+    priority: "Low",
+  };
+  await createTicket(p, siteless);
+
+  const all = await listTickets(p, { limit: "200" });
+  const row = (ticketId: string) => all.items.find((t) => t.id === ticketId)!;
+  const a = row(overdue.id);
+  assert.equal(a.status, "NeedsInformation");
+  // The expired previous operator is excluded; the single current operator is the customer.
+  assert.deepEqual(
+    { name: a.customer?.display_name, basis: a.customer?.basis },
+    { name: "SYN Greenhouse Demonstration", basis: "SiteOperator" },
+  );
+  assert.equal(a.site?.id, site);
+  assert.equal(a.asset?.id, asset);
+  assert.equal(a.received_at, "2026-09-04T00:00:00.000Z");
+  assert.equal(a.channel, "Phone");
+  assert.ok(a.triage_owner_name.length > 0);
+  assert.deepEqual(
+    { status: a.clarification?.status, due_at: a.clarification?.due_at, due_needed: a.clarification?.due_needed },
+    { status: "Open", due_at: "2026-09-01T00:00:00.000Z", due_needed: false },
+  );
+  assert.equal(a.clarification_unavailable, false);
+  // The list and the record count the same triage blockers.
+  assert.equal(a.triage_blocker_count, (await readIntake(p, overdue.id)).triage_blockers.length);
+  assert.ok(a.triage_blocker_count! >= 1);
+
+  const b = row(siteless.id);
+  assert.equal(b.site, null);
+  assert.deepEqual(
+    { name: b.customer?.display_name, basis: b.customer?.basis },
+    { name: "SYN Greenhouse Demonstration", basis: "RequesterRelationship" },
+  );
+
+  // A triaged seed request carries its visible work orders, each in its own state, and no blocker count.
+  const triaged = row(id(40, 20));
+  assert.equal(triaged.triage_blocker_count, null);
+  assert.equal(triaged.work_orders.length, 10);
+  assert.ok(triaged.work_orders.every((w) => /^SYN-PPO-WO-\d{6}$/.test(w.display_number) && ["Draft", "Authorised"].includes(w.status)));
+  const noSite = row(id(40, 11));
+  assert.equal(noSite.customer, null);
+
+  // The schema allows one effective Operator per site, so ambiguity arises from people: a second current
+  // relationship leaves the site-less request without a customer rather than choosing between organisations.
+  const second = randomUUID();
+  await createOrganisation(p, {
+    ...base(),
+    id: second,
+    company_id: company,
+    display_name: "SYN Second employer",
+    relationship_status: "Prospect",
+    owner_id: actor,
+  });
+  await addAffiliation(p, second, {
+    ...base(),
+    id: randomUUID(),
+    expected_version: 1,
+    person_id: person,
+    role_label: "SYN contractor",
+    valid_from: "2026-09-01",
+    valid_to: null,
+  });
+  const after = (await listTickets(p, { limit: "200" })).items;
+  assert.equal(after.find((t) => t.id === siteless.id)!.customer, null);
+  assert.equal(after.find((t) => t.id === overdue.id)!.customer?.basis, "SiteOperator");
+
+  // Urgency order: priority, then oldest received, then reference; the cursor carries on in the same order.
+  const rank: Record<string, number> = { Urgent: 0, High: 1, Normal: 2, Low: 3 };
+  const key = (t: { priority: string; received_at: string; display_number: string }) =>
+    [rank[t.priority], t.received_at, t.display_number] as const;
+  const ordered = (await listTickets(p, { sort: "urgency", limit: "200" })).items;
+  for (let i = 1; i < ordered.length; i++) {
+    const [x, y] = [key(ordered[i - 1]), key(ordered[i])];
+    assert.ok(x[0] < y[0] || (x[0] === y[0] && (x[1] < y[1] || (x[1] === y[1] && x[2] <= y[2]))), "urgency order");
+  }
+  assert.equal(ordered.at(-1)!.id, siteless.id);
+  const first = await listTickets(p, { sort: "urgency", limit: "2" });
+  const next = await listTickets(p, { sort: "urgency", limit: "2", cursor: first.next_cursor! });
+  assert.deepEqual(
+    [...first.items, ...next.items].map((t) => t.id),
+    ordered.slice(0, 4).map((t) => t.id),
+  );
+  // A cursor is bound to its sort: reusing an unsorted cursor for the urgency order is refused.
+  const plain = await listTickets(p, { limit: "1" });
+  await assert.rejects(listTickets(p, { sort: "urgency", limit: "1", cursor: plain.next_cursor! }), code("InvalidData"));
+  await assert.rejects(listTickets(p, { sort: "received" }), code("InvalidData"));
+
+  // Queue counts use the list's visibility and filters.
+  const queues = await ticketQueues(p);
+  const statuses = all.items.map((t) => t.status);
+  assert.equal(queues.all_open, all.items.length);
+  assert.equal(queues.new, statuses.filter((s) => s === "New").length);
+  assert.equal(queues.needs_information, statuses.filter((s) => s === "NeedsInformation").length);
+  assert.equal(queues.triaged, statuses.filter((s) => s === "Triaged").length);
+  assert.equal(queues.urgent, all.items.filter((t) => t.priority === "Urgent").length);
+  assert.equal(queues.overdue_clarifications, 1);
+  const siteOnly = await principal("site-observer");
+  assert.equal((await ticketQueues(siteOnly)).all_open, (await listTickets(siteOnly, { limit: "200" })).items.length);
+  assert.equal((await ticketQueues(p, { site_id: site })).all_open, all.items.filter((t) => t.site_id === site).length);
+  await assert.rejects(ticketQueues(p, { status: "New" }), code("InvalidData"));
+
+  // Without activity.read the clarification is withheld, never partially shown, and not counted as overdue.
+  await database().query("DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='activity.read'", [p.actor_id]);
+  const withheld = (await listTickets(p, { limit: "200" })).items.find((t) => t.id === overdue.id)!;
+  assert.equal(withheld.clarification, null);
+  assert.equal(withheld.clarification_unavailable, true);
+  assert.equal((await ticketQueues(p)).overdue_clarifications, 0);
 });
