@@ -6,6 +6,8 @@
 
 [ES-08 Screen Geometry Study architecture proposal](es08-screen-geometry-study.md) retains the quantity engine and proposes an owned versioned study with explicit mapping, source adoption and immutable drawings. Audit only at `0c95c5a`; no migration slot or native implementation is authorised by that session.
 
+[ES-08 design board owner decision](es08-design-board.md) records Dean's 23 September 2026 acceptance of the merged Screen Configurator Workbench board: departures D1–D15, rulings DEC-R1 (rounding) and DEC-R2 (roll fit) and a five-profile structure drawing standard. The board has [retained captures](../reference/ui/specialist/design-board-r01/README.md). It states the changes that WP-G00 must carry into the geometry build plan. It is design direction only: no implementation, migration, UI baseline entry or engineering acceptance.
+
 [decision-register.csv](decision-register.csv) retains the 29 original questions and closure evidence. D-003 is resolved for the personal prototype under ADR-0005. D-004/D-022/D-029 remain partially resolved; 25 other decisions remain open. Proposed roles are not assigned staff.
 
 | ADR | Decision |

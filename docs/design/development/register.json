@@ -1170,7 +1170,13 @@
       "guide_key": "guide.es.08",
       "design_path": "docs/design/development/pages/scope-es-08.md",
       "html_path": "docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r03.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-01-Configure-r01.png",
+        "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-02-Drawings-r01.png",
+        "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-B-Structure-Families-r01.png",
+        "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-D-Phone-Configure-r01.png",
+        "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-E-Phone-Drawings-r01.png"
+      ],
       "dependencies": [],
       "scope_status": "unbuilt",
       "visual_status": "Needs review",
@@ -7154,7 +7160,12 @@
       "guide_key": "guide.page.estimating.configurations.id.view",
       "design_path": "docs/design/development/pages/route-estimating-configurations-id-view.md",
       "html_path": "docs/reference/ui/specialist/PPO-Specialist-Configuration-Workbench-r03.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-01-Configure-r01.png",
+        "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-02-Drawings-r01.png",
+        "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-D-Phone-Configure-r01.png",
+        "docs/reference/ui/specialist/design-board-r01/PPO-ES-08-Design-Board-E-Phone-Drawings-r01.png"
+      ],
       "dependencies": [],
       "scope_status": "refine",
       "visual_status": "Needs review",
