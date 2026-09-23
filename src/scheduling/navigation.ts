@@ -18,8 +18,16 @@ export function plannerHref(c: ReturnType<typeof plannerContext>) {
   });
 }
 export function safePlannerReturn(value: string | null) {
-  if (!value || value.length > 1024 || !/^\/schedule(?:\?|$)/.test(value)) return "/schedule";
-  return plannerHref(plannerContext(new URLSearchParams(value.split("?")[1])));
+  if (!value || value.length > 2048) return "/schedule";
+  const match = /^\/schedule(\/(?:changes|travel|capacity))?(?:\?(.*))?$/.exec(value);
+  if (!match) return "/schedule";
+  const q = new URLSearchParams(match[2]), context = plannerContext(q);
+  if (!match[1]) return plannerHref(context);
+  const result = new URLSearchParams({day:context.day, timezone:context.zone,
+    ...(context.site ? {site_id:context.site}:{}), ...(context.resource ? {resource_id:context.resource}:{})});
+  if (q.getAll("days").length===1 && ["7","28","90"].includes(q.get("days")!)) result.set("days",q.get("days")!);
+  if (match[1]==="/changes" && q.getAll("appointment_id").length===1 && uuid.test(q.get("appointment_id")!)) result.set("appointment_id",q.get("appointment_id")!);
+  return "/schedule"+match[1]+"?"+result;
 }
 export function appointmentHref(id: string, returnTo: string) {
   return `/service/appointments/${id}?returnTo=${encodeURIComponent(safePlannerReturn(returnTo))}`;

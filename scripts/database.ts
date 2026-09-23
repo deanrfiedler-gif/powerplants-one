@@ -48,6 +48,9 @@ export async function migrate(through = latestMigrationVersion) {
 export async function seed(through = latestMigrationVersion) {
   validateMigrationRegistry(migrationFiles, seedFiles);
   await transaction(async (client) => {
+    // Fixture bundles execute many statements, including platform timezone scans.
+    // Bound setup separately; SET LOCAL leaves normal application reads at 10s.
+    await client.query("SET LOCAL statement_timeout = '120s'");
     await client.query("SELECT pg_advisory_xact_lock(10001)");
     for (const [version, file] of seedFiles) {
       if (version > through) break;

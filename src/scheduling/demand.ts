@@ -6,6 +6,7 @@ import {
   requireCapability,
   scopeSql,
   type Capability,
+  type QueryClient,
 } from "../platform/permissions";
 import { orderVisibility } from "../service/work-orders";
 import { envelope, visibility, visible } from "../shared/reads";
@@ -45,9 +46,13 @@ export function demandQuery(input: unknown) {
 }
 export type DemandQuery = ReturnType<typeof demandQuery>;
 export async function readUnassignedDemand(p: Principal, input: unknown = {}) {
-  const q = demandQuery(input);
   return transaction(async (c) => {
     await c.query("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ");
+    return demandSnapshot(c, p, input);
+  });
+}
+export async function demandSnapshot(c: QueryClient, p: Principal, input: unknown = {}) {
+  const q = demandQuery(input);
     await requireCapability(c, p, DEMAND_CAPABILITY);
     // A named site outside this identity's scope refuses exactly as a site that
     // does not exist. Nothing distinguishes "not permitted" from "not found".
@@ -98,5 +103,4 @@ export async function readUnassignedDemand(p: Principal, input: unknown = {}) {
       completeness: more ? "Partial" : "Complete",
       limit: q.limit,
     };
-  });
 }
