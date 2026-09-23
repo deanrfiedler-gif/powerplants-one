@@ -90,7 +90,15 @@
       "specification": "docs/design/development/components/buttons.md",
       "used_on": [
         "system:theme",
-        "route:/development/page-register"
+        "route:/development/page-register",
+        "scope:PL-02",
+        "scope:PL-04",
+        "scope:PL-05",
+        "scope:PL-03",
+        "route:/service/technicians/[id]",
+        "route:/schedule/capacity",
+        "route:/schedule/changes",
+        "route:/schedule/travel"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -102,6 +110,14 @@
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "Legacy scoped button families do not all use Button/ButtonLink.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "scheduling-native-review",
+          "expected": "Shared controls remain readable in scheduling comparisons at desktop, 320 px and 200% zoom.",
+          "actual": "New scheduling consumers added; owner visual acceptance pending.",
+          "action": "Inspect captured runtime evidence and retain legacy booking-control exceptions.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -483,6 +499,11 @@
           "id": "read-only",
           "label": "Read only",
           "description": "Management actions unavailable in this example."
+        },
+        {
+          "id": "long-label",
+          "label": "Long resource label",
+          "description": "Wrapping resource identity with a controlled availability and competence link."
         }
       ],
       "implementation": [
@@ -504,7 +525,8 @@
       },
       "specification": "docs/design/development/components/planner.md",
       "used_on": [
-        "route:/schedule"
+        "route:/schedule",
+        "scope:PL-01"
       ],
       "desktop": "Day and Week share the same fixture. A drop proposes a move; the host still owns conflict, readiness, crew and authority checks.",
       "mobile": "Each lane scrolls independently in Week. Day provides the simpler narrow-screen alternative.",
@@ -516,6 +538,14 @@
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "This planner is not the project Gantt. Catalogue callbacks do not prove conflict enforcement or saved booking behaviour.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "scheduling-native-review",
+          "expected": "Shared controls remain readable in scheduling comparisons at desktop, 320 px and 200% zoom.",
+          "actual": "New scheduling consumers added; owner visual acceptance pending.",
+          "action": "Inspect captured runtime evidence and retain legacy booking-control exceptions.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -642,7 +672,16 @@
         "route:/sites/[id]/readiness",
         "route:/customers/[id]/development",
         "route:/surveys",
-        "route:/surveys/[id]"
+        "route:/surveys/[id]",
+        "scope:PL-01",
+        "scope:PL-02",
+        "scope:PL-04",
+        "scope:PL-05",
+        "scope:PL-03",
+        "route:/service/technicians/[id]",
+        "route:/schedule/capacity",
+        "route:/schedule/changes",
+        "route:/schedule/travel"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -662,6 +701,14 @@
           "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
           "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "scheduling-native-review",
+          "expected": "Shared controls remain readable in scheduling comparisons at desktop, 320 px and 200% zoom.",
+          "actual": "New scheduling consumers added; owner visual acceptance pending.",
+          "action": "Inspect captured runtime evidence and retain legacy booking-control exceptions.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1117,7 +1164,16 @@
         "route:/customers/[id]/development",
         "route:/surveys/[id]",
         "route:/sites/[id]",
-        "route:/surveys"
+        "route:/surveys",
+        "scope:PL-01",
+        "scope:PL-02",
+        "scope:PL-04",
+        "scope:PL-05",
+        "scope:PL-03",
+        "route:/service/technicians/[id]",
+        "route:/schedule/capacity",
+        "route:/schedule/changes",
+        "route:/schedule/travel"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -1137,6 +1193,14 @@
           "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
           "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "scheduling-native-review",
+          "expected": "Shared controls remain readable in scheduling comparisons at desktop, 320 px and 200% zoom.",
+          "actual": "New scheduling consumers added; owner visual acceptance pending.",
+          "action": "Inspect captured runtime evidence and retain legacy booking-control exceptions.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1315,7 +1379,8 @@
         "src/app/layout.tsx",
         "src/app/desktop-shell.css",
         "src/app/mobile-layout.css",
-        "src/app/styles/customers.css"
+        "src/app/styles/customers.css",
+        "src/scheduling/components/client/workspace-navigation.client.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",

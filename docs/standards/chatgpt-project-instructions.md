@@ -66,9 +66,9 @@ HTML packages: follow docs/standards/html-module-conformance.md. State scope ID,
 
 ## 8. Execution and authority
 
-Complete authorised work; state assumptions. Ask only when a consequential missing fact blocks progress.
+Complete authorised work; ask only for consequential blockers.
 
-Preserve unrelated work. Use a dedicated branch and reviewable PR; merge within granted scope after required checks/review. Never bypass permissions. Update affected specifications/registers.
+Preserve unrelated work. Use branches/PRs, scoped authority and required checks. Update affected contracts/registers.
 
 Repository work does not authorise paid services, public deployment, access changes, live transactions, migration or messages to others. Prepare work before seeking approval. Keep secrets/raw operational exports/restricted records outside Git; use synthetic or approved redacted fixtures.
 
@@ -76,9 +76,9 @@ Repository work does not authorise paid services, public deployment, access chan
 
 Run foundation/prototype/naming checks.
 
-Test behaviour: permissions, booking conflicts, stale revisions, offline replay, deduplication, document integrity and Finance reconciliation. Visually check relevant screens/documents. Record commit/environment.
+Test permissions, conflicts, versions, replay, deduplication, documents and Finance. Visually inspect; record commit/environment.
 
-Separate decisions, evidence, proposals and open questions; distinguish delivery, tests, acceptance and production readiness. Cite sources and limits.
+Separate decisions/evidence/proposals/questions and delivery/tests/acceptance/readiness. Cite limits.
 
 Preserve ES-02 exact costs and PJ-09 scoped close/reopen. ES-08: accepted design board (es08-design-board.md: D1–D15, DEC-R1/R2) guides the geometry build, which needs separate authority, WP-G00 first, no migration slot. ADR-0034 review is not engineering approval. Retain four CI lanes (ci-retained-suite-isolation.md).
 
@@ -87,3 +87,5 @@ Keep synthetic mailboxes private and bodies outside shared Activities; see demo-
 CS: follow ADR-0042 and cs-native-completion-handover.md. Preserve CS-05 identities, Grouping, service links and E2 snapshots. Readiness grants no work authority; survey handovers bind exact reviewed snapshots. Account plans create no bookings/forecasts. Reuse SH and Activity; Finance /account stays Finance.
 
 Fertigation: follow `docs/delivery/priva-fertigation-native-handover.md`. Preserve exact scopes, neutral context and unverified supplier conclusions. Merge/deployment need separate authorisation.
+
+Scheduling PL-01 to PL-05: preserve source-owned reads, unknown effort/mappings, analytical scenarios and explicit travel. Follow `docs/decisions/scheduling-resources-architecture.md`.

@@ -12931,7 +12931,8 @@
           "paragraphs": [
             "Use Readiness and change-impact review to work towards this outcome: Readiness is supported by current source evidence.",
             "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "One ready component does not make the entire project ready."
+            "One ready component does not make the entire project ready.",
+            "Source audit on 24 September: the r02 change record identifies a revised deliverable, but the checked-in r02 HTML contains r01 bytes. No verified r02 implementation reference is selected; native controls are unavailable."
           ],
           "steps": [],
           "rows": [],
@@ -13160,9 +13161,10 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/projects/PPO-Project-Delivery-Readiness-and-Change-Control-r01.html",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/delivery/projects-completion-programme.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Record the unavailable verified r02 source without substituting r01 or granting review.",
       "document_id": "PPO-GUIDE-PJ-07",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -13446,22 +13448,22 @@
       "title": "Staged acceptance and closeout",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Existing foundation + proposed completion",
+      "content_mode": "Native workflow; guide walkthrough and family acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Prior executed component evidence: docs/testing/evidence/project-acceptance-r01/README.md. A0 source inspection only; no new native walkthrough.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Staged acceptance and closeout to work towards this outcome: Each stage has a reviewed disposition and owned residual work.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "Open defects must not disappear when a stage is accepted."
+            "The native acceptance workspace records exact staged scope, readiness, outstanding work, training/manual handover and independent closeout decisions. Use the selected project and stage to review the applicable revision.",
+            "Source was inspected at ca006fb1. The linked PJ-09 record contains prior database, HTTP, browser and restart evidence. This article remains a draft; no new walkthrough, owner acceptance or deployment is implied.",
+            "Technical review, customer response, independent Service receiving and commercial disposition remain separate. Gantt progress and completed Activities do not accept a stage or close a Project."
           ],
           "steps": [],
           "rows": [],
@@ -13541,7 +13543,7 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
+            "Use the permitted controls for this view and exact selected stage. Source availability, current access and expected versions are checked by the server; general Project edit permission does not grant acceptance duties."
           ],
           "steps": [
             "Review stage-specific completion and exceptions",
@@ -13555,9 +13557,9 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Each stage has a reviewed disposition and owned residual work.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Open defects must not disappear when a stage is accepted."
+            "Retain the exact stage/output revision and receiving decision. The whole-project closeout gate also considers unallocated scope, all stages, current source evidence and commercial disposition.",
+            "Remaining obligations keep their owner, evidence and independent responsibility acceptance. Closed history is preserved; later source change can require reassessment and an owned follow-up.",
+            "Local synthetic preparation, issue and receiving do not transmit a customer message, post to MYOB or upload to SharePoint."
           ],
           "steps": [],
           "rows": [],
@@ -13639,6 +13641,10 @@
             [
               "Guide differs from the page",
               "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
+            ],
+            [
+              "Acceptance result uncertain",
+              "Use the existing original-operation recovery dialog and server-held intent. Do not make a second decision or recreate an issue. Access is rechecked before the original outcome is disclosed."
             ]
           ],
           "headers": [
@@ -13662,7 +13668,8 @@
           "title": "Related guidance and procedures",
           "paragraphs": [
             "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them.",
+            "See ADR-0033, docs/delivery/pj09-staged-acceptance-handover.md and docs/testing/evidence/project-acceptance-r01/README.md for exact source, workflow, geometry exceptions and executed evidence."
           ],
           "steps": [],
           "rows": [],
@@ -13696,9 +13703,12 @@
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md",
+        "docs/testing/evidence/project-acceptance-r01/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Reconcile native PJ-09 presence and source-owned acceptance boundaries; retain Draft and separate historical evidence from current review.",
       "document_id": "PPO-GUIDE-PJ-09",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -13707,7 +13717,9 @@
       "section_aliases": {},
       "workflow_basis": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -15852,22 +15864,20 @@
       "title": "Service planner and unassigned demand",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Existing foundation + proposed completion",
+      "content_mode": "Native application workflow; owner acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/testing/evidence/scheduling-resources/README.md; no owner acceptance inferred.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Service planner and unassigned demand to work towards this outcome: One traceable appointment continues the original demand.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "Concurrent bookings and changed work-order context must be rechecked. A proposal alone does not reserve crew."
+            "Existing same-tab booking recovery and server commands are preserved. Request decisions now show current versus proposed time, named crew, travel and version differences."
           ],
           "steps": [],
           "rows": [],
@@ -15877,9 +15887,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Unassigned demand, work-order version, site timezone, readiness and crew.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use a current identity with schedule.read and the required company/site/record scope. Source-domain reads also require their own permissions. No browser link grants authority.",
+            "Use synthetic records and inspect source-as-at and completeness before taking action."
           ],
           "steps": [],
           "rows": [],
@@ -15890,11 +15899,10 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Select the demand and use Plan visit where available",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Select a day/week, display timezone and permitted site or resource. Working hours, anonymous busy reservations and travel buffers remain separate from visit times.",
+            "From authorised unassigned demand choose Plan visit. Preserve the work-order version and site time; save the proposal, review readiness, record contact, then confirm eligible crew with explicit travel values and reasons.",
+            "Use Move or reassign as the keyboard alternative to drag. Compare the exact saved booking and proposed interval/crew before submitting. Open a resource name for availability and competence evidence.",
+            "Use Changes & follow-up, Travel review or Demand & capacity in the Scheduling navigation."
           ],
           "rows": [],
           "headers": []
@@ -15902,42 +15910,18 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Service planner and unassigned demand · Page"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Planning workspace in the native PPO shell. The secondary Scheduling navigation connects Planner, Resources, Changes & follow-up, Travel review and Demand & capacity."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Unassigned demand, work-order version, site timezone, readiness and crew.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Keep the appointment/resource/source UUID, readable reference, version and explicit time basis together. Unknown quantities, unavailable domains and missing evidence are not zero."
           ],
           "steps": [],
           "rows": [],
@@ -15946,13 +15930,12 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Task sequence for review against the applicable running release."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Select the demand and use Plan visit where available",
-            "Prepare the site-time proposal and continue through readiness/contact",
-            "Confirm eligible crew and inspect the resulting appointment"
+            "Select a day/week, display timezone and permitted site or resource. Working hours, anonymous busy reservations and travel buffers remain separate from visit times.",
+            "From authorised unassigned demand choose Plan visit. Preserve the work-order version and site time; save the proposal, review readiness, record contact, then confirm eligible crew with explicit travel values and reasons.",
+            "Use Move or reassign as the keyboard alternative to drag. Compare the exact saved booking and proposed interval/crew before submitting. Open a resource name for availability and competence evidence.",
+            "Use Changes & follow-up, Travel review or Demand & capacity in the Scheduling navigation."
           ],
           "rows": [],
           "headers": []
@@ -15961,9 +15944,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "One traceable appointment continues the original demand.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Concurrent bookings and changed work-order context must be rechecked. A proposal alone does not reserve crew."
+            "Existing same-tab booking recovery and server commands are preserved. Request decisions now show current versus proposed time, named crew, travel and version differences.",
+            "Analytical comparison produces no source change. Saved commands retain their original operation receipt and current server authority."
           ],
           "steps": [],
           "rows": [],
@@ -15972,45 +15954,19 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Loading, no records, filtered empty and failed/denied reads are distinct. Refresh clears analytical scenarios and obtains a new source snapshot. Missing source evidence stays Unknown.",
+            "PL-01/PL-04 commands retain validation, stale-version, saving, uncertain outcome and receipt/retry states. Retry an uncertain original unchanged; do not submit a different decision until it is resolved."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare unassigned demand, work-order version, site timezone, readiness and crew. Follow the task sequence and check that one traceable appointment continues the original demand. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Service planner and unassigned demand has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Concurrent bookings and changed work-order context must be rechecked. A proposal alone does not reserve crew."
+            "SYN-PPO example: a two-person service booking retains both explicit travel buffers. A Project task with dates but no effort stays Unknown; its owner is not inferred to be a technician."
           ],
           "steps": [],
           "rows": [],
@@ -16019,45 +15975,20 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "For read failure, use Refresh or Retry. A denied source is unavailable, not empty capacity. Narrow the window/site when the bounded read refuses.",
+            "For stale booking/request versions, reopen the current record and compare before a new decision. The original failed move preserves the old booking. For uncertain sends keep the original operation and retry unchanged."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use labelled controls and Tab/Shift+Tab; Enter or Space activates buttons. Travel order has Earlier/Later alternatives without dragging. Cards and comparisons stack on phones.",
+            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations."
           ],
           "steps": [],
           "rows": [],
@@ -16067,8 +15998,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "Related contracts: ADR-0010, ADR-0039, PPO-SCHED-ADR, SC-07/08 and the Scheduling & Resources handover. Operational SOP and source ownership approval remain separate."
           ],
           "steps": [],
           "rows": [],
@@ -16078,9 +16008,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide for the implemented workflow. Actual verification is recorded in the evidence index; owner and physical-device acceptance remain pending. Stable article identity and Git history are retained."
           ],
           "steps": [],
           "rows": [],
@@ -16093,9 +16021,12 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/delivery/pl01-demand-to-booking-handover.md",
-        "docs/delivery/p05-handover.md"
+        "docs/delivery/p05-handover.md",
+        "src/app/(business)/schedule/page.tsx",
+        "docs/decisions/scheduling-resources-architecture.md",
+        "docs/delivery/scheduling-resources-handover.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "S1–S5 Scheduling & Resources implementation and source-owned review boundaries.",
       "document_id": "PPO-GUIDE-PL-01",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -16116,22 +16047,20 @@
       "title": "Resource availability and competence",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Existing foundation + proposed completion",
+      "content_mode": "Native application workflow; owner acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/testing/evidence/scheduling-resources/README.md; no owner acceptance inferred.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Resource availability and competence to work towards this outcome: The proposed crew can be assessed against the task.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "A directory listing is not a reservation or proof of all required competence."
+            "Resource/calendar/competence mutation is unavailable. Synthetic skills are not statutory certificates; certificate/renewal evidence remains Unknown. No private HR fields are added."
           ],
           "steps": [],
           "rows": [],
@@ -16141,9 +16070,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Technician, availability, qualifications, expiry and work requirements.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use a current identity with schedule.read and the required company/site/record scope. Source-domain reads also require their own permissions. No browser link grants authority.",
+            "Use synthetic records and inspect source-as-at and completeness before taking action."
           ],
           "steps": [],
           "rows": [],
@@ -16154,11 +16082,10 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Review current availability and preparation flags",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Keep Field Team Visits, Technicians and Needs preparation views. In Technicians, choose Availability & competence; the resource name in Planner also opens detail.",
+            "Select a seven-day review window. Inspect permitted site eligibility, active/publication state, source-as-at, effective dates and calendar version/timezone.",
+            "Review weekly intervals, exceptions, unavailable/other-work blocks and anonymous busy reservations. Open permitted appointment records for commitments and retained history.",
+            "Check skill status, validity and review evidence. Expired, not-yet-valid, expiring-within-period and unknown evidence stay explicit."
           ],
           "rows": [],
           "headers": []
@@ -16166,42 +16093,18 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Resource availability and competence · Page + detail"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Record detail with existing register in the native PPO shell. The secondary Scheduling navigation connects Planner, Resources, Changes & follow-up, Travel review and Demand & capacity."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Technician, availability, qualifications, expiry and work requirements.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Keep the appointment/resource/source UUID, readable reference, version and explicit time basis together. Unknown quantities, unavailable domains and missing evidence are not zero."
           ],
           "steps": [],
           "rows": [],
@@ -16210,13 +16113,12 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Task sequence for review against the applicable running release."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Review current availability and preparation flags",
-            "Check applicable competence evidence",
-            "Use the planner for controlled assignment and booking"
+            "Keep Field Team Visits, Technicians and Needs preparation views. In Technicians, choose Availability & competence; the resource name in Planner also opens detail.",
+            "Select a seven-day review window. Inspect permitted site eligibility, active/publication state, source-as-at, effective dates and calendar version/timezone.",
+            "Review weekly intervals, exceptions, unavailable/other-work blocks and anonymous busy reservations. Open permitted appointment records for commitments and retained history.",
+            "Check skill status, validity and review evidence. Expired, not-yet-valid, expiring-within-period and unknown evidence stay explicit."
           ],
           "rows": [],
           "headers": []
@@ -16225,9 +16127,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "The proposed crew can be assessed against the task.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A directory listing is not a reservation or proof of all required competence."
+            "Resource/calendar/competence mutation is unavailable. Synthetic skills are not statutory certificates; certificate/renewal evidence remains Unknown. No private HR fields are added.",
+            "Analytical comparison produces no source change. Saved commands retain their original operation receipt and current server authority."
           ],
           "steps": [],
           "rows": [],
@@ -16236,45 +16137,19 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Loading, no records, filtered empty and failed/denied reads are distinct. Refresh clears analytical scenarios and obtains a new source snapshot. Missing source evidence stays Unknown.",
+            "PL-01/PL-04 commands retain validation, stale-version, saving, uncertain outcome and receipt/retry states. Retry an uncertain original unchanged; do not submit a different decision until it is resolved."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare technician, availability, qualifications, expiry and work requirements. Follow the task sequence and check that the proposed crew can be assessed against the task. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Resource availability and competence has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A directory listing is not a reservation or proof of all required competence."
+            "SYN-PPO example: a two-person service booking retains both explicit travel buffers. A Project task with dates but no effort stays Unknown; its owner is not inferred to be a technician."
           ],
           "steps": [],
           "rows": [],
@@ -16283,45 +16158,20 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "For read failure, use Refresh or Retry. A denied source is unavailable, not empty capacity. Narrow the window/site when the bounded read refuses.",
+            "For stale booking/request versions, reopen the current record and compare before a new decision. The original failed move preserves the old booking. For uncertain sends keep the original operation and retry unchanged."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use labelled controls and Tab/Shift+Tab; Enter or Space activates buttons. Travel order has Earlier/Later alternatives without dragging. Cards and comparisons stack on phones.",
+            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations."
           ],
           "steps": [],
           "rows": [],
@@ -16331,8 +16181,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "Related contracts: ADR-0010, ADR-0039, PPO-SCHED-ADR, SC-07/08 and the Scheduling & Resources handover. Operational SOP and source ownership approval remain separate."
           ],
           "steps": [],
           "rows": [],
@@ -16342,9 +16191,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide for the implemented workflow. Actual verification is recorded in the evidence index; owner and physical-device acceptance remain pending. Stable article identity and Git history are retained."
           ],
           "steps": [],
           "rows": [],
@@ -16354,13 +16201,17 @@
       "related_entry_keys": [
         "route:/service/technicians",
         "scope:AD-01",
-        "scope:SV-03"
+        "scope:SV-03",
+        "route:/service/technicians/[id]"
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/delivery/p05-handover.md"
+        "docs/delivery/p05-handover.md",
+        "src/app/(business)/service/technicians/page.tsx",
+        "docs/decisions/scheduling-resources-architecture.md",
+        "docs/delivery/scheduling-resources-handover.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "S1–S5 Scheduling & Resources implementation and source-owned review boundaries.",
       "document_id": "PPO-GUIDE-PL-02",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -16380,22 +16231,20 @@
       "title": "Cross-domain resource demand and capacity",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Native application workflow; owner acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/testing/evidence/scheduling-resources/README.md; no owner acceptance inferred.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Cross-domain resource demand and capacity to work towards this outcome: Capacity constraints are visible with a stated basis.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "Capacity analysis must not silently change appointments or project commitments."
+            "Project programme dates and Engineering required dates never become labour effort. Service reservations include crew and explicit buffers; they are not labour estimates. No utilisation denominator or percentage is claimed."
           ],
           "steps": [],
           "rows": [],
@@ -16405,9 +16254,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Domain demand, effort basis, time period and existing commitments.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use a current identity with schedule.read and the required company/site/record scope. Source-domain reads also require their own permissions. No browser link grants authority.",
+            "Use synthetic records and inspect source-as-at and completeness before taking action."
           ],
           "steps": [],
           "rows": [],
@@ -16418,11 +16266,10 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Compare demand on a consistent time basis",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Select a 7-, 28- or 90-day horizon, display timezone and permitted site. Review each source domain’s completeness or Unavailable state.",
+            "Filter by domain, source commitment, resource mapping, required skill or unknown effort. Unknown resource/skill filters explicitly retain missing mappings.",
+            "Review source references, UUIDs, versions/as-at, customer/site context, owner, time basis and next action. Follow the exact owning-domain link for resolution.",
+            "Exclude contributions from an analytical scenario and compare its count and reserved resource minutes against the visible baseline. Reset or refresh discards the scenario."
           ],
           "rows": [],
           "headers": []
@@ -16430,42 +16277,18 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Cross-domain resource demand and capacity · Page"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Review / comparison in the native PPO shell. The secondary Scheduling navigation connects Planner, Resources, Changes & follow-up, Travel review and Demand & capacity."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Domain demand, effort basis, time period and existing commitments.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Keep the appointment/resource/source UUID, readable reference, version and explicit time basis together. Unknown quantities, unavailable domains and missing evidence are not zero."
           ],
           "steps": [],
           "rows": [],
@@ -16474,13 +16297,12 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Compare demand on a consistent time basis",
-            "Identify over-allocation and unknown effort",
-            "Prepare owned capacity actions for the relevant schedulers"
+            "Select a 7-, 28- or 90-day horizon, display timezone and permitted site. Review each source domain’s completeness or Unavailable state.",
+            "Filter by domain, source commitment, resource mapping, required skill or unknown effort. Unknown resource/skill filters explicitly retain missing mappings.",
+            "Review source references, UUIDs, versions/as-at, customer/site context, owner, time basis and next action. Follow the exact owning-domain link for resolution.",
+            "Exclude contributions from an analytical scenario and compare its count and reserved resource minutes against the visible baseline. Reset or refresh discards the scenario."
           ],
           "rows": [],
           "headers": []
@@ -16489,9 +16311,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Capacity constraints are visible with a stated basis.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Capacity analysis must not silently change appointments or project commitments."
+            "Project programme dates and Engineering required dates never become labour effort. Service reservations include crew and explicit buffers; they are not labour estimates. No utilisation denominator or percentage is claimed.",
+            "Analytical comparison produces no source change. Saved commands retain their original operation receipt and current server authority."
           ],
           "steps": [],
           "rows": [],
@@ -16500,45 +16321,19 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Loading, no records, filtered empty and failed/denied reads are distinct. Refresh clears analytical scenarios and obtains a new source snapshot. Missing source evidence stays Unknown.",
+            "PL-01/PL-04 commands retain validation, stale-version, saving, uncertain outcome and receipt/retry states. Retry an uncertain original unchanged; do not submit a different decision until it is resolved."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare domain demand, effort basis, time period and existing commitments. Follow the task sequence and check that capacity constraints are visible with a stated basis. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Cross-domain resource demand and capacity has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Capacity analysis must not silently change appointments or project commitments."
+            "SYN-PPO example: a two-person service booking retains both explicit travel buffers. A Project task with dates but no effort stays Unknown; its owner is not inferred to be a technician."
           ],
           "steps": [],
           "rows": [],
@@ -16547,45 +16342,20 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "For read failure, use Refresh or Retry. A denied source is unavailable, not empty capacity. Narrow the window/site when the bounded read refuses.",
+            "For stale booking/request versions, reopen the current record and compare before a new decision. The original failed move preserves the old booking. For uncertain sends keep the original operation and retry unchanged."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use labelled controls and Tab/Shift+Tab; Enter or Space activates buttons. Travel order has Earlier/Later alternatives without dragging. Cards and comparisons stack on phones.",
+            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations."
           ],
           "steps": [],
           "rows": [],
@@ -16595,8 +16365,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "Related contracts: ADR-0010, ADR-0039, PPO-SCHED-ADR, SC-07/08 and the Scheduling & Resources handover. Operational SOP and source ownership approval remain separate."
           ],
           "steps": [],
           "rows": [],
@@ -16606,9 +16375,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide for the implemented workflow. Actual verification is recorded in the evidence index; owner and physical-device acceptance remain pending. Stable article identity and Git history are retained."
           ],
           "steps": [],
           "rows": [],
@@ -16618,13 +16385,17 @@
       "related_entry_keys": [
         "scope:PJ-07",
         "scope:MA-04",
-        "scope:PL-02"
+        "scope:PL-02",
+        "route:/schedule/capacity"
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/delivery/p05-handover.md"
+        "docs/delivery/p05-handover.md",
+        "src/app/(business)/schedule/capacity/page.tsx",
+        "docs/decisions/scheduling-resources-architecture.md",
+        "docs/delivery/scheduling-resources-handover.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "S1–S5 Scheduling & Resources implementation and source-owned review boundaries.",
       "document_id": "PPO-GUIDE-PL-03",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -16644,22 +16415,20 @@
       "title": "Rescheduling and acknowledgement centre",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Existing foundation + proposed completion",
+      "content_mode": "Native application workflow; owner acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/testing/evidence/scheduling-resources/README.md; no owner acceptance inferred.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Rescheduling and acknowledgement centre to work towards this outcome: A scheduling change has a traceable outcome.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "Acknowledgement of the old appointment is not acknowledgement of a changed one."
+            "An exact appointment handover stays visible even outside the selected date/queue. Changed booking facts require fresh contact and preparation review. Contact is not delivery or pack acknowledgement."
           ],
           "steps": [],
           "rows": [],
@@ -16669,9 +16438,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Original appointment, proposed change, reason, contact and acknowledgements.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use a current identity with schedule.read and the required company/site/record scope. Source-domain reads also require their own permissions. No browser link grants authority.",
+            "Use synthetic records and inspect source-as-at and completeness before taking action."
           ],
           "steps": [],
           "rows": [],
@@ -16682,11 +16450,10 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Review the existing booking and affected crew",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Select the period, timezone and site, then Needs review, Change requests, Customer follow-up, Cancellations or History / all visits.",
+            "Select the exact appointment. Compare current versus requested interval, crew roles, explicit travel allowances/reasons and schedule/request versions.",
+            "Enter a decision reason and use existing Accept and check move, Reject request or Cancel request where permitted. Acceptance reruns booking guards; pending requests reserve nothing.",
+            "Open appointment controls for move/reassignment, customer contact or cancellation. Review owned follow-up, booking history and contact events separately."
           ],
           "rows": [],
           "headers": []
@@ -16694,42 +16461,18 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Rescheduling and acknowledgement centre · Page + review flow"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Work queue + persistent detail in the native PPO shell. The secondary Scheduling navigation connects Planner, Resources, Changes & follow-up, Travel review and Demand & capacity."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Original appointment, proposed change, reason, contact and acknowledgements.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Keep the appointment/resource/source UUID, readable reference, version and explicit time basis together. Unknown quantities, unavailable domains and missing evidence are not zero."
           ],
           "steps": [],
           "rows": [],
@@ -16738,13 +16481,12 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Task sequence for review against the applicable running release."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Review the existing booking and affected crew",
-            "Record the proposed move or cancellation reason",
-            "Complete required contact and renewed acknowledgement"
+            "Select the period, timezone and site, then Needs review, Change requests, Customer follow-up, Cancellations or History / all visits.",
+            "Select the exact appointment. Compare current versus requested interval, crew roles, explicit travel allowances/reasons and schedule/request versions.",
+            "Enter a decision reason and use existing Accept and check move, Reject request or Cancel request where permitted. Acceptance reruns booking guards; pending requests reserve nothing.",
+            "Open appointment controls for move/reassignment, customer contact or cancellation. Review owned follow-up, booking history and contact events separately."
           ],
           "rows": [],
           "headers": []
@@ -16753,9 +16495,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "A scheduling change has a traceable outcome.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Acknowledgement of the old appointment is not acknowledgement of a changed one."
+            "An exact appointment handover stays visible even outside the selected date/queue. Changed booking facts require fresh contact and preparation review. Contact is not delivery or pack acknowledgement.",
+            "Analytical comparison produces no source change. Saved commands retain their original operation receipt and current server authority."
           ],
           "steps": [],
           "rows": [],
@@ -16764,45 +16505,19 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Loading, no records, filtered empty and failed/denied reads are distinct. Refresh clears analytical scenarios and obtains a new source snapshot. Missing source evidence stays Unknown.",
+            "PL-01/PL-04 commands retain validation, stale-version, saving, uncertain outcome and receipt/retry states. Retry an uncertain original unchanged; do not submit a different decision until it is resolved."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare original appointment, proposed change, reason, contact and acknowledgements. Follow the task sequence and check that a scheduling change has a traceable outcome. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Rescheduling and acknowledgement centre has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Acknowledgement of the old appointment is not acknowledgement of a changed one."
+            "SYN-PPO example: a two-person service booking retains both explicit travel buffers. A Project task with dates but no effort stays Unknown; its owner is not inferred to be a technician."
           ],
           "steps": [],
           "rows": [],
@@ -16811,45 +16526,20 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "For read failure, use Refresh or Retry. A denied source is unavailable, not empty capacity. Narrow the window/site when the bounded read refuses.",
+            "For stale booking/request versions, reopen the current record and compare before a new decision. The original failed move preserves the old booking. For uncertain sends keep the original operation and retry unchanged."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use labelled controls and Tab/Shift+Tab; Enter or Space activates buttons. Travel order has Earlier/Later alternatives without dragging. Cards and comparisons stack on phones.",
+            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations."
           ],
           "steps": [],
           "rows": [],
@@ -16859,8 +16549,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "Related contracts: ADR-0010, ADR-0039, PPO-SCHED-ADR, SC-07/08 and the Scheduling & Resources handover. Operational SOP and source ownership approval remain separate."
           ],
           "steps": [],
           "rows": [],
@@ -16870,9 +16559,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide for the implemented workflow. Actual verification is recorded in the evidence index; owner and physical-device acceptance remain pending. Stable article identity and Git history are retained."
           ],
           "steps": [],
           "rows": [],
@@ -16882,13 +16569,17 @@
       "related_entry_keys": [
         "scope:PL-01",
         "scope:PL-02",
-        "scope:SH-03"
+        "scope:SH-03",
+        "route:/schedule/changes"
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/delivery/p05-handover.md"
+        "docs/delivery/p05-handover.md",
+        "src/app/(business)/schedule/changes/page.tsx",
+        "docs/decisions/scheduling-resources-architecture.md",
+        "docs/delivery/scheduling-resources-handover.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "S1–S5 Scheduling & Resources implementation and source-owned review boundaries.",
       "document_id": "PPO-GUIDE-PL-04",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -16908,22 +16599,20 @@
       "title": "Visit route and travel review",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Native application workflow; owner acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/testing/evidence/scheduling-resources/README.md; no owner acceptance inferred.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Visit route and travel review to work towards this outcome: A reviewed visit sequence with explicit travel assumptions.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "A route suggestion is not a confirmed booking. External mapping providers remain separately configured."
+            "No map, provider, inferred distance/speed, traffic or optimiser is configured. Planned travel allowance, unknown route estimate and actual field Travel are independent facts."
           ],
           "steps": [],
           "rows": [],
@@ -16933,9 +16622,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Visit locations, access windows, travel assumptions and grouping constraints.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use a current identity with schedule.read and the required company/site/record scope. Source-domain reads also require their own permissions. No browser link grants authority.",
+            "Use synthetic records and inspect source-as-at and completeness before taking action."
           ],
           "steps": [],
           "rows": [],
@@ -16946,11 +16634,10 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Review the day's confirmed visits and site constraints",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Select one local day, timezone and permitted site. Choose a resource/crew member to review its ordered visits and anonymous busy intervals.",
+            "Check each site/customer, appointment time in site timezone, supplied customer window, travel-before/after allowance and recorded reason.",
+            "Review buffered gaps/overlaps, unavailable blocks and unknown route sufficiency. Select Earlier or Later to compare a manual sequence; booking times stay unchanged.",
+            "Use Review booking change to open PL-04 with the exact appointment, resource, day and timezone. Reset sequence comparison discards the analytical order."
           ],
           "rows": [],
           "headers": []
@@ -16958,42 +16645,18 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Visit route and travel review · Page or planner tab"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Review / comparison in the native PPO shell. The secondary Scheduling navigation connects Planner, Resources, Changes & follow-up, Travel review and Demand & capacity."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Visit locations, access windows, travel assumptions and grouping constraints.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Keep the appointment/resource/source UUID, readable reference, version and explicit time basis together. Unknown quantities, unavailable domains and missing evidence are not zero."
           ],
           "steps": [],
           "rows": [],
@@ -17002,13 +16665,12 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Review the day's confirmed visits and site constraints",
-            "Compare a proposed sequence and its travel basis",
-            "Request controlled scheduling changes where necessary"
+            "Select one local day, timezone and permitted site. Choose a resource/crew member to review its ordered visits and anonymous busy intervals.",
+            "Check each site/customer, appointment time in site timezone, supplied customer window, travel-before/after allowance and recorded reason.",
+            "Review buffered gaps/overlaps, unavailable blocks and unknown route sufficiency. Select Earlier or Later to compare a manual sequence; booking times stay unchanged.",
+            "Use Review booking change to open PL-04 with the exact appointment, resource, day and timezone. Reset sequence comparison discards the analytical order."
           ],
           "rows": [],
           "headers": []
@@ -17017,9 +16679,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "A reviewed visit sequence with explicit travel assumptions.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A route suggestion is not a confirmed booking. External mapping providers remain separately configured."
+            "No map, provider, inferred distance/speed, traffic or optimiser is configured. Planned travel allowance, unknown route estimate and actual field Travel are independent facts.",
+            "Analytical comparison produces no source change. Saved commands retain their original operation receipt and current server authority."
           ],
           "steps": [],
           "rows": [],
@@ -17028,45 +16689,19 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Loading, no records, filtered empty and failed/denied reads are distinct. Refresh clears analytical scenarios and obtains a new source snapshot. Missing source evidence stays Unknown.",
+            "PL-01/PL-04 commands retain validation, stale-version, saving, uncertain outcome and receipt/retry states. Retry an uncertain original unchanged; do not submit a different decision until it is resolved."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare visit locations, access windows, travel assumptions and grouping constraints. Follow the task sequence and check that a reviewed visit sequence with explicit travel assumptions. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Visit route and travel review has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A route suggestion is not a confirmed booking. External mapping providers remain separately configured."
+            "SYN-PPO example: a two-person service booking retains both explicit travel buffers. A Project task with dates but no effort stays Unknown; its owner is not inferred to be a technician."
           ],
           "steps": [],
           "rows": [],
@@ -17075,45 +16710,20 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "For read failure, use Refresh or Retry. A denied source is unavailable, not empty capacity. Narrow the window/site when the bounded read refuses.",
+            "For stale booking/request versions, reopen the current record and compare before a new decision. The original failed move preserves the old booking. For uncertain sends keep the original operation and retry unchanged."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use labelled controls and Tab/Shift+Tab; Enter or Space activates buttons. Travel order has Earlier/Later alternatives without dragging. Cards and comparisons stack on phones.",
+            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations."
           ],
           "steps": [],
           "rows": [],
@@ -17123,8 +16733,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "Related contracts: ADR-0010, ADR-0039, PPO-SCHED-ADR, SC-07/08 and the Scheduling & Resources handover. Operational SOP and source ownership approval remain separate."
           ],
           "steps": [],
           "rows": [],
@@ -17134,9 +16743,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide for the implemented workflow. Actual verification is recorded in the evidence index; owner and physical-device acceptance remain pending. Stable article identity and Git history are retained."
           ],
           "steps": [],
           "rows": [],
@@ -17146,13 +16753,17 @@
       "related_entry_keys": [
         "scope:CS-04",
         "scope:PL-04",
-        "scope:FI-05"
+        "scope:FI-05",
+        "route:/schedule/travel"
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/delivery/p05-handover.md"
+        "docs/delivery/p05-handover.md",
+        "src/app/(business)/schedule/travel/page.tsx",
+        "docs/decisions/scheduling-resources-architecture.md",
+        "docs/delivery/scheduling-resources-handover.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "S1–S5 Scheduling & Resources implementation and source-owned review boundaries.",
       "document_id": "PPO-GUIDE-PL-05",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -48391,22 +48002,20 @@
       "title": "Service planner",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native application workflow; owner acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/testing/evidence/scheduling-resources/README.md; no owner acceptance inferred.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Service planner to work towards this outcome: One traceable appointment continues the original demand.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "Concurrent bookings and changed work-order context must be rechecked. A proposal alone does not reserve crew."
+            "Existing same-tab booking recovery and server commands are preserved. Request decisions now show current versus proposed time, named crew, travel and version differences."
           ],
           "steps": [],
           "rows": [],
@@ -48416,9 +48025,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Unassigned demand, work-order version, site timezone, readiness and crew.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use a current identity with schedule.read and the required company/site/record scope. Source-domain reads also require their own permissions. No browser link grants authority.",
+            "Use synthetic records and inspect source-as-at and completeness before taking action."
           ],
           "steps": [],
           "rows": [],
@@ -48429,11 +48037,10 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Select the demand and use Plan visit where available",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Select a day/week, display timezone and permitted site or resource. Working hours, anonymous busy reservations and travel buffers remain separate from visit times.",
+            "From authorised unassigned demand choose Plan visit. Preserve the work-order version and site time; save the proposal, review readiness, record contact, then confirm eligible crew with explicit travel values and reasons.",
+            "Use Move or reassign as the keyboard alternative to drag. Compare the exact saved booking and proposed interval/crew before submitting. Open a resource name for availability and competence evidence.",
+            "Use Changes & follow-up, Travel review or Demand & capacity in the Scheduling navigation."
           ],
           "rows": [],
           "headers": []
@@ -48441,42 +48048,18 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Service planner · Register / workspace"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Planning workspace in the native PPO shell. The secondary Scheduling navigation connects Planner, Resources, Changes & follow-up, Travel review and Demand & capacity."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Unassigned demand, work-order version, site timezone, readiness and crew.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Keep the appointment/resource/source UUID, readable reference, version and explicit time basis together. Unknown quantities, unavailable domains and missing evidence are not zero."
           ],
           "steps": [],
           "rows": [],
@@ -48485,13 +48068,12 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Task sequence for review against the applicable running release."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Select the demand and use Plan visit where available",
-            "Prepare the site-time proposal and continue through readiness/contact",
-            "Confirm eligible crew and inspect the resulting appointment"
+            "Select a day/week, display timezone and permitted site or resource. Working hours, anonymous busy reservations and travel buffers remain separate from visit times.",
+            "From authorised unassigned demand choose Plan visit. Preserve the work-order version and site time; save the proposal, review readiness, record contact, then confirm eligible crew with explicit travel values and reasons.",
+            "Use Move or reassign as the keyboard alternative to drag. Compare the exact saved booking and proposed interval/crew before submitting. Open a resource name for availability and competence evidence.",
+            "Use Changes & follow-up, Travel review or Demand & capacity in the Scheduling navigation."
           ],
           "rows": [],
           "headers": []
@@ -48500,9 +48082,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "One traceable appointment continues the original demand.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Concurrent bookings and changed work-order context must be rechecked. A proposal alone does not reserve crew."
+            "Existing same-tab booking recovery and server commands are preserved. Request decisions now show current versus proposed time, named crew, travel and version differences.",
+            "Analytical comparison produces no source change. Saved commands retain their original operation receipt and current server authority."
           ],
           "steps": [],
           "rows": [],
@@ -48511,45 +48092,19 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Loading, no records, filtered empty and failed/denied reads are distinct. Refresh clears analytical scenarios and obtains a new source snapshot. Missing source evidence stays Unknown.",
+            "PL-01/PL-04 commands retain validation, stale-version, saving, uncertain outcome and receipt/retry states. Retry an uncertain original unchanged; do not submit a different decision until it is resolved."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare unassigned demand, work-order version, site timezone, readiness and crew. Follow the task sequence and check that one traceable appointment continues the original demand. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Service planner has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Concurrent bookings and changed work-order context must be rechecked. A proposal alone does not reserve crew."
+            "SYN-PPO example: a two-person service booking retains both explicit travel buffers. A Project task with dates but no effort stays Unknown; its owner is not inferred to be a technician."
           ],
           "steps": [],
           "rows": [],
@@ -48558,45 +48113,20 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "For read failure, use Refresh or Retry. A denied source is unavailable, not empty capacity. Narrow the window/site when the bounded read refuses.",
+            "For stale booking/request versions, reopen the current record and compare before a new decision. The original failed move preserves the old booking. For uncertain sends keep the original operation and retry unchanged."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use labelled controls and Tab/Shift+Tab; Enter or Space activates buttons. Travel order has Earlier/Later alternatives without dragging. Cards and comparisons stack on phones.",
+            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations."
           ],
           "steps": [],
           "rows": [],
@@ -48606,8 +48136,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "Related contracts: ADR-0010, ADR-0039, PPO-SCHED-ADR, SC-07/08 and the Scheduling & Resources handover. Operational SOP and source ownership approval remain separate."
           ],
           "steps": [],
           "rows": [],
@@ -48617,9 +48146,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide for the implemented workflow. Actual verification is recorded in the evidence index; owner and physical-device acceptance remain pending. Stable article identity and Git history are retained."
           ],
           "steps": [],
           "rows": [],
@@ -48632,9 +48159,11 @@
       "source_paths": [
         "src/app/(business)/schedule/page.tsx",
         "docs/delivery/pl01-demand-to-booking-handover.md",
-        "docs/delivery/p05-handover.md"
+        "docs/delivery/p05-handover.md",
+        "docs/decisions/scheduling-resources-architecture.md",
+        "docs/delivery/scheduling-resources-handover.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "S1–S5 Scheduling & Resources implementation and source-owned review boundaries.",
       "document_id": "PPO-GUIDE-PAGE-SCHEDULE",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -50299,22 +49828,20 @@
       "title": "Field technicians",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native application workflow; owner acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/testing/evidence/scheduling-resources/README.md; no owner acceptance inferred.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Field technicians to work towards this outcome: The proposed crew can be assessed against the task.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "A directory listing is not a reservation or proof of all required competence."
+            "Resource/calendar/competence mutation is unavailable. Synthetic skills are not statutory certificates; certificate/renewal evidence remains Unknown. No private HR fields are added."
           ],
           "steps": [],
           "rows": [],
@@ -50324,9 +49851,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Technician, availability, qualifications, expiry and work requirements.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use a current identity with schedule.read and the required company/site/record scope. Source-domain reads also require their own permissions. No browser link grants authority.",
+            "Use synthetic records and inspect source-as-at and completeness before taking action."
           ],
           "steps": [],
           "rows": [],
@@ -50337,11 +49863,10 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Review current availability and preparation flags",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Keep Field Team Visits, Technicians and Needs preparation views. In Technicians, choose Availability & competence; the resource name in Planner also opens detail.",
+            "Select a seven-day review window. Inspect permitted site eligibility, active/publication state, source-as-at, effective dates and calendar version/timezone.",
+            "Review weekly intervals, exceptions, unavailable/other-work blocks and anonymous busy reservations. Open permitted appointment records for commitments and retained history.",
+            "Check skill status, validity and review evidence. Expired, not-yet-valid, expiring-within-period and unknown evidence stay explicit."
           ],
           "rows": [],
           "headers": []
@@ -50349,42 +49874,18 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Field technicians · Register / workspace"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Record detail with existing register in the native PPO shell. The secondary Scheduling navigation connects Planner, Resources, Changes & follow-up, Travel review and Demand & capacity."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Technician, availability, qualifications, expiry and work requirements.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Keep the appointment/resource/source UUID, readable reference, version and explicit time basis together. Unknown quantities, unavailable domains and missing evidence are not zero."
           ],
           "steps": [],
           "rows": [],
@@ -50393,13 +49894,12 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Task sequence for review against the applicable running release."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Review current availability and preparation flags",
-            "Check applicable competence evidence",
-            "Use the planner for controlled assignment and booking"
+            "Keep Field Team Visits, Technicians and Needs preparation views. In Technicians, choose Availability & competence; the resource name in Planner also opens detail.",
+            "Select a seven-day review window. Inspect permitted site eligibility, active/publication state, source-as-at, effective dates and calendar version/timezone.",
+            "Review weekly intervals, exceptions, unavailable/other-work blocks and anonymous busy reservations. Open permitted appointment records for commitments and retained history.",
+            "Check skill status, validity and review evidence. Expired, not-yet-valid, expiring-within-period and unknown evidence stay explicit."
           ],
           "rows": [],
           "headers": []
@@ -50408,9 +49908,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "The proposed crew can be assessed against the task.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A directory listing is not a reservation or proof of all required competence."
+            "Resource/calendar/competence mutation is unavailable. Synthetic skills are not statutory certificates; certificate/renewal evidence remains Unknown. No private HR fields are added.",
+            "Analytical comparison produces no source change. Saved commands retain their original operation receipt and current server authority."
           ],
           "steps": [],
           "rows": [],
@@ -50419,45 +49918,19 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Loading, no records, filtered empty and failed/denied reads are distinct. Refresh clears analytical scenarios and obtains a new source snapshot. Missing source evidence stays Unknown.",
+            "PL-01/PL-04 commands retain validation, stale-version, saving, uncertain outcome and receipt/retry states. Retry an uncertain original unchanged; do not submit a different decision until it is resolved."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare technician, availability, qualifications, expiry and work requirements. Follow the task sequence and check that the proposed crew can be assessed against the task. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Field technicians has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A directory listing is not a reservation or proof of all required competence."
+            "SYN-PPO example: a two-person service booking retains both explicit travel buffers. A Project task with dates but no effort stays Unknown; its owner is not inferred to be a technician."
           ],
           "steps": [],
           "rows": [],
@@ -50466,45 +49939,20 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "For read failure, use Refresh or Retry. A denied source is unavailable, not empty capacity. Narrow the window/site when the bounded read refuses.",
+            "For stale booking/request versions, reopen the current record and compare before a new decision. The original failed move preserves the old booking. For uncertain sends keep the original operation and retry unchanged."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use labelled controls and Tab/Shift+Tab; Enter or Space activates buttons. Travel order has Earlier/Later alternatives without dragging. Cards and comparisons stack on phones.",
+            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations."
           ],
           "steps": [],
           "rows": [],
@@ -50514,8 +49962,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "Related contracts: ADR-0010, ADR-0039, PPO-SCHED-ADR, SC-07/08 and the Scheduling & Resources handover. Operational SOP and source ownership approval remain separate."
           ],
           "steps": [],
           "rows": [],
@@ -50525,9 +49972,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide for the implemented workflow. Actual verification is recorded in the evidence index; owner and physical-device acceptance remain pending. Stable article identity and Git history are retained."
           ],
           "steps": [],
           "rows": [],
@@ -50535,13 +49980,16 @@
         }
       ],
       "related_entry_keys": [
-        "scope:PL-02"
+        "scope:PL-02",
+        "route:/service/technicians/[id]"
       ],
       "source_paths": [
         "src/app/(business)/service/technicians/page.tsx",
-        "docs/delivery/p05-handover.md"
+        "docs/delivery/p05-handover.md",
+        "docs/decisions/scheduling-resources-architecture.md",
+        "docs/delivery/scheduling-resources-handover.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "S1–S5 Scheduling & Resources implementation and source-owned review boundaries.",
       "document_id": "PPO-GUIDE-PAGE-SERVICE-TECHNICIANS",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -63073,6 +62521,14 @@
             [
               "Guide and design",
               "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
+            ],
+            [
+              "Import a portable scope",
+              "Previews a native JSON, standalone r02 JSON or native valve CSV file against the selected saved Discovery source and shows the identity mapping before anything is created. Confirm creates a separate native draft; the original file is never changed."
+            ],
+            [
+              "Place held legacy fields",
+              "Appears when a standalone r02 file holds fields that have no native field. Each family of held fields is placed as a source note, or, for the project reference, customer and site only, left to the Discovery binding. Kept values are labelled unverified r02 source values; none becomes a native technical value."
             ]
           ],
           "headers": [
@@ -63102,7 +62558,8 @@
             "Search the related register for an existing record before creating another.",
             "Complete the information requested by the creation form; keep unknown values explicit.",
             "Review the entered context, save through the page action and inspect the resulting record/confirmation.",
-            "Then continue the wider workflow: Inspect calculated results and review evidence before preparing a controlled report"
+            "Then continue the wider workflow: Inspect calculated results and review evidence before preparing a controlled report",
+            "To import an r02 project, preview the file, place every held field family, tick that you have reviewed the placements, then confirm. Resolve the imported draft's findings from its Next actions list."
           ],
           "rows": [],
           "headers": []
@@ -63148,6 +62605,10 @@
             [
               "Planned / not available",
               "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
+            ],
+            [
+              "Import held",
+              "The file contains fields with no native mapping. For a standalone r02 file, place each held field to continue; changing any placement clears the review tick. A held native export references attachments whose bytes a portable file does not carry; it cannot be placed here, and each listed reason names what is missing."
             ]
           ],
           "headers": [
@@ -63195,6 +62656,10 @@
             [
               "Guide differs from the page",
               "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
+            ],
+            [
+              "Confirm import stays disabled",
+              "Every held field needs a placement and the review tick must be set after the last change. If the preview is stale, preview the file again; placements are not carried to a new preview."
             ]
           ],
           "headers": [
@@ -64864,22 +64329,22 @@
       "title": "Project acceptance & closeout",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native workflow; guide walkthrough and family acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Prior executed component evidence: docs/testing/evidence/project-acceptance-r01/README.md. A0 source inspection only; no new native walkthrough.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Project acceptance & closeout to work towards this outcome: Each stage has a reviewed disposition and owned residual work.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified. This route was added to the register from the 23 September source inventory.",
-            "Open defects must not disappear when a stage is accepted."
+            "The native acceptance workspace records exact staged scope, readiness, outstanding work, training/manual handover and independent closeout decisions. Use the selected project and stage to review the applicable revision.",
+            "Source was inspected at ca006fb1. The linked PJ-09 record contains prior database, HTTP, browser and restart evidence. This article remains a draft; no new walkthrough, owner acceptance or deployment is implied.",
+            "Technical review, customer response, independent Service receiving and commercial disposition remain separate. Gantt progress and completed Activities do not accept a stage or close a Project."
           ],
           "steps": [],
           "rows": [],
@@ -64959,7 +64424,7 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Use the permitted controls for this view and exact selected stage. Source availability, current access and expected versions are checked by the server; general Project edit permission does not grant acceptance duties."
           ],
           "steps": [
             "Review stage-specific completion and exceptions",
@@ -64973,9 +64438,9 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Each stage has a reviewed disposition and owned residual work.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Open defects must not disappear when a stage is accepted."
+            "Retain the exact stage/output revision and receiving decision. The whole-project closeout gate also considers unallocated scope, all stages, current source evidence and commercial disposition.",
+            "Remaining obligations keep their owner, evidence and independent responsibility acceptance. Closed history is preserved; later source change can require reassessment and an owned follow-up.",
+            "Local synthetic preparation, issue and receiving do not transmit a customer message, post to MYOB or upload to SharePoint."
           ],
           "steps": [],
           "rows": [],
@@ -65057,6 +64522,10 @@
             [
               "Guide differs from the page",
               "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
+            ],
+            [
+              "Acceptance result uncertain",
+              "Use the existing original-operation recovery dialog and server-held intent. Do not make a second decision or recreate an issue. Access is rechecked before the original outcome is disclosed."
             ]
           ],
           "headers": [
@@ -65080,7 +64549,8 @@
           "title": "Related guidance and procedures",
           "paragraphs": [
             "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them.",
+            "See ADR-0033, docs/delivery/pj09-staged-acceptance-handover.md and docs/testing/evidence/project-acceptance-r01/README.md for exact source, workflow, geometry exceptions and executed evidence."
           ],
           "steps": [],
           "rows": [],
@@ -65104,9 +64574,12 @@
       ],
       "source_paths": [
         "src/app/(business)/projects/acceptance/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md",
+        "docs/testing/evidence/project-acceptance-r01/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Reconcile native PJ-09 presence and source-owned acceptance boundaries; retain Draft and separate historical evidence from current review.",
       "document_id": "PPO-GUIDE-PAGE-PROJECTS-ACCEPTANCE",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -65115,7 +64588,9 @@
       "section_aliases": {},
       "workflow_basis": [
         "src/app/(business)/projects/acceptance/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -65126,23 +64601,22 @@
       "title": "Project acceptance & closeout · closeout",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native workflow; guide walkthrough and family acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Prior executed component evidence: docs/testing/evidence/project-acceptance-r01/README.md. A0 source inspection only; no new native walkthrough.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "This page focuses on project closeout within the registered workflow.",
-            "Use Project acceptance & closeout · closeout to work towards this outcome: Each stage has a reviewed disposition and owned residual work.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified. This route was added to the register from the 23 September source inventory.",
-            "Open defects must not disappear when a stage is accepted."
+            "The native acceptance workspace records exact staged scope, readiness, outstanding work, training/manual handover and independent closeout decisions. Use the selected project and stage to review the applicable revision.",
+            "Source was inspected at ca006fb1. The linked PJ-09 record contains prior database, HTTP, browser and restart evidence. This article remains a draft; no new walkthrough, owner acceptance or deployment is implied.",
+            "Technical review, customer response, independent Service receiving and commercial disposition remain separate. Gantt progress and completed Activities do not accept a stage or close a Project."
           ],
           "steps": [],
           "rows": [],
@@ -65226,7 +64700,7 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Use the permitted controls for this view and exact selected stage. Source availability, current access and expected versions are checked by the server; general Project edit permission does not grant acceptance duties."
           ],
           "steps": [
             "Confirm the project/stage and the acceptance basis being closed.",
@@ -65241,9 +64715,9 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Each stage has a reviewed disposition and owned residual work.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Open defects must not disappear when a stage is accepted."
+            "Retain the exact stage/output revision and receiving decision. The whole-project closeout gate also considers unallocated scope, all stages, current source evidence and commercial disposition.",
+            "Remaining obligations keep their owner, evidence and independent responsibility acceptance. Closed history is preserved; later source change can require reassessment and an owned follow-up.",
+            "Local synthetic preparation, issue and receiving do not transmit a customer message, post to MYOB or upload to SharePoint."
           ],
           "steps": [],
           "rows": [],
@@ -65325,6 +64799,10 @@
             [
               "Guide differs from the page",
               "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
+            ],
+            [
+              "Acceptance result uncertain",
+              "Use the existing original-operation recovery dialog and server-held intent. Do not make a second decision or recreate an issue. Access is rechecked before the original outcome is disclosed."
             ]
           ],
           "headers": [
@@ -65348,7 +64826,8 @@
           "title": "Related guidance and procedures",
           "paragraphs": [
             "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them.",
+            "See ADR-0033, docs/delivery/pj09-staged-acceptance-handover.md and docs/testing/evidence/project-acceptance-r01/README.md for exact source, workflow, geometry exceptions and executed evidence."
           ],
           "steps": [],
           "rows": [],
@@ -65372,9 +64851,12 @@
       ],
       "source_paths": [
         "src/app/(business)/projects/acceptance/closeout/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md",
+        "docs/testing/evidence/project-acceptance-r01/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Reconcile native PJ-09 presence and source-owned acceptance boundaries; retain Draft and separate historical evidence from current review.",
       "document_id": "PPO-GUIDE-PAGE-PROJECTS-ACCEPTANCE-CLOSEOUT",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -65383,7 +64865,9 @@
       "section_aliases": {},
       "workflow_basis": [
         "src/app/(business)/projects/acceptance/closeout/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -65394,23 +64878,22 @@
       "title": "Project acceptance & closeout · handover",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native workflow; guide walkthrough and family acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Prior executed component evidence: docs/testing/evidence/project-acceptance-r01/README.md. A0 source inspection only; no new native walkthrough.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "This page focuses on receiving a handover within the registered workflow.",
-            "Use Project acceptance & closeout · handover to work towards this outcome: Each stage has a reviewed disposition and owned residual work.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified. This route was added to the register from the 23 September source inventory.",
-            "Open defects must not disappear when a stage is accepted."
+            "The native acceptance workspace records exact staged scope, readiness, outstanding work, training/manual handover and independent closeout decisions. Use the selected project and stage to review the applicable revision.",
+            "Source was inspected at ca006fb1. The linked PJ-09 record contains prior database, HTTP, browser and restart evidence. This article remains a draft; no new walkthrough, owner acceptance or deployment is implied.",
+            "Technical review, customer response, independent Service receiving and commercial disposition remain separate. Gantt progress and completed Activities do not accept a stage or close a Project."
           ],
           "steps": [],
           "rows": [],
@@ -65494,7 +64977,7 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Use the permitted controls for this view and exact selected stage. Source availability, current access and expected versions are checked by the server; general Project edit permission does not grant acceptance duties."
           ],
           "steps": [
             "Identify the exact package/revision and intended receiving workflow.",
@@ -65509,9 +64992,9 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Each stage has a reviewed disposition and owned residual work.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Open defects must not disappear when a stage is accepted."
+            "Retain the exact stage/output revision and receiving decision. The whole-project closeout gate also considers unallocated scope, all stages, current source evidence and commercial disposition.",
+            "Remaining obligations keep their owner, evidence and independent responsibility acceptance. Closed history is preserved; later source change can require reassessment and an owned follow-up.",
+            "Local synthetic preparation, issue and receiving do not transmit a customer message, post to MYOB or upload to SharePoint."
           ],
           "steps": [],
           "rows": [],
@@ -65593,6 +65076,10 @@
             [
               "Guide differs from the page",
               "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
+            ],
+            [
+              "Acceptance result uncertain",
+              "Use the existing original-operation recovery dialog and server-held intent. Do not make a second decision or recreate an issue. Access is rechecked before the original outcome is disclosed."
             ]
           ],
           "headers": [
@@ -65616,7 +65103,8 @@
           "title": "Related guidance and procedures",
           "paragraphs": [
             "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them.",
+            "See ADR-0033, docs/delivery/pj09-staged-acceptance-handover.md and docs/testing/evidence/project-acceptance-r01/README.md for exact source, workflow, geometry exceptions and executed evidence."
           ],
           "steps": [],
           "rows": [],
@@ -65640,9 +65128,12 @@
       ],
       "source_paths": [
         "src/app/(business)/projects/acceptance/handover/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md",
+        "docs/testing/evidence/project-acceptance-r01/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Reconcile native PJ-09 presence and source-owned acceptance boundaries; retain Draft and separate historical evidence from current review.",
       "document_id": "PPO-GUIDE-PAGE-PROJECTS-ACCEPTANCE-HANDOVER",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -65651,7 +65142,9 @@
       "section_aliases": {},
       "workflow_basis": [
         "src/app/(business)/projects/acceptance/handover/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -65662,23 +65155,22 @@
       "title": "Project acceptance & closeout · history",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native workflow; guide walkthrough and family acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Prior executed component evidence: docs/testing/evidence/project-acceptance-r01/README.md. A0 source inspection only; no new native walkthrough.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "This page focuses on historical evidence within the registered workflow.",
-            "Use Project acceptance & closeout · history to work towards this outcome: Each stage has a reviewed disposition and owned residual work.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified. This route was added to the register from the 23 September source inventory.",
-            "Open defects must not disappear when a stage is accepted."
+            "The native acceptance workspace records exact staged scope, readiness, outstanding work, training/manual handover and independent closeout decisions. Use the selected project and stage to review the applicable revision.",
+            "Source was inspected at ca006fb1. The linked PJ-09 record contains prior database, HTTP, browser and restart evidence. This article remains a draft; no new walkthrough, owner acceptance or deployment is implied.",
+            "Technical review, customer response, independent Service receiving and commercial disposition remain separate. Gantt progress and completed Activities do not accept a stage or close a Project."
           ],
           "steps": [],
           "rows": [],
@@ -65762,7 +65254,7 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Use the permitted controls for this view and exact selected stage. Source availability, current access and expected versions are checked by the server; general Project edit permission does not grant acceptance duties."
           ],
           "steps": [
             "Identify the event or saved revision relevant to your question.",
@@ -65777,9 +65269,9 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Each stage has a reviewed disposition and owned residual work.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Open defects must not disappear when a stage is accepted."
+            "Retain the exact stage/output revision and receiving decision. The whole-project closeout gate also considers unallocated scope, all stages, current source evidence and commercial disposition.",
+            "Remaining obligations keep their owner, evidence and independent responsibility acceptance. Closed history is preserved; later source change can require reassessment and an owned follow-up.",
+            "Local synthetic preparation, issue and receiving do not transmit a customer message, post to MYOB or upload to SharePoint."
           ],
           "steps": [],
           "rows": [],
@@ -65861,6 +65353,10 @@
             [
               "Guide differs from the page",
               "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
+            ],
+            [
+              "Acceptance result uncertain",
+              "Use the existing original-operation recovery dialog and server-held intent. Do not make a second decision or recreate an issue. Access is rechecked before the original outcome is disclosed."
             ]
           ],
           "headers": [
@@ -65884,7 +65380,8 @@
           "title": "Related guidance and procedures",
           "paragraphs": [
             "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them.",
+            "See ADR-0033, docs/delivery/pj09-staged-acceptance-handover.md and docs/testing/evidence/project-acceptance-r01/README.md for exact source, workflow, geometry exceptions and executed evidence."
           ],
           "steps": [],
           "rows": [],
@@ -65908,9 +65405,12 @@
       ],
       "source_paths": [
         "src/app/(business)/projects/acceptance/history/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md",
+        "docs/testing/evidence/project-acceptance-r01/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Reconcile native PJ-09 presence and source-owned acceptance boundaries; retain Draft and separate historical evidence from current review.",
       "document_id": "PPO-GUIDE-PAGE-PROJECTS-ACCEPTANCE-HISTORY",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -65919,7 +65419,9 @@
       "section_aliases": {},
       "workflow_basis": [
         "src/app/(business)/projects/acceptance/history/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -65930,23 +65432,22 @@
       "title": "Project acceptance & closeout · outstanding",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native workflow; guide walkthrough and family acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Prior executed component evidence: docs/testing/evidence/project-acceptance-r01/README.md. A0 source inspection only; no new native walkthrough.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "This page focuses on outstanding work within the registered workflow.",
-            "Use Project acceptance & closeout · outstanding to work towards this outcome: Each stage has a reviewed disposition and owned residual work.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified. This route was added to the register from the 23 September source inventory.",
-            "Open defects must not disappear when a stage is accepted."
+            "The native acceptance workspace records exact staged scope, readiness, outstanding work, training/manual handover and independent closeout decisions. Use the selected project and stage to review the applicable revision.",
+            "Source was inspected at ca006fb1. The linked PJ-09 record contains prior database, HTTP, browser and restart evidence. This article remains a draft; no new walkthrough, owner acceptance or deployment is implied.",
+            "Technical review, customer response, independent Service receiving and commercial disposition remain separate. Gantt progress and completed Activities do not accept a stage or close a Project."
           ],
           "steps": [],
           "rows": [],
@@ -66030,7 +65531,7 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Use the permitted controls for this view and exact selected stage. Source availability, current access and expected versions are checked by the server; general Project edit permission does not grant acceptance duties."
           ],
           "steps": [
             "Review open items for the selected project/stage.",
@@ -66045,9 +65546,9 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Each stage has a reviewed disposition and owned residual work.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Open defects must not disappear when a stage is accepted."
+            "Retain the exact stage/output revision and receiving decision. The whole-project closeout gate also considers unallocated scope, all stages, current source evidence and commercial disposition.",
+            "Remaining obligations keep their owner, evidence and independent responsibility acceptance. Closed history is preserved; later source change can require reassessment and an owned follow-up.",
+            "Local synthetic preparation, issue and receiving do not transmit a customer message, post to MYOB or upload to SharePoint."
           ],
           "steps": [],
           "rows": [],
@@ -66129,6 +65630,10 @@
             [
               "Guide differs from the page",
               "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
+            ],
+            [
+              "Acceptance result uncertain",
+              "Use the existing original-operation recovery dialog and server-held intent. Do not make a second decision or recreate an issue. Access is rechecked before the original outcome is disclosed."
             ]
           ],
           "headers": [
@@ -66152,7 +65657,8 @@
           "title": "Related guidance and procedures",
           "paragraphs": [
             "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them.",
+            "See ADR-0033, docs/delivery/pj09-staged-acceptance-handover.md and docs/testing/evidence/project-acceptance-r01/README.md for exact source, workflow, geometry exceptions and executed evidence."
           ],
           "steps": [],
           "rows": [],
@@ -66176,9 +65682,12 @@
       ],
       "source_paths": [
         "src/app/(business)/projects/acceptance/outstanding/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md",
+        "docs/testing/evidence/project-acceptance-r01/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Reconcile native PJ-09 presence and source-owned acceptance boundaries; retain Draft and separate historical evidence from current review.",
       "document_id": "PPO-GUIDE-PAGE-PROJECTS-ACCEPTANCE-OUTSTANDING",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -66187,7 +65696,9 @@
       "section_aliases": {},
       "workflow_basis": [
         "src/app/(business)/projects/acceptance/outstanding/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -66198,23 +65709,22 @@
       "title": "Project acceptance & closeout · readiness",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native workflow; guide walkthrough and family acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Prior executed component evidence: docs/testing/evidence/project-acceptance-r01/README.md. A0 source inspection only; no new native walkthrough.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "This page focuses on acceptance readiness within the registered workflow.",
-            "Use Project acceptance & closeout · readiness to work towards this outcome: Each stage has a reviewed disposition and owned residual work.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified. This route was added to the register from the 23 September source inventory.",
-            "Open defects must not disappear when a stage is accepted."
+            "The native acceptance workspace records exact staged scope, readiness, outstanding work, training/manual handover and independent closeout decisions. Use the selected project and stage to review the applicable revision.",
+            "Source was inspected at ca006fb1. The linked PJ-09 record contains prior database, HTTP, browser and restart evidence. This article remains a draft; no new walkthrough, owner acceptance or deployment is implied.",
+            "Technical review, customer response, independent Service receiving and commercial disposition remain separate. Gantt progress and completed Activities do not accept a stage or close a Project."
           ],
           "steps": [],
           "rows": [],
@@ -66298,7 +65808,7 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Use the permitted controls for this view and exact selected stage. Source availability, current access and expected versions are checked by the server; general Project edit permission does not grant acceptance duties."
           ],
           "steps": [
             "Identify the stage, required acceptance evidence and current source versions.",
@@ -66313,9 +65823,9 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Each stage has a reviewed disposition and owned residual work.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Open defects must not disappear when a stage is accepted."
+            "Retain the exact stage/output revision and receiving decision. The whole-project closeout gate also considers unallocated scope, all stages, current source evidence and commercial disposition.",
+            "Remaining obligations keep their owner, evidence and independent responsibility acceptance. Closed history is preserved; later source change can require reassessment and an owned follow-up.",
+            "Local synthetic preparation, issue and receiving do not transmit a customer message, post to MYOB or upload to SharePoint."
           ],
           "steps": [],
           "rows": [],
@@ -66397,6 +65907,10 @@
             [
               "Guide differs from the page",
               "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
+            ],
+            [
+              "Acceptance result uncertain",
+              "Use the existing original-operation recovery dialog and server-held intent. Do not make a second decision or recreate an issue. Access is rechecked before the original outcome is disclosed."
             ]
           ],
           "headers": [
@@ -66420,7 +65934,8 @@
           "title": "Related guidance and procedures",
           "paragraphs": [
             "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them.",
+            "See ADR-0033, docs/delivery/pj09-staged-acceptance-handover.md and docs/testing/evidence/project-acceptance-r01/README.md for exact source, workflow, geometry exceptions and executed evidence."
           ],
           "steps": [],
           "rows": [],
@@ -66444,9 +65959,12 @@
       ],
       "source_paths": [
         "src/app/(business)/projects/acceptance/readiness/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md",
+        "docs/testing/evidence/project-acceptance-r01/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Reconcile native PJ-09 presence and source-owned acceptance boundaries; retain Draft and separate historical evidence from current review.",
       "document_id": "PPO-GUIDE-PAGE-PROJECTS-ACCEPTANCE-READINESS",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -66455,7 +65973,9 @@
       "section_aliases": {},
       "workflow_basis": [
         "src/app/(business)/projects/acceptance/readiness/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -66466,22 +65986,22 @@
       "title": "Project acceptance & closeout · stages / [id]",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native workflow; guide walkthrough and family acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Prior executed component evidence: docs/testing/evidence/project-acceptance-r01/README.md. A0 source inspection only; no new native walkthrough.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Project acceptance & closeout · stages / [id] to work towards this outcome: Each stage has a reviewed disposition and owned residual work.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified. This route was added to the register from the 23 September source inventory.",
-            "Open defects must not disappear when a stage is accepted."
+            "The native acceptance workspace records exact staged scope, readiness, outstanding work, training/manual handover and independent closeout decisions. Use the selected project and stage to review the applicable revision.",
+            "Source was inspected at ca006fb1. The linked PJ-09 record contains prior database, HTTP, browser and restart evidence. This article remains a draft; no new walkthrough, owner acceptance or deployment is implied.",
+            "Technical review, customer response, independent Service receiving and commercial disposition remain separate. Gantt progress and completed Activities do not accept a stage or close a Project."
           ],
           "steps": [],
           "rows": [],
@@ -66561,7 +66081,7 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Use the permitted controls for this view and exact selected stage. Source availability, current access and expected versions are checked by the server; general Project edit permission does not grant acceptance duties."
           ],
           "steps": [
             "Confirm the record reference and customer/site context in this record workspace.",
@@ -66576,9 +66096,9 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Each stage has a reviewed disposition and owned residual work.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Open defects must not disappear when a stage is accepted."
+            "Retain the exact stage/output revision and receiving decision. The whole-project closeout gate also considers unallocated scope, all stages, current source evidence and commercial disposition.",
+            "Remaining obligations keep their owner, evidence and independent responsibility acceptance. Closed history is preserved; later source change can require reassessment and an owned follow-up.",
+            "Local synthetic preparation, issue and receiving do not transmit a customer message, post to MYOB or upload to SharePoint."
           ],
           "steps": [],
           "rows": [],
@@ -66660,6 +66180,10 @@
             [
               "Guide differs from the page",
               "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
+            ],
+            [
+              "Acceptance result uncertain",
+              "Use the existing original-operation recovery dialog and server-held intent. Do not make a second decision or recreate an issue. Access is rechecked before the original outcome is disclosed."
             ]
           ],
           "headers": [
@@ -66683,7 +66207,8 @@
           "title": "Related guidance and procedures",
           "paragraphs": [
             "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them.",
+            "See ADR-0033, docs/delivery/pj09-staged-acceptance-handover.md and docs/testing/evidence/project-acceptance-r01/README.md for exact source, workflow, geometry exceptions and executed evidence."
           ],
           "steps": [],
           "rows": [],
@@ -66707,9 +66232,12 @@
       ],
       "source_paths": [
         "src/app/(business)/projects/acceptance/stages/[id]/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md",
+        "docs/testing/evidence/project-acceptance-r01/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Reconcile native PJ-09 presence and source-owned acceptance boundaries; retain Draft and separate historical evidence from current review.",
       "document_id": "PPO-GUIDE-PAGE-PROJECTS-ACCEPTANCE-STAGES-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -66718,7 +66246,9 @@
       "section_aliases": {},
       "workflow_basis": [
         "src/app/(business)/projects/acceptance/stages/[id]/page.tsx",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/ADR-0033-staged-acceptance.md",
+        "docs/delivery/pj09-staged-acceptance-handover.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -68975,6 +68505,243 @@
         }
       ],
       "runtime_evidence": "CS native synthetic database, compiled HTTP and desktop/mobile browser proofs executed on 23 September 2026; see docs/testing/evidence/cs-native-completion/README.md. Owner acceptance pending."
+    },
+    {
+      "guide_key": "guide.route-schedule-capacity",
+      "entry_key": "route:/schedule/capacity",
+      "title": "Cross-domain resource demand and capacity",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native application workflow; owner acceptance pending",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [
+        "scope:PL-03"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Project programme dates and Engineering required dates never become labour effort. Service reservations include crew and explicit buffers; they are not labour estimates. No utilisation denominator or percentage is claimed."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [],
+          "steps": [
+            "Select a 7-, 28- or 90-day horizon, display timezone and permitted site. Review each source domain’s completeness or Unavailable state.",
+            "Filter by domain, source commitment, resource mapping, required skill or unknown effort. Unknown resource/skill filters explicitly retain missing mappings.",
+            "Review source references, UUIDs, versions/as-at, customer/site context, owner, time basis and next action. Follow the exact owning-domain link for resolution.",
+            "Exclude contributions from an analytical scenario and compare its count and reserved resource minutes against the visible baseline. Reset or refresh discards the scenario."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "For read failure, use Refresh or Retry. A denied source is unavailable, not empty capacity. Narrow the window/site when the bounded read refuses.",
+            "For stale booking/request versions, reopen the current record and compare before a new decision. The original failed move preserves the old booking. For uncertain sends keep the original operation and retry unchanged."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "change_summary": "S1–S5 Scheduling & Resources implementation and source-owned review boundaries.",
+      "runtime_evidence": "See docs/testing/evidence/scheduling-resources/README.md; no owner acceptance inferred.",
+      "source_paths": [
+        "src/app/(business)/schedule/capacity/page.tsx",
+        "docs/decisions/scheduling-resources-architecture.md",
+        "docs/delivery/scheduling-resources-handover.md"
+      ]
+    },
+    {
+      "guide_key": "guide.route-schedule-changes",
+      "entry_key": "route:/schedule/changes",
+      "title": "Rescheduling and acknowledgement centre",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native application workflow; owner acceptance pending",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [
+        "scope:PL-04"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "An exact appointment handover stays visible even outside the selected date/queue. Changed booking facts require fresh contact and preparation review. Contact is not delivery or pack acknowledgement."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [],
+          "steps": [
+            "Select the period, timezone and site, then Needs review, Change requests, Customer follow-up, Cancellations or History / all visits.",
+            "Select the exact appointment. Compare current versus requested interval, crew roles, explicit travel allowances/reasons and schedule/request versions.",
+            "Enter a decision reason and use existing Accept and check move, Reject request or Cancel request where permitted. Acceptance reruns booking guards; pending requests reserve nothing.",
+            "Open appointment controls for move/reassignment, customer contact or cancellation. Review owned follow-up, booking history and contact events separately."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "For read failure, use Refresh or Retry. A denied source is unavailable, not empty capacity. Narrow the window/site when the bounded read refuses.",
+            "For stale booking/request versions, reopen the current record and compare before a new decision. The original failed move preserves the old booking. For uncertain sends keep the original operation and retry unchanged."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "change_summary": "S1–S5 Scheduling & Resources implementation and source-owned review boundaries.",
+      "runtime_evidence": "See docs/testing/evidence/scheduling-resources/README.md; no owner acceptance inferred.",
+      "source_paths": [
+        "src/app/(business)/schedule/changes/page.tsx",
+        "docs/decisions/scheduling-resources-architecture.md",
+        "docs/delivery/scheduling-resources-handover.md"
+      ]
+    },
+    {
+      "guide_key": "guide.route-schedule-travel",
+      "entry_key": "route:/schedule/travel",
+      "title": "Visit route and travel review",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native application workflow; owner acceptance pending",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [
+        "scope:PL-05"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "No map, provider, inferred distance/speed, traffic or optimiser is configured. Planned travel allowance, unknown route estimate and actual field Travel are independent facts."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [],
+          "steps": [
+            "Select one local day, timezone and permitted site. Choose a resource/crew member to review its ordered visits and anonymous busy intervals.",
+            "Check each site/customer, appointment time in site timezone, supplied customer window, travel-before/after allowance and recorded reason.",
+            "Review buffered gaps/overlaps, unavailable blocks and unknown route sufficiency. Select Earlier or Later to compare a manual sequence; booking times stay unchanged.",
+            "Use Review booking change to open PL-04 with the exact appointment, resource, day and timezone. Reset sequence comparison discards the analytical order."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "For read failure, use Refresh or Retry. A denied source is unavailable, not empty capacity. Narrow the window/site when the bounded read refuses.",
+            "For stale booking/request versions, reopen the current record and compare before a new decision. The original failed move preserves the old booking. For uncertain sends keep the original operation and retry unchanged."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "change_summary": "S1–S5 Scheduling & Resources implementation and source-owned review boundaries.",
+      "runtime_evidence": "See docs/testing/evidence/scheduling-resources/README.md; no owner acceptance inferred.",
+      "source_paths": [
+        "src/app/(business)/schedule/travel/page.tsx",
+        "docs/decisions/scheduling-resources-architecture.md",
+        "docs/delivery/scheduling-resources-handover.md"
+      ]
+    },
+    {
+      "guide_key": "guide.route-service-technicians-id",
+      "entry_key": "route:/service/technicians/[id]",
+      "title": "Resource detail",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native application workflow; owner acceptance pending",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [
+        "scope:PL-02",
+        "route:/service/technicians"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Resource/calendar/competence mutation is unavailable. Synthetic skills are not statutory certificates; certificate/renewal evidence remains Unknown. No private HR fields are added."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [],
+          "steps": [
+            "Keep Field Team Visits, Technicians and Needs preparation views. In Technicians, choose Availability & competence; the resource name in Planner also opens detail.",
+            "Select a seven-day review window. Inspect permitted site eligibility, active/publication state, source-as-at, effective dates and calendar version/timezone.",
+            "Review weekly intervals, exceptions, unavailable/other-work blocks and anonymous busy reservations. Open permitted appointment records for commitments and retained history.",
+            "Check skill status, validity and review evidence. Expired, not-yet-valid, expiring-within-period and unknown evidence stay explicit."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "For read failure, use Refresh or Retry. A denied source is unavailable, not empty capacity. Narrow the window/site when the bounded read refuses.",
+            "For stale booking/request versions, reopen the current record and compare before a new decision. The original failed move preserves the old booking. For uncertain sends keep the original operation and retry unchanged."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "change_summary": "S1–S5 Scheduling & Resources implementation and source-owned review boundaries.",
+      "runtime_evidence": "See docs/testing/evidence/scheduling-resources/README.md; no owner acceptance inferred.",
+      "source_paths": [
+        "src/app/(business)/service/technicians/[id]/page.tsx",
+        "docs/decisions/scheduling-resources-architecture.md",
+        "docs/delivery/scheduling-resources-handover.md"
+      ]
     }
   ]
 }

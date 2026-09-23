@@ -41,3 +41,7 @@ Changes to the source, styles, fixtures, specification or reference invalidate p
 ## CS native receiving
 
 The existing `system:shell` binding owns the inherited frame around CS pages. Page files do not directly import shell controls, so no false direct-consumer binding is added. The CS stylesheet retains a scoped phone-header containment correction within this real host. The [CS evidence](../../../testing/evidence/cs-native-completion/README.md) and owning page guides record workflow checks and inspected widths. Owner/device comparison remains pending in the explicit CS alignment item.
+
+## Scheduling workspace navigation
+
+The secondary SchedulingNavigation composition reuses current shell permission discovery, native links and shared tokens. It links Planner, Resources, Changes & follow-up, Travel review and Demand & capacity while preserving day, timezone, site and resource context. The global rail retains its existing destinations. The inherited system:shell binding covers the four new routes; their native compositions remain pending review; navigation does not add a capability or grant access. Host examples remain the evidence surface.
