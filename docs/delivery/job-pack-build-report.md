@@ -1198,7 +1198,7 @@ The compiled browser suite (required context "Desktop and mobile browser suite a
 
 ### 12.2 Known local limits (owner's Windows machine; plan §10)
 
-- `ppo_synthetic_test` is absent and the local role cannot create it, so CI is the first run of the database suites.
+- ~~`ppo_synthetic_test` is absent and the local role cannot create it, so CI is the first run of the database suites.~~ **Superseded 23 September 2026:** a durable cluster outside every worktree now holds `ppo_synthetic` and `ppo_synthetic_test`, so `npm run test:db` starts and executes locally, which it could not before. A clean full-suite local baseline is not yet established, and single-file reruns against an already-exercised database are not a valid way to run these suites. Compare any local database failure with CI’s `P01–P11 database proof` on the same commit before attributing it: the disposable cluster used during I3 produced five failures CI did not reproduce.
 - Four unit tests fail identically on unmodified `main`: `document-store` (2), `recovery` (1) and `warm-routes` (1).
 - Exclude the git-ignored `tmp/` from type checking.
 - The dev database retains crew bookings; use free dates.
@@ -1475,6 +1475,7 @@ Proposed handling (I5, optional; Q-07):
 | DP-19 | "Service › Field technicians › Job pack" | "Service › Job packs › {reference}", beside the shell breadcrumb | D8-A |
 | DP-20 | Tools table with "Parts: not applicable" | Recorded controls table in 07 and a compact list in 08; no parts row | No parts criterion exists; identical controls text in both sections (O-02) |
 | DP-21 | Section 01 shows coordinator, site address and visit status | Coordinator and live visit status omitted; location in 02 | Not in the pack read; the location is in the frozen arrangements text |
+| DP-22 | Preparation action bar is sticky at `bottom:12px` | Fixed above the shell’s navigation bar at ≤ 760 px; r03’s static fallback below 650 px of height | Adopted 23 September 2026. Measured in I3: the sticky bar is clamped by its containing block and falls 26 px (390 px) and 145 px (320 px) behind the shell bar. A bottom inset does not reach the cause |
 
 ## Appendix G — Re-serialisation prototype results
 
