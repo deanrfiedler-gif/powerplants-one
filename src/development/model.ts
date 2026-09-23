@@ -99,6 +99,8 @@ export type Catalog = {
   entries: CatalogEntry[];
   journeys: Resource[];
   tokens: { name: string; value: string }[];
+  component_links?: { id: string; title: string; used_on: string[] }[];
+  component_resources?: Resource[];
   unregistered_routes: string[];
   errors: string[];
 };

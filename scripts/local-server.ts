@@ -1,3 +1,4 @@
+import { developmentFramePolicy } from "../src/development/access";
 import { createServer } from "node:http";
 import { randomBytes } from "node:crypto";
 import { existsSync } from "node:fs";
@@ -71,7 +72,8 @@ const server = createServer((req, res) => {
   req.headers["x-ppo-local-gateway"] = process.env.PPO_LOCAL_GATEWAY;
   res.setHeader("Cache-Control", "private, no-store");
   res.setHeader("X-Content-Type-Options", "nosniff");
-  res.setHeader("X-Frame-Options", "DENY");
+  res.setHeader("X-Frame-Options", developmentFramePolicy(loginPath));
+  if (developmentFramePolicy(loginPath) === "SAMEORIGIN") res.setHeader("Content-Security-Policy", "frame-ancestors 'self'");
   res.setHeader("Referrer-Policy", "no-referrer");
   res.setHeader(
     "Permissions-Policy",

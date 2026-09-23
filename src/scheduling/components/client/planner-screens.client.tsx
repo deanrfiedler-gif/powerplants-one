@@ -3,9 +3,17 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { DemandPanel } from "./demand-panel.client";
-import { BookingContinuation, showAppointmentDates } from "./booking-continuation.client";
+import {
+  BookingContinuation,
+  showAppointmentDates,
+} from "./booking-continuation.client";
 import { BookingRecovery, useBookingCommand } from "./booking-recovery.client";
-import { appointmentHref, plannerContext, plannerHref, safePlannerReturn } from "../../navigation";
+import {
+  appointmentHref,
+  plannerContext,
+  plannerHref,
+  safePlannerReturn,
+} from "../../navigation";
 import { useIdentity } from "../../../components/business-session";
 import {
   ErrorNotice,
@@ -278,7 +286,10 @@ function BookingForm({
       `appointments/${appointment.id}`,
     );
   const command = mode === "confirm" ? durableCommand : memoryCommand;
-  const target = appointmentHref(appointment.id, safePlannerReturn(useSearchParams().get("returnTo")));
+  const target = appointmentHref(
+    appointment.id,
+    safePlannerReturn(useSearchParams().get("returnTo")),
+  );
   const reviewed = savedRecord.data?.items[0];
   const latest =
     reviewed && reviewed.version >= appointment.version
@@ -341,9 +352,19 @@ function BookingForm({
             };
       // The stable request UUID is held below for uncertain retries, like the original operation ID.
       if (mode === "request") fields.id = requestId.current;
-      const receipt = mode === "confirm"
-        ? await durableCommand.send(`appointments/${basis.id}/confirm`, fields, target, "Confirmation", basis.id)
-        : await memoryCommand.send(`appointments/${basis.id}/${mode === "request" ? "change-requests" : mode}`, fields);
+      const receipt =
+        mode === "confirm"
+          ? await durableCommand.send(
+              `appointments/${basis.id}/confirm`,
+              fields,
+              target,
+              "Confirmation",
+              basis.id,
+            )
+          : await memoryCommand.send(
+              `appointments/${basis.id}/${mode === "request" ? "change-requests" : mode}`,
+              fields,
+            );
       if (receipt) onSaved();
     } catch (e) {
       setLocalError({
@@ -367,14 +388,18 @@ function BookingForm({
       <VersionLine a={basis} />
       <ReadState {...resources} retry={resources.reload} />
       {mode === "confirm" && <BookingRecovery command={durableCommand} />}
-      <ErrorNotice error={localError ?? (mode === "confirm" ? null : command.error)} />
-      {command.saved && (mode !== "confirm" || durableCommand.accepted?.entry.label === "Confirmation") && (
-        <p role="status" className="save-notice">
-          {mode === "request"
-            ? "Change request saved. Existing booking retained."
-            : "Appointment saved. Dispatch remains held."}
-        </p>
-      )}
+      <ErrorNotice
+        error={localError ?? (mode === "confirm" ? null : command.error)}
+      />
+      {command.saved &&
+        (mode !== "confirm" ||
+          durableCommand.accepted?.entry.label === "Confirmation") && (
+          <p role="status" className="save-notice">
+            {mode === "request"
+              ? "Change request saved. Existing booking retained."
+              : "Appointment saved. Dispatch remains held."}
+          </p>
+        )}
       <button
         className="secondary"
         type="button"
@@ -384,7 +409,8 @@ function BookingForm({
         Review saved appointment
       </button>
       <ReadState {...savedRecord} retry={savedRecord.reload} />
-      {(latest.version !== basis.version || latest.work_order_version !== basis.work_order_version) && (
+      {(latest.version !== basis.version ||
+        latest.work_order_version !== basis.work_order_version) && (
         <div className="planner-warning">
           <p>
             The saved appointment is now v{latest.version}. Your proposal still
@@ -429,7 +455,13 @@ function BookingForm({
       <ValidationFields error={localError ?? command.error}>
         <form onSubmit={save}>
           <fieldset
-            disabled={command.busy || resources.loading || !!resources.error || (mode === "confirm" && (!!durableCommand.pending || !durableCommand.ready))}
+            disabled={
+              command.busy ||
+              resources.loading ||
+              !!resources.error ||
+              (mode === "confirm" &&
+                (!!durableCommand.pending || !durableCommand.ready))
+            }
           >
             <legend>Visit · {basis.site_timezone}</legend>
             {mode === "confirm" ? (
@@ -635,23 +667,32 @@ function ContactForm({ a, onSaved }: { a: Appointment; onSaved: () => void }) {
     command = useBookingCommand(),
     id = useRef(crypto.randomUUID()),
     occurred = useRef<string | null>(null);
-  const target = appointmentHref(a.id, safePlannerReturn(useSearchParams().get("returnTo")));
+  const target = appointmentHref(
+    a.id,
+    safePlannerReturn(useSearchParams().get("returnTo")),
+  );
   async function save(e: React.FormEvent) {
     e.preventDefault();
     occurred.current ??= new Date().toISOString();
-    const result = await command.send(`appointments/${a.id}/contacts`, {
-      id: id.current,
-      expected_version: a.version,
-      recipient_id: a.primary_contact_id,
-      channel,
-      outcome,
-      occurred_at: occurred.current,
-      notes,
-      reason:
-        a.status === "Cancelled"
-          ? "Record manual cancellation contact"
-          : "Record manual scheduling contact",
-    }, target, "Customer contact", id.current);
+    const result = await command.send(
+      `appointments/${a.id}/contacts`,
+      {
+        id: id.current,
+        expected_version: a.version,
+        recipient_id: a.primary_contact_id,
+        channel,
+        outcome,
+        occurred_at: occurred.current,
+        notes,
+        reason:
+          a.status === "Cancelled"
+            ? "Record manual cancellation contact"
+            : "Record manual scheduling contact",
+      },
+      target,
+      "Customer contact",
+      id.current,
+    );
     if (result) {
       id.current = crypto.randomUUID();
       occurred.current = null;
@@ -669,13 +710,21 @@ function ContactForm({ a, onSaved }: { a: Appointment; onSaved: () => void }) {
         ; it is separate from sending, delivery and pack acknowledgement.
       </p>
       <BookingRecovery command={command} />
-      {command.saved && command.accepted?.entry.label === "Customer contact" && (
-        <p role="status" className="save-notice">
-          Contact outcome saved.
-        </p>
-      )}
+      {command.saved &&
+        command.accepted?.entry.label === "Customer contact" && (
+          <p role="status" className="save-notice">
+            Contact outcome saved.
+          </p>
+        )}
       <form onSubmit={save}>
-        <fieldset disabled={command.busy || !!command.pending || !command.ready || !a.primary_contact_id}>
+        <fieldset
+          disabled={
+            command.busy ||
+            !!command.pending ||
+            !command.ready ||
+            !a.primary_contact_id
+          }
+        >
           <legend>Current site contact</legend>
           <p>
             Contact ID:{" "}
@@ -870,9 +919,13 @@ export function AppointmentScreen({ id }: { id: string }) {
       "confirm" | "move" | "request" | "contact" | "cancel" | null
     >(null);
   const reload = useRef(resource.reload);
-  useEffect(() => { reload.current = resource.reload; }, [resource.reload]);
+  useEffect(() => {
+    reload.current = resource.reload;
+  }, [resource.reload]);
   const acceptedOperation = recovery.accepted?.receipt.operation_id;
-  useEffect(() => { if (acceptedOperation) reload.current(); }, [acceptedOperation]);
+  useEffect(() => {
+    if (acceptedOperation) reload.current();
+  }, [acceptedOperation]);
   return (
     <>
       <PageHeader
@@ -920,7 +973,11 @@ export function AppointmentScreen({ id }: { id: string }) {
               Showing the last successful read. Current availability is unknown.
             </p>
           )}
-          <p><Link href={showAppointmentDates(a, returnTo)}>Show its dates / View in planner</Link></p>
+          <p>
+            <Link href={showAppointmentDates(a, returnTo)}>
+              Show its dates / View in planner
+            </Link>
+          </p>
           <div className="planner-holds">
             <strong>
               {a.dispatch_hold
@@ -1009,7 +1066,11 @@ export function AppointmentScreen({ id }: { id: string }) {
             />
           )}
           {mode === "contact" && (
-            <ContactForm key={`${a.id}:${a.version}`} a={a} onSaved={resource.reload} />
+            <ContactForm
+              key={`${a.id}:${a.version}`}
+              a={a}
+              onSaved={resource.reload}
+            />
           )}
           {mode === "cancel" && a.status !== "Cancelled" && (
             <CancelForm a={a} onSaved={resource.reload} />
@@ -1039,9 +1100,24 @@ export function AppointmentScreen({ id }: { id: string }) {
             </section>
             <section className="panel">
               <h2>Readiness and preparation</h2>
-              <p>Preparation: <Status value={a.preparation_status} /></p>
-              <p><Link href={`/service/work-orders/${a.work_order_id}?returnTo=${encodeURIComponent(target)}#visit-${a.id}`}>Review readiness on the work order</Link></p>
-              {["Unknown", "Blocked"].includes(a.preparation_status) && <p className="planner-warning">Readiness assessment does not change this preparation state. Review with the service owner; use controlled cancellation and a new proposal where permitted. Preparation cannot be corrected in place by this screen.</p>}
+              <p>
+                Preparation: <Status value={a.preparation_status} />
+              </p>
+              <p>
+                <Link
+                  href={`/service/work-orders/${a.work_order_id}?returnTo=${encodeURIComponent(target)}#visit-${a.id}`}
+                >
+                  Review readiness on the work order
+                </Link>
+              </p>
+              {["Unknown", "Blocked"].includes(a.preparation_status) && (
+                <p className="planner-warning">
+                  Readiness assessment does not change this preparation state.
+                  Review with the service owner; use controlled cancellation and
+                  a new proposal where permitted. Preparation cannot be
+                  corrected in place by this screen.
+                </p>
+              )}
               {a.authorisation_blockers.map((b, i) => (
                 <p className="planner-warning" key={i}>
                   {b.message}
@@ -1176,7 +1252,7 @@ export function AppointmentScreen({ id }: { id: string }) {
     </>
   );
 }
-function AppointmentCard({
+export function AppointmentCard({
   a,
   zone,
   drag,
@@ -1228,16 +1304,250 @@ function AppointmentCard({
     </article>
   );
 }
+export function PlannerBoard({
+  data,
+  days,
+  mode,
+  zone,
+  usable,
+  onDrop,
+  onMove,
+  onDragNotice,
+}: {
+  data: Schedule;
+  days: string[];
+  mode: "day" | "week";
+  zone: string;
+  usable: boolean;
+  onDrop: (event: React.DragEvent, day: string, resource: Resource) => void;
+  onMove: (appointment: ScheduleAppointment) => void;
+  onDragNotice: (message: string) => void;
+}) {
+  // Calculate each timestamp's displayed day once for this render instead of
+  // once per appointment × resource × day. This map ends with the render.
+  const displayDates = new Map<string, string>();
+  const onDay = (iso: string, d: string) => {
+    let value = displayDates.get(iso);
+    if (value === undefined) {
+      value = localDateTime(iso, zone).slice(0, 10);
+      displayDates.set(iso, value);
+    }
+    return value === d;
+  };
+  const dayBounds = new Map(
+    days.map((d) => [
+      d,
+      {
+        start: Date.parse(utcFromLocal(d + "T00:00", zone)),
+        end: Date.parse(utcFromLocal(addDays(d, 1) + "T00:00", zone)),
+      },
+    ]),
+  );
+  return (
+    <section
+      className={`planner-board ${mode}`}
+      aria-label={`${mode === "week" ? "Week" : "Day"} resource planner`}
+    >
+      {!data.resources.length && (
+        <p className="empty-state">
+          No permitted resources in this filter. Availability is not assumed.
+        </p>
+      )}
+      {data.resources.map((r) => (
+        <section
+          className="resource-lane"
+          key={r.id}
+          aria-label={`${r.name} resource lane`}
+        >
+          <header>
+            <h2>{r.name}</h2>
+            <span>
+              {r.active ? "Published resource" : "Inactive · cannot book"}
+            </span>
+            <small>
+              {r.calendar.name} · {r.calendar.timezone}
+            </small>
+            <small>
+              Resource v{r.version} · Calendar v{r.calendar.version}
+            </small>
+            <details>
+              <summary>Calendar, skills and evidence</summary>
+              {r.calendar.intervals.map((i) => (
+                <p key={`${i.weekday}-${i.start_minute}`}>
+                  {
+                    [
+                      "Sunday",
+                      "Monday",
+                      "Tuesday",
+                      "Wednesday",
+                      "Thursday",
+                      "Friday",
+                      "Saturday",
+                    ][i.weekday]
+                  }{" "}
+                  {minuteText(i.start_minute)}–{minuteText(i.end_minute)} ·{" "}
+                  {r.calendar.timezone}
+                </p>
+              ))}
+              {r.skills.map((s) => (
+                <p key={s.skill_code}>
+                  {s.skill_code} · {s.status} through{" "}
+                  <Stamp value={s.valid_to} timezone={r.base_timezone} />
+                </p>
+              ))}
+              <small>
+                Source as at{" "}
+                <Stamp value={r.source_as_at} timezone={r.base_timezone} />
+              </small>
+            </details>
+          </header>
+          <div
+            className="lane-days"
+            tabIndex={mode === "week" ? 0 : undefined}
+            role="region"
+            aria-label={`${r.name} days`}
+            style={{ "--planner-days": days.length } as React.CSSProperties}
+          >
+            {days.map((d) => {
+              const weekday = new Date(d + "T12:00:00Z").getUTCDay(),
+                slots = r.calendar.intervals.filter(
+                  (i) => i.weekday === weekday,
+                ),
+                events = data.items.filter(
+                  (a) =>
+                    onDay(a.start_at, d) &&
+                    a.assignments.some(
+                      (x) => x.resource_id === r.id && x.active,
+                    ),
+                ),
+                blocks = (r.blocks ?? []).filter(
+                  (b) =>
+                    Date.parse(b.start_at) < dayBounds.get(d)!.end &&
+                    Date.parse(b.end_at) > dayBounds.get(d)!.start,
+                ),
+                busy = (r.busy ?? []).filter(
+                  (b) =>
+                    Date.parse(b.start_at) < dayBounds.get(d)!.end &&
+                    Date.parse(b.end_at) > dayBounds.get(d)!.start,
+                ),
+                closed = (r.exceptions ?? []).filter((b) =>
+                  onDay(b.start_at, d),
+                );
+              return (
+                <div
+                  key={d}
+                  className="planner-day-cell"
+                  data-day={d}
+                  onDragOver={(e) => {
+                    if (usable) e.preventDefault();
+                  }}
+                  onDrop={(e) => onDrop(e, d, r)}
+                  aria-label={`${r.name} ${displayDay(d)}`}
+                >
+                  <h3>{displayDay(d)}</h3>
+                  <p className="calendar-slot">
+                    {zone !== r.calendar.timezone
+                      ? "Working hours: see resource calendar"
+                      : slots.length
+                        ? slots
+                            .map(
+                              (i) =>
+                                `${minuteText(i.start_minute)}–${minuteText(i.end_minute)}`,
+                            )
+                            .join(", ")
+                        : "Non-working day"}
+                    <br />
+                    {r.calendar.timezone}
+                  </p>
+                  {blocks.map((b) => (
+                    <p className="availability-block" key={b.id}>
+                      <strong>{b.kind}</strong>
+                      <br />
+                      {shortTime(b.start_at, zone)}–{shortTime(b.end_at, zone)}
+                    </p>
+                  ))}
+                  {closed.map((b) => (
+                    <p className="availability-block" key={b.id}>
+                      Calendar closed
+                    </p>
+                  ))}
+                  {busy.length > 0 && (
+                    <details className="reserved-periods">
+                      <summary>
+                        {busy.length} reserved{" "}
+                        {busy.length === 1 ? "period" : "periods"} · includes
+                        travel
+                      </summary>
+                      <p>
+                        Capacity remains reserved across appointment filters.
+                      </p>
+                      {busy.map((b) => (
+                        <p key={b.start_at}>
+                          <Stamp value={b.start_at} timezone={zone} /> –{" "}
+                          <Stamp value={b.end_at} timezone={zone} />
+                        </p>
+                      ))}
+                    </details>
+                  )}
+                  {events.map((a) => (
+                    <AppointmentCard
+                      key={a.id}
+                      a={a}
+                      zone={zone}
+                      drag={
+                        usable &&
+                        a.actions.can_manage &&
+                        a.status === "Confirmed"
+                          ? (e) => {
+                              e.dataTransfer.setData("text/plain", a.id);
+                              onDragNotice(
+                                "Dragging proposes a move. The original booking remains saved.",
+                              );
+                            }
+                          : undefined
+                      }
+                      onMove={usable ? onMove : undefined}
+                    />
+                  ))}
+                  {!events.length && !blocks.length && !closed.length && (
+                    <p className="lane-empty">
+                      No displayed booking
+                      <br />
+                      <small>Server checks all reservations</small>
+                    </p>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      ))}
+    </section>
+  );
+}
+
 export function PlannerScreen() {
   useIdentity();
   const search = useSearchParams();
   const context = plannerContext(new URLSearchParams(search.toString()));
   const { day, mode, zone, site, resource: resourceFilter, status } = context;
   const returnTo = plannerHref(context);
-  const update = (patch: Partial<typeof context>) => window.history.replaceState(null, "", plannerHref({ ...context, ...patch }) + (search.get("returnTo") ? "&returnTo=" + encodeURIComponent(safePlannerReturn(search.get("returnTo"))) : ""));
-  const setDay = (day: string) => update({ day }), setMode = (mode: "day" | "week") => update({ mode });
-  const setZone = (zone: string) => update({ zone }), setSite = (site: string) => update({ site, resource: "" });
-  const setResourceFilter = (resource: string) => update({ resource }), setStatus = (status: string) => update({ status });
+  const update = (patch: Partial<typeof context>) =>
+    window.history.replaceState(
+      null,
+      "",
+      plannerHref({ ...context, ...patch }) +
+        (search.get("returnTo")
+          ? "&returnTo=" +
+            encodeURIComponent(safePlannerReturn(search.get("returnTo")))
+          : ""),
+    );
+  const setDay = (day: string) => update({ day }),
+    setMode = (mode: "day" | "week") => update({ mode });
+  const setZone = (zone: string) => update({ zone }),
+    setSite = (site: string) => update({ site, resource: "" });
+  const setResourceFilter = (resource: string) => update({ resource }),
+    setStatus = (status: string) => update({ status });
   const [planId, setPlanId] = useState<string | null>(null);
   const [demandLimit, setDemandLimit] = useState(50);
   const [move, setMove] = useState<{
@@ -1282,26 +1592,6 @@ export function PlannerScreen() {
     setMove(null);
     setDragNotice("");
   }
-  // Calculate each timestamp's displayed day once for this render instead of
-  // once per appointment × resource × day. This map ends with the render.
-  const displayDates = new Map<string, string>();
-  const onDay = (iso: string, d: string) => {
-    let value = displayDates.get(iso);
-    if (value === undefined) {
-      value = localDateTime(iso, zone).slice(0, 10);
-      displayDates.set(iso, value);
-    }
-    return value === d;
-  };
-  const dayBounds = new Map(
-    days.map((d) => [
-      d,
-      {
-        start: Date.parse(utcFromLocal(d + "T00:00", zone)),
-        end: Date.parse(utcFromLocal(addDays(d, 1) + "T00:00", zone)),
-      },
-    ]),
-  );
   function drop(e: React.DragEvent, d: string, resource: Resource) {
     e.preventDefault();
     if (!usable) return;
@@ -1341,7 +1631,13 @@ export function PlannerScreen() {
           document for assistive technology and heading order. */}
       <h1 className="sr-only">Service planner</h1>
       <BookingContinuation />
-      {search.get("returnTo") && <p><Link href={safePlannerReturn(search.get("returnTo"))}>Return to previous planner context</Link></p>}
+      {search.get("returnTo") && (
+        <p>
+          <Link href={safePlannerReturn(search.get("returnTo"))}>
+            Return to previous planner context
+          </Link>
+        </p>
+      )}
       <section className="planner-toolbar" aria-label="Planner controls">
         <div className="planner-date">
           <button
@@ -1496,193 +1792,16 @@ export function PlannerScreen() {
               the days and use arrow keys, or choose Day.
             </p>
           )}
-          <section
-            className={`planner-board ${mode}`}
-            aria-label={`${mode === "week" ? "Week" : "Day"} resource planner`}
-          >
-            {!data.resources.length && (
-              <p className="empty-state">
-                No permitted resources in this filter. Availability is not
-                assumed.
-              </p>
-            )}
-            {data.resources.map((r) => (
-              <section
-                className="resource-lane"
-                key={r.id}
-                aria-label={`${r.name} resource lane`}
-              >
-                <header>
-                  <h2>{r.name}</h2>
-                  <span>
-                    {r.active ? "Published resource" : "Inactive · cannot book"}
-                  </span>
-                  <small>
-                    {r.calendar.name} · {r.calendar.timezone}
-                  </small>
-                  <small>
-                    Resource v{r.version} · Calendar v{r.calendar.version}
-                  </small>
-                  <details>
-                    <summary>Calendar, skills and evidence</summary>
-                    {r.calendar.intervals.map((i) => (
-                      <p key={`${i.weekday}-${i.start_minute}`}>
-                        {
-                          [
-                            "Sunday",
-                            "Monday",
-                            "Tuesday",
-                            "Wednesday",
-                            "Thursday",
-                            "Friday",
-                            "Saturday",
-                          ][i.weekday]
-                        }{" "}
-                        {minuteText(i.start_minute)}–{minuteText(i.end_minute)}{" "}
-                        · {r.calendar.timezone}
-                      </p>
-                    ))}
-                    {r.skills.map((s) => (
-                      <p key={s.skill_code}>
-                        {s.skill_code} · {s.status} through{" "}
-                        <Stamp value={s.valid_to} timezone={r.base_timezone} />
-                      </p>
-                    ))}
-                    <small>
-                      Source as at{" "}
-                      <Stamp
-                        value={r.source_as_at}
-                        timezone={r.base_timezone}
-                      />
-                    </small>
-                  </details>
-                </header>
-                <div
-                  className="lane-days"
-                  tabIndex={mode === "week" ? 0 : undefined}
-                  role="region"
-                  aria-label={`${r.name} days`}
-                  style={
-                    { "--planner-days": days.length } as React.CSSProperties
-                  }
-                >
-                  {days.map((d) => {
-                    const weekday = new Date(d + "T12:00:00Z").getUTCDay(),
-                      slots = r.calendar.intervals.filter(
-                        (i) => i.weekday === weekday,
-                      ),
-                      events = data.items.filter(
-                        (a) =>
-                          onDay(a.start_at, d) &&
-                          a.assignments.some(
-                            (x) => x.resource_id === r.id && x.active,
-                          ),
-                      ),
-                      blocks = (r.blocks ?? []).filter(
-                        (b) =>
-                          Date.parse(b.start_at) < dayBounds.get(d)!.end &&
-                          Date.parse(b.end_at) > dayBounds.get(d)!.start,
-                      ),
-                      busy = (r.busy ?? []).filter(
-                        (b) =>
-                          Date.parse(b.start_at) < dayBounds.get(d)!.end &&
-                          Date.parse(b.end_at) > dayBounds.get(d)!.start,
-                      ),
-                      closed = (r.exceptions ?? []).filter((b) =>
-                        onDay(b.start_at, d),
-                      );
-                    return (
-                      <div
-                        key={d}
-                        className="planner-day-cell"
-                        data-day={d}
-                        onDragOver={(e) => {
-                          if (usable) e.preventDefault();
-                        }}
-                        onDrop={(e) => drop(e, d, r)}
-                        aria-label={`${r.name} ${displayDay(d)}`}
-                      >
-                        <h3>{displayDay(d)}</h3>
-                        <p className="calendar-slot">
-                          {zone !== r.calendar.timezone
-                            ? "Working hours: see resource calendar"
-                            : slots.length
-                              ? slots
-                                  .map(
-                                    (i) =>
-                                      `${minuteText(i.start_minute)}–${minuteText(i.end_minute)}`,
-                                  )
-                                  .join(", ")
-                              : "Non-working day"}
-                          <br />
-                          {r.calendar.timezone}
-                        </p>
-                        {blocks.map((b) => (
-                          <p className="availability-block" key={b.id}>
-                            <strong>{b.kind}</strong>
-                            <br />
-                            {shortTime(b.start_at, zone)}–
-                            {shortTime(b.end_at, zone)}
-                          </p>
-                        ))}
-                        {closed.map((b) => (
-                          <p className="availability-block" key={b.id}>
-                            Calendar closed
-                          </p>
-                        ))}
-                        {busy.length > 0 && (
-                          <details className="reserved-periods">
-                            <summary>
-                              {busy.length} reserved{" "}
-                              {busy.length === 1 ? "period" : "periods"} ·
-                              includes travel
-                            </summary>
-                            <p>
-                              Capacity remains reserved across appointment
-                              filters.
-                            </p>
-                            {busy.map((b) => (
-                              <p key={b.start_at}>
-                                <Stamp value={b.start_at} timezone={zone} /> –{" "}
-                                <Stamp value={b.end_at} timezone={zone} />
-                              </p>
-                            ))}
-                          </details>
-                        )}
-                        {events.map((a) => (
-                          <AppointmentCard
-                            key={a.id}
-                            a={a}
-                            zone={zone}
-                            drag={
-                              usable &&
-                              a.actions.can_manage &&
-                              a.status === "Confirmed"
-                                ? (e) => {
-                                    e.dataTransfer.setData("text/plain", a.id);
-                                    setDragNotice(
-                                      "Dragging proposes a move. The original booking remains saved.",
-                                    );
-                                  }
-                                : undefined
-                            }
-                            onMove={usable ? (a) => setMove({ a }) : undefined}
-                          />
-                        ))}
-                        {!events.length && !blocks.length && !closed.length && (
-                          <p className="lane-empty">
-                            No displayed booking
-                            <br />
-                            <small>Server checks all reservations</small>
-                          </p>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </section>
-            ))}
-          </section>
+          <PlannerBoard
+            data={data}
+            days={days}
+            mode={mode}
+            zone={zone}
+            usable={usable}
+            onDrop={drop}
+            onMove={(a) => setMove({ a })}
+            onDragNotice={setDragNotice}
+          />
           <section className="panel proposal-section">
             <h2>Proposed and cancelled appointments</h2>
             <p>
@@ -1711,12 +1830,14 @@ export function PlannerScreen() {
         </>
       )}
       <section className="panel proposal-section">
-        <h2 id="unassigned-demand-heading" tabIndex={-1}>Unassigned demand</h2>
+        <h2 id="unassigned-demand-heading" tabIndex={-1}>
+          Unassigned demand
+        </h2>
         <p>
           Authorised work without a non-cancelled appointment. Work whose only
-          visits were cancelled can appear again. Draft work is excluded.
-          Demand is independent of calendar dates, resource and status filters;
-          the selected site and your permitted scope apply.
+          visits were cancelled can appear again. Draft work is excluded. Demand
+          is independent of calendar dates, resource and status filters; the
+          selected site and your permitted scope apply.
         </p>
         {demand.loading && <p role="status">Loading permitted records…</p>}
         {/* Demand is a secondary read on this page, so it reports its own
@@ -1758,7 +1879,13 @@ export function PlannerScreen() {
                   <small>
                     Work order v{w.version} · {w.site_timezone}
                   </small>
-                  <button className="pl01-primary" disabled={demand.loading} onClick={() => setPlanId(w.id)}>Plan visit</button>
+                  <button
+                    className="pl01-primary"
+                    disabled={demand.loading}
+                    onClick={() => setPlanId(w.id)}
+                  >
+                    Plan visit
+                  </button>
                 </article>
               ))}
             </div>
@@ -1773,14 +1900,37 @@ export function PlannerScreen() {
                 ? "Complete permitted result"
                 : `Partial result · bounded to ${demand.data.limit}; more eligible work may exist`}{" "}
               · Observed{" "}
-              <Stamp value={demand.data.observed_at} timezone={zone} />
-              {" "}({zone})
+              <Stamp value={demand.data.observed_at} timezone={zone} /> ({zone})
             </p>
-            {demand.data.completeness === "Partial" && (demandLimit < 200 ? <button className="secondary" onClick={() => setDemandLimit(200)}>Show up to 200 permitted orders</button> : <p>Narrow by site to inspect this bounded result. There is no next page.</p>)}
+            {demand.data.completeness === "Partial" &&
+              (demandLimit < 200 ? (
+                <button
+                  className="secondary"
+                  onClick={() => setDemandLimit(200)}
+                >
+                  Show up to 200 permitted orders
+                </button>
+              ) : (
+                <p>
+                  Narrow by site to inspect this bounded result. There is no
+                  next page.
+                </p>
+              ))}
           </>
         )}
       </section>
-      {planId && <DemandPanel key={planId} id={planId} returnTo={returnTo} onClose={() => setPlanId(null)} onSaved={() => { demand.reload(); result.reload(); }} />}
+      {planId && (
+        <DemandPanel
+          key={planId}
+          id={planId}
+          returnTo={returnTo}
+          onClose={() => setPlanId(null)}
+          onSaved={() => {
+            demand.reload();
+            result.reload();
+          }}
+        />
+      )}
       {dragNotice && (
         <p role="status" className="planner-warning">
           {dragNotice}
