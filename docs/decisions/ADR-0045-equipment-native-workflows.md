@@ -18,6 +18,8 @@ Calibration renewal adds a retained certificate record in `inspection_instrument
 
 ## Alternatives and constraints
 
+EQ-02 requests camera access only after an explicit action and stops tracks when leaving or stopping capture. The local demonstration response permits `camera=(self)` while microphone and geolocation remain disabled; browser permission is still required. A route-specific document policy was rejected because native SPA navigation retains the initial document policy. Retaining `camera=()` would silently prevent the authorised lookup feature on supported devices. No images or video are uploaded or retained by this lookup.
+
 Reusing the standalone HTML's local storage would omit current permission, concurrency and receipt guarantees. Separate Asset/instrument/task stores would duplicate canonical responsibilities. Editing configuration history would reinterpret earlier work. A third-party QR library adds maintenance before a need has been demonstrated; use browser capability detection and permanent manual fallback, with unsupported camera states explicit.
 
 `shared.read`, `shared.edit` and `shared.history.record` express existing context maintenance/evidence duties; reuse only where their scope matches the command. Distinct review authority, if required by a future operational policy, needs its own decision and the complete capability regeneration workflow. No hidden control grants authority.

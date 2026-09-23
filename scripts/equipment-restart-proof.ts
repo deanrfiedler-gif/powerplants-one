@@ -38,7 +38,7 @@ async function call(path: string, data?: unknown) {
     headers: { origin, cookie, "content-type": "application/json" },
     body: data === undefined ? undefined : JSON.stringify(data),
   });
-  assert.ok(r.ok(), await r.clone().text());
+  assert.ok(r.ok, await r.clone().text());
   return r.json();
 }
 async function snapshot(id: string, operations: string[]) {

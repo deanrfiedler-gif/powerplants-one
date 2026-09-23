@@ -82,6 +82,15 @@ test("EQ02 unknown, malformed, unavailable camera and denial retain manual looku
     });
   });
   await page.goto("/equipment/lookup");
+  expect(
+    await page.evaluate(() =>
+      (
+        document as Document & {
+          featurePolicy: { allowsFeature(name: string): boolean };
+        }
+      ).featurePolicy.allowsFeature("camera"),
+    ),
+  ).toBe(true);
   await page.getByRole("button", { name: "Start camera" }).click();
   await expect(
     page.getByText(/QR camera scanning is unavailable/),
@@ -307,14 +316,12 @@ test("EQ06 native bulletin retains candidate and reviewed disposition separately
   await page
     .getByRole("button", { name: "Record evidence", exact: true })
     .click();
-  const card = page
-    .locator("article")
-    .filter({
-      has: page.getByRole("heading", {
-        name: `${reference} · r01 · Open`,
-        exact: true,
-      }),
-    });
+  const card = page.locator("article").filter({
+    has: page.getByRole("heading", {
+      name: `${reference} · r01 · Open`,
+      exact: true,
+    }),
+  });
   await expect(
     card.getByText(
       "1 permitted candidates. Matching does not establish applicability.",
@@ -380,14 +387,12 @@ test("EQ09 native calibration creation and withdrawal retain certificate evidenc
   await page
     .getByRole("button", { name: "Record certificate evidence", exact: true })
     .click();
-  const card = page
-    .locator("article")
-    .filter({
-      has: page.getByRole("heading", {
-        name: `${reference} · SYN browser pressure gauge`,
-        exact: true,
-      }),
-    });
+  const card = page.locator("article").filter({
+    has: page.getByRole("heading", {
+      name: `${reference} · SYN browser pressure gauge`,
+      exact: true,
+    }),
+  });
   await expect(
     card.getByText("SYN certificate source · r01", { exact: true }),
   ).toBeVisible();
