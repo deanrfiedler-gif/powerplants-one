@@ -199,7 +199,10 @@ test("change request review presents exact comparison before a reasoned decision
   await expect(
     request.getByRole("heading", { name: "Requested booking" }),
   ).toBeVisible();
-  await request.screenshot({
+  await request
+    .getByRole("heading", { name: "Current booking", exact: true })
+    .evaluate((e) => e.scrollIntoView({ block: "start" }));
+  await page.screenshot({
     path: info.outputPath("current-proposed-comparison.png"),
   });
   await request

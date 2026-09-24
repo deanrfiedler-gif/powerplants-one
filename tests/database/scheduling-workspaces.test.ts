@@ -49,6 +49,13 @@ test("PL-02 returns scoped eligibility, calendar, competence validity and anonym
     ),
   );
   assert.ok(result.resource.busy.length);
+  await assert.rejects(
+    readResourceWorkspace(await p(), id("a4"), {
+      ...period,
+      site_id: id("70"),
+    }),
+    { code: "InvalidData" },
+  );
   assert.ok(
     result.resource.busy.every(
       (b: Record<string, unknown>) =>
@@ -95,6 +102,11 @@ test("capacity keeps source provenance, unknown effort and reservations separate
     ),
   );
   const a = (await readAppointment(await p(), id("a8"))).items[0];
+  assert.ok(
+    result.items
+      .find((i) => i.key === "Appointment:" + a.id)
+      ?.skills.includes("SYN-VISUAL"),
+  );
   assert.ok(
     !result.items.some((i) => i.key === "WorkOrder:" + a.work_order_id),
   );
@@ -184,6 +196,13 @@ test("change queue includes pending proposed-window requests and exact handover;
   );
   const focused = await readChanges(actor, { ...period, appointment_id: a.id });
   assert.equal(focused.items.length, 1);
+  await assert.rejects(
+    readChanges(actor, {
+      ...period,
+      appointment_id: a.id,
+      resource_id: id("a4", 3),
+    }),
+  );
   const current = focused.items[0],
     decision = {
       ...base(),

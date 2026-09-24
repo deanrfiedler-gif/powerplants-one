@@ -49,7 +49,7 @@ export async function readResourceWorkspace(
   id: string,
   input: unknown,
 ) {
-  const { period } = periodInput(input);
+  const { period } = periodInput(object(input, ["from", "to", "timezone"]));
   return transaction(async (c) => {
     await c.query("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ");
     await visibleResource(c, p, id);
@@ -124,7 +124,20 @@ export async function readChanges(p: Principal, input: unknown) {
     const items = [];
     for (const row of rows) {
       try {
-        items.push(await appointmentDetail(c, p, row.id));
+        const detail = await appointmentDetail(c, p, row.id);
+        if (
+          focus &&
+          ((site && detail.site_id !== site) ||
+            (resource &&
+              !detail.assignments.some(
+                (x) =>
+                  x.active &&
+                  x.assignment_version === detail.assignment_version &&
+                  x.resource_id === resource,
+              )))
+        )
+          throw unavailable();
+        items.push(detail);
       } catch (e) {
         if (focus || !(e instanceof AppError) || ![403, 404].includes(e.status))
           throw e;
@@ -136,7 +149,9 @@ export async function readChanges(p: Principal, input: unknown) {
       to: period.end_at,
       focused: !!focus,
       observed_at: new Date().toISOString(),
-      completeness: "Complete permitted appointments in this review window",
+      completeness: focus
+        ? "Exact permitted appointment; date window bypassed"
+        : "Complete permitted appointments in this review window",
     };
   });
 }
@@ -197,6 +212,12 @@ export async function readCapacity(p: Principal, input: unknown) {
       const crew = a.assignments.filter(
         (x) => x.active && x.assignment_version === a.assignment_version,
       );
+      const skills = (
+        await c.query(
+          "SELECT DISTINCT unnest(required_skill_codes) AS code FROM ppo.scope_items WHERE workspace_id=$1 AND scope_revision_id=$2",
+          [p.workspace_id, a.scope_revision_id],
+        )
+      ).rows.map((x) => x.code as string);
       items.push({
         key: "Appointment:" + a.id,
         domain: "Service",
@@ -212,7 +233,7 @@ export async function readCapacity(p: Principal, input: unknown) {
         owner: owner.display_name,
         owner_id: owner.service_owner_id,
         resource_ids: crew.map((x) => x.resource_id),
-        skills: [],
+        skills,
         window_start: a.start_at.toISOString(),
         window_end: a.end_at.toISOString(),
         time_basis: a.site_timezone + " · appointment instants",
