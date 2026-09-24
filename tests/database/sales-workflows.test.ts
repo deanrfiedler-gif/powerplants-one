@@ -727,8 +727,10 @@ test("migration 0046 preserves previous ledger and immutable Won obligations on 
       "SELECT * FROM public.ppo_migrations ORDER BY version",
     )
   ).rows;
-  assert.deepEqual(after.slice(0, -1), before);
-  assert.equal(after.at(-1).version, 46);
+  // Other domains can add migrations on either side of Sales. Preserve the
+  // exact baseline ledger and require Sales once without assuming it is last.
+  assert.deepEqual(after.filter((row) => row.version <= 44), before);
+  assert.equal(after.filter((row) => row.version === 46).length, 1);
   assert.deepEqual(
     (
       await database().query(
