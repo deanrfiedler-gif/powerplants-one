@@ -1,5 +1,5 @@
 "use client";
-import { ReadState, useResource } from "../../../components/business-ui";
+import { isDenied, ReadState, useResource } from "../../../components/business-ui";
 import { Button, ButtonLink } from "../../../components/ui/button";
 import { readableValue } from "../../pack-view";
 
@@ -20,9 +20,14 @@ export function JobPackEntry({ appointmentId }: { appointmentId: string }) {
     `appointments/${appointmentId}/pack`,
   );
   const current = !read.loading && !read.error ? read.data : null;
+  const denied = !read.loading && isDenied(read.error);
   return (
     <section className="job-pack-entry" aria-label="Visit job pack">
-      <ReadState {...read} retry={read.reload} />
+      {denied ? (
+        <p role="status">Job pack access is unavailable to this identity.</p>
+      ) : (
+        <ReadState {...read} retry={read.reload} />
+      )}
       {current && (
         <>
           {current.pack ? (
@@ -54,10 +59,12 @@ export function JobPackEntry({ appointmentId }: { appointmentId: string }) {
               coordinator to review preparation.
             </p>
           )}
-          <Button variant="quiet" onClick={read.reload}>
-            Refresh pack status
-          </Button>
         </>
+      )}
+      {(current || denied) && (
+        <Button variant="quiet" onClick={read.reload}>
+          Refresh pack status
+        </Button>
       )}
     </section>
   );

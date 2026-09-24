@@ -33,8 +33,7 @@ Local results on the integrated #309 tree: production build passed; fresh migrat
 
 Fresh CI remains required for every integrated head. Synthetic test evidence does not establish owner/device acceptance, production readiness or deployment.
 
-## Combined migration and Scheduling reconciliation
 
-The integrated sequence assigns Equipment 0045, Sales 0046, Engineering 0047 and Cost Sources 0048. The unmerged Cost Sources SQL is byte-identical after renumbering; seed order, exact migration lists, upgrade counts, grant allowlists and the 92-capability access-review contract are reconciled. No existing database is renumbered and no issued identity is changed.
+## Optional Job Pack access boundary
 
-Scheduling's Contacts source review is recorded in `docs/design/contacts/README.md`. Local verification passed: byte-identical issued Contacts HTML; all 103 Contacts model groups; all 62 native Chrome browser groups; TypeScript; design register (309 entries, 28 components); foundation, prototype and naming checks. Visual/owner review remains pending in the register. Fresh CI and combined database upgrade proof remain required.
+Fresh CI at `8155cd1` exposed two invited-user demo failures ([run 35947481361](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35947481361)). The saved appointment loaded correctly, but its new optional JobPackEntry showed a page error for an identity without pack.read. The panel now distinguishes a denied read from a failed request: permission denial shows an access-unavailable status, while server/transport errors retain the error alert. Both hide old links; refresh remains available. No permissions, endpoints or server policy change. Consumer fixtures cover 403, 404 and 500, and the invited-user journeys explicitly wait for the unavailable status and assert no pack link. Fresh CI remains required.
