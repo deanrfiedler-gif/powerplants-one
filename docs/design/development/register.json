@@ -1962,7 +1962,7 @@
       "title": "Job-pack preparation and issue follow-through",
       "kind": "scope",
       "module": "SV",
-      "summary": "Complete Job Pack r03 integration. The new detail screen is in current source; the maintained plan still identifies preparation, revision history/source-change/print and entry-point/conformance work (I3–I5).",
+      "summary": "Job Pack r03 I1–I3 are merged. I4 adds source-change review and exact saved-revision print choices; structured sections (I6), presentation refinements (I7) and final conformance/entry points (I5) remain.",
       "path": "/service/packs",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -5794,7 +5794,7 @@
       "title": "Job pack detail",
       "kind": "route",
       "module": "SV",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "Job Pack r03 I1–I3 are merged. I4 adds source-change review and exact saved-revision print choices; structured sections (I6), presentation refinements (I7) and final conformance/entry points (I5) remain.",
       "path": "/service/packs/[id]",
       "source_paths": [
         "src/app/(business)/service/packs/[id]/page.tsx"
