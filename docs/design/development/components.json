@@ -1502,6 +1502,70 @@
         }
       ],
       "review": null
+    },
+    {
+      "id": "job-pack-dialog",
+      "title": "Job Pack decision and print dialogs",
+      "category": "Dialogs & overlays",
+      "module": "SV",
+      "purpose": "The page-scoped r03 PackDialog used by preparation, controlled decisions and print choices. Application fixture coverage is linked; the catalogue has no isolated renderer for this variant.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Reference only",
+      "states": [
+        {
+          "id": "saved-print",
+          "label": "Saved preparation",
+          "description": "Heading focus; exact saved draft link; no business mutation."
+        },
+        {
+          "id": "unsaved-print",
+          "label": "Unsaved preparation",
+          "description": "Save and print or keep entries and print the saved draft."
+        },
+        {
+          "id": "reason",
+          "label": "Record change",
+          "description": "Reason focused; busy command blocks dismissal; refusal retains inputs."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/documents/components/client/job-pack-ui.tsx",
+          "symbol": "PackDialog"
+        }
+      ],
+      "dependencies": [
+        "src/app/styles/job-pack.css",
+        "src/documents/components/client/job-pack-screen.tsx",
+        "src/documents/components/client/job-pack-change-dialog.tsx"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
+        "anchor": "",
+        "status": "Accepted page-scoped r03 reference; owner acceptance of native application remains separate"
+      },
+      "specification": "docs/design/development/components/job-pack-dialog.md",
+      "used_on": [
+        "scope:SV-05",
+        "route:/service/packs/[id]",
+        "route:/service/packs/new"
+      ],
+      "desktop": "Native modal with heading/body/actions. Initial reason or primary action focus; information-only choices focus the heading.",
+      "mobile": "Keep dialog within the viewport with scrollable body and reachable actions at 390 and 320 CSS px; 44 px touch targets.",
+      "keyboard": "Tab and Shift+Tab wrap through visible enabled controls, including backward from the initially focused heading. Escape returns to the opener or active pack tab.",
+      "limitations": "This retained page-specific variant is not the shared WorklistPanel. Reference-only describes catalogue rendering, not absence from the application. No catalogue business command is executed.",
+      "gaps": [
+        {
+          "id": "job-pack-dialog-gallery",
+          "expected": "An isolated live catalogue rendering for the page-specific dialog.",
+          "actual": "Exact source and application state fixtures are linked; no gallery renderer is bound.",
+          "action": "Retain the visible reference-only entry and use the I4 application browser proof; consider a gallery fixture in shared-control alignment.",
+          "priority": "Low",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
     }
   ]
 }
