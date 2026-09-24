@@ -1137,7 +1137,7 @@ export async function decideChangeRequest(
     action === "accept" ? "AppointmentChanged" : "ScheduleChangeDecided",
   );
 }
-async function resourceDetail(
+export async function resourceDetail(
   c: QueryClient,
   p: Principal,
   id: string,
@@ -1203,7 +1203,8 @@ async function appointmentCore(c: QueryClient, p: Principal, id: string) {
   ).rows;
   for (const x of assignments)
     await visibleResource(c, p, x.resource_id, a.site_id);
-  return { a, w, site, r, assignments };
+  const customer = await visible(c,p,"Organisation",w.customer_id);
+  return { a, w, site, r, assignments, customer };
 }
 function appointmentHeader({
   a,
@@ -1211,6 +1212,7 @@ function appointmentHeader({
   site,
   r,
   assignments,
+  customer,
 }: Awaited<ReturnType<typeof appointmentCore>>) {
   return {
     ...a,
@@ -1224,6 +1226,7 @@ function appointmentHeader({
       a.scope_revision_id !== w.authorised_scope_revision_id ||
       a.scope_version !== r.version,
     site_name: site.display_name,
+    customer_name: customer.display_name,
     primary_contact_id: site.primary_contact_id,
     assignments,
   };
@@ -1257,7 +1260,7 @@ async function appointmentActions(
     ),
   };
 }
-async function appointmentDetail(c: QueryClient, p: Principal, id: string) {
+export async function appointmentDetail(c: QueryClient, p: Principal, id: string) {
   const core = await appointmentCore(c, p, id),
     { a, w, r } = core;
   const contacts = (
@@ -1297,6 +1300,7 @@ async function appointmentDetail(c: QueryClient, p: Principal, id: string) {
         summary: activity.summary,
         status: activity.status,
         owner_id: activity.owner_id,
+        owner_name: (await c.query("SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2", [p.workspace_id,activity.owner_id])).rows[0]?.display_name ?? "Unknown",
         due_at: activity.due_at,
         due_needed: activity.due_needed,
       });
@@ -1335,7 +1339,7 @@ async function appointmentDetail(c: QueryClient, p: Principal, id: string) {
     actions: await appointmentActions(c, p, a),
   };
 }
-async function scheduleSummaries(c: QueryClient, p: Principal, ids: string[]) {
+export async function scheduleSummaries(c: QueryClient, p: Principal, ids: string[]) {
   if (!ids.length) return [];
   // Read the bounded candidate set together. Every predicate below uses the
   // same source-of-truth scope projections as the individual detail read,
@@ -1351,6 +1355,7 @@ async function scheduleSummaries(c: QueryClient, p: Principal, ids: string[]) {
         scope_revision: number;
         scope_review_required: boolean;
         site_name: string;
+        customer_name: string;
         primary_contact_id: string | null;
         can_manage: boolean;
         can_request: boolean;
@@ -1361,13 +1366,14 @@ async function scheduleSummaries(c: QueryClient, p: Principal, ids: string[]) {
         sr.summary AS scope_summary,sr.content_hash AS scope_hash,sr.revision AS scope_revision,
         (w.scope_revision_id IS DISTINCT FROM w.authorised_scope_revision_id OR
          a.scope_revision_id IS DISTINCT FROM w.authorised_scope_revision_id OR a.scope_version<>sr.version) AS scope_review_required,
-        site.display_name AS site_name,site.primary_contact_id,
+        site.display_name AS site_name,site.primary_contact_id,customer.display_name AS customer_name,
         ${scopeSql("a.company_id", "a.site_id", "schedule.manage")} AS can_manage,
         ${scopeSql("a.company_id", "a.site_id", "schedule.request")} AS can_request,
         ${scopeSql("a.company_id", "a.site_id", "schedule.contact")} AS can_contact
        FROM ppo.appointments a
        JOIN ppo.work_orders w ON (w.workspace_id,w.id)=(a.workspace_id,a.work_order_id)
        JOIN ppo.sites site ON (site.workspace_id,site.id)=(a.workspace_id,a.site_id)
+       JOIN ppo.organisations customer ON (customer.workspace_id,customer.id)=(w.workspace_id,w.customer_id)
        JOIN ppo.scope_revisions sr ON (sr.workspace_id,sr.work_order_id,sr.id)=(a.workspace_id,w.id,a.scope_revision_id)
        WHERE a.workspace_id=$1 AND a.id=ANY($3::uuid[])
          AND ${scopeSql("a.company_id", "a.site_id", "schedule.read")}
@@ -1435,7 +1441,7 @@ export async function readAppointment(
     return envelope([await appointmentDetail(c, p, id)]);
   });
 }
-async function scheduleLanes(
+export async function scheduleLanes(
   c: QueryClient,
   p: Principal,
   ids: string[],
@@ -1494,6 +1500,12 @@ async function scheduleLanes(
   }));
 }
 export async function readSchedule(p: Principal, input: unknown) {
+  return transaction(async (c) => {
+    await c.query("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ");
+    return scheduleSnapshot(c, p, input);
+  });
+}
+export async function scheduleSnapshot(c: QueryClient, p: Principal, input: unknown, maxDays = 8) {
   const q = object(input, [
       "from",
       "to",
@@ -1509,10 +1521,8 @@ export async function readSchedule(p: Principal, input: unknown) {
   const status = q.status
     ? choice(q.status, "status", ["Proposed", "Confirmed", "Cancelled"])
     : null;
-  if (Date.parse(period.end_at) - Date.parse(period.start_at) > 8 * 86400000)
-    blocked("to", "Load at most eight days at a time.");
-  return transaction(async (c) => {
-    await c.query("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ");
+  if (Date.parse(period.end_at) - Date.parse(period.start_at) > maxDays * 86400000)
+    blocked("to", `Load at most ${maxDays} days at a time.`);
     await requireCapability(c, p, "schedule.read");
     if (siteId) {
       const site = await visible(c, p, "Site", siteId);
@@ -1561,5 +1571,4 @@ export async function readSchedule(p: Principal, input: unknown) {
       to: period.end_at,
       synthetic: true,
     };
-  });
 }

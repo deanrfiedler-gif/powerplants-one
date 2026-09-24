@@ -16,9 +16,9 @@
     "src/shared/reads.ts": "7adc6229ce98701eee689d9206db528367909ed6e6627efc2fa697e1ecfbfe9b",
     "src/crm/directory.ts": "5812d66b1edd4d791128e568d18226fedf21f9ce3f6059aa8c42ab5cef5336e5",
     "src/shared/context.ts": "1859ee53bb9a4f0831a5ea1ce1c7bfe93450f01cf1ba1f5605c8c1ec8583d2d8",
-    "src/projects/service.ts": "f928687f1587a5f78108236d822cdd905b41aaa0c56ba99100b7c6209f6cb003",
+    "src/projects/service.ts": "80bd9df083d975358d3e0196534324d5052e32a63a08730c1c9b48b6f84e0bd2",
     "src/finance/context.ts": "5cf34bf9c0ded84218b2f9948698e2d59ae070a957b1ab186a80c94b02ddfc73",
-    "src/scheduling/planner.ts": "ff302dd3b520fbfa2b2b1bdad9d03611275a2a13be38639b1095bacc576af16c",
+    "src/scheduling/planner.ts": "fd4d58cd76b8e67773ad991125cfd89d8d383424b71f6c53ede5648efa5adab0",
     "src/reports/service.ts": "81bdafae2a81aa7c246c96cdba0c6801cf5b9cb54fd4ca9d0e6889781af0c609",
     "db/seed.sql": "3a5460878e57f6d803affee8ff10a09f1888d2167a78755c9af12a09769c5b81"
   },

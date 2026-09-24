@@ -526,3 +526,20 @@ export async function projectOptions(p: Principal, input: unknown) {
   const rows = await internalOwners(c, p, context, search, true);
   return { items: rows.slice(0, 50), has_more: rows.length > 50 };
 }
+
+// Scheduling consumes the same scoped project/task projection in its read snapshot.
+export async function capacityProjects(c: QueryClient, p: Principal, from: string, to: string) {
+  const rows = (await c.query<ProjectRow>(
+    `${projectSelect} WHERE p.workspace_id=$1 AND ${projectVisibility()} AND p.lifecycle='Active'
+      AND EXISTS (SELECT 1 FROM ppo.project_tasks t WHERE t.workspace_id=p.workspace_id AND t.project_id=p.id AND t.status<>'Complete'
+        AND (t.start_date IS NULL OR t.finish_date IS NULL OR (t.start_date<$4::date AND t.finish_date>=$3::date)))
+      ORDER BY p.id LIMIT 101`, [p.workspace_id,p.actor_id,from,to])).rows;
+  const items = [];
+  for (const row of rows.slice(0,100)) {
+    const timestamps = (await c.query<{id:string;updated_at:Date}>("SELECT id,updated_at FROM ppo.project_tasks WHERE workspace_id=$1 AND project_id=$2",[p.workspace_id,row.id])).rows;
+    items.push({ project: projection(row,false), tasks: (await tasksFor(c,p,row.id)).filter(t =>
+      t.status !== 'Complete' && (!t.start_date || !t.finish_date || (t.start_date < to && t.finish_date >= from)))
+      .map(task=>({...task,updated_at:timestamps.find(t=>t.id===task.id)!.updated_at.toISOString()})) });
+  }
+  return { items, completeness: rows.length>100 ? 'Partial' : 'Complete' };
+}

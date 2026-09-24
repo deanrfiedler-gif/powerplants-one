@@ -66,7 +66,7 @@ HTML packages: follow docs/standards/html-module-conformance.md. State scope ID,
 
 ## 8. Execution and authority
 
-Complete authorised work; state assumptions. Ask only when a consequential missing fact blocks progress.
+Complete authorised work; ask only for consequential blockers.
 
 Preserve unrelated work. Use a dedicated branch/reviewable PR; merge only within granted scope after required checks/review. Respect permissions; update affected specifications/registers.
 
@@ -87,6 +87,8 @@ Mail: preserve private mailboxes and body separation (demo-email-crm-integration
 CS: follow ADR-0042 and cs-native-completion-handover.md. Preserve CS-05 identities, Grouping, service links and E2 snapshots. Readiness grants no work authority; survey handovers bind exact reviewed snapshots. Account plans create no bookings/forecasts. Reuse SH and Activity; Finance /account stays Finance.
 
 Fertigation: follow `docs/delivery/priva-fertigation-native-handover.md`. Preserve exact scopes, neutral context and unverified supplier conclusions. Merge/deployment need separate authorisation.
+
+Scheduling PL-01 to PL-05: preserve source-owned reads, unknown effort/mappings, analytical scenarios and explicit travel. Follow `docs/decisions/scheduling-resources-architecture.md`.
 
 Sales CR-01–05: follow ADR-0046 and sales-native-completion-handover.md. Preserve frozen submissions, immutable Won due, source-scoped receipts and aftercare unknown policies. Receiving creates no downstream work.
 

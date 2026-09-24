@@ -492,3 +492,11 @@ export async function engineeringOptions(p: Principal, value: unknown) {
   ).rows;
   return { items: rows.slice(0, 50), has_more: rows.length > 50 };
 }
+
+// Dates remain due dates, never an effort estimate or a Service resource mapping.
+export async function capacityEngineering(c: QueryClient, p: Principal, from: string, to: string) {
+  const rows = (await c.query<Row & {site_name:string|null}>(`${projectionSql.replace("SELECT p.*", "SELECT s.display_name AS site_name,p.*")} WHERE p.workspace_id=$1 AND ${permitted()}
+    AND (p.required_date IS NULL OR (p.required_date >= $3::date AND p.required_date < $4::date))
+    ORDER BY p.id LIMIT 201`, [p.workspace_id,p.actor_id,from,to])).rows;
+  return { items: rows.slice(0,200).map(r=>({...project(r),site_name:r.site_name})), completeness: rows.length>200 ? 'Partial' : 'Complete' };
+}

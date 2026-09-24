@@ -482,3 +482,17 @@ Additive read contract for the service requests register, increment I1 of build 
   - **Query fields:** `q`, `company_id`, `site_id` and `owner_id`. `status` and paging are refused.
   - **Returns:** `{as_at, all_open, new, needs_information, triaged, urgent, overdue_clarifications, source}`, using the list's visibility and filters.
   - **Overdue clarifications:** a NeedsInformation request whose visible clarification activity is Open or InProgress with a past `due_at`. A clarification the identity cannot read is not counted.
+
+## Scheduling & Resources read workspaces
+
+[PPO-SCHED-ADR](../decisions/scheduling-resources-architecture.md) extends API-R04 without adding command authority. All responses use the existing no-store readRoute, current server identity and bounded repeatable-read snapshots. The existing eight-day `/schedule` and resource selector contracts remain unchanged.
+
+| Read | Parameters and bound | Evidence and authority |
+|---|---|---|
+| GET `/api/v1/resources/:id/scheduling` | `from`, `to`, IANA `timezone`; positive interval, at most 93 days | `schedule.read`, shared site scope and existing resource visibility. Published bundle, permitted eligibility, calendar/skill review evidence, anonymous busy intervals and scoped current assignments |
+| GET `/api/v1/schedule/changes` | `from`, `to`, `timezone`; optional `site_id`, `resource_id`, `appointment_id`; at most 93 days and 50 candidate appointments | Current appointment/work-order/context visibility. Includes current interval or a Pending request whose proposed interval intersects the period. Exact `appointment_id` handover bypasses date filtering but must match any selected site/resource and never bypasses permission checks. More than the bound refuses with narrowing instructions |
+| GET `/api/v1/schedule/capacity` | `from`, `to`, `timezone`; optional `site_id`, `resource_id`; at most 93 days | Existing scoped Service snapshot (200 visits/50 resources), up to 200 undated authorised orders, 100 permitted active Projects and their open tasks, 200 Engineering packages. Each source reports completeness or Unavailable; source-domain permissions are independent |
+
+Capacity is a server projection. Stable typed source keys prevent duplicate contributions. Orders with a non-cancelled appointment are not added again as unassigned demand. Project tasks and Engineering packages remain separate source plans: no undocumented semantic overlap/deduplication is guessed across domains. Unknown effort is JSON null, never zero. Calendar dates retain their domain/timezone meaning; reservations count each included appointment's whole crew reservation and explicit travel, not prorated effort, labour or utilisation. Required skills come from the appointment's captured scope or the unassigned order's authorised scope. Undated sources remain visible alongside the selected window. Resource filtering applies to Service assignments/supply; other domains retain unmapped resources rather than invent mappings.
+
+All new endpoints are GET-only. Travel order and capacity exclusions have no command API. Exact appointment handover returns through an allowlisted Scheduling URL. Existing accept/reject/cancel/contact/move commands retain their payloads, expected versions, durable receipts/outbox and refusal semantics. Request review exposes current/proposed time, crew and travel before invoking those commands. Read failure is Unknown, never free capacity.

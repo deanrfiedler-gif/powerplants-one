@@ -458,3 +458,11 @@ Stage definitions come from the immutable I1 catalogue. Counts use only the retu
 | Facility history | Existing immutable `audit_events` with before/after, clearing, context/source and reviewed dependency facts; no invented `history_records` kind. |
 
 Rich APIs and scoped keyset pages are additive to legacy shared APIs. Type/use/parent changes that remove or reinterpret facts require a fresh exact comparison. E2 keeps its accepted Facility ID/name/version; no automatic accepted-snapshot, pricing, quote or project mutation occurs. Current read/create/edit use existing shared capabilities; no new grants are seeded. Synthetic examples are introduced once and reseeding retains later edits.
+
+## Scheduling & Resources derived read model
+
+No persisted schema is added. [PPO-SCHED-ADR](../decisions/scheduling-resources-architecture.md) defines the derivation. `DemandContribution` has a typed stable source key, domain, source UUID/version/as-at, readable reference, exact drill-through, permitted customer/site context, owner, resource IDs/skill codes where explicitly supplied, window with time basis, source commitment/state/completeness and next action. `effort_minutes` is null for current sources. `reserved_minutes` counts Service crew occupancy including explicit travel; Proposed visits reserve zero and other domains supply no reservations. These fields never become actual field Travel or labour.
+
+Resource detail uses existing immutable Resource, WorkingCalendar, SkillEvidence and ResourceEvidence fields; review UUID/time/hash are source evidence, not new certification. Site lists are permission-filtered. Busy intervals reveal start/end only where booking detail is unavailable. New resource history is not fabricated from an immutable current bundle. Appointment summary/detail adds permitted customer display context; follow-ups retain their Activity owner and current status.
+
+`ChangesWorkspace` is a bounded collection of existing appointment detail, including immutable request crew and historical booking/contact evidence. `CapacityWorkspace` is one repeatable-read snapshot of source-owned contributions and current permitted resource supply. Scenario exclusions and sequence arrays exist only in the current browser view and are discarded on refresh/context change. No audit/receipt/write is created by analysis.

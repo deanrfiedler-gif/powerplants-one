@@ -30,6 +30,7 @@ import "./styles/project-acceptance.css";
 import "./module-workspaces.css";
 import "./styles/facilities.css";
 import "./styles/planner-demand.css";
+import "./styles/scheduling-workspaces.css";
 import "../components/ui/controls.css";
 import "./styles/development.css";
 import "./styles/component-catalogue.css";
