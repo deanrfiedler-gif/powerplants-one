@@ -1911,8 +1911,13 @@
         },
         {
           "id": "denied",
-          "label": "Denied or failed",
-          "description": "Retry without a stale record link."
+          "label": "Access unavailable",
+          "description": "Permission denial shows a status and refresh without a stale record link."
+        },
+        {
+          "id": "failed",
+          "label": "Read failed",
+          "description": "Server or transport error retains the shared alert and retry; no stale link."
         }
       ],
       "implementation": [
@@ -1949,6 +1954,14 @@
           "actual": "Actual consumer browser fixtures retained",
           "action": "Use the I5 handover suite; catalogue rendering remains a separate extension.",
           "priority": "Low",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "job-pack-entry-access-review",
+          "expected": "Owner review of access-unavailable and failed-read presentation in both consumers",
+          "actual": "Distinct states implemented; automated fixtures cover 403, 404 and 500; owner review pending",
+          "action": "Compare appointment and Field Technicians states on desktop and phone without granting pack authority.",
+          "priority": "Medium",
           "owner": "Dean Fiedler"
         }
       ],
