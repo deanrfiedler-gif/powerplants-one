@@ -31,9 +31,10 @@ test("FI05 assigned visit, unchanged originals, changed sources and responsive f
     reason: "SYN FI05 browser verification",
   });
   await login(request, "coordinator");
+  // Dedicated weekdays: the full pack/browser suite owns November 19 and 20.
   const job = await prepareIsolatedFieldAppointment(
     call,
-    info.project.name.startsWith("mobile") ? "2031-11-20" : "2031-11-19",
+    info.project.name.startsWith("mobile") ? "2031-12-09" : "2031-12-08",
   );
   const site = "70000000-0000-4000-8000-000000000001",
     owner = "30000000-0000-4000-8000-000000000001";
@@ -185,6 +186,11 @@ test("FI05 assigned visit, unchanged originals, changed sources and responsive f
   await expect(
     page.getByRole("button", { name: "Record my acknowledgement" }),
   ).toBeDisabled();
+  await page
+    .getByRole("heading", {
+      name: "Different or changed source/context — re-review required",
+    })
+    .scrollIntoViewIfNeeded();
   await page.screenshot({
     path: info.outputPath("fi05-changed-source.png"),
     fullPage: true,
