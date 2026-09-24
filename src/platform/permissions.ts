@@ -49,6 +49,7 @@ export type Capability =
   | "finance.account.read"
   | "estimating.read"
   | "estimating.edit"
+  | "estimating.source.review"
   | "estimating.quote.read"
   | "estimating.quote.prepare"
   | "report.read"

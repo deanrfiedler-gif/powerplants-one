@@ -6,6 +6,7 @@ import { scopedOwner } from "../shared/authority";
 import { uuid } from "../shared/validation";
 import type { CostLine, QuoteChoice } from "./math";
 import type { SafeQuote } from "./template";
+import { sourceBindings, type SourceBinding } from "./sources/bindings";
 import { costBasisContext, estimateSite, type CostBasis } from "./cost-basis-context";
 export type Estimate = {
   id:string; workspace_id:string; company_id:string; site_id:string|null; opportunity_id:string; owner_id:string;
@@ -18,6 +19,7 @@ export type EstimateVersion = {
   scope_revision_id:string; title:string; scope:{included:string;excluded:string;assumptions:string}; lines:CostLine[];
   policy:string; content_hash:string; reason:string; cost_total:string|null; sell_total:string|null; created_at:Date; created_by:string;
   cost_schema_version?: 1 | 2;
+  source_bindings?: SourceBinding[];
   discovery_basis?: CostBasis;
 };
 export type QuoteRevision = {
@@ -49,6 +51,7 @@ export async function estimateContext(c:QueryClient,p:Principal,id:string,cap:Es
     await relationshipContext(c,owner,o,"estimating.edit");
     if(basis) await relationshipContext(c,owner,{...o,site_id:site},"estimating.edit");
   }
+  if(cap!=="estimating.quote.read") await sourceBindings(c,p,versionId??e.current_version_id);
   return e;
 }
 export async function versionContext(c:QueryClient,p:Principal,e:Estimate,id:string,cap:EstimateCap="estimating.read") {
@@ -58,6 +61,10 @@ export async function versionContext(c:QueryClient,p:Principal,e:Estimate,id:str
   if(basis)v.discovery_basis=basis;
   // Keep every original schema-1 DTO field and value, including its absence of this new discriminator.
   if(v.cost_schema_version === 1) delete v.cost_schema_version;
+  if(cap!=="estimating.quote.read") {
+    const bindings=await sourceBindings(c,p,v.id);
+    if(bindings.length)v.source_bindings=bindings;
+  }
   return v;
 }
 export async function quoteContext(c:QueryClient,p:Principal,id:string,cap:EstimateCap="estimating.quote.read") {

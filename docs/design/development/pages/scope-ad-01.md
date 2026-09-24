@@ -39,3 +39,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 The draft User Guide `guide.ad.01` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## Current permission catalogue working master
+
+The stable [AD-01 working HTML](../../access-review/access-review.html) is generated from the current 88-capability registry, including the independent synthetic source-review duty. The issued r01 HTML and its original captures remain unchanged historical evidence; their catalogue count is not the working count. Native ES-03 permission enforcement is separate from this explanatory design. Generator/model/browser checks now use the versionless master. No owner review or current fingerprint is inferred from regeneration.

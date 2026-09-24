@@ -41,7 +41,7 @@
     'report.read':'Read service reports','report.review':'Review service reports','report.issue':'Issue service reports','report.respond':'Record customer responses',
     'crm.lead.read':'Read leads','crm.lead.create':'Create leads','crm.lead.edit':'Edit leads','crm.lead.convert':'Convert leads','crm.opportunity.read':'Read opportunities','crm.opportunity.create':'Create opportunities','crm.opportunity.edit':'Edit opportunities','crm.opportunity.transfer.own':'Transfer own opportunities',
     'finance.read':'Read Finance handoffs','finance.prepare':'Prepare Finance handoffs','finance.review':'Review Finance handoffs','finance.process':'Record Finance processing outcome','finance.reconcile':'Reconcile Finance outcomes','finance.issue':'Issue Finance supporting evidence','finance.account.read':'Read synthetic account context',
-    'estimating.read':'Read estimates','estimating.edit':'Edit estimates','estimating.quote.read':'Read quotation drafts','estimating.quote.prepare':'Prepare quotation drafts',
+    'estimating.read':'Read estimates','estimating.source.review':'Review synthetic source evidence', 'estimating.edit':'Edit estimates','estimating.quote.read':'Read quotation drafts','estimating.quote.prepare':'Prepare quotation drafts',
     'email.read':'Read linked email and calendar items','email.edit':'Link and follow up email items','email.connect':'Connect a demo mailbox',
     'project.read':'Read projects','project.create':'Create projects','project.edit':'Edit projects',
     'engineering.read':'Read engineering requests','engineering.create':'Create engineering requests','engineering.edit':'Edit engineering requests',

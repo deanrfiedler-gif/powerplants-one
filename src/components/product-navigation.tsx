@@ -488,7 +488,7 @@ export function ProductHeader() {
       : page?.workspace === "sales"
         ? ["deals", "leads"]
         : page?.workspace === "estimate"
-          ? ["estimates", "wizard"]
+          ? ["estimates", "wizard", ...(page.id === "pricing" ? ["pricing"] : [])]
           : page?.id === "mail" || page?.id === "calendar"
             ? ["mail", "calendar"]
       : ["customers", "sites", "facilities", "equipment"].includes(page?.id ?? "")

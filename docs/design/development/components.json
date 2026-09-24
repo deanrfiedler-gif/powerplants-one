@@ -92,7 +92,12 @@
         "system:theme",
         "route:/development/page-register",
         "scope:ES-01",
-        "route:/estimating"
+        "route:/estimating",
+        "scope:ES-03",
+        "route:/estimating/cost-sources",
+        "route:/estimating/cost-sources/new",
+        "route:/estimating/cost-sources/[id]",
+        "route:/estimating/estimates/[id]/sources"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -104,6 +109,14 @@
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "Legacy scoped button families do not all use Button/ButtonLink.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "es03-buttons-host-review",
+          "expected": "Paired native ES-03 source/form/comparison states against retained supplier-pricing design.",
+          "actual": "New native consumers; functional evidence and paired owner acceptance remain separately recorded.",
+          "action": "Inspect normal, stale, denied and original-operation recovery at desktop, phone and enlarged widths; preserve reference bytes.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -644,7 +657,12 @@
         "route:/sites/[id]/readiness",
         "route:/customers/[id]/development",
         "route:/surveys",
-        "route:/surveys/[id]"
+        "route:/surveys/[id]",
+        "scope:ES-03",
+        "route:/estimating/cost-sources",
+        "route:/estimating/cost-sources/new",
+        "route:/estimating/cost-sources/[id]",
+        "route:/estimating/estimates/[id]/sources"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -664,6 +682,14 @@
           "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
           "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "es03-fields-host-review",
+          "expected": "Paired native ES-03 source/form/comparison states against retained supplier-pricing design.",
+          "actual": "New native consumers; functional evidence and paired owner acceptance remain separately recorded.",
+          "action": "Inspect normal, stale, denied and original-operation recovery at desktop, phone and enlarged widths; preserve reference bytes.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -785,7 +811,12 @@
         "route:/sites/[id]/readiness",
         "route:/customers/[id]/development",
         "route:/surveys",
-        "route:/surveys/[id]"
+        "route:/surveys/[id]",
+        "scope:ES-03",
+        "route:/estimating/cost-sources",
+        "route:/estimating/cost-sources/new",
+        "route:/estimating/cost-sources/[id]",
+        "route:/estimating/estimates/[id]/sources"
       ],
       "desktop": "Submit an empty title to focus the summary, then follow its link to the field. Correct the title and save to clear the example error.",
       "mobile": "Summary and inline errors must remain visible at 320 px and 200% zoom.",
@@ -805,6 +836,14 @@
           "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
           "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "es03-validation-host-review",
+          "expected": "Paired native ES-03 source/form/comparison states against retained supplier-pricing design.",
+          "actual": "New native consumers; functional evidence and paired owner acceptance remain separately recorded.",
+          "action": "Inspect normal, stale, denied and original-operation recovery at desktop, phone and enlarged widths; preserve reference bytes.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1119,7 +1158,12 @@
         "route:/customers/[id]/development",
         "route:/surveys/[id]",
         "route:/sites/[id]",
-        "route:/surveys"
+        "route:/surveys",
+        "scope:ES-03",
+        "route:/estimating/cost-sources",
+        "route:/estimating/cost-sources/new",
+        "route:/estimating/cost-sources/[id]",
+        "route:/estimating/estimates/[id]/sources"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -1139,6 +1183,14 @@
           "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
           "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "es03-read-state-host-review",
+          "expected": "Paired native ES-03 source/form/comparison states against retained supplier-pricing design.",
+          "actual": "New native consumers; functional evidence and paired owner acceptance remain separately recorded.",
+          "action": "Inspect normal, stale, denied and original-operation recovery at desktop, phone and enlarged widths; preserve reference bytes.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1329,7 +1381,8 @@
       "specification": "docs/design/development/components/application-shell.md",
       "used_on": [
         "system:shell",
-        "scope:ES-01"
+        "scope:ES-01",
+        "scope:ES-03"
       ],
       "desktop": "Review the real global search, workspace switcher, rail, More and utility controls around this catalogue. Shell access can be unavailable without a running identity/database service.",
       "mobile": "Resize the actual browser window to review the mobile shell; component-frame presets do not resize the surrounding application.",
@@ -1349,6 +1402,14 @@
           "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
           "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "es03-application-shell-host-review",
+          "expected": "Paired native ES-03 source/form/comparison states against retained supplier-pricing design.",
+          "actual": "New native consumers; functional evidence and paired owner acceptance remain separately recorded.",
+          "action": "Inspect normal, stale, denied and original-operation recovery at desktop, phone and enlarged widths; preserve reference bytes.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

@@ -74,7 +74,7 @@ export const destinations: ShellDestination[] = [
   {"id": "wizard", "label": "Estimation wizard", "icon": "nav-wizard", "readiness": "ready", "href": "/estimating/discovery", "workspace": "estimate", "requires": ["estimating.read"]},
   {"id": "estimates", "label": "Intake & workload", "icon": "nav-estimates", "readiness": "ready", "href": "/estimating", "workspace": "estimate", "requires": ["estimating.read"]},
   {"id": "configurations", "label": "Specialist configurations", "icon": "nav-configurations", "readiness": "ready", "href": "/estimating/configurations", "workspace": "estimate", "requires": ["estimating.read"]},
-  {"id": "pricing", "label": "Supplier pricing", "icon": "nav-pricing", "readiness": "unavailable"},
+  {"id": "pricing", "label": "Cost sources", "icon": "nav-pricing", "readiness": "ready", "href": "/estimating/cost-sources", "workspace": "estimate", "requires": ["estimating.read"]},
   {"id": "quotations", "label": "Quotations", "icon": "nav-quotation", "readiness": "ready", "href": "/estimating/quotes", "workspace": "estimate", "requires": ["estimating.quote.read"], "requiresAll": ["estimating.read"]},
   {"id": "estimate-reviews", "label": "Reviews & approvals", "icon": "nav-approval", "readiness": "unavailable", "workspace": "estimate"},
   {"id": "fertigation", "label": "Priva Fertigation Configurator", "icon": "nav-fertigation", "readiness": "ready", "href": "/estimating/fertigation", "workspace": "estimate", "requires": ["estimating.read"]},
@@ -226,6 +226,7 @@ export const destination = (id: string) =>
 export const matchesPath = (path: string, href: string) =>
   path === href || (href !== "/" && path.startsWith(href + "/"));
 export function pageForPath(path: string) {
+  if (/^\/estimating\/estimates\/[0-9a-f-]{36}\/sources$/.test(path)) return {...destination("pricing"), label: "Compare source costs"};
   if (path === "/search") return { ...destination("work"), id: "search", label: "Search", href: "/search" };
   if (materialsPath(path) || changesPath(path) || commissioningPath(path)) return destination("engineering");
   // Specific routes precede their parent; a future page must not inherit a wrong guide.

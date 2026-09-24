@@ -6982,22 +6982,21 @@
       "title": "Cost-source and supplier-price review",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Native synthetic workflow; review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/delivery/estimating-cost-sources-handover.md; checks do not grant owner acceptance",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Cost-source and supplier-price review to work towards this outcome: A price refresh is attributable to exact source changes.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "Source review is separate from estimate approval. Do not invent exchange rates or supplier validity."
+            "Retain authored synthetic supplier evidence, independently review exact revisions and deliberately refresh saved estimate lines.",
+            "The workflow is synthetic and online. Source review, estimate approval and quotation approval are separate."
           ],
           "steps": [],
           "rows": [],
@@ -7007,9 +7006,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Supplier source revision, currency, units, validity, freight and FX basis.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Confirm current company identity and estimating read/edit authority. Only the source owner can revise/submit; a separately authorised different author reviews evidence.",
+            "Prepare a fixed supplier/entity/item/unit identity, evidence text/reference, source and effective dates, known expiry and explicit quantity-tier prices. The estimate comparison requires an exact current editable saved cost basis; discovery-bound work must still use its selected Complete revision."
           ],
           "steps": [],
           "rows": [],
@@ -7020,11 +7018,10 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Compare the current and proposed supplier evidence",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Read source evidence and exact revision history.",
+            "Save and submit authored synthetic evidence.",
+            "Review with a separately granted source-review duty.",
+            "Compare affected saved estimate lines before an explicit successor."
           ],
           "rows": [],
           "headers": []
@@ -7036,38 +7033,37 @@
           "steps": [],
           "rows": [
             [
-              "Page context",
-              "Cost-source and supplier-price review · Page + tab"
+              "Register",
+              "URL search and source-state filter, latest 100 matching permitted sources."
             ],
             [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
+              "Evidence",
+              "Exact selected revision, immutable hash and attributed review/revision history."
             ],
             [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
+              "Source form",
+              "One supplier/item/unit identity; complete successor content and reason."
             ],
             [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
+              "Comparison",
+              "Exact reviewed revisions, before/after cost, unchanged sell and explicit review confirmation."
             ],
             [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
+              "Page information",
+              "Global guide preserves form entries; Escape returns focus."
             ]
           ],
           "headers": [
             "Area",
-            "How to use it"
+            "Use"
           ]
         },
         {
           "section_id": "information",
-          "title": "Information you need",
+          "title": "Information and numerical boundary",
           "paragraphs": [
-            "Supplier source revision, currency, units, validity, freight and FX basis.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "AUD and excluding tax only. Quantities retain three decimal places and unit prices two under current scaled-integer arithmetic. Up to 20 increasing tiers; the greatest eligible minimum applies. Blank prices are not zero.",
+            "Pricing dates must meet the effective date and known expiry; unknown expiry produces a visible warning. Units must match exactly. Currency/unit conversion and landed-cost policy are Not configured."
           ],
           "steps": [],
           "rows": [],
@@ -7075,14 +7071,13 @@
         },
         {
           "section_id": "tasks",
-          "title": "Complete the main task",
-          "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
-          ],
+          "title": "Complete the task",
+          "paragraphs": [],
           "steps": [
-            "Compare the current and proposed supplier evidence",
-            "Review each changed cost assumption",
-            "Prepare a successor estimate basis only after the relevant review"
+            "Read source evidence and exact revision history.",
+            "Save and submit authored synthetic evidence.",
+            "Review with a separately granted source-review duty.",
+            "Compare affected saved estimate lines before an explicit successor."
           ],
           "rows": [],
           "headers": []
@@ -7091,9 +7086,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "A price refresh is attributable to exact source changes.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Source review is separate from estimate approval. Do not invent exchange rates or supplier validity."
+            "Confirm the accepted receipt and open the saved record. A source successor retains old evidence; only the explicit estimate refresh creates a new saved cost version.",
+            "The refresh retains quantities, sell, scope and specialist lineage. Source, source revision, review event and estimate version remain separate identities. Historical estimate and quotation bytes remain unchanged."
           ],
           "steps": [],
           "rows": [],
@@ -7101,46 +7095,50 @@
         },
         {
           "section_id": "states",
-          "title": "Statuses, warnings and save state",
+          "title": "State meanings",
           "paragraphs": [],
           "steps": [],
           "rows": [
             [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
+              "Draft",
+              "Owner evidence saved; no independent review."
             ],
             [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
+              "Submitted",
+              "Exact current evidence frozen for independent review."
             ],
             [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
+              "Reviewed",
+              "Independent evidence check recorded; no commercial approval."
             ],
             [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
+              "Returned / Rejected",
+              "Decision retained. Owner correction requires a reasoned successor Draft."
             ],
             [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
+              "Read-only / stale",
+              "Historical, changed or unauthorised basis cannot save over current evidence."
             ],
             [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
+              "Outcome unknown",
+              "Keep original operation; reconcile before any repeat."
+            ],
+            [
+              "Not configured",
+              "No FX/landed/unit-conversion, connected catalogue or operational approval threshold is invented."
             ]
           ],
           "headers": [
-            "State or situation",
-            "Meaning and response"
+            "State",
+            "Meaning"
           ]
         },
         {
           "section_id": "examples",
-          "title": "Worked examples",
+          "title": "Synthetic examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare supplier source revision, currency, units, validity, freight and fx basis. Follow the task sequence and check that a price refresh is attributable to exact source changes. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Cost-source and supplier-price review has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Source review is separate from estimate approval. Do not invent exchange rates or supplier validity."
+            "An each-unit source changes from AUD 120 to a reviewed AUD 100. Two saved units show a cost reduction of AUD 40 and unchanged sell. Only explicit comparison/save creates a successor.",
+            "A source advances while its comparison is open: save is refused on expected source version. Review a new comparison instead of silently using current prices."
           ],
           "steps": [],
           "rows": [],
@@ -7148,46 +7146,22 @@
         },
         {
           "section_id": "recovery",
-          "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "title": "Failure, conflict and recovery",
+          "paragraphs": [
+            "Unsaved form values live in memory. Pending exact synthetic commands use an actor-bound same-tab journal; reload first reads the original receipt. Check original outcome or Retry exact original never creates a replacement operation.",
+            "After acceptance only an operation pointer remains in the journal. A denied or unavailable receipt is not proof that no save occurred. Failed/denied reads clear sensitive evidence and forms.",
+            "A stale source editor keeps entered values and exposes current saved evidence; Replace my entries is explicit. Changing price comparison inputs removes its confirmation. A source change after preview causes a server conflict."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
-          "title": "Mobile, keyboard and offline use",
+          "title": "Phone, keyboard and offline boundary",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use Tab/Shift+Tab through labelled controls; Enter submits a filter, Space activates buttons/check boxes, Escape closes global guidance. On phone the same source facts and confirmations stack; scroll to the explicit save.",
+            "This is an online workflow. Same-tab command recovery is not an offline supplier catalogue or permission cache. Physical device, keyboard occlusion and screen-reader acceptance remain separate."
           ],
           "steps": [],
           "rows": [],
@@ -7195,10 +7169,10 @@
         },
         {
           "section_id": "resources",
-          "title": "Related guidance and procedures",
+          "title": "Related contracts",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "Native server contract: docs/contracts/estimating-cost-sources.md. Executed evidence and limitations: docs/delivery/estimating-cost-sources-handover.md.",
+            "MYOB remains ERP authority and SharePoint document authority. No operational SOP, customer message or live transaction is authorised."
           ],
           "steps": [],
           "rows": [],
@@ -7206,11 +7180,10 @@
         },
         {
           "section_id": "review",
-          "title": "Guide review and feedback",
+          "title": "Guide review",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft working guide prepared 24 September 2026. Owner review and deployment are pending. Tests and source presence do not grant review.",
+            "Record corrections against this stable guide key through Git review; the development workspace does not save exported proposals."
           ],
           "steps": [],
           "rows": [],
@@ -7218,15 +7191,20 @@
         }
       ],
       "related_entry_keys": [
-        "scope:PD-03",
-        "scope:ES-02"
+        "route:/estimating/cost-sources",
+        "route:/estimating/cost-sources/new",
+        "route:/estimating/cost-sources/[id]",
+        "route:/estimating/estimates/[id]/sources"
       ],
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html",
-        "docs/blueprints/BP-04-estimating-quotation.md"
+        "src/components/cost-sources.tsx",
+        "src/components/cost-sources.css",
+        "src/components/cost-sources-guide.ts",
+        "docs/contracts/estimating-cost-sources.md",
+        "docs/delivery/estimating-cost-sources-handover.md",
+        "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Native exact-source evidence, independent review and deliberate estimate refresh instructions",
       "document_id": "PPO-GUIDE-ES-03",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -7234,9 +7212,8 @@
       "supersedes": null,
       "section_aliases": {},
       "workflow_basis": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html",
-        "docs/blueprints/BP-04-estimating-quotation.md"
+        "docs/contracts/estimating-cost-sources.md",
+        "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -34304,7 +34281,8 @@
           "paragraphs": [
             "Use Users, roles, teams and access review to work towards this outcome: Access changes have an attributable decision.",
             "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "Source content and guide text cannot authorise an access expansion."
+            "Source content and guide text cannot authorise an access expansion.",
+            "The versionless AD-01 working HTML now explains 88 current code capabilities, including independent synthetic cost-source review. The issued r01 remains historical evidence. This design explains authority; the native server enforces it."
           ],
           "steps": [],
           "rows": [],
@@ -34528,7 +34506,8 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/access-review/PPO-Users-Roles-and-Access-Review-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/design/access-review/access-review.html"
       ],
       "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
       "document_id": "PPO-GUIDE-AD-01",
@@ -68910,6 +68889,944 @@
         }
       ],
       "runtime_evidence": "CS native synthetic database, compiled HTTP and desktop/mobile browser proofs executed on 23 September 2026; see docs/testing/evidence/cs-native-completion/README.md. Owner acceptance pending."
+    },
+    {
+      "guide_key": "guide.route-estimating-cost-sources-id",
+      "entry_key": "route:/estimating/cost-sources/[id]",
+      "title": "Cost-source evidence and review",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic workflow; review pending",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [
+        "scope:ES-03",
+        "route:/estimating/cost-sources",
+        "route:/estimating/cost-sources/new",
+        "route:/estimating/estimates/[id]/sources"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Inspect exact provenance, independently review a submitted revision and retain attributable successors.",
+            "The workflow is synthetic and online. Source review, estimate approval and quotation approval are separate."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Confirm current company identity and estimating read/edit authority. Only the source owner can revise/submit; a separately authorised different author reviews evidence.",
+            "Prepare a fixed supplier/entity/item/unit identity, evidence text/reference, source and effective dates, known expiry and explicit quantity-tier prices. The estimate comparison requires an exact current editable saved cost basis; discovery-bound work must still use its selected Complete revision."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Read the exact selected revision, evidence, dates, tiers, hash and review attribution.",
+            "The owner can submit the current Draft or prepare a reasoned successor outside Submitted.",
+            "A different authorised reviewer can record Reviewed, Returned or Rejected.",
+            "Follow history links without treating a historical reviewed revision as the latest source.",
+            "Inspect affected estimate-version links; no source edit reprices them."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [],
+          "steps": [],
+          "rows": [
+            [
+              "Register",
+              "URL search and source-state filter, latest 100 matching permitted sources."
+            ],
+            [
+              "Evidence",
+              "Exact selected revision, immutable hash and attributed review/revision history."
+            ],
+            [
+              "Source form",
+              "One supplier/item/unit identity; complete successor content and reason."
+            ],
+            [
+              "Comparison",
+              "Exact reviewed revisions, before/after cost, unchanged sell and explicit review confirmation."
+            ],
+            [
+              "Page information",
+              "Global guide preserves form entries; Escape returns focus."
+            ]
+          ],
+          "headers": [
+            "Area",
+            "Use"
+          ]
+        },
+        {
+          "section_id": "information",
+          "title": "Information and numerical boundary",
+          "paragraphs": [
+            "AUD and excluding tax only. Quantities retain three decimal places and unit prices two under current scaled-integer arithmetic. Up to 20 increasing tiers; the greatest eligible minimum applies. Blank prices are not zero.",
+            "Pricing dates must meet the effective date and known expiry; unknown expiry produces a visible warning. Units must match exactly. Currency/unit conversion and landed-cost policy are Not configured."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the task",
+          "paragraphs": [],
+          "steps": [
+            "Read the exact selected revision, evidence, dates, tiers, hash and review attribution.",
+            "The owner can submit the current Draft or prepare a reasoned successor outside Submitted.",
+            "A different authorised reviewer can record Reviewed, Returned or Rejected.",
+            "Follow history links without treating a historical reviewed revision as the latest source.",
+            "Inspect affected estimate-version links; no source edit reprices them."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Confirm the accepted receipt and open the saved record. A source successor retains old evidence; only the explicit estimate refresh creates a new saved cost version.",
+            "The refresh retains quantities, sell, scope and specialist lineage. Source, source revision, review event and estimate version remain separate identities. Historical estimate and quotation bytes remain unchanged."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "states",
+          "title": "State meanings",
+          "paragraphs": [],
+          "steps": [],
+          "rows": [
+            [
+              "Draft",
+              "Owner evidence saved; no independent review."
+            ],
+            [
+              "Submitted",
+              "Exact current evidence frozen for independent review."
+            ],
+            [
+              "Reviewed",
+              "Independent evidence check recorded; no commercial approval."
+            ],
+            [
+              "Returned / Rejected",
+              "Decision retained. Owner correction requires a reasoned successor Draft."
+            ],
+            [
+              "Read-only / stale",
+              "Historical, changed or unauthorised basis cannot save over current evidence."
+            ],
+            [
+              "Outcome unknown",
+              "Keep original operation; reconcile before any repeat."
+            ],
+            [
+              "Not configured",
+              "No FX/landed/unit-conversion, connected catalogue or operational approval threshold is invented."
+            ]
+          ],
+          "headers": [
+            "State",
+            "Meaning"
+          ]
+        },
+        {
+          "section_id": "examples",
+          "title": "Synthetic examples",
+          "paragraphs": [
+            "An each-unit source changes from AUD 120 to a reviewed AUD 100. Two saved units show a cost reduction of AUD 40 and unchanged sell. Only explicit comparison/save creates a successor.",
+            "A source advances while its comparison is open: save is refused on expected source version. Review a new comparison instead of silently using current prices."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Failure, conflict and recovery",
+          "paragraphs": [
+            "Unsaved form values live in memory. Pending exact synthetic commands use an actor-bound same-tab journal; reload first reads the original receipt. Check original outcome or Retry exact original never creates a replacement operation.",
+            "After acceptance only an operation pointer remains in the journal. A denied or unavailable receipt is not proof that no save occurred. Failed/denied reads clear sensitive evidence and forms.",
+            "A stale source editor keeps entered values and exposes current saved evidence; Replace my entries is explicit. Changing price comparison inputs removes its confirmation. A source change after preview causes a server conflict."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Phone, keyboard and offline boundary",
+          "paragraphs": [
+            "Use Tab/Shift+Tab through labelled controls; Enter submits a filter, Space activates buttons/check boxes, Escape closes global guidance. On phone the same source facts and confirmations stack; scroll to the explicit save.",
+            "This is an online workflow. Same-tab command recovery is not an offline supplier catalogue or permission cache. Physical device, keyboard occlusion and screen-reader acceptance remain separate."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related contracts",
+          "paragraphs": [
+            "Native server contract: docs/contracts/estimating-cost-sources.md. Executed evidence and limitations: docs/delivery/estimating-cost-sources-handover.md.",
+            "MYOB remains ERP authority and SharePoint document authority. No operational SOP, customer message or live transaction is authorised."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "review",
+          "title": "Guide review",
+          "paragraphs": [
+            "Draft working guide prepared 24 September 2026. Owner review and deployment are pending. Tests and source presence do not grant review.",
+            "Record corrections against this stable guide key through Git review; the development workspace does not save exported proposals."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/estimating-cost-sources-handover.md; checks do not grant owner acceptance",
+      "change_summary": "Native exact-source evidence, independent review and deliberate estimate refresh instructions",
+      "source_paths": [
+        "src/components/cost-sources.tsx",
+        "src/components/cost-sources.css",
+        "src/components/cost-sources-guide.ts",
+        "docs/contracts/estimating-cost-sources.md",
+        "docs/delivery/estimating-cost-sources-handover.md",
+        "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html"
+      ],
+      "workflow_basis": [
+        "docs/contracts/estimating-cost-sources.md",
+        "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html"
+      ]
+    },
+    {
+      "guide_key": "guide.route-estimating-cost-sources-new",
+      "entry_key": "route:/estimating/cost-sources/new",
+      "title": "New synthetic cost source",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic workflow; review pending",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [
+        "scope:ES-03",
+        "route:/estimating/cost-sources",
+        "route:/estimating/cost-sources/[id]",
+        "route:/estimating/estimates/[id]/sources"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Author one company-owned synthetic supplier/item/unit identity and its initial immutable evidence revision.",
+            "The workflow is synthetic and online. Source review, estimate approval and quotation approval are separate."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Confirm current company identity and estimating read/edit authority. Only the source owner can revise/submit; a separately authorised different author reviews evidence.",
+            "Prepare a fixed supplier/entity/item/unit identity, evidence text/reference, source and effective dates, known expiry and explicit quantity-tier prices. The estimate comparison requires an exact current editable saved cost basis; discovery-bound work must still use its selected Complete revision."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Choose the permitted company and a local reference beginning SYN-.",
+            "Enter explicit supplier/item/unit identity, AUD excluding-tax prices, dates and evidence.",
+            "Leave unknown entity key or expiry blank; enter zero explicitly when it is the known price.",
+            "Add increasing quantity tiers, supply a reason and save.",
+            "Open saved record to inspect the server revision before submitting it."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [],
+          "steps": [],
+          "rows": [
+            [
+              "Register",
+              "URL search and source-state filter, latest 100 matching permitted sources."
+            ],
+            [
+              "Evidence",
+              "Exact selected revision, immutable hash and attributed review/revision history."
+            ],
+            [
+              "Source form",
+              "One supplier/item/unit identity; complete successor content and reason."
+            ],
+            [
+              "Comparison",
+              "Exact reviewed revisions, before/after cost, unchanged sell and explicit review confirmation."
+            ],
+            [
+              "Page information",
+              "Global guide preserves form entries; Escape returns focus."
+            ]
+          ],
+          "headers": [
+            "Area",
+            "Use"
+          ]
+        },
+        {
+          "section_id": "information",
+          "title": "Information and numerical boundary",
+          "paragraphs": [
+            "AUD and excluding tax only. Quantities retain three decimal places and unit prices two under current scaled-integer arithmetic. Up to 20 increasing tiers; the greatest eligible minimum applies. Blank prices are not zero.",
+            "Pricing dates must meet the effective date and known expiry; unknown expiry produces a visible warning. Units must match exactly. Currency/unit conversion and landed-cost policy are Not configured."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the task",
+          "paragraphs": [],
+          "steps": [
+            "Choose the permitted company and a local reference beginning SYN-.",
+            "Enter explicit supplier/item/unit identity, AUD excluding-tax prices, dates and evidence.",
+            "Leave unknown entity key or expiry blank; enter zero explicitly when it is the known price.",
+            "Add increasing quantity tiers, supply a reason and save.",
+            "Open saved record to inspect the server revision before submitting it."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Confirm the accepted receipt and open the saved record. A source successor retains old evidence; only the explicit estimate refresh creates a new saved cost version.",
+            "The refresh retains quantities, sell, scope and specialist lineage. Source, source revision, review event and estimate version remain separate identities. Historical estimate and quotation bytes remain unchanged."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "states",
+          "title": "State meanings",
+          "paragraphs": [],
+          "steps": [],
+          "rows": [
+            [
+              "Draft",
+              "Owner evidence saved; no independent review."
+            ],
+            [
+              "Submitted",
+              "Exact current evidence frozen for independent review."
+            ],
+            [
+              "Reviewed",
+              "Independent evidence check recorded; no commercial approval."
+            ],
+            [
+              "Returned / Rejected",
+              "Decision retained. Owner correction requires a reasoned successor Draft."
+            ],
+            [
+              "Read-only / stale",
+              "Historical, changed or unauthorised basis cannot save over current evidence."
+            ],
+            [
+              "Outcome unknown",
+              "Keep original operation; reconcile before any repeat."
+            ],
+            [
+              "Not configured",
+              "No FX/landed/unit-conversion, connected catalogue or operational approval threshold is invented."
+            ]
+          ],
+          "headers": [
+            "State",
+            "Meaning"
+          ]
+        },
+        {
+          "section_id": "examples",
+          "title": "Synthetic examples",
+          "paragraphs": [
+            "An each-unit source changes from AUD 120 to a reviewed AUD 100. Two saved units show a cost reduction of AUD 40 and unchanged sell. Only explicit comparison/save creates a successor.",
+            "A source advances while its comparison is open: save is refused on expected source version. Review a new comparison instead of silently using current prices."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Failure, conflict and recovery",
+          "paragraphs": [
+            "Unsaved form values live in memory. Pending exact synthetic commands use an actor-bound same-tab journal; reload first reads the original receipt. Check original outcome or Retry exact original never creates a replacement operation.",
+            "After acceptance only an operation pointer remains in the journal. A denied or unavailable receipt is not proof that no save occurred. Failed/denied reads clear sensitive evidence and forms.",
+            "A stale source editor keeps entered values and exposes current saved evidence; Replace my entries is explicit. Changing price comparison inputs removes its confirmation. A source change after preview causes a server conflict."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Phone, keyboard and offline boundary",
+          "paragraphs": [
+            "Use Tab/Shift+Tab through labelled controls; Enter submits a filter, Space activates buttons/check boxes, Escape closes global guidance. On phone the same source facts and confirmations stack; scroll to the explicit save.",
+            "This is an online workflow. Same-tab command recovery is not an offline supplier catalogue or permission cache. Physical device, keyboard occlusion and screen-reader acceptance remain separate."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related contracts",
+          "paragraphs": [
+            "Native server contract: docs/contracts/estimating-cost-sources.md. Executed evidence and limitations: docs/delivery/estimating-cost-sources-handover.md.",
+            "MYOB remains ERP authority and SharePoint document authority. No operational SOP, customer message or live transaction is authorised."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "review",
+          "title": "Guide review",
+          "paragraphs": [
+            "Draft working guide prepared 24 September 2026. Owner review and deployment are pending. Tests and source presence do not grant review.",
+            "Record corrections against this stable guide key through Git review; the development workspace does not save exported proposals."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/estimating-cost-sources-handover.md; checks do not grant owner acceptance",
+      "change_summary": "Native exact-source evidence, independent review and deliberate estimate refresh instructions",
+      "source_paths": [
+        "src/components/cost-sources.tsx",
+        "src/components/cost-sources.css",
+        "src/components/cost-sources-guide.ts",
+        "docs/contracts/estimating-cost-sources.md",
+        "docs/delivery/estimating-cost-sources-handover.md",
+        "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html"
+      ],
+      "workflow_basis": [
+        "docs/contracts/estimating-cost-sources.md",
+        "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html"
+      ]
+    },
+    {
+      "guide_key": "guide.route-estimating-cost-sources",
+      "entry_key": "route:/estimating/cost-sources",
+      "title": "Cost-source register",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic workflow; review pending",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [
+        "scope:ES-03",
+        "route:/estimating/cost-sources/new",
+        "route:/estimating/cost-sources/[id]",
+        "route:/estimating/estimates/[id]/sources"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Find current permitted sources by reference, supplier, item or title and explicit source state.",
+            "The workflow is synthetic and online. Source review, estimate approval and quotation approval are separate."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Confirm current company identity and estimating read/edit authority. Only the source owner can revise/submit; a separately authorised different author reviews evidence.",
+            "Prepare a fixed supplier/entity/item/unit identity, evidence text/reference, source and effective dates, known expiry and explicit quantity-tier prices. The estimate comparison requires an exact current editable saved cost basis; discovery-bound work must still use its selected Complete revision."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Search literal source text; Apply filters updates the URL.",
+            "Read current state, revision, effective date and Unknown expiry.",
+            "Open exact evidence or use New synthetic source where company edit authority permits.",
+            "Back, Forward and reload retain the chosen URL filters."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [],
+          "steps": [],
+          "rows": [
+            [
+              "Register",
+              "URL search and source-state filter, latest 100 matching permitted sources."
+            ],
+            [
+              "Evidence",
+              "Exact selected revision, immutable hash and attributed review/revision history."
+            ],
+            [
+              "Source form",
+              "One supplier/item/unit identity; complete successor content and reason."
+            ],
+            [
+              "Comparison",
+              "Exact reviewed revisions, before/after cost, unchanged sell and explicit review confirmation."
+            ],
+            [
+              "Page information",
+              "Global guide preserves form entries; Escape returns focus."
+            ]
+          ],
+          "headers": [
+            "Area",
+            "Use"
+          ]
+        },
+        {
+          "section_id": "information",
+          "title": "Information and numerical boundary",
+          "paragraphs": [
+            "AUD and excluding tax only. Quantities retain three decimal places and unit prices two under current scaled-integer arithmetic. Up to 20 increasing tiers; the greatest eligible minimum applies. Blank prices are not zero.",
+            "Pricing dates must meet the effective date and known expiry; unknown expiry produces a visible warning. Units must match exactly. Currency/unit conversion and landed-cost policy are Not configured."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the task",
+          "paragraphs": [],
+          "steps": [
+            "Search literal source text; Apply filters updates the URL.",
+            "Read current state, revision, effective date and Unknown expiry.",
+            "Open exact evidence or use New synthetic source where company edit authority permits.",
+            "Back, Forward and reload retain the chosen URL filters."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Confirm the accepted receipt and open the saved record. A source successor retains old evidence; only the explicit estimate refresh creates a new saved cost version.",
+            "The refresh retains quantities, sell, scope and specialist lineage. Source, source revision, review event and estimate version remain separate identities. Historical estimate and quotation bytes remain unchanged."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "states",
+          "title": "State meanings",
+          "paragraphs": [],
+          "steps": [],
+          "rows": [
+            [
+              "Draft",
+              "Owner evidence saved; no independent review."
+            ],
+            [
+              "Submitted",
+              "Exact current evidence frozen for independent review."
+            ],
+            [
+              "Reviewed",
+              "Independent evidence check recorded; no commercial approval."
+            ],
+            [
+              "Returned / Rejected",
+              "Decision retained. Owner correction requires a reasoned successor Draft."
+            ],
+            [
+              "Read-only / stale",
+              "Historical, changed or unauthorised basis cannot save over current evidence."
+            ],
+            [
+              "Outcome unknown",
+              "Keep original operation; reconcile before any repeat."
+            ],
+            [
+              "Not configured",
+              "No FX/landed/unit-conversion, connected catalogue or operational approval threshold is invented."
+            ]
+          ],
+          "headers": [
+            "State",
+            "Meaning"
+          ]
+        },
+        {
+          "section_id": "examples",
+          "title": "Synthetic examples",
+          "paragraphs": [
+            "An each-unit source changes from AUD 120 to a reviewed AUD 100. Two saved units show a cost reduction of AUD 40 and unchanged sell. Only explicit comparison/save creates a successor.",
+            "A source advances while its comparison is open: save is refused on expected source version. Review a new comparison instead of silently using current prices."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Failure, conflict and recovery",
+          "paragraphs": [
+            "Unsaved form values live in memory. Pending exact synthetic commands use an actor-bound same-tab journal; reload first reads the original receipt. Check original outcome or Retry exact original never creates a replacement operation.",
+            "After acceptance only an operation pointer remains in the journal. A denied or unavailable receipt is not proof that no save occurred. Failed/denied reads clear sensitive evidence and forms.",
+            "A stale source editor keeps entered values and exposes current saved evidence; Replace my entries is explicit. Changing price comparison inputs removes its confirmation. A source change after preview causes a server conflict."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Phone, keyboard and offline boundary",
+          "paragraphs": [
+            "Use Tab/Shift+Tab through labelled controls; Enter submits a filter, Space activates buttons/check boxes, Escape closes global guidance. On phone the same source facts and confirmations stack; scroll to the explicit save.",
+            "This is an online workflow. Same-tab command recovery is not an offline supplier catalogue or permission cache. Physical device, keyboard occlusion and screen-reader acceptance remain separate."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related contracts",
+          "paragraphs": [
+            "Native server contract: docs/contracts/estimating-cost-sources.md. Executed evidence and limitations: docs/delivery/estimating-cost-sources-handover.md.",
+            "MYOB remains ERP authority and SharePoint document authority. No operational SOP, customer message or live transaction is authorised."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "review",
+          "title": "Guide review",
+          "paragraphs": [
+            "Draft working guide prepared 24 September 2026. Owner review and deployment are pending. Tests and source presence do not grant review.",
+            "Record corrections against this stable guide key through Git review; the development workspace does not save exported proposals."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/estimating-cost-sources-handover.md; checks do not grant owner acceptance",
+      "change_summary": "Native exact-source evidence, independent review and deliberate estimate refresh instructions",
+      "source_paths": [
+        "src/components/cost-sources.tsx",
+        "src/components/cost-sources.css",
+        "src/components/cost-sources-guide.ts",
+        "docs/contracts/estimating-cost-sources.md",
+        "docs/delivery/estimating-cost-sources-handover.md",
+        "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html"
+      ],
+      "workflow_basis": [
+        "docs/contracts/estimating-cost-sources.md",
+        "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html"
+      ]
+    },
+    {
+      "guide_key": "guide.route-estimating-estimates-id-sources",
+      "entry_key": "route:/estimating/estimates/[id]/sources",
+      "title": "Compare reviewed source costs",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic workflow; review pending",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [
+        "scope:ES-03",
+        "route:/estimating/cost-sources",
+        "route:/estimating/cost-sources/new",
+        "route:/estimating/cost-sources/[id]"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Compare reviewed source evidence against exact saved estimate lines and save one explicit cost successor.",
+            "The workflow is synthetic and online. Source review, estimate approval and quotation approval are separate."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Confirm current company identity and estimating read/edit authority. Only the source owner can revise/submit; a separately authorised different author reviews evidence.",
+            "Prepare a fixed supplier/entity/item/unit identity, evidence text/reference, source and effective dates, known expiry and explicit quantity-tier prices. The estimate comparison requires an exact current editable saved cost basis; discovery-bound work must still use its selected Complete revision."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Open from the current editable saved estimate; historical versions are read-only.",
+            "Enter the explicit pricing date and select an exact reviewed source revision for each affected line.",
+            "Compare before/after cost, unchanged sell and Unknown expiry warnings.",
+            "Confirm every change and enter a reason; save the exact previewed proposal.",
+            "Open the saved successor; retain previous estimate and quotation evidence."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [],
+          "steps": [],
+          "rows": [
+            [
+              "Register",
+              "URL search and source-state filter, latest 100 matching permitted sources."
+            ],
+            [
+              "Evidence",
+              "Exact selected revision, immutable hash and attributed review/revision history."
+            ],
+            [
+              "Source form",
+              "One supplier/item/unit identity; complete successor content and reason."
+            ],
+            [
+              "Comparison",
+              "Exact reviewed revisions, before/after cost, unchanged sell and explicit review confirmation."
+            ],
+            [
+              "Page information",
+              "Global guide preserves form entries; Escape returns focus."
+            ]
+          ],
+          "headers": [
+            "Area",
+            "Use"
+          ]
+        },
+        {
+          "section_id": "information",
+          "title": "Information and numerical boundary",
+          "paragraphs": [
+            "AUD and excluding tax only. Quantities retain three decimal places and unit prices two under current scaled-integer arithmetic. Up to 20 increasing tiers; the greatest eligible minimum applies. Blank prices are not zero.",
+            "Pricing dates must meet the effective date and known expiry; unknown expiry produces a visible warning. Units must match exactly. Currency/unit conversion and landed-cost policy are Not configured."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the task",
+          "paragraphs": [],
+          "steps": [
+            "Open from the current editable saved estimate; historical versions are read-only.",
+            "Enter the explicit pricing date and select an exact reviewed source revision for each affected line.",
+            "Compare before/after cost, unchanged sell and Unknown expiry warnings.",
+            "Confirm every change and enter a reason; save the exact previewed proposal.",
+            "Open the saved successor; retain previous estimate and quotation evidence."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Confirm the accepted receipt and open the saved record. A source successor retains old evidence; only the explicit estimate refresh creates a new saved cost version.",
+            "The refresh retains quantities, sell, scope and specialist lineage. Source, source revision, review event and estimate version remain separate identities. Historical estimate and quotation bytes remain unchanged."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "states",
+          "title": "State meanings",
+          "paragraphs": [],
+          "steps": [],
+          "rows": [
+            [
+              "Draft",
+              "Owner evidence saved; no independent review."
+            ],
+            [
+              "Submitted",
+              "Exact current evidence frozen for independent review."
+            ],
+            [
+              "Reviewed",
+              "Independent evidence check recorded; no commercial approval."
+            ],
+            [
+              "Returned / Rejected",
+              "Decision retained. Owner correction requires a reasoned successor Draft."
+            ],
+            [
+              "Read-only / stale",
+              "Historical, changed or unauthorised basis cannot save over current evidence."
+            ],
+            [
+              "Outcome unknown",
+              "Keep original operation; reconcile before any repeat."
+            ],
+            [
+              "Not configured",
+              "No FX/landed/unit-conversion, connected catalogue or operational approval threshold is invented."
+            ]
+          ],
+          "headers": [
+            "State",
+            "Meaning"
+          ]
+        },
+        {
+          "section_id": "examples",
+          "title": "Synthetic examples",
+          "paragraphs": [
+            "An each-unit source changes from AUD 120 to a reviewed AUD 100. Two saved units show a cost reduction of AUD 40 and unchanged sell. Only explicit comparison/save creates a successor.",
+            "A source advances while its comparison is open: save is refused on expected source version. Review a new comparison instead of silently using current prices."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Failure, conflict and recovery",
+          "paragraphs": [
+            "Unsaved form values live in memory. Pending exact synthetic commands use an actor-bound same-tab journal; reload first reads the original receipt. Check original outcome or Retry exact original never creates a replacement operation.",
+            "After acceptance only an operation pointer remains in the journal. A denied or unavailable receipt is not proof that no save occurred. Failed/denied reads clear sensitive evidence and forms.",
+            "A stale source editor keeps entered values and exposes current saved evidence; Replace my entries is explicit. Changing price comparison inputs removes its confirmation. A source change after preview causes a server conflict."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Phone, keyboard and offline boundary",
+          "paragraphs": [
+            "Use Tab/Shift+Tab through labelled controls; Enter submits a filter, Space activates buttons/check boxes, Escape closes global guidance. On phone the same source facts and confirmations stack; scroll to the explicit save.",
+            "This is an online workflow. Same-tab command recovery is not an offline supplier catalogue or permission cache. Physical device, keyboard occlusion and screen-reader acceptance remain separate."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related contracts",
+          "paragraphs": [
+            "Native server contract: docs/contracts/estimating-cost-sources.md. Executed evidence and limitations: docs/delivery/estimating-cost-sources-handover.md.",
+            "MYOB remains ERP authority and SharePoint document authority. No operational SOP, customer message or live transaction is authorised."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "review",
+          "title": "Guide review",
+          "paragraphs": [
+            "Draft working guide prepared 24 September 2026. Owner review and deployment are pending. Tests and source presence do not grant review.",
+            "Record corrections against this stable guide key through Git review; the development workspace does not save exported proposals."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/estimating-cost-sources-handover.md; checks do not grant owner acceptance",
+      "change_summary": "Native exact-source evidence, independent review and deliberate estimate refresh instructions",
+      "source_paths": [
+        "src/components/cost-sources.tsx",
+        "src/components/cost-sources.css",
+        "src/components/cost-sources-guide.ts",
+        "docs/contracts/estimating-cost-sources.md",
+        "docs/delivery/estimating-cost-sources-handover.md",
+        "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html"
+      ],
+      "workflow_basis": [
+        "docs/contracts/estimating-cost-sources.md",
+        "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html"
+      ]
     }
   ]
 }

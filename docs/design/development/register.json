@@ -1023,10 +1023,11 @@
       "title": "Cost-source and supplier-price review",
       "kind": "scope",
       "module": "ES",
-      "summary": "Implement supplier cost-source review, validity/currency/freight evidence and controlled refresh comparison.",
+      "summary": "Retain authored synthetic supplier evidence, independently review exact revisions and deliberately refresh saved estimate lines.",
       "path": "/estimating/cost-sources",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/components/cost-sources.tsx"
       ],
       "guide_key": "guide.es.03",
       "design_path": "docs/design/development/pages/scope-es-03.md",
@@ -1034,10 +1035,16 @@
       "image_paths": [
         "docs/testing/evidence/supplier-pricing-r01/desktop-price-comparison.png"
       ],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/components/cost-sources.tsx",
+        "src/components/cost-sources.css",
+        "src/components/cost-sources-guide.ts",
+        "docs/contracts/estimating-cost-sources.md",
+        "docs/delivery/estimating-cost-sources-handover.md"
+      ],
+      "scope_status": "Native synthetic source increment; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Implementation checks in progress; see cost-source handover",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -1045,7 +1052,12 @@
       "build_rank": 49,
       "related_keys": [
         "scope:PD-03",
-        "scope:ES-02"
+        "scope:ES-02",
+        "route:/estimating/cost-sources",
+        "route:/estimating/cost-sources/new",
+        "route:/estimating/cost-sources/[id]",
+        "route:/estimating/estimates/[id]/sources",
+        "scope:ES-04"
       ],
       "reviewer": null
     },
@@ -4150,9 +4162,13 @@
       ],
       "guide_key": "guide.ad.01",
       "design_path": "docs/design/development/pages/scope-ad-01.md",
-      "html_path": "docs/reference/ui/access-review/PPO-Users-Roles-and-Access-Review-r01.html",
+      "html_path": "docs/design/access-review/access-review.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/design/access-review/access-review.html",
+        "src/platform/permissions.ts",
+        "docs/design/access-review/capabilities.js"
+      ],
       "scope_status": "unbuilt",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -8270,6 +8286,170 @@
       "related_keys": [
         "scope:CS-08",
         "route:/surveys/[id]"
+      ]
+    },
+    {
+      "key": "route:/estimating/cost-sources/[id]",
+      "title": "Cost-source evidence and review",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Inspect exact provenance, independently review a submitted revision and retain attributable successors.",
+      "path": "/estimating/cost-sources/[id]",
+      "source_paths": [
+        "src/app/(business)/estimating/cost-sources/[id]/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-cost-sources-id",
+      "design_path": "docs/design/development/pages/route-estimating-cost-sources-id.md",
+      "html_path": "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html",
+      "image_paths": [
+        "docs/testing/evidence/supplier-pricing-r01/desktop-price-comparison.png"
+      ],
+      "dependencies": [
+        "src/components/cost-sources.tsx",
+        "src/components/cost-sources.css",
+        "src/components/cost-sources-guide.ts",
+        "docs/contracts/estimating-cost-sources.md",
+        "docs/delivery/estimating-cost-sources-handover.md"
+      ],
+      "scope_status": "Native synthetic source increment; acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "Implementation checks in progress; see cost-source handover",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:ES-03",
+        "route:/estimating/cost-sources",
+        "route:/estimating/cost-sources/new",
+        "route:/estimating/estimates/[id]/sources",
+        "scope:ES-02",
+        "scope:ES-04"
+      ]
+    },
+    {
+      "key": "route:/estimating/cost-sources/new",
+      "title": "New synthetic cost source",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Author one company-owned synthetic supplier/item/unit identity and its initial immutable evidence revision.",
+      "path": "/estimating/cost-sources/new",
+      "source_paths": [
+        "src/app/(business)/estimating/cost-sources/new/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-cost-sources-new",
+      "design_path": "docs/design/development/pages/route-estimating-cost-sources-new.md",
+      "html_path": "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html",
+      "image_paths": [
+        "docs/testing/evidence/supplier-pricing-r01/desktop-price-comparison.png"
+      ],
+      "dependencies": [
+        "src/components/cost-sources.tsx",
+        "src/components/cost-sources.css",
+        "src/components/cost-sources-guide.ts",
+        "docs/contracts/estimating-cost-sources.md",
+        "docs/delivery/estimating-cost-sources-handover.md"
+      ],
+      "scope_status": "Native synthetic source increment; acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "Implementation checks in progress; see cost-source handover",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:ES-03",
+        "route:/estimating/cost-sources",
+        "route:/estimating/cost-sources/[id]",
+        "route:/estimating/estimates/[id]/sources",
+        "scope:ES-02",
+        "scope:ES-04"
+      ]
+    },
+    {
+      "key": "route:/estimating/cost-sources",
+      "title": "Cost-source register",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Find current permitted sources by reference, supplier, item or title and explicit source state.",
+      "path": "/estimating/cost-sources",
+      "source_paths": [
+        "src/app/(business)/estimating/cost-sources/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-cost-sources",
+      "design_path": "docs/design/development/pages/route-estimating-cost-sources.md",
+      "html_path": "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html",
+      "image_paths": [
+        "docs/testing/evidence/supplier-pricing-r01/desktop-price-comparison.png"
+      ],
+      "dependencies": [
+        "src/components/cost-sources.tsx",
+        "src/components/cost-sources.css",
+        "src/components/cost-sources-guide.ts",
+        "docs/contracts/estimating-cost-sources.md",
+        "docs/delivery/estimating-cost-sources-handover.md"
+      ],
+      "scope_status": "Native synthetic source increment; acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "Implementation checks in progress; see cost-source handover",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:ES-03",
+        "route:/estimating/cost-sources/new",
+        "route:/estimating/cost-sources/[id]",
+        "route:/estimating/estimates/[id]/sources",
+        "scope:ES-02",
+        "scope:ES-04"
+      ]
+    },
+    {
+      "key": "route:/estimating/estimates/[id]/sources",
+      "title": "Compare reviewed source costs",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Compare reviewed source evidence against exact saved estimate lines and save one explicit cost successor.",
+      "path": "/estimating/estimates/[id]/sources",
+      "source_paths": [
+        "src/app/(business)/estimating/estimates/[id]/sources/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-estimates-id-sources",
+      "design_path": "docs/design/development/pages/route-estimating-estimates-id-sources.md",
+      "html_path": "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html",
+      "image_paths": [
+        "docs/testing/evidence/supplier-pricing-r01/desktop-price-comparison.png"
+      ],
+      "dependencies": [
+        "src/components/cost-sources.tsx",
+        "src/components/cost-sources.css",
+        "src/components/cost-sources-guide.ts",
+        "docs/contracts/estimating-cost-sources.md",
+        "docs/delivery/estimating-cost-sources-handover.md"
+      ],
+      "scope_status": "Native synthetic source increment; acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "Implementation checks in progress; see cost-source handover",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:ES-03",
+        "route:/estimating/cost-sources",
+        "route:/estimating/cost-sources/new",
+        "route:/estimating/cost-sources/[id]",
+        "scope:ES-02",
+        "scope:ES-04"
       ]
     }
   ]

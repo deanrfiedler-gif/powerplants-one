@@ -1,42 +1,41 @@
-# Cost-source and supplier-price review — design reference
+# Cost-source and supplier-price review — native design contract
 
-Stable entry: `scope:ES-03`. Owner: Dean Fiedler. Status: **Draft for visual review**.
-Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/estimating/cost-sources`.
-This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
+<!-- versioning: git; committed history is authoritative -->
 
-## Purpose and task
+Stable entry: `scope:ES-03`. Scope: ES-03, page-register order 049. Owner: Dean Fiedler. Draft for paired visual review; no accepted baseline or deployment claim. Retained source provenance remains `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`.
 
-Implement supplier cost-source review, validity/currency/freight evidence and controlled refresh comparison.
+## Purpose and layout
 
-1. Compare the current and proposed supplier evidence
-2. Review each changed cost assumption
-3. Prepare a successor estimate basis only after the relevant review
+Retain authored synthetic supplier evidence, independently review exact revisions and deliberately refresh saved estimate lines. r20 page type: Record / task workspace. Native layout is padded within the current shell; the shell owns the viewport and main content scrolling. No standalone masthead, second rail or nested viewport is carried from the reference. The native source/editor/comparison route split is a proposed adaptation of the five-view retained design, pending paired owner review.
+
+1. Read source evidence and exact revision history.
+2. Save and submit authored synthetic evidence.
+3. Review with a separately granted source-review duty.
+4. Compare affected saved estimate lines before an explicit successor.
 
 ## Desktop
 
-Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
-
-At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
+At 1440 × 1000 and 1024 × 768, keep record/source identity and the primary action with the task. Register cards separate supplier/item context from revision/validity; evidence uses labelled facts and a disclosure for UUID/hash attribution. Form fields and quantity tiers use consistent shared controls; comparison groups before/after cost with unchanged sell, warning and explicit confirmation. Long source text and hashes wrap. Dense content must not hide unresolved validity or review state.
 
 ## Mobile
 
-At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
+At 390 × 844 and 320 CSS px, stack facts, fields, tier controls and register cards. Maintain readable input text and 44 px controls. Keep actions in document flow above the fixed shell navigation; never conceal a required confirmation to reduce height. At 200% enlargement, allow additional rows and retain visible focus. Global page information closes with Escape and restores focus while unsaved form values remain. Native phone, keyboard and enlarged-state evidence must be inspected; physical device and assistive-technology acceptance remain separate.
 
-The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+## Components and states
 
-## Shared components and states
+Reuse Button/ButtonLink, Field/SelectField, ValidationFields, ErrorNotice, PageHeader, the current application rail/header/global guide and actor-bound recoverable command hook. Source-specific cards, facts, loading/empty text and recovery panel are host compositions, not new generic component acceptance. Semantic navy/green tokens and existing Roboto/Verdana typography apply.
 
-Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared Button component for new controls; preserve documented existing page-specific exceptions until deliberately migrated. Use consistent primary/secondary/quiet/danger meanings. Include hover, visible focus, disabled and loading states.
+Distinguish loading, empty register, filtered no-results, invalid fields, denied/revoked reads, server failure, read-only history, stale revision, pending save, unknown outcome and confirmed receipt. Failed source reads remove evidence/forms; stale edit preserves inputs until explicit replacement. A pending write blocks replacement operations and reload first checks its original receipt. Unknown expiry is a written state. Submitted freezes editing; Reviewed means evidence review only.
 
-Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
+## Handovers and limits
 
-## Visual references
+Incoming: explicit authored synthetic evidence, exact current saved estimate/discovery basis and current scoped authority. Outgoing: immutable source revision/review events and an explicitly saved estimate successor with exact per-line source bindings. Historical estimates and Draft quote outputs are retained. Source review grants no estimate/quotation approval. Catalogue connection, FX, unit conversion, landed allocation and commercial thresholds remain Not configured.
 
-- [desktop-price-comparison.png](../../../testing/evidence/supplier-pricing-r01/desktop-price-comparison.png)
-- [PPO-Supplier-Pricing-and-Cost-Sources-r01.html](../../../reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html)
+## Exact references and evidence
 
-## Behaviour, handovers and verification
+- [Supplier-pricing r01 HTML](../../../reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html).
+- [Original desktop price-comparison capture](../../../testing/evidence/supplier-pricing-r01/desktop-price-comparison.png).
+- Exact source captures for the new native record/form route compositions are missing; compare their task and component behaviour against the retained package and record proposed departures.
+- [Native contract](../../../contracts/estimating-cost-sources.md) and [executed verification/limits](../../../delivery/estimating-cost-sources-handover.md).
 
-The draft User Guide `guide.es.03` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
-
-Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+Source presence, functional proof, paired visual review, owner acceptance and deployment are separate. No current fingerprint is recorded as reviewed. Preserve all issued reference bytes.
