@@ -272,6 +272,21 @@
       "adaptations": "docs/decisions/ADR-0034-es08-specialist-workbench.md"
     },
     {
+      "id": "sv01-native-r01",
+      "route": "/service/tickets",
+      "scope": "#ppo-service-requests",
+      "layout": "full-bleed",
+      "scroll_owner": ".sr-scroll",
+      "design": "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html",
+      "sha256": "23e92f96f495690e5670d664ac09e1063b8f9473679c39d7fa77b1e13d18fa5f",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+      "component_proof": "tests/unit/ticket-register-view.test.ts",
+      "application_proof": "tests/browser/service-requests.spec.ts",
+      "authority": "Dean accepted D3 (native increment) on 23 September 2026; layout adaptations are proposed for owner visual and device review; no accepted screenshot baseline.",
+      "adaptations": "docs/delivery/service-requests-integration-build-plan.md"
+    },
+    {
       "id": "cs05-native-r01",
       "route": "/facilities",
       "scope": "#ppo-facilities",

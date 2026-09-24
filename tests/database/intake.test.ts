@@ -946,3 +946,45 @@ test("SV-01 I1 register read model: permitted context, a customer never guessed,
   assert.equal(withheld.clarification_unavailable, true);
   assert.equal((await ticketQueues(p)).overdue_clarifications, 0);
 });
+
+test("SV-01 I2 register: each queue filter lists what its count counts, and each row carries the record's edit rule", async () => {
+  const p = await principal();
+  const overdue = ticket();
+  await createTicket(p, overdue);
+  await requestInformation(p, overdue.id, {
+    ...information(),
+    follow_up: { id: randomUUID(), owner_id: actor, due_needed: false, due_at: "2026-09-01T00:00:00Z" },
+  });
+  await createTicket(p, { ...ticket(), priority: "Urgent" });
+  await createTicket(p, ticket());
+
+  // One predicate set serves the list and the counts, so a toggle never disagrees with its badge.
+  const counts = await ticketQueues(p);
+  for (const queue of ["all_open", "new", "needs_information", "triaged", "urgent", "overdue_clarifications"] as const)
+    assert.equal((await listTickets(p, { queue, sort: "urgency", limit: "200" })).items.length, counts[queue], queue);
+  const urgent = (await listTickets(p, { queue: "urgent", limit: "200" })).items;
+  assert.ok(urgent.length >= 1 && urgent.every((t) => t.priority === "Urgent"));
+  assert.deepEqual(
+    (await listTickets(p, { queue: "overdue_clarifications", limit: "200" })).items.map((t) => t.id),
+    [overdue.id],
+  );
+  // The other filters combine with a queue exactly as they do for the counts.
+  assert.equal(
+    (await listTickets(p, { queue: "new", site_id: site, limit: "200" })).items.length,
+    (await ticketQueues(p, { site_id: site })).new,
+  );
+  // A cursor is bound to its queue, and only the native queues exist.
+  const first = await listTickets(p, { queue: "new", limit: "1" });
+  assert.ok(first.next_cursor);
+  await assert.rejects(listTickets(p, { queue: "urgent", limit: "1", cursor: first.next_cursor! }), code("InvalidData"));
+  await assert.rejects(listTickets(p, { queue: "resolved" }), code("InvalidData"));
+
+  // The row's edit flag is the record's rule, so Move is offered only where the commands would accept it.
+  const all = (await listTickets(p, { limit: "200" })).items;
+  for (const row of all)
+    assert.equal(row.can_edit_intake, (await readIntake(p, row.id)).can_edit_intake, row.display_number);
+  assert.ok(all.some((t) => t.can_edit_intake));
+  assert.ok(all.some((t) => t.status === "Triaged" && !t.can_edit_intake));
+  await database().query("DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='service.ticket.edit'", [p.actor_id]);
+  assert.ok((await listTickets(p, { limit: "200" })).items.every((t) => !t.can_edit_intake));
+});

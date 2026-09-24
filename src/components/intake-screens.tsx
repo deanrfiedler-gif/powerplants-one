@@ -8,7 +8,6 @@ import {
   EnumField,
   ErrorNotice,
   Field,
-  Observed,
   PageHeader,
   ReadState,
   RecordLink,
@@ -21,111 +20,7 @@ import {
   type Envelope,
   type Option,
 } from "./business-ui";
-type Intake = Awaited<ReturnType<typeof readIntake>>;
-type TicketRow = {
-  id: string;
-  display_number: string;
-  summary: string;
-  status: string;
-  priority: string;
-  version: number;
-  site_identification_needed: boolean;
-  received_time_basis: string;
-};
-export function TicketList() {
-  const [q, setQ] = useState(""),
-    [status, setStatus] = useState(""),
-    [cursor, setCursor] = useState("");
-  const r = useResource<Envelope<TicketRow>>(
-    `service/tickets?${new URLSearchParams({ q, ...(status ? { status } : {}), ...(cursor ? { cursor } : {}) })}`,
-  );
-  return (
-    <>
-      <PageHeader
-        variant="register"
-        eyebrow="SC-04 / Service intake"
-        title="Service requests"
-        description="Capture the issue, clarify what is unknown and prepare it for a separate work-scope decision."
-        action={
-          <Link className="button" href="/service/tickets/new">
-            New service request
-          </Link>
-        }
-      />
-      <div className="filters">
-        <Field
-          name="ticket-search"
-          label="Search service requests"
-          value={q}
-          onChange={(v) => {
-            setQ(v);
-            setCursor("");
-          }}
-        />
-        <EnumField
-          name="ticket-status"
-          label="Status"
-          value={status}
-          values={["New", "NeedsInformation", "Triaged"]}
-          onChange={(v) => {
-            setStatus(v);
-            setCursor("");
-          }}
-        />
-      </div>
-      <ReadState loading={r.loading} error={r.error} retry={r.reload} />
-      {r.data && !r.error && (
-        <>
-          <Observed envelope={r.data} />
-          {r.data.items.length === 0 ? (
-            <p className="empty-state">
-              No permitted service requests match these filters.
-            </p>
-          ) : (
-            <div className="record-grid">
-              {r.data.items.map((t) => (
-                <article key={t.id} className="record-card">
-                  <p className="eyebrow">{t.display_number}</p>
-                  <h2>
-                    <Link href={`/service/tickets/${t.id}`}>{t.summary}</Link>
-                  </h2>
-                  <div className="card-top">
-                    <Status value={t.status} />
-                    <Status value={t.priority} />
-                  </div>
-                  {t.site_identification_needed && (
-                    <p>Site identification needed</p>
-                  )}
-                  {t.received_time_basis === "LegacyUnverified" && (
-                    <p>Legacy received time needs confirmation</p>
-                  )}
-                  <small>
-                    Intake does not authorise work or confirm a booking.
-                  </small>
-                </article>
-              ))}
-            </div>
-          )}
-          <div className="actions">
-            {cursor && (
-              <button className="secondary" onClick={() => setCursor("")}>
-                First page
-              </button>
-            )}
-            {r.data.next_cursor && (
-              <button onClick={() => setCursor(r.data!.next_cursor!)}>
-                Next page
-              </button>
-            )}
-            <button className="secondary" onClick={r.reload}>
-              Refresh requests
-            </button>
-          </div>
-        </>
-      )}
-    </>
-  );
-}
+export type Intake = Awaited<ReturnType<typeof readIntake>>;
 export function TicketCreate({ siteId }: { siteId?: string }) {
   const r = useResource<Envelope<Option & { company_id: string }>>(
     siteId ? `sites/${siteId}` : null,
@@ -522,12 +417,16 @@ function IntakeForm({
     </section>
   );
 }
-function TriageActions({
+// The register's Move dialog (SV-01 I2) reuses this form. `target` narrows it to the one command a board move
+// asked for; the record page passes none and keeps both paths. The server gates are unchanged either way.
+export function TriageActions({
   ticket: t,
   reload,
+  target,
 }: {
   ticket: Intake;
   reload: () => void;
+  target?: "NeedsInformation" | "Triaged";
 }) {
   const cmd = useCommand(),
     p = useIdentity(),
@@ -596,8 +495,11 @@ function TriageActions({
           onChange={setReason}
           maxLength={1000}
         />
-        {t.status === "New" && (
-          <details className="form-panel">
+        {t.status === "New" && target !== "Triaged" && (
+          <details
+            className="form-panel"
+            open={target === "NeedsInformation" || undefined}
+          >
             <summary>Request information with owned follow-up</summary>
             <Field
               name="triage-questions"
@@ -659,7 +561,9 @@ function TriageActions({
             maxLength={4000}
           />
         )}
-        <button onClick={() => void triage()}>Complete triage</button>
+        {target !== "NeedsInformation" && (
+          <button onClick={() => void triage()}>Complete triage</button>
+        )}
       </fieldset>
     </section>
   );

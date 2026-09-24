@@ -28,6 +28,7 @@ import "./styles/engineering-commissioning-release.css";
 import "./styles/project-acceptance.css";
 import "./module-workspaces.css";
 import "./styles/facilities.css";
+import "./styles/service-requests.css";
 import "./styles/planner-demand.css";
 import "../components/ui/controls.css";
 import "./styles/development.css";
