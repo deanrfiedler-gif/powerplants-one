@@ -1,0 +1,531 @@
+{
+  "schema_version": 1,
+  "application_commit": "23fcb3a4e4fd8b177e03a05702800731f7b28e5a",
+  "latest_assurance_commit": "69c7427878d0373b6aab50659d61ce886907c575",
+  "date": "2026-09-24",
+  "environment": "Windows; Node 24.21.0; PostgreSQL 16; Playwright 1.63.0; Chrome 154.0.8037.58; en-AU; isolated synthetic fixtures",
+  "owner": "Dean Fiedler",
+  "owner_acceptance": false,
+  "captures": [
+    {
+      "file": "cr01-1440.png",
+      "scope": "CR01",
+      "kind": "native",
+      "state": "Overview with next action and customer objective",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "a703379cc74a76cb6d0276822152c89eb0424524a7c579978ba928f9dc7f0aa7",
+      "captured_at": "2026-09-23T23:53:56.599827+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr01-1024.png",
+      "scope": "CR01",
+      "kind": "native",
+      "state": "Overview with next action and customer objective",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "sha256": "5160075a3c95ed92dac25cad5a602cdca5a089573f6f6fa8338bf230cef0d26e",
+      "captured_at": "2026-09-23T23:53:57.148342+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr01-390.png",
+      "scope": "CR01",
+      "kind": "native",
+      "state": "Overview with next action and customer objective",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "f4f0e9fa1927b2cb13c93183f55c0f08b7231ec0d05e1205599acbe66fbf0edc",
+      "captured_at": "2026-09-23T23:53:57.516019+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr01-320.png",
+      "scope": "CR01",
+      "kind": "native",
+      "state": "Overview with next action and customer objective",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "sha256": "35eae02546dc8eb8053d5575674d3b53ba71bde25736605dbb506dac83eae44f",
+      "captured_at": "2026-09-23T23:53:57.849045+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr04-1440.png",
+      "scope": "CR04",
+      "kind": "native",
+      "state": "Expanded same-population insights above retained Board",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "896f8520f123ee5278414b643bb85c421f01185abef7dc11f2b321b0d65432de",
+      "captured_at": "2026-09-23T23:53:50.292853+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr04-1024.png",
+      "scope": "CR04",
+      "kind": "native",
+      "state": "Expanded same-population insights above retained Board",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "sha256": "b37b2b3afa5fe8dc8f6931c9588e330a44a7b4d12038729fe29bb8f310ebb9fd",
+      "captured_at": "2026-09-23T23:53:50.741618+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr04-390.png",
+      "scope": "CR04",
+      "kind": "native",
+      "state": "Expanded same-population insights above retained Board",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "8434ffaad1f084b19a690ad6d8502089d0dc3123f7c64b53ffd60e4b28516f9d",
+      "captured_at": "2026-09-23T23:53:51.199118+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr04-320.png",
+      "scope": "CR04",
+      "kind": "native",
+      "state": "Expanded same-population insights above retained Board",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "sha256": "61d507cf87ec7283c9ac63016cf20986b430d115a5267075b3a3cf91c4ee025d",
+      "captured_at": "2026-09-23T23:53:51.590385+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr02-1440.png",
+      "scope": "CR02",
+      "kind": "native",
+      "state": "Accepted intake, frozen revision 1",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "b9fe031c6db2e275bd3fa7228cd2e2eb02fa593ebd33dea982a30a413373b727",
+      "captured_at": "2026-09-23T23:49:08.432676+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr02-1024.png",
+      "scope": "CR02",
+      "kind": "native",
+      "state": "Accepted intake, frozen revision 1",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "sha256": "292afa2c7f35e5148159ab4ed2d251b075618d535cb80da1a8ac5d10e8b5fd3a",
+      "captured_at": "2026-09-23T23:49:10.688324+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr02-390.png",
+      "scope": "CR02",
+      "kind": "native",
+      "state": "Accepted intake, frozen revision 1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "aa31e11056a895dcc90f31594acbb17f5ec5790f8d8b63a3f82a83de124b3718",
+      "captured_at": "2026-09-23T23:49:12.140527+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr02-320.png",
+      "scope": "CR02",
+      "kind": "native",
+      "state": "Accepted intake, frozen revision 1",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "sha256": "c03f0d769e3a24209c0c05b7d43f747fc06405be06f485d1c339a7c182ac5392",
+      "captured_at": "2026-09-23T23:49:13.121753+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr03-1440.png",
+      "scope": "CR03",
+      "kind": "native",
+      "state": "Accepted corrected Won receiving revision 2",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "1353a28afc540d0455ce39349140d503595d44634e6fe2fc6ff1ca363ef81223",
+      "captured_at": "2026-09-23T23:49:48.100155+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr03-1024.png",
+      "scope": "CR03",
+      "kind": "native",
+      "state": "Accepted corrected Won receiving revision 2",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "sha256": "600a2d3a84409567ff8c3fb2283d25c87493ef0b16d709f377a3a952df403f5e",
+      "captured_at": "2026-09-23T23:49:48.816146+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr03-390.png",
+      "scope": "CR03",
+      "kind": "native",
+      "state": "Accepted corrected Won receiving revision 2",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "131361d255a770a5702de4bf2bb4fd9f5c6038bf5579fc5ef9b161ba85f96370",
+      "captured_at": "2026-09-23T23:49:49.494408+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr03-320.png",
+      "scope": "CR03",
+      "kind": "native",
+      "state": "Accepted corrected Won receiving revision 2",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "sha256": "753e6c13098c79b935bead3fec0969a394b07e83764d768491dd06f5da57486d",
+      "captured_at": "2026-09-23T23:49:50.085531+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr05-1440.png",
+      "scope": "CR05",
+      "kind": "native",
+      "state": "Closed review, exact saved customer feedback",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "5c42bbfa28a93bcc58a553d19ef8ea4b9553a76c052c93f6fd9209af867da443",
+      "captured_at": "2026-09-23T23:50:37.504968+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr05-1024.png",
+      "scope": "CR05",
+      "kind": "native",
+      "state": "Closed review, exact saved customer feedback",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "sha256": "34bbf3996c6bb8a72fb55c945a8d928f17e432e4415b210e369d0e4f58dc7a2a",
+      "captured_at": "2026-09-23T23:50:38.178756+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr05-390.png",
+      "scope": "CR05",
+      "kind": "native",
+      "state": "Closed review, exact saved customer feedback",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "e1a972c6e1b31a9a518916238ee6cd88050266b4e02eb39da9cc33f2d29adca8",
+      "captured_at": "2026-09-23T23:50:38.833817+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr05-320.png",
+      "scope": "CR05",
+      "kind": "native",
+      "state": "Closed review, exact saved customer feedback",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "sha256": "018065aacb0e71ede5b97bc0c608d0a0e788582562300dfe18ab4fedcc2193aa",
+      "captured_at": "2026-09-23T23:50:39.330582+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr05-200-percent-css-zoom.png",
+      "scope": "CR05",
+      "kind": "native",
+      "state": "Closed review; CSS zoom 2 with focused skip link. Not native browser zoom.",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "05497c6fa9111b21602368fae5fe578a3eaf4db4b7d9b088accae69140330914",
+      "captured_at": "2026-09-23T23:50:39.881298+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr02-intake-1440.png",
+      "scope": "CR02",
+      "kind": "native",
+      "state": "Permitted worklist / receiving queue",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "10332dc87de66034102c0c99a37cdded83ecb444d0a580228ed108c60504d24f",
+      "captured_at": "2026-09-23T23:56:17.223485+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr02-intake-320.png",
+      "scope": "CR02",
+      "kind": "native",
+      "state": "Permitted worklist / receiving queue",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "sha256": "a20e476ba8b9099600bbb576482ec930734b5762942897b170db11d56361c2b8",
+      "captured_at": "2026-09-23T23:56:17.293436+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr02-worklist-1440.png",
+      "scope": "CR02",
+      "kind": "native",
+      "state": "Permitted worklist / receiving queue",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "b9a8d36964e657d361b04333f26164b6554caf5756c706d2814a56dd4ae77aac",
+      "captured_at": "2026-09-23T23:56:15.979028+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr02-worklist-320.png",
+      "scope": "CR02",
+      "kind": "native",
+      "state": "Permitted worklist / receiving queue",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "sha256": "8292d9c5a16dc30205702b85ac572def606ac20dfe014d40903e048a75c7e284",
+      "captured_at": "2026-09-23T23:56:16.094220+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr03-worklist-1440.png",
+      "scope": "CR03",
+      "kind": "native",
+      "state": "Permitted worklist / receiving queue",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "633d540c70182707c8ed844d52b27745976c39d0513d4b0b2c91328c2a96d9e6",
+      "captured_at": "2026-09-23T23:56:18.352207+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr03-worklist-320.png",
+      "scope": "CR03",
+      "kind": "native",
+      "state": "Permitted worklist / receiving queue",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "sha256": "491ac8f8846125215bb02af9df1bba7972c76d2763728b33ee58f27b1f645e62",
+      "captured_at": "2026-09-23T23:56:18.449178+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr05-worklist-1440.png",
+      "scope": "CR05",
+      "kind": "native",
+      "state": "Permitted worklist / receiving queue",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "0b9a544927c8b2ea1e835f898324143955e8924f1857f1bffee8e66ad000dfa7",
+      "captured_at": "2026-09-23T23:56:19.949778+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr05-worklist-320.png",
+      "scope": "CR05",
+      "kind": "native",
+      "state": "Permitted worklist / receiving queue",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "sha256": "9e09c4ebf35fa709134d264c86f438b9db3f19f7b8161092ae806d04b2c78d34",
+      "captured_at": "2026-09-23T23:56:20.047147+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false
+    },
+    {
+      "file": "cr01-reference-1440.png",
+      "scope": "CR01",
+      "kind": "reference",
+      "state": "Issued standalone reference, unchanged",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "501c820cf20f4fa46e91840329b41eb2d828a1c420a2a53865612e9ae3ae77e2",
+      "captured_at": "2026-09-23T21:47:03.453649+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false,
+      "reference_source": "docs/reference/ui/crm/PPO-Deal-Workspace-r01.html",
+      "reference_source_sha256": "8fd467547d5369de0a42cde05700495ceb0068a433d5e1c4dea0fbd1485d507a"
+    },
+    {
+      "file": "cr04-reference-1440.png",
+      "scope": "CR04",
+      "kind": "reference",
+      "state": "Issued standalone reference, unchanged",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "4825389afab5d933db4454f1a2ba850cae4dc3522d9c6c5e176d7b55232f7a02",
+      "captured_at": "2026-09-23T21:47:04.728858+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false,
+      "reference_source": "docs/reference/ui/crm/ppo-deal-pipeline_r38.html",
+      "reference_source_sha256": "eb16502a8cb6cb235a4abbc5ed56e836eaa31d7d2ecba81e594c66a37b1a3b65"
+    },
+    {
+      "file": "cr02-reference-1440.png",
+      "scope": "CR02",
+      "kind": "reference",
+      "state": "Issued standalone reference, unchanged",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "edd91e90523bdee82a8913e1c4df0ed972e7b6bf4bbc16408ae19294f87bbdc7",
+      "captured_at": "2026-09-23T21:47:06.050998+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false,
+      "reference_source": "docs/reference/ui/estimating/sales-estimating-intake-preview-r02.html",
+      "reference_source_sha256": "de9cebe453dcf063386cf143ad3ad164022877ab3410223a365032c90578e46c"
+    },
+    {
+      "file": "cr03-reference-1440.png",
+      "scope": "CR03",
+      "kind": "reference",
+      "state": "Issued standalone reference, unchanged",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "8b2fe317bb3bee52db62d01b515e51a36585d5e765ac45bb066539a041cd9bec",
+      "captured_at": "2026-09-23T21:47:06.798343+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false,
+      "reference_source": "docs/reference/ui/crm/PPO-Sales-to-Delivery-Handover-Workspace-r01.html",
+      "reference_source_sha256": "956b059b7d1407c7000caebfcc1626d625e25ffa966785e1066dfc40a37ee5f6"
+    },
+    {
+      "file": "cr05-reference-1440.png",
+      "scope": "CR05",
+      "kind": "reference",
+      "state": "Issued standalone reference, unchanged",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "sha256": "976648e8ebdf665e403d19210737a53441162bc61db2569c1d1ff7b7b339fe57",
+      "captured_at": "2026-09-23T21:47:07.445971+00:00",
+      "individually_inspected": true,
+      "reviewer": "Codex visual inspection",
+      "owner_acceptance": false,
+      "reference_source": "docs/reference/ui/sales-aftercare/PPO-Sales-Aftercare-and-Renewal-Worklist-r01.html",
+      "reference_source_sha256": "403a0a182bdc353333a1e387b2f3fa3b32d6c8c3245085acb31919ff79435f48"
+    }
+  ]
+}

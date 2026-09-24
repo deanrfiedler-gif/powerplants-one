@@ -1428,8 +1428,8 @@
         {
           "id": "sales-shell-mobile-containment",
           "expected": "Phone utility controls stay inside the native header and leave Sales back links operable.",
-          "actual": "Sales captures identified an inherited identity-strip grid override. The native flex selector is corrected; final paired evidence and owner review remain pending.",
-          "action": "Run native Sales browser journeys and retained shell geometry checks, then inspect 390px and 320px captures.",
+          "actual": "Inherited identity-strip grid specificity was corrected. All 34 Sales reference/native captures were inspected; native 390px/320px controls stay inside the header. Owner/device acceptance remains pending.",
+          "action": "Review docs/testing/evidence/sales-native-completion/README.md and its hashed manifest with the owner; retain the passing header containment and shell geometry checks.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
