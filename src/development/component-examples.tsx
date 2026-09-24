@@ -33,6 +33,8 @@ import {
   appointmentFixture,
   areaFixture,
   customerRecordTabsFixture,
+  salesEvidenceFixture,
+  salesRecordTabsFixture,
   equipmentDateFixture,
   fixtureDate,
   fixtureId,
@@ -57,7 +59,7 @@ function FieldsExample({
         : "",
     ),
     [kind, setKind] = useState(""),
-    [notes, setNotes] = useState(""),
+    [notes, setNotes] = useState(state === "sales-evidence" ? salesEvidenceFixture : ""),
     [date, setDate] = useState(""),
     [effective, setEffective] = useState(equipmentDateFixture.value),
     [movement, setMovement] = useState(equipmentDateFixture.value),
@@ -124,6 +126,7 @@ function FieldsExample({
             name="catalogue-notes"
             label="Notes"
             multiline
+            maxLength={4000}
             value={notes}
             onChange={setNotes}
             hint="Include useful context; no customer data."
@@ -504,14 +507,11 @@ function NavigationExample({
   state?: string;
 }) {
   const [value, setValue] = useState("overview");
-  const options =
-    state === "cs-customer"
-      ? customerRecordTabsFixture
-      : [
-          { id: "overview", label: "Overview" },
-          { id: "details", label: "Details" },
-          { id: "history", label: "History" },
-        ];
+  const options = state === "cs-customer" ? customerRecordTabsFixture : state === "sales-workspace" ? salesRecordTabsFixture : [
+    { id: "overview", label: "Overview" },
+    { id: "details", label: "Details" },
+    { id: "history", label: "History" },
+  ];
   return menu ? (
     <>
       <WorklistChoice

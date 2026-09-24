@@ -1,4 +1,5 @@
 "use client";
+import { controlModules, controlPath } from "../engineering/control/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -441,9 +442,10 @@ export function ProductHeader() {
   const changes = page?.workspace === "engineering" ? changesPath(path) : undefined;
   // EN-08 likewise: "Engineering / Commissioning Basis & As-Built Release", then its destination while its menu is hidden.
   const commissioning = page?.workspace === "engineering" ? commissioningPath(path) : undefined;
+  const control = controlPath(path);
   const acceptance = path.startsWith("/projects/acceptance");
-  const crumb = materials ?? changes ?? commissioning ?? (acceptance ? { view: undefined } : undefined);
-  const view = page?.id === "work" ? workViewForPath(path)?.label : materials ? materialsModuleLabel : changes ? changesModuleLabel : commissioning ? commissioningModuleLabel : acceptance ? "Staged Acceptance & Closeout" : undefined;
+  const crumb = materials ?? changes ?? commissioning ?? (control ? {view:{label:controlModules[control.module].views.find(([key])=>key===control.view)?.[1]}} : undefined) ?? (acceptance ? { view: undefined } : undefined);
+  const view = page?.id === "work" ? workViewForPath(path)?.label : materials ? materialsModuleLabel : changes ? changesModuleLabel : commissioning ? commissioningModuleLabel : control ? control.title : acceptance ? "Staged Acceptance & Closeout" : undefined;
   const subview = crumb?.view?.label;
   const workspaceRoot = page?.workspace ? workspaces.find((w) => w.id === page.workspace) : undefined;
   const currentModule =
@@ -488,7 +490,7 @@ export function ProductHeader() {
       : page?.workspace === "sales"
         ? ["deals", "leads"]
         : page?.workspace === "estimate"
-          ? ["estimates", "wizard"]
+          ? ["estimates", "wizard", ...(page.id === "pricing" ? ["pricing"] : [])]
           : page?.id === "mail" || page?.id === "calendar"
             ? ["mail", "calendar"]
       : ["customers", "sites", "facilities", "equipment"].includes(page?.id ?? "")

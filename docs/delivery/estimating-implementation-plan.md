@@ -62,3 +62,7 @@ Dean has invoked the bounded design and rules step. [E2-D01–03](../decisions/e
 ## Excel import design addition — 15 September 2026
 
 Dean authorised the [Excel import design package](excel-estimate-import-handover.md). The [bounded plan](excel-estimate-import-plan.md) places standard-workbook upload/review/draft saving alongside E3 cost-source work, reusing E1 and the exact E2 receiving basis. The first pilot retains current numerical/100-line limits. Operational workbook compatibility, native Excel checks and browser/r19 review remain open; no runtime import, pricing-policy extension or new E/P sequence label is delivered.
+
+## Native source increment
+
+The authorised programme now implements the bounded E3 authored-synthetic-source slice in [its native contract](../contracts/estimating-cost-sources.md) and [verification handover](estimating-cost-sources-handover.md). Independent evidence review and exact comparison/save create an estimate successor; no historical recost, operational commercial approval, FX/landed policy or connected catalogue is adopted. Excel parser/import and ES-04 review follow separately.

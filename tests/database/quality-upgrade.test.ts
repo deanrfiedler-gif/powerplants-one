@@ -181,6 +181,11 @@ for (const state of ["Approved", "OutcomeUnknown", "Reconciled"]) {
       ]),
       ...coordinatorGrants.filter(g => g.value.capability === "shared.edit").map(g => ({ ...g.value, capability: "engineering.material.source" })),
     );
+    // Seed 47 adds only four narrow technical duties to existing fictional identities.
+    expected.push(...companyAGrants.filter(g=>g.value.capability==="shared.edit").flatMap(g=>[
+      [materials.reviewer,"engineering.technical.review"],[materials.release,"engineering.technical.issue"],
+      [materials.release,"engineering.technical.distribute"],["30000000-0000-4000-8000-000000000001","engineering.technical.source"],
+    ].map(([user_id,capability])=>({...g.value,user_id,capability}))));
     // Seed 30 (EN-07): three more fictional profiles read Company A, nobody gains engineering.edit, and review, technical
     // decision, closure, receiving and verification are one capability each, held only where the seed names the person.
     const changes = { releaseOwner: "30000000-0000-4000-8000-000000000022", service: "30000000-0000-4000-8000-000000000023", verifier: "30000000-0000-4000-8000-000000000024" };
@@ -215,6 +220,8 @@ for (const state of ["Approved", "OutcomeUnknown", "Reconciled"]) {
     expected.push(...acceptanceSeedGrants(originalGrants.map(g=>g.value),expected) as {capability:string}[]);
     expected.push(...companyAGrants.filter(g=>["shared.read","shared.edit","shared.internal.read","activity.read"].includes(String(g.value.capability))).map(g=>({...g.value,capability:String(g.value.capability),user_id:"c5010044-0000-4000-8000-000000000001"})));
     const grantShape = (g: Record<string, unknown>) => Object.fromEntries(Object.entries(g).filter(([k]) => k !== "id"));
+    expected.push(...companyAGrants.filter(g=>["shared.read","estimating.read"].includes(String(g.value.capability))).map(g=>({...g.value,capability:String(g.value.capability),user_id:"e5030045-0000-4000-8000-000000000001"})),
+      ...companyAGrants.filter(g=>g.value.capability==="estimating.read").map(g=>({...g.value,capability:"estimating.source.review",user_id:"e5030045-0000-4000-8000-000000000001"})));
     const sorted = (gs: Record<string, unknown>[]) => gs.map(g => JSON.stringify(grantShape(g))).sort();
     assert.deepEqual(sorted(added.map(g => g.value)), sorted(expected));
     assert.deepEqual({ ...afterUpgrade, permission_grants: originalGrants }, before);

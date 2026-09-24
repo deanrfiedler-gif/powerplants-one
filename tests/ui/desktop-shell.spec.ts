@@ -48,7 +48,7 @@ test("department shell fits laptop, desktop and compact viewports with centred s
     });
     expect(frames.after).toEqual(frames.before); expect(frames.bodyTop).toBeCloseTo(frames.before.head); expect(frames.bodyBottom).toBeCloseTo(frames.before.foot); expect(frames.scrolled).toBe(true);
     await page.getByRole("searchbox", { name: "Find a menu item" }).fill("Sales");
-    await expect(page.getByRole("navigation", { name: "More navigation" }).getByRole("link")).toHaveText(["Sales", "Pulse", "Leads", "Tasks", "Sales Inbox"]);
+    await expect(page.getByRole("navigation", { name: "More navigation" }).getByRole("link")).toHaveText(["Sales", "Pulse", "Leads", "Tasks", "Sales Inbox", "Sales-to-Estimating handovers", "Won-deal receiving", "Aftercare & renewal"]);
     await page.screenshot({ path: info.outputPath(`more-filter-${width}x${height}.png`) });
     await page.keyboard.press("Escape");
     await expect(page.getByRole("button", { name: "More", exact: true })).toBeFocused();
@@ -209,11 +209,14 @@ test("runtime shell matches the retained r17 reference typography, panel geometr
       // r17 geometry is retained; the navigation decision replaces planned links
       // with ready, permitted destinations. Supply has no business landing yet.
       await expect(actualPanel.locator(".ppo-menu-group").first().locator(".ppo-more-link")).toHaveText(["Sales", "Estimating & quotation", "Engineering", "Projects", "Service operations", "Finance"]);
-      // CS-08 adds one canonical Survey destination. Footer count includes Help;
+      // CS-08 and the three native Sales handover/aftercare destinations are included. Footer count includes Help;
       // installation actions are separate controls. Retained r17 bytes stay unchanged.
-      await expect(actualPanel.locator(".ppo-menu-group .ppo-more-link")).toHaveCount(23);
+      await expect(actualPanel.locator(".ppo-menu-group .ppo-more-link")).toHaveCount(26);
       await expect(actualPanel.locator(".ppo-help-link")).toBeVisible();
-      await expect(actualPanel.locator("footer")).toContainText("24 destinations");
+      for (const [name, href] of [["Sales-to-Estimating handovers", "/sales/handoffs/estimating"], ["Won-deal receiving", "/sales/handoffs/won"], ["Aftercare & renewal", "/sales/aftercare"]]) {
+        await expect(actualPanel.getByRole("link", { name, exact: true })).toHaveAttribute("href", href);
+      }
+      await expect(actualPanel.locator("footer")).toContainText("27 destinations");
       await expect(actualPanel.getByRole("link", { name: "Facilities & growing areas", exact: true })).toHaveAttribute("href", "/facilities?department=sales");
       await expect(actualPanel.getByRole("link", { name: "Site surveys & as-found", exact: true })).toHaveAttribute("href", "/surveys?department=sales");
     }

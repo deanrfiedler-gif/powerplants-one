@@ -1,0 +1,11 @@
+✔ ES03 immutable exact revisions, independent review, scope, stale writes and recoverable original receipts (3163.9865ms)
+✔ ES03 explicit successor retains original estimate and quote bytes, carries exact reviewed provenance and replays once (5537.8081ms)
+✔ ES03 comparison conflicts and a failed version write roll back all source bindings, events and receipts (3588.3974ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 48509.9157
