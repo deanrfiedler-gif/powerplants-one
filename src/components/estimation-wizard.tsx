@@ -368,9 +368,11 @@ function Pricing({ summary }: { summary: Summary | null }) {
         {total.markup_percent ?? "Not applicable"}%
       </p>
       <p>
-        Packages have no adopted saved membership. Supplier-price refresh and
-        specialist calculators are not integrated. Manual prices remain
-        authoritative for this saved version.
+        Packages have no adopted saved membership. Supplier-price refresh is
+        not configured. Screen Systems contributions can be reviewed and
+        explicitly adopted through the specialist workbench; saved quantities,
+        prices and their exact source basis remain unchanged until a successor
+        estimate is saved.
       </p>
       <Link href={`/estimating/estimates/${summary.estimate_id}`}>
         Open manual estimate and View/Create Draft quotation
@@ -1076,7 +1078,7 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
               <li><SpecialistEntry workspaceId={id} optionId={current.option.id}/></li>
               <li><Link href={`/estimating/fertigation?estimating_workspace_id=${id}&option_id=${current.option.id}`}>Priva Fertigation Configurator</Link></li>
               <li>
-                <Link href="/estimating">Manual estimates</Link>
+                <Link href="/estimating?tab=estimates">Saved manual estimates</Link>
               </li>
               {summary.data?.status === "Available" && (
                 <li>

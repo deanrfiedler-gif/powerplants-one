@@ -90,7 +90,9 @@
       "specification": "docs/design/development/components/buttons.md",
       "used_on": [
         "system:theme",
-        "route:/development/page-register"
+        "route:/development/page-register",
+        "scope:ES-01",
+        "route:/estimating"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -1183,7 +1185,9 @@
         "route:/customers",
         "route:/customers/[id]",
         "route:/people/[id]",
-        "route:/sites/[id]"
+        "route:/sites/[id]",
+        "scope:ES-01",
+        "route:/estimating"
       ],
       "desktop": "Keep a readable label with each tone; business state and tone are not equivalent.",
       "mobile": "Chips wrap without truncating operational meaning.",
@@ -1324,7 +1328,8 @@
       },
       "specification": "docs/design/development/components/application-shell.md",
       "used_on": [
-        "system:shell"
+        "system:shell",
+        "scope:ES-01"
       ],
       "desktop": "Review the real global search, workspace switcher, rail, More and utility controls around this catalogue. Shell access can be unavailable without a running identity/database service.",
       "mobile": "Resize the actual browser window to review the mobile shell; component-frame presets do not resize the surrounding application.",
