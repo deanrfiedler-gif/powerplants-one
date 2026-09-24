@@ -8,6 +8,7 @@ export type RegisterItem = {
   summary: string;
   status: string;
   priority: string;
+  version: number;
   received_at: string;
   channel: string;
   next_action: string | null;
@@ -27,6 +28,8 @@ export type RegisterItem = {
   clarification_unavailable: boolean;
   triage_blocker_count: number | null;
   work_orders: { id: string; display_number: string; status: string }[];
+  // I2: whether the triage and request-information commands would accept this actor for this request.
+  can_edit_intake: boolean;
 };
 
 export type Tone = "neutral" | "danger" | "warning" | "info" | "success";
@@ -111,6 +114,20 @@ export function attention(item: RegisterItem, now: Date): { text: string; tone: 
   return null;
 }
 
+// Card chips. An overdue clarification already shows in the card's next-action block in the danger tone, so it
+// is not repeated as a chip (SV-01); the list's Attention column uses attention() instead.
+export function cardChips(item: RegisterItem): { text: string; tone: Tone }[] {
+  const chips: { text: string; tone: Tone }[] = [];
+  if (item.triage_blocker_count)
+    chips.push({
+      text: `${item.triage_blocker_count} triage blocker${item.triage_blocker_count === 1 ? "" : "s"}`,
+      tone: "warning",
+    });
+  else if (item.status === "New" && item.triage_blocker_count === 0) chips.push({ text: "Ready to triage", tone: "neutral" });
+  if (item.clarification_unavailable) chips.push({ text: "Clarification not visible to you", tone: "neutral" });
+  return chips;
+}
+
 // The next-action block: the owned clarification when one is visible, otherwise the recorded next action,
 // which has no due time in the native contract.
 export function nextAction(item: RegisterItem, now: Date) {
@@ -146,4 +163,90 @@ export function equipmentLabel(item: RegisterItem) {
 
 export function workOrderLabel(order: RegisterItem["work_orders"][number]) {
   return `${order.display_number.replace(/^SYN-PPO-/, "")} · ${order.status.toLowerCase()}`;
+}
+
+// Board moves offer only the transitions the native commands perform (D3): request information from New, and
+// triage from New or Needs information. Anything later waits for ADR-0043.
+export type MoveTarget = "NeedsInformation" | "Triaged";
+export function moveTargets(item: Pick<RegisterItem, "status">): MoveTarget[] {
+  if (item.status === "New") return ["NeedsInformation", "Triaged"];
+  if (item.status === "NeedsInformation") return ["Triaged"];
+  return [];
+}
+
+// Why Move is unavailable, in words, or null when it is available. The server still decides on submit.
+export function moveUnavailable(item: Pick<RegisterItem, "status" | "can_edit_intake">) {
+  if (!moveTargets(item).length) return "Triaged is the last stage the application supports today.";
+  if (!item.can_edit_intake) return "Moving a request needs service request edit permission for its site.";
+  return null;
+}
+
+const channels: Record<string, string> = {
+  Phone: "phone",
+  Email: "email",
+  Manual: "manual entry",
+  PlannedMaintenance: "planned maintenance",
+  Other: "other channel",
+};
+export function channelLabel(channel: string) {
+  return channels[channel] ?? channel.toLowerCase();
+}
+
+// Times read in the application's business time zone (the Stamp default), relative to the read's as-at time:
+// "today 9:20 am", "yesterday 2:00 pm", otherwise "Mon 14 Sept, 2:00 pm".
+export const businessTimeZone = "Australia/Brisbane";
+function parts(date: Date) {
+  return new Intl.DateTimeFormat("en-AU", {
+    timeZone: businessTimeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(date);
+}
+export function formatWhen(iso: string, now: Date) {
+  const date = new Date(iso);
+  const time = new Intl.DateTimeFormat("en-AU", {
+    timeZone: businessTimeZone,
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  })
+    .format(date)
+    .replace(/\s?(am|pm)$/i, (m) => ` ${m.trim().toLowerCase()}`);
+  if (parts(date) === parts(now)) return `today ${time}`;
+  if (parts(date) === parts(new Date(now.getTime() - 86400000))) return `yesterday ${time}`;
+  const day = new Intl.DateTimeFormat("en-AU", {
+    timeZone: businessTimeZone,
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+  }).format(date);
+  return `${day.replace(",", "")}, ${time}`;
+}
+
+export function initials(name: string | null | undefined) {
+  const words = (name ?? "").trim().split(/\s+/).filter(Boolean);
+  if (!words.length) return "?";
+  return (words[0][0] + (words.length > 1 ? words[words.length - 1][0] : "")).toUpperCase();
+}
+
+// The accountable person for the next action: the owned clarification's owner when one is open and visible,
+// otherwise the triage owner, who owns the recorded next action.
+export function actionOwner(item: RegisterItem) {
+  const c = item.clarification;
+  return c && (c.status === "Open" || c.status === "InProgress") && c.owner_name ? c.owner_name : item.triage_owner_name;
+}
+
+// Action due wording for the list: the clarification's due time, a due time still needed, or no due time,
+// because the native next action has none.
+export function actionDue(item: RegisterItem, now: Date): { text: string; detail: string | null; tone: Tone } {
+  const c = item.clarification;
+  if (c && (c.status === "Open" || c.status === "InProgress")) {
+    if (c.due_at) {
+      const relative = relativeTime(now, c.due_at);
+      return { text: formatWhen(c.due_at, now), detail: relative.text, tone: relative.overdue ? "danger" : "neutral" };
+    }
+    if (c.due_needed) return { text: "Due time needed", detail: null, tone: "warning" };
+  }
+  return { text: "No due time", detail: null, tone: "neutral" };
 }

@@ -483,6 +483,17 @@ Additive read contract for the service requests register, increment I1 of build 
   - **Returns:** `{as_at, all_open, new, needs_information, triaged, urgent, overdue_clarifications, source}`, using the list's visibility and filters.
   - **Overdue clarifications:** a NeedsInformation request whose visible clarification activity is Open or InProgress with a past `due_at`. A clarification the identity cannot read is not counted.
 
+### SV-01 I2 register amendment — 24 September 2026
+
+Additive, for increment I2 of `PPO-SV01-PLAN`. No command, state, permission, migration or seed changes. Existing fields, filters, orders and cursors are unchanged.
+
+- **GET `/service/tickets?queue=`:**
+  - **Values:** `all_open`, `new`, `needs_information`, `triaged`, `urgent` or `overdue_clarifications`. Any other value is refused as `InvalidData`.
+  - **Rule:** each value applies exactly the predicate the matching `/service/tickets/queues` count uses. One shared definition serves both, so a list filtered by a queue holds the rows its count counts under the same filters.
+  - **Filters:** it combines with `q`, `company_id`, `site_id`, `owner_id`, `status` and `sort`.
+  - **Cursor:** the signed cursor is bound to the queue, so a cursor from another queue is refused. A request without `queue` keeps its existing cursor binding.
+- **Row field `can_edit_intake`:** true when the request is New or NeedsInformation and the actor holds `service.ticket.edit` for its company and site. This is the same rule as the record read's `can_edit_intake`. It tells the register where Move can be offered; the triage and request-information commands still decide and refuse on their own gates.
+
 ## Scheduling & Resources read workspaces
 
 [PPO-SCHED-ADR](../decisions/scheduling-resources-architecture.md) extends API-R04 without adding command authority. All responses use the existing no-store readRoute, current server identity and bounded repeatable-read snapshots. The existing eight-day `/schedule` and resource selector contracts remain unchanged.

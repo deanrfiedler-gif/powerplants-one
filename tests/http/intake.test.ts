@@ -179,9 +179,14 @@ test("SV-01 I1 register reads: the queues route and the urgency order share the 
   const rank: Record<string, number> = { Urgent: 0, High: 1, Normal: 2, Low: 3 };
   const ranks = list.body.items.map((t: { priority: string }) => rank[t.priority]);
   assert.deepEqual(ranks, [...ranks].sort((a, b) => a - b));
-  for (const key of ["received_at", "channel", "triage_owner_name", "customer", "clarification", "clarification_unavailable", "triage_blocker_count", "work_orders"])
+  for (const key of ["received_at", "channel", "triage_owner_name", "customer", "clarification", "clarification_unavailable", "triage_blocker_count", "work_orders", "can_edit_intake"])
     assert.ok(key in list.body.items[0], key);
   assert.equal((await call(cookie, "service/tickets?sort=received")).status, 422);
+  // I2: the register's queue filter lists what the matching badge counts.
+  const urgent = await call(cookie, "service/tickets?queue=urgent&sort=urgency&limit=200");
+  assert.equal(urgent.status, 200);
+  assert.equal(urgent.body.items.length, queues.body.urgent);
+  assert.equal((await call(cookie, "service/tickets?queue=resolved")).status, 422);
   const denied = await session("finance-processor");
   assert.equal((await call(denied, "service/tickets/queues")).status, 403);
 });

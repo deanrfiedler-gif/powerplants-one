@@ -2088,11 +2088,12 @@
       ],
       "dependencies": [
         "docs/decisions/service-requests-native-refinement.md",
-        "docs/decisions/ADR-0043-service-request-lifecycle.md"
+        "docs/decisions/ADR-0043-service-request-lifecycle.md",
+        "docs/delivery/service-requests-integration-build-plan.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Focused automated proof of the I2 native register (three states): tests/browser/service-requests.spec.ts",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6433,10 +6434,13 @@
       "title": "Service request register",
       "kind": "route",
       "module": "SV",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "The SV-01 native register (build plan I2): Board and List over New, Needs information and Triaged, with queues, filters, preview and Move through the existing triage form. Later stages wait for ADR-0043.",
       "path": "/service/tickets",
       "source_paths": [
-        "src/app/(business)/service/tickets/page.tsx"
+        "src/app/(business)/service/tickets/page.tsx",
+        "src/service/components/client/ticket-register.tsx",
+        "src/service/components/client/ticket-register-parts.tsx",
+        "src/app/styles/service-requests.css"
       ],
       "guide_key": "guide.page.service.tickets",
       "design_path": "docs/design/development/pages/route-service-tickets.md",
@@ -6459,7 +6463,7 @@
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Focused automated proof of the I2 native register (three states): tests/browser/service-requests.spec.ts",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

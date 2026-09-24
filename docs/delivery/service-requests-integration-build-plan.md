@@ -3,7 +3,7 @@ document_id: PPO-SV01-PLAN
 title: SV-01/SV-02 — Service requests application integration — build plan
 date: 2026-09-23
 owner: Dean Fiedler
-status: Prepared under Dean's acceptance of D3 on 23 September 2026; I1 delivered for review in a stacked PR; I2–I5 not started; lifecycle increments wait for ADR-0043
+status: Prepared under Dean's acceptance of D3 on 23 September 2026; I1 merged; I2 delivered for review; I3–I5 not started; lifecycle increments wait for ADR-0043
 scope_id: SV-01
 source_commit: 7bf972cbc38a9e62fd25b1bd635c6991895d76e6
 versioning: git
@@ -100,13 +100,48 @@ One pull request per increment. After each one, the application works and every 
 ### I2 — Register page (frames 1–3 without later lanes, 6, 14, 16, 19, 20 and 23)
 
 - **Screen and styles:** `src/service/components/client/ticket-register.tsx` (Board, List, preview drawer, queue row, filters, *Columns*, sort and states) and `src/app/styles/service-requests.css`, both scoped to `#ppo-service-requests`.
-- **List columns:** the twelve with a native source.
+- **List columns:** the fourteen with a native source (eighteen less *Customer update*, *Affected areas*, *Response route* and *Category*; this line said "twelve" until 24 September 2026).
 - **Shell:** register `/service/tickets` as `full-bleed` with `navigation: "workspace"` (D6).
 - **Board moves:** Move and drag offer only native transitions, New → NeedsInformation and New or NeedsInformation → Triaged, and open the existing commands' forms.
 - **Tests:**
   - `intake.spec.ts`: the visible heading becomes the hidden `h1` *Service requests*, and *New service request* becomes *Log a request*;
   - a new `tests/browser/service-requests.spec.ts`: board, list, preview, keyboard Move, 1024 × 768 and phone;
   - the shell-geometry probe for the workspace layout.
+
+#### I2 delivered adaptations
+
+I2 was built on 24 September 2026 in `src/service/components/client/ticket-register.tsx`, `ticket-register-parts.tsx` and `src/app/styles/service-requests.css`. The `sv01-native-r01` integration entry moved forward from I5, because registering a module workspace requires its entry (`tests/ui/deals-design-conformance.spec.ts`). The paired captures stay in I5.
+
+**Read-model additions** (no migration, command, capability or seed), amended in `docs/contracts/service-api.md`:
+- `listTickets` accepts `queue` (`all_open`, `new`, `needs_information`, `triaged`, `urgent` or `overdue_clarifications`). One predicate set serves the list and `ticketQueues`, so a toggle and its badge cannot disagree. The signed cursor is bound to the queue.
+- Each row carries `can_edit_intake`, the same rule as `readIntake`. Move is offered only where the triage and request-information commands would accept the actor, and the commands still decide.
+
+**Departures from the frames and component contract**, all Proposed and applied under delegation for Dean's visual review:
+
+| # | Frame element | Native adaptation | Why |
+|---|---|---|---|
+| A1 | *Open requests* scope menu | Omitted | No closed state is reachable natively; it returns with L2 |
+| A2 | Search across customers, sites and callers | Title and reference only; the placeholder says so | `listTickets` matches summary and reference; wider search needs a read contract |
+| A3 | Filters: owner, priority, customer, site, equipment and category | Company context, site and request owner. Priority is the Urgent queue | The list read has no customer, equipment, category or priority filter |
+| A4 | *Saved views* | Omitted | No saved-view store for this register |
+| A5 | *Sort: Urgency* control | Stated as text, *Sorted by urgency* | Urgency is the only user-meaningful native order; the default order is by identifier |
+| A6 | Board holds every request | The 200 most urgent, with a notice pointing to List or a queue | The read's page limit is 200; the board does not page |
+| A7 | Preview: Customer commitment and Why information is needed | Omitted; a Context section shows customer basis, site, equipment, linked work, owner and received time | No native source in the list read |
+| A8 | Phone Move | Cards open the record; Move is on the record (I3) | Frame 11 has none |
+| A9 | Queue short labels at 1024 px (All open, New, Urgent, Waiting, Overdue and Review) | All open, New, Urgent, Information and Overdue | The native queue set (frame 14) |
+| A10 | Move from a card or drag | A dialog chooses the target when there are two, then shows the record page's `TriageActions` narrowed to that command | One form and one set of server gates for both surfaces |
+| A11 | List footer on a phone | Shown only when there is another page; the count sits above the cards | Frame 11 has no footer |
+| A12 | Shared `sales-board`, `sales-table` and `drawer` components | Module-scoped implementations of those patterns under `#ppo-service-requests`, on r22 tokens. They reuse `business-ui` reads and fields, `ProductIcon` and `TriageActions`. The catalogue consumer bindings are unchanged | The Deals board and table are bound to CRM data and commands; binding them to Tickets is a component change for owner alignment |
+
+**Shell overlap, fixed on main:** before main was merged in, the shell's phone header icons wrapped under the breadcrumb and overlapped the first row below it on Service pages, including this register's search field. The same overlap showed on `/service/work-orders` and `/service/tickets/new`. The Job Pack I5 shared-shell correction on main fixed it. After the merge, a recheck at 390 px showed the breadcrumb truncating and the icons staying on one row. I2 makes no shell change.
+
+**Verified:**
+- unit tests for the view helpers;
+- `tests/database/intake.test.ts`: each queue lists what its count counts, the cursor is bound to its queue, and the row edit flag equals `readIntake`'s;
+- `tests/http/intake.test.ts`: the queue filter route;
+- `tests/browser/service-requests.spec.ts` and the updated `intake.spec.ts`, on desktop and phone.
+
+The browser runs used Playwright's bundled Chromium, because the pinned Chrome channel is not installed in the build container; CI runs the pinned channel. The shell-geometry probe was not run.
 
 ### I3 — Record page (frames 4, 7, 12, 13, 15, 17 and 24, native content only)
 
@@ -122,7 +157,7 @@ One pull request per increment. After each one, the application works and every 
 
 ### I5 — Conformance proof and records
 
-- **Integration entry:** a `module_integrations` entry `sv01-native-r01`. Its fields:
+- **Integration entry:** delivered early in I2 (see [I2 delivered adaptations](#i2-delivered-adaptations)); I5 updates it with the paired captures. Its fields:
   - `design`: r02 HTML and its SHA-256;
   - `shared_design`: theme board r22;
   - `component_proof` and `application_proof`: I2's specs;
@@ -158,4 +193,4 @@ One pull request per increment. After each one, the application works and every 
 
 ## 7. Immediate next step
 
-I1, on a branch stacked on the refinement PR.
+I3, the record page, after Dean's visual review of I2 or in parallel with it.

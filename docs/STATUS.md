@@ -1,5 +1,13 @@
 # Current prototype status
 
+**Service requests register I2, 24 September 2026:** Increment I2 of the [build plan](delivery/service-requests-integration-build-plan.md#i2-delivered-adaptations) makes `/service/tickets` the native SV-01 register for New, Needs information and Triaged. It is a full-bleed module workspace (D6) with integration entry `sv01-native-r01`.
+- **Presentation:** Board and List, queue toggles with server counts, filters, preview, and Move through the record page's existing triage and request-information form with its gates unchanged.
+- **Read model:** two additive changes, recorded in the [service API](contracts/service-api.md): a `queue` filter that shares its predicates with the counts, and a per-row `can_edit_intake`.
+- **Adaptations:** twelve native departures (A1–A12) are listed for Dean's visual and device review. The build plan's "twelve" native columns are corrected to fourteen.
+- **Proof:** unit, database, HTTP and browser proofs pass locally; the browser runs used bundled Chromium, not the pinned Chrome channel.
+- **Shell overlap:** a phone header overlap on Service pages, seen before main was merged in, is fixed by main's shared-shell correction. It was rechecked after the merge.
+- **Not claimed:** no migration, capability or seed. Visual acceptance, device review and deployment remain separate. I1 and the design merged as #298 and #294.
+
 **Native cost sources, 24 September 2026:** Draft PR #308 implements ES-03 source, exact review and deliberate estimate-refresh routes, stacked on workload PR #301. Migration 0048 (reconciled from the unmerged 0045 proposal) and a local synthetic reviewer preserve historical estimate/quote content. Three isolated database cases, all 14 concurrent Estimating HTTP cases, six native browser journeys and the final desktop/phone comparison correction pass. Source/review/binding/estimate rows and seven original receipts survive three application processes and two PostgreSQL restarts. CI on `ce05194` passed fresh-reset/current-schema and E1/E2 upgrades, then exposed shared-actor interference now corrected in the HTTP fixture; final-head CI remains required. [Contract](contracts/estimating-cost-sources.md), [decision](decisions/estimating-cost-sources-native.md), [retained inspected evidence](testing/evidence/estimating-native-cost-sources/README.md) and [limits](delivery/estimating-cost-sources-handover.md). Excel import, the full programme, owner acceptance and deployment remain open.
 
 
@@ -49,14 +57,14 @@
 - **Lifecycle extension.** It is drafted as proposed [ADR-0043](decisions/ADR-0043-service-request-lifecycle.md). The schema already holds all eight TicketState values, so the extension adds guarded commands, the customer-update commitment and typed evidence, contact, waiting and resolution records. It authorises no migration. Seven questions (Q1–Q7) await Dean, including P03's known-site triage gate for organisation-level requests and an explicit customer field.
 - **Native build.** The [integration build plan](delivery/service-requests-integration-build-plan.md) sequences it as I1 read model, I2 register, I3 record, I4 capture and I5 conformance proof, followed by lifecycle increments after ADR-0043. Visual acceptance stays separate, as for every current module integration.
 - **Second round.** After the decision, eleven frames were drawn: the native three-state board, Triage & actions, the 1024 × 768 and 320 px layouts, and phone capture, filters, no matches, work and evidence. Frame 8 was corrected, because *Request information* is unavailable while a request waits.
-- **I1 read model.** Delivered for review in a PR stacked on the design PR, with no visible change:
+- **I1 read model.** Merged as #298, with no visible change:
   - the register rows gain customer, site, equipment, owner, received time, clarification, triage-blocker and linked-work projections;
   - `sort=urgency` and `GET /service/tickets/queues` are added;
   - the presentation helpers are a pure module.
   No migration, command, capability or seed changes. The [service API](contracts/service-api.md) records the amendment.
 - **Still open.** Dean's visual review is not yet recorded, so the board is not an accepted baseline.
-- **Not claimed.** No application code, migration, guide article, visual acceptance or deployment.
-- **Register gaps.** The gaps found by the audit are corrected in a separate pull request.
+- **Not claimed.** No migration, visual acceptance or deployment. The native register followed in I2 (above).
+- **Register gaps.** The gaps found by the audit were corrected in #297.
 
 **Design register gaps, 23 September 2026:** Three gaps found by that day's register audit are corrected in the working design register. `scope:CS-05` and its four Facility routes now record the native implementation merged in #274 as `ab96e2b` ([ADR-0037](decisions/ADR-0037-cs05-facilities-native.md)), with desktop and mobile contracts drawn from the [CS-05 handover](delivery/facilities-growing-areas-handover.md) and its evidence. The Scheduling & Appointments r01 HTML is linked from SV-04, PL-01 and PL-04, the register entries it declares, as a proposed reference only. AD-07 keeps its imported `refine` classification, which five other route-less scopes share; its contract now states that no `/admin/audit` route exists. No visual review, owner acceptance or deployment is recorded.
 
