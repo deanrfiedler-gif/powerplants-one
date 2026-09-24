@@ -671,7 +671,7 @@ export async function readPack(p: Principal, id: string) {
     ).rows;
     const jobs = (
       await c.query(
-        "SELECT j.id,j.revision_id,j.state,j.attempts,j.error_code,j.requested_at,j.recovery_owner_id,j.issue_id,u.display_name AS actor_name FROM ppo.pack_render_jobs j JOIN ppo.users u ON (u.workspace_id,u.id)=(j.workspace_id,j.actor_id) WHERE j.workspace_id=$1 AND j.pack_id=$2 ORDER BY j.requested_at DESC",
+        "SELECT j.id,j.revision_id,j.state,j.attempts,j.error_code,j.requested_at,j.recovery_owner_id,j.issue_id,u.display_name AS actor_name,owner.display_name AS recovery_owner_name FROM ppo.pack_render_jobs j JOIN ppo.users u ON (u.workspace_id,u.id)=(j.workspace_id,j.actor_id) LEFT JOIN ppo.users owner ON (owner.workspace_id,owner.id)=(j.workspace_id,j.recovery_owner_id) WHERE j.workspace_id=$1 AND j.pack_id=$2 ORDER BY j.requested_at DESC",
         [p.workspace_id, id],
       )
     ).rows;
@@ -725,8 +725,15 @@ export async function readPack(p: Principal, id: string) {
       ).rows) {
         try {
           const task = await visibleActivity(c, p, f.activity_id);
+          const owner = (
+            await c.query(
+              "SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2",
+              [p.workspace_id, task.owner_id],
+            )
+          ).rows[0];
           follow_ups.push({
             activity_id: task.id,
+            owner_name: owner?.display_name ?? null,
             owner_id: task.owner_id,
             status: task.status,
             summary: task.summary,
@@ -797,7 +804,7 @@ export async function readPack(p: Principal, id: string) {
         history: staff
           ? (
               await c.query(
-                "SELECT id,kind,summary FROM ppo.history_records WHERE workspace_id=$1 AND company_id=$2 AND site_id=$3 AND access_class IN ('RestrictedService','CustomerApproved') ORDER BY occurred_at DESC",
+                "SELECT id,kind,summary,occurred_at,confidence,author_label,source_system,source_id,verification_status FROM ppo.history_records WHERE workspace_id=$1 AND company_id=$2 AND site_id=$3 AND access_class IN ('RestrictedService','CustomerApproved') ORDER BY occurred_at DESC",
                 [p.workspace_id, a.company_id, a.site_id],
               )
             ).rows
@@ -812,6 +819,14 @@ export async function readPack(p: Principal, id: string) {
             ],
           )
         ).rows,
+        acknowledgements: staff
+          ? (
+              await c.query(
+                "SELECT ak.id,i.id AS issue_id,r.revision,u.display_name,ak.acknowledged_at FROM ppo.pack_acknowledgements ak JOIN ppo.pack_recipients pr ON (pr.workspace_id,pr.id)=(ak.workspace_id,ak.recipient_id) JOIN ppo.pack_issues i ON (i.workspace_id,i.id)=(pr.workspace_id,pr.issue_id) JOIN ppo.pack_revisions r ON (r.workspace_id,r.id)=(i.workspace_id,i.revision_id) JOIN ppo.users u ON (u.workspace_id,u.id)=(ak.workspace_id,ak.actor_id) WHERE i.workspace_id=$1 AND i.pack_id=$2 ORDER BY ak.acknowledged_at DESC,ak.id",
+                [p.workspace_id, pack.id],
+              )
+            ).rows
+          : null,
         jobs: staff ? jobs : [],
         sources: staff
           ? await availableSources(c, p, a.company_id, a.site_id)
@@ -874,7 +889,7 @@ export async function preparationOptions(p: Principal, id: string) {
       sources: await availableSources(c, p, a.company_id, a.site_id),
       history: (
         await c.query(
-          "SELECT id,kind,summary FROM ppo.history_records WHERE workspace_id=$1 AND company_id=$2 AND site_id=$3 AND access_class IN ('RestrictedService','CustomerApproved') ORDER BY occurred_at DESC",
+          "SELECT id,kind,summary,occurred_at,confidence,author_label,source_system,source_id,verification_status FROM ppo.history_records WHERE workspace_id=$1 AND company_id=$2 AND site_id=$3 AND access_class IN ('RestrictedService','CustomerApproved') ORDER BY occurred_at DESC",
           [p.workspace_id, a.company_id, a.site_id],
         )
       ).rows,

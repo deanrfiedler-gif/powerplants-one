@@ -68,3 +68,7 @@ Acceptance evidence is pending. Capture matching original-reference and applicat
 ## I6 saved-section handover
 
 First preparation still uses the existing command and nine required notes. After the save opens the record, verified structured context and the exact saved-text disclosure are available in the shared Job pack/Preparation view. I6 adds no first-save field, permission or source-selection authority. See the [I6 handover](../../../delivery/job-pack-i6-handover.md).
+
+## I7 history selection context
+
+Existing history choices now show their recorded confidence, date and author/verification where supplied. These remain service-audience records selected by the existing command. A reported or suspected entry is not a verified cause; selecting it does not change its source record. No first-save field or authority changes.

@@ -1966,7 +1966,7 @@
       "title": "Job-pack preparation and issue follow-through",
       "kind": "scope",
       "module": "SV",
-      "summary": "Job Pack I6 adds permission-scoped structured saved sections with exact-text proof and fallback, after I4 source/print choices. I7 presentation and I5 final conformance/entry points remain.",
+      "summary": "I4 source/print work is merged; I6 structured sections is PR #306. I7 adds verified scope title, stage-grouped readiness and staff provenance/exact issue acknowledgements. Final I5 conformance, entry links and print remain.",
       "path": "/service/packs",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -1976,13 +1976,16 @@
       "html_path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
       "image_paths": [
         "docs/testing/evidence/job-pack-i6/structured-scope-1440.png",
-        "docs/testing/evidence/job-pack-i6/structured-scope-320.png"
+        "docs/testing/evidence/job-pack-i6/structured-scope-320.png",
+        "docs/testing/evidence/job-pack-i7/heading-1440.png",
+        "docs/testing/evidence/job-pack-i7/readiness-320.png"
       ],
       "dependencies": [
         "src/documents/section-text.ts",
         "src/documents/section-readers.ts",
         "src/documents/section-view.ts",
-        "docs/delivery/job-pack-i6-handover.md"
+        "docs/delivery/job-pack-i6-handover.md",
+        "docs/delivery/job-pack-i7-handover.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -5771,7 +5774,7 @@
       "title": "Job pack detail",
       "kind": "route",
       "module": "SV",
-      "summary": "Job Pack I6 adds permission-scoped structured saved sections with exact-text proof and fallback, after I4 source/print choices. I7 presentation and I5 final conformance/entry points remain.",
+      "summary": "I4 source/print work is merged; I6 structured sections is PR #306. I7 adds verified scope title, stage-grouped readiness and staff provenance/exact issue acknowledgements. Final I5 conformance, entry links and print remain.",
       "path": "/service/packs/[id]",
       "source_paths": [
         "src/app/(business)/service/packs/[id]/page.tsx"
@@ -5781,13 +5784,16 @@
       "html_path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
       "image_paths": [
         "docs/testing/evidence/job-pack-i6/structured-scope-1440.png",
-        "docs/testing/evidence/job-pack-i6/structured-scope-320.png"
+        "docs/testing/evidence/job-pack-i6/structured-scope-320.png",
+        "docs/testing/evidence/job-pack-i7/heading-1440.png",
+        "docs/testing/evidence/job-pack-i7/readiness-320.png"
       ],
       "dependencies": [
         "src/documents/section-text.ts",
         "src/documents/section-readers.ts",
         "src/documents/section-view.ts",
-        "docs/delivery/job-pack-i6-handover.md"
+        "docs/delivery/job-pack-i6-handover.md",
+        "docs/delivery/job-pack-i7-handover.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",

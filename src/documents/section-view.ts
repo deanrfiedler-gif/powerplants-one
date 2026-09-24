@@ -93,7 +93,7 @@ export async function sectionView(
     const records = s.history.length
       ? (
           await c.query(
-            "SELECT id,kind,summary,confidence,occurred_at FROM ppo.history_records WHERE workspace_id=$1 AND id=ANY($2::uuid[]) AND company_id=$3 AND site_id=$4 AND access_class IN ('RestrictedService','CustomerApproved')",
+            "SELECT id,kind,summary,confidence,occurred_at,author_label,source_system,source_id,verification_status FROM ppo.history_records WHERE workspace_id=$1 AND id=ANY($2::uuid[]) AND company_id=$3 AND site_id=$4 AND access_class IN ('RestrictedService','CustomerApproved')",
             [
               p.workspace_id,
               s.history.map((h) => h.id),
@@ -109,10 +109,27 @@ export async function sectionView(
         result.history = null;
         return result;
       }
+      const basis = {
+        id: h.id,
+        kind: h.kind,
+        summary: h.summary,
+        confidence: h.confidence,
+        occurred_at: h.occurred_at,
+      };
       history.push({
-        ...h,
+        ...basis,
         occurred_at: h.occurred_at.toISOString(),
-        matches_snapshot: digest(canonical(h)) === selected.hash,
+        matches_snapshot: digest(canonical(basis)) === selected.hash,
+        ...(staff
+          ? {
+              author_label: h.author_label,
+              verification_status: h.verification_status,
+              source:
+                h.source_system && h.source_id
+                  ? { system: h.source_system, id: h.source_id }
+                  : null,
+            }
+          : {}),
       });
     }
     result.history = history;

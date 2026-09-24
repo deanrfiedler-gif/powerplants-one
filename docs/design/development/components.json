@@ -1591,6 +1591,11 @@
           "id": "recipient",
           "label": "Issued recipient view",
           "description": "Exact permitted issue revision; no internal equipment IDs or links."
+        },
+        {
+          "id": "staff-provenance",
+          "label": "Staff provenance",
+          "description": "Recorded author, source and verification metadata beside hash-verified history; recipient metadata excluded."
         }
       ],
       "implementation": [
@@ -1629,6 +1634,82 @@
           "expected": "An isolated live catalogue renderer.",
           "actual": "Actual application fixture and fallback cases are covered separately.",
           "action": "Retain this visible binding and use the I6 application proof.",
+          "priority": "Low",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "job-pack-rail",
+      "title": "Job Pack readiness, crew and output rail",
+      "category": "Boards & cards",
+      "module": "SV",
+      "purpose": "Page-scoped r03 readiness, explicit crew response and output recovery facts. Uses server outcomes and current permissions.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Reference only",
+      "states": [
+        {
+          "id": "attention",
+          "label": "Action required",
+          "description": "Unsatisfied outcomes remain visible in the correct stage."
+        },
+        {
+          "id": "satisfied",
+          "label": "Satisfied details",
+          "description": "Native disclosure retains every satisfied assessment."
+        },
+        {
+          "id": "recovery",
+          "label": "Output recovery",
+          "description": "Exact revision, readable error and named recovery owner."
+        },
+        {
+          "id": "recipient",
+          "label": "Recipient",
+          "description": "Current issue and crew facts without staff history or ownership projections."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/documents/components/client/job-pack-rail.tsx",
+          "symbol": "ReadinessCard"
+        },
+        {
+          "path": "src/documents/components/client/job-pack-rail.tsx",
+          "symbol": "CrewCard"
+        },
+        {
+          "path": "src/documents/components/client/job-pack-rail.tsx",
+          "symbol": "OutputCard"
+        }
+      ],
+      "dependencies": [
+        "src/documents/pack-view.ts",
+        "src/documents/packs.ts",
+        "src/app/styles/job-pack.css"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
+        "anchor": "",
+        "status": "Accepted r03 with adopted D9/D10 density and read-model decisions; application owner acceptance separate"
+      },
+      "specification": "docs/design/development/components/job-pack-rail.md",
+      "used_on": [
+        "scope:SV-05",
+        "route:/service/packs/[id]"
+      ],
+      "desktop": "Right rail in the accepted r03 column; fixed logical stage order, visible attention and collapsed satisfied rows.",
+      "mobile": "Rail follows the paper in normal module scrolling. Disclosures and actions retain 44 px targets and wrap long names/reasons.",
+      "keyboard": "Native summary toggles with Enter or Space and shows focus. No action-required row is initially hidden.",
+      "limitations": "Actual application state fixtures exist; no isolated catalogue renderer. Counts present server outcomes and grant no authority.",
+      "gaps": [
+        {
+          "id": "job-pack-rail-gallery",
+          "expected": "Isolated live catalogue renderer.",
+          "actual": "Application fixtures cover the page-scoped implementation.",
+          "action": "Retain the visible source/consumer bindings and use the I7 browser proof.",
           "priority": "Low",
           "owner": "Dean Fiedler"
         }

@@ -15,3 +15,5 @@ Control labels stack above values below the page breakpoint. Long values wrap. N
 `tests/fixtures/job-pack-read.json` adds only a section projection to the retained pre-I6 snapshot. Unit compatibility tests retain its original text. The application browser fixture exercises verified, unavailable and mismatched states, exact disclosure and six widths. Scope equipment IDs are null for recipients; staff links require current asset access. History needs selected ID/order/hash proof. No source read changes the snapshot or grants work authority.
 
 The component is bound to scope:SV-05 and route:/service/packs/[id]. It is reference-only in the catalogue because there is no isolated renderer. Whole-page paired comparison belongs to I5; device and owner acceptance are not inferred from automated checks.
+
+I7 adds staff-only recorded author, verification and source metadata to hash-verified history rows. Recipients do not receive those metadata fields. The hash remains the original ID/kind/summary/confidence/occurrence basis; provenance additions do not move it.

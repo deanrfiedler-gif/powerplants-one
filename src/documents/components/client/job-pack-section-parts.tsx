@@ -161,6 +161,19 @@ export function SectionParts({
                 <small>
                   {formatStamp(h.occurred_at, zone)} · {friendly(h.confidence)}
                 </small>
+                {h.author_label && (
+                  <small className="jp-structured-help">
+                    Recorded by {h.author_label} ·{" "}
+                    {h.verification_status
+                      ? friendly(h.verification_status)
+                      : "Verification not recorded"}
+                  </small>
+                )}
+                {h.source && (
+                  <small className="jp-structured-help">
+                    Source: {h.source.system} · {h.source.id}
+                  </small>
+                )}
               </div>
             </article>
           ))}
