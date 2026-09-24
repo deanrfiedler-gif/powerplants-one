@@ -1552,7 +1552,7 @@ The pilot benefits baseline should record preparation/search time, pack issue/ac
 | BP-05 | Engineering & Design Control Functional & Build Blueprint | Engineering, Projects, Service | Planned |
 | BP-06 | Projects & Commercial Delivery Functional & Build Blueprint | Projects, Commercial, Finance, QHSE | Planned |
 | BP-07 | Service Operations Functional & Build Blueprint | Service, technicians, Finance, Supply Chain | Planned |
-| BP-08 | Supply Chain Management Functional & Build Blueprint | Procurement/Inventory/Logistics, Finance | Planned |
+| BP-08 | [Supply Chain Management Functional & Build Blueprint](BP-08-supply-chain.md) | Procurement/Inventory/Logistics, Finance | Working native synthetic specification; acceptance pending |
 | BP-09 | Finance & Commercial Controls Functional & Build Blueprint | Finance and operational measure owners | Planned |
 
 ### 23.1 Common module specification structure

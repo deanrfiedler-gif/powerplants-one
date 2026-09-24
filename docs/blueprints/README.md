@@ -11,7 +11,7 @@
 | BP-05 | Engineering & Design Control Functional & Build Blueprint | Planned; native CAD boundary retained |
 | BP-06 | [Projects & Commercial Delivery Functional & Build Blueprint](BP-06-projects-commercial-delivery.md) | r01 bounded discovery; [source assessment](projects-source-assessment.md), [screens](projects-screen-specification.md), [handover](../delivery/projects-discovery-handover.md); implementation and transition open |
 | BP-07 | [Service Operations Functional & Build Blueprint](BP-07-service-operations.md) | Selected planned-service prototype specified; extended lifecycle scope deferred |
-| BP-08 | Supply Chain Management Functional & Build Blueprint | Planned; first-release material readiness boundary included in BP-07 |
+| BP-08 | [Supply Chain Management Functional & Build Blueprint](BP-08-supply-chain.md) | Native synthetic coordination working specification; source policy and owner acceptance pending |
 | BP-09 | Finance & Commercial Controls Functional & Build Blueprint | [Minimum service/account subset](../contracts/finance-handoff.md) authored; full Finance specification planned |
 
 The [prototype package](../prototype/README.md) links the data, API, document, acceptance and delivery contracts. A partial module contract is never described as full enterprise implementation.

@@ -56,3 +56,7 @@ The first runtime slice should use manual fictional demand/promise/assessment ev
 Required tests cover strict payload/version/unit validation, complete mixed-target permission filtering, same-key recovery and races, quantity conservation, atomic audit/receipt/outbox/Activity effects, changed-source comparison, unchanged confirmed bookings and exact issued-file preservation. Upgrade/reseed/restart must retain original UUIDs, references, evidence and revoked access. Real ERP availability, reservations, purchases, receipt, dispatch, return or credit commands require verified source contracts and separate execution authority.
 
 The contract and cases are prepared; none is an executed SCM/AT acceptance result. This closes the audit's readiness-definition task while keeping the full #13 implementation and source-policy gaps visible.
+
+## Native implementation follow-through — 25 September 2026
+
+The earlier candidate/design status above is historical. [BP-08](../blueprints/BP-08-supply-chain.md) and [ADR-0049](../decisions/ADR-0049-native-supply-chain.md) define the authorised native synthetic receiving implementation. [Handover](../delivery/supply-chain-native-handover.md) records actual verification. ERP mappings, source freshness policy and operational authority remain unresolved; no age threshold or live command is inferred.
