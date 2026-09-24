@@ -33,6 +33,11 @@ Local results on the integrated #309 tree: production build passed; fresh migrat
 
 Fresh CI remains required for every integrated head. Synthetic test evidence does not establish owner/device acceptance, production readiness or deployment.
 
+## Performance sample response ownership
+
+The [fresh Equipment performance job](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35952532608/job/107483935296) retained one failed development sample out of 320. Its phone Customers wave received a 200 response 71 ms after observation began, with zero matching requests started in that wave; Chromium then refused its body after navigation. The URL-only waiter had selected a late response from the preceding wave. The waiter now accepts only responses belonging to GET request objects observed after that sample starts. It retains the 120-second deadline, real browser request, declared network rule, HTTP-error assertion, raw samples and timing boundary; no retry, interception or timing exclusion is added.
+
+A controlled delayed-response regression returned the previous wave with the old predicate on both desktop and phone. After the correction, all four browser cases passed, including preservation of a current 503 response, exclusion of POST, and a bounded timeout when no request starts. Focused lint and TypeScript checks passed. This proves response ownership, not production performance. The separate [original-failure replay](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35952532608/job/107483935192) received an external runner shutdown during warm-up; its application journeys did not run. Fresh CI on the corrected head is required for both lanes.
 
 ## Optional Job Pack access boundary
 
