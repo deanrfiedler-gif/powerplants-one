@@ -549,14 +549,20 @@
       "guide_key": "guide.eq.01",
       "design_path": "docs/design/development/pages/scope-eq-01.md",
       "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/equipment-native/eq-register-1440.png",
+        "docs/testing/evidence/equipment-native/eq-register-390.png",
+        "docs/testing/evidence/equipment-native/eq-record-1440.png",
+        "docs/testing/evidence/equipment-native/eq-record-390.png"
+      ],
       "dependencies": [
         "docs/decisions/ADR-0045-equipment-native-workflows.md",
-        "docs/delivery/equipment-native-completion-handover.md"
+        "docs/delivery/equipment-native-completion-handover.md",
+        "docs/testing/evidence/equipment-native/README.md"
       ],
-      "scope_status": "Native implementation; verification in progress",
-      "visual_status": "Proposed native adaptation; owner review pending",
-      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "scope_status": "Native implementation; synthetic verification recorded",
+      "visual_status": "Implementation captures inspected; proposed native adaptation; owner acceptance pending",
+      "functional_status": "Executed database, HTTP, browser and restart proof; see Equipment evidence index for exact checkpoints and limits",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -593,14 +599,19 @@
       "guide_key": "guide.eq.02",
       "design_path": "docs/design/development/pages/scope-eq-02.md",
       "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/equipment-native/eq-lookup-1440.png",
+        "docs/testing/evidence/equipment-native/eq-lookup-390.png",
+        "docs/testing/evidence/equipment-native/eq-lookup-320.png"
+      ],
       "dependencies": [
         "docs/decisions/ADR-0045-equipment-native-workflows.md",
-        "docs/delivery/equipment-native-completion-handover.md"
+        "docs/delivery/equipment-native-completion-handover.md",
+        "docs/testing/evidence/equipment-native/README.md"
       ],
-      "scope_status": "Native implementation; verification in progress",
-      "visual_status": "Proposed native adaptation; owner review pending",
-      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "scope_status": "Native implementation; synthetic verification recorded",
+      "visual_status": "Implementation captures inspected; proposed native adaptation; owner acceptance pending",
+      "functional_status": "Executed database, HTTP, browser and restart proof; see Equipment evidence index for exact checkpoints and limits",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -635,14 +646,18 @@
       "guide_key": "guide.eq.03",
       "design_path": "docs/design/development/pages/scope-eq-03.md",
       "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/equipment-native/eq-configuration-1440.png",
+        "docs/testing/evidence/equipment-native/eq-configuration-390.png"
+      ],
       "dependencies": [
         "docs/decisions/ADR-0045-equipment-native-workflows.md",
-        "docs/delivery/equipment-native-completion-handover.md"
+        "docs/delivery/equipment-native-completion-handover.md",
+        "docs/testing/evidence/equipment-native/README.md"
       ],
-      "scope_status": "Native implementation; verification in progress",
-      "visual_status": "Proposed native adaptation; owner review pending",
-      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "scope_status": "Native implementation; synthetic verification recorded",
+      "visual_status": "Implementation captures inspected; proposed native adaptation; owner acceptance pending",
+      "functional_status": "Executed database, HTTP, browser and restart proof; see Equipment evidence index for exact checkpoints and limits",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -679,14 +694,18 @@
       "guide_key": "guide.eq.04",
       "design_path": "docs/design/development/pages/scope-eq-04.md",
       "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/equipment-native/eq-lifecycle-1440.png",
+        "docs/testing/evidence/equipment-native/eq-lifecycle-390.png"
+      ],
       "dependencies": [
         "docs/decisions/ADR-0045-equipment-native-workflows.md",
-        "docs/delivery/equipment-native-completion-handover.md"
+        "docs/delivery/equipment-native-completion-handover.md",
+        "docs/testing/evidence/equipment-native/README.md"
       ],
-      "scope_status": "Native implementation; verification in progress",
-      "visual_status": "Proposed native adaptation; owner review pending",
-      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "scope_status": "Native implementation; synthetic verification recorded",
+      "visual_status": "Implementation captures inspected; proposed native adaptation; owner acceptance pending",
+      "functional_status": "Executed database, HTTP, browser and restart proof; see Equipment evidence index for exact checkpoints and limits",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -723,14 +742,18 @@
       "guide_key": "guide.eq.05",
       "design_path": "docs/design/development/pages/scope-eq-05.md",
       "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/equipment-native/eq-history-failed-fix-1440.png",
+        "docs/testing/evidence/equipment-native/eq-history-failed-fix-390.png"
+      ],
       "dependencies": [
         "docs/decisions/ADR-0045-equipment-native-workflows.md",
-        "docs/delivery/equipment-native-completion-handover.md"
+        "docs/delivery/equipment-native-completion-handover.md",
+        "docs/testing/evidence/equipment-native/README.md"
       ],
-      "scope_status": "Native implementation; verification in progress",
-      "visual_status": "Proposed native adaptation; owner review pending",
-      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "scope_status": "Native implementation; synthetic verification recorded",
+      "visual_status": "Implementation captures inspected; proposed native adaptation; owner acceptance pending",
+      "functional_status": "Executed database, HTTP, browser and restart proof; see Equipment evidence index for exact checkpoints and limits",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -768,14 +791,19 @@
       "guide_key": "guide.eq.06",
       "design_path": "docs/design/development/pages/scope-eq-06.md",
       "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/equipment-native/eq-bulletins-1440.png",
+        "docs/testing/evidence/equipment-native/eq-bulletins-390.png",
+        "docs/testing/evidence/equipment-native/eq-bulletin-closure-error-390.png"
+      ],
       "dependencies": [
         "docs/decisions/ADR-0045-equipment-native-workflows.md",
-        "docs/delivery/equipment-native-completion-handover.md"
+        "docs/delivery/equipment-native-completion-handover.md",
+        "docs/testing/evidence/equipment-native/README.md"
       ],
-      "scope_status": "Native implementation; verification in progress",
-      "visual_status": "Proposed native adaptation; owner review pending",
-      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "scope_status": "Native implementation; synthetic verification recorded",
+      "visual_status": "Implementation captures inspected; proposed native adaptation; owner acceptance pending",
+      "functional_status": "Executed database, HTTP, browser and restart proof; see Equipment evidence index for exact checkpoints and limits",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -812,14 +840,19 @@
       "guide_key": "guide.eq.07",
       "design_path": "docs/design/development/pages/scope-eq-07.md",
       "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/equipment-native/eq-support-recorded-desktop.png",
+        "docs/testing/evidence/equipment-native/eq-support-recorded-mobile.png",
+        "docs/testing/evidence/equipment-native/eq-support-detail-390.png"
+      ],
       "dependencies": [
         "docs/decisions/ADR-0045-equipment-native-workflows.md",
-        "docs/delivery/equipment-native-completion-handover.md"
+        "docs/delivery/equipment-native-completion-handover.md",
+        "docs/testing/evidence/equipment-native/README.md"
       ],
-      "scope_status": "Native implementation; verification in progress",
-      "visual_status": "Proposed native adaptation; owner review pending",
-      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "scope_status": "Native implementation; synthetic verification recorded",
+      "visual_status": "Implementation captures inspected; proposed native adaptation; owner acceptance pending",
+      "functional_status": "Executed database, HTTP, browser and restart proof; see Equipment evidence index for exact checkpoints and limits",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -856,14 +889,20 @@
       "guide_key": "guide.eq.08",
       "design_path": "docs/design/development/pages/scope-eq-08.md",
       "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/equipment-native/eq-backup-recorded-desktop.png",
+        "docs/testing/evidence/equipment-native/eq-backup-recorded-mobile.png",
+        "docs/testing/evidence/equipment-native/eq-backup-stages-1440.png",
+        "docs/testing/evidence/equipment-native/eq-backup-stages-390.png"
+      ],
       "dependencies": [
         "docs/decisions/ADR-0045-equipment-native-workflows.md",
-        "docs/delivery/equipment-native-completion-handover.md"
+        "docs/delivery/equipment-native-completion-handover.md",
+        "docs/testing/evidence/equipment-native/README.md"
       ],
-      "scope_status": "Native implementation; verification in progress",
-      "visual_status": "Proposed native adaptation; owner review pending",
-      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "scope_status": "Native implementation; synthetic verification recorded",
+      "visual_status": "Implementation captures inspected; proposed native adaptation; owner acceptance pending",
+      "functional_status": "Executed database, HTTP, browser and restart proof; see Equipment evidence index for exact checkpoints and limits",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -900,14 +939,20 @@
       "guide_key": "guide.eq.09",
       "design_path": "docs/design/development/pages/scope-eq-09.md",
       "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/equipment-native/eq-instruments-1440.png",
+        "docs/testing/evidence/equipment-native/eq-instruments-390.png",
+        "docs/testing/evidence/equipment-native/eq-calibration-at-use-1440.png",
+        "docs/testing/evidence/equipment-native/eq-calibration-at-use-390.png"
+      ],
       "dependencies": [
         "docs/decisions/ADR-0045-equipment-native-workflows.md",
-        "docs/delivery/equipment-native-completion-handover.md"
+        "docs/delivery/equipment-native-completion-handover.md",
+        "docs/testing/evidence/equipment-native/README.md"
       ],
-      "scope_status": "Native implementation; verification in progress",
-      "visual_status": "Proposed native adaptation; owner review pending",
-      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "scope_status": "Native implementation; synthetic verification recorded",
+      "visual_status": "Implementation captures inspected; proposed native adaptation; owner acceptance pending",
+      "functional_status": "Executed database, HTTP, browser and restart proof; see Equipment evidence index for exact checkpoints and limits",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -5120,14 +5165,20 @@
       "guide_key": "guide.page.equipment.id",
       "design_path": "docs/design/development/pages/route-equipment-id.md",
       "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/equipment-native/eq-register-1440.png",
+        "docs/testing/evidence/equipment-native/eq-register-390.png",
+        "docs/testing/evidence/equipment-native/eq-record-1440.png",
+        "docs/testing/evidence/equipment-native/eq-record-390.png"
+      ],
       "dependencies": [
         "docs/decisions/ADR-0045-equipment-native-workflows.md",
-        "docs/delivery/equipment-native-completion-handover.md"
+        "docs/delivery/equipment-native-completion-handover.md",
+        "docs/testing/evidence/equipment-native/README.md"
       ],
-      "scope_status": "Native implementation; verification in progress",
-      "visual_status": "Proposed native adaptation; owner review pending",
-      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "scope_status": "Native implementation; synthetic verification recorded",
+      "visual_status": "Implementation captures inspected; proposed native adaptation; owner acceptance pending",
+      "functional_status": "Executed database, HTTP, browser and restart proof; see Equipment evidence index for exact checkpoints and limits",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -5165,14 +5216,20 @@
       "guide_key": "guide.page.equipment",
       "design_path": "docs/design/development/pages/route-equipment.md",
       "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/equipment-native/eq-register-1440.png",
+        "docs/testing/evidence/equipment-native/eq-register-390.png",
+        "docs/testing/evidence/equipment-native/eq-record-1440.png",
+        "docs/testing/evidence/equipment-native/eq-record-390.png"
+      ],
       "dependencies": [
         "docs/decisions/ADR-0045-equipment-native-workflows.md",
-        "docs/delivery/equipment-native-completion-handover.md"
+        "docs/delivery/equipment-native-completion-handover.md",
+        "docs/testing/evidence/equipment-native/README.md"
       ],
-      "scope_status": "Native implementation; verification in progress",
-      "visual_status": "Proposed native adaptation; owner review pending",
-      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "scope_status": "Native implementation; synthetic verification recorded",
+      "visual_status": "Implementation captures inspected; proposed native adaptation; owner acceptance pending",
+      "functional_status": "Executed database, HTTP, browser and restart proof; see Equipment evidence index for exact checkpoints and limits",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -8438,14 +8495,20 @@
       "guide_key": "guide.route-equipment-backups",
       "design_path": "docs/design/development/pages/route-equipment-backups.md",
       "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/equipment-native/eq-backup-recorded-desktop.png",
+        "docs/testing/evidence/equipment-native/eq-backup-recorded-mobile.png",
+        "docs/testing/evidence/equipment-native/eq-backup-stages-1440.png",
+        "docs/testing/evidence/equipment-native/eq-backup-stages-390.png"
+      ],
       "dependencies": [
         "docs/decisions/ADR-0045-equipment-native-workflows.md",
-        "docs/delivery/equipment-native-completion-handover.md"
+        "docs/delivery/equipment-native-completion-handover.md",
+        "docs/testing/evidence/equipment-native/README.md"
       ],
-      "scope_status": "Native implementation; verification in progress",
-      "visual_status": "Proposed native adaptation; owner review pending",
-      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "scope_status": "Native implementation; synthetic verification recorded",
+      "visual_status": "Implementation captures inspected; proposed native adaptation; owner acceptance pending",
+      "functional_status": "Executed database, HTTP, browser and restart proof; see Equipment evidence index for exact checkpoints and limits",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -8480,14 +8543,19 @@
       "guide_key": "guide.route-equipment-bulletins",
       "design_path": "docs/design/development/pages/route-equipment-bulletins.md",
       "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/equipment-native/eq-bulletins-1440.png",
+        "docs/testing/evidence/equipment-native/eq-bulletins-390.png",
+        "docs/testing/evidence/equipment-native/eq-bulletin-closure-error-390.png"
+      ],
       "dependencies": [
         "docs/decisions/ADR-0045-equipment-native-workflows.md",
-        "docs/delivery/equipment-native-completion-handover.md"
+        "docs/delivery/equipment-native-completion-handover.md",
+        "docs/testing/evidence/equipment-native/README.md"
       ],
-      "scope_status": "Native implementation; verification in progress",
-      "visual_status": "Proposed native adaptation; owner review pending",
-      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "scope_status": "Native implementation; synthetic verification recorded",
+      "visual_status": "Implementation captures inspected; proposed native adaptation; owner acceptance pending",
+      "functional_status": "Executed database, HTTP, browser and restart proof; see Equipment evidence index for exact checkpoints and limits",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -8522,14 +8590,20 @@
       "guide_key": "guide.route-equipment-instruments",
       "design_path": "docs/design/development/pages/route-equipment-instruments.md",
       "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/equipment-native/eq-instruments-1440.png",
+        "docs/testing/evidence/equipment-native/eq-instruments-390.png",
+        "docs/testing/evidence/equipment-native/eq-calibration-at-use-1440.png",
+        "docs/testing/evidence/equipment-native/eq-calibration-at-use-390.png"
+      ],
       "dependencies": [
         "docs/decisions/ADR-0045-equipment-native-workflows.md",
-        "docs/delivery/equipment-native-completion-handover.md"
+        "docs/delivery/equipment-native-completion-handover.md",
+        "docs/testing/evidence/equipment-native/README.md"
       ],
-      "scope_status": "Native implementation; verification in progress",
-      "visual_status": "Proposed native adaptation; owner review pending",
-      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "scope_status": "Native implementation; synthetic verification recorded",
+      "visual_status": "Implementation captures inspected; proposed native adaptation; owner acceptance pending",
+      "functional_status": "Executed database, HTTP, browser and restart proof; see Equipment evidence index for exact checkpoints and limits",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -8564,14 +8638,19 @@
       "guide_key": "guide.route-equipment-lifecycle",
       "design_path": "docs/design/development/pages/route-equipment-lifecycle.md",
       "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/equipment-native/eq-support-recorded-desktop.png",
+        "docs/testing/evidence/equipment-native/eq-support-recorded-mobile.png",
+        "docs/testing/evidence/equipment-native/eq-support-detail-390.png"
+      ],
       "dependencies": [
         "docs/decisions/ADR-0045-equipment-native-workflows.md",
-        "docs/delivery/equipment-native-completion-handover.md"
+        "docs/delivery/equipment-native-completion-handover.md",
+        "docs/testing/evidence/equipment-native/README.md"
       ],
-      "scope_status": "Native implementation; verification in progress",
-      "visual_status": "Proposed native adaptation; owner review pending",
-      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "scope_status": "Native implementation; synthetic verification recorded",
+      "visual_status": "Implementation captures inspected; proposed native adaptation; owner acceptance pending",
+      "functional_status": "Executed database, HTTP, browser and restart proof; see Equipment evidence index for exact checkpoints and limits",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -8606,14 +8685,19 @@
       "guide_key": "guide.route-equipment-lookup",
       "design_path": "docs/design/development/pages/route-equipment-lookup.md",
       "html_path": "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/equipment-native/eq-lookup-1440.png",
+        "docs/testing/evidence/equipment-native/eq-lookup-390.png",
+        "docs/testing/evidence/equipment-native/eq-lookup-320.png"
+      ],
       "dependencies": [
         "docs/decisions/ADR-0045-equipment-native-workflows.md",
-        "docs/delivery/equipment-native-completion-handover.md"
+        "docs/delivery/equipment-native-completion-handover.md",
+        "docs/testing/evidence/equipment-native/README.md"
       ],
-      "scope_status": "Native implementation; verification in progress",
-      "visual_status": "Proposed native adaptation; owner review pending",
-      "functional_status": "See Equipment completion handover for executed evidence and limits",
+      "scope_status": "Native implementation; synthetic verification recorded",
+      "visual_status": "Implementation captures inspected; proposed native adaptation; owner acceptance pending",
+      "functional_status": "Executed database, HTTP, browser and restart proof; see Equipment evidence index for exact checkpoints and limits",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,

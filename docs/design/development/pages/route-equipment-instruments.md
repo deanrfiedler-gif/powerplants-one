@@ -44,3 +44,9 @@ Proposed native adaptation: use the existing shared shell and responsive cards/t
 ## Evidence and review
 
 The page guide `guide.route-equipment-instruments` describes current controls. [Completion handover](../../../delivery/equipment-native-completion-handover.md) records executed checks, screenshots, failure comparisons and publication status. Source presence, functional evidence, visual comparison, business acceptance and deployment remain separate. No review fingerprint is asserted.
+
+## Implementation verification
+
+Implementation checkpoint `cad07b414d1cd2deab95ce8d2b459e01ddbed8ab` was inspected on 24 September 2026. These are original synthetic runtime captures, separate from accepted design images: [eq-instruments-1440.png](../../../testing/evidence/equipment-native/eq-instruments-1440.png), [eq-instruments-390.png](../../../testing/evidence/equipment-native/eq-instruments-390.png), [eq-calibration-at-use-1440.png](../../../testing/evidence/equipment-native/eq-calibration-at-use-1440.png), [eq-calibration-at-use-390.png](../../../testing/evidence/equipment-native/eq-calibration-at-use-390.png).
+
+The [evidence index](../../../testing/evidence/equipment-native/README.md) and [manifest](../../../testing/evidence/equipment-native/manifest.json) retain exact dimensions, hashes and source provenance. Desktop/phone pairs, the seven-width family matrix, 1024 x 768 and the effective 200% viewport were inspected. The maintained browser proof passed all 38 Equipment cases, including all seven route-guide mappings and focus return; ten duplicate matrix/reference cases were intentionally skipped. Database, HTTP and actual application/database restart results are recorded separately. Owner/device acceptance, accepted-image baselines and deployment remain pending; no review fingerprint is asserted.

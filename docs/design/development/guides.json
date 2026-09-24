@@ -2830,7 +2830,7 @@
       "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/delivery/equipment-native-completion-handover.md; authored checks are not executed evidence",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -2869,7 +2869,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Register and record workspace: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon links to this draft guide."
+            "Register and record workspace: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon opens the registered draft route guide; the nine EQ scope guides are also available in Design & Development."
           ],
           "steps": [],
           "rows": [],
@@ -2955,7 +2955,8 @@
           "paragraphs": [
             "docs/decisions/ADR-0045-equipment-native-workflows.md",
             "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-            "docs/delivery/equipment-native-completion-handover.md"
+            "docs/delivery/equipment-native-completion-handover.md",
+            "docs/testing/evidence/equipment-native/README.md"
           ],
           "steps": [],
           "rows": [],
@@ -3011,7 +3012,7 @@
       "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/delivery/equipment-native-completion-handover.md; authored checks are not executed evidence",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -3050,7 +3051,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Focused lookup workflow: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon links to this draft guide."
+            "Focused lookup workflow: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon opens the registered draft route guide; the nine EQ scope guides are also available in Design & Development."
           ],
           "steps": [],
           "rows": [],
@@ -3136,7 +3137,8 @@
           "paragraphs": [
             "docs/decisions/ADR-0045-equipment-native-workflows.md",
             "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-            "docs/delivery/equipment-native-completion-handover.md"
+            "docs/delivery/equipment-native-completion-handover.md",
+            "docs/testing/evidence/equipment-native/README.md"
           ],
           "steps": [],
           "rows": [],
@@ -3189,7 +3191,7 @@
       "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/delivery/equipment-native-completion-handover.md; authored checks are not executed evidence",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -3228,7 +3230,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Record evidence workflow: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon links to this draft guide."
+            "Record evidence workflow: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon opens the registered draft route guide; the nine EQ scope guides are also available in Design & Development."
           ],
           "steps": [],
           "rows": [],
@@ -3314,7 +3316,8 @@
           "paragraphs": [
             "docs/decisions/ADR-0045-equipment-native-workflows.md",
             "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-            "docs/delivery/equipment-native-completion-handover.md"
+            "docs/delivery/equipment-native-completion-handover.md",
+            "docs/testing/evidence/equipment-native/README.md"
           ],
           "steps": [],
           "rows": [],
@@ -3369,7 +3372,7 @@
       "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/delivery/equipment-native-completion-handover.md; authored checks are not executed evidence",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -3408,7 +3411,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Record decision workflow: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon links to this draft guide."
+            "Record decision workflow: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon opens the registered draft route guide; the nine EQ scope guides are also available in Design & Development."
           ],
           "steps": [],
           "rows": [],
@@ -3494,7 +3497,8 @@
           "paragraphs": [
             "docs/decisions/ADR-0045-equipment-native-workflows.md",
             "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-            "docs/delivery/equipment-native-completion-handover.md"
+            "docs/delivery/equipment-native-completion-handover.md",
+            "docs/testing/evidence/equipment-native/README.md"
           ],
           "steps": [],
           "rows": [],
@@ -3549,7 +3553,7 @@
       "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/delivery/equipment-native-completion-handover.md; authored checks are not executed evidence",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -3589,7 +3593,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Record timeline: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon links to this draft guide."
+            "Record timeline: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon opens the registered draft route guide; the nine EQ scope guides are also available in Design & Development."
           ],
           "steps": [],
           "rows": [],
@@ -3675,7 +3679,8 @@
           "paragraphs": [
             "docs/decisions/ADR-0045-equipment-native-workflows.md",
             "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-            "docs/delivery/equipment-native-completion-handover.md"
+            "docs/delivery/equipment-native-completion-handover.md",
+            "docs/testing/evidence/equipment-native/README.md"
           ],
           "steps": [],
           "rows": [],
@@ -3731,7 +3736,7 @@
       "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/delivery/equipment-native-completion-handover.md; authored checks are not executed evidence",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -3770,7 +3775,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Register and reviewed evidence: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon links to this draft guide."
+            "Register and reviewed evidence: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon opens the registered draft route guide; the nine EQ scope guides are also available in Design & Development."
           ],
           "steps": [],
           "rows": [],
@@ -3856,7 +3861,8 @@
           "paragraphs": [
             "docs/decisions/ADR-0045-equipment-native-workflows.md",
             "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-            "docs/delivery/equipment-native-completion-handover.md"
+            "docs/delivery/equipment-native-completion-handover.md",
+            "docs/testing/evidence/equipment-native/README.md"
           ],
           "steps": [],
           "rows": [],
@@ -3909,7 +3915,7 @@
       "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/delivery/equipment-native-completion-handover.md; authored checks are not executed evidence",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -3948,7 +3954,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Portfolio evidence register: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon links to this draft guide."
+            "Portfolio evidence register: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon opens the registered draft route guide; the nine EQ scope guides are also available in Design & Development."
           ],
           "steps": [],
           "rows": [],
@@ -4034,7 +4040,8 @@
           "paragraphs": [
             "docs/decisions/ADR-0045-equipment-native-workflows.md",
             "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-            "docs/delivery/equipment-native-completion-handover.md"
+            "docs/delivery/equipment-native-completion-handover.md",
+            "docs/testing/evidence/equipment-native/README.md"
           ],
           "steps": [],
           "rows": [],
@@ -4087,7 +4094,7 @@
       "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/delivery/equipment-native-completion-handover.md; authored checks are not executed evidence",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -4126,7 +4133,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Portfolio and staged evidence workflow: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon links to this draft guide."
+            "Portfolio and staged evidence workflow: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon opens the registered draft route guide; the nine EQ scope guides are also available in Design & Development."
           ],
           "steps": [],
           "rows": [],
@@ -4212,7 +4219,8 @@
           "paragraphs": [
             "docs/decisions/ADR-0045-equipment-native-workflows.md",
             "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-            "docs/delivery/equipment-native-completion-handover.md"
+            "docs/delivery/equipment-native-completion-handover.md",
+            "docs/testing/evidence/equipment-native/README.md"
           ],
           "steps": [],
           "rows": [],
@@ -4265,7 +4273,7 @@
       "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/delivery/equipment-native-completion-handover.md; authored checks are not executed evidence",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -4304,7 +4312,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Canonical instrument register: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon links to this draft guide."
+            "Canonical instrument register: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon opens the registered draft route guide; the nine EQ scope guides are also available in Design & Development."
           ],
           "steps": [],
           "rows": [],
@@ -4390,7 +4398,8 @@
           "paragraphs": [
             "docs/decisions/ADR-0045-equipment-native-workflows.md",
             "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-            "docs/delivery/equipment-native-completion-handover.md"
+            "docs/delivery/equipment-native-completion-handover.md",
+            "docs/testing/evidence/equipment-native/README.md"
           ],
           "steps": [],
           "rows": [],
@@ -41184,7 +41193,7 @@
       "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/delivery/equipment-native-completion-handover.md; authored checks are not executed evidence",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -41223,7 +41232,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Register and record workspace: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon links to this draft guide."
+            "Register and record workspace: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon opens the registered draft route guide; the nine EQ scope guides are also available in Design & Development."
           ],
           "steps": [],
           "rows": [],
@@ -41309,7 +41318,8 @@
           "paragraphs": [
             "docs/decisions/ADR-0045-equipment-native-workflows.md",
             "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-            "docs/delivery/equipment-native-completion-handover.md"
+            "docs/delivery/equipment-native-completion-handover.md",
+            "docs/testing/evidence/equipment-native/README.md"
           ],
           "steps": [],
           "rows": [],
@@ -41365,7 +41375,7 @@
       "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/delivery/equipment-native-completion-handover.md; authored checks are not executed evidence",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -41404,7 +41414,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Register and record workspace: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon links to this draft guide."
+            "Register and record workspace: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon opens the registered draft route guide; the nine EQ scope guides are also available in Design & Development."
           ],
           "steps": [],
           "rows": [],
@@ -41490,7 +41500,8 @@
           "paragraphs": [
             "docs/decisions/ADR-0045-equipment-native-workflows.md",
             "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-            "docs/delivery/equipment-native-completion-handover.md"
+            "docs/delivery/equipment-native-completion-handover.md",
+            "docs/testing/evidence/equipment-native/README.md"
           ],
           "steps": [],
           "rows": [],
@@ -68193,7 +68204,7 @@
         }
       ],
       "prepared_at": "2026-09-24",
-      "runtime_evidence": "See docs/delivery/equipment-native-completion-handover.md; authored checks are not executed evidence"
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending."
     },
     {
       "guide_key": "guide.route-equipment-bulletins",
@@ -68242,7 +68253,7 @@
         }
       ],
       "prepared_at": "2026-09-24",
-      "runtime_evidence": "See docs/delivery/equipment-native-completion-handover.md; authored checks are not executed evidence"
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending."
     },
     {
       "guide_key": "guide.route-equipment-instruments",
@@ -68291,7 +68302,7 @@
         }
       ],
       "prepared_at": "2026-09-24",
-      "runtime_evidence": "See docs/delivery/equipment-native-completion-handover.md; authored checks are not executed evidence"
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending."
     },
     {
       "guide_key": "guide.route-equipment-lifecycle",
@@ -68340,7 +68351,7 @@
         }
       ],
       "prepared_at": "2026-09-24",
-      "runtime_evidence": "See docs/delivery/equipment-native-completion-handover.md; authored checks are not executed evidence"
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending."
     },
     {
       "guide_key": "guide.route-equipment-lookup",
@@ -68389,7 +68400,7 @@
         }
       ],
       "prepared_at": "2026-09-24",
-      "runtime_evidence": "See docs/delivery/equipment-native-completion-handover.md; authored checks are not executed evidence"
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending."
     }
   ]
 }

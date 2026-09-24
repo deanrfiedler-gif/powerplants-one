@@ -376,7 +376,7 @@ test("P03 persisted intake, validation retention, clarification completion, tria
 test("P03 unavailable and empty queues stay distinct; keyboard focus and network-failed form entries survive", async ({
   page,
 }, info) => {
-  const retainedName = `SYN retained new customer ${info.project.name}`;
+  const retainedName = `SYN retained new customer ${info.project.name} ${crypto.randomUUID()}`;
   // My actions is the activity list behind My Work; the Overview is a bounded preview of it.
   await page.goto("/work/actions");
   await identity(page);
