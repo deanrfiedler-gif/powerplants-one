@@ -1,3 +1,4 @@
+import { controlPath } from "../engineering/control/navigation";
 import type { Capability } from "../platform/permissions";
 import type { ProductIconName } from "../components/product-icons";
 
@@ -79,11 +80,11 @@ export const destinations: ShellDestination[] = [
   {"id": "estimate-reviews", "label": "Reviews & approvals", "icon": "nav-approval", "readiness": "unavailable", "workspace": "estimate"},
   {"id": "fertigation", "label": "Priva Fertigation Configurator", "icon": "nav-fertigation", "readiness": "ready", "href": "/estimating/fertigation", "workspace": "estimate", "requires": ["estimating.read"]},
   {"id": "engineering", "label": "Engineering workload", "icon": "nav-workload", "readiness": "ready", "href": "/engineering", "workspace": "engineering", "requires": ["engineering.read"]},
-  {"id": "basis", "label": "Design basis & interfaces", "icon": "nav-interfaces", "readiness": "unavailable", "workspace": "engineering"},
-  {"id": "drawings", "label": "Drawings", "icon": "nav-drawings", "readiness": "unavailable", "workspace": "engineering"},
+  {"id": "basis", "label": "Design basis & interfaces", "icon": "nav-interfaces", "readiness": "ready", "href": "/engineering/basis", "requires": ["engineering.read"], "workspace": "engineering"},
+  {"id": "drawings", "label": "Drawings", "icon": "nav-drawings", "readiness": "ready", "href": "/engineering/drawings", "requires": ["engineering.read"], "workspace": "engineering"},
   {"id": "materials", "label": "Materials & substitutions", "icon": "nav-materials", "readiness": "ready", "href": "/engineering/materials", "workspace": "engineering", "requires": ["engineering.read"]},
   {"id": "changes", "label": "Change review", "icon": "nav-changes", "readiness": "ready", "href": "/engineering/changes", "workspace": "engineering", "requires": ["engineering.read"]},
-  {"id": "technical-reviews", "label": "Technical reviews", "icon": "nav-approval", "readiness": "unavailable", "workspace": "engineering"},
+  {"id": "technical-reviews", "label": "Technical reviews", "icon": "nav-approval", "readiness": "ready", "href": "/engineering/reviews", "requires": ["engineering.read"], "workspace": "engineering"},
   {"id": "commissioning", "label": "Commissioning & as-built", "icon": "nav-commissioning", "readiness": "ready", "href": "/engineering/commissioning", "workspace": "engineering", "requires": ["engineering.read"]},
   {"id": "projects", "label": "Projects", "icon": "nav-projects", "readiness": "ready", "href": "/projects", "workspace": "projects", "requires": ["project.read"]},
   {"id": "programme", "label": "Programme", "icon": "nav-programme", "readiness": "ready", "href": "/projects/programme", "workspace": "projects", "requires": ["project.read"]},
@@ -227,7 +228,7 @@ export const matchesPath = (path: string, href: string) =>
   path === href || (href !== "/" && path.startsWith(href + "/"));
 export function pageForPath(path: string) {
   if (path === "/search") return { ...destination("work"), id: "search", label: "Search", href: "/search" };
-  if (materialsPath(path) || changesPath(path) || commissioningPath(path)) return destination("engineering");
+  if (materialsPath(path) || changesPath(path) || commissioningPath(path) || controlPath(path)) return destination("engineering");
   // Specific routes precede their parent; a future page must not inherit a wrong guide.
   const item = destinations
     .filter((d) => d.href && matchesPath(path, d.href))
@@ -302,6 +303,8 @@ export function railDestinationForLocation(path: string, query: URLSearchParams,
   }
   if (workspace === "finance" && /^\/customers\/[^/]+\/account$/.test(path)) return "accounts";
   if (workspace === "engineering") {
+    const native = controlPath(path);
+    if (native) return native.module === "reviews" ? "technical-reviews" : native.module === "queries" ? "engineering" : native.module;
     if (materialsPath(path)) return "materials";
     if (changesPath(path)) return "changes";
     if (commissioningPath(path)) return "commissioning";

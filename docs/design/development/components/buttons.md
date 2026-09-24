@@ -32,6 +32,8 @@ Tab/Shift+Tab and visible focus throughout. Use labelled controls as alternative
 
 Legacy scoped button families do not all use Button/ButtonLink.
 
+Native EN-02–EN-05 adopts Button in entry, register, inspector, forms and recovery states. Its workspace excludes these controls from the older My Work element and hover resets. Review primary save/submit, secondary navigation, disabled saving and unchanged-original retry on desktop and phone; do not apply a global legacy restyle.
+
 ## Verification and maintenance
 
 Review at 1440 × 960, 1024 × 768, 820 × 800, 390 × 844 and 320 × 700 where relevant; check browser zoom and keyboard operation separately. Compare the same state and viewport with the retained reference. Record exact commit, reviewer, date, fixture state, viewport, result and evidence paths in the component review record. Automated source fingerprints do not grant acceptance.

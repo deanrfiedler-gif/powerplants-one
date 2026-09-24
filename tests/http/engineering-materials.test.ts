@@ -4,7 +4,7 @@ import { test } from "node:test";
 import { MATERIALS, scenarioIds, seedMaterialsScenario, type Call, type SignIn } from "../helpers/engineering-materials";
 
 // EN-06 over HTTP: the envelope, the local-request guards and the export, which the in-process suites cannot see.
-const origin = "http://127.0.0.1:3000";
+const origin = `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
 const cookies = new Map<string, string>();
 async function cookieFor(profile: string) {
   if (!cookies.has(profile)) {

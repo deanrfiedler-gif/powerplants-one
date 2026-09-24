@@ -25,11 +25,11 @@ Derived from the current destination catalogue and ordered rails against the sup
 | Estimating & quotation | 8 | Reviews & approvals | Withheld | nav-approval | No capability invented | Unavailable | None | No native estimate review/approval queue; general work reviews are not a substitute. |
 | Engineering | 1 | My Work | /work | nav-work | activity.read | Working route / adapter | work | Navigation unit + department browser rail; exact record guards retained |
 | Engineering | 2 | Engineering workload | /engineering | nav-workload | engineering.read | Working route / adapter | engineering | Navigation unit + department browser rail; exact record guards retained |
-| Engineering | 3 | Design basis & interfaces | Withheld | nav-interfaces | No capability invented | Unavailable | None | No native design-basis/interface register; package fields are not an index. |
-| Engineering | 4 | Drawings | Withheld | nav-drawings | No capability invented | Unavailable | None | No controlled drawing register or authorised general drawing list. |
+| Engineering | 3 | Design basis & interfaces | /engineering/basis | nav-interfaces | engineering.read; commands retain separate duties | Native route; verification recorded separately | basis | Package-scoped EN-02–EN-05 records; see Engineering programme handover. |
+| Engineering | 4 | Drawings | /engineering/drawings | nav-drawings | engineering.read; commands retain separate duties | Native route; verification recorded separately | drawings | Package-scoped EN-02–EN-05 records; see Engineering programme handover. |
 | Engineering | 5 | Materials & substitutions | /engineering/materials | nav-materials | engineering.read | Working route / adapter | materials | Navigation unit + department browser rail; exact record guards retained |
 | Engineering | 6 | Change review | /engineering/changes | nav-changes | engineering.read | Working route / adapter | changes | Navigation unit + department browser rail; exact record guards retained |
-| Engineering | 7 | Technical reviews | Withheld | nav-approval | No capability invented | Unavailable | None | Engineering review workspace is a placeholder, not a technical-review queue. |
+| Engineering | 7 | Technical reviews | /engineering/reviews | nav-approval | engineering.read; commands retain separate duties | Native route; verification recorded separately | technical-reviews | Package-scoped EN-02–EN-05 records; see Engineering programme handover. |
 | Engineering | 8 | Commissioning & as-built | /engineering/commissioning | nav-commissioning | engineering.read | Working route / adapter | commissioning | Navigation unit + department browser rail; exact record guards retained |
 | Projects | 1 | My Work | /work | nav-work | activity.read | Working route / adapter | work | Navigation unit + department browser rail; exact record guards retained |
 | Projects | 2 | Projects | /projects | nav-projects | project.read | Working route / adapter | projects | Navigation unit + department browser rail; exact record guards retained |
@@ -69,3 +69,5 @@ Specific child routes take precedence. Fertigation selects Specialist configurat
 More retains My Work for Sales, People, Organisations, Sites, Facilities, Equipment, My jobs, Priva Fertigation, Approvals & handovers, Integrations & recovery and local Foundation checks when permitted. Documents and Settings remain withheld without general landings. The catalogue includes Blinds for existing Screen Systems context; no geometry route, calculation or schema is added. Context-only symbols do not manufacture More entries.
 
 Full departments: Sales; Estimating & Quotation; Engineering & Design Control; Projects & Commercial Delivery; Service Operations; Supply Chain Management; Finance & Commercial Controls.
+
+EN-04 Technical queries and supplier submittals are available at /engineering/queries and package-scoped destinations from EN-01 and the native module menu. No new rail position is allocated. Source availability, browser proof and visual/owner acceptance remain separate.

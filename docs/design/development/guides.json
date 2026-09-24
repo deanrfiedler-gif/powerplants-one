@@ -9197,22 +9197,20 @@
       "title": "Engineering workload and deliverables",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Existing foundation + proposed completion",
+      "content_mode": "Native coordination and technical work",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-09-24",
+      "source_commit": "6c5e7c4fcbaf05d712a46989faf2cf7cabb8ba72",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See engineering-native-control-handover.md; functional evidence is separate from owner review.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Engineering workload and deliverables to work towards this outcome: Engineering work has accountable deliverable ownership.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "Coordination progress is separate from technical approval."
+            "Coordinate Engineering packages, accountable deliverables and technical work without treating coordination progress as formal issue."
           ],
           "steps": [],
           "rows": [],
@@ -9222,9 +9220,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Accepted brief, deliverables, author/reviewer, due dates and dependencies.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Confirm the permitted package, Project/Opportunity, customer and site. Prepare the brief, responsible person, date and next action. Technical review and issue require their separately configured duties."
           ],
           "steps": [],
           "rows": [],
@@ -9235,11 +9231,10 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Confirm the accepted engineering basis",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Choose the correct package or create an authorised request in the existing intake form.",
+            "Filter owned packages, author actions, assigned reviews or current issues.",
+            "Open the inspector and follow the relevant native basis, drawings, queries or reviews link.",
+            "Record exact sources and accountable next actions; inspect save state or recover the original operation."
           ],
           "rows": [],
           "headers": []
@@ -9247,42 +9242,19 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Engineering workload and deliverables · Page + tabs"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "All packages and My work retain package ownership. Author actions shows owned draft/returned bases, open/returned queries, returned submittals and open findings. Reviews shows assigned submitted reviews; Released requires current exact issues.",
+            "Overview shows basis/issues; Deliverables shows accountable work/documents; Technical queries shows queries/submittals; Review & history separates technical decisions from coordination notes."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Accepted brief, deliverables, author/reviewer, due dates and dependencies.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Deliverables retain owner, discipline, date, prerequisite evidence and next action. Planned hours require a source; authorised hours require authorisation evidence. Actual effort and availability are ungoverned; no utilisation is calculated."
           ],
           "steps": [],
           "rows": [],
@@ -9291,13 +9263,12 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Task sequence for review against the applicable running release."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Confirm the accepted engineering basis",
-            "Review workload and blocked deliverables",
-            "Assign a next action without bypassing technical review"
+            "Choose the correct package or create an authorised request in the existing intake form.",
+            "Filter owned packages, author actions, assigned reviews or current issues.",
+            "Open the inspector and follow the relevant native basis, drawings, queries or reviews link.",
+            "Record exact sources and accountable next actions; inspect save state or recover the original operation."
           ],
           "rows": [],
           "headers": []
@@ -9306,9 +9277,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Engineering work has accountable deliverable ownership.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Coordination progress is separate from technical approval."
+            "Check the saved state and next accountable action. A coordination update is not technical approval, formal issue, purchase or Project completion."
           ],
           "steps": [],
           "rows": [],
@@ -9354,8 +9323,7 @@
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare accepted brief, deliverables, author/reviewer, due dates and dependencies. Follow the task sequence and check that engineering work has accountable deliverable ownership. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Engineering workload and deliverables has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Coordination progress is separate from technical approval."
+            "SYN-PPO Nursery: add a deliverable whose prerequisite drawing is missing. It appears blocked. Retain the exact drawing revision, resolve prerequisites and submit independent review before issuing. Changing coordination to In design does not produce a released issue."
           ],
           "steps": [],
           "rows": [],
@@ -9401,8 +9369,7 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use labelled package cards on a phone and the same context tabs. Tab and Shift+Tab reach actions; Escape closes supported dialogs and returns focus. Native Engineering commands require a connection; there is no new offline queue."
           ],
           "steps": [],
           "rows": [],
@@ -9423,9 +9390,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide; owner and visual review remain pending. Use the programme handover for exact implementation and test evidence. A Git change does not confer approval."
           ],
           "steps": [],
           "rows": [],
@@ -9435,14 +9400,18 @@
       "related_entry_keys": [
         "route:/engineering/[id]",
         "route:/engineering",
-        "scope:CR-03"
+        "scope:CR-03",
+        "scope:EN-02",
+        "scope:EN-03",
+        "scope:EN-04",
+        "scope:EN-05"
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/engineering/PPO-Engineering-Container-r02.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Reconciles EN-01 with persisted EN-02–EN-05 records and distinct workload queues.",
       "document_id": "PPO-GUIDE-EN-01",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -9460,25 +9429,24 @@
     {
       "guide_key": "guide.en.02",
       "entry_key": "scope:EN-02",
-      "title": "Design basis and interface register",
+      "title": "Design basis & interfaces",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Native synthetic workflow; owner/visual review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-09-24",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/delivery/engineering-native-control-handover.md; results and limits recorded separately.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Design basis and interface register to work towards this outcome: A controlled basis and interface responsibility record.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "Unknown inputs remain visible; a guessed value must not become an approved design requirement."
+            "Retain exact requirements, assumptions, constraints, questions, interfaces and calculation references for one controlled basis.",
+            "Trace EN-02 → ENG-02; route /engineering/basis."
           ],
           "steps": [],
           "rows": [],
@@ -9488,9 +9456,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Requirements, interfaces, calculations, assumptions and discipline owners.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Choose a permitted package and confirm customer, site, Project/Opportunity and identity. Prepare synthetic evidence only.",
+            "Source visibility and separate author, reviewer, issuer and distributor duties are checked on the server. Policy is purpose-specific; a title grants no authority."
           ],
           "steps": [],
           "rows": [],
@@ -9499,56 +9466,28 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Record the design basis with source revisions",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Choose a package, then the route-backed module view. Search records or use Assigned to me, Work waiting or Overdue. Select a row to inspect its revision and accountable actions. Check the saved server result before leaving."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Design basis and interface register · Tabs"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Context retains package, customer, Project/Opportunity and owner. The module menu carries views and EN-06–EN-08 links. The register shows reference, revision, state words, owner/date and source reassessment. A selected row opens the inspector; forms retain saving/error/recovery state."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Requirements, interfaces, calculations, assumptions and discipline owners.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Stable-ID typed child rows belong to the versioned basis. File version, engineering revision and reviewed basis revision remain distinct. Unknown inputs and dates remain explicit."
           ],
           "steps": [],
           "rows": [],
@@ -9557,13 +9496,13 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Record the design basis with source revisions",
-            "Identify each interface and its owners",
-            "Resolve or explicitly own conflicting assumptions"
+            "Add the basis reference, title, owner, required date, purpose, scope, exclusions, facility applicability and exact sources.",
+            "Requirements retain acceptance criteria, source evidence, owners and affected deliverables. Assumptions & questions retain owned uncertainty and due dates.",
+            "Interfaces name distinct provider and receiver, required input, expected output and agreement criterion. Each person confirms their saved side.",
+            "Calculations & sources retains model reference, version and check evidence; PPO provides no new calculator.",
+            "Review & handover submits a frozen snapshot to an independent reviewer. Returned work needs a successor and accepted closure of earlier findings."
           ],
           "rows": [],
           "headers": []
@@ -9572,9 +9511,9 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "A controlled basis and interface responsibility record.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Unknown inputs remain visible; a guessed value must not become an approved design requirement."
+            "A saved record has an operation receipt. Submission, review, issue, sent, delivered and acknowledged are different facts.",
+            "Native basis/document/issue lineage publishes exact retained sources through the existing EN-06 adapter. EN-07/EN-08 retain their own decisions. Older labelled synthetic references remain usable.",
+            "No purchase, goods receipt, installation permission, statutory certification, implementation or Project/Service/Finance completion is implied."
           ],
           "steps": [],
           "rows": [],
@@ -9583,45 +9522,20 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Draft → Submitted → Reviewed or Returned. Missing sources, blocking unknown inputs, unconfirmed interface sides or absent calculation evidence prevent a positive decision. A successor requires renewed confirmation.",
+            "Loading is not empty. A filtered-empty list asks you to clear filters. Denied sources withhold dependent records. Saving disables repeated actions. Validation preserves entries. A stale version requires comparison with the refreshed record."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare requirements, interfaces, calculations, assumptions and discipline owners. Follow the task sequence and check that a controlled basis and interface responsibility record. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Design basis and interface register has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Unknown inputs remain visible; a guessed value must not become an approved design requirement."
+            "SYN-PPO nursery package: native file version 7.2 and engineering revision B are retained separately. Submit exact evidence to a separate reviewer, then an independent issuer.",
+            "If source content changes after submission, preserve the old snapshot and prepare a reassessed successor. Earlier acknowledgements remain attached only to their original issue."
           ],
           "steps": [],
           "rows": [],
@@ -9630,45 +9544,20 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "Keep an uncertain operation open. Recover original result or Retry unchanged operation preserves its ID and payload. A missing receipt does not prove failure; do not invent a replacement operation.",
+            "The server rechecks source visibility and current duty/policy on recovery. A stale refusal preserves entries until you close; inspect the latest saved record before a new decision."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "At 390 × 844 and 320 CSS px the inspector replaces the list; Close inspector returns to the register. The secondary menu becomes an overlay below the docked breakpoint. Long references wrap.",
+            "Tab/Shift+Tab reach labelled controls; visible focus and Escape/focus return are required. Pending/unknown operations retain their context. No offline mutation queue is provided."
           ],
           "steps": [],
           "rows": [],
@@ -9678,8 +9567,8 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "Retained EN-02 six-view HTML: docs/reference/ui/engineering-basis/PPO-Design-Basis-and-Interface-Register-r01.html. No exact accepted native screenshot exists.",
+            "Architecture and limits: docs/decisions/ADR-0047-engineering-native-control.md and docs/delivery/engineering-native-control-handover.md."
           ],
           "steps": [],
           "rows": [],
@@ -9689,9 +9578,8 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner: Dean Fiedler. This editable draft confers no business authority, visual acceptance, training completion or deployment acceptance.",
+            "Record actual review evidence separately; never copy a fingerprint solely because code or tests exist."
           ],
           "steps": [],
           "rows": [],
@@ -9700,14 +9588,18 @@
       ],
       "related_entry_keys": [
         "scope:CS-08",
-        "scope:ES-06"
+        "scope:ES-06",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/reference/ui/engineering-basis/PPO-Design-Basis-and-Interface-Register-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/design/development/pages/scope-en-02.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Native workflow, exact source/decision boundaries, accountable tasks and recovery.",
       "document_id": "PPO-GUIDE-EN-02",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -9715,9 +9607,8 @@
       "supersedes": null,
       "section_aliases": {},
       "workflow_basis": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/reference/ui/engineering-basis/PPO-Design-Basis-and-Interface-Register-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -9725,25 +9616,24 @@
     {
       "guide_key": "guide.en.03",
       "entry_key": "scope:EN-03",
-      "title": "Drawing and controlled technical document register",
+      "title": "Drawings & controlled documents",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Native synthetic workflow; owner/visual review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-09-24",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/delivery/engineering-native-control-handover.md; results and limits recorded separately.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Drawing and controlled technical document register to work towards this outcome: Users can identify the applicable technical issue.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "PPO references controlled documents; native CAD tools retain authoring and dependent files."
+            "Govern stable document identities, exact native source revisions and accountable deliverables while CAD tools retain authorship and dependencies.",
+            "Trace EN-03 → ENG-03; route /engineering/drawings."
           ],
           "steps": [],
           "rows": [],
@@ -9753,9 +9643,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Drawing reference, revision, purpose and native-source location.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Choose a permitted package and confirm customer, site, Project/Opportunity and identity. Prepare synthetic evidence only.",
+            "Source visibility and separate author, reviewer, issuer and distributor duties are checked on the server. Policy is purpose-specific; a title grants no authority."
           ],
           "steps": [],
           "rows": [],
@@ -9764,56 +9653,28 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Find the correct technical document",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Choose a package, then the route-backed module view. Search records or use Assigned to me, Work waiting or Overdue. Select a row to inspect its revision and accountable actions. Check the saved server result before leaving."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Drawing and controlled technical document register · Page"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Context retains package, customer, Project/Opportunity and owner. The module menu carries views and EN-06–EN-08 links. The register shows reference, revision, state words, owner/date and source reassessment. A selected row opens the inspector; forms retain saving/error/recovery state."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Drawing reference, revision, purpose and native-source location.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Stable document UUID/reference differs from native version, engineering revision, output version/hash, review and purpose. A deliverable may link one controlled document."
           ],
           "steps": [],
           "rows": [],
@@ -9822,13 +9683,13 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Find the correct technical document",
-            "Check revision and permitted use",
-            "Follow the native-source link for authoring dependencies"
+            "Add the stable document reference, title, discipline, source type and owner.",
+            "Retain a new document revision with native authoring system/reference, native version, engineering revision, optional reviewed basis/configuration and published output reference/version/SHA-256.",
+            "Use Accountable deliverables for owner, required date, prerequisite evidence and next action.",
+            "Planned hours require a planning source; authorised hours require authorisation evidence. Actual effort and availability are not governed and no utilisation is calculated.",
+            "Open Technical reviews to bind one exact revision per document. Different documents can have different engineering revisions."
           ],
           "rows": [],
           "headers": []
@@ -9837,9 +9698,9 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Users can identify the applicable technical issue.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "PPO references controlled documents; native CAD tools retain authoring and dependent files."
+            "A saved record has an operation receipt. Submission, review, issue, sent, delivered and acknowledged are different facts.",
+            "Native basis/document/issue lineage publishes exact retained sources through the existing EN-06 adapter. EN-07/EN-08 retain their own decisions. Older labelled synthetic references remain usable.",
+            "No purchase, goods receipt, installation permission, statutory certification, implementation or Project/Service/Finance completion is implied."
           ],
           "steps": [],
           "rows": [],
@@ -9848,45 +9709,20 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "A new revision supersedes current use of the old source while retaining every historical revision. Missing prerequisite evidence is blocked work. Coordination progress never means Released.",
+            "Loading is not empty. A filtered-empty list asks you to clear filters. Denied sources withhold dependent records. Saving disables repeated actions. Validation preserves entries. A stale version requires comparison with the refreshed record."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare drawing reference, revision, purpose and native-source location. Follow the task sequence and check that users can identify the applicable technical issue. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Drawing and controlled technical document register has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. PPO references controlled documents; native CAD tools retain authoring and dependent files."
+            "SYN-PPO nursery package: native file version 7.2 and engineering revision B are retained separately. Submit exact evidence to a separate reviewer, then an independent issuer.",
+            "If source content changes after submission, preserve the old snapshot and prepare a reassessed successor. Earlier acknowledgements remain attached only to their original issue."
           ],
           "steps": [],
           "rows": [],
@@ -9895,45 +9731,20 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "Keep an uncertain operation open. Recover original result or Retry unchanged operation preserves its ID and payload. A missing receipt does not prove failure; do not invent a replacement operation.",
+            "The server rechecks source visibility and current duty/policy on recovery. A stale refusal preserves entries until you close; inspect the latest saved record before a new decision."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "At 390 × 844 and 320 CSS px the inspector replaces the list; Close inspector returns to the register. The secondary menu becomes an overlay below the docked breakpoint. Long references wrap.",
+            "Tab/Shift+Tab reach labelled controls; visible focus and Escape/focus return are required. Pending/unknown operations retain their context. No offline mutation queue is provided."
           ],
           "steps": [],
           "rows": [],
@@ -9943,8 +9754,8 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "No exact dedicated EN-03 HTML or image baseline is available. This native register/inspector is proposed, informed by BP-01 ENG-03, Engineering r02 and EN-06/EN-07.",
+            "Architecture and limits: docs/decisions/ADR-0047-engineering-native-control.md and docs/delivery/engineering-native-control-handover.md."
           ],
           "steps": [],
           "rows": [],
@@ -9954,9 +9765,8 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner: Dean Fiedler. This editable draft confers no business authority, visual acceptance, training completion or deployment acceptance.",
+            "Record actual review evidence separately; never copy a fingerprint solely because code or tests exist."
           ],
           "steps": [],
           "rows": [],
@@ -9965,13 +9775,18 @@
       ],
       "related_entry_keys": [
         "scope:EN-02",
-        "scope:DK-01"
+        "scope:DK-01",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/design/development/pages/scope-en-03.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Native workflow, exact source/decision boundaries, accountable tasks and recovery.",
       "document_id": "PPO-GUIDE-EN-03",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -9979,8 +9794,8 @@
       "supersedes": null,
       "section_aliases": {},
       "workflow_basis": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -9988,25 +9803,24 @@
     {
       "guide_key": "guide.en.04",
       "entry_key": "scope:EN-04",
-      "title": "Technical queries and supplier submittals",
+      "title": "Technical queries & supplier submittals",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Existing foundation + proposed completion",
+      "content_mode": "Native synthetic workflow; owner/visual review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-09-24",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/delivery/engineering-native-control-handover.md; results and limits recorded separately.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Technical queries and supplier submittals to work towards this outcome: An exact query has a response or owned outstanding action.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "A coordination note is not a reviewed technical answer."
+            "Retain formal owned questions, exact affected sources, technical answers and supplier dispositions separately from notes and procurement receipts.",
+            "Trace EN-04 → ENG-02 / ENG-04 / ENG-06; route /engineering/queries."
           ],
           "steps": [],
           "rows": [],
@@ -10016,9 +9830,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Question/submittal, related requirement, requested response and owner.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Choose a permitted package and confirm customer, site, Project/Opportunity and identity. Prepare synthetic evidence only.",
+            "Source visibility and separate author, reviewer, issuer and distributor duties are checked on the server. Policy is purpose-specific; a title grants no authority."
           ],
           "steps": [],
           "rows": [],
@@ -10027,56 +9840,28 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Frame a specific technical question",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Choose a package, then the route-backed module view. Search records or use Assigned to me, Work waiting or Overdue. Select a row to inspect its revision and accountable actions. Check the saved server result before leaving."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Technical queries and supplier submittals · Pages or tabs"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Context retains package, customer, Project/Opportunity and owner. The module menu carries views and EN-06–EN-08 links. The register shows reference, revision, state words, owner/date and source reassessment. A selected row opens the inspector; forms retain saving/error/recovery state."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Question/submittal, related requirement, requested response and owner.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Question, requester, owner, due date, exact sources, response author/date and actions remain distinct facts. A PO reference is context only."
           ],
           "steps": [],
           "rows": [],
@@ -10085,13 +9870,13 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Task sequence for review against the applicable running release."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Frame a specific technical question",
-            "Link the source revision and required evidence",
-            "Record the reviewed response and affected work"
+            "Add a query with exact sources, owner, requested response date, affected deliverables and review requirement.",
+            "The responsible owner records the formal response, resulting actions and optional same-package EN-07 change.",
+            "A separate technical reviewer disposes the answer where review is required.",
+            "Supplier submittals retain supplier/product context, optional PO reference, submitted revision, evidence, assigned reviewer and downstream actions.",
+            "Returned/rejected supplier content needs a successor. Technical acceptance never records a goods receipt."
           ],
           "rows": [],
           "headers": []
@@ -10100,9 +9885,9 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "An exact query has a response or owned outstanding action.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A coordination note is not a reviewed technical answer."
+            "A saved record has an operation receipt. Submission, review, issue, sent, delivered and acknowledged are different facts.",
+            "Native basis/document/issue lineage publishes exact retained sources through the existing EN-06 adapter. EN-07/EN-08 retain their own decisions. Older labelled synthetic references remain usable.",
+            "No purchase, goods receipt, installation permission, statutory certification, implementation or Project/Service/Finance completion is implied."
           ],
           "steps": [],
           "rows": [],
@@ -10111,45 +9896,20 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Query Open → Answered → Resolved or Returned; no-review queries resolve on formal response. Submittal Submitted → Accepted, Returned or Rejected. Accepted content is superseded by an explicit successor.",
+            "Loading is not empty. A filtered-empty list asks you to clear filters. Denied sources withhold dependent records. Saving disables repeated actions. Validation preserves entries. A stale version requires comparison with the refreshed record."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare question/submittal, related requirement, requested response and owner. Follow the task sequence and check that an exact query has a response or owned outstanding action. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Technical queries and supplier submittals has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A coordination note is not a reviewed technical answer."
+            "SYN-PPO nursery package: native file version 7.2 and engineering revision B are retained separately. Submit exact evidence to a separate reviewer, then an independent issuer.",
+            "If source content changes after submission, preserve the old snapshot and prepare a reassessed successor. Earlier acknowledgements remain attached only to their original issue."
           ],
           "steps": [],
           "rows": [],
@@ -10158,45 +9918,20 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "Keep an uncertain operation open. Recover original result or Retry unchanged operation preserves its ID and payload. A missing receipt does not prove failure; do not invent a replacement operation.",
+            "The server rechecks source visibility and current duty/policy on recovery. A stale refusal preserves entries until you close; inspect the latest saved record before a new decision."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "At 390 × 844 and 320 CSS px the inspector replaces the list; Close inspector returns to the register. The secondary menu becomes an overlay below the docked breakpoint. Long references wrap.",
+            "Tab/Shift+Tab reach labelled controls; visible focus and Escape/focus return are required. Pending/unknown operations retain their context. No offline mutation queue is provided."
           ],
           "steps": [],
           "rows": [],
@@ -10206,8 +9941,8 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "Engineering r02 conceptual source: docs/reference/ui/engineering/PPO-Engineering-Container-r02.html. No exact EN-04 native screenshot is available. Queries remain contextual without a new Engineering rail slot.",
+            "Architecture and limits: docs/decisions/ADR-0047-engineering-native-control.md and docs/delivery/engineering-native-control-handover.md."
           ],
           "steps": [],
           "rows": [],
@@ -10217,9 +9952,8 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner: Dean Fiedler. This editable draft confers no business authority, visual acceptance, training completion or deployment acceptance.",
+            "Record actual review evidence separately; never copy a fingerprint solely because code or tests exist."
           ],
           "steps": [],
           "rows": [],
@@ -10229,14 +9963,18 @@
       "related_entry_keys": [
         "route:/engineering/[id]",
         "route:/engineering",
-        "scope:EN-03"
+        "scope:EN-03",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/reference/ui/engineering/PPO-Engineering-Container-r02.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/design/development/pages/scope-en-04.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Native workflow, exact source/decision boundaries, accountable tasks and recovery.",
       "document_id": "PPO-GUIDE-EN-04",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -10244,9 +9982,8 @@
       "supersedes": null,
       "section_aliases": {},
       "workflow_basis": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/reference/ui/engineering/PPO-Engineering-Container-r02.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -10254,25 +9991,24 @@
     {
       "guide_key": "guide.en.05",
       "entry_key": "scope:EN-05",
-      "title": "Technical review, approval and transmittal",
+      "title": "Technical reviews, issues & transmittals",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Native synthetic workflow; owner/visual review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-09-24",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/delivery/engineering-native-control-handover.md; results and limits recorded separately.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Technical review, approval and transmittal to work towards this outcome: The released technical set and its distribution are traceable.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "Approval for one purpose does not establish approval for all construction or procurement uses."
+            "Bind independent technical decisions, formal issues and recipient evidence to exact content and purpose.",
+            "Trace EN-05 → ENG-04; route /engineering/reviews."
           ],
           "steps": [],
           "rows": [],
@@ -10282,9 +10018,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Exact release set, findings, approval purpose and recipients.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Choose a permitted package and confirm customer, site, Project/Opportunity and identity. Prepare synthetic evidence only.",
+            "Source visibility and separate author, reviewer, issuer and distributor duties are checked on the server. Policy is purpose-specific; a title grants no authority."
           ],
           "steps": [],
           "rows": [],
@@ -10293,56 +10028,28 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Review the exact documents and unresolved findings",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Choose a package, then the route-backed module view. Search records or use Assigned to me, Work waiting or Overdue. Select a row to inspect its revision and accountable actions. Check the saved server result before leaving."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Technical review, approval and transmittal · Page + review flow"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Context retains package, customer, Project/Opportunity and owner. The module menu carries views and EN-06–EN-08 links. The register shows reference, revision, state words, owner/date and source reassessment. A selected row opens the inspector; forms retain saving/error/recovery state."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Exact release set, findings, approval purpose and recipients.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Submission hash, frozen content, per-document revisions, purpose, policy, contributors and reviewer are retained. Issue manifest/hash, issuer, recipients and each evidence timestamp are separate."
           ],
           "steps": [],
           "rows": [],
@@ -10351,13 +10058,13 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Review the exact documents and unresolved findings",
-            "Record authorised approval for its stated purpose",
-            "Retain transmittal and receipt evidence for the released set"
+            "Submit an exact review with reviewed basis, one revision per document, applicable submittals/sources, purpose, reviewer and due date.",
+            "The reviewer records findings; named owners respond and the reviewer accepts closure. Returned work retains its original snapshot through resubmission.",
+            "Complete review only when sources remain current and basis blockers, findings and supplier dispositions are resolved.",
+            "A separate configured issuer creates the exact reviewed issue for named synthetic recipients. Issue is not sent evidence.",
+            "Record Sent and Delivered separately; only the named recipient records Acknowledged. Withdraw current use without erasing history."
           ],
           "rows": [],
           "headers": []
@@ -10366,9 +10073,9 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "The released technical set and its distribution are traceable.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Approval for one purpose does not establish approval for all construction or procurement uses."
+            "A saved record has an operation receipt. Submission, review, issue, sent, delivered and acknowledged are different facts.",
+            "Native basis/document/issue lineage publishes exact retained sources through the existing EN-06 adapter. EN-07/EN-08 retain their own decisions. Older labelled synthetic references remain usable.",
+            "No purchase, goods receipt, installation permission, statutory certification, implementation or Project/Service/Finance completion is implied."
           ],
           "steps": [],
           "rows": [],
@@ -10377,45 +10084,20 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Review Submitted → Reviewed or Returned. Issue Issued → Withdrawn. Changed upstream sources withdraw current source use and require reassessment. Sent, Delivered and Acknowledged remain separate. No configured policy means cannot review or issue.",
+            "Loading is not empty. A filtered-empty list asks you to clear filters. Denied sources withhold dependent records. Saving disables repeated actions. Validation preserves entries. A stale version requires comparison with the refreshed record."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare exact release set, findings, approval purpose and recipients. Follow the task sequence and check that the released technical set and its distribution are traceable. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Technical review, approval and transmittal has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Approval for one purpose does not establish approval for all construction or procurement uses."
+            "SYN-PPO nursery package: native file version 7.2 and engineering revision B are retained separately. Submit exact evidence to a separate reviewer, then an independent issuer.",
+            "If source content changes after submission, preserve the old snapshot and prepare a reassessed successor. Earlier acknowledgements remain attached only to their original issue."
           ],
           "steps": [],
           "rows": [],
@@ -10424,45 +10106,20 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "Keep an uncertain operation open. Recover original result or Retry unchanged operation preserves its ID and payload. A missing receipt does not prove failure; do not invent a replacement operation.",
+            "The server rechecks source visibility and current duty/policy on recovery. A stale refusal preserves entries until you close; inspect the latest saved record before a new decision."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "At 390 × 844 and 320 CSS px the inspector replaces the list; Close inspector returns to the register. The secondary menu becomes an overlay below the docked breakpoint. Long references wrap.",
+            "Tab/Shift+Tab reach labelled controls; visible focus and Escape/focus return are required. Pending/unknown operations retain their context. No offline mutation queue is provided."
           ],
           "steps": [],
           "rows": [],
@@ -10472,8 +10129,8 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "No exact dedicated EN-05 HTML or image baseline is available. The native queue, frozen inspector and evidence dialogs are proposed PPO application design.",
+            "Architecture and limits: docs/decisions/ADR-0047-engineering-native-control.md and docs/delivery/engineering-native-control-handover.md."
           ],
           "steps": [],
           "rows": [],
@@ -10483,9 +10140,8 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner: Dean Fiedler. This editable draft confers no business authority, visual acceptance, training completion or deployment acceptance.",
+            "Record actual review evidence separately; never copy a fingerprint solely because code or tests exist."
           ],
           "steps": [],
           "rows": [],
@@ -10494,13 +10150,18 @@
       ],
       "related_entry_keys": [
         "scope:EN-03",
-        "scope:EN-04"
+        "scope:EN-04",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/design/development/pages/scope-en-05.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Native workflow, exact source/decision boundaries, accountable tasks and recovery.",
       "document_id": "PPO-GUIDE-EN-05",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -10508,8 +10169,8 @@
       "supersedes": null,
       "section_aliases": {},
       "workflow_basis": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -41408,22 +41069,20 @@
       "title": "Engineering package",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native coordination and technical work",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-09-24",
+      "source_commit": "6c5e7c4fcbaf05d712a46989faf2cf7cabb8ba72",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See engineering-native-control-handover.md; functional evidence is separate from owner review.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Engineering package to work towards this outcome: Engineering work has accountable deliverable ownership.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "Coordination progress is separate from technical approval."
+            "Coordinate Engineering packages, accountable deliverables and technical work without treating coordination progress as formal issue."
           ],
           "steps": [],
           "rows": [],
@@ -41433,9 +41092,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Accepted brief, deliverables, author/reviewer, due dates and dependencies.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Confirm the permitted package, Project/Opportunity, customer and site. Prepare the brief, responsible person, date and next action. Technical review and issue require their separately configured duties."
           ],
           "steps": [],
           "rows": [],
@@ -41446,11 +41103,10 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Confirm the record reference and customer/site context in this record workspace.",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Choose the correct package or create an authorised request in the existing intake form.",
+            "Filter owned packages, author actions, assigned reviews or current issues.",
+            "Open the inspector and follow the relevant native basis, drawings, queries or reviews link.",
+            "Record exact sources and accountable next actions; inspect save state or recover the original operation."
           ],
           "rows": [],
           "headers": []
@@ -41458,42 +41114,19 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Engineering package · Record workspace"
-            ],
-            [
-              "Application links",
-              "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "All packages and My work retain package ownership. Author actions shows owned draft/returned bases, open/returned queries, returned submittals and open findings. Reviews shows assigned submitted reviews; Released requires current exact issues.",
+            "Overview shows basis/issues; Deliverables shows accountable work/documents; Technical queries shows queries/submittals; Review & history separates technical decisions from coordination notes."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Accepted brief, deliverables, author/reviewer, due dates and dependencies.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Deliverables retain owner, discipline, date, prerequisite evidence and next action. Planned hours require a source; authorised hours require authorisation evidence. Actual effort and availability are ungoverned; no utilisation is calculated."
           ],
           "steps": [],
           "rows": [],
@@ -41502,14 +41135,12 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Task sequence for review against the applicable running release."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Confirm the record reference and customer/site context in this record workspace.",
-            "Confirm the accepted engineering basis",
-            "Review workload and blocked deliverables",
-            "Assign a next action without bypassing technical review"
+            "Choose the correct package or create an authorised request in the existing intake form.",
+            "Filter owned packages, author actions, assigned reviews or current issues.",
+            "Open the inspector and follow the relevant native basis, drawings, queries or reviews link.",
+            "Record exact sources and accountable next actions; inspect save state or recover the original operation."
           ],
           "rows": [],
           "headers": []
@@ -41518,9 +41149,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Engineering work has accountable deliverable ownership.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Coordination progress is separate from technical approval."
+            "Check the saved state and next accountable action. A coordination update is not technical approval, formal issue, purchase or Project completion."
           ],
           "steps": [],
           "rows": [],
@@ -41566,8 +41195,7 @@
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare accepted brief, deliverables, author/reviewer, due dates and dependencies. Follow the task sequence and check that engineering work has accountable deliverable ownership. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Engineering package has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Coordination progress is separate from technical approval."
+            "SYN-PPO Nursery: add a deliverable whose prerequisite drawing is missing. It appears blocked. Retain the exact drawing revision, resolve prerequisites and submit independent review before issuing. Changing coordination to In design does not produce a released issue."
           ],
           "steps": [],
           "rows": [],
@@ -41613,8 +41241,7 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use labelled package cards on a phone and the same context tabs. Tab and Shift+Tab reach actions; Escape closes supported dialogs and returns focus. Native Engineering commands require a connection; there is no new offline queue."
           ],
           "steps": [],
           "rows": [],
@@ -41635,9 +41262,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide; owner and visual review remain pending. Use the programme handover for exact implementation and test evidence. A Git change does not confer approval."
           ],
           "steps": [],
           "rows": [],
@@ -41646,14 +41271,17 @@
       ],
       "related_entry_keys": [
         "scope:EN-01",
-        "scope:EN-04"
+        "scope:EN-04",
+        "scope:EN-02",
+        "scope:EN-03",
+        "scope:EN-05"
       ],
       "source_paths": [
         "src/app/(business)/engineering/[id]/page.tsx",
         "docs/reference/ui/engineering/PPO-Engineering-Container-r02.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Reconciles EN-01 with persisted EN-02–EN-05 records and distinct workload queues.",
       "document_id": "PPO-GUIDE-PAGE-ENGINEERING-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -41674,22 +41302,20 @@
       "title": "Engineering workspace",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native coordination and technical work",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-09-24",
+      "source_commit": "6c5e7c4fcbaf05d712a46989faf2cf7cabb8ba72",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See engineering-native-control-handover.md; functional evidence is separate from owner review.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Engineering workspace to work towards this outcome: Engineering work has accountable deliverable ownership.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "Coordination progress is separate from technical approval."
+            "Coordinate Engineering packages, accountable deliverables and technical work without treating coordination progress as formal issue."
           ],
           "steps": [],
           "rows": [],
@@ -41699,9 +41325,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Accepted brief, deliverables, author/reviewer, due dates and dependencies.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Confirm the permitted package, Project/Opportunity, customer and site. Prepare the brief, responsible person, date and next action. Technical review and issue require their separately configured duties."
           ],
           "steps": [],
           "rows": [],
@@ -41712,11 +41336,10 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Confirm the accepted engineering basis",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Choose the correct package or create an authorised request in the existing intake form.",
+            "Filter owned packages, author actions, assigned reviews or current issues.",
+            "Open the inspector and follow the relevant native basis, drawings, queries or reviews link.",
+            "Record exact sources and accountable next actions; inspect save state or recover the original operation."
           ],
           "rows": [],
           "headers": []
@@ -41724,42 +41347,19 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Engineering workspace · Register / workspace"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "All packages and My work retain package ownership. Author actions shows owned draft/returned bases, open/returned queries, returned submittals and open findings. Reviews shows assigned submitted reviews; Released requires current exact issues.",
+            "Overview shows basis/issues; Deliverables shows accountable work/documents; Technical queries shows queries/submittals; Review & history separates technical decisions from coordination notes."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Accepted brief, deliverables, author/reviewer, due dates and dependencies.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Deliverables retain owner, discipline, date, prerequisite evidence and next action. Planned hours require a source; authorised hours require authorisation evidence. Actual effort and availability are ungoverned; no utilisation is calculated."
           ],
           "steps": [],
           "rows": [],
@@ -41768,13 +41368,12 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Task sequence for review against the applicable running release."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Confirm the accepted engineering basis",
-            "Review workload and blocked deliverables",
-            "Assign a next action without bypassing technical review"
+            "Choose the correct package or create an authorised request in the existing intake form.",
+            "Filter owned packages, author actions, assigned reviews or current issues.",
+            "Open the inspector and follow the relevant native basis, drawings, queries or reviews link.",
+            "Record exact sources and accountable next actions; inspect save state or recover the original operation."
           ],
           "rows": [],
           "headers": []
@@ -41783,9 +41382,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Engineering work has accountable deliverable ownership.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Coordination progress is separate from technical approval."
+            "Check the saved state and next accountable action. A coordination update is not technical approval, formal issue, purchase or Project completion."
           ],
           "steps": [],
           "rows": [],
@@ -41831,8 +41428,7 @@
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare accepted brief, deliverables, author/reviewer, due dates and dependencies. Follow the task sequence and check that engineering work has accountable deliverable ownership. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Engineering workspace has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Coordination progress is separate from technical approval."
+            "SYN-PPO Nursery: add a deliverable whose prerequisite drawing is missing. It appears blocked. Retain the exact drawing revision, resolve prerequisites and submit independent review before issuing. Changing coordination to In design does not produce a released issue."
           ],
           "steps": [],
           "rows": [],
@@ -41878,8 +41474,7 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use labelled package cards on a phone and the same context tabs. Tab and Shift+Tab reach actions; Escape closes supported dialogs and returns focus. Native Engineering commands require a connection; there is no new offline queue."
           ],
           "steps": [],
           "rows": [],
@@ -41900,9 +41495,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide; owner and visual review remain pending. Use the programme handover for exact implementation and test evidence. A Git change does not confer approval."
           ],
           "steps": [],
           "rows": [],
@@ -41911,14 +41504,17 @@
       ],
       "related_entry_keys": [
         "scope:EN-01",
-        "scope:EN-04"
+        "scope:EN-04",
+        "scope:EN-02",
+        "scope:EN-03",
+        "scope:EN-05"
       ],
       "source_paths": [
         "src/app/(business)/engineering/page.tsx",
         "docs/reference/ui/engineering/PPO-Engineering-Container-r02.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Reconciles EN-01 with persisted EN-02–EN-05 records and distinct workload queues.",
       "document_id": "PPO-GUIDE-PAGE-ENGINEERING",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -69069,6 +68665,1046 @@
         }
       ],
       "runtime_evidence": "CS native synthetic database, compiled HTTP and desktop/mobile browser proofs executed on 23 September 2026; see docs/testing/evidence/cs-native-completion/README.md. Owner acceptance pending."
+    },
+    {
+      "guide_key": "guide.route-engineering-id-basis-assumptions",
+      "entry_key": "route:/engineering/[id]/basis/assumptions",
+      "title": "Design basis & interfaces",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic workflow; owner/visual review pending",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
+      "related_entry_keys": [
+        "scope:EN-02",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Retain exact requirements, assumptions, constraints, questions, interfaces and calculation references for one controlled basis.",
+            "Trace EN-02 → ENG-02; route /engineering/[id]/basis/assumptions."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [
+            "Choose a package, then the route-backed module view. Search records or use Assigned to me, Work waiting or Overdue. Select a row to inspect its revision and accountable actions. Check the saved server result before leaving."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "Keep an uncertain operation open. Recover original result or Retry unchanged operation preserves its ID and payload. A missing receipt does not prove failure; do not invent a replacement operation.",
+            "The server rechecks source visibility and current duty/policy on recovery. A stale refusal preserves entries until you close; inspect the latest saved record before a new decision."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/engineering-native-control-handover.md; results and limits recorded separately.",
+      "source_paths": [
+        "src/app/(business)/engineering/[id]/basis/assumptions/page.tsx",
+        "docs/design/development/pages/route-engineering-id-basis-assumptions.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "workflow_basis": [
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "change_summary": "Native workflow, exact source/decision boundaries, accountable tasks and recovery."
+    },
+    {
+      "guide_key": "guide.route-engineering-id-basis-interfaces",
+      "entry_key": "route:/engineering/[id]/basis/interfaces",
+      "title": "Design basis & interfaces",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic workflow; owner/visual review pending",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
+      "related_entry_keys": [
+        "scope:EN-02",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Retain exact requirements, assumptions, constraints, questions, interfaces and calculation references for one controlled basis.",
+            "Trace EN-02 → ENG-02; route /engineering/[id]/basis/interfaces."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [
+            "Choose a package, then the route-backed module view. Search records or use Assigned to me, Work waiting or Overdue. Select a row to inspect its revision and accountable actions. Check the saved server result before leaving."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "Keep an uncertain operation open. Recover original result or Retry unchanged operation preserves its ID and payload. A missing receipt does not prove failure; do not invent a replacement operation.",
+            "The server rechecks source visibility and current duty/policy on recovery. A stale refusal preserves entries until you close; inspect the latest saved record before a new decision."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/engineering-native-control-handover.md; results and limits recorded separately.",
+      "source_paths": [
+        "src/app/(business)/engineering/[id]/basis/interfaces/page.tsx",
+        "docs/design/development/pages/route-engineering-id-basis-interfaces.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "workflow_basis": [
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "change_summary": "Native workflow, exact source/decision boundaries, accountable tasks and recovery."
+    },
+    {
+      "guide_key": "guide.route-engineering-id-basis",
+      "entry_key": "route:/engineering/[id]/basis",
+      "title": "Design basis & interfaces",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic workflow; owner/visual review pending",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
+      "related_entry_keys": [
+        "scope:EN-02",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Retain exact requirements, assumptions, constraints, questions, interfaces and calculation references for one controlled basis.",
+            "Trace EN-02 → ENG-02; route /engineering/[id]/basis."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [
+            "Choose a package, then the route-backed module view. Search records or use Assigned to me, Work waiting or Overdue. Select a row to inspect its revision and accountable actions. Check the saved server result before leaving."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "Keep an uncertain operation open. Recover original result or Retry unchanged operation preserves its ID and payload. A missing receipt does not prove failure; do not invent a replacement operation.",
+            "The server rechecks source visibility and current duty/policy on recovery. A stale refusal preserves entries until you close; inspect the latest saved record before a new decision."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/engineering-native-control-handover.md; results and limits recorded separately.",
+      "source_paths": [
+        "src/app/(business)/engineering/[id]/basis/page.tsx",
+        "docs/design/development/pages/route-engineering-id-basis.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "workflow_basis": [
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "change_summary": "Native workflow, exact source/decision boundaries, accountable tasks and recovery."
+    },
+    {
+      "guide_key": "guide.route-engineering-id-basis-requirements",
+      "entry_key": "route:/engineering/[id]/basis/requirements",
+      "title": "Design basis & interfaces",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic workflow; owner/visual review pending",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
+      "related_entry_keys": [
+        "scope:EN-02",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Retain exact requirements, assumptions, constraints, questions, interfaces and calculation references for one controlled basis.",
+            "Trace EN-02 → ENG-02; route /engineering/[id]/basis/requirements."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [
+            "Choose a package, then the route-backed module view. Search records or use Assigned to me, Work waiting or Overdue. Select a row to inspect its revision and accountable actions. Check the saved server result before leaving."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "Keep an uncertain operation open. Recover original result or Retry unchanged operation preserves its ID and payload. A missing receipt does not prove failure; do not invent a replacement operation.",
+            "The server rechecks source visibility and current duty/policy on recovery. A stale refusal preserves entries until you close; inspect the latest saved record before a new decision."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/engineering-native-control-handover.md; results and limits recorded separately.",
+      "source_paths": [
+        "src/app/(business)/engineering/[id]/basis/requirements/page.tsx",
+        "docs/design/development/pages/route-engineering-id-basis-requirements.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "workflow_basis": [
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "change_summary": "Native workflow, exact source/decision boundaries, accountable tasks and recovery."
+    },
+    {
+      "guide_key": "guide.route-engineering-id-basis-review",
+      "entry_key": "route:/engineering/[id]/basis/review",
+      "title": "Design basis & interfaces",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic workflow; owner/visual review pending",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
+      "related_entry_keys": [
+        "scope:EN-02",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Retain exact requirements, assumptions, constraints, questions, interfaces and calculation references for one controlled basis.",
+            "Trace EN-02 → ENG-02; route /engineering/[id]/basis/review."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [
+            "Choose a package, then the route-backed module view. Search records or use Assigned to me, Work waiting or Overdue. Select a row to inspect its revision and accountable actions. Check the saved server result before leaving."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "Keep an uncertain operation open. Recover original result or Retry unchanged operation preserves its ID and payload. A missing receipt does not prove failure; do not invent a replacement operation.",
+            "The server rechecks source visibility and current duty/policy on recovery. A stale refusal preserves entries until you close; inspect the latest saved record before a new decision."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/engineering-native-control-handover.md; results and limits recorded separately.",
+      "source_paths": [
+        "src/app/(business)/engineering/[id]/basis/review/page.tsx",
+        "docs/design/development/pages/route-engineering-id-basis-review.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "workflow_basis": [
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "change_summary": "Native workflow, exact source/decision boundaries, accountable tasks and recovery."
+    },
+    {
+      "guide_key": "guide.route-engineering-id-basis-sources",
+      "entry_key": "route:/engineering/[id]/basis/sources",
+      "title": "Design basis & interfaces",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic workflow; owner/visual review pending",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
+      "related_entry_keys": [
+        "scope:EN-02",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Retain exact requirements, assumptions, constraints, questions, interfaces and calculation references for one controlled basis.",
+            "Trace EN-02 → ENG-02; route /engineering/[id]/basis/sources."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [
+            "Choose a package, then the route-backed module view. Search records or use Assigned to me, Work waiting or Overdue. Select a row to inspect its revision and accountable actions. Check the saved server result before leaving."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "Keep an uncertain operation open. Recover original result or Retry unchanged operation preserves its ID and payload. A missing receipt does not prove failure; do not invent a replacement operation.",
+            "The server rechecks source visibility and current duty/policy on recovery. A stale refusal preserves entries until you close; inspect the latest saved record before a new decision."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/engineering-native-control-handover.md; results and limits recorded separately.",
+      "source_paths": [
+        "src/app/(business)/engineering/[id]/basis/sources/page.tsx",
+        "docs/design/development/pages/route-engineering-id-basis-sources.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "workflow_basis": [
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "change_summary": "Native workflow, exact source/decision boundaries, accountable tasks and recovery."
+    },
+    {
+      "guide_key": "guide.route-engineering-id-drawings-deliverables",
+      "entry_key": "route:/engineering/[id]/drawings/deliverables",
+      "title": "Drawings & controlled documents",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic workflow; owner/visual review pending",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
+      "related_entry_keys": [
+        "scope:EN-03",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Govern stable document identities, exact native source revisions and accountable deliverables while CAD tools retain authorship and dependencies.",
+            "Trace EN-03 → ENG-03; route /engineering/[id]/drawings/deliverables."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [
+            "Choose a package, then the route-backed module view. Search records or use Assigned to me, Work waiting or Overdue. Select a row to inspect its revision and accountable actions. Check the saved server result before leaving."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "Keep an uncertain operation open. Recover original result or Retry unchanged operation preserves its ID and payload. A missing receipt does not prove failure; do not invent a replacement operation.",
+            "The server rechecks source visibility and current duty/policy on recovery. A stale refusal preserves entries until you close; inspect the latest saved record before a new decision."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/engineering-native-control-handover.md; results and limits recorded separately.",
+      "source_paths": [
+        "src/app/(business)/engineering/[id]/drawings/deliverables/page.tsx",
+        "docs/design/development/pages/route-engineering-id-drawings-deliverables.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "workflow_basis": [
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "change_summary": "Native workflow, exact source/decision boundaries, accountable tasks and recovery."
+    },
+    {
+      "guide_key": "guide.route-engineering-id-drawings",
+      "entry_key": "route:/engineering/[id]/drawings",
+      "title": "Drawings & controlled documents",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic workflow; owner/visual review pending",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
+      "related_entry_keys": [
+        "scope:EN-03",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Govern stable document identities, exact native source revisions and accountable deliverables while CAD tools retain authorship and dependencies.",
+            "Trace EN-03 → ENG-03; route /engineering/[id]/drawings."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [
+            "Choose a package, then the route-backed module view. Search records or use Assigned to me, Work waiting or Overdue. Select a row to inspect its revision and accountable actions. Check the saved server result before leaving."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "Keep an uncertain operation open. Recover original result or Retry unchanged operation preserves its ID and payload. A missing receipt does not prove failure; do not invent a replacement operation.",
+            "The server rechecks source visibility and current duty/policy on recovery. A stale refusal preserves entries until you close; inspect the latest saved record before a new decision."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/engineering-native-control-handover.md; results and limits recorded separately.",
+      "source_paths": [
+        "src/app/(business)/engineering/[id]/drawings/page.tsx",
+        "docs/design/development/pages/route-engineering-id-drawings.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "workflow_basis": [
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "change_summary": "Native workflow, exact source/decision boundaries, accountable tasks and recovery."
+    },
+    {
+      "guide_key": "guide.route-engineering-id-queries",
+      "entry_key": "route:/engineering/[id]/queries",
+      "title": "Technical queries & supplier submittals",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic workflow; owner/visual review pending",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
+      "related_entry_keys": [
+        "scope:EN-04",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Retain formal owned questions, exact affected sources, technical answers and supplier dispositions separately from notes and procurement receipts.",
+            "Trace EN-04 → ENG-02 / ENG-04 / ENG-06; route /engineering/[id]/queries."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [
+            "Choose a package, then the route-backed module view. Search records or use Assigned to me, Work waiting or Overdue. Select a row to inspect its revision and accountable actions. Check the saved server result before leaving."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "Keep an uncertain operation open. Recover original result or Retry unchanged operation preserves its ID and payload. A missing receipt does not prove failure; do not invent a replacement operation.",
+            "The server rechecks source visibility and current duty/policy on recovery. A stale refusal preserves entries until you close; inspect the latest saved record before a new decision."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/engineering-native-control-handover.md; results and limits recorded separately.",
+      "source_paths": [
+        "src/app/(business)/engineering/[id]/queries/page.tsx",
+        "docs/design/development/pages/route-engineering-id-queries.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "workflow_basis": [
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "change_summary": "Native workflow, exact source/decision boundaries, accountable tasks and recovery."
+    },
+    {
+      "guide_key": "guide.route-engineering-id-queries-submittals",
+      "entry_key": "route:/engineering/[id]/queries/submittals",
+      "title": "Technical queries & supplier submittals",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic workflow; owner/visual review pending",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
+      "related_entry_keys": [
+        "scope:EN-04",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Retain formal owned questions, exact affected sources, technical answers and supplier dispositions separately from notes and procurement receipts.",
+            "Trace EN-04 → ENG-02 / ENG-04 / ENG-06; route /engineering/[id]/queries/submittals."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [
+            "Choose a package, then the route-backed module view. Search records or use Assigned to me, Work waiting or Overdue. Select a row to inspect its revision and accountable actions. Check the saved server result before leaving."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "Keep an uncertain operation open. Recover original result or Retry unchanged operation preserves its ID and payload. A missing receipt does not prove failure; do not invent a replacement operation.",
+            "The server rechecks source visibility and current duty/policy on recovery. A stale refusal preserves entries until you close; inspect the latest saved record before a new decision."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/engineering-native-control-handover.md; results and limits recorded separately.",
+      "source_paths": [
+        "src/app/(business)/engineering/[id]/queries/submittals/page.tsx",
+        "docs/design/development/pages/route-engineering-id-queries-submittals.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "workflow_basis": [
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "change_summary": "Native workflow, exact source/decision boundaries, accountable tasks and recovery."
+    },
+    {
+      "guide_key": "guide.route-engineering-id-reviews-issues",
+      "entry_key": "route:/engineering/[id]/reviews/issues",
+      "title": "Technical reviews, issues & transmittals",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic workflow; owner/visual review pending",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
+      "related_entry_keys": [
+        "scope:EN-05",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Bind independent technical decisions, formal issues and recipient evidence to exact content and purpose.",
+            "Trace EN-05 → ENG-04; route /engineering/[id]/reviews/issues."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [
+            "Choose a package, then the route-backed module view. Search records or use Assigned to me, Work waiting or Overdue. Select a row to inspect its revision and accountable actions. Check the saved server result before leaving."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "Keep an uncertain operation open. Recover original result or Retry unchanged operation preserves its ID and payload. A missing receipt does not prove failure; do not invent a replacement operation.",
+            "The server rechecks source visibility and current duty/policy on recovery. A stale refusal preserves entries until you close; inspect the latest saved record before a new decision."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/engineering-native-control-handover.md; results and limits recorded separately.",
+      "source_paths": [
+        "src/app/(business)/engineering/[id]/reviews/issues/page.tsx",
+        "docs/design/development/pages/route-engineering-id-reviews-issues.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "workflow_basis": [
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "change_summary": "Native workflow, exact source/decision boundaries, accountable tasks and recovery."
+    },
+    {
+      "guide_key": "guide.route-engineering-id-reviews",
+      "entry_key": "route:/engineering/[id]/reviews",
+      "title": "Technical reviews, issues & transmittals",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic workflow; owner/visual review pending",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
+      "related_entry_keys": [
+        "scope:EN-05",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Bind independent technical decisions, formal issues and recipient evidence to exact content and purpose.",
+            "Trace EN-05 → ENG-04; route /engineering/[id]/reviews."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [
+            "Choose a package, then the route-backed module view. Search records or use Assigned to me, Work waiting or Overdue. Select a row to inspect its revision and accountable actions. Check the saved server result before leaving."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "Keep an uncertain operation open. Recover original result or Retry unchanged operation preserves its ID and payload. A missing receipt does not prove failure; do not invent a replacement operation.",
+            "The server rechecks source visibility and current duty/policy on recovery. A stale refusal preserves entries until you close; inspect the latest saved record before a new decision."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/engineering-native-control-handover.md; results and limits recorded separately.",
+      "source_paths": [
+        "src/app/(business)/engineering/[id]/reviews/page.tsx",
+        "docs/design/development/pages/route-engineering-id-reviews.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "workflow_basis": [
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "change_summary": "Native workflow, exact source/decision boundaries, accountable tasks and recovery."
+    },
+    {
+      "guide_key": "guide.route-engineering-basis",
+      "entry_key": "route:/engineering/basis",
+      "title": "Design basis & interfaces",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic workflow; owner/visual review pending",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
+      "related_entry_keys": [
+        "scope:EN-02",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Retain exact requirements, assumptions, constraints, questions, interfaces and calculation references for one controlled basis.",
+            "Trace EN-02 → ENG-02; route /engineering/basis."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [
+            "Choose a package, then the route-backed module view. Search records or use Assigned to me, Work waiting or Overdue. Select a row to inspect its revision and accountable actions. Check the saved server result before leaving."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "Keep an uncertain operation open. Recover original result or Retry unchanged operation preserves its ID and payload. A missing receipt does not prove failure; do not invent a replacement operation.",
+            "The server rechecks source visibility and current duty/policy on recovery. A stale refusal preserves entries until you close; inspect the latest saved record before a new decision."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/engineering-native-control-handover.md; results and limits recorded separately.",
+      "source_paths": [
+        "src/app/(business)/engineering/basis/page.tsx",
+        "docs/design/development/pages/route-engineering-basis.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "workflow_basis": [
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "change_summary": "Native workflow, exact source/decision boundaries, accountable tasks and recovery."
+    },
+    {
+      "guide_key": "guide.route-engineering-drawings",
+      "entry_key": "route:/engineering/drawings",
+      "title": "Drawings & controlled documents",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic workflow; owner/visual review pending",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
+      "related_entry_keys": [
+        "scope:EN-03",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Govern stable document identities, exact native source revisions and accountable deliverables while CAD tools retain authorship and dependencies.",
+            "Trace EN-03 → ENG-03; route /engineering/drawings."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [
+            "Choose a package, then the route-backed module view. Search records or use Assigned to me, Work waiting or Overdue. Select a row to inspect its revision and accountable actions. Check the saved server result before leaving."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "Keep an uncertain operation open. Recover original result or Retry unchanged operation preserves its ID and payload. A missing receipt does not prove failure; do not invent a replacement operation.",
+            "The server rechecks source visibility and current duty/policy on recovery. A stale refusal preserves entries until you close; inspect the latest saved record before a new decision."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/engineering-native-control-handover.md; results and limits recorded separately.",
+      "source_paths": [
+        "src/app/(business)/engineering/drawings/page.tsx",
+        "docs/design/development/pages/route-engineering-drawings.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "workflow_basis": [
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "change_summary": "Native workflow, exact source/decision boundaries, accountable tasks and recovery."
+    },
+    {
+      "guide_key": "guide.route-engineering-queries",
+      "entry_key": "route:/engineering/queries",
+      "title": "Technical queries & supplier submittals",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic workflow; owner/visual review pending",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
+      "related_entry_keys": [
+        "scope:EN-04",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Retain formal owned questions, exact affected sources, technical answers and supplier dispositions separately from notes and procurement receipts.",
+            "Trace EN-04 → ENG-02 / ENG-04 / ENG-06; route /engineering/queries."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [
+            "Choose a package, then the route-backed module view. Search records or use Assigned to me, Work waiting or Overdue. Select a row to inspect its revision and accountable actions. Check the saved server result before leaving."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "Keep an uncertain operation open. Recover original result or Retry unchanged operation preserves its ID and payload. A missing receipt does not prove failure; do not invent a replacement operation.",
+            "The server rechecks source visibility and current duty/policy on recovery. A stale refusal preserves entries until you close; inspect the latest saved record before a new decision."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/engineering-native-control-handover.md; results and limits recorded separately.",
+      "source_paths": [
+        "src/app/(business)/engineering/queries/page.tsx",
+        "docs/design/development/pages/route-engineering-queries.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "workflow_basis": [
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "change_summary": "Native workflow, exact source/decision boundaries, accountable tasks and recovery."
+    },
+    {
+      "guide_key": "guide.route-engineering-reviews",
+      "entry_key": "route:/engineering/reviews",
+      "title": "Technical reviews, issues & transmittals",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic workflow; owner/visual review pending",
+      "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
+      "related_entry_keys": [
+        "scope:EN-05",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Bind independent technical decisions, formal issues and recipient evidence to exact content and purpose.",
+            "Trace EN-05 → ENG-04; route /engineering/reviews."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [
+            "Choose a package, then the route-backed module view. Search records or use Assigned to me, Work waiting or Overdue. Select a row to inspect its revision and accountable actions. Check the saved server result before leaving."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "Keep an uncertain operation open. Recover original result or Retry unchanged operation preserves its ID and payload. A missing receipt does not prove failure; do not invent a replacement operation.",
+            "The server rechecks source visibility and current duty/policy on recovery. A stale refusal preserves entries until you close; inspect the latest saved record before a new decision."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/engineering-native-control-handover.md; results and limits recorded separately.",
+      "source_paths": [
+        "src/app/(business)/engineering/reviews/page.tsx",
+        "docs/design/development/pages/route-engineering-reviews.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "workflow_basis": [
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "change_summary": "Native workflow, exact source/decision boundaries, accountable tasks and recovery."
     }
   ]
 }

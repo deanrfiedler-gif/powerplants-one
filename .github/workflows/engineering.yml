@@ -1,4 +1,4 @@
-name: Engineering intake assurance
+name: Engineering native workflow assurance
 on:
   pull_request:
     paths:
@@ -7,6 +7,8 @@ on:
       - "src/components/engineering*.tsx"
       - "src/app/**/engineering/**"
       - "src/app/engineering.css"
+      - "src/app/styles/engineering*.css"
+      - "src/app/styles/my-work.css"
       - "src/shared/receipts.ts"
       - "src/shell/**"
       - "db/**"
@@ -19,9 +21,9 @@ permissions:
   contents: read
 jobs:
   engineering:
-    name: Engineering r02 intake, history and scoped persistence
+    name: Engineering EN-01–EN-08 commands, lineage and browser journeys
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    timeout-minutes: 45
     services:
       postgres:
         image: postgres:16.15
@@ -61,14 +63,25 @@ jobs:
           npm run db:seed
           npm run db:health
       - name: Scoped commands, evidence, concurrency and additive upgrade
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/database/engineering.test.ts tests/database/engineering-control.test.ts tests/database/engineering-materials.test.ts tests/database/engineering-changes.test.ts tests/database/quality-upgrade.test.ts tests/database/desktop-shell.test.ts
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/engineering.test.ts tests/database/engineering-control.test.ts tests/database/engineering-materials.test.ts tests/database/engineering-changes.test.ts tests/database/quality-upgrade.test.ts tests/database/desktop-shell.test.ts tests/database/department-navigation.test.ts tests/database/my-work.test.ts
+      - name: Native and retained Engineering HTTP contracts
+        run: |
+          PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > /tmp/engineering-server.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            curl --silent --fail http://127.0.0.1:3000/ > /dev/null && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/http/engineering-control.test.ts tests/http/engineering-materials.test.ts tests/http/engineering-changes.test.ts
       - name: Real HTTP and saved desktop and phone journeys
-        run: npx playwright test --config=playwright.compiled.config.ts tests/browser/engineering.spec.ts --output verification-evidence/engineering-browser --reporter=list
+        run: npx playwright test --config=playwright.compiled.config.ts tests/browser/engineering.spec.ts tests/browser/engineering-control.spec.ts tests/browser/engineering-materials.spec.ts tests/browser/engineering-changes.spec.ts tests/browser/engineering-commissioning.spec.ts tests/browser/department-navigation.spec.ts --output verification-evidence/engineering-browser --reporter=list
       - name: Retain bounded synthetic verification evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: Engineering-r02-review
+          name: Engineering-native-review
           path: |
             verification-evidence/engineering-browser
             !**/trace.zip

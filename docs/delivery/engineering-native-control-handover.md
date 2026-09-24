@@ -16,7 +16,7 @@ EN-06–EN-08 are native in the base (#265/#268, #266, #270), despite stale deve
 
 The foundation increment contains the shared information model, additive migration/seed, scoped API, authority, immutable evidence, operation recovery and EN-01 workload projections. The dependent application increment contains routes, native forms/inspectors, EN-01 integration, navigation, guides and browser assurance. Review these as a dependency-ordered pair. No merge or deployment is performed by this task.
 
-| Scope / parent | Foundation and dependent application scope |
+| Scope / parent | Implemented working-tree behaviour |
 |---|---|
 | EN-01 / ENG-01 | Preserved intake, IDs, Project/Opportunity links and coordination history; accountable deliverables, prerequisite blockers, sourced effort, distinct author/reviewer queues, current-issue filter and native summaries. |
 | EN-02 / ENG-02 | Versioned bases, stable typed requirements/inputs/interfaces/calculation references, two-sided confirmation, unknowns, facility applicability, frozen review and returned successors. |

@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { engineeringControlGuide } from "../engineering/control/guide";
 import { shellGuide } from "../shell/guide";
 import { usePageDescription } from "../shell/page-description";
 import { leadsGuide, type PageGuide } from "./leads-guide";
@@ -7,7 +9,8 @@ import { ShellIcon } from "./shell-icon";
 
 const pageGuides: Record<string, PageGuide> = { Leads: leadsGuide };
 export function ShellPageGuide({ page }: { page: string }) {
-  const pageGuide = pageGuides[page];
+  const path = usePathname();
+  const pageGuide = engineeringControlGuide(path) ?? pageGuides[page];
   // A register that gave up its visible description publishes it here, so the information icon keeps it.
   const published = usePageDescription();
   const [showShell, setShowShell] = useState(page === "Application shell");

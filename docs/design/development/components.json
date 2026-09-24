@@ -90,7 +90,23 @@
       "specification": "docs/design/development/components/buttons.md",
       "used_on": [
         "system:theme",
-        "route:/development/page-register"
+        "route:/development/page-register",
+        "route:/engineering/[id]/basis/assumptions",
+        "route:/engineering/[id]/basis/interfaces",
+        "route:/engineering/[id]/basis",
+        "route:/engineering/[id]/basis/requirements",
+        "route:/engineering/[id]/basis/review",
+        "route:/engineering/[id]/basis/sources",
+        "route:/engineering/[id]/drawings/deliverables",
+        "route:/engineering/[id]/drawings",
+        "route:/engineering/[id]/queries",
+        "route:/engineering/[id]/queries/submittals",
+        "route:/engineering/[id]/reviews/issues",
+        "route:/engineering/[id]/reviews",
+        "route:/engineering/basis",
+        "route:/engineering/drawings",
+        "route:/engineering/queries",
+        "route:/engineering/reviews"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -1296,7 +1312,13 @@
       "owner": "Dean Fiedler",
       "example": null,
       "coverage": "Host example",
-      "states": [],
+      "states": [
+        {
+          "id": "engineering-host",
+          "label": "Native Engineering host",
+          "description": "Use the real permitted EN-01–EN-08 routes through the shared business layout to inspect rail, breadcrumbs, secondary menu, information guidance and restricted states. This is host evidence, not an isolated component example."
+        }
+      ],
       "implementation": [
         {
           "path": "src/components/product-navigation.tsx",
@@ -1315,7 +1337,11 @@
         "src/app/layout.tsx",
         "src/app/desktop-shell.css",
         "src/app/mobile-layout.css",
-        "src/app/styles/customers.css"
+        "src/app/styles/customers.css",
+        "src/engineering/control/navigation.ts",
+        "src/engineering/control/guide.ts",
+        "src/app/styles/my-work.css",
+        "src/shell/secondary-menu.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -1344,6 +1370,14 @@
           "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
           "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "engineering-native-shell-review",
+          "expected": "Native EN-02–EN-05 rail, module/view breadcrumbs, menu and information guide at desktop/mobile widths.",
+          "actual": "Native consumer added; owner and visual acceptance pending.",
+          "action": "Use native Engineering evidence for paired review against r17 and EN-02 sources.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

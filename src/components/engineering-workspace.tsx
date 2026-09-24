@@ -1,4 +1,5 @@
 "use client";
+import { ControlSummary } from "../engineering/control/components/summary";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -28,6 +29,7 @@ import type { ShellContext } from "../shell/model";
 const views = [
   ["all", "All packages"],
   ["mine", "My work"],
+  ["author", "Author actions"],
   ["review", "Reviews"],
   ["released", "Released"],
 ] as const;
@@ -310,6 +312,10 @@ export function EngineeringWorkspace({ initialId }: { initialId?: string }) {
           <p>Work packages, drawings and technical reviews</p>
         </div>
         <div className="eng-heading-actions">
+          <Link className="eng-meta-link" href="/engineering/basis">Design basis &amp; interfaces</Link>
+          <Link className="eng-meta-link" href="/engineering/drawings">Drawings &amp; deliverables</Link>
+          <Link className="eng-meta-link" href="/engineering/queries">Technical queries &amp; submittals</Link>
+          <Link className="eng-meta-link" href="/engineering/reviews">Technical reviews &amp; issues</Link>
           {/* EN-06: material requirements, substitutions, technical release and supply handover of a package. */}
           <Link className="eng-meta-link" href="/engineering/materials">
             Released materials &amp; substitutions
@@ -577,7 +583,7 @@ export function EngineeringWorkspace({ initialId }: { initialId?: string }) {
                           <span className="eng-cell-sub">{p.discipline}</span>
                         </td>
                         <td>
-                          <span className="eng-meta">To be agreed</span>
+                          <Link href={`/engineering/${p.id}/drawings/deliverables`}>{p.technical ? `${p.technical.deliverables} deliverables · ${p.technical.blocked} blocked` : "Open accountable deliverables"}</Link>
                         </td>
                         <td>
                           <span
@@ -616,6 +622,7 @@ export function EngineeringWorkspace({ initialId }: { initialId?: string }) {
                       <span>{dateText(p.required_date)}</span>
                     </div>
                     <div className="eng-mobile-action">{nextAction(p)}</div>
+                    {p.technical && <p>{p.technical.deliverables} deliverables · {p.technical.blocked} blocked · {p.technical.reviews} reviews assigned to me · {p.technical.released} current issues</p>}
                   </article>
                 ))}
               </div>
@@ -1041,18 +1048,7 @@ function PackageDrawer({
               id="eng-panel-overview"
               aria-labelledby="eng-tab-overview"
             >
-              <div className="eng-version-pair">
-                <div>
-                  <span>Working set</span>
-                  <strong>Not assigned</strong>
-                  <small>Deliverables to be agreed</small>
-                </div>
-                <div>
-                  <span>Latest issued package</span>
-                  <strong>No issue yet</strong>
-                  <small>No use authorised by an issue</small>
-                </div>
-              </div>
+              {tab === "overview" && <ControlSummary packageId={p.id} mode="overview" />}
               <div className="eng-facts">
                 <div className="eng-fact">
                   <span>Engineer</span>
@@ -1060,7 +1056,7 @@ function PackageDrawer({
                 </div>
                 <div className="eng-fact">
                   <span>Technical reviewer</span>
-                  <strong>To be assigned</strong>
+                  <Link href={`/engineering/${p.id}/reviews`}>See assigned technical reviews</Link>
                 </div>
                 <div className="eng-fact">
                   <span>Package required by</span>
@@ -1138,19 +1134,7 @@ function PackageDrawer({
               id="eng-panel-documents"
               aria-labelledby="eng-tab-documents"
             >
-              <h3>Drawing & model register</h3>
-              <div className="eng-note">
-                <strong>No deliverables recorded</strong>The required drawings,
-                models and renders will be agreed during scope review.
-              </div>
-              <section className="eng-section">
-                <h3>Source documents</h3>
-                <p>
-                  Engineering files remain in SharePoint and are authored in
-                  SOLIDWORKS. Document linking and published previews are the
-                  next integration step.
-                </p>
-              </section>
+              {tab === "documents" && <ControlSummary packageId={p.id} mode="documents" />}
             </div>
             <div
               hidden={tab !== "queries"}
@@ -1158,12 +1142,7 @@ function PackageDrawer({
               id="eng-panel-queries"
               aria-labelledby="eng-tab-queries"
             >
-              <h3>Technical queries</h3>
-              <div className="eng-note">
-                <strong>No formal technical queries recorded</strong>Questions
-                can be captured in Review & history while the technical-query
-                workflow is introduced.
-              </div>
+              {tab === "queries" && <ControlSummary packageId={p.id} mode="queries" />}
             </div>
             <div
               hidden={tab !== "review"}
@@ -1172,6 +1151,7 @@ function PackageDrawer({
               aria-labelledby="eng-tab-review"
             >
               <h3>Review & history</h3>
+              {tab === "review" && <ControlSummary packageId={p.id} mode="review" />}
               {notice && (
                 <p className="eng-saved" role="status">
                   {notice}

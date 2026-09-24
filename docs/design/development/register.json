@@ -1263,7 +1263,7 @@
       "title": "Engineering workload and deliverables",
       "kind": "scope",
       "module": "EN",
-      "summary": "Extend existing engineering intake/coordination with deliverable ownership, effort, prerequisites and author/reviewer workloads.",
+      "summary": "Native Engineering coordination with accountable deliverables, separate author/reviewer queues and exact technical basis/query/review/issue summaries.",
       "path": "/engineering",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -1272,10 +1272,14 @@
       "design_path": "docs/design/development/pages/scope-en-01.md",
       "html_path": "docs/reference/ui/engineering/PPO-Engineering-Container-r02.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "src/engineering/control/components/summary.tsx",
+        "src/engineering/control/workload.ts",
+        "src/engineering/control/guide.ts"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Native implementation; see engineering-native-control-handover.md for current checks and limits.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -1290,10 +1294,10 @@
     },
     {
       "key": "scope:EN-02",
-      "title": "Design basis and interface register",
+      "title": "Design basis & interfaces",
       "kind": "scope",
       "module": "EN",
-      "summary": "Implement design-basis requirements, assumptions, calculations and discipline/interface ownership.",
+      "summary": "Retain exact requirements, assumptions, constraints, questions, interfaces and calculation references for one controlled basis.",
       "path": "/engineering/basis",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -1302,27 +1306,36 @@
       "design_path": "docs/design/development/pages/scope-en-02.md",
       "html_path": "docs/reference/ui/engineering-basis/PPO-Design-Basis-and-Interface-Register-r01.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/engineering/control/components/workspace.tsx",
+        "src/app/styles/engineering-control.css",
+        "src/shell/secondary-menu.tsx",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "scope_status": "Native implementation present; review separate",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "See programme handover; verification in progress",
+      "deployment_status": "Not deployed by this programme",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 71,
       "related_keys": [
         "scope:CS-08",
-        "scope:ES-06"
+        "scope:ES-06",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
       ],
       "reviewer": null
     },
     {
       "key": "scope:EN-03",
-      "title": "Drawing and controlled technical document register",
+      "title": "Drawings & controlled documents",
       "kind": "scope",
       "module": "EN",
-      "summary": "Implement drawing and controlled technical-document registers, revisions, purposes and native-source links.",
+      "summary": "Govern stable document identities, exact native source revisions and accountable deliverables while CAD tools retain authorship and dependencies.",
       "path": "/engineering/drawings",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -1331,27 +1344,36 @@
       "design_path": "docs/design/development/pages/scope-en-03.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/engineering/control/components/workspace.tsx",
+        "src/app/styles/engineering-control.css",
+        "src/shell/secondary-menu.tsx",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "scope_status": "Native implementation present; review separate",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "See programme handover; verification in progress",
+      "deployment_status": "Not deployed by this programme",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 72,
       "related_keys": [
         "scope:EN-02",
-        "scope:DK-01"
+        "scope:DK-01",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
       ],
       "reviewer": null
     },
     {
       "key": "scope:EN-04",
-      "title": "Technical queries and supplier submittals",
+      "title": "Technical queries & supplier submittals",
       "kind": "scope",
       "module": "EN",
-      "summary": "Complete technical-query and supplier-submittal workflows; existing coordination notes do not provide reviewable queries or submittals.",
+      "summary": "Retain formal owned questions, exact affected sources, technical answers and supplier dispositions separately from notes and procurement receipts.",
       "path": "/engineering/queries",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -1360,11 +1382,16 @@
       "design_path": "docs/design/development/pages/scope-en-04.md",
       "html_path": "docs/reference/ui/engineering/PPO-Engineering-Container-r02.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "refine",
+      "dependencies": [
+        "src/engineering/control/components/workspace.tsx",
+        "src/app/styles/engineering-control.css",
+        "src/shell/secondary-menu.tsx",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "scope_status": "Native implementation present; review separate",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "See programme handover; verification in progress",
+      "deployment_status": "Not deployed by this programme",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -1372,16 +1399,20 @@
       "related_keys": [
         "route:/engineering/[id]",
         "route:/engineering",
-        "scope:EN-03"
+        "scope:EN-03",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
       ],
       "reviewer": null
     },
     {
       "key": "scope:EN-05",
-      "title": "Technical review, approval and transmittal",
+      "title": "Technical reviews, issues & transmittals",
       "kind": "scope",
       "module": "EN",
-      "summary": "Implement exact technical review, findings, approval purpose, controlled release sets and transmittals.",
+      "summary": "Bind independent technical decisions, formal issues and recipient evidence to exact content and purpose.",
       "path": "/engineering/reviews",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -1390,18 +1421,27 @@
       "design_path": "docs/design/development/pages/scope-en-05.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/engineering/control/components/workspace.tsx",
+        "src/app/styles/engineering-control.css",
+        "src/shell/secondary-menu.tsx",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "scope_status": "Native implementation present; review separate",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "See programme handover; verification in progress",
+      "deployment_status": "Not deployed by this programme",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 74,
       "related_keys": [
         "scope:EN-03",
-        "scope:EN-04"
+        "scope:EN-04",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
       ],
       "reviewer": null
     },
@@ -1419,10 +1459,12 @@
       "design_path": "docs/design/development/pages/scope-en-06.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "docs/delivery/engineering-native-control-handover.md"
+      ],
+      "scope_status": "Native implementation present; review separate",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Existing native source and suites confirmed on main ca006fb1; programme regression recorded separately",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -1455,10 +1497,12 @@
       "design_path": "docs/design/development/pages/scope-en-07.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "docs/delivery/engineering-native-control-handover.md"
+      ],
+      "scope_status": "Native implementation present; review separate",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Existing native source and suites confirmed on main ca006fb1; programme regression recorded separately",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -1490,10 +1534,12 @@
       "design_path": "docs/design/development/pages/scope-en-08.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "docs/delivery/engineering-native-control-handover.md"
+      ],
+      "scope_status": "Native implementation present; review separate",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Existing native source and suites confirmed on main ca006fb1; programme regression recorded separately",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -4921,7 +4967,7 @@
       "title": "Engineering package",
       "kind": "route",
       "module": "EN",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "Native Engineering coordination with accountable deliverables, separate author/reviewer queues and exact technical basis/query/review/issue summaries.",
       "path": "/engineering/[id]",
       "source_paths": [
         "src/app/(business)/engineering/[id]/page.tsx"
@@ -4930,10 +4976,14 @@
       "design_path": "docs/design/development/pages/route-engineering-id.md",
       "html_path": "docs/reference/ui/engineering/PPO-Engineering-Container-r02.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "src/engineering/control/components/summary.tsx",
+        "src/engineering/control/workload.ts",
+        "src/engineering/control/guide.ts"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Native implementation; see engineering-native-control-handover.md for current checks and limits.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -4950,7 +5000,7 @@
       "title": "Engineering workspace",
       "kind": "route",
       "module": "EN",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "Native Engineering coordination with accountable deliverables, separate author/reviewer queues and exact technical basis/query/review/issue summaries.",
       "path": "/engineering",
       "source_paths": [
         "src/app/(business)/engineering/page.tsx"
@@ -4959,10 +5009,14 @@
       "design_path": "docs/design/development/pages/route-engineering.md",
       "html_path": "docs/reference/ui/engineering/PPO-Engineering-Container-r02.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "src/engineering/control/components/summary.tsx",
+        "src/engineering/control/workload.ts",
+        "src/engineering/control/guide.ts"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Native implementation; see engineering-native-control-handover.md for current checks and limits.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -8262,6 +8316,598 @@
       "related_keys": [
         "scope:CS-08",
         "route:/surveys/[id]"
+      ]
+    },
+    {
+      "key": "route:/engineering/[id]/basis/assumptions",
+      "title": "Design basis & interfaces",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Retain exact requirements, assumptions, constraints, questions, interfaces and calculation references for one controlled basis.",
+      "path": "/engineering/[id]/basis/assumptions",
+      "source_paths": [
+        "src/app/(business)/engineering/[id]/basis/assumptions/page.tsx"
+      ],
+      "guide_key": "guide.route-engineering-id-basis-assumptions",
+      "design_path": "docs/design/development/pages/route-engineering-id-basis-assumptions.md",
+      "html_path": "docs/reference/ui/engineering-basis/PPO-Design-Basis-and-Interface-Register-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/engineering/control/components/workspace.tsx",
+        "src/app/styles/engineering-control.css",
+        "src/shell/secondary-menu.tsx",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "scope_status": "Native implementation present; review separate",
+      "visual_status": "Needs review",
+      "functional_status": "See programme handover; verification in progress",
+      "deployment_status": "Not deployed by this programme",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:EN-02",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ]
+    },
+    {
+      "key": "route:/engineering/[id]/basis/interfaces",
+      "title": "Design basis & interfaces",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Retain exact requirements, assumptions, constraints, questions, interfaces and calculation references for one controlled basis.",
+      "path": "/engineering/[id]/basis/interfaces",
+      "source_paths": [
+        "src/app/(business)/engineering/[id]/basis/interfaces/page.tsx"
+      ],
+      "guide_key": "guide.route-engineering-id-basis-interfaces",
+      "design_path": "docs/design/development/pages/route-engineering-id-basis-interfaces.md",
+      "html_path": "docs/reference/ui/engineering-basis/PPO-Design-Basis-and-Interface-Register-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/engineering/control/components/workspace.tsx",
+        "src/app/styles/engineering-control.css",
+        "src/shell/secondary-menu.tsx",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "scope_status": "Native implementation present; review separate",
+      "visual_status": "Needs review",
+      "functional_status": "See programme handover; verification in progress",
+      "deployment_status": "Not deployed by this programme",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:EN-02",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ]
+    },
+    {
+      "key": "route:/engineering/[id]/basis",
+      "title": "Design basis & interfaces",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Retain exact requirements, assumptions, constraints, questions, interfaces and calculation references for one controlled basis.",
+      "path": "/engineering/[id]/basis",
+      "source_paths": [
+        "src/app/(business)/engineering/[id]/basis/page.tsx"
+      ],
+      "guide_key": "guide.route-engineering-id-basis",
+      "design_path": "docs/design/development/pages/route-engineering-id-basis.md",
+      "html_path": "docs/reference/ui/engineering-basis/PPO-Design-Basis-and-Interface-Register-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/engineering/control/components/workspace.tsx",
+        "src/app/styles/engineering-control.css",
+        "src/shell/secondary-menu.tsx",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "scope_status": "Native implementation present; review separate",
+      "visual_status": "Needs review",
+      "functional_status": "See programme handover; verification in progress",
+      "deployment_status": "Not deployed by this programme",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:EN-02",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ]
+    },
+    {
+      "key": "route:/engineering/[id]/basis/requirements",
+      "title": "Design basis & interfaces",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Retain exact requirements, assumptions, constraints, questions, interfaces and calculation references for one controlled basis.",
+      "path": "/engineering/[id]/basis/requirements",
+      "source_paths": [
+        "src/app/(business)/engineering/[id]/basis/requirements/page.tsx"
+      ],
+      "guide_key": "guide.route-engineering-id-basis-requirements",
+      "design_path": "docs/design/development/pages/route-engineering-id-basis-requirements.md",
+      "html_path": "docs/reference/ui/engineering-basis/PPO-Design-Basis-and-Interface-Register-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/engineering/control/components/workspace.tsx",
+        "src/app/styles/engineering-control.css",
+        "src/shell/secondary-menu.tsx",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "scope_status": "Native implementation present; review separate",
+      "visual_status": "Needs review",
+      "functional_status": "See programme handover; verification in progress",
+      "deployment_status": "Not deployed by this programme",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:EN-02",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ]
+    },
+    {
+      "key": "route:/engineering/[id]/basis/review",
+      "title": "Design basis & interfaces",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Retain exact requirements, assumptions, constraints, questions, interfaces and calculation references for one controlled basis.",
+      "path": "/engineering/[id]/basis/review",
+      "source_paths": [
+        "src/app/(business)/engineering/[id]/basis/review/page.tsx"
+      ],
+      "guide_key": "guide.route-engineering-id-basis-review",
+      "design_path": "docs/design/development/pages/route-engineering-id-basis-review.md",
+      "html_path": "docs/reference/ui/engineering-basis/PPO-Design-Basis-and-Interface-Register-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/engineering/control/components/workspace.tsx",
+        "src/app/styles/engineering-control.css",
+        "src/shell/secondary-menu.tsx",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "scope_status": "Native implementation present; review separate",
+      "visual_status": "Needs review",
+      "functional_status": "See programme handover; verification in progress",
+      "deployment_status": "Not deployed by this programme",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:EN-02",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ]
+    },
+    {
+      "key": "route:/engineering/[id]/basis/sources",
+      "title": "Design basis & interfaces",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Retain exact requirements, assumptions, constraints, questions, interfaces and calculation references for one controlled basis.",
+      "path": "/engineering/[id]/basis/sources",
+      "source_paths": [
+        "src/app/(business)/engineering/[id]/basis/sources/page.tsx"
+      ],
+      "guide_key": "guide.route-engineering-id-basis-sources",
+      "design_path": "docs/design/development/pages/route-engineering-id-basis-sources.md",
+      "html_path": "docs/reference/ui/engineering-basis/PPO-Design-Basis-and-Interface-Register-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/engineering/control/components/workspace.tsx",
+        "src/app/styles/engineering-control.css",
+        "src/shell/secondary-menu.tsx",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "scope_status": "Native implementation present; review separate",
+      "visual_status": "Needs review",
+      "functional_status": "See programme handover; verification in progress",
+      "deployment_status": "Not deployed by this programme",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:EN-02",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ]
+    },
+    {
+      "key": "route:/engineering/[id]/drawings/deliverables",
+      "title": "Drawings & controlled documents",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Govern stable document identities, exact native source revisions and accountable deliverables while CAD tools retain authorship and dependencies.",
+      "path": "/engineering/[id]/drawings/deliverables",
+      "source_paths": [
+        "src/app/(business)/engineering/[id]/drawings/deliverables/page.tsx"
+      ],
+      "guide_key": "guide.route-engineering-id-drawings-deliverables",
+      "design_path": "docs/design/development/pages/route-engineering-id-drawings-deliverables.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [
+        "src/engineering/control/components/workspace.tsx",
+        "src/app/styles/engineering-control.css",
+        "src/shell/secondary-menu.tsx",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "scope_status": "Native implementation present; review separate",
+      "visual_status": "Needs review",
+      "functional_status": "See programme handover; verification in progress",
+      "deployment_status": "Not deployed by this programme",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:EN-03",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ]
+    },
+    {
+      "key": "route:/engineering/[id]/drawings",
+      "title": "Drawings & controlled documents",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Govern stable document identities, exact native source revisions and accountable deliverables while CAD tools retain authorship and dependencies.",
+      "path": "/engineering/[id]/drawings",
+      "source_paths": [
+        "src/app/(business)/engineering/[id]/drawings/page.tsx"
+      ],
+      "guide_key": "guide.route-engineering-id-drawings",
+      "design_path": "docs/design/development/pages/route-engineering-id-drawings.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [
+        "src/engineering/control/components/workspace.tsx",
+        "src/app/styles/engineering-control.css",
+        "src/shell/secondary-menu.tsx",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "scope_status": "Native implementation present; review separate",
+      "visual_status": "Needs review",
+      "functional_status": "See programme handover; verification in progress",
+      "deployment_status": "Not deployed by this programme",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:EN-03",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ]
+    },
+    {
+      "key": "route:/engineering/[id]/queries",
+      "title": "Technical queries & supplier submittals",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Retain formal owned questions, exact affected sources, technical answers and supplier dispositions separately from notes and procurement receipts.",
+      "path": "/engineering/[id]/queries",
+      "source_paths": [
+        "src/app/(business)/engineering/[id]/queries/page.tsx"
+      ],
+      "guide_key": "guide.route-engineering-id-queries",
+      "design_path": "docs/design/development/pages/route-engineering-id-queries.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [
+        "src/engineering/control/components/workspace.tsx",
+        "src/app/styles/engineering-control.css",
+        "src/shell/secondary-menu.tsx",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "scope_status": "Native implementation present; review separate",
+      "visual_status": "Needs review",
+      "functional_status": "See programme handover; verification in progress",
+      "deployment_status": "Not deployed by this programme",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:EN-04",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ]
+    },
+    {
+      "key": "route:/engineering/[id]/queries/submittals",
+      "title": "Technical queries & supplier submittals",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Retain formal owned questions, exact affected sources, technical answers and supplier dispositions separately from notes and procurement receipts.",
+      "path": "/engineering/[id]/queries/submittals",
+      "source_paths": [
+        "src/app/(business)/engineering/[id]/queries/submittals/page.tsx"
+      ],
+      "guide_key": "guide.route-engineering-id-queries-submittals",
+      "design_path": "docs/design/development/pages/route-engineering-id-queries-submittals.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [
+        "src/engineering/control/components/workspace.tsx",
+        "src/app/styles/engineering-control.css",
+        "src/shell/secondary-menu.tsx",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "scope_status": "Native implementation present; review separate",
+      "visual_status": "Needs review",
+      "functional_status": "See programme handover; verification in progress",
+      "deployment_status": "Not deployed by this programme",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:EN-04",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ]
+    },
+    {
+      "key": "route:/engineering/[id]/reviews/issues",
+      "title": "Technical reviews, issues & transmittals",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Bind independent technical decisions, formal issues and recipient evidence to exact content and purpose.",
+      "path": "/engineering/[id]/reviews/issues",
+      "source_paths": [
+        "src/app/(business)/engineering/[id]/reviews/issues/page.tsx"
+      ],
+      "guide_key": "guide.route-engineering-id-reviews-issues",
+      "design_path": "docs/design/development/pages/route-engineering-id-reviews-issues.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [
+        "src/engineering/control/components/workspace.tsx",
+        "src/app/styles/engineering-control.css",
+        "src/shell/secondary-menu.tsx",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "scope_status": "Native implementation present; review separate",
+      "visual_status": "Needs review",
+      "functional_status": "See programme handover; verification in progress",
+      "deployment_status": "Not deployed by this programme",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:EN-05",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ]
+    },
+    {
+      "key": "route:/engineering/[id]/reviews",
+      "title": "Technical reviews, issues & transmittals",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Bind independent technical decisions, formal issues and recipient evidence to exact content and purpose.",
+      "path": "/engineering/[id]/reviews",
+      "source_paths": [
+        "src/app/(business)/engineering/[id]/reviews/page.tsx"
+      ],
+      "guide_key": "guide.route-engineering-id-reviews",
+      "design_path": "docs/design/development/pages/route-engineering-id-reviews.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [
+        "src/engineering/control/components/workspace.tsx",
+        "src/app/styles/engineering-control.css",
+        "src/shell/secondary-menu.tsx",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "scope_status": "Native implementation present; review separate",
+      "visual_status": "Needs review",
+      "functional_status": "See programme handover; verification in progress",
+      "deployment_status": "Not deployed by this programme",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:EN-05",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ]
+    },
+    {
+      "key": "route:/engineering/basis",
+      "title": "Design basis & interfaces",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Retain exact requirements, assumptions, constraints, questions, interfaces and calculation references for one controlled basis.",
+      "path": "/engineering/basis",
+      "source_paths": [
+        "src/app/(business)/engineering/basis/page.tsx"
+      ],
+      "guide_key": "guide.route-engineering-basis",
+      "design_path": "docs/design/development/pages/route-engineering-basis.md",
+      "html_path": "docs/reference/ui/engineering-basis/PPO-Design-Basis-and-Interface-Register-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/engineering/control/components/workspace.tsx",
+        "src/app/styles/engineering-control.css",
+        "src/shell/secondary-menu.tsx",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "scope_status": "Native implementation present; review separate",
+      "visual_status": "Needs review",
+      "functional_status": "See programme handover; verification in progress",
+      "deployment_status": "Not deployed by this programme",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:EN-02",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ]
+    },
+    {
+      "key": "route:/engineering/drawings",
+      "title": "Drawings & controlled documents",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Govern stable document identities, exact native source revisions and accountable deliverables while CAD tools retain authorship and dependencies.",
+      "path": "/engineering/drawings",
+      "source_paths": [
+        "src/app/(business)/engineering/drawings/page.tsx"
+      ],
+      "guide_key": "guide.route-engineering-drawings",
+      "design_path": "docs/design/development/pages/route-engineering-drawings.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [
+        "src/engineering/control/components/workspace.tsx",
+        "src/app/styles/engineering-control.css",
+        "src/shell/secondary-menu.tsx",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "scope_status": "Native implementation present; review separate",
+      "visual_status": "Needs review",
+      "functional_status": "See programme handover; verification in progress",
+      "deployment_status": "Not deployed by this programme",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:EN-03",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ]
+    },
+    {
+      "key": "route:/engineering/queries",
+      "title": "Technical queries & supplier submittals",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Retain formal owned questions, exact affected sources, technical answers and supplier dispositions separately from notes and procurement receipts.",
+      "path": "/engineering/queries",
+      "source_paths": [
+        "src/app/(business)/engineering/queries/page.tsx"
+      ],
+      "guide_key": "guide.route-engineering-queries",
+      "design_path": "docs/design/development/pages/route-engineering-queries.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [
+        "src/engineering/control/components/workspace.tsx",
+        "src/app/styles/engineering-control.css",
+        "src/shell/secondary-menu.tsx",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "scope_status": "Native implementation present; review separate",
+      "visual_status": "Needs review",
+      "functional_status": "See programme handover; verification in progress",
+      "deployment_status": "Not deployed by this programme",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:EN-04",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
+      ]
+    },
+    {
+      "key": "route:/engineering/reviews",
+      "title": "Technical reviews, issues & transmittals",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Bind independent technical decisions, formal issues and recipient evidence to exact content and purpose.",
+      "path": "/engineering/reviews",
+      "source_paths": [
+        "src/app/(business)/engineering/reviews/page.tsx"
+      ],
+      "guide_key": "guide.route-engineering-reviews",
+      "design_path": "docs/design/development/pages/route-engineering-reviews.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [
+        "src/engineering/control/components/workspace.tsx",
+        "src/app/styles/engineering-control.css",
+        "src/shell/secondary-menu.tsx",
+        "docs/decisions/ADR-0047-engineering-native-control.md"
+      ],
+      "scope_status": "Native implementation present; review separate",
+      "visual_status": "Needs review",
+      "functional_status": "See programme handover; verification in progress",
+      "deployment_status": "Not deployed by this programme",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:EN-05",
+        "scope:EN-01",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EN-08"
       ]
     }
   ]

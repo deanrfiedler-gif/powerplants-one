@@ -39,3 +39,7 @@ No exact image or HTML reference is linked. Keep this gap visible.
 The draft User Guide `guide.en.08` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## Implementation reconciliation — 24 September 2026
+
+Native commissioning basis, results, configuration, as-built release and receiving are implemented in merged PRs #270, confirmed on origin/main `6c5e7c4fcbaf05d712a46989faf2cf7cabb8ba72`. Preserve their existing engines, routes, capabilities and handover boundaries. Migration 0047 adds exact upstream basis/document/issue lineage through the existing synthetic material-source adapter. Source changes withdraw current downstream source use transitively while retaining historical snapshots and acknowledgements. No purchase, implementation, Project/Service closure, warranty or Finance action is implied. Visual and owner acceptance remain separate; see the native Engineering programme handover for regression evidence.

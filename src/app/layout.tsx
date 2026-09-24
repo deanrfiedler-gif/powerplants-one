@@ -20,6 +20,7 @@ import "./styles/sh-platform.css";
 import "./styles/my-work-mobile.css";
 import "./styles/engineering-review-base.css";
 import "./styles/engineering-materials.css";
+import "./styles/engineering-control.css";
 import "./styles/engineering-changes.css";
 import "./styles/engineering-commissioning.css";
 import "./styles/engineering-commissioning-tests.css";
