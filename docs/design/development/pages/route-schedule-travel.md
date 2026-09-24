@@ -2,7 +2,7 @@
 
 Stable entry: `route:/schedule/travel`. Owner: Dean Fiedler. Status: **Draft for visual review**.
 
-## S1–S5 native implementation
+## Native workflow
 
 Page type: **Review / comparison**. Canonical destination: `/schedule/travel`. Source authority: [PPO-SCHED-ADR](../../../decisions/scheduling-resources-architecture.md).
 
@@ -15,14 +15,24 @@ No map, provider, inferred distance/speed, traffic or optimiser is configured. P
 
 ## Desktop
 
-Toolbar wraps; PL-04 queue and comparison sit beside the exact record. PL-03/PL-05 use readable evidence cards.
+Show one local day, permitted site and resource filters, followed by separately ordered resource visits. Cards retain customer/site, site-time interval, supplied customer window, before/after allowances, reasons and buffered gaps/overlaps. Compare a manual order only after selecting one resource.
 
 ## Mobile
 
-Stack filters, queue/detail and current/proposed sections; preserve words, UUID context and reachable actions. The shared shell owns vertical scrolling. Use 1440 × 960, 1024 × 768, 390 × 844, 320 CSS px and 200% zoom for review.
+At 390 x 844 and 320 CSS px, use a vertical visit sequence with wrapping context and labelled Earlier/Later controls. The exact Review booking change link stays reachable; route estimate and actual field Travel remain visibly distinct from planned buffers. Review native 200% browser zoom separately; CSS-width reflow is not a substitute.
 
-Reuse: current shell, business-ui Field/SelectField/ReadState/Stamp, Button/ButtonLink, existing PlannerBoard and RequestDecision controls. Incoming: current scoped source/version evidence. Outgoing: existing owning-domain commands and exact PL-04 handovers; scenarios do not mutate.
+## Shared components and states
 
-No exact page-specific retained HTML or accepted mockup exists. The new composition is proposed for owner visual review.
+TravelWorkspaceScreen, travelSequences, shared WindowControls/ReviewSelect over business-ui fields/read states, Button/ButtonLink and SchedulingNavigation. No mapping or routing library is added.
 
-[Executed evidence and remaining review](../../../testing/evidence/scheduling-resources/README.md). Application images are pending until that index identifies inspected captures. No review fingerprint or owner acceptance is created by this edit.
+Loading, empty/filtered empty, failed and denied reads remove prior evidence. Words identify Unknown and source completeness. These review pages have no source-mutation save action; analytical state is explicitly disposable.
+
+## Handovers and authority
+
+Incoming: current permitted scheduling assignments and anonymous busy/block intervals. Outgoing: exact appointment/resource/day/timezone handover to PL-04. Sequence changes are browser-only comparisons; appointment times and reservations never change until the existing controlled workflow saves them.
+
+## Visual references and verification
+
+No exact page-specific retained HTML or accepted mockup exists. The native composition is proposed for owner visual review.
+
+[Executed checks, inspected captures and remaining review](../../../testing/evidence/scheduling-resources/README.md) identify the exact evidence. Draft guides, source presence, functional proof, owner visual acceptance and deployment remain separate. No review fingerprint is adopted by this edit.

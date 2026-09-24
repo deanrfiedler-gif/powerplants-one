@@ -206,6 +206,10 @@ test("change request review presents exact comparison before a reasoned decision
     path: info.outputPath("current-proposed-comparison.png"),
   });
   await request
+    .getByRole("heading", { name: "Requested booking", exact: true })
+    .evaluate((e) => e.scrollIntoView({ block: "start" }));
+  await page.screenshot({ path: info.outputPath("requested-comparison.png") });
+  await request
     .getByLabel("Decision reason")
     .fill("SYN-PPO retain the existing customer arrangement");
   await request

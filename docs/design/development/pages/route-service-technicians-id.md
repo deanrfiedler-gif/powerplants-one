@@ -2,7 +2,7 @@
 
 Stable entry: `route:/service/technicians/[id]`. Owner: Dean Fiedler. Status: **Draft for visual review**.
 
-## S1–S5 native implementation
+## Native workflow
 
 Page type: **Record detail with existing register**. Canonical destination: `/service/technicians/[id]`. Source authority: [PPO-SCHED-ADR](../../../decisions/scheduling-resources-architecture.md).
 
@@ -15,14 +15,24 @@ Resource/calendar/competence mutation is unavailable. Synthetic skills are not s
 
 ## Desktop
 
-Toolbar wraps; PL-04 queue and comparison sit beside the exact record. PL-03/PL-05 use readable evidence cards.
+Keep the accepted Field Team Visits, Technicians and Needs preparation views. Availability & competence opens a specific resource. Detail uses paired overview/calendar cards, skill evidence, then reservations and permitted commitments; resource identity, seven-day window and source versions stay explicit.
 
 ## Mobile
 
-Stack filters, queue/detail and current/proposed sections; preserve words, UUID context and reachable actions. The shared shell owns vertical scrolling. Use 1440 × 960, 1024 × 768, 390 × 844, 320 CSS px and 200% zoom for review.
+Stack resource evidence cards without hiding interval, validity or unknown-evidence text. Date and refresh controls remain reachable at 390 x 844 and 320 CSS px. Long UUIDs and hashes wrap. Existing Field Team filters and record navigation remain available. Review native 200% browser zoom separately; CSS-width reflow is not a substitute.
 
-Reuse: current shell, business-ui Field/SelectField/ReadState/Stamp, Button/ButtonLink, existing PlannerBoard and RequestDecision controls. Incoming: current scoped source/version evidence. Outgoing: existing owning-domain commands and exact PL-04 handovers; scenarios do not mutate.
+## Shared components and states
 
-No exact page-specific retained HTML or accepted mockup exists. The new composition is proposed for owner visual review.
+FieldTeamScreen, ResourceWorkspaceScreen, shared shell/SchedulingNavigation, Field, ReadState, Stamp and Button. No operational source editor is introduced.
 
-[Executed evidence and remaining review](../../../testing/evidence/scheduling-resources/README.md). Application images are pending until that index identifies inspected captures. No review fingerprint or owner acceptance is created by this edit.
+Loading, empty/filtered empty, failed and denied reads remove prior evidence. Words identify Unknown and source completeness. These review pages have no source-mutation save action; analytical state is explicitly disposable.
+
+## Handovers and authority
+
+Incoming: exact permitted resource identity and selected review date from Planner or Field Team. Outgoing: permitted site/appointment records and retained booking history. Source publication history beyond the returned bundle, certificates and renewal evidence remain unavailable/Unknown.
+
+## Visual references and verification
+
+[Field Team r04](../../../reference/ui/field-technicians/powerplants-one-field-technicians-r04.html) remains the accepted register layout; [r05](../../../reference/ui/field-technicians/powerplants-one-field-technicians-r05.html) and [its change record](../../../reference/ui/field-technicians/powerplants-one-field-technicians-r05-change-record.md) remain retained sources. No exact issued resource-detail mockup exists.
+
+[Executed checks, inspected captures and remaining review](../../../testing/evidence/scheduling-resources/README.md) identify the exact evidence. Draft guides, source presence, functional proof, owner visual acceptance and deployment remain separate. No review fingerprint is adopted by this edit.

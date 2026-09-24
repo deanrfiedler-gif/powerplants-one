@@ -2,7 +2,7 @@
 
 Stable entry: `route:/schedule/capacity`. Owner: Dean Fiedler. Status: **Draft for visual review**.
 
-## S1–S5 native implementation
+## Native workflow
 
 Page type: **Review / comparison**. Canonical destination: `/schedule/capacity`. Source authority: [PPO-SCHED-ADR](../../../decisions/scheduling-resources-architecture.md).
 
@@ -15,14 +15,24 @@ Project programme dates and Engineering required dates never become labour effor
 
 ## Desktop
 
-Toolbar wraps; PL-04 queue and comparison sit beside the exact record. PL-03/PL-05 use readable evidence cards.
+Place source availability first, then horizon/domain/commitment/resource/skill filters, analytical comparison, supply basis and exact contributing records. Use readable cards at 1440 x 960 and 1024 x 768. Never make programme duration or due dates an effort quantity.
 
 ## Mobile
 
-Stack filters, queue/detail and current/proposed sections; preserve words, UUID context and reachable actions. The shared shell owns vertical scrolling. Use 1440 × 960, 1024 × 768, 390 × 844, 320 CSS px and 200% zoom for review.
+Stack filters and evidence cards at 390 x 844 and 320 CSS px. Scenario checkboxes have explicit labels; source/owner links and unknown effort remain readable. No utilisation gauge, automatic application or hidden mutation action appears. Review native 200% browser zoom separately; CSS-width reflow is not a substitute.
 
-Reuse: current shell, business-ui Field/SelectField/ReadState/Stamp, Button/ButtonLink, existing PlannerBoard and RequestDecision controls. Incoming: current scoped source/version evidence. Outgoing: existing owning-domain commands and exact PL-04 handovers; scenarios do not mutate.
+## Shared components and states
 
-No exact page-specific retained HTML or accepted mockup exists. The new composition is proposed for owner visual review.
+CapacityWorkspaceScreen and shared ReviewSelect/WindowControls composition over Field, SelectField, ReadState, Stamp, Button/ButtonLink and the native shell. This page does not consume PlannerBoard.
 
-[Executed evidence and remaining review](../../../testing/evidence/scheduling-resources/README.md). Application images are pending until that index identifies inspected captures. No review fingerprint or owner acceptance is created by this edit.
+Loading, empty/filtered empty, failed and denied reads remove prior evidence. Words identify Unknown and source completeness. These review pages have no source-mutation save action; analytical state is explicitly disposable.
+
+## Handovers and authority
+
+Incoming: repeatable-read, independently scoped Service, Projects and Engineering contributions. Outgoing: exact source-owned records and named next actions. Exclusions compare analytical counts/reservation minutes and reset on refresh. Unknown effort prevents a defensible net-capacity or overload calculation; inspect supplied busy/block intervals for reservation conflicts.
+
+## Visual references and verification
+
+No exact page-specific retained HTML or accepted mockup exists. The native composition is proposed for owner visual review.
+
+[Executed checks, inspected captures and remaining review](../../../testing/evidence/scheduling-resources/README.md) identify the exact evidence. Draft guides, source presence, functional proof, owner visual acceptance and deployment remain separate. No review fingerprint is adopted by this edit.
