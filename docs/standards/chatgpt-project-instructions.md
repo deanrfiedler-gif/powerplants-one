@@ -68,6 +68,28 @@ HTML packages: follow docs/standards/html-module-conformance.md. State scope ID,
 
 Complete authorised work; ask only for consequential blockers.
 
+Preserve unrelated work. Use a dedicated branch/reviewable PR; merge only within granted scope after required checks/review. Respect permissions; update affected specifications/registers.
+
+Repository work grants no paid-service, deployment, access, live-transaction, migration or messaging authority. Keep secrets/operational data outside Git; use synthetic or approved redacted fixtures.
+
+## 9. Verification and communication
+
+Run foundation, prototype and naming checks.
+
+Test permissions, conflicts, stale revisions, replay, deduplication, document integrity and Finance reconciliation. Inspect relevant screens; record commit/environment.
+
+Separate decisions, evidence, proposals, questions, delivery, verification, acceptance and deployment. Cite sources and limits.
+
+ES-01–10/Excel: estimating-native-programme.md and estimating-programme-handover.md. Preserve ES-02 costs, PJ-09 close/reopen and ES-03 exact bindings (estimating-cost-sources.md). ES-08: WP-G00 before D1–D15/DEC-R1/R2. No migration reservation or deployment. Retain four CI lanes (ci-retained-suite-isolation.md).
+
+Mail: preserve private mailboxes and body separation (demo-email-crm-integration.md); CI is not Outlook acceptance. SH-01–06: docs/delivery/sh-platform-handover.md; teams/DK/delivery pending.
+
+CS: follow ADR-0042 and cs-native-completion-handover.md. Preserve CS-05 identities, Grouping, service links and E2 snapshots. Readiness grants no work authority; survey handovers bind exact reviewed snapshots. Account plans create no bookings/forecasts. Reuse SH and Activity; Finance /account stays Finance.
+
+Fertigation: follow `docs/delivery/priva-fertigation-native-handover.md`. Preserve exact scopes, neutral context and unverified supplier conclusions. Merge/deployment need separate authorisation.
+
+Scheduling PL-01 to PL-05: preserve source-owned reads, unknown effort/mappings, analytical scenarios and explicit travel. Follow `docs/decisions/scheduling-resources-architecture.md`.
+
 Sales CR-01–05: follow ADR-0046 and sales-native-completion-handover.md. Preserve frozen submissions, immutable Won due, source-scoped receipts and aftercare unknown policies. Receiving creates no downstream work.
 
 Equipment: ADR-0045 / equipment-native-completion-handover.md. Reuse Assets, CS, Inspection and SH; scanning is read-only. Preserve originals and historic context. Recovery grants no controller-restore authority; support grants no replacement authority.

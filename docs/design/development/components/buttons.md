@@ -42,6 +42,9 @@ Review at 1440 × 960, 1024 × 768, 820 × 800, 390 × 844 and 320 × 700 where 
 
 Changes to the source, styles, fixtures, specification or reference invalidate prior evidence. Update this master and its component record in the same pull request. Keep app business checks separate from catalogue presentation checks.
 
+## Scheduling consumers
+
+PL-01–PL-05 reuse this family in the native shell. New review pages use wrapping actions, read/empty/error states, resource evidence and analytical comparisons. Existing booking forms retain their scoped button family. See [Scheduling evidence](../../../testing/evidence/scheduling-resources/README.md); component fixtures and review fingerprints remain unchanged because the underlying shared implementation is unchanged.
 
 ## ES-03 native consumer
 

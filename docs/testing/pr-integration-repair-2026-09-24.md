@@ -37,3 +37,13 @@ Fresh CI remains required for every integrated head. Synthetic test evidence doe
 ## Optional Job Pack access boundary
 
 Fresh CI at `8155cd1` exposed two invited-user demo failures ([run 35947481361](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35947481361)). The saved appointment loaded correctly, but its new optional JobPackEntry showed a page error for an identity without pack.read. The panel now distinguishes a denied read from a failed request: permission denial shows an access-unavailable status, while server/transport errors retain the error alert. Both hide old links; refresh remains available. No permissions, endpoints or server policy change. Consumer fixtures cover 403, 404 and 500, and the invited-user journeys explicitly wait for the unavailable status and assert no pack link. Fresh CI remains required.
+
+## Combined migration and Scheduling reconciliation
+
+The integrated sequence assigns Equipment 0045, Sales 0046, Engineering 0047 and Cost Sources 0048. The unmerged Cost Sources SQL is byte-identical after renumbering; seed order, exact migration lists, upgrade counts, grant allowlists and the 92-capability access-review contract are reconciled. No existing database is renumbered and no issued identity is changed.
+
+Scheduling's Contacts source review is recorded in `docs/design/contacts/README.md`. Local verification passed: byte-identical issued Contacts HTML; all 103 Contacts model groups; all 62 native Chrome browser groups; TypeScript; design register (309 entries, 28 components); foundation, prototype and naming checks. Visual/owner review remains pending in the register. Fresh CI and combined database upgrade proof remain required.
+
+The combined application build and lint pass. The full local unit run passes 410 of 414 cases; all four Windows path/private-storage failures reproduce in an untouched `854db10` main checkout (the same seven focused cases pass 3/fail 4 there). GitHub's supported Ubuntu checks remain authoritative for those cases; no assertion or storage safeguard was relaxed.
+
+The compiled optional-pack boundary proof on `992dbb4` passes both desktop and phone consumers (3/3 including warm-up). Final review also restored the issued access-review r01 snapshot to main's exact bytes: Engineering had regenerated that historical file before the Cost Sources branch moved the live generator to the versionless working master. Current working capability data remains 92; historical evidence is retained.
