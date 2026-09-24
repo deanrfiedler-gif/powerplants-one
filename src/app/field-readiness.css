@@ -1,0 +1,62 @@
+#ppo-field-readiness {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+#ppo-field-readiness .business-card {
+  margin-block: 1rem;
+  padding: 1.25rem;
+  background: var(--white);
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+}
+#ppo-field-readiness form {
+  display: grid;
+  gap: 1rem;
+  max-width: 56rem;
+}
+#ppo-field-readiness label {
+  display: grid;
+  gap: 0.4rem;
+}
+#ppo-field-readiness input:not([type="checkbox"]),
+#ppo-field-readiness select {
+  font: inherit;
+  font-size: 1rem;
+  min-height: 44px;
+  width: 100%;
+  box-sizing: border-box;
+}
+#ppo-field-readiness fieldset {
+  min-width: 0;
+  border: 1px solid var(--line-strong);
+  padding: 1rem;
+}
+#ppo-field-readiness .fi-choice {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 44px;
+}
+#ppo-field-readiness .fi-choice input {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+}
+#ppo-field-readiness .fi-requirement {
+  border-top: 1px solid var(--line-strong);
+  padding-block: 1rem;
+}
+#ppo-field-readiness :focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+@media (max-width: 600px) {
+  #ppo-field-readiness .ppo-button {
+    min-height: 44px;
+    width: 100%;
+    white-space: normal;
+  }
+  #ppo-field-readiness fieldset {
+    padding: 0.5rem;
+  }
+}
