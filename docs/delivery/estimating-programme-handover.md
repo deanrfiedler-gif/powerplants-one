@@ -49,3 +49,21 @@ Draft [PR #301](https://github.com/deanrfiedler-gif/powerplants-one/pull/301) ca
 ### Current-main integration
 
 Rebased the workload increment onto fetched main `6c5e7c4fcbaf05d712a46989faf2cf7cabb8ba72` (merged Projects A0 #300 and fertigation placement #299). Preserved the Projects status and document-register additions and both families' guide/page updates. Main still ends at migration 0044; this increment adds none. Earlier capture source hashes remain the evidence for their actual build, not a claim of fresh visual acceptance after rebase. Final published-head CI remains required.
+
+## ES-01 design adoption
+
+On 25 September 2026 Dean delegated the decisions on the ES-01 design board's proposals P1–P9 and questions O1–O2. They were decided and implemented on the integration head `7fb30f5`; decisions, adjustments and findings are in the [design board record](../decisions/es01-design-board.md).
+
+- **Read model:** `readEstimatingWorkload` adds `counts` per readiness state. The field is additive and read-only, computed in the same snapshot over permitted candidates matched by search and owner, before the readiness view. No migration, capability, seed or write is added.
+- **Page:** the page becomes a register with section tabs, inline owner and sort, readiness segments with counts, and a persistent 448 px detail panel from 1360 CSS px. Below that a `WorklistPanel` drawer is used, and at 760 px of register width and below, cards with the detail inline. Saved estimates becomes a table with AUD saved sell excluding tax and Not estimated for unpriced scope. The states stay distinct. `Status` gains an optional `tone` override.
+- **Findings:** B1–B5 are fixed on this page. B6, a shared segmented-control hover conflict, is recorded and worked around locally only.
+- **Unchanged:** intake acceptance, allocation, return commands, priority policy and the Unknown required response date.
+
+### Verification
+
+Run locally on Node 22.22.2 with bundled Chromium 141 against disposable PostgreSQL 16.13. The pinned Node 24.21.0 and Chrome channel are unavailable here.
+- **Passed:** 434 units; 4 workload database cases, including the new counts case; 1 workload HTTP case; 5 workload browser cases, with 1 desktop-only case skipped on mobile by design; the component catalogue browser cases.
+- **Failed, environmental:** four E1 browser cases, at draft-quote output only, because the pinned Chrome document renderer cannot launch here. This change touches no render or quote code.
+- **Evidence:** captures, axe-core results and hashes are in the [adoption evidence](../testing/evidence/estimating-workload-design-adoption/README.md).
+
+Pull-request CI remains the authority for the full suites. Owner visual and device review is pending, and no UI baseline entry, deployment or business acceptance is claimed.

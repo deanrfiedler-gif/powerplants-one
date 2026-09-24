@@ -1,9 +1,8 @@
 "use client";
 import Link from "next/link";
-import { SpecialistEntry } from "./specialist-entry";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import type { estimatingOptions, listEstimates, readEstimate, readQuote } from "../estimating/reads";
+import type { estimatingOptions, readEstimate, readQuote } from "../estimating/reads";
 import { arithmeticPolicy, calculate, quoteAmounts, type CostLine, type QuoteChoice } from "../estimating/math";
 import { parseLines } from "../estimating/validation";
 import { ErrorNotice, Field, SelectField, ValidationFields, api, PageHeader, Status } from "./business-ui";
@@ -24,10 +23,6 @@ export function CommandState({command}:{command:ReturnType<typeof useCrmCommand>
 }
 function Heading({title,description,register,children}:{title:string;description?:string;register?:boolean;children?:React.ReactNode}) {
   return <PageHeader variant={register?"register":"record"} eyebrow="Estimating · Synthetic" title={title} description={description} action={children}/>;
-}
-export function EstimateList() {
-  const data=useCrmResource<Awaited<ReturnType<typeof listEstimates>>>("estimating/estimates");
-  return <div className="est-screen"><Heading title="Estimates" register description="Manual estimates and draft quotations, linked to the existing sales opportunity.">{data.data?.can_create&&<Link className="button" href="/estimating/new">New estimate</Link>}</Heading><p><Link href="/estimating/discovery">Open scope discovery and option workspaces</Link></p><p><SpecialistEntry/></p><ResourceState {...data}/>{data.data&&<><p>Showing up to {data.data.limit} permitted estimates, most recently saved first.</p>{!data.data.items.length?<div className="est-panel"><h2>No estimates yet</h2><p>Start from an existing opportunity and record the scope, assumptions and manual pricing basis.</p><Link href="/sales/opportunities">Open CRM Sales</Link></div>:<div className="est-list">{data.data.items.map(e=><article className="est-panel" key={e.id}><div><p className="est-eyebrow">{e.display_number} · Saved version {e.version} · Draft</p><h2><Link href={`/estimating/estimates/${e.id}`}>{e.title}</Link></h2><p>{e.customer}</p></div><div><small>Saved sell · excluding tax</small><strong>{money(e.sell_total)}</strong></div></article>)}</div>}</>}</div>;
 }
 export function DraftFields({value,onChange}:{value:Draft;onChange:(v:Draft)=>void}) {
   const set=(key:keyof Draft,v:Draft[keyof Draft])=>onChange({...value,[key]:v});

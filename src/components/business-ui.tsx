@@ -229,11 +229,14 @@ export function Stamp({
     </>
   );
 }
-export function Status({ value }: { value: string }) {
-  const tone = ["Completed","Confirmed","Approved","Authorised","Issued"].includes(value) ? "success"
+export type StatusTone = "success" | "attention" | "danger" | "info" | "neutral";
+// `tone` lets a caller that owns a domain mapping (for example ES-01 readiness)
+// choose the tone; without it every existing caller keeps this value mapping.
+export function Status({ value, tone: chosen }: { value: string; tone?: StatusTone }) {
+  const tone = chosen ?? (["Completed","Confirmed","Approved","Authorised","Issued"].includes(value) ? "success"
     : ["NeedsInformation","Unresolved","Disputed","DueNeeded","Planned","Proposed"].includes(value) ? "attention"
     : ["Urgent","Overdue","Failed","Error"].includes(value) ? "danger"
-    : ["Open","InProgress","Enquiry","Qualified","Sent"].includes(value) ? "info" : "neutral";
+    : ["Open","InProgress","Enquiry","Qualified","Sent"].includes(value) ? "info" : "neutral");
   return <span className={`status-chip tone-${tone}`}>{friendly(value)}</span>;
 }
 export function PageHeader({

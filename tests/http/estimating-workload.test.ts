@@ -17,6 +17,8 @@ test("ES01 HTTP workload is current-authority, no-store, read-only and strictly 
   const body = await response.json(), row = body.items.find((x: {opportunity: {id: string}}) => x.opportunity.id === input.id);
   assert.equal(row.opportunity.need_summary, input.need_summary);
   assert.equal(row.intake_acceptance, "NotConfigured");
+  assert.deepEqual(Object.keys(body.counts).sort(), ["clarification", "legacy", "ready", "unstarted"]);
+  assert.ok(body.counts.unstarted >= 1, "the permitted new brief is counted");
   assert.equal((await fetch(`${origin}/api/v1/estimating/workload?view=approved`, {headers: {Cookie: cookie}})).status, 422);
   assert.equal((await fetch(`${origin}/api/v1/estimating/workload`, {method: "POST", headers: {Cookie: cookie, Origin: origin}})).status, 405);
   const second = await session("second-company");

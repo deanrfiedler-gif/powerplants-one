@@ -17,10 +17,16 @@ import {
   workspaceAuthority,
 } from "./discovery-workspace-context";
 import { estimateContext, versionContext } from "./context";
-import { workloadQuery, workloadState } from "./workload-query";
+import {
+  workloadQuery,
+  workloadState,
+  type WorkloadState,
+} from "./workload-query";
 
 // No cached principal, counts or business-state inference. A read uses one
 // snapshot; the canonical services retain authority over every linked source.
+// Readiness counts cover only permitted candidates in the same bounded window,
+// matched by search and owner and counted before the readiness view applies.
 export async function readEstimatingWorkload(
   p: Principal,
   query: Record<string, string> = {},
@@ -50,6 +56,12 @@ export async function readEstimatingWorkload(
       )
     ).rows;
     const items = [];
+    const counts: Record<WorkloadState, number> = {
+      unstarted: 0,
+      clarification: 0,
+      ready: 0,
+      legacy: 0,
+    };
     for (const candidate of candidates) {
       try {
         const opportunity = await visibleOpportunity(c, p, candidate.id);
@@ -62,7 +74,10 @@ export async function readEstimatingWorkload(
           (x) => x.option.id === workspace?.selected_option_id,
         );
         const state = workloadState(selected?.revision.scope_readiness ?? null);
-        if (filters.view !== "all" && filters.view !== state) continue;
+        if (filters.view !== "all" && filters.view !== state) {
+          counts[state] += 1;
+          continue;
+        }
         const context = (
           await c.query<{
             customer: string;
@@ -204,12 +219,19 @@ export async function readEstimatingWorkload(
             : null,
           estimates,
         });
+        counts[state] += 1;
       } catch (error) {
         // Never disclose hidden-source status, counts, identities or labels.
         if (!(error instanceof AppError) || ![403, 404].includes(error.status))
           throw error;
       }
     }
-    return { items, filters, candidate_limit: 100, synthetic: true as const };
+    return {
+      items,
+      counts,
+      filters,
+      candidate_limit: 100,
+      synthetic: true as const,
+    };
   });
 }

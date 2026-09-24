@@ -1256,7 +1256,9 @@
         "scope:SC-07",
         "scope:SC-08",
         "scope:SC-09",
-        "scope:SC-10"
+        "scope:SC-10",
+        "scope:ES-01",
+        "route:/estimating"
       ],
       "desktop": "Use drawers for supplementary record context; preserve the parent task and focus return.",
       "mobile": "The actual drawer should fit the phone viewport and scroll content internally.",
@@ -1268,6 +1270,14 @@
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "Drawer geometry must be compared with its CRM reference; shell utility panels have separate behaviour.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "es01-right-drawer",
+          "expected": "Drawer geometry matches its reference or records an accepted page-specific variant.",
+          "actual": "ES-01 reuses WorklistPanel behaviour (modal dialog, Escape, focus return) with page-scoped right-hand geometry, 448 px and full height, below the 1360 px panel width. The CRM drawer is a top sheet.",
+          "action": "Compare the ES-01 drawer with the CRM drawer and the ES-01 board R1; accept the page variant or migrate to a shared right-hand drawer.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1381,7 +1391,9 @@
         "scope:EQ-08",
         "scope:EQ-09",
         "scope:FI-05",
-        "route:/my-jobs/site-readiness"
+        "route:/my-jobs/site-readiness",
+        "scope:ES-01",
+        "route:/estimating"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -1501,6 +1513,14 @@
           "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
           "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "es01-readiness-tone",
+          "expected": "ES-01 readiness chips use the design system's attention and success tones without changing other callers' value mapping.",
+          "actual": "Status accepts an optional tone override; ES-01 maps Scope clarification to attention, Discovery complete to success and the other two states to neutral. Catalogue examples are unchanged because the rendered tones are the existing set.",
+          "action": "Review the ES-01 readiness chips on the running page at desktop and phone widths; record owner acceptance or a correction.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

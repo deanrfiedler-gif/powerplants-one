@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-ES-01 uses textual scope-readiness statuses: Discovery not started, Scope clarification, Discovery complete and Legacy manual basis. These are not commercial approval states. The existing Status component is unchanged; native page states and phone wrapping are verified by the Estimating workload browser suite.
+ES-01 uses textual scope-readiness statuses: Discovery not started, Scope clarification, Discovery complete and Legacy manual basis. These are not commercial approval states. Under the ES-01 design decisions (P3, O2), the page passes Status's optional `tone`: attention for Scope clarification, success for Discovery complete, and neutral for the other two. Callers that omit `tone` keep the value mapping unchanged. The words remain the state; success means complete scope evidence only. Native page states and phone wrapping are verified by the Estimating workload browser suite; the alignment item `es01-readiness-tone` holds owner review.
 
 **Owner:** Dean Fiedler · **Catalogue key:** `status` · **Review:** Pending
 

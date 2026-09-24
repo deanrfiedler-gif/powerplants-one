@@ -71,3 +71,7 @@ EQ-01 through EQ-09 reuse the shared control in their applicable register, recor
 ## FI-05 field readiness consumer
 
 The exact assigned-visit review reuses this control without changing its shared implementation. Loading, denied, unsaved, saving, stale, unknown-result recovery and server-saved states remain distinct. Fixtures and retained-source/lost-response journeys are in tests/browser/field-readiness.spec.ts; actual visual evidence is tracked by the Field Work programme handover. Owner/device acceptance remains pending.
+
+## ES-01 native consumer
+
+The Estimating workload and Saved estimates views use ErrorNotice with host loading, no-match, no-permitted-workload and no-access states. A failed read clears rows and readiness counts and offers a secondary Try loading again (decision P9). Placeholder rows were declined; loading uses status text. The shared implementation and catalogue fixtures are unchanged. The host browser suite covers the failed, recovered and revoked reads.

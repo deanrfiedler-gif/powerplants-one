@@ -5406,7 +5406,7 @@
           "section_id": "quick-start",
           "title": "Quick start",
           "paragraphs": [
-            "Open Estimating > Intake & workload. Search a customer, opportunity reference, title or brief. Expand Readiness, owner and sort for additional filters, then Apply filters. Collapsing the controls retains their selections. Review ownership and the selected discovery revision. Open discovery to resolve scope or deliberately adopt manual costs. Use Saved estimates for the existing exact-version workbook and Draft output."
+            "Open Estimating > Intake & workload. Search a customer, opportunity reference, title or brief, choose an estimating owner and sort, then Apply filters. Choose a readiness state from Scope readiness; each shows its count of permitted opportunities. Select an opportunity's title to review its detail and next step, then Open discovery to resolve scope or deliberately adopt manual costs. Use the Saved estimates tab for the existing exact-version workbooks and Draft output."
           ],
           "steps": [],
           "rows": [],
@@ -5416,7 +5416,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "The page has a workload/saved-estimates navigation row, search/readiness/owner/sort filters and one card per permitted opportunity. Desktop cards align brief, ownership/source context and next estimating step. Phone cards stack these sections without hiding scope states or actions."
+            "The page has Workload and Saved estimates tabs, a filter row, readiness choices with counts, and a register with one row per permitted opportunity: opportunity, readiness and ownership. On a wide screen the selected opportunity's detail stays in a panel beside the register; on a narrower screen it opens in a drawer that Escape or Done closes. On a phone each card carries the full detail. Saved estimates is a table of saved sell totals in AUD, excluding tax."
           ],
           "steps": [],
           "rows": [],
@@ -5436,7 +5436,7 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Use My estimating work to select workspaces you own; unallocated opportunities are not assigned to you by this filter. Use Scope clarification for incomplete selected discovery, Discovery complete for scope ready to review for manual costing, or Legacy manual basis for estimates without a recorded E2 questionnaire. Recently changed orders opportunity/discovery changes; Customer sorts by canonical customer name. Filters live in the URL and survive Reload and Back/Forward."
+            "Use My estimating work to select workspaces you own; unallocated opportunities are not assigned to you by this filter. Use Scope clarification for incomplete selected discovery, Discovery complete for scope ready to review for manual costing, or Legacy manual basis for estimates without a recorded E2 questionnaire. Readiness counts cover permitted rows matching the search and owner within the bounded window. Recently changed orders opportunity/discovery changes; Customer sorts by canonical customer name. Filters live in the URL and survive Reload and Back/Forward; the selected row does not."
           ],
           "steps": [],
           "rows": [],
@@ -5456,7 +5456,7 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Discovery not started means no estimating workspace. Scope clarification means the selected discovery is Incomplete. Discovery complete describes scope only. Legacy manual basis preserves pre-questionnaire estimates. Not allocated is distinct from Sales ownership. No readable saved estimate does not mean zero cost. Intake acceptance, allocation/return commands and priority policy are Not configured. A post-Won Sales handover-due reference is an obligation, not receiving acceptance."
+            "Discovery not started means no estimating workspace. Scope clarification (attention tone) means the selected discovery is Incomplete. Discovery complete (success tone) describes scope only; it does not approve a price or issue a quotation. Legacy manual basis preserves pre-questionnaire estimates. Every state is named in words. Not allocated is distinct from Sales ownership. No readable saved estimate does not mean zero cost, and an estimate without cost lines reads Not estimated. Intake acceptance, allocation/return commands and priority policy are Not configured. A post-Won Sales handover-due reference is an obligation, not receiving acceptance."
           ],
           "steps": [],
           "rows": [],
@@ -5476,7 +5476,7 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "The view refreshes on focus and periodically. Loading, failed reads and denied access are distinct from an empty queue. A failed refresh clears rows and offers Try loading again. Revoked source access removes protected rows/actions. The view is bounded to 100 search/owner-matching candidates before readiness filtering; narrow search for older records. Downstream saves retain their existing expected-version and original-operation recovery; resolve an uncertain original save in its record before retrying."
+            "The view refreshes on focus and periodically. Loading, failed reads and denied access are distinct from an empty queue. A failed refresh clears rows and counts and offers Try loading again. Revoked source access removes protected rows, counts and actions. The view is bounded to 100 search/owner-matching candidates in the chosen sort order before readiness filtering; narrow search for older records. Downstream saves retain their existing expected-version and original-operation recovery; resolve an uncertain original save in its record before retrying."
           ],
           "steps": [],
           "rows": [],
@@ -5486,7 +5486,7 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Filters stack at phone widths. Use labelled controls and Apply filters with keyboard or touch; every record link remains reachable. Browser Back/Forward restores URL filters. The global information icon opens the page guide and returns focus when closed. This page is online only and stores no business draft locally."
+            "At phone width, tablet portrait and 200% zoom the register stacks into cards that carry the full detail. Readiness, owner and sort sit under one button whose label names the current selections. Use labelled controls and Apply filters with keyboard or touch; every record link remains reachable. Rows are selected with Enter or Space; the drawer closes with Escape and returns focus to its row. Browser Back/Forward restores URL filters. The global information icon opens the page guide and returns focus when closed. This page is online only and stores no business draft locally."
           ],
           "steps": [],
           "rows": [],
@@ -5506,7 +5506,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Prepared from the native workload implementation on 24 September 2026. This is a Draft guide; owner and operational review are pending. Verification is recorded in docs/delivery/estimating-programme-handover.md. A test pass or screenshot does not grant business acceptance or indicate deployment."
+            "Prepared from the native workload implementation on 24 September 2026 and revised for the ES-01 design decisions of 25 September 2026 (docs/decisions/es01-design-board.md). This is a Draft guide; owner and operational review are pending. Verification is recorded in docs/delivery/estimating-programme-handover.md. A test pass or screenshot does not grant business acceptance or indicate deployment."
           ],
           "steps": [],
           "rows": [],
@@ -5525,9 +5525,10 @@
         "docs/blueprints/BP-04-estimating-quotation.md",
         "src/components/estimating-workload.tsx",
         "src/estimating/workload.ts",
-        "docs/delivery/estimating-programme-handover.md"
+        "docs/delivery/estimating-programme-handover.md",
+        "docs/decisions/es01-design-board.md"
       ],
-      "change_summary": "Describe actual workload filters, canonical ownership, exact discovery/cost identities, bounded results and authority/recovery boundaries.",
+      "change_summary": "Describe the decided ES-01 register: readiness counts, selection panel and drawer, phone cards, saved-estimate table, canonical ownership, exact discovery/cost identities, bounded results and authority/recovery boundaries.",
       "document_id": "PPO-GUIDE-ES-01",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
