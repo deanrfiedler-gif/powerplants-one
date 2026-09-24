@@ -28,7 +28,15 @@ async function openPack(page: Page) {
   await page.route(`**/api/v1/packs/${id}`, (route) =>
     route.fulfill({ status: 200, json: read }),
   );
+  // Start the layout assertion after the actual fixture read, not during shell hydration.
+  const ready = page.waitForResponse(
+    (response) =>
+      response.url().endsWith(`/api/v1/packs/${id}`) &&
+      response.request().method() === "GET" &&
+      response.status() === 200,
+  );
   await page.goto(`/service/packs/${id}`);
+  await ready;
   await expect(page.locator("#jp-panel-pack .jp-paper-section")).toHaveCount(9);
 }
 const tokensOf = (page: Page, names: string[]) =>
