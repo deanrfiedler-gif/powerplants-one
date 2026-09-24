@@ -45,6 +45,10 @@ Follow-through: `116f210` browser/correctness refinements; `55d795d` exact seed/
 
 ## Traceability and boundaries
 
+### PR integration repair, 25 September 2026
+
+Dean authorised fixing and merging the open PRs. The first E1 CI run on #317 failed because the retained shell-preview test still expected `/work?department=supply`; the native Supply landing is `/supply/material-readiness`. The test now checks that route and retains the reload, workspace selection and cross-module navigation assertions. Current main's FI-05 receipt authority, component consumers, guides and page records are reconciled alongside Supply's entries. Neither domain loses its authority checks or review status. Final branch CI and merge evidence remain in PR #317; this repair does not grant design acceptance or deploy the application.
+
 SCM-01–SCM-08 and SVC-09; IF-11–IF-16; D-005/D-006/D-015/D-017; AT-16/AT-29/AT-31. Allocation and custody constraints are local synthetic coordination rules, not MYOB transaction semantics. Manual origin/release/quotation/warranty references are explicitly evidence where verified receiving contracts are absent. Scheduling owns actual proposed intervals/crew and document owners own reissue. Supply Chain creates an owned review Activity and leaves current downstream records untouched.
 
 Open source/business policy: live ERP mappings and authority, observation-age thresholds, unit conversion dictionary, reservation policy, commercial visibility adoption, customer acknowledgement medium, partial-dispatch policy, source shipment semantics and credit/financial definitions. Unsupported source commands remain Not configured. No automatic netting, loss calculation, invoice, payment, stock posting, installation, booking or customer communication is implied.

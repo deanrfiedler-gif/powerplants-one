@@ -1,4 +1,5 @@
 import { receiptAuthority as supplyReceiptAuthority } from "../supply/context";
+import { fieldReadinessReceiptAuthority } from "../field/readiness";
 import { aftercareReceiptAuthority } from "../sales/aftercare-service";
 import { handoverReceiptAuthority } from "../sales/handover-service";
 import { personEditAuthority } from "./contacts/commands";
@@ -63,6 +64,8 @@ export async function readOperation(
     await aftercareReceiptAuthority(client,p,r.record_id,r.command);
   } else if (r.object_type === "SalesHandover") {
     await handoverReceiptAuthority(client,p,r.record_id,r.command);
+  } else if (r.command === "FieldReadinessAcknowledge" && r.object_type === "SiteReadiness") {
+    await fieldReadinessReceiptAuthority(client,p,r.record_id,operation_id);
   } else if (["SiteReadiness","SiteSurvey","AccountPlan"].includes(r.object_type)) {
     const row=await csRecord(client,p,r.object_type==="SiteReadiness"?"Readiness":r.object_type==="SiteSurvey"?"Survey":"AccountPlan",r.record_id,true);
     if(r.command?.startsWith("CsCreate:"))await companyContext(client,p,row.company_id,row.site_id,"shared.create");

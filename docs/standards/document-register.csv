@@ -448,3 +448,5 @@ PPO-EST-SOURCES-CONTRACT,Native synthetic cost sources and estimate refresh,docs
 PPO-EST-SOURCES-HANDOVER,Native cost-source review and controlled refresh,docs/delivery/estimating-cost-sources-handover.md,,Implementation and verification in progress,Dean Fiedler,f929312,,,git,
 ADR-0049,Native Supply Chain coordination,docs/decisions/ADR-0049-native-supply-chain.md,,Working synthetic implementation; owner review pending,Dean Fiedler,0f10b7fb46a8ab512e9b019573ece272cf5920b9,,,git,
 PPO-SUPPLY-NATIVE-HANDOVER,Native Supply Chain implementation handover,docs/delivery/supply-chain-native-handover.md,,Working synthetic implementation; owner review pending,Dean Fiedler,0f10b7fb46a8ab512e9b019573ece272cf5920b9,,,git,
+PPO-FIELD-READINESS-DEC,Field readiness over CS-06,docs/decisions/field-readiness-native.md,,Implementation decision; owner acceptance separate,Dean Fiedler,0f10b7fb46a8ab512e9b019573ece272cf5920b9,,,git,
+PPO-FIELD-QUALITY-HO,Field Work and Quality native programme,docs/delivery/field-quality-native-handover.md,,Implementation in progress,Dean Fiedler,0f10b7fb46a8ab512e9b019573ece272cf5920b9,,,git,

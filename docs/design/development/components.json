@@ -147,7 +147,9 @@
         "scope:SC-07",
         "scope:SC-08",
         "scope:SC-09",
-        "scope:SC-10"
+        "scope:SC-10",
+        "scope:FI-05",
+        "route:/my-jobs/site-readiness"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -772,7 +774,9 @@
         "scope:EQ-06",
         "scope:EQ-07",
         "scope:EQ-08",
-        "scope:EQ-09"
+        "scope:EQ-09",
+        "scope:FI-05",
+        "route:/my-jobs/site-readiness"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -958,7 +962,9 @@
         "scope:EQ-06",
         "scope:EQ-07",
         "scope:EQ-08",
-        "scope:EQ-09"
+        "scope:EQ-09",
+        "scope:FI-05",
+        "route:/my-jobs/site-readiness"
       ],
       "desktop": "Submit an empty title to focus the summary, then follow its link to the field. Correct the title and save to clear the example error.",
       "mobile": "Summary and inline errors must remain visible at 320 px and 200% zoom.",
@@ -1373,7 +1379,9 @@
         "scope:EQ-06",
         "scope:EQ-07",
         "scope:EQ-08",
-        "scope:EQ-09"
+        "scope:EQ-09",
+        "scope:FI-05",
+        "route:/my-jobs/site-readiness"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",

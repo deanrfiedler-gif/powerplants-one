@@ -16262,22 +16262,21 @@
       "title": "Site induction, risk and biosecurity review",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Native synthetic implementation; review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/delivery/field-quality-native-handover.md",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Site induction, risk and biosecurity review to work towards this outcome: Readiness evidence identifies the person, site and applicable instructions.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "Opening instructions is not evidence of induction or permission to proceed."
+            "Read the current Site instructions for your exact assigned appointment and retain a personal acknowledgement of that review. CS-06 remains the source owner.",
+            "Acknowledgement does not grant entry, satisfy external induction, waive a blocker, authorise isolation or work, start attendance or make an old source current."
           ],
           "steps": [],
           "rows": [],
@@ -16287,9 +16286,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Site/area instructions, induction, hazards, biosecurity and participant.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Sign in as the currently assigned technician with Field capture and permitted Site-read access. Open the issued pack and work instructions to identify the exact activity and locations.",
+            "A confirmed or in-progress visit permits a new review. The server checks assignment and scope again for every command. Unknown and inaccessible records are not distinguished."
           ],
           "steps": [],
           "rows": [],
@@ -16298,56 +16296,34 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Read the current site-specific instructions",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Open My Jobs, choose the job and select Review Site induction, risk and biosecurity. With no appointment selected this page lists your permitted visits.",
+            "Choose the readiness source, exact activity and explicitly applicable Facility/Area/Block; select Review this context. Site-level work has no selected Facility.",
+            "Read the source, owner, dates, requirements, reviewed evidence and every unresolved condition. Add a review note identifying what needs escalation, confirm that you reviewed the displayed context, and record the acknowledgement."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Site induction, risk and biosecurity review · Page + mobile checklist"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "The visit header retains the exact appointment, Work Order, scheduled interval, Site and arrival/biosecurity notes. The source link returns to CS-06.",
+            "The context form does not change authorised scope. Requirements apply only to an explicit Site-wide source or an exact selected location and matching activity. A parent Facility never stands in for its children.",
+            "Retained reviews show whether they match the displayed source and context. Different or changed context requires re-review."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
-          "title": "Information you need",
+          "title": "Information and meaning",
           "paragraphs": [
-            "Site/area instructions, induction, hazards, biosecurity and participant.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Source revision, owner and recorded time come from CS-06. Evidence capture/expiry and independent review remain separate. Missing sources or work windows remain unknown.",
+            "No authoritative User-to-Person mapping exists. The page therefore cannot establish your individual induction evidence by matching names or borrowing another visitor. Applicable induction remains unresolved.",
+            "Appointment times come from Scheduling. Your selected activity/locations are a recorded preparation context, not new work authority."
           ],
           "steps": [],
           "rows": [],
@@ -16355,15 +16331,13 @@
         },
         {
           "section_id": "tasks",
-          "title": "Complete the main task",
+          "title": "Tasks and decisions",
           "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
+            "Refresh current sources before relying on instructions. Open the owning Site record for source maintenance; technicians cannot edit requirements through this page.",
+            "Read and escalate unresolved conditions to the Service owner using existing permitted work/Activity processes. A review note records the concern but sends no message and does not create an assigned escalation.",
+            "Changed sources require a new review. The old snapshot, note, actor, blockers and operation remain retained."
           ],
-          "steps": [
-            "Read the current site-specific instructions",
-            "Record completion or an owned unmet condition",
-            "Escalate changed conditions before proceeding"
-          ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
@@ -16371,9 +16345,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Readiness evidence identifies the person, site and applicable instructions.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Opening instructions is not evidence of induction or permission to proceed."
+            "Saved to the server confirms only that the personal review was retained. Verify it in Your retained reviews for this visit, then return to the exact job.",
+            "Work permission, pack acknowledgement, attendance, inspection acceptance, report issue and Finance outcomes remain with their owning commands."
           ],
           "steps": [],
           "rows": [],
@@ -16381,46 +16354,21 @@
         },
         {
           "section_id": "states",
-          "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "title": "States and save outcomes",
+          "paragraphs": [
+            "Loading waits for an authorised server read. No readiness source means unknown, not ready. Current source and context are distinct from satisfied evidence.",
+            "Unsaved notes are held in the open page only. Saving disables conflicting controls. Saved to the server is the accepted original receipt.",
+            "An uncertain result retains the original action for Check the original acknowledgement. Do not change its meaning or create a replacement while its outcome is unknown."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
-          "section_id": "examples",
-          "title": "Worked examples",
+          "section_id": "example",
+          "title": "Synthetic example",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare site/area instructions, induction, hazards, biosecurity and participant. Follow the task sequence and check that readiness evidence identifies the person, site and applicable instructions. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Site induction, risk and biosecurity review has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Opening instructions is not evidence of induction or permission to proceed."
+            "Riley selects a recorded growing area for an Inspection visit. The source requires induction, but Riley has no authoritative Person link. The page retains that blocker. Riley records having read it and needing Service follow-up; it does not certify induction or start work."
           ],
           "steps": [],
           "rows": [],
@@ -16428,46 +16376,22 @@
         },
         {
           "section_id": "recovery",
-          "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "title": "Errors, stale context and recovery",
+          "paragraphs": [
+            "If sources or scheduling change, refresh and read the changed context. A stale command is refused. Review the displayed instructions, explicitly choose the new context and confirm again.",
+            "If saving times out, keep the page open and choose Check the original acknowledgement. Recovery checks the original receipt and replays only the identical original when needed.",
+            "Revoked assignment or access blocks reads and new writes; existing evidence remains retained. This online page has no durable local queue. Do not rely on a closed or reloaded unsaved form."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
-          "title": "Mobile, keyboard and offline use",
+          "title": "Mobile, keyboard and offline",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "The same labelled sections stack on a phone. Use Tab/Shift+Tab, Space for checkboxes and Enter for form submission; focus stays visible. No page-specific drawer or dialog is required.",
+            "This increment requires an online server response. FI-02 offline extension remains programme work; a cached page or network indicator is not evidence of current authority or a successful save."
           ],
           "steps": [],
           "rows": [],
@@ -16475,10 +16399,10 @@
         },
         {
           "section_id": "resources",
-          "title": "Related guidance and procedures",
+          "title": "Related guidance",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "Use the owning Site readiness guide (CS-06), exact job (FI-01), issued Job Pack (SV-05) and the existing offline guide (FI-02) within their implemented scope.",
+            "The Quality/Site Assurance r01 HTML is a proposed presentation reference. Operational procedures and safety authority are not established by its synthetic fixtures."
           ],
           "steps": [],
           "rows": [],
@@ -16486,11 +16410,10 @@
         },
         {
           "section_id": "review",
-          "title": "Guide review and feedback",
+          "title": "Review and evidence",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide for implemented synthetic behaviour. Owner/device/visual acceptance and deployment remain separate. Tests and actual captures are recorded in the Field Work programme handover.",
+            "Keep this stable guide current through Git; an export or test pass does not grant review."
           ],
           "steps": [],
           "rows": [],
@@ -16498,15 +16421,19 @@
         }
       ],
       "related_entry_keys": [
+        "scope:FI-01",
         "scope:CS-06",
-        "scope:SV-03"
+        "scope:FI-02"
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
-        "docs/delivery/p07-handover.md"
+        "docs/delivery/p07-handover.md",
+        "src/field/readiness.ts",
+        "src/components/field-readiness-screen.tsx",
+        "docs/decisions/field-readiness-native.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Exact assigned CS-06 source review, original-operation recovery and explicit authority boundaries.",
       "document_id": "PPO-GUIDE-FI-05",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -16516,7 +16443,10 @@
       "workflow_basis": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
-        "docs/delivery/p07-handover.md"
+        "docs/delivery/p07-handover.md",
+        "src/field/readiness.ts",
+        "src/components/field-readiness-screen.tsx",
+        "docs/decisions/field-readiness-native.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -69778,6 +69708,186 @@
       ],
       "prepared_at": "2026-09-25",
       "runtime_evidence": "See native handover; visual and owner acceptance separate"
+    },
+    {
+      "guide_key": "guide.route-my-jobs-site-readiness",
+      "entry_key": "route:/my-jobs/site-readiness",
+      "title": "Site induction, risk and biosecurity review",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic implementation; review pending",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [
+        "scope:FI-01",
+        "scope:CS-06",
+        "scope:FI-02"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Read the current Site instructions for your exact assigned appointment and retain a personal acknowledgement of that review. CS-06 remains the source owner.",
+            "Acknowledgement does not grant entry, satisfy external induction, waive a blocker, authorise isolation or work, start attendance or make an old source current."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Sign in as the currently assigned technician with Field capture and permitted Site-read access. Open the issued pack and work instructions to identify the exact activity and locations.",
+            "A confirmed or in-progress visit permits a new review. The server checks assignment and scope again for every command. Unknown and inaccessible records are not distinguished."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [
+            "Open My Jobs, choose the job and select Review Site induction, risk and biosecurity. With no appointment selected this page lists your permitted visits.",
+            "Choose the readiness source, exact activity and explicitly applicable Facility/Area/Block; select Review this context. Site-level work has no selected Facility.",
+            "Read the source, owner, dates, requirements, reviewed evidence and every unresolved condition. Add a review note identifying what needs escalation, confirm that you reviewed the displayed context, and record the acknowledgement."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [
+            "The visit header retains the exact appointment, Work Order, scheduled interval, Site and arrival/biosecurity notes. The source link returns to CS-06.",
+            "The context form does not change authorised scope. Requirements apply only to an explicit Site-wide source or an exact selected location and matching activity. A parent Facility never stands in for its children.",
+            "Retained reviews show whether they match the displayed source and context. Different or changed context requires re-review."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information and meaning",
+          "paragraphs": [
+            "Source revision, owner and recorded time come from CS-06. Evidence capture/expiry and independent review remain separate. Missing sources or work windows remain unknown.",
+            "No authoritative User-to-Person mapping exists. The page therefore cannot establish your individual induction evidence by matching names or borrowing another visitor. Applicable induction remains unresolved.",
+            "Appointment times come from Scheduling. Your selected activity/locations are a recorded preparation context, not new work authority."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Tasks and decisions",
+          "paragraphs": [
+            "Refresh current sources before relying on instructions. Open the owning Site record for source maintenance; technicians cannot edit requirements through this page.",
+            "Read and escalate unresolved conditions to the Service owner using existing permitted work/Activity processes. A review note records the concern but sends no message and does not create an assigned escalation.",
+            "Changed sources require a new review. The old snapshot, note, actor, blockers and operation remain retained."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Saved to the server confirms only that the personal review was retained. Verify it in Your retained reviews for this visit, then return to the exact job.",
+            "Work permission, pack acknowledgement, attendance, inspection acceptance, report issue and Finance outcomes remain with their owning commands."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "states",
+          "title": "States and save outcomes",
+          "paragraphs": [
+            "Loading waits for an authorised server read. No readiness source means unknown, not ready. Current source and context are distinct from satisfied evidence.",
+            "Unsaved notes are held in the open page only. Saving disables conflicting controls. Saved to the server is the accepted original receipt.",
+            "An uncertain result retains the original action for Check the original acknowledgement. Do not change its meaning or create a replacement while its outcome is unknown."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "example",
+          "title": "Synthetic example",
+          "paragraphs": [
+            "Riley selects a recorded growing area for an Inspection visit. The source requires induction, but Riley has no authoritative Person link. The page retains that blocker. Riley records having read it and needing Service follow-up; it does not certify induction or start work."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Errors, stale context and recovery",
+          "paragraphs": [
+            "If sources or scheduling change, refresh and read the changed context. A stale command is refused. Review the displayed instructions, explicitly choose the new context and confirm again.",
+            "If saving times out, keep the page open and choose Check the original acknowledgement. Recovery checks the original receipt and replays only the identical original when needed.",
+            "Revoked assignment or access blocks reads and new writes; existing evidence remains retained. This online page has no durable local queue. Do not rely on a closed or reloaded unsaved form."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline",
+          "paragraphs": [
+            "The same labelled sections stack on a phone. Use Tab/Shift+Tab, Space for checkboxes and Enter for form submission; focus stays visible. No page-specific drawer or dialog is required.",
+            "This increment requires an online server response. FI-02 offline extension remains programme work; a cached page or network indicator is not evidence of current authority or a successful save."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related guidance",
+          "paragraphs": [
+            "Use the owning Site readiness guide (CS-06), exact job (FI-01), issued Job Pack (SV-05) and the existing offline guide (FI-02) within their implemented scope.",
+            "The Quality/Site Assurance r01 HTML is a proposed presentation reference. Operational procedures and safety authority are not established by its synthetic fixtures."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "review",
+          "title": "Review and evidence",
+          "paragraphs": [
+            "Draft guide for implemented synthetic behaviour. Owner/device/visual acceptance and deployment remain separate. Tests and actual captures are recorded in the Field Work programme handover.",
+            "Keep this stable guide current through Git; an export or test pass does not grant review."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "See docs/delivery/field-quality-native-handover.md",
+      "change_summary": "Exact assigned CS-06 source review, original-operation recovery and explicit authority boundaries.",
+      "source_paths": [
+        "src/field/readiness.ts",
+        "src/components/field-readiness-screen.tsx",
+        "docs/decisions/field-readiness-native.md"
+      ],
+      "workflow_basis": [
+        "src/field/readiness.ts",
+        "src/components/field-readiness-screen.tsx",
+        "docs/decisions/field-readiness-native.md"
+      ]
     }
   ]
 }
