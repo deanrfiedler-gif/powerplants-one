@@ -297,3 +297,15 @@
 
 /* Version/hash drift can be longer than a phone column. */
 #ppo-job-pack .jp-notice>div{min-width:0;overflow-wrap:anywhere}
+
+/* D6-A presentation: structure is shown only after an exact frozen-text proof. */
+#ppo-job-pack .jp-structured-list{padding-left:22px;color:var(--text-secondary);line-height:1.6}
+#ppo-job-pack .jp-structured-list>li{padding:8px 0;overflow-wrap:anywhere}
+#ppo-job-pack .jp-structured-list ul{padding-left:20px}
+#ppo-job-pack .jp-structured-help{display:block;color:var(--muted);font-size:13px;line-height:1.6;margin-top:6px}
+#ppo-job-pack .jp-structured-item+.jp-structured-item{border-top:1px solid var(--line);margin-top:18px;padding-top:18px}
+#ppo-job-pack .jp-structured-controls>div{display:grid;grid-template-columns:minmax(130px,1fr) minmax(0,2fr);gap:16px;border-bottom:1px solid var(--line);padding:12px 0}
+#ppo-job-pack .jp-structured-controls dt{font-weight:500;color:var(--ink)}
+#ppo-job-pack .jp-structured-controls dd{margin:0;min-width:0;overflow-wrap:anywhere}
+#ppo-job-pack .jp-structured-controls small{color:var(--muted)}
+@media(max-width:760px){#ppo-job-pack .jp-structured-controls>div{grid-template-columns:1fr;gap:5px}}

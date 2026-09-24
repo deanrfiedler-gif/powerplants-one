@@ -72,3 +72,11 @@ The source-change notice uses the server advisory drift, issued review flag or s
 Print preview offers the exact saved preparation. Unsaved entries can be retained while printing the saved draft, or saved with a reason before opening the exact successor. A later concurrent save must not silently change that print target. A refusal retains entries; an uncertain result replays unchanged bytes. The exact issued document remains separately available.
 
 Desktop and mobile use the existing r03 notice/dialog styling and native focus trap/return. Source values must wrap at 320 px. Functional and visual evidence is recorded in the I4 handover; owner acceptance and deployment remain separate.
+
+## I6 structured saved sections
+
+D6-A was accepted on 23 September 2026; implementation uses the same immutable saved section text. Customer arrangements and captured controls are parsed only with recognised delimiters and outcomes. Scope, equipment, selected history and completion requirements additionally need the exact saved revision's permission-scoped projection. Every structured section must reproduce the saved wording byte for byte; ambiguous, denied, mismatched or unsupported content stays verbatim. An Exact text as it will be issued disclosure remains available beside each structured section.
+
+Desktop reuses the r03 labelled information grid, task lists, history rows and notes within the existing paper. Phones stack label/value controls, wrap long values and retain native keyboard disclosures. Recipient equipment has no internal link; a staff link requires current asset visibility. The recipient revision follows the readable issue even while staff have an unissued successor. Frozen controls do not replace current readiness assessments. Sources: `section-text.ts`, `section-readers.ts`, `section-view.ts` and `job-pack-section-parts.tsx`; reused Pair and scoped r03 components.
+
+The [I6 handover](../../../delivery/job-pack-i6-handover.md) records proof and limits. Original r03 remains unchanged. I7 and I5, paired whole-page reference comparison, device review, owner acceptance and deployment remain separate.

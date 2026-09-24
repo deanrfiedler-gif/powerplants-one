@@ -437,6 +437,41 @@
     "can_check": true,
     "can_issue": true,
     "can_acknowledge": false
+   },
+   "section_view": {
+    "revision_id": "97b020d0-026c-46dd-b7af-de495a075409",
+    "scope": {
+     "verified": true,
+     "revision": 1,
+     "summary": "SYN Planned controller inspection — coordination and customer date review",
+     "exclusions": "No shutdown, replacement, energised access, repair or financial approval.",
+     "diagnostic_limit": "External visual inspection only.",
+     "items": [
+      {
+       "sequence": 1,
+       "task_kind": "Inspection",
+       "task_description": "Observe controller display and external sensor identity",
+       "completion_requirements": [
+        "Record observations",
+        "Stop before intervention"
+       ],
+       "shutdown_condition": null,
+       "assets": [
+        {
+         "asset_id": null,
+         "display_number": "SYN-PPO-AST-000001",
+         "description": "SYN irrigation controller",
+         "identity_status": "Verified",
+         "serial": null,
+         "configuration_description": null,
+         "method": null,
+         "limits": null
+        }
+       ]
+      }
+     ]
+    },
+    "history": []
    }
   }
  ],

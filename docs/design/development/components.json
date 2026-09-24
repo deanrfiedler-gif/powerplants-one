@@ -1561,6 +1561,74 @@
         }
       ],
       "review": null
+    },
+    {
+      "id": "job-pack-sections",
+      "title": "Job Pack saved section presentation",
+      "category": "Boards & cards",
+      "module": "SV",
+      "purpose": "Structured re-presentation of exact saved pack content in both Job pack and Preparation. Frozen saved text stays authoritative.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Reference only",
+      "states": [
+        {
+          "id": "verified",
+          "label": "Verified saved section",
+          "description": "Labelled fields with the exact saved text disclosure."
+        },
+        {
+          "id": "fallback",
+          "label": "Unverified structure",
+          "description": "Denied or mismatched sources display the original saved text."
+        },
+        {
+          "id": "recipient",
+          "label": "Issued recipient view",
+          "description": "Exact permitted issue revision; no internal equipment IDs or links."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/documents/components/client/job-pack-section-parts.tsx",
+          "symbol": "SectionParts"
+        },
+        {
+          "path": "src/documents/components/client/job-pack-sections.tsx",
+          "symbol": "SectionBody"
+        }
+      ],
+      "dependencies": [
+        "src/documents/section-readers.ts",
+        "src/documents/section-text.ts",
+        "src/documents/section-view.ts",
+        "src/app/styles/job-pack.css"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
+        "anchor": "",
+        "status": "Accepted r03 page treatment with accepted D6-A implementation decision; native acceptance separate"
+      },
+      "specification": "docs/design/development/components/job-pack-sections.md",
+      "used_on": [
+        "scope:SV-05",
+        "route:/service/packs/[id]"
+      ],
+      "desktop": "Reuse labelled information grids and task lists inside the existing r03 paper.",
+      "mobile": "Stack captured controls, wrap long prose and retain readable exact-text disclosures at 320 px.",
+      "keyboard": "Native details/summary works with Enter or Space and visible focus.",
+      "limitations": "Application fixtures exercise the real component. There is no isolated catalogue renderer; reference-only is catalogue coverage, not application status.",
+      "gaps": [
+        {
+          "id": "job-pack-sections-gallery",
+          "expected": "An isolated live catalogue renderer.",
+          "actual": "Actual application fixture and fallback cases are covered separately.",
+          "action": "Retain this visible binding and use the I6 application proof.",
+          "priority": "Low",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
     }
   ]
 }

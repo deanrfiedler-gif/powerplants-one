@@ -3,7 +3,7 @@ document_id: PPO-SC06-PLAN
 title: SC-06 — Job Pack r03 application integration — build plan
 date: 2026-09-20
 owner: Dean Fiedler
-status: Authorised by Dean Fiedler on 20 September 2026 with the recommended answer to each of D1–D5 adopted, and extended on 23 September 2026 with D6–D10 adopted from the build report; I1 merged (#256), I2 merged (#257), I3 merged (#288); I4 implementation in verification; I6, I7 and I5 remain
+status: Authorised by Dean Fiedler on 20 September 2026 with the recommended answer to each of D1–D5 adopted, and extended on 23 September 2026 with D6–D10 adopted from the build report; I1 merged (#256), I2 merged (#257), I3 merged (#288); I4 in PR #304; I6 structured sections in verification; I7 and I5 remain
 scope_id: SC-06
 source_commit: 540b2b7e463ad68d5f552d006ea7cae6d75fbff8
 versioning: git

@@ -14866,6 +14866,10 @@
             [
               "Guide and design",
               "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
+            ],
+            [
+              "Saved section details",
+              "Arrangements, approved scope, equipment, selected history, captured controls and completion requirements may appear as labelled fields. Open Exact text as it will be issued to inspect the saved wording."
             ]
           ],
           "headers": [
@@ -14897,7 +14901,8 @@
             "Issue the checked pack and track recipient acknowledgement",
             "When sources have changed, choose Review changed sources. In Preparation, review the current source information and choose Refresh saved sources… to record a reason and save a successor, even when the nine notes are unchanged.",
             "For a saved preparation preview, choose Print preview, then Print saved draft. Unsaved entries stay in the form. Choose Save and print… to record a reason and save first; after success, open Print saved revision to print that exact successor.",
-            "Open exact issued document opens the retained controlled issue. A preparation preview is not an issue and printing never acknowledges a pack."
+            "Open exact issued document opens the retained controlled issue. A preparation preview is not an issue and printing never acknowledges a pack.",
+            "Compare the structured details with Exact text as it will be issued when reviewing a saved section. Captured readiness belongs to that revision; use Pack readiness for current assessments."
           ],
           "rows": [],
           "headers": []
@@ -14943,6 +14948,10 @@
             [
               "Planned / not available",
               "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
+            ],
+            [
+              "Saved wording shown as plain text",
+              "The section remains readable when its structured details cannot be verified or accessed. This does not change the saved pack or its authority."
             ]
           ],
           "headers": [
@@ -49013,6 +49022,10 @@
             [
               "Guide and design",
               "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
+            ],
+            [
+              "Saved section details",
+              "Arrangements, approved scope, equipment, selected history, captured controls and completion requirements may appear as labelled fields. Open Exact text as it will be issued to inspect the saved wording."
             ]
           ],
           "headers": [
@@ -49050,7 +49063,8 @@
             "Discard changes restores the last saved revision. Only unsaved entries are discarded.",
             "When sources have changed, choose Review changed sources. In Preparation, review the current source information and choose Refresh saved sources… to record a reason and save a successor, even when the nine notes are unchanged.",
             "For a saved preparation preview, choose Print preview, then Print saved draft. Unsaved entries stay in the form. Choose Save and print… to record a reason and save first; after success, open Print saved revision to print that exact successor.",
-            "Open exact issued document opens the retained controlled issue. A preparation preview is not an issue and printing never acknowledges a pack."
+            "Open exact issued document opens the retained controlled issue. A preparation preview is not an issue and printing never acknowledges a pack.",
+            "Compare the structured details with Exact text as it will be issued when reviewing a saved section. Captured readiness belongs to that revision; use Pack readiness for current assessments."
           ],
           "rows": [],
           "headers": []
@@ -49110,6 +49124,10 @@
             [
               "Read-only or access refused",
               "A missing pack and one outside this identity's scope read the same. Use the authorised route; do not try another identity."
+            ],
+            [
+              "Saved wording shown as plain text",
+              "The section remains readable when its structured details cannot be verified or accessed. This does not change the saved pack or its authority."
             ]
           ],
           "headers": [
@@ -49358,7 +49376,8 @@
           "paragraphs": [
             "A reproducible issued pack is available to the intended crew.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Changed content requires a new revision. Acknowledgement must not carry over automatically."
+            "Changed content requires a new revision. Acknowledgement must not carry over automatically.",
+            "The saved record may show verified context as labelled fields. Open Exact text as it will be issued to inspect the retained wording; plain text remains available when structured context cannot be verified."
           ],
           "steps": [],
           "rows": [],

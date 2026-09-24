@@ -64,3 +64,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 The draft User Guide `guide.page.service.packs.new` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## I6 saved-section handover
+
+First preparation still uses the existing command and nine required notes. After the save opens the record, verified structured context and the exact saved-text disclosure are available in the shared Job pack/Preparation view. I6 adds no first-save field, permission or source-selection authority. See the [I6 handover](../../../delivery/job-pack-i6-handover.md).
