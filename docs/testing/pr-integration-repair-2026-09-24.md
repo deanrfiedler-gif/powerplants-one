@@ -61,3 +61,9 @@ The fresh [CRM lane on Engineering](https://github.com/deanrfiedler-gif/powerpla
 ## Issued access snapshot preserved throughout the merge sequence
 
 The versionless access-review generator was also carried back to the Engineering foundation before its merge, so every integration step retains main's issued r01 bytes. The 91-capability Engineering working master passed all 107 model groups and 40 native Chrome browser groups; the combined 92-capability master passed all 107 model groups after reconciliation. Existing reference captures and owner-review status remain unchanged. Generated model evidence now writes to `verification-evidence/` rather than overwriting the issued r01 evidence record.
+
+## Disposable setup boundary
+
+The [fresh Equipment Finance lane](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35949089864/job/107473514763) failed seven `beforeEach(reset)` hooks at schema disposal, before the Finance assertions. Reset inherited the application's ten-second PostgreSQL statement deadline. Scheduling already separates fixture seeding and synthetic schema disposal with a transaction-local 120-second setup bound; that existing correction is now carried forward from Equipment rather than arriving only in the final PR. It changes no application query, migration SQL, assertion, retry or workflow test deadline.
+
+The new database regression passes on the combined tree (1/1): after reset and repeated seed, the same single pooled connection still reports the normal ten-second statement timeout. Disposal still requires `ppo_synthetic_test` and the explicit reset flags in this proof. The original Finance lane remains failed evidence; corrected-source CI must execute the full lane.
