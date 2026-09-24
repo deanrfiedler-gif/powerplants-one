@@ -1187,7 +1187,12 @@
       "design_path": "docs/design/development/pages/scope-es-02.md",
       "html_path": "docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html",
       "image_paths": [
-        "docs/testing/evidence/es02-native-r01/read-only-summary.png"
+        "docs/testing/evidence/es02-native-r01/read-only-summary.png",
+        "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-06-Equipment-Families-r01.png",
+        "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-07-Departures-and-Build-Findings-r01.png",
+        "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-04-Design-Versus-Current-Build-r01.png",
+        "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-S2-Configuration-r01.png",
+        "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-R2-Phone-390-Configuration-r01.png"
       ],
       "dependencies": [],
       "scope_status": "refine",
@@ -5566,7 +5571,15 @@
       "design_path": "docs/design/development/pages/route-estimating-discovery-id.md",
       "html_path": "docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html",
       "image_paths": [
-        "docs/testing/evidence/es02-native-r01/read-only-summary.png"
+        "docs/testing/evidence/es02-native-r01/read-only-summary.png",
+        "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-S1-Requirements-r01.png",
+        "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-S2-Configuration-r01.png",
+        "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-S5-Review-r01.png",
+        "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-R1-Tablet-1024-Configuration-r01.png",
+        "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-R2-Phone-390-Configuration-r01.png",
+        "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-04-Design-Versus-Current-Build-r01.png",
+        "docs/testing/evidence/es02-design-board-r01/build-configuration-1440x960.png",
+        "docs/testing/evidence/es02-design-board-r01/build-configuration-390x844.png"
       ],
       "dependencies": [],
       "scope_status": "refine",
