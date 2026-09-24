@@ -33,6 +33,12 @@ Local results on the integrated #309 tree: production build passed; fresh migrat
 
 Fresh CI remains required for every integrated head. Synthetic test evidence does not establish owner/device acceptance, production readiness or deployment.
 
+## Equipment migration receipt in a combined upgrade
+
+The [Sales database lane](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35956024809/job/107494423163) exposed an Equipment test that asserted the newest applied migration was always 0045. It failed with 0046 after Sales was integrated; the same original assertion reproduced locally as 0048 versus 0045 on the complete integration tree. The upgrade now preserves every original migration receipt through 0025, requires exactly one Equipment 0045 receipt, and verifies the entire upgraded ledger remains unchanged after repeated migration/seed. The existing exact original-Asset comparison remains. Whole-registry assertions in the other upgrade suites remain independent and unchanged.
+
+The corrected combined 0048 tree passed all 27 cases across the complete Equipment, Sales, Engineering control and Cost Source database files, with no failures or skips. Focused lint and whitespace checks passed. This is an integration-test correction; no migration, application behavior, deadline or runtime dependency changes. Fresh CI remains required on each affected dependent head.
+
 ## Performance sample response ownership
 
 The [fresh Equipment performance job](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35952532608/job/107483935296) retained one failed development sample out of 320. Its phone Customers wave received a 200 response 71 ms after observation began, with zero matching requests started in that wave; Chromium then refused its body after navigation. The URL-only waiter had selected a late response from the preceding wave. The waiter now accepts only responses belonging to GET request objects observed after that sample starts. It retains the 120-second deadline, real browser request, declared network rule, HTTP-error assertion, raw samples and timing boundary; no retry, interception or timing exclusion is added.
