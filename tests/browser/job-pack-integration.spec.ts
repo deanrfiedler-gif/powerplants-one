@@ -94,12 +94,12 @@ test("SV05-I5 field and appointment handovers use current pack identity and hide
   page,
 }) => {
   await session(page);
-  let state: "existing" | "prepare" | "unavailable" | "denied" = "existing";
+  let state: "existing" | "prepare" | "unavailable" | "denied" | "forbidden" | "failed" = "existing";
   const id = "10000000-0000-4000-8000-000000000042";
   await page.route("**/api/v1/appointments/*/pack", (r) =>
-    state === "denied"
+    ["denied", "forbidden", "failed"].includes(state)
       ? r.fulfill({
-          status: 404,
+          status: state === "failed" ? 500 : state === "forbidden" ? 403 : 404,
           json: { message: "SYN pack unavailable to this identity" },
         })
       : r.fulfill({
@@ -153,7 +153,17 @@ test("SV05-I5 field and appointment handovers use current pack identity and hide
   await expect(entry.getByRole("link")).toBeVisible();
   state = "denied";
   await entry.getByRole("button", { name: "Refresh pack status" }).click();
+  await expect(entry.getByRole("status")).toHaveText("Job pack access is unavailable to this identity.");
+  await expect(entry.getByRole("alert")).toHaveCount(0);
+  await expect(entry.getByRole("link")).toHaveCount(0);
+  state = "forbidden";
+  await entry.getByRole("button", { name: "Refresh pack status" }).click();
+  await expect(entry.getByRole("status")).toHaveText("Job pack access is unavailable to this identity.");
+  await expect(entry.getByRole("link")).toHaveCount(0);
+  state = "failed";
+  await entry.getByRole("button", { name: "Refresh pack status" }).click();
   await expect(entry.getByRole("alert")).toBeVisible();
+  await expect(entry.getByRole("status")).toHaveCount(0);
   await expect(entry.getByRole("link")).toHaveCount(0);
   state = "existing";
   await page.goto(appointment!);
