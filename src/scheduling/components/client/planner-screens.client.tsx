@@ -31,7 +31,7 @@ import {
   ValidationFields,
   type Envelope,
 } from "../../../components/business-ui";
-import { addDays, localDateTime, utcFromLocal } from "../../time";
+import { addDays, intervalsOverlap, localDateTime, utcFromLocal } from "../../time";
 import type { CrewInput } from "../../validation";
 export type Resource = {
   id: string;
@@ -1447,7 +1447,9 @@ export function PlannerBoard({
                     Date.parse(b.end_at) > dayBounds.get(d)!.start,
                 ),
                 closed = (r.exceptions ?? []).filter((b) =>
-                  onDay(b.start_at, d),
+                  intervalsOverlap(b.start_at, b.end_at,
+                    new Date(dayBounds.get(d)!.start).toISOString(),
+                    new Date(dayBounds.get(d)!.end).toISOString()),
                 );
               return (
                 <div
