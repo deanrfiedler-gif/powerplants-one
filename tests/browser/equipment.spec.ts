@@ -223,7 +223,7 @@ test("EQ03 native proposal, uncertain response recovery and exact successor surv
 test("EQ07/08 native evidence forms save only their declared kind and retain exact source", async ({
   page,
   baseURL,
-}) => {
+}, info) => {
   const id = await fixture(page, baseURL!);
   await page.goto(`/equipment/lifecycle?asset_id=${id}`);
   await page
@@ -246,6 +246,10 @@ test("EQ07/08 native evidence forms save only their declared kind and retain exa
   await expect(
     page.getByText("SYN manufacturer support bulletin", { exact: false }),
   ).toBeVisible();
+  await page.screenshot({
+    path: info.outputPath("eq-support-recorded.png"),
+    fullPage: true,
+  });
   await page.goto(`/equipment/backups?asset_id=${id}`);
   await page
     .getByRole("button", { name: "Record backup", exact: true })
@@ -276,6 +280,10 @@ test("EQ07/08 native evidence forms save only their declared kind and retain exa
   await expect(
     page.getByText("Current configuration basis", { exact: true }),
   ).toBeVisible();
+  await page.screenshot({
+    path: info.outputPath("eq-backup-recorded.png"),
+    fullPage: true,
+  });
 });
 test("EQ permissions clear records after identity switch; missing sources remain explicit", async ({
   page,
@@ -296,7 +304,7 @@ test("EQ permissions clear records after identity switch; missing sources remain
 test("EQ06 native bulletin retains candidate and reviewed disposition separately", async ({
   page,
   baseURL,
-}) => {
+}, info) => {
   const id = await fixture(page, baseURL!),
     reference = `SYN-B-${id}`;
   await page.goto("/equipment/bulletins");
@@ -346,7 +354,7 @@ test("EQ06 native bulletin retains candidate and reviewed disposition separately
   expect(candidates.length).toBeGreaterThan(1); // Unknown serials remain candidates, never automatic exclusions.
   await card.getByLabel("Candidate equipment").selectOption(id);
   await card
-    .getByLabel("Applicability", { exact: true })
+    .getByRole("combobox", { name: "Applicability", exact: true })
     .selectOption("NotApplicable");
   await card
     .getByLabel("Applicability evidence")
@@ -371,6 +379,9 @@ test("EQ06 native bulletin retains candidate and reviewed disposition separately
       })
       .first(),
   ).toBeVisible();
+  await card.screenshot({
+    path: info.outputPath("eq-bulletin-incomplete-closure.png"),
+  });
   await page.reload();
   await expect(
     page.getByRole("heading", {
@@ -475,40 +486,42 @@ for (const width of [1440, 1280, 1024, 768, 430, 390, 320]) {
     }
   });
 }
-test("EQ retained reference and shared controls are independently inspected; keyboard and 200 percent reflow", async ({
+for (const [name, file] of [
+  [
+    "equipment",
+    "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
+  ],
+  [
+    "theme",
+    "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+  ],
+]) {
+  test(`EQ retained ${name} reference at desktop and mobile widths`, async ({
+    page: source,
+  }, info) => {
+    test.skip(
+      info.project.name !== "desktop-chromium",
+      "One paired reference proof.",
+    );
+    expect((await readFile(file, "utf8")).length).toBeGreaterThan(1000);
+    for (const width of [1440, 390]) {
+      await source.setViewportSize({ width, height: 960 });
+      await source.goto(pathToFileURL(resolve(file)).href);
+      await expect(source.locator("h1").first()).toBeVisible();
+      await source.screenshot({
+        path: info.outputPath(`source-${name}-${width}.png`),
+      });
+    }
+  });
+}
+test("EQ shared controls keyboard and 200 percent reflow", async ({
   page,
-  browser,
   baseURL,
 }, info) => {
   test.skip(
     info.project.name !== "desktop-chromium",
-    "One paired reference proof.",
+    "One keyboard and effective-zoom proof.",
   );
-  const source = await browser.newPage();
-  try {
-    for (const [name, file] of [
-      [
-        "equipment",
-        "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
-      ],
-      [
-        "theme",
-        "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
-      ],
-    ]) {
-      expect((await readFile(file, "utf8")).length).toBeGreaterThan(1000);
-      for (const width of [1440, 390]) {
-        await source.setViewportSize({ width, height: 960 });
-        await source.goto(pathToFileURL(resolve(file)).href);
-        await expect(source.locator("h1").first()).toBeVisible();
-        await source.screenshot({
-          path: info.outputPath(`source-${name}-${width}.png`),
-        });
-      }
-    }
-  } finally {
-    await source.close();
-  }
   const id = await fixture(page, baseURL!);
   await page.goto(`/equipment/${id}`);
   await page.getByRole("tab", { name: "Overview", exact: true }).focus();
@@ -516,6 +529,13 @@ test("EQ retained reference and shared controls are independently inspected; key
   await expect(
     page.getByRole("tab", { name: "Configuration", exact: true }),
   ).toBeFocused();
+  await expect(
+    page.getByRole("tab", { name: "Configuration", exact: true }),
+  ).toHaveAttribute("aria-selected", "true");
+  const preview = page
+    .getByRole("tabpanel", { name: "Configuration", exact: true })
+    .getByRole("button", { name: "Preview current impact", exact: true });
+  await expect(preview).toBeVisible();
   await page.setViewportSize({ width: 720, height: 480 }); // Effective CSS viewport of a 1440px desktop at 200% zoom.
   await expect
     .poll(() =>
@@ -524,14 +544,11 @@ test("EQ retained reference and shared controls are independently inspected; key
       ),
     )
     .toBe(true);
-  const style = await page
-    .locator(".eq-workspace .ppo-button:visible")
-    .first()
-    .evaluate((el) => ({
-      font: getComputedStyle(el).fontFamily,
-      height: el.getBoundingClientRect().height,
-      outline: getComputedStyle(el).outlineStyle,
-    }));
+  const style = await preview.evaluate((el) => ({
+    font: getComputedStyle(el).fontFamily,
+    height: el.getBoundingClientRect().height,
+    outline: getComputedStyle(el).outlineStyle,
+  }));
   expect(style.font).toContain("Roboto");
   expect(style.height).toBeGreaterThanOrEqual(44);
   await page.screenshot({
