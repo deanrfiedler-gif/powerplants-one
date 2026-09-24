@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { sectionKeys, type SectionKey } from "../../validation";
 import {
   formatDate,
@@ -91,7 +92,13 @@ export function SourceTag({
   );
 }
 
-function Identification({ revision }: { revision: PackRevision }) {
+function Identification({
+  revision,
+  appointmentId,
+}: {
+  revision: PackRevision;
+  appointmentId: string;
+}) {
   const s = revision.snapshot,
     a = s.appointment;
   return (
@@ -102,7 +109,10 @@ function Identification({ revision }: { revision: PackRevision }) {
         {s.work.reference} · v{s.work.version}
       </Pair>
       <Pair label="Appointment">
-        {a.reference} · v{a.version}
+        <Link href={`/service/appointments/${appointmentId}`}>
+          {a.reference}
+        </Link>{" "}
+        · v{a.version}
       </Pair>
       <Pair label="Visit window" wide>
         {formatDate(a.start_at, a.timezone, true)}
@@ -138,7 +148,9 @@ export function SectionBody({
   const s = revision.snapshot,
     frozen = s.sections[section];
   if (section === "identification")
-    return <Identification revision={revision} />;
+    return (
+      <Identification revision={revision} appointmentId={pack.appointment_id} />
+    );
   const structured = readSection(section, s, revision.id, pack.section_view);
   if (structured)
     return (

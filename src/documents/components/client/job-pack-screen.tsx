@@ -1,4 +1,5 @@
 "use client";
+import { printHeaderCss } from "../../print-view";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -678,19 +679,17 @@ export function JobPackScreen({ id }: { id: string }) {
                 </>
               )}
               {status && <Badge tone={status.tone}>{status.label}</Badge>}
-              {dirty && <UnsavedBadge />}
+              {dirty && (
+                <span className="jp-unsaved">
+                  <UnsavedBadge />
+                </span>
+              )}
             </div>
           )}
         </div>
         {p && (
           <div className="jp-heading-right">
             <div className="jp-button-row">
-              <Link
-                className="jp-button"
-                href={`/service/appointments/${p.appointment_id}`}
-              >
-                Appointment
-              </Link>
               {revision && issue?.revision_id !== revision.id && staff && (
                 <button
                   type="button"
@@ -701,7 +700,7 @@ export function JobPackScreen({ id }: { id: string }) {
                   Print preview
                 </button>
               )}
-              {issue && (
+              {issue && issue.revision_id === revision?.id && (
                 <Link
                   className="jp-button jp-primary"
                   href={`/documents/${issue.id}`}
@@ -800,6 +799,34 @@ export function JobPackScreen({ id }: { id: string }) {
             aria-labelledby="jp-tab-pack"
             hidden={view !== "pack"}
           >
+            {revision && (
+              <>
+                <style data-jp-print-reference>
+                  {printHeaderCss(
+                    p.display_number,
+                    revisionLabel(revision.revision),
+                    issue?.revision_id === revision.id
+                      ? "Issued revision"
+                      : "NOT ISSUED",
+                  )}
+                </style>
+                <div className="jp-print-only jp-print-warning">
+                  <strong>Workbench print — saved revision only</strong>
+                  <p>
+                    The controlled document is the exact issued output. This
+                    workbench copy does not authorise field work. Unsaved
+                    preparation is excluded.
+                  </p>
+                  <p>
+                    Current readiness at print:{" "}
+                    {summary
+                      ? `${summary.satisfied} of ${summary.total} criteria satisfied`
+                      : "Not available to this identity"}
+                    {sourceChanged ? " · Source review required" : ""}.
+                  </p>
+                </div>
+              </>
+            )}
             <div className="jp-layout">
               {revision ? (
                 <ContentsRail
@@ -832,6 +859,15 @@ export function JobPackScreen({ id }: { id: string }) {
               )}
               <div className="jp-main-column">
                 {view === "pack" && sourceNotice}
+                {issue && issue.revision_id !== revision?.id && (
+                  <p className="jp-prior-issue">
+                    Earlier issue {revisionLabel(issue.revision)}:{" "}
+                    <Link href={`/documents/${issue.id}`}>
+                      Open exact issued document
+                    </Link>
+                    . The saved successor below has not been issued.
+                  </p>
+                )}
                 {step && (
                   <div className={`jp-notice ${step.tone}`.trim()}>
                     <Icon name={step.icon} />
@@ -1373,7 +1409,11 @@ export function NewJobPackScreen({ appointmentId }: { appointmentId: string }) {
           </h1>
           <div className="jp-subtitle">
             <Badge>Not yet saved</Badge>
-            {dirty && <UnsavedBadge />}
+            {dirty && (
+              <span className="jp-unsaved">
+                <UnsavedBadge />
+              </span>
+            )}
           </div>
         </div>
         <div className="jp-heading-right">

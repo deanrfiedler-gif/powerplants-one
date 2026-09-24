@@ -14708,9 +14708,9 @@
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-24",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "aed0c00",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "I5: two component and 46 compiled browser cases passed, with four and seven deliberate skips respectively. Paired/print inspection recorded in docs/testing/evidence/job-pack-i5/README.md; owner/device acceptance separate.",
       "sections": [
         {
           "section_id": "purpose",
@@ -14815,7 +14815,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Task sequence for review against the applicable running release.",
+            "Print preview opens the exact saved server preview. Browser Print instead produces a labelled workbench copy of the saved revision, even when Preparation is selected; unsaved entries are excluded. Only the exact issued document is the controlled output. The appointment link is in section 01; an earlier issue remains explicitly linked beside an unissued successor."
           ],
           "steps": [
             "Prepare the pack against the correct scope",
@@ -14835,7 +14836,8 @@
           "paragraphs": [
             "A reproducible issued pack is available to the intended crew.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Changed content requires a new revision. Acknowledgement must not carry over automatically."
+            "Changed content requires a new revision. Acknowledgement must not carry over automatically.",
+            "From appointment detail or the Field Technicians Job pack tab, open the current permitted pack. When no visible pack is returned and preparation is permitted, use Prepare job pack. Refresh pack status checks the current read; failed or denied reads remove earlier links. Preparation still checks visit and approved-scope authority on Save."
           ],
           "steps": [],
           "rows": [],
@@ -48525,10 +48527,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-09-24",
+      "source_commit": "aed0c00",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "I5: two component and 46 compiled browser cases passed, with four and seven deliberate skips respectively. Paired/print inspection recorded in docs/testing/evidence/job-pack-i5/README.md; owner/device acceptance separate.",
       "sections": [
         {
           "section_id": "purpose",
@@ -48633,7 +48635,8 @@
           "paragraphs": [
             "An appointment has an explicit scheduling and acknowledgement state.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A proposed time, a confirmed booking and a technician acknowledgement are different."
+            "A proposed time, a confirmed booking and a technician acknowledgement are different.",
+            "From appointment detail or the Field Technicians Job pack tab, open the current permitted pack. When no visible pack is returned and preparation is permitted, use Prepare job pack. Refresh pack status checks the current read; failed or denied reads remove earlier links. Preparation still checks visit and approved-scope authority on Save."
           ],
           "steps": [],
           "rows": [],
@@ -48789,9 +48792,9 @@
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-24",
-      "source_commit": "4c8fd6dba83794f6c64aee6859cadb913401fd64",
+      "source_commit": "aed0c00",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Compiled application driven through the preparation workflow on 23 September 2026; captures in docs/testing/evidence/job-pack-i3/. Not an owner's visual review.",
+      "runtime_evidence": "I5: two component and 46 compiled browser cases passed, with four and seven deliberate skips respectively. Paired/print inspection recorded in docs/testing/evidence/job-pack-i5/README.md; owner/device acceptance separate.",
       "sections": [
         {
           "section_id": "purpose",
@@ -48897,7 +48900,8 @@
           "title": "Complete the main task",
           "paragraphs": [
             "Preparation is entered in the Preparation view, one guided section per pack section. Each section shows the frozen context the last save composed, so entries are written against exactly what will be checked and issued.",
-            "Every save creates a new immutable revision and records its own reason with the fields that changed. There is no standing reason field on the form."
+            "Every save creates a new immutable revision and records its own reason with the fields that changed. There is no standing reason field on the form.",
+            "Print preview opens the exact saved server preview. Browser Print instead produces a labelled workbench copy of the saved revision, even when Preparation is selected; unsaved entries are excluded. Only the exact issued document is the controlled output. The appointment link is in section 01; an earlier issue remains explicitly linked beside an unissued successor."
           ],
           "steps": [
             "Open the Preparation view. The contents rail lists the nine sections and flags any that need attention.",
@@ -48922,7 +48926,8 @@
           "paragraphs": [
             "A reproducible issued pack is available to the intended crew.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Changed content requires a new revision. Acknowledgement must not carry over automatically."
+            "Changed content requires a new revision. Acknowledgement must not carry over automatically.",
+            "From appointment detail or the Field Technicians Job pack tab, open the current permitted pack. When no visible pack is returned and preparation is permitted, use Prepare job pack. Refresh pack status checks the current read; failed or denied reads remove earlier links. Preparation still checks visit and approved-scope authority on Save."
           ],
           "steps": [],
           "rows": [],
@@ -49116,9 +49121,9 @@
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-24",
-      "source_commit": "4c8fd6dba83794f6c64aee6859cadb913401fd64",
+      "source_commit": "aed0c00",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Compiled application driven through the preparation workflow on 23 September 2026; captures in docs/testing/evidence/job-pack-i3/. Not an owner's visual review.",
+      "runtime_evidence": "I5: two component and 46 compiled browser cases passed, with four and seven deliberate skips respectively. Paired/print inspection recorded in docs/testing/evidence/job-pack-i5/README.md; owner/device acceptance separate.",
       "sections": [
         {
           "section_id": "purpose",
@@ -49207,7 +49212,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "This route prepares the first revision of a pack for a confirmed appointment. Until the first save there is no revision, no readiness and no pack record, so only the Preparation view is available and each section states that its context is composed from the current records when you save."
+            "This route prepares the first revision of a pack for a confirmed appointment. Until the first save there is no revision, no readiness and no pack record, so only the Preparation view is available and each section states that its context is composed from the current records when you save.",
+            "Print preview opens the exact saved server preview. Browser Print instead produces a labelled workbench copy of the saved revision, even when Preparation is selected; unsaved entries are excluded. Only the exact issued document is the controlled output. The appointment link is in section 01; an earlier issue remains explicitly linked beside an unissued successor."
           ],
           "steps": [
             "Open the route from the appointment. If a pack already exists it opens instead, with a message saying so.",
@@ -49226,7 +49232,8 @@
             "A reproducible issued pack is available to the intended crew.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
             "Changed content requires a new revision. Acknowledgement must not carry over automatically.",
-            "The saved record may show verified context as labelled fields. Open Exact text as it will be issued to inspect the retained wording; plain text remains available when structured context cannot be verified."
+            "The saved record may show verified context as labelled fields. Open Exact text as it will be issued to inspect the retained wording; plain text remains available when structured context cannot be verified.",
+            "From appointment detail or the Field Technicians Job pack tab, open the current permitted pack. When no visible pack is returned and preparation is permitted, use Prepare job pack. Refresh pack status checks the current read; failed or denied reads remove earlier links. Preparation still checks visit and approved-scope authority on Save."
           ],
           "steps": [],
           "rows": [],
@@ -50205,10 +50212,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-09-24",
+      "source_commit": "aed0c00",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "I5: two component and 46 compiled browser cases passed, with four and seven deliberate skips respectively. Paired/print inspection recorded in docs/testing/evidence/job-pack-i5/README.md; owner/device acceptance separate.",
       "sections": [
         {
           "section_id": "purpose",
@@ -50312,7 +50319,8 @@
           "paragraphs": [
             "The proposed crew can be assessed against the task.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A directory listing is not a reservation or proof of all required competence."
+            "A directory listing is not a reservation or proof of all required competence.",
+            "From appointment detail or the Field Technicians Job pack tab, open the current permitted pack. When no visible pack is returned and preparation is permitted, use Prepare job pack. Refresh pack status checks the current read; failed or denied reads remove earlier links. Preparation still checks visit and approved-scope authority on Save."
           ],
           "steps": [],
           "rows": [],

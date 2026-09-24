@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { JobPackEntry } from "../../../documents/components/client/job-pack-entry";
 import { useSearchParams } from "next/navigation";
 import { DemandPanel } from "./demand-panel.client";
 import {
@@ -1224,14 +1225,12 @@ export function AppointmentScreen({ id }: { id: string }) {
               </p>
             ))}
           </details>
+          <section className="panel" aria-label="Job pack handover">
+            <h2>Job pack</h2>
+            <JobPackEntry appointmentId={a.id} />
+          </section>
           <details className="panel">
             <summary>Exact record identities and observed context</summary>
-            <div className="pack-toolbar">
-              <Link href={`/service/packs/new?appointment_id=${a.id}`}>
-                Prepare job pack
-              </Link>
-              <Link href="/service/packs">Job packs and acknowledgements</Link>
-            </div>
             <p className="record-id">Appointment: {a.id}</p>
             <p className="record-id">Work order: {a.work_order_id}</p>
             <p className="record-id">

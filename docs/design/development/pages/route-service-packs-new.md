@@ -72,3 +72,7 @@ First preparation still uses the existing command and nine required notes. After
 ## I7 history selection context
 
 Existing history choices now show their recorded confidence, date and author/verification where supplied. These remain service-audience records selected by the existing command. A reported or suspected entry is not a verified cause; selecting it does not change its source record. No first-save field or authority changes.
+
+## I5 final integration
+
+The canonical appointment/Field Technicians handover uses JobPackEntry and the current permission-filtered read. The record keeps r03’s full-bleed detail page, shared shell navigation and adopted D8-A breadcrumb. At most two header actions; appointment link in section 01 and prior exact issue link beside the successor context. Browser print includes only saved sections and explicit workbench/reference/state/page context, with shell clipping released. Incoming appointment and outgoing exact pack/issue identities are preserved. [Conformance record](../../../decisions/job-pack-integration.md) and [handover](../../../delivery/job-pack-integration-handover.md) distinguish actual checks, reference captures, owner/device review and deployment. Historical uploaded images are unavailable; fresh r03 captures are labelled as such.

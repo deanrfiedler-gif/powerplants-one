@@ -1300,7 +1300,13 @@
       "owner": "Dean Fiedler",
       "example": null,
       "coverage": "Host example",
-      "states": [],
+      "states": [
+        {
+          "id": "service-phone-identity",
+          "label": "Service phone identity",
+          "description": "Utilities remain inside the header with local identity mounted; CRM filter row remains intentional."
+        }
+      ],
       "implementation": [
         {
           "path": "src/components/product-navigation.tsx",
@@ -1319,7 +1325,8 @@
         "src/app/layout.tsx",
         "src/app/desktop-shell.css",
         "src/app/mobile-layout.css",
-        "src/app/styles/customers.css"
+        "src/app/styles/customers.css",
+        "docs/testing/evidence/job-pack-i5/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -1349,6 +1356,14 @@
           "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
           "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "service-shell-owner-review",
+          "expected": "Owner/device review of the phone identity correction",
+          "actual": "Component and compiled proof recorded separately in I5",
+          "action": "Review retained phone captures and shared-shell results.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1711,6 +1726,94 @@
           "actual": "Application fixtures cover the page-scoped implementation.",
           "action": "Retain the visible source/consumer bindings and use the I7 browser proof.",
           "priority": "Low",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "job-pack-entry",
+      "title": "Canonical visit job pack handover",
+      "category": "Boards & cards",
+      "module": "SV",
+      "purpose": "Open the current permitted pack or prepare through the server permission flag; never retain a stale action link.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Reference only",
+      "states": [
+        {
+          "id": "existing",
+          "label": "Existing pack",
+          "description": "Current permitted exact identity."
+        },
+        {
+          "id": "prepare",
+          "label": "Preparation available",
+          "description": "No visible pack and server can_prepare."
+        },
+        {
+          "id": "unavailable",
+          "label": "Unavailable",
+          "description": "No visible pack and no preparation permission."
+        },
+        {
+          "id": "loading",
+          "label": "Loading",
+          "description": "No prior link while refreshing."
+        },
+        {
+          "id": "denied",
+          "label": "Access unavailable",
+          "description": "Permission denial shows a status and refresh without a stale record link."
+        },
+        {
+          "id": "failed",
+          "label": "Read failed",
+          "description": "Server or transport error retains the shared alert and retry; no stale link."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/documents/components/client/job-pack-entry.tsx",
+          "symbol": "JobPackEntry"
+        }
+      ],
+      "dependencies": [
+        "src/components/business-ui.tsx",
+        "src/components/ui/button.tsx",
+        "src/documents/packs.ts",
+        "src/app/styles/job-pack.css",
+        "docs/testing/evidence/job-pack-i5/README.md"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
+        "anchor": "",
+        "status": "Accepted r03 with adopted D9/D10 density and read-model decisions; application owner acceptance separate"
+      },
+      "specification": "docs/design/development/components/job-pack-entry.md",
+      "used_on": [
+        "route:/service/technicians",
+        "route:/service/appointments/[id]"
+      ],
+      "desktop": "Shared ButtonLink and quiet refresh within the visit context.",
+      "mobile": "Text wraps; 44 px actions stay within the drawer or appointment panel.",
+      "keyboard": "Links and refresh are native keyboard controls; drawer owns focus trap/return.",
+      "limitations": "No isolated catalogue renderer. Browser state tests use the actual consumers. Link availability does not bypass Save authority.",
+      "gaps": [
+        {
+          "id": "job-pack-entry-gallery",
+          "expected": "Isolated live catalogue example",
+          "actual": "Actual consumer browser fixtures retained",
+          "action": "Use the I5 handover suite; catalogue rendering remains a separate extension.",
+          "priority": "Low",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "job-pack-entry-access-review",
+          "expected": "Owner review of access-unavailable and failed-read presentation in both consumers",
+          "actual": "Distinct states implemented; automated fixtures cover 403, 404 and 500; owner review pending",
+          "action": "Compare appointment and Field Technicians states on desktop and phone without granting pack authority.",
+          "priority": "Medium",
           "owner": "Dean Fiedler"
         }
       ],

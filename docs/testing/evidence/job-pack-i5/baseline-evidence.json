@@ -1,0 +1,216 @@
+{
+  "scope": "Design baseline integrity and token comparison only; not application, accessibility or business acceptance",
+  "registry": "docs/standards/ui-baselines.json",
+  "registry_sha256": "ef1fab253cb46abdce296e70b5c78463f157e873fff349d1acd966bcfc14c045",
+  "source_head": "aed0c006e07e55654538f2a9a7fe76ed99024a54",
+  "executed_checkout": "aed0c006e07e55654538f2a9a7fe76ed99024a54",
+  "executed_tree": "acad5db5c13d7086bbeebdd4577eafb536a47b5e",
+  "browser": "154.0.8037.58",
+  "app_base": "http://127.0.0.1:54106",
+  "run_id": null,
+  "attempt": null,
+  "baselines": [
+    {
+      "id": "job-pack-r03",
+      "design": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
+      "checks": [
+        {
+          "check": "integrity",
+          "result": "pass",
+          "sha256": "5b41481460984bdeb09f683b76a5ba30cdd805eb19f90735e725d01fedc6b825",
+          "bytes": 481380
+        },
+        {
+          "check": "scope-container",
+          "result": "pass",
+          "selector": "#ppo-job-pack",
+          "matched": 1
+        },
+        {
+          "check": "token-count",
+          "result": "pass",
+          "resolved": 41,
+          "declared": 41
+        },
+        {
+          "check": "overflow/desktop",
+          "result": "pass",
+          "scroll": 1440,
+          "client": 1440
+        },
+        {
+          "check": "overflow/laptop",
+          "result": "pass",
+          "scroll": 1024,
+          "client": 1024
+        },
+        {
+          "check": "overflow/tablet",
+          "result": "pass",
+          "scroll": 820,
+          "client": 820
+        },
+        {
+          "check": "overflow/phone",
+          "result": "pass",
+          "scroll": 390,
+          "client": 390
+        },
+        {
+          "check": "console",
+          "result": "pass",
+          "errors": []
+        }
+      ],
+      "tokens": {
+        "--navy": "#242a37",
+        "--green": "#62bb46",
+        "--ink": "#242a37",
+        "--muted": "#667181",
+        "--text-secondary": "#596779",
+        "--link": "#355b80",
+        "--paper": "#f5f6f8",
+        "--surface": "#f6f7f9",
+        "--surface-2": "#f7f8fa",
+        "--surface-3": "#fcfcfd",
+        "--surface-hover": "#eff2f5",
+        "--surface-white": "#fff",
+        "--line": "#e1e5eb",
+        "--line-strong": "#dce2e9",
+        "--line-soft": "#eef0f3",
+        "--hairline": "#cbd2dc",
+        "--control-border": "#828e9f",
+        "--success": "#416d33",
+        "--success-surface": "#edf5e9",
+        "--success-border": "#d4e3cb",
+        "--success-icon": "#527347",
+        "--success-tint": "#ebefe9",
+        "--warning": "#80530e",
+        "--warning-surface": "#fff2d9",
+        "--warning-border": "#efdbb6",
+        "--warning-accent": "#c69539",
+        "--warning-icon": "#9b6d27",
+        "--warning-tint": "#fff8ec",
+        "--danger": "#993b2a",
+        "--danger-surface": "#fff1ed",
+        "--danger-border": "#edc6bd",
+        "--danger-accent": "#ad4635",
+        "--info": "#346580",
+        "--info-surface": "#e9f2f8",
+        "--info-border": "#cfe0ec",
+        "--info-accent": "#5d8db0",
+        "--neutral": "#526078",
+        "--neutral-surface": "#edf0f5",
+        "--avatar-surface": "#eaf1e5",
+        "--avatar-text": "#45623b",
+        "--focus": "#365d8b"
+      },
+      "app": {
+        "url": "http://127.0.0.1:54106/service/packs/9c698d10-e4d2-44c5-9ca4-8d18b14399e5",
+        "tokens_compared": 41,
+        "missing": [],
+        "different": []
+      }
+    }
+  ],
+  "captures": [
+    {
+      "filename": "job-pack-r03-design-desktop.png",
+      "baseline": "job-pack-r03",
+      "side": "design",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 960
+      },
+      "bytes": 578593,
+      "sha256": "0ff4cf29b9c49351bd63b37ad72b59a8cd735dfc830ba321c301de62d35aea63"
+    },
+    {
+      "filename": "job-pack-r03-design-laptop.png",
+      "baseline": "job-pack-r03",
+      "side": "design",
+      "viewport": {
+        "name": "laptop",
+        "width": 1024,
+        "height": 768
+      },
+      "bytes": 563929,
+      "sha256": "514f794d8f1a95ab13fba4efe0435a8631996bbdc0ed00969c8964b05dc5a5cd"
+    },
+    {
+      "filename": "job-pack-r03-design-tablet.png",
+      "baseline": "job-pack-r03",
+      "side": "design",
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 800
+      },
+      "bytes": 572593,
+      "sha256": "acf5983c964a5ac25ffbd44ba4b68ea9cb89e9d69db7b737f35cdb65313ccb33"
+    },
+    {
+      "filename": "job-pack-r03-design-phone.png",
+      "baseline": "job-pack-r03",
+      "side": "design",
+      "viewport": {
+        "name": "phone",
+        "width": 390,
+        "height": 844
+      },
+      "bytes": 557693,
+      "sha256": "906424e11099012944e1fc496e64c975a32fa694e1a640e18fc6c05fbc68778e"
+    },
+    {
+      "filename": "job-pack-r03-app-desktop.png",
+      "baseline": "job-pack-r03",
+      "side": "app",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 960
+      },
+      "bytes": 42538,
+      "sha256": "15044144323087dc33188827ee2650722fbf76d85c6738b0258e715e06e8fc5f"
+    },
+    {
+      "filename": "job-pack-r03-app-laptop.png",
+      "baseline": "job-pack-r03",
+      "side": "app",
+      "viewport": {
+        "name": "laptop",
+        "width": 1024,
+        "height": 768
+      },
+      "bytes": 39174,
+      "sha256": "0713fa4315a98700d76d2bbd18bfe3be9dda53cbbb55df89d777f84042faaefe"
+    },
+    {
+      "filename": "job-pack-r03-app-tablet.png",
+      "baseline": "job-pack-r03",
+      "side": "app",
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 800
+      },
+      "bytes": 115179,
+      "sha256": "d0fb0675dc2410a6cfcfb75f74b862e44c37f2aa914ecea58a98ac221db2d27c"
+    },
+    {
+      "filename": "job-pack-r03-app-phone.png",
+      "baseline": "job-pack-r03",
+      "side": "app",
+      "viewport": {
+        "name": "phone",
+        "width": 390,
+        "height": 844
+      },
+      "bytes": 71596,
+      "sha256": "5129b7c588c3fb94402eedfda9bf1e4daea370f0788022f775bdd4185de83d1c"
+    }
+  ],
+  "result": "passed",
+  "failures": []
+}

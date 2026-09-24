@@ -1089,7 +1089,7 @@ The rules for every increment:
 | Entry points | Drawer and planner use `GET appointments/:id/pack`: "Open job pack", or "Prepare job pack" with `can_prepare`. Update `field-technicians.spec.ts` in step |
 | Conformance | `tests/ui/job-pack-design-conformance.spec.ts` (component proof, `playwright.crm-ui.config.ts`); `tests/helpers/job-pack-design.ts`; complete the application proof |
 | Print | Port the print rules with the scroll reset; inspect a multi-page A4 print; prune unused `.pack-*` rules in `globals.css` selector by selector |
-| Records | `ui-baselines.json`; `docs/reference/ui/README.md` pointers; `docs/decisions/job-pack-r03-integration.md` (conformance table, DP-1 to DP-21); pointer in `job-pack-design.md`; `docs/delivery/job-pack-integration-handover.md`; STATUS; register images (Appendix E); the UI-consistency exception (D8-A) |
+| Records | `ui-baselines.json`; `docs/reference/ui/README.md` pointers; `docs/decisions/job-pack-integration.md` (conformance table, DP-1 to DP-21); pointer in `job-pack-design.md`; `docs/delivery/job-pack-integration-handover.md`; STATUS; register images (Appendix E); the UI-consistency exception (D8-A) |
 | Exit | `node scripts/design-baseline-check.mjs --app http://127.0.0.1:3000` passes; paired captures inspected at 1440 × 960, 1024 × 768, 820, 770, 390 × 844 and 320; G-06 wording checked |
 
 ---
@@ -1281,7 +1281,7 @@ The compiled browser suite (required context "Desktop and mobile browser suite a
 | `docs/design/development/register.json` | I5 | `image_paths`; visual review only with real evidence |
 | `docs/standards/ui-baselines.json` | I5 | As plan |
 | `docs/delivery/existing-modules-ui-consistency-handover.md` | I7 (D8-A) | Breadcrumb exception |
-| `docs/decisions/job-pack-r03-integration.md`, `docs/delivery/job-pack-integration-handover.md` | I5 | New, as plan |
+| `docs/decisions/job-pack-integration.md`, `docs/delivery/job-pack-integration-handover.md` | I5 | New, as plan |
 | This report | On adoption of decisions, and when an increment lands | Mark decided items; keep the change record current |
 
 ---
