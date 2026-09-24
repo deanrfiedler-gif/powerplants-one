@@ -1368,7 +1368,8 @@
         "src/app/layout.tsx",
         "src/app/desktop-shell.css",
         "src/app/mobile-layout.css",
-        "src/app/styles/customers.css"
+        "src/app/styles/customers.css",
+        "src/app/styles/equipment.css"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -1397,6 +1398,14 @@
           "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
           "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "eq-application-shell-host-review",
+          "expected": "Review the actual Equipment host and scrolled evidence at desktop and phone widths.",
+          "actual": "Equipment preserves the shared shell and restores its intended phone flex row; synthetic captures and containment checks are separate from owner/device acceptance.",
+          "action": "Use docs/testing/evidence/equipment-native/README.md and the EQ guides for paired review of populated, restricted, stale and recovered states.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

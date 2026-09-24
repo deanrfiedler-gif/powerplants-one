@@ -44,6 +44,46 @@ async function fixture(page: Page, origin: string) {
   return id;
 }
 test.beforeEach(async ({ page, baseURL }) => login(page, baseURL!));
+for (const [path, guide] of [
+  ["/equipment", "guide.page.equipment"],
+  [
+    "/equipment/80000000-0000-4000-8000-000000000001",
+    "guide.page.equipment.id",
+  ],
+  ["/equipment/lookup", "guide.route-equipment-lookup"],
+  ["/equipment/bulletins", "guide.route-equipment-bulletins"],
+  ["/equipment/lifecycle", "guide.route-equipment-lifecycle"],
+  ["/equipment/backups", "guide.route-equipment-backups"],
+  ["/equipment/instruments", "guide.route-equipment-instruments"],
+]) {
+  test(`EQ global information control opens the owning guide for ${path}`, async ({
+    page,
+  }) => {
+    await page.goto(path);
+    const opener = page.getByRole("button", {
+      name: "Page guide",
+      exact: true,
+    });
+    const read = page.waitForResponse((response) =>
+      response.url().includes("/api/development/catalog?pathname="),
+    );
+    await opener.click();
+    const response = await read;
+    expect(response.status()).toBe(200);
+    const body = await response.json();
+    expect(body.guide_key).toBe(guide);
+    await page
+      .getByText("Development draft guide for this page", { exact: true })
+      .click();
+    await expect(
+      page
+        .locator(".ppo-development-guide")
+        .getByText(body.title, { exact: true }),
+    ).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(opener).toBeFocused();
+  });
+}
 test("EQ01/02 URL lookup is read-only, restores context and requires physical comparison", async ({
   page,
   baseURL,
@@ -379,7 +419,7 @@ test("EQ06 native bulletin retains candidate and reviewed disposition separately
       })
       .first(),
   ).toBeVisible();
-  await card.screenshot({
+  await page.screenshot({
     path: info.outputPath("eq-bulletin-incomplete-closure.png"),
   });
   await page.reload();
@@ -473,6 +513,21 @@ for (const width of [1440, 1280, 1024, 768, 430, 390, 320]) {
       await expect(page.locator(".eq-workspace h1")).toBeVisible();
       await expect(page.getByText(/^Loading permitted records/)).toHaveCount(0);
       await expect(page.locator(".business-error[role=alert]")).toHaveCount(0);
+      await expect
+        .poll(() =>
+          page.evaluate(() => {
+            const header = document
+              .querySelector(".ppo-shell-header")!
+              .getBoundingClientRect();
+            const utilities = document
+              .querySelector(".ppo-header-utilities")!
+              .getBoundingClientRect();
+            return (
+              utilities.top >= header.top && utilities.bottom <= header.bottom
+            );
+          }),
+        )
+        .toBe(true);
       await expect
         .poll(() =>
           page.evaluate(

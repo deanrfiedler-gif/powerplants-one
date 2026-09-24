@@ -208,3 +208,13 @@
   padding: 0.75rem 0;
   font-weight: 600;
 }
+
+@media (max-width: 780px) {
+  /* The legacy identity-strip grid otherwise outranks the shared shell's flex
+     row and spills its utility controls over scrolled Equipment records. */
+  .workspace:has(.eq-workspace) .topbar.ppo-shell-header {
+    display: flex;
+    padding: 0 10px;
+    gap: 4px;
+  }
+}
