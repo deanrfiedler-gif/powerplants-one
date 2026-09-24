@@ -1,8 +1,14 @@
-import { ContextDetail } from "../../../../components/context-screens";
+import { Suspense } from "react";
+import { EquipmentWorkspace } from "../../../../components/equipment-workspace";
 export default async function Page({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
-  return <ContextDetail kind="Asset" id={(await params).id} />;
+  const { id } = await params;
+  return (
+    <Suspense fallback={<p>Loading equipment…</p>}>
+      <EquipmentWorkspace key={id} id={id} />
+    </Suspense>
+  );
 }

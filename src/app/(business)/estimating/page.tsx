@@ -1,2 +1,2 @@
-import { EstimateList } from "../../../components/estimating-screens";
-export default function Page(){return <EstimateList/>;}
+import { EstimatingWorkload } from "../../../components/estimating-workload";
+export default function Page(){return <EstimatingWorkload/>;}

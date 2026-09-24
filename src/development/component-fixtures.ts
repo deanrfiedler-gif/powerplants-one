@@ -20,6 +20,12 @@ export const salesRecordTabsFixture = [
   { id: "files", label: "Documents" },
   { id: "history", label: "History" },
 ];
+export const equipmentDateFixture = {
+  value: "2026-09-20T00:00:00Z",
+  validationField: "effective_at",
+  firstName: "catalogue-configuration-effective",
+  secondName: "catalogue-movement-effective",
+};
 export const customerRecordTabsFixture = [
   { id: "overview", label: "Overview" },
   { id: "deals", label: "Deals & quotations" },

@@ -219,9 +219,8 @@
   .crm-toolbar .crm-header-search { width: 180px; flex-basis: 180px; }
 }
 @media (max-width: 780px) {
-  /* Match the legacy identity-strip selector so its grid cannot put utilities
-     in an implicit second row over the first page action. */
-  .workspace .topbar.ppo-shell-header, body:has(.crm-workspace) .topbar.ppo-shell-header { display: flex; gap: 4px; padding: 0 10px; height: 64px; min-height: 64px; }
+  /* Override the legacy identity-dependent grid: utilities belong in the header row. */
+  .topbar.ppo-shell-header, body:has(.crm-workspace) .topbar.ppo-shell-header, .workspace:has(.identity-strip) .topbar.ppo-shell-header { display: flex; gap: 4px; padding: 0 10px; height: 64px; min-height: 64px; }
   .ppo-shell-header .mobile-brand { display: flex; align-items: center; justify-content: center; width: 36px; min-width: 36px; height: 44px; margin: 0; }
   .ppo-shell-header .mobile-brand .brand-logo { width: 34px; height: 34px; }
   .ppo-shell-header .ppo-product-name { font-size: 13px; }
@@ -233,7 +232,7 @@
   .ppo-shell-header .header-tools { display: contents; }
   /* Retain the CRM phone page filter supplied through its existing header slot.
      Global record search is separate; hiding this slot would remove page filtering. */
-  .topbar.ppo-shell-header:has(#header-search:not(:empty)), body:has(.crm-workspace) .topbar.ppo-shell-header:has(#header-search:not(:empty)) { height: 116px; min-height: 116px; flex-wrap: wrap; align-content: center; row-gap: 8px; }
+  .workspace:has(.identity-strip) .topbar.ppo-shell-header:has(#header-search:not(:empty)), .topbar.ppo-shell-header:has(#header-search:not(:empty)), body:has(.crm-workspace) .topbar.ppo-shell-header:has(#header-search:not(:empty)) { height: 116px; min-height: 116px; flex-wrap: wrap; align-content: center; row-gap: 8px; }
   .ppo-shell-header #header-search:not(:empty) { display: block; flex: 0 0 100%; order: 1; padding: 0; }
   .ppo-shell-header #header-search .crm-header-search { width: 100%; margin: 0; }
   .ppo-header-panel { top: 72px; max-height: calc(100dvh - 150px - env(safe-area-inset-bottom)); }

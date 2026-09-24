@@ -37,7 +37,7 @@ async function revealSalesAction(page: Page, id: string, tasks: boolean) {
 }
 const rails = {
   sales: ["Pulse", "Leads", "Deals", "Activities", "Tasks", "Sales Inbox", "Contacts"],
-  estimate: ["My Work", "Intake", "Estimation wizard", "Estimates", "Specialist configurations", "Quotations"],
+  estimate: ["My Work", "Intake & workload", "Estimation wizard", "Specialist configurations", "Quotations"],
   engineering: ["My Work", "Engineering workload", "Materials & substitutions", "Change review", "Commissioning & as-built"],
   projects: ["My Work", "Projects", "Programme", "Acceptance & closeout"],
   service: ["My Work", "Service requests", "Work orders", "Schedule", "Field team", "Job packs", "Service review", "Equipment"],

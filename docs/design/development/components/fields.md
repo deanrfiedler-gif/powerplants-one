@@ -49,3 +49,10 @@ The maintained consumer bindings include the native Customer, Contact, Stakehold
 CR-02/03/05 reuse these controls for Save, Submit, receiving decisions and recovery. Disabled/busy and uncertain results remain distinct; background refresh preserves dirty form values. Scope-specific handlers stay in the page. Labels, native keyboard semantics and source ownership remain intact. Actual device evidence is in the Sales handover; owner acceptance is pending.
 
 The Sales evidence fixture demonstrates a long synthetic statement with the 4000-character source limit. Native handover and review fields declare their server limits explicitly; short default fields must not truncate a supported evidence narrative.
+
+
+## Equipment native consumers
+
+EQ-01 through EQ-09 reuse the shared control in their applicable register, record and evidence forms; tabs are used by EQ-01/EQ-03/EQ-04/EQ-05. Synthetic states are exercised in `tests/database/equipment.test.ts`, `tests/http/equipment.test.ts` and the Equipment browser proof. Source binding is recorded in the living register. No shared-control rendering change or visual acceptance is implied.
+
+LocalDateTimeField accepts an optional canonical `validationField` independently of its DOM `name`. Equipment supplies stable React instance IDs to Field and LocalDateTimeField so mounted tab drafts and repeated evidence cards have distinct label/error targets. The catalogue fixture shows configuration and movement times with separate IDs and one canonical command-field name; defaults for existing consumers remain unchanged. Browser verification checks active-tab entry and duplicate-ID absence. This additive adapter has not received owner visual acceptance.

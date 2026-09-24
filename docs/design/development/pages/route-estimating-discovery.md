@@ -1,5 +1,7 @@
 # Discovery register — design reference
 
+24 September native navigation refinement: return to Estimating intake & workload at `/estimating`; saved estimates remain available at `/estimating?tab=estimates`. The five-step, immutable discovery and exact manual-costing contracts are unchanged. [Current programme](../../../delivery/estimating-programme-handover.md).
+
 Stable entry: `route:/estimating/discovery`. Owner: Dean Fiedler. Status: **Draft for visual review**.
 Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/estimating/discovery`.
 This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.

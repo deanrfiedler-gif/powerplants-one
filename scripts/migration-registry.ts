@@ -46,7 +46,7 @@ export const migrationFiles = [
   "0042-fertigation-scopes.sql",
   "0043-sh-platform-coordination.sql",
   "0044-customer-location-workflows.sql",
-  // 0045 is owned by concurrent equipment work.
+  "0045-equipment-workflows.sql",
   "0046-sales-workflows.sql",
 ] as const;
 export const seedFiles = [

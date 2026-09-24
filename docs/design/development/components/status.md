@@ -2,6 +2,8 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
+ES-01 uses textual scope-readiness statuses: Discovery not started, Scope clarification, Discovery complete and Legacy manual basis. These are not commercial approval states. The existing Status component is unchanged; native page states and phone wrapping are verified by the Estimating workload browser suite.
+
 **Owner:** Dean Fiedler · **Catalogue key:** `status` · **Review:** Pending
 
 Real Status chips across neutral, progress, warning, success and failure tones.
@@ -45,3 +47,8 @@ The maintained consumer bindings include the native Customer, Contact, Stakehold
 ## Sales handover and aftercare consumers
 
 CR-02/03/05 reuse these controls for Save, Submit, receiving decisions and recovery. Disabled/busy and uncertain results remain distinct; background refresh preserves dirty form values. Scope-specific handlers stay in the page. Labels, native keyboard semantics and source ownership remain intact. Actual device evidence is in the Sales handover; owner acceptance is pending.
+
+
+## Equipment native consumers
+
+EQ-01 through EQ-09 reuse the shared control in their applicable register, record and evidence forms; tabs are used by EQ-01/EQ-03/EQ-04/EQ-05. Synthetic states are exercised in `tests/database/equipment.test.ts`, `tests/http/equipment.test.ts` and the Equipment browser proof. Source binding is recorded in the living register. No shared-control rendering change or visual acceptance is implied.
