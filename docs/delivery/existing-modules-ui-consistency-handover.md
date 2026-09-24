@@ -177,3 +177,7 @@ against a running application, not part of any suite.
   rule is not yet applied there.
 - No physical device, assistive technology, owner visual acceptance or business acceptance is
   established by anything above.
+
+## Job Pack breadcrumb exception — D8-A
+
+Dean adopted D8 option A on 23 September 2026 in the Job Pack build report. SV-05 retains the accepted r03 in-module breadcrumb under the application shell, as Field Technicians does under its own baseline. Its root now reads Service; Job packs opens the register. This deliberate double breadcrumb is an accepted page-specific exception, not a second application shell. I7 implements it; owner/device acceptance of the running page remains separate.

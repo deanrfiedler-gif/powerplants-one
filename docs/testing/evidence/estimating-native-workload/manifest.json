@@ -1,0 +1,67 @@
+{
+  "captured_at": "2026-09-23T22:08:13.412427+00:00",
+  "source_parent": "f92931237d45f27101a86c21bd6f677c40f68761",
+  "source_state": "Parent plus recorded working-copy changes; see exact LF-normalised source hashes",
+  "build_id": "X5E5d7-DKReuz0CUxHPfV",
+  "node": "24.21.0",
+  "playwright": "1.63.0",
+  "browser": "Chrome 154.0.8037.58",
+  "source_lf_sha256": {
+    "src/components/estimating-workload.tsx": "a86c1d9e44db4bebdaa4ad1ae0098ce4f950de090a222c19b49a0863582a2b61",
+    "src/components/estimating-workload.css": "f8225ca3535c5cfd4781030686c0b8c7ceba53672d5fee4bf67384f132a19f77",
+    "src/components/estimating-workload-guide.ts": "cd45fe5113450660f5496a79a2373166b3a42230fa89591642ca77a3b228fac3",
+    "src/components/shell-page-guide.tsx": "a816268226256a892f539f066ab54ca3c738a30d13193da152d2f38e3c4dbdc5",
+    "src/estimating/workload.ts": "b76669555eb8771439b08ff64f3207fbb1af80f1464f01e033358b66c7c2381e",
+    "src/estimating/workload-query.ts": "e8af03e6064e3d4c42f8c08feda70cfc770f79a76f93efd7c6d18ce7ae41e2ac",
+    "src/shell/navigation.ts": "698f6864ad89e51180b4f8f8b63e58f6aa0f3a70a5995b62d37ae2d1fa1caf1e",
+    "tests/browser/estimating-workload.spec.ts": "adf9b5e993adfd9feb093531f5f10b748918ac6e4b3c9b1f197fe8b9a332ce3e"
+  },
+  "images": [
+    {
+      "file": "desktop-workload.png",
+      "sha256": "625215fb437ba0a690062f7133bfda918be2d4dc099afc699fefac5aa70507c4",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "state": "default"
+    },
+    {
+      "file": "desktop-css-zoom-200.png",
+      "sha256": "dc84076ba70135f3a333f47697626ecffc6e3ecc1a2f41e46dfd634cee781cb2",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "state": "CSS zoom 2"
+    },
+    {
+      "file": "phone-workload.png",
+      "sha256": "aaa1870ae927ef7d8bd269d5381328d86ff90d67c2509e1fe78dc255f9591ee6",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "default"
+    },
+    {
+      "file": "phone-next-action.png",
+      "sha256": "0b5d1ccc38d6d858ff04c69865caa0049f0e9ac72d391c0d6b316d5ad390950c",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "scrolled to next action"
+    },
+    {
+      "file": "phone-320.png",
+      "sha256": "fef8cb196af0138e0e03fe791cc759441c5a005e0a6a82013772115b37d08868",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "state": "focused search"
+    }
+  ],
+  "review": "Codex inspected these actual native captures on 24 September 2026. Exact ES-01 source imagery unavailable; no paired-source, owner, browser-UI zoom or physical-device acceptance."
+}

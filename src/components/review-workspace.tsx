@@ -176,7 +176,7 @@ export function ReviewWorkspace() {
             onChange={(e) => set({ module: e.target.value })}
           >
             <option value="">All permitted</option>
-            {["Service", "Finance", "Engineering", "Customers & sites"].map((v) => (
+            {["Service", "Finance", "Engineering", "Customers & sites", "Equipment"].map((v) => (
               <option key={v}>{v}</option>
             ))}
           </select>
@@ -302,7 +302,7 @@ export function ReviewWorkspace() {
         </>
       )}
       <p className="sh-muted">
-        Connected: Service reports, Finance handoffs, Engineering change reviews and Site survey reviews
+        Connected: Service reports, Finance handoffs, Engineering change reviews Site survey reviews and Equipment evidence reviews
         and receiving requests. Estimating approval and Sales-to-delivery
         receiving tasks await persisted source contracts.
       </p>

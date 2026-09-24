@@ -1,0 +1,189 @@
+{
+  "captured_at": "2026-09-24T00:56:35.285Z",
+  "base_source": "aed0c00",
+  "working_source": true,
+  "browser": "154.0.8037.58",
+  "device_scale_factor": 1,
+  "fixture": "tests/fixtures/job-pack-read.json",
+  "captures": [
+    {
+      "file": "application-1440.png",
+      "side": "application",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "state": "saved pack"
+    },
+    {
+      "file": "reference-1440.png",
+      "side": "reference",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "state": "saved pack"
+    },
+    {
+      "file": "application-1024.png",
+      "side": "application",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "state": "saved pack"
+    },
+    {
+      "file": "reference-1024.png",
+      "side": "reference",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "state": "saved pack"
+    },
+    {
+      "file": "application-820.png",
+      "side": "application",
+      "viewport": {
+        "width": 820,
+        "height": 800
+      },
+      "state": "saved pack"
+    },
+    {
+      "file": "reference-820.png",
+      "side": "reference",
+      "viewport": {
+        "width": 820,
+        "height": 800
+      },
+      "state": "saved pack"
+    },
+    {
+      "file": "application-770.png",
+      "side": "application",
+      "viewport": {
+        "width": 770,
+        "height": 900
+      },
+      "state": "saved pack"
+    },
+    {
+      "file": "reference-770.png",
+      "side": "reference",
+      "viewport": {
+        "width": 770,
+        "height": 900
+      },
+      "state": "saved pack"
+    },
+    {
+      "file": "application-390.png",
+      "side": "application",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "saved pack"
+    },
+    {
+      "file": "reference-390.png",
+      "side": "reference",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "saved pack"
+    },
+    {
+      "file": "application-320.png",
+      "side": "application",
+      "viewport": {
+        "width": 320,
+        "height": 800
+      },
+      "state": "saved pack"
+    },
+    {
+      "file": "reference-320.png",
+      "side": "reference",
+      "viewport": {
+        "width": 320,
+        "height": 800
+      },
+      "state": "saved pack"
+    },
+    {
+      "file": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03-desktop-01.png",
+      "side": "new reference capture; historical upload unavailable",
+      "viewport": {
+        "width": 1900,
+        "height": 1080
+      },
+      "starting_section": 1
+    },
+    {
+      "file": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03-desktop-02.png",
+      "side": "new reference capture; historical upload unavailable",
+      "viewport": {
+        "width": 1900,
+        "height": 1080
+      },
+      "starting_section": 2
+    },
+    {
+      "file": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03-desktop-03.png",
+      "side": "new reference capture; historical upload unavailable",
+      "viewport": {
+        "width": 1900,
+        "height": 1080
+      },
+      "starting_section": 4
+    },
+    {
+      "file": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03-desktop-04.png",
+      "side": "new reference capture; historical upload unavailable",
+      "viewport": {
+        "width": 1900,
+        "height": 1080
+      },
+      "starting_section": 6
+    },
+    {
+      "file": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03-desktop-05.png",
+      "side": "new reference capture; historical upload unavailable",
+      "viewport": {
+        "width": 1900,
+        "height": 1080
+      },
+      "starting_section": 8
+    }
+  ],
+  "source_hashes": {
+    "src/app/styles/job-pack.css": "e31bc9a96669d66736c43116b1abb52582bd6c8961f62b9f9804d2591e7fe4d5",
+    "src/app/desktop-shell.css": "9a0b681f406033c0fd54cfb30d5e8b486df402653cc84493d1808eb8b34b14c0",
+    "src/documents/components/client/job-pack-screen.tsx": "21a54fe929446d4d1acb1ce1f958eda4e530a866299abbba999736edda4e7c2e",
+    "src/documents/components/client/job-pack-entry.tsx": "a18b4f9dff7e038fa004db3e71a5ae06065b11d7fc480313b55079c3b6e25ade",
+    "tests/fixtures/job-pack-read.json": "aad9a8b819abf8cbb7896004bb0ac9ee832b8b681c2bd889f612ef234974f1ec"
+  },
+  "final_print_capture_at": "2026-09-24T01:16:33.246Z",
+  "final_print_source_hashes": {
+    "src/documents/print-view.ts": "b46c8302a6e3ea2021bb430730ba0a864b76d6fddab76cdbc79362d9370061a0",
+    "src/documents/components/client/job-pack-screen.tsx": "92fbd3a771148c17324c3289842207ff93c4b6db9784f75f61a440bd6223c841",
+    "src/app/styles/job-pack.css": "03c60a7e70f6789e72ca680808af46359362924dbab215f1eed13d964faaf687"
+  },
+  "zoom_proof": {
+    "method": "Effective browser-zoom viewport emulation, not CSS zoom or a physical browser UI check",
+    "display": {
+      "width": 1440,
+      "height": 960
+    },
+    "css_viewport": {
+      "width": 720,
+      "height": 480
+    },
+    "device_scale_factor": 2,
+    "captured_at": "2026-09-24T01:21:45.338Z"
+  }
+}

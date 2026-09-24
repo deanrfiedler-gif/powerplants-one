@@ -9,7 +9,12 @@ import {
   Status,
   ValidationFields,
 } from "../components/business-ui";
-import { LookupField, RecordPanel, RecordTabs } from "../components/record-ui";
+import {
+  LookupField,
+  LocalDateTimeField,
+  RecordPanel,
+  RecordTabs,
+} from "../components/record-ui";
 import { Board, Grid } from "../components/crm-worklist-board";
 import {
   ForecastWorklist,
@@ -28,6 +33,9 @@ import {
   appointmentFixture,
   areaFixture,
   customerRecordTabsFixture,
+  salesEvidenceFixture,
+  salesRecordTabsFixture,
+  equipmentDateFixture,
   fixtureDate,
   fixtureId,
   fixtureTime,
@@ -51,8 +59,10 @@ function FieldsExample({
         : "",
     ),
     [kind, setKind] = useState(""),
-    [notes, setNotes] = useState(""),
+    [notes, setNotes] = useState(state === "sales-evidence" ? salesEvidenceFixture : ""),
     [date, setDate] = useState(""),
+    [effective, setEffective] = useState(equipmentDateFixture.value),
+    [movement, setMovement] = useState(equipmentDateFixture.value),
     [saved, setSaved] = useState(false),
     [invalid, setInvalid] = useState(state === "invalid");
   const error = useMemo(
@@ -116,9 +126,24 @@ function FieldsExample({
             name="catalogue-notes"
             label="Notes"
             multiline
+            maxLength={4000}
             value={notes}
             onChange={setNotes}
             hint="Include useful context; no customer data."
+          />
+          <LocalDateTimeField
+            name={equipmentDateFixture.firstName}
+            validationField={equipmentDateFixture.validationField}
+            label="Configuration effective time"
+            value={effective}
+            onChange={setEffective}
+          />
+          <LocalDateTimeField
+            name={equipmentDateFixture.secondName}
+            validationField={equipmentDateFixture.validationField}
+            label="Movement effective time"
+            value={movement}
+            onChange={setMovement}
           />
           <label>
             <input type="checkbox" /> Include a follow-up reminder in this
@@ -474,9 +499,15 @@ function AreasExample({ state }: { state: string }) {
     </section>
   );
 }
-function NavigationExample({ menu = false, state = "default" }: { menu?: boolean; state?: string }) {
+function NavigationExample({
+  menu = false,
+  state = "default",
+}: {
+  menu?: boolean;
+  state?: string;
+}) {
   const [value, setValue] = useState("overview");
-  const options = state === "cs-customer" ? customerRecordTabsFixture : [
+  const options = state === "cs-customer" ? customerRecordTabsFixture : state === "sales-workspace" ? salesRecordTabsFixture : [
     { id: "overview", label: "Overview" },
     { id: "details", label: "Details" },
     { id: "history", label: "History" },

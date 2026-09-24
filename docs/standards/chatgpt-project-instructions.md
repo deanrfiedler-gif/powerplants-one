@@ -14,7 +14,7 @@ Test sales, service, upgrades, greenhouse projects and warranty/returns against 
 
 PP-01 demonstrates customer/site/equipment context, service intake, authorised work orders, checked/issued job packs, technician scheduling, field labour/parts/findings/photos, customer acknowledgement, reviewed reports and controlled Finance handoff/reconciliation.
 
-Follow P01–P12; verify STATUS, handovers and publications. PPO-009 CRM differs from P09. Read BP-03 section 0 and I1/I2. Approved r02: Essential customers/manual leads, opportunities, activities/handovers, desktop/mobile/access; Next reports/module links, email/calendar; Later automation/scoring/AI. Defer capture/prospecting, proposals/e-signatures, marketing and subscription comparisons. Retain estimate references/BP-04 scope.
+Follow P01–P12; verify STATUS and handovers. PPO-009 CRM is separate from P09. Read BP-03 section 0, I1/I2 and approved report r02 before CRM work; preserve its Essential/Next/Later boundaries, estimate references and BP-04 scope.
 
 ## 3. Sources and continuity
 
@@ -30,7 +30,7 @@ Current user decisions override older assumptions. Date-check baselines and reso
 
 Follow BP-02/ADR-0003: TypeScript/Next.js monolith, PostgreSQL, domain services, server permissions, durable operations/outbox and replaceable adapters. Pin supported dependencies; document architecture rationale/alternatives. Avoid unnecessary infrastructure.
 
-MYOB Acumatica remains the intended ERP authority; SharePoint owns business documents; native CAD tools retain authoring/dependencies. Verify licences, configuration, interfaces and record ownership before live integration. Never invent ERP endpoints or CREMS formulas.
+MYOB Acumatica remains the intended ERP authority; SharePoint owns business documents; native CAD tools retain authoring/dependencies. Verify ownership and interfaces before live integration. Never invent ERP endpoints or CREMS formulas.
 
 Use synthetic data and clearly simulated interfaces. Decide operational service-order/appointment/labour ownership explicitly. Retain CREMS, Pipedrive and Smartsheet until a tested, accepted transition. Assess build/configure/integrate/retain per capability.
 
@@ -56,7 +56,7 @@ Prevent duplicate work/financial effects on retry. Reconcile unknown outcomes. D
 
 ## 7. User experience and quality
 
-Use accessible layouts, keyboard controls and explicit save status; avoid jargon.
+Use accessible layouts, keyboard controls and explicit save status.
 
 Use Australian English, Roboto/Verdana, navy #242a37, green #62bb46 and the intact logo per ui-style-specification.md. CRM: crm-desktop-mobile-refinements.md; shell/rails: department-navigation-icons.md. Show synthetic/environment context.
 
@@ -70,24 +70,24 @@ Complete authorised work; state assumptions. Ask only when a consequential missi
 
 Preserve unrelated work. Use a dedicated branch/reviewable PR; merge only within granted scope after required checks/review. Respect permissions; update affected specifications/registers.
 
-Repository work excludes paid services, public deployment, access changes, live transactions/migration and messages to others. Prepare before seeking approval. Keep secrets/raw exports/restricted records outside Git; use synthetic or approved redacted fixtures.
+Repository work grants no paid-service, deployment, access, live-transaction, migration or messaging authority. Keep secrets/operational data outside Git; use synthetic or approved redacted fixtures.
 
 ## 9. Verification and communication
 
-Run foundation/prototype/naming checks.
+Run foundation, prototype and naming checks.
 
-Test behaviour: permissions, booking conflicts, stale revisions, offline replay, deduplication, document integrity and Finance reconciliation. Visually check relevant screens/documents. Record commit/environment.
+Test permissions, conflicts, stale revisions, replay, deduplication, document integrity and Finance reconciliation. Inspect relevant screens; record commit/environment.
 
-Separate decisions, evidence, proposals and open questions; distinguish delivery, tests, acceptance and production readiness. Cite sources and limits.
+Separate decisions, evidence, proposals, questions, delivery, verification, acceptance and deployment. Cite sources and limits.
 
-Preserve ES-02 exact costs and PJ-09 scoped close/reopen. ES-08: accepted design board (es08-design-board.md: D1–D15, DEC-R1/R2) guides the geometry build, which needs separate authority, WP-G00 first, no migration slot. ADR-0034 review is not engineering approval. Retain four CI lanes (ci-retained-suite-isolation.md).
+Preserve ES-02 exact costs and PJ-09 close/reopen. ES-01–10/Excel authority: estimating-native-programme.md; progress: estimating-programme-handover.md. ES-08 D1–D15/DEC-R1/R2: WP-G00 first; no migration slot, engineering approval or deployment. Retain four CI lanes (ci-retained-suite-isolation.md).
 
-Keep synthetic mailboxes private and bodies outside shared Activities; see demo-email-crm-integration.md. CI and Outlook acceptance are separate. SH-01–06: docs/delivery/sh-platform-handover.md; teams/DK/delivery pending.
+Mail: preserve private mailboxes and body separation (demo-email-crm-integration.md); CI is not Outlook acceptance. SH-01–06: docs/delivery/sh-platform-handover.md; teams/DK/delivery pending.
 
 CS: follow ADR-0042 and cs-native-completion-handover.md. Preserve CS-05 identities, Grouping, service links and E2 snapshots. Readiness grants no work authority; survey handovers bind exact reviewed snapshots. Account plans create no bookings/forecasts. Reuse SH and Activity; Finance /account stays Finance.
 
 Fertigation: follow `docs/delivery/priva-fertigation-native-handover.md`. Preserve exact scopes, neutral context and unverified supplier conclusions. Merge/deployment need separate authorisation.
 
-## Native Engineering continuity
+Sales CR-01–05: follow ADR-0046 and sales-native-completion-handover.md. Preserve frozen submissions, immutable Won due, source-scoped receipts and aftercare unknown policies. Receiving creates no downstream work.
 
-EN-01–EN-08: read ADR-0047 and engineering-native-control-handover.md. Preserve EN-06–EN-08 engines, package IDs and exact source lineage. File version, engineering revision, review, purpose and issue are distinct. Changed sources require reassessment. Current policy and separate author/reviewer/issuer duties govern actions and recovery. Tests grant no statutory, business, visual or deployment acceptance.
+Equipment: ADR-0045 / equipment-native-completion-handover.md. Reuse Assets, CS, Inspection and SH; scanning is read-only. Preserve originals and historic context. Recovery grants no controller-restore authority; support grants no replacement authority.

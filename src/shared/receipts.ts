@@ -1,4 +1,8 @@
+import { aftercareReceiptAuthority } from "../sales/aftercare-service";
+import { handoverReceiptAuthority } from "../sales/handover-service";
 import { personEditAuthority } from "./contacts/commands";
+import { readEquipmentChange } from "../equipment/changes";
+import { equipmentEvidenceRecord, calibrationAuthority } from "../equipment/evidence";
 import { csRecord } from "./cs/service";
 import { companyContext } from "./authority";
 import { createResolutionAuthority } from "../estimating/specialist/recovery";
@@ -49,7 +53,11 @@ export async function readOperation(
   );
   const r = result.rows[0];
   if (!r) throw unavailable();
-  if (["SiteReadiness","SiteSurvey","AccountPlan"].includes(r.object_type)) {
+  if (r.object_type === "AftercareRecord") {
+    await aftercareReceiptAuthority(client,p,r.record_id,r.command);
+  } else if (r.object_type === "SalesHandover") {
+    await handoverReceiptAuthority(client,p,r.record_id,r.command);
+  } else if (["SiteReadiness","SiteSurvey","AccountPlan"].includes(r.object_type)) {
     const row=await csRecord(client,p,r.object_type==="SiteReadiness"?"Readiness":r.object_type==="SiteSurvey"?"Survey":"AccountPlan",r.record_id,true);
     if(r.command?.startsWith("CsCreate:"))await companyContext(client,p,row.company_id,row.site_id,"shared.create");
   } else if (r.command === "RevisePerson") {
@@ -90,6 +98,17 @@ export async function readOperation(
   } else if (r.object_type === "DraftQuoteRevision") {
     await quoteContext(client,p,r.record_id,"estimating.quote.prepare");
     await quoteContext(client,p,r.record_id);
+  } else if (r.object_type === "EquipmentChange") {
+    if (!["ProposeEquipmentChange", "ReviewEquipmentChange"].includes(r.command)) throw unavailable();
+    await readEquipmentChange(client, p, r.record_id, true);
+  } else if (["EquipmentBackup", "EquipmentBulletin", "EquipmentSupport"].includes(r.object_type)) {
+    const kind = r.object_type === "EquipmentBackup" ? "backups" : r.object_type === "EquipmentBulletin" ? "bulletins" : "support";
+    const commands = {backups:["CreateEquipmentbackups","ReviewEquipmentBackup"],bulletins:["CreateEquipmentbulletins","ReviewEquipmentBulletin","CloseEquipmentBulletin"],support:["CreateEquipmentsupport"]};
+    if (!commands[kind].includes(r.command)) throw unavailable();
+    await equipmentEvidenceRecord(client,p,kind,r.record_id,true);
+  } else if (r.object_type === "CalibrationEvidence") {
+    if (r.command !== "RecordEquipmentCalibration") throw unavailable();
+    await calibrationAuthority(client,p,r.record_id,true);
   } else if (r.object_type === "EngineeringPackage") {
     if (r.command?.startsWith("EngineeringControl:")) await engineeringControlReceiptAuthority(client,p,r.record_id,operation_id);
     else await engineeringRow(client, p, r.record_id, r.command === "CreateEngineeringRequest" ? "engineering.create" : "engineering.edit");

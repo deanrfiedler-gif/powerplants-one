@@ -1,6 +1,8 @@
-# Estimate register — design reference
+# Estimating intake and workload — design reference
 
 Stable entry: `route:/estimating`. Owner: Dean Fiedler. Status: **Draft for visual review**.
+
+The 24 September native increment changes this route to the permitted intake/workload front door; the original saved-estimate register remains at `?tab=estimates`. Use the exact desktop/mobile, state, filter, authority and handover contract in [ES-01](scope-es-01.md). This route has no exact retained mockup; the ES-02 wizard HTML is not its visual baseline. Reused controls remain PageHeader, Button/ButtonLink, ErrorNotice, Status and the current shell. See the [programme handover](../../../delivery/estimating-programme-handover.md) for executed evidence and remaining intake-policy limitations.
 Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/estimating`.
 This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
 
@@ -32,7 +34,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-- [PPO-Estimation-Wizard-Container-r03.html](../../../reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html)
+No exact ES-01 mockup or HTML is available. The related [ES-02 wizard](../../../reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html) is a downstream workflow reference, not the workload layout baseline.
 
 ## Behaviour, handovers and verification
 

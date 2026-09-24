@@ -45,8 +45,13 @@ test("approved field views keep filters, open controlled records and preserve ou
   ).toHaveAttribute("href", /^\/service\/appointments\//);
   await page.getByRole("tab", { name: "Job pack", exact: true }).click();
   await expect(
-    page.getByRole("link", { name: "Open job packs", exact: true }),
-  ).toHaveAttribute("href", "/service/packs");
+    page
+      .getByRole("region", { name: "Visit job pack", exact: true })
+      .getByRole("link"),
+  ).toHaveAttribute(
+    "href",
+    /^\/service\/packs\/(?:[0-9a-f-]{36}|new\?appointment_id=[0-9a-f-]{36})$/,
+  );
   await page.getByRole("tab", { name: "Field notes", exact: true }).click();
   await expect(
     page.getByRole("link", { name: "Open My Jobs", exact: true }),

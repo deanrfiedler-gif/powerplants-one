@@ -1,3 +1,4 @@
+import type { DealFact } from "./insights";
 import { opportunityStages, type OpportunityStage } from "./stages";
 import { leadsAvailable } from "./leads/context";
 import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
@@ -15,6 +16,7 @@ const key = randomBytes(32);
 const sign = (body: string) => createHmac("sha256", key).update(body).digest("base64url");
 type Cursor = { binding: string; as_of: string; after: string; sort_key: string; stamp: string };
 export type WorklistItem = {
+  history?: DealFact[];
   id: string; display_number: string; title: string; stage_id: OpportunityStage;
   close_outcome: "Open" | "Won" | "Lost"; stage_entered_at: string; updated_at: string; version: number;
   company_id: string; company_name: string; organisation_name: string;
@@ -69,6 +71,7 @@ export async function listOpportunities(p: Principal, input: unknown = {}) {
         o.company_id,co.display_name AS company_name,r.display_name AS organisation_name,o.site_id,s.display_name AS site_name,
         o.primary_person_id,pe.display_name AS contact_name,o.owner_id,u.display_name AS owner_name,a.id AS next_action_id,a.summary AS next_action_summary,a.owner_id AS action_owner_id,au.display_name AS action_owner_name,a.due_at,a.due_needed,a.version AS action_version,
         CASE WHEN a.id IS NULL THEN 'Unavailable' WHEN a.status NOT IN ('Open','InProgress') THEN 'Needed' WHEN a.due_needed THEN 'DueNeeded' WHEN a.due_at<$10::timestamptz THEN 'Overdue' ELSE 'Upcoming' END AS next_action_state,
+        (SELECT coalesce(jsonb_agg(jsonb_build_object('version',e.opportunity_version,'at',e.created_at,'from_stage',e.from_stage,'to_stage',e.to_stage,'close_date',e.record_snapshot->>'expected_close_date','close_recorded',coalesce(e.record_snapshot ? 'expected_close_date',false)) ORDER BY e.opportunity_version),'[]'::jsonb) FROM ppo.opportunity_events e WHERE e.workspace_id=o.workspace_id AND e.opportunity_id=o.id) AS history,
         ${sortKey} AS sort_key
       FROM ppo.opportunities o JOIN ppo.companies co ON (co.workspace_id,co.id)=(o.workspace_id,o.company_id)
       JOIN ppo.users u ON (u.workspace_id,u.id)=(o.workspace_id,o.owner_id)
