@@ -233,6 +233,10 @@ export const destination = (id: string) =>
 export const matchesPath = (path: string, href: string) =>
   path === href || (href !== "/" && path.startsWith(href + "/"));
 export function pageForPath(path: string) {
+  if (matchesPath(path, "/maintenance/coverage")) return { ...destination("agreements"), label: "Coverage & entitlement" };
+  if (matchesPath(path, "/maintenance/renewals")) return { ...destination("agreements"), label: "Renewals & relationship review" };
+  if (matchesPath(path, "/maintenance/plans")) return { ...destination("maintenance"), label: "Maintenance plans" };
+  if (matchesPath(path, "/warranty/supplier-recovery")) return { ...destination("warranty"), label: "Supplier recovery" };
   if (/^\/estimating\/estimates\/[0-9a-f-]{36}\/sources$/.test(path)) return {...destination("pricing"), label: "Compare source costs"};
   if (path === "/search") return { ...destination("work"), id: "search", label: "Search", href: "/search" };
   if (materialsPath(path) || changesPath(path) || commissioningPath(path) || controlPath(path)) return destination("engineering");

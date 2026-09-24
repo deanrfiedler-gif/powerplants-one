@@ -236,7 +236,13 @@ async function fixtures(page: Page, origin: string) {
   };
 }
 const overflow = (page: Page) =>
-  page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1);
+  page.evaluate(() =>
+    [
+      document.documentElement,
+      document.querySelector("#main"),
+      document.querySelector(".ma-workspace"),
+    ].some((el) => el && el.scrollWidth > el.clientWidth + 1),
+  );
 test.beforeEach(async ({ page, baseURL }) => login(page, baseURL!));
 test("all fourteen native routes expose their exact guide and preserve shell focus", async ({
   page,
@@ -248,6 +254,9 @@ test("all fourteen native routes expose their exact guide and preserve shell foc
     for (const tail of ["", `/${id}`]) {
       await page.goto(`/${path}${tail}`);
       await expect(page.locator(".ma-workspace")).toBeVisible();
+      await expect(
+        page.getByText("Page unavailable", { exact: true }),
+      ).toHaveCount(0);
       await expect(
         page.locator(".ma-context, .ma-snapshot").first(),
       ).toBeVisible();
@@ -278,11 +287,9 @@ test("native reviewed forms preserve draft through guidance and recover a lost a
   test.setTimeout(120000);
   const f = await fixtures(page, baseURL!);
   await page.goto(`/warranty/cases/${f.war}`);
-  const action = page
-    .locator("details.ma-action")
-    .filter({
-      has: page.locator("summary", { hasText: "Assign next case review" }),
-    });
+  const action = page.locator("details.ma-action").filter({
+    has: page.locator("summary", { hasText: "Assign next case review" }),
+  });
   await action.locator("summary").click();
   await action
     .getByLabel("Responsible owner", { exact: false })
@@ -346,11 +353,34 @@ test("paired original references and complete native shell reflow with overflow 
   const width = info.project.name.startsWith("mobile") ? 390 : 1440;
   for (const [path, id] of f.paths) {
     await page.setViewportSize({ width, height: width === 390 ? 844 : 960 });
+    await page.goto(`/${path}`);
+    await expect(page.locator(".ma-snapshot")).toBeVisible();
+    expect(await overflow(page)).toBe(false);
+    await page.screenshot({
+      path: info.outputPath(
+        path.replaceAll("/", "-") + `-register-${width}.png`,
+      ),
+    });
     await page.goto(`/${path}/${id}`);
-    await expect(page.locator(".ma-context")).toBeVisible();
+    await expect(page.locator(".ma-workspace > .ma-context")).toBeVisible();
     expect(await overflow(page)).toBe(false);
     await page.screenshot({
       path: info.outputPath(path.replaceAll("/", "-") + `-${width}.png`),
+    });
+  }
+  for (const view of [
+    "evidence",
+    "coverage",
+    "resolution",
+    "customer",
+    "supplier",
+    "history",
+  ]) {
+    await page.goto(`/warranty/cases/${f.war}?view=${view}`);
+    await expect(page.locator(".ma-workspace > .ma-context")).toBeVisible();
+    expect(await overflow(page)).toBe(false);
+    await page.screenshot({
+      path: info.outputPath(`warranty-view-${view}-${width}.png`),
     });
   }
   for (const [w, h] of [
@@ -361,7 +391,7 @@ test("paired original references and complete native shell reflow with overflow 
   ]) {
     await page.setViewportSize({ width: w, height: h });
     await page.goto(`/warranty/cases/${f.war}`);
-    await expect(page.locator(".ma-context")).toBeVisible();
+    await expect(page.locator(".ma-workspace > .ma-context")).toBeVisible();
     expect(await overflow(page)).toBe(false);
     await page.screenshot({
       path: info.outputPath(`warranty-reflow-${w}.png`),
@@ -396,6 +426,7 @@ test("paired original references and complete native shell reflow with overflow 
       sha256: createHash("sha256").update(bytes).digest("hex"),
     });
     const ref = await page.context().newPage();
+    await ref.route(/^https?:/, (r) => r.abort());
     await ref.setViewportSize({ width, height: width === 390 ? 844 : 960 });
     await ref.goto(pathToFileURL(local).href);
     await expect(ref.locator(scope)).toBeVisible();
@@ -431,8 +462,8 @@ test("filtered-empty, read-only, missing record and failed-read recovery are exp
     page.getByRole("button", { name: "New record", exact: true }),
   ).toHaveCount(0);
   await page.goto(`/warranty/cases/${randomUUID()}`);
-  await expect(page.getByRole("alert")).toBeVisible();
-  await expect(page.locator(".ma-context")).toHaveCount(0);
+  await expect(page.locator(".ma-workspace").getByRole("alert")).toBeVisible();
+  await expect(page.locator(".ma-workspace > .ma-context")).toHaveCount(0);
   await login(page, baseURL!);
   await page.route("**/api/v1/maintenance/plans", (route) =>
     route.fulfill({
@@ -445,7 +476,7 @@ test("filtered-empty, read-only, missing record and failed-read recovery are exp
     }),
   );
   await page.goto("/maintenance/plans");
-  await expect(page.getByRole("alert")).toBeVisible();
+  await expect(page.locator(".ma-workspace").getByRole("alert")).toBeVisible();
   await expect(page.locator(".ma-register article")).toHaveCount(0);
   await page.unroute("**/api/v1/maintenance/plans");
   await page.getByRole("button", { name: /Retry/ }).click();

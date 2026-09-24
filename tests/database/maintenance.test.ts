@@ -21,6 +21,12 @@ import {
   renewalSource,
 } from "../../src/maintenance/reads";
 import { readOperation } from "../../src/shared/receipts";
+import { createAsset } from "../../src/shared/commands";
+import {
+  previewEquipmentChange,
+  proposeEquipmentChange,
+  reviewEquipmentChange,
+} from "../../src/equipment/changes";
 import {
   agreement,
   plan,
@@ -531,6 +537,19 @@ test("MA07 supplier evidence chronology, partial approval, credit reference and 
       ...base(),
       expected_version: 4,
       action: "Credit",
+      data: {
+        ...credit,
+        reference: credit.reference.toLowerCase(),
+        amount_minor: 1000,
+      },
+    }),
+    code("Conflict", "DuplicateRecord", "Duplicate", "RelationshipConflict"),
+  );
+  await assert.rejects(
+    recoveryCommand(finance, id, {
+      ...base(),
+      expected_version: 4,
+      action: "Credit",
       data: { ...credit, amount_minor: 3000, reference: "SYN-EXCESS" },
     }),
     code("ValidationFailed", "InvalidData"),
@@ -591,4 +610,210 @@ test("current action revocation blocks original operation receipt replay", async
       [CRM.owner],
     );
   }
+});
+test("AT-33 relocation and retirement retain original obligations and require future-plan review", async () => {
+  const p = await principal();
+  for (const kind of ["Relocate", "Retire"]) {
+    const assetId = randomUUID();
+    await createAsset(p, {
+      ...base(),
+      id: assetId,
+      company_id: CRM.company,
+      site_id: CRM.site,
+      description: `SYN ${kind} maintenance evidence`,
+      identity_status: "Verified",
+      effective_at: "2026-01-01T00:00:00Z",
+      configuration: "SYN original configuration",
+    });
+    const a = await plan(assetId);
+    await planCommand(p, a.id, {
+      ...base(),
+      expected_version: 2,
+      action: "Generate",
+      from: "2026-01-01",
+      until: "2026-03-31",
+    });
+    const original = await rows(
+      "SELECT to_jsonb(t) AS row FROM ppo.maintenance_occurrences t WHERE plan_id=$1 ORDER BY original_due",
+      [a.id],
+    );
+    const impact = await previewEquipmentChange(p, assetId),
+      change = randomUUID();
+    await proposeEquipmentChange(p, assetId, {
+      ...base(),
+      id: change,
+      expected_version: impact.impact.asset_version,
+      kind,
+      effective_at: new Date().toISOString(),
+      source_reference: "SYN exact physical change",
+      source_revision: "1",
+      basis_hash: impact.basis_hash,
+      consequences:
+        "Owned future maintenance review; retain original obligations",
+      ...(kind === "Relocate"
+        ? { site_id: "70000000-0000-4000-8000-000000000002" }
+        : {}),
+    });
+    await reviewEquipmentChange(p, change, {
+      ...base(),
+      expected_version: 1,
+      decision: "Apply",
+    });
+    assert.equal(
+      (await workspace(p, "plans", a.id)).row.state,
+      "ReviewRequired",
+    );
+    assert.deepEqual(
+      await rows(
+        "SELECT to_jsonb(t) AS row FROM ppo.maintenance_occurrences t WHERE plan_id=$1 ORDER BY original_due",
+        [a.id],
+      ),
+      original,
+    );
+    await assert.rejects(
+      planCommand(p, a.id, {
+        ...base(),
+        expected_version: 4,
+        action: "Generate",
+        from: "2026-04-01",
+        until: "2026-05-31",
+      }),
+      code("SourceReviewRequired", "InvalidData"),
+    );
+  }
+});
+
+test("MA06 goodwill is separate from entitlement and Service authority; withdrawal blocks receiving", async () => {
+  const w = await warranty(),
+    finance = await principal("finance-reviewer");
+  const entitlement = await assessment(
+    w.p,
+    null,
+    "2026-09-01",
+    w.id,
+    3,
+    "Disputed",
+  );
+  const data = {
+    assessment_id: entitlement,
+    remedy: "Repair",
+    scope: "SYN disputed exact repair",
+    access_review: "SYN controlled intervention",
+    target_date: "2026-10-01",
+    owner_id: CRM.owner,
+  };
+  await warrantyCommand(w.p, w.id, {
+    ...base(),
+    expected_version: 4,
+    action: "Plan",
+    data,
+  });
+  const plan = (await workspace(w.p, "cases", w.id)).sources.plan as {
+    id: string;
+  };
+  const decision = {
+    plan_id: plan.id,
+    decision: "Approved",
+    authority_reference: "SYN exact separate decision",
+    basis: "Retained disputed entitlement",
+  };
+  await assert.rejects(
+    warrantyCommand(w.p, w.id, {
+      ...base(),
+      expected_version: 5,
+      action: "Authority",
+      data: decision,
+    }),
+    code("SourceReviewRequired"),
+  );
+  await assert.rejects(
+    warrantyCommand(w.p, w.id, {
+      ...base(),
+      expected_version: 5,
+      action: "Goodwill",
+      data: decision,
+    }),
+    code("RecordUnavailable", "Forbidden"),
+  );
+  await warrantyCommand(finance, w.id, {
+    ...base(),
+    expected_version: 5,
+    action: "Goodwill",
+    data: decision,
+  });
+  assert.equal(
+    (await workspace(w.p, "coverage", entitlement)).heading.state,
+    "Disputed",
+  );
+  const request = {
+    assessment_id: entitlement,
+    plan_id: plan.id,
+    owner_id: CRM.owner,
+  };
+  await assert.rejects(
+    prepareWork(w.p, "cases", w.id, {
+      ...base(),
+      expected_version: 6,
+      ...request,
+    }),
+    code("SourceReviewRequired"),
+  );
+  await warrantyCommand(w.p, w.id, {
+    ...base(),
+    expected_version: 6,
+    action: "Authority",
+    data: decision,
+  });
+  await warrantyCommand(finance, w.id, {
+    ...base(),
+    expected_version: 7,
+    action: "Goodwill",
+    data: { ...decision, decision: "Declined" },
+  });
+  await assert.rejects(
+    prepareWork(w.p, "cases", w.id, {
+      ...base(),
+      expected_version: 8,
+      ...request,
+    }),
+    code("SourceReviewRequired"),
+  );
+  await warrantyCommand(finance, w.id, {
+    ...base(),
+    expected_version: 8,
+    action: "Goodwill",
+    data: decision,
+  });
+  await prepareWork(w.p, "cases", w.id, {
+    ...base(),
+    expected_version: 9,
+    ...request,
+  });
+  await warrantyCommand(w.p, w.id, {
+    ...base(),
+    expected_version: 10,
+    action: "Plan",
+    data: { ...data, scope: "SYN changed repair scope" },
+  });
+  await assert.rejects(
+    warrantyCommand(w.p, w.id, {
+      ...base(),
+      expected_version: 11,
+      action: "Authority",
+      data: decision,
+    }),
+    code("SourceReviewRequired"),
+  );
+  const current = (await workspace(w.p, "cases", w.id)).sources.plan as {
+    id: string;
+  };
+  await assert.rejects(
+    prepareWork(w.p, "cases", w.id, {
+      ...base(),
+      expected_version: 11,
+      ...request,
+      plan_id: current.id,
+    }),
+    code("SourceReviewRequired"),
+  );
 });

@@ -40,7 +40,7 @@ Equipment configuration/physical changes retain originals and cause owned Review
 
 ## Warranty and recovery boundaries
 
-Evidence references are case-insensitively unique per case. Evidence review retains exact evidence revision/source hash. Resolution plans are immutable; goodwill and Service authority name the exact plan/content hash. New content cannot reuse either decision. Covered entitlement or separate approved goodwill is required for a non-investigation remedy; missing facts are not cured by goodwill.
+Evidence references are case-insensitively unique per case. Evidence review retains exact evidence revision/source hash. Resolution plans are immutable; goodwill and Service authority name the exact plan/content hash. New content cannot reuse either decision. Intervention requests require Covered entitlement or a current exact-plan approved goodwill decision as well as Service authority. Investigation remains a separately authorised identification request; it grants no intervention or free-work entitlement. Missing facts are not cured by goodwill.
 
 Customer updates retain exact completed Service result, recipient/content/revision/hash. Responses name the current update. Reservations/Disagreed/Unavailable creates an owned dated Activity. Resolution requires the current Accepted response, current completed remedy and completed earlier customer follow-ups; it leaves supplier and Finance state independent. A reviewed canonical replacement has a separately retained source bridge for its historical remedy, not a new work-authority shortcut.
 

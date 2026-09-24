@@ -2,9 +2,18 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { departmentRails, destination, destinations, navigationForCapabilities, railDestinationForLocation, railDestinations, workspaceForLocation, departmentHref, menuGroups } from "../../src/shell/navigation";
+import { departmentRails, destination, destinations, navigationForCapabilities, railDestinationForLocation, railDestinations, workspaceForLocation, departmentHref, menuGroups, pageForPath } from "../../src/shell/navigation";
 import { NavigationIcon, navigationDrawings, type NavigationIconName } from "../../src/components/navigation-icons";
 import { moduleWorkspaceForPath } from "../../src/shell/module-workspaces";
+test("all Maintenance and Warranty routes retain their Service shell parent", () => {
+  for (const [path, parent] of [["maintenance/agreements","agreements"],["maintenance/coverage","agreements"],["maintenance/renewals","agreements"],["maintenance/plans","maintenance"],["maintenance/due","maintenance"],["warranty/cases","warranty"],["warranty/supplier-recovery","warranty"]]) {
+    for (const tail of ["", "/10000000-0000-4000-8000-000000000099"]) {
+      const route = "/"+path+tail;
+      assert.equal(pageForPath(route)?.workspace,"service");
+      assert.equal(railDestinationForLocation(route,new URLSearchParams(),"service"),parent);
+    }
+  }
+});
 
 test("seven full ordered compositions retain withheld positions and My Work placement", () => {
   const expected = {

@@ -94,4 +94,4 @@ Sales CR-01–05: follow ADR-0046 and sales-native-completion-handover.md. Prese
 
 Equipment: ADR-0045 / equipment-native-completion-handover.md. Reuse Assets, CS, Inspection and SH; scanning is read-only. Preserve originals and historic context. Recovery grants no controller-restore authority; support grants no replacement authority.
 
-MA-01–07: ADR-0049 / maintenance-warranty-api.md. Preserve entitlement, authority, original due, exact Service results and customer/Finance separation. Equipment is canonical; SC-08 is unavailable.
+MA-01–07: follow ADR-0049. Preserve exact entitlement, due, Service and customer/Finance decisions. Equipment is canonical; SC-08 is unavailable.

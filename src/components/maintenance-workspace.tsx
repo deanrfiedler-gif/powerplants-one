@@ -56,6 +56,66 @@ export const maPages: Record<
   },
 };
 export type MaWorkspace = Awaited<ReturnType<typeof workspace>>;
+function recordFacts(family: Family, detail: MaWorkspace) {
+  const revision = (
+    detail.sources.revisions as
+      { content: Record<string, unknown> }[] | undefined
+  )?.[0];
+  const row =
+    revision?.content ?? (detail.row as unknown as Record<string, unknown>);
+  const keys: Record<Family, string[]> = {
+    agreements: [
+      "effective_from",
+      "effective_to",
+      "service_scope",
+      "exclusions",
+      "response_terms",
+      "charging_basis",
+      "responsibilities",
+      "source",
+    ],
+    plans: [
+      "task_set_reference",
+      "task_set_revision",
+      "interval",
+      "anchor",
+      "timezone",
+      "window_months",
+      "tolerance",
+      "effective_from",
+      "interval_source",
+      "tasks",
+    ],
+    due: ["original_due", "target_date", "timezone", "state"],
+    coverage: [
+      "event_date",
+      "status",
+      "basis",
+      "cause",
+      "review_due",
+      "next_action",
+    ],
+    renewals: [
+      "review_from",
+      "next_date",
+      "next_action",
+      "proposal",
+      "customer_response",
+    ],
+    cases: ["event_date", "symptoms", "next_review", "next_action", "source"],
+    recovery: [
+      "scope",
+      "claimed_minor",
+      "approved_minor",
+      "credited_minor",
+      "unrecovered_minor",
+      "currency",
+      "tax_basis",
+      "due_date",
+    ],
+  };
+  return Object.fromEntries(keys[family].map((key) => [key, row[key]]));
+}
 export const pick = (v: Record<string, unknown>, fields: MaField[]) =>
   Object.fromEntries(fields.map((f) => [f.key, v[f.key] ?? null]));
 export function MaintenanceNav() {
@@ -546,9 +606,13 @@ export function MaintenanceRecord({
                   {(t.id === "record" || t.id === "evidence") && (
                     <>
                       <SourceCard
-                        title="Record context"
-                        value={r.data!.row}
+                        title="Current record facts"
+                        value={recordFacts(family, r.data!)}
                         open
+                      />
+                      <SourceCard
+                        title="Retained record identity"
+                        value={r.data!.row}
                       />
                       {r.data!.sources.asset && (
                         <SourceCard

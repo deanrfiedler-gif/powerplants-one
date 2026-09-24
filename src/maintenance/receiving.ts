@@ -156,6 +156,20 @@ export async function prepareWork(
           conflict(
             "The exact current resolution plan requires separate Service authority.",
           );
+        const goodwill = (await history(c, p, id))
+          .filter(
+            (e) => e.action === "Goodwill" && e.content.plan_id === plan.id,
+          )
+          .at(-1);
+        if (
+          plan.remedy !== "Investigate" &&
+          assessment.status !== "Covered" &&
+          (goodwill?.content.decision !== "Approved" ||
+            goodwill.content.content_hash !== plan.content_hash)
+        )
+          conflict(
+            "The current exact-plan goodwill decision no longer supports this intervention request.",
+          );
         tasks = [
           {
             id: plan.id,

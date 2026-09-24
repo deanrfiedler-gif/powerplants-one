@@ -115,7 +115,7 @@ test("MA HTTP native routes, current authority, exact receipts and optimistic co
       }),
     ),
   );
-  assert.deepEqual(writes.map((x) => x.status).sort(), [201, 409]);
+  assert.deepEqual(writes.map((x) => x.status).sort(), [200, 409]);
   const detail = await call(actor, `warranty/cases/${id}`);
   assert.equal(detail.body.row.version, 2);
   assert.equal(detail.body.history.length, 2);
