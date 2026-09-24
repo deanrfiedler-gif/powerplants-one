@@ -208,11 +208,12 @@ test("E2 migration 27 and repeated seed retain legacy DTOs, ledgers, receipts an
   assert.deepEqual(after.filter((_,i)=>i!==identityAt),before.filter((_,i)=>i!==identityAt));
   const originalIds=new Set(before[identityAt].map(r=>r.v.id));
   assert.deepEqual(after[identityAt].filter(r=>originalIds.has(r.v.id)),before[identityAt]);
-  // Seed 41 creates exactly these normal synthetic records. No existing identity changes,
+  // Seeds 41 and 49 create exactly these normal synthetic records. No existing identity changes,
   // no identity backfill and no Facility display number are accepted by this proof.
   const additions=after[identityAt].filter(r=>!originalIds.has(r.v.id)).map(r=>r.v);
   const expectedIds=["c5050000-0000-4000-8000-000000000001","c5050001-0000-4000-8000-000000000001","c5050001-0000-4000-8000-000000000002",...Array.from({length:9},(_,i)=>`c5050002-0000-4000-8000-${String(i+1).padStart(12,"0")}`),"c5050003-0000-4000-8000-000000000001","c5050004-0000-4000-8000-000000000001","c5050004-0000-4000-8000-000000000002","c5050005-0000-4000-8000-000000000001"];
-  assert.deepEqual(additions.map(r=>r.id).sort(),expectedIds.sort());
+  assert.deepEqual(additions.map(r=>r.id).sort(),[...expectedIds,...supplySeedIdentities.map(r=>r.id)].sort());
+  assert.deepEqual(additions.filter(r=>r.object_type==="SupplyRecord").sort((a,b)=>a.id.localeCompare(b.id)),supplySeedIdentities);
   for(const r of additions){assert.equal(r.workspace_id,p.workspace_id);assert.equal(r.synthetic,true);if(r.object_type==="Facility")assert.equal(r.display_number,null);}
   assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations WHERE version<=26 ORDER BY version"),ledger);
   assert.deepEqual(await readEstimate(p,e.id),saved);assert.deepEqual(await draftBytes(p,command.id),bytes);assert.deepEqual(await readOperation(p,input.operation_id),accepted.receipt);
@@ -222,3 +223,4 @@ test("E2 migration 27 and repeated seed retain legacy DTOs, ledgers, receipts an
 });
 
 }
+import { supplySeedIdentities } from "./supply-seed-identities";

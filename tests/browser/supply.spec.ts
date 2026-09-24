@@ -421,7 +421,7 @@ test("denied identity and Partial evidence do not become authorised or zero avai
   ).toBeDisabled();
   await login(page, baseURL!, "second-company");
   await page.reload();
-  await expect(page.getByRole("alert")).toContainText("unavailable");
+  await expect(page.getByRole("alert").filter({ hasText: "This record is unavailable" })).toBeVisible();
   await expect(
     page.getByRole("button", { name: "Revise record", exact: true }),
   ).not.toBeVisible();
