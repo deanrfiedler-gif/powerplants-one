@@ -312,10 +312,7 @@ export function EngineeringWorkspace({ initialId }: { initialId?: string }) {
           <p>Work packages, drawings and technical reviews</p>
         </div>
         <div className="eng-heading-actions">
-          <Link className="eng-meta-link" href="/engineering/basis">Design basis &amp; interfaces</Link>
-          <Link className="eng-meta-link" href="/engineering/drawings">Drawings &amp; deliverables</Link>
           <Link className="eng-meta-link" href="/engineering/queries">Technical queries &amp; submittals</Link>
-          <Link className="eng-meta-link" href="/engineering/reviews">Technical reviews &amp; issues</Link>
           {/* EN-06: material requirements, substitutions, technical release and supply handover of a package. */}
           <Link className="eng-meta-link" href="/engineering/materials">
             Released materials &amp; substitutions

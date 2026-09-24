@@ -22,6 +22,7 @@ test("accepted container creates a real request; an uncertain note retries once 
   };
   await call(page, "projects", project);
   await page.goto("/engineering");
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
   await page.getByRole("button", { name: "＋ Request", exact: true }).click();
   const requestDialog = page.getByRole("dialog");
   const title = `SYN Engineering ${info.project.name} ${Date.now()}`;
@@ -52,6 +53,7 @@ test("accepted container creates a real request; an uncertain note retries once 
     has: page.getByRole("button", { name: "Close package", exact: true }),
   });
   await expect(packageDialog.getByRole("heading").first()).toHaveText(title);
+  await expect(packageDialog).toBeInViewport();
   const list = await call(page, `engineering?q=${encodeURIComponent(title)}`);
   expect(list.items).toHaveLength(1);
   const id = list.items[0].id;

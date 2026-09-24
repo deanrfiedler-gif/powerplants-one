@@ -230,3 +230,9 @@
 #ppo-engineering[data-phone=true] .eng-toolbar .eng-filter-label select{width:100%}
 #ppo-engineering[data-phone=true] .eng-list-foot{align-items:flex-start;gap:8px;flex-wrap:wrap}
 #ppo-engineering[data-phone=true] .eng-facts{grid-template-columns:1fr}
+
+/* Contextual handover links stay inside EN-01; primary native destinations are in the rail. */
+#ppo-engineering .eng-heading{flex-wrap:wrap}
+#ppo-engineering .eng-heading-actions{min-width:0;max-width:100%;flex-wrap:wrap;gap:12px 18px}
+#ppo-engineering .eng-heading-actions a{overflow-wrap:anywhere}
+
