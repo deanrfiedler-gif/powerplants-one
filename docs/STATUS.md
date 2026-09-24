@@ -5,7 +5,7 @@
 - **Read model:** two additive changes, recorded in the [service API](contracts/service-api.md): a `queue` filter that shares its predicates with the counts, and a per-row `can_edit_intake`.
 - **Adaptations:** eleven native departures from the frames (A1–A11) are listed for Dean's visual and device review. The build plan's "twelve" native columns are corrected to fourteen.
 - **Proof:** unit, database, HTTP and browser proofs pass locally; the browser runs used bundled Chromium, not the pinned Chrome channel.
-- **Found, not fixed:** a shell header overlap on Service pages at phone width. It predates this change.
+- **Shell overlap:** a phone header overlap on Service pages, seen before main was merged in, is fixed by main's shared-shell correction. It was rechecked after the merge.
 - **Not claimed:** no migration, capability or seed. Visual acceptance, device review and deployment remain separate. I1 and the design merged as #298 and #294.
 
 **Job Pack I5, 24 September 2026:** final canonical handovers, saved-workbench A4 print and legacy style cleanup are implemented after I7 PR #309. Two component and 46 compiled cases passed; a focused final-print rerun passed six (counts include warm-up, duplicate viewport skips separate). Paired images and all five A4 pages were inspected. The measured phone shell utility overlap is corrected with shared-shell regression coverage. [Integration handover](delivery/job-pack-integration-handover.md) records remaining acceptance and programme work.

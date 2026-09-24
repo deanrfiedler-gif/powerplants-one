@@ -132,7 +132,7 @@ I2 was built on 24 September 2026 in `src/service/components/client/ticket-regis
 | A10 | Move from a card or drag | A dialog chooses the target when there are two, then shows the record page's `TriageActions` narrowed to that command | One form and one set of server gates for both surfaces |
 | A11 | List footer on a phone | Shown only when there is another page; the count sits above the cards | Frame 11 has no footer |
 
-**Found, not fixed here:** on a phone, the shell's header icons wrap under the breadcrumb and overlap the first row below it on Service pages. It predates I2 and appears on `/service/work-orders` and `/service/tickets/new`; on this register it overlaps the search field. It belongs to the shell and needs its own change.
+**Shell overlap, fixed on main:** before main was merged in, the shell's phone header icons wrapped under the breadcrumb and overlapped the first row below it on Service pages, including this register's search field. The same overlap showed on `/service/work-orders` and `/service/tickets/new`. The Job Pack I5 shared-shell correction on main fixed it. After the merge, a recheck at 390 px showed the breadcrumb truncating and the icons staying on one row. I2 makes no shell change.
 
 **Verified:**
 - unit tests for the view helpers;
