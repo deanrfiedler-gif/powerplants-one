@@ -137,7 +137,17 @@
         "scope:EQ-06",
         "scope:EQ-07",
         "scope:EQ-08",
-        "scope:EQ-09"
+        "scope:EQ-09",
+        "scope:SC-01",
+        "scope:SC-02",
+        "scope:SC-03",
+        "scope:SC-04",
+        "scope:SC-05",
+        "scope:SC-06",
+        "scope:SC-07",
+        "scope:SC-08",
+        "scope:SC-09",
+        "scope:SC-10"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -1167,7 +1177,17 @@
       },
       "specification": "docs/design/development/components/dialog.md",
       "used_on": [
-        "route:/sales/opportunities"
+        "route:/sales/opportunities",
+        "scope:SC-01",
+        "scope:SC-02",
+        "scope:SC-03",
+        "scope:SC-04",
+        "scope:SC-05",
+        "scope:SC-06",
+        "scope:SC-07",
+        "scope:SC-08",
+        "scope:SC-09",
+        "scope:SC-10"
       ],
       "desktop": "Opening creates a modal focus boundary. Confirm is local to the example; close and Escape return to the opener.",
       "mobile": "Inspect the dialog at phone width with long content and browser zoom; keep Close and Done reachable.",
@@ -1220,7 +1240,17 @@
       },
       "specification": "docs/design/development/components/drawer.md",
       "used_on": [
-        "route:/sales/opportunities"
+        "route:/sales/opportunities",
+        "scope:SC-01",
+        "scope:SC-02",
+        "scope:SC-03",
+        "scope:SC-04",
+        "scope:SC-05",
+        "scope:SC-06",
+        "scope:SC-07",
+        "scope:SC-08",
+        "scope:SC-09",
+        "scope:SC-10"
       ],
       "desktop": "Use drawers for supplementary record context; preserve the parent task and focus return.",
       "mobile": "The actual drawer should fit the phone viewport and scroll content internally.",

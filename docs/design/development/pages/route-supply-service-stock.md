@@ -1,14 +1,14 @@
-# Picking & dispatch — native design contract
+# Service stock custody — native design contract
 
-Stable entry: `scope:SC-06`. Scope: **SC-06**. Route: `/supply/dispatch`. Owner: Dean Fiedler. Review: Draft; no accepted visual fingerprint.
+Stable entry: `route:/supply/service-stock`. Scope: **SC-10**. Route: `/supply/service-stock`. Owner: Dean Fiedler. Review: Draft; no accepted visual fingerprint.
 
 ## Purpose and task
 
-Pick, stage, prepare and record movement against evidenced usable allocation.
+Reconcile warehouse â†’ technician / van â†’ job â†’ outcome against exact Field evidence.
 
-1. **Pick then stage:** Open approved demand with evidenced usable allocation. Record picked quantity and location/serial/batch evidence. Record staged quantity and packing separately. Neither may exceed its preceding physical quantity.
-2. **Resolve findings and substitutions:** Retain shortages and findings. A proposed substitution blocks further fulfilment until a decision references Engineering and the commercial/delivery scope review. No technical release or spend authority is granted here.
-3. **Prepare then move:** Record Prepared dispatch with packing, receiving details and documents. Review that exact capture to record Moved and movement time. Source shipment outcome is a separate observation. On mobile, each step has a labelled form.
+1. **Establish custody:** Create a custody record against Service demand, its actual Work Order appointment/visit, custodian, van, warehouse and authoritative issue/transfer observation. Preserve item, unit and serial/batch identity.
+2. **Explain every issued quantity:** Record a full reconciliation snapshot: held in custody, at job, used, unused returned, damaged, quarantined and missing. These are mutually exclusive current outcomes and must total issued exactly. Used quantity references matching current Field parts capture.
+3. **Reconcile before closure:** Close only after no quantity remains unexplained, in custody, at the job or in quarantine, and an inventory reference and evidence time support reconciliation. Custody is not consumption; consumption is not automatically billable. Investigate an unknown original transfer before repeating any equivalent effect.
 
 ## Desktop
 
@@ -28,6 +28,6 @@ Incoming: canonical Customer/Site/Facility/Equipment, Project or Work Order dema
 
 ## References and review evidence
 
-Exact retained HTML: `docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html`. Historical bytes are unchanged.
+No exact historical HTML or image exists for SC-10. This native composition and its new application captures are the design reference; owner acceptance remains pending.
 
 No exact historical mobile image is recorded. New application captures belong under `docs/testing/evidence/supply-chain-native/`; source presence, executed functional tests, visual inspection, owner acceptance and deployment are separate. See [handover](../../../delivery/supply-chain-native-handover.md) and [BP-08](../../../blueprints/BP-08-supply-chain.md). Current paired visual acceptance is not claimed.

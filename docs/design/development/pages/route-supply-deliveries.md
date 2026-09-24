@@ -1,14 +1,14 @@
-# Picking & dispatch — native design contract
+# Customer deliveries — native design contract
 
-Stable entry: `scope:SC-06`. Scope: **SC-06**. Route: `/supply/dispatch`. Owner: Dean Fiedler. Review: Draft; no accepted visual fingerprint.
+Stable entry: `route:/supply/deliveries`. Scope: **SC-07**. Route: `/supply/deliveries`. Owner: Dean Fiedler. Review: Draft; no accepted visual fingerprint.
 
 ## Purpose and task
 
-Pick, stage, prepare and record movement against evidenced usable allocation.
+Record physical delivery, exceptions and separate customer acknowledgement.
 
-1. **Pick then stage:** Open approved demand with evidenced usable allocation. Record picked quantity and location/serial/batch evidence. Record staged quantity and packing separately. Neither may exceed its preceding physical quantity.
-2. **Resolve findings and substitutions:** Retain shortages and findings. A proposed substitution blocks further fulfilment until a decision references Engineering and the commercial/delivery scope review. No technical release or spend authority is granted here.
-3. **Prepare then move:** Record Prepared dispatch with packing, receiving details and documents. Review that exact capture to record Moved and movement time. Source shipment outcome is a separate observation. On mobile, each step has a labelled form.
+1. **Prepare the delivery context:** Open the demand and review the moved and outstanding quantities. State delivery address, receiving point, instructions and intended installation/use area separately.
+2. **Capture POD:** Record delivered quantity, physical time, recipient evidence, damage within delivery, reported missing and excess held for review. Carrier arrival does not prove delivery. Upload a supported photo where useful.
+3. **Record customer response:** Customer acknowledgement references an exact current delivery capture, actor, medium and response time. Correct mistakes through retained predecessors. Delivery does not establish installation, Service completion, invoicing or payment.
 
 ## Desktop
 

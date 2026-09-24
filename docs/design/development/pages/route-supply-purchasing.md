@@ -1,14 +1,14 @@
-# Picking & dispatch — native design contract
+# Purchasing & supplier commitments — native design contract
 
-Stable entry: `scope:SC-06`. Scope: **SC-06**. Route: `/supply/dispatch`. Owner: Dean Fiedler. Review: Draft; no accepted visual fingerprint.
+Stable entry: `route:/supply/purchasing`. Scope: **SC-02**. Route: `/supply/purchasing`. Owner: Dean Fiedler. Review: Draft; no accepted visual fingerprint.
 
 ## Purpose and task
 
-Pick, stage, prepare and record movement against evidenced usable allocation.
+Keep authorised demand, purchasing requests and observed supplier outcomes distinct.
 
-1. **Pick then stage:** Open approved demand with evidenced usable allocation. Record picked quantity and location/serial/batch evidence. Record staged quantity and packing separately. Neither may exceed its preceding physical quantity.
-2. **Resolve findings and substitutions:** Retain shortages and findings. A proposed substitution blocks further fulfilment until a decision references Engineering and the commercial/delivery scope review. No technical release or spend authority is granted here.
-3. **Prepare then move:** Record Prepared dispatch with packing, receiving details and documents. Review that exact capture to record Moved and movement time. Source shipment outcome is a separate observation. On mobile, each step has a labelled form.
+1. **Prepare a request:** Select approved demand. Record requisition, RFQ/quotation comparison evidence, supplier, manufacturing milestones, technical submittals and exceptions. An approved request needs its separate authority evidence.
+2. **Record a promise:** Enter quantity, date, Estimated or SupplierConfirmed basis and confirmation source. Revise the previous promise to retain its predecessor and create a change review.
+3. **Observe the purchase outcome:** Record the purchase reference and observed outcome. This page does not place an order, spend money or confirm an ERP transaction.
 
 ## Desktop
 
@@ -28,6 +28,6 @@ Incoming: canonical Customer/Site/Facility/Equipment, Project or Work Order dema
 
 ## References and review evidence
 
-Exact retained HTML: `docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html`. Historical bytes are unchanged.
+Exact retained HTML: `docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html`. Historical bytes are unchanged.
 
 No exact historical mobile image is recorded. New application captures belong under `docs/testing/evidence/supply-chain-native/`; source presence, executed functional tests, visual inspection, owner acceptance and deployment are separate. See [handover](../../../delivery/supply-chain-native-handover.md) and [BP-08](../../../blueprints/BP-08-supply-chain.md). Current paired visual acceptance is not claimed.

@@ -1,14 +1,14 @@
-# Picking & dispatch — native design contract
+# Receiving & inspection — native design contract
 
-Stable entry: `scope:SC-06`. Scope: **SC-06**. Route: `/supply/dispatch`. Owner: Dean Fiedler. Review: Draft; no accepted visual fingerprint.
+Stable entry: `route:/supply/receipts`. Scope: **SC-04**. Route: `/supply/receipts`. Owner: Dean Fiedler. Review: Draft; no accepted visual fingerprint.
 
 ## Purpose and task
 
-Pick, stage, prepare and record movement against evidenced usable allocation.
+Capture physical receipt and inspection. Arrival and quarantine do not establish usable stock.
 
-1. **Pick then stage:** Open approved demand with evidenced usable allocation. Record picked quantity and location/serial/batch evidence. Record staged quantity and packing separately. Neither may exceed its preceding physical quantity.
-2. **Resolve findings and substitutions:** Retain shortages and findings. A proposed substitution blocks further fulfilment until a decision references Engineering and the commercial/delivery scope review. No technical release or spend authority is granted here.
-3. **Prepare then move:** Record Prepared dispatch with packing, receiving details and documents. Review that exact capture to record Moved and movement time. Source shipment outcome is a separate observation. On mobile, each step has a labelled form.
+1. **Record physical receipt:** Select the incoming line and open Receipt and inspection. Carrier arrival and ERP receipt reference are separate observations. Record actual quantities and explicit identity evidence.
+2. **Inspect and quarantine:** Inspected cannot exceed received. Usable plus quarantined cannot exceed inspected. Damage is included within quarantined quantity. Short quantity records the shortage for this receipt; neither arrival nor quarantine makes goods usable.
+3. **Capture and correct:** On a phone, complete the stacked capture form and optionally upload a supported PNG. A verified stored photo is linked to the exact capture. Review / correct capture adds a successor; originals remain available.
 
 ## Desktop
 
@@ -28,6 +28,6 @@ Incoming: canonical Customer/Site/Facility/Equipment, Project or Work Order dema
 
 ## References and review evidence
 
-Exact retained HTML: `docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html`. Historical bytes are unchanged.
+Exact retained HTML: `docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html`. Historical bytes are unchanged.
 
 No exact historical mobile image is recorded. New application captures belong under `docs/testing/evidence/supply-chain-native/`; source presence, executed functional tests, visual inspection, owner acceptance and deployment are separate. See [handover](../../../delivery/supply-chain-native-handover.md) and [BP-08](../../../blueprints/BP-08-supply-chain.md). Current paired visual acceptance is not claimed.

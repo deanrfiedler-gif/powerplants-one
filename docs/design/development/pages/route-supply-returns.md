@@ -1,14 +1,14 @@
-# Picking & dispatch — native design contract
+# Returns & claims — native design contract
 
-Stable entry: `scope:SC-06`. Scope: **SC-06**. Route: `/supply/dispatch`. Owner: Dean Fiedler. Review: Draft; no accepted visual fingerprint.
+Stable entry: `route:/supply/returns`. Scope: **SC-08**. Route: `/supply/returns`. Owner: Dean Fiedler. Review: Draft; no accepted visual fingerprint.
 
 ## Purpose and task
 
-Pick, stage, prepare and record movement against evidenced usable allocation.
+Follow the goods, customer remedy, supplier recovery and credits separately.
 
-1. **Pick then stage:** Open approved demand with evidenced usable allocation. Record picked quantity and location/serial/batch evidence. Record staged quantity and packing separately. Neither may exceed its preceding physical quantity.
-2. **Resolve findings and substitutions:** Retain shortages and findings. A proposed substitution blocks further fulfilment until a decision references Engineering and the commercial/delivery scope review. No technical release or spend authority is granted here.
-3. **Prepare then move:** Record Prepared dispatch with packing, receiving details and documents. Review that exact capture to record Moved and movement time. Source shipment outcome is a separate observation. On mobile, each step has a labelled form.
+1. **Authorise a return:** Use the six workspaces to keep return authorisation, inspection, customer outcome, supplier claim and credits distinct. Link the original demand and delivery/receipt reference. Unknown returned identity remains unresolved evidence; approval needs verified identity and remaining entitlement.
+2. **Inspect and decide:** Keep reported symptom, observed damage, suspected cause and verified finding separate. Propose a disposition, approve that exact quantity/outcome, then separately record execution. Reference MA-06/MA-07 decisions; do not repeat warranty decisions here.
+3. **Track independent outcomes:** Customer remedy can complete while supplier recovery remains open. Physical supplier movement and source/credit observations are separate. Finance permission is needed before any credit content is read; no customer credit is netted against supplier recovery.
 
 ## Desktop
 
@@ -28,6 +28,8 @@ Incoming: canonical Customer/Site/Facility/Equipment, Project or Work Order dema
 
 ## References and review evidence
 
-Exact retained HTML: `docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html`. Historical bytes are unchanged.
+Exact retained HTML: `docs/reference/ui/returns-claims/PPO-Returns-Supplier-Claims-and-Credit-Tracking-Workspace-r01.html`. Historical bytes are unchanged.
 
 No exact historical mobile image is recorded. New application captures belong under `docs/testing/evidence/supply-chain-native/`; source presence, executed functional tests, visual inspection, owner acceptance and deployment are separate. See [handover](../../../delivery/supply-chain-native-handover.md) and [BP-08](../../../blueprints/BP-08-supply-chain.md). Current paired visual acceptance is not claimed.
+
+The r01 Returns report records an unpublished authoring package and disagreeing HTML hashes. Native tests are new evidence; no historical verification claim is repaired or implied.

@@ -2964,20 +2964,30 @@
       "title": "Demand and material-readiness workspace",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement demand/material readiness with quantities, units, shortages, source completeness and owned blockers.",
+      "summary": "Review the exact material scope, usable supply and owned blockers.",
       "path": "/supply/material-readiness",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/material-readiness/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.01",
       "design_path": "docs/design/development/pages/scope-sc-01.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -2985,7 +2995,8 @@
       "related_keys": [
         "scope:CS-05",
         "scope:PD-01",
-        "scope:EN-06"
+        "scope:EN-06",
+        "route:/supply/material-readiness"
       ],
       "reviewer": null
     },
@@ -2994,27 +3005,38 @@
       "title": "Purchasing and supplier commitments",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement purchasing requests, supplier RFQs/commitments and procurement-reference coordination.",
+      "summary": "Keep authorised demand, purchasing requests and observed supplier outcomes distinct.",
       "path": "/supply/purchasing",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/purchasing/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.02",
       "design_path": "docs/design/development/pages/scope-sc-02.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 84,
       "related_keys": [
         "scope:SC-01",
-        "scope:AD-05"
+        "scope:AD-05",
+        "route:/supply/purchasing"
       ],
       "reviewer": null
     },
@@ -3023,26 +3045,37 @@
       "title": "Inbound shipments and line allocations",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement inbound shipments, split line allocations, dated ETA changes and import/logistics evidence.",
+      "summary": "Coordinate shipment lines, split allocations and dated ETA evidence.",
       "path": "/supply/shipments",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/shipments/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.03",
       "design_path": "docs/design/development/pages/scope-sc-03.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 85,
       "related_keys": [
-        "scope:SC-02"
+        "scope:SC-02",
+        "route:/supply/shipments"
       ],
       "reviewer": null
     },
@@ -3051,26 +3084,37 @@
       "title": "Receipt, inspection and quarantine",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement receipt, inspection, damage/shortage review, quarantine and disposition.",
+      "summary": "Capture physical receipt and inspection. Arrival and quarantine do not establish usable stock.",
       "path": "/supply/receipts",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/receipts/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.04",
       "design_path": "docs/design/development/pages/scope-sc-04.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 86,
       "related_keys": [
-        "scope:SC-03"
+        "scope:SC-03",
+        "route:/supply/receipts"
       ],
       "reviewer": null
     },
@@ -3079,20 +3123,30 @@
       "title": "Stock availability and reservations",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement stock availability and reservations with warehouse/bin context and source timestamps.",
+      "summary": "Dated source observations, explicit units and completeness. Live reservations are not configured.",
       "path": "/supply/stock",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/stock/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.05",
       "design_path": "docs/design/development/pages/scope-sc-05.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -3100,7 +3154,8 @@
       "related_keys": [
         "scope:PD-01",
         "scope:AD-05",
-        "scope:SC-04"
+        "scope:SC-04",
+        "route:/supply/stock"
       ],
       "reviewer": null
     },
@@ -3109,26 +3164,37 @@
       "title": "Picking and dispatch preparation",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement picking, staging, approved substitutions, packing and dispatch preparation.",
+      "summary": "Pick, stage, prepare and record movement against evidenced usable allocation.",
       "path": "/supply/dispatch",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/dispatch/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.06",
       "design_path": "docs/design/development/pages/scope-sc-06.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 88,
       "related_keys": [
-        "scope:SC-05"
+        "scope:SC-05",
+        "route:/supply/dispatch"
       ],
       "reviewer": null
     },
@@ -3137,26 +3203,37 @@
       "title": "Customer delivery and proof of delivery",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement customer delivery, partial quantities, proof of delivery and outstanding exceptions.",
+      "summary": "Record physical delivery, exceptions and separate customer acknowledgement.",
       "path": "/supply/deliveries",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/deliveries/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.07",
       "design_path": "docs/design/development/pages/scope-sc-07.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 89,
       "related_keys": [
-        "scope:SC-06"
+        "scope:SC-06",
+        "route:/supply/deliveries"
       ],
       "reviewer": null
     },
@@ -3165,27 +3242,38 @@
       "title": "Returns, supplier claims and credit tracking",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement returns, supplier claims and credit tracking as distinct linked outcomes.",
+      "summary": "Follow the goods, customer remedy, supplier recovery and credits separately.",
       "path": "/supply/returns",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/returns/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.08",
       "design_path": "docs/design/development/pages/scope-sc-08.md",
       "html_path": "docs/reference/ui/returns-claims/PPO-Returns-Supplier-Claims-and-Credit-Tracking-Workspace-r01.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 90,
       "related_keys": [
         "scope:SC-04",
-        "scope:SC-07"
+        "scope:SC-07",
+        "route:/supply/returns"
       ],
       "reviewer": null
     },
@@ -3194,27 +3282,38 @@
       "title": "Material change-impact review",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement material-change impact review before requesting downstream booking/project changes.",
+      "summary": "Review before and after evidence through the owning module. Bookings and issued packs remain unchanged.",
       "path": "/supply/changes",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/changes/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.09",
       "design_path": "docs/design/development/pages/scope-sc-09.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 91,
       "related_keys": [
         "scope:SC-01",
-        "scope:SC-04"
+        "scope:SC-04",
+        "route:/supply/changes"
       ],
       "reviewer": null
     },
@@ -3223,20 +3322,30 @@
       "title": "Service stock custody and job reconciliation",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement warehouse/van/job custody and used/returned/damaged/missing stock reconciliation.",
+      "summary": "Reconcile warehouse â†’ technician / van â†’ job â†’ outcome against exact Field evidence.",
       "path": "/supply/service-stock",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/service-stock/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.10",
       "design_path": "docs/design/development/pages/scope-sc-10.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -3245,7 +3354,8 @@
         "scope:SC-05",
         "scope:SC-06",
         "scope:FI-01",
-        "scope:SV-06"
+        "scope:SV-06",
+        "route:/supply/service-stock"
       ],
       "reviewer": null
     },
@@ -10093,6 +10203,376 @@
         "scope:CS-05",
         "scope:CS-06",
         "scope:SH-06"
+      ]
+    },
+    {
+      "key": "route:/supply/changes",
+      "title": "supply / changes",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Review before and after evidence through the owning module. Bookings and issued packs remain unchanged.",
+      "path": "/supply/changes",
+      "source_paths": [
+        "src/app/(business)/supply/changes/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-changes",
+      "design_path": "docs/design/development/pages/route-supply-changes.md",
+      "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-09"
+      ]
+    },
+    {
+      "key": "route:/supply/deliveries",
+      "title": "supply / deliveries",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Record physical delivery, exceptions and separate customer acknowledgement.",
+      "path": "/supply/deliveries",
+      "source_paths": [
+        "src/app/(business)/supply/deliveries/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-deliveries",
+      "design_path": "docs/design/development/pages/route-supply-deliveries.md",
+      "html_path": "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-07"
+      ]
+    },
+    {
+      "key": "route:/supply/dispatch",
+      "title": "supply / dispatch",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Pick, stage, prepare and record movement against evidenced usable allocation.",
+      "path": "/supply/dispatch",
+      "source_paths": [
+        "src/app/(business)/supply/dispatch/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-dispatch",
+      "design_path": "docs/design/development/pages/route-supply-dispatch.md",
+      "html_path": "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-06"
+      ]
+    },
+    {
+      "key": "route:/supply/material-readiness",
+      "title": "supply / material readiness",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Review the exact material scope, usable supply and owned blockers.",
+      "path": "/supply/material-readiness",
+      "source_paths": [
+        "src/app/(business)/supply/material-readiness/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-material-readiness",
+      "design_path": "docs/design/development/pages/route-supply-material-readiness.md",
+      "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-01"
+      ]
+    },
+    {
+      "key": "route:/supply/purchasing",
+      "title": "supply / purchasing",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Keep authorised demand, purchasing requests and observed supplier outcomes distinct.",
+      "path": "/supply/purchasing",
+      "source_paths": [
+        "src/app/(business)/supply/purchasing/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-purchasing",
+      "design_path": "docs/design/development/pages/route-supply-purchasing.md",
+      "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-02"
+      ]
+    },
+    {
+      "key": "route:/supply/receipts",
+      "title": "supply / receipts",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Capture physical receipt and inspection. Arrival and quarantine do not establish usable stock.",
+      "path": "/supply/receipts",
+      "source_paths": [
+        "src/app/(business)/supply/receipts/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-receipts",
+      "design_path": "docs/design/development/pages/route-supply-receipts.md",
+      "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-04"
+      ]
+    },
+    {
+      "key": "route:/supply/returns",
+      "title": "supply / returns",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Follow the goods, customer remedy, supplier recovery and credits separately.",
+      "path": "/supply/returns",
+      "source_paths": [
+        "src/app/(business)/supply/returns/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-returns",
+      "design_path": "docs/design/development/pages/route-supply-returns.md",
+      "html_path": "docs/reference/ui/returns-claims/PPO-Returns-Supplier-Claims-and-Credit-Tracking-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-08"
+      ]
+    },
+    {
+      "key": "route:/supply/service-stock",
+      "title": "supply / service stock",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Reconcile warehouse â†’ technician / van â†’ job â†’ outcome against exact Field evidence.",
+      "path": "/supply/service-stock",
+      "source_paths": [
+        "src/app/(business)/supply/service-stock/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-service-stock",
+      "design_path": "docs/design/development/pages/route-supply-service-stock.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-10"
+      ]
+    },
+    {
+      "key": "route:/supply/shipments",
+      "title": "supply / shipments",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Coordinate shipment lines, split allocations and dated ETA evidence.",
+      "path": "/supply/shipments",
+      "source_paths": [
+        "src/app/(business)/supply/shipments/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-shipments",
+      "design_path": "docs/design/development/pages/route-supply-shipments.md",
+      "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-03"
+      ]
+    },
+    {
+      "key": "route:/supply/stock",
+      "title": "supply / stock",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Dated source observations, explicit units and completeness. Live reservations are not configured.",
+      "path": "/supply/stock",
+      "source_paths": [
+        "src/app/(business)/supply/stock/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-stock",
+      "design_path": "docs/design/development/pages/route-supply-stock.md",
+      "html_path": "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-05"
       ]
     }
   ]
