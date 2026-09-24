@@ -80,7 +80,7 @@ Test permissions, conflicts, stale revisions, replay, deduplication, document in
 
 Separate decisions, evidence, proposals, questions, delivery, verification, acceptance and deployment. Cite sources and limits.
 
-ES-01–10/Excel: estimating-native-programme.md and estimating-programme-handover.md. Preserve ES-02 costs, PJ-09 close/reopen and ES-03 exact bindings (estimating-cost-sources.md). ES-08: WP-G00 before D1–D15/DEC-R1/R2. No migration reservation or deployment. Retain four CI lanes (ci-retained-suite-isolation.md).
+ES-01–10/Excel: estimating-native-programme.md and estimating-programme-handover.md. Preserve ES-02 exact costs, PJ-09 close/reopen and ES-03 exact bindings (estimating-cost-sources.md). ES-02 families: es02-design-board.md; P2–P9 proposed. ES-08: WP-G00 before D1–D15/DEC-R1/R2. No migration reservation, engineering approval or deployment. Retain four CI lanes (ci-retained-suite-isolation.md).
 
 Mail: preserve private mailboxes and body separation (demo-email-crm-integration.md); CI is not Outlook acceptance. SH-01–06: docs/delivery/sh-platform-handover.md; teams/DK/delivery pending.
 
@@ -93,3 +93,5 @@ Scheduling PL-01 to PL-05: preserve source-owned reads, unknown effort/mappings,
 Sales CR-01–05: follow ADR-0046 and sales-native-completion-handover.md. Preserve frozen submissions, immutable Won due, source-scoped receipts and aftercare unknown policies. Receiving creates no downstream work.
 
 Equipment: ADR-0045 / equipment-native-completion-handover.md. Reuse Assets, CS, Inspection and SH; scanning is read-only. Preserve originals and historic context. Recovery grants no controller-restore authority; support grants no replacement authority.
+
+FI: field-quality-native-handover.md. FI-05 reuses CS-06; induction needs a Person link. Acknowledgement grants no work authority.

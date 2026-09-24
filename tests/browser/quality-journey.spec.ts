@@ -32,7 +32,18 @@ test("P11 selected UI service-to-Finance journey preserves controlled booking, p
     await initialCustomerDelay;
     await route.fulfill({ response });
   });
+  // Exercise the same readiness boundary on the next page: its data can arrive
+  // after the ordinary five-second visibility deadline without being a failure.
+  const initialSiteRead = "**/api/v1/sites/70000000-0000-4000-8000-000000000001";
+  let initialSiteDelay: Promise<void> | undefined;
+  await page.route(initialSiteRead, async route => {
+    const response = await route.fetch();
+    initialSiteDelay ??= new Promise(resolve => setTimeout(resolve, 6500));
+    await initialSiteDelay;
+    await route.fulfill({ response });
+  });
   const source = await prepareJourney(page, info);
+  await page.unroute(initialSiteRead);
   await page.unroute(initialCustomerRead);
   const aid = source.appointment_id;
   const openPersonalJob = async () => {

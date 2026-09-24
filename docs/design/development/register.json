@@ -1187,7 +1187,12 @@
       "design_path": "docs/design/development/pages/scope-es-02.md",
       "html_path": "docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html",
       "image_paths": [
-        "docs/testing/evidence/es02-native-r01/read-only-summary.png"
+        "docs/testing/evidence/es02-native-r01/read-only-summary.png",
+        "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-06-Equipment-Families-r01.png",
+        "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-07-Departures-and-Build-Findings-r01.png",
+        "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-04-Design-Versus-Current-Build-r01.png",
+        "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-S2-Configuration-r01.png",
+        "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-R2-Phone-390-Configuration-r01.png"
       ],
       "dependencies": [],
       "scope_status": "refine",
@@ -2678,27 +2683,39 @@
       "title": "Site induction, risk and biosecurity review",
       "kind": "scope",
       "module": "FI",
-      "summary": "Implement structured induction, risk and biosecurity review with site/area-specific instructions and acknowledgement.",
+      "summary": "Assigned-visit review of exact CS-06 sources, with retained personal acknowledgements and unresolved conditions.",
       "path": "/my-jobs/site-readiness",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/my-jobs/site-readiness/page.tsx"
       ],
       "guide_key": "guide.fi.05",
       "design_path": "docs/design/development/pages/scope-fi-05.md",
       "html_path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/field-readiness-native/captures/quality-reference-1440.png",
+        "docs/testing/evidence/field-readiness-native/captures/quality-reference-390.png"
+      ],
+      "dependencies": [
+        "src/field/readiness.ts",
+        "src/shared/cs/readiness.ts",
+        "src/components/field-readiness-screen.tsx",
+        "src/app/field-readiness.css",
+        "docs/testing/evidence/field-readiness-native/README.md",
+        "docs/testing/evidence/field-readiness-native/capture-manifest.json"
+      ],
+      "scope_status": "Implemented; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "FI05 database 2/2 and desktop/phone browser 2/2 passed; programme handover records regression limits",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 62,
       "related_keys": [
+        "scope:FI-01",
         "scope:CS-06",
-        "scope:SV-03"
+        "scope:FI-02"
       ],
       "reviewer": null
     },
@@ -5456,7 +5473,15 @@
       "design_path": "docs/design/development/pages/route-estimating-discovery-id.md",
       "html_path": "docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html",
       "image_paths": [
-        "docs/testing/evidence/es02-native-r01/read-only-summary.png"
+        "docs/testing/evidence/es02-native-r01/read-only-summary.png",
+        "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-S1-Requirements-r01.png",
+        "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-S2-Configuration-r01.png",
+        "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-S5-Review-r01.png",
+        "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-R1-Tablet-1024-Configuration-r01.png",
+        "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-R2-Phone-390-Configuration-r01.png",
+        "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-04-Design-Versus-Current-Build-r01.png",
+        "docs/testing/evidence/es02-design-board-r01/build-configuration-1440x960.png",
+        "docs/testing/evidence/es02-design-board-r01/build-configuration-390x844.png"
       ],
       "dependencies": [],
       "scope_status": "refine",
@@ -10093,6 +10118,46 @@
         "scope:CS-05",
         "scope:CS-06",
         "scope:SH-06"
+      ]
+    },
+    {
+      "key": "route:/my-jobs/site-readiness",
+      "title": "Site induction, risk and biosecurity review",
+      "kind": "route",
+      "module": "FI",
+      "summary": "Assigned-visit review of exact CS-06 sources, with retained personal acknowledgements and unresolved conditions.",
+      "path": "/my-jobs/site-readiness",
+      "source_paths": [
+        "src/app/(business)/my-jobs/site-readiness/page.tsx"
+      ],
+      "guide_key": "guide.route-my-jobs-site-readiness",
+      "design_path": "docs/design/development/pages/route-my-jobs-site-readiness.md",
+      "html_path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
+      "image_paths": [
+        "docs/testing/evidence/field-readiness-native/captures/quality-reference-1440.png",
+        "docs/testing/evidence/field-readiness-native/captures/quality-reference-390.png"
+      ],
+      "dependencies": [
+        "src/field/readiness.ts",
+        "src/shared/cs/readiness.ts",
+        "src/components/field-readiness-screen.tsx",
+        "src/app/field-readiness.css",
+        "docs/testing/evidence/field-readiness-native/README.md",
+        "docs/testing/evidence/field-readiness-native/capture-manifest.json"
+      ],
+      "scope_status": "Implemented; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "FI05 database 2/2 and desktop/phone browser 2/2 passed; programme handover records regression limits",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:FI-01",
+        "scope:CS-06",
+        "scope:FI-02"
       ]
     }
   ]
