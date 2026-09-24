@@ -1,0 +1,179 @@
+{
+  "source_head": "ce05194671bfde6983c5ace3c8a5abb0b67088c0",
+  "integrated_main": "9e49a57332aacfbb45a43fdd4d17c1d031fc80fb",
+  "owner_acceptance": "pending",
+  "node": "24.21.0",
+  "playwright": "1.63.0",
+  "browser": "Chrome 154.0.8037.58",
+  "source_hash_encoding": "UTF-8 LF",
+  "batches": {
+    "integrated": {
+      "build_id": null,
+      "build_id_status": "not captured before the subsequent rebuild",
+      "source": "ce05194671bfde6983c5ace3c8a5abb0b67088c0",
+      "source_sha256": {
+        "src/components/cost-sources.tsx": "692830c3fc40e3428eb055b065ca1171e8bf6363345a9e0e88acad4e55ba56ba",
+        "src/components/cost-sources.css": "4f665b17076bd14989e45b7a626d0baf8eff430c92478b0393b5fe0838ceedc5",
+        "src/components/cost-sources-guide.ts": "5a3b92dcbfb7d23f36a0d59cc85d8761f8bf7b118e0c2fc117ac8f0be526968f",
+        "src/components/product-navigation.tsx": "e4699413c3010ca21b995148ca8e357a6a2fb7283941bc88367ac431f44ad912",
+        "src/components/shell-page-guide.tsx": "2738c0eba2f2f7beaab8399883d2ed4df42e5380a1ffe0362d5bd7a94452c954",
+        "src/shell/navigation.ts": "c218d4f23ade0b056870123b9028c564d5b7b68039de9d372106a5778e8440fe",
+        "src/shell/module-workspaces.ts": "a055503723a4a0e54d2e5228a172cec27afc059bee905d4816be2e9518bdb078",
+        "src/app/api/v1/estimating/cost-sources/[id]/review/route.ts": "893a52605450a6eb5502f989b36f6b9aa8a915f81d3986de6467e07312cf3f04",
+        "src/app/api/v1/estimating/cost-sources/[id]/route.ts": "664c6a38720f78332bda0116bd5c4ac9ad6cbb9062b8c79ff271bce000ba39eb",
+        "src/app/api/v1/estimating/cost-sources/route.ts": "aca1bcc6a0feb3f03cc40d2398b1c263f3150bad6509fb55ef396ad7cabf689f",
+        "src/estimating/sources/bindings.ts": "bebddc474f1ecc8f88c395fc6a6474ef57a1b78a4a94280d60ba63cae2cab611",
+        "src/estimating/sources/commands.ts": "2ed170b73fe4810454c8603c72b2db288472a80e54d5acaaa87fe8b774c94563",
+        "src/estimating/sources/context.ts": "3ecff18a2d0ee06e1250bdc30778d1ae1e78f526053ca720f6b072beded71100",
+        "src/estimating/sources/price.ts": "a4171096483765f2a82ebb05982dbeac9be1076256ddccc6f6dbf0d50d69c746",
+        "src/estimating/sources/reads.ts": "4693946f4a543a3ba5319cccf3102523eefcb9487a2269b22c94c6fab023489f",
+        "src/estimating/sources/refresh.ts": "36811e7938658b169b33ca79fdcbece123d63a58e83389bc65200f619e4ac1af",
+        "src/estimating/sources/validation.ts": "6f7905d4c638ffb1b897ee4f516ae055c249d41a4af505419d90697a414b39d9"
+      },
+      "proof": "Six passing native desktop/phone cases; confirmation capture adjustment and checkbox correction followed."
+    },
+    "confirmation": {
+      "build_id": "BQdPwgiw-ujdWravl1B5Y",
+      "source": "ce05194671bfde6983c5ace3c8a5abb0b67088c0",
+      "working_changes": "Scoped checkbox layout/span and browser evidence assertion; no domain/schema changes",
+      "source_sha256": {
+        "src/components/cost-sources.tsx": "6abf600f977000e2cdedc3d082d76b44a464cf905230fd3955ca213d426a1fa2",
+        "src/components/cost-sources.css": "ad2257688a0ca9260122593447bb569afe1fb619aca02c6dd822db7f52a4e664",
+        "src/components/cost-sources-guide.ts": "5a3b92dcbfb7d23f36a0d59cc85d8761f8bf7b118e0c2fc117ac8f0be526968f",
+        "src/components/product-navigation.tsx": "e4699413c3010ca21b995148ca8e357a6a2fb7283941bc88367ac431f44ad912",
+        "src/components/shell-page-guide.tsx": "2738c0eba2f2f7beaab8399883d2ed4df42e5380a1ffe0362d5bd7a94452c954",
+        "src/shell/navigation.ts": "c218d4f23ade0b056870123b9028c564d5b7b68039de9d372106a5778e8440fe",
+        "src/shell/module-workspaces.ts": "a055503723a4a0e54d2e5228a172cec27afc059bee905d4816be2e9518bdb078",
+        "src/app/api/v1/estimating/cost-sources/[id]/review/route.ts": "893a52605450a6eb5502f989b36f6b9aa8a915f81d3986de6467e07312cf3f04",
+        "src/app/api/v1/estimating/cost-sources/[id]/route.ts": "664c6a38720f78332bda0116bd5c4ac9ad6cbb9062b8c79ff271bce000ba39eb",
+        "src/app/api/v1/estimating/cost-sources/route.ts": "aca1bcc6a0feb3f03cc40d2398b1c263f3150bad6509fb55ef396ad7cabf689f",
+        "src/estimating/sources/bindings.ts": "bebddc474f1ecc8f88c395fc6a6474ef57a1b78a4a94280d60ba63cae2cab611",
+        "src/estimating/sources/commands.ts": "2ed170b73fe4810454c8603c72b2db288472a80e54d5acaaa87fe8b774c94563",
+        "src/estimating/sources/context.ts": "3ecff18a2d0ee06e1250bdc30778d1ae1e78f526053ca720f6b072beded71100",
+        "src/estimating/sources/price.ts": "a4171096483765f2a82ebb05982dbeac9be1076256ddccc6f6dbf0d50d69c746",
+        "src/estimating/sources/reads.ts": "4693946f4a543a3ba5319cccf3102523eefcb9487a2269b22c94c6fab023489f",
+        "src/estimating/sources/refresh.ts": "36811e7938658b169b33ca79fdcbece123d63a58e83389bc65200f619e4ac1af",
+        "src/estimating/sources/validation.ts": "6f7905d4c638ffb1b897ee4f516ae055c249d41a4af505419d90697a414b39d9"
+      },
+      "proof": "Two passing exact-comparison cases on the rebuilt application."
+    },
+    "reference": {
+      "path": "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html",
+      "sha256": "a0a38d3f520b350a97886d5148865fe6caeb3ba1fe367a05cada6f926962a0e5",
+      "proof": "20 browser groups, 29 captures; issued source unchanged."
+    }
+  },
+  "proof_source_sha256": {
+    "scripts/estimating-sources-restart.ts": "a23659df4250d00c54041d5027a05bb3b0213c15fdffe0c77bb8b442d9bc462a",
+    "tests/browser/estimating-sources.spec.ts": "4d056db74fab54e4fa3a022817948e8502003e75143ffa182e2e7ce3aff4e366",
+    "tests/http/estimating-sources.test.ts": "86c59b3efd5750ded1d1f7621a45143bfe2b465607dff500a3576fd3a41c3ae6"
+  },
+  "images": [
+    {
+      "file": "desktop-recovery.png",
+      "source": "estimating-sources-reviewed/estimating-sources-ES03-na-1659e-ntly-reviews-exact-evidence-desktop-chromium/source-recovery.png",
+      "batch": "integrated",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "sha256": "fc534875e6ece5a6f81abc170c8a7880b2b325abfb970cf8c7fc7e76814ada19",
+      "bytes": 93930
+    },
+    {
+      "file": "phone-reviewed.png",
+      "source": "estimating-sources-reviewed/estimating-sources-ES03-na-1659e-ntly-reviews-exact-evidence-mobile-chromium/source-reviewed.png",
+      "batch": "integrated",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "74f4695ac6a80d5122e65bb5c94c32aed485a6b33453fa31c3892d45ac940aa5",
+      "bytes": 67646
+    },
+    {
+      "file": "desktop-revision-comparison.png",
+      "source": "estimating-sources-reviewed/estimating-sources-ES03-re-df0c6-ed-evidence-remain-explicit-desktop-chromium/source-revision-comparison.png",
+      "batch": "integrated",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "sha256": "d33524446c3edc627d69e03c4c3a41c26381553bdbba29129cb164a652a0996f",
+      "bytes": 102672
+    },
+    {
+      "file": "desktop-css-zoom-200.png",
+      "source": "estimating-sources-reviewed/estimating-sources-ES03-re-df0c6-ed-evidence-remain-explicit-desktop-chromium/source-register-200-percent.png",
+      "batch": "integrated",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "sha256": "3a52df221511e1a525f5c8d2429cc75640d89052796393b48033432d6b0c29df",
+      "bytes": 205927
+    },
+    {
+      "file": "phone-320.png",
+      "source": "estimating-sources-reviewed/estimating-sources-ES03-re-df0c6-ed-evidence-remain-explicit-mobile-chromium/source-register-320.png",
+      "batch": "integrated",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "sha256": "71a6ac950f28bff2a4a426d0c2cc39d90bd35fc1f55abf65b17c1759959f3128",
+      "bytes": 57668
+    },
+    {
+      "file": "desktop-cost-comparison.png",
+      "source": "estimating-sources-confirmation/estimating-sources-ES03-ex-b7e57-liberate-estimate-successor-desktop-chromium/source-comparison-review.png",
+      "batch": "confirmation",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "sha256": "057400ffc2e6282f36eb831810c342741946c7c2bc65d70816a2263a2848e436",
+      "bytes": 111797
+    },
+    {
+      "file": "phone-cost-comparison.png",
+      "source": "estimating-sources-confirmation/estimating-sources-ES03-ex-b7e57-liberate-estimate-successor-mobile-chromium/source-comparison-review.png",
+      "batch": "confirmation",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "f24f863d8648c0c584063af2c5936aad54528f31123e46d2bda76c466bd34e62",
+      "bytes": 68435
+    },
+    {
+      "file": "reference-estimate-cost-review.png",
+      "source": "supplier-pricing/1440-estimate-cost-review.png",
+      "batch": "reference",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "sha256": "b829ae87a60ad5b0f33f5ae714926c3c1d23e82ab79a18e33ae1078a3611386e",
+      "bytes": 255965
+    },
+    {
+      "file": "reference-price-change-review.png",
+      "source": "supplier-pricing/1440-price-change-review.png",
+      "batch": "reference",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "sha256": "5def4ce9c179ae99ffd53a8ec013b776c68e5df5ebfeee0d3fdce27abe22ac69",
+      "bytes": 183253
+    }
+  ],
+  "limits": [
+    "Synthetic fixture only",
+    "CSS zoom is not physical-device/browser-UI zoom acceptance",
+    "Paired task inspection by Codex; no owner visual baseline adoption",
+    "Fresh-reset and cross-0026 upgrade CI remain separate",
+    "Restart metadata records base checkout; local proof helper was uncommitted and confirmation layout changed at rebuild, with exact hashes above"
+  ]
+}

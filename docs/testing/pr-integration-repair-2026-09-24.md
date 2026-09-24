@@ -33,6 +33,18 @@ Local results on the integrated #309 tree: production build passed; fresh migrat
 
 Fresh CI remains required for every integrated head. Synthetic test evidence does not establish owner/device acceptance, production readiness or deployment.
 
+## Calibration initial-read readiness
+
+The [Scheduling compiled browser run](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35962585021/job/107514147939) passed 466 cases with 74 declared skips, but its desktop EQ-09 case timed out waiting for Company context. The retained screenshot shows the focused Record calibration evidence button, a completed register read and a closed form; no calibration command had been reached. A controlled local read released between pointer-down and pointer-up moved the opener from y=258.875 to y=224.578125 as the loading message disappeared, reproducing the focused closed form. Clicking after that read settled opened the form. This demonstrates a matching mechanism; the screenshot alone does not prove the precise CI event ordering.
+
+The EQ-09 journey now observes its successful initial instrument GET and rendered register status before pointer activation. The navigation and response waits are handled together. Application code, the 45-second test deadline, and all creation, withdrawal, exact certificate and reload assertions remain unchanged. Compiled warm-up reached all 519 routes and both desktop/phone journeys passed; the final paired-wait arrangement passed both cases again, with no skips. Focused lint and whitespace checks passed. Fresh #310 CI remains required.
+
+## Equipment migration receipt in a combined upgrade
+
+The [Sales database lane](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35956024809/job/107494423163) exposed an Equipment test that asserted the newest applied migration was always 0045. It failed with 0046 after Sales was integrated; the same original assertion reproduced locally as 0048 versus 0045 on the complete integration tree. The upgrade now preserves every original migration receipt through 0025, requires exactly one Equipment 0045 receipt, and verifies the entire upgraded ledger remains unchanged after repeated migration/seed. The existing exact original-Asset comparison remains. Whole-registry assertions in the other upgrade suites remain independent and unchanged.
+
+The corrected combined 0048 tree passed all 27 cases across the complete Equipment, Sales, Engineering control and Cost Source database files, with no failures or skips. Focused lint and whitespace checks passed. This is an integration-test correction; no migration, application behavior, deadline or runtime dependency changes. Fresh CI remains required on each affected dependent head.
+
 ## Performance sample response ownership
 
 The [fresh Equipment performance job](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35952532608/job/107483935296) retained one failed development sample out of 320. Its phone Customers wave received a 200 response 71 ms after observation began, with zero matching requests started in that wave; Chromium then refused its body after navigation. The URL-only waiter had selected a late response from the preceding wave. The waiter now accepts only responses belonging to GET request objects observed after that sample starts. It retains the 120-second deadline, real browser request, declared network rule, HTTP-error assertion, raw samples and timing boundary; no retry, interception or timing exclusion is added.
@@ -42,3 +54,33 @@ A controlled delayed-response regression returned the previous wave with the old
 ## Optional Job Pack access boundary
 
 Fresh CI at `8155cd1` exposed two invited-user demo failures ([run 35947481361](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35947481361)). The saved appointment loaded correctly, but its new optional JobPackEntry showed a page error for an identity without pack.read. The panel now distinguishes a denied read from a failed request: permission denial shows an access-unavailable status, while server/transport errors retain the error alert. Both hide old links; refresh remains available. No permissions, endpoints or server policy change. Consumer fixtures cover 403, 404 and 500, and the invited-user journeys explicitly wait for the unavailable status and assert no pack link. Fresh CI remains required.
+
+## Combined migration and Scheduling reconciliation
+
+The integrated sequence assigns Equipment 0045, Sales 0046, Engineering 0047 and Cost Sources 0048. The unmerged Cost Sources SQL is byte-identical after renumbering; seed order, exact migration lists, upgrade counts, grant allowlists and the 92-capability access-review contract are reconciled. No existing database is renumbered and no issued identity is changed.
+
+Scheduling's Contacts source review is recorded in `docs/design/contacts/README.md`. Local verification passed: byte-identical issued Contacts HTML; all 103 Contacts model groups; all 62 native Chrome browser groups; TypeScript; design register (309 entries, 28 components); foundation, prototype and naming checks. Visual/owner review remains pending in the register. Fresh CI and combined database upgrade proof remain required.
+
+The combined application build and lint pass. The full local unit run passes 410 of 414 cases; all four Windows path/private-storage failures reproduce in an untouched `854db10` main checkout (the same seven focused cases pass 3/fail 4 there). GitHub's supported Ubuntu checks remain authoritative for those cases; no assertion or storage safeguard was relaxed.
+
+The compiled optional-pack boundary proof on `992dbb4` passes both desktop and phone consumers (3/3 including warm-up). Final review also restored the issued access-review r01 snapshot to main's exact bytes: Engineering had regenerated that historical file before the Cost Sources branch moved the live generator to the versionless working master. Current working capability data remains 92; historical evidence is retained.
+
+## Combined local verification
+
+Application tree `c354575` (the following commits only retain documentation and historical reference bytes) passed the normal production build and lint. Against the isolated PostgreSQL 16.15 `ppo_synthetic_test`, ten selected database upgrade/reseed cases passed, including the upgrade across 0026 with existing estimates and the exact whole-grant snapshots. The unfiltered demo-upgrade suite and Scheduling workspace database suite passed **10/10** (five each), including CRLF ledger preservation and rollback after a late privilege failure. An earlier filtered demo run ended on its deliberately invalid migration-ledger fixture and failed the suite teardown because the final rollback case was excluded; the complete unchanged suite then passed.
+
+The compiled application passed **23/23**, with no skips, in three minutes: all seven Scheduling browser cases, CRM permission revocation, Planner conflict/uncertain recovery, both Job Pack entry consumers and Engineering page guidance on desktop and phone. Warm-up reached all 519 discovered routes. Node 24.21.0, Chrome 154.0.8037.58 and Playwright 1.63.0 were used. These focused checks supplement the full GitHub lanes, whose actual per-head results and merge records remain authoritative.
+
+## Sales upgrade ledger assertion
+
+The fresh [CRM lane on Engineering](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35949089469/job/107473512663) exposed another combined-migration assumption in the new Sales test: it removed only the final ledger row and expected Sales 0046 to be last. Equipment 0045 and later Engineering/Cost Sources make that assumption false. The proof now compares every original row through its actual 0044 baseline, including checksums/timestamps, and requires exactly one Sales 0046 receipt. Existing whole-registry proofs cover the complete sequence. The corrected case passed against the combined 0048 tree (1/1, no skips); no migration or application code changed.
+
+## Issued access snapshot preserved throughout the merge sequence
+
+The versionless access-review generator was also carried back to the Engineering foundation before its merge, so every integration step retains main's issued r01 bytes. The 91-capability Engineering working master passed all 107 model groups and 40 native Chrome browser groups; the combined 92-capability master passed all 107 model groups after reconciliation. Existing reference captures and owner-review status remain unchanged. Generated model evidence now writes to `verification-evidence/` rather than overwriting the issued r01 evidence record.
+
+## Disposable setup boundary
+
+The [fresh Equipment Finance lane](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35949089864/job/107473514763) failed seven `beforeEach(reset)` hooks at schema disposal, before the Finance assertions. Reset inherited the application's ten-second PostgreSQL statement deadline. Scheduling already separates fixture seeding and synthetic schema disposal with a transaction-local 120-second setup bound; that existing correction is now carried forward from Equipment rather than arriving only in the final PR. It changes no application query, migration SQL, assertion, retry or workflow test deadline.
+
+The new database regression passes on the combined tree (1/1): after reset and repeated seed, the same single pooled connection still reports the normal ten-second statement timeout. Disposal still requires `ppo_synthetic_test` and the explicit reset flags in this proof. The original Finance lane remains failed evidence; corrected-source CI must execute the full lane.

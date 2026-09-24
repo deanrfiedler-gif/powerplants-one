@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { JobPackEntry } from "../../../documents/components/client/job-pack-entry";
 import { useSearchParams } from "next/navigation";
+import { SchedulingNavigation } from "./workspace-navigation.client";
 import { DemandPanel } from "./demand-panel.client";
 import {
   BookingContinuation,
@@ -79,6 +80,7 @@ export type Appointment = {
   site_timezone: string;
   site_id: string;
   site_name: string;
+  customer_name?: string;
   scope_revision_id: string;
   scope_version: number;
   scope_revision: number;
@@ -127,6 +129,8 @@ export type Appointment = {
     summary: string;
     status: string;
     due_needed: boolean;
+    owner_id?: string;
+    owner_name?: string;
     due_at: string | null;
   }[];
   proposal: {
@@ -813,7 +817,7 @@ function CancelForm({ a, onSaved }: { a: Appointment; onSaved: () => void }) {
     </section>
   );
 }
-function RequestDecision({
+export function RequestDecision({
   a,
   request,
   onSaved,
@@ -825,6 +829,8 @@ function RequestDecision({
   const p = useIdentity(),
     [reason, setReason] = useState(""),
     command = useCommand();
+  const resources = useResource<Envelope<Resource>>(`selectors/resources?site_id=${a.site_id}`);
+  const resourceName = (id: string) => resources.data?.items.find(r => r.id === id)?.name ?? "Resource identity unavailable";
   async function decide(action: string) {
     const body =
       action === "accept"
@@ -855,6 +861,17 @@ function RequestDecision({
         <Status value={request.status} />
       </div>
       <p>{request.reason}</p>
+      <div className="scheduling-comparison" aria-label="Current versus proposed booking">
+        <section><h3>Current booking</h3><p><Stamp value={a.start_at} timezone={a.site_timezone}/> – <Stamp value={a.end_at} timezone={a.site_timezone}/></p>
+          {a.assignments.filter(x=>x.active && x.assignment_version===a.assignment_version).map(x=><p key={x.id}>{x.name} · {x.crew_role} · Travel before {x.travel_before_minutes} min / after {x.travel_after_minutes} min. Basis: {x.travel_reason}</p>)}
+          <p>Customer: {a.customer_commitment} · Dispatch {a.dispatch_hold ? "held" : "not held"} · Pack: {a.pack_requirement}</p>
+        </section>
+        <section><h3>Requested booking</h3><p><Stamp value={request.proposed_start} timezone={a.site_timezone}/> – <Stamp value={request.proposed_end} timezone={a.site_timezone}/></p>
+          {request.crew.map(x=><p key={x.resource_id}>{resourceName(x.resource_id)} · {x.crew_role} · Travel before {x.travel_before_minutes} min / after {x.travel_after_minutes} min. Basis: {x.travel_reason}</p>)}
+          <p>Site timezone: {a.site_timezone}. Acceptance rechecks the whole crew, calendars, skills and reservations. Changed booking facts require fresh customer contact and preparation review.</p>
+        </section>
+      </div>
+      <p>Requested against schedule v{request.expected_schedule_version}; current v{a.schedule_version}. {request.expected_schedule_version !== a.schedule_version && "Stale request ? review current booking before deciding."}</p>
       <p>
         <Stamp value={request.proposed_start} timezone={a.site_timezone} /> –{" "}
         <Stamp value={request.proposed_end} timezone={a.site_timezone} /> ·{" "}
@@ -935,7 +952,7 @@ export function AppointmentScreen({ id }: { id: string }) {
         description="Attendance, work authority and customer commitment remain distinct."
         action={
           <Link className="button secondary" href={returnTo}>
-            Back to planner
+            {returnTo.startsWith("/schedule/") ? "Back to scheduling review" : "Back to planner"}
           </Link>
         }
       />
@@ -1359,7 +1376,7 @@ export function PlannerBoard({
           aria-label={`${r.name} resource lane`}
         >
           <header>
-            <h2>{r.name}</h2>
+            <h2><Link href={`/service/technicians/${r.id}`}>{r.name}</Link></h2>
             <span>
               {r.active ? "Published resource" : "Inactive · cannot book"}
             </span>
@@ -1629,6 +1646,7 @@ export function PlannerScreen() {
           page, so the heading block is redundant on screen. It stays in the
           document for assistive technology and heading order. */}
       <h1 className="sr-only">Service planner</h1>
+      <SchedulingNavigation />
       <BookingContinuation />
       {search.get("returnTo") && (
         <p>

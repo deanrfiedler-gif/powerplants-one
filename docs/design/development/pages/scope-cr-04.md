@@ -40,3 +40,26 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 The draft User Guide `guide.cr.04` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## Native Sales implementation contract
+
+Review stage history, next-action coverage and close-date movement over the same permitted result page as Deals.
+
+- Board, List, Forecast and Archive preserve their existing controls.
+- Pipeline insights has a compact 44px disclosure above the worklist and a bounded scrolling body when expanded, retaining Board access at phone widths.
+- Coverage distinguishes known/unknown values and next-action states.
+- Deal drill-through links retain the selected worklist URL.
+
+Choose pipeline, company/site, owner, outcome and search filters. Read the observation time, count basis and complete/partial state before interpreting totals.
+
+The denominator is the returned page, not a whole-company forecast. Amounts are unweighted AUD excluding GST; null is not zero. Stage ageing uses recorded entry time. Date movements compare recorded snapshots; positive moves accumulate as slipped days. Missing history stays unknown.
+
+Insights are read-only arithmetic over authorised facts. No probabilities, forecast categories or financial policy are adopted.
+
+Desktop: retain the current shell, Roboto/Verdana and navy/green tokens. Reuse PageHeader, Button, Field, SelectField, RecordTabs and error/status controls. Keep review decisions after the brief, immutable history separate and long reasons wrapping. Inspect at 1440 × 960 and 1024 × 768.
+
+Mobile: stack fields/actions, keep every tab reachable and contain table/history overflow. Inspect at 390 × 844, 320 CSS px and 200% zoom; keyboard focus and recovery state must stay visible.
+
+Loading, empty/filter-empty, partial, failed, denied, read-only, validation, saving, saved, uncertain and source-changed states remain explicit. The guide `guide.cr.04` carries normal and recovery steps.
+
+Retained reference: `docs/reference/ui/crm/ppo-deal-pipeline_r38.html`. Missing mobile reference images are explicitly unprovided. The current shell and server authority govern departures from demonstration HTML. ES-05/06/07, agreements and automatic downstream effects remain unavailable under ADR-0046. Actual paired captures and differences are recorded in `docs/delivery/sales-native-completion-handover.md`; acceptance is pending.

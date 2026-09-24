@@ -9,6 +9,17 @@ import { emptyConfiguration } from "../estimating/configuration-definition";
 
 export const fixtureDate = "2026-09-23";
 export const fixtureTime = "2026-09-23T00:00:00Z";
+export const salesEvidenceFixture = "Synthetic customer statement: the controls work in the observed configuration. Further instruction is requested; no competence assessment, quotation acceptance or order authority is implied. ".repeat(8);
+export const salesRecordTabsFixture = [
+  { id: "overview", label: "Overview" },
+  { id: "details", label: "Scope & sites" },
+  { id: "timeline", label: "Activities" },
+  { id: "tasks", label: "Tasks" },
+  { id: "commercial", label: "Estimates & quotations" },
+  { id: "correspondence", label: "Correspondence" },
+  { id: "files", label: "Documents" },
+  { id: "history", label: "History" },
+];
 export const equipmentDateFixture = {
   value: "2026-09-20T00:00:00Z",
   validationField: "effective_at",
@@ -84,6 +95,7 @@ export const salesFixture: ComponentProps<typeof Board>["data"] = {
     value_amount: i === 1 ? null : "12500.00",
     expected_close_date: i === 2 ? null : "2026-10-20",
     can_edit: true,
+    history: [{ version: 1, at: fixtureTime, from_stage: null, to_stage: (["Discovery", "Scoping", "Quoting"] as const)[i], close_date: i === 2 ? null : "2026-10-20", close_recorded: true }],
   })),
 };
 export const projectFixture: ProjectSchedule = {
@@ -192,6 +204,8 @@ export const appointmentFixture: ScheduleAppointment = {
   requests: [],
   projection: "ScheduleSummary",
 };
+export const longSchedulingResourceName =
+  "SYN-PPO Technician with a long multi-site resource identity for wrapping review";
 export const plannerFixture: Schedule = {
   items: [appointmentFixture],
   next_cursor: null,

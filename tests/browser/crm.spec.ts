@@ -160,9 +160,9 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
   await page
     .getByLabel("Source context (synthetic)", { exact: true })
     .fill("SYN Manually recorded fictional conversation");
-  if (await page.getByRole("tab",{name:"Timeline",exact:true}).count()) await page.getByRole("tab",{name:"Timeline",exact:true}).click();
+  if (await page.getByRole("tab",{name:"Activities",exact:true}).count()) await page.getByRole("tab",{name:"Activities",exact:true}).click();
   await pick(page, "Activity owner", CRM.owner);
-  if (await page.getByRole("tab",{name:"Timeline",exact:true}).count()) await page.getByRole("tab",{name:"Timeline",exact:true}).click();
+  if (await page.getByRole("tab",{name:"Activities",exact:true}).count()) await page.getByRole("tab",{name:"Activities",exact:true}).click();
   await page
     .getByLabel("Action purpose", { exact: true })
     .fill("SYN Call to clarify the irrigation controls need");
@@ -180,6 +180,7 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
   ).toBeVisible();
   await expect(page.getByText("No unsaved changes", { exact: true })).toBeVisible();
   await capture(page, info, "saved-opportunity");
+  await page.getByRole("tab", {name:"Activities",exact:true}).click();
   await page.getByRole("link", { name: "Open activity", exact: true }).click();
   await expect(
     page.getByRole("heading", {
@@ -200,6 +201,7 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
     page.getByText("Completed", { exact: true }).first(),
   ).toBeVisible();
   await page.goto(detailUrl);
+  await page.getByRole("tab", {name:"Activities",exact:true}).click();
   await expect(
     page.getByRole("heading", { name: "Next action needed", exact: true }),
   ).toBeVisible();
@@ -215,9 +217,9 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
   await expect(page.getByRole("dialog")).not.toBeVisible();
   await expect(page.locator('.crm-stage-track [aria-current="step"]')).toContainText("Scoping");
   await expect(page.getByRole("button", { name: "Save next action", exact: true })).toBeEnabled();
-  if (await page.getByRole("tab",{name:"Timeline",exact:true}).count()) await page.getByRole("tab",{name:"Timeline",exact:true}).click();
+  if (await page.getByRole("tab",{name:"Activities",exact:true}).count()) await page.getByRole("tab",{name:"Activities",exact:true}).click();
   await pick(page, "Activity owner", CRM.owner);
-  if (await page.getByRole("tab",{name:"Timeline",exact:true}).count()) await page.getByRole("tab",{name:"Timeline",exact:true}).click();
+  if (await page.getByRole("tab",{name:"Activities",exact:true}).count()) await page.getByRole("tab",{name:"Activities",exact:true}).click();
   await page
     .getByLabel("Action purpose", { exact: true })
     .fill("SYN Arrange a technical discovery conversation");
@@ -228,12 +230,13 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
     page.getByRole("heading", { name: "Due date needed", exact: true }),
   ).toBeVisible();
   await page.reload();
+  await page.getByRole("tab", {name:"Activities",exact:true}).click();
   await expect(
     page
-      .getByText("SYN Arrange a technical discovery conversation", {
+      .getByRole("tabpanel", {name:"Activities",exact:true})
+      .getByRole("link", {name:"SYN Arrange a technical discovery conversation",
         exact: true,
-      })
-      .first(),
+      }),
   ).toBeVisible();
   await capture(page, info, "qualified-successor");
   await capture(page, info, "successor-action");
@@ -250,13 +253,14 @@ test("CA-02/03 real conflict retains proposed need; lost response reconciles ori
   page,
 }, info) => {
   const i = await seeded(page);
+  await page.getByRole("tab", {name:"Activities",exact:true}).click();
   await expect(page.getByRole("heading",{name:"Overdue",exact:true})).toBeVisible();
   await capture(page,info,"overdue");
-  await page.getByRole("tab", {name:"Details",exact:true}).click();
+  await page.getByRole("tab", {name:"Scope & sites",exact:true}).click();
   await page
     .getByLabel("Qualified customer need", { exact: true })
     .fill("SYN Safe proposed need retained after conflict");
-  await page.getByRole("tab", {name:"Details",exact:true}).click();
+  await page.getByRole("tab", {name:"Scope & sites",exact:true}).click();
   await page
     .getByLabel("Qualification outcome", { exact: true })
     .fill("SYN Proposed qualification note");
@@ -326,7 +330,7 @@ test("CA-06/10/13 denied identity clears sensitive forms; real empty, unavailabl
   page,
 }, info) => {
   const i = await seeded(page);
-  await page.getByRole("tab", {name:"Details",exact:true}).click();
+  await page.getByRole("tab", {name:"Scope & sites",exact:true}).click();
   await page
     .getByLabel("Qualification outcome", { exact: true })
     .fill("SYN Sensitive unsaved proposal");
@@ -422,7 +426,7 @@ test("CA-06/10 real CRM permission revocation clears linked Activity content aft
   const detail = await page.context().newPage();
   await detail.goto(`/sales/opportunities/${i.id}`);
   await expect(detail.getByRole("heading", {name:i.title,exact:true})).toBeVisible();
-  await detail.getByRole("tab", {name:"Details",exact:true}).click();
+  await detail.getByRole("tab", {name:"Scope & sites",exact:true}).click();
   await detail.getByLabel("Qualification outcome", {exact:true}).fill("SYN Private proposal before revocation");
   // Hold a real authorised server response, then let a newer request observe revocation.
   let releaseOriginal!: () => void;
@@ -455,7 +459,10 @@ test("CA-06/10 real CRM permission revocation clears linked Activity content aft
   expect(await page.locator("body").innerText()).not.toContain(i.title);await capture(page,info,"revoked-activity");
   expect((await database().query("SELECT status,outcome FROM ppo.activities WHERE id=$1",[i.initial_action.id])).rows[0]).toEqual({status:"Open",outcome:null});
   await detail.evaluate(() => window.dispatchEvent(new Event("focus")));
-  await expect(detail.locator('.business-error[role="alert"]')).toBeVisible();
+  // Both the record and its scope editor can report denied reads during
+  // revocation. Require a visible refusal; private-content assertions below
+  // prove the record is removed, including after the held late response.
+  await expect(detail.locator('.business-error[role="alert"]').filter({hasText:"This record is unavailable."}).first()).toBeVisible();
   await expect(detail.getByRole("heading",{name:i.title,exact:true})).toHaveCount(0);
   const lateResponse = detail.waitForResponse(r => r.url().endsWith(`/crm/opportunities/${i.id}`) && r.status() === 200);
   releaseOriginal();

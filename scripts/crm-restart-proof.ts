@@ -284,7 +284,10 @@ try {
     await page.goto(origin + `/crm/opportunities/${outcome.deal.id}`);
     await expect(page.getByRole("heading",{name:outcome.deal.title,exact:true})).toBeVisible();
     if (outcome.body.close_outcome === "Won") await expect(page.getByRole("heading",{name:"Handover due",exact:true})).toBeVisible();
-    else await expect(page.getByText("Lost reason: No decision",{exact:true})).toBeVisible();
+    else {
+      await page.getByRole("tab", { name: "History", exact: true }).click();
+      await expect(page.getByText("Lost reason: No decision",{exact:true})).toBeVisible();
+    }
     const file = `${evidence}/outcome-${outcome.body.close_outcome.toLowerCase()}-${phase}`;
     const image = await page.screenshot({path:`${file}.png`,fullPage:false});
     const metadata = JSON.parse(await readFile(`${evidence}/${phase}.json`,"utf8"));

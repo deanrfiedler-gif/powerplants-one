@@ -1,0 +1,419 @@
+{
+  "date": "2026-09-24",
+  "owner_acceptance": "Pending",
+  "runtime_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a",
+  "capture_code_commit": "8a717d0",
+  "browser": "Chrome 154.0.8037.58",
+  "zoom_metrics": [
+    {
+      "name": "planner",
+      "path": "/schedule?day=2031-09-22",
+      "innerWidth": 711,
+      "innerHeight": 432,
+      "outerWidth": 1440,
+      "outerHeight": 960,
+      "pixelRatio": 2,
+      "scale": 1,
+      "overflow": false
+    },
+    {
+      "name": "resource",
+      "path": "/service/technicians/a4000000-0000-4000-8000-000000000001?day=2031-09-22",
+      "innerWidth": 711,
+      "innerHeight": 432,
+      "outerWidth": 1440,
+      "outerHeight": 960,
+      "pixelRatio": 2,
+      "scale": 1,
+      "overflow": false
+    },
+    {
+      "name": "changes",
+      "path": "/schedule/changes?day=2031-09-22&appointment_id=a8000000-0000-4000-8000-000000000001",
+      "innerWidth": 711,
+      "innerHeight": 432,
+      "outerWidth": 1440,
+      "outerHeight": 960,
+      "pixelRatio": 2,
+      "scale": 1,
+      "overflow": false
+    },
+    {
+      "name": "travel",
+      "path": "/schedule/travel?day=2031-09-22",
+      "innerWidth": 711,
+      "innerHeight": 432,
+      "outerWidth": 1440,
+      "outerHeight": 960,
+      "pixelRatio": 2,
+      "scale": 1,
+      "overflow": false
+    },
+    {
+      "name": "capacity",
+      "path": "/schedule/capacity?day=2031-09-22",
+      "innerWidth": 711,
+      "innerHeight": 432,
+      "outerWidth": 1440,
+      "outerHeight": 960,
+      "pixelRatio": 2,
+      "scale": 1,
+      "overflow": false
+    }
+  ],
+  "review_note": "Manual inspection is limited to images explicitly marked true. Other images are retained automated captures. Earlier implementation captures/reference were also inspected; this manifest marks final files only.",
+  "images": [
+    {
+      "path": "images/capacity-1024x768.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "175b3170f10a1475243e9412a7bf84adcf1ebe196602ec642c2c9e0e4320f63d",
+      "manually_inspected": false,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/capacity-1440x960.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "ece47c2c726a5dfae6d5a2bf59ab03c5e114f1be87bc0734d85cbe030f8a21fa",
+      "manually_inspected": true,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/capacity-200-percent-detail.png",
+      "width": 1422,
+      "height": 864,
+      "sha256": "266977b14e8cccc1cb1e5ef9f37aa64a76095868a77f8b69248f8034b28adc9c",
+      "manually_inspected": true,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/capacity-200-percent.png",
+      "width": 1422,
+      "height": 864,
+      "sha256": "7c16f9e8749726155f56a83bb7139fc14d930eca50a2b41f038bb899cf1b31d0",
+      "manually_inspected": false,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/capacity-320-detail.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "1af538f75fa5b7566829590edf4b5438ad783d8d8b32e8dce5ea614f350a6f35",
+      "manually_inspected": true,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/capacity-320x844.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "741add195d4b6e5d91bea39a27e6669e897cf4f176edbfe5a4689990c5629ce1",
+      "manually_inspected": true,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/capacity-390x844.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "303495d44dc746779eb1de3d39c4583632fa263c583b562735dac4fd67944edd",
+      "manually_inspected": false,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/capacity-720x480.png",
+      "width": 720,
+      "height": 480,
+      "sha256": "d59576f0d96b66e2eee17d1eac27d818f25c0a5cc617ea9c5b0756e38af07cf4",
+      "manually_inspected": false,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/changes-1024x768.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "794b0a75cd8c5303fd6fe31fa2668da4cd68e4a11effcf1587bb7962c8a0d3d6",
+      "manually_inspected": true,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/changes-1440x960.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "48e068df7c3b83846dd658d67e557fddb046eb776b5ca4934cb55e7345dbe729",
+      "manually_inspected": false,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/changes-200-percent-detail.png",
+      "width": 1422,
+      "height": 864,
+      "sha256": "69a2d26e62e4769e6f5889ba32cecabd7962887bb118c358c6e670d95b0b08ab",
+      "manually_inspected": true,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/changes-200-percent.png",
+      "width": 1422,
+      "height": 864,
+      "sha256": "b6a844506e7454732eae201bbbc3f40100133d7695b2fc79298119a7825f8186",
+      "manually_inspected": false,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/changes-320x844.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "87031e101ae8d1781829e8986e71b04aaafffb85103381e5b6469053a4d026b7",
+      "manually_inspected": true,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/changes-390x844.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "b5302ca8c129d521569a5c29135ac359ac5675291098b6f81b3621e96234ccc0",
+      "manually_inspected": false,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/changes-720x480.png",
+      "width": 720,
+      "height": 480,
+      "sha256": "10a1fd1181de31409dbaa315d814145538924964e12be74d600ce3ce920b0b9d",
+      "manually_inspected": false,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/current-proposed-comparison-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "407e510e84a8890dd033d2426c158c92bb882aacee8222c9b4b31e4f6cfb9cee",
+      "manually_inspected": false,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/current-proposed-comparison-390.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "0155ed298c8cbb0c65cfdf6e72ec728779baa5cf2f89a3874d34344e7585d012",
+      "manually_inspected": true,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/planner-1024x768.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "f923842e2cd97eb64e45f3fb40696228f4c6bae10aef3f0e815ed5baa35805ea",
+      "manually_inspected": false,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/planner-1440x960.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "8d6477765dad494ea93e88ed533bfe07b6a96bc814ea858417034f9c059b2fee",
+      "manually_inspected": true,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/planner-200-percent-detail.png",
+      "width": 1422,
+      "height": 864,
+      "sha256": "fa6f2134a4fe37f70717ae661a33a47dbe319f9f9bfe402d142c23a6caefa1b1",
+      "manually_inspected": false,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/planner-200-percent.png",
+      "width": 1422,
+      "height": 864,
+      "sha256": "71b89262bf49c2f79ecf8cc495c1cc9a09ac9f6fe3daf6a6d0716686561df813",
+      "manually_inspected": true,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/planner-320x844.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "30c14d13eeebb0dda4db8b3ab5072af5fb140e2eba6415fd94d0d19e2ccd3da1",
+      "manually_inspected": true,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/planner-390x844.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "ccfa320e9042204606901b041c70ccbdbffa1d1967f8890752db8c486b2fda62",
+      "manually_inspected": false,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/planner-720x480.png",
+      "width": 720,
+      "height": 480,
+      "sha256": "7a455e871f9b702e674f5b2061d80cba0744d8bff7dc76316deb07dce076c7cd",
+      "manually_inspected": false,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/planner-long-label-1440.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "c362abc340aac8e3a866190d63e26d1f169831edda07c5e458d09789d619587b",
+      "manually_inspected": false,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/planner-long-label-320.png",
+      "width": 320,
+      "height": 960,
+      "sha256": "21035db756e21ad9db3847d4caaece90e4f2a96faf39499ad9884a07061efca5",
+      "manually_inspected": true,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/requested-comparison-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "407e510e84a8890dd033d2426c158c92bb882aacee8222c9b4b31e4f6cfb9cee",
+      "manually_inspected": false,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/requested-comparison-390.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "9a568fc47f11ad64fe964966882d58f1ceca26e6d56b723865b74cebffd7cf23",
+      "manually_inspected": true,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/resource-1024x768.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "9f1bbd40f99b4ccdfc8ec8362afaf171a29f3418453cbd810ff4e35bb3fa7c1a",
+      "manually_inspected": false,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/resource-1440x960.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "523df250532aec05e5db6dbf3a60864aa515ad0e00aae6a5f92c0abe1021aff4",
+      "manually_inspected": true,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/resource-200-percent-detail.png",
+      "width": 1422,
+      "height": 864,
+      "sha256": "b464a45b4d72d61b5a88e153e5db2dd62c25b8d75d1ed9dc4b534931b1abeea5",
+      "manually_inspected": true,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/resource-200-percent.png",
+      "width": 1422,
+      "height": 864,
+      "sha256": "ea299b0f741f336db3e38d5b885f09cdb65a9f6badfcf82b407913ec6cffd8ed",
+      "manually_inspected": false,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/resource-320-detail.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "34be0293b20f68b656aab2d485c8c7c9dce4cd58d3e4c17d50869d1ea12b077a",
+      "manually_inspected": true,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/resource-320x844.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "3f4fcfd71149134c366047671c2142ab10bc548dfb5c75259688ea466e7ee236",
+      "manually_inspected": true,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/resource-390x844.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "c970b0c84f6f7c95180e83580661a37a927b8c953611188cdb5679326d0bdf75",
+      "manually_inspected": false,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/resource-720x480.png",
+      "width": 720,
+      "height": 480,
+      "sha256": "e8d082933e24ec95f2f6a009b13b8e688a6d8bcf50bcb20e10dfd76cd56df8a2",
+      "manually_inspected": false,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/retained-reference-1440x960.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "affa18b26dfd6d5c6aee684d9df985ee2b788581964b0e0a53bae22e51951ec2",
+      "manually_inspected": true,
+      "source_commit": null
+    },
+    {
+      "path": "images/travel-1024x768.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "869f23071e3900d4f0affd7360b4a25ba719f400a40b029055a4c362ad793cf3",
+      "manually_inspected": true,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/travel-1440x960.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "72594276e51894a93d02b01667e8e04a6790d69d05587f6ab823a6fd7225d12d",
+      "manually_inspected": false,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/travel-200-percent.png",
+      "width": 1422,
+      "height": 864,
+      "sha256": "3682f4956251ef90aeb0bd4e2ce4d424131763adf07437c04682fc13b5db1d02",
+      "manually_inspected": true,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/travel-320-detail.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "cd9e2d2fc082ce068b74866e008440f003c62d751416fbdc722197281525b2c1",
+      "manually_inspected": true,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/travel-320x844.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "ebe79fc091cb064966b599dfa7af34ea4edb28d51628f65a7f37d315154b342d",
+      "manually_inspected": true,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/travel-390x844.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "ac7f09a8320b54bbdf03a48d02a83498fb73e0513ac3ec58b46ceb12a4029294",
+      "manually_inspected": false,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    },
+    {
+      "path": "images/travel-720x480.png",
+      "width": 720,
+      "height": 480,
+      "sha256": "069f1437b0d100f2a589fcb9ccaacb9a400c0360c265bdf333faa76df7278339",
+      "manually_inspected": false,
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a"
+    }
+  ]
+}

@@ -118,7 +118,21 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // No seed, grants, users, external adapter or historic content rewrite. Historical
   // Asset links keep their Site while new links must match current context.
   // Runtime writes remain checked by current scope and exact applied review.
-  if (latestMigrationVersion !== 45) throw Error("Review the existing-demo upgrade for this release.");
+  // 0046: additive Sales workflow aggregates and immutable review events; 0045 Equipment is included.
+  // No seeds, new users, grants or existing source changes. Deferred identities are flushed
+  // before ALTER; generic runtime grants cover the new tables. No hosted upgrade is run here.
+  // 0047: additive Engineering control children, immutable exact review/issue history and four narrow
+  // capabilities. Seed 47 grants four duties only to existing fictional users and adds one synthetic
+  // Company A policy. No invited tester receives review, issue, distribution or source authority;
+  // no new user, historical migration rewrite, external transaction or identity-table ALTER occurs.
+  // 0048 adds synthetic cost-source headers, immutable revisions/reviews and
+  // exact estimate-line source bindings. Shared checks are extended with the
+  // deferred identity-event flush; old rows, hashes and output bytes are not
+  // rewritten. Seed 48 adds one local-only fictional reviewer and three grants
+  // copied from the coordinator's Company A scope/validity. Hosted identities
+  // gain no source-review or commercial approval duty. Generic table grants
+  // cover the additive records; upgrade/reseed proofs retain revoked grants.
+  if (latestMigrationVersion !== 48) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

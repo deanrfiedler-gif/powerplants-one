@@ -91,6 +91,44 @@
       "used_on": [
         "system:theme",
         "route:/development/page-register",
+        "scope:PL-02",
+        "scope:PL-04",
+        "scope:PL-05",
+        "scope:PL-03",
+        "route:/service/technicians/[id]",
+        "route:/schedule/capacity",
+        "route:/schedule/changes",
+        "route:/schedule/travel",
+        "scope:ES-01",
+        "route:/estimating",
+        "scope:ES-03",
+        "route:/estimating/cost-sources",
+        "route:/estimating/cost-sources/new",
+        "route:/estimating/cost-sources/[id]",
+        "route:/estimating/estimates/[id]/sources",
+        "route:/engineering/[id]/basis/assumptions",
+        "route:/engineering/[id]/basis/interfaces",
+        "route:/engineering/[id]/basis",
+        "route:/engineering/[id]/basis/requirements",
+        "route:/engineering/[id]/basis/review",
+        "route:/engineering/[id]/basis/sources",
+        "route:/engineering/[id]/drawings/deliverables",
+        "route:/engineering/[id]/drawings",
+        "route:/engineering/[id]/queries",
+        "route:/engineering/[id]/queries/submittals",
+        "route:/engineering/[id]/reviews/issues",
+        "route:/engineering/[id]/reviews",
+        "route:/engineering/basis",
+        "route:/engineering/drawings",
+        "route:/engineering/queries",
+        "route:/engineering/reviews",
+        "route:/estimating/intake",
+        "route:/sales/aftercare/[id]",
+        "route:/sales/aftercare",
+        "route:/sales/handoffs/estimating/[id]",
+        "route:/sales/handoffs/estimating",
+        "route:/sales/handoffs/won/[id]",
+        "route:/sales/handoffs/won",
         "scope:EQ-01",
         "scope:EQ-02",
         "scope:EQ-03",
@@ -99,9 +137,7 @@
         "scope:EQ-06",
         "scope:EQ-07",
         "scope:EQ-08",
-        "scope:EQ-09",
-        "scope:ES-01",
-        "route:/estimating"
+        "scope:EQ-09"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -113,6 +149,22 @@
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "Legacy scoped button families do not all use Button/ButtonLink.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "scheduling-native-review",
+          "expected": "Shared controls remain readable in scheduling comparisons at desktop, 320 px and 200% zoom.",
+          "actual": "New scheduling consumers added; owner visual acceptance pending.",
+          "action": "Inspect captured runtime evidence and retain legacy booking-control exceptions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "es03-buttons-host-review",
+          "expected": "Paired native ES-03 source/form/comparison states against retained supplier-pricing design.",
+          "actual": "New native consumers; functional evidence and paired owner acceptance remain separately recorded.",
+          "action": "Inspect normal, stale, denied and original-operation recovery at desktop, phone and enlarged widths; preserve reference bytes.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -160,7 +212,8 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/components/deal-workspace-link.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -296,7 +349,8 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/components/deal-workspace-link.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -359,7 +413,8 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/components/deal-workspace-link.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -494,6 +549,11 @@
           "id": "read-only",
           "label": "Read only",
           "description": "Management actions unavailable in this example."
+        },
+        {
+          "id": "long-label",
+          "label": "Long resource label",
+          "description": "Wrapping resource identity with a controlled availability and competence link."
         }
       ],
       "implementation": [
@@ -515,7 +575,8 @@
       },
       "specification": "docs/design/development/components/planner.md",
       "used_on": [
-        "route:/schedule"
+        "route:/schedule",
+        "scope:PL-01"
       ],
       "desktop": "Day and Week share the same fixture. A drop proposes a move; the host still owns conflict, readiness, crew and authority checks.",
       "mobile": "Each lane scrolls independently in Week. Day provides the simpler narrow-screen alternative.",
@@ -527,6 +588,14 @@
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "This planner is not the project Gantt. Catalogue callbacks do not prove conflict enforcement or saved booking behaviour.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "scheduling-native-review",
+          "expected": "Shared controls remain readable in scheduling comparisons at desktop, 320 px and 200% zoom.",
+          "actual": "New scheduling consumers added; owner visual acceptance pending.",
+          "action": "Inspect captured runtime evidence and retain legacy booking-control exceptions.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -625,6 +694,11 @@
           "id": "saving",
           "label": "Saving",
           "description": "Inspect the saving variant and its explanatory messages."
+        },
+        {
+          "id": "sales-evidence",
+          "label": "Sales evidence",
+          "description": "Long synthetic source statement with a 4000-character field limit; preview-only, no saved business record."
         }
       ],
       "implementation": [
@@ -659,6 +733,27 @@
         "route:/customers/[id]/development",
         "route:/surveys",
         "route:/surveys/[id]",
+        "scope:PL-01",
+        "scope:PL-02",
+        "scope:PL-04",
+        "scope:PL-05",
+        "scope:PL-03",
+        "route:/service/technicians/[id]",
+        "route:/schedule/capacity",
+        "route:/schedule/changes",
+        "route:/schedule/travel",
+        "scope:ES-03",
+        "route:/estimating/cost-sources",
+        "route:/estimating/cost-sources/new",
+        "route:/estimating/cost-sources/[id]",
+        "route:/estimating/estimates/[id]/sources",
+        "route:/estimating/intake",
+        "route:/sales/aftercare/[id]",
+        "route:/sales/aftercare",
+        "route:/sales/handoffs/estimating/[id]",
+        "route:/sales/handoffs/estimating",
+        "route:/sales/handoffs/won/[id]",
+        "route:/sales/handoffs/won",
         "scope:EQ-01",
         "scope:EQ-02",
         "scope:EQ-03",
@@ -687,6 +782,30 @@
           "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
           "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "scheduling-native-review",
+          "expected": "Shared controls remain readable in scheduling comparisons at desktop, 320 px and 200% zoom.",
+          "actual": "New scheduling consumers added; owner visual acceptance pending.",
+          "action": "Inspect captured runtime evidence and retain legacy booking-control exceptions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "es03-fields-host-review",
+          "expected": "Paired native ES-03 source/form/comparison states against retained supplier-pricing design.",
+          "actual": "New native consumers; functional evidence and paired owner acceptance remain separately recorded.",
+          "action": "Inspect normal, stale, denied and original-operation recovery at desktop, phone and enlarged widths; preserve reference bytes.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "sales-fields-host-review",
+          "expected": "Review native Sales fields and tabs with long statements and the actual saved workflow states.",
+          "actual": "Synthetic catalogue fixtures and native browser journeys are present; owner and assistive-technology acceptance are pending.",
+          "action": "Compare the Sales native captures with issued references; retain original-operation recovery and source-authority distinctions.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -809,6 +928,18 @@
         "route:/customers/[id]/development",
         "route:/surveys",
         "route:/surveys/[id]",
+        "scope:ES-03",
+        "route:/estimating/cost-sources",
+        "route:/estimating/cost-sources/new",
+        "route:/estimating/cost-sources/[id]",
+        "route:/estimating/estimates/[id]/sources",
+        "route:/estimating/intake",
+        "route:/sales/aftercare/[id]",
+        "route:/sales/aftercare",
+        "route:/sales/handoffs/estimating/[id]",
+        "route:/sales/handoffs/estimating",
+        "route:/sales/handoffs/won/[id]",
+        "route:/sales/handoffs/won",
         "scope:EQ-01",
         "scope:EQ-02",
         "scope:EQ-03",
@@ -839,6 +970,14 @@
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "es03-validation-host-review",
+          "expected": "Paired native ES-03 source/form/comparison states against retained supplier-pricing design.",
+          "actual": "New native consumers; functional evidence and paired owner acceptance remain separately recorded.",
+          "action": "Inspect normal, stale, denied and original-operation recovery at desktop, phone and enlarged widths; preserve reference bytes.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "review": null
@@ -862,6 +1001,11 @@
           "id": "cs-customer",
           "label": "Customer 360",
           "description": "Eight native Customer 360 labels exercise wrapping, scroll and keyboard selection; panels are presentation-only synthetic fixtures."
+        },
+        {
+          "id": "sales-workspace",
+          "label": "Sales workspace",
+          "description": "Eight native Sales workspace labels with keyboard selection and horizontal tab scrolling at phone widths; preview-only panels."
         }
       ],
       "implementation": [
@@ -892,6 +1036,13 @@
         "route:/customers/[id]/development",
         "route:/surveys/[id]",
         "route:/sites/[id]",
+        "route:/estimating/intake",
+        "route:/sales/aftercare/[id]",
+        "route:/sales/aftercare",
+        "route:/sales/handoffs/estimating/[id]",
+        "route:/sales/handoffs/estimating",
+        "route:/sales/handoffs/won/[id]",
+        "route:/sales/handoffs/won",
         "scope:EQ-01",
         "scope:EQ-03",
         "scope:EQ-04"
@@ -914,6 +1065,14 @@
           "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
           "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "sales-tabs-host-review",
+          "expected": "Review native Sales fields and tabs with long statements and the actual saved workflow states.",
+          "actual": "Synthetic catalogue fixtures and native browser journeys are present; owner and assistive-technology acceptance are pending.",
+          "action": "Compare the Sales native captures with issued references; retain original-operation recovery and source-authority distinctions.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1155,6 +1314,27 @@
         "route:/surveys/[id]",
         "route:/sites/[id]",
         "route:/surveys",
+        "scope:PL-01",
+        "scope:PL-02",
+        "scope:PL-04",
+        "scope:PL-05",
+        "scope:PL-03",
+        "route:/service/technicians/[id]",
+        "route:/schedule/capacity",
+        "route:/schedule/changes",
+        "route:/schedule/travel",
+        "scope:ES-03",
+        "route:/estimating/cost-sources",
+        "route:/estimating/cost-sources/new",
+        "route:/estimating/cost-sources/[id]",
+        "route:/estimating/estimates/[id]/sources",
+        "route:/estimating/intake",
+        "route:/sales/aftercare/[id]",
+        "route:/sales/aftercare",
+        "route:/sales/handoffs/estimating/[id]",
+        "route:/sales/handoffs/estimating",
+        "route:/sales/handoffs/won/[id]",
+        "route:/sales/handoffs/won",
         "scope:EQ-01",
         "scope:EQ-02",
         "scope:EQ-03",
@@ -1183,6 +1363,22 @@
           "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
           "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "scheduling-native-review",
+          "expected": "Shared controls remain readable in scheduling comparisons at desktop, 320 px and 200% zoom.",
+          "actual": "New scheduling consumers added; owner visual acceptance pending.",
+          "action": "Inspect captured runtime evidence and retain legacy booking-control exceptions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "es03-read-state-host-review",
+          "expected": "Paired native ES-03 source/form/comparison states against retained supplier-pricing design.",
+          "actual": "New native consumers; functional evidence and paired owner acceptance remain separately recorded.",
+          "action": "Inspect normal, stale, denied and original-operation recovery at desktop, phone and enlarged widths; preserve reference bytes.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1230,6 +1426,13 @@
         "route:/customers/[id]",
         "route:/people/[id]",
         "route:/sites/[id]",
+        "route:/estimating/intake",
+        "route:/sales/aftercare/[id]",
+        "route:/sales/aftercare",
+        "route:/sales/handoffs/estimating/[id]",
+        "route:/sales/handoffs/estimating",
+        "route:/sales/handoffs/won/[id]",
+        "route:/sales/handoffs/won",
         "scope:EQ-01",
         "scope:EQ-02",
         "scope:EQ-03",
@@ -1318,7 +1521,14 @@
         "route:/sites/[id]/readiness",
         "route:/customers/[id]/development",
         "route:/surveys",
-        "route:/surveys/[id]"
+        "route:/surveys/[id]",
+        "route:/estimating/intake",
+        "route:/sales/aftercare/[id]",
+        "route:/sales/aftercare",
+        "route:/sales/handoffs/estimating/[id]",
+        "route:/sales/handoffs/estimating",
+        "route:/sales/handoffs/won/[id]",
+        "route:/sales/handoffs/won"
       ],
       "desktop": "Use the phone presets and a separate browser window. This is the same form component family at a real responsive viewport.",
       "mobile": "Check 390/320 px, 200% zoom, touch targets, keyboard occlusion and error focus. No scaled screenshot is used.",
@@ -1355,6 +1565,11 @@
       "coverage": "Host example",
       "states": [
         {
+          "id": "engineering-host",
+          "label": "Native Engineering host",
+          "description": "Use the real permitted EN-01–EN-08 routes through the shared business layout to inspect rail, breadcrumbs, secondary menu, information guidance and restricted states. This is host evidence, not an isolated component example."
+        },
+        {
           "id": "service-phone-identity",
           "label": "Service phone identity",
           "description": "Utilities remain inside the header with local identity mounted; CRM filter row remains intentional."
@@ -1379,6 +1594,12 @@
         "src/app/desktop-shell.css",
         "src/app/mobile-layout.css",
         "src/app/styles/customers.css",
+        "src/scheduling/components/client/workspace-navigation.client.tsx",
+        "src/app/styles/scheduling-workspaces.css",
+        "src/engineering/control/navigation.ts",
+        "src/engineering/control/guide.ts",
+        "src/app/styles/my-work.css",
+        "src/shell/secondary-menu.tsx",
         "src/app/styles/equipment.css",
         "docs/testing/evidence/job-pack-i5/README.md"
       ],
@@ -1390,10 +1611,11 @@
       "specification": "docs/design/development/components/application-shell.md",
       "used_on": [
         "system:shell",
-        "scope:ES-01"
+        "scope:ES-01",
+        "scope:ES-03"
       ],
       "desktop": "Review the real global search, workspace switcher, rail, More and utility controls around this catalogue. Shell access can be unavailable without a running identity/database service.",
-      "mobile": "Resize the actual browser window to review the mobile shell; component-frame presets do not resize the surrounding application.",
+      "mobile": "Resize the actual browser window to review the mobile shell; component-frame presets do not resize the surrounding application. Native shell controls must remain inside the 64px header, including local identity at 390px and 320px; the legacy CRM grid must not overlay the first page action.",
       "keyboard": "Check tab order, skip link, More dialog, Escape and focus return in the real host.",
       "limitations": "No synthetic permission grants are supplied. The host is not counted as an isolated runnable fixture.",
       "gaps": [
@@ -1410,6 +1632,30 @@
           "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
           "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "es03-application-shell-host-review",
+          "expected": "Paired native ES-03 source/form/comparison states against retained supplier-pricing design.",
+          "actual": "New native consumers; functional evidence and paired owner acceptance remain separately recorded.",
+          "action": "Inspect normal, stale, denied and original-operation recovery at desktop, phone and enlarged widths; preserve reference bytes.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "engineering-native-shell-review",
+          "expected": "Native EN-02–EN-05 rail, module/view breadcrumbs, menu and information guide at desktop/mobile widths.",
+          "actual": "Native consumer added; owner and visual acceptance pending.",
+          "action": "Use native Engineering evidence for paired review against r17 and EN-02 sources.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "sales-shell-mobile-containment",
+          "expected": "Phone utility controls stay inside the native header and leave Sales back links operable.",
+          "actual": "Inherited identity-strip grid specificity was corrected. All 34 Sales reference/native captures were inspected; native 390px/320px controls stay inside the header. Owner/device acceptance remains pending.",
+          "action": "Review docs/testing/evidence/sales-native-completion/README.md and its hashed manifest with the owner; retain the passing header containment and shell geometry checks.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         },

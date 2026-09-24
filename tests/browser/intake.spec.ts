@@ -368,9 +368,16 @@ test("P03 persisted intake, validation retention, clarification completion, tria
   });
   await noOverflow(page);
   await page.goto("/service/tickets");
+  // SV-01 I2: a full-bleed register keeps its heading for assistive technology only; Log a request is its action.
   await expect(
-    page.getByRole("heading", { name: "Service requests", exact: true }),
+    page.getByRole("heading", { level: 1, name: "Service requests", exact: true }),
+  ).toBeAttached();
+  await expect(
+    page.getByRole("link", { name: "Log a request", exact: true }),
   ).toBeVisible();
+  await expect(
+    page.getByText("Loading permitted requests…", { exact: true }),
+  ).toHaveCount(0);
   await capture(page, info, "P03-tickets-list.png");
 });
 test("P03 unavailable and empty queues stay distinct; keyboard focus and network-failed form entries survive", async ({

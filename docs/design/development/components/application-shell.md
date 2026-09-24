@@ -40,9 +40,25 @@ Review at 1440 × 960, 1024 × 768, 820 × 800, 390 × 844 and 320 × 700 where 
 
 Changes to the source, styles, fixtures, specification or reference invalidate prior evidence. Update this master and its component record in the same pull request. Keep app business checks separate from catalogue presentation checks.
 
+Native Engineering routes inherit ProductNavigation/ProductHeader/ShellControls through the shared business layout; `system:shell` is the direct component binding. Page dependencies record the indirect consumers. New Engineering Button controls are excluded from the legacy workspace button reset so their shared variants and 44px targets remain intact. Existing My Work and EN-06–EN-08 reset selectors are unchanged. The host fixture covers current/denied context, open/collapsed menu, breadcrumbs and route-specific help; review remains pending.
+
 ## CS native receiving
 
 The existing `system:shell` binding owns the inherited frame around CS pages. Page files do not directly import shell controls, so no false direct-consumer binding is added. The CS stylesheet retains a scoped phone-header containment correction within this real host. The [CS evidence](../../../testing/evidence/cs-native-completion/README.md) and owning page guides record workflow checks and inspected widths. Owner/device comparison remains pending in the explicit CS alignment item.
+
+## Scheduling workspace navigation
+
+The secondary SchedulingNavigation composition reuses current shell permission discovery, native links and shared tokens. It links Planner, Resources, Changes & follow-up, Travel review and Demand & capacity while preserving day, timezone, site and resource context. The global rail retains its existing destinations. The inherited system:shell binding covers the four new routes; their native compositions remain pending review; navigation does not add a capability or grant access. Host examples remain the evidence surface.
+
+Native Scheduling captures exposed legacy identity-grid rules placing header utilities over Service tabs at phone widths. The Scheduling stylesheet restores the existing shell flex row only where SchedulingNavigation is present, following the existing Customers containment pattern. Header button containment is checked at all captured widths; broader legacy shell migration remains separate.
+
+## Native Engineering consumers
+
+EN-02–EN-05 reuse the shared menu and workspace controls under #ppo-engineering-control. The rail exposes basis, drawings and reviews; queries remain contextual. ProductHeader resolves module/view breadcrumbs and the information icon resolves route-specific guidance. Existing EN-06–EN-08 controls/defaults remain. Below 1100 CSS px the native Engineering workspace owns one scroll surface for context, controls and the selected record; it never leaves a tiny inner evidence viewport. Host fixture states: author, reviewer, issuer, read-only, denied and authority not configured. Functional evidence and paired review remain in the programme handover; no review fingerprint is adopted.
+
+## Sales native mobile containment
+
+The Sales review found that the legacy identity-strip grid could override the native phone shell, placing utility controls over the first page action. The native flex rule now matches that legacy selector. Verify the real local-identity host at 390px and 320px, including the back link below the header. The existing `system:shell` binding owns every affected consumer. No reference bytes or owner acceptance are changed.
 
 ## Equipment native receiving
 
@@ -55,3 +71,7 @@ I5 found legacy identity-dependent grid styles placing utilities over the Servic
 ## ES-01 native receiving
 
 The workload uses the inherited frame and global page-information control. A register-scoped phone rule restores the compact flex header where the older local-identity grid placed utilities over module navigation. The workload browser fixture checks the guide control remains inside its header. No shared shell implementation or isolated fixture changed; owner/device acceptance remains pending. See the [programme handover](../../../delivery/estimating-programme-handover.md).
+
+## ES-03 native consumer
+
+The source register, authored evidence form, independent review and estimate comparison use this family through `src/components/cost-sources.tsx`. Existing catalogue fixtures remain unchanged because the shared component implementation is unchanged. Source-specific unknown/stale/recovery compositions are verified in the host browser tests, not inferred from the catalogue. The read-state binding includes ErrorNotice and host loading/recovery text; it does not claim a new generic ReadState implementation. See the [cost-source handover](../../../delivery/estimating-cost-sources-handover.md) for executed evidence and open paired/owner/device review.

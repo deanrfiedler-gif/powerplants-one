@@ -434,7 +434,20 @@ test("EQ09 native calibration creation and withdrawal retain certificate evidenc
   page,
 }) => {
   const reference = `SYN-I-${randomUUID()}`;
-  await page.goto("/equipment/instruments");
+  const [initialRead] = await Promise.all([
+    page.waitForResponse(
+      (response) =>
+        new URL(response.url()).pathname === "/api/v1/equipment/instruments" &&
+        response.request().method() === "GET",
+    ),
+    page.goto("/equipment/instruments"),
+  ]);
+  expect(initialRead.status()).toBe(200);
+  // The initial loading message sits above the opener. Settle that read before
+  // pointer activation so its removal cannot move the button during the click.
+  await expect(
+    page.getByRole("status").filter({ hasText: /^\d+ retained calibration records/ }),
+  ).toBeVisible();
   await page
     .getByRole("button", { name: "Record calibration evidence", exact: true })
     .click();

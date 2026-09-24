@@ -13,18 +13,20 @@ import { calculate, quoteAmounts } from "./math";
 import { quoteTemplate, type SafeQuote } from "./template";
 import { guardLegacyEstimateCreate, guardExistingEstimateMutation } from "./discovery-workspace-context";
 import { writeLineage } from "./specialist/lineage";
+import { inheritSourceBindings } from "./sources/bindings";
 export function versionHash(v:Pick<EstimateVersion,"title"|"scope"|"lines"|"policy"|"cost_schema_version">) {
   return digest(canonical({title:v.title,scope:v.scope,lines:v.lines,policy:v.policy,...(v.cost_schema_version === 2 ? {cost_schema_version:2} : {})}));
 }
 export function expected(actual:number,wanted:number) {
   if(actual!==wanted) throw new AppError(409,"VersionConflict","The saved record changed. Keep your proposal and compare the current version before saving again.");
 }
-export async function insertVersion(c:PoolClient,p:Principal,e:Estimate,input:Pick<ReturnType<typeof saveInput>,"title"|"scope"|"lines"|"policy"|"schema_version"|"reason">,id:string,predecessor:string|null) {
+export async function insertVersion(c:PoolClient,p:Principal,e:Estimate,input:Pick<ReturnType<typeof saveInput>,"title"|"scope"|"lines"|"policy"|"schema_version"|"reason">,id:string,predecessor:string|null,replaceSourceLines:string[] = []) {
   const totals=calculate(input.lines);
   const expanded = input.schema_version === 2;
   await c.query(`INSERT INTO ppo.estimate_versions(id,workspace_id,company_id,estimate_id,version,created_by,updated_by,predecessor_id,scope_revision_id,title,scope,lines,policy,content_hash,reason,cost_total,sell_total${expanded ? ",cost_schema_version" : ""})
     VALUES($1,$2,$3,$4,$5,$6,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16${expanded ? ",2" : ""})`,
     [id,p.workspace_id,e.company_id,e.id,e.version,p.actor_id,predecessor,randomUUID(),input.title,input.scope,JSON.stringify(input.lines),input.policy,versionHash({...input,...(expanded ? {cost_schema_version:2 as const} : {})}),input.reason,totals.cost,totals.sell]);
+  await inheritSourceBindings(c,p,e.company_id,id,predecessor,input.lines,replaceSourceLines);
 }
 export async function createEstimate(p:Principal,value:unknown) {
   const input=createInput(value);
