@@ -423,3 +423,5 @@ PPO-SV05-I6-HANDOVER,Job Pack structured saved sections,docs/delivery/job-pack-i
 PPO-PJ-COMPLETION,Projects and Delivery completion programme,docs/delivery/projects-completion-programme.md,,A0 audit and register reconciliation; native completion outstanding,Dean Fiedler,ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc,,,git,
 PPO-PJ-COMPLETION-EVIDENCE,Projects completion evidence,docs/testing/evidence/projects-completion/README.md,,A0 audit evidence; family acceptance outstanding,Dean Fiedler,ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc,,,git,
 PPO-SV05-I7-HANDOVER,Job Pack title readiness and history refinement,docs/delivery/job-pack-i7-handover.md,,Implementation in verification; owner acceptance open,Dean Fiedler,fe0a7e0,,,git,
+PPO-SV05-INTEGRATION,Job Pack application integration,docs/decisions/job-pack-integration.md,,Implementation conformance candidate; owner acceptance open,Dean Fiedler,aed0c00,,,git,
+PPO-SV05-HANDOVER,Job Pack integration handover,docs/delivery/job-pack-integration-handover.md,,Implementation in verification; owner acceptance open,Dean Fiedler,aed0c00,,,git,

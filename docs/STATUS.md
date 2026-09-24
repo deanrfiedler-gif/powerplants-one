@@ -1,5 +1,7 @@
 # Current prototype status
 
+**Job Pack I5, 24 September 2026:** final canonical handovers, saved-workbench A4 print and legacy style cleanup are implemented after I7 PR #309. Two component and 46 compiled cases passed; a focused final-print rerun passed six (counts include warm-up, duplicate viewport skips separate). Paired images and all five A4 pages were inspected. The measured phone shell utility overlap is corrected with shared-shell regression coverage. [Integration handover](delivery/job-pack-integration-handover.md) records remaining acceptance and programme work.
+
 **Job Pack I7, 24 September 2026:** verified title, stage-grouped readiness and richer staff history/acknowledgements are implemented after I6 PR #306; 18 unit, three database and 30 compiled browser cases passed (six deliberate skips). [I7 handover](delivery/job-pack-i7-handover.md) records the proof and limits. Final I5 remains.
 
 **Job Pack I6, 24 September 2026:** structured saved sections are in verification on a stack after I4. Six compatibility tests and three focused database proofs passed, with local seeding timeout limits recorded in the [I6 handover](delivery/job-pack-i6-handover.md). I7 and final I5 remain.
