@@ -3,7 +3,7 @@ import { after, test } from "node:test";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { sourceInput } from "../helpers/estimating-sources";
-import { crmBase, crmCreate } from "../helpers/crm";
+import { CRM, crmBase, crmCreate } from "../helpers/crm";
 import { estimateInput } from "../helpers/estimating";
 
 const origin = process.env.PPO_TEST_ORIGIN ?? "http://127.0.0.1:3000";
@@ -134,6 +134,15 @@ test("ES03 HTTP exact review, scoped reads, altered replay and revoked receipt a
     await database().query(
       "UPDATE ppo.permission_grants SET valid_to=NULL WHERE user_id='e5030045-0000-4000-8000-000000000001' AND capability='estimating.source.review'",
     );
+  }
+  await database().query("UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='estimating.read'", [CRM.owner]);
+  try {
+    const denied=await request(owner,`${path}?revision_id=${d.revision.id}`);
+    assert.equal(denied.status,404);
+    assert(!JSON.stringify(await denied.json()).includes(input.content.evidence_excerpt));
+    assert.equal((await request(owner,`operations/${input.operation_id}`)).status,404);
+  } finally {
+    await database().query("UPDATE ppo.permission_grants SET valid_to=NULL WHERE user_id=$1 AND capability='estimating.read'", [CRM.owner]);
   }
 });
 test("ES03 HTTP comparison is read-only, exact-version guarded and recovers one successor", async () => {

@@ -244,6 +244,9 @@ test("ES03 register history, stale draft, failed read and denied evidence remain
   ).toBeVisible();
   await page.goBack();
   await expect(search).toHaveValue(input.reference);
+  await page.goForward();
+  await expect(page.getByRole("heading", {name:"No sources match these filters"})).toBeVisible();
+  await page.goBack();
   await page.reload();
   await expect(
     page.getByRole("link", { name: input.content.title, exact: true }),
@@ -329,6 +332,8 @@ test("ES03 register history, stale draft, failed read and denied evidence remain
   await expect(page.getByLabel("Source title", { exact: true })).toHaveValue(
     "SYN another saved version",
   );
+  await page.getByRole("heading", {name:"Compare source revisions"}).scrollIntoViewIfNeeded();
+  await page.screenshot({path:info.outputPath("source-revision-comparison.png"),fullPage:true});
   await page.route(`**/api/v1/estimating/cost-sources/${input.id}`, (route) =>
     route.fulfill({
       status: 503,
