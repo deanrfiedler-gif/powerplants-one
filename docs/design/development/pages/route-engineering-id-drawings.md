@@ -35,7 +35,7 @@ Reuse ProductNavigation/ProductHeader, SecondaryMenuFrame/useSecondaryMenu, Butt
 
 No exact dedicated EN-03 HTML or image baseline is available. This native register/inspector is proposed, informed by BP-01 ENG-03, Engineering r02 and EN-06/EN-07.
 
-EN-02 retains Basis & scope, Requirements, Assumptions & questions, Interfaces, Calculations & sources, Review & handover. EN-03/EN-05 compositions remain proposed pending paired review. Missing native desktop/mobile images are explicit; do not substitute an unrelated image or rewrite issued references.
+EN-02 retains Basis & scope, Requirements, Assumptions & questions, Interfaces, Calculations & sources, Review & handover. EN-03/EN-05 compositions remain proposed pending paired review. Inspected native desktop/phone captures and their exact routes/states are indexed in [Engineering implementation evidence](../../../testing/evidence/engineering-native-control/README.md). These are implementation captures, not an approved visual baseline; views not listed there still lack exact captures.
 
 ## Handovers
 
@@ -46,3 +46,13 @@ Outgoing: exact reviewed basis/document/issue sources through the existing EN-06
 
 Guide: guide.route-engineering-id-drawings. The global information icon resolves route-specific native guidance and the draft development article.
 Evidence: docs/delivery/engineering-native-control-handover.md. Functional proof, visual review, business acceptance and deployment are separate. Review fields remain blank until actual review; no deployment is authorised.
+
+Exact implementation captures (24 September 2026; source `04444fb`; owner review pending):
+
+- [engineering-drawings-1440x960.png](../../../testing/evidence/engineering-native-control/engineering-drawings-1440x960.png)
+- [engineering-drawings-1024x768.png](../../../testing/evidence/engineering-native-control/engineering-drawings-1024x768.png)
+- [engineering-drawings-390x844.png](../../../testing/evidence/engineering-native-control/engineering-drawings-390x844.png)
+- [engineering-drawings-320x844.png](../../../testing/evidence/engineering-native-control/engineering-drawings-320x844.png)
+- [engineering-drawings-720x480.png](../../../testing/evidence/engineering-native-control/engineering-drawings-720x480.png)
+- [engineering-drawings-evidence-390x844.png](../../../testing/evidence/engineering-native-control/engineering-drawings-evidence-390x844.png)
+- [engineering-drawings-evidence-320x844.png](../../../testing/evidence/engineering-native-control/engineering-drawings-evidence-320x844.png)

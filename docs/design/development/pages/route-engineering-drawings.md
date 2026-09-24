@@ -35,7 +35,7 @@ Reuse ProductNavigation/ProductHeader, SecondaryMenuFrame/useSecondaryMenu, Butt
 
 No exact dedicated EN-03 HTML or image baseline is available. This native register/inspector is proposed, informed by BP-01 ENG-03, Engineering r02 and EN-06/EN-07.
 
-EN-02 retains Basis & scope, Requirements, Assumptions & questions, Interfaces, Calculations & sources, Review & handover. EN-03/EN-05 compositions remain proposed pending paired review. Missing native desktop/mobile images are explicit; do not substitute an unrelated image or rewrite issued references.
+EN-02 retains Basis & scope, Requirements, Assumptions & questions, Interfaces, Calculations & sources, Review & handover. EN-03/EN-05 compositions remain proposed pending paired review. Inspected native desktop/phone captures and their exact routes/states are indexed in [Engineering implementation evidence](../../../testing/evidence/engineering-native-control/README.md). These are implementation captures, not an approved visual baseline; views not listed there still lack exact captures.
 
 ## Handovers
 

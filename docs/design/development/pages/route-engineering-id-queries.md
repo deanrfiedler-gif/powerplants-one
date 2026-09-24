@@ -33,9 +33,9 @@ At 390 × 844 and 320 CSS px stack labelled search/filter fields; the selected i
 
 Reuse ProductNavigation/ProductHeader, SecondaryMenuFrame/useSecondaryMenu, Button, ErrorNotice, EN-06 Dialog focus management and the shared operation/receipt API. Engineering-specific forms are modular. Extend shared stylesheet scope registration without changing existing module defaults.
 
-Engineering r02 conceptual source: docs/reference/ui/engineering/PPO-Engineering-Container-r02.html. No exact EN-04 native screenshot is available. Queries remain contextual without a new Engineering rail slot.
+Engineering r02 conceptual source: docs/reference/ui/engineering/PPO-Engineering-Container-r02.html. The persisted query answer has exact desktop/phone implementation captures in the evidence index; other EN-04 views lack exact captures. Queries remain contextual without a new Engineering rail slot.
 
-EN-02 retains Basis & scope, Requirements, Assumptions & questions, Interfaces, Calculations & sources, Review & handover. EN-03/EN-05 compositions remain proposed pending paired review. Missing native desktop/mobile images are explicit; do not substitute an unrelated image or rewrite issued references.
+EN-02 retains Basis & scope, Requirements, Assumptions & questions, Interfaces, Calculations & sources, Review & handover. EN-03/EN-05 compositions remain proposed pending paired review. Inspected native desktop/phone captures and their exact routes/states are indexed in [Engineering implementation evidence](../../../testing/evidence/engineering-native-control/README.md). These are implementation captures, not an approved visual baseline; views not listed there still lack exact captures.
 
 ## Handovers
 
@@ -46,3 +46,8 @@ Outgoing: exact reviewed basis/document/issue sources through the existing EN-06
 
 Guide: guide.route-engineering-id-queries. The global information icon resolves route-specific native guidance and the draft development article.
 Evidence: docs/delivery/engineering-native-control-handover.md. Functional proof, visual review, business acceptance and deployment are separate. Review fields remain blank until actual review; no deployment is authorised.
+
+Exact implementation captures (24 September 2026; source `04444fb`; owner review pending):
+
+- [engineering-query-answer-desktop-chromium.png](../../../testing/evidence/engineering-native-control/engineering-query-answer-desktop-chromium.png)
+- [engineering-query-answer-mobile-chromium.png](../../../testing/evidence/engineering-native-control/engineering-query-answer-mobile-chromium.png)

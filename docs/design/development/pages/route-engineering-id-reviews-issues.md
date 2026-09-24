@@ -35,7 +35,7 @@ Reuse ProductNavigation/ProductHeader, SecondaryMenuFrame/useSecondaryMenu, Butt
 
 No exact dedicated EN-05 HTML or image baseline is available. The native queue, frozen inspector and evidence dialogs are proposed PPO application design.
 
-EN-02 retains Basis & scope, Requirements, Assumptions & questions, Interfaces, Calculations & sources, Review & handover. EN-03/EN-05 compositions remain proposed pending paired review. Missing native desktop/mobile images are explicit; do not substitute an unrelated image or rewrite issued references.
+EN-02 retains Basis & scope, Requirements, Assumptions & questions, Interfaces, Calculations & sources, Review & handover. EN-03/EN-05 compositions remain proposed pending paired review. Inspected native desktop/phone captures and their exact routes/states are indexed in [Engineering implementation evidence](../../../testing/evidence/engineering-native-control/README.md). These are implementation captures, not an approved visual baseline; views not listed there still lack exact captures.
 
 ## Handovers
 
@@ -46,3 +46,8 @@ Outgoing: exact reviewed basis/document/issue sources through the existing EN-06
 
 Guide: guide.route-engineering-id-reviews-issues. The global information icon resolves route-specific native guidance and the draft development article.
 Evidence: docs/delivery/engineering-native-control-handover.md. Functional proof, visual review, business acceptance and deployment are separate. Review fields remain blank until actual review; no deployment is authorised.
+
+Exact implementation captures (24 September 2026; source `04444fb`; owner review pending):
+
+- [engineering-issue-acknowledged-desktop-chromium.png](../../../testing/evidence/engineering-native-control/engineering-issue-acknowledged-desktop-chromium.png)
+- [engineering-issue-acknowledged-mobile-chromium.png](../../../testing/evidence/engineering-native-control/engineering-issue-acknowledged-mobile-chromium.png)
