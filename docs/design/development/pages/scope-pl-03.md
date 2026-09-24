@@ -38,3 +38,9 @@ Incoming: repeatable-read, independently scoped Service, Projects and Engineerin
 No exact page-specific retained HTML or accepted mockup exists. The native composition is proposed for owner visual review.
 
 [Executed checks, inspected captures and remaining review](../../../testing/evidence/scheduling-resources/README.md) identify the exact evidence. Draft guides, source presence, functional proof, owner visual acceptance and deployment remain separate. No review fingerprint is adopted by this edit.
+
+## Post-merge refinement
+
+Domain, commitment, resource, required skill and unknown-effort filters are retained in the page address and restored on reload. Analytical exclusions remain in memory and reset on refresh or a filter change. Unknown resource and skill mappings remain explicit. Criteria confer no permission and do not change source records.
+
+[Refinement verification](../../../testing/evidence/scheduling-refinement/README.md) records actual checks and review limits. Visual status remains Needs review; no fingerprint is adopted.

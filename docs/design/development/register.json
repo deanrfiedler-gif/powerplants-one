@@ -2376,7 +2376,7 @@
       "title": "Service planner and unassigned demand",
       "kind": "scope",
       "module": "PL",
-      "summary": "Existing same-tab booking recovery and server commands are preserved. Request decisions now show current versus proposed time, named crew, travel and version differences.",
+      "summary": "Calendar closures span every intersecting day in the display timezone, including a continuing closure that starts before the visible day. The end boundary is exclusive. Published working intervals and busy reservations remain independent; this display correction changes no booking guard.",
       "path": "/schedule",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -2413,7 +2413,7 @@
       "title": "Resource availability and competence",
       "kind": "scope",
       "module": "PL",
-      "summary": "Resource/calendar/competence mutation is unavailable. Synthetic skills are not statutory certificates; certificate/renewal evidence remains Unknown. No private HR fields are added.",
+      "summary": "Field Team now honours incoming day, site and display timezone and retains those controls on reload. Its default without a date remains today. Availability & competence and Back to Field Team retain day/site/timezone. Resource detail exposes a Review timezone selector for its seven-day window; published calendar timezone remains explicit and unchanged. No source editor is added.",
       "path": "/service/technicians",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -2453,7 +2453,7 @@
       "title": "Cross-domain resource demand and capacity",
       "kind": "scope",
       "module": "PL",
-      "summary": "Project programme dates and Engineering required dates never become labour effort. Service reservations include crew and explicit buffers; they are not labour estimates. No utilisation denominator or percentage is claimed.",
+      "summary": "Domain, commitment, resource, required skill and unknown-effort filters are retained in the page address and restored on reload. Analytical exclusions remain in memory and reset on refresh or a filter change. Unknown resource and skill mappings remain explicit. Criteria confer no permission and do not change source records.",
       "path": "/schedule/capacity",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -2493,7 +2493,7 @@
       "title": "Rescheduling and acknowledgement centre",
       "kind": "scope",
       "module": "PL",
-      "summary": "An exact appointment handover stays visible even outside the selected date/queue. Changed booking facts require fresh contact and preparation review. Contact is not delivery or pack acknowledgement.",
+      "summary": "Queue and selected appointment are retained in the page address and in the allowlisted return from appointment controls. Only Open and InProgress follow-up Activities enter Customer follow-up or contribute an outstanding task to Needs review; Completed and Cancelled remain history. An independent pending request, changed commitment or scope review can still require review.",
       "path": "/schedule/changes",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -2533,7 +2533,7 @@
       "title": "Visit route and travel review",
       "kind": "scope",
       "module": "PL",
-      "summary": "No map, provider, inferred distance/speed, traffic or optimiser is configured. Planned travel allowance, unknown route estimate and actual field Travel are independent facts.",
+      "summary": "Resource selection survives reload. Travel review flags calendar closures as well as availability blocks against the complete buffered reservation, using exclusive end boundaries. Displayed gap figures are explicitly the original schedule when comparing a manual order. A site-filter warning explains omitted visits; the change handover retains exact site/resource/appointment/day/timezone. No routing estimate or booking mutation is introduced.",
       "path": "/schedule/travel",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -2689,27 +2689,39 @@
       "title": "Site induction, risk and biosecurity review",
       "kind": "scope",
       "module": "FI",
-      "summary": "Implement structured induction, risk and biosecurity review with site/area-specific instructions and acknowledgement.",
+      "summary": "Assigned-visit review of exact CS-06 sources, with retained personal acknowledgements and unresolved conditions.",
       "path": "/my-jobs/site-readiness",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/my-jobs/site-readiness/page.tsx"
       ],
       "guide_key": "guide.fi.05",
       "design_path": "docs/design/development/pages/scope-fi-05.md",
       "html_path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/field-readiness-native/captures/quality-reference-1440.png",
+        "docs/testing/evidence/field-readiness-native/captures/quality-reference-390.png"
+      ],
+      "dependencies": [
+        "src/field/readiness.ts",
+        "src/shared/cs/readiness.ts",
+        "src/components/field-readiness-screen.tsx",
+        "src/app/field-readiness.css",
+        "docs/testing/evidence/field-readiness-native/README.md",
+        "docs/testing/evidence/field-readiness-native/capture-manifest.json"
+      ],
+      "scope_status": "Implemented; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "FI05 database 2/2 and desktop/phone browser 2/2 passed; programme handover records regression limits",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 62,
       "related_keys": [
+        "scope:FI-01",
         "scope:CS-06",
-        "scope:SV-03"
+        "scope:FI-02"
       ],
       "reviewer": null
     },
@@ -2975,20 +2987,35 @@
       "title": "Demand and material-readiness workspace",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement demand/material readiness with quantities, units, shortages, source completeness and owned blockers.",
+      "summary": "Review the exact material scope, usable supply and owned blockers.",
       "path": "/supply/material-readiness",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/material-readiness/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.01",
       "design_path": "docs/design/development/pages/scope-sc-01.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-01-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-01-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-01-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-01-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -2996,7 +3023,8 @@
       "related_keys": [
         "scope:CS-05",
         "scope:PD-01",
-        "scope:EN-06"
+        "scope:EN-06",
+        "route:/supply/material-readiness"
       ],
       "reviewer": null
     },
@@ -3005,27 +3033,43 @@
       "title": "Purchasing and supplier commitments",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement purchasing requests, supplier RFQs/commitments and procurement-reference coordination.",
+      "summary": "Keep authorised demand, purchasing requests and observed supplier outcomes distinct.",
       "path": "/supply/purchasing",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/purchasing/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.02",
       "design_path": "docs/design/development/pages/scope-sc-02.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-02-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-02-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-02-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-02-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 84,
       "related_keys": [
         "scope:SC-01",
-        "scope:AD-05"
+        "scope:AD-05",
+        "route:/supply/purchasing"
       ],
       "reviewer": null
     },
@@ -3034,26 +3078,42 @@
       "title": "Inbound shipments and line allocations",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement inbound shipments, split line allocations, dated ETA changes and import/logistics evidence.",
+      "summary": "Coordinate shipment lines, split allocations and dated ETA evidence.",
       "path": "/supply/shipments",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/shipments/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.03",
       "design_path": "docs/design/development/pages/scope-sc-03.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-03-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-03-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-03-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-03-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 85,
       "related_keys": [
-        "scope:SC-02"
+        "scope:SC-02",
+        "route:/supply/shipments"
       ],
       "reviewer": null
     },
@@ -3062,26 +3122,42 @@
       "title": "Receipt, inspection and quarantine",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement receipt, inspection, damage/shortage review, quarantine and disposition.",
+      "summary": "Capture physical receipt and inspection. Arrival and quarantine do not establish usable stock.",
       "path": "/supply/receipts",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/receipts/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.04",
       "design_path": "docs/design/development/pages/scope-sc-04.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-04-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-04-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-04-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-04-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 86,
       "related_keys": [
-        "scope:SC-03"
+        "scope:SC-03",
+        "route:/supply/receipts"
       ],
       "reviewer": null
     },
@@ -3090,20 +3166,35 @@
       "title": "Stock availability and reservations",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement stock availability and reservations with warehouse/bin context and source timestamps.",
+      "summary": "Dated source observations, explicit units and completeness. Live reservations are not configured.",
       "path": "/supply/stock",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/stock/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.05",
       "design_path": "docs/design/development/pages/scope-sc-05.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-05-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-05-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-05-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-05-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -3111,7 +3202,8 @@
       "related_keys": [
         "scope:PD-01",
         "scope:AD-05",
-        "scope:SC-04"
+        "scope:SC-04",
+        "route:/supply/stock"
       ],
       "reviewer": null
     },
@@ -3120,26 +3212,42 @@
       "title": "Picking and dispatch preparation",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement picking, staging, approved substitutions, packing and dispatch preparation.",
+      "summary": "Pick, stage, prepare and record movement against evidenced usable allocation.",
       "path": "/supply/dispatch",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/dispatch/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.06",
       "design_path": "docs/design/development/pages/scope-sc-06.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-06-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-06-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-06-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-06-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 88,
       "related_keys": [
-        "scope:SC-05"
+        "scope:SC-05",
+        "route:/supply/dispatch"
       ],
       "reviewer": null
     },
@@ -3148,26 +3256,42 @@
       "title": "Customer delivery and proof of delivery",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement customer delivery, partial quantities, proof of delivery and outstanding exceptions.",
+      "summary": "Record physical delivery, exceptions and separate customer acknowledgement.",
       "path": "/supply/deliveries",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/deliveries/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.07",
       "design_path": "docs/design/development/pages/scope-sc-07.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-07-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-07-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-07-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-07-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 89,
       "related_keys": [
-        "scope:SC-06"
+        "scope:SC-06",
+        "route:/supply/deliveries"
       ],
       "reviewer": null
     },
@@ -3176,27 +3300,43 @@
       "title": "Returns, supplier claims and credit tracking",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement returns, supplier claims and credit tracking as distinct linked outcomes.",
+      "summary": "Follow the goods, customer remedy, supplier recovery and credits separately.",
       "path": "/supply/returns",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/returns/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.08",
       "design_path": "docs/design/development/pages/scope-sc-08.md",
       "html_path": "docs/reference/ui/returns-claims/PPO-Returns-Supplier-Claims-and-Credit-Tracking-Workspace-r01.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-08-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-08-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-08-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-08-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 90,
       "related_keys": [
         "scope:SC-04",
-        "scope:SC-07"
+        "scope:SC-07",
+        "route:/supply/returns"
       ],
       "reviewer": null
     },
@@ -3205,27 +3345,43 @@
       "title": "Material change-impact review",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement material-change impact review before requesting downstream booking/project changes.",
+      "summary": "Review before and after evidence through the owning module. Bookings and issued packs remain unchanged.",
       "path": "/supply/changes",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/changes/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.09",
       "design_path": "docs/design/development/pages/scope-sc-09.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-09-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-09-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-09-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-09-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 91,
       "related_keys": [
         "scope:SC-01",
-        "scope:SC-04"
+        "scope:SC-04",
+        "route:/supply/changes"
       ],
       "reviewer": null
     },
@@ -3234,20 +3390,35 @@
       "title": "Service stock custody and job reconciliation",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement warehouse/van/job custody and used/returned/damaged/missing stock reconciliation.",
+      "summary": "Reconcile warehouse to technician / van to job to outcome against exact Field evidence.",
       "path": "/supply/service-stock",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/service-stock/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.10",
       "design_path": "docs/design/development/pages/scope-sc-10.md",
       "html_path": null,
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-10-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-10-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-10-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-10-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -3256,7 +3427,8 @@
         "scope:SC-05",
         "scope:SC-06",
         "scope:FI-01",
-        "scope:SV-06"
+        "scope:SV-06",
+        "route:/supply/service-stock"
       ],
       "reviewer": null
     },
@@ -6114,7 +6286,7 @@
       "title": "Service planner",
       "kind": "route",
       "module": "PL",
-      "summary": "Existing same-tab booking recovery and server commands are preserved. Request decisions now show current versus proposed time, named crew, travel and version differences.",
+      "summary": "Calendar closures span every intersecting day in the display timezone, including a continuing closure that starts before the visible day. The end boundary is exclusive. Published working intervals and busy reservations remain independent; this display correction changes no booking guard.",
       "path": "/schedule",
       "source_paths": [
         "src/app/(business)/schedule/page.tsx"
@@ -6345,7 +6517,7 @@
       "title": "Field technicians",
       "kind": "route",
       "module": "PL",
-      "summary": "Resource/calendar/competence mutation is unavailable. Synthetic skills are not statutory certificates; certificate/renewal evidence remains Unknown. No private HR fields are added. The Job pack handover uses the current permitted canonical pack read and server preparation flag.",
+      "summary": "Field Team now honours incoming day, site and display timezone and retains those controls on reload. Its default without a date remains today. Availability & competence and Back to Field Team retain day/site/timezone. Resource detail exposes a Review timezone selector for its seven-day window; published calendar timezone remains explicit and unchanged. No source editor is added.",
       "path": "/service/technicians",
       "source_paths": [
         "src/app/(business)/service/technicians/page.tsx"
@@ -8731,7 +8903,7 @@
       "title": "Cross-domain resource demand and capacity",
       "kind": "route",
       "module": "PL",
-      "summary": "Project programme dates and Engineering required dates never become labour effort. Service reservations include crew and explicit buffers; they are not labour estimates. No utilisation denominator or percentage is claimed.",
+      "summary": "Domain, commitment, resource, required skill and unknown-effort filters are retained in the page address and restored on reload. Analytical exclusions remain in memory and reset on refresh or a filter change. Unknown resource and skill mappings remain explicit. Criteria confer no permission and do not change source records.",
       "path": "/schedule/capacity",
       "source_paths": [
         "src/app/(business)/schedule/capacity/page.tsx"
@@ -8767,7 +8939,7 @@
       "title": "Rescheduling and acknowledgement centre",
       "kind": "route",
       "module": "PL",
-      "summary": "An exact appointment handover stays visible even outside the selected date/queue. Changed booking facts require fresh contact and preparation review. Contact is not delivery or pack acknowledgement.",
+      "summary": "Queue and selected appointment are retained in the page address and in the allowlisted return from appointment controls. Only Open and InProgress follow-up Activities enter Customer follow-up or contribute an outstanding task to Needs review; Completed and Cancelled remain history. An independent pending request, changed commitment or scope review can still require review.",
       "path": "/schedule/changes",
       "source_paths": [
         "src/app/(business)/schedule/changes/page.tsx"
@@ -8803,7 +8975,7 @@
       "title": "Visit route and travel review",
       "kind": "route",
       "module": "PL",
-      "summary": "No map, provider, inferred distance/speed, traffic or optimiser is configured. Planned travel allowance, unknown route estimate and actual field Travel are independent facts.",
+      "summary": "Resource selection survives reload. Travel review flags calendar closures as well as availability blocks against the complete buffered reservation, using exclusive end boundaries. Displayed gap figures are explicitly the original schedule when comparing a manual order. A site-filter warning explains omitted visits; the change handover retains exact site/resource/appointment/day/timezone. No routing estimate or booking mutation is introduced.",
       "path": "/schedule/travel",
       "source_paths": [
         "src/app/(business)/schedule/travel/page.tsx"
@@ -8839,7 +9011,7 @@
       "title": "Resource detail",
       "kind": "route",
       "module": "PL",
-      "summary": "Resource/calendar/competence mutation is unavailable. Synthetic skills are not statutory certificates; certificate/renewal evidence remains Unknown. No private HR fields are added.",
+      "summary": "Field Team now honours incoming day, site and display timezone and retains those controls on reload. Its default without a date remains today. Availability & competence and Back to Field Team retain day/site/timezone. Resource detail exposes a Review timezone selector for its seven-day window; published calendar timezone remains explicit and unchanged. No source editor is added.",
       "path": "/service/technicians/[id]",
       "source_paths": [
         "src/app/(business)/service/technicians/[id]/page.tsx"
@@ -10118,6 +10290,466 @@
         "scope:CS-05",
         "scope:CS-06",
         "scope:SH-06"
+      ]
+    },
+    {
+      "key": "route:/supply/changes",
+      "title": "supply / changes",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Review before and after evidence through the owning module. Bookings and issued packs remain unchanged.",
+      "path": "/supply/changes",
+      "source_paths": [
+        "src/app/(business)/supply/changes/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-changes",
+      "design_path": "docs/design/development/pages/route-supply-changes.md",
+      "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-09-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-09-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-09-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-09-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-09"
+      ]
+    },
+    {
+      "key": "route:/supply/deliveries",
+      "title": "supply / deliveries",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Record physical delivery, exceptions and separate customer acknowledgement.",
+      "path": "/supply/deliveries",
+      "source_paths": [
+        "src/app/(business)/supply/deliveries/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-deliveries",
+      "design_path": "docs/design/development/pages/route-supply-deliveries.md",
+      "html_path": "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-07-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-07-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-07-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-07-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-07"
+      ]
+    },
+    {
+      "key": "route:/supply/dispatch",
+      "title": "supply / dispatch",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Pick, stage, prepare and record movement against evidenced usable allocation.",
+      "path": "/supply/dispatch",
+      "source_paths": [
+        "src/app/(business)/supply/dispatch/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-dispatch",
+      "design_path": "docs/design/development/pages/route-supply-dispatch.md",
+      "html_path": "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-06-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-06-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-06-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-06-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-06"
+      ]
+    },
+    {
+      "key": "route:/supply/material-readiness",
+      "title": "supply / material readiness",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Review the exact material scope, usable supply and owned blockers.",
+      "path": "/supply/material-readiness",
+      "source_paths": [
+        "src/app/(business)/supply/material-readiness/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-material-readiness",
+      "design_path": "docs/design/development/pages/route-supply-material-readiness.md",
+      "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-01-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-01-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-01-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-01-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-01"
+      ]
+    },
+    {
+      "key": "route:/supply/purchasing",
+      "title": "supply / purchasing",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Keep authorised demand, purchasing requests and observed supplier outcomes distinct.",
+      "path": "/supply/purchasing",
+      "source_paths": [
+        "src/app/(business)/supply/purchasing/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-purchasing",
+      "design_path": "docs/design/development/pages/route-supply-purchasing.md",
+      "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-02-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-02-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-02-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-02-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-02"
+      ]
+    },
+    {
+      "key": "route:/supply/receipts",
+      "title": "supply / receipts",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Capture physical receipt and inspection. Arrival and quarantine do not establish usable stock.",
+      "path": "/supply/receipts",
+      "source_paths": [
+        "src/app/(business)/supply/receipts/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-receipts",
+      "design_path": "docs/design/development/pages/route-supply-receipts.md",
+      "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-04-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-04-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-04-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-04-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-04"
+      ]
+    },
+    {
+      "key": "route:/supply/returns",
+      "title": "supply / returns",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Follow the goods, customer remedy, supplier recovery and credits separately.",
+      "path": "/supply/returns",
+      "source_paths": [
+        "src/app/(business)/supply/returns/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-returns",
+      "design_path": "docs/design/development/pages/route-supply-returns.md",
+      "html_path": "docs/reference/ui/returns-claims/PPO-Returns-Supplier-Claims-and-Credit-Tracking-Workspace-r01.html",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-08-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-08-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-08-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-08-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-08"
+      ]
+    },
+    {
+      "key": "route:/supply/service-stock",
+      "title": "supply / service stock",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Reconcile warehouse to technician / van to job to outcome against exact Field evidence.",
+      "path": "/supply/service-stock",
+      "source_paths": [
+        "src/app/(business)/supply/service-stock/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-service-stock",
+      "design_path": "docs/design/development/pages/route-supply-service-stock.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-10-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-10-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-10-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-10-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-10"
+      ]
+    },
+    {
+      "key": "route:/supply/shipments",
+      "title": "supply / shipments",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Coordinate shipment lines, split allocations and dated ETA evidence.",
+      "path": "/supply/shipments",
+      "source_paths": [
+        "src/app/(business)/supply/shipments/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-shipments",
+      "design_path": "docs/design/development/pages/route-supply-shipments.md",
+      "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-03-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-03-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-03-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-03-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-03"
+      ]
+    },
+    {
+      "key": "route:/supply/stock",
+      "title": "supply / stock",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Dated source observations, explicit units and completeness. Live reservations are not configured.",
+      "path": "/supply/stock",
+      "source_paths": [
+        "src/app/(business)/supply/stock/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-stock",
+      "design_path": "docs/design/development/pages/route-supply-stock.md",
+      "html_path": "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-05-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-05-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-05-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-05-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-05"
+      ]
+    },
+    {
+      "key": "route:/my-jobs/site-readiness",
+      "title": "Site induction, risk and biosecurity review",
+      "kind": "route",
+      "module": "FI",
+      "summary": "Assigned-visit review of exact CS-06 sources, with retained personal acknowledgements and unresolved conditions.",
+      "path": "/my-jobs/site-readiness",
+      "source_paths": [
+        "src/app/(business)/my-jobs/site-readiness/page.tsx"
+      ],
+      "guide_key": "guide.route-my-jobs-site-readiness",
+      "design_path": "docs/design/development/pages/route-my-jobs-site-readiness.md",
+      "html_path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
+      "image_paths": [
+        "docs/testing/evidence/field-readiness-native/captures/quality-reference-1440.png",
+        "docs/testing/evidence/field-readiness-native/captures/quality-reference-390.png"
+      ],
+      "dependencies": [
+        "src/field/readiness.ts",
+        "src/shared/cs/readiness.ts",
+        "src/components/field-readiness-screen.tsx",
+        "src/app/field-readiness.css",
+        "docs/testing/evidence/field-readiness-native/README.md",
+        "docs/testing/evidence/field-readiness-native/capture-manifest.json"
+      ],
+      "scope_status": "Implemented; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "FI05 database 2/2 and desktop/phone browser 2/2 passed; programme handover records regression limits",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:FI-01",
+        "scope:CS-06",
+        "scope:FI-02"
       ]
     }
   ]

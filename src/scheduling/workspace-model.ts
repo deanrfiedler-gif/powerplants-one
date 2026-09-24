@@ -1,4 +1,5 @@
 import type { Appointment, Resource, ScheduleAppointment } from "./index";
+import { intervalsOverlap } from "./time";
 
 export type ResourceEvidence = Omit<Resource, "calendar" | "skills"> & {
   effective_from: string;
@@ -38,6 +39,26 @@ export type ChangesWorkspace = {
   to: string;
   focused: boolean;
 };
+export function hasOpenSchedulingFollowup(a: Pick<Appointment, "followups">) {
+  return a.followups.some((f) => ["Open", "InProgress"].includes(f.status));
+}
+
+export function travelAvailabilityConflicts(
+  visit: TravelVisit,
+  resource?: Resource,
+) {
+  const overlaps = (b: { start_at: string; end_at: string }) =>
+    intervalsOverlap(
+      b.start_at,
+      b.end_at,
+      visit.reserved_start,
+      visit.reserved_end,
+    );
+  return {
+    blocks: resource?.blocks?.filter(overlaps) ?? [],
+    closures: resource?.exceptions?.filter(overlaps) ?? [],
+  };
+}
 export type DemandContribution = {
   key: string;
   domain: "Service" | "Projects" | "Engineering";

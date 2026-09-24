@@ -1,3 +1,4 @@
+import { supplyPages } from "../supply/navigation";
 import { controlPath } from "../engineering/control/navigation";
 import type { Capability } from "../platform/permissions";
 import type { ProductIconName } from "../components/product-icons";
@@ -103,13 +104,13 @@ export const destinations: ShellDestination[] = [
   {"id": "packs", "label": "Job packs", "icon": "nav-packs", "readiness": "ready", "href": "/service/packs", "workspace": "service", "requires": ["pack.read"]},
   {"id": "reports", "label": "Service review", "icon": "nav-service-review", "readiness": "ready", "href": "/service/reports", "workspace": "service", "requires": ["report.read"]},
   {"id": "jobs", "label": "My jobs", "icon": "nav-service", "readiness": "ready", "href": "/my-jobs", "workspace": "service", "requires": ["field.read.own"]},
-  {"id": "supply", "label": "Material demand", "icon": "nav-demand", "readiness": "unavailable", "workspace": "supply"},
-  {"id": "purchasing", "label": "Purchasing", "icon": "nav-purchasing", "readiness": "unavailable", "workspace": "supply"},
-  {"id": "inbound", "label": "Inbound shipments", "icon": "nav-inbound", "readiness": "unavailable", "workspace": "supply"},
-  {"id": "receiving", "label": "Receiving", "icon": "nav-receiving", "readiness": "unavailable", "workspace": "supply"},
-  {"id": "stock", "label": "Stock & reservations", "icon": "nav-stock", "readiness": "unavailable", "workspace": "supply"},
-  {"id": "deliveries", "label": "Dispatch & delivery", "icon": "nav-dispatch", "readiness": "unavailable", "workspace": "supply"},
-  {"id": "returns", "label": "Returns & claims", "icon": "nav-returns", "readiness": "unavailable", "workspace": "supply"},
+  {"id": "supply", "label": "Material demand", "icon": "nav-demand", "href": "/supply/material-readiness", "requires": ["supply.read"], "readiness": "ready", "workspace": "supply"},
+  {"id": "purchasing", "label": "Purchasing", "icon": "nav-purchasing", "href": "/supply/purchasing", "requires": ["supply.read"], "readiness": "ready", "workspace": "supply"},
+  {"id": "inbound", "label": "Inbound shipments", "icon": "nav-inbound", "href": "/supply/shipments", "requires": ["supply.read"], "readiness": "ready", "workspace": "supply"},
+  {"id": "receiving", "label": "Receiving", "icon": "nav-receiving", "href": "/supply/receipts", "requires": ["supply.read"], "readiness": "ready", "workspace": "supply"},
+  {"id": "stock", "label": "Stock & reservations", "icon": "nav-stock", "href": "/supply/stock", "requires": ["supply.read"], "readiness": "ready", "workspace": "supply"},
+  {"id": "deliveries", "label": "Dispatch & delivery", "icon": "nav-dispatch", "href": "/supply/dispatch", "requires": ["supply.read"], "readiness": "ready", "workspace": "supply"},
+  {"id": "returns", "label": "Returns & claims", "icon": "nav-returns", "href": "/supply/returns", "requires": ["supply.read"], "readiness": "ready", "workspace": "supply"},
   {"id": "finance", "label": "Finance handoffs", "icon": "nav-inbox", "readiness": "ready", "href": "/finance/handoffs", "workspace": "finance", "requires": ["finance.read"]},
   {"id": "accounts", "label": "Customer accounts", "icon": "nav-accounts", "readiness": "ready", "href": "/finance/accounts", "workspace": "finance", "requires": ["finance.account.read"], "requiresAll": ["shared.finance.read", "finance.read"]},
   {"id": "performance", "label": "Project performance", "icon": "nav-performance", "readiness": "unavailable", "workspace": "finance"},
@@ -230,6 +231,7 @@ export const destination = (id: string) =>
 export const matchesPath = (path: string, href: string) =>
   path === href || (href !== "/" && path.startsWith(href + "/"));
 export function pageForPath(path: string) {
+  const supply=supplyPages.find(p=>path===`/supply/${p.slug}`); if(supply)return {...destination(supply.rail),label:supply.title};
   if (/^\/estimating\/estimates\/[0-9a-f-]{36}\/sources$/.test(path)) return {...destination("pricing"), label: "Compare source costs"};
   if (path === "/search") return { ...destination("work"), id: "search", label: "Search", href: "/search" };
   if (materialsPath(path) || changesPath(path) || commissioningPath(path) || controlPath(path)) return destination("engineering");

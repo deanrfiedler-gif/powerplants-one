@@ -137,7 +137,19 @@
         "scope:EQ-06",
         "scope:EQ-07",
         "scope:EQ-08",
-        "scope:EQ-09"
+        "scope:EQ-09",
+        "scope:SC-01",
+        "scope:SC-02",
+        "scope:SC-03",
+        "scope:SC-04",
+        "scope:SC-05",
+        "scope:SC-06",
+        "scope:SC-07",
+        "scope:SC-08",
+        "scope:SC-09",
+        "scope:SC-10",
+        "scope:FI-05",
+        "route:/my-jobs/site-readiness"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -538,7 +550,7 @@
         {
           "id": "week",
           "label": "Week",
-          "description": "Seven-day resource lane view."
+          "description": "Seven-day resource lanes with a continuing calendar closure across three days; the exclusive end boundary is not closed."
         },
         {
           "id": "empty",
@@ -594,7 +606,7 @@
         {
           "id": "scheduling-native-review",
           "expected": "Shared controls remain readable in scheduling comparisons at desktop, 320 px and 200% zoom.",
-          "actual": "New scheduling consumers added; owner visual acceptance pending.",
+          "actual": "Multi-day closure rendering corrected and exercised in the Week fixture; owner visual acceptance remains pending.",
           "action": "Inspect captured runtime evidence and retain legacy booking-control exceptions.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
@@ -762,7 +774,9 @@
         "scope:EQ-06",
         "scope:EQ-07",
         "scope:EQ-08",
-        "scope:EQ-09"
+        "scope:EQ-09",
+        "scope:FI-05",
+        "route:/my-jobs/site-readiness"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -948,7 +962,9 @@
         "scope:EQ-06",
         "scope:EQ-07",
         "scope:EQ-08",
-        "scope:EQ-09"
+        "scope:EQ-09",
+        "scope:FI-05",
+        "route:/my-jobs/site-readiness"
       ],
       "desktop": "Submit an empty title to focus the summary, then follow its link to the field. Correct the title and save to clear the example error.",
       "mobile": "Summary and inline errors must remain visible at 320 px and 200% zoom.",
@@ -1167,7 +1183,17 @@
       },
       "specification": "docs/design/development/components/dialog.md",
       "used_on": [
-        "route:/sales/opportunities"
+        "route:/sales/opportunities",
+        "scope:SC-01",
+        "scope:SC-02",
+        "scope:SC-03",
+        "scope:SC-04",
+        "scope:SC-05",
+        "scope:SC-06",
+        "scope:SC-07",
+        "scope:SC-08",
+        "scope:SC-09",
+        "scope:SC-10"
       ],
       "desktop": "Opening creates a modal focus boundary. Confirm is local to the example; close and Escape return to the opener.",
       "mobile": "Inspect the dialog at phone width with long content and browser zoom; keep Close and Done reachable.",
@@ -1220,7 +1246,17 @@
       },
       "specification": "docs/design/development/components/drawer.md",
       "used_on": [
-        "route:/sales/opportunities"
+        "route:/sales/opportunities",
+        "scope:SC-01",
+        "scope:SC-02",
+        "scope:SC-03",
+        "scope:SC-04",
+        "scope:SC-05",
+        "scope:SC-06",
+        "scope:SC-07",
+        "scope:SC-08",
+        "scope:SC-09",
+        "scope:SC-10"
       ],
       "desktop": "Use drawers for supplementary record context; preserve the parent task and focus return.",
       "mobile": "The actual drawer should fit the phone viewport and scroll content internally.",
@@ -1343,7 +1379,9 @@
         "scope:EQ-06",
         "scope:EQ-07",
         "scope:EQ-08",
-        "scope:EQ-09"
+        "scope:EQ-09",
+        "scope:FI-05",
+        "route:/my-jobs/site-readiness"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",

@@ -1,0 +1,68 @@
+[
+  {
+    "name": "planner",
+    "path": "/schedule?day=2031-09-22",
+    "innerWidth": 711,
+    "innerHeight": 432,
+    "outerWidth": 1440,
+    "outerHeight": 960,
+    "pixelRatio": 2,
+    "scale": 1,
+    "overflow": false
+  },
+  {
+    "name": "field-team",
+    "path": "/service/technicians?day=2031-09-22&timezone=Australia%2FMelbourne",
+    "innerWidth": 711,
+    "innerHeight": 432,
+    "outerWidth": 1440,
+    "outerHeight": 960,
+    "pixelRatio": 2,
+    "scale": 1,
+    "overflow": false
+  },
+  {
+    "name": "resource",
+    "path": "/service/technicians/a4000000-0000-4000-8000-000000000001?day=2031-09-22",
+    "innerWidth": 711,
+    "innerHeight": 432,
+    "outerWidth": 1440,
+    "outerHeight": 960,
+    "pixelRatio": 2,
+    "scale": 1,
+    "overflow": false
+  },
+  {
+    "name": "changes",
+    "path": "/schedule/changes?day=2031-09-22&appointment_id=a8000000-0000-4000-8000-000000000001",
+    "innerWidth": 711,
+    "innerHeight": 432,
+    "outerWidth": 1440,
+    "outerHeight": 960,
+    "pixelRatio": 2,
+    "scale": 1,
+    "overflow": false
+  },
+  {
+    "name": "travel",
+    "path": "/schedule/travel?day=2031-09-22",
+    "innerWidth": 711,
+    "innerHeight": 432,
+    "outerWidth": 1440,
+    "outerHeight": 960,
+    "pixelRatio": 2,
+    "scale": 1,
+    "overflow": false
+  },
+  {
+    "name": "capacity",
+    "path": "/schedule/capacity?day=2031-09-22",
+    "innerWidth": 711,
+    "innerHeight": 432,
+    "outerWidth": 1440,
+    "outerHeight": 960,
+    "pixelRatio": 2,
+    "scale": 1,
+    "overflow": false
+  }
+]

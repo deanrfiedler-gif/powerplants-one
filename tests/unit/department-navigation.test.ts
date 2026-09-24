@@ -23,7 +23,8 @@ test("permission and readiness filters retain relative order and never manufactu
   const permitted = navigationForCapabilities(new Set(["activity.read", "crm.opportunity.read", "shared.read", "email.read"]), true);
   assert.deepEqual(railDestinations("sales", permitted, true).map(d => d.id), ["pulse", "deals", "calendar", "tasks", "mail", "contacts"]);
   assert.deepEqual(railDestinations("sales", [], true), []);
-  assert.deepEqual(railDestinations("supply", ["work", "supply", "stock"], true).map(d => d.id), ["work"]);
+  assert.deepEqual(railDestinations("supply", ["work", "supply", "stock"], true).map(d => d.id), ["work", "supply", "stock"]);
+  assert.deepEqual(railDestinations("supply", permitted, true).map(d => d.id), ["work"]);
   assert.ok(!navigationForCapabilities(new Set(["activity.read"]), true).includes("tasks"));
   assert.ok(!navigationForCapabilities(new Set(["finance.account.read"]), true).includes("accounts"));
   for (const id of ["products", "insights", "exceptions"]) assert.equal(destination(id).href, undefined);
@@ -48,6 +49,11 @@ test("specific routes, genuine views and shared records select exactly their rai
   check("/engineering/commissioning/results?record=a", "engineering", "commissioning");
   check("/projects/acceptance/closeout", "projects", "acceptance");
   check("/projects/programme", "projects", "programme"); check("/projects/abc?view=programme", "projects", "programme");
+  check("/supply/material-readiness", "supply", "supply"); check("/supply/changes", "supply", "supply");
+  check("/supply/purchasing", "supply", "purchasing"); check("/supply/shipments", "supply", "inbound");
+  check("/supply/receipts", "supply", "receiving"); check("/supply/stock", "supply", "stock");
+  check("/supply/service-stock", "supply", "stock"); check("/supply/dispatch", "supply", "deliveries");
+  check("/supply/deliveries", "supply", "deliveries"); check("/supply/returns", "supply", "returns");
   check("/estimating/fertigation/example?view=valves", "estimate", "configurations");
   check("/estimating/estimates/00000000-0000-4000-8000-000000000001/sources", "estimate", "pricing");
   assert.equal(moduleWorkspaceForPath("/estimating/fertigation/example")?.scope, "ppo-fertigation");

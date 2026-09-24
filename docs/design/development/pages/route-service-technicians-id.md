@@ -33,6 +33,12 @@ Incoming: exact permitted resource identity and selected review date from Planne
 
 ## Visual references and verification
 
-[Field Team r04](../../../reference/ui/field-technicians/powerplants-one-field-technicians-r04.html) remains the accepted register layout; [r05](../../../reference/ui/field-technicians/powerplants-one-field-technicians-r05.html) and [its change record](../../../reference/ui/field-technicians/powerplants-one-field-technicians-r05-change-record.md) remain retained sources. No exact issued resource-detail mockup exists.
+[Field Team r04](../../../reference/ui/field-technicians/powerplants-one-field-technicians-r04.html) is the retained predecessor; the accepted successor is [r05](../../../reference/ui/field-technicians/powerplants-one-field-technicians-r05.html), whose [change record](../../../reference/ui/field-technicians/powerplants-one-field-technicians-r05-change-record.md) records that acceptance. Native parity remains a separate review. No exact issued resource-detail mockup exists.
 
 [Executed checks, inspected captures and remaining review](../../../testing/evidence/scheduling-resources/README.md) identify the exact evidence. Draft guides, source presence, functional proof, owner visual acceptance and deployment remain separate. No review fingerprint is adopted by this edit.
+
+## Post-merge refinement
+
+Field Team now honours incoming day, site and display timezone and retains those controls on reload. Its default without a date remains today. Availability & competence and Back to Field Team retain day/site/timezone. Resource detail exposes a Review timezone selector for its seven-day window; published calendar timezone remains explicit and unchanged. No source editor is added.
+
+[Refinement verification](../../../testing/evidence/scheduling-refinement/README.md) records actual checks and review limits. Visual status remains Needs review; no fingerprint is adopted.

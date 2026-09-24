@@ -1,0 +1,25 @@
+✔ seven full ordered compositions retain withheld positions and My Work placement (6.5266ms)
+✔ permission and readiness filters retain relative order and never manufacture links (2.5016ms)
+✔ specific routes, genuine views and shared records select exactly their rail parent (6.0467ms)
+✔ shared context is explicit or remembered, independent of customer route spelling (1.6357ms)
+✔ every primary semantic glyph has a deliberate distinct active drawing on the same grid (49.2904ms)
+✔ read-only navigation does not imply creation or elevate an identity (7.1969ms)
+✔ nested pages resolve to their actual workspace instead of a remembered Sales selection (3.3478ms)
+✔ seven workspace preferences validate schema and retain r15 identifiers (6.1537ms)
+✔ More finds workspace names and existing page names, including former rail destinations (3.1616ms)
+✔ exact decimal algebra conserves millionths and refuses implicit numeric coercion (45.0635ms)
+✔ readiness is bound to approved demand, complete evidence and exact usable quantity (1.9397ms)
+✔ receipt inspection partitions damaged, quarantined and usable quantities (0.5766ms)
+✔ corrections retain original delivery while outstanding uses current exact captures (0.9001ms)
+✔ remaining returns never exceed original entitlement (0.4177ms)
+✔ custody is separate from consumption and closes only with reconciled outcomes (0.5159ms)
+✔ material changes compare explicit before and after fields (0.4796ms)
+✔ unsupported reservation commands and invented field/state contracts remain blocked (4.0022ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1686.6469

@@ -1,5 +1,7 @@
 # Loading, empty, error and recovery
 
+SC-01–SC-10 reuse ErrorNotice with domain-owned loading, filtered-empty, denied, saved and uncertain-operation states. No new shared renderer or fixture behaviour is introduced. The host keeps original save identity/content in identity-scoped session storage and asks the server to recover the original receipt. These host states are covered by the Supply Chain browser/HTTP proof, not inferred from component catalogue examples. Draft visual/owner review remains separate.
+
 <!-- versioning: git; committed history is authoritative -->
 
 **Owner:** Dean Fiedler · **Catalogue key:** `read-state` · **Review:** Pending
@@ -64,3 +66,8 @@ CR-02/03/05 reuse these controls for Save, Submit, receiving decisions and recov
 ## Equipment native consumers
 
 EQ-01 through EQ-09 reuse the shared control in their applicable register, record and evidence forms; tabs are used by EQ-01/EQ-03/EQ-04/EQ-05. Synthetic states are exercised in `tests/database/equipment.test.ts`, `tests/http/equipment.test.ts` and the Equipment browser proof. Source binding is recorded in the living register. No shared-control rendering change or visual acceptance is implied.
+
+
+## FI-05 field readiness consumer
+
+The exact assigned-visit review reuses this control without changing its shared implementation. Loading, denied, unsaved, saving, stale, unknown-result recovery and server-saved states remain distinct. Fixtures and retained-source/lost-response journeys are in tests/browser/field-readiness.spec.ts; actual visual evidence is tracked by the Field Work programme handover. Owner/device acceptance remains pending.

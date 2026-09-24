@@ -1,5 +1,7 @@
 # Buttons and action links
 
+SC-01–SC-10 consume Button for capture, allocation, filters and original-operation recovery. Shared rendering and catalogue fixtures are unchanged. Host tests in `tests/browser/supply.spec.ts` cover disabled, saving, saved, conflict and recovery compositions at 1440/1024/390/320 px; see the Supply Chain handover for executed results. Consumer bindings preserve Draft review and do not grant owner acceptance.
+
 <!-- versioning: git; committed history is authoritative -->
 
 ES-01 consumes the existing Button for filter submission and failed-read retry, and ButtonLink for permitted discovery entry. No component implementation or fixture semantics change. Inspect long action labels at 320 px; page alignment evidence remains in the Estimating programme handover.
@@ -58,3 +60,8 @@ CR-02/03/05 reuse these controls for Save, Submit, receiving decisions and recov
 ## Equipment native consumers
 
 EQ-01 through EQ-09 reuse the shared control in their applicable register, record and evidence forms; tabs are used by EQ-01/EQ-03/EQ-04/EQ-05. Synthetic states are exercised in `tests/database/equipment.test.ts`, `tests/http/equipment.test.ts` and the Equipment browser proof. Source binding is recorded in the living register. No shared-control rendering change or visual acceptance is implied.
+
+
+## FI-05 field readiness consumer
+
+The exact assigned-visit review reuses this control without changing its shared implementation. Loading, denied, unsaved, saving, stale, unknown-result recovery and server-saved states remain distinct. Fixtures and retained-source/lost-response journeys are in tests/browser/field-readiness.spec.ts; actual visual evidence is tracked by the Field Work programme handover. Owner/device acceptance remains pending.
