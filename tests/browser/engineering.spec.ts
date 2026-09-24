@@ -6,7 +6,7 @@ test.describe.configure({ timeout: 120000 });
 async function call(page: Page, path: string, body?: unknown) {
   const response = await page.request.fetch(`/api/v1/${path}`, {
     method: body === undefined ? "GET" : "POST",
-    headers: body === undefined ? {} : { Origin: "http://127.0.0.1:3000" },
+    headers: body === undefined ? {} : { Origin: new URL(test.info().project.use.baseURL ?? "http://127.0.0.1:3000").origin },
     data: body,
   });
   expect(response.ok(), await response.text()).toBe(true);
@@ -22,6 +22,7 @@ test("accepted container creates a real request; an uncertain note retries once 
   };
   await call(page, "projects", project);
   await page.goto("/engineering");
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
   await page.getByRole("button", { name: "＋ Request", exact: true }).click();
   const requestDialog = page.getByRole("dialog");
   const title = `SYN Engineering ${info.project.name} ${Date.now()}`;
@@ -52,6 +53,7 @@ test("accepted container creates a real request; an uncertain note retries once 
     has: page.getByRole("button", { name: "Close package", exact: true }),
   });
   await expect(packageDialog.getByRole("heading").first()).toHaveText(title);
+  await expect(packageDialog).toBeInViewport();
   const list = await call(page, `engineering?q=${encodeURIComponent(title)}`);
   expect(list.items).toHaveLength(1);
   const id = list.items[0].id;

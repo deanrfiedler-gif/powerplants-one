@@ -9,7 +9,7 @@ import { moduleWorkspaceForPath } from "../../src/shell/module-workspaces";
 test("seven full ordered compositions retain withheld positions and My Work placement", () => {
   const expected = {
     sales: "Pulse|Leads|Deals|Activities|Tasks|Sales Inbox|Contacts|Products|Insights",
-    estimate: "My Work|Intake & workload|Estimation wizard|Specialist configurations|Supplier pricing|Quotations|Reviews & approvals",
+    estimate: "My Work|Intake & workload|Estimation wizard|Specialist configurations|Cost sources|Quotations|Reviews & approvals",
     engineering: "My Work|Engineering workload|Design basis & interfaces|Drawings|Materials & substitutions|Change review|Technical reviews|Commissioning & as-built",
     projects: "My Work|Projects|Programme|Delivery readiness|Risks & issues|Variations & obligations|Site assurance|Acceptance & closeout",
     service: "My Work|Service requests|Work orders|Schedule|Field team|Job packs|Service review|Equipment",
@@ -26,7 +26,9 @@ test("permission and readiness filters retain relative order and never manufactu
   assert.deepEqual(railDestinations("supply", ["work", "supply", "stock"], true).map(d => d.id), ["work"]);
   assert.ok(!navigationForCapabilities(new Set(["activity.read"]), true).includes("tasks"));
   assert.ok(!navigationForCapabilities(new Set(["finance.account.read"]), true).includes("accounts"));
-  for (const id of ["products", "insights", "drawings", "exceptions"]) assert.equal(destination(id).href, undefined);
+  for (const id of ["products", "insights", "exceptions"]) assert.equal(destination(id).href, undefined);
+  assert.equal(destination("drawings").href, "/engineering/drawings");
+  assert.ok(navigationForCapabilities(new Set(["engineering.read"]), true).includes("drawings"));
 });
 test("specific routes, genuine views and shared records select exactly their rail parent", () => {
   const check = (path: string, workspace: keyof typeof departmentRails, expected?: string) => {
@@ -40,10 +42,14 @@ test("specific routes, genuine views and shared records select exactly their rai
   check("/work/reviews", "engineering"); check("/work/123?salesTask=1", "sales", "tasks");
   check("/engineering/package/materials/mapping", "engineering", "materials");
   check("/engineering/package/changes/reviews", "engineering", "changes");
+  check("/engineering/package/basis/interfaces", "engineering", "basis");
+  check("/engineering/package/drawings/deliverables", "engineering", "drawings");
+  check("/engineering/package/reviews/issues", "engineering", "technical-reviews");
   check("/engineering/commissioning/results?record=a", "engineering", "commissioning");
   check("/projects/acceptance/closeout", "projects", "acceptance");
   check("/projects/programme", "projects", "programme"); check("/projects/abc?view=programme", "projects", "programme");
   check("/estimating/fertigation/example?view=valves", "estimate", "configurations");
+  check("/estimating/estimates/00000000-0000-4000-8000-000000000001/sources", "estimate", "pricing");
   assert.equal(moduleWorkspaceForPath("/estimating/fertigation/example")?.scope, "ppo-fertigation");
   assert.equal(destination("fertigation").href, "/estimating/fertigation");
 });

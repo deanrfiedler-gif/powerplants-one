@@ -1,0 +1,318 @@
+/* EN-01–EN-05 proposed native composition. Shared shell/menu, tokens, Button and modal controls. */
+:where(#ppo-engineering-control) :is(h1, h2, h3, h4) {
+  letter-spacing: normal;
+  line-height: 1.4;
+}
+#ppo-engineering-control .mw-content {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+#ppo-engineering-control .ec-workspace {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+  overflow: hidden;
+}
+:where(#ppo-engineering-control) .ec-context {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--line, #e1e5eb);
+  background: #fff;
+}
+:where(#ppo-engineering-control) .ec-context h1 {
+  font-size: 18px;
+  margin: 0 0 8px;
+  color: var(--navy, #242a37);
+}
+:where(#ppo-engineering-control) .ec-context p {
+  margin: 4px 0;
+  overflow-wrap: anywhere;
+}
+:where(#ppo-engineering-control) .ec-links,
+:where(#ppo-engineering-control) .ec-toolbar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+:where(#ppo-engineering-control) .ec-toolbar {
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--line, #e1e5eb);
+}
+:where(#ppo-engineering-control) .ec-toolbar label,
+:where(#ppo-engineering-control) .ec-entry label,
+:where(#ppo-engineering-control) .ec-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+:where(#ppo-engineering-control) .ec-toolbar input,
+:where(#ppo-engineering-control) .ec-toolbar select,
+:where(#ppo-engineering-control) .ec-entry input,
+:where(#ppo-engineering-control) .ec-form input,
+:where(#ppo-engineering-control) .ec-form select,
+:where(#ppo-engineering-control) .ec-form textarea {
+  font: inherit;
+  min-height: 40px;
+  min-width: 0;
+  max-width: 100%;
+  padding: 8px;
+  border: 1px solid var(--control-border, #828e9f);
+  border-radius: var(--radius-control, 6px);
+  background: #fff;
+  color: inherit;
+}
+:where(#ppo-engineering-control) .ec-notice {
+  margin: 0;
+  padding: 8px 20px;
+  background: var(--surface, #f6f7f9);
+  font-size: 13px;
+}
+:where(#ppo-engineering-control) .ec-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 0;
+  flex: 1;
+}
+:where(#ppo-engineering-control) .ec-split[data-selected="true"] {
+  grid-template-columns: minmax(260px, 1fr) minmax(340px, 45%);
+}
+:where(#ppo-engineering-control) .ec-register,
+:where(#ppo-engineering-control) .ec-inspector {
+  overflow: auto;
+  min-width: 0;
+  min-height: 0;
+  background: #fff;
+  scrollbar-gutter: stable;
+}
+:where(#ppo-engineering-control) .ec-register ul,
+:where(#ppo-engineering-control) .ec-entry-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+:where(#ppo-engineering-control) .ec-register li,
+:where(#ppo-engineering-control) .ec-entry-list li {
+  border-bottom: 1px solid var(--line, #e1e5eb);
+  padding: 16px 20px;
+  overflow-wrap: anywhere;
+}
+:where(#ppo-engineering-control) .ec-register li[data-selected="true"] {
+  background: #edf6e9;
+  border-left: 4px solid #62bb46;
+  padding-left: 16px;
+}
+:where(#ppo-engineering-control) .ec-register li:hover {
+  background: #f8faf7;
+}
+:where(#ppo-engineering-control) .ec-register li a {
+  color: var(--navy, #242a37);
+  display: block;
+}
+:where(#ppo-engineering-control) .ec-register li a span,
+:where(#ppo-engineering-control) .ec-inspector small {
+  display: block;
+  color: var(--text-secondary, #596779);
+  overflow-wrap: anywhere;
+}
+:where(#ppo-engineering-control) .ec-register p {
+  margin: 5px 0;
+}
+:where(#ppo-engineering-control) .ec-inspector {
+  border-left: 1px solid var(--line, #e1e5eb);
+  padding: 20px;
+  overflow-wrap: anywhere;
+}
+:where(#ppo-engineering-control) .ec-inspector-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  justify-content: space-between;
+}
+:where(#ppo-engineering-control) .ec-inspector-head > button {
+  flex-shrink: 0;
+  overflow-wrap: normal;
+}
+:where(#ppo-engineering-control) .ec-inspector-head h2 {
+  font-size: 19px;
+  margin: 0;
+}
+:where(#ppo-engineering-control) .ec-inspector h3 {
+  font-size: 17px;
+  margin-top: 22px;
+}
+:where(#ppo-engineering-control) .ec-inspector h4 {
+  font-size: 15px;
+}
+:where(#ppo-engineering-control) .ec-inspector article {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line, #e1e5eb);
+}
+:where(#ppo-engineering-control) .ec-inspector dd {
+  margin: 4px 0 12px;
+}
+:where(#ppo-engineering-control) .ec-inspector button {
+  margin: 4px 6px 4px 0;
+}
+:where(#ppo-engineering-control) .ec-inspector summary {
+  cursor: pointer;
+  padding: 12px 0;
+  font-weight: 500;
+}
+:where(#ppo-engineering-control) .ec-warning {
+  color: var(--warning, #80530e);
+}
+:where(#ppo-engineering-control) .ec-empty {
+  padding: 32px 20px;
+}
+:where(#ppo-engineering-control) .ec-entry {
+  padding: 24px;
+  overflow: auto;
+  min-height: 0;
+  flex: 1;
+  font-family: Roboto, Verdana, sans-serif;
+}
+:where(#ppo-engineering-control) .ec-entry > label {
+  max-width: 480px;
+}
+:where(#ppo-engineering-control) .ec-entry-list {
+  margin: 24px 0;
+}
+:where(#ppo-engineering-control) .ec-form {
+  font:
+    14px/1.5 Roboto,
+    Verdana,
+    sans-serif;
+}
+:where(#ppo-engineering-control) .ec-form fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+:where(#ppo-engineering-control) .ec-form label {
+  margin: 12px 0;
+}
+:where(#ppo-engineering-control) .ec-form textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+:where(#ppo-engineering-control) .ec-form input[type="checkbox"] {
+  min-height: 24px;
+  width: 24px;
+  flex: none;
+}
+:where(#ppo-engineering-control) .ec-form label:has(input[type="checkbox"]) {
+  flex-direction: row;
+  align-items: flex-start;
+}
+:where(#ppo-engineering-control) .ec-form .ec-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 16px;
+}
+:where(#ppo-engineering-control) .ec-form article,
+:where(#ppo-engineering-control) .ec-form section {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line, #e1e5eb);
+}
+:where(#ppo-engineering-control) .ec-form .ec-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 16px 0;
+}
+:where(#ppo-engineering-control) .ec-form .ec-tabs [aria-pressed="true"] {
+  box-shadow: inset 0 -3px #62bb46;
+}
+:where(#ppo-engineering-control)
+  :is(.ec-form, .ec-workspace, .ec-entry)
+  :is(a, button, input, select, textarea, summary):focus-visible {
+  outline: 3px solid var(--focus, #365d8b);
+  outline-offset: 3px;
+}
+:where(#ppo-engineering-control) .ec-inspector-context {
+  display: none;
+}
+@media (max-width: 1100px) {
+  #ppo-engineering-control .ec-workspace {
+    display: block;
+    overflow: auto;
+  }
+  :where(#ppo-engineering-control) .ec-split {
+    display: block;
+  }
+  :where(#ppo-engineering-control) .ec-register,
+  :where(#ppo-engineering-control) .ec-inspector {
+    overflow: visible;
+  }
+  :where(#ppo-engineering-control) .ec-inspector-context {
+    display: block;
+    margin: 0 0 12px;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  :where(#ppo-engineering-control) .ec-split[data-selected="true"] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  :where(#ppo-engineering-control)
+    .ec-split[data-selected="true"]
+    > .ec-register {
+    display: none;
+  }
+  :where(#ppo-engineering-control) .ec-inspector {
+    border-left: 0;
+  }
+}
+@media (max-width: 600px) {
+  :where(#ppo-engineering-control) .ec-context,
+  :where(#ppo-engineering-control) .ec-toolbar {
+    padding: 12px;
+  }
+  :where(#ppo-engineering-control) .ec-context h1 {
+    font-size: 17px;
+  }
+  :where(#ppo-engineering-control) .ec-toolbar > label {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+  :where(#ppo-engineering-control) .ec-toolbar input,
+  :where(#ppo-engineering-control) .ec-toolbar select {
+    width: 100%;
+  }
+  :where(#ppo-engineering-control) .ec-inspector {
+    padding: 12px;
+  }
+  :where(#ppo-engineering-control) .ec-inspector-head {
+    flex-direction: column;
+  }
+  :where(#ppo-engineering-control) .ec-form .ec-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  :where(#ppo-engineering-control) .ec-entry {
+    padding: 16px;
+  }
+  :where(#ppo-engineering-control) .ec-form input,
+  :where(#ppo-engineering-control) .ec-form select,
+  :where(#ppo-engineering-control) .ec-form textarea {
+    font-size: 16px;
+  }
+}
+
+#ppo-engineering-control dialog.em-dialog-wide {
+  width: min(860px, calc(100vw - 32px));
+}
+@media (max-width: 600px) {
+  #ppo-engineering-control dialog.em-dialog-wide {
+    width: 100vw;
+  }
+}
+
+:where(#ppo-engineering-control) .ec-detail {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}

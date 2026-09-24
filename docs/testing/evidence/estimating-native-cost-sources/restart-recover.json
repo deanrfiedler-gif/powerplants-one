@@ -1,0 +1,24 @@
+{
+  "phase": "recover",
+  "source_head": "ce05194671bfde6983c5ace3c8a5abb0b67088c0",
+  "executed_checkout": "ce05194671bfde6983c5ace3c8a5abb0b67088c0",
+  "tree": "5802c433232c1b4b04dea71f5c8bc470b277c1be",
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "byte_count": 119915,
+  "sha256": "7e7b7d50548578f9712f20f26bd5bbbce39ef0007909aa12340715749b850620",
+  "application_pids": [
+    24124,
+    16624
+  ],
+  "database_starts": [
+    "2026-09-23T21:50:24.195Z",
+    "2026-09-24T00:37:09.422Z"
+  ],
+  "source_id": "63a1911e-5f87-41df-a4a4-7b7fcfb750a1",
+  "estimate_id": "5db8a677-ad5c-40b5-a30c-afdfe5fc1d36",
+  "exact_rows_sha256": "95b8f98c2764b0a571643dd8c811d8d99dd42faa540f6516e14fd5f7135347f2",
+  "receipt_count": 7
+}

@@ -1,0 +1,27 @@
+# Native cost-source evidence
+
+Owner: Dean Fiedler. Implementation and visual inspection by Codex, 24 September 2026. Owner acceptance and deployment remain pending.
+
+The [manifest](manifest.json) records original image hashes, LF source hashes, the two capture batches and their limits. All records are synthetic. The integrated capture batch ran on `ce05194`; its build identifier was not recorded before the subsequent rebuild. The final comparison batch ran on compiled build `BQdPwgiw-ujdWravl1B5Y` with the scoped checkbox correction. No generated review fingerprint is represented as accepted.
+
+| Captures inspected | Result and comparison |
+|---|---|
+| [Reference estimate cost review](reference-estimate-cost-review.png) and [native desktop comparison](desktop-cost-comparison.png) | Both expose saved cost provenance before deliberate refresh. The native route uses current shell controls and exact saved-version context. The first native slice is AUD with unchanged sell; the reference's FX/unit-allocation demonstrations remain Not configured. |
+| [Reference price-change review](reference-price-change-review.png) and [native revision comparison](desktop-revision-comparison.png) | Previous/selected evidence is separated and changed fields are labelled. The native independent review is a persisted exact-revision event; the reference is an in-memory demonstration. |
+| [Phone reviewed evidence](phone-reviewed.png) | Source identity, exact revision, known date and Unknown expiry remain readable in the current phone shell. |
+| [Phone cost comparison](phone-cost-comparison.png) | Cost delta, unchanged sell, Unknown validity, deliberate confirmation, reason and save action fit the phone task flow above fixed navigation. |
+| [Lost-response recovery](desktop-recovery.png) | Original operation remains identifiable, form is frozen, and reconciliation/exact retry is explicit. Reload recovers the committed receipt without another submission. |
+| [320 px register](phone-320.png) and [200% CSS enlargement](desktop-css-zoom-200.png) | Fields/cards wrap and the enlarged header no longer overlaps. Secondary navigation owns its horizontal overflow. CSS enlargement is not browser-UI zoom or physical-device acceptance. |
+
+Inspection found and corrected two native defects: enlarged header overlap and a confirmation checkbox separated from its text by inherited input sizing. Browser geometry assertions now cover both. Exact reference imagery for the new authoring form and route split is absent; those are proposed native adaptations, not a visually accepted replica. Physical-device and assistive-technology review remain open.
+
+## Executed proof
+
+- [Three database cases](source-existing-seed-proof-reviewed.txt) passed on an isolated database restored from seeded 0044 and migrated/seeded to 0045. They include return/reject, independent review, immutable history, scoped revocation, unchanged old estimates/quotes, safe new quote projection, source bindings and atomic failure/replay. This is not a fresh-reset or cross-0026 proof.
+- [Two HTTP cases](source-http-integrated.txt) passed, including revoked historical-source reads and original-receipt authority.
+- CI then exposed shared-actor interference: revoking the seeded coordinator's grant could deny an E1 request in another concurrently running file. The source revocation case now creates separate synthetic actors and opaque server sessions, following the existing CRM HTTP pattern. [All 14 concurrent E1/E2/ES-01/ES-03/ES-08/fertigation HTTP cases](source-http-concurrent.txt) passed after that correction, including exact Draft output bytes. No test was serialised or deadline increased.
+- [Six native desktop/phone cases](source-browser-reviewed.txt) passed after correcting test setup to enter `/work` directly instead of racing the home-page redirect. After the checkbox correction, [both exact-comparison cases](source-confirmation-browser.txt) passed on the rebuilt application.
+- The unchanged supplier-pricing reference passed [20 browser groups](source-reference-browser.txt), producing 29 captures. Its broader commercial policy is not adopted by passing those checks.
+- The real restart proof passed [write](source-restart-write.txt), [recover](source-restart-recover-ready.txt) and [verify](source-restart-verify.txt). [Write](restart-write.json), [recover](restart-recover.json) and [verify](restart-verify.json) metadata identify three actual application processes and three distinct PostgreSQL start times, representing two database restarts. The source/review/estimate/binding row hash remained `95b8f98c2764b0a571643dd8c811d8d99dd42faa540f6516e14fd5f7135347f2`; all seven original receipts replayed exactly with no added version. A later source Draft did not change the reviewed binding.
+
+The first two local restart attempts failed at application readiness before assertions. After rebuilding and waiting for the compiled application to report ready, the same source proof passed against the actual restarted processes. The existing CI startup and database deadlines were not changed. At `ce05194`, [Estimating CI](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35937386501) passed its fresh-reset/current-schema and E1/E2 upgrade step before reaching the shared-actor HTTP failure. Final-head CI remains a separate gate; [handover](../../../delivery/estimating-cost-sources-handover.md) records the local reset failures and other checks.

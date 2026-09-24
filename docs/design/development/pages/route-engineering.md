@@ -39,3 +39,15 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 The draft User Guide `guide.page.engineering` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## Native workflow reconciliation — 24 September 2026
+
+EN-01 retains package identity, intake, Project/Opportunity context, coordination history, versioning and bookmarks. It now reads native EN-02–EN-05 records. Parent trace: ENG-01–ENG-04.
+
+All packages and My work retain their original package ownership meaning. Author actions shows owned draft/returned bases, open/returned queries, returned submittals and open findings. Reviews shows submitted reviews assigned to this person. Released requires a current exact formal issue; coordination state cannot populate it. Search, discipline, ownership and attention filters remain scoped. Attention includes missing deliverable prerequisite evidence.
+
+The inspector's Overview links exact basis and issues. Deliverables lists accountable owners, dates, prerequisites, next actions and controlled documents. Technical queries opens persisted queries/submittals. Review & history separates independent technical decisions from coordination notes. Add deliverables in Drawings; planned hours need a source and authorised hours need authority evidence. Actual effort and staff availability are unknown; no utilisation is calculated.
+
+Incoming: existing packages and permitted Project/Opportunity/customer/site context. Outgoing: package-scoped EN-02–EN-05 records and existing EN-06–EN-08 handovers. The r02 HTML remains an issued design source; new compositions require owner review. Browser evidence and current validation are recorded in `docs/delivery/engineering-native-control-handover.md`; no design/business/deployment approval is inferred.
+
+Native destinations use the department rail; contextual query and retained handover links wrap inside the EN-01 heading. The phone page must not overflow horizontally or shift its modal drawer outside the viewport. Existing intake/review-note browser journeys prove this boundary.

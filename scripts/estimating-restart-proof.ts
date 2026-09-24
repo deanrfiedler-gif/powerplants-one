@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { es02Restart } from "./es02-restart";
 import { discoveryRestart } from "./estimating-discovery-restart";
 import { costBasisRestart } from "./estimating-cost-basis-restart";
+import { sourcesRestart } from "./estimating-sources-restart";
 import { spawn, execFileSync } from "node:child_process";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
@@ -85,6 +86,7 @@ try {
   await discoveryRestart({phase,root,evidence,call,page,pid:server.pid!,databaseStart:await started()});
   await es02Restart({phase,root,evidence,call,page,pid:server.pid!,databaseStart:await started()});
   await costBasisRestart({phase,root,evidence,call,page,pid:server.pid!,databaseStart:await started()});
+  await sourcesRestart({phase,root,evidence,call,page,pid:server.pid!,databaseStart:await started()});
   await page.goto(`${origin}/estimating/estimates/${taxonomy.input.id}`);await expect(page.getByLabel("Category 1",{exact:true})).toHaveValue("Engineering");await expect(page.getByLabel("Allowance 2",{exact:true})).toHaveValue("No");
   await page.locator(".est-line").first().evaluate(e=>e.scrollIntoView({block:"start"}));
   const taxonomyCapture=await page.screenshot({path:`${evidence}/taxonomy-${phase}.png`});

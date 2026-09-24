@@ -34,7 +34,7 @@ jobs:
         run: |
           mkdir -p verification-evidence/access-review
           python3 scripts/build-access-review.py
-          git diff --exit-code -- docs/design/access-review/capabilities.js docs/reference/ui/access-review/PPO-Users-Roles-and-Access-Review-r01.html
+          git diff --exit-code -- docs/design/access-review/capabilities.js docs/design/access-review/access-review.html
           node scripts/check-access-review-model.mjs > verification-evidence/access-review/model-results.json
           node scripts/check-access-review-browser.mjs
       - name: Retain original evidence

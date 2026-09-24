@@ -591,11 +591,21 @@ test("EQ migration upgrade across deferred identity backfill, retained originals
   await database().query("DROP TABLE public.ppo_migrations");
   await migrate(25);
   await seed(25);
+  const originalLedger = await rows(
+    "SELECT * FROM public.ppo_migrations ORDER BY version",
+  );
   const before = await rows(
     "SELECT row_to_json(a) AS row FROM ppo.assets a ORDER BY id",
   );
   await migrate();
   await seed();
+  const upgradedLedger = await rows(
+    "SELECT * FROM public.ppo_migrations ORDER BY version",
+  );
+  assert.deepEqual(upgradedLedger.filter((row) => row.version <= 25), originalLedger);
+  // Later domains can migrate in the same transaction. Equipment must have
+  // exactly one receipt without assuming that it is the latest migration.
+  assert.equal(upgradedLedger.filter((row) => row.version === 45).length, 1);
   assert.deepEqual(
     await rows(
       "SELECT row_to_json(a) AS row FROM ppo.assets a WHERE id=ANY($1::uuid[]) ORDER BY id",
@@ -605,8 +615,8 @@ test("EQ migration upgrade across deferred identity backfill, retained originals
   );
   await seed();
   await migrate();
-  assert.equal(
-    (await rows("SELECT max(version) AS n FROM public.ppo_migrations"))[0].n,
-    45,
+  assert.deepEqual(
+    await rows("SELECT * FROM public.ppo_migrations ORDER BY version"),
+    upgradedLedger,
   );
 });

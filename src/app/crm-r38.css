@@ -64,6 +64,11 @@
 #ppo-deals .crm-header-search input { height:27px; min-height:27px; font-size:12px; padding:0; }
 #ppo-deals .crm-worklist-stamp { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); }
 #ppo-deals .crm-board-scroll { background:white; padding-top:0; scroll-padding-top:90px; scrollbar-gutter:stable; scrollbar-width:thin; }
+/* Insights shares the worklist population. Keep its disclosure compact and its
+   expanded content independently scrollable so the retained board still fits. */
+#ppo-deals .crm-insights { flex:0 0 auto; margin:0; padding:0 12px; max-height:min(50dvh,28rem); overflow:auto; }
+#ppo-deals .crm-insights > summary { min-height:44px; align-content:center; cursor:pointer; }
+#ppo-deals .crm-insights > summary:focus-visible { outline:2px solid var(--navy); outline-offset:-2px; }
 #ppo-deals .crm-board { min-height:100%; gap:0; }
 #ppo-deals .crm-board-headers,#ppo-deals .crm-board-columns { grid-template-columns:var(--crm-stage-tracks); gap:9px; padding:0 10px; }
 #ppo-deals .crm-board-headers { padding-top:0; }
