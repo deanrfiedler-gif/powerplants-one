@@ -42,4 +42,4 @@ Acceptance evidence is pending. Capture matching original-reference and applicat
 
 ## Current permission catalogue working master
 
-The stable [AD-01 working HTML](../../access-review/access-review.html) is generated from the current 88-capability registry, including the independent synthetic source-review duty. The issued r01 HTML and its original captures remain unchanged historical evidence; their catalogue count is not the working count. Native ES-03 permission enforcement is separate from this explanatory design. Generator/model/browser checks now use the versionless master. No owner review or current fingerprint is inferred from regeneration.
+The stable [AD-01 working HTML](../../access-review/access-review.html) is generated from the current capability registry. The issued r01 HTML and its original captures remain unchanged historical evidence; their catalogue count is not the working count. Server permission enforcement is separate from this explanatory design. Generator/model/browser checks use the versionless master. No owner review or current fingerprint is inferred from regeneration.

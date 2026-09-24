@@ -57,3 +57,7 @@ The compiled application passed **23/23**, with no skips, in three minutes: all 
 ## Sales upgrade ledger assertion
 
 The fresh [CRM lane on Engineering](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35949089469/job/107473512663) exposed another combined-migration assumption in the new Sales test: it removed only the final ledger row and expected Sales 0046 to be last. Equipment 0045 and later Engineering/Cost Sources make that assumption false. The proof now compares every original row through its actual 0044 baseline, including checksums/timestamps, and requires exactly one Sales 0046 receipt. Existing whole-registry proofs cover the complete sequence. The corrected case passed against the combined 0048 tree (1/1, no skips); no migration or application code changed.
+
+## Issued access snapshot preserved throughout the merge sequence
+
+The versionless access-review generator was also carried back to the Engineering foundation before its merge, so every integration step retains main's issued r01 bytes. The 91-capability Engineering working master passed all 107 model groups and 40 native Chrome browser groups; the combined 92-capability master passed all 107 model groups after reconciliation. Existing reference captures and owner-review status remain unchanged. Generated model evidence now writes to `verification-evidence/` rather than overwriting the issued r01 evidence record.
