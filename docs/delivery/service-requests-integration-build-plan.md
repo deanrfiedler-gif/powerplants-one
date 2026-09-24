@@ -116,7 +116,7 @@ I2 was built on 24 September 2026 in `src/service/components/client/ticket-regis
 - `listTickets` accepts `queue` (`all_open`, `new`, `needs_information`, `triaged`, `urgent` or `overdue_clarifications`). One predicate set serves the list and `ticketQueues`, so a toggle and its badge cannot disagree. The signed cursor is bound to the queue.
 - Each row carries `can_edit_intake`, the same rule as `readIntake`. Move is offered only where the triage and request-information commands would accept the actor, and the commands still decide.
 
-**Departures from the frames**, all Proposed and applied under delegation for Dean's visual review:
+**Departures from the frames and component contract**, all Proposed and applied under delegation for Dean's visual review:
 
 | # | Frame element | Native adaptation | Why |
 |---|---|---|---|
@@ -131,6 +131,7 @@ I2 was built on 24 September 2026 in `src/service/components/client/ticket-regis
 | A9 | Queue short labels at 1024 px (All open, New, Urgent, Waiting, Overdue and Review) | All open, New, Urgent, Information and Overdue | The native queue set (frame 14) |
 | A10 | Move from a card or drag | A dialog chooses the target when there are two, then shows the record page's `TriageActions` narrowed to that command | One form and one set of server gates for both surfaces |
 | A11 | List footer on a phone | Shown only when there is another page; the count sits above the cards | Frame 11 has no footer |
+| A12 | Shared `sales-board`, `sales-table` and `drawer` components | Module-scoped implementations of those patterns under `#ppo-service-requests`, on r22 tokens. They reuse `business-ui` reads and fields, `ProductIcon` and `TriageActions`. The catalogue consumer bindings are unchanged | The Deals board and table are bound to CRM data and commands; binding them to Tickets is a component change for owner alignment |
 
 **Shell overlap, fixed on main:** before main was merged in, the shell's phone header icons wrapped under the breadcrumb and overlapped the first row below it on Service pages, including this register's search field. The same overlap showed on `/service/work-orders` and `/service/tickets/new`. The Job Pack I5 shared-shell correction on main fixed it. After the merge, a recheck at 390 px showed the breadcrumb truncating and the icons staying on one row. I2 makes no shell change.
 

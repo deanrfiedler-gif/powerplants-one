@@ -3,7 +3,7 @@
 **Service requests register I2, 24 September 2026:** Increment I2 of the [build plan](delivery/service-requests-integration-build-plan.md#i2-delivered-adaptations) makes `/service/tickets` the native SV-01 register for New, Needs information and Triaged. It is a full-bleed module workspace (D6) with integration entry `sv01-native-r01`.
 - **Presentation:** Board and List, queue toggles with server counts, filters, preview, and Move through the record page's existing triage and request-information form with its gates unchanged.
 - **Read model:** two additive changes, recorded in the [service API](contracts/service-api.md): a `queue` filter that shares its predicates with the counts, and a per-row `can_edit_intake`.
-- **Adaptations:** eleven native departures from the frames (A1–A11) are listed for Dean's visual and device review. The build plan's "twelve" native columns are corrected to fourteen.
+- **Adaptations:** twelve native departures (A1–A12) are listed for Dean's visual and device review. The build plan's "twelve" native columns are corrected to fourteen.
 - **Proof:** unit, database, HTTP and browser proofs pass locally; the browser runs used bundled Chromium, not the pinned Chrome channel.
 - **Shell overlap:** a phone header overlap on Service pages, seen before main was merged in, is fixed by main's shared-shell correction. It was rechecked after the merge.
 - **Not claimed:** no migration, capability or seed. Visual acceptance, device review and deployment remain separate. I1 and the design merged as #298 and #294.
