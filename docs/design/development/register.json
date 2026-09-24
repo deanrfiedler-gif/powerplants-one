@@ -1033,14 +1033,18 @@
       "design_path": "docs/design/development/pages/scope-es-03.md",
       "html_path": "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html",
       "image_paths": [
-        "docs/testing/evidence/supplier-pricing-r01/desktop-price-comparison.png"
+        "docs/testing/evidence/supplier-pricing-r01/desktop-price-comparison.png",
+        "docs/testing/evidence/estimating-native-cost-sources/desktop-cost-comparison.png",
+        "docs/testing/evidence/estimating-native-cost-sources/phone-reviewed.png"
       ],
       "dependencies": [
         "src/components/cost-sources.tsx",
         "src/components/cost-sources.css",
         "src/components/cost-sources-guide.ts",
         "docs/contracts/estimating-cost-sources.md",
-        "docs/delivery/estimating-cost-sources-handover.md"
+        "docs/delivery/estimating-cost-sources-handover.md",
+        "docs/testing/evidence/estimating-native-cost-sources/README.md",
+        "docs/testing/evidence/estimating-native-cost-sources/manifest.json"
       ],
       "scope_status": "Native synthetic source increment; acceptance pending",
       "visual_status": "Needs review",
@@ -8302,14 +8306,18 @@
       "design_path": "docs/design/development/pages/route-estimating-cost-sources-id.md",
       "html_path": "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html",
       "image_paths": [
-        "docs/testing/evidence/supplier-pricing-r01/desktop-price-comparison.png"
+        "docs/testing/evidence/supplier-pricing-r01/desktop-price-comparison.png",
+        "docs/testing/evidence/estimating-native-cost-sources/desktop-revision-comparison.png",
+        "docs/testing/evidence/estimating-native-cost-sources/phone-reviewed.png"
       ],
       "dependencies": [
         "src/components/cost-sources.tsx",
         "src/components/cost-sources.css",
         "src/components/cost-sources-guide.ts",
         "docs/contracts/estimating-cost-sources.md",
-        "docs/delivery/estimating-cost-sources-handover.md"
+        "docs/delivery/estimating-cost-sources-handover.md",
+        "docs/testing/evidence/estimating-native-cost-sources/README.md",
+        "docs/testing/evidence/estimating-native-cost-sources/manifest.json"
       ],
       "scope_status": "Native synthetic source increment; acceptance pending",
       "visual_status": "Needs review",
@@ -8343,14 +8351,17 @@
       "design_path": "docs/design/development/pages/route-estimating-cost-sources-new.md",
       "html_path": "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html",
       "image_paths": [
-        "docs/testing/evidence/supplier-pricing-r01/desktop-price-comparison.png"
+        "docs/testing/evidence/supplier-pricing-r01/desktop-price-comparison.png",
+        "docs/testing/evidence/estimating-native-cost-sources/desktop-recovery.png"
       ],
       "dependencies": [
         "src/components/cost-sources.tsx",
         "src/components/cost-sources.css",
         "src/components/cost-sources-guide.ts",
         "docs/contracts/estimating-cost-sources.md",
-        "docs/delivery/estimating-cost-sources-handover.md"
+        "docs/delivery/estimating-cost-sources-handover.md",
+        "docs/testing/evidence/estimating-native-cost-sources/README.md",
+        "docs/testing/evidence/estimating-native-cost-sources/manifest.json"
       ],
       "scope_status": "Native synthetic source increment; acceptance pending",
       "visual_status": "Needs review",
@@ -8384,14 +8395,18 @@
       "design_path": "docs/design/development/pages/route-estimating-cost-sources.md",
       "html_path": "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html",
       "image_paths": [
-        "docs/testing/evidence/supplier-pricing-r01/desktop-price-comparison.png"
+        "docs/testing/evidence/supplier-pricing-r01/desktop-price-comparison.png",
+        "docs/testing/evidence/estimating-native-cost-sources/desktop-css-zoom-200.png",
+        "docs/testing/evidence/estimating-native-cost-sources/phone-320.png"
       ],
       "dependencies": [
         "src/components/cost-sources.tsx",
         "src/components/cost-sources.css",
         "src/components/cost-sources-guide.ts",
         "docs/contracts/estimating-cost-sources.md",
-        "docs/delivery/estimating-cost-sources-handover.md"
+        "docs/delivery/estimating-cost-sources-handover.md",
+        "docs/testing/evidence/estimating-native-cost-sources/README.md",
+        "docs/testing/evidence/estimating-native-cost-sources/manifest.json"
       ],
       "scope_status": "Native synthetic source increment; acceptance pending",
       "visual_status": "Needs review",
@@ -8425,14 +8440,18 @@
       "design_path": "docs/design/development/pages/route-estimating-estimates-id-sources.md",
       "html_path": "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html",
       "image_paths": [
-        "docs/testing/evidence/supplier-pricing-r01/desktop-price-comparison.png"
+        "docs/testing/evidence/supplier-pricing-r01/desktop-price-comparison.png",
+        "docs/testing/evidence/estimating-native-cost-sources/desktop-cost-comparison.png",
+        "docs/testing/evidence/estimating-native-cost-sources/phone-cost-comparison.png"
       ],
       "dependencies": [
         "src/components/cost-sources.tsx",
         "src/components/cost-sources.css",
         "src/components/cost-sources-guide.ts",
         "docs/contracts/estimating-cost-sources.md",
-        "docs/delivery/estimating-cost-sources-handover.md"
+        "docs/delivery/estimating-cost-sources-handover.md",
+        "docs/testing/evidence/estimating-native-cost-sources/README.md",
+        "docs/testing/evidence/estimating-native-cost-sources/manifest.json"
       ],
       "scope_status": "Native synthetic source increment; acceptance pending",
       "visual_status": "Needs review",

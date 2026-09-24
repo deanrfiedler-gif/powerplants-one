@@ -37,5 +37,6 @@ Incoming: explicit authored synthetic evidence, exact current saved estimate/dis
 - [Original desktop price-comparison capture](../../../testing/evidence/supplier-pricing-r01/desktop-price-comparison.png).
 - Exact source captures for the new native record/form route compositions are missing; compare their task and component behaviour against the retained package and record proposed departures.
 - [Native contract](../../../contracts/estimating-cost-sources.md) and [executed verification/limits](../../../delivery/estimating-cost-sources-handover.md).
+- [Inspected native/reference captures and process proof](../../../testing/evidence/estimating-native-cost-sources/README.md) record the 24 September paired task comparison. Desktop and phone confirmation remain adjacent after the scoped input-size correction; enlarged header and 320 px states were inspected. Exact source imagery for the new authoring form remains missing. Owner baseline adoption is pending.
 
 Source presence, functional proof, paired visual review, owner acceptance and deployment are separate. No current fingerprint is recorded as reviewed. Preserve all issued reference bytes.

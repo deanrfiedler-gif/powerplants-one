@@ -5,7 +5,7 @@ import { estimateInput } from "../helpers/estimating";
 
 test.describe.configure({ timeout: 120000 });
 async function identity(page: Page, profile = "coordinator") {
-  await page.goto("/");
+  await page.goto("/work");
   const r = await page.request.post("/api/v1/local-session", {
     headers: { Origin: new URL(page.url()).origin },
     data: { profile },
@@ -191,7 +191,14 @@ test("ES03 exact comparison keeps sell unchanged and requires a deliberate estim
   });
   await page
     .getByRole("heading", { name: "Review the successor cost basis" })
-    .scrollIntoViewIfNeeded();
+    .evaluate((element) => element.scrollIntoView({ block: "start" }));
+  const confirmation = page.locator("label.source-check");
+  const box = await confirmation.locator("input").boundingBox();
+  const text = await confirmation.locator("span").boundingBox();
+  expect(box).not.toBeNull();
+  expect(text).not.toBeNull();
+  expect(box!.width).toBeLessThanOrEqual(28);
+  expect(text!.x - box!.x - box!.width).toBeLessThanOrEqual(16);
   await page.screenshot({
     path: info.outputPath("source-comparison-review.png"),
     fullPage: true,
@@ -245,7 +252,9 @@ test("ES03 register history, stale draft, failed read and denied evidence remain
   await page.goBack();
   await expect(search).toHaveValue(input.reference);
   await page.goForward();
-  await expect(page.getByRole("heading", {name:"No sources match these filters"})).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "No sources match these filters" }),
+  ).toBeVisible();
   await page.goBack();
   await page.reload();
   await expect(
@@ -332,8 +341,13 @@ test("ES03 register history, stale draft, failed read and denied evidence remain
   await expect(page.getByLabel("Source title", { exact: true })).toHaveValue(
     "SYN another saved version",
   );
-  await page.getByRole("heading", {name:"Compare source revisions"}).scrollIntoViewIfNeeded();
-  await page.screenshot({path:info.outputPath("source-revision-comparison.png"),fullPage:true});
+  await page
+    .getByRole("heading", { name: "Compare source revisions" })
+    .scrollIntoViewIfNeeded();
+  await page.screenshot({
+    path: info.outputPath("source-revision-comparison.png"),
+    fullPage: true,
+  });
   await page.route(`**/api/v1/estimating/cost-sources/${input.id}`, (route) =>
     route.fulfill({
       status: 503,

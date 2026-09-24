@@ -1103,8 +1103,10 @@ function RefreshForm({
                     onChange={(event) => setReviewed(event.target.checked)}
                     required
                   />
-                  I reviewed every changed line, the unchanged sell prices and
-                  any Unknown validity.
+                  <span>
+                    I reviewed every changed line, the unchanged sell prices
+                    and any Unknown validity.
+                  </span>
                 </label>
                 <Field
                   label="Reason for the estimate successor"

@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
 import { after, test } from "node:test";
+import { randomBytes, randomUUID } from "node:crypto";
+import { tokenHash } from "../../src/platform/identity";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { sourceInput } from "../helpers/estimating-sources";
@@ -10,6 +12,24 @@ const origin = process.env.PPO_TEST_ORIGIN ?? "http://127.0.0.1:3000";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable synthetic database only");
 after(closeDatabase);
+async function isolatedActor(template: string) {
+  const user = randomUUID(),
+    token = randomBytes(32).toString("hex");
+  await database().query(
+    "INSERT INTO ppo.users(id,workspace_id,issuer,subject_id,display_name) VALUES($1,$2,'PPO-LocalSynthetic',$3,'SYN ES03 HTTP revocation actor')",
+    [user, CRM.workspace, `source-http-${randomUUID()}`],
+  );
+  await database().query(
+    "INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id) SELECT workspace_id,$1,company_id,capability,scope_type,scope_id,site_id FROM ppo.permission_grants WHERE user_id=$2 AND capability IN ('shared.read','estimating.read','estimating.edit','estimating.source.review') AND valid_to IS NULL",
+    [user, template],
+  );
+  // A real opaque server session; revoke only this test's actors while other HTTP files run.
+  await database().query(
+    "INSERT INTO ppo.sessions(token_hash,workspace_id,actor_id,expires_at) VALUES($1,$2,$3,clock_timestamp()+interval '1 hour')",
+    [tokenHash(token), CRM.workspace, user],
+  );
+  return { user, cookie: `ppo_local_session=${token}` };
+}
 async function session(profile: string) {
   const r = await fetch(`${origin}/api/v1/local-session`, {
     method: "POST",
@@ -31,8 +51,10 @@ async function request(cookie: string, path: string, body?: unknown) {
   });
 }
 test("ES03 HTTP exact review, scoped reads, altered replay and revoked receipt authority", async () => {
-  const owner = await session("coordinator"),
-    reviewer = await session("estimating-source-reviewer"),
+  const ownerActor = await isolatedActor(CRM.owner),
+    reviewerActor = await isolatedActor("e5030045-0000-4000-8000-000000000001"),
+    owner = ownerActor.cookie,
+    reviewer = reviewerActor.cookie,
     input = sourceInput(),
     path = `estimating/cost-sources/${input.id}`;
   const created = await request(owner, "estimating/cost-sources", input);
@@ -117,7 +139,8 @@ test("ES03 HTTP exact review, scoped reads, altered replay and revoked receipt a
     422,
   );
   await database().query(
-    "UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id='e5030045-0000-4000-8000-000000000001' AND capability='estimating.source.review'",
+    "UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='estimating.source.review'",
+    [reviewerActor.user],
   );
   try {
     assert.equal(
@@ -132,17 +155,31 @@ test("ES03 HTTP exact review, scoped reads, altered replay and revoked receipt a
     assert.equal(reduced.can_review, false);
   } finally {
     await database().query(
-      "UPDATE ppo.permission_grants SET valid_to=NULL WHERE user_id='e5030045-0000-4000-8000-000000000001' AND capability='estimating.source.review'",
+      "UPDATE ppo.permission_grants SET valid_to=NULL WHERE user_id=$1 AND capability='estimating.source.review'",
+      [reviewerActor.user],
     );
   }
-  await database().query("UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='estimating.read'", [CRM.owner]);
+  await database().query(
+    "UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='estimating.read'",
+    [ownerActor.user],
+  );
   try {
-    const denied=await request(owner,`${path}?revision_id=${d.revision.id}`);
-    assert.equal(denied.status,404);
-    assert(!JSON.stringify(await denied.json()).includes(input.content.evidence_excerpt));
-    assert.equal((await request(owner,`operations/${input.operation_id}`)).status,404);
+    const denied = await request(owner, `${path}?revision_id=${d.revision.id}`);
+    assert.equal(denied.status, 404);
+    assert(
+      !JSON.stringify(await denied.json()).includes(
+        input.content.evidence_excerpt,
+      ),
+    );
+    assert.equal(
+      (await request(owner, `operations/${input.operation_id}`)).status,
+      404,
+    );
   } finally {
-    await database().query("UPDATE ppo.permission_grants SET valid_to=NULL WHERE user_id=$1 AND capability='estimating.read'", [CRM.owner]);
+    await database().query(
+      "UPDATE ppo.permission_grants SET valid_to=NULL WHERE user_id=$1 AND capability='estimating.read'",
+      [ownerActor.user],
+    );
   }
 });
 test("ES03 HTTP comparison is read-only, exact-version guarded and recovers one successor", async () => {

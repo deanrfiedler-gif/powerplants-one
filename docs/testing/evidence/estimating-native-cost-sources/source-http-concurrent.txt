@@ -1,0 +1,22 @@
+✔ ES02 HTTP: exact structured create/receipt/history/summary/evidence/compare routes preserve authority and refuse future schema (4753.4334ms)
+✔ ES03 HTTP exact review, scoped reads, altered replay and revoked receipt authority (2664.4928ms)
+✔ ES03 HTTP comparison is read-only, exact-version guarded and recovers one successor (3426.9131ms)
+✔ ES01 HTTP workload is current-authority, no-store, read-only and strictly validates filters (6353.6175ms)
+✔ E1-HTTP01 complete saved journey, discarded response, successor conflict and exact draft bytes (6939.8186ms)
+✔ E1-HTTP02 real direct routes enforce identity, scope, original target, strict inputs and local origin (942.0063ms)
+✔ DR01-HTTP01 explicit adoption preserves old DTO and receipts, rejects false flags and binds recovery (984.384ms)
+✔ E2 costing HTTP binds exact revisions, preserves original responses and refuses wrong identity, source, origin and schema (9422.6428ms)
+✔ FN-T44/T56 direct HTTP portable import accepts the supported large graph while ordinary commands retain 2 MiB (7052.311ms)
+✔ FN-T03/T08/T09/T11/T78/T86 direct HTTP exact revision, original replay and clean-session read (1260.9504ms)
+✔ FN-T08/T41/T42/T44 direct HTTP native import preview and confirmation bind exact source/file and one authenticated intent (2438.7015ms)
+✔ FN-T10/T11/T86 direct HTTP rejects origin, spoofed authority, stale references and oversized UTF-8 envelopes (348.0549ms)
+✔ ES08-T05/T27/T35/T53/T57/T61/T70/T79 scoped full-envelope HTTP contract (7249.1338ms)
+✔ ES08-T35/T39/T46/T59/T65/T70 native HTTP receiver rechecks signed exact server policy (3700.8483ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 26181.0822
