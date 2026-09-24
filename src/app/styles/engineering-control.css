@@ -1,4 +1,8 @@
 /* EN-01–EN-05 proposed native composition. Shared shell/menu, tokens, Button and modal controls. */
+:where(#ppo-engineering-control) :is(h1, h2, h3, h4) {
+  letter-spacing: normal;
+  line-height: 1.4;
+}
 #ppo-engineering-control .mw-content {
   overflow: hidden;
   display: flex;
@@ -225,7 +229,27 @@
   outline: 3px solid var(--focus, #365d8b);
   outline-offset: 3px;
 }
+:where(#ppo-engineering-control) .ec-inspector-context {
+  display: none;
+}
 @media (max-width: 1100px) {
+  #ppo-engineering-control .ec-workspace {
+    display: block;
+    overflow: auto;
+  }
+  :where(#ppo-engineering-control) .ec-split {
+    display: block;
+  }
+  :where(#ppo-engineering-control) .ec-register,
+  :where(#ppo-engineering-control) .ec-inspector {
+    overflow: visible;
+  }
+  :where(#ppo-engineering-control) .ec-inspector-context {
+    display: block;
+    margin: 0 0 12px;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
   :where(#ppo-engineering-control) .ec-split[data-selected="true"] {
     grid-template-columns: minmax(0, 1fr);
   }

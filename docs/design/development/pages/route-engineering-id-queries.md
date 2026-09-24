@@ -23,11 +23,11 @@ Query Open → Answered → Resolved or Returned; no-review queries resolve on f
 
 ## Desktop
 
-At 1440 × 960 use the existing PPO shell, shared SecondaryMenuFrame, package context, search/work queue and selected-row inspector. List and inspector each own their scroll surface. At 1024 × 768 the selected inspector occupies the width with an explicit return control. State words, owner, date, purpose and exact sources stay visible. Roboto/Verdana, navy/green, line, warning and focus use shared tokens. Long filenames, paths, references and hashes wrap.
+At 1440 × 960 use the existing PPO shell, shared SecondaryMenuFrame, package context, search/work queue and selected-row inspector. List and inspector each own their scroll surface. At 1024 × 768 the selected inspector occupies the width with an explicit return control. Narrow screens use one workspace scroll surface for context, filters and evidence, so a short viewport never squeezes the record into an unusable strip. State words, owner, date, purpose and exact sources stay visible. Roboto/Verdana, navy/green, line, warning and focus use shared tokens. Long filenames, paths, references and hashes wrap.
 
 ## Mobile
 
-At 390 × 844 and 320 CSS px stack labelled search/filter fields; the selected inspector replaces the list. Keep decision evidence. Use shared target sizes and 16px input text on phones. Verify Tab/Shift+Tab, Escape and focus return, 200% reflow, long references, loading, empty/filtered-empty, denied/read-only, validation, stale, saving, saved and uncertain-result states.
+At 390 × 844 and 320 CSS px stack labelled search/filter fields; the selected inspector replaces the list. Context, filters and the complete record share one workspace scroll surface; package/customer/site context is repeated beside the selected record. Keep decision evidence. Use shared target sizes and 16px input text on phones. Verify Tab/Shift+Tab, Escape and focus return, 200% reflow, long references, loading, empty/filtered-empty, denied/read-only, validation, stale, saving, saved and uncertain-result states.
 
 ## Shared controls and proposed departures
 

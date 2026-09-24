@@ -423,6 +423,10 @@ function Workspace({
                   className="ec-inspector"
                   aria-label="Selected Engineering record"
                 >
+                  <p className="ec-inspector-context">
+                    {data.package.display_number} · {data.package.customer_name}{" "}
+                    · {data.site_name ?? "Site not yet supplied"}
+                  </p>
                   <div className="ec-inspector-head">
                     <h2 ref={inspectorHeading} tabIndex={-1}>
                       {selected.title}

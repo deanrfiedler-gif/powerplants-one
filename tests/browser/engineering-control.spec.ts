@@ -267,15 +267,26 @@ test("EN01–EN05 responsive registers, exact references, guides, empty states a
       });
       expect(colours[0]).not.toBe(colours[1]);
       await expect(add).toHaveCSS("color", "rgb(255, 255, 255)");
+      if (width <= 1100) {
+        await expect(page.locator(".ec-workspace")).toHaveCSS(
+          "overflow-y",
+          "auto",
+        );
+        await expect(page.locator(".ec-inspector")).toHaveCSS(
+          "overflow-y",
+          "visible",
+        );
+        await page.locator(".ec-inspector-context").scrollIntoViewIfNeeded();
+      }
       await page.screenshot({
         path: test
           .info()
           .outputPath(`engineering-drawings-${width}x${height}.png`),
       });
       if (width === 390 || width === 320) {
-        await page.locator(".ec-inspector").evaluate((element) => {
-          element.scrollTop = element.scrollHeight;
-        });
+        await page
+          .getByText("Source file version", { exact: true })
+          .scrollIntoViewIfNeeded();
         await page.screenshot({
           path: test
             .info()
