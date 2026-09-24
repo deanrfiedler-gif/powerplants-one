@@ -3327,7 +3327,7 @@
       "title": "Service stock custody and job reconciliation",
       "kind": "scope",
       "module": "SC",
-      "summary": "Reconcile warehouse â†’ technician / van â†’ job â†’ outcome against exact Field evidence.",
+      "summary": "Reconcile warehouse to technician / van to job to outcome against exact Field evidence.",
       "path": "/supply/service-stock",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -10482,7 +10482,7 @@
       "title": "supply / service stock",
       "kind": "route",
       "module": "Unassigned",
-      "summary": "Reconcile warehouse â†’ technician / van â†’ job â†’ outcome against exact Field evidence.",
+      "summary": "Reconcile warehouse to technician / van to job to outcome against exact Field evidence.",
       "path": "/supply/service-stock",
       "source_paths": [
         "src/app/(business)/supply/service-stock/page.tsx",

@@ -1,6 +1,6 @@
 import { test, expect, type Page } from "@playwright/test";
 import { mkdir } from "node:fs/promises";
-import { supplyPages } from "../../src/supply/navigation";
+import { supplyPages, returnViews } from "../../src/supply/navigation";
 import { supplyInput, supplyFact, supplyBase } from "../helpers/supply";
 import { randomUUID } from "node:crypto";
 import { destination } from "../../src/shell/navigation";
@@ -138,11 +138,24 @@ for (const spec of supplyPages)
       await expect(
         surface.getByRole("button", { name: "Revise record", exact: true }),
       ).toBeVisible();
+      if ((page.viewportSize()?.width ?? 0) < 800) {
+        await expect(surface.getByRole("button", { name: "Back to worklist", exact: true })).toBeVisible();
+        await expect(surface.locator(".supply-worklist")).toBeHidden();
+      }
       await page.goBack();
       await expect(page).not.toHaveURL(/record=/);
       await firstRecord.click();
     }
     const guide = page.getByRole("button", { name: "Page guide", exact: true });
+    if (spec.scope === "SC-08") {
+      for (const view of returnViews) {
+        const tab = surface.getByRole("navigation", { name: "Returns workspaces" }).getByRole("button", { name: view.label, exact: true });
+        await tab.click();
+        await expect(tab).toHaveAttribute("aria-pressed", "true");
+        await expect(page).toHaveURL(new RegExp(`view=${view.id}`));
+      }
+      await surface.getByRole("button", { name: "Returns register", exact: true }).click();
+    }
     await guide.click();
     await expect(
       page.getByText(`${spec.scope} — purpose and prerequisites`, {
@@ -399,6 +412,28 @@ test("lost accepted save survives reload and recovers its original receipt witho
   expect(saved.record.version).toBe(2);
   expect(saved.record.next_action).toBe("SYN recovered original change");
 });
+test("stale proposal retains entered work until the latest saved evidence is reviewed", async ({ page, baseURL }) => {
+  const input = supplyInput();
+  await post(page, baseURL!, "supply/records", input);
+  await page.goto(`/supply/material-readiness?record=${input.id}`);
+  await page.getByRole("button", { name: "Revise record", exact: true }).click();
+  const dialog = page.getByRole("dialog", { name: "Revise coordination record" });
+  await dialog.getByLabel("Next action", { exact: false }).fill("SYN retained proposal");
+  await dialog.getByLabel("Reason for this record").fill("SYN compare intervening evidence");
+  await post(page, baseURL!, `supply/records/${input.id}`, { ...input, ...supplyBase(), expected_version: 1, next_action: "SYN intervening saved action" });
+  await dialog.getByRole("button", { name: "Save demand", exact: true }).click();
+  await dialog.getByRole("button", { name: "Load latest evidence for comparison" }).click();
+  await expect(dialog.getByRole("heading", { name: "Server version 2" })).toBeVisible();
+  await expect(dialog.getByText("Next action: SYN intervening saved action", { exact: true })).toBeVisible();
+  await expect(dialog.getByLabel("Next action", { exact: false })).toHaveValue("SYN retained proposal");
+  await dialog.getByRole("button", { name: "Use this reviewed version for my proposal" }).click();
+  await dialog.getByRole("button", { name: "Save demand", exact: true }).click();
+  await expect(dialog).not.toBeVisible();
+  const saved = await (await page.request.get(baseURL + `/api/v1/supply/records/${input.id}`)).json();
+  expect(saved.record.version).toBe(3);
+  expect(saved.record.next_action).toBe("SYN retained proposal");
+});
+
 test("denied identity and Partial evidence do not become authorised or zero availability", async ({
   page,
   baseURL,

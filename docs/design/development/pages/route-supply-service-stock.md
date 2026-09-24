@@ -4,7 +4,7 @@ Stable entry: `route:/supply/service-stock`. Scope: **SC-10**. Route: `/supply/s
 
 ## Purpose and task
 
-Reconcile warehouse â†’ technician / van â†’ job â†’ outcome against exact Field evidence.
+Reconcile warehouse to technician / van to job to outcome against exact Field evidence.
 
 1. **Establish custody:** Create a custody record against Service demand, its actual Work Order appointment/visit, custodian, van, warehouse and authoritative issue/transfer observation. Preserve item, unit and serial/batch identity.
 2. **Explain every issued quantity:** Record a full reconciliation snapshot: held in custody, at job, used, unused returned, damaged, quarantined and missing. These are mutually exclusive current outcomes and must total issued exactly. Used quantity references matching current Field parts capture.
@@ -16,7 +16,7 @@ Use the existing PPO shell, r20 Register / worklist with selected Detail workspa
 
 ## Mobile
 
-At 390 × 844 and 320 CSS px the worklist/detail grid and capture fields become a single column. Module padding is 12px; the title is 22px. Every field remains available with a visible label, 16px input text and 44px target. Receipt, pick/stage/dispatch, POD and custody capture use focused stacked forms. Dense evidence uses labelled definition lists rather than an inaccessible table-only view. Content and long identifiers wrap within the viewport. Mobile browser/keyboard evidence is separate from physical-device acceptance.
+At 390 × 844 and 320 CSS px the worklist/detail grid and capture fields become a single column. Module padding is 12px; the title is 22px. Every field remains available with a visible label, 16px input text and 44px target. Receipt, pick/stage/dispatch, POD and custody capture use focused stacked forms. Dense evidence uses labelled definition lists rather than an inaccessible table-only view. Content and long identifiers wrap within the viewport. Selecting a record on mobile opens its detail in place of the worklist, with an explicit Back to worklist control; browser Back also restores the list. Mobile browser/keyboard evidence is separate from physical-device acceptance.
 
 ## Components, states and handovers
 

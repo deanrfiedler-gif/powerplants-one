@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { supplySeedIdentities } from "./supply-seed-identities";
 import { test } from "node:test";
 import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
@@ -223,4 +224,3 @@ test("E2 migration 27 and repeated seed retain legacy DTOs, ledgers, receipts an
 });
 
 }
-import { supplySeedIdentities } from "./supply-seed-identities";

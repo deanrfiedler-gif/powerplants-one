@@ -252,7 +252,20 @@
   overflow: hidden;
   font-size: 16px;
 }
+.supply-back-to-list {
+  display: none;
+}
 @media (max-width: 780px) {
+  .supply-columns.has-selection > .supply-worklist {
+    display: none;
+  }
+  .supply-back-to-list {
+    display: inline-flex;
+    margin-bottom: 12px;
+  }
+  .supply-detail {
+    scroll-margin-top: 12px;
+  }
   #ppo-supply {
     padding: 12px;
   }

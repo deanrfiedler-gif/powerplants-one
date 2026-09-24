@@ -38,6 +38,13 @@ function Workspace({ slug }: { slug: string }) {
   const [panel, setPanel] = useState<Panel | null>(null),
     [history, setHistory] = useState(false);
   const focusAfterClose = useRef<string | null>(null);
+  const detailRegion = useRef<HTMLElement | null>(null);
+  useEffect(() => {
+    if (selected && window.matchMedia("(max-width: 780px)").matches) {
+      detailRegion.current?.focus();
+      detailRegion.current?.scrollIntoView({ block: "start" });
+    }
+  }, [selected]);
   function openPanel(value: Panel, focusKey: string) {
     focusAfterClose.current = focusKey;
     setPanel(value);
@@ -214,7 +221,7 @@ function Workspace({ slug }: { slug: string }) {
       </form>
       <ErrorNotice error={list.error} />
       <ErrorNotice error={opts.error} />
-      <div className="supply-columns">
+      <div className={`supply-columns${selected ? " has-selection" : ""}`}>
         <section className="supply-worklist" aria-label="Supply Chain worklist">
           <h2>
             {page.kind === "Supply"
@@ -273,9 +280,16 @@ function Workspace({ slug }: { slug: string }) {
           )}
         </section>
         <section
+          ref={detailRegion}
+          tabIndex={-1}
           className="supply-detail"
           aria-label="Selected Supply Chain record"
         >
+          {selected && (
+            <Button className="supply-back-to-list" onClick={() => query("record", "", true)}>
+              Back to worklist
+            </Button>
+          )}
           {!selected ? (
             <div className="supply-empty">
               <h2>Select a record</h2>

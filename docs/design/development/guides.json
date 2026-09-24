@@ -20520,7 +20520,7 @@
           "title": "Purpose and outcome",
           "paragraphs": [
             "Use your permitted synthetic profile and the exact company, Site and existing source identities. Keep the source time, completeness, units, owner and next action explicit. These pages coordinate evidence; MYOB remains the intended inventory and Finance authority.",
-            "Reconcile warehouse â†’ technician / van â†’ job â†’ outcome against exact Field evidence."
+            "Reconcile warehouse to technician / van to job to outcome against exact Field evidence."
           ],
           "steps": [],
           "rows": [],
@@ -69644,7 +69644,7 @@
           "title": "Purpose and applicability",
           "paragraphs": [
             "Use your permitted synthetic profile and the exact company, Site and existing source identities. Keep the source time, completeness, units, owner and next action explicit. These pages coordinate evidence; MYOB remains the intended inventory and Finance authority.",
-            "Reconcile warehouse â†’ technician / van â†’ job â†’ outcome against exact Field evidence."
+            "Reconcile warehouse to technician / van to job to outcome against exact Field evidence."
           ],
           "steps": [],
           "headers": [],

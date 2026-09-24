@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { AppError } from "../../src/platform/errors";
 import { before, after, test } from "node:test";
 import { reset } from "../../scripts/database";
 import { database, closeDatabase } from "../../src/platform/database";
@@ -66,7 +67,7 @@ test("actual Field parts capture reconciles each issued service-stock unit once;
       custody.id,
       supplyFact("Custody", 1, { ...observed, returned: "2" }),
     ),
-    /issued|explain|quantity/i,
+    (error: unknown) => error instanceof AppError && error.status === 422 && error.code === "InvalidData" && error.field_errors.some(field => /issued|explain|quantity/i.test(field.message)),
   );
   await assert.rejects(
     recordFact(
@@ -74,7 +75,7 @@ test("actual Field parts capture reconciles each issued service-stock unit once;
       custody.id,
       supplyFact("Custody", 1, { ...observed, inventory_reference: null }),
     ),
-    /inventory|reconcil/i,
+    (error: unknown) => error instanceof AppError && error.status === 422 && error.code === "InvalidData" && error.field_errors.some(field => /inventory|reconcil/i.test(field.message)),
   );
   await assert.rejects(
     recordFact(
