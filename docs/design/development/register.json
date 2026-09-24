@@ -1150,7 +1150,13 @@
       "guide_key": "guide.es.01",
       "design_path": "docs/design/development/pages/scope-es-01.md",
       "html_path": null,
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-D1-Workload-Desktop-1440-r01.png",
+        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-D2-Saved-Estimates-Desktop-1440-r01.png",
+        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R1-Tablet-1024-Drawer-r01.png",
+        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R2-Phone-390-Workload-r01.png",
+        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R4-Phone-320-Workload-r01.png"
+      ],
       "dependencies": [
         "src/estimating/workload.ts",
         "src/estimating/workload-query.ts",
@@ -5610,7 +5616,13 @@
       "guide_key": "guide.page.estimating",
       "design_path": "docs/design/development/pages/route-estimating.md",
       "html_path": null,
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-D1-Workload-Desktop-1440-r01.png",
+        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-D2-Saved-Estimates-Desktop-1440-r01.png",
+        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R1-Tablet-1024-Drawer-r01.png",
+        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R2-Phone-390-Workload-r01.png",
+        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R4-Phone-320-Workload-r01.png"
+      ],
       "dependencies": [
         "src/estimating/workload.ts",
         "src/estimating/workload-query.ts",
