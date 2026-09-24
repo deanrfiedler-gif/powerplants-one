@@ -12,7 +12,7 @@ Which presentation changes and features on the refinement board should become th
 ## Context
 
 - Dean asked for a design board of the r02 workbench with refinements that make it look more professional, then directed that the work proceed however is most professional. He then asked for an audit of that version, to make the module a standout module in Powerplants One.
-- The board is a private claude.ai design canvas, "Priva Fertigation Workbench" (version 8, 23 September 2026). It holds 21 artboards in five rows plus shared parts:
+- The board is a private claude.ai design canvas, "Priva Fertigation Workbench" (version 8, 23 September 2026). Its 21 artboards are retained as [captures r01](../reference/ui/estimating/fertigation-design-board-r01/README.md) with hashes, native counterparts and the board statements native rules supersede; [`boardReferenceScope`](../../tests/helpers/fertigation-board-scope.ts) reproduces its figures (FN-T117). It holds 21 artboards in five rows plus shared parts:
   - the nine sections at 1440 px;
   - an import reconciliation page;
   - two drawers: resolve a conflict, and a calculation trace;

@@ -44,9 +44,19 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-No exact image or HTML reference is linked. Keep this gap visible.
+Design reference (direction given, not accepted): the [retained design board captures r01](../../../reference/ui/estimating/fertigation-design-board-r01/README.md), 21 PNG artboards with hashes, from the private design canvas that refines the r02 standalone workbench (SHA-256 `b51bf2cab7cb1af54e33a0ec739921c4ca1a08da918165d615ead347d6463ab9`). For this route:
 
-A proposed refinement of the r02 standalone workbench (SHA-256 `b51bf2cab7cb1af54e33a0ec739921c4ca1a08da918165d615ead347d6463ab9`) exists as a private design canvas. It covers all nine views at 1440 px, the Overview at 390 px, and import, conflict-resolution, calculation-trace, revision-compare, report, site-visit and state artboards. Its departures and proposed features are raised in [Priva fertigation workbench refinement](../../../decisions/fertigation-workbench-refinement.md). It is not accepted and is not an exact reference for this route.
+- the nine views at 1440 px: boards 01–09;
+- the Overview at 390 px: board A;
+- the Resolve and Calculation trace drawers: boards B and C;
+- revision compare: board D;
+- the customer report: boards E and F;
+- phone site visit: board G, not built (F8);
+- states: board H;
+- design language: board I;
+- the shared header and rail: boards J and K.
+
+The capture README lists the board statements that native rules supersede. [`boardReferenceScope`](../../../../tests/helpers/fertigation-board-scope.ts) reproduces the board's figures for like-for-like comparison (FN-T117). No accepted visual baseline exists for this route; departures are raised in [Priva fertigation workbench refinement](../../../decisions/fertigation-workbench-refinement.md).
 
 Implementation captures of the guidance layer were taken locally at 1440 × 1000 and 390 × 844 against a synthetic scope (compiled build, preinstalled Chromium) on 23 September 2026. They are working evidence, not a visual review, and are not committed; no reference image is linked yet.
 

@@ -44,9 +44,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-No exact image or HTML reference is linked. Keep this gap visible.
-
-The private refinement design canvas raised in the [workbench refinement](../../../decisions/fertigation-workbench-refinement.md) includes an import reconciliation artboard (10 · Import an r02 project). It is proposed, not accepted, and not an exact reference for this route. Implementation captures of the placement step were taken locally at 1440 × 1000 and 390 × 844 by FN-T112 (compiled build, preinstalled Chromium) on 23 September 2026. They are working evidence, not a visual review, and are not committed.
+Design reference (direction given, not accepted): board 10 · Import an r02 project in the [retained design board captures r01](../../../reference/ui/estimating/fertigation-design-board-r01/README.md), [captured at 1440 × 2671](../../../reference/ui/estimating/fertigation-design-board-r01/PPO-Priva-Fertigation-Design-Board-10-Import-an-r02-Project-r01.png). Native import rules differ from it in two places, both listed in the capture README. ADR-0044 allows two placements, not four, and declarations are made on the created draft, not before Confirm. No accepted visual baseline exists for this route. Implementation captures of the placement step were taken locally at 1440 × 1000 and 390 × 844 by FN-T112 (compiled build, preinstalled Chromium) on 23 September 2026. They are working evidence, not a visual review, and are not committed.
 
 ## Behaviour, handovers and verification
 
