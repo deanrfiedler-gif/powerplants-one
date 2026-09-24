@@ -24,6 +24,10 @@ import type {
   Finding,
   Scope,
 } from "../estimating/fertigation/types";
+import {
+  declaredCoverage,
+  type Declaration,
+} from "../estimating/fertigation/declarations";
 import { fertigationViews, type FertigationView } from "./fertigation-frame";
 
 const viewLabel = (view: GuidanceView) =>
@@ -169,6 +173,8 @@ export function NextActionsPanel({
   candidates = [],
   canResolve,
   onResolve,
+  canDeclare,
+  onDeclare,
   limit = 5,
 }: {
   scope: Scope;
@@ -179,6 +185,9 @@ export function NextActionsPanel({
   /** code → whether a registered resolution applies; "injection" for candidates. */
   canResolve?: (code: string) => boolean;
   onResolve?: (code: string) => void;
+  /** code → whether a declaration offers a draft edit for a missing input. */
+  canDeclare?: (code: string) => boolean;
+  onDeclare?: (code: string) => void;
   limit?: number;
 }) {
   const actions = useMemo(
@@ -241,6 +250,11 @@ export function NextActionsPanel({
                     Resolve
                   </button>
                 )}
+                {a.severity !== "conflict" && canDeclare?.(a.code) && (
+                  <button type="button" onClick={() => onDeclare?.(a.code)}>
+                    Declare
+                  </button>
+                )}
                 <button type="button" onClick={() => onView(a.view)}>
                   Open {viewLabel(a.view)}
                 </button>
@@ -260,6 +274,100 @@ export function NextActionsPanel({
           </button>
         </p>
       )}
+    </section>
+  );
+}
+
+export type DeclarationBasis = "recorded" | "declared" | "new_input";
+export const declarationBasis = (d: Declaration): DeclarationBasis =>
+  d.options.some((o) => o.transform && o.basis === "recorded")
+    ? "recorded"
+    : d.options.some((o) => o.transform)
+      ? "declared"
+      : "new_input";
+const basisText: Record<DeclarationBasis, [string, string]> = {
+  recorded: ["From recorded values", "fn-chip fn-chip-success"],
+  declared: ["Your declaration", "fn-chip fn-chip-review"],
+  new_input: ["Needs new input", "fn-chip"],
+};
+export function BasisChip({ basis }: { basis: DeclarationBasis }) {
+  const [text, className] = basisText[basis];
+  return <span className={className}>{text}</span>;
+}
+
+/** Declarations the draft needs (feature F1): what each finding group waits
+ * on, and whether the draft already records the answer. */
+export function DeclarationsPanel({
+  items,
+  findings,
+  basis,
+  onView,
+  canOpen,
+  onDeclare,
+}: {
+  items: Declaration[];
+  findings: number;
+  basis: string;
+  onView: (view: FertigationView) => void;
+  /** The drawer needs a calculation that belongs to the current draft. */
+  canOpen: boolean;
+  onDeclare: (key: string) => void;
+}) {
+  if (!items.length) return null;
+  const covered = declaredCoverage(items);
+  return (
+    <section className="fn-panel" aria-labelledby="fn-declarations-title">
+      <header className="fn-panel-head">
+        <h2 id="fn-declarations-title">Declarations this draft needs</h2>
+        <p>
+          {items.length} {items.length === 1 ? "declaration" : "declarations"}{" "}
+          address {covered} of {findings}{" "}
+          {findings === 1 ? "finding" : "findings"} · {basis}
+        </p>
+      </header>
+      <ol className="fn-next-list">
+        {items.map((d) => {
+          const b = declarationBasis(d);
+          return (
+            <li key={d.key}>
+              <div className="fn-next-body">
+                <strong>
+                  {d.id} · {d.title}
+                  {d.findingIds.length > 0 && (
+                    <span className="fn-count"> ×{d.findingIds.length}</span>
+                  )}
+                </strong>
+                <small>{d.message}</small>
+                <span className="fn-next-meta">
+                  <BasisChip basis={b} />
+                  <RoleChip role={d.role} />
+                </span>
+              </div>
+              <span className="fn-next-actions">
+                {b !== "new_input" && canOpen && (
+                  <button type="button" onClick={() => onDeclare(d.key)}>
+                    Declare
+                  </button>
+                )}
+                {b === "new_input" && canOpen && (
+                  <button type="button" onClick={() => onDeclare(d.key)}>
+                    What is needed
+                  </button>
+                )}
+                {d.view !== "overview" && (
+                  <button type="button" onClick={() => onView(d.view)}>
+                    Open {viewLabel(d.view)}
+                  </button>
+                )}
+              </span>
+            </li>
+          );
+        })}
+      </ol>
+      <p className="fn-panel-foot">
+        Each edit is previewed by the server and applied to the working draft
+        only. Nothing is saved until you save a revision with a reason.
+      </p>
     </section>
   );
 }

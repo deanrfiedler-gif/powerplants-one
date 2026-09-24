@@ -20,6 +20,7 @@ import {
   CapacityPanel,
   EvidencePanel,
   FindingsReview,
+  DeclarationsPanel,
   NextActionsPanel,
   OutputReadinessPanel,
   ReadinessSummary,
@@ -31,6 +32,7 @@ import {
   type Resolvable,
 } from "../estimating/fertigation/resolutions";
 import type { TraceKey } from "../estimating/fertigation/trace";
+import { declarations } from "../estimating/fertigation/declarations";
 import {
   candidateFailures,
   withLabels,
@@ -525,7 +527,8 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
     [historyEpoch, setHistoryEpoch] = useState(0),
     [trace, setTrace] = useState<TraceKey | null>(null),
     [compareDraft, setCompareDraft] = useState(false),
-    [resolving, setResolving] = useState<Resolvable[] | null>(null);
+    [resolving, setResolving] = useState<Resolvable[] | null>(null),
+    [declaring, setDeclaring] = useState<string | null>(null);
   const [artifactsVisited, setArtifactsVisited] = useState(
     initialView === "evidence" || initialView === "review",
   );
@@ -713,6 +716,15 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
   const resolveList = activeCalculation
     ? resolvables(proposal, activeCalculation)
     : [];
+  // Declarations use the same basis as the guidance; edits need the
+  // calculation to belong to the current draft.
+  const declarationList = declarations(guidanceScope, guidanceCalculation),
+    declarable = (code: string) =>
+      activeCalculation
+        ? declarationList.find(
+            (d) => d.codes.includes(code) && d.options.some((o) => o.transform),
+          )
+        : undefined;
   const resolveFor = (match: (key: string) => boolean) => {
     const items = resolveList.filter((r) => match(r.key));
     if (items.length) setResolving(items);
@@ -893,6 +905,18 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
                 onResolve={(code) =>
                   resolveFor((key) => key.startsWith(`${code}:`))
                 }
+                canDeclare={(code) => canEdit && !!declarable(code)}
+                onDeclare={(code) =>
+                  setDeclaring(declarable(code)?.key ?? null)
+                }
+              />
+              <DeclarationsPanel
+                items={declarationList}
+                findings={guidanceCalculation.findings.length}
+                basis={guidanceBasis}
+                onView={changeView}
+                canOpen={!!activeCalculation}
+                onDeclare={setDeclaring}
               />
             </div>
             <section className="fn-section">
@@ -1659,6 +1683,25 @@ function Workspace({ data, reload }: { data: Detail; reload: () => void }) {
             setPreview({ proposal: next, calculation });
           }}
           close={() => setResolving(null)}
+        />
+      )}
+      {declaring && activeCalculation && (
+        <ResolveDrawer
+          title="Make a declaration"
+          itemLabel="Declaration"
+          tone="declaration"
+          items={declarationList}
+          initialKey={declaring}
+          keepOpen
+          scope={proposal}
+          calculation={activeCalculation}
+          canEdit={canEdit}
+          preview={previewProposal}
+          apply={(next, calculation) => {
+            update(next);
+            setPreview({ proposal: next, calculation });
+          }}
+          close={() => setDeclaring(null)}
         />
       )}
       {trace && (

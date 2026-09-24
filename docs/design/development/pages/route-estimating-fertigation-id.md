@@ -21,6 +21,7 @@ The native record workspace carries the guidance layer raised in [Priva fertigat
 - **Overview.** In order: what this scope can produce now (the server's own preconditions; open findings never block an output), next actions ranked conflicts first with a default responsible role, scope at a glance, capacity headroom (each entered capacity loaded by its native result on one 0–200% scale), evidence coverage, production context and saved origin.
 - **Water & hydraulics.** Required head, curve head at pump peak and margin, each with a calculation trace, and a pump chart drawn at the container's real width so chart text stays 11–12 px.
 - **Scope review.** Findings grouped by the view that resolves them, with severity and responsible-role filters, native codes and the affected record.
+- **Declarations.** After Next actions, the Overview lists the declarations the draft needs (D-01–D-12 of the [workbench refinement](../../../decisions/fertigation-workbench-refinement.md), feature F1): the findings each addresses, a basis chip (From recorded values, Your declaration, Needs new input) and the responsible role. Declare opens **Make a declaration**, the same drawer as Resolve a conflict in a neutral tone: what the draft records, what each finding waits on, and options that are previewed by the server and applied to the working draft only. The drawer stays open after an edit so several can be made in turn. Declare also appears on Next actions rows for missing inputs.
 - **Drawers.** Calculation trace (rule, inputs, evidence, where used; the engine's value only), Resolve a conflict (options restate the engine's pass condition; an unambiguous edit is previewed by the server and applied to the working draft only) and Compare draft (result, finding, candidate and input changes against the saved revision).
 
 ## Desktop
@@ -33,7 +34,7 @@ At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
-At phone width the cockpit panels stack, capacity rows become stacked cards with the bar under the label, output rows keep their state chip, and review rows stack their actions. Drawers fill the viewport through the shared dialog. The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+At phone width the declarations list stacks its actions under each row like Next actions, and the cockpit panels stack, capacity rows become stacked cards with the bar under the label, output rows keep their state chip, and review rows stack their actions. Drawers fill the viewport through the shared dialog. The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
 
 ## Shared components and states
 
@@ -43,9 +44,19 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-No exact image or HTML reference is linked. Keep this gap visible.
+Design reference (direction given, not accepted): the [retained design board captures r01](../../../reference/ui/estimating/fertigation-design-board-r01/README.md), 21 PNG artboards with hashes, from the private design canvas that refines the r02 standalone workbench (SHA-256 `b51bf2cab7cb1af54e33a0ec739921c4ca1a08da918165d615ead347d6463ab9`). For this route:
 
-A proposed refinement of the r02 standalone workbench (SHA-256 `b51bf2cab7cb1af54e33a0ec739921c4ca1a08da918165d615ead347d6463ab9`) exists as a private design canvas. It covers all nine views at 1440 px, the Overview at 390 px, and import, conflict-resolution, calculation-trace, revision-compare, report, site-visit and state artboards. Its departures and proposed features are raised in [Priva fertigation workbench refinement](../../../decisions/fertigation-workbench-refinement.md). It is not accepted and is not an exact reference for this route.
+- the nine views at 1440 px: boards 01–09;
+- the Overview at 390 px: board A;
+- the Resolve and Calculation trace drawers: boards B and C;
+- revision compare: board D;
+- the customer report: boards E and F;
+- phone site visit: board G, not built (F8);
+- states: board H;
+- design language: board I;
+- the shared header and rail: boards J and K.
+
+The capture README lists the board statements that native rules supersede. [`boardReferenceScope`](../../../../tests/helpers/fertigation-board-scope.ts) reproduces the board's figures for like-for-like comparison (FN-T117). No accepted visual baseline exists for this route; departures are raised in [Priva fertigation workbench refinement](../../../decisions/fertigation-workbench-refinement.md).
 
 Implementation captures of the guidance layer were taken locally at 1440 × 1000 and 390 × 844 against a synthetic scope (compiled build, preinstalled Chromium) on 23 September 2026. They are working evidence, not a visual review, and are not committed; no reference image is linked yet.
 

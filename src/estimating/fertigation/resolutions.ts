@@ -20,6 +20,9 @@ export interface ResolutionOption {
   detail: string;
   /** Present only when the edit is unambiguous; returns a new proposal. */
   transform?: (scope: Scope) => Scope;
+  /** recorded: restates values the draft records. declared: the reviewer
+   * states a fact the draft does not record (declarations register). */
+  basis?: "recorded" | "declared";
 }
 
 export interface Resolvable {
@@ -27,6 +30,8 @@ export interface Resolvable {
   title: string;
   message: string;
   options: ResolutionOption[];
+  /** What the draft records that bears on the item. */
+  facts?: string[];
 }
 
 const known = (v: number | null | undefined): v is number =>
