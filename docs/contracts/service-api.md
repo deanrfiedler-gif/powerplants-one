@@ -508,6 +508,8 @@ Capacity is a server projection. Stable typed source keys prevent duplicate cont
 
 All new endpoints are GET-only. Travel order and capacity exclusions have no command API. Exact appointment handover returns through an allowlisted Scheduling URL. Existing accept/reject/cancel/contact/move commands retain their payloads, expected versions, durable receipts/outbox and refusal semantics. Request review exposes current/proposed time, crew and travel before invoking those commands. Read failure is Unknown, never free capacity.
 
+Native view URLs additionally retain Changes `queue`/`selected_id` and Capacity `domain`/`commitment`/`resource_id`/`skill`/`unknown_effort`. These are validated presentation criteria and are not new API parameters. Travel filters its complete permitted day snapshot by resource, retaining the full resource selector; its exact change handover includes site when selected. Field Team consumes the existing schedule API using its explicit day/site/timezone. Analytical order/exclusions and command payloads are never restored from URL values.
+
 ## FI-05 assigned field readiness amendment — 25 September 2026
 
 This additive contract implements FI-05 over the existing CS-06 master, Preparation snapshots and Acknowledged events. [Architecture and authority decision](../decisions/field-readiness-native.md). No migration, capability or source-edit permission is introduced.

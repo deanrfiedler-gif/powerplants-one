@@ -2370,7 +2370,7 @@
       "title": "Service planner and unassigned demand",
       "kind": "scope",
       "module": "PL",
-      "summary": "Existing same-tab booking recovery and server commands are preserved. Request decisions now show current versus proposed time, named crew, travel and version differences.",
+      "summary": "Calendar closures span every intersecting day in the display timezone, including a continuing closure that starts before the visible day. The end boundary is exclusive. Published working intervals and busy reservations remain independent; this display correction changes no booking guard.",
       "path": "/schedule",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -2407,7 +2407,7 @@
       "title": "Resource availability and competence",
       "kind": "scope",
       "module": "PL",
-      "summary": "Resource/calendar/competence mutation is unavailable. Synthetic skills are not statutory certificates; certificate/renewal evidence remains Unknown. No private HR fields are added.",
+      "summary": "Field Team now honours incoming day, site and display timezone and retains those controls on reload. Its default without a date remains today. Availability & competence and Back to Field Team retain day/site/timezone. Resource detail exposes a Review timezone selector for its seven-day window; published calendar timezone remains explicit and unchanged. No source editor is added.",
       "path": "/service/technicians",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -2447,7 +2447,7 @@
       "title": "Cross-domain resource demand and capacity",
       "kind": "scope",
       "module": "PL",
-      "summary": "Project programme dates and Engineering required dates never become labour effort. Service reservations include crew and explicit buffers; they are not labour estimates. No utilisation denominator or percentage is claimed.",
+      "summary": "Domain, commitment, resource, required skill and unknown-effort filters are retained in the page address and restored on reload. Analytical exclusions remain in memory and reset on refresh or a filter change. Unknown resource and skill mappings remain explicit. Criteria confer no permission and do not change source records.",
       "path": "/schedule/capacity",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -2487,7 +2487,7 @@
       "title": "Rescheduling and acknowledgement centre",
       "kind": "scope",
       "module": "PL",
-      "summary": "An exact appointment handover stays visible even outside the selected date/queue. Changed booking facts require fresh contact and preparation review. Contact is not delivery or pack acknowledgement.",
+      "summary": "Queue and selected appointment are retained in the page address and in the allowlisted return from appointment controls. Only Open and InProgress follow-up Activities enter Customer follow-up or contribute an outstanding task to Needs review; Completed and Cancelled remain history. An independent pending request, changed commitment or scope review can still require review.",
       "path": "/schedule/changes",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -2527,7 +2527,7 @@
       "title": "Visit route and travel review",
       "kind": "scope",
       "module": "PL",
-      "summary": "No map, provider, inferred distance/speed, traffic or optimiser is configured. Planned travel allowance, unknown route estimate and actual field Travel are independent facts.",
+      "summary": "Resource selection survives reload. Travel review flags calendar closures as well as availability blocks against the complete buffered reservation, using exclusive end boundaries. Displayed gap figures are explicitly the original schedule when comparing a manual order. A site-filter warning explains omitted visits; the change handover retains exact site/resource/appointment/day/timezone. No routing estimate or booking mutation is introduced.",
       "path": "/schedule/travel",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -6274,7 +6274,7 @@
       "title": "Service planner",
       "kind": "route",
       "module": "PL",
-      "summary": "Existing same-tab booking recovery and server commands are preserved. Request decisions now show current versus proposed time, named crew, travel and version differences.",
+      "summary": "Calendar closures span every intersecting day in the display timezone, including a continuing closure that starts before the visible day. The end boundary is exclusive. Published working intervals and busy reservations remain independent; this display correction changes no booking guard.",
       "path": "/schedule",
       "source_paths": [
         "src/app/(business)/schedule/page.tsx"
@@ -6505,7 +6505,7 @@
       "title": "Field technicians",
       "kind": "route",
       "module": "PL",
-      "summary": "Resource/calendar/competence mutation is unavailable. Synthetic skills are not statutory certificates; certificate/renewal evidence remains Unknown. No private HR fields are added. The Job pack handover uses the current permitted canonical pack read and server preparation flag.",
+      "summary": "Field Team now honours incoming day, site and display timezone and retains those controls on reload. Its default without a date remains today. Availability & competence and Back to Field Team retain day/site/timezone. Resource detail exposes a Review timezone selector for its seven-day window; published calendar timezone remains explicit and unchanged. No source editor is added.",
       "path": "/service/technicians",
       "source_paths": [
         "src/app/(business)/service/technicians/page.tsx"
@@ -8891,7 +8891,7 @@
       "title": "Cross-domain resource demand and capacity",
       "kind": "route",
       "module": "PL",
-      "summary": "Project programme dates and Engineering required dates never become labour effort. Service reservations include crew and explicit buffers; they are not labour estimates. No utilisation denominator or percentage is claimed.",
+      "summary": "Domain, commitment, resource, required skill and unknown-effort filters are retained in the page address and restored on reload. Analytical exclusions remain in memory and reset on refresh or a filter change. Unknown resource and skill mappings remain explicit. Criteria confer no permission and do not change source records.",
       "path": "/schedule/capacity",
       "source_paths": [
         "src/app/(business)/schedule/capacity/page.tsx"
@@ -8927,7 +8927,7 @@
       "title": "Rescheduling and acknowledgement centre",
       "kind": "route",
       "module": "PL",
-      "summary": "An exact appointment handover stays visible even outside the selected date/queue. Changed booking facts require fresh contact and preparation review. Contact is not delivery or pack acknowledgement.",
+      "summary": "Queue and selected appointment are retained in the page address and in the allowlisted return from appointment controls. Only Open and InProgress follow-up Activities enter Customer follow-up or contribute an outstanding task to Needs review; Completed and Cancelled remain history. An independent pending request, changed commitment or scope review can still require review.",
       "path": "/schedule/changes",
       "source_paths": [
         "src/app/(business)/schedule/changes/page.tsx"
@@ -8963,7 +8963,7 @@
       "title": "Visit route and travel review",
       "kind": "route",
       "module": "PL",
-      "summary": "No map, provider, inferred distance/speed, traffic or optimiser is configured. Planned travel allowance, unknown route estimate and actual field Travel are independent facts.",
+      "summary": "Resource selection survives reload. Travel review flags calendar closures as well as availability blocks against the complete buffered reservation, using exclusive end boundaries. Displayed gap figures are explicitly the original schedule when comparing a manual order. A site-filter warning explains omitted visits; the change handover retains exact site/resource/appointment/day/timezone. No routing estimate or booking mutation is introduced.",
       "path": "/schedule/travel",
       "source_paths": [
         "src/app/(business)/schedule/travel/page.tsx"
@@ -8999,7 +8999,7 @@
       "title": "Resource detail",
       "kind": "route",
       "module": "PL",
-      "summary": "Resource/calendar/competence mutation is unavailable. Synthetic skills are not statutory certificates; certificate/renewal evidence remains Unknown. No private HR fields are added.",
+      "summary": "Field Team now honours incoming day, site and display timezone and retains those controls on reload. Its default without a date remains today. Availability & competence and Back to Field Team retain day/site/timezone. Resource detail exposes a Review timezone selector for its seven-day window; published calendar timezone remains explicit and unchanged. No source editor is added.",
       "path": "/service/technicians/[id]",
       "source_paths": [
         "src/app/(business)/service/technicians/[id]/page.tsx"

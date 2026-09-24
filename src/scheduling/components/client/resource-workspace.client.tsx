@@ -7,10 +7,11 @@ import {
   Stamp,
   useResource,
   Field,
+  SelectField,
 } from "../../../components/business-ui";
 import { Button } from "../../../components/ui/button";
 import { SchedulingNavigation } from "./workspace-navigation.client";
-import { plannerContext } from "../../navigation";
+import { plannerContext, plannerZones } from "../../navigation";
 import { addDays, utcFromLocal } from "../../time";
 import { competenceState, type ResourceWorkspace } from "../../workspace-model";
 
@@ -23,9 +24,11 @@ export function ResourceWorkspaceScreen({ id }: { id: string }) {
     new URLSearchParams(useSearchParams().toString()),
   );
   const day = initial.day;
-  const setDay = (value: string) => {
+  const update = (values: Record<string, string>) => {
     const q = new URLSearchParams(window.location.search);
-    q.set("day", value);
+    Object.entries(values).forEach(([key, value]) =>
+      value ? q.set(key, value) : q.delete(key),
+    );
     window.history.replaceState(null, "", window.location.pathname + "?" + q);
   };
   const context = plannerContext(
@@ -55,10 +58,33 @@ export function ResourceWorkspaceScreen({ id }: { id: string }) {
           label="Week starting"
           type="date"
           value={day}
-          onChange={setDay}
+          onChange={(day) => {
+            if (day) update({ day });
+          }}
+        />
+        <SelectField
+          name="resource-zone"
+          label="Review timezone"
+          value={context.zone}
+          onChange={(timezone) => update({ timezone })}
+          options={plannerZones.map((zone) => ({
+            id: zone,
+            display_name: zone,
+          }))}
         />
         <Button onClick={read.reload}>Refresh evidence</Button>
-        <Link href={"/service/technicians?day=" + day}>Back to Field Team</Link>
+        <Link
+          href={
+            "/service/technicians?" +
+            new URLSearchParams({
+              day,
+              timezone: context.zone,
+              ...(initial.site ? { site_id: initial.site } : {}),
+            })
+          }
+        >
+          Back to Field Team
+        </Link>
       </div>
       <p className="read-meta">
         Review window: {context.day} for seven days · {context.zone}. Source
@@ -131,6 +157,10 @@ export function ResourceWorkspaceScreen({ id }: { id: string }) {
                 ))}
               </ul>
               <h3>Exceptions and unavailable / other work</h3>
+              <p>
+                Intervals below use {r.base_timezone}; weekly working hours
+                above use {r.calendar.timezone}.
+              </p>
               {[...(r.exceptions ?? []), ...(r.blocks ?? [])].map((b) => (
                 <p key={b.id}>
                   <strong>{b.kind}</strong> ·{" "}
