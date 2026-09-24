@@ -33,6 +33,12 @@ Local results on the integrated #309 tree: production build passed; fresh migrat
 
 Fresh CI remains required for every integrated head. Synthetic test evidence does not establish owner/device acceptance, production readiness or deployment.
 
+## Calibration initial-read readiness
+
+The [Scheduling compiled browser run](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35962585021/job/107514147939) passed 466 cases with 74 declared skips, but its desktop EQ-09 case timed out waiting for Company context. The retained screenshot shows the focused Record calibration evidence button, a completed register read and a closed form; no calibration command had been reached. A controlled local read released between pointer-down and pointer-up moved the opener from y=258.875 to y=224.578125 as the loading message disappeared, reproducing the focused closed form. Clicking after that read settled opened the form. This demonstrates a matching mechanism; the screenshot alone does not prove the precise CI event ordering.
+
+The EQ-09 journey now observes its successful initial instrument GET and rendered register status before pointer activation. The navigation and response waits are handled together. Application code, the 45-second test deadline, and all creation, withdrawal, exact certificate and reload assertions remain unchanged. Compiled warm-up reached all 519 routes and both desktop/phone journeys passed; the final paired-wait arrangement passed both cases again, with no skips. Focused lint and whitespace checks passed. Fresh #310 CI remains required.
+
 ## Equipment migration receipt in a combined upgrade
 
 The [Sales database lane](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35956024809/job/107494423163) exposed an Equipment test that asserted the newest applied migration was always 0045. It failed with 0046 after Sales was integrated; the same original assertion reproduced locally as 0048 versus 0045 on the complete integration tree. The upgrade now preserves every original migration receipt through 0025, requires exactly one Equipment 0045 receipt, and verifies the entire upgraded ledger remains unchanged after repeated migration/seed. The existing exact original-Asset comparison remains. Whole-registry assertions in the other upgrade suites remain independent and unchanged.
