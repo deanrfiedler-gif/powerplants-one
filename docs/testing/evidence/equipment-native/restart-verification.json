@@ -1,0 +1,9 @@
+{
+  "phase": "verify",
+  "server_before": 36132,
+  "server_after": 13952,
+  "database_before": "2026-09-24 06:56:53.171562+10",
+  "database_after": "2026-09-24 08:01:10.250498+10",
+  "original_sha256": "ca6867c5e315ca6f41b0290d4dcd5404e0f26a06a9c6af9eca404e101e90fc62",
+  "result": "Passed: exact Asset, configuration lineage, change and original receipts after application and PostgreSQL restarts"
+}

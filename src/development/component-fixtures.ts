@@ -9,6 +9,12 @@ import { emptyConfiguration } from "../estimating/configuration-definition";
 
 export const fixtureDate = "2026-09-23";
 export const fixtureTime = "2026-09-23T00:00:00Z";
+export const equipmentDateFixture = {
+  value: "2026-09-20T00:00:00Z",
+  validationField: "effective_at",
+  firstName: "catalogue-configuration-effective",
+  secondName: "catalogue-movement-effective",
+};
 export const customerRecordTabsFixture = [
   { id: "overview", label: "Overview" },
   { id: "deals", label: "Deals & quotations" },
