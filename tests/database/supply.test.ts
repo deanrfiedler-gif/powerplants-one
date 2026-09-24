@@ -207,6 +207,23 @@ test("Project demand, split shipment and quarantined partial receipt keep readin
   const units = await create(p, "Demand", { unit: "M" });
   await assert.rejects(allocation(p, units.id, s.id, "1"), code("InvalidData"));
 });
+test("record revisions cannot reduce supply or returns below retained physical evidence", async () => {
+  const p = await actor(), s = await create(p, "Supply");
+  await fact(p, s.id, "Receipt", { received: "8", inspected: "8", usable: "8", quarantined: "0", identity_status: "Verified" });
+  const d = await delivered(p), r = await create(p, "Return", { quantity: "2", data: { ...supplyInput("Return").data, demand_id: d.id, identity_status: "Verified", direction: "Customer" } });
+  const proposed = await fact(p, r.id, "ReturnAuthorisation", { quantity: "2", state: "Proposed" });
+  await fact(p, r.id, "ReturnAuthorisation", { quantity: "2", state: "Approved" }, proposed.cmd.id);
+  await fact(p, r.id, "ReturnReceipt", { received: "2", usable: "0", quarantined: "2" });
+  for (const [record, quantity] of [[s, "7"], [r, "1"]] as const) {
+    const before = await workspace(p, record.id);
+    const command = supplyInput(record.kind, { id: record.id, reference: record.reference, data: record.data, quantity, expected_version: before.record.version });
+    await assert.rejects(saveRecord(p, command, true), code("InvalidRelationship"));
+    await assert.rejects(database().query("UPDATE ppo.supply_records SET quantity=$2,version=version+1 WHERE id=$1", [record.id, quantity]), code("23514"));
+    assert.deepEqual((await workspace(p, record.id)).record, before.record);
+    assert.equal((await database().query("SELECT count(*)::int n FROM ppo.operation_receipts WHERE operation_id=$1", [command.operation_id])).rows[0].n, 0);
+  }
+});
+
 test("racing allocations conserve one source and failed writes leave no receipt/outbox", async () => {
   const p = await actor(),
     s = await create(p, "Supply", {

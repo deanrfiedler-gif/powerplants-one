@@ -124,6 +124,7 @@ CREATE FUNCTION ppo.supply_record_guard() RETURNS trigger LANGUAGE plpgsql AS $$
   IF parent.kind<>'Demand' OR NEW.site_id<>parent.site_id OR NEW.unit<>parent.unit OR NEW.item<>parent.item OR NEW.data->>'demand_id'<>parent.id::text THEN RAISE EXCEPTION 'Parent demand context mismatch' USING ERRCODE='23514'; END IF;
  END IF;
  IF NEW.kind='Demand' THEN
+  IF NEW.quantity<COALESCE((SELECT sum(quantity) FROM ppo.supply_records WHERE workspace_id=NEW.workspace_id AND parent_id=NEW.id AND kind='Custody'),0) THEN RAISE EXCEPTION 'Demand cannot fall below retained service-stock issues' USING ERRCODE='23514'; END IF;
   IF NEW.data->>'demand_class' NOT IN ('Forecast','Approved') OR NEW.data->>'origin_kind' NOT IN ('Project','WorkOrder','OtherApproved') OR (NEW.data->>'demand_class'='Approved' AND COALESCE(length(NEW.data->>'authority'),0)=0) THEN RAISE EXCEPTION 'Explicit demand class and authority required' USING ERRCODE='23514'; END IF;
   IF EXISTS(SELECT 1 FROM ppo.supply_allocations WHERE workspace_id=NEW.workspace_id AND demand_id=NEW.id GROUP BY basis HAVING sum(quantity)>NEW.quantity) THEN RAISE EXCEPTION 'Demand cannot drop below allocations' USING ERRCODE='23514'; END IF;
   IF NEW.data->>'demand_class'='Forecast' AND EXISTS(SELECT 1 FROM ppo.supply_allocations WHERE workspace_id=NEW.workspace_id AND demand_id=NEW.id AND quantity>0) THEN RAISE EXCEPTION 'Resolve allocations before withdrawing approved demand' USING ERRCODE='23514'; END IF;
@@ -134,8 +135,12 @@ CREATE FUNCTION ppo.supply_record_guard() RETURNS trigger LANGUAGE plpgsql AS $$
   IF TG_OP='UPDATE' AND NEW.quantity<>OLD.quantity AND EXISTS(SELECT 1 FROM ppo.supply_facts WHERE workspace_id=NEW.workspace_id AND record_id=NEW.id AND kind='Custody') THEN RAISE EXCEPTION 'Retain issued quantity after custody evidence exists' USING ERRCODE='23514'; END IF;
  END IF;
  IF NEW.kind='Supply' THEN
+  IF NEW.quantity<COALESCE((SELECT sum(ppo.supply_q(data,'received')) FROM ppo.supply_current_facts WHERE workspace_id=NEW.workspace_id AND record_id=NEW.id AND kind='Receipt'),0) THEN RAISE EXCEPTION 'Supply cannot fall below retained physical receipts' USING ERRCODE='23514'; END IF;
   IF NEW.data->>'supply_kind' NOT IN ('Stock','Shipment') THEN RAISE EXCEPTION 'Supply kind required' USING ERRCODE='23514'; END IF;
   IF EXISTS(SELECT 1 FROM ppo.supply_allocations WHERE workspace_id=NEW.workspace_id AND supply_id=NEW.id AND basis='Incoming' GROUP BY basis HAVING sum(quantity)>NEW.quantity) THEN RAISE EXCEPTION 'Supply cannot drop below incoming allocations' USING ERRCODE='23514'; END IF;
+ END IF;
+ IF NEW.kind='Return' THEN
+  IF NEW.quantity<COALESCE((SELECT sum(ppo.supply_q(data,'received')) FROM ppo.supply_current_facts WHERE workspace_id=NEW.workspace_id AND record_id=NEW.id AND kind='ReturnReceipt'),0) OR NEW.quantity<COALESCE((SELECT max(ppo.supply_q(data,'quantity')) FROM ppo.supply_current_facts WHERE workspace_id=NEW.workspace_id AND record_id=NEW.id AND kind IN ('ReturnAuthorisation','Disposition')),0) THEN RAISE EXCEPTION 'Return cannot fall below retained authorisation, receipt or disposition' USING ERRCODE='23514'; END IF;
  END IF;
  IF NEW.kind='Return' AND NEW.data->>'identity_status'='Verified' THEN
   SELECT COALESCE(sum(quantity),0) INTO used FROM ppo.supply_records WHERE workspace_id=NEW.workspace_id AND parent_id=NEW.parent_id AND kind='Return' AND data->>'direction'=NEW.data->>'direction' AND id<>NEW.id;
