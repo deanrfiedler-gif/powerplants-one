@@ -11,7 +11,17 @@ export type PackSource = {
   content_hash: string;
   version_id: string;
 };
-export type PackHistory = { id: string; kind: string; summary: string };
+export type PackHistory = {
+  id: string;
+  kind: string;
+  summary: string;
+  occurred_at?: string;
+  confidence?: string;
+  author_label?: string;
+  source_system?: string | null;
+  source_id?: string | null;
+  verification_status?: string;
+};
 export type PackRevision = {
   id: string;
   revision: number;
@@ -83,14 +93,25 @@ export type Pack = {
     error_code: string | null;
     requested_at: string;
     recovery_owner_id: string;
+    recovery_owner_name?: string | null;
     issue_id: string | null;
     actor_name: string | null;
   }[];
+  acknowledgements?:
+    | {
+        id: string;
+        issue_id: string;
+        revision: number;
+        display_name: string;
+        acknowledged_at: string;
+      }[]
+    | null;
   sources: PackSource[];
   history: PackHistory[];
   follow_ups: {
     activity_id: string;
     owner_id: string;
+    owner_name?: string | null;
     status: string;
     summary: string;
   }[];

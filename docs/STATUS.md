@@ -1,5 +1,7 @@
 # Current prototype status
 
+**Job Pack I7, 24 September 2026:** verified title, stage-grouped readiness and richer staff history/acknowledgements are implemented after I6 PR #306; 18 unit, three database and 30 compiled browser cases passed (six deliberate skips). [I7 handover](delivery/job-pack-i7-handover.md) records the proof and limits. Final I5 remains.
+
 **Job Pack I6, 24 September 2026:** structured saved sections are in verification on a stack after I4. Six compatibility tests and three focused database proofs passed, with local seeding timeout limits recorded in the [I6 handover](delivery/job-pack-i6-handover.md). I7 and final I5 remain.
 
 **Service Operations restart, 24 September 2026:** restart main was `ca006fb1`; the later `6c5e7c4` refresh contains no new Service code; SV-05 I1–I3 are merged. I4 source-change review and saved-revision print choices merged in PR #304 (`9e49a57`) with all 18 CI checks passing. Compiled conformance passed 17 cases; the real desktop/phone save-and-print journeys passed, with remaining test limits in the handover. [Programme ledger](delivery/service-operations-programme.md) and [I4 handover](delivery/job-pack-i4-handover.md) separate implementation, checks and remaining I6/I7/I5 and SV-01–SV-08 work. ADR-0043 remains Proposed; request lifecycle extensions are excluded. No deployment or owner acceptance is claimed.

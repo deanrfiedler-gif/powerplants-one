@@ -5,6 +5,12 @@ import {
   initials,
   outcomeLabels,
   readinessSummary,
+  readinessGroups,
+  outputStateLabel,
+  outputErrorMessage,
+  distributionLabel,
+  readableValue,
+  statusPresentation,
   revisionLabel,
   type PackCriterion,
 } from "../../pack-view";
@@ -58,6 +64,9 @@ function CriterionRow({ c, zone }: { c: PackCriterion; zone: string }) {
             ? ` · ${c.assessed_by_name}, ${formatStamp(c.assessed_at, zone)}`
             : ""}
         </small>
+        {c.valid_until && (
+          <small>Valid until {formatStamp(c.valid_until, zone)}</small>
+        )}
       </div>
     </div>
   );
@@ -112,9 +121,30 @@ export function ReadinessCard({
             )}
           </div>
         )}
-        {pack.criteria?.map((c) => (
-          <CriterionRow key={c.criterion_code} c={c} zone={zone} />
-        ))}
+        {pack.criteria &&
+          readinessGroups(pack.criteria).map((group) => (
+            <section
+              className="jp-readiness-group"
+              key={group.stage}
+              aria-label={`${group.stage} readiness`}
+            >
+              <h3>
+                {group.stage} · {group.satisfied.length} of {group.total}{" "}
+                satisfied
+              </h3>
+              {group.attention.map((c) => (
+                <CriterionRow key={c.criterion_code} c={c} zone={zone} />
+              ))}
+              {!!group.satisfied.length && (
+                <details>
+                  <summary>{group.satisfied.length} satisfied — show</summary>
+                  {group.satisfied.map((c) => (
+                    <CriterionRow key={c.criterion_code} c={c} zone={zone} />
+                  ))}
+                </details>
+              )}
+            </section>
+          ))}
         {pack.actions.can_prepare && pack.criteria && (
           <p className="jp-side-foot">
             <Link href={`/service/appointments/${pack.appointment_id}`}>
@@ -157,7 +187,9 @@ export function CrewCard({
 }) {
   const zone = zoneOf(revision),
     recipients: PackRecipient[] = pack.readiness.recipients,
-    responded = recipients.filter((r) => r.acknowledged_at).length;
+    responded = recipients.filter((r) => r.acknowledged_at).length,
+    crewRevision =
+      pack.revisions.find((r) => r.id === issue?.revision_id) ?? revision;
   return (
     <section className="jp-side-card">
       <div className="jp-side-heading">
@@ -179,6 +211,29 @@ export function CrewCard({
                 </span>
                 <div>
                   <strong>{r.display_name}</strong>
+                  <small>
+                    {crewRevision?.snapshot.recipients.find(
+                      (member) => member.assignment_id === r.assignment_id,
+                    )?.role ?? "Role not recorded"}
+                  </small>
+                  {pack.distribution
+                    .filter(
+                      (f) =>
+                        f.recipient_id === r.id &&
+                        ["TaskCreated", "Opened", "Downloaded"].includes(
+                          f.kind,
+                        ),
+                    )
+                    .sort(
+                      (a, b) =>
+                        Date.parse(a.occurred_at) - Date.parse(b.occurred_at),
+                    )
+                    .map((f) => (
+                      <small key={f.id}>
+                        {distributionLabel(f.kind)} ·{" "}
+                        {formatStamp(f.occurred_at, zone)}
+                      </small>
+                    ))}
                   <small>
                     {r.acknowledged_at
                       ? `Acknowledged ${formatStamp(r.acknowledged_at, zone)}`
@@ -229,7 +284,7 @@ export function RecordCard({
           <KeyRow label="Revision">
             {revision ? revisionLabel(revision.revision) : "Not visible"}
           </KeyRow>
-          <KeyRow label="State">{pack.status}</KeyRow>
+          <KeyRow label="State">{statusPresentation(pack).label}</KeyRow>
           {pack.basis && (
             <>
               <KeyRow label="Work-order scope">
@@ -295,11 +350,26 @@ export function OutputCard({
       <div className="jp-side-body">
         {pack.jobs.map((j) => (
           <div className="jp-job" key={j.id}>
-            <strong>{j.state}</strong>
-            {j.attempts} attempt{j.attempts === 1 ? "" : "s"}
-            {j.error_code ? ` · ${j.error_code}` : ""}
-            <br />
-            Recovery owner {j.recovery_owner_id}
+            <strong>
+              Output for{" "}
+              {pack.revisions.find((r) => r.id === j.revision_id)
+                ? revisionLabel(
+                    pack.revisions.find((r) => r.id === j.revision_id)!
+                      .revision,
+                  )
+                : "a saved revision"}
+            </strong>
+            <p>
+              {outputStateLabel(j.state)} · {j.attempts} attempt
+              {j.attempts === 1 ? "" : "s"}
+            </p>
+            {j.error_code && (
+              <p>
+                {outputErrorMessage(j.error_code)}{" "}
+                <small>Reference: {j.error_code}</small>
+              </p>
+            )}
+            <p>Recovery owner {j.recovery_owner_name ?? "Not recorded"}</p>
             {pack.actions.can_issue &&
               !["Issued", "StaleSource"].includes(j.state) && (
                 <button
@@ -340,12 +410,13 @@ export function OutputCard({
         {pack.follow_ups.map((f) => (
           <p key={f.activity_id} className="jp-gap-top">
             <Link href={`/work/${f.activity_id}`}>{f.summary}</Link> ·{" "}
-            {f.status} · Owner {f.owner_id}
+            {readableValue(f.status)} · Owner {f.owner_name ?? "Not recorded"}
           </p>
         ))}
         {pack.distribution.map((d) => (
           <p key={d.id} className="jp-gap-top">
-            {d.display_name}: {d.kind} · {formatStamp(d.occurred_at, zone)}
+            {d.display_name}: {distributionLabel(d.kind)} ·{" "}
+            {formatStamp(d.occurred_at, zone)}
           </p>
         ))}
         {issue && (
@@ -353,6 +424,11 @@ export function OutputCard({
             In-app tasks, simulated sending and retrieval are separate from
             explicit acknowledgement. No message is sent.
           </p>
+        )}
+        {pack.actions.can_issue && issue && (
+          <h3 className="jp-subheading">
+            Simulated sending — no message is sent
+          </h3>
         )}
         {pack.actions.can_issue &&
           issue &&

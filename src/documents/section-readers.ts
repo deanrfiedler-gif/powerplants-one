@@ -23,6 +23,9 @@ export type SectionView = {
         id: string;
         occurred_at: string;
         matches_snapshot: boolean;
+        author_label?: string;
+        verification_status?: string;
+        source?: { system: string; id: string } | null;
       })[]
     | null;
 };

@@ -14870,6 +14870,18 @@
             [
               "Saved section details",
               "Arrangements, approved scope, equipment, selected history, captured controls and completion requirements may appear as labelled fields. Open Exact text as it will be issued to inspect the saved wording."
+            ],
+            [
+              "Pack title",
+              "A verified saved scope supplies the visit title and work kind; the exact work-order and appointment references remain visible."
+            ],
+            [
+              "Pack readiness",
+              "Stages follow Authorisation, Booking, Dispatch and Completion. Review the visible action-required rows first. Open the satisfied group to inspect its retained assessment details."
+            ],
+            [
+              "Revision history",
+              "Staff can inspect acknowledgements against earlier exact issues. An earlier response never satisfies the current successor."
             ]
           ],
           "headers": [
@@ -14883,7 +14895,8 @@
           "paragraphs": [
             "Work-order revision, appointment, selected documents, issue recipients and checks.",
             "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed.",
+            "Review the confidence, occurrence date and recorded author shown for a history choice. A selection preserves its meaning and does not turn advice or a hypothesis into authority."
           ],
           "steps": [],
           "rows": [],
@@ -14922,7 +14935,9 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
+          "paragraphs": [
+            "Task created, opened and downloaded are distribution facts. Only an explicit acknowledgement records that response. Confidence and verification belong to the history source; a suspected cause remains suspected."
+          ],
           "steps": [],
           "rows": [
             [
@@ -49026,6 +49041,18 @@
             [
               "Saved section details",
               "Arrangements, approved scope, equipment, selected history, captured controls and completion requirements may appear as labelled fields. Open Exact text as it will be issued to inspect the saved wording."
+            ],
+            [
+              "Pack title",
+              "A verified saved scope supplies the visit title and work kind; the exact work-order and appointment references remain visible."
+            ],
+            [
+              "Pack readiness",
+              "Stages follow Authorisation, Booking, Dispatch and Completion. Review the visible action-required rows first. Open the satisfied group to inspect its retained assessment details."
+            ],
+            [
+              "Revision history",
+              "Staff can inspect acknowledgements against earlier exact issues. An earlier response never satisfies the current successor."
             ]
           ],
           "headers": [
@@ -49039,7 +49066,8 @@
           "paragraphs": [
             "Work-order revision, appointment, selected documents, issue recipients and checks.",
             "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed.",
+            "Review the confidence, occurrence date and recorded author shown for a history choice. A selection preserves its meaning and does not turn advice or a hypothesis into authority."
           ],
           "steps": [],
           "rows": [],
@@ -49085,7 +49113,8 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Prepared, checked, queued, generated, issued, sent, opened, acknowledged and dispatched are separate facts and are shown as such. None of them is implied by another."
+            "Prepared, checked, queued, generated, issued, sent, opened, acknowledged and dispatched are separate facts and are shown as such. None of them is implied by another.",
+            "Task created, opened and downloaded are distribution facts. Only an explicit acknowledgement records that response. Confidence and verification belong to the history source; a suspected cause remains suspected."
           ],
           "steps": [],
           "rows": [
@@ -49267,7 +49296,7 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "4c8fd6dba83794f6c64aee6859cadb913401fd64",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "Compiled application driven through the preparation workflow on 23 September 2026; captures in docs/testing/evidence/job-pack-i3/. Not an owner's visual review.",
@@ -49348,7 +49377,8 @@
           "paragraphs": [
             "Work-order revision, appointment, selected documents, issue recipients and checks.",
             "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed.",
+            "Review the confidence, occurrence date and recorded author shown for a history choice. A selection preserves its meaning and does not turn advice or a hypothesis into authority."
           ],
           "steps": [],
           "rows": [],

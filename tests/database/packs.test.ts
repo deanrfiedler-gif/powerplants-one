@@ -255,6 +255,7 @@ test("SC-06 issue and acknowledgement advance the appointment record without rep
   const q = await issued();
   assert.equal(typeof q.pack.issues[0].issued_by_name, "string");
   assert.equal(typeof q.pack.jobs[0].actor_name, "string");
+  assert.equal(typeof q.pack.jobs[0].recovery_owner_name, "string");
   assert.deepEqual(q.pack.basis_drift, []);
   const first = await ack(q.pack, "assigned-technician");
   await acknowledgePack(first.p, q.issue_id, first.input);
@@ -267,6 +268,11 @@ test("SC-06 issue and acknowledgement advance the appointment record without rep
   const mine = (await readPack(first.p, q.pack.id)).items[0];
   assert.equal(mine.issues[0].issued_by_name, null);
   assert.equal(mine.revisions[0].created_by_name, null);
+  assert.equal(mine.acknowledgements, null);
+  assert.equal(after.acknowledgements.length, 1);
+  assert.equal(after.acknowledgements[0].issue_id, q.issue_id);
+  assert.equal(after.acknowledgements[0].revision, 1);
+  assert.equal(typeof after.acknowledgements[0].display_name, "string");
   const originalRevision = mine.current_revision_id;
   assert.equal(mine.section_view.revision_id, originalRevision);
   for (const item of mine.section_view.scope?.items ?? [])
@@ -281,6 +287,8 @@ test("SC-06 issue and acknowledgement advance the appointment record without rep
   assert.equal(recipient.current_revision_id, originalRevision);
   assert.equal(recipient.section_view.revision_id, originalRevision);
   assert.equal(recipient.revisions.length, 1);
+  assert.deepEqual(successor.acknowledgements, after.acknowledgements);
+  assert.equal(recipient.acknowledgements, null);
 });
 test("SV05-I6 section projection verifies history bytes and respects revoked dependency permissions", async () => {
   const p = await principal(), pack = await prepared();
@@ -296,6 +304,13 @@ test("SV05-I6 section projection verifies history bytes and respects revoked dep
   saved.sections.history.text = `${history.kind} (${history.confidence}): ${history.summary}`;
   const projected = await sectionView(database(), p, w, {...revision, snapshot: saved}, true);
   assert.equal(projected?.history?.[0].matches_snapshot, true);
+  assert.equal(typeof projected?.history?.[0].author_label, "string");
+  assert.equal(typeof projected?.history?.[0].verification_status, "string");
+  const recipientView = await sectionView(database(), p, w, {...revision, snapshot:saved}, false);
+  assert.equal(recipientView?.history?.[0].matches_snapshot, true);
+  assert.equal(Object.hasOwn(recipientView!.history![0], "author_label"), false);
+  assert.equal(Object.hasOwn(recipientView!.history![0], "source"), false);
+  assert.equal(Object.hasOwn(recipientView!.history![0], "verification_status"), false);
   assert.equal(readSection("history", saved, revision.id, projected)?.kind, "history");
   saved.history[0].hash = "0".repeat(64);
   const mismatched = await sectionView(database(), p, w, {...revision, snapshot: saved}, true);
