@@ -90,4 +90,4 @@ Fertigation: follow `docs/delivery/priva-fertigation-native-handover.md`. Preser
 
 Sales CR-01–05: follow ADR-0046 and sales-native-completion-handover.md. Preserve frozen submissions, immutable Won due, source-scoped receipts and aftercare unknown policies. Receiving creates no downstream work.
 
-Equipment: follow ADR-0045 and equipment-native-completion-handover.md. Reuse canonical Assets, CS locations, Inspection instruments and SH coordination. Scanning is read-only; configuration successors retain originals; reviewed moves preserve historical context. Recovery records do not restore controllers. Support advice grants no replacement authority.
+Equipment: ADR-0045 / equipment-native-completion-handover.md. Reuse Assets, CS, Inspection and SH; scanning is read-only. Preserve originals and historic context. Recovery grants no controller-restore authority; support grants no replacement authority.
