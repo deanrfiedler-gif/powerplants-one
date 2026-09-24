@@ -1,4 +1,5 @@
 "use client";
+import { printHeaderCss } from "../../print-view";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -16,6 +17,7 @@ import { useUnsavedChanges } from "../../../components/record-ui";
 import { useIdentity } from "../../../components/business-session";
 import type { OperationReceipt } from "../../../platform/operations";
 import { sectionKeys, type PackInput, type SectionKey } from "../../validation";
+import { readSection } from "../../section-readers";
 import {
   driftSources,
   emptyInput,
@@ -26,6 +28,7 @@ import {
   packTimeline,
   readinessSummary,
   revisionLabel,
+  readableValue,
   statusPresentation,
   zoneLabel,
 } from "../../pack-view";
@@ -556,6 +559,10 @@ export function JobPackScreen({ id }: { id: string }) {
       ...(staff ? ([["prepare", "Preparation"]] as [View, string][]) : []),
       ["revisions", "Revision history"],
     ];
+  const scopeView = revision
+    ? readSection("scope", revision.snapshot, revision.id, p?.section_view)
+    : null;
+  const scopeHeading = scopeView?.kind === "scope" ? scopeView.value : null;
   const tabKeys = (e: React.KeyboardEvent) => {
     const i = views.findIndex(([v]) => v === view),
       next =
@@ -627,7 +634,7 @@ export function JobPackScreen({ id }: { id: string }) {
   return frame(
     <>
       <nav className="jp-breadcrumb" aria-label="Page location">
-        <Link href="/service/tickets">Service operations</Link>
+        <Link href="/service/tickets">Service</Link>
         <span aria-hidden="true">›</span>
         <Link href="/service/packs">Job packs</Link>
         <span aria-hidden="true">›</span>
@@ -646,10 +653,22 @@ export function JobPackScreen({ id }: { id: string }) {
             <span>Synthetic prototype</span>
           </div>
           <h1 id="jp-page-title">
-            {revision
-              ? `${revision.snapshot.work.reference} · ${revision.snapshot.appointment.reference}`
-              : (p?.display_number ?? "Job pack")}
+            {scopeHeading?.summary ||
+              (revision
+                ? `${revision.snapshot.work.reference} · ${revision.snapshot.appointment.reference}`
+                : (p?.display_number ?? "Job pack"))}
           </h1>
+          {scopeHeading && (
+            <p className="jp-work-context">
+              {[
+                ...new Set(
+                  scopeHeading.items.map((i) => readableValue(i.task_kind)),
+                ),
+              ].join(" · ")}{" "}
+              · {revision?.snapshot.work.reference} ·{" "}
+              {revision?.snapshot.appointment.reference}
+            </p>
+          )}
           {p && (
             <div className="jp-subtitle">
               {revision && (
@@ -660,19 +679,17 @@ export function JobPackScreen({ id }: { id: string }) {
                 </>
               )}
               {status && <Badge tone={status.tone}>{status.label}</Badge>}
-              {dirty && <UnsavedBadge />}
+              {dirty && (
+                <span className="jp-unsaved">
+                  <UnsavedBadge />
+                </span>
+              )}
             </div>
           )}
         </div>
         {p && (
           <div className="jp-heading-right">
             <div className="jp-button-row">
-              <Link
-                className="jp-button"
-                href={`/service/appointments/${p.appointment_id}`}
-              >
-                Appointment
-              </Link>
               {revision && issue?.revision_id !== revision.id && staff && (
                 <button
                   type="button"
@@ -683,7 +700,7 @@ export function JobPackScreen({ id }: { id: string }) {
                   Print preview
                 </button>
               )}
-              {issue && (
+              {issue && issue.revision_id === revision?.id && (
                 <Link
                   className="jp-button jp-primary"
                   href={`/documents/${issue.id}`}
@@ -782,6 +799,34 @@ export function JobPackScreen({ id }: { id: string }) {
             aria-labelledby="jp-tab-pack"
             hidden={view !== "pack"}
           >
+            {revision && (
+              <>
+                <style data-jp-print-reference>
+                  {printHeaderCss(
+                    p.display_number,
+                    revisionLabel(revision.revision),
+                    issue?.revision_id === revision.id
+                      ? "Issued revision"
+                      : "NOT ISSUED",
+                  )}
+                </style>
+                <div className="jp-print-only jp-print-warning">
+                  <strong>Workbench print — saved revision only</strong>
+                  <p>
+                    The controlled document is the exact issued output. This
+                    workbench copy does not authorise field work. Unsaved
+                    preparation is excluded.
+                  </p>
+                  <p>
+                    Current readiness at print:{" "}
+                    {summary
+                      ? `${summary.satisfied} of ${summary.total} criteria satisfied`
+                      : "Not available to this identity"}
+                    {sourceChanged ? " · Source review required" : ""}.
+                  </p>
+                </div>
+              </>
+            )}
             <div className="jp-layout">
               {revision ? (
                 <ContentsRail
@@ -814,6 +859,15 @@ export function JobPackScreen({ id }: { id: string }) {
               )}
               <div className="jp-main-column">
                 {view === "pack" && sourceNotice}
+                {issue && issue.revision_id !== revision?.id && (
+                  <p className="jp-prior-issue">
+                    Earlier issue {revisionLabel(issue.revision)}:{" "}
+                    <Link href={`/documents/${issue.id}`}>
+                      Open exact issued document
+                    </Link>
+                    . The saved successor below has not been issued.
+                  </p>
+                )}
                 {step && (
                   <div className={`jp-notice ${step.tone}`.trim()}>
                     <Icon name={step.icon} />
@@ -1044,6 +1098,9 @@ export function JobPackScreen({ id }: { id: string }) {
                       key={e.kind + e.id}
                     >
                       <h3>
+                        {e.revision != null && (
+                          <Badge>{revisionLabel(e.revision)}</Badge>
+                        )}{" "}
                         {e.href ? (
                           <Link href={e.href}>{e.title}</Link>
                         ) : (
@@ -1085,7 +1142,9 @@ export function JobPackScreen({ id }: { id: string }) {
                         ? revisionLabel(revision.revision)
                         : "Not visible"}
                     </KeyRow>
-                    <KeyRow label="Status">{p.status}</KeyRow>
+                    <KeyRow label="Status">
+                      {status?.label ?? readableValue(p.status)}
+                    </KeyRow>
                     <KeyRow label="Issued version">
                       {issue ? revisionLabel(issue.revision) : "None"}
                     </KeyRow>
@@ -1247,7 +1306,12 @@ export function JobPackScreen({ id }: { id: string }) {
 }
 
 type PreparationOptions = {
-  appointment: { id: string; version: number; display_number: string };
+  appointment: {
+    id: string;
+    version: number;
+    display_number: string;
+    site_timezone: string;
+  };
   work_order_reference: string;
   // Non-null when a pack already exists for this appointment: one pack per appointment, so this page
   // opens that pack instead of failing the unique constraint on save.
@@ -1345,7 +1409,11 @@ export function NewJobPackScreen({ appointmentId }: { appointmentId: string }) {
           </h1>
           <div className="jp-subtitle">
             <Badge>Not yet saved</Badge>
-            {dirty && <UnsavedBadge />}
+            {dirty && (
+              <span className="jp-unsaved">
+                <UnsavedBadge />
+              </span>
+            )}
           </div>
         </div>
         <div className="jp-heading-right">
@@ -1417,6 +1485,7 @@ export function NewJobPackScreen({ appointmentId }: { appointmentId: string }) {
               <div className="jp-main-column">
                 <ValidationFields error={prep ? null : command.error}>
                   <PreparationForm
+                    timeZone={options.appointment.site_timezone}
                     sources={options.sources}
                     history={options.history}
                     value={value}

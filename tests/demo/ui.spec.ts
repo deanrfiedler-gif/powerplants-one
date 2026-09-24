@@ -159,7 +159,7 @@ test("invited actor: mailbox to refined deal, follow-up, calendar and another br
     .fill("12500.50");
   await editor.getByRole("button", { name: "Save deal", exact: true }).click();
   await expect(editor).not.toBeVisible();
-  await page.getByRole("tab", { name: "Details", exact: true }).click();
+  await page.getByRole("tab", { name: "Scope & sites", exact: true }).click();
   await page
     .getByRole("button", { name: "Edit requirements and scope", exact: true })
     .click();
@@ -174,8 +174,8 @@ test("invited actor: mailbox to refined deal, follow-up, calendar and another br
     .getByRole("button", { name: "Save requirements and scope", exact: true })
     .click();
   await expect(scope).not.toBeVisible();
-  await page.getByRole("tab", { name: "Timeline", exact: true }).click();
-  await expect(page.getByText(summary, { exact: true })).toBeVisible();
+  await page.getByRole("tab", { name: "Activities", exact: true }).click();
+  await expect(page.getByRole("tabpanel", { name: "Activities", exact: true }).getByRole("link", { name: summary, exact: true })).toBeVisible();
   const saved = (await call(page, `crm/opportunities/${o.id}`)).items[0];
   const mail = await call(page, `email/${message}`);
   expect(saved.value_amount).toBe("12500.50");

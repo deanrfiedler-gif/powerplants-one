@@ -53,3 +53,15 @@ Authority basis is **Recorded**, **Asserted by us** or **Unknown**. Nothing here
 ## Boundaries
 
 Every person, organisation, site, affiliation and downstream binding is fictional. Preview role selection is explanatory; it is not authentication or authorisation. Browser storage is per-browser and is not shared persistence. Real domain write policy, owner acceptance and application integration remain separate work. No application package, dependency pin, server contract, migration or seed is introduced.
+
+## Equipment contract re-read - 24 September 2026
+
+Source review at Equipment commit `81ab4a6` compared the pinned `01b9824` contracts, unchanged main `ca006fb` and the Equipment changes. `src/shared/reads.ts` adds the CS-05 parent-relationship label already on main, the already-permitted Asset history access-class label and additive configuration-succession currentness. Person/contact fields, relationship authority and query visibility are unchanged. `src/reports/service.ts` adds the SH-06 source-owned report review projection already on main: it calls the existing report context, restricts returned narrative and uses the original performer/reviewer authority. It changes no contact relationship or customer-response command.
+
+The stale report pin also failed `build-contacts-design.py --check` on untouched main. The two working contract pins are updated after this source review; issued Contacts HTML, original source commit, asset pins, fixtures and historical build evidence remain unchanged. This is contract maintenance, not renewed visual or business acceptance. The deterministic check must still reproduce the same issued HTML bytes.
+
+## Scheduling contract re-read - 24 September 2026
+
+Source review of Scheduling `bbc9528` against main `854db10` found an additive `capacityProjects` projection that reuses the existing project visibility, task-owner visibility and bounded result rules. Planner exports its existing scoped detail helpers, adds customer and follow-up owner labels, and extracts the existing repeatable-read schedule into a reusable snapshot with the same default eight-day limit. Contact relationship fields, commands and restricted-versus-empty semantics are unchanged. The Contacts model's task-owner precedent still matches `tasksFor`; appointment contact permissions remain server checked.
+
+Only these two working contract pins change after that review. The deterministic builder and Contacts model checks verify compatibility; issued HTML, original provenance, fixture evidence and visual acceptance remain unchanged. See the [integration repair record](../../testing/pr-integration-repair-2026-09-24.md) for execution results.

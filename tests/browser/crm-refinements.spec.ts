@@ -136,7 +136,7 @@ test("owned Won handover and structured Lost survive reload on desktop and phone
     await expect(page.getByLabel("Saved sales outcome",{exact:true})).toBeVisible();
     await expect(page.locator('.crm-stage-track [aria-current="step"]')).toBeDisabled();
     if(outcome==="Won") await expect(page.getByRole("region",{name:"Handover due"})).toContainText("SYN Coordinator");
-    else await expect(page.getByText("Lost reason: Competitor",{exact:true})).toBeVisible();
+    else { await page.getByRole("tab", { name: "History", exact: true }).click(); await expect(page.getByText("Lost reason: Competitor",{exact:true})).toBeVisible(); }
     const saved=(await call(page,`crm/opportunities/${input.id}`)).items[0];
     expect(saved.close_outcome).toBe(outcome); expect(saved.version).toBe(version+1);
     expect(saved.actions[0].owner_id).toBe(input.initial_action.owner_id);
@@ -211,7 +211,7 @@ test("card hit areas, snapshot, core pencil, separate scope and stage changes pe
     await card.locator(".crm-card-company").click();
     await expect(page.getByRole("dialog")).toHaveCount(0);
   }
-  await expect(page).toHaveURL(new RegExp(`/sales/opportunities/${input.id}$`));
+  await expect(page).toHaveURL(url => url.pathname === `/sales/opportunities/${input.id}`);
   await page
     .getByRole("button", { name: "Edit deal information", exact: true })
     .click();
@@ -236,7 +236,7 @@ test("card hit areas, snapshot, core pencil, separate scope and stage changes pe
     page.getByRole("heading", { name: input.title + " updated", exact: true }),
   ).toBeVisible();
   await expect(page.locator(".crm-deal-key-facts")).toContainText("$12,345.67");
-  await page.getByRole("tab", { name: "Details", exact: true }).click();
+  await page.getByRole("tab", { name: "Scope & sites", exact: true }).click();
   await page
     .getByRole("button", { name: "Edit requirements and scope", exact: true })
     .click();
@@ -252,7 +252,7 @@ test("card hit areas, snapshot, core pencil, separate scope and stage changes pe
     .click();
   await expect(dialog).not.toBeVisible();
   await page.reload();
-  await page.getByRole("tab", { name: "Details", exact: true }).click();
+  await page.getByRole("tab", { name: "Scope & sites", exact: true }).click();
   await expect(page.locator(".crm-scope-section")).toContainText(
     "SYN Sensors and commissioning",
   );
@@ -290,7 +290,7 @@ test("card hit areas, snapshot, core pencil, separate scope and stage changes pe
     expect(record.stage_id).toBe("Enquiry");
   }
   await page.goto(`/sales/opportunities/${input.id}`);
-  await page.getByRole("tab", { name: "Files", exact: true }).click();
+  await page.getByRole("tab", { name: "Documents", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "Deal documents", exact: true }),
   ).toBeVisible();
@@ -660,6 +660,7 @@ test("an accepted detail stage save preserves an independently edited next-actio
   await call(page, "local-session", { profile: "coordinator" });
   const input = crmDiscovery(); await call(page, "crm/opportunities", input);
   await page.goto(`/sales/opportunities/${input.id}`);
+  await page.getByRole("tab", { name: "Activities", exact: true }).click();
   const purpose = page.getByLabel("Action purpose", { exact: true });
   await purpose.fill("SYN independently edited follow-up must retain its original version");
   await page.locator(".crm-stage-track").getByRole("button", { name: "Scoping", exact: true }).click();

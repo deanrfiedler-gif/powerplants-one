@@ -5,7 +5,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
-const src=path.join(root,'docs/design/access-review'),html=path.join(root,'docs/reference/ui/access-review/PPO-Users-Roles-and-Access-Review-r01.html');
+const src=path.join(root,'docs/design/access-review'),html=path.join(root,'docs/design/access-review/access-review.html');
 const ctx=vm.createContext({});for(const f of ['capabilities.js','model.js'])vm.runInContext(fs.readFileSync(path.join(src,f),'utf8'),ctx);
 const M=ctx.ACCESS_MODEL,C=ctx.ACCESS_CAPABILITIES,copy=x=>JSON.parse(JSON.stringify(x));
 const sha=p=>createHash('sha256').update(fs.readFileSync(p)).digest('hex');
@@ -27,9 +27,9 @@ const demo=[...demoText.match(/export const demoCapabilities\s*=\s*\[([\s\S]*?)\
 const migrations=fs.readdirSync(path.join(root,'db/migrations')).filter(f=>f.endsWith('.sql')).map(f=>fs.readFileSync(path.join(root,'db/migrations',f),'utf8')).join('\n');
 
 /* Contract fidelity */
-test('Capability catalogue equals the application Capability union exactly',()=>{same([...C.keys],union);assert.equal(C.keys.length,87);assert.equal(C.source_sha256,sha(path.join(root,'src/platform/permissions.ts')));});
+test('Capability catalogue equals the application Capability union exactly',()=>{same([...C.keys],union);assert.equal(C.keys.length,92);assert.equal(C.source_sha256,sha(path.join(root,'src/platform/permissions.ts')));});
 test('Hosted demo capability set equals scripts/demo-database.ts',()=>{same([...C.hosted_demo],demo);assert.equal(C.hosted_demo.length,31);assert.equal(C.demo_source_sha256,sha(path.join(root,'scripts/demo-database.ts')));});
-test('Every capability has a plain-English label and a known family',()=>{for(const c of M.catalogue()){assert(c.label&&c.label.length>5,c.key);assert(c.familyName,c.key);}assert.equal(Object.keys(M.LABELS).length,87);});
+test('Every capability has a plain-English label and a known family',()=>{for(const c of M.catalogue()){assert(c.label&&c.label.length>5,c.key);assert(c.familyName,c.key);}assert.equal(Object.keys(M.LABELS).length,92);});
 test('Only email.connect is hosted-only, matching the hosted migration track',()=>{same(M.catalogue().filter(c=>c.hostedOnly).map(c=>c.key),['email.connect']);assert.match(fs.readFileSync(path.join(root,'db/demo/0002-gmail-connection.sql'),'utf8'),/email\.connect/);});
 test('Administrative capabilities stay outside the application contract',()=>{for(const k of M.ADMIN_CAPS){assert(!C.keys.includes(k));assert(!union.includes(k));assert(!migrations.includes(`'${k}'`));}});
 test('Scope rule mirrors ck_grants_scope in migration 0002',()=>{assert.match(migrations,/scope_type='Workspace' AND scope_id=workspace_id AND company_id IS NULL AND site_id IS NULL/);
@@ -167,7 +167,7 @@ test('Valid serialised state round-trips unchanged',()=>assert.equal(JSON.string
 
 /* Composition */
 const page=fs.readFileSync(html,'utf8');
-test('Assembled page is the module only, with one scope container and six views',()=>{assert.equal((page.match(/id="ppo-access-review"/g)||[]).length,1);assert.equal(M.VIEWS.length,6);assert(!/<nav[^>]*rail|class="masthead"|<img/.test(page));assert.match(page,/<meta name="ppo-scope-id" content="AD-01">/);assert.match(page,/<meta name="ppo-design-revision" content="r01">/);});
+test('Assembled page is the module only, with one scope container and six views',()=>{assert.equal((page.match(/id="ppo-access-review"/g)||[]).length,1);assert.equal(M.VIEWS.length,6);assert(!/<nav[^>]*rail|class="masthead"|<img/.test(page));assert.match(page,/<meta name="ppo-scope-id" content="AD-01">/);assert.match(page,/<meta name="ppo-design-status" content="working">/);});
 test('Embedded fonts are byte-identical to the declared My Work r20 source',()=>{assert.equal(sha(path.join(src,'fonts.css')),sha(path.join(root,'docs/design/my-work/fonts.css')));assert(page.includes(fs.readFileSync(path.join(src,'fonts.css'),'utf8')));});
 test('Token core names match the My Work r01 source',()=>{const tok=f=>(fs.readFileSync(f,'utf8').match(/--(navy|green|ink|paper|surface|line|muted|link|success|warning|danger|info)(-bg)?:[^;]+/g)||[]).slice(0,17);same(tok(path.join(src,'workspace.css')),tok(path.join(root,'docs/design/my-work/workspace.css')));});
 test('Page makes no remote requests and stores only under its own key',()=>{assert(!/https?:\/\/(?!www\.w3\.org)[^"'\s)]*\.(js|css|woff2?)/.test(page));assert.match(page,/ppo-access-review-r01/);assert(!/sessionStorage|indexedDB/.test(page));});
@@ -175,5 +175,5 @@ test('Page never claims enforcement and states the authority boundary',()=>{asse
 test('Page contains no secrets, tokens or unmasked hosted object identifiers in rendered copy',()=>{assert(!/token_hash|password|secret=/i.test(page.replace(/Tokens are never shown/g,'')));});
 
 const out={html_sha256:sha(html),fixture_sha256:createHash('sha256').update(M.stable(M.seed())).digest('hex'),capability_source_sha256:C.source_sha256,groups:results.length,results};
-if(process.argv.includes('--write-evidence')){fs.mkdirSync(path.join(root,'docs/testing/evidence/access-review-r01'),{recursive:true});fs.writeFileSync(path.join(root,'docs/testing/evidence/access-review-r01/model-results.json'),JSON.stringify(out,null,2)+'\n');}
+if(process.argv.includes('--write-evidence')){fs.mkdirSync(path.join(root,'verification-evidence/access-review'),{recursive:true});fs.writeFileSync(path.join(root,'verification-evidence/access-review/model-results.json'),JSON.stringify(out,null,2)+'\n');}
 console.log(JSON.stringify(out,null,2));

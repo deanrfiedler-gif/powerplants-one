@@ -37,4 +37,7 @@ Incoming: exact permitted resource identity and selected review date from Planne
 
 [Field Team r04](../../../reference/ui/field-technicians/powerplants-one-field-technicians-r04.html) remains the accepted register layout; [r05](../../../reference/ui/field-technicians/powerplants-one-field-technicians-r05.html) and [its change record](../../../reference/ui/field-technicians/powerplants-one-field-technicians-r05-change-record.md) remain retained sources. No exact issued resource-detail mockup exists.
 
-[Executed checks, inspected captures and remaining review](../../../testing/evidence/scheduling-resources/README.md) identify the exact evidence. Draft guides, source presence, functional proof, owner visual acceptance and deployment remain separate. No review fingerprint is adopted by this edit.
+
+## Canonical Job Pack handover
+
+JobPackEntry reuses shared buttons and ReadState. The current server read chooses Open job pack or permitted Prepare job pack with the exact appointment identity. No visible pack is distinct from a failed/denied read; refresh hides prior links. Desktop/phone text wraps and 44 px controls remain within the existing panel or trapped drawer. [I5 handover](../../../delivery/job-pack-integration-handover.md) records evidence; the existing appointment/booking authority is unchanged.

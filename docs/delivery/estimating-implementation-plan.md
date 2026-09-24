@@ -8,6 +8,10 @@ versioning: git
 
 # BP-04 bounded implementation sequence
 
+## Current native programme authority — 24 September 2026
+
+Dean has now authorised native completion/refinement of ES-01–ES-10 and the bounded Excel import in dependency-ordered reviewable PRs. The [current decision](../decisions/estimating-native-programme.md) and [refreshed programme handover](estimating-programme-handover.md) govern that work. Earlier design-only and prepared-starter statements below retain their historical context; they do not withdraw this authority. Existing ES-02/ES-08 runtimes must be preserved. Missing policy remains Not configured, and no live integration, customer communication or deployment follows.
+
 [BP-04](../blueprints/BP-04-estimating-quotation.md) and [evidence](../blueprints/estimating-evidence.md) define the domain. E1–E6 are **BP-04-local sequence labels**, not P13, new parent requirements or additional GitHub issue numbers. PPO-010 remains issue #10. No speculative implementation issues are created now.
 
 ## 1. Sequencing decision
@@ -58,3 +62,7 @@ Dean has invoked the bounded design and rules step. [E2-D01–03](../decisions/e
 ## Excel import design addition — 15 September 2026
 
 Dean authorised the [Excel import design package](excel-estimate-import-handover.md). The [bounded plan](excel-estimate-import-plan.md) places standard-workbook upload/review/draft saving alongside E3 cost-source work, reusing E1 and the exact E2 receiving basis. The first pilot retains current numerical/100-line limits. Operational workbook compatibility, native Excel checks and browser/r19 review remain open; no runtime import, pricing-policy extension or new E/P sequence label is delivered.
+
+## Native source increment
+
+The authorised programme now implements the bounded E3 authored-synthetic-source slice in [its native contract](../contracts/estimating-cost-sources.md) and [verification handover](estimating-cost-sources-handover.md). Independent evidence review and exact comparison/save create an estimate successor; no historical recost, operational commercial approval, FX/landed policy or connected catalogue is adopted. Excel parser/import and ES-04 review follow separately.

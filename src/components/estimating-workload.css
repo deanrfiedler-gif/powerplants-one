@@ -1,0 +1,183 @@
+.est-workload-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  border-bottom: 1px solid var(--line-strong);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+}
+.est-workload-nav a[aria-current] {
+  font-weight: 700;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 6px;
+}
+.est-workload-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: end;
+  padding: 16px;
+  background: var(--white);
+  border: 1px solid var(--line-strong);
+}
+.est-workload-filters label {
+  display: flex;
+  flex: 1 1 180px;
+  flex-direction: column;
+  gap: 4px;
+  font-weight: 600;
+  margin: 0;
+}
+.est-workload-advanced summary {
+  cursor: pointer;
+  min-height: 44px;
+  padding: 12px 8px;
+}
+.est-workload-advanced summary:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
+}
+.est-workload-advanced[open] {
+  flex: 1 1 100%;
+}
+.est-workload-advanced > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-bottom: 12px;
+}
+.est-workload-filters input,
+.est-workload-filters select {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  background: var(--white);
+  color: var(--ink);
+}
+.est-workload-limit {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+.est-workload-rows {
+  display: grid;
+  gap: 12px;
+  container-type: inline-size;
+  container-name: workload-cards;
+}
+.est-workload-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+}
+.est-workload-row h2 {
+  font-size: 18px;
+  margin: 0;
+}
+.est-workload-row h3 {
+  font-size: 15px;
+  margin: 0;
+}
+.est-workload-row p {
+  margin: 6px 0 12px;
+  overflow-wrap: anywhere;
+}
+.est-workload-row dl {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 12px;
+  margin: 0;
+}
+.est-workload-row dt {
+  color: var(--text-secondary);
+}
+.est-workload-row dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.est-workload-next,
+.est-workload-context {
+  border-left: 1px solid var(--line-soft);
+  padding-left: 20px;
+  min-width: 0;
+}
+.est-workload-boundaries {
+  margin-top: 20px;
+}
+.workspace:has(.est-workload) .ppo-shell-header {
+  container-type: inline-size;
+  container-name: workload-header;
+}
+@container workload-cards (max-width: 900px) {
+  .est-workload-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .est-workload-context,
+  .est-workload-next {
+    border-left: 0;
+    border-top: 1px solid var(--line-soft);
+    padding: 16px 0 0;
+  }
+}
+@container workload-header (max-width: 900px) {
+  .workspace:has(.est-workload) .ppo-header-centre {
+    position: static;
+    transform: none;
+    width: auto;
+    flex: 1 1 140px;
+    min-width: 0;
+  }
+  .workspace:has(.est-workload) .ppo-global-search kbd {
+    display: none;
+  }
+  .workspace:has(.est-workload) .product-heading {
+    max-width: 22%;
+  }
+}
+/* Local identities enable an older shell grid. Match the current compact shell
+   row on this register, including 200% reflow, without changing other pages. */
+@media (max-width: 780px) {
+  .workspace:has(.est-workload) .topbar.ppo-shell-header {
+    display: flex;
+  }
+}
+@media (max-width: 1000px) {
+  .est-workload-row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .est-workload-next {
+    grid-column: 1/-1;
+    border-left: 0;
+    border-top: 1px solid var(--line-soft);
+    padding: 16px 0 0;
+  }
+}
+@media (max-width: 600px) {
+  .est-workload-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .est-workload-context {
+    border-left: 0;
+    border-top: 1px solid var(--line-soft);
+    padding: 16px 0 0;
+  }
+  .est-workload-filters label {
+    flex-basis: 100%;
+  }
+  .est-workload-advanced {
+    flex-basis: 100%;
+  }
+  .est-workload-nav {
+    gap: 12px 20px;
+  }
+  .est-workload-nav a {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+}

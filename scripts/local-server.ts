@@ -77,7 +77,10 @@ const server = createServer((req, res) => {
   res.setHeader("Referrer-Policy", "no-referrer");
   res.setHeader(
     "Permissions-Policy",
-    "camera=(), microphone=(), geolocation=()",
+    // The SPA can navigate to EQ-02 without a new document. Permit the
+    // same-origin camera request; explicit action and browser permission
+    // still gate capture. Microphone and geolocation remain unnecessary.
+    "camera=(self), microphone=(), geolocation=()",
   );
   void withProofRequest({ request_id: requestId, path }, () => handler(req, res)).catch(() => {
     proofEvent("http-handler-rejected", { request_id: requestId, path, elapsed_ms: performance.now() - received });

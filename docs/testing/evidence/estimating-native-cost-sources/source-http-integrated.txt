@@ -1,0 +1,10 @@
+✔ ES03 HTTP exact review, scoped reads, altered replay and revoked receipt authority (5005.1392ms)
+✔ ES03 HTTP comparison is read-only, exact-version guarded and recovers one successor (11425.2475ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18221.0437

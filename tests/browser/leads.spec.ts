@@ -62,6 +62,7 @@ test("approved leads list/detail and atomic conversion persist through reload", 
   expect(lead.deal.id).toBeTruthy();
   expect(lead.next_activity.id).toBe(action.id);
   await page.getByRole("link", { name: "Open deal", exact: true }).click();
+  await page.getByRole("tab", { name: "Activities", exact: true }).click();
   await expect(
     page.getByRole("link", { name: lead.display_number, exact: true }),
   ).toBeVisible();

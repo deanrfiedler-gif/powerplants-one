@@ -410,12 +410,6 @@ test("P05 controlled move conflict keeps original position; uncertain accepted r
     "could not be confirmed",
   );
   await capture(page, info, "uncertain-move-retry");
-  // The accepted receipt starts a separate schedule refresh. Observe that
-  // response before requiring its rendered state for the final capture.
-  const scheduleRefreshed = page.waitForResponse((response) =>
-    response.request().method() === "GET" &&
-    new URL(response.url()).pathname === "/api/v1/schedule",
-  );
   await dialog.getByRole("button", { name: "Save proposed move" }).click();
   await expect(
     dialog.getByText("Appointment saved. Dispatch remains held.", {
@@ -427,13 +421,11 @@ test("P05 controlled move conflict keeps original position; uncertain accepted r
   expect(current.assignment_version).toBe(3);
   expect(current.customer_commitment).toBe("Changed");
   expect(current.pack_requirement).toBe("ReviewRequired");
-  const refreshed = await scheduleRefreshed;
-  expect(refreshed.ok()).toBe(true);
-  const schedule = await refreshed.json();
-  expect(schedule.items.find((a: { id: string }) => a.id === aid)).toMatchObject({
-    start_at: current.start_at,
-    assignment_version: current.assignment_version,
-  });
+  // Prove the refreshed planner itself moved this exact appointment. A
+  // response observer alone can miss a refresh already delivered to the UI.
+  const savedLink = `a[href="/service/appointments/${aid}"]`;
+  await expect(lane.locator(`[data-day="${target}"]`).locator(savedLink)).toBeVisible();
+  await expect(lane.locator(`[data-day="${day}"]`).locator(savedLink)).toHaveCount(0);
   await capture(page, info, "move-saved-review-held");
 });
 test("P05 project requests reject then accept through keyboard; technician request cannot confirm", async ({

@@ -52,7 +52,7 @@ jobs:
           p=Path('.env.local')
           p.write_text(p.read_text().replace('<local-password>','ppo_disposable_ci_only').replace('/ppo_synthetic','/ppo_synthetic_test'))
           PY
-          node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/estimating.test.ts tests/database/estimating-workspaces.test.ts tests/database/estimating-discovery-context.test.ts tests/database/estimating-configuration.test.ts tests/database/specialist.test.ts tests/database/fertigation.test.ts tests/database/fertigation-artifacts.test.ts tests/database/fertigation-import.test.ts
+          node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/estimating.test.ts tests/database/estimating-workspaces.test.ts tests/database/estimating-discovery-context.test.ts tests/database/estimating-workload.test.ts tests/database/estimating-sources.test.ts tests/database/estimating-configuration.test.ts tests/database/specialist.test.ts tests/database/fertigation.test.ts tests/database/fertigation-artifacts.test.ts tests/database/fertigation-import.test.ts
       - name: Compile the exact E1 E2 ES-02 application
         run: npm run build
       - name: Record the actual compiled checkout and fertigation source hashes
@@ -76,7 +76,7 @@ jobs:
             curl --fail --silent http://127.0.0.1:3000/ > /dev/null && break
             sleep 1
           done
-          node --env-file=.env.local --import tsx --test tests/http/estimating.test.ts tests/http/estimating-configuration.test.ts tests/http/specialist.test.ts tests/http/fertigation.test.ts
+          node --env-file=.env.local --import tsx --test tests/http/estimating.test.ts tests/http/estimating-workload.test.ts tests/http/estimating-sources.test.ts tests/http/estimating-configuration.test.ts tests/http/specialist.test.ts tests/http/fertigation.test.ts
           PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/fertigation-restart-proof.ts write
           node --env-file=.env.local --import tsx scripts/fertigation-capacity-proof.mjs
       - name: E1 journey through three application and browser processes and two PostgreSQL restarts
@@ -107,7 +107,7 @@ jobs:
         # Reuse the build verified by HTTP/restart checks. The same assertions
         # also pass in the full compiled suite; a second dev compilation can
         # leave an otherwise permitted workbook loading past its 5s assertion.
-        run: npx playwright test --config=playwright.compiled.config.ts tests/browser/estimating.spec.ts --output verification-evidence/estimating-e1-browser --reporter=list
+        run: npx playwright test --config=playwright.compiled.config.ts tests/browser/estimating.spec.ts tests/browser/estimating-workload.spec.ts tests/browser/estimating-sources.spec.ts --output verification-evidence/estimating-e1-browser --reporter=list
       - name: Compiled ES-02, My Work, Engineering materials and shell regression
         env:
           PPO_PORT: "3012"

@@ -1,0 +1,52 @@
+{
+  "tool": "PyMuPDF 1.28.2, temporary verification tool; no application dependency",
+  "source": "Final compiled application with retained synthetic read",
+  "pages": [
+    {
+      "page": 1,
+      "width_pt": 594.96,
+      "height_pt": 841.92,
+      "reference_present": true,
+      "revision_and_state_present": true,
+      "page_count_present": true,
+      "unsaved_entries_absent": true
+    },
+    {
+      "page": 2,
+      "width_pt": 594.96,
+      "height_pt": 841.92,
+      "reference_present": true,
+      "revision_and_state_present": true,
+      "page_count_present": true,
+      "unsaved_entries_absent": true
+    },
+    {
+      "page": 3,
+      "width_pt": 594.96,
+      "height_pt": 841.92,
+      "reference_present": true,
+      "revision_and_state_present": true,
+      "page_count_present": true,
+      "unsaved_entries_absent": true
+    },
+    {
+      "page": 4,
+      "width_pt": 594.96,
+      "height_pt": 841.92,
+      "reference_present": true,
+      "revision_and_state_present": true,
+      "page_count_present": true,
+      "unsaved_entries_absent": true
+    },
+    {
+      "page": 5,
+      "width_pt": 594.96,
+      "height_pt": 841.92,
+      "reference_present": true,
+      "revision_and_state_present": true,
+      "page_count_present": true,
+      "unsaved_entries_absent": true
+    }
+  ],
+  "final_section_present": true
+}

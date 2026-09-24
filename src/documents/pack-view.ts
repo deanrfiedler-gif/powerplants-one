@@ -387,8 +387,19 @@ export type TimelineEvent = {
   actor: string | null;
   changes: PackChange[];
   href?: string;
+  revision?: number;
 };
 export type TimelineSource = {
+  current_issue_id?: string | null;
+  acknowledgements?:
+    | {
+        id: string;
+        issue_id: string;
+        revision: number;
+        display_name: string;
+        acknowledged_at: string;
+      }[]
+    | null;
   revisions: {
     id: string;
     revision: number;
@@ -424,6 +435,7 @@ export type TimelineSource = {
   events: {
     id: string;
     kind: string;
+    issue_id?: string;
     reason: string;
     occurred_at: string;
     actor_name?: string | null;
@@ -459,6 +471,7 @@ export function packTimeline(
   ascending.forEach((r, i) =>
     events.push({
       id: r.id,
+      revision: r.revision,
       kind: "prepare",
       title:
         i === 0
@@ -473,6 +486,7 @@ export function packTimeline(
   for (const c of pack.checks)
     events.push({
       id: c.id,
+      revision: revisionOf.get(c.revision_id),
       kind: "review",
       title:
         c.decision === "Checked"
@@ -486,9 +500,10 @@ export function packTimeline(
   for (const j of pack.jobs)
     events.push({
       id: j.id,
+      revision: revisionOf.get(j.revision_id),
       kind: "issue",
       title: `Exact output requested for ${label(j.revision_id)}`,
-      detail: `${j.state} · ${j.attempts} attempt${j.attempts === 1 ? "" : "s"}${j.error_code ? ` · ${j.error_code}` : ""}. A queued or generated output is not an issue.`,
+      detail: `${outputStateLabel(j.state)} · ${j.attempts} attempt${j.attempts === 1 ? "" : "s"}${j.error_code ? `. ${outputErrorMessage(j.error_code)} Reference: ${j.error_code}` : ""}. A queued or generated output is not an issue.`,
       at: j.requested_at,
       actor: j.actor_name ?? null,
       changes: [],
@@ -496,9 +511,10 @@ export function packTimeline(
   for (const i of pack.issues)
     events.push({
       id: i.id,
+      revision: i.revision,
       kind: "issue",
       title: `Issued ${revisionLabel(i.revision)}`,
-      detail: i.manifest.filename,
+      detail: `Exact output ${i.manifest.filename}`,
       at: i.issued_at,
       actor: i.issued_by_name ?? null,
       changes: [],
@@ -508,6 +524,7 @@ export function packTimeline(
   for (const e of pack.events.filter((x) => x.kind !== "Issued"))
     events.push({
       id: e.id,
+      revision: pack.issues.find((i) => i.id === e.issue_id)?.revision,
       kind: e.kind === "ReviewRequired" ? "source" : "issue",
       title: eventTitles[e.kind] ?? e.kind,
       detail: e.reason,
@@ -518,15 +535,32 @@ export function packTimeline(
   for (const d of pack.distribution)
     events.push({
       id: d.id,
+      revision: pack.issues.find((i) => i.id === pack.current_issue_id)
+        ?.revision,
       kind: "distribution",
-      title: `${d.kind} · ${d.display_name}`,
+      title: `${distributionLabel(d.kind)} · ${d.display_name}`,
       detail:
         "A distribution fact. It is not an acknowledgement and no message is sent.",
       at: d.occurred_at,
       actor: null,
       changes: [],
     });
-  for (const r of pack.readiness.recipients.filter((x) => x.acknowledged_at))
+  for (const a of pack.acknowledgements ?? [])
+    events.push({
+      id: `ack-${a.id}`,
+      kind: "review",
+      revision: a.revision,
+      title: `Acknowledged by ${a.display_name} · ${revisionLabel(a.revision)}`,
+      detail: "Explicit acknowledgement of the exact issue.",
+      at: a.acknowledged_at,
+      actor: a.display_name,
+      changes: [],
+      href: `/documents/${a.issue_id}`,
+    });
+  // Recipient reads keep the existing current-issue facts; staff receive the explicit all-issue projection.
+  for (const r of pack.acknowledgements == null
+    ? pack.readiness.recipients.filter((x) => x.acknowledged_at)
+    : [])
     events.push({
       id: `ack-${r.id}`,
       kind: "review",
@@ -542,3 +576,62 @@ export function packTimeline(
       a.id.localeCompare(b.id),
   );
 }
+
+// D9 groups server outcomes; no new readiness rule or authority is evaluated here.
+export function readinessGroups(criteria: PackCriterion[]) {
+  const known = ["Authorisation", "Booking", "Dispatch", "Completion"];
+  const stages = [
+    ...known,
+    ...new Set(
+      criteria
+        .map((c) => c.blocking_stage)
+        .filter((s) => !known.includes(s))
+        .sort(),
+    ),
+  ];
+  return stages
+    .map((stage) => {
+      const rows = criteria.filter((c) => c.blocking_stage === stage),
+        summary = readinessSummary(rows);
+      return {
+        stage,
+        total: rows.length,
+        attention: summary.blocked,
+        satisfied: rows.filter((c) => !summary.blocked.includes(c)),
+      };
+    })
+    .filter((group) => group.total);
+}
+export const outputStateLabel = (state: string) =>
+  (
+    ({
+      Running: "Generating",
+      Durable: "Output stored · not yet issued",
+      Failed: "Failed · recovery needed",
+      StaleSource: "Source changed · original attempt retained",
+    }) as Record<string, string>
+  )[state] ?? readableValue(state);
+export const distributionLabel = (kind: string) =>
+  (
+    ({
+      TaskCreated: "Task created",
+      SimulatedSent: "Simulated sending recorded",
+    }) as Record<string, string>
+  )[kind] ?? readableValue(kind);
+export const outputErrorMessage = (code: string) =>
+  (
+    ({
+      PackNotReady: "Preparation is not ready. Resolve the listed items.",
+      ScopeReviewRequired:
+        "The authorised scope needs review before this pack can be saved or checked.",
+      StaleSource:
+        "A source changed after this revision was saved. Prepare a successor with current sources.",
+      TemplateUnavailable:
+        "The exact supported job pack template is unavailable.",
+      RecipientUnavailable:
+        "A crew member no longer has current access to receive this pack.",
+      PolicyUnavailable: "The scheduling policy for this visit is unavailable.",
+      RenderOrStorageFailure:
+        "The output could not be generated or stored. Recover the original output.",
+    }) as Record<string, string>
+  )[code] ?? "The output attempt did not complete.";

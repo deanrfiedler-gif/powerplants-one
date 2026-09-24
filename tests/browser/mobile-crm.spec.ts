@@ -9,7 +9,7 @@ async function call(page:Page,path:string,body?:unknown) {
 test("mobile CRM completion, Brisbane follow-up and record links persist through reload",async({page},info)=>{
   await call(page,"local-session",{profile:"coordinator"});
   const input=crmCreate(); await call(page,"crm/opportunities",input);
-  await page.goto(`/sales/opportunities/${input.id}`);
+  await page.goto(`/sales/opportunities/${input.id}?section=timeline`);
   await page.getByRole("link",{name:"Open activity",exact:true}).click();
   await page.getByLabel("Completion outcome or cancellation reason",{exact:true}).fill("SYN Confirmed the required growing area with the customer.");
   await page.getByLabel("Reason for change",{exact:true}).fill("SYN Customer discussion completed");
@@ -17,6 +17,7 @@ test("mobile CRM completion, Brisbane follow-up and record links persist through
   await expect(page.getByText("Completed",{exact:true}).first()).toBeVisible();
   await page.reload();
   await page.getByRole("link",{name:"Return to opportunity and plan follow-up"}).click();
+  await page.getByRole("tab",{name:"Activities",exact:true}).click();
   await expect(page.getByRole("heading",{name:"Next action needed",exact:true})).toBeVisible();
   await page.getByLabel("Action purpose",{exact:true}).fill("SYN Confirm tunnel controller settings");
   await page.getByLabel("Due date needed",{exact:true}).uncheck();
@@ -29,7 +30,7 @@ test("mobile CRM completion, Brisbane follow-up and record links persist through
   expect(o.next_activity.id).not.toBe(input.initial_action.id);
   expect(o.actions.find((a:{id:string})=>a.id===input.initial_action.id).status).toBe("Completed");
   expect(o.actions).toHaveLength(2);
-  await page.getByRole("tab",{name:"Details",exact:true}).click();
+  await page.getByRole("tab",{name:"Scope & sites",exact:true}).click();
   await expect(page.getByText("Requirements and scope",{exact:true})).toBeVisible();
   await expect(page.locator(`a[href="/sites/${CRM.site}"]`)).toBeVisible();
   await page.screenshot({path:info.outputPath("mobile-crm-details.png")});
@@ -40,7 +41,7 @@ test("mobile CRM completion, Brisbane follow-up and record links persist through
   const [commercialRead] = await Promise.all([
     page.waitForResponse(response => response.request().method() === "GET" &&
       new URL(response.url()).pathname === `/api/v1/crm/opportunities/${input.id}/commercial`),
-    page.getByRole("tab",{name:"Commercial",exact:true}).click(),
+    page.getByRole("tab",{name:"Estimates & quotations",exact:true}).click(),
   ]);
   expect(commercialRead.status(), await commercialRead.text()).toBe(200);
   expect(commercialRead.headers()["cache-control"]).toBe("private, no-store");
@@ -48,10 +49,10 @@ test("mobile CRM completion, Brisbane follow-up and record links persist through
   await expect(page.locator(`a[href="/estimating/estimates/${estimate.id}"]`)).toBeVisible();
   const commercial = await call(page,`crm/opportunities/${input.id}/commercial`);
   expect(commercial.estimate.id).toBe(estimate.id);
-  await page.getByRole("tab",{name:"Timeline",exact:true}).focus();
+  await page.getByRole("tab",{name:"Overview",exact:true}).focus();
   await page.keyboard.press("ArrowRight");
-  await expect(page.getByRole("tab",{name:"Details",exact:true})).toBeFocused();
-  await expect(page.getByRole("tab",{name:"Details",exact:true})).toHaveAttribute("aria-selected","true");
+  await expect(page.getByRole("tab",{name:"Scope & sites",exact:true})).toBeFocused();
+  await expect(page.getByRole("tab",{name:"Scope & sites",exact:true})).toHaveAttribute("aria-selected","true");
 });
 
 test("organisation summary opens the full Sites hierarchy; mobile menu contains keyboard focus",async({page},info)=>{
