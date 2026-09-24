@@ -96,6 +96,9 @@ export const destinations: ShellDestination[] = [
   {"id": "variations", "label": "Variations & obligations", "icon": "nav-variations", "readiness": "unavailable", "workspace": "projects"},
   {"id": "assurance", "label": "Site assurance", "icon": "nav-assurance", "readiness": "unavailable", "workspace": "projects"},
   {"id": "acceptance", "label": "Acceptance & closeout", "icon": "nav-acceptance", "readiness": "ready", "href": "/projects/acceptance", "workspace": "projects", "requires": ["project.read"]},
+  {"id":"agreements","label":"Service agreements","icon":"nav-orders","readiness":"ready","href":"/maintenance/agreements","workspace":"service","requires":["maintenance.read"]},
+  {"id":"maintenance","label":"Maintenance","icon":"nav-schedule","readiness":"ready","href":"/maintenance/due","workspace":"service","requires":["maintenance.read"]},
+  {"id":"warranty","label":"Warranty","icon":"nav-service-review","readiness":"ready","href":"/warranty/cases","workspace":"service","requires":["warranty.read"]},
   {"id": "tickets", "label": "Service requests", "icon": "nav-requests", "readiness": "ready", "href": "/service/tickets", "workspace": "service", "requires": ["service.ticket.read"]},
   {"id": "orders", "label": "Work orders", "icon": "nav-orders", "readiness": "ready", "href": "/service/work-orders", "workspace": "service", "requires": ["service.work_order.read"]},
   {"id": "planner", "label": "Schedule", "icon": "nav-schedule", "readiness": "ready", "href": "/schedule", "workspace": "service", "requires": ["schedule.read"]},
@@ -287,7 +290,7 @@ export const departmentRails: Record<WorkspaceId, readonly string[]> = {
   estimate: ["work", "estimates", "wizard", "configurations", "pricing", "quotations", "estimate-reviews"],
   engineering: ["work", "engineering", "basis", "drawings", "materials", "changes", "technical-reviews", "commissioning"],
   projects: ["work", "projects", "programme", "readiness", "risks", "variations", "assurance", "acceptance"],
-  service: ["work", "tickets", "orders", "planner", "technicians", "packs", "reports", "equipment"],
+  service: ["work", "tickets", "orders", "planner", "technicians", "packs", "reports", "equipment", "agreements", "maintenance", "warranty"],
   supply: ["work", "supply", "purchasing", "inbound", "receiving", "stock", "deliveries", "returns"],
   finance: ["work", "finance", "accounts", "performance", "claims", "cash", "reconciliation", "exceptions"],
 };

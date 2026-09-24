@@ -1,5 +1,7 @@
 # Current prototype status
 
+**Native Maintenance and Warranty, 25 September 2026:** MA-01–MA-07 is implemented for review under [ADR-0049](decisions/ADR-0049-maintenance-warranty-native.md). Migration 0049, exact sources and Service receiving, bounded original-due recurrence, renewals and independent customer/supplier outcomes are in verification. [Contract](contracts/maintenance-warranty-api.md), [handover](delivery/maintenance-warranty-handover.md) and [evidence](testing/evidence/maintenance-warranty/README.md) retain actual proof and limits. Equipment is canonical; Sales Aftercare reads native agreements/renewals. SC-08 remains unavailable. Owner/device acceptance and deployment remain separate.
+
 **Service requests register I2, 24 September 2026:** Increment I2 of the [build plan](delivery/service-requests-integration-build-plan.md#i2-delivered-adaptations) makes `/service/tickets` the native SV-01 register for New, Needs information and Triaged. It is a full-bleed module workspace (D6) with integration entry `sv01-native-r01`.
 - **Presentation:** Board and List, queue toggles with server counts, filters, preview, and Move through the record page's existing triage and request-information form with its gates unchanged.
 - **Read model:** two additive changes, recorded in the [service API](contracts/service-api.md): a `queue` filter that shares its predicates with the counts, and a per-row `can_edit_intake`.

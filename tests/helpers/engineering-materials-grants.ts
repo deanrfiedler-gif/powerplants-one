@@ -102,7 +102,13 @@ export function assertOnlyEngineeringSeedGrantsAdded(original: Grant[], upgraded
   assert.equal(sourceReviewer.length,3);
   const technical = original.filter(g=>g.user_id===coordinator&&g.company_id===companyA&&g.scope_type==="Company"&&g.capability==="engineering.read").flatMap(g=>[[profiles.reviewer,"engineering.technical.review"],[profiles.release,"engineering.technical.issue"],[profiles.release,"engineering.technical.distribute"],[coordinator,"engineering.technical.source"]].map(([user_id,capability])=>({...g,user_id,capability})));
   assert.equal(technical.length,4);
-  const expected=[...earlier,...acceptanceSeedGrants(original,earlier),...customerReview,...technical,...sourceReviewer];
+  const maintenance=original.filter(g=>g.capability==="shared.read").flatMap(g=>{
+    const id=String(g.user_id);
+    const caps=[coordinator,secondCompany].includes(id)?["maintenance.read","maintenance.manage","maintenance.assess","warranty.read","warranty.manage","warranty.assess","warranty.recovery"]:
+      ["30000000-0000-4000-8000-000000000002","30000000-0000-4000-8000-000000000012","30000000-0000-4000-8000-000000000014"].includes(id)?["maintenance.read","warranty.read",...(id.endsWith("012")?["maintenance.agreement.approve","warranty.goodwill"]:[])]:[];
+    return caps.map(capability=>({...g,capability}));
+  });
+  const expected=[...maintenance,...earlier,...acceptanceSeedGrants(original,earlier),...customerReview,...technical,...sourceReviewer];
   assert.equal(materials.length, 31);
   assert.equal(changes.length, 21); // twelve reads for three profiles and nine duty grants
   assert.equal(commissioning.length, 18); // four reads for one profile, six duty grants and eight My Work action grants

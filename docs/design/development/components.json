@@ -80,7 +80,8 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "docs/design/development/maintenance-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -137,7 +138,28 @@
         "scope:EQ-06",
         "scope:EQ-07",
         "scope:EQ-08",
-        "scope:EQ-09"
+        "scope:EQ-09",
+        "scope:MA-01",
+        "route:/maintenance/agreements",
+        "route:/maintenance/agreements/[id]",
+        "scope:MA-02",
+        "route:/maintenance/coverage",
+        "route:/maintenance/coverage/[id]",
+        "scope:MA-03",
+        "route:/maintenance/plans",
+        "route:/maintenance/plans/[id]",
+        "scope:MA-04",
+        "route:/maintenance/due",
+        "route:/maintenance/due/[id]",
+        "scope:MA-05",
+        "route:/maintenance/renewals",
+        "route:/maintenance/renewals/[id]",
+        "scope:MA-06",
+        "route:/warranty/cases",
+        "route:/warranty/cases/[id]",
+        "scope:MA-07",
+        "route:/warranty/supplier-recovery",
+        "route:/warranty/supplier-recovery/[id]"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -165,6 +187,14 @@
           "expected": "Paired native ES-03 source/form/comparison states against retained supplier-pricing design.",
           "actual": "New native consumers; functional evidence and paired owner acceptance remain separately recorded.",
           "action": "Inspect normal, stale, denied and original-operation recovery at desktop, phone and enlarged widths; preserve reference bytes.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-maintenance-adaptation",
+          "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
+          "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
+          "action": "Review the MA handover and retained images before baseline adoption",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -717,7 +747,8 @@
         "src/development/component-examples.tsx",
         "src/development/component-fixtures.ts",
         "src/app/styles/customers.css",
-        "src/components/equipment-controls.tsx"
+        "src/components/equipment-controls.tsx",
+        "docs/design/development/maintenance-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -762,7 +793,28 @@
         "scope:EQ-06",
         "scope:EQ-07",
         "scope:EQ-08",
-        "scope:EQ-09"
+        "scope:EQ-09",
+        "scope:MA-01",
+        "route:/maintenance/agreements",
+        "route:/maintenance/agreements/[id]",
+        "scope:MA-02",
+        "route:/maintenance/coverage",
+        "route:/maintenance/coverage/[id]",
+        "scope:MA-03",
+        "route:/maintenance/plans",
+        "route:/maintenance/plans/[id]",
+        "scope:MA-04",
+        "route:/maintenance/due",
+        "route:/maintenance/due/[id]",
+        "scope:MA-05",
+        "route:/maintenance/renewals",
+        "route:/maintenance/renewals/[id]",
+        "scope:MA-06",
+        "route:/warranty/cases",
+        "route:/warranty/cases/[id]",
+        "scope:MA-07",
+        "route:/warranty/supplier-recovery",
+        "route:/warranty/supplier-recovery/[id]"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -806,6 +858,14 @@
           "expected": "Review native Sales fields and tabs with long statements and the actual saved workflow states.",
           "actual": "Synthetic catalogue fixtures and native browser journeys are present; owner and assistive-technology acceptance are pending.",
           "action": "Compare the Sales native captures with issued references; retain original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fields-maintenance-adaptation",
+          "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
+          "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
+          "action": "Review the MA handover and retained images before baseline adoption",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -912,7 +972,8 @@
         "src/app/globals.css",
         "src/development/component-examples.tsx",
         "src/development/component-fixtures.ts",
-        "src/app/styles/customers.css"
+        "src/app/styles/customers.css",
+        "docs/design/development/maintenance-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -948,7 +1009,28 @@
         "scope:EQ-06",
         "scope:EQ-07",
         "scope:EQ-08",
-        "scope:EQ-09"
+        "scope:EQ-09",
+        "scope:MA-01",
+        "route:/maintenance/agreements",
+        "route:/maintenance/agreements/[id]",
+        "scope:MA-02",
+        "route:/maintenance/coverage",
+        "route:/maintenance/coverage/[id]",
+        "scope:MA-03",
+        "route:/maintenance/plans",
+        "route:/maintenance/plans/[id]",
+        "scope:MA-04",
+        "route:/maintenance/due",
+        "route:/maintenance/due/[id]",
+        "scope:MA-05",
+        "route:/maintenance/renewals",
+        "route:/maintenance/renewals/[id]",
+        "scope:MA-06",
+        "route:/warranty/cases",
+        "route:/warranty/cases/[id]",
+        "scope:MA-07",
+        "route:/warranty/supplier-recovery",
+        "route:/warranty/supplier-recovery/[id]"
       ],
       "desktop": "Submit an empty title to focus the summary, then follow its link to the field. Correct the title and save to clear the example error.",
       "mobile": "Summary and inline errors must remain visible at 320 px and 200% zoom.",
@@ -976,6 +1058,14 @@
           "expected": "Paired native ES-03 source/form/comparison states against retained supplier-pricing design.",
           "actual": "New native consumers; functional evidence and paired owner acceptance remain separately recorded.",
           "action": "Inspect normal, stale, denied and original-operation recovery at desktop, phone and enlarged widths; preserve reference bytes.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "validation-maintenance-adaptation",
+          "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
+          "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
+          "action": "Review the MA handover and retained images before baseline adoption",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1019,7 +1109,8 @@
         "src/app/globals.css",
         "src/development/component-examples.tsx",
         "src/development/component-fixtures.ts",
-        "src/app/styles/customers.css"
+        "src/app/styles/customers.css",
+        "docs/design/development/maintenance-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -1045,7 +1136,28 @@
         "route:/sales/handoffs/won",
         "scope:EQ-01",
         "scope:EQ-03",
-        "scope:EQ-04"
+        "scope:EQ-04",
+        "scope:MA-01",
+        "route:/maintenance/agreements",
+        "route:/maintenance/agreements/[id]",
+        "scope:MA-02",
+        "route:/maintenance/coverage",
+        "route:/maintenance/coverage/[id]",
+        "scope:MA-03",
+        "route:/maintenance/plans",
+        "route:/maintenance/plans/[id]",
+        "scope:MA-04",
+        "route:/maintenance/due",
+        "route:/maintenance/due/[id]",
+        "scope:MA-05",
+        "route:/maintenance/renewals",
+        "route:/maintenance/renewals/[id]",
+        "scope:MA-06",
+        "route:/warranty/cases",
+        "route:/warranty/cases/[id]",
+        "scope:MA-07",
+        "route:/warranty/supplier-recovery",
+        "route:/warranty/supplier-recovery/[id]"
       ],
       "desktop": "Arrow keys, Home and End select/focus tabs. Each tab labels its corresponding panel.",
       "mobile": "Confirm wrapped or scrolling tabs keep the selected label and focus visible.",
@@ -1073,6 +1185,14 @@
           "expected": "Review native Sales fields and tabs with long statements and the actual saved workflow states.",
           "actual": "Synthetic catalogue fixtures and native browser journeys are present; owner and assistive-technology acceptance are pending.",
           "action": "Compare the Sales native captures with issued references; retain original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "tabs-maintenance-adaptation",
+          "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
+          "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
+          "action": "Review the MA handover and retained images before baseline adoption",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1295,7 +1415,8 @@
         "src/app/globals.css",
         "src/development/component-examples.tsx",
         "src/development/component-fixtures.ts",
-        "src/app/styles/customers.css"
+        "src/app/styles/customers.css",
+        "docs/design/development/maintenance-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -1343,7 +1464,28 @@
         "scope:EQ-06",
         "scope:EQ-07",
         "scope:EQ-08",
-        "scope:EQ-09"
+        "scope:EQ-09",
+        "scope:MA-01",
+        "route:/maintenance/agreements",
+        "route:/maintenance/agreements/[id]",
+        "scope:MA-02",
+        "route:/maintenance/coverage",
+        "route:/maintenance/coverage/[id]",
+        "scope:MA-03",
+        "route:/maintenance/plans",
+        "route:/maintenance/plans/[id]",
+        "scope:MA-04",
+        "route:/maintenance/due",
+        "route:/maintenance/due/[id]",
+        "scope:MA-05",
+        "route:/maintenance/renewals",
+        "route:/maintenance/renewals/[id]",
+        "scope:MA-06",
+        "route:/warranty/cases",
+        "route:/warranty/cases/[id]",
+        "scope:MA-07",
+        "route:/warranty/supplier-recovery",
+        "route:/warranty/supplier-recovery/[id]"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -1381,6 +1523,14 @@
           "action": "Inspect normal, stale, denied and original-operation recovery at desktop, phone and enlarged widths; preserve reference bytes.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "read-state-maintenance-adaptation",
+          "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
+          "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
+          "action": "Review the MA handover and retained images before baseline adoption",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "review": null
@@ -1412,7 +1562,8 @@
         "src/app/globals.css",
         "src/development/component-examples.tsx",
         "src/development/component-fixtures.ts",
-        "src/app/styles/customers.css"
+        "src/app/styles/customers.css",
+        "docs/design/development/maintenance-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -1443,7 +1594,28 @@
         "scope:EQ-08",
         "scope:EQ-09",
         "scope:ES-01",
-        "route:/estimating"
+        "route:/estimating",
+        "scope:MA-01",
+        "route:/maintenance/agreements",
+        "route:/maintenance/agreements/[id]",
+        "scope:MA-02",
+        "route:/maintenance/coverage",
+        "route:/maintenance/coverage/[id]",
+        "scope:MA-03",
+        "route:/maintenance/plans",
+        "route:/maintenance/plans/[id]",
+        "scope:MA-04",
+        "route:/maintenance/due",
+        "route:/maintenance/due/[id]",
+        "scope:MA-05",
+        "route:/maintenance/renewals",
+        "route:/maintenance/renewals/[id]",
+        "scope:MA-06",
+        "route:/warranty/cases",
+        "route:/warranty/cases/[id]",
+        "scope:MA-07",
+        "route:/warranty/supplier-recovery",
+        "route:/warranty/supplier-recovery/[id]"
       ],
       "desktop": "Keep a readable label with each tone; business state and tone are not equivalent.",
       "mobile": "Chips wrap without truncating operational meaning.",
@@ -1463,6 +1635,14 @@
           "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
           "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "status-maintenance-adaptation",
+          "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
+          "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
+          "action": "Review the MA handover and retained images before baseline adoption",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1506,7 +1686,8 @@
         "src/app/globals.css",
         "src/development/component-examples.tsx",
         "src/development/component-fixtures.ts",
-        "src/app/styles/customers.css"
+        "src/app/styles/customers.css",
+        "docs/design/development/maintenance-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -1528,7 +1709,28 @@
         "route:/sales/handoffs/estimating/[id]",
         "route:/sales/handoffs/estimating",
         "route:/sales/handoffs/won/[id]",
-        "route:/sales/handoffs/won"
+        "route:/sales/handoffs/won",
+        "scope:MA-01",
+        "route:/maintenance/agreements",
+        "route:/maintenance/agreements/[id]",
+        "scope:MA-02",
+        "route:/maintenance/coverage",
+        "route:/maintenance/coverage/[id]",
+        "scope:MA-03",
+        "route:/maintenance/plans",
+        "route:/maintenance/plans/[id]",
+        "scope:MA-04",
+        "route:/maintenance/due",
+        "route:/maintenance/due/[id]",
+        "scope:MA-05",
+        "route:/maintenance/renewals",
+        "route:/maintenance/renewals/[id]",
+        "scope:MA-06",
+        "route:/warranty/cases",
+        "route:/warranty/cases/[id]",
+        "scope:MA-07",
+        "route:/warranty/supplier-recovery",
+        "route:/warranty/supplier-recovery/[id]"
       ],
       "desktop": "Use the phone presets and a separate browser window. This is the same form component family at a real responsive viewport.",
       "mobile": "Check 390/320 px, 200% zoom, touch targets, keyboard occlusion and error focus. No scaled screenshot is used.",
@@ -1548,6 +1750,14 @@
           "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
           "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "mobile-form-maintenance-adaptation",
+          "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
+          "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
+          "action": "Review the MA handover and retained images before baseline adoption",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1601,7 +1811,8 @@
         "src/app/styles/my-work.css",
         "src/shell/secondary-menu.tsx",
         "src/app/styles/equipment.css",
-        "docs/testing/evidence/job-pack-i5/README.md"
+        "docs/testing/evidence/job-pack-i5/README.md",
+        "docs/design/development/maintenance-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -1612,7 +1823,28 @@
       "used_on": [
         "system:shell",
         "scope:ES-01",
-        "scope:ES-03"
+        "scope:ES-03",
+        "scope:MA-01",
+        "route:/maintenance/agreements",
+        "route:/maintenance/agreements/[id]",
+        "scope:MA-02",
+        "route:/maintenance/coverage",
+        "route:/maintenance/coverage/[id]",
+        "scope:MA-03",
+        "route:/maintenance/plans",
+        "route:/maintenance/plans/[id]",
+        "scope:MA-04",
+        "route:/maintenance/due",
+        "route:/maintenance/due/[id]",
+        "scope:MA-05",
+        "route:/maintenance/renewals",
+        "route:/maintenance/renewals/[id]",
+        "scope:MA-06",
+        "route:/warranty/cases",
+        "route:/warranty/cases/[id]",
+        "scope:MA-07",
+        "route:/warranty/supplier-recovery",
+        "route:/warranty/supplier-recovery/[id]"
       ],
       "desktop": "Review the real global search, workspace switcher, rail, More and utility controls around this catalogue. Shell access can be unavailable without a running identity/database service.",
       "mobile": "Resize the actual browser window to review the mobile shell; component-frame presets do not resize the surrounding application. Native shell controls must remain inside the 64px header, including local identity at 390px and 320px; the legacy CRM grid must not overlay the first page action.",
@@ -1672,6 +1904,14 @@
           "expected": "Owner/device review of the phone identity correction",
           "actual": "Component and compiled proof recorded separately in I5",
           "action": "Review retained phone captures and shared-shell results.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-maintenance-adaptation",
+          "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
+          "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
+          "action": "Review the MA handover and retained images before baseline adoption",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2121,6 +2361,200 @@
           "expected": "Owner review of access-unavailable and failed-read presentation in both consumers",
           "actual": "Distinct states implemented; automated fixtures cover 403, 404 and 500; owner review pending",
           "action": "Compare appointment and Field Technicians states on desktop and phone without granting pack authority.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "maintenance-form",
+      "title": "Maintenance sourced decision form",
+      "category": "Forms",
+      "module": "MA",
+      "purpose": "Compose exact source, owner, reason and retained business decisions in native workspaces.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Reference only",
+      "states": [
+        {
+          "id": "default",
+          "label": "Default",
+          "description": "Synthetic owning-page state; see docs/design/development/maintenance-fixtures.json."
+        },
+        {
+          "id": "long-source",
+          "label": "Long Source",
+          "description": "Synthetic owning-page state; see docs/design/development/maintenance-fixtures.json."
+        },
+        {
+          "id": "unknown",
+          "label": "Unknown",
+          "description": "Synthetic owning-page state; see docs/design/development/maintenance-fixtures.json."
+        },
+        {
+          "id": "stale-version",
+          "label": "Stale Version",
+          "description": "Synthetic owning-page state; see docs/design/development/maintenance-fixtures.json."
+        },
+        {
+          "id": "uncertain",
+          "label": "Uncertain",
+          "description": "Synthetic owning-page state; see docs/design/development/maintenance-fixtures.json."
+        },
+        {
+          "id": "read-only",
+          "label": "Read Only",
+          "description": "Synthetic owning-page state; see docs/design/development/maintenance-fixtures.json."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/maintenance-forms.tsx",
+          "symbol": "MaForm"
+        }
+      ],
+      "dependencies": [
+        "src/components/crm-state.ts",
+        "src/app/styles/maintenance.css",
+        "docs/design/development/maintenance-fixtures.json"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html",
+        "anchor": "",
+        "status": "Retained source; proposed native adaptation"
+      },
+      "specification": "docs/design/development/components/maintenance-form.md",
+      "used_on": [
+        "scope:MA-01",
+        "route:/maintenance/agreements",
+        "route:/maintenance/agreements/[id]",
+        "scope:MA-02",
+        "route:/maintenance/coverage",
+        "route:/maintenance/coverage/[id]",
+        "scope:MA-03",
+        "route:/maintenance/plans",
+        "route:/maintenance/plans/[id]",
+        "scope:MA-04",
+        "route:/maintenance/due",
+        "route:/maintenance/due/[id]",
+        "scope:MA-05",
+        "route:/maintenance/renewals",
+        "route:/maintenance/renewals/[id]",
+        "scope:MA-06",
+        "route:/warranty/cases",
+        "route:/warranty/cases/[id]",
+        "scope:MA-07",
+        "route:/warranty/supplier-recovery",
+        "route:/warranty/supplier-recovery/[id]"
+      ],
+      "desktop": "Two-column worklist and one-column disclosed decision form; bounded evidence wraps.",
+      "mobile": "Single column; 16 px input text, 44 px actions; no page overflow.",
+      "keyboard": "Native disclosures and labelled fields; shared validation and command recovery.",
+      "limitations": "Owning-page implementation and fixtures; no isolated catalogue renderer. Owner/device acceptance pending.",
+      "gaps": [
+        {
+          "id": "maintenance-form-review",
+          "expected": "Owner review of native adaptation",
+          "actual": "Working implementation and synthetic fixtures; review pending",
+          "action": "Inspect paired source/application evidence in MA handover",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "maintenance-source",
+      "title": "Maintenance immutable source disclosure",
+      "category": "Boards & cards",
+      "module": "MA",
+      "purpose": "Compose exact source, owner, reason and retained business decisions in native workspaces.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Reference only",
+      "states": [
+        {
+          "id": "default",
+          "label": "Default",
+          "description": "Synthetic owning-page state; see docs/design/development/maintenance-fixtures.json."
+        },
+        {
+          "id": "long-source",
+          "label": "Long Source",
+          "description": "Synthetic owning-page state; see docs/design/development/maintenance-fixtures.json."
+        },
+        {
+          "id": "unknown",
+          "label": "Unknown",
+          "description": "Synthetic owning-page state; see docs/design/development/maintenance-fixtures.json."
+        },
+        {
+          "id": "stale-version",
+          "label": "Stale Version",
+          "description": "Synthetic owning-page state; see docs/design/development/maintenance-fixtures.json."
+        },
+        {
+          "id": "uncertain",
+          "label": "Uncertain",
+          "description": "Synthetic owning-page state; see docs/design/development/maintenance-fixtures.json."
+        },
+        {
+          "id": "read-only",
+          "label": "Read Only",
+          "description": "Synthetic owning-page state; see docs/design/development/maintenance-fixtures.json."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/maintenance-workspace.tsx",
+          "symbol": "SourceCard"
+        }
+      ],
+      "dependencies": [
+        "src/components/crm-state.ts",
+        "src/app/styles/maintenance.css",
+        "docs/design/development/maintenance-fixtures.json"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html",
+        "anchor": "",
+        "status": "Retained source; proposed native adaptation"
+      },
+      "specification": "docs/design/development/components/maintenance-source.md",
+      "used_on": [
+        "scope:MA-01",
+        "route:/maintenance/agreements",
+        "route:/maintenance/agreements/[id]",
+        "scope:MA-02",
+        "route:/maintenance/coverage",
+        "route:/maintenance/coverage/[id]",
+        "scope:MA-03",
+        "route:/maintenance/plans",
+        "route:/maintenance/plans/[id]",
+        "scope:MA-04",
+        "route:/maintenance/due",
+        "route:/maintenance/due/[id]",
+        "scope:MA-05",
+        "route:/maintenance/renewals",
+        "route:/maintenance/renewals/[id]",
+        "scope:MA-06",
+        "route:/warranty/cases",
+        "route:/warranty/cases/[id]",
+        "scope:MA-07",
+        "route:/warranty/supplier-recovery",
+        "route:/warranty/supplier-recovery/[id]"
+      ],
+      "desktop": "Two-column worklist and one-column disclosed decision form; bounded evidence wraps.",
+      "mobile": "Single column; 16 px input text, 44 px actions; no page overflow.",
+      "keyboard": "Native disclosures and labelled fields; shared validation and command recovery.",
+      "limitations": "Owning-page implementation and fixtures; no isolated catalogue renderer. Owner/device acceptance pending.",
+      "gaps": [
+        {
+          "id": "maintenance-source-review",
+          "expected": "Owner review of native adaptation",
+          "actual": "Working implementation and synthetic fixtures; review pending",
+          "action": "Inspect paired source/application evidence in MA handover",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

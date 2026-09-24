@@ -132,7 +132,11 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // copied from the coordinator's Company A scope/validity. Hosted identities
   // gain no source-review or commercial approval duty. Generic table grants
   // cover the additive records; upgrade/reseed proofs retain revoked grants.
-  if (latestMigrationVersion !== 48) throw Error("Review the existing-demo upgrade for this release.");
+  // 0049: additive Maintenance/Warranty records and exact retained history.
+  // No source backfill or external transaction. Identity events flush before ALTER.
+  // Seed 49 grants explicit synthetic duties only; invited hosted identities gain none.
+  // Generic runtime table grants apply; revoked grants remain protected by seed receipts.
+  if (latestMigrationVersion !== 49) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

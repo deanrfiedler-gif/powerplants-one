@@ -213,6 +213,18 @@ export async function createTicket(p: Principal, input: unknown) {
     "TicketCreated",
   );
 }
+// Domain receiving commands call this inside their existing sharedOperation.
+// It uses the same intake validation and authority as ordinary request creation;
+// the caller retains the exact source link, receipt and audit atomically.
+export async function receiveOwnedRequest(
+  c: QueryClient, p: Principal, id: string, company_id: string,
+  input: ReturnType<typeof intakeFields>,
+) {
+  const fields = intakeFields(input);
+  await context(c,p,company_id,fields);
+  const entries=Object.entries({...fields,id,company_id,workspace_id:p.workspace_id,created_by:p.actor_id,updated_by:p.actor_id,status:"New",intake_schema_version:2,received_time_basis:"UserReported"});
+  return (await c.query(`INSERT INTO ppo.tickets(${entries.map(([k])=>k).join(",")}) VALUES(${entries.map((_,i)=>`$${i+1}`).join(",")}) RETURNING *`,entries.map(([,v])=>v))).rows[0];
+}
 export async function saveIntake(p: Principal, id: string, input: unknown) {
   const r = object(input, [...commonKeys, "expected_version", ...intakeKeys]);
   const command = {

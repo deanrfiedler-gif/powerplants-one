@@ -106,3 +106,5 @@ The [PPO Assistant direction and architecture decision](ppo-assistant-direction.
 - [ADR-0044 — Explicit placement of held legacy fields on fertigation import](ADR-0044-fertigation-held-import-placement.md): a held standalone r02 import confirms only when every held field is placed as an unverified source note or, for project identity only, left to the Discovery binding; placements are stored with the import. Amends ADR-0038's held-import behaviour only.
 
 - [ADR-0046 — Native Sales handovers and aftercare](ADR-0046-sales-native-workflows.md): frozen Sales submissions, exact receiving decisions, shared Activity obligations and bounded aftercare; owner acceptance and deployment remain separate.
+
+- [ADR-0049 — Native Maintenance and Warranty](ADR-0049-maintenance-warranty-native.md): MA-01–MA-07 typed sources, bounded recurrence, exact Service receiving, independent customer and supplier outcomes; acceptance and deployment remain separate.

@@ -1,4 +1,6 @@
 import { createHash, randomUUID } from "node:crypto";
+import { currentAssessment } from "../maintenance/assessments";
+import { agreementRevision } from "../maintenance/context";
 import { database } from "../platform/database";
 import { AppError, unavailable } from "../platform/errors";
 import type { Principal } from "../platform/identity";
@@ -210,6 +212,16 @@ async function writeScope(
   input: ScopeInput,
 ) {
   await validateAssets(c, p, w, input);
+  if(input.coverage?.entitlement_assessment_id) {
+    const a=await currentAssessment(c,p,input.coverage.entitlement_assessment_id);
+    if(a.company_id!==w.company_id||a.site_id!==w.site_id||a.customer_id!==w.customer_id||a.status!==input.coverage.status||input.items.some(item=>item.assets.some(asset=>asset.asset_id!==a.asset_id)))
+      invalid("entitlement_assessment_id","Use the exact current assessment for this customer, site, asset and coverage position.");
+    if(a.agreement_revision_id) {
+      const agreement=await agreementRevision(c,p,a.agreement_revision_id);
+      if(input.coverage.agreement_reference!==agreement.row.reference||input.coverage.source_version!==agreement.revision.content.source.revision)
+        invalid("entitlement_assessment_id","Retain the exact managed agreement reference and source revision.");
+    }
+  }
   const authority = await evidence(c, p, w, input.authority_evidence);
   const coverage = input.coverage
     ? (
@@ -489,11 +501,12 @@ export async function scopeDetail(
   const coverage = r.coverage_assessment_id
     ? (
         await c.query(
-          "SELECT id,status,agreement_reference,source_version,effective_from::text,effective_to::text,assessment,reason,charging_route,assessed_by,assessed_at FROM ppo.coverage_assessments WHERE workspace_id=$1 AND id=$2",
+          "SELECT id,status,agreement_reference,source_version,effective_from::text,effective_to::text,assessment,reason,charging_route,assessed_by,assessed_at,to_jsonb(coverage_assessments)->>'entitlement_assessment_id' AS entitlement_assessment_id FROM ppo.coverage_assessments WHERE workspace_id=$1 AND id=$2",
           [p.workspace_id, r.coverage_assessment_id],
         )
       ).rows[0]
     : null;
+  if(coverage && !coverage.entitlement_assessment_id)delete coverage.entitlement_assessment_id;
   const authority = r.authority_evidence_ref
     ? (
         await c.query(
@@ -849,6 +862,7 @@ export async function authoriseWorkOrder(
         "SELECT a.id FROM ppo.assets a JOIN ppo.scope_assets sa ON (sa.workspace_id,sa.asset_id)=(a.workspace_id,a.id) WHERE sa.workspace_id=$1 AND sa.scope_revision_id=$2 ORDER BY a.id FOR SHARE OF a",
         [p.workspace_id, r.id],
       );
+      if(r.coverage?.entitlement_assessment_id)await currentAssessment(c,p,r.coverage.entitlement_assessment_id);
       const b = await blockers(c, p, w, r);
       if (b.length)
         throw new AppError(

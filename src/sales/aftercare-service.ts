@@ -1,3 +1,4 @@
+import { renewalSource } from "../maintenance/reads";
 import { randomUUID } from "node:crypto";
 import type { Principal } from "../platform/identity";
 import { database, transaction } from "../platform/database";
@@ -261,12 +262,7 @@ export async function readAftercare(p: Principal, id: string) {
   return {
     ...result,
     customer: await customer360(p, result.record.organisation_id),
-    agreements: {
-      state: "Unavailable",
-      basis:
-        "Native Service Agreements and MA-05 renewal source not implemented",
-      observed_at: new Date().toISOString(),
-    },
+    agreements: await renewalSource(p, result.record.organisation_id),
   };
 }
 export async function listAftercare(p: Principal, opportunity_id?: string) {

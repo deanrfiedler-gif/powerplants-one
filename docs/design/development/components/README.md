@@ -4,7 +4,7 @@
 
 **Owner:** Dean Fiedler · **Schema:** 1 · **Review:** Paired visual and device acceptance pending.
 
-The component catalogue extends the existing local development workspace at `/development/design-system`. It is backed by `../components.json`, these Markdown specifications and the actual runtime components. It contains 19 runnable examples, one real host-shell entry and four reference-only patterns across ten categories. These are coverage counts, not approval or proof that every application-specific variant has been migrated.
+The component catalogue extends the existing local development workspace at `/development/design-system`. It is backed by `../components.json`, these Markdown specifications and the actual runtime components. It contains 19 runnable examples, one real host-shell entry and ten reference-only patterns across ten categories. These are coverage counts, not approval or proof that every application-specific variant has been migrated.
 
 ## Browsing and comparison
 
@@ -72,3 +72,5 @@ Use semantic native tables for tabular data; do not add an ARIA grid without its
 ## Recovery and authority
 
 Reset restores the selected synthetic example. Refresh working copy rereads Git files. A stale reference hash returns an informative refusal rather than substituting different bytes. Persistent theme changes follow the existing proposal/source/PR workflow. The preview and catalogue remain local-gated; hiding the shell on a fixture route does not grant access. Hosted access, public deployment and operational integration are unchanged.
+
+Maintenance and Warranty add two reference-only compositions, MaForm and SourceCard, with exact route consumers and synthetic fixtures. Their browser proof is an application integration test; no isolated renderer or accepted visual fingerprint is claimed.

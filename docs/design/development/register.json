@@ -2758,204 +2758,260 @@
     },
     {
       "key": "scope:MA-01",
-      "title": "Agreement register and agreement detail",
+      "title": "Service agreements",
       "kind": "scope",
       "module": "MA",
-      "summary": "Implement managed agreement register/detail, revisions, periods and responsibilities.",
+      "summary": "Find the exact contracting customer, covered sites and source revision before a commercial decision.",
       "path": "/maintenance/agreements",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/maintenance/agreements/page.tsx",
+        "src/maintenance/agreements.ts"
       ],
       "guide_key": "guide.ma.01",
       "design_path": "docs/design/development/pages/scope-ma-01.md",
       "html_path": "docs/reference/ui/maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/components/maintenance-workspace.tsx",
+        "src/components/maintenance-forms.tsx",
+        "src/components/maintenance-record-actions.tsx",
+        "src/app/styles/maintenance.css",
+        "docs/contracts/maintenance-warranty-api.md"
+      ],
+      "scope_status": "Native synthetic implementation; owner acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Verification recorded in maintenance-warranty-handover.md",
+      "deployment_status": "Not deployed by this change",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 104,
       "related_keys": [
-        "scope:CS-05",
-        "scope:EQ-01"
+        "route:/maintenance/agreements",
+        "route:/maintenance/agreements/[id]"
       ],
       "reviewer": null
     },
     {
       "key": "scope:MA-02",
-      "title": "Coverage and entitlement assessment",
+      "title": "Coverage and entitlement",
       "kind": "scope",
       "module": "MA",
-      "summary": "Implement sourced coverage and entitlement assessment; current manual references are only a foundation.",
+      "summary": "Record a reasoned entitlement decision for an exact event, asset and available source.",
       "path": "/maintenance/coverage",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/maintenance/coverage/page.tsx",
+        "src/maintenance/assessments.ts"
       ],
       "guide_key": "guide.ma.02",
       "design_path": "docs/design/development/pages/scope-ma-02.md",
       "html_path": "docs/reference/ui/maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/components/maintenance-workspace.tsx",
+        "src/components/maintenance-forms.tsx",
+        "src/components/maintenance-record-actions.tsx",
+        "src/app/styles/maintenance.css",
+        "docs/contracts/maintenance-warranty-api.md"
+      ],
+      "scope_status": "Native synthetic implementation; owner acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Verification recorded in maintenance-warranty-handover.md",
+      "deployment_status": "Not deployed by this change",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 105,
       "related_keys": [
-        "scope:MA-01"
+        "route:/maintenance/coverage",
+        "route:/maintenance/coverage/[id]"
       ],
       "reviewer": null
     },
     {
       "key": "scope:MA-03",
-      "title": "Maintenance plans and task templates",
+      "title": "Maintenance plans",
       "kind": "scope",
       "module": "MA",
-      "summary": "Implement maintenance plans, tasks, templates and source-defined triggers.",
+      "summary": "Maintain reviewed task revisions and sourced monthly or quarterly obligations.",
       "path": "/maintenance/plans",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/maintenance/plans/page.tsx",
+        "src/maintenance/plans.ts"
       ],
       "guide_key": "guide.ma.03",
       "design_path": "docs/design/development/pages/scope-ma-03.md",
       "html_path": "docs/reference/ui/maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/components/maintenance-workspace.tsx",
+        "src/components/maintenance-forms.tsx",
+        "src/components/maintenance-record-actions.tsx",
+        "src/app/styles/maintenance.css",
+        "docs/contracts/maintenance-warranty-api.md"
+      ],
+      "scope_status": "Native synthetic implementation; owner acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Verification recorded in maintenance-warranty-handover.md",
+      "deployment_status": "Not deployed by this change",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 106,
       "related_keys": [
-        "scope:MA-01",
-        "scope:EQ-01",
-        "scope:DK-06"
+        "route:/maintenance/plans",
+        "route:/maintenance/plans/[id]"
       ],
       "reviewer": null
     },
     {
       "key": "scope:MA-04",
-      "title": "Due-maintenance occurrence worklist",
+      "title": "Due maintenance",
       "kind": "scope",
       "module": "MA",
-      "summary": "Implement due occurrences, exception review, skip/defer/cancel and controlled work-request generation.",
+      "summary": "Disposition the original obligation and receive exact Service evidence.",
       "path": "/maintenance/due",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/maintenance/due/page.tsx",
+        "src/maintenance/receiving.ts"
       ],
       "guide_key": "guide.ma.04",
       "design_path": "docs/design/development/pages/scope-ma-04.md",
       "html_path": "docs/reference/ui/maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/components/maintenance-workspace.tsx",
+        "src/components/maintenance-forms.tsx",
+        "src/components/maintenance-record-actions.tsx",
+        "src/app/styles/maintenance.css",
+        "docs/contracts/maintenance-warranty-api.md"
+      ],
+      "scope_status": "Native synthetic implementation; owner acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Verification recorded in maintenance-warranty-handover.md",
+      "deployment_status": "Not deployed by this change",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 107,
       "related_keys": [
-        "scope:MA-03",
-        "scope:SV-03"
+        "route:/maintenance/due",
+        "route:/maintenance/due/[id]"
       ],
       "reviewer": null
     },
     {
       "key": "scope:MA-05",
-      "title": "Renewals and service relationship review",
+      "title": "Renewals and relationship review",
       "kind": "scope",
       "module": "MA",
-      "summary": "Implement renewal and service-relationship review with owned proposals.",
+      "summary": "Own the expiry review without changing contract terms.",
       "path": "/maintenance/renewals",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/maintenance/renewals/page.tsx",
+        "src/maintenance/renewals.ts"
       ],
       "guide_key": "guide.ma.05",
       "design_path": "docs/design/development/pages/scope-ma-05.md",
       "html_path": "docs/reference/ui/maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/components/maintenance-workspace.tsx",
+        "src/components/maintenance-forms.tsx",
+        "src/components/maintenance-record-actions.tsx",
+        "src/app/styles/maintenance.css",
+        "docs/contracts/maintenance-warranty-api.md"
+      ],
+      "scope_status": "Native synthetic implementation; owner acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Verification recorded in maintenance-warranty-handover.md",
+      "deployment_status": "Not deployed by this change",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 108,
       "related_keys": [
-        "scope:MA-01",
-        "scope:MA-04"
+        "route:/maintenance/renewals",
+        "route:/maintenance/renewals/[id]"
       ],
       "reviewer": null
     },
     {
       "key": "scope:MA-06",
-      "title": "Warranty case and customer resolution",
+      "title": "Warranty cases",
       "kind": "scope",
       "module": "MA",
-      "summary": "Implement warranty cases and customer resolution with separate goodwill, work authority and commercial outcomes.",
+      "summary": "Keep reported failure, cause, entitlement, remedy and customer outcome independently reviewable.",
       "path": "/warranty/cases",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/warranty/cases/page.tsx",
+        "src/maintenance/warranty.ts"
       ],
       "guide_key": "guide.ma.06",
       "design_path": "docs/design/development/pages/scope-ma-06.md",
       "html_path": "docs/reference/ui/warranty/PPO-Warranty-and-Customer-Resolution-Workspace-r01.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/components/maintenance-workspace.tsx",
+        "src/components/maintenance-forms.tsx",
+        "src/components/maintenance-record-actions.tsx",
+        "src/app/styles/maintenance.css",
+        "docs/contracts/maintenance-warranty-api.md"
+      ],
+      "scope_status": "Native synthetic implementation; owner acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Verification recorded in maintenance-warranty-handover.md",
+      "deployment_status": "Not deployed by this change",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 109,
       "related_keys": [
-        "scope:MA-02",
-        "scope:SV-07"
+        "route:/warranty/cases",
+        "route:/warranty/cases/[id]"
       ],
       "reviewer": null
     },
     {
       "key": "scope:MA-07",
-      "title": "Supplier recovery coordination",
+      "title": "Supplier recovery",
       "kind": "scope",
       "module": "MA",
-      "summary": "Implement linked supplier recovery, claims, evidence and outcome tracking.",
+      "summary": "Coordinate an exact supplier package, response and Finance evidence independently of customer resolution.",
       "path": "/warranty/supplier-recovery",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/warranty/supplier-recovery/page.tsx",
+        "src/maintenance/recovery.ts"
       ],
       "guide_key": "guide.ma.07",
       "design_path": "docs/design/development/pages/scope-ma-07.md",
       "html_path": "docs/reference/ui/warranty/PPO-Warranty-and-Customer-Resolution-Workspace-r01.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/components/maintenance-workspace.tsx",
+        "src/components/maintenance-forms.tsx",
+        "src/components/maintenance-record-actions.tsx",
+        "src/app/styles/maintenance.css",
+        "docs/contracts/maintenance-warranty-api.md"
+      ],
+      "scope_status": "Native synthetic implementation; owner acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Verification recorded in maintenance-warranty-handover.md",
+      "deployment_status": "Not deployed by this change",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 110,
       "related_keys": [
-        "scope:MA-06",
-        "scope:SC-08"
+        "route:/warranty/supplier-recovery",
+        "route:/warranty/supplier-recovery/[id]"
       ],
       "reviewer": null
     },
@@ -10093,6 +10149,538 @@
         "scope:CS-05",
         "scope:CS-06",
         "scope:SH-06"
+      ]
+    },
+    {
+      "key": "route:/maintenance/agreements/[id]",
+      "title": "Service agreements detail",
+      "kind": "route",
+      "module": "MA",
+      "summary": "Find the exact contracting customer, covered sites and source revision before a commercial decision.",
+      "path": "/maintenance/agreements/[id]",
+      "source_paths": [
+        "src/app/(business)/maintenance/agreements/[id]/page.tsx",
+        "src/maintenance/agreements.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "guide_key": "guide.route-maintenance-agreements-id",
+      "design_path": "docs/design/development/pages/route-maintenance-agreements-id.md",
+      "html_path": "docs/reference/ui/maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/maintenance-workspace.tsx",
+        "src/components/maintenance-forms.tsx",
+        "src/components/maintenance-record-actions.tsx",
+        "src/app/styles/maintenance.css",
+        "docs/contracts/maintenance-warranty-api.md"
+      ],
+      "scope_status": "Native synthetic implementation; owner acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "Verification recorded in maintenance-warranty-handover.md",
+      "deployment_status": "Not deployed by this change",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:MA-01",
+        "route:/maintenance/agreements"
+      ]
+    },
+    {
+      "key": "route:/maintenance/agreements",
+      "title": "Service agreements",
+      "kind": "route",
+      "module": "MA",
+      "summary": "Find the exact contracting customer, covered sites and source revision before a commercial decision.",
+      "path": "/maintenance/agreements",
+      "source_paths": [
+        "src/app/(business)/maintenance/agreements/page.tsx",
+        "src/maintenance/agreements.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "guide_key": "guide.route-maintenance-agreements",
+      "design_path": "docs/design/development/pages/route-maintenance-agreements.md",
+      "html_path": "docs/reference/ui/maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/maintenance-workspace.tsx",
+        "src/components/maintenance-forms.tsx",
+        "src/components/maintenance-record-actions.tsx",
+        "src/app/styles/maintenance.css",
+        "docs/contracts/maintenance-warranty-api.md"
+      ],
+      "scope_status": "Native synthetic implementation; owner acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "Verification recorded in maintenance-warranty-handover.md",
+      "deployment_status": "Not deployed by this change",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:MA-01",
+        "route:/maintenance/agreements/[id]"
+      ]
+    },
+    {
+      "key": "route:/maintenance/coverage/[id]",
+      "title": "Coverage and entitlement detail",
+      "kind": "route",
+      "module": "MA",
+      "summary": "Record a reasoned entitlement decision for an exact event, asset and available source.",
+      "path": "/maintenance/coverage/[id]",
+      "source_paths": [
+        "src/app/(business)/maintenance/coverage/[id]/page.tsx",
+        "src/maintenance/assessments.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "guide_key": "guide.route-maintenance-coverage-id",
+      "design_path": "docs/design/development/pages/route-maintenance-coverage-id.md",
+      "html_path": "docs/reference/ui/maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/maintenance-workspace.tsx",
+        "src/components/maintenance-forms.tsx",
+        "src/components/maintenance-record-actions.tsx",
+        "src/app/styles/maintenance.css",
+        "docs/contracts/maintenance-warranty-api.md"
+      ],
+      "scope_status": "Native synthetic implementation; owner acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "Verification recorded in maintenance-warranty-handover.md",
+      "deployment_status": "Not deployed by this change",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:MA-02",
+        "route:/maintenance/coverage"
+      ]
+    },
+    {
+      "key": "route:/maintenance/coverage",
+      "title": "Coverage and entitlement",
+      "kind": "route",
+      "module": "MA",
+      "summary": "Record a reasoned entitlement decision for an exact event, asset and available source.",
+      "path": "/maintenance/coverage",
+      "source_paths": [
+        "src/app/(business)/maintenance/coverage/page.tsx",
+        "src/maintenance/assessments.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "guide_key": "guide.route-maintenance-coverage",
+      "design_path": "docs/design/development/pages/route-maintenance-coverage.md",
+      "html_path": "docs/reference/ui/maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/maintenance-workspace.tsx",
+        "src/components/maintenance-forms.tsx",
+        "src/components/maintenance-record-actions.tsx",
+        "src/app/styles/maintenance.css",
+        "docs/contracts/maintenance-warranty-api.md"
+      ],
+      "scope_status": "Native synthetic implementation; owner acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "Verification recorded in maintenance-warranty-handover.md",
+      "deployment_status": "Not deployed by this change",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:MA-02",
+        "route:/maintenance/coverage/[id]"
+      ]
+    },
+    {
+      "key": "route:/maintenance/due/[id]",
+      "title": "Due maintenance detail",
+      "kind": "route",
+      "module": "MA",
+      "summary": "Disposition the original obligation and receive exact Service evidence.",
+      "path": "/maintenance/due/[id]",
+      "source_paths": [
+        "src/app/(business)/maintenance/due/[id]/page.tsx",
+        "src/maintenance/receiving.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "guide_key": "guide.route-maintenance-due-id",
+      "design_path": "docs/design/development/pages/route-maintenance-due-id.md",
+      "html_path": "docs/reference/ui/maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/maintenance-workspace.tsx",
+        "src/components/maintenance-forms.tsx",
+        "src/components/maintenance-record-actions.tsx",
+        "src/app/styles/maintenance.css",
+        "docs/contracts/maintenance-warranty-api.md"
+      ],
+      "scope_status": "Native synthetic implementation; owner acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "Verification recorded in maintenance-warranty-handover.md",
+      "deployment_status": "Not deployed by this change",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:MA-04",
+        "route:/maintenance/due"
+      ]
+    },
+    {
+      "key": "route:/maintenance/due",
+      "title": "Due maintenance",
+      "kind": "route",
+      "module": "MA",
+      "summary": "Disposition the original obligation and receive exact Service evidence.",
+      "path": "/maintenance/due",
+      "source_paths": [
+        "src/app/(business)/maintenance/due/page.tsx",
+        "src/maintenance/receiving.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "guide_key": "guide.route-maintenance-due",
+      "design_path": "docs/design/development/pages/route-maintenance-due.md",
+      "html_path": "docs/reference/ui/maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/maintenance-workspace.tsx",
+        "src/components/maintenance-forms.tsx",
+        "src/components/maintenance-record-actions.tsx",
+        "src/app/styles/maintenance.css",
+        "docs/contracts/maintenance-warranty-api.md"
+      ],
+      "scope_status": "Native synthetic implementation; owner acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "Verification recorded in maintenance-warranty-handover.md",
+      "deployment_status": "Not deployed by this change",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:MA-04",
+        "route:/maintenance/due/[id]"
+      ]
+    },
+    {
+      "key": "route:/maintenance/plans/[id]",
+      "title": "Maintenance plans detail",
+      "kind": "route",
+      "module": "MA",
+      "summary": "Maintain reviewed task revisions and sourced monthly or quarterly obligations.",
+      "path": "/maintenance/plans/[id]",
+      "source_paths": [
+        "src/app/(business)/maintenance/plans/[id]/page.tsx",
+        "src/maintenance/plans.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "guide_key": "guide.route-maintenance-plans-id",
+      "design_path": "docs/design/development/pages/route-maintenance-plans-id.md",
+      "html_path": "docs/reference/ui/maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/maintenance-workspace.tsx",
+        "src/components/maintenance-forms.tsx",
+        "src/components/maintenance-record-actions.tsx",
+        "src/app/styles/maintenance.css",
+        "docs/contracts/maintenance-warranty-api.md"
+      ],
+      "scope_status": "Native synthetic implementation; owner acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "Verification recorded in maintenance-warranty-handover.md",
+      "deployment_status": "Not deployed by this change",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:MA-03",
+        "route:/maintenance/plans"
+      ]
+    },
+    {
+      "key": "route:/maintenance/plans",
+      "title": "Maintenance plans",
+      "kind": "route",
+      "module": "MA",
+      "summary": "Maintain reviewed task revisions and sourced monthly or quarterly obligations.",
+      "path": "/maintenance/plans",
+      "source_paths": [
+        "src/app/(business)/maintenance/plans/page.tsx",
+        "src/maintenance/plans.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "guide_key": "guide.route-maintenance-plans",
+      "design_path": "docs/design/development/pages/route-maintenance-plans.md",
+      "html_path": "docs/reference/ui/maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/maintenance-workspace.tsx",
+        "src/components/maintenance-forms.tsx",
+        "src/components/maintenance-record-actions.tsx",
+        "src/app/styles/maintenance.css",
+        "docs/contracts/maintenance-warranty-api.md"
+      ],
+      "scope_status": "Native synthetic implementation; owner acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "Verification recorded in maintenance-warranty-handover.md",
+      "deployment_status": "Not deployed by this change",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:MA-03",
+        "route:/maintenance/plans/[id]"
+      ]
+    },
+    {
+      "key": "route:/maintenance/renewals/[id]",
+      "title": "Renewals and relationship review detail",
+      "kind": "route",
+      "module": "MA",
+      "summary": "Own the expiry review without changing contract terms.",
+      "path": "/maintenance/renewals/[id]",
+      "source_paths": [
+        "src/app/(business)/maintenance/renewals/[id]/page.tsx",
+        "src/maintenance/renewals.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "guide_key": "guide.route-maintenance-renewals-id",
+      "design_path": "docs/design/development/pages/route-maintenance-renewals-id.md",
+      "html_path": "docs/reference/ui/maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/maintenance-workspace.tsx",
+        "src/components/maintenance-forms.tsx",
+        "src/components/maintenance-record-actions.tsx",
+        "src/app/styles/maintenance.css",
+        "docs/contracts/maintenance-warranty-api.md"
+      ],
+      "scope_status": "Native synthetic implementation; owner acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "Verification recorded in maintenance-warranty-handover.md",
+      "deployment_status": "Not deployed by this change",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:MA-05",
+        "route:/maintenance/renewals"
+      ]
+    },
+    {
+      "key": "route:/maintenance/renewals",
+      "title": "Renewals and relationship review",
+      "kind": "route",
+      "module": "MA",
+      "summary": "Own the expiry review without changing contract terms.",
+      "path": "/maintenance/renewals",
+      "source_paths": [
+        "src/app/(business)/maintenance/renewals/page.tsx",
+        "src/maintenance/renewals.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "guide_key": "guide.route-maintenance-renewals",
+      "design_path": "docs/design/development/pages/route-maintenance-renewals.md",
+      "html_path": "docs/reference/ui/maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/maintenance-workspace.tsx",
+        "src/components/maintenance-forms.tsx",
+        "src/components/maintenance-record-actions.tsx",
+        "src/app/styles/maintenance.css",
+        "docs/contracts/maintenance-warranty-api.md"
+      ],
+      "scope_status": "Native synthetic implementation; owner acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "Verification recorded in maintenance-warranty-handover.md",
+      "deployment_status": "Not deployed by this change",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:MA-05",
+        "route:/maintenance/renewals/[id]"
+      ]
+    },
+    {
+      "key": "route:/warranty/cases/[id]",
+      "title": "Warranty cases detail",
+      "kind": "route",
+      "module": "MA",
+      "summary": "Keep reported failure, cause, entitlement, remedy and customer outcome independently reviewable.",
+      "path": "/warranty/cases/[id]",
+      "source_paths": [
+        "src/app/(business)/warranty/cases/[id]/page.tsx",
+        "src/maintenance/warranty.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "guide_key": "guide.route-warranty-cases-id",
+      "design_path": "docs/design/development/pages/route-warranty-cases-id.md",
+      "html_path": "docs/reference/ui/warranty/PPO-Warranty-and-Customer-Resolution-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/maintenance-workspace.tsx",
+        "src/components/maintenance-forms.tsx",
+        "src/components/maintenance-record-actions.tsx",
+        "src/app/styles/maintenance.css",
+        "docs/contracts/maintenance-warranty-api.md"
+      ],
+      "scope_status": "Native synthetic implementation; owner acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "Verification recorded in maintenance-warranty-handover.md",
+      "deployment_status": "Not deployed by this change",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:MA-06",
+        "route:/warranty/cases"
+      ]
+    },
+    {
+      "key": "route:/warranty/cases",
+      "title": "Warranty cases",
+      "kind": "route",
+      "module": "MA",
+      "summary": "Keep reported failure, cause, entitlement, remedy and customer outcome independently reviewable.",
+      "path": "/warranty/cases",
+      "source_paths": [
+        "src/app/(business)/warranty/cases/page.tsx",
+        "src/maintenance/warranty.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "guide_key": "guide.route-warranty-cases",
+      "design_path": "docs/design/development/pages/route-warranty-cases.md",
+      "html_path": "docs/reference/ui/warranty/PPO-Warranty-and-Customer-Resolution-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/maintenance-workspace.tsx",
+        "src/components/maintenance-forms.tsx",
+        "src/components/maintenance-record-actions.tsx",
+        "src/app/styles/maintenance.css",
+        "docs/contracts/maintenance-warranty-api.md"
+      ],
+      "scope_status": "Native synthetic implementation; owner acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "Verification recorded in maintenance-warranty-handover.md",
+      "deployment_status": "Not deployed by this change",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:MA-06",
+        "route:/warranty/cases/[id]"
+      ]
+    },
+    {
+      "key": "route:/warranty/supplier-recovery/[id]",
+      "title": "Supplier recovery detail",
+      "kind": "route",
+      "module": "MA",
+      "summary": "Coordinate an exact supplier package, response and Finance evidence independently of customer resolution.",
+      "path": "/warranty/supplier-recovery/[id]",
+      "source_paths": [
+        "src/app/(business)/warranty/supplier-recovery/[id]/page.tsx",
+        "src/maintenance/recovery.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "guide_key": "guide.route-warranty-supplier-recovery-id",
+      "design_path": "docs/design/development/pages/route-warranty-supplier-recovery-id.md",
+      "html_path": "docs/reference/ui/warranty/PPO-Warranty-and-Customer-Resolution-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/maintenance-workspace.tsx",
+        "src/components/maintenance-forms.tsx",
+        "src/components/maintenance-record-actions.tsx",
+        "src/app/styles/maintenance.css",
+        "docs/contracts/maintenance-warranty-api.md"
+      ],
+      "scope_status": "Native synthetic implementation; owner acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "Verification recorded in maintenance-warranty-handover.md",
+      "deployment_status": "Not deployed by this change",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:MA-07",
+        "route:/warranty/supplier-recovery"
+      ]
+    },
+    {
+      "key": "route:/warranty/supplier-recovery",
+      "title": "Supplier recovery",
+      "kind": "route",
+      "module": "MA",
+      "summary": "Coordinate an exact supplier package, response and Finance evidence independently of customer resolution.",
+      "path": "/warranty/supplier-recovery",
+      "source_paths": [
+        "src/app/(business)/warranty/supplier-recovery/page.tsx",
+        "src/maintenance/recovery.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "guide_key": "guide.route-warranty-supplier-recovery",
+      "design_path": "docs/design/development/pages/route-warranty-supplier-recovery.md",
+      "html_path": "docs/reference/ui/warranty/PPO-Warranty-and-Customer-Resolution-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/maintenance-workspace.tsx",
+        "src/components/maintenance-forms.tsx",
+        "src/components/maintenance-record-actions.tsx",
+        "src/app/styles/maintenance.css",
+        "docs/contracts/maintenance-warranty-api.md"
+      ],
+      "scope_status": "Native synthetic implementation; owner acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "Verification recorded in maintenance-warranty-handover.md",
+      "deployment_status": "Not deployed by this change",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:MA-07",
+        "route:/warranty/supplier-recovery/[id]"
       ]
     }
   ]

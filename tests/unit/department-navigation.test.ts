@@ -12,7 +12,7 @@ test("seven full ordered compositions retain withheld positions and My Work plac
     estimate: "My Work|Intake & workload|Estimation wizard|Specialist configurations|Cost sources|Quotations|Reviews & approvals",
     engineering: "My Work|Engineering workload|Design basis & interfaces|Drawings|Materials & substitutions|Change review|Technical reviews|Commissioning & as-built",
     projects: "My Work|Projects|Programme|Delivery readiness|Risks & issues|Variations & obligations|Site assurance|Acceptance & closeout",
-    service: "My Work|Service requests|Work orders|Schedule|Field team|Job packs|Service review|Equipment",
+    service: "My Work|Service requests|Work orders|Schedule|Field team|Job packs|Service review|Equipment|Service agreements|Maintenance|Warranty",
     supply: "My Work|Material demand|Purchasing|Inbound shipments|Receiving|Stock & reservations|Dispatch & delivery|Returns & claims",
     finance: "My Work|Finance handoffs|Customer accounts|Project performance|Claims & obligations|Cash outlook|Reconciliation|Exceptions",
   };

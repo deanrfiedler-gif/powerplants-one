@@ -874,6 +874,7 @@ function AftercareWorkspace({
             {d.agreements.state}: {d.agreements.basis}. No agreement or renewal
             term is changed here.
           </p>
+          <ul>{d.agreements.agreements.map(a=><li key={a.id}><Link href={a.href}>{a.reference}</Link> ? {a.state}</li>)}{d.agreements.items.map(a=><li key={a.id}><Link href={a.href}>{a.reference}</Link> ? {a.next_action}</li>)}</ul>
           <p>
             Existing CRM opportunities: {d.customer.sections.deals.state} · As
             at <Stamp value={d.customer.sections.deals.observed_at} />
