@@ -9,6 +9,7 @@ import { closeDatabase, database } from "../src/platform/database";
 import { qualityLoadFixture } from "./quality-load-fixture";
 import { performanceFixtureFingerprint } from "./quality-performance-fixture";
 import { netlogDirectory, prepareNetlog } from "./netlog-metadata";
+import { waitForSampleCoreResponse } from "./quality-core-response";
 
 const compiled = process.argv.includes("--compiled");
 const baseRoot = "verification-evidence/p11-performance";
@@ -368,12 +369,7 @@ try {
               // navigation failure must remain an original failed sample, not
               // leave a response waiter that terminates the measurement early.
               const [received] = await Promise.all([
-                page.waitForResponse(
-                  (r) =>
-                    new URL(r.url()).pathname === view.api &&
-                    r.request().method() === "GET",
-                  { timeout: 120000 },
-                ),
+                waitForSampleCoreResponse(page, view.api),
                 page.goto(origin + view.route, {
                   waitUntil: "domcontentloaded",
                   timeout: 120000,
