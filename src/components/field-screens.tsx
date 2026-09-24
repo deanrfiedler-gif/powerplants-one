@@ -1374,6 +1374,7 @@ export function FieldJobScreen({ id }: { id: string }) {
               {job.work_order.reference} · {job.work_order.status}
             </span>
           </div>
+          <p><Link href={`/my-jobs/site-readiness?appointment_id=${job.id}`}>Review Site induction, risk and biosecurity</Link></p>
           <section className="business-card">
             <h2>Current work context</h2>
             <p>

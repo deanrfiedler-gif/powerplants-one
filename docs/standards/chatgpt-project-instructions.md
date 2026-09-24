@@ -93,3 +93,5 @@ Scheduling PL-01 to PL-05: preserve source-owned reads, unknown effort/mappings,
 Sales CR-01–05: follow ADR-0046 and sales-native-completion-handover.md. Preserve frozen submissions, immutable Won due, source-scoped receipts and aftercare unknown policies. Receiving creates no downstream work.
 
 Equipment: ADR-0045 / equipment-native-completion-handover.md. Reuse Assets, CS, Inspection and SH; scanning is read-only. Preserve originals and historic context. Recovery grants no controller-restore authority; support grants no replacement authority.
+
+FI: field-quality-native-handover.md. FI-05 reuses CS-06; induction needs a Person link. Acknowledgement grants no work authority.

@@ -6,15 +6,17 @@ This is an editable working specification. Existing accepted page baselines take
 
 ## Purpose and task
 
-Implement structured induction, risk and biosecurity review with site/area-specific instructions and acknowledgement.
+Native `/my-jobs/site-readiness?appointment_id=…` consumes the exact CS-06 source for a currently assigned visit. The bare route offers a permitted-visit chooser. [Implementation decision](../../../decisions/field-readiness-native.md) and [programme evidence](../../../delivery/field-quality-native-handover.md) distinguish implementation, testing, visual review and deployment.
 
-1. Read the current site-specific instructions
-2. Record completion or an owned unmet condition
-3. Escalate changed conditions before proceeding
+1. Open the exact job and review arrival/access, source owner and recorded time.
+2. Explicitly select Facility/Area/Block and activity; review applicable requirements, evidence periods and work windows.
+3. Record your personal review note and acknowledgement. Unmet conditions remain unresolved and must be escalated through the owning Service workflow.
+
+The current Resource has no canonical Person binding. Individual induction remains unverified; a matching name or acknowledgement cannot satisfy it. A preparation selection never expands authorised scope or inherits a parent Facility's requirements.
 
 ## Desktop
 
-Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
+Page type: record/evidence workspace with a visit chooser. Reuse the current shell, PageHeader, ReadState, Field, ValidationFields, Button and original-operation command status. Show visit context, explicit preparation selection, source/requirements and retained personal reviews in that order. No second navigation shell or global header. Incoming handovers: My Jobs, exact appointment/assignment and CS-06. Outgoing handovers: owning Site readiness and the same job; escalation is a retained note, not an automatically assigned Activity.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
@@ -39,3 +41,9 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 The draft User Guide `guide.fi.05` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## Native adaptations and limits
+
+Quality r01 is a proposed standalone reference. Native FI-05 uses the existing shell and vertically ordered cards instead of reproducing its multi-domain package rail. No runtime release/hold/induction policy is copied from its fixture. Paired visual review remains pending; exact source images have not yet been supplied. The source HTML remains unchanged.
+
+Changed source/visit context refuses a stale save; the old note/snapshot remains. An uncertain command keeps its original identity for receipt recovery. The page is online only at this increment; FI-02 extension is tracked separately. Denied reads clear current source content. The global information icon maps this route to its maintained draft guide.
