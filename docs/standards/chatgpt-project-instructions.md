@@ -58,7 +58,7 @@ Prevent duplicate work/financial effects on retry. Reconcile unknown outcomes. D
 
 Use accessible layouts, keyboard controls and explicit save status; avoid jargon.
 
-Use Australian English and docs/standards/ui-style-specification.md: Roboto/Verdana, navy #242a37, green #62bb46 and the intact supplied logo. CRM baseline: docs/decisions/crm-desktop-mobile-refinements.md. Show synthetic/environment context. Shell and rails: docs/decisions/department-navigation-icons.md.
+Use Australian English and docs/standards/ui-style-specification.md: Roboto/Verdana, navy #242a37, green #62bb46 and the intact supplied logo. CRM baseline: crm-desktop-mobile-refinements.md. Show synthetic/environment context. Shell/rails: department-navigation-icons.md.
 
 Define scope, permissions, validation, recovery and acceptance. Follow docs/requirements/product-quality-register.md and docs/delivery/product-quality-plan.md.
 
@@ -80,7 +80,7 @@ Test behaviour: permissions, booking conflicts, stale revisions, offline replay,
 
 Separate decisions, evidence, proposals and open questions; distinguish delivery, tests, acceptance and production readiness. Cite sources and limits.
 
-Preserve ES-02 exact costs and PJ-09 close/reopen. ES-01–10/Excel authority: estimating-native-programme.md; progress: estimating-programme-handover.md. ES-08 D1–D15/DEC-R1/R2: WP-G00 first; no migration slot, engineering approval or deployment. Retain four CI lanes (ci-retained-suite-isolation.md).
+Preserve ES-02 exact costs and PJ-09 close/reopen. ES-01–10/Excel authority: estimating-native-programme.md; progress: estimating-programme-handover.md. ES-02 families: es02-design-board.md; P2–P9 proposed. ES-08 D1–D15/DEC-R1/R2: WP-G00 first; no migration slot, engineering approval or deployment. Retain four CI lanes (ci-retained-suite-isolation.md).
 
 Keep synthetic mailboxes private and bodies outside shared Activities; see demo-email-crm-integration.md. CI and Outlook acceptance are separate. SH-01–06: docs/delivery/sh-platform-handover.md; teams/DK/delivery pending.
 

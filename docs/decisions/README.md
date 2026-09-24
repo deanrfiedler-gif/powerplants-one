@@ -14,6 +14,8 @@
 
 [ES-08 design board owner decision](es08-design-board.md) records Dean's 23 September 2026 acceptance of the merged Screen Configurator Workbench board: departures D1–D15, rulings DEC-R1 (rounding) and DEC-R2 (roll fit) and a five-profile structure drawing standard. The board has [retained captures](../reference/ui/specialist/design-board-r01/README.md). It states the changes that WP-G00 must carry into the geometry build plan. It is design direction only: no implementation, migration, UI baseline entry or engineering acceptance.
 
+[ES-02 Estimation Wizard design board](es02-design-board.md) records the user's 23 September 2026 decision that six equipment families with 108 categories replace build plan r04 §4.7's four presentation groups, and what implementing it needs (a successor to `PPO-ES02-CONFIG-r01`, a migration and an ADR amending ADR-0035). The board's proposals P2–P9 and open decision O1 (desktop control height) are **not accepted**; six findings against the running build (B1–B6) are recorded with evidence. The board has [retained captures](../reference/ui/estimating/design-board-r01/README.md). No implementation, migration or UI baseline entry.
+
 [decision-register.csv](decision-register.csv) retains the 29 original questions and closure evidence. D-003 is resolved for the personal prototype under ADR-0005. D-004/D-022/D-029 remain partially resolved; 25 other decisions remain open. Proposed roles are not assigned staff.
 
 | ADR | Decision |
