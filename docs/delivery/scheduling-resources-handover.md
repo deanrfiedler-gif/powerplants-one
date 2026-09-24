@@ -2,14 +2,16 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-**Owner:** Dean Fiedler · **Date:** 24 September 2026 · **Status:** Implementation and verification in progress; owner acceptance and deployment separate.
+**Owner:** Dean Fiedler · **Date:** 24 September 2026 · **Status:** S1–S5 implemented for review; local verification and its baseline limits recorded separately from owner acceptance and deployment.
 **Original base:** `ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc` · **Branch:** `feat/scheduling-resources-completion`.
 
 ## Refreshed audit
 
 Fetched origin before implementation; it matched the prompt's audited head. During implementation PRs #299 (fertigation held-field placement) and #300 (Projects reconciliation) merged. Reconciled with main `6c5e7c4fcbaf05d712a46989faf2cf7cabb8ba72`, preserving their runtime and shared-register changes. The document-register append conflict retained both programmes. No Scheduling engine or migration changed upstream.
 
-A second open-PR audit found #301 (Estimating), #302 (Equipment), #303 (Sales) and #304 (SV-05 print/source review). They overlap STATUS, guides, registers and some shared component records/fixtures. #302 reserves migration 0045 and #303 reserves 0046; this programme needs neither a migration nor a new capability. Other worktrees remain untouched.
+A second open-PR audit found #301 (Estimating), #302 (Equipment), #303 (Sales) and #304 (SV-05 print/source review). Before publication, #304 merged and was preserved by reconciling main `9e49a57332aacfbb45a43fdd4d17c1d031fc80fb`; its changes are confined to Job Pack runtime and shared documentation. New Estimating cost-source work also appeared. Concurrent programmes overlap STATUS, guides, registers, shared component records/fixtures and migration allocations; this programme needs neither a migration nor a new capability. Other worktrees remain untouched. These observations are bounded to the refresh, not reservations on behalf of those programmes.
+
+The final open-PR inspection covered #301, #302, #303 and new #305–#308. Engineering #305 also touches `src/engineering/service.ts`; #307 touches the layout import, and Equipment #302 touches component examples/fixtures. All seven overlap shared living documentation. At that observation, #302 and #308 each named a 0045 migration, #303 named 0046 and #305 named 0047; they need their own merge-time reconciliation. Scheduling allocates no migration and does not incorporate unmerged domain changes.
 
 The retained Scheduling r01 HTML and its packaged design/change records were inspected without editing issued bytes. Its unassigned lane was Proposed appointments; current ADR-0039 and the authorised work-order demand implementation supersede that design detail. Field Team remains the accepted technician-centric workflow. Its new resource link continues into PL-02 detail.
 
@@ -33,4 +35,4 @@ PL-04 accepts no new command authority. Existing request/appointment versions, r
 
 [Executed evidence](../testing/evidence/scheduling-resources/README.md) is the maintained source of exact results and limitations. Working PL-01–05 and new route contracts, draft guides, component consumer bindings and API/data documentation accompany the implementation. Missing mockups and owner visual review remain explicit; no review fingerprint is copied or accepted.
 
-Before merge, reconcile current main and shared registers, run required checks, inspect native desktop/phone/zoom evidence and report CI conclusions against the exact PR head. The next owner step is review of the concrete PR and native compositions. Deployment requires its separate release instruction.
+The next owner step is review of the concrete PR and native compositions, alongside the exact check results in the evidence record. All working visual review records and guides remain pending/Draft; captures do not grant acceptance. Required PR checks must be considered before merge. Deployment requires its separate release instruction.

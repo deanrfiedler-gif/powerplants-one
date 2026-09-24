@@ -15880,9 +15880,9 @@
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-24",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/testing/evidence/scheduling-resources/README.md; no owner acceptance inferred.",
+      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits.",
       "sections": [
         {
           "section_id": "purpose",
@@ -16063,9 +16063,9 @@
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-24",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/testing/evidence/scheduling-resources/README.md; no owner acceptance inferred.",
+      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits.",
       "sections": [
         {
           "section_id": "purpose",
@@ -16247,9 +16247,9 @@
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-24",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/testing/evidence/scheduling-resources/README.md; no owner acceptance inferred.",
+      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits.",
       "sections": [
         {
           "section_id": "purpose",
@@ -16431,9 +16431,9 @@
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-24",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/testing/evidence/scheduling-resources/README.md; no owner acceptance inferred.",
+      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits.",
       "sections": [
         {
           "section_id": "purpose",
@@ -16615,9 +16615,9 @@
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-24",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/testing/evidence/scheduling-resources/README.md; no owner acceptance inferred.",
+      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits.",
       "sections": [
         {
           "section_id": "purpose",
@@ -48018,9 +48018,9 @@
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-24",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/testing/evidence/scheduling-resources/README.md; no owner acceptance inferred.",
+      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits.",
       "sections": [
         {
           "section_id": "purpose",
@@ -49855,9 +49855,9 @@
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-24",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/testing/evidence/scheduling-resources/README.md; no owner acceptance inferred.",
+      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits.",
       "sections": [
         {
           "section_id": "purpose",
@@ -68538,7 +68538,7 @@
       "reviewed_at": null,
       "reviewed_content_hash": null,
       "content_mode": "Native application workflow; owner acceptance pending",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a",
       "related_entry_keys": [
         "scope:PL-03"
       ],
@@ -68580,7 +68580,7 @@
       ],
       "prepared_at": "2026-09-24",
       "change_summary": "S1–S5 Scheduling & Resources implementation and source-owned review boundaries.",
-      "runtime_evidence": "See docs/testing/evidence/scheduling-resources/README.md; no owner acceptance inferred.",
+      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits.",
       "source_paths": [
         "src/app/(business)/schedule/capacity/page.tsx",
         "docs/decisions/scheduling-resources-architecture.md",
@@ -68597,7 +68597,7 @@
       "reviewed_at": null,
       "reviewed_content_hash": null,
       "content_mode": "Native application workflow; owner acceptance pending",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a",
       "related_entry_keys": [
         "scope:PL-04"
       ],
@@ -68639,7 +68639,7 @@
       ],
       "prepared_at": "2026-09-24",
       "change_summary": "S1–S5 Scheduling & Resources implementation and source-owned review boundaries.",
-      "runtime_evidence": "See docs/testing/evidence/scheduling-resources/README.md; no owner acceptance inferred.",
+      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits.",
       "source_paths": [
         "src/app/(business)/schedule/changes/page.tsx",
         "docs/decisions/scheduling-resources-architecture.md",
@@ -68656,7 +68656,7 @@
       "reviewed_at": null,
       "reviewed_content_hash": null,
       "content_mode": "Native application workflow; owner acceptance pending",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a",
       "related_entry_keys": [
         "scope:PL-05"
       ],
@@ -68698,7 +68698,7 @@
       ],
       "prepared_at": "2026-09-24",
       "change_summary": "S1–S5 Scheduling & Resources implementation and source-owned review boundaries.",
-      "runtime_evidence": "See docs/testing/evidence/scheduling-resources/README.md; no owner acceptance inferred.",
+      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits.",
       "source_paths": [
         "src/app/(business)/schedule/travel/page.tsx",
         "docs/decisions/scheduling-resources-architecture.md",
@@ -68715,7 +68715,7 @@
       "reviewed_at": null,
       "reviewed_content_hash": null,
       "content_mode": "Native application workflow; owner acceptance pending",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a",
       "related_entry_keys": [
         "scope:PL-02",
         "route:/service/technicians"
@@ -68758,7 +68758,7 @@
       ],
       "prepared_at": "2026-09-24",
       "change_summary": "S1–S5 Scheduling & Resources implementation and source-owned review boundaries.",
-      "runtime_evidence": "See docs/testing/evidence/scheduling-resources/README.md; no owner acceptance inferred.",
+      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits.",
       "source_paths": [
         "src/app/(business)/service/technicians/[id]/page.tsx",
         "docs/decisions/scheduling-resources-architecture.md",

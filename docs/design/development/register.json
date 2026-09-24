@@ -2097,7 +2097,10 @@
       "guide_key": "guide.pl.01",
       "design_path": "docs/design/development/pages/scope-pl-01.md",
       "html_path": "docs/reference/ui/service/PPO-Scheduling-and-Appointments-Workspace-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/scheduling-resources/images/planner-1440x960.png",
+        "docs/testing/evidence/scheduling-resources/images/planner-320x844.png"
+      ],
       "dependencies": [
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
@@ -2106,7 +2109,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Implementation present; evidence recorded separately",
+      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -2131,7 +2134,10 @@
       "guide_key": "guide.pl.02",
       "design_path": "docs/design/development/pages/scope-pl-02.md",
       "html_path": null,
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/scheduling-resources/images/resource-1440x960.png",
+        "docs/testing/evidence/scheduling-resources/images/resource-320x844.png"
+      ],
       "dependencies": [
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
@@ -2140,7 +2146,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Implementation present; evidence recorded separately",
+      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -2168,7 +2174,10 @@
       "guide_key": "guide.pl.03",
       "design_path": "docs/design/development/pages/scope-pl-03.md",
       "html_path": null,
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/scheduling-resources/images/capacity-1440x960.png",
+        "docs/testing/evidence/scheduling-resources/images/capacity-320x844.png"
+      ],
       "dependencies": [
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
@@ -2177,7 +2186,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Implementation present; evidence recorded separately",
+      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -2205,7 +2214,10 @@
       "guide_key": "guide.pl.04",
       "design_path": "docs/design/development/pages/scope-pl-04.md",
       "html_path": "docs/reference/ui/service/PPO-Scheduling-and-Appointments-Workspace-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/scheduling-resources/images/changes-1440x960.png",
+        "docs/testing/evidence/scheduling-resources/images/changes-320x844.png"
+      ],
       "dependencies": [
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
@@ -2214,7 +2226,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Implementation present; evidence recorded separately",
+      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -2242,7 +2254,10 @@
       "guide_key": "guide.pl.05",
       "design_path": "docs/design/development/pages/scope-pl-05.md",
       "html_path": null,
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/scheduling-resources/images/travel-1440x960.png",
+        "docs/testing/evidence/scheduling-resources/images/travel-320x844.png"
+      ],
       "dependencies": [
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
@@ -2251,7 +2266,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Implementation present; evidence recorded separately",
+      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -5741,7 +5756,10 @@
       "guide_key": "guide.page.schedule",
       "design_path": "docs/design/development/pages/route-schedule.md",
       "html_path": null,
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/scheduling-resources/images/planner-1440x960.png",
+        "docs/testing/evidence/scheduling-resources/images/planner-320x844.png"
+      ],
       "dependencies": [
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
@@ -5750,7 +5768,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Implementation present; evidence recorded separately",
+      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -5944,7 +5962,10 @@
       "guide_key": "guide.page.service.technicians",
       "design_path": "docs/design/development/pages/route-service-technicians.md",
       "html_path": null,
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/scheduling-resources/images/resource-1440x960.png",
+        "docs/testing/evidence/scheduling-resources/images/resource-320x844.png"
+      ],
       "dependencies": [
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
@@ -5953,7 +5974,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Implementation present; evidence recorded separately",
+      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -8322,7 +8343,10 @@
       "guide_key": "guide.route-schedule-capacity",
       "design_path": "docs/design/development/pages/route-schedule-capacity.md",
       "html_path": null,
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/scheduling-resources/images/capacity-1440x960.png",
+        "docs/testing/evidence/scheduling-resources/images/capacity-320x844.png"
+      ],
       "dependencies": [
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
@@ -8331,7 +8355,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Implementation present; evidence recorded separately",
+      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -8355,7 +8379,10 @@
       "guide_key": "guide.route-schedule-changes",
       "design_path": "docs/design/development/pages/route-schedule-changes.md",
       "html_path": null,
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/scheduling-resources/images/changes-1440x960.png",
+        "docs/testing/evidence/scheduling-resources/images/changes-320x844.png"
+      ],
       "dependencies": [
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
@@ -8364,7 +8391,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Implementation present; evidence recorded separately",
+      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -8388,7 +8415,10 @@
       "guide_key": "guide.route-schedule-travel",
       "design_path": "docs/design/development/pages/route-schedule-travel.md",
       "html_path": null,
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/scheduling-resources/images/travel-1440x960.png",
+        "docs/testing/evidence/scheduling-resources/images/travel-320x844.png"
+      ],
       "dependencies": [
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
@@ -8397,7 +8427,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Implementation present; evidence recorded separately",
+      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -8421,7 +8451,10 @@
       "guide_key": "guide.route-service-technicians-id",
       "design_path": "docs/design/development/pages/route-service-technicians-id.md",
       "html_path": null,
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/scheduling-resources/images/resource-1440x960.png",
+        "docs/testing/evidence/scheduling-resources/images/resource-320x844.png"
+      ],
       "dependencies": [
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
@@ -8430,7 +8463,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Implementation present; evidence recorded separately",
+      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

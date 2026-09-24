@@ -7,7 +7,7 @@
 
 ## Evidence and scope
 
-Initial main was `ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc`. PRs #299 and #300 subsequently merged; the branch is reconciled with `6c5e7c4fcbaf05d712a46989faf2cf7cabb8ba72`. Current #301 to #304 overlap shared documentation/component records; Equipment and Sales reserve 0045/0046. No Scheduling migration or capability is needed. Other worktrees remain untouched.
+Initial main was `ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc`. The branch subsequently reconciled #299/#300 at `6c5e7c4` and #304 at `9e49a57332aacfbb45a43fdd4d17c1d031fc80fb`. The [handover](../delivery/scheduling-resources-handover.md) records the final open-PR overlaps and observed migration allocations. No Scheduling migration or capability is needed. Other worktrees remain untouched.
 
 PL-01 and Field Team already work. Preserve their engines and accepted presentation. PL-02 adds read-only resource detail; PL-04 adds a coordination queue and explicit request comparison using existing decisions; PL-05 reviews explicit reservations and analytical visit order; PL-03 combines source-owned contributions on the server.
 
