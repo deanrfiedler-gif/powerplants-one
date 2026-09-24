@@ -2,13 +2,13 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. Status: implementation and verification in progress on `feature/supply-chain-native`; no merge, deployment or owner acceptance claimed.
+Owner: Dean Fiedler. Native SC-01–SC-10 implementation and focused verification are delivered in [PR #317](https://github.com/deanrfiedler-gif/powerplants-one/pull/317), branch `feature/supply-chain-native`. Broader CI is tracked per commit on that PR. Merge, deployment, owner acceptance and production readiness remain separate and are not claimed.
 
 ## Baseline and scope
 
 Fetched main: `0f10b7fb46a8ab512e9b019573ece272cf5920b9`. Tree: `a5b0624f19205909e67b83b437bc1edb79510f3a`. GitHub initially had only PR #314 (ES-02 design board) open. It overlaps shared status/design/document registers, not Supply Chain runtime. Recent merged native Customer, Equipment, Sales, Engineering and Scheduling work was inspected. Issue [#13 / PPO-013](https://github.com/deanrfiedler-gif/powerplants-one/issues/13) remains the broad package; no production transaction or customer communication was authorised.
 
-The original local checkout contains unrelated uncommitted Field/Quality work. This contribution uses an isolated worktree and leaves those changes intact. Another local session was running Field database tests and a build. Supply verification therefore uses a disposable loopback PostgreSQL instance on port 5549 with the required database name `ppo_synthetic_test`, and application port 3059. Neither the other session's processes nor its database were reset.
+The original local checkout contains unrelated uncommitted Field/Quality work. This contribution uses an isolated worktree and leaves those changes intact. Other local sessions were running Field and Finance checks. Supply verification therefore uses disposable loopback PostgreSQL instances on ports 5549 (database tests) and 5550 (browser/process restart), both named `ppo_synthetic_test`, and application port 3059. Other sessions' processes and databases were not reset.
 
 ## Implementation
 
@@ -18,17 +18,30 @@ The ten page-specific guides are available through the global information icon. 
 
 ## Verification record
 
-Targeted database verification: **10/10 passed**, including actual Field consumption and custody reconciliation, restart recovery, scope, replay/conflict, Project split-shipment/quarantine, concurrent allocations, fulfilment/outstanding, return remedy versus recovery, restricted credits, original external-operation reconciliation, unchanged confirmed Service appointment and exact durable PNG access. Later browser-driven refinements are undergoing the final regression run.
+| Command / evidence | Executed result |
+|---|---|
+| `npm run test:unit` | 426/430 passed on Windows. The same four filesystem/path failures reproduce on untouched main `2173cc64eed54b1e3fb8334495f7cd924206d13f` (3/7 passed): two document-store cases, recovery-directory guard and warm-route path assertion. |
+| `node --import tsx --test tests/unit/supply.test.ts tests/unit/department-navigation.test.ts tests/unit/shell-navigation.test.ts` | 17/17 passed, including all eight Supply units. |
+| `node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=180000 tests/database/supply.test.ts tests/database/supply-custody.test.ts` | 11/11 passed: exact arithmetic/conservation, concurrent allocation, scope, replay, corrections, restricted credits, six cross-domain scenarios, durable PNG, reseed and upgrade preservation. Includes direct-SQL and API refusal of reductions below retained receipt/return quantities. |
+| `node --env-file=.env.supply-browser --import tsx --test tests/http/supply.test.ts` | Passed against the compiled application: authorised/denied scope, invalid/stale commands, duplicate original, changed-content refusal, Partial and Unknown evidence, Not configured source command and original-operation recovery. |
+| `npx playwright test --config=playwright.supply.config.ts` | 60/60 passed against the compiled application at 1440 × 960, 1024 × 768, 390 × 844 and 320 × 844. All ten routes; six Returns views; mobile receipt/correction, pick/stage/partial POD, focus, Back/reload, denied/read-only access, stale proposal review and lost accepted response recovery. |
+| Department navigation browser regression | 1/1 passed against the compiled application, traversing all seven departments and the newly available Supply rail. |
+| CRM affected race/upgrade/output cases | Both previously interrupted races passed. Exact pre-transfer upgrade preservation passed on a clean rerun. E1 output/owner preservation passed. A 10-second schema-drop statement timeout occurred on an earlier local upgrade attempt; the clean rerun passed. |
+| `scripts/supply-restart-proof.ts write` / `verify` | Passed across an actual PostgreSQL restart and compiled application restart. The script asserts changed PostgreSQL start time, identical record/revision/fact/photo/audit/receipt/outbox hash, exact PNG bytes, original receipt through HTTP, and replay without another effect. CI runs the same proof around its existing PostgreSQL restart. |
+| `npm run lint`; `npm run typecheck`; `npm run build` | Passed. Compiled build `10gJ-npmZg83l88QcfFvc`, UI source `6305a2cc5b844444dad30d3369c73788b45b2d15`, tree `ce8f71f2665016c25169bdc32602f1acf7a40fd8`. Final quantity guard/test source `ecf2f576a8f26fecb651e63dce38d85b9bab56d5`, tree `f4e0ba9e92e8efcdd188c98da002a962d50a3893`; compiled UI unchanged. |
+| `npm run studio:sync`; `npm run studio:check` | Passed: 319 entries, 165 source routes, 28 component records, no integrity errors; reviews remain pending. |
+| `python scripts/check_foundation.py`; `python scripts/check_prototype.py`; `python scripts/check_naming.py`; `node scripts/check-access-review-model.mjs`; `git diff --check` | Passed. All 78 parent IDs and issued reference bytes retained; project instructions are within the 8,000-character limit; access-review model has 107 groups. |
+| `npm run test:db`; `npm run test:http`; broad browser suites | Full Linux CI runs through the normal PR workflows; use the PR's per-commit checks and final verification comment for completed aggregate results. The original local broad database run was suspended for hours and stopped in favour of clean focused reruns and full CI. It is not claimed as a full local pass. Local port 3000 belongs to another session; older HTTP suites hard-code that port, so the full HTTP suite runs in isolated CI. |
 
-Full unit suite: **426/430 passed**. Four Windows filesystem/path failures in `document-store.test.ts` (two), `recovery.test.ts` and `warm-routes.test.ts` reproduce on unchanged main `2173cc64eed54b1e3fb8334495f7cd924206d13f` (3/7 passed, the same four failures). Supply HTTP contract passed. Lint, TypeScript, application build, foundation, prototype and the 107-group access-review model check passed before the final browser refinements. Naming identified the 8,000-character project-instruction limit; the copy has been shortened for final recheck.
-
-Mobile verification has passed receipt/correction/focus return, pick/stage/partial POD and original-operation recovery after a lost accepted response. The full 56-case, four-width run is in progress. A reused dialog initially lacked host-scoped styling, and refresh removed the focus-return target; both were fixed within the Supply host. A prior local run was interrupted by a multi-hour runner suspension; its elapsed-time failures are not counted as successful verification. The broad database run and clean reruns are pending.
+The [evidence index](../testing/evidence/supply-chain-native/README.md) contains 75 hashed captures, retained result logs and explicit source/native design differences. Browser inspection corrected missing host-scoped modal styling, focus loss after save and mobile detail below a long list. Native mobile selection now replaces the list with detail and an explicit Back control. No capture or test pass grants owner acceptance or an accepted design fingerprint.
 
 The first sandboxed Node/tsx attempts failed before loading tests with `uv_os_get_passwd ENOMEM`. Unsandboxed local runs loaded and executed normally. This is recorded as a local tool failure, not an application regression. Next's first worktree launch could not resolve its package inside the new checkout; installing the existing locked dependencies locally is environment setup, not a dependency change.
 
-Pending checks: final lint/typecheck/database/HTTP/build, all-route responsive browser captures, design/register/naming assurance, migration/reseed/upgrade preservation and final Git diff review. No test pass or screenshot has been used to mark a design review accepted.
+The seeded identity compatibility proofs retain exact comparisons and allow only the three authored seed-49 identities; no previous identity or counter is relaxed. Shell compatibility proofs now expect the native Supply landing and eight links including My Work. The new quantity guard closes an identified revision loophole instead of allowing a smaller parent quantity to contradict retained physical evidence.
 
 Main was reconciled with the ES-02 design-board merge at `2173cc64eed54b1e3fb8334495f7cd924206d13f`, tree `c7d9f5402c8d09dc6d37df0cb7d81ecd0d507276`. PRs #315 (Scheduling refinement) and #316 (FI-05) were audited; they have no migration collision but overlap shared status/register/receipt files. Their unrelated work is preserved. Review increments: `d75377f` persistence/API; `420fd5e` native workspaces/guides; `8b74caa` verification; `3bb510c` working documentation.
+
+Follow-through: `116f210` browser/correctness refinements; `55d795d` exact seed/shell expectations; `6305a2c` mobile detail navigation and stale-review proof; `ecf2f57` retained physical quantity guards. The PR records the final evidence/CI-proof commit and its complete check set.
 
 ## Traceability and boundaries
 

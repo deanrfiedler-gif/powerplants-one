@@ -31,3 +31,9 @@ Incoming: canonical Customer/Site/Facility/Equipment, Project or Work Order dema
 No exact historical HTML or image exists for SC-10. This native composition and its new application captures are the design reference; owner acceptance remains pending.
 
 No exact historical mobile image is recorded. New application captures belong under `docs/testing/evidence/supply-chain-native/`; source presence, executed functional tests, visual inspection, owner acceptance and deployment are separate. See [handover](../../../delivery/supply-chain-native-handover.md) and [BP-08](../../../blueprints/BP-08-supply-chain.md). Current paired visual acceptance is not claimed.
+
+## Native application captures — 25 September 2026
+
+[1440 px](../../../testing/evidence/supply-chain-native/sc-10-supply-1440.png) · [1024 px](../../../testing/evidence/supply-chain-native/sc-10-supply-1024.png) · [390 px](../../../testing/evidence/supply-chain-native/sc-10-supply-390.png) · [320 px](../../../testing/evidence/supply-chain-native/sc-10-supply-320.png)
+
+Source, hashes, executed checks and proposed departures are recorded in the [evidence index](../../../testing/evidence/supply-chain-native/README.md). These are native application captures; historical references and pending owner review remain separate.

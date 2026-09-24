@@ -2979,7 +2979,12 @@
       "guide_key": "guide.sc.01",
       "design_path": "docs/design/development/pages/scope-sc-01.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-01-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-01-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-01-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-01-supply-320.png"
+      ],
       "dependencies": [
         "src/supply/model.ts",
         "src/supply/commands.ts",
@@ -2991,7 +2996,7 @@
       ],
       "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -3020,7 +3025,12 @@
       "guide_key": "guide.sc.02",
       "design_path": "docs/design/development/pages/scope-sc-02.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-02-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-02-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-02-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-02-supply-320.png"
+      ],
       "dependencies": [
         "src/supply/model.ts",
         "src/supply/commands.ts",
@@ -3032,7 +3042,7 @@
       ],
       "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -3060,7 +3070,12 @@
       "guide_key": "guide.sc.03",
       "design_path": "docs/design/development/pages/scope-sc-03.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-03-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-03-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-03-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-03-supply-320.png"
+      ],
       "dependencies": [
         "src/supply/model.ts",
         "src/supply/commands.ts",
@@ -3072,7 +3087,7 @@
       ],
       "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -3099,7 +3114,12 @@
       "guide_key": "guide.sc.04",
       "design_path": "docs/design/development/pages/scope-sc-04.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-04-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-04-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-04-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-04-supply-320.png"
+      ],
       "dependencies": [
         "src/supply/model.ts",
         "src/supply/commands.ts",
@@ -3111,7 +3131,7 @@
       ],
       "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -3138,7 +3158,12 @@
       "guide_key": "guide.sc.05",
       "design_path": "docs/design/development/pages/scope-sc-05.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-05-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-05-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-05-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-05-supply-320.png"
+      ],
       "dependencies": [
         "src/supply/model.ts",
         "src/supply/commands.ts",
@@ -3150,7 +3175,7 @@
       ],
       "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -3179,7 +3204,12 @@
       "guide_key": "guide.sc.06",
       "design_path": "docs/design/development/pages/scope-sc-06.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-06-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-06-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-06-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-06-supply-320.png"
+      ],
       "dependencies": [
         "src/supply/model.ts",
         "src/supply/commands.ts",
@@ -3191,7 +3221,7 @@
       ],
       "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -3218,7 +3248,12 @@
       "guide_key": "guide.sc.07",
       "design_path": "docs/design/development/pages/scope-sc-07.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-07-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-07-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-07-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-07-supply-320.png"
+      ],
       "dependencies": [
         "src/supply/model.ts",
         "src/supply/commands.ts",
@@ -3230,7 +3265,7 @@
       ],
       "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -3257,7 +3292,12 @@
       "guide_key": "guide.sc.08",
       "design_path": "docs/design/development/pages/scope-sc-08.md",
       "html_path": "docs/reference/ui/returns-claims/PPO-Returns-Supplier-Claims-and-Credit-Tracking-Workspace-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-08-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-08-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-08-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-08-supply-320.png"
+      ],
       "dependencies": [
         "src/supply/model.ts",
         "src/supply/commands.ts",
@@ -3269,7 +3309,7 @@
       ],
       "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -3297,7 +3337,12 @@
       "guide_key": "guide.sc.09",
       "design_path": "docs/design/development/pages/scope-sc-09.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-09-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-09-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-09-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-09-supply-320.png"
+      ],
       "dependencies": [
         "src/supply/model.ts",
         "src/supply/commands.ts",
@@ -3309,7 +3354,7 @@
       ],
       "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -3337,7 +3382,12 @@
       "guide_key": "guide.sc.10",
       "design_path": "docs/design/development/pages/scope-sc-10.md",
       "html_path": null,
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-10-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-10-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-10-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-10-supply-320.png"
+      ],
       "dependencies": [
         "src/supply/model.ts",
         "src/supply/commands.ts",
@@ -3349,7 +3399,7 @@
       ],
       "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -10232,7 +10282,12 @@
       "guide_key": "guide.route-supply-changes",
       "design_path": "docs/design/development/pages/route-supply-changes.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-09-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-09-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-09-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-09-supply-320.png"
+      ],
       "dependencies": [
         "src/supply/model.ts",
         "src/supply/commands.ts",
@@ -10244,7 +10299,7 @@
       ],
       "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -10269,7 +10324,12 @@
       "guide_key": "guide.route-supply-deliveries",
       "design_path": "docs/design/development/pages/route-supply-deliveries.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-07-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-07-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-07-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-07-supply-320.png"
+      ],
       "dependencies": [
         "src/supply/model.ts",
         "src/supply/commands.ts",
@@ -10281,7 +10341,7 @@
       ],
       "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -10306,7 +10366,12 @@
       "guide_key": "guide.route-supply-dispatch",
       "design_path": "docs/design/development/pages/route-supply-dispatch.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-06-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-06-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-06-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-06-supply-320.png"
+      ],
       "dependencies": [
         "src/supply/model.ts",
         "src/supply/commands.ts",
@@ -10318,7 +10383,7 @@
       ],
       "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -10343,7 +10408,12 @@
       "guide_key": "guide.route-supply-material-readiness",
       "design_path": "docs/design/development/pages/route-supply-material-readiness.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-01-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-01-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-01-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-01-supply-320.png"
+      ],
       "dependencies": [
         "src/supply/model.ts",
         "src/supply/commands.ts",
@@ -10355,7 +10425,7 @@
       ],
       "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -10380,7 +10450,12 @@
       "guide_key": "guide.route-supply-purchasing",
       "design_path": "docs/design/development/pages/route-supply-purchasing.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-02-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-02-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-02-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-02-supply-320.png"
+      ],
       "dependencies": [
         "src/supply/model.ts",
         "src/supply/commands.ts",
@@ -10392,7 +10467,7 @@
       ],
       "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -10417,7 +10492,12 @@
       "guide_key": "guide.route-supply-receipts",
       "design_path": "docs/design/development/pages/route-supply-receipts.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-04-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-04-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-04-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-04-supply-320.png"
+      ],
       "dependencies": [
         "src/supply/model.ts",
         "src/supply/commands.ts",
@@ -10429,7 +10509,7 @@
       ],
       "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -10454,7 +10534,12 @@
       "guide_key": "guide.route-supply-returns",
       "design_path": "docs/design/development/pages/route-supply-returns.md",
       "html_path": "docs/reference/ui/returns-claims/PPO-Returns-Supplier-Claims-and-Credit-Tracking-Workspace-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-08-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-08-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-08-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-08-supply-320.png"
+      ],
       "dependencies": [
         "src/supply/model.ts",
         "src/supply/commands.ts",
@@ -10466,7 +10551,7 @@
       ],
       "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -10491,7 +10576,12 @@
       "guide_key": "guide.route-supply-service-stock",
       "design_path": "docs/design/development/pages/route-supply-service-stock.md",
       "html_path": null,
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-10-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-10-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-10-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-10-supply-320.png"
+      ],
       "dependencies": [
         "src/supply/model.ts",
         "src/supply/commands.ts",
@@ -10503,7 +10593,7 @@
       ],
       "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -10528,7 +10618,12 @@
       "guide_key": "guide.route-supply-shipments",
       "design_path": "docs/design/development/pages/route-supply-shipments.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-03-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-03-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-03-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-03-supply-320.png"
+      ],
       "dependencies": [
         "src/supply/model.ts",
         "src/supply/commands.ts",
@@ -10540,7 +10635,7 @@
       ],
       "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -10565,7 +10660,12 @@
       "guide_key": "guide.route-supply-stock",
       "design_path": "docs/design/development/pages/route-supply-stock.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-05-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-05-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-05-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-05-supply-320.png"
+      ],
       "dependencies": [
         "src/supply/model.ts",
         "src/supply/commands.ts",
@@ -10577,7 +10677,7 @@
       ],
       "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Native verification in progress; see supply-chain-native-handover.md",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,

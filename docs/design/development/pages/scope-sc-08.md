@@ -33,3 +33,9 @@ Exact retained HTML: `docs/reference/ui/returns-claims/PPO-Returns-Supplier-Clai
 No exact historical mobile image is recorded. New application captures belong under `docs/testing/evidence/supply-chain-native/`; source presence, executed functional tests, visual inspection, owner acceptance and deployment are separate. See [handover](../../../delivery/supply-chain-native-handover.md) and [BP-08](../../../blueprints/BP-08-supply-chain.md). Current paired visual acceptance is not claimed.
 
 The r01 Returns report records an unpublished authoring package and disagreeing HTML hashes. Native tests are new evidence; no historical verification claim is repaired or implied.
+
+## Native application captures — 25 September 2026
+
+[1440 px](../../../testing/evidence/supply-chain-native/sc-08-supply-1440.png) · [1024 px](../../../testing/evidence/supply-chain-native/sc-08-supply-1024.png) · [390 px](../../../testing/evidence/supply-chain-native/sc-08-supply-390.png) · [320 px](../../../testing/evidence/supply-chain-native/sc-08-supply-320.png)
+
+Source, hashes, executed checks and proposed departures are recorded in the [evidence index](../../../testing/evidence/supply-chain-native/README.md). These are native application captures; historical references and pending owner review remain separate.
