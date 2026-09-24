@@ -12,6 +12,8 @@ Refreshed `origin/main`: `ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc`, identical t
 
 A second fetch before I6 found main at `6c5e7c4fcbaf05d712a46989faf2cf7cabb8ba72`: #299 and #300 had merged. The inspected delta is estimating/Projects and shared documentation/register work, with no Service implementation. I6 is explicitly stacked on I4 (`899dd6e`); later integration must retain those unrelated records.
 
+I4 #304 subsequently merged as `9e49a57332aacfbb45a43fdd4d17c1d031fc80fb` with all 18 checks successful, including standard database, HTTP and compiled browser suites. I6 was reconciled with that main before publication. This supersedes the initial local test limits as the release regression signal; those local observations remain recorded honestly.
+
 ## Reconciled programme
 
 | Scope | Starting source state | Next bounded work |
@@ -33,8 +35,14 @@ ADR-0043 remains **Proposed, not accepted**. SV-01/SV-02 must retain New, NeedsI
 |---|---|---|---|
 | SV-05 I4 | `feat/sv05-i4-source-print`, based on starting main | Source-change review; reasoned successor refresh; exact saved preparation print choices; real API receipt shape; original-operation replay retained | [I4 handover](job-pack-i4-handover.md). Compiled conformance 17 passed / five deliberate skips; real main journeys passed on desktop/phone; remaining local test limits recorded. [PR #304](https://github.com/deanrfiedler-gif/powerplants-one/pull/304); I6/I7/I5 remain |
 
+I6 on `feat/sv05-i6-structured-sections` is a stack after I4. It adds the adopted pure formatter, permission-scoped projection, exact-text proof/fallback and structured saved sections. Six unit cases, three focused database cases, a pre-I6-created revision Check and 22 compiled browser cases pass; six browser skips avoid duplicate width coverage. [I6 handover](job-pack-i6-handover.md) records the environment and acceptance limits. I7 and I5 remain.
+
+I7 continues on `feat/sv05-i7-presentation`, stacked on I6 PR #306, using the existing Service worktree and locked tooling. [I7 handover](job-pack-i7-handover.md) records the adopted title, readiness and staff history refinements. I5 remains the final Job Pack increment.
+
 ## Programme boundaries
 
 Use the [Job Pack plan](job-pack-integration-build-plan.md), [request plan](service-requests-integration-build-plan.md), current source, BP-01/BP-07 and each route/scope contract. Before each later workstream, audit the exact implementation, tests and retained design. Work Orders retain P04 authority; Scheduling retains booking authority; Service Review retains P09 revisions, exact evidence, controlled output and response bindings. Findings should project existing sources; an essential new durable identity requires its own architectural decision before schema work. Remote support must distinguish reported symptoms, hypotheses, verified findings and OEM advice, with manual evidence capture only.
 
 Every increment includes its applicable register/guide changes and checks. Use bounded PRs and explicit dependencies. Unresolved owner decisions and local baseline failures remain visible; neither implementation nor a passing screenshot test grants owner acceptance.
+
+I5 continues on `feat/sv05-i5-integration` after I7 PR #309. The refreshed main remains `9e49a57`; concurrent Sales, Equipment, Engineering and Estimating PRs are independent. [Final Job Pack handover](job-pack-integration-handover.md) records implementation and verification without closing the remaining SV-01–SV-08 workstreams.

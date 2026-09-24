@@ -72,7 +72,7 @@ export const destinations: ShellDestination[] = [
   {"id": "insights", "label": "Insights", "icon": "nav-insights", "readiness": "unavailable", "workspace": "sales"},
   {"id": "intake", "label": "Intake", "icon": "nav-inbox", "readiness": "unavailable", "workspace": "estimate"},
   {"id": "wizard", "label": "Estimation wizard", "icon": "nav-wizard", "readiness": "ready", "href": "/estimating/discovery", "workspace": "estimate", "requires": ["estimating.read"]},
-  {"id": "estimates", "label": "Estimates", "icon": "nav-estimates", "readiness": "ready", "href": "/estimating", "workspace": "estimate", "requires": ["estimating.read"]},
+  {"id": "estimates", "label": "Intake & workload", "icon": "nav-estimates", "readiness": "ready", "href": "/estimating", "workspace": "estimate", "requires": ["estimating.read"]},
   {"id": "configurations", "label": "Specialist configurations", "icon": "nav-configurations", "readiness": "ready", "href": "/estimating/configurations", "workspace": "estimate", "requires": ["estimating.read"]},
   {"id": "pricing", "label": "Supplier pricing", "icon": "nav-pricing", "readiness": "unavailable"},
   {"id": "quotations", "label": "Quotations", "icon": "nav-quotation", "readiness": "ready", "href": "/estimating/quotes", "workspace": "estimate", "requires": ["estimating.quote.read"], "requiresAll": ["estimating.read"]},
@@ -279,7 +279,7 @@ export function workspacePreference(raw: string | null): WorkspaceId {
 }
 export const departmentRails: Record<WorkspaceId, readonly string[]> = {
   sales: ["pulse", "leads", "deals", "calendar", "tasks", "mail", "contacts", "products", "insights"],
-  estimate: ["work", "intake", "wizard", "estimates", "configurations", "pricing", "quotations", "estimate-reviews"],
+  estimate: ["work", "estimates", "wizard", "configurations", "pricing", "quotations", "estimate-reviews"],
   engineering: ["work", "engineering", "basis", "drawings", "materials", "changes", "technical-reviews", "commissioning"],
   projects: ["work", "projects", "programme", "readiness", "risks", "variations", "assurance", "acceptance"],
   service: ["work", "tickets", "orders", "planner", "technicians", "packs", "reports", "equipment"],

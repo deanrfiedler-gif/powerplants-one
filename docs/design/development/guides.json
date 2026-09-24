@@ -5772,11 +5772,11 @@
       "title": "Estimating intake and workload",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Existing foundation + proposed completion",
+      "content_mode": "Native read workflow with explicit unavailable policy actions",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "Not run for this guide",
@@ -5785,9 +5785,7 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Estimating intake and workload to work towards this outcome: An estimator has a clear, current basis for work.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "A workload entry is not an approved price or an issued quotation."
+            "Use the intake and workload view to find an opportunity brief, identify its current estimating owner and scope readiness, then open the exact discovery or saved estimate. This view reads canonical Sales and Estimating records; it does not accept intake, approve prices or issue a quotation."
           ],
           "steps": [],
           "rows": [],
@@ -5797,9 +5795,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Customer brief, opportunity, estimator, scope and required response date.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Current estimating.read, CRM opportunity and underlying customer/site/contact access are required. Current discovery and cost sources are independently checked. A Sales owner is not automatically the estimating owner. Start discovery additionally needs estimating.edit; existing edit and ownership guards are rechecked in the wizard."
           ],
           "steps": [],
           "rows": [],
@@ -5808,56 +5804,28 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Find the intake or existing estimate",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Open Estimating > Intake & workload. Search a customer, opportunity reference, title or brief. Expand Readiness, owner and sort for additional filters, then Apply filters. Collapsing the controls retains their selections. Review ownership and the selected discovery revision. Open discovery to resolve scope or deliberately adopt manual costs. Use Saved estimates for the existing exact-version workbook and Draft output."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Estimating intake and workload · Page"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "The page has a workload/saved-estimates navigation row, search/readiness/owner/sort filters and one card per permitted opportunity. Desktop cards align brief, ownership/source context and next estimating step. Phone cards stack these sections without hiding scope states or actions."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Customer brief, opportunity, estimator, scope and required response date.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Customer and brief come from the linked Opportunity, with its readable reference, UUID and current source version. Estimating owner comes from the discovery workspace. Each saved estimate retains its own option and costed discovery revision. Required response date is Unknown: neither the Sales next-action date nor expected close date is substituted."
           ],
           "steps": [],
           "rows": [],
@@ -5867,13 +5835,9 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Use My estimating work to select workspaces you own; unallocated opportunities are not assigned to you by this filter. Use Scope clarification for incomplete selected discovery, Discovery complete for scope ready to review for manual costing, or Legacy manual basis for estimates without a recorded E2 questionnaire. Recently changed orders opportunity/discovery changes; Customer sorts by canonical customer name. Filters live in the URL and survive Reload and Back/Forward."
           ],
-          "steps": [
-            "Find the intake or existing estimate",
-            "Check scope completeness and required clarification",
-            "Assign or review the next estimating action"
-          ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
@@ -5881,9 +5845,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "An estimator has a clear, current basis for work.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A workload entry is not an approved price or an issued quotation."
+            "Opening a record has no business effect. Complete discovery must still be deliberately adopted by the existing costing service. A changed discovery revision never silently changes a saved estimate. Draft quotation preparation uses an exact saved estimate version and remains a separate action."
           ],
           "steps": [],
           "rows": [],
@@ -5892,45 +5854,18 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Discovery not started means no estimating workspace. Scope clarification means the selected discovery is Incomplete. Discovery complete describes scope only. Legacy manual basis preserves pre-questionnaire estimates. Not allocated is distinct from Sales ownership. No readable saved estimate does not mean zero cost. Intake acceptance, allocation/return commands and priority policy are Not configured. A post-Won Sales handover-due reference is an obligation, not receiving acceptance."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare customer brief, opportunity, estimator, scope and required response date. Follow the task sequence and check that an estimator has a clear, current basis for work. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Estimating intake and workload has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A workload entry is not an approved price or an issued quotation."
+            "Synthetic example: an open Northbank brief with no discovery appears as Discovery not started and Not allocated. Saving discovery establishes its own owner and selected option. A Complete discovery still has no estimate until manual costing is deliberately adopted. If discovery later changes, the saved estimate link continues to show its original costed revision."
           ],
           "steps": [],
           "rows": [],
@@ -5939,45 +5874,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "The view refreshes on focus and periodically. Loading, failed reads and denied access are distinct from an empty queue. A failed refresh clears rows and offers Try loading again. Revoked source access removes protected rows/actions. The view is bounded to 100 search/owner-matching candidates before readiness filtering; narrow search for older records. Downstream saves retain their existing expected-version and original-operation recovery; resolve an uncertain original save in its record before retrying."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Filters stack at phone widths. Use labelled controls and Apply filters with keyboard or touch; every record link remains reachable. Browser Back/Forward restores URL filters. The global information icon opens the page guide and returns focus when closed. This page is online only and stores no business draft locally."
           ],
           "steps": [],
           "rows": [],
@@ -5987,8 +5895,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "ES-02 owns discovery and exact manual-cost adoption. ES-08 owns governed Screen Systems runs and explicit contribution adoption. Supplier pricing and Excel import are separate programme increments. Formal commercial review, issue and conversion remain separate business boundaries."
           ],
           "steps": [],
           "rows": [],
@@ -5998,9 +5905,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Prepared from the native workload implementation on 24 September 2026. This is a Draft guide; owner and operational review are pending. Verification is recorded in docs/delivery/estimating-programme-handover.md. A test pass or screenshot does not grant business acceptance or indicate deployment."
           ],
           "steps": [],
           "rows": [],
@@ -6016,9 +5921,12 @@
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/blueprints/BP-04-estimating-quotation.md"
+        "docs/blueprints/BP-04-estimating-quotation.md",
+        "src/components/estimating-workload.tsx",
+        "src/estimating/workload.ts",
+        "docs/delivery/estimating-programme-handover.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Describe actual workload filters, canonical ownership, exact discovery/cost identities, bounded results and authority/recovery boundaries.",
       "document_id": "PPO-GUIDE-ES-01",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -6149,7 +6057,8 @@
           "paragraphs": [
             "A selected, traceable discovery basis with owned review items.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A newer discovery revision does not automatically recost a saved estimate. The broader wizard design and implemented subset differ."
+            "A newer discovery revision does not automatically recost a saved estimate. The broader wizard design and implemented subset differ.",
+            "Current native journey: Intake & workload opens the existing discovery workspace. The five steps, alternatives, exact revisions and saved-cost evidence remain. Screen Systems is integrated through explicit specialist run review/adoption; its presence does not permit automatic repricing. Supplier-price refresh and Excel import remain separate programme work."
           ],
           "steps": [],
           "rows": [],
@@ -6287,7 +6196,7 @@
         "docs/delivery/es02-estimation-wizard-handover.md",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Reconcile workload entry and native specialist integration without changing discovery or saved-cost authority.",
       "document_id": "PPO-GUIDE-ES-02",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -14035,9 +13944,9 @@
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-24",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "aed0c00",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "I5: two component and 46 compiled browser cases passed, with four and seven deliberate skips respectively. Paired/print inspection recorded in docs/testing/evidence/job-pack-i5/README.md; owner/device acceptance separate.",
       "sections": [
         {
           "section_id": "purpose",
@@ -14102,6 +14011,22 @@
             [
               "Guide and design",
               "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
+            ],
+            [
+              "Saved section details",
+              "Arrangements, approved scope, equipment, selected history, captured controls and completion requirements may appear as labelled fields. Open Exact text as it will be issued to inspect the saved wording."
+            ],
+            [
+              "Pack title",
+              "A verified saved scope supplies the visit title and work kind; the exact work-order and appointment references remain visible."
+            ],
+            [
+              "Pack readiness",
+              "Stages follow Authorisation, Booking, Dispatch and Completion. Review the visible action-required rows first. Open the satisfied group to inspect its retained assessment details."
+            ],
+            [
+              "Revision history",
+              "Staff can inspect acknowledgements against earlier exact issues. An earlier response never satisfies the current successor."
             ]
           ],
           "headers": [
@@ -14115,7 +14040,8 @@
           "paragraphs": [
             "Work-order revision, appointment, selected documents, issue recipients and checks.",
             "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed.",
+            "Review the confidence, occurrence date and recorded author shown for a history choice. A selection preserves its meaning and does not turn advice or a hypothesis into authority."
           ],
           "steps": [],
           "rows": [],
@@ -14125,7 +14051,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Task sequence for review against the applicable running release.",
+            "Print preview opens the exact saved server preview. Browser Print instead produces a labelled workbench copy of the saved revision, even when Preparation is selected; unsaved entries are excluded. Only the exact issued document is the controlled output. The appointment link is in section 01; an earlier issue remains explicitly linked beside an unissued successor."
           ],
           "steps": [
             "Prepare the pack against the correct scope",
@@ -14133,7 +14060,8 @@
             "Issue the checked pack and track recipient acknowledgement",
             "When sources have changed, choose Review changed sources. In Preparation, review the current source information and choose Refresh saved sources… to record a reason and save a successor, even when the nine notes are unchanged.",
             "For a saved preparation preview, choose Print preview, then Print saved draft. Unsaved entries stay in the form. Choose Save and print… to record a reason and save first; after success, open Print saved revision to print that exact successor.",
-            "Open exact issued document opens the retained controlled issue. A preparation preview is not an issue and printing never acknowledges a pack."
+            "Open exact issued document opens the retained controlled issue. A preparation preview is not an issue and printing never acknowledges a pack.",
+            "Compare the structured details with Exact text as it will be issued when reviewing a saved section. Captured readiness belongs to that revision; use Pack readiness for current assessments."
           ],
           "rows": [],
           "headers": []
@@ -14144,7 +14072,8 @@
           "paragraphs": [
             "A reproducible issued pack is available to the intended crew.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Changed content requires a new revision. Acknowledgement must not carry over automatically."
+            "Changed content requires a new revision. Acknowledgement must not carry over automatically.",
+            "From appointment detail or the Field Technicians Job pack tab, open the current permitted pack. When no visible pack is returned and preparation is permitted, use Prepare job pack. Refresh pack status checks the current read; failed or denied reads remove earlier links. Preparation still checks visit and approved-scope authority on Save."
           ],
           "steps": [],
           "rows": [],
@@ -14153,7 +14082,9 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
+          "paragraphs": [
+            "Task created, opened and downloaded are distribution facts. Only an explicit acknowledgement records that response. Confidence and verification belong to the history source; a suspected cause remains suspected."
+          ],
           "steps": [],
           "rows": [
             [
@@ -14179,6 +14110,10 @@
             [
               "Planned / not available",
               "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
+            ],
+            [
+              "Saved wording shown as plain text",
+              "The section remains readable when its structured details cannot be verified or accessed. This does not change the saved pack or its authority."
             ]
           ],
           "headers": [
@@ -41934,7 +41869,8 @@
           "paragraphs": [
             "A selected, traceable discovery basis with owned review items.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A newer discovery revision does not automatically recost a saved estimate. The broader wizard design and implemented subset differ."
+            "A newer discovery revision does not automatically recost a saved estimate. The broader wizard design and implemented subset differ.",
+            "Current native journey: Intake & workload opens the existing discovery workspace. The five steps, alternatives, exact revisions and saved-cost evidence remain. Screen Systems is integrated through explicit specialist run review/adoption; its presence does not permit automatic repricing. Supplier-price refresh and Excel import remain separate programme work."
           ],
           "steps": [],
           "rows": [],
@@ -42067,7 +42003,7 @@
         "docs/delivery/es02-estimation-wizard-handover.md",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Reconcile workload entry and native specialist integration without changing discovery or saved-cost authority.",
       "document_id": "PPO-GUIDE-PAGE-ESTIMATING-DISCOVERY-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -42467,7 +42403,8 @@
           "paragraphs": [
             "A selected, traceable discovery basis with owned review items.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A newer discovery revision does not automatically recost a saved estimate. The broader wizard design and implemented subset differ."
+            "A newer discovery revision does not automatically recost a saved estimate. The broader wizard design and implemented subset differ.",
+            "Current native journey: Intake & workload opens the existing discovery workspace. The five steps, alternatives, exact revisions and saved-cost evidence remain. Screen Systems is integrated through explicit specialist run review/adoption; its presence does not permit automatic repricing. Supplier-price refresh and Excel import remain separate programme work."
           ],
           "steps": [],
           "rows": [],
@@ -42600,7 +42537,7 @@
         "docs/delivery/es02-estimation-wizard-handover.md",
         "docs/blueprints/BP-04-estimating-quotation.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Reconcile workload entry and native specialist integration without changing discovery or saved-cost authority.",
       "document_id": "PPO-GUIDE-PAGE-ESTIMATING-DISCOVERY",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -43149,14 +43086,14 @@
     {
       "guide_key": "guide.page.estimating",
       "entry_key": "route:/estimating",
-      "title": "Estimate register",
+      "title": "Estimating intake and workload",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native read workflow with explicit unavailable policy actions",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "Not run for this guide",
@@ -43165,9 +43102,7 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Estimate register to work towards this outcome: An estimator has a clear, current basis for work.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "A workload entry is not an approved price or an issued quotation."
+            "Use the intake and workload view to find an opportunity brief, identify its current estimating owner and scope readiness, then open the exact discovery or saved estimate. This view reads canonical Sales and Estimating records; it does not accept intake, approve prices or issue a quotation."
           ],
           "steps": [],
           "rows": [],
@@ -43177,9 +43112,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Customer brief, opportunity, estimator, scope and required response date.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Current estimating.read, CRM opportunity and underlying customer/site/contact access are required. Current discovery and cost sources are independently checked. A Sales owner is not automatically the estimating owner. Start discovery additionally needs estimating.edit; existing edit and ownership guards are rechecked in the wizard."
           ],
           "steps": [],
           "rows": [],
@@ -43188,56 +43121,28 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Find the intake or existing estimate",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Open Estimating > Intake & workload. Search a customer, opportunity reference, title or brief. Expand Readiness, owner and sort for additional filters, then Apply filters. Collapsing the controls retains their selections. Review ownership and the selected discovery revision. Open discovery to resolve scope or deliberately adopt manual costs. Use Saved estimates for the existing exact-version workbook and Draft output."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Estimate register · Register / workspace"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "The page has a workload/saved-estimates navigation row, search/readiness/owner/sort filters and one card per permitted opportunity. Desktop cards align brief, ownership/source context and next estimating step. Phone cards stack these sections without hiding scope states or actions."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Customer brief, opportunity, estimator, scope and required response date.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Customer and brief come from the linked Opportunity, with its readable reference, UUID and current source version. Estimating owner comes from the discovery workspace. Each saved estimate retains its own option and costed discovery revision. Required response date is Unknown: neither the Sales next-action date nor expected close date is substituted."
           ],
           "steps": [],
           "rows": [],
@@ -43247,13 +43152,9 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Use My estimating work to select workspaces you own; unallocated opportunities are not assigned to you by this filter. Use Scope clarification for incomplete selected discovery, Discovery complete for scope ready to review for manual costing, or Legacy manual basis for estimates without a recorded E2 questionnaire. Recently changed orders opportunity/discovery changes; Customer sorts by canonical customer name. Filters live in the URL and survive Reload and Back/Forward."
           ],
-          "steps": [
-            "Find the intake or existing estimate",
-            "Check scope completeness and required clarification",
-            "Assign or review the next estimating action"
-          ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
@@ -43261,9 +43162,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "An estimator has a clear, current basis for work.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A workload entry is not an approved price or an issued quotation."
+            "Opening a record has no business effect. Complete discovery must still be deliberately adopted by the existing costing service. A changed discovery revision never silently changes a saved estimate. Draft quotation preparation uses an exact saved estimate version and remains a separate action."
           ],
           "steps": [],
           "rows": [],
@@ -43272,45 +43171,18 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Discovery not started means no estimating workspace. Scope clarification means the selected discovery is Incomplete. Discovery complete describes scope only. Legacy manual basis preserves pre-questionnaire estimates. Not allocated is distinct from Sales ownership. No readable saved estimate does not mean zero cost. Intake acceptance, allocation/return commands and priority policy are Not configured. A post-Won Sales handover-due reference is an obligation, not receiving acceptance."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare customer brief, opportunity, estimator, scope and required response date. Follow the task sequence and check that an estimator has a clear, current basis for work. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Estimate register has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A workload entry is not an approved price or an issued quotation."
+            "Synthetic example: an open Northbank brief with no discovery appears as Discovery not started and Not allocated. Saving discovery establishes its own owner and selected option. A Complete discovery still has no estimate until manual costing is deliberately adopted. If discovery later changes, the saved estimate link continues to show its original costed revision."
           ],
           "steps": [],
           "rows": [],
@@ -43319,45 +43191,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "The view refreshes on focus and periodically. Loading, failed reads and denied access are distinct from an empty queue. A failed refresh clears rows and offers Try loading again. Revoked source access removes protected rows/actions. The view is bounded to 100 search/owner-matching candidates before readiness filtering; narrow search for older records. Downstream saves retain their existing expected-version and original-operation recovery; resolve an uncertain original save in its record before retrying."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Filters stack at phone widths. Use labelled controls and Apply filters with keyboard or touch; every record link remains reachable. Browser Back/Forward restores URL filters. The global information icon opens the page guide and returns focus when closed. This page is online only and stores no business draft locally."
           ],
           "steps": [],
           "rows": [],
@@ -43367,8 +43212,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "ES-02 owns discovery and exact manual-cost adoption. ES-08 owns governed Screen Systems runs and explicit contribution adoption. Supplier pricing and Excel import are separate programme increments. Formal commercial review, issue and conversion remain separate business boundaries."
           ],
           "steps": [],
           "rows": [],
@@ -43378,9 +43222,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Prepared from the native workload implementation on 24 September 2026. This is a Draft guide; owner and operational review are pending. Verification is recorded in docs/delivery/estimating-programme-handover.md. A test pass or screenshot does not grant business acceptance or indicate deployment."
           ],
           "steps": [],
           "rows": [],
@@ -43393,9 +43235,12 @@
       "source_paths": [
         "src/app/(business)/estimating/page.tsx",
         "docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html",
-        "docs/blueprints/BP-04-estimating-quotation.md"
+        "docs/blueprints/BP-04-estimating-quotation.md",
+        "src/components/estimating-workload.tsx",
+        "src/estimating/workload.ts",
+        "docs/delivery/estimating-programme-handover.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Describe actual workload filters, canonical ownership, exact discovery/cost identities, bounded results and authority/recovery boundaries.",
       "document_id": "PPO-GUIDE-PAGE-ESTIMATING",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -47747,10 +47592,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-09-24",
+      "source_commit": "aed0c00",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "I5: two component and 46 compiled browser cases passed, with four and seven deliberate skips respectively. Paired/print inspection recorded in docs/testing/evidence/job-pack-i5/README.md; owner/device acceptance separate.",
       "sections": [
         {
           "section_id": "purpose",
@@ -47855,7 +47700,8 @@
           "paragraphs": [
             "An appointment has an explicit scheduling and acknowledgement state.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A proposed time, a confirmed booking and a technician acknowledgement are different."
+            "A proposed time, a confirmed booking and a technician acknowledgement are different.",
+            "From appointment detail or the Field Technicians Job pack tab, open the current permitted pack. When no visible pack is returned and preparation is permitted, use Prepare job pack. Refresh pack status checks the current read; failed or denied reads remove earlier links. Preparation still checks visit and approved-scope authority on Save."
           ],
           "steps": [],
           "rows": [],
@@ -48011,9 +47857,9 @@
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-24",
-      "source_commit": "4c8fd6dba83794f6c64aee6859cadb913401fd64",
+      "source_commit": "aed0c00",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Compiled application driven through the preparation workflow on 23 September 2026; captures in docs/testing/evidence/job-pack-i3/. Not an owner's visual review.",
+      "runtime_evidence": "I5: two component and 46 compiled browser cases passed, with four and seven deliberate skips respectively. Paired/print inspection recorded in docs/testing/evidence/job-pack-i5/README.md; owner/device acceptance separate.",
       "sections": [
         {
           "section_id": "purpose",
@@ -48078,6 +47924,22 @@
             [
               "Guide and design",
               "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
+            ],
+            [
+              "Saved section details",
+              "Arrangements, approved scope, equipment, selected history, captured controls and completion requirements may appear as labelled fields. Open Exact text as it will be issued to inspect the saved wording."
+            ],
+            [
+              "Pack title",
+              "A verified saved scope supplies the visit title and work kind; the exact work-order and appointment references remain visible."
+            ],
+            [
+              "Pack readiness",
+              "Stages follow Authorisation, Booking, Dispatch and Completion. Review the visible action-required rows first. Open the satisfied group to inspect its retained assessment details."
+            ],
+            [
+              "Revision history",
+              "Staff can inspect acknowledgements against earlier exact issues. An earlier response never satisfies the current successor."
             ]
           ],
           "headers": [
@@ -48091,7 +47953,8 @@
           "paragraphs": [
             "Work-order revision, appointment, selected documents, issue recipients and checks.",
             "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed.",
+            "Review the confidence, occurrence date and recorded author shown for a history choice. A selection preserves its meaning and does not turn advice or a hypothesis into authority."
           ],
           "steps": [],
           "rows": [],
@@ -48102,7 +47965,8 @@
           "title": "Complete the main task",
           "paragraphs": [
             "Preparation is entered in the Preparation view, one guided section per pack section. Each section shows the frozen context the last save composed, so entries are written against exactly what will be checked and issued.",
-            "Every save creates a new immutable revision and records its own reason with the fields that changed. There is no standing reason field on the form."
+            "Every save creates a new immutable revision and records its own reason with the fields that changed. There is no standing reason field on the form.",
+            "Print preview opens the exact saved server preview. Browser Print instead produces a labelled workbench copy of the saved revision, even when Preparation is selected; unsaved entries are excluded. Only the exact issued document is the controlled output. The appointment link is in section 01; an earlier issue remains explicitly linked beside an unissued successor."
           ],
           "steps": [
             "Open the Preparation view. The contents rail lists the nine sections and flags any that need attention.",
@@ -48115,7 +47979,8 @@
             "Discard changes restores the last saved revision. Only unsaved entries are discarded.",
             "When sources have changed, choose Review changed sources. In Preparation, review the current source information and choose Refresh saved sources… to record a reason and save a successor, even when the nine notes are unchanged.",
             "For a saved preparation preview, choose Print preview, then Print saved draft. Unsaved entries stay in the form. Choose Save and print… to record a reason and save first; after success, open Print saved revision to print that exact successor.",
-            "Open exact issued document opens the retained controlled issue. A preparation preview is not an issue and printing never acknowledges a pack."
+            "Open exact issued document opens the retained controlled issue. A preparation preview is not an issue and printing never acknowledges a pack.",
+            "Compare the structured details with Exact text as it will be issued when reviewing a saved section. Captured readiness belongs to that revision; use Pack readiness for current assessments."
           ],
           "rows": [],
           "headers": []
@@ -48126,7 +47991,8 @@
           "paragraphs": [
             "A reproducible issued pack is available to the intended crew.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Changed content requires a new revision. Acknowledgement must not carry over automatically."
+            "Changed content requires a new revision. Acknowledgement must not carry over automatically.",
+            "From appointment detail or the Field Technicians Job pack tab, open the current permitted pack. When no visible pack is returned and preparation is permitted, use Prepare job pack. Refresh pack status checks the current read; failed or denied reads remove earlier links. Preparation still checks visit and approved-scope authority on Save."
           ],
           "steps": [],
           "rows": [],
@@ -48136,7 +48002,8 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Prepared, checked, queued, generated, issued, sent, opened, acknowledged and dispatched are separate facts and are shown as such. None of them is implied by another."
+            "Prepared, checked, queued, generated, issued, sent, opened, acknowledged and dispatched are separate facts and are shown as such. None of them is implied by another.",
+            "Task created, opened and downloaded are distribution facts. Only an explicit acknowledgement records that response. Confidence and verification belong to the history source; a suspected cause remains suspected."
           ],
           "steps": [],
           "rows": [
@@ -48175,6 +48042,10 @@
             [
               "Read-only or access refused",
               "A missing pack and one outside this identity's scope read the same. Use the authorised route; do not try another identity."
+            ],
+            [
+              "Saved wording shown as plain text",
+              "The section remains readable when its structured details cannot be verified or accessed. This does not change the saved pack or its authority."
             ]
           ],
           "headers": [
@@ -48314,10 +48185,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "4c8fd6dba83794f6c64aee6859cadb913401fd64",
+      "prepared_at": "2026-09-24",
+      "source_commit": "aed0c00",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Compiled application driven through the preparation workflow on 23 September 2026; captures in docs/testing/evidence/job-pack-i3/. Not an owner's visual review.",
+      "runtime_evidence": "I5: two component and 46 compiled browser cases passed, with four and seven deliberate skips respectively. Paired/print inspection recorded in docs/testing/evidence/job-pack-i5/README.md; owner/device acceptance separate.",
       "sections": [
         {
           "section_id": "purpose",
@@ -48395,7 +48266,8 @@
           "paragraphs": [
             "Work-order revision, appointment, selected documents, issue recipients and checks.",
             "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed.",
+            "Review the confidence, occurrence date and recorded author shown for a history choice. A selection preserves its meaning and does not turn advice or a hypothesis into authority."
           ],
           "steps": [],
           "rows": [],
@@ -48405,7 +48277,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "This route prepares the first revision of a pack for a confirmed appointment. Until the first save there is no revision, no readiness and no pack record, so only the Preparation view is available and each section states that its context is composed from the current records when you save."
+            "This route prepares the first revision of a pack for a confirmed appointment. Until the first save there is no revision, no readiness and no pack record, so only the Preparation view is available and each section states that its context is composed from the current records when you save.",
+            "Print preview opens the exact saved server preview. Browser Print instead produces a labelled workbench copy of the saved revision, even when Preparation is selected; unsaved entries are excluded. Only the exact issued document is the controlled output. The appointment link is in section 01; an earlier issue remains explicitly linked beside an unissued successor."
           ],
           "steps": [
             "Open the route from the appointment. If a pack already exists it opens instead, with a message saying so.",
@@ -48423,7 +48296,9 @@
           "paragraphs": [
             "A reproducible issued pack is available to the intended crew.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Changed content requires a new revision. Acknowledgement must not carry over automatically."
+            "Changed content requires a new revision. Acknowledgement must not carry over automatically.",
+            "The saved record may show verified context as labelled fields. Open Exact text as it will be issued to inspect the retained wording; plain text remains available when structured context cannot be verified.",
+            "From appointment detail or the Field Technicians Job pack tab, open the current permitted pack. When no visible pack is returned and preparation is permitted, use Prepare job pack. Refresh pack status checks the current read; failed or denied reads remove earlier links. Preparation still checks visit and approved-scope authority on Save."
           ],
           "steps": [],
           "rows": [],
@@ -49402,10 +49277,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-09-24",
+      "source_commit": "aed0c00",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "I5: two component and 46 compiled browser cases passed, with four and seven deliberate skips respectively. Paired/print inspection recorded in docs/testing/evidence/job-pack-i5/README.md; owner/device acceptance separate.",
       "sections": [
         {
           "section_id": "purpose",
@@ -49509,7 +49384,8 @@
           "paragraphs": [
             "The proposed crew can be assessed against the task.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A directory listing is not a reservation or proof of all required competence."
+            "A directory listing is not a reservation or proof of all required competence.",
+            "From appointment detail or the Field Technicians Job pack tab, open the current permitted pack. When no visible pack is returned and preparation is permitted, use Prepare job pack. Refresh pack status checks the current read; failed or denied reads remove earlier links. Preparation still checks visit and approved-scope authority on Save."
           ],
           "steps": [],
           "rows": [],

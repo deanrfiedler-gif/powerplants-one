@@ -28,6 +28,7 @@ const args = process.argv.slice(2);
 const argValue = name => { const i = args.indexOf(name); return i === -1 ? null : args[i + 1] ?? null; };
 const only = argValue('--baseline');
 const appBase = argValue('--app');
+const recordId = argValue('--record-id');
 const storageState = process.env.PPO_STORAGE_STATE || argValue('--storage-state') || undefined;
 
 const registry = JSON.parse(await readFile(registryPath, 'utf8'));
@@ -177,7 +178,12 @@ try {
     for (const baseline of implemented) {
       const context = await browser.newContext({ viewport: registry.viewports[0], ...(storageState ? { storageState } : {}) });
       const page = await context.newPage();
-      const url = new URL(baseline.app_route, appBase).href;
+      if (baseline.app_route.includes('[id]') && (!recordId || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(recordId))) {
+        fail(baseline.id, 'app-record-id', 'This record route requires --record-id with a permitted synthetic UUID');
+        await context.close();
+        continue;
+      }
+      const url = new URL(baseline.app_route.replace('[id]', recordId ?? ''), appBase).href;
       let reachable = true;
       try {
         const response = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
@@ -185,6 +191,8 @@ try {
       } catch (error) { fail(baseline.id, 'app-route', `${url} ${error.message}`); reachable = false; }
 
       if (reachable) {
+        // The record is mounted after the permitted read/session hydrates.
+        await page.locator(baseline.app_scope_selector).waitFor({state:'visible',timeout:30000}).catch(()=>{});
         const found = await page.locator(baseline.app_scope_selector).count();
         if (found !== 1) {
           fail(baseline.id, 'app-scope-container', `${baseline.app_scope_selector} matched ${found} elements at ${url}. A signed-out or redirected page cannot be compared`);

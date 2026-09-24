@@ -2,6 +2,8 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
+ES-01 consumes the existing Button for filter submission and failed-read retry, and ButtonLink for permitted discovery entry. No component implementation or fixture semantics change. Inspect long action labels at 320 px; page alignment evidence remains in the Estimating programme handover.
+
 **Owner:** Dean Fiedler · **Catalogue key:** `buttons` · **Review:** Pending
 
 Primary, secondary, quiet, destructive, disabled, busy and link actions.

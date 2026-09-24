@@ -9,7 +9,7 @@ import { moduleWorkspaceForPath } from "../../src/shell/module-workspaces";
 test("seven full ordered compositions retain withheld positions and My Work placement", () => {
   const expected = {
     sales: "Pulse|Leads|Deals|Activities|Tasks|Sales Inbox|Contacts|Products|Insights",
-    estimate: "My Work|Intake|Estimation wizard|Estimates|Specialist configurations|Supplier pricing|Quotations|Reviews & approvals",
+    estimate: "My Work|Intake & workload|Estimation wizard|Specialist configurations|Supplier pricing|Quotations|Reviews & approvals",
     engineering: "My Work|Engineering workload|Design basis & interfaces|Drawings|Materials & substitutions|Change review|Technical reviews|Commissioning & as-built",
     projects: "My Work|Projects|Programme|Delivery readiness|Risks & issues|Variations & obligations|Site assurance|Acceptance & closeout",
     service: "My Work|Service requests|Work orders|Schedule|Field team|Job packs|Service review|Equipment",
