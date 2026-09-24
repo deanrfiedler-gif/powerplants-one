@@ -1,0 +1,226 @@
+{
+ "1440x960": {
+  "rail": {
+   "w": 76,
+   "h": 960,
+   "x": 0,
+   "y": 0
+  },
+  "menu": {
+   "w": 240,
+   "h": 896,
+   "x": 76,
+   "y": 64
+  },
+  "menuEdge": {
+   "w": 10,
+   "h": 896,
+   "x": 306,
+   "y": 64
+  },
+  "main": {
+   "w": 804,
+   "h": 896,
+   "x": 316,
+   "y": 64
+  },
+  "scrollPad": "16px",
+  "summary": {
+   "w": 320,
+   "h": 896,
+   "x": 1120,
+   "y": 64
+  },
+  "bottom": {
+   "w": 804,
+   "h": 61,
+   "x": 316,
+   "y": 899
+  },
+  "bottomPos": "static",
+  "stepRows": 1,
+  "stepH": 48,
+  "tabs": [
+   252,
+   252,
+   252
+  ],
+  "crumbs": [
+   {
+    "text": "Estimating",
+    "w": 71,
+    "clipped": false
+   },
+   {
+    "text": "Estimation Wizard",
+    "w": 151,
+    "clipped": false
+   }
+  ],
+  "pageScrollX": false,
+  "menuToggle": {
+   "w": 40,
+   "h": 40,
+   "x": 86,
+   "y": 12
+  }
+ },
+ "1024x768": {
+  "rail": {
+   "w": 76,
+   "h": 768,
+   "x": 0,
+   "y": 0
+  },
+  "menu": "hidden",
+  "menuEdge": "absent",
+  "main": {
+   "w": 948,
+   "h": 1984,
+   "x": 76,
+   "y": 64
+  },
+  "scrollPad": "16px",
+  "summary": {
+   "w": 948,
+   "h": 664,
+   "x": 76,
+   "y": 2048
+  },
+  "bottom": {
+   "w": 948,
+   "h": 61,
+   "x": 76,
+   "y": 1987
+  },
+  "bottomPos": "static",
+  "stepRows": 1,
+  "stepH": 48,
+  "tabs": [
+   300,
+   300,
+   300
+  ],
+  "crumbs": [
+   {
+    "text": "Estimating",
+    "w": 71,
+    "clipped": false
+   },
+   {
+    "text": "Estimation Wizard",
+    "w": 150,
+    "clipped": false
+   }
+  ],
+  "pageScrollX": false,
+  "menuToggle": {
+   "w": 40,
+   "h": 40,
+   "x": 86,
+   "y": 12
+  }
+ },
+ "390x844": {
+  "rail": "hidden",
+  "menu": "hidden",
+  "menuEdge": "absent",
+  "main": {
+   "w": 390,
+   "h": 2560,
+   "x": 0,
+   "y": 64
+  },
+  "scrollPad": "12px",
+  "summary": {
+   "w": 390,
+   "h": 669,
+   "x": 0,
+   "y": 2624
+  },
+  "bottom": {
+   "w": 390,
+   "h": 91,
+   "x": 0,
+   "y": 2533
+  },
+  "bottomPos": "static",
+  "stepRows": 2,
+  "stepH": 45,
+  "tabs": [
+   130,
+   130,
+   130
+  ],
+  "crumbs": [
+   {
+    "text": "Estimating",
+    "w": 50,
+    "clipped": true
+   },
+   {
+    "text": "Estimation Wizard",
+    "w": 94,
+    "clipped": true
+   }
+  ],
+  "pageScrollX": false,
+  "menuToggle": {
+   "w": 44,
+   "h": 44,
+   "x": 6,
+   "y": 10
+  }
+ },
+ "320x700": {
+  "rail": "hidden",
+  "menu": "hidden",
+  "menuEdge": "absent",
+  "main": {
+   "w": 320,
+   "h": 2691,
+   "x": 0,
+   "y": 64
+  },
+  "scrollPad": "12px",
+  "summary": {
+   "w": 320,
+   "h": 679,
+   "x": 0,
+   "y": 2755
+  },
+  "bottom": {
+   "w": 320,
+   "h": 137,
+   "x": 0,
+   "y": 2618
+  },
+  "bottomPos": "static",
+  "stepRows": 2,
+  "stepH": 45,
+  "tabs": [
+   107,
+   107,
+   107
+  ],
+  "crumbs": [
+   {
+    "text": "Estimating",
+    "w": 26,
+    "clipped": true
+   },
+   {
+    "text": "Estimation Wizard",
+    "w": 48,
+    "clipped": true
+   }
+  ],
+  "pageScrollX": false,
+  "menuToggle": {
+   "w": 44,
+   "h": 44,
+   "x": 6,
+   "y": 10
+  }
+ }
+}

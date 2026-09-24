@@ -1,0 +1,46 @@
+{
+ "1440-1. Requirements": [
+  {
+   "id": "color-contrast",
+   "impact": "serious",
+   "n": 1,
+   "help": "Elements must meet minimum color contrast ratio thresholds",
+   "sample": [
+    "kbd ::   Element has insufficient color contrast of 3.99 (foreground color: #758091, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+   ]
+  }
+ ],
+ "1440-2. Configuration": [
+  {
+   "id": "color-contrast",
+   "impact": "serious",
+   "n": 1,
+   "help": "Elements must meet minimum color contrast ratio thresholds",
+   "sample": [
+    "kbd ::   Element has insufficient color contrast of 3.99 (foreground color: #758091, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+   ]
+  }
+ ],
+ "390-1. Requirements": [
+  {
+   "id": "scrollable-region-focusable",
+   "impact": "serious",
+   "n": 1,
+   "help": "Scrollable region must have keyboard access",
+   "sample": [
+    "section[aria-label=\"Estimating areas\"] > .es02-table-scroll ::   Element should have focusable content"
+   ]
+  }
+ ],
+ "390-2. Configuration": [
+  {
+   "id": "scrollable-region-focusable",
+   "impact": "serious",
+   "n": 1,
+   "help": "Scrollable region must have keyboard access",
+   "sample": [
+    "section[aria-label=\"Systems & configuration\"] > .es02-table-scroll ::   Element should have focusable content"
+   ]
+  }
+ ]
+}

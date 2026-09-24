@@ -80,7 +80,7 @@ Test permissions, conflicts, stale revisions, replay, deduplication, document in
 
 Separate decisions, evidence, proposals, questions, delivery, verification, acceptance and deployment. Cite sources and limits.
 
-ES-01–10/Excel: estimating-native-programme.md and estimating-programme-handover.md. Preserve ES-02 costs, PJ-09 close/reopen and ES-03 exact bindings (estimating-cost-sources.md). ES-08: WP-G00 before D1–D15/DEC-R1/R2. No migration reservation or deployment. Retain four CI lanes (ci-retained-suite-isolation.md).
+ES-01–10/Excel: estimating-native-programme.md and estimating-programme-handover.md. Preserve ES-02 exact costs, PJ-09 close/reopen and ES-03 exact bindings (estimating-cost-sources.md). ES-02 families: es02-design-board.md; P2–P9 proposed. ES-08: WP-G00 before D1–D15/DEC-R1/R2. No migration reservation, engineering approval or deployment. Retain four CI lanes (ci-retained-suite-isolation.md).
 
 Mail: preserve private mailboxes and body separation (demo-email-crm-integration.md); CI is not Outlook acceptance. SH-01–06: docs/delivery/sh-platform-handover.md; teams/DK/delivery pending.
 
