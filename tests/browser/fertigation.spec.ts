@@ -14,6 +14,11 @@ import { calculate } from "../../src/estimating/fertigation/engine";
 import { validateScope } from "../../src/estimating/fertigation/validation";
 import { valveCsv } from "../../src/estimating/fertigation/output";
 import {
+  previewImport,
+  requireConfirmableImport,
+} from "../../src/estimating/fertigation/interchange";
+import { proposedPlacement } from "../../src/estimating/fertigation/import-placement";
+import {
   blankScope,
   blankSource,
   blankMaster,
@@ -1331,4 +1336,137 @@ test("FN-T112 a genuine r02 file imports only after every held field is placed a
       /Legacy r02 (project\.)?(reference|customer|site):/,
     );
   }
+});
+
+test("FN-T116 an imported r02 draft lists its declarations, and recorded or declared edits are previewed and applied to the working draft only", async ({
+  page,
+}, info) => {
+  const discovery = await savedDiscovery(page);
+  const options = await call(
+    page,
+    `estimating/fertigation/options?estimating_workspace_id=${discovery.id}`,
+  );
+  const source = options.sources.find(
+    (x: { option_id: string }) => x.option_id === discovery.option_id,
+  );
+  // r02's own sample, imported with the proposed placements (ADR-0044).
+  const imported = previewImport(
+    await readFile("tests/fixtures/fertigation-r02-sample-export.json", "utf8"),
+    randomUUID(),
+  );
+  const proposal = requireConfirmableImport(
+    imported,
+    imported.source_hash,
+    imported.preview_hash,
+    imported.losses.map((l) => ({
+      path: l.path,
+      disposition: proposedPlacement(l.path),
+    })),
+  );
+  const id = randomUUID();
+  await call(page, "estimating/fertigation", {
+    ...crmBase(),
+    id,
+    name: "SYN declared r02 sample",
+    estimating_workspace_id: discovery.id,
+    option_id: source.option_id,
+    revision_id: source.revision_id,
+    expected_workspace_version: source.expected_workspace_version,
+    coverage: {
+      system_id: null,
+      area_ids: [],
+      facility_ids: source.facility_ids,
+    },
+    proposal,
+  });
+  await page.goto(`/estimating/fertigation/${id}?view=overview`);
+  const root = page.locator("#ppo-fertigation");
+  const panel = root.getByRole("region", {
+    name: "Declarations this draft needs",
+  });
+  await expect(panel).toBeVisible();
+  await expect(panel.getByText(/address 28 of 28 findings/)).toBeVisible();
+  const phases = panel
+    .getByRole("listitem")
+    .filter({ hasText: "D-02 · Record phases" });
+  await expect(phases.getByText("From recorded values")).toBeVisible();
+  // Controller facts need new information: no edit is offered.
+  await expect(
+    panel
+      .getByRole("listitem")
+      .filter({ hasText: "D-09 · Who controls each valve and master" })
+      .getByRole("button", { name: "Declare", exact: true }),
+  ).toHaveCount(0);
+
+  await phases.getByRole("button", { name: "Declare", exact: true }).click();
+  const drawer = page.getByRole("dialog", { name: "Make a declaration" });
+  await expect(
+    drawer.getByRole("heading", { name: "What the draft records" }),
+  ).toBeVisible();
+  await expect(
+    drawer.getByText(
+      "A1: flow waits on the phase of A · Mature blueberry pots.",
+    ),
+  ).toBeVisible();
+  const apply = async (option: RegExp) => {
+    await drawer.getByRole("radio", { name: option }).check();
+    await drawer
+      .getByRole("button", { name: "Preview consequences", exact: true })
+      .click();
+    await expect(
+      drawer.getByRole("heading", { name: "Result changes" }),
+    ).toBeVisible();
+    await drawer
+      .getByRole("button", { name: "Apply to working draft", exact: true })
+      .click();
+    await expect(drawer.getByRole("status")).toContainText(
+      "Applied to the working draft",
+    );
+  };
+  await apply(/^Use recorded phases for 5 records/);
+  await expect(page.locator(".fn-status")).toHaveText("Unsaved changes");
+  // The drawer stays open on the same declaration, now with what remains.
+  await expect(
+    drawer.getByRole("radio", { name: /^Use recorded phases/ }),
+  ).toHaveCount(0);
+  await expect(drawer.getByText("Your declaration").first()).toBeVisible();
+  await apply(/^Declare G1 · A1 \+ B1 Proposed/);
+  await apply(
+    /^Declare Base · active blocks and Future · smallest group Proposed/,
+  );
+  await drawer
+    .getByLabel("Declaration", { exact: true })
+    .selectOption({ label: "Supply source for the scenario" });
+  await apply(/^Bind Base · active blocks to Dam → raw-water tank/);
+  await drawer.scrollIntoViewIfNeeded();
+  await page.screenshot({
+    path: info.outputPath("native-declarations-drawer.png"),
+  });
+  await drawer
+    .getByRole("button", { name: /^Close Make a declaration/ })
+    .click();
+
+  await expect(phases).toHaveCount(0);
+  await expect(panel.getByText(/address \d+ of \d+ findings/)).not.toHaveText(
+    /address 28 of 28/,
+  );
+  await panel.scrollIntoViewIfNeeded();
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await page.screenshot({
+    path: info.outputPath("native-declarations-panel.png"),
+  });
+
+  // Nothing was saved: the exact saved revision is unchanged.
+  const saved = await call(page, `estimating/fertigation/${id}`);
+  expect(saved.revision.version).toBe(1);
+  expect(
+    saved.revision.proposal.crop_groups.every(
+      (c: { phase: string }) => c.phase === "unknown",
+    ),
+  ).toBe(true);
+  expect(saved.revision.proposal.scenarios[0].source_id).toBeNull();
 });

@@ -21,6 +21,7 @@ The native record workspace carries the guidance layer raised in [Priva fertigat
 - **Overview.** In order: what this scope can produce now (the server's own preconditions; open findings never block an output), next actions ranked conflicts first with a default responsible role, scope at a glance, capacity headroom (each entered capacity loaded by its native result on one 0–200% scale), evidence coverage, production context and saved origin.
 - **Water & hydraulics.** Required head, curve head at pump peak and margin, each with a calculation trace, and a pump chart drawn at the container's real width so chart text stays 11–12 px.
 - **Scope review.** Findings grouped by the view that resolves them, with severity and responsible-role filters, native codes and the affected record.
+- **Declarations.** After Next actions, the Overview lists the declarations the draft needs (D-01–D-12 of the [workbench refinement](../../../decisions/fertigation-workbench-refinement.md), feature F1): the findings each addresses, a basis chip (From recorded values, Your declaration, Needs new input) and the responsible role. Declare opens **Make a declaration**, the same drawer as Resolve a conflict in a neutral tone: what the draft records, what each finding waits on, and options that are previewed by the server and applied to the working draft only. The drawer stays open after an edit so several can be made in turn. Declare also appears on Next actions rows for missing inputs.
 - **Drawers.** Calculation trace (rule, inputs, evidence, where used; the engine's value only), Resolve a conflict (options restate the engine's pass condition; an unambiguous edit is previewed by the server and applied to the working draft only) and Compare draft (result, finding, candidate and input changes against the saved revision).
 
 ## Desktop
@@ -33,7 +34,7 @@ At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
-At phone width the cockpit panels stack, capacity rows become stacked cards with the bar under the label, output rows keep their state chip, and review rows stack their actions. Drawers fill the viewport through the shared dialog. The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+At phone width the declarations list stacks its actions under each row like Next actions, and the cockpit panels stack, capacity rows become stacked cards with the bar under the label, output rows keep their state chip, and review rows stack their actions. Drawers fill the viewport through the shared dialog. The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
 
 ## Shared components and states
 

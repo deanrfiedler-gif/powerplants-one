@@ -1,16 +1,32 @@
 "use client";
-import { useState } from "react";
+import { useId, useState } from "react";
 import { ErrorNotice } from "./business-ui";
 import { CalculationDelta } from "./fertigation-comparison";
 import { RoleChip } from "./fertigation-cockpit";
 import { FertigationDialog } from "./fertigation-fields";
-import type { Resolvable } from "../estimating/fertigation/resolutions";
+import type {
+  ResolutionOption,
+  Resolvable,
+} from "../estimating/fertigation/resolutions";
 import type { Calculation, Scope } from "../estimating/fertigation/types";
 
+const optionChip = (o: ResolutionOption): [string, string] =>
+  !o.transform
+    ? ["Needs new input", "fn-chip"]
+    : o.basis === "recorded"
+      ? ["From recorded values", "fn-chip fn-chip-success"]
+      : o.basis === "declared"
+        ? ["Your declaration", "fn-chip fn-chip-review"]
+        : ["Draft edit available", "fn-chip fn-chip-success"];
+
 /**
- * Resolve a contradiction (proposed feature F2). Options restate the engine's
- * pass condition; an option with an unambiguous draft edit can be previewed
- * through the server and applied to the working draft. Nothing is saved.
+ * Resolve a contradiction (proposed feature F2) or make a declaration
+ * (feature F1). Options restate the engine's pass condition; an option with a
+ * draft edit can be previewed through the server and applied to the working
+ * draft. Nothing is saved.
+ *
+ * Items may be recomputed from the current draft while the drawer is open
+ * (declarations); the selection follows the item's key.
  */
 export function ResolveDrawer({
   items,
@@ -20,6 +36,11 @@ export function ResolveDrawer({
   preview,
   apply,
   close,
+  title = "Resolve a conflict",
+  itemLabel = "Conflict",
+  initialKey,
+  keepOpen = false,
+  tone = "conflict",
 }: {
   items: Resolvable[];
   scope: Scope;
@@ -28,19 +49,44 @@ export function ResolveDrawer({
   preview: (proposal: Scope) => Promise<Calculation>;
   apply: (proposal: Scope, calculation: Calculation) => void;
   close: () => void;
+  title?: string;
+  itemLabel?: string;
+  initialKey?: string;
+  /** Stay open after applying, for working through several declarations. */
+  keepOpen?: boolean;
+  /** Declarations describe missing inputs, not contradictions. */
+  tone?: "conflict" | "declaration";
 }) {
-  const [index, setIndex] = useState(0),
-    [choice, setChoice] = useState(items[0]?.options[0]?.id ?? ""),
+  const [key, setKey] = useState(initialKey ?? items[0]?.key ?? ""),
+    [choice, setChoice] = useState(""),
     [result, setResult] = useState<{
+      key: string;
       option: string;
       proposal: Scope;
       calculation: Calculation;
     } | null>(null),
     [busy, setBusy] = useState(false),
-    [error, setError] = useState<unknown>(null);
-  const item = items[index];
-  if (!item) return null;
+    [error, setError] = useState<unknown>(null),
+    [applied, setApplied] = useState<string | null>(null),
+    selectId = useId();
+  const item = items.find((it) => it.key === key) ?? items[0];
+  if (!item)
+    return (
+      <FertigationDialog title={title} close={close}>
+        <div className="fn-dialog-body fn-resolve">
+          {applied && <p role="status">Applied: {applied}.</p>}
+          <p>
+            Nothing is left here that the draft can answer. Save a revision with
+            a reason to keep the applied edits.
+          </p>
+        </div>
+      </FertigationDialog>
+    );
   const option = item.options.find((o) => o.id === choice) ?? item.options[0];
+  const current =
+    result && result.key === item.key && result.option === option.id
+      ? result
+      : null;
   async function run() {
     if (!option.transform) return;
     setBusy(true);
@@ -50,6 +96,7 @@ export function ResolveDrawer({
       // One transform per preview, so the identities applied are the ones shown.
       const proposal = option.transform(scope);
       setResult({
+        key: item.key,
         option: option.id,
         proposal,
         calculation: await preview(proposal),
@@ -61,66 +108,80 @@ export function ResolveDrawer({
     }
   }
   return (
-    <FertigationDialog title="Resolve a conflict" close={close}>
+    <FertigationDialog title={title} close={close}>
       <div className="fn-dialog-body fn-resolve">
+        {applied && (
+          <p role="status">Applied to the working draft: {applied}.</p>
+        )}
         {items.length > 1 && (
-          <label>
-            Conflict
+          <div className="fn-resolve-picker">
+            <label htmlFor={selectId}>{itemLabel}</label>
             <select
-              value={index}
+              id={selectId}
+              value={item.key}
               onChange={(e) => {
-                const next = Number(e.target.value);
-                setIndex(next);
-                setChoice(items[next].options[0]?.id ?? "");
+                setKey(e.target.value);
+                setChoice("");
                 setResult(null);
               }}
             >
-              {items.map((it, i) => (
-                <option key={it.key} value={i}>
+              {items.map((it) => (
+                <option key={it.key} value={it.key}>
                   {it.title}
                 </option>
               ))}
             </select>
-          </label>
+          </div>
         )}
-        <div className="fn-resolve-problem">
+        <div
+          className={`fn-resolve-problem${tone === "declaration" ? " fn-resolve-declaration" : ""}`}
+        >
           <strong>{item.title}</strong>
           <p>{item.message}</p>
         </div>
+        {!!item.facts?.length && (
+          <div className="fn-resolve-facts">
+            <h3>What the draft records</h3>
+            <ul>
+              {item.facts.map((f) => (
+                <li key={f}>{f}</li>
+              ))}
+            </ul>
+          </div>
+        )}
         <fieldset>
           <legend>Ways to resolve</legend>
-          {item.options.map((o) => (
-            <label
-              key={o.id}
-              className={`fn-resolve-option${o.id === option.id ? " fn-selected" : ""}`}
-            >
-              <span className="fn-resolve-choice">
-                <input
-                  type="radio"
-                  name="fn-resolution"
-                  value={o.id}
-                  checked={o.id === option.id}
-                  onChange={() => {
-                    setChoice(o.id);
-                    setResult(null);
-                  }}
-                />
-                <span>
-                  <strong>{o.title}</strong>
-                  <span className="fn-next-meta">
-                    <RoleChip role={o.role} />
-                    <span
-                      className={`fn-chip ${o.transform ? "fn-chip-success" : ""}`}
-                    >
-                      {o.transform ? "Draft edit available" : "Needs new input"}
+          {item.options.map((o) => {
+            const [chip, chipClass] = optionChip(o);
+            return (
+              <label
+                key={o.id}
+                className={`fn-resolve-option${o.id === option.id ? " fn-selected" : ""}`}
+              >
+                <span className="fn-resolve-choice">
+                  <input
+                    type="radio"
+                    name="fn-resolution"
+                    value={o.id}
+                    checked={o.id === option.id}
+                    onChange={() => {
+                      setChoice(o.id);
+                      setResult(null);
+                    }}
+                  />
+                  <span>
+                    <strong>{o.title}</strong>
+                    <span className="fn-next-meta">
+                      <RoleChip role={o.role} />
+                      <span className={chipClass}>{chip}</span>
                     </span>
                   </span>
                 </span>
-              </span>
-              <small>{o.condition}</small>
-              <small>{o.detail}</small>
-            </label>
-          ))}
+                <small>{o.condition}</small>
+                <small>{o.detail}</small>
+              </label>
+            );
+          })}
         </fieldset>
         <ErrorNotice error={error} />
         {option.transform && (
@@ -130,13 +191,13 @@ export function ResolveDrawer({
             </button>
           </p>
         )}
-        {result && result.option === option.id && (
+        {current && (
           <>
             <CalculationDelta
               beforeScope={scope}
               before={calculation}
-              afterScope={result.proposal}
-              after={result.calculation}
+              afterScope={current.proposal}
+              after={current.calculation}
               beforeLabel="Now"
               afterLabel="With this option"
             />
@@ -146,8 +207,13 @@ export function ResolveDrawer({
                 className="fn-primary"
                 disabled={!canEdit}
                 onClick={() => {
-                  apply(result.proposal, result.calculation);
-                  close();
+                  apply(current.proposal, current.calculation);
+                  if (!keepOpen) close();
+                  else {
+                    setApplied(option.title);
+                    setResult(null);
+                    setChoice("");
+                  }
                 }}
               >
                 Apply to working draft

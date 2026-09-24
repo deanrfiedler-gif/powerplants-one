@@ -62800,6 +62800,10 @@
             [
               "How this is calculated",
               "Opens a trace of the result: the rule, every input and its basis, the evidence, and where the result is used. The value is the engine's own."
+            ],
+            [
+              "Declarations this draft needs",
+              "Lists what the draft still has to declare, with the findings each addresses and who normally answers it. From recorded values means the draft already holds the answer; Your declaration means you state a fact the draft does not record; Needs new input means the information must be gathered."
             ]
           ],
           "headers": [
@@ -62831,7 +62835,8 @@
             "Review the exact valve and master-source revisions and unresolved bindings",
             "Inspect calculated results and review evidence before preparing a controlled report",
             "Work the Next actions list from the top; use Resolve to preview an option's consequences before applying it to the working draft.",
-            "Use Compare draft to check result, finding and input changes against the saved revision, then save a revision with a reason."
+            "Use Compare draft to check result, finding and input changes against the saved revision, then save a revision with a reason.",
+            "After importing an r02 project, work the Declarations list: use Declare, read what the draft records, preview each option's consequences and apply the ones that are true. Phases usually come first because density, valve flow and timing wait on them."
           ],
           "rows": [],
           "headers": []
@@ -62885,6 +62890,10 @@
             [
               "Applied resolution",
               "An applied option changes the working draft only and shows Unsaved changes. Nothing is saved until you save a revision."
+            ],
+            [
+              "Your declaration",
+              "An option that states a fact the draft does not record, such as single-pass drip or a group's phase. Apply it only if it is true; it changes the working draft only and is saved with your revision reason."
             ]
           ],
           "headers": [
