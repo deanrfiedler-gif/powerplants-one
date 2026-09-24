@@ -39,3 +39,7 @@ No exact image or HTML reference is linked. Keep this gap visible.
 The draft User Guide `guide.page.service.technicians` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## Canonical Job Pack handover
+
+JobPackEntry reuses shared buttons and ReadState. The current server read chooses Open job pack or permitted Prepare job pack with the exact appointment identity. No visible pack is distinct from a failed/denied read; refresh hides prior links. Desktop/phone text wraps and 44 px controls remain within the existing panel or trapped drawer. [I5 handover](../../../delivery/job-pack-integration-handover.md) records evidence; the existing appointment/booking authority is unchanged.

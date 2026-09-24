@@ -1,5 +1,7 @@
 # Decision control
 
+[ADR-0047 — Native Engineering control](ADR-0047-engineering-native-control.md) records the authorised EN-01–EN-05 synthetic implementation and backwards-compatible EN-06–EN-08 source lineage. Narrow technical duties, exact revisions, immutable review/issue evidence and recipient stages are separate; operational authority and new visual compositions remain unaccepted.
+
 [Priva fertigation workbench refinement](fertigation-workbench-refinement.md) raised seven presentation departures (D1–D7), audit findings A1–A9 and twelve features (F1–F12) on 23 September 2026. Dean directed the same day that the improvements be applied; D1, D7, F2–F7, F9 and the placement part of F1 are built, and the rest remain proposed. No calculation changes; visual review and acceptance are not yet recorded.
 
 [Service requests native refinement](service-requests-native-refinement.md) is a **proposed** SV-01/SV-02 design: the r02 Service Cases & Triage workspace refined as a module interior for the shared shell, with a separate register and record, less chrome, collapsible empty lanes and "Service request" as the label. Recorded 23 September 2026. Dean accepted all eight of its recommendations (D1–D8) the same day. His visual review is still to be recorded, so it is not an accepted baseline. [ADR-0043](ADR-0043-service-request-lifecycle.md) is its **proposed** lifecycle extension, drafted for his review; it authorises no migration.
@@ -99,4 +101,8 @@ The [PPO Assistant direction and architecture decision](ppo-assistant-direction.
 
 - [ADR-0043 — Service request lifecycle](ADR-0043-service-request-lifecycle.md): **proposed**, not accepted. Intent-specific TR-15 commands for work, waiting, resolution review, closure, reopening and cancellation on the existing Ticket. It reuses Activity for owned actions and the customer-update commitment, and adds typed evidence, contact, waiting and resolution records. No new state values; one future migration.
 
+- [ADR-0045 - Native Equipment workflows](ADR-0045-equipment-native-workflows.md): authorised synthetic EQ-01-EQ-09 implementation using canonical Assets, CS locations, Inspection instruments and SH coordination; retained configuration lineage and explicit reviewed physical changes. Operational and visual acceptance remain separate.
+
 - [ADR-0044 — Explicit placement of held legacy fields on fertigation import](ADR-0044-fertigation-held-import-placement.md): a held standalone r02 import confirms only when every held field is placed as an unverified source note or, for project identity only, left to the Discovery binding; placements are stored with the import. Amends ADR-0038's held-import behaviour only.
+
+- [ADR-0046 — Native Sales handovers and aftercare](ADR-0046-sales-native-workflows.md): frozen Sales submissions, exact receiving decisions, shared Activity obligations and bounded aftercare; owner acceptance and deployment remain separate.

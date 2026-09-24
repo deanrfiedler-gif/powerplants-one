@@ -26,7 +26,9 @@ test("permission and readiness filters retain relative order and never manufactu
   assert.deepEqual(railDestinations("supply", ["work", "supply", "stock"], true).map(d => d.id), ["work"]);
   assert.ok(!navigationForCapabilities(new Set(["activity.read"]), true).includes("tasks"));
   assert.ok(!navigationForCapabilities(new Set(["finance.account.read"]), true).includes("accounts"));
-  for (const id of ["products", "insights", "drawings", "exceptions"]) assert.equal(destination(id).href, undefined);
+  for (const id of ["products", "insights", "exceptions"]) assert.equal(destination(id).href, undefined);
+  assert.equal(destination("drawings").href, "/engineering/drawings");
+  assert.ok(navigationForCapabilities(new Set(["engineering.read"]), true).includes("drawings"));
 });
 test("specific routes, genuine views and shared records select exactly their rail parent", () => {
   const check = (path: string, workspace: keyof typeof departmentRails, expected?: string) => {
@@ -40,6 +42,9 @@ test("specific routes, genuine views and shared records select exactly their rai
   check("/work/reviews", "engineering"); check("/work/123?salesTask=1", "sales", "tasks");
   check("/engineering/package/materials/mapping", "engineering", "materials");
   check("/engineering/package/changes/reviews", "engineering", "changes");
+  check("/engineering/package/basis/interfaces", "engineering", "basis");
+  check("/engineering/package/drawings/deliverables", "engineering", "drawings");
+  check("/engineering/package/reviews/issues", "engineering", "technical-reviews");
   check("/engineering/commissioning/results?record=a", "engineering", "commissioning");
   check("/projects/acceptance/closeout", "projects", "acceptance");
   check("/projects/programme", "projects", "programme"); check("/projects/abc?view=programme", "projects", "programme");

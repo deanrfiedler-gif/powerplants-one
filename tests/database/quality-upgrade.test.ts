@@ -181,6 +181,11 @@ for (const state of ["Approved", "OutcomeUnknown", "Reconciled"]) {
       ]),
       ...coordinatorGrants.filter(g => g.value.capability === "shared.edit").map(g => ({ ...g.value, capability: "engineering.material.source" })),
     );
+    // Seed 47 adds only four narrow technical duties to existing fictional identities.
+    expected.push(...companyAGrants.filter(g=>g.value.capability==="shared.edit").flatMap(g=>[
+      [materials.reviewer,"engineering.technical.review"],[materials.release,"engineering.technical.issue"],
+      [materials.release,"engineering.technical.distribute"],["30000000-0000-4000-8000-000000000001","engineering.technical.source"],
+    ].map(([user_id,capability])=>({...g.value,user_id,capability}))));
     // Seed 30 (EN-07): three more fictional profiles read Company A, nobody gains engineering.edit, and review, technical
     // decision, closure, receiving and verification are one capability each, held only where the seed names the person.
     const changes = { releaseOwner: "30000000-0000-4000-8000-000000000022", service: "30000000-0000-4000-8000-000000000023", verifier: "30000000-0000-4000-8000-000000000024" };

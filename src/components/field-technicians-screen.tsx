@@ -8,6 +8,7 @@ import {
   type Option,
 } from "./business-ui";
 import { ProductIcon } from "./product-icons";
+import { JobPackEntry } from "../documents/components/client/job-pack-entry";
 import type { Appointment, Resource, Schedule } from "../scheduling";
 import type { Order } from "./work-order-screens";
 import {
@@ -350,7 +351,7 @@ function VisitDetails({ id, close }: { id: string; close: () => void }) {
                   <p>No readiness assessments returned.</p>
                 )}
                 <div className="ft-actions">
-                  <Link href="/service/packs">Open job packs</Link>
+                  <JobPackEntry appointmentId={a.id} />
                   <Link href={`/service/appointments/${id}`}>
                     Review visit readiness
                   </Link>

@@ -1,0 +1,220 @@
+.eq-workspace {
+  max-width: 1440px;
+  margin: auto;
+  padding: 1rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--ink);
+}
+.eq-nav,
+.eq-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  align-items: center;
+  margin: 1rem 0;
+}
+.eq-nav a {
+  padding: 0.55rem 0;
+  margin-right: 1rem;
+}
+.eq-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: end;
+  margin: 1rem 0;
+}
+.eq-filters > .field {
+  flex: 1 1 20rem;
+}
+.eq-filters label {
+  display: grid;
+  gap: 0.4rem;
+}
+.eq-workspace select {
+  min-height: 44px;
+  font: inherit;
+  padding: 0.5rem;
+  max-width: 100%;
+}
+.eq-register {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+.eq-card,
+.eq-context > section {
+  border: 1px solid var(--line);
+  background: var(--white);
+  padding: 1rem;
+  border-radius: var(--radius-card);
+  min-width: 0;
+}
+.eq-card header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.eq-card h2 {
+  font-size: 1.15rem;
+  margin: 0.4rem 0;
+}
+.eq-card h3 {
+  margin-top: 0;
+}
+.eq-workspace dl {
+  display: grid;
+  grid-template-columns: minmax(7rem, 1fr) minmax(0, 2fr);
+  gap: 0.6rem 1rem;
+}
+.eq-workspace dt {
+  color: var(--text-secondary);
+}
+.eq-workspace dd {
+  margin: 0;
+}
+.eq-context {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+.eq-muted {
+  color: var(--text-secondary);
+}
+.eq-workspace .record-panel > .eq-card {
+  margin-block: 1rem;
+}
+.eq-camera {
+  width: 100%;
+  max-width: 32rem;
+  background: #242a37;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+}
+.eq-workspace .record-tablist {
+  flex-wrap: wrap;
+  white-space: normal;
+}
+.eq-workspace :focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+.eq-notice {
+  padding: 1rem;
+  border: 1px solid var(--line);
+  background: var(--white);
+}
+@media (max-width: 767px) {
+  .eq-register,
+  .eq-context {
+    grid-template-columns: 1fr;
+  }
+  .eq-workspace {
+    padding: 0.7rem;
+  }
+  .eq-workspace input,
+  .eq-workspace textarea,
+  .eq-workspace select {
+    font-size: 16px;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .eq-filters > * {
+    flex: 1 1 100%;
+  }
+  .eq-workspace dl {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+  }
+  .eq-workspace dd {
+    margin-bottom: 0.65rem;
+  }
+  .eq-card header {
+    flex-wrap: wrap;
+  }
+  .eq-nav {
+    gap: 0.5rem;
+  }
+  .eq-nav a {
+    margin: 0;
+  }
+  .eq-workspace .record-tablist {
+    display: flex;
+    gap: 0.3rem;
+  }
+  .eq-workspace .record-tablist button {
+    flex: 1 1 auto;
+    white-space: normal;
+    min-height: 44px;
+  }
+}
+
+.eq-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid var(--line);
+}
+.eq-form > legend {
+  font-weight: 600;
+}
+.eq-form .eq-notice,
+.eq-form > p {
+  grid-column: 1/-1;
+}
+.eq-select {
+  display: grid;
+  gap: 0.4rem;
+  min-width: 0;
+}
+.eq-workspace > .eq-card {
+  margin-block: 1rem;
+}
+.eq-workspace summary {
+  cursor: pointer;
+  padding: 0.75rem 0;
+  font-weight: 600;
+}
+.eq-workspace input[type="checkbox"] {
+  width: auto;
+  margin-right: 0.6rem;
+}
+.eq-workspace .record-panel[hidden] {
+  display: none;
+}
+@media (max-width: 767px) {
+  .eq-form {
+    grid-template-columns: 1fr;
+    padding: 0.7rem;
+  }
+}
+
+.eq-timeline {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+.eq-narrative {
+  white-space: pre-wrap;
+}
+.eq-workspace details > summary {
+  cursor: pointer;
+  padding: 0.75rem 0;
+  font-weight: 600;
+}
+
+@media (max-width: 780px) {
+  /* The legacy identity-strip grid otherwise outranks the shared shell's flex
+     row and spills its utility controls over scrolled Equipment records. */
+  .workspace:has(.eq-workspace) .topbar.ppo-shell-header {
+    display: flex;
+    padding: 0 10px;
+    gap: 4px;
+  }
+}

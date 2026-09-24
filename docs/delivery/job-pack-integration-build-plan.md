@@ -3,7 +3,7 @@ document_id: PPO-SC06-PLAN
 title: SC-06 — Job Pack r03 application integration — build plan
 date: 2026-09-20
 owner: Dean Fiedler
-status: Authorised by Dean Fiedler on 20 September 2026 with the recommended answer to each of D1–D5 adopted, and extended on 23 September 2026 with D6–D10 adopted from the build report; I1 merged (#256), I2 merged (#257), I3 merged (#288); I4 implementation in verification; I6, I7 and I5 remain
+status: Authorised by Dean Fiedler on 20 September 2026 with the recommended answer to each of D1–D5 adopted, and extended on 23 September 2026 with D6–D10 adopted from the build report; I1 merged (#256), I2 merged (#257), I3 merged (#288); I4 merged (#304); I6 in PR #306; I7 in PR #309; I5 implemented and locally verified for review
 scope_id: SC-06
 source_commit: 540b2b7e463ad68d5f552d006ea7cae6d75fbff8
 versioning: git
@@ -302,7 +302,7 @@ One pull request per increment; the application works and every suite passes aft
 - Field Technicians drawer reads `appointments/:id/pack` and links to `/service/packs/<id>`, or to `/service/packs/new?appointment_id=` with `pack.prepare`; `tests/browser/field-technicians.spec.ts:46-49` changes with it.
 - `tests/ui/job-pack-design-conformance.spec.ts` (component proof against the issued HTML, run by `playwright.crm-ui.config.ts`), completion of the application proof, shared assertions in `tests/helpers/job-pack-design.ts`, and a **negative control** for audit U1 (last section unreachable by scroll-spy).
 - Port the r03 print stylesheet; prune the `.pack-*` rules in `globals.css` that no screen uses any longer.
-- Records: `ui-baselines.json` (`app_route`, `app_scope_selector`, `status`, a `module_integrations` entry modelled on Deals r38); `docs/reference/ui/README.md` lines 138 and 239, which file r02 as current and r03 as an earlier revision; `docs/decisions/job-pack-r03-integration.md` with the conformance table and §6; a pointer in `job-pack-design.md`; `docs/delivery/job-pack-integration-handover.md`; the Service Operations row in `docs/STATUS.md`; register rows.
+- Records: `ui-baselines.json` (`app_route`, `app_scope_selector`, `status`, a `module_integrations` entry modelled on Deals r38); `docs/reference/ui/README.md` lines 138 and 239, which file r02 as current and r03 as an earlier revision; `docs/decisions/job-pack-integration.md` with the conformance table and §6; a pointer in `job-pack-design.md`; `docs/delivery/job-pack-integration-handover.md`; the Service Operations row in `docs/STATUS.md`; register rows.
 - Exit: `node scripts/design-baseline-check.mjs --app http://127.0.0.1:3000` passes; paired captures at the four declared viewports inspected.
 
 ## 9. Test ledger

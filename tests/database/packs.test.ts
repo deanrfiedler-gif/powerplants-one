@@ -20,6 +20,9 @@ import {
 } from "../../src/documents/packs";
 import { snapshot } from "../../src/documents/context";
 import { basisOf } from "../../src/documents/pack-view";
+import { readSection } from "../../src/documents/section-readers";
+import { sectionView } from "../../src/documents/section-view";
+import { packContext } from "../../src/documents/context";
 import { canonical } from "../../src/platform/operations";
 import {
   readBundle,
@@ -104,7 +107,7 @@ test("P06 upgrade and repeat seed preserve exact P05 SQL evidence, revoked grant
   );
   assert.deepEqual(
     (await rows("SELECT version FROM public.ppo_migrations ORDER BY version")).map(r=>r.version),
-    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45],
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48],
   );
   assert.equal(
     (
@@ -204,6 +207,10 @@ test("SC-06 pack read adds registry readiness, actors and an advisory basis for 
   assert.deepEqual(pack.basis, basisOf(revision.snapshot));
   assert.deepEqual(pack.current_basis, pack.basis);
   assert.deepEqual(pack.basis_drift, []);
+  assert.equal(pack.section_view.revision_id, revision.id);
+  assert.equal(pack.section_view.scope.verified, true);
+  for (const section of ["scope", "equipment", "completion"] as const)
+    assert.ok(readSection(section, revision.snapshot, revision.id, pack.section_view));
   // None of the new reads moved the hash that Check and Issue compare.
   assert.equal(
     digest(
@@ -236,6 +243,7 @@ test("SC-06 pack read adds registry readiness, actors and an advisory basis for 
   assert.equal(mine.basis, null);
   assert.equal(mine.current_basis, null);
   assert.equal(mine.basis_drift, null);
+  assert.equal(mine.section_view, null);
   assert.deepEqual(mine.revisions, []);
   assert.equal((await packForAppointment(technician, a.id)).can_prepare, false);
   await assert.rejects(
@@ -247,6 +255,7 @@ test("SC-06 issue and acknowledgement advance the appointment record without rep
   const q = await issued();
   assert.equal(typeof q.pack.issues[0].issued_by_name, "string");
   assert.equal(typeof q.pack.jobs[0].actor_name, "string");
+  assert.equal(typeof q.pack.jobs[0].recovery_owner_name, "string");
   assert.deepEqual(q.pack.basis_drift, []);
   const first = await ack(q.pack, "assigned-technician");
   await acknowledgePack(first.p, q.issue_id, first.input);
@@ -259,6 +268,68 @@ test("SC-06 issue and acknowledgement advance the appointment record without rep
   const mine = (await readPack(first.p, q.pack.id)).items[0];
   assert.equal(mine.issues[0].issued_by_name, null);
   assert.equal(mine.revisions[0].created_by_name, null);
+  assert.equal(mine.acknowledgements, null);
+  assert.equal(after.acknowledgements.length, 1);
+  assert.equal(after.acknowledgements[0].issue_id, q.issue_id);
+  assert.equal(after.acknowledgements[0].revision, 1);
+  assert.equal(typeof after.acknowledgements[0].display_name, "string");
+  const originalRevision = mine.current_revision_id;
+  assert.equal(mine.section_view.revision_id, originalRevision);
+  for (const item of mine.section_view.scope?.items ?? [])
+    assert.ok(item.assets.every((asset: {asset_id: string | null}) => asset.asset_id === null));
+  await revisePack(q.p, q.pack.id, {
+    ...base(), expected_version: after.version, content: content(),
+  });
+  const successor = (await readPack(q.p, q.pack.id)).items[0];
+  const recipient = (await readPack(first.p, q.pack.id)).items[0];
+  assert.notEqual(successor.current_revision_id, originalRevision);
+  assert.equal(successor.section_view.revision_id, successor.current_revision_id);
+  assert.equal(recipient.current_revision_id, originalRevision);
+  assert.equal(recipient.section_view.revision_id, originalRevision);
+  assert.equal(recipient.revisions.length, 1);
+  assert.deepEqual(successor.acknowledgements, after.acknowledgements);
+  assert.equal(recipient.acknowledgements, null);
+});
+test("SV05-I6 section projection verifies history bytes and respects revoked dependency permissions", async () => {
+  const p = await principal(), pack = await prepared();
+  const revision = pack.revisions[0];
+  const { w } = await packContext(database(), p, pack.id);
+  const history = (await rows(
+    "SELECT id,kind,summary,confidence,occurred_at FROM ppo.history_records WHERE workspace_id=$1 AND company_id=$2 AND site_id=$3 AND access_class IN ('RestrictedService','CustomerApproved') ORDER BY id LIMIT 1",
+    [p.workspace_id, w.company_id, w.site_id],
+  ))[0];
+  assert.ok(history, "Seed must exercise selected history verification");
+  const saved = structuredClone(revision.snapshot);
+  saved.history = [{id: history.id, hash: digest(canonical(history))}];
+  saved.sections.history.text = `${history.kind} (${history.confidence}): ${history.summary}`;
+  const projected = await sectionView(database(), p, w, {...revision, snapshot: saved}, true);
+  assert.equal(projected?.history?.[0].matches_snapshot, true);
+  assert.equal(typeof projected?.history?.[0].author_label, "string");
+  assert.equal(typeof projected?.history?.[0].verification_status, "string");
+  const recipientView = await sectionView(database(), p, w, {...revision, snapshot:saved}, false);
+  assert.equal(recipientView?.history?.[0].matches_snapshot, true);
+  assert.equal(Object.hasOwn(recipientView!.history![0], "author_label"), false);
+  assert.equal(Object.hasOwn(recipientView!.history![0], "source"), false);
+  assert.equal(Object.hasOwn(recipientView!.history![0], "verification_status"), false);
+  assert.equal(readSection("history", saved, revision.id, projected)?.kind, "history");
+  saved.history[0].hash = "0".repeat(64);
+  const mismatched = await sectionView(database(), p, w, {...revision, snapshot: saved}, true);
+  assert.equal(mismatched?.history?.[0].matches_snapshot, false);
+  assert.equal(readSection("history", saved, revision.id, mismatched), null);
+  saved.work.scope_hash = "0".repeat(64);
+  assert.equal((await sectionView(database(), p, w, {...revision, snapshot: saved}, true))?.scope, null);
+  await database().query(
+    "UPDATE ppo.permission_grants SET valid_to=now()-interval '1 second' WHERE workspace_id=$1 AND user_id=$2 AND capability IN ('shared.read','service.work_order.read')",
+    [p.workspace_id, p.actor_id],
+  );
+  const denied = await sectionView(database(), p, w, revision, true);
+  assert.equal(denied?.scope, null);
+  assert.equal(denied?.history, null);
+  // Losing work-order permission denies the enclosing pack as well; optional display must not weaken it.
+  await assert.rejects(readPack(p, pack.id), code("Forbidden"));
+  const retained = (await rows("SELECT snapshot,content_hash FROM ppo.pack_revisions WHERE id=$1", [revision.id]))[0];
+  assert.deepEqual(retained.snapshot, revision.snapshot);
+  assert.equal(retained.content_hash, revision.content_hash);
 });
 test("P06 exact immutable output and two independent acknowledgements control component readiness", async () => {
   const q = await issued();

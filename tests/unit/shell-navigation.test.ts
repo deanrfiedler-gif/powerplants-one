@@ -57,7 +57,7 @@ test("seven workspace preferences validate schema and retain r15 identifiers", (
 test("More finds workspace names and existing page names, including former rail destinations", () => {
   assert.deepEqual(
     menuGroups("sales").flatMap((g) => g.items.map((d) => d.id)),
-    ["deals", "pulse", "leads", "tasks", "mail", "insights"],
+    ["deals", "pulse", "leads", "tasks", "mail", "insights", "sales-estimating", "sales-won", "sales-aftercare"],
   );
   assert.deepEqual(
     menuGroups("Contact").flatMap((g) => g.items.map((d) => d.id)),
