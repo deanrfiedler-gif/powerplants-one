@@ -459,7 +459,9 @@ test("CA-06/10 real CRM permission revocation clears linked Activity content aft
   expect(await page.locator("body").innerText()).not.toContain(i.title);await capture(page,info,"revoked-activity");
   expect((await database().query("SELECT status,outcome FROM ppo.activities WHERE id=$1",[i.initial_action.id])).rows[0]).toEqual({status:"Open",outcome:null});
   await detail.evaluate(() => window.dispatchEvent(new Event("focus")));
-  await expect(detail.locator('.business-error[role="alert"]')).toBeVisible();
+  // The scope editor may also report its denied shared-data read while the
+  // parent denial removes it. Assert the CRM record's authoritative refusal.
+  await expect(detail.locator('.business-error[role="alert"]').filter({hasText:"This record is unavailable."})).toBeVisible();
   await expect(detail.getByRole("heading",{name:i.title,exact:true})).toHaveCount(0);
   const lateResponse = detail.waitForResponse(r => r.url().endsWith(`/crm/opportunities/${i.id}`) && r.status() === 200);
   releaseOriginal();
