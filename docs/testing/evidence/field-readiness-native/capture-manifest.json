@@ -1,0 +1,166 @@
+{
+  "captured_on": "2026-09-25",
+  "implementation_commit": "39acd4d3f7d5be0fbefee86b0866a101f4172efa",
+  "base_main": "2173cc64eed54b1e3fb8334495f7cd924206d13f",
+  "environment": "Windows; Node 24.21.0; PostgreSQL 16; Playwright 1.63.0; maintained Chrome 154.0.8037.58; loopback compiled synthetic application",
+  "reference": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
+  "reference_sha256": "7f0e7531c2f4b8d592e4e269225d45da0d870db4361879465149164eb4cf9db3",
+  "owner_acceptance": "Pending",
+  "notes": [
+    "Application code bytes match the implementation commit; its rebase changed documentation only.",
+    "The native shell scrolls within its content region. Top and lower captures show different scroll positions.",
+    "720 CSS px is a reflow probe, not a completed 200% browser zoom test."
+  ],
+  "captures": [
+    {
+      "file": "captures/fi05-1024.png",
+      "sha256": "c9f7e4170511c383055c35cf5ce01ff200efe01f804eb2265276af804f73a6ad",
+      "image_width": 1024,
+      "image_height": 960,
+      "viewport_width": 1024,
+      "viewport_height": 960,
+      "source": "Compiled FI05 application; synthetic assigned visit",
+      "inspection": "Automated overflow/capture evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/fi05-1440.png",
+      "sha256": "c64bb612f7464cfee91dbd57870a20e1af03ce174c51932e6160b2849f066ab3",
+      "image_width": 1440,
+      "image_height": 960,
+      "viewport_width": 1440,
+      "viewport_height": 960,
+      "source": "Compiled FI05 application; synthetic assigned visit",
+      "inspection": "Inspected by implementation agent; no owner acceptance"
+    },
+    {
+      "file": "captures/fi05-320.png",
+      "sha256": "e73b58a85ab49d416d54bb45c799b8658eb9df96f0dbbe9211dcb4d962f2847c",
+      "image_width": 320,
+      "image_height": 844,
+      "viewport_width": 320,
+      "viewport_height": 844,
+      "source": "Compiled FI05 application; synthetic assigned visit",
+      "inspection": "Inspected by implementation agent; no owner acceptance"
+    },
+    {
+      "file": "captures/fi05-390.png",
+      "sha256": "83c2498e53b5dd4b6e850d88bdf62d144d910c7495e1bcb9979ab287f1a3ee36",
+      "image_width": 390,
+      "image_height": 844,
+      "viewport_width": 390,
+      "viewport_height": 844,
+      "source": "Compiled FI05 application; synthetic assigned visit",
+      "inspection": "Automated overflow/capture evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/fi05-720.png",
+      "sha256": "20aa5379d595f5bbb909ac7d3954059e0f452c7f205fe3f726613a6734c91879",
+      "image_width": 720,
+      "image_height": 960,
+      "viewport_width": 720,
+      "viewport_height": 960,
+      "source": "Compiled FI05 application; synthetic assigned visit",
+      "inspection": "Automated overflow/capture evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/fi05-820.png",
+      "sha256": "65f22a2f3c4da335819881e458fbb3c5510f7a78a33458f675f9fe5c11ea5d31",
+      "image_width": 820,
+      "image_height": 960,
+      "viewport_width": 820,
+      "viewport_height": 960,
+      "source": "Compiled FI05 application; synthetic assigned visit",
+      "inspection": "Automated overflow/capture evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/fi05-review-1024.png",
+      "sha256": "7d7d180db81dbeacd86cb87d109a5bc7763f84681511969dd120eb395a6ddfbb",
+      "image_width": 1024,
+      "image_height": 960,
+      "viewport_width": 1024,
+      "viewport_height": 960,
+      "source": "Compiled FI05 application; synthetic assigned visit",
+      "inspection": "Automated overflow/capture evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/fi05-review-1440.png",
+      "sha256": "fe89ae9654a7b3f048da0750dee1b50d6530d194386a1e950b08e03fdc7bc87a",
+      "image_width": 1440,
+      "image_height": 960,
+      "viewport_width": 1440,
+      "viewport_height": 960,
+      "source": "Compiled FI05 application; synthetic assigned visit",
+      "inspection": "Inspected by implementation agent; no owner acceptance"
+    },
+    {
+      "file": "captures/fi05-review-320.png",
+      "sha256": "76420b6312a30446b9e2643cffbe532b6add2522773744cb7646995400fd9f0f",
+      "image_width": 320,
+      "image_height": 844,
+      "viewport_width": 320,
+      "viewport_height": 844,
+      "source": "Compiled FI05 application; synthetic assigned visit",
+      "inspection": "Automated overflow/capture evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/fi05-review-390.png",
+      "sha256": "d936e5b1c040c7aca92905845e9e5d730c3317ec302dd7dbd4afeb92fb00c3d7",
+      "image_width": 390,
+      "image_height": 844,
+      "viewport_width": 390,
+      "viewport_height": 844,
+      "source": "Compiled FI05 application; synthetic assigned visit",
+      "inspection": "Inspected by implementation agent; no owner acceptance"
+    },
+    {
+      "file": "captures/fi05-review-720.png",
+      "sha256": "31af30c9dce62411e9623947277c1cfe2bc6549d323870973e6e41cdcc70767a",
+      "image_width": 720,
+      "image_height": 960,
+      "viewport_width": 720,
+      "viewport_height": 960,
+      "source": "Compiled FI05 application; synthetic assigned visit",
+      "inspection": "Automated overflow/capture evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/fi05-review-820.png",
+      "sha256": "61f2cb4ebb55206899845bd1ef8f5358d65f926a7dc8f7a1d7edf3e15dbb5f26",
+      "image_width": 820,
+      "image_height": 960,
+      "viewport_width": 820,
+      "viewport_height": 960,
+      "source": "Compiled FI05 application; synthetic assigned visit",
+      "inspection": "Automated overflow/capture evidence; not individually visually inspected"
+    },
+    {
+      "file": "captures/fi05-history-390.png",
+      "sha256": "3fd2e4c0b69f7cb2d0b817ddd6922c2ff4f2bf3d045a87a4a72b20fe9ce075bd",
+      "image_width": 390,
+      "image_height": 844,
+      "viewport_width": 390,
+      "viewport_height": 844,
+      "source": "Compiled FI05 application; synthetic assigned visit",
+      "inspection": "Inspected by implementation agent; no owner acceptance"
+    },
+    {
+      "file": "captures/quality-reference-1440.png",
+      "sha256": "43990e7f7e81cbe620937b7eb8db6c16fcc31ae94b0f79c6132a95ce672fe9a8",
+      "image_width": 1440,
+      "image_height": 1558,
+      "viewport_width": 1440,
+      "viewport_height": 960,
+      "source": "Proposed Quality r01 reference",
+      "inspection": "Inspected by implementation agent; no owner acceptance"
+    },
+    {
+      "file": "captures/quality-reference-390.png",
+      "sha256": "eedf6ebd6ca05637b8a726787651963a8441bf74362addb01677f252ec81553e",
+      "image_width": 390,
+      "image_height": 2675,
+      "viewport_width": 390,
+      "viewport_height": 844,
+      "source": "Proposed Quality r01 reference",
+      "inspection": "Inspected by implementation agent; no owner acceptance"
+    }
+  ]
+}

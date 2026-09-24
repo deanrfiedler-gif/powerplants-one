@@ -2692,16 +2692,21 @@
       "guide_key": "guide.fi.05",
       "design_path": "docs/design/development/pages/scope-fi-05.md",
       "html_path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/field-readiness-native/captures/quality-reference-1440.png",
+        "docs/testing/evidence/field-readiness-native/captures/quality-reference-390.png"
+      ],
       "dependencies": [
         "src/field/readiness.ts",
         "src/shared/cs/readiness.ts",
         "src/components/field-readiness-screen.tsx",
-        "src/app/field-readiness.css"
+        "src/app/field-readiness.css",
+        "docs/testing/evidence/field-readiness-native/README.md",
+        "docs/testing/evidence/field-readiness-native/capture-manifest.json"
       ],
       "scope_status": "Implemented; review pending",
       "visual_status": "Needs review",
-      "functional_status": "FI-05 verification in progress; see programme handover",
+      "functional_status": "FI05 database 2/2 and desktop/phone browser 2/2 passed; programme handover records regression limits",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -10128,16 +10133,21 @@
       "guide_key": "guide.route-my-jobs-site-readiness",
       "design_path": "docs/design/development/pages/route-my-jobs-site-readiness.md",
       "html_path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/field-readiness-native/captures/quality-reference-1440.png",
+        "docs/testing/evidence/field-readiness-native/captures/quality-reference-390.png"
+      ],
       "dependencies": [
         "src/field/readiness.ts",
         "src/shared/cs/readiness.ts",
         "src/components/field-readiness-screen.tsx",
-        "src/app/field-readiness.css"
+        "src/app/field-readiness.css",
+        "docs/testing/evidence/field-readiness-native/README.md",
+        "docs/testing/evidence/field-readiness-native/capture-manifest.json"
       ],
       "scope_status": "Implemented; review pending",
       "visual_status": "Needs review",
-      "functional_status": "FI-05 verification in progress; see programme handover",
+      "functional_status": "FI05 database 2/2 and desktop/phone browser 2/2 passed; programme handover records regression limits",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

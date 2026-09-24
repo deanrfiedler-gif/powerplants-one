@@ -40,10 +40,10 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 The draft User Guide `guide.fi.05` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
-Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+[Executed evidence](../../../testing/evidence/field-readiness-native/README.md) records paired reference/native captures, keyboard order, wrapping, scroll ownership and desktop/phone recovery. Actual 200% browser zoom and physical-device/assistive-technology acceptance remain pending. No page-specific dialog was added. Do not replace a comparison image simply to make a test pass.
 
 ## Native adaptations and limits
 
-Quality r01 is a proposed standalone reference. Native FI-05 uses the existing shell and vertically ordered cards instead of reproducing its multi-domain package rail. No runtime release/hold/induction policy is copied from its fixture. Paired visual review remains pending; exact source images have not yet been supplied. The source HTML remains unchanged.
+Quality r01 is a proposed standalone reference. Native FI-05 uses the existing shell and vertically ordered cards instead of reproducing its multi-domain package rail. No runtime release/hold/induction policy is copied from its fixture. Exact reference captures are retained in the evidence manifest; the implementation agent inspected desktop/phone pairs. Owner visual acceptance remains pending. The source HTML remains unchanged.
 
 Changed source/visit context refuses a stale save; the old note/snapshot remains. An uncertain command keeps its original identity for receipt recovery. The page is online only at this increment; FI-02 extension is tracked separately. Denied reads clear current source content. The global information icon maps this route to its maintained draft guide.
