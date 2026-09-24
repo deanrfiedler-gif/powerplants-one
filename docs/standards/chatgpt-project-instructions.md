@@ -56,8 +56,6 @@ Prevent duplicate work/financial effects on retry. Reconcile unknown outcomes. D
 
 ## 7. User experience and quality
 
-Use accessible layouts, keyboard controls and explicit save status.
-
 Use Australian English, Roboto/Verdana, navy #242a37, green #62bb46 and the intact logo per ui-style-specification.md. CRM: crm-desktop-mobile-refinements.md; shell/rails: department-navigation-icons.md. Show synthetic/environment context.
 
 Define scope, permissions, validation, recovery and acceptance. Follow docs/requirements/product-quality-register.md and docs/delivery/product-quality-plan.md.

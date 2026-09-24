@@ -14,7 +14,7 @@ import {
   type FactKind,
   type Allocation,
 } from "../model";
-import type { options } from "../reads";
+import type { options, SupplyWorkspace } from "../reads";
 import { useSupplyCommand, Recovery } from "./recovery";
 type Options = Awaited<ReturnType<typeof options>>;
 type Command = ReturnType<typeof useSupplyCommand>;
@@ -99,6 +99,7 @@ export function RecordForm({
   onDone: () => void;
 }) {
   const [id] = useState(() => record?.id ?? crypto.randomUUID());
+  const [version, setVersion] = useState(record?.version);
   const [newShipment] = useState(() => crypto.randomUUID());
   const [source, setSource] = useState(() => ({
     provider: record?.external_key?.provider ?? "Manual",
@@ -145,7 +146,7 @@ export function RecordForm({
           )
           .map((r) => ({ id: r.id, label: `${r.reference} · ${r.title}` }))
       : key === "technician_id"
-        ? options.owners
+        ? options.custodians.filter((c) => c.company_id === values.company_id)
         : key === "shipment_id"
           ? [
               {
@@ -186,7 +187,7 @@ export function RecordForm({
             id,
             kind,
             site_id: values.site_id || null,
-            expected_version: record?.version ?? undefined,
+            expected_version: version,
             external_key: source.key ? source : null,
             data,
           })
@@ -200,6 +201,9 @@ export function RecordForm({
           ? `Revise saved version ${record.version}. Its predecessor will remain available.`
           : "Create a synthetic coordination record with explicit context."}
       </p>
+      {record && command.error?.code === "VersionConflict" && (
+        <VersionReview id={record.id} onUse={setVersion} />
+      )}
       <div className="supply-fields">
         {[spec("reference", "Readable reference"), spec("title", "Title")].map(
           (f) => (
@@ -438,21 +442,7 @@ export function FactForm({
         {version}
       </p>
       {command.error?.code === "VersionConflict" && (
-        <Button
-          onClick={async () => {
-            const latest = await api<{ record: SupplyRecord }>(
-              `supply/records/${record.id}`,
-            );
-            if (
-              window.confirm(
-                `The server is now version ${latest.record.version}. Review the latest record in the workspace before rebasing this retained proposal. Use this version?`,
-              )
-            )
-              setVersion(latest.record.version);
-          }}
-        >
-          Compare latest version and rebase proposal
-        </Button>
+        <VersionReview id={record.id} onUse={setVersion} />
       )}
       {previous && (
         <p>
@@ -467,14 +457,16 @@ export function FactForm({
             value={data[f.key]}
             onChange={(v) => setData((d) => ({ ...d, [f.key]: v || null }))}
             options={
-              f.key === "field_entry_id" ? fieldCaptures : f.key === "delivery_id"
-                ? facts
-                    .filter((f) => f.kind === "Delivery")
-                    .map((f) => ({
-                      id: f.id,
-                      label: `Delivery ${f.data.quantity} ${record.unit} · ${new Date(f.observed_at).toLocaleString("en-AU")}`,
-                    }))
-                : undefined
+              f.key === "field_entry_id"
+                ? fieldCaptures
+                : f.key === "delivery_id"
+                  ? facts
+                      .filter((f) => f.kind === "Delivery")
+                      .map((f) => ({
+                        id: f.id,
+                        label: `Delivery ${f.data.quantity} ${record.unit} · ${new Date(f.observed_at).toLocaleString("en-AU")}`,
+                      }))
+                  : undefined
             }
           />
         ))}
@@ -547,6 +539,69 @@ export function FactForm({
         Save {factSpecs[kind].title.toLowerCase()}
       </Button>
     </form>
+  );
+}
+function VersionReview({
+  id,
+  onUse,
+}: {
+  id: string;
+  onUse: (version: number) => void;
+}) {
+  const [latest, setLatest] = useState<SupplyWorkspace | null>(null),
+    [error, setError] = useState<Failure | null>(null);
+  return (
+    <section className="supply-notice" aria-label="Compare stale proposal">
+      <Button
+        onClick={async () => {
+          try {
+            setLatest(await api<SupplyWorkspace>(`supply/records/${id}`));
+            setError(null);
+          } catch (e) {
+            setError(e as Failure);
+          }
+        }}
+      >
+        Load latest evidence for comparison
+      </Button>
+      <ErrorNotice error={error} />
+      {latest && (
+        <>
+          <h3>Server version {latest.record.version}</h3>
+          <p>
+            {latest.record.title} · {latest.record.quantity}{" "}
+            {latest.record.unit} · {latest.record.completeness}
+          </p>
+          <p>Next action: {latest.record.next_action}</p>
+          <p>
+            Required: {latest.record.data.required_on ?? "Unknown"} · ETA:{" "}
+            {latest.record.data.eta ?? "Unknown"}
+          </p>
+          <ul>
+            {latest.current_facts.slice(-6).map((f) => (
+              <li key={f.id}>
+                {factSpecs[f.kind].title} · version {f.version} ·{" "}
+                {f.data.state ?? f.completeness} ·{" "}
+                {f.data.quantity ?? f.data.received ?? ""} {latest.record.unit}
+              </li>
+            ))}
+          </ul>
+          <p>
+            Your entered proposal remains below. Compare it with this evidence.
+            If the original capture was superseded, reopen its current successor
+            before correcting it.
+          </p>
+          <Button
+            onClick={() => {
+              onUse(latest.record.version);
+              setLatest(null);
+            }}
+          >
+            Use this reviewed version for my proposal
+          </Button>
+        </>
+      )}
+    </section>
   );
 }
 export function AllocationForm({

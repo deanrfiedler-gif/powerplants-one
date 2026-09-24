@@ -98,8 +98,16 @@ export async function saveRecord(p: Principal, input: unknown, update = false) {
       let saved: SupplyRecord;
       if (before) {
         if (before.kind === "Demand") {
-          const issued = (await c.query("SELECT COALESCE(sum(quantity),0)::text n FROM ppo.supply_records WHERE workspace_id=$1 AND parent_id=$2 AND kind='Custody'",[p.workspace_id,before.id])).rows[0].n;
-          check(decimal(cmd.quantity) >= decimal(issued),"Demand cannot fall below retained service-stock issues.");
+          const issued = (
+            await c.query(
+              "SELECT COALESCE(sum(quantity),0)::text n FROM ppo.supply_records WHERE workspace_id=$1 AND parent_id=$2 AND kind='Custody'",
+              [p.workspace_id, before.id],
+            )
+          ).rows[0].n;
+          check(
+            decimal(cmd.quantity) >= decimal(issued),
+            "Demand cannot fall below retained service-stock issues.",
+          );
         }
         const entries = Object.entries({
           ...values,
@@ -210,11 +218,27 @@ async function impacts(
     };
     await authoriseActivityInput(c, p, activity);
     await insertActivity(c, p, activity);
-    const assessment = latestFact(await factsFor(c,p,demand),"Assessment");
-    const packs = demand.data.appointment_id && await hasPermission(c,p,"pack.read",demand.company_id,demand.site_id ?? undefined)
-      ? (await c.query("SELECT display_number,version,current_issue_id FROM ppo.packs WHERE workspace_id=$1 AND appointment_id=$2 AND current_issue_id IS NOT NULL",[p.workspace_id,demand.data.appointment_id])).rows : [];
+    const assessment = latestFact(await factsFor(c, p, demand), "Assessment");
+    const packs =
+      demand.data.appointment_id &&
+      (await hasPermission(
+        c,
+        p,
+        "pack.read",
+        demand.company_id,
+        demand.site_id ?? undefined,
+      ))
+        ? (
+            await c.query(
+              "SELECT display_number,version,current_issue_id FROM ppo.packs WHERE workspace_id=$1 AND appointment_id=$2 AND current_issue_id IS NOT NULL",
+              [p.workspace_id, demand.data.appointment_id],
+            )
+          ).rows
+        : [];
     const affected = [
-      assessment ? `Readiness assessment ${assessment.id} at version ${assessment.version}` : "No saved readiness assessment",
+      assessment
+        ? `Readiness assessment ${assessment.id} at version ${assessment.version}`
+        : "No saved readiness assessment",
       demand.data.origin_kind,
       demand.data.origin_id,
       demand.data.appointment_id
@@ -224,7 +248,10 @@ async function impacts(
       demand.data.engineering_id
         ? `Engineering ${demand.data.engineering_id}`
         : "Technical release separately owned",
-      ...packs.map(pack => `Issued pack ${pack.display_number} version ${pack.version}, exact issue ${pack.current_issue_id} (unchanged; document owner review required)`),
+      ...packs.map(
+        (pack) =>
+          `Issued pack ${pack.display_number} version ${pack.version}, exact issue ${pack.current_issue_id} (unchanged; document owner review required)`,
+      ),
     ]
       .filter(Boolean)
       .join("; ");
@@ -421,12 +448,33 @@ async function validateFact(
       );
   }
   if (kind === "Credit") {
-    const original = active.find(f=>f.kind==="Credit" && f.data.party===data.party && f.data.erp_reference===data.erp_reference);
-    if (original) check(previous?.id===original.id,"Retain the original credit observation as its predecessor; do not duplicate the source reference.");
-    if (previous) check(previous.data.party===data.party && previous.data.erp_reference===data.erp_reference,
-      "Reconcile the exact original credit party and ERP reference.");
-    check(!active.some(f=>f.kind==="Credit" && f.data.party===data.party && f.data.state==="Unknown" && f.id!==previous?.id),
-      "Reconcile the original unknown credit before another observation for that party.");
+    const original = active.find(
+      (f) =>
+        f.kind === "Credit" &&
+        f.data.party === data.party &&
+        f.data.erp_reference === data.erp_reference,
+    );
+    if (original)
+      check(
+        previous?.id === original.id,
+        "Retain the original credit observation as its predecessor; do not duplicate the source reference.",
+      );
+    if (previous)
+      check(
+        previous.data.party === data.party &&
+          previous.data.erp_reference === data.erp_reference,
+        "Reconcile the exact original credit party and ERP reference.",
+      );
+    check(
+      !active.some(
+        (f) =>
+          f.kind === "Credit" &&
+          f.data.party === data.party &&
+          f.data.state === "Unknown" &&
+          f.id !== previous?.id,
+      ),
+      "Reconcile the original unknown credit before another observation for that party.",
+    );
   }
   if (kind === "Purchase") {
     check(
@@ -486,7 +534,7 @@ async function validateFact(
     if (data.state === "Moved")
       check(
         !!previous &&
-          ["Prepared","Moved"].includes(previous.data.state!) &&
+          ["Prepared", "Moved"].includes(previous.data.state!) &&
           data.quantity === previous.data.quantity &&
           !!data.movement_at,
         "Physical movement needs the exact prepared predecessor and movement time.",
@@ -496,7 +544,9 @@ async function validateFact(
         sumFacts(facts, "Stage") -
           sumFacts(
             facts.filter(
-              (f) => f.id !== cmd.predecessor_id && (f.kind !== "Dispatch" || f.data.state === "Moved"),
+              (f) =>
+                f.id !== cmd.predecessor_id &&
+                (f.kind !== "Dispatch" || f.data.state === "Moved"),
             ),
             "Dispatch",
           ),
@@ -524,16 +574,25 @@ async function validateFact(
     );
     if (data.state === "Approved")
       check(
-        !!previous && ["Proposed","Approved"].includes(previous.data.state!) && previous.data.quantity === data.quantity,
+        !!previous &&
+          ["Proposed", "Approved"].includes(previous.data.state!) &&
+          previous.data.quantity === data.quantity,
         "Approve the exact proposed authorisation.",
       );
   }
   if (kind === "ReturnReceipt") {
     const authorised = latestFact(facts, "ReturnAuthorisation");
-    const retainedReceipt = sumFacts(facts.filter(f=>f.id!==cmd.predecessor_id),"ReturnReceipt","received") + q(data,"received");
-    const disposition = latestFact(facts,"Disposition");
-    check(!disposition || q(disposition.data,"quantity") <= retainedReceipt,
-      "Receipt correction cannot remove quantity already retained in a disposition decision.");
+    const retainedReceipt =
+      sumFacts(
+        facts.filter((f) => f.id !== cmd.predecessor_id),
+        "ReturnReceipt",
+        "received",
+      ) + q(data, "received");
+    const disposition = latestFact(facts, "Disposition");
+    check(
+      !disposition || q(disposition.data, "quantity") <= retainedReceipt,
+      "Receipt correction cannot remove quantity already retained in a disposition decision.",
+    );
     check(
       q(data, "usable") + q(data, "quarantined") <= q(data, "received"),
       "Usable and quarantined cannot exceed received.",

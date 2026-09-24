@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useShell } from "../../components/shell-provider";
@@ -37,6 +37,11 @@ function Workspace({ slug }: { slug: string }) {
     view = params.get("view") ?? "register";
   const [panel, setPanel] = useState<Panel | null>(null),
     [history, setHistory] = useState(false);
+  const focusAfterClose = useRef<string | null>(null);
+  function openPanel(value: Panel, focusKey: string) {
+    focusAfterClose.current = focusKey;
+    setPanel(value);
+  }
   const list = usePlatformResource<Awaited<ReturnType<typeof register>>>(
     `supply/records?kind=${page.kind}&q=${encodeURIComponent(search)}&completeness=${encodeURIComponent(filter)}`,
   );
@@ -54,6 +59,16 @@ function Workspace({ slug }: { slug: string }) {
     opts.reload();
   };
   const command = useSupplyCommand(refresh);
+  useEffect(() => {
+    if (panel || detail.loading || !focusAfterClose.current) return;
+    const control = document.querySelector<HTMLButtonElement>(
+      `[data-supply-action="${focusAfterClose.current}"]`,
+    );
+    if (control && !control.disabled) {
+      control.focus({ preventScroll: true });
+      focusAfterClose.current = null;
+    }
+  }, [panel, detail.loading, detail.data, command.pending]);
   usePublishPageDescription(page.title, page.intro);
   function query(key: string, value: string, push = false) {
     const next = new URLSearchParams(params.toString());
@@ -88,11 +103,14 @@ function Workspace({ slug }: { slug: string }) {
       "Claim",
       "Custody",
     ];
-    setPanel({
-      type: "fact",
+    openPanel(
+      {
+        type: "fact",
+        kind,
+        previous: single.includes(kind) ? latest : undefined,
+      },
       kind,
-      previous: single.includes(kind) ? latest : undefined,
-    });
+    );
   }
   const canCreate = opts.data?.can_create?.[page.kind] ?? false;
   return (
@@ -112,7 +130,8 @@ function Workspace({ slug }: { slug: string }) {
         <Button
           variant="primary"
           disabled={!opts.data || !canCreate || !!command.pending}
-          onClick={() => setPanel({ type: "create" })}
+          data-supply-action="create"
+          onClick={() => openPanel({ type: "create" }, "create")}
         >
           New {page.kind.toLowerCase()}
         </Button>
@@ -331,16 +350,20 @@ function Workspace({ slug }: { slug: string }) {
                 )}
               <div className="supply-actions">
                 <Button
-                  onClick={() => setPanel({ type: "edit" })}
+                  data-supply-action="edit"
+                  onClick={() => openPanel({ type: "edit" }, "edit")}
                   disabled={!detail.data.capabilities.edit || !!command.pending}
                 >
                   Revise record
                 </Button>
                 {["Demand", "Supply"].includes(r.kind) && (
                   <Button
-                    onClick={() => setPanel({ type: "allocate" })}
+                    data-supply-action="allocate"
+                    onClick={() => openPanel({ type: "allocate" }, "allocate")}
                     disabled={
-                      !detail.data.capabilities.edit || !!command.pending
+                      !opts.data ||
+                      !detail.data.capabilities.edit ||
+                      !!command.pending
                     }
                   >
                     Allocate to a line
@@ -351,6 +374,7 @@ function Workspace({ slug }: { slug: string }) {
                   .map((k) => (
                     <Button
                       key={k}
+                      data-supply-action={k}
                       onClick={() => openFact(k)}
                       disabled={!!command.pending}
                     >
@@ -434,7 +458,9 @@ function Workspace({ slug }: { slug: string }) {
                     </p>
                     <dl>
                       {Object.entries(f.data)
-                        .filter(([key]) => f.kind !== "Assessment" || key !== "basis")
+                        .filter(
+                          ([key]) => f.kind !== "Assessment" || key !== "basis",
+                        )
                         .map(([key, value]) => (
                           <div key={key}>
                             <dt>
@@ -446,7 +472,9 @@ function Workspace({ slug }: { slug: string }) {
                           </div>
                         ))}
                     </dl>
-                    {f.kind === "Assessment" && f.data.basis && <AssessmentEvidence value={f.data.basis} />}
+                    {f.kind === "Assessment" && f.data.basis && (
+                      <AssessmentEvidence value={f.data.basis} />
+                    )}
                     <p>{f.evidence}</p>
                     {f.attachment_id && (
                       <a
@@ -470,11 +498,14 @@ function Workspace({ slug }: { slug: string }) {
                       detail.data!.capabilities[f.kind] && (
                         <Button
                           onClick={() =>
-                            setPanel({
-                              type: "fact",
-                              kind: f.kind,
-                              previous: f,
-                            })
+                            openPanel(
+                              {
+                                type: "fact",
+                                kind: f.kind,
+                                previous: f,
+                              },
+                              f.kind,
+                            )
                           }
                         >
                           Review / correct capture
@@ -509,7 +540,7 @@ function Workspace({ slug }: { slug: string }) {
           )}
         </section>
       </div>
-      {panel && opts.data && (
+      {panel && (opts.data || panel.type === "fact") && (
         <WorklistPanel
           title={
             panel.type === "fact"
@@ -536,7 +567,7 @@ function Workspace({ slug }: { slug: string }) {
               key={`${panel.type}-${r?.id ?? "new"}`}
               kind={panel.type === "edit" && r ? r.kind : page.kind}
               record={panel.type === "edit" ? r : undefined}
-              options={opts.data}
+              options={opts.data!}
               command={command}
               onDone={() => setPanel(null)}
             />
@@ -544,7 +575,7 @@ function Workspace({ slug }: { slug: string }) {
             <AllocationForm
               record={r}
               allocations={detail.data?.allocations ?? []}
-              options={opts.data}
+              options={opts.data!}
               command={command}
               onDone={() => setPanel(null)}
             />
@@ -565,10 +596,35 @@ function Workspace({ slug }: { slug: string }) {
     </section>
   );
 }
-function AssessmentEvidence({value}: {value:string}) {
-  let basis: {demand_version:number; sources:{id:string;version:number;observed_at:string;completeness:string;usable:string|null}[]};
-  try { basis=JSON.parse(value); } catch { return <p>The exact assessment basis needs recovery.</p>; }
-  return <details><summary>Exact assessed source versions</summary><p>Demand version {basis.demand_version}</p>
-    {basis.sources.map(source=><p key={source.id}><Link href={`/supply/stock?record=${source.id}`}>Source version {source.version}</Link> · {source.completeness} · usable {source.usable ?? "Unknown"} · <Stamp value={source.observed_at} /></p>)}
-  </details>;
+function AssessmentEvidence({ value }: { value: string }) {
+  let basis: {
+    demand_version: number;
+    sources: {
+      id: string;
+      version: number;
+      observed_at: string;
+      completeness: string;
+      usable: string | null;
+    }[];
+  };
+  try {
+    basis = JSON.parse(value);
+  } catch {
+    return <p>The exact assessment basis needs recovery.</p>;
+  }
+  return (
+    <details>
+      <summary>Exact assessed source versions</summary>
+      <p>Demand version {basis.demand_version}</p>
+      {basis.sources.map((source) => (
+        <p key={source.id}>
+          <Link href={`/supply/stock?record=${source.id}`}>
+            Source version {source.version}
+          </Link>{" "}
+          · {source.completeness} · usable {source.usable ?? "Unknown"} ·{" "}
+          <Stamp value={source.observed_at} />
+        </p>
+      ))}
+    </details>
+  );
 }

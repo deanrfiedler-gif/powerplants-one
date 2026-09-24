@@ -145,7 +145,10 @@ export async function newContext(
   await companyContext(c, p, r.company_id, r.site_id, createCapability[r.kind]);
   await linkedContext(c, p, r);
   if (r.kind === "Custody") {
-    const custodian = await c.query("SELECT 1 FROM ppo.resources resource JOIN ppo.users u ON (u.workspace_id,u.id)=(resource.workspace_id,resource.user_id) WHERE resource.workspace_id=$1 AND resource.company_id=$2 AND resource.user_id=$3 AND u.active",[p.workspace_id,r.company_id,r.data.technician_id]);
+    const custodian = await c.query(
+      "SELECT 1 FROM ppo.resources resource JOIN ppo.users u ON (u.workspace_id,u.id)=(resource.workspace_id,resource.user_id) WHERE resource.workspace_id=$1 AND resource.company_id=$2 AND resource.user_id=$3 AND u.active",
+      [p.workspace_id, r.company_id, r.data.technician_id],
+    );
     if (!custodian.rowCount) throw unavailable();
   }
   await scopedOwner(

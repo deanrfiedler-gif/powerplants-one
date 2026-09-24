@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Date: 24 September 2026. Owner: Dean Fiedler. Status: implementation decision under the user's SC-01–SC-10 instruction; business policy and visual acceptance pending.
+Date: 25 September 2026. Owner: Dean Fiedler. Status: implementation decision under the user's SC-01–SC-10 instruction; business policy and visual acceptance pending.
 
 ## Context and baseline
 

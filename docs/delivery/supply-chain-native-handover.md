@@ -18,11 +18,17 @@ The ten page-specific guides are available through the global information icon. 
 
 ## Verification record
 
-Initial targeted unit run: **8/8 passed** outside the Windows sandbox. Initial targeted database run: **8/9 passed**, including scope, replay/conflict, Project split-shipment/quarantine, concurrent allocations, fulfilment/outstanding, return remedy versus recovery, restricted credits, original external-operation reconciliation, unchanged confirmed Service appointment and exact durable PNG access. The ninth test incorrectly attempted to delete an immutable seed receipt; its harness now executes the seed directly. Final rerun and broader results will be recorded below.
+Targeted database verification: **10/10 passed**, including actual Field consumption and custody reconciliation, restart recovery, scope, replay/conflict, Project split-shipment/quarantine, concurrent allocations, fulfilment/outstanding, return remedy versus recovery, restricted credits, original external-operation reconciliation, unchanged confirmed Service appointment and exact durable PNG access. Later browser-driven refinements are undergoing the final regression run.
+
+Full unit suite: **426/430 passed**. Four Windows filesystem/path failures in `document-store.test.ts` (two), `recovery.test.ts` and `warm-routes.test.ts` reproduce on unchanged main `2173cc64eed54b1e3fb8334495f7cd924206d13f` (3/7 passed, the same four failures). Supply HTTP contract passed. Lint, TypeScript, application build, foundation, prototype and the 107-group access-review model check passed before the final browser refinements. Naming identified the 8,000-character project-instruction limit; the copy has been shortened for final recheck.
+
+Mobile verification has passed receipt/correction/focus return, pick/stage/partial POD and original-operation recovery after a lost accepted response. The full 56-case, four-width run is in progress. A reused dialog initially lacked host-scoped styling, and refresh removed the focus-return target; both were fixed within the Supply host. A prior local run was interrupted by a multi-hour runner suspension; its elapsed-time failures are not counted as successful verification. The broad database run and clean reruns are pending.
 
 The first sandboxed Node/tsx attempts failed before loading tests with `uv_os_get_passwd ENOMEM`. Unsandboxed local runs loaded and executed normally. This is recorded as a local tool failure, not an application regression. Next's first worktree launch could not resolve its package inside the new checkout; installing the existing locked dependencies locally is environment setup, not a dependency change.
 
-Pending checks: full lint/typecheck/unit/database/HTTP/build, targeted browser journeys and responsive captures, design/register/naming/foundation assurance, migration/reseed/upgrade preservation and final Git diff review. No test pass or screenshot has been used to mark a design review accepted.
+Pending checks: final lint/typecheck/database/HTTP/build, all-route responsive browser captures, design/register/naming assurance, migration/reseed/upgrade preservation and final Git diff review. No test pass or screenshot has been used to mark a design review accepted.
+
+Main was reconciled with the ES-02 design-board merge at `2173cc64eed54b1e3fb8334495f7cd924206d13f`, tree `c7d9f5402c8d09dc6d37df0cb7d81ecd0d507276`. PRs #315 (Scheduling refinement) and #316 (FI-05) were audited; they have no migration collision but overlap shared status/register/receipt files. Their unrelated work is preserved. Review increments: `d75377f` persistence/API; `420fd5e` native workspaces/guides; `8b74caa` verification; `3bb510c` working documentation.
 
 ## Traceability and boundaries
 

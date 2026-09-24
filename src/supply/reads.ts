@@ -186,8 +186,21 @@ export async function workspace(p: Principal, id: string) {
       )
     ).rows;
     const links = await linksFor(c, p, record);
-    const field_captures: {id: string; label: string}[] = record.kind === "Custody" && capabilities.Custody
-      ? (await c.query("SELECT e.id,(e.payload->>'quantity') || ' ' || (e.payload->>'uom') || ' used · ' || e.captured_at::text AS label FROM ppo.field_entries e WHERE e.workspace_id=$1 AND e.appointment_id=$2 AND e.actor_id=$3 AND e.kind='Material' AND e.payload->>'item_reference'=$4 AND e.payload->>'uom'=$5 AND e.payload->>'movement_kind'='Consumed' AND NOT EXISTS(SELECT 1 FROM ppo.field_entries n WHERE n.workspace_id=e.workspace_id AND n.supersedes_entry_id=e.id) ORDER BY e.captured_at DESC LIMIT 200",[p.workspace_id,record.data.appointment_id,record.data.technician_id,record.item,record.unit])).rows : [];
+    const field_captures: { id: string; label: string }[] =
+      record.kind === "Custody" && capabilities.Custody
+        ? (
+            await c.query(
+              "SELECT e.id,(e.payload->>'quantity') || ' ' || (e.payload->>'uom') || ' used · ' || e.captured_at::text AS label FROM ppo.field_entries e WHERE e.workspace_id=$1 AND e.appointment_id=$2 AND e.actor_id=$3 AND e.kind='Material' AND e.payload->>'item_reference'=$4 AND e.payload->>'uom'=$5 AND e.payload->>'movement_kind'='Consumed' AND NOT EXISTS(SELECT 1 FROM ppo.field_entries n WHERE n.workspace_id=e.workspace_id AND n.supersedes_entry_id=e.id) ORDER BY e.captured_at DESC LIMIT 200",
+              [
+                p.workspace_id,
+                record.data.appointment_id,
+                record.data.technician_id,
+                record.item,
+                record.unit,
+              ],
+            )
+          ).rows
+        : [];
     const allocations: Allocation[] = [];
     for (const a of (
       await c.query<Allocation>(
@@ -263,7 +276,7 @@ export async function options(p: Principal) {
   await requireCapability(c, p, "supply.read");
   const companies = (
     await c.query(
-      `SELECT id,display_name AS label FROM ppo.companies r WHERE workspace_id=$1 AND (${scopeSql("r.id", "NULL::uuid", "supply.read")} OR EXISTS(SELECT 1 FROM ppo.sites s WHERE s.workspace_id=r.workspace_id AND s.company_id=r.id AND ${scopeSql("s.company_id","s.id","supply.read")} AND ${scopeSql("s.company_id","s.id")}))`,
+      `SELECT id,display_name AS label FROM ppo.companies r WHERE workspace_id=$1 AND (${scopeSql("r.id", "NULL::uuid", "supply.read")} OR EXISTS(SELECT 1 FROM ppo.sites s WHERE s.workspace_id=r.workspace_id AND s.company_id=r.id AND ${scopeSql("s.company_id", "s.id", "supply.read")} AND ${scopeSql("s.company_id", "s.id")}))`,
       [p.workspace_id, p.actor_id],
     )
   ).rows;
@@ -280,6 +293,12 @@ export async function options(p: Principal) {
     )
   ).rows;
   const records = (await register(p)).items;
+  const custodians: { id: string; label: string; company_id: string }[] = (
+    await c.query(
+      "SELECT DISTINCT u.id,u.display_name AS label,r.company_id FROM ppo.resources r JOIN ppo.users u ON (u.workspace_id,u.id)=(r.workspace_id,r.user_id) WHERE r.workspace_id=$1 AND r.company_id=ANY($2::uuid[]) AND u.active ORDER BY u.display_name",
+      [p.workspace_id, companies.map((co) => co.id)],
+    )
+  ).rows;
   const contexts: Record<
     string,
     {
@@ -358,6 +377,7 @@ export async function options(p: Principal) {
     companies,
     sites,
     owners,
+    custodians,
     records,
     contexts,
     actor_id: p.actor_id,

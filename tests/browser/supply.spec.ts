@@ -23,7 +23,80 @@ test.beforeEach(async ({ page, baseURL }) => login(page, baseURL!));
 for (const spec of supplyPages)
   test(`${spec.scope} route, guide, filters, keyboard and responsive containment`, async ({
     page,
+    baseURL,
   }, testInfo) => {
+    if (spec.kind === "Return") {
+      const d = supplyInput();
+      await post(page, baseURL!, "supply/records", d);
+      await post(
+        page,
+        baseURL!,
+        "supply/records",
+        supplyInput("Return", {
+          quantity: "1",
+          data: {
+            ...supplyInput("Return").data,
+            demand_id: d.id,
+            identity_status: "Unresolved",
+          },
+        }),
+      );
+    }
+    if (spec.scope === "SC-09") {
+      const d = supplyInput();
+      await post(page, baseURL!, "supply/records", d);
+      await post(
+        page,
+        baseURL!,
+        `supply/records/${d.id}/facts`,
+        supplyFact("Promise", 1, { quantity: "10", promised_on: "2026-11-01" }),
+      );
+    }
+    if (spec.kind === "Custody") {
+      const o = await (
+        await page.request.get(baseURL + "/api/v1/supply/options")
+      ).json();
+      const a = o.contexts.appointment_id.find(
+        (a: { company_id: string; work_order_id: string }) =>
+          o.custodians.some(
+            (u: { company_id: string }) => u.company_id === a.company_id,
+          ) &&
+          o.contexts.WorkOrder.some(
+            (w: { id: string }) => w.id === a.work_order_id,
+          ),
+      );
+      expect(a).toBeTruthy();
+      const d = supplyInput("Demand", {
+        company_id: a.company_id,
+        site_id: a.site_id,
+        data: {
+          ...supplyInput().data,
+          origin_kind: "WorkOrder",
+          origin_id: a.work_order_id,
+          appointment_id: a.id,
+        },
+      });
+      await post(page, baseURL!, "supply/records", d);
+      const custody = supplyInput("Custody", {
+        company_id: a.company_id,
+        site_id: a.site_id,
+        data: {
+          ...supplyInput("Custody").data,
+          demand_id: d.id,
+          appointment_id: a.id,
+          technician_id: o.custodians.find(
+            (u: { company_id: string }) => u.company_id === a.company_id,
+          ).id,
+        },
+      });
+      await post(page, baseURL!, "supply/records", custody);
+      await post(
+        page,
+        baseURL!,
+        `supply/records/${custody.id}/facts`,
+        supplyFact("Custody", 1, { held: "10", state: "Open" }),
+      );
+    }
     await page.goto(`/supply/${spec.slug}`);
     const surface = page.locator("#ppo-supply");
     await expect(surface).toBeVisible();
@@ -34,7 +107,12 @@ for (const spec of supplyPages)
       timeout: 60000,
     });
     if ((page.viewportSize()?.width ?? 0) >= 1024) {
-      await expect(page.locator(".ppo-primary-nav").getByRole("link",{name:destination(spec.rail).label,exact:true})).toHaveAttribute("aria-current","page");
+      await expect(
+        page.locator(".ppo-primary-nav").getByRole("link", {
+          name: destination(spec.rail).label,
+          exact: true,
+        }),
+      ).toHaveAttribute("aria-current", "page");
     }
     await surface.getByRole("searchbox").fill("SYN-NO-SUPPLY-MATCH");
     await expect(surface.getByText(/No records match/)).toBeVisible();
@@ -44,11 +122,24 @@ for (const spec of supplyPages)
       "SYN-NO-SUPPLY-MATCH",
     );
     await surface.getByRole("button", { name: "Clear filters" }).click();
-    const firstRecord = surface.locator(".supply-worklist article button").first();
-    if (await firstRecord.count()) {
-      await firstRecord.click();await expect(page).toHaveURL(/record=/);
-      await expect(surface.getByRole("button",{name:"Revise record",exact:true})).toBeVisible();
-      await page.goBack();await expect(page).not.toHaveURL(/record=/);
+    await expect(
+      surface.getByRole("button", {
+        name: `New ${spec.kind.toLowerCase()}`,
+        exact: true,
+      }),
+    ).toBeEnabled({ timeout: 60000 });
+    const firstRecord = surface
+      .locator(".supply-worklist article button")
+      .first();
+    await expect(firstRecord).toBeVisible();
+    {
+      await firstRecord.click();
+      await expect(page).toHaveURL(/record=/);
+      await expect(
+        surface.getByRole("button", { name: "Revise record", exact: true }),
+      ).toBeVisible();
+      await page.goBack();
+      await expect(page).not.toHaveURL(/record=/);
       await firstRecord.click();
     }
     const guide = page.getByRole("button", { name: "Page guide", exact: true });
@@ -71,6 +162,13 @@ for (const spec of supplyPages)
       path: `docs/testing/evidence/supply-chain-native/${spec.scope.toLowerCase()}-${testInfo.project.name}.png`,
       fullPage: true,
     });
+    if ((page.viewportSize()?.width ?? 0) < 800) {
+      await surface.locator(".supply-detail").scrollIntoViewIfNeeded();
+      await page.screenshot({
+        path: `docs/testing/evidence/supply-chain-native/${spec.scope.toLowerCase()}-detail-${testInfo.project.name}.png`,
+        fullPage: true,
+      });
+    }
   });
 test("mobile receipt capture, persisted correction and focus return", async ({
   page,
@@ -107,12 +205,17 @@ test("mobile receipt capture, persisted correction and focus return", async ({
     await dialog.getByLabel(label, { exact: false }).fill(value);
   await dialog.getByLabel("Source completeness").selectOption("Complete");
   await dialog.getByLabel("Receipt item identity").selectOption("Verified");
-  await page.screenshot({path:`docs/testing/evidence/supply-chain-native/receipt-form-${page.viewportSize()!.width}.png`,fullPage:true});
+  await page.screenshot({
+    path: `docs/testing/evidence/supply-chain-native/receipt-form-${page.viewportSize()!.width}.png`,
+    fullPage: true,
+  });
   await dialog
     .getByRole("button", { name: "Save receipt and inspection" })
     .click();
   await expect(dialog).not.toBeVisible();
-  await expect(page.getByRole("button",{name:"Receipt and inspection",exact:true})).toBeFocused();
+  await expect(
+    page.getByRole("button", { name: "Receipt and inspection", exact: true }),
+  ).toBeFocused();
   await expect(
     page.locator(".supply-fact").getByText("SYN bent guard", { exact: true }),
   ).toBeVisible();
@@ -125,14 +228,30 @@ test("mobile receipt capture, persisted correction and focus return", async ({
       () => document.documentElement.scrollWidth > innerWidth + 1,
     ),
   ).toBe(false);
-  await page.getByRole("button",{name:"Review / correct capture",exact:true}).click();
-  const correction=page.getByRole("dialog",{name:"Receipt and inspection"});
-  await correction.getByLabel("Inspection finding").fill("SYN corrected bent guard finding");
-  await correction.getByLabel("Evidence reference / finding").fill("SYN reinspection");
-  await correction.getByLabel("Reason / correction explanation").fill("SYN corrected finding only");
-  await correction.getByRole("button",{name:"Save receipt and inspection"}).click();
+  await page
+    .getByRole("button", { name: "Review / correct capture", exact: true })
+    .click();
+  const correction = page.getByRole("dialog", {
+    name: "Receipt and inspection",
+  });
+  await correction
+    .getByLabel("Inspection finding")
+    .fill("SYN corrected bent guard finding");
+  await correction
+    .getByLabel("Evidence reference / finding")
+    .fill("SYN reinspection");
+  await correction
+    .getByLabel("Reason / correction explanation")
+    .fill("SYN corrected finding only");
+  await correction
+    .getByRole("button", { name: "Save receipt and inspection" })
+    .click();
   await expect(correction).not.toBeVisible();
-  await expect(page.locator(".supply-fact").getByText("SYN corrected bent guard finding",{exact:true})).toBeVisible();
+  await expect(
+    page
+      .locator(".supply-fact")
+      .getByText("SYN corrected bent guard finding", { exact: true }),
+  ).toBeVisible();
 });
 test("picking, staging and partial POD use exact outstanding quantities and browser restoration", async ({
   page,
@@ -166,7 +285,10 @@ test("picking, staging and partial POD use exact outstanding quantities and brow
   ])
     await dialog.getByLabel(label, { exact: false }).fill(value);
   await dialog.getByLabel("Source completeness").selectOption("Complete");
-  await page.screenshot({path:`docs/testing/evidence/supply-chain-native/pick-form-${page.viewportSize()!.width}.png`,fullPage:true});
+  await page.screenshot({
+    path: `docs/testing/evidence/supply-chain-native/pick-form-${page.viewportSize()!.width}.png`,
+    fullPage: true,
+  });
   await dialog.getByRole("button", { name: "Save pick goods" }).click();
   await expect(dialog).not.toBeVisible();
   const w = await (
@@ -211,7 +333,10 @@ test("picking, staging and partial POD use exact outstanding quantities and brow
   ])
     await dialog.getByLabel(label, { exact: false }).fill(value);
   await dialog.getByLabel("Source completeness").selectOption("Complete");
-  await page.screenshot({path:`docs/testing/evidence/supply-chain-native/pod-form-${page.viewportSize()!.width}.png`,fullPage:true});
+  await page.screenshot({
+    path: `docs/testing/evidence/supply-chain-native/pod-form-${page.viewportSize()!.width}.png`,
+    fullPage: true,
+  });
   await dialog
     .getByRole("button", { name: "Save delivery / pod capture" })
     .click();
@@ -225,25 +350,54 @@ test("picking, staging and partial POD use exact outstanding quantities and brow
   ).toBeVisible();
 });
 
-test("lost accepted save survives reload and recovers its original receipt without a second revision",async({page,baseURL})=>{
-  const d=supplyInput();await post(page,baseURL!,"supply/records",d);
+test("lost accepted save survives reload and recovers its original receipt without a second revision", async ({
+  page,
+  baseURL,
+}) => {
+  const d = supplyInput();
+  await post(page, baseURL!, "supply/records", d);
   await page.goto(`/supply/material-readiness?record=${d.id}`);
-  await page.getByRole("button",{name:"Revise record",exact:true}).click();
-  const dialog=page.getByRole("dialog",{name:"Revise coordination record"});
-  await dialog.getByLabel("Next action",{exact:false}).fill("SYN recovered original change");
-  await dialog.getByLabel("Reason for this record").fill("SYN lost-response proof");
-  await page.route(`**/api/v1/supply/records/${d.id}`,async route=>{
-    if(route.request().method()!=="POST")return route.continue();
-    const response=await route.fetch();expect(response.status()).toBe(201);await route.abort("failed");
+  await page
+    .getByRole("button", { name: "Revise record", exact: true })
+    .click();
+  const dialog = page.getByRole("dialog", {
+    name: "Revise coordination record",
   });
-  await dialog.getByRole("button",{name:"Save demand",exact:true}).click();
-  await expect(dialog.getByText("Uncertain result — original operation retained",{exact:true})).toBeVisible();
+  await dialog
+    .getByLabel("Next action", { exact: false })
+    .fill("SYN recovered original change");
+  await dialog
+    .getByLabel("Reason for this record")
+    .fill("SYN lost-response proof");
+  await page.route(`**/api/v1/supply/records/${d.id}`, async (route) => {
+    if (route.request().method() !== "POST") return route.continue();
+    const response = await route.fetch();
+    expect(response.status()).toBe(200);
+    await route.abort("failed");
+  });
+  await dialog
+    .getByRole("button", { name: "Save demand", exact: true })
+    .click();
+  await expect(
+    dialog.getByText("Uncertain result — original operation retained", {
+      exact: true,
+    }),
+  ).toBeVisible();
   await page.unroute(`**/api/v1/supply/records/${d.id}`);
   await page.reload();
-  await page.getByRole("button",{name:"Check original receipt",exact:true}).click();
-  await expect(page.getByText("Original save recovered. No second effect was created.",{exact:true})).toBeVisible();
-  const saved=await(await page.request.get(baseURL+`/api/v1/supply/records/${d.id}`)).json();
-  expect(saved.record.version).toBe(2);expect(saved.record.next_action).toBe("SYN recovered original change");
+  await page
+    .getByRole("button", { name: "Check original receipt", exact: true })
+    .click();
+  await expect(
+    page.getByText("Original save recovered. No second effect was created.", {
+      exact: true,
+    }),
+  ).toBeVisible();
+  const saved = await (
+    await page.request.get(baseURL + `/api/v1/supply/records/${d.id}`)
+  ).json();
+  expect(saved.record.version).toBe(2);
+  expect(saved.record.next_action).toBe("SYN recovered original change");
 });
 test("denied identity and Partial evidence do not become authorised or zero availability", async ({
   page,

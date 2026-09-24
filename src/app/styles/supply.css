@@ -190,6 +190,53 @@
   min-width: 0;
   font-family: Roboto, Verdana, sans-serif;
 }
+#ppo-supply .crm-r38-panel {
+  width: min(780px, calc(100vw - 24px));
+  max-height: calc(100dvh - 24px);
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  color: var(--navy);
+}
+#ppo-supply .crm-r38-panel[open] {
+  display: flex;
+  flex-direction: column;
+}
+#ppo-supply .crm-r38-panel::backdrop {
+  background: #242a3748;
+}
+#ppo-supply .crm-r38-panel > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+}
+#ppo-supply .crm-r38-panel > header h2 {
+  margin: 0;
+  font-size: 20px;
+}
+#ppo-supply .crm-r38-panel > header button {
+  min-width: 44px;
+  min-height: 44px;
+}
+#ppo-supply .crm-r38-panel-body {
+  overflow: auto;
+  min-height: 0;
+  padding: 16px;
+}
+#ppo-supply .crm-r38-panel > footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 16px;
+  border-top: 1px solid var(--line);
+  background: var(--surface-3);
+}
+#ppo-supply .crm-r38-panel > footer button {
+  min-height: 44px;
+}
 .supply-form label {
   display: block;
   min-width: 0;
