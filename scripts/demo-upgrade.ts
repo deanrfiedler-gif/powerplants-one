@@ -114,8 +114,15 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // Seed 44 adds one dedicated synthetic CS reviewer with four existing shared/Activity read/edit duties.
   // No existing profile or invited-tester duty, backfill or source changes; identity events are flushed.
   // Existing generic runtime grants cover the new tables. No hosted deployment is run here.
+  // 0045 review: typed Equipment evidence and append-only configuration succession.
+  // No seed, grants, users, external adapter or historic content rewrite. Historical
+  // Asset links keep their Site while new links must match current context.
+  // Runtime writes remain checked by current scope and exact applied review.
+  // 0046: additive Sales workflow aggregates and immutable review events; 0045 Equipment is included.
+  // No seeds, new users, grants or existing source changes. Deferred identities are flushed
+  // before ALTER; generic runtime grants cover the new tables. No hosted upgrade is run here.
   // 0047: additive Engineering control children, immutable exact review/issue history and four narrow
-  // capabilities. Seed 45 grants four duties only to existing fictional users and adds one synthetic
+  // capabilities. Seed 47 grants four duties only to existing fictional users and adds one synthetic
   // Company A policy. No invited tester receives review, issue, distribution or source authority;
   // no new user, historical migration rewrite, external transaction or identity-table ALTER occurs.
   if (latestMigrationVersion !== 47) throw Error("Review the existing-demo upgrade for this release.");

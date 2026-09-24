@@ -6,6 +6,8 @@ import { listFinance, readFinance } from "../finance/reads";
 import { listEngineering } from "../engineering/service";
 import { changeReviewTasks } from "../engineering/changes/reads";
 import { inReviewView, reviewViews, type ReviewTask } from "./model";
+import { equipmentReviewTasks } from "../equipment/reviews";
+import { database } from "../platform/database";
 import { surveyReviewTasks } from "../shared/cs/reviews";
 
 type SourceState = {
@@ -19,7 +21,8 @@ export async function reviewSources(
 ) {
   const items: ReviewTask[] = [],
     sources: SourceState[] = [];
-  for (const domain of ["Service", "Finance", "Engineering", "Customers & sites"]) {
+  const equipmentAvailable=(await database().query("SELECT to_regclass('ppo.equipment_changes') IS NOT NULL AS present")).rows[0].present;
+  for (const domain of ["Service", "Finance", "Engineering", "Customers & sites",...(equipmentAvailable?["Equipment"]:[])]) {
     const selected: ReviewTask[] = [];
     let bounded = false;
     try {
@@ -82,6 +85,8 @@ export async function reviewSources(
           after = page.next_cursor;
           bounded = !!after && selected.length >= 500;
         } while (after && !bounded);
+      } else if(domain === "Equipment") {
+        const source=await equipmentReviewTasks(p,company);selected.push(...source.items);bounded=source.bounded;
       } else if(domain === "Customers & sites") {
         const source=await surveyReviewTasks(p,company);selected.push(...source.items);bounded=source.bounded;
       } else {
@@ -137,7 +142,7 @@ export async function reviewInbox(p: Principal, input: unknown = {}) {
   const matches = (t: ReviewTask) =>
     inReviewView(t, view, p.actor_id) ||
     (view === "mine" &&
-      ["FinanceHandoff","SiteSurvey"].includes(t.source) &&
+      ["FinanceHandoff","SiteSurvey","EquipmentChange","EquipmentBackup","EquipmentBulletin"].includes(t.source) &&
       t.current &&
       t.actionable &&
       !t.owner_id);
@@ -148,7 +153,7 @@ export async function reviewInbox(p: Principal, input: unknown = {}) {
         (t) =>
           inReviewView(t, v, p.actor_id) ||
           (v === "mine" &&
-            ["FinanceHandoff","SiteSurvey"].includes(t.source) &&
+            ["FinanceHandoff","SiteSurvey","EquipmentChange","EquipmentBackup","EquipmentBulletin"].includes(t.source) &&
             t.current &&
             t.actionable &&
             !t.owner_id),

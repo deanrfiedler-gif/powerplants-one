@@ -8,6 +8,10 @@ versioning: git
 
 # BP-04 bounded implementation sequence
 
+## Current native programme authority — 24 September 2026
+
+Dean has now authorised native completion/refinement of ES-01–ES-10 and the bounded Excel import in dependency-ordered reviewable PRs. The [current decision](../decisions/estimating-native-programme.md) and [refreshed programme handover](estimating-programme-handover.md) govern that work. Earlier design-only and prepared-starter statements below retain their historical context; they do not withdraw this authority. Existing ES-02/ES-08 runtimes must be preserved. Missing policy remains Not configured, and no live integration, customer communication or deployment follows.
+
 [BP-04](../blueprints/BP-04-estimating-quotation.md) and [evidence](../blueprints/estimating-evidence.md) define the domain. E1–E6 are **BP-04-local sequence labels**, not P13, new parent requirements or additional GitHub issue numbers. PPO-010 remains issue #10. No speculative implementation issues are created now.
 
 ## 1. Sequencing decision

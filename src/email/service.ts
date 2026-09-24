@@ -61,14 +61,16 @@ export async function emailContext(
 }
 export async function listEmail(p: Principal, query: Record<string, string>) {
   await requireCapability(database(), p, "email.read");
+  const opportunity_id = query.opportunity_id ? uuid(query.opportunity_id, "opportunity_id") : null;
+  if (opportunity_id) await visibleOpportunity(database(), p, opportunity_id);
   const search = (query.search ?? "").trim();
   if (search.length > 200)
     throw new AppError(422, "InvalidSearch", "Use a shorter search.");
   const rows = await database().query(
-    `SELECT m.id,m.subject,m.sender_name,m.received_at,m.version,m.opportunity_id,m.followup_id FROM ppo.email_messages m WHERE m.workspace_id=$1 AND ${mailVisibility()} AND ($3='' OR strpos(lower(m.subject || ' ' || m.sender_name),lower($3))>0) ORDER BY m.received_at DESC,m.id LIMIT 101`,
-    [p.workspace_id, p.actor_id, search],
+    `SELECT m.id,m.subject,m.sender_name,m.received_at,m.version,m.opportunity_id,m.followup_id FROM ppo.email_messages m WHERE m.workspace_id=$1 AND ${mailVisibility()} AND ($4::uuid IS NULL OR m.opportunity_id=$4) AND ($3='' OR strpos(lower(m.subject || ' ' || m.sender_name),lower($3))>0) ORDER BY m.received_at DESC,m.id LIMIT 101`,
+    [p.workspace_id, p.actor_id, search, opportunity_id],
   );
-  return { items: rows.rows.slice(0, 100), truncated: rows.rows.length > 100 };
+  return { items: rows.rows.slice(0, 100), truncated: rows.rows.length > 100, observed_at: new Date().toISOString() };
 }
 export async function readEmail(p: Principal, id: string) {
   const c = database(),

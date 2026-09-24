@@ -15,6 +15,10 @@ import {
   preparationHelp,
   readableValue,
   readinessSummary,
+  readinessGroups,
+  outputStateLabel,
+  outputErrorMessage,
+  distributionLabel,
   revisionLabel,
   statusPresentation,
   visitWindow,
@@ -336,7 +340,7 @@ test("the timeline is one newest-first record with a reason and field delta on e
     [
       "Review required",
       "Acknowledged by SYN Riley Technician",
-      "TaskCreated · SYN Riley Technician",
+      "Task created · SYN Riley Technician",
       "Issued r02",
       "Exact output requested for r02",
       "Revision r02 checked",
@@ -396,13 +400,25 @@ test("the save dialog's change list is the page's dirty state", () => {
   // An unchanged entry, and whitespace around one, are not a change.
   assert.deepEqual(inputDiff(saved, input(), names), []);
   assert.deepEqual(
-    inputDiff(saved, input({ sections: { ...saved.sections, scope: "  SYN scope note  " } as PackInput["sections"] }), names),
+    inputDiff(
+      saved,
+      input({
+        sections: {
+          ...saved.sections,
+          scope: "  SYN scope note  ",
+        } as PackInput["sections"],
+      }),
+      names,
+    ),
     [],
   );
   const edited = inputDiff(
     saved,
     input({
-      sections: { ...saved.sections, scope: "SYN amended scope note" } as PackInput["sections"],
+      sections: {
+        ...saved.sections,
+        scope: "SYN amended scope note",
+      } as PackInput["sections"],
       history_ids: ["h1"],
     }),
     names,
@@ -421,4 +437,100 @@ test("the save dialog's change list is the page's dirty state", () => {
   const first = inputDiff(null, saved, names);
   assert.equal(first.length, sectionKeys.length + 1);
   assert.ok(first.every((c) => c.from === "(empty)" || c.from === ""));
+});
+
+test("D9 keeps stage order and every server action-required row outside the satisfied groups", () => {
+  const rows = [
+    criterion({ criterion_code: "dispatch-pass", blocking_stage: "Dispatch" }),
+    criterion({
+      criterion_code: "booking-unknown",
+      blocking_stage: "Booking",
+      outcome: "Unknown",
+      stale: true,
+    }),
+    criterion({
+      criterion_code: "authorisation-blocked",
+      blocking_stage: "Authorisation",
+      outcome: "Blocked",
+    }),
+    criterion({
+      criterion_code: "completion-exception",
+      blocking_stage: "Completion",
+      outcome: "PermittedException",
+    }),
+    criterion({
+      criterion_code: "booking-na",
+      blocking_stage: "Booking",
+      outcome: "NotApplicable",
+    }),
+  ];
+  const groups = readinessGroups(rows);
+  assert.deepEqual(
+    groups.map((g) => g.stage),
+    ["Authorisation", "Booking", "Dispatch", "Completion"],
+  );
+  assert.deepEqual(
+    groups.flatMap((g) => g.attention.map((c) => c.criterion_code)),
+    ["authorisation-blocked", "booking-unknown"],
+  );
+  assert.equal(
+    groups.reduce((n, g) => n + g.satisfied.length + g.attention.length, 0),
+    rows.length,
+  );
+  assert.equal(
+    distributionLabel("SimulatedSent"),
+    "Simulated sending recorded",
+  );
+  assert.equal(outputStateLabel("Durable"), "Output stored · not yet issued");
+  assert.match(
+    outputErrorMessage("RenderOrStorageFailure"),
+    /Recover the original output/,
+  );
+});
+test("D10 staff acknowledgement history retains exact earlier issue identity without duplicate current responses", () => {
+  const source: TimelineSource = {
+    revisions: [],
+    checks: [],
+    jobs: [],
+    issues: [],
+    events: [],
+    distribution: [],
+    readiness: {
+      recipients: [
+        {
+          id: "recipient",
+          display_name: "SYN Crew",
+          acknowledged_at: "2026-09-21T00:00:00Z",
+        },
+      ],
+    },
+    acknowledgements: [
+      {
+        id: "first",
+        issue_id: "old-issue",
+        revision: 1,
+        display_name: "SYN Crew",
+        acknowledged_at: "2026-09-20T00:00:00Z",
+      },
+      {
+        id: "second",
+        issue_id: "new-issue",
+        revision: 2,
+        display_name: "SYN Crew",
+        acknowledged_at: "2026-09-21T00:00:00Z",
+      },
+    ],
+  };
+  const events = packTimeline(source, names);
+  assert.equal(events.length, 2);
+  assert.deepEqual(
+    events.map((e) => [e.revision, e.href]),
+    [
+      [2, "/documents/new-issue"],
+      [1, "/documents/old-issue"],
+    ],
+  );
+  assert.match(events[1].title, /r01$/);
+  source.acknowledgements = null;
+  assert.equal(packTimeline(source, names).length, 1);
 });

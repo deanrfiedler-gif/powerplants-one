@@ -36,7 +36,7 @@ await build({
                  }
                  const subscribe = listener => { window.addEventListener("popstate", listener); window.addEventListener("fixture-location", listener); return () => { window.removeEventListener("popstate", listener); window.removeEventListener("fixture-location", listener); }; };
                  export const useSearchParams=()=>new URLSearchParams(useSyncExternalStore(subscribe,()=>window.location.search,()=>""));
-                 export const usePathname=()=>"/sales/opportunities";
+                 export const usePathname=()=>${JSON.stringify(process.argv[4] ?? "/sales/opportunities")};
                  export const useRouter=()=>({push:href=>window.dispatchEvent(new CustomEvent("fixture-router-push",{detail:href})),refresh:()=>{}});`
               : args.path === "next/link"
                 ? 'import React from "react"; export default function Link({href,children,...props}){return <a href={href} {...props}>{children}</a>}'

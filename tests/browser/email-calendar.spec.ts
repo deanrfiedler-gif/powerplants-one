@@ -111,9 +111,9 @@ test("EC complete journey, reload, calendar navigation, details, narrow layout a
     saved.items[0].actions.filter((a: { id: string }) => a.id === m.followup_id),
   ).toHaveLength(1);
   await page.goto(`/sales/opportunities/${o.id}`);
-  await page.getByRole("tab", { name: "Timeline", exact: true }).click();
+  await page.getByRole("tab", { name: "Activities", exact: true }).click();
   await expect(
-    page.getByText("SYN Confirm irrigation site visit", { exact: true }),
+    page.getByRole("tabpanel", { name: "Activities", exact: true }).getByRole("link", { name: "SYN Confirm irrigation site visit", exact: true }),
   ).toBeVisible();
   await page.goto("/calendar?day=2026-09-09");
   await expect(
