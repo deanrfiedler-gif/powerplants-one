@@ -126,6 +126,31 @@ test("ES03 immutable exact revisions, independent review, scope, stale writes an
   const successor = await readCostSource(p, input.id);
   assert.equal(successor.source.revision, 2);
   assert.equal(successor.source.state, "Draft");
+  for (const action of ["Returned", "Rejected"] as const) {
+    const current = await readCostSource(p, input.id);
+    await decideCostSource(p, input.id, {
+      ...crmBase(),
+      expected_version: current.source.version,
+      revision_id: current.revision.id,
+      action: "Submit",
+    });
+    await decideCostSource(reviewer, input.id, {
+      ...crmBase(),
+      expected_version: current.source.version + 1,
+      revision_id: current.revision.id,
+      action,
+    });
+    const decided = await readCostSource(p, input.id);
+    assert.equal(decided.source.state, action);
+    assert.equal(decided.can_revise, true);
+    assert.equal(decided.can_submit, false);
+    if (action === "Returned")
+      await reviseCostSource(p, input.id, {
+        ...crmBase(),
+        expected_version: decided.source.version,
+        content: { ...input.content, title: "SYN corrected returned evidence" },
+      });
+  }
   assert.equal(
     successor.previous_revision?.content_hash,
     d.revision.content_hash,
