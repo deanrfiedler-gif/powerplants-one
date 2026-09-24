@@ -131,6 +131,10 @@
   gap: 12px;
   justify-content: space-between;
 }
+:where(#ppo-engineering-control) .ec-inspector-head > button {
+  flex-shrink: 0;
+  overflow-wrap: normal;
+}
 :where(#ppo-engineering-control) .ec-inspector-head h2 {
   font-size: 19px;
   margin: 0;

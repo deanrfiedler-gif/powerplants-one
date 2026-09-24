@@ -167,6 +167,15 @@ test("EN02 actual native forms retain draft, six views, keyboard focus and origi
     }
     await page
       .locator(".ec-inspector")
+      .getByRole("heading", { name: "Review & handover", exact: true })
+      .scrollIntoViewIfNeeded();
+    await page.screenshot({
+      path: test
+        .info()
+        .outputPath(`engineering-basis-review-${test.info().project.name}.png`),
+    });
+    await page
+      .locator(".ec-inspector")
       .getByRole("button", { name: "Close inspector" })
       .click();
     await expect(page.locator(`#ec-record-${basis.id}`)).toBeFocused({
@@ -470,6 +479,20 @@ test("EN04–EN05 compiled journey: formal response, independent review, exact i
       .getByRole("button", { name: "Record formal response", exact: true })
       .click();
     await expect(dialog).toHaveCount(0);
+    await expect(page.locator(".ec-inspector")).toContainText(
+      "SYN-PPO answer tied to the exact retained brief",
+      { timeout: 60000 },
+    );
+    await page
+      .getByText("SYN-PPO answer tied to the exact retained brief", {
+        exact: true,
+      })
+      .scrollIntoViewIfNeeded();
+    await page.screenshot({
+      path: test
+        .info()
+        .outputPath(`engineering-query-answer-${test.info().project.name}.png`),
+    });
     await signIn(page, "materials-reviewer");
     await page.reload();
     await page
@@ -584,6 +607,18 @@ test("EN04–EN05 compiled journey: formal response, independent review, exact i
       "Acknowledged: SYN-PPO recipient read this exact manifest",
       { timeout: 60000 },
     );
+    await page
+      .getByText("Acknowledged: SYN-PPO recipient read this exact manifest", {
+        exact: true,
+      })
+      .scrollIntoViewIfNeeded();
+    await page.screenshot({
+      path: test
+        .info()
+        .outputPath(
+          `engineering-issue-acknowledged-${test.info().project.name}.png`,
+        ),
+    });
   } finally {
     await s.dispose();
   }
