@@ -72,13 +72,13 @@ export function LookupField({ name, label, value, onChange, search, onSearch, op
   </div>;
 }
 
-export function LocalDateTimeField({ name, label = "Due date and time", value, onChange, timezone = "Australia/Brisbane", required = true }: {
-  name: string; label?: string; value: string; onChange: (iso: string) => void; timezone?: string; required?: boolean;
+export function LocalDateTimeField({ name, validationField, label = "Due date and time", value, onChange, timezone = "Australia/Brisbane", required = true }: {
+  name: string; validationField?: string; label?: string; value: string; onChange: (iso: string) => void; timezone?: string; required?: boolean;
 }) {
   const [invalid, setInvalid] = useState<{ raw: string; message: string } | null>(null);
   const display = invalid?.raw ?? (value ? localDateTime(value, timezone) : "");
   return <div>
-    <Field name={name} label={label} type="datetime-local" value={display} required={required}
+    <Field name={name} validationField={validationField} label={label} type="datetime-local" value={display} required={required}
       hint={timezone.replaceAll("_", " ")}
       onChange={raw => {
         try { const iso = raw ? utcFromLocal(raw, timezone) : ""; setInvalid(null); onChange(iso); }

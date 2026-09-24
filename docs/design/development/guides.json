@@ -2820,25 +2820,23 @@
     {
       "guide_key": "guide.eq.01",
       "entry_key": "scope:EQ-01",
-      "title": "Installed-base register and equipment workspace",
+      "title": "Installed base and Equipment workspace",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Existing foundation + proposed completion",
+      "content_mode": "Native implementation; owner acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Installed-base register and equipment workspace to work towards this outcome: The correct installed asset is selected for the work.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "The equipment location may differ from the area it serves. Readable references are not database UUIDs."
+            "Search reference, description, serial, manufacturer, model, customer, Site, installed Facility or served area. Restore filters and pagination from the URL. Open a canonical Asset and use its record tabs."
           ],
           "steps": [],
           "rows": [],
@@ -2848,9 +2846,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Asset reference, customer/site, physical location, served area and model.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use a permitted synthetic identity and confirm company, Site and Asset context. Prepare exact source references/revisions and a reason. Editing does not grant separate operational authority.",
+            "Configuration and lifecycle decisions never infer a warranty or maintenance transfer."
           ],
           "steps": [],
           "rows": [],
@@ -2861,11 +2858,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Find the installed equipment by reference or context",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Enter a search or select identity/lifecycle filters.",
+            "Open an Asset; compare installed Facility with the separately listed served areas.",
+            "Use controlled identity correction with an expected version and evidence-backed reason; use a separate Asset for replacement."
           ],
           "rows": [],
           "headers": []
@@ -2873,42 +2868,19 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Installed-base register and equipment workspace · Pages"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Register and record workspace: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon opens the registered draft route guide; the nine EQ scope guides are also available in Design & Development."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Asset reference, customer/site, physical location, served area and model.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Search reference, description, serial, manufacturer, model, customer, Site, installed Facility or served area. Restore filters and pagination from the URL. Open a canonical Asset and use its record tabs.",
+            "Configuration and lifecycle decisions never infer a warranty or maintenance transfer."
           ],
           "steps": [],
           "rows": [],
@@ -2917,13 +2889,11 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Task sequence for review against the applicable running release."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Find the installed equipment by reference or context",
-            "Confirm its physical identity and current location",
-            "Review linked configuration, service and document history"
+            "Enter a search or select identity/lifecycle filters.",
+            "Open an Asset; compare installed Facility with the separately listed served areas.",
+            "Use controlled identity correction with an expected version and evidence-backed reason; use a separate Asset for replacement."
           ],
           "rows": [],
           "headers": []
@@ -2932,9 +2902,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "The correct installed asset is selected for the work.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "The equipment location may differ from the area it serves. Readable references are not database UUIDs."
+            "Shared Assets and CS supply identities, physical Site/Facility and served relationships. Equipment links to CS readiness, source-owned history, Inspection and My Work.",
+            "A successful receipt confirms the saved source decision. Read the resulting version/state. It does not grant business acceptance or authorise another module's work."
           ],
           "steps": [],
           "rows": [],
@@ -2943,45 +2912,18 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Read-only and no permitted records are different from filtered-empty. Source failure/bounded history is labelled partial. Unknown remains explicit. Review the field error, stale basis or uncertain outcome before leaving."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare asset reference, customer/site, physical location, served area and model. Follow the task sequence and check that the correct installed asset is selected for the work. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Installed-base register and equipment workspace has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. The equipment location may differ from the area it serves. Readable references are not database UUIDs."
+            "Synthetic example: use a labelled SYN pump, controller or test instrument to exercise installed base and equipment workspace. All supplier criteria, software/firmware and measurement limits are fictional."
           ],
           "steps": [],
           "rows": [],
@@ -2990,45 +2932,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "For an uncertain save, use Recover original operation. Keep the same operation and original payload. For stale version/source errors, compare the latest source with retained entries before a fresh decision. A denied read clears source details; do not infer hidden record existence."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use labelled stacked cards and forms. Camera lookup retains a manual path. Keyboard focus is visible and tabs use the shared navigation pattern. These Equipment commands require a network connection; no offline write queue is claimed."
           ],
           "steps": [],
           "rows": [],
@@ -3038,8 +2953,10 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "docs/decisions/ADR-0045-equipment-native-workflows.md",
+            "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
+            "docs/delivery/equipment-native-completion-handover.md",
+            "docs/testing/evidence/equipment-native/README.md"
           ],
           "steps": [],
           "rows": [],
@@ -3049,9 +2966,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner: Dean Fiedler. This is a working draft guide, not released operational instruction. Functional verification, visual review, device acceptance and deployment are recorded separately."
           ],
           "steps": [],
           "rows": [],
@@ -3087,25 +3002,23 @@
     {
       "guide_key": "guide.eq.02",
       "entry_key": "scope:EQ-02",
-      "title": "QR lookup and equipment identity confirmation",
+      "title": "Identify equipment",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Native implementation; owner acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use QR lookup and equipment identity confirmation to work towards this outcome: Physical equipment and its record are explicitly matched.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "A successful scan alone does not prove the label is attached to the correct unit."
+            "Enter an exact Asset reference, UUID, serial or same-origin equipment URL. Camera support is detected at runtime; manual lookup stays available."
           ],
           "steps": [],
           "rows": [],
@@ -3115,9 +3028,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: QR value, visible serial/model and site context.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use a permitted synthetic identity and confirm company, Site and Asset context. Prepare exact source references/revisions and a reason. Editing does not grant separate operational authority.",
+            "Unsupported camera, denial, device failure and unreadable codes retain manual lookup. A physical comparison in this page is session-only."
           ],
           "steps": [],
           "rows": [],
@@ -3128,11 +3040,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Scan the identifier or enter it manually",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Start the camera, or enter the identifier manually.",
+            "Resolve ambiguous serials using the exact Asset reference. Unknown and inaccessible identities share a private no-match response.",
+            "Compare the physical label, serial and current installation. Tick the explicit session comparison before following context links."
           ],
           "rows": [],
           "headers": []
@@ -3140,42 +3050,19 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "QR lookup and equipment identity confirmation · Page + mobile flow"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Focused lookup workflow: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon opens the registered draft route guide; the nine EQ scope guides are also available in Design & Development."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "QR value, visible serial/model and site context.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Enter an exact Asset reference, UUID, serial or same-origin equipment URL. Camera support is detected at runtime; manual lookup stays available.",
+            "Unsupported camera, denial, device failure and unreadable codes retain manual lookup. A physical comparison in this page is session-only."
           ],
           "steps": [],
           "rows": [],
@@ -3184,13 +3071,11 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Scan the identifier or enter it manually",
-            "Compare the returned record with the equipment label",
-            "Resolve a mismatch before linking work or evidence"
+            "Start the camera, or enter the identifier manually.",
+            "Resolve ambiguous serials using the exact Asset reference. Unknown and inaccessible identities share a private no-match response.",
+            "Compare the physical label, serial and current installation. Tick the explicit session comparison before following context links."
           ],
           "rows": [],
           "headers": []
@@ -3199,9 +3084,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Physical equipment and its record are explicitly matched.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A successful scan alone does not prove the label is attached to the correct unit."
+            "F01 leads to Equipment identity, CS readiness (F08) and the owning Inspection context (F02). Scanning writes no identity or inspection evidence.",
+            "A successful receipt confirms the saved source decision. Read the resulting version/state. It does not grant business acceptance or authorise another module's work."
           ],
           "steps": [],
           "rows": [],
@@ -3210,45 +3094,18 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Read-only and no permitted records are different from filtered-empty. Source failure/bounded history is labelled partial. Unknown remains explicit. Review the field error, stale basis or uncertain outcome before leaving."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare qr value, visible serial/model and site context. Follow the task sequence and check that physical equipment and its record are explicitly matched. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for QR lookup and equipment identity confirmation has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A successful scan alone does not prove the label is attached to the correct unit."
+            "Synthetic example: use a labelled SYN pump, controller or test instrument to exercise identify equipment. All supplier criteria, software/firmware and measurement limits are fictional."
           ],
           "steps": [],
           "rows": [],
@@ -3257,45 +3114,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "For an uncertain save, use Recover original operation. Keep the same operation and original payload. For stale version/source errors, compare the latest source with retained entries before a fresh decision. A denied read clears source details; do not infer hidden record existence."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use labelled stacked cards and forms. Camera lookup retains a manual path. Keyboard focus is visible and tabs use the shared navigation pattern. These Equipment commands require a network connection; no offline write queue is claimed."
           ],
           "steps": [],
           "rows": [],
@@ -3305,8 +3135,10 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "docs/decisions/ADR-0045-equipment-native-workflows.md",
+            "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
+            "docs/delivery/equipment-native-completion-handover.md",
+            "docs/testing/evidence/equipment-native/README.md"
           ],
           "steps": [],
           "rows": [],
@@ -3316,9 +3148,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner: Dean Fiedler. This is a working draft guide, not released operational instruction. Functional verification, visual review, device acceptance and deployment are recorded separately."
           ],
           "steps": [],
           "rows": [],
@@ -3351,25 +3181,23 @@
     {
       "guide_key": "guide.eq.03",
       "entry_key": "scope:EQ-03",
-      "title": "Configuration and change history",
+      "title": "Configuration succession",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Existing foundation + proposed completion",
+      "content_mode": "Native implementation; owner acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Configuration and change history to work towards this outcome: A dated configuration history that explains what changed.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "Changing a record must not imply that a physical controller has been changed."
+            "Read retained configuration revisions and their effective times. Describe a source-backed successor, review its impact, then submit a separate review decision."
           ],
           "steps": [],
           "rows": [],
@@ -3379,9 +3207,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Hardware, firmware, software, licences and source revision.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use a permitted synthetic identity and confirm company, Site and Asset context. Prepare exact source references/revisions and a reason. Editing does not grant separate operational authority.",
+            "Original configurations, including their originally recorded validity interval, remain unchanged. Additive succession determines the current projection."
           ],
           "steps": [],
           "rows": [],
@@ -3392,11 +3219,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Read the existing configuration basis",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Enter the exact configuration description, source revision, actual effective time, reason and consequences.",
+            "Preview the current Asset/configuration/Service/relationship basis; record the proposal.",
+            "Review the immutable proposal and apply or reject it. A changed source requires a fresh proposal."
           ],
           "rows": [],
           "headers": []
@@ -3404,42 +3229,19 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Configuration and change history · Tab"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Record evidence workflow: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon opens the registered draft route guide; the nine EQ scope guides are also available in Design & Development."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Hardware, firmware, software, licences and source revision.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Read retained configuration revisions and their effective times. Describe a source-backed successor, review its impact, then submit a separate review decision.",
+            "Original configurations, including their originally recorded validity interval, remain unchanged. Additive succession determines the current projection."
           ],
           "steps": [],
           "rows": [],
@@ -3448,13 +3250,11 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Task sequence for review against the applicable running release."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Read the existing configuration basis",
-            "Record the proposed change and affected components",
-            "Preserve previous configuration and capture the successor basis"
+            "Enter the exact configuration description, source revision, actual effective time, reason and consequences.",
+            "Preview the current Asset/configuration/Service/relationship basis; record the proposal.",
+            "Review the immutable proposal and apply or reject it. A changed source requires a fresh proposal."
           ],
           "rows": [],
           "headers": []
@@ -3463,9 +3263,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "A dated configuration history that explains what changed.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Changing a record must not imply that a physical controller has been changed."
+            "Service scopes retain exact AssetConfiguration IDs; Inspection retains its exact captured basis. Logical programmes remain separate from Facilities and served areas.",
+            "A successful receipt confirms the saved source decision. Read the resulting version/state. It does not grant business acceptance or authorise another module's work."
           ],
           "steps": [],
           "rows": [],
@@ -3474,45 +3273,18 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Read-only and no permitted records are different from filtered-empty. Source failure/bounded history is labelled partial. Unknown remains explicit. Review the field error, stale basis or uncertain outcome before leaving."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare hardware, firmware, software, licences and source revision. Follow the task sequence and check that a dated configuration history that explains what changed. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Configuration and change history has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Changing a record must not imply that a physical controller has been changed."
+            "Synthetic example: use a labelled SYN pump, controller or test instrument to exercise configuration succession. All supplier criteria, software/firmware and measurement limits are fictional."
           ],
           "steps": [],
           "rows": [],
@@ -3521,45 +3293,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "For an uncertain save, use Recover original operation. Keep the same operation and original payload. For stale version/source errors, compare the latest source with retained entries before a fresh decision. A denied read clears source details; do not infer hidden record existence."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use labelled stacked cards and forms. Camera lookup retains a manual path. Keyboard focus is visible and tabs use the shared navigation pattern. These Equipment commands require a network connection; no offline write queue is claimed."
           ],
           "steps": [],
           "rows": [],
@@ -3569,8 +3314,10 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "docs/decisions/ADR-0045-equipment-native-workflows.md",
+            "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
+            "docs/delivery/equipment-native-completion-handover.md",
+            "docs/testing/evidence/equipment-native/README.md"
           ],
           "steps": [],
           "rows": [],
@@ -3580,9 +3327,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner: Dean Fiedler. This is a working draft guide, not released operational instruction. Functional verification, visual review, device acceptance and deployment are recorded separately."
           ],
           "steps": [],
           "rows": [],
@@ -3617,25 +3362,23 @@
     {
       "guide_key": "guide.eq.04",
       "entry_key": "scope:EQ-04",
-      "title": "Equipment movement, replacement and retirement",
+      "title": "Movement, replacement and retirement",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Existing foundation + proposed completion",
+      "content_mode": "Native implementation; owner acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Equipment movement, replacement and retirement to work towards this outcome: Movement, replacement or retirement is traceable.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "Replacement equipment needs its own identity. Historical service must remain linked to the original asset."
+            "Record actual relocation, correction of recorded location, replacement with a separate successor, or retirement. Current version, both contexts and consequences are checked in one transaction."
           ],
           "steps": [],
           "rows": [],
@@ -3645,9 +3388,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Effective date, original/new location and predecessor/successor identities.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use a permitted synthetic identity and confirm company, Site and Asset context. Prepare exact source references/revisions and a reason. Editing does not grant separate operational authority.",
+            "No history is deleted and no ordinary Site edit bypasses the reviewed lifecycle guard. Warranty, defects, configuration verification and Service authority do not transfer."
           ],
           "steps": [],
           "rows": [],
@@ -3658,11 +3400,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Identify the asset and proposed lifecycle event",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Choose the change kind and destination Site/installed Facility or separate successor Asset.",
+            "Record actual effective time, source revision, reason and reviewed consequences.",
+            "Resolve parent/components, active served relationships and open Service work in their owning workflows; preview, propose, then apply or reject."
           ],
           "rows": [],
           "headers": []
@@ -3670,42 +3410,19 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Equipment movement, replacement and retirement · Form + history tab"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Record decision workflow: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon opens the registered draft route guide; the nine EQ scope guides are also available in Design & Development."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Effective date, original/new location and predecessor/successor identities.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Record actual relocation, correction of recorded location, replacement with a separate successor, or retirement. Current version, both contexts and consequences are checked in one transaction.",
+            "No history is deleted and no ordinary Site edit bypasses the reviewed lifecycle guard. Warranty, defects, configuration verification and Service authority do not transfer."
           ],
           "steps": [],
           "rows": [],
@@ -3714,13 +3431,11 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Task sequence for review against the applicable running release."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Identify the asset and proposed lifecycle event",
-            "Assess service, warranty and document impacts",
-            "Record the event with effective date and retained history"
+            "Choose the change kind and destination Site/installed Facility or separate successor Asset.",
+            "Record actual effective time, source revision, reason and reviewed consequences.",
+            "Resolve parent/components, active served relationships and open Service work in their owning workflows; preview, propose, then apply or reject."
           ],
           "rows": [],
           "headers": []
@@ -3729,9 +3444,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Movement, replacement or retirement is traceable.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Replacement equipment needs its own identity. Historical service must remain linked to the original asset."
+            "CS owns served relationships; Service owns open work. Equipment preserves predecessor/successor identity and event-time location.",
+            "A successful receipt confirms the saved source decision. Read the resulting version/state. It does not grant business acceptance or authorise another module's work."
           ],
           "steps": [],
           "rows": [],
@@ -3740,45 +3454,18 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Read-only and no permitted records are different from filtered-empty. Source failure/bounded history is labelled partial. Unknown remains explicit. Review the field error, stale basis or uncertain outcome before leaving."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare effective date, original/new location and predecessor/successor identities. Follow the task sequence and check that movement, replacement or retirement is traceable. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Equipment movement, replacement and retirement has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Replacement equipment needs its own identity. Historical service must remain linked to the original asset."
+            "Synthetic example: use a labelled SYN pump, controller or test instrument to exercise movement, replacement and retirement. All supplier criteria, software/firmware and measurement limits are fictional."
           ],
           "steps": [],
           "rows": [],
@@ -3787,45 +3474,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "For an uncertain save, use Recover original operation. Keep the same operation and original payload. For stale version/source errors, compare the latest source with retained entries before a fresh decision. A denied read clears source details; do not infer hidden record existence."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use labelled stacked cards and forms. Camera lookup retains a manual path. Keyboard focus is visible and tabs use the shared navigation pattern. These Equipment commands require a network connection; no offline write queue is claimed."
           ],
           "steps": [],
           "rows": [],
@@ -3835,8 +3495,10 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "docs/decisions/ADR-0045-equipment-native-workflows.md",
+            "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
+            "docs/delivery/equipment-native-completion-handover.md",
+            "docs/testing/evidence/equipment-native/README.md"
           ],
           "steps": [],
           "rows": [],
@@ -3846,9 +3508,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner: Dean Fiedler. This is a working draft guide, not released operational instruction. Functional verification, visual review, device acceptance and deployment are recorded separately."
           ],
           "steps": [],
           "rows": [],
@@ -3883,25 +3543,24 @@
     {
       "guide_key": "guide.eq.05",
       "entry_key": "scope:EQ-05",
-      "title": "Equipment document and service timeline",
+      "title": "Documents and Service timeline",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Existing foundation + proposed completion",
+      "content_mode": "Native implementation; owner acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Equipment document and service timeline to work towards this outcome: The next worker has relevant historical context.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "An old fix or manual may no longer apply to the current configuration."
+            "Filter the source-owned timeline. Read reported symptoms, technical history, changes, Service requests, Work Orders, appointments, report links, exact document revisions, field evidence, Inspection attempts and Activities.",
+            "Use Create follow-up to open the canonical Activity form with this Asset, company and Site retained. Review the history before assigning the action; this does not authorise diagnostic work."
           ],
           "steps": [],
           "rows": [],
@@ -3911,9 +3570,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Exact documents, prior diagnoses, attempted fixes and open findings.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use a permitted synthetic identity and confirm company, Site and Asset context. Prepare exact source references/revisions and a reason. Editing does not grant separate operational authority.",
+            "A historical manual revision is historical inclusion, not current applicability. Suspected causes remain suspected; missing event-time Facility is labelled instead of inferred."
           ],
           "steps": [],
           "rows": [],
@@ -3924,11 +3582,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Review previous visits and unsuccessful fixes",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Open Documents & service and select a source filter if useful.",
+            "Read occurred time, actor, source/revision, state, confidence, access and event-time location.",
+            "Open the owning source for full evidence, further bounded history or its next action."
           ],
           "rows": [],
           "headers": []
@@ -3936,42 +3592,19 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Equipment document and service timeline · Tab"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Record timeline: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon opens the registered draft route guide; the nine EQ scope guides are also available in Design & Development."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Exact documents, prior diagnoses, attempted fixes and open findings.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Filter the source-owned timeline. Read reported symptoms, technical history, changes, Service requests, Work Orders, appointments, report links, exact document revisions, field evidence, Inspection attempts and Activities.",
+            "A historical manual revision is historical inclusion, not current applicability. Suspected causes remain suspected; missing event-time Facility is labelled instead of inferred."
           ],
           "steps": [],
           "rows": [],
@@ -3980,13 +3613,11 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Task sequence for review against the applicable running release."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Review previous visits and unsuccessful fixes",
-            "Open the applicable document revision",
-            "Carry unresolved findings into the next authorised task"
+            "Open Documents & service and select a source filter if useful.",
+            "Read occurred time, actor, source/revision, state, confidence, access and event-time location.",
+            "Open the owning source for full evidence, further bounded history or its next action."
           ],
           "rows": [],
           "headers": []
@@ -3995,9 +3626,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "The next worker has relevant historical context.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "An old fix or manual may no longer apply to the current configuration."
+            "Each Service, Document, field, Inspection and Activity projection rechecks its owning access contract. SharePoint remains intended document authority; no live connector is used.",
+            "A successful receipt confirms the saved source decision. Read the resulting version/state. It does not grant business acceptance or authorise another module's work."
           ],
           "steps": [],
           "rows": [],
@@ -4006,45 +3636,18 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Read-only and no permitted records are different from filtered-empty. Source failure/bounded history is labelled partial. Unknown remains explicit. Review the field error, stale basis or uncertain outcome before leaving."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare exact documents, prior diagnoses, attempted fixes and open findings. Follow the task sequence and check that the next worker has relevant historical context. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Equipment document and service timeline has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. An old fix or manual may no longer apply to the current configuration."
+            "Synthetic example: use a labelled SYN pump, controller or test instrument to exercise documents and service timeline. All supplier criteria, software/firmware and measurement limits are fictional."
           ],
           "steps": [],
           "rows": [],
@@ -4053,45 +3656,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "For an uncertain save, use Recover original operation. Keep the same operation and original payload. For stale version/source errors, compare the latest source with retained entries before a fresh decision. A denied read clears source details; do not infer hidden record existence."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use labelled stacked cards and forms. Camera lookup retains a manual path. Keyboard focus is visible and tabs use the shared navigation pattern. These Equipment commands require a network connection; no offline write queue is claimed."
           ],
           "steps": [],
           "rows": [],
@@ -4101,8 +3677,10 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "docs/decisions/ADR-0045-equipment-native-workflows.md",
+            "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
+            "docs/delivery/equipment-native-completion-handover.md",
+            "docs/testing/evidence/equipment-native/README.md"
           ],
           "steps": [],
           "rows": [],
@@ -4112,9 +3690,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner: Dean Fiedler. This is a working draft guide, not released operational instruction. Functional verification, visual review, device acceptance and deployment are recorded separately."
           ],
           "steps": [],
           "rows": [],
@@ -4153,22 +3729,20 @@
       "title": "Service bulletin applicability",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Native implementation; owner acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Service bulletin applicability to work towards this outcome: Each affected asset has a reviewed disposition.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "A supplier bulletin does not itself authorise customer work or prove every model is affected."
+            "Record exact bulletin source/revision and supported manufacturer/model/serial/configuration criteria. Matches are candidates; an Asset-level review makes the disposition."
           ],
           "steps": [],
           "rows": [],
@@ -4178,9 +3752,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Supplier bulletin, applicable models/versions and affected assets.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use a permitted synthetic identity and confirm company, Site and Asset context. Prepare exact source references/revisions and a reason. Editing does not grant separate operational authority.",
+            "Candidate matching never makes the final decision. Missing identity criteria stay visible for review and Unknown blocks closure."
           ],
           "steps": [],
           "rows": [],
@@ -4191,11 +3764,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Record the exact bulletin and its source",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Record the supplier bulletin revision in its permitted company.",
+            "Choose candidate Equipment, record applicability evidence and Unknown, PotentiallyAffected, Affected or NotApplicable.",
+            "For unresolved/affected Equipment select an owned existing Activity or name an owner and due date. Close only after current definitive dispositions and completed affected follow-ups."
           ],
           "rows": [],
           "headers": []
@@ -4203,42 +3774,19 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Service bulletin applicability · Page + tab"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Register and reviewed evidence: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon opens the registered draft route guide; the nine EQ scope guides are also available in Design & Development."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Supplier bulletin, applicable models/versions and affected assets.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Record exact bulletin source/revision and supported manufacturer/model/serial/configuration criteria. Matches are candidates; an Asset-level review makes the disposition.",
+            "Candidate matching never makes the final decision. Missing identity criteria stay visible for review and Unknown blocks closure."
           ],
           "steps": [],
           "rows": [],
@@ -4247,13 +3795,11 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Record the exact bulletin and its source",
-            "Review asset applicability against configuration",
-            "Assign follow-up and retain exclusion reasons"
+            "Record the supplier bulletin revision in its permitted company.",
+            "Choose candidate Equipment, record applicability evidence and Unknown, PotentiallyAffected, Affected or NotApplicable.",
+            "For unresolved/affected Equipment select an owned existing Activity or name an owner and due date. Close only after current definitive dispositions and completed affected follow-ups."
           ],
           "rows": [],
           "headers": []
@@ -4262,9 +3808,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Each affected asset has a reviewed disposition.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A supplier bulletin does not itself authorise customer work or prove every model is affected."
+            "Shared Reviews coordinates the bulletin; Activities supply ownership, My Work and shared notifications. Service, Sales and Engineering remain separate destination authorities.",
+            "A successful receipt confirms the saved source decision. Read the resulting version/state. It does not grant business acceptance or authorise another module's work."
           ],
           "steps": [],
           "rows": [],
@@ -4273,45 +3818,18 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Read-only and no permitted records are different from filtered-empty. Source failure/bounded history is labelled partial. Unknown remains explicit. Review the field error, stale basis or uncertain outcome before leaving."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare supplier bulletin, applicable models/versions and affected assets. Follow the task sequence and check that each affected asset has a reviewed disposition. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Service bulletin applicability has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A supplier bulletin does not itself authorise customer work or prove every model is affected."
+            "Synthetic example: use a labelled SYN pump, controller or test instrument to exercise service bulletin applicability. All supplier criteria, software/firmware and measurement limits are fictional."
           ],
           "steps": [],
           "rows": [],
@@ -4320,45 +3838,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "For an uncertain save, use Recover original operation. Keep the same operation and original payload. For stale version/source errors, compare the latest source with retained entries before a fresh decision. A denied read clears source details; do not infer hidden record existence."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use labelled stacked cards and forms. Camera lookup retains a manual path. Keyboard focus is visible and tabs use the shared navigation pattern. These Equipment commands require a network connection; no offline write queue is claimed."
           ],
           "steps": [],
           "rows": [],
@@ -4368,8 +3859,10 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "docs/decisions/ADR-0045-equipment-native-workflows.md",
+            "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
+            "docs/delivery/equipment-native-completion-handover.md",
+            "docs/testing/evidence/equipment-native/README.md"
           ],
           "steps": [],
           "rows": [],
@@ -4379,9 +3872,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner: Dean Fiedler. This is a working draft guide, not released operational instruction. Functional verification, visual review, device acceptance and deployment are recorded separately."
           ],
           "steps": [],
           "rows": [],
@@ -4417,22 +3908,20 @@
       "title": "Support lifecycle and obsolescence",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Native implementation; owner acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Support lifecycle and obsolescence to work towards this outcome: Lifecycle risks have sourced dates and accountable actions.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "Do not infer end-of-support dates from product age or marketing availability."
+            "Record dated supplier support evidence, support/software dates, affected component, replacement advice and uncertainty against the exact Asset."
           ],
           "steps": [],
           "rows": [],
@@ -4442,9 +3931,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Support dates, supplier notices, obsolete parts and replacement evidence.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use a permitted synthetic identity and confirm company, Site and Asset context. Prepare exact source references/revisions and a reason. Editing does not grant separate operational authority.",
+            "Supported, SupportEnding or Discontinued evidence does not change the Asset's physical lifecycle. Unknown is never inferred from absence as supported."
           ],
           "steps": [],
           "rows": [],
@@ -4455,11 +3943,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Check supplier lifecycle evidence",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Select Equipment context and record a source/revision/date.",
+            "Choose an evidenced conclusion or retain Unknown; leave unavailable end dates Unknown.",
+            "Retain subsequent evidence separately and use source-owned follow-up or a governed physical replacement only when authorised."
           ],
           "rows": [],
           "headers": []
@@ -4467,42 +3953,19 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Support lifecycle and obsolescence · Tab"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Portfolio evidence register: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon opens the registered draft route guide; the nine EQ scope guides are also available in Design & Development."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Support dates, supplier notices, obsolete parts and replacement evidence.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Record dated supplier support evidence, support/software dates, affected component, replacement advice and uncertainty against the exact Asset.",
+            "Supported, SupportEnding or Discontinued evidence does not change the Asset's physical lifecycle. Unknown is never inferred from absence as supported."
           ],
           "steps": [],
           "rows": [],
@@ -4511,13 +3974,11 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Check supplier lifecycle evidence",
-            "Identify exposed installed assets and missing information",
-            "Prepare a reviewed support or upgrade proposal"
+            "Select Equipment context and record a source/revision/date.",
+            "Choose an evidenced conclusion or retain Unknown; leave unavailable end dates Unknown.",
+            "Retain subsequent evidence separately and use source-owned follow-up or a governed physical replacement only when authorised."
           ],
           "rows": [],
           "headers": []
@@ -4526,9 +3987,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Lifecycle risks have sourced dates and accountable actions.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Do not infer end-of-support dates from product age or marketing availability."
+            "The supplier evidence portfolio links to canonical Equipment. Support advice can inform later Engineering, Sales or Service work without creating it automatically.",
+            "A successful receipt confirms the saved source decision. Read the resulting version/state. It does not grant business acceptance or authorise another module's work."
           ],
           "steps": [],
           "rows": [],
@@ -4537,45 +3997,18 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Read-only and no permitted records are different from filtered-empty. Source failure/bounded history is labelled partial. Unknown remains explicit. Review the field error, stale basis or uncertain outcome before leaving."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare support dates, supplier notices, obsolete parts and replacement evidence. Follow the task sequence and check that lifecycle risks have sourced dates and accountable actions. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Support lifecycle and obsolescence has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Do not infer end-of-support dates from product age or marketing availability."
+            "Synthetic example: use a labelled SYN pump, controller or test instrument to exercise support lifecycle and obsolescence. All supplier criteria, software/firmware and measurement limits are fictional."
           ],
           "steps": [],
           "rows": [],
@@ -4584,45 +4017,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "For an uncertain save, use Recover original operation. Keep the same operation and original payload. For stale version/source errors, compare the latest source with retained entries before a fresh decision. A denied read clears source details; do not infer hidden record existence."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use labelled stacked cards and forms. Camera lookup retains a manual path. Keyboard focus is visible and tabs use the shared navigation pattern. These Equipment commands require a network connection; no offline write queue is claimed."
           ],
           "steps": [],
           "rows": [],
@@ -4632,8 +4038,10 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "docs/decisions/ADR-0045-equipment-native-workflows.md",
+            "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
+            "docs/delivery/equipment-native-completion-handover.md",
+            "docs/testing/evidence/equipment-native/README.md"
           ],
           "steps": [],
           "rows": [],
@@ -4643,9 +4051,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner: Dean Fiedler. This is a working draft guide, not released operational instruction. Functional verification, visual review, device acceptance and deployment are recorded separately."
           ],
           "steps": [],
           "rows": [],
@@ -4678,25 +4084,23 @@
     {
       "guide_key": "guide.eq.08",
       "entry_key": "scope:EQ-08",
-      "title": "Control configuration backup and recovery record",
+      "title": "Configuration backups and recovery evidence",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Native implementation; owner acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Control configuration backup and recovery record to work towards this outcome: A recoverable evidence trail for the correct configuration.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "This workspace records backup/recovery evidence. It does not restore equipment or expose passwords."
+            "Record an exact configuration backup, captured time/person, custodian, protected location/source revision, compatibility and recovery-procedure revision."
           ],
           "steps": [],
           "rows": [],
@@ -4706,9 +4110,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Backup reference, exact device configuration, compatibility and recovery evidence.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use a permitted synthetic identity and confirm company, Site and Asset context. Prepare exact source references/revisions and a reason. Editing does not grant separate operational authority.",
+            "A later configuration makes earlier recovery evidence historical. Repeating an earlier review invalidates subsequent current-stage claims while retaining all prior reviews. Never enter credentials or connection strings."
           ],
           "steps": [],
           "rows": [],
@@ -4719,11 +4122,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Identify the backup and its protected authoritative location",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Select Equipment and its current configuration; record Baseline, PreChange or PostChange evidence.",
+            "Record separate BackupReviewed, ProcedureReviewed, RecoveryTested and RecoveryVerified evidence with result, occurrence time and exact evidence revision.",
+            "Complete prerequisites and use a different permitted reviewer to verify a passed recovery test. Read Engineering commissioning backups at their owning source."
           ],
           "rows": [],
           "headers": []
@@ -4731,42 +4132,19 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Control configuration backup and recovery record · Tab + review flow"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Portfolio and staged evidence workflow: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon opens the registered draft route guide; the nine EQ scope guides are also available in Design & Development."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Backup reference, exact device configuration, compatibility and recovery evidence.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Record an exact configuration backup, captured time/person, custodian, protected location/source revision, compatibility and recovery-procedure revision.",
+            "A later configuration makes earlier recovery evidence historical. Repeating an earlier review invalidates subsequent current-stage claims while retaining all prior reviews. Never enter credentials or connection strings."
           ],
           "steps": [],
           "rows": [],
@@ -4775,13 +4153,11 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Identify the backup and its protected authoritative location",
-            "Review compatibility and the intended recovery procedure",
-            "Record actual recovery verification separately"
+            "Select Equipment and its current configuration; record Baseline, PreChange or PostChange evidence.",
+            "Record separate BackupReviewed, ProcedureReviewed, RecoveryTested and RecoveryVerified evidence with result, occurrence time and exact evidence revision.",
+            "Complete prerequisites and use a different permitted reviewer to verify a passed recovery test. Read Engineering commissioning backups at their owning source."
           ],
           "rows": [],
           "headers": []
@@ -4790,9 +4166,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "A recoverable evidence trail for the correct configuration.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "This workspace records backup/recovery evidence. It does not restore equipment or expose passwords."
+            "Canonical Asset configurations and existing EN-08 backup records keep their identities. SH Reviews coordinates pending evidence; no controller restore is executed.",
+            "A successful receipt confirms the saved source decision. Read the resulting version/state. It does not grant business acceptance or authorise another module's work."
           ],
           "steps": [],
           "rows": [],
@@ -4801,45 +4176,18 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Read-only and no permitted records are different from filtered-empty. Source failure/bounded history is labelled partial. Unknown remains explicit. Review the field error, stale basis or uncertain outcome before leaving."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare backup reference, exact device configuration, compatibility and recovery evidence. Follow the task sequence and check that a recoverable evidence trail for the correct configuration. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Control configuration backup and recovery record has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. This workspace records backup/recovery evidence. It does not restore equipment or expose passwords."
+            "Synthetic example: use a labelled SYN pump, controller or test instrument to exercise configuration backups and recovery evidence. All supplier criteria, software/firmware and measurement limits are fictional."
           ],
           "steps": [],
           "rows": [],
@@ -4848,45 +4196,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "For an uncertain save, use Recover original operation. Keep the same operation and original payload. For stale version/source errors, compare the latest source with retained entries before a fresh decision. A denied read clears source details; do not infer hidden record existence."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use labelled stacked cards and forms. Camera lookup retains a manual path. Keyboard focus is visible and tabs use the shared navigation pattern. These Equipment commands require a network connection; no offline write queue is claimed."
           ],
           "steps": [],
           "rows": [],
@@ -4896,8 +4217,10 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "docs/decisions/ADR-0045-equipment-native-workflows.md",
+            "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
+            "docs/delivery/equipment-native-completion-handover.md",
+            "docs/testing/evidence/equipment-native/README.md"
           ],
           "steps": [],
           "rows": [],
@@ -4907,9 +4230,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner: Dean Fiedler. This is a working draft guide, not released operational instruction. Functional verification, visual review, device acceptance and deployment are recorded separately."
           ],
           "steps": [],
           "rows": [],
@@ -4942,25 +4263,23 @@
     {
       "guide_key": "guide.eq.09",
       "entry_key": "scope:EQ-09",
-      "title": "Test instruments and calibration evidence",
+      "title": "Test instruments and calibration",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Native implementation; owner acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Test instruments and calibration evidence to work towards this outcome: A reading can be traced to its instrument and calibration state.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "A current certificate must not be applied retrospectively to an earlier measurement without evidence."
+            "Read canonical Inspection instruments and retained calibration certificate versions, measurement capability, exact certificate references, current assessment and historical use/readings."
           ],
           "steps": [],
           "rows": [],
@@ -4970,9 +4289,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Instrument identity, calibration certificate, validity and measurement task.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use a permitted synthetic identity and confirm company, Site and Asset context. Prepare exact source references/revisions and a reason. Editing does not grant separate operational authority.",
+            "Expiry today does not invalidate a then-valid use. Renewal never repairs an earlier invalid reading. Custody, reservations and loans remain CX-01."
           ],
           "steps": [],
           "rows": [],
@@ -4983,11 +4301,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Identify the instrument used for a reading",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Record a canonical calibration certificate or renew the same instrument reference with a retained successor.",
+            "Inspect the captured at-use assessment separately from today's assessment and later withdrawal effects.",
+            "Record a source-backed retrospective withdrawal against the exact expected version when applicable."
           ],
           "rows": [],
           "headers": []
@@ -4995,42 +4311,19 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Test instruments and calibration evidence · Register + linked panel"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Canonical instrument register: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon opens the registered draft route guide; the nine EQ scope guides are also available in Design & Development."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Instrument identity, calibration certificate, validity and measurement task.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Read canonical Inspection instruments and retained calibration certificate versions, measurement capability, exact certificate references, current assessment and historical use/readings.",
+            "Expiry today does not invalidate a then-valid use. Renewal never repairs an earlier invalid reading. Custody, reservations and loans remain CX-01."
           ],
           "steps": [],
           "rows": [],
@@ -5039,13 +4332,11 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Identify the instrument used for a reading",
-            "Check its applicable calibration evidence",
-            "Retain the certificate basis with the measurement"
+            "Record a canonical calibration certificate or renew the same instrument reference with a retained successor.",
+            "Inspect the captured at-use assessment separately from today's assessment and later withdrawal effects.",
+            "Record a source-backed retrospective withdrawal against the exact expected version when applicable."
           ],
           "rows": [],
           "headers": []
@@ -5054,9 +4345,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "A reading can be traced to its instrument and calibration state.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A current certificate must not be applied retrospectively to an earlier measurement without evidence."
+            "Inspection owns instruments and use snapshots. Equipment checks each Engineering internal host or assigned Service host before projecting its usage/readings.",
+            "A successful receipt confirms the saved source decision. Read the resulting version/state. It does not grant business acceptance or authorise another module's work."
           ],
           "steps": [],
           "rows": [],
@@ -5065,45 +4355,18 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Read-only and no permitted records are different from filtered-empty. Source failure/bounded history is labelled partial. Unknown remains explicit. Review the field error, stale basis or uncertain outcome before leaving."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare instrument identity, calibration certificate, validity and measurement task. Follow the task sequence and check that a reading can be traced to its instrument and calibration state. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Test instruments and calibration evidence has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A current certificate must not be applied retrospectively to an earlier measurement without evidence."
+            "Synthetic example: use a labelled SYN pump, controller or test instrument to exercise test instruments and calibration. All supplier criteria, software/firmware and measurement limits are fictional."
           ],
           "steps": [],
           "rows": [],
@@ -5112,45 +4375,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "For an uncertain save, use Recover original operation. Keep the same operation and original payload. For stale version/source errors, compare the latest source with retained entries before a fresh decision. A denied read clears source details; do not infer hidden record existence."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use labelled stacked cards and forms. Camera lookup retains a manual path. Keyboard focus is visible and tabs use the shared navigation pattern. These Equipment commands require a network connection; no offline write queue is claimed."
           ],
           "steps": [],
           "rows": [],
@@ -5160,8 +4396,10 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "docs/decisions/ADR-0045-equipment-native-workflows.md",
+            "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
+            "docs/delivery/equipment-native-completion-handover.md",
+            "docs/testing/evidence/equipment-native/README.md"
           ],
           "steps": [],
           "rows": [],
@@ -5171,9 +4409,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner: Dean Fiedler. This is a working draft guide, not released operational instruction. Functional verification, visual review, device acceptance and deployment are recorded separately."
           ],
           "steps": [],
           "rows": [],
@@ -41882,25 +41118,23 @@
     {
       "guide_key": "guide.page.equipment.id",
       "entry_key": "route:/equipment/[id]",
-      "title": "Equipment detail",
+      "title": "Installed base and Equipment workspace",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native implementation; owner acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Equipment detail to work towards this outcome: The correct installed asset is selected for the work.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "The equipment location may differ from the area it serves. Readable references are not database UUIDs."
+            "Search reference, description, serial, manufacturer, model, customer, Site, installed Facility or served area. Restore filters and pagination from the URL. Open a canonical Asset and use its record tabs."
           ],
           "steps": [],
           "rows": [],
@@ -41910,9 +41144,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Asset reference, customer/site, physical location, served area and model.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use a permitted synthetic identity and confirm company, Site and Asset context. Prepare exact source references/revisions and a reason. Editing does not grant separate operational authority.",
+            "Configuration and lifecycle decisions never infer a warranty or maintenance transfer."
           ],
           "steps": [],
           "rows": [],
@@ -41923,11 +41156,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Confirm the record reference and customer/site context in this record workspace.",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Enter a search or select identity/lifecycle filters.",
+            "Open an Asset; compare installed Facility with the separately listed served areas.",
+            "Use controlled identity correction with an expected version and evidence-backed reason; use a separate Asset for replacement."
           ],
           "rows": [],
           "headers": []
@@ -41935,42 +41166,19 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Equipment detail · Record workspace"
-            ],
-            [
-              "Application links",
-              "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Register and record workspace: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon opens the registered draft route guide; the nine EQ scope guides are also available in Design & Development."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Asset reference, customer/site, physical location, served area and model.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Search reference, description, serial, manufacturer, model, customer, Site, installed Facility or served area. Restore filters and pagination from the URL. Open a canonical Asset and use its record tabs.",
+            "Configuration and lifecycle decisions never infer a warranty or maintenance transfer."
           ],
           "steps": [],
           "rows": [],
@@ -41979,14 +41187,11 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Task sequence for review against the applicable running release."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Confirm the record reference and customer/site context in this record workspace.",
-            "Find the installed equipment by reference or context",
-            "Confirm its physical identity and current location",
-            "Review linked configuration, service and document history"
+            "Enter a search or select identity/lifecycle filters.",
+            "Open an Asset; compare installed Facility with the separately listed served areas.",
+            "Use controlled identity correction with an expected version and evidence-backed reason; use a separate Asset for replacement."
           ],
           "rows": [],
           "headers": []
@@ -41995,9 +41200,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "The correct installed asset is selected for the work.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "The equipment location may differ from the area it serves. Readable references are not database UUIDs."
+            "Shared Assets and CS supply identities, physical Site/Facility and served relationships. Equipment links to CS readiness, source-owned history, Inspection and My Work.",
+            "A successful receipt confirms the saved source decision. Read the resulting version/state. It does not grant business acceptance or authorise another module's work."
           ],
           "steps": [],
           "rows": [],
@@ -42006,45 +41210,18 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Read-only and no permitted records are different from filtered-empty. Source failure/bounded history is labelled partial. Unknown remains explicit. Review the field error, stale basis or uncertain outcome before leaving."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare asset reference, customer/site, physical location, served area and model. Follow the task sequence and check that the correct installed asset is selected for the work. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Equipment detail has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. The equipment location may differ from the area it serves. Readable references are not database UUIDs."
+            "Synthetic example: use a labelled SYN pump, controller or test instrument to exercise installed base and equipment workspace. All supplier criteria, software/firmware and measurement limits are fictional."
           ],
           "steps": [],
           "rows": [],
@@ -42053,45 +41230,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "For an uncertain save, use Recover original operation. Keep the same operation and original payload. For stale version/source errors, compare the latest source with retained entries before a fresh decision. A denied read clears source details; do not infer hidden record existence."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use labelled stacked cards and forms. Camera lookup retains a manual path. Keyboard focus is visible and tabs use the shared navigation pattern. These Equipment commands require a network connection; no offline write queue is claimed."
           ],
           "steps": [],
           "rows": [],
@@ -42101,8 +41251,10 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "docs/decisions/ADR-0045-equipment-native-workflows.md",
+            "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
+            "docs/delivery/equipment-native-completion-handover.md",
+            "docs/testing/evidence/equipment-native/README.md"
           ],
           "steps": [],
           "rows": [],
@@ -42112,9 +41264,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner: Dean Fiedler. This is a working draft guide, not released operational instruction. Functional verification, visual review, device acceptance and deployment are recorded separately."
           ],
           "steps": [],
           "rows": [],
@@ -42150,25 +41300,23 @@
     {
       "guide_key": "guide.page.equipment",
       "entry_key": "route:/equipment",
-      "title": "Equipment register",
+      "title": "Installed base and Equipment workspace",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native implementation; owner acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Equipment register to work towards this outcome: The correct installed asset is selected for the work.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "The equipment location may differ from the area it serves. Readable references are not database UUIDs."
+            "Search reference, description, serial, manufacturer, model, customer, Site, installed Facility or served area. Restore filters and pagination from the URL. Open a canonical Asset and use its record tabs."
           ],
           "steps": [],
           "rows": [],
@@ -42178,9 +41326,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Asset reference, customer/site, physical location, served area and model.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use a permitted synthetic identity and confirm company, Site and Asset context. Prepare exact source references/revisions and a reason. Editing does not grant separate operational authority.",
+            "Configuration and lifecycle decisions never infer a warranty or maintenance transfer."
           ],
           "steps": [],
           "rows": [],
@@ -42191,11 +41338,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Find the installed equipment by reference or context",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Enter a search or select identity/lifecycle filters.",
+            "Open an Asset; compare installed Facility with the separately listed served areas.",
+            "Use controlled identity correction with an expected version and evidence-backed reason; use a separate Asset for replacement."
           ],
           "rows": [],
           "headers": []
@@ -42203,42 +41348,19 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Equipment register · Register / workspace"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Register and record workspace: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon opens the registered draft route guide; the nine EQ scope guides are also available in Design & Development."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Asset reference, customer/site, physical location, served area and model.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Search reference, description, serial, manufacturer, model, customer, Site, installed Facility or served area. Restore filters and pagination from the URL. Open a canonical Asset and use its record tabs.",
+            "Configuration and lifecycle decisions never infer a warranty or maintenance transfer."
           ],
           "steps": [],
           "rows": [],
@@ -42247,13 +41369,11 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Task sequence for review against the applicable running release."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Find the installed equipment by reference or context",
-            "Confirm its physical identity and current location",
-            "Review linked configuration, service and document history"
+            "Enter a search or select identity/lifecycle filters.",
+            "Open an Asset; compare installed Facility with the separately listed served areas.",
+            "Use controlled identity correction with an expected version and evidence-backed reason; use a separate Asset for replacement."
           ],
           "rows": [],
           "headers": []
@@ -42262,9 +41382,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "The correct installed asset is selected for the work.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "The equipment location may differ from the area it serves. Readable references are not database UUIDs."
+            "Shared Assets and CS supply identities, physical Site/Facility and served relationships. Equipment links to CS readiness, source-owned history, Inspection and My Work.",
+            "A successful receipt confirms the saved source decision. Read the resulting version/state. It does not grant business acceptance or authorise another module's work."
           ],
           "steps": [],
           "rows": [],
@@ -42273,45 +41392,18 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Read-only and no permitted records are different from filtered-empty. Source failure/bounded history is labelled partial. Unknown remains explicit. Review the field error, stale basis or uncertain outcome before leaving."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare asset reference, customer/site, physical location, served area and model. Follow the task sequence and check that the correct installed asset is selected for the work. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Equipment register has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. The equipment location may differ from the area it serves. Readable references are not database UUIDs."
+            "Synthetic example: use a labelled SYN pump, controller or test instrument to exercise installed base and equipment workspace. All supplier criteria, software/firmware and measurement limits are fictional."
           ],
           "steps": [],
           "rows": [],
@@ -42320,45 +41412,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "For an uncertain save, use Recover original operation. Keep the same operation and original payload. For stale version/source errors, compare the latest source with retained entries before a fresh decision. A denied read clears source details; do not infer hidden record existence."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use labelled stacked cards and forms. Camera lookup retains a manual path. Keyboard focus is visible and tabs use the shared navigation pattern. These Equipment commands require a network connection; no offline write queue is claimed."
           ],
           "steps": [],
           "rows": [],
@@ -42368,8 +41433,10 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "docs/decisions/ADR-0045-equipment-native-workflows.md",
+            "docs/reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html",
+            "docs/delivery/equipment-native-completion-handover.md",
+            "docs/testing/evidence/equipment-native/README.md"
           ],
           "steps": [],
           "rows": [],
@@ -42379,9 +41446,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner: Dean Fiedler. This is a working draft guide, not released operational instruction. Functional verification, visual review, device acceptance and deployment are recorded separately."
           ],
           "steps": [],
           "rows": [],
@@ -68987,6 +68052,251 @@
         }
       ],
       "runtime_evidence": "CS native synthetic database, compiled HTTP and desktop/mobile browser proofs executed on 23 September 2026; see docs/testing/evidence/cs-native-completion/README.md. Owner acceptance pending."
+    },
+    {
+      "guide_key": "guide.route-equipment-backups",
+      "entry_key": "route:/equipment/backups",
+      "title": "Configuration backups and recovery evidence",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native implementation; owner acceptance pending",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Record an exact configuration backup, captured time/person, custodian, protected location/source revision, compatibility and recovery-procedure revision."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [],
+          "steps": [
+            "Select Equipment and its current configuration; record Baseline, PreChange or PostChange evidence.",
+            "Record separate BackupReviewed, ProcedureReviewed, RecoveryTested and RecoveryVerified evidence with result, occurrence time and exact evidence revision.",
+            "Complete prerequisites and use a different permitted reviewer to verify a passed recovery test. Read Engineering commissioning backups at their owning source."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "For an uncertain save, use Recover original operation. Keep the same operation and original payload. For stale version/source errors, compare the latest source with retained entries before a fresh decision. A denied read clears source details; do not infer hidden record existence."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending."
+    },
+    {
+      "guide_key": "guide.route-equipment-bulletins",
+      "entry_key": "route:/equipment/bulletins",
+      "title": "Service bulletin applicability",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native implementation; owner acceptance pending",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Record exact bulletin source/revision and supported manufacturer/model/serial/configuration criteria. Matches are candidates; an Asset-level review makes the disposition."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [],
+          "steps": [
+            "Record the supplier bulletin revision in its permitted company.",
+            "Choose candidate Equipment, record applicability evidence and Unknown, PotentiallyAffected, Affected or NotApplicable.",
+            "For unresolved/affected Equipment select an owned existing Activity or name an owner and due date. Close only after current definitive dispositions and completed affected follow-ups."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "For an uncertain save, use Recover original operation. Keep the same operation and original payload. For stale version/source errors, compare the latest source with retained entries before a fresh decision. A denied read clears source details; do not infer hidden record existence."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending."
+    },
+    {
+      "guide_key": "guide.route-equipment-instruments",
+      "entry_key": "route:/equipment/instruments",
+      "title": "Test instruments and calibration",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native implementation; owner acceptance pending",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Read canonical Inspection instruments and retained calibration certificate versions, measurement capability, exact certificate references, current assessment and historical use/readings."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [],
+          "steps": [
+            "Record a canonical calibration certificate or renew the same instrument reference with a retained successor.",
+            "Inspect the captured at-use assessment separately from today's assessment and later withdrawal effects.",
+            "Record a source-backed retrospective withdrawal against the exact expected version when applicable."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "For an uncertain save, use Recover original operation. Keep the same operation and original payload. For stale version/source errors, compare the latest source with retained entries before a fresh decision. A denied read clears source details; do not infer hidden record existence."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending."
+    },
+    {
+      "guide_key": "guide.route-equipment-lifecycle",
+      "entry_key": "route:/equipment/lifecycle",
+      "title": "Support lifecycle and obsolescence",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native implementation; owner acceptance pending",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Record dated supplier support evidence, support/software dates, affected component, replacement advice and uncertainty against the exact Asset."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [],
+          "steps": [
+            "Select Equipment context and record a source/revision/date.",
+            "Choose an evidenced conclusion or retain Unknown; leave unavailable end dates Unknown.",
+            "Retain subsequent evidence separately and use source-owned follow-up or a governed physical replacement only when authorised."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "For an uncertain save, use Recover original operation. Keep the same operation and original payload. For stale version/source errors, compare the latest source with retained entries before a fresh decision. A denied read clears source details; do not infer hidden record existence."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending."
+    },
+    {
+      "guide_key": "guide.route-equipment-lookup",
+      "entry_key": "route:/equipment/lookup",
+      "title": "Identify equipment",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native implementation; owner acceptance pending",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Enter an exact Asset reference, UUID, serial or same-origin equipment URL. Camera support is detected at runtime; manual lookup stays available."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [],
+          "steps": [
+            "Start the camera, or enter the identifier manually.",
+            "Resolve ambiguous serials using the exact Asset reference. Unknown and inaccessible identities share a private no-match response.",
+            "Compare the physical label, serial and current installation. Tick the explicit session comparison before following context links."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "For an uncertain save, use Recover original operation. Keep the same operation and original payload. For stale version/source errors, compare the latest source with retained entries before a fresh decision. A denied read clears source details; do not infer hidden record existence."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-09-24",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending."
     }
   ]
 }

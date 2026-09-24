@@ -91,6 +91,15 @@
       "used_on": [
         "system:theme",
         "route:/development/page-register",
+        "scope:EQ-01",
+        "scope:EQ-02",
+        "scope:EQ-03",
+        "scope:EQ-04",
+        "scope:EQ-05",
+        "scope:EQ-06",
+        "scope:EQ-07",
+        "scope:EQ-08",
+        "scope:EQ-09",
         "scope:ES-01",
         "route:/estimating"
       ],
@@ -597,7 +606,7 @@
       "title": "Form controls and save states",
       "category": "Forms",
       "module": "Shared",
-      "purpose": "Actual text, multiline, date and select controls, required fields and synthetic save feedback.",
+      "purpose": "Actual text, multiline, date, local date/time and select controls; distinct label targets retain canonical server validation fields.",
       "owner": "Dean Fiedler",
       "example": "fields",
       "coverage": "Runnable",
@@ -622,6 +631,10 @@
         {
           "path": "src/components/business-ui.tsx",
           "symbol": "Field"
+        },
+        {
+          "path": "src/components/record-ui.tsx",
+          "symbol": "LocalDateTimeField"
         }
       ],
       "dependencies": [
@@ -629,7 +642,8 @@
         "src/app/globals.css",
         "src/development/component-examples.tsx",
         "src/development/component-fixtures.ts",
-        "src/app/styles/customers.css"
+        "src/app/styles/customers.css",
+        "src/components/equipment-controls.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -644,7 +658,16 @@
         "route:/sites/[id]/readiness",
         "route:/customers/[id]/development",
         "route:/surveys",
-        "route:/surveys/[id]"
+        "route:/surveys/[id]",
+        "scope:EQ-01",
+        "scope:EQ-02",
+        "scope:EQ-03",
+        "scope:EQ-04",
+        "scope:EQ-05",
+        "scope:EQ-06",
+        "scope:EQ-07",
+        "scope:EQ-08",
+        "scope:EQ-09"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -785,7 +808,16 @@
         "route:/sites/[id]/readiness",
         "route:/customers/[id]/development",
         "route:/surveys",
-        "route:/surveys/[id]"
+        "route:/surveys/[id]",
+        "scope:EQ-01",
+        "scope:EQ-02",
+        "scope:EQ-03",
+        "scope:EQ-04",
+        "scope:EQ-05",
+        "scope:EQ-06",
+        "scope:EQ-07",
+        "scope:EQ-08",
+        "scope:EQ-09"
       ],
       "desktop": "Submit an empty title to focus the summary, then follow its link to the field. Correct the title and save to clear the example error.",
       "mobile": "Summary and inline errors must remain visible at 320 px and 200% zoom.",
@@ -859,7 +891,10 @@
         "route:/sites/[id]/readiness",
         "route:/customers/[id]/development",
         "route:/surveys/[id]",
-        "route:/sites/[id]"
+        "route:/sites/[id]",
+        "scope:EQ-01",
+        "scope:EQ-03",
+        "scope:EQ-04"
       ],
       "desktop": "Arrow keys, Home and End select/focus tabs. Each tab labels its corresponding panel.",
       "mobile": "Confirm wrapped or scrolling tabs keep the selected label and focus visible.",
@@ -1119,7 +1154,16 @@
         "route:/customers/[id]/development",
         "route:/surveys/[id]",
         "route:/sites/[id]",
-        "route:/surveys"
+        "route:/surveys",
+        "scope:EQ-01",
+        "scope:EQ-02",
+        "scope:EQ-03",
+        "scope:EQ-04",
+        "scope:EQ-05",
+        "scope:EQ-06",
+        "scope:EQ-07",
+        "scope:EQ-08",
+        "scope:EQ-09"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -1186,6 +1230,15 @@
         "route:/customers/[id]",
         "route:/people/[id]",
         "route:/sites/[id]",
+        "scope:EQ-01",
+        "scope:EQ-02",
+        "scope:EQ-03",
+        "scope:EQ-04",
+        "scope:EQ-05",
+        "scope:EQ-06",
+        "scope:EQ-07",
+        "scope:EQ-08",
+        "scope:EQ-09",
         "scope:ES-01",
         "route:/estimating"
       ],
@@ -1326,6 +1379,7 @@
         "src/app/desktop-shell.css",
         "src/app/mobile-layout.css",
         "src/app/styles/customers.css",
+        "src/app/styles/equipment.css",
         "docs/testing/evidence/job-pack-i5/README.md"
       ],
       "reference": {
@@ -1356,6 +1410,14 @@
           "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
           "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "eq-application-shell-host-review",
+          "expected": "Review the actual Equipment host and scrolled evidence at desktop and phone widths.",
+          "actual": "Equipment preserves the shared shell and restores its intended phone flex row; synthetic captures and containment checks are separate from owner/device acceptance.",
+          "action": "Use docs/testing/evidence/equipment-native/README.md and the EQ guides for paired review of populated, restricted, stale and recovered states.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         },

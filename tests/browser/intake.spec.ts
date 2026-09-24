@@ -97,7 +97,8 @@ test("P03 customer, shared contact, site/equipment attribution and My Work at de
   });
   await noOverflow(page);
   await page.goto("/equipment/80000000-0000-4000-8000-000000000001");
-  await expect(page.getByText(/did not resolve/)).toBeVisible();
+  await page.getByRole("tab", { name: "Documents & service", exact: true }).click();
+  await expect(page.getByText("SYN cable replacement did not resolve intermittent reading; cause suspected.", { exact: true })).toBeVisible();
   await expect(
     page.getByRole("link", { name: /SYN OEM query:/ }),
   ).toBeVisible();
@@ -382,7 +383,7 @@ test("P03 persisted intake, validation retention, clarification completion, tria
 test("P03 unavailable and empty queues stay distinct; keyboard focus and network-failed form entries survive", async ({
   page,
 }, info) => {
-  const retainedName = `SYN retained new customer ${info.project.name}`;
+  const retainedName = `SYN retained new customer ${info.project.name} ${crypto.randomUUID()}`;
   // My actions is the activity list behind My Work; the Overview is a bounded preview of it.
   await page.goto("/work/actions");
   await identity(page);
