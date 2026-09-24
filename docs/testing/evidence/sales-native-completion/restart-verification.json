@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "application_commit": "b28242c3b67b810efd3730fc1c317a0b5da7fabb",
+  "environment": "Local compiled application; PostgreSQL 16; guarded ppo_synthetic_test on loopback 5546",
+  "method": "Capture all Sales aggregate/event rows, immutable Won obligations and shared Activities; JSON-normalise timestamps; compute canonical SHA-256. Read all seven Sales details and all 48 original receipts through authorised HTTP. Stop the application, restart the dedicated PostgreSQL cluster, relaunch the compiled application, wait for readiness, repeat and assert exact equality.",
+  "written_at": "2026-09-24T00:30:49.8299557Z",
+  "verified_at": "2026-09-24T00:35:52.5437094Z",
+  "before": {
+    "phase": "write",
+    "passed": true,
+    "table_hashes": {
+      "sales_handovers": "78d4f99e267932ff99a90c7beca7417f9009808aff5a7170e610b5d16ccf7b6d",
+      "sales_aftercare": "22efbc0ea8286c7643054d69051488f9ca8f8dc429e5a4c757382344c987bd48",
+      "sales_workflow_events": "99e8fa66ff08137bb851c08c059160869dbce7537447df6972edc6006e7048fe",
+      "opportunity_handovers_due": "258e1dd76abf10dd71d5f827f4de823313af26b1121e8f4b27e65d9b6c5c7ce0",
+      "activities": "52c016b786f457e9219583da134e77c81d5c0c07e0709f8a16198396a815da2c"
+    },
+    "detail_hash": "f1b68fca7f215a182fef2c034be5b906090b564dfb6b4df451b1e69b8b738d51",
+    "receipts_hash": "5609a6bdfa14e95adb43b87e1f7517893d0f86a857cd4c7c4dea7a4b0d367caf",
+    "counts": {
+      "sales_handovers": 5,
+      "sales_aftercare": 2,
+      "sales_workflow_events": 48,
+      "opportunity_handovers_due": 2,
+      "activities": 30
+    },
+    "receipts": 48
+  },
+  "after": {
+    "phase": "verify",
+    "passed": true,
+    "table_hashes": {
+      "sales_handovers": "78d4f99e267932ff99a90c7beca7417f9009808aff5a7170e610b5d16ccf7b6d",
+      "sales_aftercare": "22efbc0ea8286c7643054d69051488f9ca8f8dc429e5a4c757382344c987bd48",
+      "sales_workflow_events": "99e8fa66ff08137bb851c08c059160869dbce7537447df6972edc6006e7048fe",
+      "opportunity_handovers_due": "258e1dd76abf10dd71d5f827f4de823313af26b1121e8f4b27e65d9b6c5c7ce0",
+      "activities": "52c016b786f457e9219583da134e77c81d5c0c07e0709f8a16198396a815da2c"
+    },
+    "detail_hash": "f1b68fca7f215a182fef2c034be5b906090b564dfb6b4df451b1e69b8b738d51",
+    "receipts_hash": "5609a6bdfa14e95adb43b87e1f7517893d0f86a857cd4c7c4dea7a4b0d367caf",
+    "counts": {
+      "sales_handovers": 5,
+      "sales_aftercare": 2,
+      "sales_workflow_events": 48,
+      "opportunity_handovers_due": 2,
+      "activities": 30
+    },
+    "receipts": 48
+  },
+  "owner_acceptance": false
+}
