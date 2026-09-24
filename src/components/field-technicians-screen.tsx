@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { SchedulingNavigation } from "../scheduling/components/client/workspace-navigation.client";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import {
   ReadState,
@@ -495,6 +496,7 @@ export function FieldTechniciansScreen() {
       className="field-technicians-workspace"
       aria-labelledby="ft-page-title"
     >
+      <SchedulingNavigation />
       <div className="ft-breadcrumb">
         <Link href="/schedule">Service</Link>
         <span aria-hidden="true">›</span>
@@ -735,12 +737,13 @@ export function FieldTechniciansScreen() {
                       <tr
                         key={r.id}
                         onClick={(e) => {
-                          if (!(e.target as HTMLElement).closest("button"))
+                          if (!(e.target as HTMLElement).closest("button,a"))
                             selectPerson(r);
                         }}
                       >
                         <td className="ft-person-cell">
                           <Person name={r.name} />
+                          <Link href={`/service/technicians/${r.id}?day=${day}`}>Availability &amp; competence</Link>
                           <button
                             className="ft-record-link"
                             aria-label={`View visits for ${r.name}`}

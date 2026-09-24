@@ -1,0 +1,165 @@
+.scheduling-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  border-bottom: 1px solid var(--line, #d9dee7);
+  padding: 8px 0;
+  margin-bottom: 16px;
+}
+.scheduling-navigation a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 12px;
+  border-radius: var(--radius, 6px);
+  text-decoration: none;
+  color: var(--text, #242a37);
+  font-weight: 500;
+}
+.scheduling-navigation a[aria-current="page"] {
+  background: var(--navy, #242a37);
+  color: white;
+}
+.scheduling-navigation a:focus-visible {
+  outline: 3px solid var(--green, #62bb46);
+  outline-offset: 2px;
+}
+.scheduling-workspace {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.scheduling-workspace h2 {
+  font-size: 18px;
+  margin: 0 0 12px;
+}
+.scheduling-workspace h3 {
+  font-size: 16px;
+  margin: 0 0 8px;
+}
+.scheduling-workspace p {
+  margin: 8px 0 12px;
+}
+.scheduling-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: end;
+  margin: 16px 0;
+}
+.scheduling-toolbar > .field {
+  min-width: 160px;
+  flex: 1 1 160px;
+  max-width: 320px;
+}
+.scheduling-toolbar input,
+.scheduling-toolbar select {
+  width: 100%;
+  min-height: 44px;
+  font-size: 16px;
+}
+.scheduling-workspace input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin: 12px 8px 12px 0;
+}
+.scheduling-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 16px;
+  margin: 16px 0;
+}
+.scheduling-card {
+  border: 1px solid var(--line, #d9dee7);
+  border-radius: 8px;
+  padding: 20px;
+  background: var(--surface, #fff);
+  min-width: 0;
+  margin: 16px 0;
+}
+.scheduling-grid > .scheduling-card {
+  margin: 0;
+}
+.scheduling-inset {
+  padding: 16px;
+  border: 1px solid var(--line-soft, #e9ecf1);
+  border-radius: 6px;
+  background: var(--surface-subtle, #f7f8fa);
+  min-width: 0;
+}
+.scheduling-review-layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 28%) minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+.scheduling-queue {
+  display: grid;
+  gap: 8px;
+  padding: 16px 0;
+}
+.scheduling-queue button {
+  text-align: left;
+  justify-content: flex-start;
+  white-space: normal;
+  width: 100%;
+  height: auto;
+}
+.scheduling-queue button[aria-pressed="true"] {
+  box-shadow: inset 4px 0 var(--green, #62bb46);
+  background: var(--success-tint, #f3f7f1);
+}
+.scheduling-travel-list {
+  padding: 0;
+  list-style: none;
+}
+.scheduling-workspace details {
+  margin: 12px 0;
+}
+.scheduling-workspace summary {
+  min-height: 44px;
+  cursor: pointer;
+  padding: 10px 0;
+}
+.scheduling-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 12px 0;
+}
+.scheduling-comparison > section {
+  min-width: 0;
+  border: 1px solid var(--line, #d9dee7);
+  border-radius: 6px;
+  padding: 12px;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 700px) {
+  .scheduling-review-layout,
+  .scheduling-comparison {
+    grid-template-columns: 1fr;
+  }
+  .scheduling-card {
+    padding: 16px;
+  }
+  .scheduling-toolbar > .field {
+    max-width: none;
+    width: 100%;
+  }
+  .scheduling-navigation a {
+    flex: 1 1 125px;
+  }
+  .scheduling-workspace .button-row {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 780px) {
+  /* Match the native shell row: legacy identity grid rules otherwise place
+     utility buttons over the Service tabs on these Scheduling surfaces. */
+  .workspace:has(.scheduling-navigation) .topbar.ppo-shell-header {
+    display: flex;
+    padding: 0 10px;
+    gap: 4px;
+  }
+}

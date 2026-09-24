@@ -2365,19 +2365,28 @@
       "title": "Service planner and unassigned demand",
       "kind": "scope",
       "module": "PL",
-      "summary": "The current service planner/unassigned-demand increment exists; STATUS explicitly records PL-01 complete. Do not list it as an unbuilt page.",
+      "summary": "Existing same-tab booking recovery and server commands are preserved. Request decisions now show current versus proposed time, named crew, travel and version differences.",
       "path": "/schedule",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/schedule/page.tsx"
       ],
       "guide_key": "guide.pl.01",
       "design_path": "docs/design/development/pages/scope-pl-01.md",
       "html_path": "docs/reference/ui/service/PPO-Scheduling-and-Appointments-Workspace-r01.html",
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/testing/evidence/scheduling-resources/images/planner-1440x960.png",
+        "docs/testing/evidence/scheduling-resources/images/planner-320x844.png"
+      ],
+      "dependencies": [
+        "src/scheduling/workspace-reads.ts",
+        "src/scheduling/workspace-model.ts",
+        "src/scheduling/components/client/workspace-navigation.client.tsx",
+        "src/app/styles/scheduling-workspaces.css"
+      ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -2393,19 +2402,28 @@
       "title": "Resource availability and competence",
       "kind": "scope",
       "module": "PL",
-      "summary": "Extend the technician/scheduling foundation with availability, competence, certificates and expiry evidence.",
+      "summary": "Resource/calendar/competence mutation is unavailable. Synthetic skills are not statutory certificates; certificate/renewal evidence remains Unknown. No private HR fields are added.",
       "path": "/service/technicians",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/service/technicians/page.tsx"
       ],
       "guide_key": "guide.pl.02",
       "design_path": "docs/design/development/pages/scope-pl-02.md",
       "html_path": null,
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "refine",
+      "image_paths": [
+        "docs/testing/evidence/scheduling-resources/images/resource-1440x960.png",
+        "docs/testing/evidence/scheduling-resources/images/resource-320x844.png"
+      ],
+      "dependencies": [
+        "src/scheduling/workspace-reads.ts",
+        "src/scheduling/workspace-model.ts",
+        "src/scheduling/components/client/workspace-navigation.client.tsx",
+        "src/app/styles/scheduling-workspaces.css"
+      ],
+      "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -2414,7 +2432,8 @@
       "related_keys": [
         "route:/service/technicians",
         "scope:AD-01",
-        "scope:SV-03"
+        "scope:SV-03",
+        "route:/service/technicians/[id]"
       ],
       "reviewer": null
     },
@@ -2423,19 +2442,28 @@
       "title": "Cross-domain resource demand and capacity",
       "kind": "scope",
       "module": "PL",
-      "summary": "Implement cross-domain demand/capacity review for engineering, installation and service without silently changing bookings.",
+      "summary": "Project programme dates and Engineering required dates never become labour effort. Service reservations include crew and explicit buffers; they are not labour estimates. No utilisation denominator or percentage is claimed.",
       "path": "/schedule/capacity",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/schedule/capacity/page.tsx"
       ],
       "guide_key": "guide.pl.03",
       "design_path": "docs/design/development/pages/scope-pl-03.md",
       "html_path": null,
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/scheduling-resources/images/capacity-1440x960.png",
+        "docs/testing/evidence/scheduling-resources/images/capacity-320x844.png"
+      ],
+      "dependencies": [
+        "src/scheduling/workspace-reads.ts",
+        "src/scheduling/workspace-model.ts",
+        "src/scheduling/components/client/workspace-navigation.client.tsx",
+        "src/app/styles/scheduling-workspaces.css"
+      ],
+      "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -2444,7 +2472,8 @@
       "related_keys": [
         "scope:PJ-07",
         "scope:MA-04",
-        "scope:PL-02"
+        "scope:PL-02",
+        "route:/schedule/capacity"
       ],
       "reviewer": null
     },
@@ -2453,19 +2482,28 @@
       "title": "Rescheduling and acknowledgement centre",
       "kind": "scope",
       "module": "PL",
-      "summary": "Extend existing move/change/contact commands into a rescheduling and acknowledgement review centre.",
+      "summary": "An exact appointment handover stays visible even outside the selected date/queue. Changed booking facts require fresh contact and preparation review. Contact is not delivery or pack acknowledgement.",
       "path": "/schedule/changes",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/schedule/changes/page.tsx"
       ],
       "guide_key": "guide.pl.04",
       "design_path": "docs/design/development/pages/scope-pl-04.md",
       "html_path": "docs/reference/ui/service/PPO-Scheduling-and-Appointments-Workspace-r01.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "refine",
+      "image_paths": [
+        "docs/testing/evidence/scheduling-resources/images/changes-1440x960.png",
+        "docs/testing/evidence/scheduling-resources/images/changes-320x844.png"
+      ],
+      "dependencies": [
+        "src/scheduling/workspace-reads.ts",
+        "src/scheduling/workspace-model.ts",
+        "src/scheduling/components/client/workspace-navigation.client.tsx",
+        "src/app/styles/scheduling-workspaces.css"
+      ],
+      "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -2474,7 +2512,8 @@
       "related_keys": [
         "scope:PL-01",
         "scope:PL-02",
-        "scope:SH-03"
+        "scope:SH-03",
+        "route:/schedule/changes"
       ],
       "reviewer": null
     },
@@ -2483,19 +2522,28 @@
       "title": "Visit route and travel review",
       "kind": "scope",
       "module": "PL",
-      "summary": "Implement visit grouping, route/travel review and sequence planning; any routing provider remains a separate integration.",
+      "summary": "No map, provider, inferred distance/speed, traffic or optimiser is configured. Planned travel allowance, unknown route estimate and actual field Travel are independent facts.",
       "path": "/schedule/travel",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/schedule/travel/page.tsx"
       ],
       "guide_key": "guide.pl.05",
       "design_path": "docs/design/development/pages/scope-pl-05.md",
       "html_path": null,
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/scheduling-resources/images/travel-1440x960.png",
+        "docs/testing/evidence/scheduling-resources/images/travel-320x844.png"
+      ],
+      "dependencies": [
+        "src/scheduling/workspace-reads.ts",
+        "src/scheduling/workspace-model.ts",
+        "src/scheduling/components/client/workspace-navigation.client.tsx",
+        "src/app/styles/scheduling-workspaces.css"
+      ],
+      "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -2504,7 +2552,8 @@
       "related_keys": [
         "scope:CS-04",
         "scope:PL-04",
-        "scope:FI-05"
+        "scope:FI-05",
+        "route:/schedule/travel"
       ],
       "reviewer": null
     },
@@ -6040,7 +6089,7 @@
       "title": "Service planner",
       "kind": "route",
       "module": "PL",
-      "summary": "This page address exists in the inspected application source. Open it from a running app using an identity with the required access.",
+      "summary": "Existing same-tab booking recovery and server commands are preserved. Request decisions now show current versus proposed time, named crew, travel and version differences.",
       "path": "/schedule",
       "source_paths": [
         "src/app/(business)/schedule/page.tsx"
@@ -6048,11 +6097,19 @@
       "guide_key": "guide.page.schedule",
       "design_path": "docs/design/development/pages/route-schedule.md",
       "html_path": null,
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/testing/evidence/scheduling-resources/images/planner-1440x960.png",
+        "docs/testing/evidence/scheduling-resources/images/planner-320x844.png"
+      ],
+      "dependencies": [
+        "src/scheduling/workspace-reads.ts",
+        "src/scheduling/workspace-model.ts",
+        "src/scheduling/components/client/workspace-navigation.client.tsx",
+        "src/app/styles/scheduling-workspaces.css"
+      ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6263,7 +6320,7 @@
       "title": "Field technicians",
       "kind": "route",
       "module": "PL",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. The Job pack handover uses the current permitted canonical pack read and server preparation flag.",
+      "summary": "Resource/calendar/competence mutation is unavailable. Synthetic skills are not statutory certificates; certificate/renewal evidence remains Unknown. No private HR fields are added. The Job pack handover uses the current permitted canonical pack read and server preparation flag.",
       "path": "/service/technicians",
       "source_paths": [
         "src/app/(business)/service/technicians/page.tsx"
@@ -6271,20 +6328,28 @@
       "guide_key": "guide.page.service.technicians",
       "design_path": "docs/design/development/pages/route-service-technicians.md",
       "html_path": null,
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/scheduling-resources/images/resource-1440x960.png",
+        "docs/testing/evidence/scheduling-resources/images/resource-320x844.png"
+      ],
       "dependencies": [
+        "src/scheduling/workspace-reads.ts",
+        "src/scheduling/workspace-model.ts",
+        "src/scheduling/components/client/workspace-navigation.client.tsx",
+        "src/app/styles/scheduling-workspaces.css",
         "src/documents/components/client/job-pack-entry.tsx"
       ],
-      "scope_status": "refine",
+      "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 59,
       "related_keys": [
-        "scope:PL-02"
+        "scope:PL-02",
+        "route:/service/technicians/[id]"
       ],
       "reviewer": null
     },
@@ -8634,6 +8699,151 @@
       "related_keys": [
         "scope:CS-08",
         "route:/surveys/[id]"
+      ]
+    },
+    {
+      "key": "route:/schedule/capacity",
+      "title": "Cross-domain resource demand and capacity",
+      "kind": "route",
+      "module": "PL",
+      "summary": "Project programme dates and Engineering required dates never become labour effort. Service reservations include crew and explicit buffers; they are not labour estimates. No utilisation denominator or percentage is claimed.",
+      "path": "/schedule/capacity",
+      "source_paths": [
+        "src/app/(business)/schedule/capacity/page.tsx"
+      ],
+      "guide_key": "guide.route-schedule-capacity",
+      "design_path": "docs/design/development/pages/route-schedule-capacity.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/testing/evidence/scheduling-resources/images/capacity-1440x960.png",
+        "docs/testing/evidence/scheduling-resources/images/capacity-320x844.png"
+      ],
+      "dependencies": [
+        "src/scheduling/workspace-reads.ts",
+        "src/scheduling/workspace-model.ts",
+        "src/scheduling/components/client/workspace-navigation.client.tsx",
+        "src/app/styles/scheduling-workspaces.css"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:PL-03"
+      ]
+    },
+    {
+      "key": "route:/schedule/changes",
+      "title": "Rescheduling and acknowledgement centre",
+      "kind": "route",
+      "module": "PL",
+      "summary": "An exact appointment handover stays visible even outside the selected date/queue. Changed booking facts require fresh contact and preparation review. Contact is not delivery or pack acknowledgement.",
+      "path": "/schedule/changes",
+      "source_paths": [
+        "src/app/(business)/schedule/changes/page.tsx"
+      ],
+      "guide_key": "guide.route-schedule-changes",
+      "design_path": "docs/design/development/pages/route-schedule-changes.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/testing/evidence/scheduling-resources/images/changes-1440x960.png",
+        "docs/testing/evidence/scheduling-resources/images/changes-320x844.png"
+      ],
+      "dependencies": [
+        "src/scheduling/workspace-reads.ts",
+        "src/scheduling/workspace-model.ts",
+        "src/scheduling/components/client/workspace-navigation.client.tsx",
+        "src/app/styles/scheduling-workspaces.css"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:PL-04"
+      ]
+    },
+    {
+      "key": "route:/schedule/travel",
+      "title": "Visit route and travel review",
+      "kind": "route",
+      "module": "PL",
+      "summary": "No map, provider, inferred distance/speed, traffic or optimiser is configured. Planned travel allowance, unknown route estimate and actual field Travel are independent facts.",
+      "path": "/schedule/travel",
+      "source_paths": [
+        "src/app/(business)/schedule/travel/page.tsx"
+      ],
+      "guide_key": "guide.route-schedule-travel",
+      "design_path": "docs/design/development/pages/route-schedule-travel.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/testing/evidence/scheduling-resources/images/travel-1440x960.png",
+        "docs/testing/evidence/scheduling-resources/images/travel-320x844.png"
+      ],
+      "dependencies": [
+        "src/scheduling/workspace-reads.ts",
+        "src/scheduling/workspace-model.ts",
+        "src/scheduling/components/client/workspace-navigation.client.tsx",
+        "src/app/styles/scheduling-workspaces.css"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:PL-05"
+      ]
+    },
+    {
+      "key": "route:/service/technicians/[id]",
+      "title": "Resource detail",
+      "kind": "route",
+      "module": "PL",
+      "summary": "Resource/calendar/competence mutation is unavailable. Synthetic skills are not statutory certificates; certificate/renewal evidence remains Unknown. No private HR fields are added.",
+      "path": "/service/technicians/[id]",
+      "source_paths": [
+        "src/app/(business)/service/technicians/[id]/page.tsx"
+      ],
+      "guide_key": "guide.route-service-technicians-id",
+      "design_path": "docs/design/development/pages/route-service-technicians-id.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/testing/evidence/scheduling-resources/images/resource-1440x960.png",
+        "docs/testing/evidence/scheduling-resources/images/resource-320x844.png"
+      ],
+      "dependencies": [
+        "src/scheduling/workspace-reads.ts",
+        "src/scheduling/workspace-model.ts",
+        "src/scheduling/components/client/workspace-navigation.client.tsx",
+        "src/app/styles/scheduling-workspaces.css"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:PL-02",
+        "route:/service/technicians"
       ]
     },
     {

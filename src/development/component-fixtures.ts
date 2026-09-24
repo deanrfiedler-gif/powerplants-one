@@ -204,6 +204,8 @@ export const appointmentFixture: ScheduleAppointment = {
   requests: [],
   projection: "ScheduleSummary",
 };
+export const longSchedulingResourceName =
+  "SYN-PPO Technician with a long multi-site resource identity for wrapping review";
 export const plannerFixture: Schedule = {
   items: [appointmentFixture],
   next_cursor: null,

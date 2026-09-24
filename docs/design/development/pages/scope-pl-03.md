@@ -4,38 +4,37 @@ Stable entry: `scope:PL-03`. Owner: Dean Fiedler. Status: **Draft for visual rev
 Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/schedule/capacity`.
 This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
 
-## Purpose and task
+## Native workflow
 
-Implement cross-domain demand/capacity review for engineering, installation and service without silently changing bookings.
+Page type: **Review / comparison**. Canonical destination: `/schedule/capacity`. Source authority: [PPO-SCHED-ADR](../../../decisions/scheduling-resources-architecture.md).
 
-1. Compare demand on a consistent time basis
-2. Identify over-allocation and unknown effort
-3. Prepare owned capacity actions for the relevant schedulers
+1. Select a 7-, 28- or 90-day horizon, display timezone and permitted site. Review each source domain’s completeness or Unavailable state.
+2. Filter by domain, source commitment, resource mapping, required skill or unknown effort. Unknown resource/skill filters explicitly retain missing mappings.
+3. Review source references, UUIDs, versions/as-at, customer/site context, owner, time basis and next action. Follow the exact owning-domain link for resolution.
+4. Exclude contributions from an analytical scenario and compare its count and reserved resource minutes against the visible baseline. Reset or refresh discards the scenario.
+
+Project programme dates and Engineering required dates never become labour effort. Service reservations include crew and explicit buffers; they are not labour estimates. No utilisation denominator or percentage is claimed.
 
 ## Desktop
 
-Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
-
-At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
+Place source availability first, then horizon/domain/commitment/resource/skill filters, analytical comparison, supply basis and exact contributing records. Use readable cards at 1440 x 960 and 1024 x 768. Never make programme duration or due dates an effort quantity.
 
 ## Mobile
 
-At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
-
-The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+Stack filters and evidence cards at 390 x 844 and 320 CSS px. Scenario checkboxes have explicit labels; source/owner links and unknown effort remain readable. No utilisation gauge, automatic application or hidden mutation action appears. Review native 200% browser zoom separately; CSS-width reflow is not a substitute.
 
 ## Shared components and states
 
-Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared Button component for new controls; preserve documented existing page-specific exceptions until deliberately migrated. Use consistent primary/secondary/quiet/danger meanings. Include hover, visible focus, disabled and loading states.
+CapacityWorkspaceScreen and shared ReviewSelect/WindowControls composition over Field, SelectField, ReadState, Stamp, Button/ButtonLink and the native shell. This page does not consume PlannerBoard.
 
-Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
+Loading, empty/filtered empty, failed and denied reads remove prior evidence. Words identify Unknown and source completeness. These review pages have no source-mutation save action; analytical state is explicitly disposable.
 
-## Visual references
+## Handovers and authority
 
-No exact image or HTML reference is linked. Keep this gap visible.
+Incoming: repeatable-read, independently scoped Service, Projects and Engineering contributions. Outgoing: exact source-owned records and named next actions. Exclusions compare analytical counts/reservation minutes and reset on refresh. Unknown effort prevents a defensible net-capacity or overload calculation; inspect supplied busy/block intervals for reservation conflicts.
 
-## Behaviour, handovers and verification
+## Visual references and verification
 
-The draft User Guide `guide.pl.03` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
+No exact page-specific retained HTML or accepted mockup exists. The native composition is proposed for owner visual review.
 
-Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+[Executed checks, inspected captures and remaining review](../../../testing/evidence/scheduling-resources/README.md) identify the exact evidence. Draft guides, source presence, functional proof, owner visual acceptance and deployment remain separate. No review fingerprint is adopted by this edit.
