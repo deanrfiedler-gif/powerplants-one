@@ -4,6 +4,8 @@ import { ErrorNotice, useFieldError } from "../../../components/business-ui";
 import { sectionKeys, type PackInput, type SectionKey } from "../../validation";
 import {
   historyLabel,
+  formatStamp,
+  readableValue,
   packSectionTitles,
   preparationFieldLabels,
   preparationHelp,
@@ -17,7 +19,12 @@ import type {
   PackSource,
 } from "./job-pack-types";
 import { Badge, Icon } from "./job-pack-ui";
-import { SectionBody, SourceTag, sectionId, sectionNumber } from "./job-pack-sections";
+import {
+  SectionBody,
+  SourceTag,
+  sectionId,
+  sectionNumber,
+} from "./job-pack-sections";
 
 // The server limit, not r03's. A note is 1–6000 characters (packInput).
 const LIMIT = 6000,
@@ -111,6 +118,7 @@ function Selection({
 }
 
 export type PreparationProps = {
+  timeZone?: string;
   // A pack that has never been saved has no snapshot, so every section states where its context will come from.
   pack?: Pack;
   revision?: PackRevision;
@@ -127,6 +135,7 @@ export type PreparationProps = {
 };
 
 export function PreparationForm({
+  timeZone,
   pack,
   revision,
   sources,
@@ -163,7 +172,9 @@ export function PreparationForm({
       <ErrorNotice error={error} />
       <div className="jp-paper">
         <div className="jp-form-intro">
-          <h2>{next ? `Prepare revision ${next}` : "Prepare the first revision"}</h2>
+          <h2>
+            {next ? `Prepare revision ${next}` : "Prepare the first revision"}
+          </h2>
           <p>
             Every save creates a new immutable revision with its own reason.
             {issued
@@ -254,7 +265,25 @@ export function PreparationForm({
                               toggle("history_ids", h.id, e.target.checked)
                             }
                           />
-                          <span>{historyLabel(h)}</span>
+                          <span>
+                            {historyLabel(h)}
+                            <small className="jp-structured-help">
+                              {h.confidence
+                                ? readableValue(h.confidence)
+                                : "Confidence not recorded"}
+                              {h.occurred_at
+                                ? ` · ${formatStamp(h.occurred_at, revision?.snapshot.appointment.timezone ?? timeZone ?? "UTC")}`
+                                : " · Date not recorded"}
+                            </small>
+                            {h.author_label && (
+                              <small className="jp-structured-help">
+                                Recorded by {h.author_label}
+                                {h.verification_status
+                                  ? ` · ${readableValue(h.verification_status)}`
+                                  : ""}
+                              </small>
+                            )}
+                          </span>
                         </label>
                       ))
                     ) : (
@@ -302,9 +331,7 @@ export function PreparationForm({
                 {key === "readiness" && pack?.actions.can_prepare && (
                   <p className="jp-note">
                     Tool readiness is a recorded assessment, not a pack entry.{" "}
-                    <Link
-                      href={`/service/appointments/${pack.appointment_id}`}
-                    >
+                    <Link href={`/service/appointments/${pack.appointment_id}`}>
                       Assess readiness at the appointment
                     </Link>
                     .
@@ -333,7 +360,11 @@ export function PreparationForm({
           >
             Discard changes
           </button>
-          <button type="submit" className="jp-primary" disabled={!dirty || busy}>
+          <button
+            type="submit"
+            className="jp-primary"
+            disabled={!dirty || busy}
+          >
             Save preparation…
           </button>
         </div>

@@ -1,3 +1,4 @@
+import type { SectionView } from "../../section-readers";
 // The pack read as the Job Pack page consumes it. Type-only imports are erased; no server module reaches the client.
 import type { PackInput } from "../../validation";
 import type { PackSnapshot } from "../../render";
@@ -10,7 +11,17 @@ export type PackSource = {
   content_hash: string;
   version_id: string;
 };
-export type PackHistory = { id: string; kind: string; summary: string };
+export type PackHistory = {
+  id: string;
+  kind: string;
+  summary: string;
+  occurred_at?: string;
+  confidence?: string;
+  author_label?: string;
+  source_system?: string | null;
+  source_id?: string | null;
+  verification_status?: string;
+};
 export type PackRevision = {
   id: string;
   revision: number;
@@ -46,6 +57,7 @@ export type PackRecipient = {
   acknowledged_at: string | null;
 };
 export type Pack = {
+  section_view?: SectionView | null;
   id: string;
   display_number: string;
   appointment_id: string;
@@ -81,14 +93,25 @@ export type Pack = {
     error_code: string | null;
     requested_at: string;
     recovery_owner_id: string;
+    recovery_owner_name?: string | null;
     issue_id: string | null;
     actor_name: string | null;
   }[];
+  acknowledgements?:
+    | {
+        id: string;
+        issue_id: string;
+        revision: number;
+        display_name: string;
+        acknowledged_at: string;
+      }[]
+    | null;
   sources: PackSource[];
   history: PackHistory[];
   follow_ups: {
     activity_id: string;
     owner_id: string;
+    owner_name?: string | null;
     status: string;
     summary: string;
   }[];

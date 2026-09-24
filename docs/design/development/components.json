@@ -90,7 +90,46 @@
       "specification": "docs/design/development/components/buttons.md",
       "used_on": [
         "system:theme",
-        "route:/development/page-register"
+        "route:/development/page-register",
+        "scope:ES-01",
+        "route:/estimating",
+        "scope:ES-03",
+        "route:/estimating/cost-sources",
+        "route:/estimating/cost-sources/new",
+        "route:/estimating/cost-sources/[id]",
+        "route:/estimating/estimates/[id]/sources",
+        "route:/engineering/[id]/basis/assumptions",
+        "route:/engineering/[id]/basis/interfaces",
+        "route:/engineering/[id]/basis",
+        "route:/engineering/[id]/basis/requirements",
+        "route:/engineering/[id]/basis/review",
+        "route:/engineering/[id]/basis/sources",
+        "route:/engineering/[id]/drawings/deliverables",
+        "route:/engineering/[id]/drawings",
+        "route:/engineering/[id]/queries",
+        "route:/engineering/[id]/queries/submittals",
+        "route:/engineering/[id]/reviews/issues",
+        "route:/engineering/[id]/reviews",
+        "route:/engineering/basis",
+        "route:/engineering/drawings",
+        "route:/engineering/queries",
+        "route:/engineering/reviews",
+        "route:/estimating/intake",
+        "route:/sales/aftercare/[id]",
+        "route:/sales/aftercare",
+        "route:/sales/handoffs/estimating/[id]",
+        "route:/sales/handoffs/estimating",
+        "route:/sales/handoffs/won/[id]",
+        "route:/sales/handoffs/won",
+        "scope:EQ-01",
+        "scope:EQ-02",
+        "scope:EQ-03",
+        "scope:EQ-04",
+        "scope:EQ-05",
+        "scope:EQ-06",
+        "scope:EQ-07",
+        "scope:EQ-08",
+        "scope:EQ-09"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -102,6 +141,14 @@
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "Legacy scoped button families do not all use Button/ButtonLink.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "es03-buttons-host-review",
+          "expected": "Paired native ES-03 source/form/comparison states against retained supplier-pricing design.",
+          "actual": "New native consumers; functional evidence and paired owner acceptance remain separately recorded.",
+          "action": "Inspect normal, stale, denied and original-operation recovery at desktop, phone and enlarged widths; preserve reference bytes.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -149,7 +196,8 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/components/deal-workspace-link.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -285,7 +333,8 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/components/deal-workspace-link.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -348,7 +397,8 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/components/deal-workspace-link.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -595,7 +645,7 @@
       "title": "Form controls and save states",
       "category": "Forms",
       "module": "Shared",
-      "purpose": "Actual text, multiline, date and select controls, required fields and synthetic save feedback.",
+      "purpose": "Actual text, multiline, date, local date/time and select controls; distinct label targets retain canonical server validation fields.",
       "owner": "Dean Fiedler",
       "example": "fields",
       "coverage": "Runnable",
@@ -614,12 +664,21 @@
           "id": "saving",
           "label": "Saving",
           "description": "Inspect the saving variant and its explanatory messages."
+        },
+        {
+          "id": "sales-evidence",
+          "label": "Sales evidence",
+          "description": "Long synthetic source statement with a 4000-character field limit; preview-only, no saved business record."
         }
       ],
       "implementation": [
         {
           "path": "src/components/business-ui.tsx",
           "symbol": "Field"
+        },
+        {
+          "path": "src/components/record-ui.tsx",
+          "symbol": "LocalDateTimeField"
         }
       ],
       "dependencies": [
@@ -627,7 +686,8 @@
         "src/app/globals.css",
         "src/development/component-examples.tsx",
         "src/development/component-fixtures.ts",
-        "src/app/styles/customers.css"
+        "src/app/styles/customers.css",
+        "src/components/equipment-controls.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -642,7 +702,28 @@
         "route:/sites/[id]/readiness",
         "route:/customers/[id]/development",
         "route:/surveys",
-        "route:/surveys/[id]"
+        "route:/surveys/[id]",
+        "scope:ES-03",
+        "route:/estimating/cost-sources",
+        "route:/estimating/cost-sources/new",
+        "route:/estimating/cost-sources/[id]",
+        "route:/estimating/estimates/[id]/sources",
+        "route:/estimating/intake",
+        "route:/sales/aftercare/[id]",
+        "route:/sales/aftercare",
+        "route:/sales/handoffs/estimating/[id]",
+        "route:/sales/handoffs/estimating",
+        "route:/sales/handoffs/won/[id]",
+        "route:/sales/handoffs/won",
+        "scope:EQ-01",
+        "scope:EQ-02",
+        "scope:EQ-03",
+        "scope:EQ-04",
+        "scope:EQ-05",
+        "scope:EQ-06",
+        "scope:EQ-07",
+        "scope:EQ-08",
+        "scope:EQ-09"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -662,6 +743,22 @@
           "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
           "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "es03-fields-host-review",
+          "expected": "Paired native ES-03 source/form/comparison states against retained supplier-pricing design.",
+          "actual": "New native consumers; functional evidence and paired owner acceptance remain separately recorded.",
+          "action": "Inspect normal, stale, denied and original-operation recovery at desktop, phone and enlarged widths; preserve reference bytes.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "sales-fields-host-review",
+          "expected": "Review native Sales fields and tabs with long statements and the actual saved workflow states.",
+          "actual": "Synthetic catalogue fixtures and native browser journeys are present; owner and assistive-technology acceptance are pending.",
+          "action": "Compare the Sales native captures with issued references; retain original-operation recovery and source-authority distinctions.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -783,7 +880,28 @@
         "route:/sites/[id]/readiness",
         "route:/customers/[id]/development",
         "route:/surveys",
-        "route:/surveys/[id]"
+        "route:/surveys/[id]",
+        "scope:ES-03",
+        "route:/estimating/cost-sources",
+        "route:/estimating/cost-sources/new",
+        "route:/estimating/cost-sources/[id]",
+        "route:/estimating/estimates/[id]/sources",
+        "route:/estimating/intake",
+        "route:/sales/aftercare/[id]",
+        "route:/sales/aftercare",
+        "route:/sales/handoffs/estimating/[id]",
+        "route:/sales/handoffs/estimating",
+        "route:/sales/handoffs/won/[id]",
+        "route:/sales/handoffs/won",
+        "scope:EQ-01",
+        "scope:EQ-02",
+        "scope:EQ-03",
+        "scope:EQ-04",
+        "scope:EQ-05",
+        "scope:EQ-06",
+        "scope:EQ-07",
+        "scope:EQ-08",
+        "scope:EQ-09"
       ],
       "desktop": "Submit an empty title to focus the summary, then follow its link to the field. Correct the title and save to clear the example error.",
       "mobile": "Summary and inline errors must remain visible at 320 px and 200% zoom.",
@@ -803,6 +921,14 @@
           "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
           "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "es03-validation-host-review",
+          "expected": "Paired native ES-03 source/form/comparison states against retained supplier-pricing design.",
+          "actual": "New native consumers; functional evidence and paired owner acceptance remain separately recorded.",
+          "action": "Inspect normal, stale, denied and original-operation recovery at desktop, phone and enlarged widths; preserve reference bytes.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -828,6 +954,11 @@
           "id": "cs-customer",
           "label": "Customer 360",
           "description": "Eight native Customer 360 labels exercise wrapping, scroll and keyboard selection; panels are presentation-only synthetic fixtures."
+        },
+        {
+          "id": "sales-workspace",
+          "label": "Sales workspace",
+          "description": "Eight native Sales workspace labels with keyboard selection and horizontal tab scrolling at phone widths; preview-only panels."
         }
       ],
       "implementation": [
@@ -857,7 +988,17 @@
         "route:/sites/[id]/readiness",
         "route:/customers/[id]/development",
         "route:/surveys/[id]",
-        "route:/sites/[id]"
+        "route:/sites/[id]",
+        "route:/estimating/intake",
+        "route:/sales/aftercare/[id]",
+        "route:/sales/aftercare",
+        "route:/sales/handoffs/estimating/[id]",
+        "route:/sales/handoffs/estimating",
+        "route:/sales/handoffs/won/[id]",
+        "route:/sales/handoffs/won",
+        "scope:EQ-01",
+        "scope:EQ-03",
+        "scope:EQ-04"
       ],
       "desktop": "Arrow keys, Home and End select/focus tabs. Each tab labels its corresponding panel.",
       "mobile": "Confirm wrapped or scrolling tabs keep the selected label and focus visible.",
@@ -877,6 +1018,14 @@
           "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
           "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "sales-tabs-host-review",
+          "expected": "Review native Sales fields and tabs with long statements and the actual saved workflow states.",
+          "actual": "Synthetic catalogue fixtures and native browser journeys are present; owner and assistive-technology acceptance are pending.",
+          "action": "Compare the Sales native captures with issued references; retain original-operation recovery and source-authority distinctions.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1117,7 +1266,28 @@
         "route:/customers/[id]/development",
         "route:/surveys/[id]",
         "route:/sites/[id]",
-        "route:/surveys"
+        "route:/surveys",
+        "scope:ES-03",
+        "route:/estimating/cost-sources",
+        "route:/estimating/cost-sources/new",
+        "route:/estimating/cost-sources/[id]",
+        "route:/estimating/estimates/[id]/sources",
+        "route:/estimating/intake",
+        "route:/sales/aftercare/[id]",
+        "route:/sales/aftercare",
+        "route:/sales/handoffs/estimating/[id]",
+        "route:/sales/handoffs/estimating",
+        "route:/sales/handoffs/won/[id]",
+        "route:/sales/handoffs/won",
+        "scope:EQ-01",
+        "scope:EQ-02",
+        "scope:EQ-03",
+        "scope:EQ-04",
+        "scope:EQ-05",
+        "scope:EQ-06",
+        "scope:EQ-07",
+        "scope:EQ-08",
+        "scope:EQ-09"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -1137,6 +1307,14 @@
           "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
           "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "es03-read-state-host-review",
+          "expected": "Paired native ES-03 source/form/comparison states against retained supplier-pricing design.",
+          "actual": "New native consumers; functional evidence and paired owner acceptance remain separately recorded.",
+          "action": "Inspect normal, stale, denied and original-operation recovery at desktop, phone and enlarged widths; preserve reference bytes.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1183,7 +1361,25 @@
         "route:/customers",
         "route:/customers/[id]",
         "route:/people/[id]",
-        "route:/sites/[id]"
+        "route:/sites/[id]",
+        "route:/estimating/intake",
+        "route:/sales/aftercare/[id]",
+        "route:/sales/aftercare",
+        "route:/sales/handoffs/estimating/[id]",
+        "route:/sales/handoffs/estimating",
+        "route:/sales/handoffs/won/[id]",
+        "route:/sales/handoffs/won",
+        "scope:EQ-01",
+        "scope:EQ-02",
+        "scope:EQ-03",
+        "scope:EQ-04",
+        "scope:EQ-05",
+        "scope:EQ-06",
+        "scope:EQ-07",
+        "scope:EQ-08",
+        "scope:EQ-09",
+        "scope:ES-01",
+        "route:/estimating"
       ],
       "desktop": "Keep a readable label with each tone; business state and tone are not equivalent.",
       "mobile": "Chips wrap without truncating operational meaning.",
@@ -1261,7 +1457,14 @@
         "route:/sites/[id]/readiness",
         "route:/customers/[id]/development",
         "route:/surveys",
-        "route:/surveys/[id]"
+        "route:/surveys/[id]",
+        "route:/estimating/intake",
+        "route:/sales/aftercare/[id]",
+        "route:/sales/aftercare",
+        "route:/sales/handoffs/estimating/[id]",
+        "route:/sales/handoffs/estimating",
+        "route:/sales/handoffs/won/[id]",
+        "route:/sales/handoffs/won"
       ],
       "desktop": "Use the phone presets and a separate browser window. This is the same form component family at a real responsive viewport.",
       "mobile": "Check 390/320 px, 200% zoom, touch targets, keyboard occlusion and error focus. No scaled screenshot is used.",
@@ -1296,7 +1499,18 @@
       "owner": "Dean Fiedler",
       "example": null,
       "coverage": "Host example",
-      "states": [],
+      "states": [
+        {
+          "id": "engineering-host",
+          "label": "Native Engineering host",
+          "description": "Use the real permitted EN-01–EN-08 routes through the shared business layout to inspect rail, breadcrumbs, secondary menu, information guidance and restricted states. This is host evidence, not an isolated component example."
+        },
+        {
+          "id": "service-phone-identity",
+          "label": "Service phone identity",
+          "description": "Utilities remain inside the header with local identity mounted; CRM filter row remains intentional."
+        }
+      ],
       "implementation": [
         {
           "path": "src/components/product-navigation.tsx",
@@ -1315,7 +1529,13 @@
         "src/app/layout.tsx",
         "src/app/desktop-shell.css",
         "src/app/mobile-layout.css",
-        "src/app/styles/customers.css"
+        "src/app/styles/customers.css",
+        "src/engineering/control/navigation.ts",
+        "src/engineering/control/guide.ts",
+        "src/app/styles/my-work.css",
+        "src/shell/secondary-menu.tsx",
+        "src/app/styles/equipment.css",
+        "docs/testing/evidence/job-pack-i5/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -1324,10 +1544,12 @@
       },
       "specification": "docs/design/development/components/application-shell.md",
       "used_on": [
-        "system:shell"
+        "system:shell",
+        "scope:ES-01",
+        "scope:ES-03"
       ],
       "desktop": "Review the real global search, workspace switcher, rail, More and utility controls around this catalogue. Shell access can be unavailable without a running identity/database service.",
-      "mobile": "Resize the actual browser window to review the mobile shell; component-frame presets do not resize the surrounding application.",
+      "mobile": "Resize the actual browser window to review the mobile shell; component-frame presets do not resize the surrounding application. Native shell controls must remain inside the 64px header, including local identity at 390px and 320px; the legacy CRM grid must not overlay the first page action.",
       "keyboard": "Check tab order, skip link, More dialog, Escape and focus return in the real host.",
       "limitations": "No synthetic permission grants are supplied. The host is not counted as an isolated runnable fixture.",
       "gaps": [
@@ -1344,6 +1566,46 @@
           "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
           "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "es03-application-shell-host-review",
+          "expected": "Paired native ES-03 source/form/comparison states against retained supplier-pricing design.",
+          "actual": "New native consumers; functional evidence and paired owner acceptance remain separately recorded.",
+          "action": "Inspect normal, stale, denied and original-operation recovery at desktop, phone and enlarged widths; preserve reference bytes.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "engineering-native-shell-review",
+          "expected": "Native EN-02–EN-05 rail, module/view breadcrumbs, menu and information guide at desktop/mobile widths.",
+          "actual": "Native consumer added; owner and visual acceptance pending.",
+          "action": "Use native Engineering evidence for paired review against r17 and EN-02 sources.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "sales-shell-mobile-containment",
+          "expected": "Phone utility controls stay inside the native header and leave Sales back links operable.",
+          "actual": "Inherited identity-strip grid specificity was corrected. All 34 Sales reference/native captures were inspected; native 390px/320px controls stay inside the header. Owner/device acceptance remains pending.",
+          "action": "Review docs/testing/evidence/sales-native-completion/README.md and its hashed manifest with the owner; retain the passing header containment and shell geometry checks.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "eq-application-shell-host-review",
+          "expected": "Review the actual Equipment host and scrolled evidence at desktop and phone widths.",
+          "actual": "Equipment preserves the shared shell and restores its intended phone flex row; synthetic captures and containment checks are separate from owner/device acceptance.",
+          "action": "Use docs/testing/evidence/equipment-native/README.md and the EQ guides for paired review of populated, restricted, stale and recovered states.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "service-shell-owner-review",
+          "expected": "Owner/device review of the phone identity correction",
+          "actual": "Component and compiled proof recorded separately in I5",
+          "action": "Review retained phone captures and shared-shell results.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1493,6 +1755,307 @@
           "actual": "Proposed patterns in the theme board have not been adopted as shared application components.",
           "action": "Resolve in the owning feature increment; retain this visible catalogue entry.",
           "priority": "Low",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "job-pack-dialog",
+      "title": "Job Pack decision and print dialogs",
+      "category": "Dialogs & overlays",
+      "module": "SV",
+      "purpose": "The page-scoped r03 PackDialog used by preparation, controlled decisions and print choices. Application fixture coverage is linked; the catalogue has no isolated renderer for this variant.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Reference only",
+      "states": [
+        {
+          "id": "saved-print",
+          "label": "Saved preparation",
+          "description": "Heading focus; exact saved draft link; no business mutation."
+        },
+        {
+          "id": "unsaved-print",
+          "label": "Unsaved preparation",
+          "description": "Save and print or keep entries and print the saved draft."
+        },
+        {
+          "id": "reason",
+          "label": "Record change",
+          "description": "Reason focused; busy command blocks dismissal; refusal retains inputs."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/documents/components/client/job-pack-ui.tsx",
+          "symbol": "PackDialog"
+        }
+      ],
+      "dependencies": [
+        "src/app/styles/job-pack.css",
+        "src/documents/components/client/job-pack-screen.tsx",
+        "src/documents/components/client/job-pack-change-dialog.tsx"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
+        "anchor": "",
+        "status": "Accepted page-scoped r03 reference; owner acceptance of native application remains separate"
+      },
+      "specification": "docs/design/development/components/job-pack-dialog.md",
+      "used_on": [
+        "scope:SV-05",
+        "route:/service/packs/[id]",
+        "route:/service/packs/new"
+      ],
+      "desktop": "Native modal with heading/body/actions. Initial reason or primary action focus; information-only choices focus the heading.",
+      "mobile": "Keep dialog within the viewport with scrollable body and reachable actions at 390 and 320 CSS px; 44 px touch targets.",
+      "keyboard": "Tab and Shift+Tab wrap through visible enabled controls, including backward from the initially focused heading. Escape returns to the opener or active pack tab.",
+      "limitations": "This retained page-specific variant is not the shared WorklistPanel. Reference-only describes catalogue rendering, not absence from the application. No catalogue business command is executed.",
+      "gaps": [
+        {
+          "id": "job-pack-dialog-gallery",
+          "expected": "An isolated live catalogue rendering for the page-specific dialog.",
+          "actual": "Exact source and application state fixtures are linked; no gallery renderer is bound.",
+          "action": "Retain the visible reference-only entry and use the I4 application browser proof; consider a gallery fixture in shared-control alignment.",
+          "priority": "Low",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "job-pack-sections",
+      "title": "Job Pack saved section presentation",
+      "category": "Boards & cards",
+      "module": "SV",
+      "purpose": "Structured re-presentation of exact saved pack content in both Job pack and Preparation. Frozen saved text stays authoritative.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Reference only",
+      "states": [
+        {
+          "id": "verified",
+          "label": "Verified saved section",
+          "description": "Labelled fields with the exact saved text disclosure."
+        },
+        {
+          "id": "fallback",
+          "label": "Unverified structure",
+          "description": "Denied or mismatched sources display the original saved text."
+        },
+        {
+          "id": "recipient",
+          "label": "Issued recipient view",
+          "description": "Exact permitted issue revision; no internal equipment IDs or links."
+        },
+        {
+          "id": "staff-provenance",
+          "label": "Staff provenance",
+          "description": "Recorded author, source and verification metadata beside hash-verified history; recipient metadata excluded."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/documents/components/client/job-pack-section-parts.tsx",
+          "symbol": "SectionParts"
+        },
+        {
+          "path": "src/documents/components/client/job-pack-sections.tsx",
+          "symbol": "SectionBody"
+        }
+      ],
+      "dependencies": [
+        "src/documents/section-readers.ts",
+        "src/documents/section-text.ts",
+        "src/documents/section-view.ts",
+        "src/app/styles/job-pack.css"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
+        "anchor": "",
+        "status": "Accepted r03 page treatment with accepted D6-A implementation decision; native acceptance separate"
+      },
+      "specification": "docs/design/development/components/job-pack-sections.md",
+      "used_on": [
+        "scope:SV-05",
+        "route:/service/packs/[id]"
+      ],
+      "desktop": "Reuse labelled information grids and task lists inside the existing r03 paper.",
+      "mobile": "Stack captured controls, wrap long prose and retain readable exact-text disclosures at 320 px.",
+      "keyboard": "Native details/summary works with Enter or Space and visible focus.",
+      "limitations": "Application fixtures exercise the real component. There is no isolated catalogue renderer; reference-only is catalogue coverage, not application status.",
+      "gaps": [
+        {
+          "id": "job-pack-sections-gallery",
+          "expected": "An isolated live catalogue renderer.",
+          "actual": "Actual application fixture and fallback cases are covered separately.",
+          "action": "Retain this visible binding and use the I6 application proof.",
+          "priority": "Low",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "job-pack-rail",
+      "title": "Job Pack readiness, crew and output rail",
+      "category": "Boards & cards",
+      "module": "SV",
+      "purpose": "Page-scoped r03 readiness, explicit crew response and output recovery facts. Uses server outcomes and current permissions.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Reference only",
+      "states": [
+        {
+          "id": "attention",
+          "label": "Action required",
+          "description": "Unsatisfied outcomes remain visible in the correct stage."
+        },
+        {
+          "id": "satisfied",
+          "label": "Satisfied details",
+          "description": "Native disclosure retains every satisfied assessment."
+        },
+        {
+          "id": "recovery",
+          "label": "Output recovery",
+          "description": "Exact revision, readable error and named recovery owner."
+        },
+        {
+          "id": "recipient",
+          "label": "Recipient",
+          "description": "Current issue and crew facts without staff history or ownership projections."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/documents/components/client/job-pack-rail.tsx",
+          "symbol": "ReadinessCard"
+        },
+        {
+          "path": "src/documents/components/client/job-pack-rail.tsx",
+          "symbol": "CrewCard"
+        },
+        {
+          "path": "src/documents/components/client/job-pack-rail.tsx",
+          "symbol": "OutputCard"
+        }
+      ],
+      "dependencies": [
+        "src/documents/pack-view.ts",
+        "src/documents/packs.ts",
+        "src/app/styles/job-pack.css"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
+        "anchor": "",
+        "status": "Accepted r03 with adopted D9/D10 density and read-model decisions; application owner acceptance separate"
+      },
+      "specification": "docs/design/development/components/job-pack-rail.md",
+      "used_on": [
+        "scope:SV-05",
+        "route:/service/packs/[id]"
+      ],
+      "desktop": "Right rail in the accepted r03 column; fixed logical stage order, visible attention and collapsed satisfied rows.",
+      "mobile": "Rail follows the paper in normal module scrolling. Disclosures and actions retain 44 px targets and wrap long names/reasons.",
+      "keyboard": "Native summary toggles with Enter or Space and shows focus. No action-required row is initially hidden.",
+      "limitations": "Actual application state fixtures exist; no isolated catalogue renderer. Counts present server outcomes and grant no authority.",
+      "gaps": [
+        {
+          "id": "job-pack-rail-gallery",
+          "expected": "Isolated live catalogue renderer.",
+          "actual": "Application fixtures cover the page-scoped implementation.",
+          "action": "Retain the visible source/consumer bindings and use the I7 browser proof.",
+          "priority": "Low",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "job-pack-entry",
+      "title": "Canonical visit job pack handover",
+      "category": "Boards & cards",
+      "module": "SV",
+      "purpose": "Open the current permitted pack or prepare through the server permission flag; never retain a stale action link.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Reference only",
+      "states": [
+        {
+          "id": "existing",
+          "label": "Existing pack",
+          "description": "Current permitted exact identity."
+        },
+        {
+          "id": "prepare",
+          "label": "Preparation available",
+          "description": "No visible pack and server can_prepare."
+        },
+        {
+          "id": "unavailable",
+          "label": "Unavailable",
+          "description": "No visible pack and no preparation permission."
+        },
+        {
+          "id": "loading",
+          "label": "Loading",
+          "description": "No prior link while refreshing."
+        },
+        {
+          "id": "denied",
+          "label": "Access unavailable",
+          "description": "Permission denial shows a status and refresh without a stale record link."
+        },
+        {
+          "id": "failed",
+          "label": "Read failed",
+          "description": "Server or transport error retains the shared alert and retry; no stale link."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/documents/components/client/job-pack-entry.tsx",
+          "symbol": "JobPackEntry"
+        }
+      ],
+      "dependencies": [
+        "src/components/business-ui.tsx",
+        "src/components/ui/button.tsx",
+        "src/documents/packs.ts",
+        "src/app/styles/job-pack.css",
+        "docs/testing/evidence/job-pack-i5/README.md"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
+        "anchor": "",
+        "status": "Accepted r03 with adopted D9/D10 density and read-model decisions; application owner acceptance separate"
+      },
+      "specification": "docs/design/development/components/job-pack-entry.md",
+      "used_on": [
+        "route:/service/technicians",
+        "route:/service/appointments/[id]"
+      ],
+      "desktop": "Shared ButtonLink and quiet refresh within the visit context.",
+      "mobile": "Text wraps; 44 px actions stay within the drawer or appointment panel.",
+      "keyboard": "Links and refresh are native keyboard controls; drawer owns focus trap/return.",
+      "limitations": "No isolated catalogue renderer. Browser state tests use the actual consumers. Link availability does not bypass Save authority.",
+      "gaps": [
+        {
+          "id": "job-pack-entry-gallery",
+          "expected": "Isolated live catalogue example",
+          "actual": "Actual consumer browser fixtures retained",
+          "action": "Use the I5 handover suite; catalogue rendering remains a separate extension.",
+          "priority": "Low",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "job-pack-entry-access-review",
+          "expected": "Owner review of access-unavailable and failed-read presentation in both consumers",
+          "actual": "Distinct states implemented; automated fixtures cover 403, 404 and 500; owner review pending",
+          "action": "Compare appointment and Field Technicians states on desktop and phone without granting pack authority.",
+          "priority": "Medium",
           "owner": "Dean Fiedler"
         }
       ],

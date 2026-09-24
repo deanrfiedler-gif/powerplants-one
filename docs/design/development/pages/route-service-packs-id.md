@@ -64,3 +64,33 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 The draft User Guide `guide.page.service.packs.id` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## I4 source changes and printing
+
+The source-change notice uses the server advisory drift, issued review flag or stale-output state. Review changed sources opens Preparation without discarding entries. Refresh saved sources opens the existing reason dialog and saves a successor through the existing amendment command, including when notes are unchanged. Check and Issue retain the digest authority.
+
+Print preview offers the exact saved preparation. Unsaved entries can be retained while printing the saved draft, or saved with a reason before opening the exact successor. A later concurrent save must not silently change that print target. A refusal retains entries; an uncertain result replays unchanged bytes. The exact issued document remains separately available.
+
+Desktop and mobile use the existing r03 notice/dialog styling and native focus trap/return. Source values must wrap at 320 px. Functional and visual evidence is recorded in the I4 handover; owner acceptance and deployment remain separate.
+
+## I6 structured saved sections
+
+D6-A was accepted on 23 September 2026; implementation uses the same immutable saved section text. Customer arrangements and captured controls are parsed only with recognised delimiters and outcomes. Scope, equipment, selected history and completion requirements additionally need the exact saved revision's permission-scoped projection. Every structured section must reproduce the saved wording byte for byte; ambiguous, denied, mismatched or unsupported content stays verbatim. An Exact text as it will be issued disclosure remains available beside each structured section.
+
+Desktop reuses the r03 labelled information grid, task lists, history rows and notes within the existing paper. Phones stack label/value controls, wrap long values and retain native keyboard disclosures. Recipient equipment has no internal link; a staff link requires current asset visibility. The recipient revision follows the readable issue even while staff have an unissued successor. Frozen controls do not replace current readiness assessments. Sources: `section-text.ts`, `section-readers.ts`, `section-view.ts` and `job-pack-section-parts.tsx`; reused Pair and scoped r03 components.
+
+The [I6 handover](../../../delivery/job-pack-i6-handover.md) records proof and limits. Original r03 remains unchanged. I7 and I5, paired whole-page reference comparison, device review, owner acceptance and deployment remain separate.
+
+## I7 title, readiness and history
+
+D7 uses the approved saved scope summary and distinct work kinds only after I6's exact-text proof. Otherwise the title retains the work-order/appointment references. Those references remain visible beside a verified title. D8-A keeps the accepted in-module breadcrumb rooted at Service; the global shell still owns its own breadcrumb.
+
+D9 groups the existing server criterion outcomes in Authorisation, Booking, Dispatch, Completion order, then any additional stage. Action-required rows remain visible; satisfied rows use a labelled native disclosure. Valid-until times remain visible within their rows. Counts describe existing outcomes; they do not decide issue or dispatch authority. The same rail stacks below the paper on phones and its disclosures keep 44 px targets.
+
+D10 gives staff readable recovery/follow-up owner names, history confidence/date/author/source/verification metadata, and acknowledgements from all exact issues. Recipients retain only the already permitted current-issue facts. Crew progress orders existing task/open/download facts by time and keeps explicit acknowledgement separate. The history hash still uses precisely the old five-column basis. Exact older acknowledgements never satisfy a new issue.
+
+Reused components: Badge, Person, Pair, native details/summary, and the existing r03 ReadinessCard/CrewCard/OutputCard. [I7 handover](../../../delivery/job-pack-i7-handover.md) records checks and limits. I5 paired reference proof, print, entry links and final integration remain; no owner/device acceptance or deployment is implied.
+
+## I5 final integration
+
+The canonical appointment/Field Technicians handover uses JobPackEntry and the current permission-filtered read. The record keeps r03’s full-bleed detail page, shared shell navigation and adopted D8-A breadcrumb. At most two header actions; appointment link in section 01 and prior exact issue link beside the successor context. Browser print includes only saved sections and explicit workbench/reference/state/page context, with shell clipping released. Incoming appointment and outgoing exact pack/issue identities are preserved. [Conformance record](../../../decisions/job-pack-integration.md) and [handover](../../../delivery/job-pack-integration-handover.md) distinguish actual checks, reference captures, owner/device review and deployment. Historical uploaded images are unavailable; fresh r03 captures are labelled as such.

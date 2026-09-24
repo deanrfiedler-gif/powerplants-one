@@ -79,6 +79,9 @@ test("invited actor: schedule lanes, demand and appointment links load with book
   const appointment = schedule.items[0];
   await page.locator(`a[href="/service/appointments/${appointment.id}"]`).first().click();
   await expect(page.getByRole("heading", { name: appointment.display_number, exact: true })).toBeVisible();
+  const packEntry = page.getByRole("region", { name: "Visit job pack", exact: true });
+  await expect(packEntry.getByRole("status")).toHaveText("Job pack access is unavailable to this identity.");
+  await expect(packEntry.getByRole("link")).toHaveCount(0);
   await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
   await expect(page.getByRole("button", { name: "Record contact", exact: true })).toBeVisible();
   expect(appointment.actions.can_manage).toBe(true);
@@ -159,7 +162,7 @@ test("invited actor: mailbox to refined deal, follow-up, calendar and another br
     .fill("12500.50");
   await editor.getByRole("button", { name: "Save deal", exact: true }).click();
   await expect(editor).not.toBeVisible();
-  await page.getByRole("tab", { name: "Details", exact: true }).click();
+  await page.getByRole("tab", { name: "Scope & sites", exact: true }).click();
   await page
     .getByRole("button", { name: "Edit requirements and scope", exact: true })
     .click();
@@ -174,8 +177,8 @@ test("invited actor: mailbox to refined deal, follow-up, calendar and another br
     .getByRole("button", { name: "Save requirements and scope", exact: true })
     .click();
   await expect(scope).not.toBeVisible();
-  await page.getByRole("tab", { name: "Timeline", exact: true }).click();
-  await expect(page.getByText(summary, { exact: true })).toBeVisible();
+  await page.getByRole("tab", { name: "Activities", exact: true }).click();
+  await expect(page.getByRole("tabpanel", { name: "Activities", exact: true }).getByRole("link", { name: summary, exact: true })).toBeVisible();
   const saved = (await call(page, `crm/opportunities/${o.id}`)).items[0];
   const mail = await call(page, `email/${message}`);
   expect(saved.value_amount).toBe("12500.50");
@@ -288,6 +291,9 @@ test("invited actor books and reschedules a prepared visit through the UI and re
   expect(saved.assignments.filter((a: { active: boolean }) => a.active)).toHaveLength(2);
   expect(saved.customer_commitment).toBe("Changed");
   await expect(page.getByRole("heading", { name: visit.display_number, exact: true })).toBeVisible();
+  const packEntry = page.getByRole("region", { name: "Visit job pack", exact: true });
+  await expect(packEntry.getByRole("status")).toHaveText("Job pack access is unavailable to this identity.");
+  await expect(packEntry.getByRole("link")).toHaveCount(0);
   await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.screenshot({ path: info.outputPath("private-booking-reloaded.png"), fullPage: true });

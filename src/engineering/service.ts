@@ -1,3 +1,9 @@
+import {
+  activeIssueSql,
+  controlVisibilitySql,
+  controlCountsSql,
+  authorWorkSql,
+} from "./control/workload";
 import { randomUUID } from "node:crypto";
 import type { PoolClient } from "pg";
 import { database, transaction } from "../platform/database";
@@ -209,6 +215,7 @@ export async function listEngineering(p: Principal, value: unknown) {
     view = choice(q.view ?? "all", "view", [
       "all",
       "mine",
+      "author",
       "review",
       "released",
     ] as const),
@@ -222,10 +229,10 @@ export async function listEngineering(p: Principal, value: unknown) {
   await requireCapability(c, p, "engineering.read");
   const rows = (
     await c.query<Row>(
-      `${projectionSql} WHERE p.workspace_id=$1 AND ${permitted()} AND ($3::uuid IS NULL OR p.id>$3)
+      `${projectionSql.replace("SELECT p.*,", `SELECT ${controlCountsSql} AS technical,p.*,`)} WHERE p.workspace_id=$1 AND ${permitted()} AND ($3::uuid IS NULL OR p.id>$3)
   AND ($4='' OR position($4 in lower(p.title||' '||p.display_number||' '||p.id::text||' '||org.display_name||' '||coalesce(ctx_project.title,ctx_op.title)))>0)
-  AND ($5='all' OR ($5='mine' AND p.owner_id=$2)) AND ($6::uuid IS NULL OR p.owner_id=$6) AND ($7::text IS NULL OR p.discipline=$7)
-  AND (NOT $8 OR p.blocker IS NOT NULL OR p.required_date<(clock_timestamp() AT TIME ZONE 'Australia/Brisbane')::date OR p.action_due<(clock_timestamp() AT TIME ZONE 'Australia/Brisbane')::date)
+  AND ($5='all' OR ($5='mine' AND p.owner_id=$2) OR ($5='author' AND EXISTS(${authorWorkSql})) OR ($5='review' AND EXISTS(SELECT 1 FROM ppo.engineering_reviews r WHERE r.workspace_id=p.workspace_id AND r.package_id=p.id AND r.owner_id=$2 AND r.state='Submitted' AND ${controlVisibilitySql("r")})) OR ($5='released' AND EXISTS(SELECT 1 FROM ppo.engineering_issues r WHERE r.workspace_id=p.workspace_id AND r.package_id=p.id AND ${activeIssueSql("r")}))) AND ($6::uuid IS NULL OR p.owner_id=$6) AND ($7::text IS NULL OR p.discipline=$7)
+  AND (NOT $8 OR p.blocker IS NOT NULL OR EXISTS(SELECT 1 FROM ppo.engineering_deliverables r WHERE r.workspace_id=p.workspace_id AND r.package_id=p.id AND r.content->>'prerequisite_evidence' IS NULL AND ${controlVisibilitySql("r")}) OR p.required_date<(clock_timestamp() AT TIME ZONE 'Australia/Brisbane')::date OR p.action_due<(clock_timestamp() AT TIME ZONE 'Australia/Brisbane')::date)
   ORDER BY p.id LIMIT $9`,
       [
         p.workspace_id,
@@ -241,7 +248,9 @@ export async function listEngineering(p: Principal, value: unknown) {
     )
   ).rows;
   return {
-    items: rows.slice(0, limit).map((r) => project(r)),
+    items: rows
+      .slice(0, limit)
+      .map((r) => ({ ...project(r), technical: r.technical })),
     next_cursor: rows.length > limit ? rows[limit - 1].id : null,
     observed_at: new Date().toISOString(),
     completeness: "Page",

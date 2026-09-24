@@ -32,7 +32,11 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-- [PPO-Project-Delivery-Readiness-and-Change-Control-r01.html](../../../reference/ui/projects/PPO-Project-Delivery-Readiness-and-Change-Control-r01.html)
+- Retained predecessor: [r01 HTML](../../../reference/ui/projects/PPO-Project-Delivery-Readiness-and-Change-Control-r01.html), SHA-256 `a830eebb34ed44292a0906b878c9965746e7e1e8f0c870c77820cf5cd79e841b` over Git bytes.
+- [r02-named HTML](../../../reference/ui/projects/PPO-Project-Delivery-Readiness-and-Change-Control-r02.html) currently has the same r01 bytes and embedded revision. It is not the revised r02 described by the [r02 change record](../../../reference/ui/projects/PPO-Project-Delivery-Readiness-and-Change-Control-r02-change-record.md).
+- Expected r02: 247,414 bytes, SHA-256 `fce055ba5c2f750751ad5eceb33a930e0edd5881b177ec218829abdd95c66741`. Exact deliverable unavailable at the A0 audit. The register selects neither issue as the native implementation reference until this discrepancy is resolved. No exact screenshots are available for that verified r02.
+
+The [programme audit](../../../delivery/projects-completion-programme.md) records the reachable Git history and source search. Preserve all issued bytes. The change record's responsive impact cards, clear Gantt legend, date formatting and usable tabs remain required refinements; recreating them is not proof of recovering the original issue. The native route remains unbuilt and no visual approval is inferred.
 
 ## Behaviour, handovers and verification
 
