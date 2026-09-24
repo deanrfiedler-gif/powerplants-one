@@ -114,7 +114,11 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // Seed 44 adds one dedicated synthetic CS reviewer with four existing shared/Activity read/edit duties.
   // No existing profile or invited-tester duty, backfill or source changes; identity events are flushed.
   // Existing generic runtime grants cover the new tables. No hosted deployment is run here.
-  if (latestMigrationVersion !== 44) throw Error("Review the existing-demo upgrade for this release.");
+  // 0045 review: typed Equipment evidence and append-only configuration succession.
+  // No seed, grants, users, external adapter or historic content rewrite. Historical
+  // Asset links keep their Site while new links must match current context.
+  // Runtime writes remain checked by current scope and exact applied review.
+  if (latestMigrationVersion !== 45) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

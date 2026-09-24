@@ -403,7 +403,7 @@ export async function assetHistory(
     invalid("filters", "Use pagination only for asset history.");
   const rows = (
     await client.query(
-      `SELECT h.id,h.version,h.site_id,h.asset_id,h.occurred_at,h.author_label,h.kind,h.summary,h.confidence,h.source_system,h.source_id,h.verification_status,h.site_label,h.operator_organisation_id,h.operator_label,h.asset_identity_status
+      `SELECT h.id,h.version,h.site_id,h.asset_id,h.occurred_at,h.author_label,h.kind,h.summary,h.confidence,h.access_class,h.source_system,h.source_id,h.verification_status,h.site_label,h.operator_organisation_id,h.operator_label,h.asset_identity_status
     FROM ppo.history_records h WHERE h.workspace_id=$1 AND h.asset_id=$3 AND ${scopeSql("h.company_id", "h.site_id")}
     AND (h.access_class IN ('RestrictedService','CustomerApproved') OR (h.access_class='Internal' AND ${scopeSql("h.company_id", "h.site_id", "shared.internal.read")}) OR (h.access_class='RestrictedFinance' AND ${scopeSql("h.company_id", "h.site_id", "shared.finance.read")}))
     AND ($4::uuid IS NULL OR h.id>$4) ORDER BY h.id LIMIT $5`,
@@ -418,9 +418,10 @@ export async function assetHistory(
 export async function assetContext(p: Principal, id: string) {
   const client = database(),
     asset = await visible(client, p, "Asset", id);
+  const lineage = (await client.query<{present:boolean}>("SELECT to_regclass('ppo.asset_configuration_successions') IS NOT NULL AS present")).rows[0].present;
   const configurations = (
     await client.query(
-      `SELECT id,revision,description,verification_status,valid_from,valid_to,(valid_from<=clock_timestamp() AND (valid_to IS NULL OR valid_to>clock_timestamp())) AS is_current FROM ppo.asset_configurations WHERE workspace_id=$1 AND asset_id=$2 ORDER BY revision`,
+      `SELECT id,revision,description,verification_status,valid_from,valid_to,(valid_from<=clock_timestamp() AND (valid_to IS NULL OR valid_to>clock_timestamp()) ${lineage ? "AND NOT EXISTS(SELECT 1 FROM ppo.asset_configuration_successions s WHERE s.workspace_id=ac.workspace_id AND s.predecessor_id=ac.id AND s.effective_at<=clock_timestamp())" : ""}) AS is_current FROM ppo.asset_configurations ac WHERE workspace_id=$1 AND asset_id=$2 ORDER BY revision`,
       [p.workspace_id, id],
     )
   ).rows;

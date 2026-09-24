@@ -99,4 +99,6 @@ The [PPO Assistant direction and architecture decision](ppo-assistant-direction.
 
 - [ADR-0043 — Service request lifecycle](ADR-0043-service-request-lifecycle.md): **proposed**, not accepted. Intent-specific TR-15 commands for work, waiting, resolution review, closure, reopening and cancellation on the existing Ticket. It reuses Activity for owned actions and the customer-update commitment, and adds typed evidence, contact, waiting and resolution records. No new state values; one future migration.
 
+- [ADR-0045 - Native Equipment workflows](ADR-0045-equipment-native-workflows.md): authorised synthetic EQ-01-EQ-09 implementation using canonical Assets, CS locations, Inspection instruments and SH coordination; retained configuration lineage and explicit reviewed physical changes. Operational and visual acceptance remain separate.
+
 - [ADR-0044 — Explicit placement of held legacy fields on fertigation import](ADR-0044-fertigation-held-import-placement.md): a held standalone r02 import confirms only when every held field is placed as an unverified source note or, for project identity only, left to the Discovery binding; placements are stored with the import. Amends ADR-0038's held-import behaviour only.
