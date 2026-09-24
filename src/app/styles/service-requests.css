@@ -25,10 +25,16 @@
 #ppo-service-requests h2,
 #ppo-service-requests h3 { margin: 0; }
 #ppo-service-requests :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+#ppo-service-requests [tabindex="-1"]:focus { outline: none; }
+/* Global element rules (footer, label, h2/h3) are reset inside the module; class rules below set what applies. */
+#ppo-service-requests footer { display: block; gap: 0; padding: 0; border: 0; color: inherit; font-size: inherit; justify-content: normal; }
+#ppo-service-requests :is(h2, h3) { letter-spacing: 0; line-height: 1.35; }
+#ppo-service-requests :is(input, select, textarea) { font-weight: 400; }
 #ppo-service-requests .product-icon { width: 18px; height: 18px; flex: none; }
 
-/* Controls: the r22 36 px control, 6 px radius. The global 46 px button is not used inside the module. */
-#ppo-service-requests :is(button, .button, summary.button) {
+/* Controls: the r22 36 px control, 6 px radius. The global 46 px button is not used inside the module. The base
+   rule uses :where() so that any class rule below outranks it. */
+#ppo-service-requests :where(button, .button, summary.button) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -44,13 +50,14 @@
   white-space: nowrap;
   cursor: pointer;
 }
-#ppo-service-requests :is(button, .button).secondary,
-#ppo-service-requests summary.button.secondary {
+#ppo-service-requests :where(button, .button, summary.button).secondary {
   background: #fff;
   color: var(--navy);
   border-color: var(--hairline);
 }
-#ppo-service-requests :is(button, .button).secondary:hover:not(:disabled) { background: var(--surface-hover); }
+#ppo-service-requests :where(button, .button, summary.button).secondary:hover:not(:disabled) { background: var(--surface-hover); }
+#ppo-service-requests a.button:not(.secondary) { color: #fff; }
+#ppo-service-requests a.button.secondary { color: var(--navy); }
 #ppo-service-requests button:disabled { cursor: not-allowed; opacity: 0.45; }
 #ppo-service-requests .sr-icon-button { width: 36px; padding: 0; }
 #ppo-service-requests .sr-quiet { border-color: transparent; background: transparent; }
@@ -90,6 +97,7 @@
   align-items: center;
   flex: 0 1 340px;
   min-width: 0;
+  font-weight: 400;
 }
 #ppo-service-requests .sr-search .product-icon { position: absolute; left: 12px; color: var(--text-secondary); pointer-events: none; }
 #ppo-service-requests .sr-search input {
@@ -100,7 +108,9 @@
   border-radius: var(--radius-control);
   color: var(--navy);
   background: #fff;
+  font-weight: 400;
 }
+#ppo-service-requests .sr-search input::placeholder { color: var(--text-secondary); }
 #ppo-service-requests .sr-toolbar-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
 #ppo-service-requests .sr-primary { padding: 0 16px; }
 
@@ -124,7 +134,7 @@
   box-shadow: var(--shadow-card);
 }
 #ppo-service-requests .sr-columns legend { float: left; width: 100%; margin-bottom: 6px; font-weight: 600; font-size: 13px; }
-#ppo-service-requests .sr-check { display: flex; align-items: center; gap: 8px; min-height: 30px; font-size: 13px; }
+#ppo-service-requests .sr-check { display: flex; align-items: center; gap: 8px; min-height: 30px; font-size: 13px; font-weight: 400; }
 #ppo-service-requests .sr-check input { width: 16px; height: 16px; margin: 0; }
 
 /* Queue row, 52 px. */
@@ -144,7 +154,7 @@
 #ppo-service-requests .sr-queue-row button[data-tone="danger"]:not([aria-pressed="true"]) { background: var(--danger-surface); border-color: var(--danger-border); color: var(--danger); }
 #ppo-service-requests .sr-queue-row button[data-tone="danger"]:not([aria-pressed="true"]) .sr-badge { background: #fff; color: var(--danger); }
 #ppo-service-requests .sr-queue-meta { display: flex; align-items: center; gap: 12px; margin: 0 0 0 auto; color: var(--text-secondary); font-size: 13px; white-space: nowrap; }
-#ppo-service-requests .sr-sort { padding: 6px 10px; border: 1px solid var(--sr-line); border-radius: var(--radius-control); color: var(--navy); }
+#ppo-service-requests .sr-sort { color: var(--navy); }
 
 #ppo-service-requests .sr-filter-chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 20px 0; flex: none; }
 #ppo-service-requests .sr-filter-chips button { min-height: 32px; padding: 0 10px; font-weight: 400; font-size: 13px; background: var(--neutral-surface); border-color: var(--neutral-surface); }
@@ -267,7 +277,7 @@
 #ppo-service-requests .sr-next.is-danger .product-icon,
 #ppo-service-requests .sr-next.is-danger .sr-next-owner,
 #ppo-service-requests .sr-next.is-danger > div > span:last-child { color: var(--danger); }
-#ppo-service-requests .sr-card-foot { display: flex; align-items: center; gap: 8px; padding-top: 10px; border-top: 1px solid var(--line-soft); font-size: 13px; }
+#ppo-service-requests .sr-card-foot { display: flex; align-items: center; gap: 8px; padding: 10px 0 0; border-top: 1px solid var(--line-soft); font-size: 13px; }
 #ppo-service-requests .sr-card-foot > div { display: grid; flex: 1; min-width: 0; color: var(--text-secondary); }
 #ppo-service-requests .sr-card-foot strong { color: var(--navy); font-weight: 400; }
 #ppo-service-requests .sr-card-foot .sr-icon-button { width: 32px; min-height: 32px; border-color: transparent; }
@@ -355,7 +365,7 @@
 #ppo-service-requests .sr-pairs dt { color: var(--text-secondary); font-size: 13px; }
 #ppo-service-requests .sr-pairs dd { display: grid; margin: 0; overflow-wrap: anywhere; }
 #ppo-service-requests .sr-pairs dd small { color: var(--text-secondary); font-size: 12px; }
-#ppo-service-requests .sr-preview-foot { display: grid; gap: 8px; padding: 14px 20px; border-top: 1px solid var(--line-soft); }
+#ppo-service-requests .sr-preview-foot { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; padding: 14px 20px; border-top: 1px solid var(--line-soft); }
 #ppo-service-requests .sr-preview-foot :is(.button, button) { min-height: 44px; width: 100%; }
 
 /* Footer, 52 px. */
@@ -413,7 +423,7 @@
 #ppo-service-requests .sr-move-body p { margin: 0; }
 #ppo-service-requests .sr-move-targets { display: grid; gap: 8px; margin: 0; padding: 0; border: 0; }
 #ppo-service-requests .sr-move-targets legend { margin-bottom: 6px; font-weight: 600; }
-#ppo-service-requests .sr-move-targets label { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border: 1px solid var(--sr-line); border-radius: var(--radius-control); cursor: pointer; }
+#ppo-service-requests .sr-move-targets label { font-weight: 400; display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border: 1px solid var(--sr-line); border-radius: var(--radius-control); cursor: pointer; }
 #ppo-service-requests .sr-move-targets label:has(input:checked) { border-color: var(--sr-selected-border); background: var(--sr-selected); }
 #ppo-service-requests .sr-move-targets input { width: 18px; height: 18px; margin: 2px 0 0; }
 #ppo-service-requests .sr-move-targets span { display: grid; }
@@ -452,7 +462,8 @@
   #ppo-service-requests .sr-phone-cards { padding: 0 16px 16px; }
   #ppo-service-requests .sr-phone-card h2 { font-size: 17px; }
   #ppo-service-requests .sr-phone-card .sr-ref { font-size: 12px; }
-  #ppo-service-requests .sr-footer { padding: 8px 16px; }
+  #ppo-service-requests .sr-footer { justify-content: flex-end; padding: 8px 16px; }
+  #ppo-service-requests .sr-footer > span:first-child { display: none; }
   #ppo-service-requests dialog,
   #ppo-service-requests dialog.sr-filters { width: 100vw; border-left: 0; }
   #ppo-service-requests .sr-filters-head .sr-icon-button { width: 44px; min-height: 44px; }

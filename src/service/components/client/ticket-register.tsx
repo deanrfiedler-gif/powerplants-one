@@ -241,16 +241,24 @@ export function TicketRegister() {
     queue = (queueKeys.has(requested) ? requested : "all_open") as QueueKey,
     view = wide ? (params.get("view") === "list" ? "list" : "board") : "cards";
   const [search, setSearch] = useState(filters.q),
+    [addressQ, setAddressQ] = useState(filters.q),
     [cursors, setCursors] = useState<string[]>([]),
     [preview, setPreview] = useState<string | null>(null),
     [move, setMove] = useState<{ item: RegisterItem; target?: MoveTarget } | null>(null),
     [filtersOpen, setFiltersOpen] = useState(false),
     [feedback, setFeedback] = useState(""),
     [hidden, toggleColumn] = useHiddenColumns();
-  const returnFocus = useRef<HTMLElement | null>(null);
+  // Follow the address when it changes elsewhere (back button, Clear filters), keeping text still being typed.
+  if (filters.q !== addressQ) {
+    setAddressQ(filters.q);
+    if (filters.q !== search.trim()) setSearch(filters.q);
+  }
+  const returnFocus = useRef<HTMLElement | null>(null),
+    [focusTicket, setFocusTicket] = useState<string | null>(null);
 
+  // Reads the current address, not this render's parameters, so a debounced search cannot undo a later change.
   const navigate = (change: Record<string, string>) => {
-    const next = new URLSearchParams(params.toString());
+    const next = new URLSearchParams(window.location.search);
     for (const [key, value] of Object.entries(change)) {
       if (value) next.set(key, value);
       else next.delete(key);
@@ -319,9 +327,21 @@ export function TicketRegister() {
   };
   const moved = (item: RegisterItem, target: MoveTarget) => {
     setFeedback(`${item.display_number}: ${target === "Triaged" ? "triage" : "information request"} saved. The register shows its current stage.`);
-    endMove();
+    setMove(null);
+    setFocusTicket(item.id);
     reload();
   };
+  // A saved move remounts the card in its new lane, so focus follows it there once the fresh read lands.
+  useEffect(() => {
+    if (!focusTicket || list.loading) return;
+    const frame = requestAnimationFrame(() => {
+      const target = document.querySelector<HTMLElement>(`[data-ticket-id="${focusTicket}"] a`);
+      target?.scrollIntoView({ block: "nearest", inline: "nearest" });
+      target?.focus();
+      setFocusTicket(null);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [focusTicket, list.loading, items]);
   const clearAll = () => {
     clearTimeout(searchTimer.current);
     setSearch("");
@@ -540,7 +560,8 @@ export function TicketRegister() {
         </div>
         {selected && wide && <Preview item={selected} now={now} onClose={closePreview} onMove={(item) => startMove(item)} />}
       </div>
-      {view !== "board" && list.data && !list.error && items.length > 0 && (
+      {/* On a phone the count sits above the cards, so the footer appears only when there is another page. */}
+      {view !== "board" && list.data && !list.error && items.length > 0 && (wide || cursors.length > 0 || !!list.data.next_cursor) && (
         <footer className="sr-footer">
           <span>
             {total ?? items.length} {queue === "all_open" ? "open" : ""} {total === 1 ? "request" : "requests"}

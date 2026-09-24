@@ -51095,10 +51095,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Automated browser proof of the SV-01 I2 register (tests/browser/service-requests.spec.ts); no business walkthrough",
       "sections": [
         {
           "section_id": "purpose",
@@ -51131,9 +51131,9 @@
           "steps": [
             "Choose the correct local or hosted environment and confirm your identity.",
             "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Find or capture the request without duplicating an existing case",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Choose a queue (All open, New to triage, Urgent, Needs information or Overdue clarifications), or search by title or reference.",
+            "Before logging a new call, search for an open request on the same site or equipment. Log a request only when none matches.",
+            "After a move, read the confirmation and check the request's lane or Stage before leaving the register."
           ],
           "rows": [],
           "headers": []
@@ -51146,19 +51146,27 @@
           "rows": [
             [
               "Page context",
-              "Service request register · Register / workspace"
+              "Service request register · a full-bleed Service workspace. The breadcrumb names the page; the page description is in the page-information panel."
             ],
             [
               "Application links",
               "Use Local app for your development server or Live app for the hosted sign-in environment."
             ],
             [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
+              "Board and List",
+              "Board shows the three stages the application supports today: New, Needs information and Triaged. An empty stage collapses to a narrow strip; select it to open it. List shows the same requests in a table with fourteen columns. Columns hides any column except Request, and the choice is kept in this browser only."
             ],
             [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
+              "Queues and filters",
+              "Each queue's badge counts the permitted requests under the current search and filters. Filters holds company context, site and request owner. Priority is available through the Urgent queue."
+            ],
+            [
+              "Cards and rows",
+              "Each request shows its customer and site, the next action or owned clarification, triage blockers and linked work orders in their own state. Unknown values are stated in amber words."
+            ],
+            [
+              "Preview and Move",
+              "Preview opens the request's summary beside the list; Open request goes to the full record. Move opens the existing triage or request-information form. The request stays in its stage until the server accepts that form."
             ],
             [
               "Guide and design",
@@ -51189,9 +51197,9 @@
             "Task sequence for review against the applicable running release."
           ],
           "steps": [
-            "Find or capture the request without duplicating an existing case",
-            "Review impact and missing context",
-            "Assign triage and the next contact or assessment action"
+            "Find the request by queue or search, or log a new one when no open request matches.",
+            "Preview it to review customer, site, equipment, triage blockers and the next action.",
+            "Move it: request information with an owned follow-up, or complete triage once no blocker remains."
           ],
           "rows": [],
           "headers": []
@@ -51231,12 +51239,20 @@
               "Correct the identified information or compare the newer source before retrying through the supported workflow."
             ],
             [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
               "Planned / not available",
               "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
+            ],
+            [
+              "Read-only / access refused",
+              "Move stays visible but disabled, with the reason. Use the authorised review or support route; do not try another identity to bypass the boundary."
+            ],
+            [
+              "Changed while moving",
+              "The form uses the request's current revision and says so. If the server refuses a stale revision, your entries are kept; compare and save again."
+            ],
+            [
+              "No matches",
+              "The register states how many open requests the current filters hide. Clear filters to see them."
             ]
           ],
           "headers": [
@@ -51295,8 +51311,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "In this register, use Tab and Shift+Tab to reach each card's Preview and Move buttons. Move is the keyboard alternative to dragging a card between stages. Enter or Space opens a button; Escape closes the preview, the Move form or the filters.",
+            "On a phone, the register is a list of cards and each card opens its request. Filters opens full screen and shows how many requests the selection will show. Only the documented Offline workspace supports its verified offline business operations; this register needs a connection."
           ],
           "steps": [],
           "rows": [],
@@ -51331,10 +51347,12 @@
       ],
       "source_paths": [
         "src/app/(business)/service/tickets/page.tsx",
+        "src/service/components/client/ticket-register.tsx",
+        "src/service/components/client/ticket-register-parts.tsx",
         "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html",
         "docs/blueprints/BP-07-service-operations.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Updated for the SV-01 I2 native register: Board and List over the three native states, queues, filters, preview and Move through the existing triage form.",
       "document_id": "PPO-GUIDE-PAGE-SERVICE-TICKETS",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -51343,6 +51361,8 @@
       "section_aliases": {},
       "workflow_basis": [
         "src/app/(business)/service/tickets/page.tsx",
+        "src/service/components/client/ticket-register.tsx",
+        "src/service/components/client/ticket-register-parts.tsx",
         "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html",
         "docs/blueprints/BP-07-service-operations.md"
       ],

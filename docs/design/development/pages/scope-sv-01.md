@@ -77,7 +77,7 @@ Proposed module interior of 1364 × 896 at a 1440 × 960 window (board frames 1�
   | Received | 186 | Received time |
   | Channel | 104 | Phone, Email, Internal or Other |
 
-  **Native increment columns.** Before ADR-0043, twelve of the eighteen columns have a native source. *Customer update*, *Affected areas*, *Response route* and *Category* stay hidden until a contract supplies them, because the native Ticket has no such fields. *Action owner* and *Action due* come from the owned clarification where there is one; otherwise the owner is the triage owner and the due time reads *No due time*. *Attention* shows triage blockers and overdue clarifications.
+  **Native increment columns.** Before ADR-0043, fourteen of the eighteen columns have a native source (corrected from "twelve" on 24 September 2026; the four listed next are the only exclusions). *Customer update*, *Affected areas*, *Response route* and *Category* stay hidden until a contract supplies them, because the native Ticket has no such fields. *Action owner* and *Action due* come from the owned clarification where there is one; otherwise the owner is the triage owner and the due time reads *No due time*. *Attention* shows triage blockers and overdue clarifications.
 - **Preview panel** (frame 3, `drawer`): 420 px, docked beside the table below the toolbar, with a left-only shadow.
   - **Header:** reference, a close control, a 20 px title, customer and site, and the stage and priority chips.
   - **Attention notice:** stated in words, for example *Two commitments are overdue*.
@@ -150,7 +150,7 @@ Hosted by `application-shell`. Uses `sales-board`, `sales-table`, `drawer`, `fie
 
 ## Behaviour, handovers and verification
 
-- **Existing contract:** the application moves a request only through New, NeedsInformation and Triaged. The first native increment builds this register for those three states (D3, accepted). Active, Waiting, Resolved and Closed wait for the proposed [ADR-0043](../../../decisions/ADR-0043-service-request-lifecycle.md); the database already holds those values.
+- **Existing contract:** the application moves a request only through New, NeedsInformation and Triaged. The first native increment builds this register for those three states (D3, accepted). Increment I2 delivers it, with functional proof in `tests/browser/service-requests.spec.ts` and its adaptations listed in the [build plan](../../../delivery/service-requests-integration-build-plan.md#i2-delivered-adaptations). Visual review is still to be recorded. Active, Waiting, Resolved and Closed wait for the proposed [ADR-0043](../../../decisions/ADR-0043-service-request-lifecycle.md); the database already holds those values.
 - **Handovers:** *Open request* hands on to SV-02. *Log a request* uses the existing intake route `/service/tickets/new`.
 - **Guide:** the draft User Guide `guide.sv.01` describes the running page and is not rewritten for proposed behaviour.
 - **Separate statuses:** source presence, visual review, functional testing, owner acceptance and deployment stay separate.
