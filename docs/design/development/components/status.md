@@ -2,6 +2,8 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
+ES-01 uses textual scope-readiness statuses: Discovery not started, Scope clarification, Discovery complete and Legacy manual basis. These are not commercial approval states. The existing Status component is unchanged; native page states and phone wrapping are verified by the Estimating workload browser suite.
+
 **Owner:** Dean Fiedler · **Catalogue key:** `status` · **Review:** Pending
 
 Real Status chips across neutral, progress, warning, success and failure tones.

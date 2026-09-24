@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { test } from "node:test";
-const origin = "http://127.0.0.1:3000";
+const origin = process.env.PPO_TEST_ORIGIN ?? "http://127.0.0.1:3000";
 const id = (t: string, n = 1) =>
   `${t}000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const base = () => ({

@@ -28,6 +28,7 @@ import {
   notClosed,
 } from "./context";
 import { previewImport, requireConfirmableImport } from "./interchange";
+import { parsePlacements } from "./import-placement";
 import { insertRevision, sha } from "./service";
 import type { FertigationRecord } from "./storage-types";
 import { PORTABLE_BYTES } from "./portable-limits";
@@ -43,7 +44,7 @@ function parse(value: unknown, commit: boolean) {
     "expected_workspace_version",
     "coverage",
     "raw_json",
-    ...(commit ? ["proposal_signature"] : []),
+    ...(commit ? ["proposal_signature", "placements"] : []),
   ]);
   if (typeof r.raw_json !== "string")
     invalid(
@@ -66,6 +67,10 @@ function parse(value: unknown, commit: boolean) {
       ? {
           ...common(r),
           proposal_signature: sha(r.proposal_signature, "proposal_signature"),
+          placements:
+            r.placements === undefined
+              ? undefined
+              : parsePlacements(r.placements),
         }
       : {}),
   };
@@ -135,6 +140,7 @@ export async function confirmNativeImport(
           "coverage",
           "raw_json",
           "proposal_signature",
+          "placements",
         ]),
       ),
     };
@@ -143,7 +149,18 @@ export async function confirmNativeImport(
       preview,
       preview.source_hash,
       preview.preview_hash,
+      input.placements,
     );
+  // Placements are retained with the import so the audit shows where every
+  // held value went (ADR-0044).
+  const provenance = input.placements
+    ? {
+        ...preview.provenance,
+        placements: [...input.placements].sort((a, b) =>
+          a.path.localeCompare(b.path),
+        ),
+      }
+    : preview.provenance;
   proposal.name = input.name;
   return sharedOperation(
     p,
@@ -232,7 +249,7 @@ export async function confirmNativeImport(
           preview.source_hash,
           preview.source_schema,
           preview.preview_hash,
-          preview.provenance,
+          provenance,
           preview.identity_map,
           p.actor_id,
         ],

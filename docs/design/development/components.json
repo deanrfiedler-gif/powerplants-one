@@ -90,7 +90,9 @@
       "specification": "docs/design/development/components/buttons.md",
       "used_on": [
         "system:theme",
-        "route:/development/page-register"
+        "route:/development/page-register",
+        "scope:ES-01",
+        "route:/estimating"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -1183,7 +1185,9 @@
         "route:/customers",
         "route:/customers/[id]",
         "route:/people/[id]",
-        "route:/sites/[id]"
+        "route:/sites/[id]",
+        "scope:ES-01",
+        "route:/estimating"
       ],
       "desktop": "Keep a readable label with each tone; business state and tone are not equivalent.",
       "mobile": "Chips wrap without truncating operational meaning.",
@@ -1296,7 +1300,13 @@
       "owner": "Dean Fiedler",
       "example": null,
       "coverage": "Host example",
-      "states": [],
+      "states": [
+        {
+          "id": "service-phone-identity",
+          "label": "Service phone identity",
+          "description": "Utilities remain inside the header with local identity mounted; CRM filter row remains intentional."
+        }
+      ],
       "implementation": [
         {
           "path": "src/components/product-navigation.tsx",
@@ -1315,7 +1325,8 @@
         "src/app/layout.tsx",
         "src/app/desktop-shell.css",
         "src/app/mobile-layout.css",
-        "src/app/styles/customers.css"
+        "src/app/styles/customers.css",
+        "docs/testing/evidence/job-pack-i5/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -1324,7 +1335,8 @@
       },
       "specification": "docs/design/development/components/application-shell.md",
       "used_on": [
-        "system:shell"
+        "system:shell",
+        "scope:ES-01"
       ],
       "desktop": "Review the real global search, workspace switcher, rail, More and utility controls around this catalogue. Shell access can be unavailable without a running identity/database service.",
       "mobile": "Resize the actual browser window to review the mobile shell; component-frame presets do not resize the surrounding application.",
@@ -1344,6 +1356,14 @@
           "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
           "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "service-shell-owner-review",
+          "expected": "Owner/device review of the phone identity correction",
+          "actual": "Component and compiled proof recorded separately in I5",
+          "action": "Review retained phone captures and shared-shell results.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1493,6 +1513,307 @@
           "actual": "Proposed patterns in the theme board have not been adopted as shared application components.",
           "action": "Resolve in the owning feature increment; retain this visible catalogue entry.",
           "priority": "Low",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "job-pack-dialog",
+      "title": "Job Pack decision and print dialogs",
+      "category": "Dialogs & overlays",
+      "module": "SV",
+      "purpose": "The page-scoped r03 PackDialog used by preparation, controlled decisions and print choices. Application fixture coverage is linked; the catalogue has no isolated renderer for this variant.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Reference only",
+      "states": [
+        {
+          "id": "saved-print",
+          "label": "Saved preparation",
+          "description": "Heading focus; exact saved draft link; no business mutation."
+        },
+        {
+          "id": "unsaved-print",
+          "label": "Unsaved preparation",
+          "description": "Save and print or keep entries and print the saved draft."
+        },
+        {
+          "id": "reason",
+          "label": "Record change",
+          "description": "Reason focused; busy command blocks dismissal; refusal retains inputs."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/documents/components/client/job-pack-ui.tsx",
+          "symbol": "PackDialog"
+        }
+      ],
+      "dependencies": [
+        "src/app/styles/job-pack.css",
+        "src/documents/components/client/job-pack-screen.tsx",
+        "src/documents/components/client/job-pack-change-dialog.tsx"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
+        "anchor": "",
+        "status": "Accepted page-scoped r03 reference; owner acceptance of native application remains separate"
+      },
+      "specification": "docs/design/development/components/job-pack-dialog.md",
+      "used_on": [
+        "scope:SV-05",
+        "route:/service/packs/[id]",
+        "route:/service/packs/new"
+      ],
+      "desktop": "Native modal with heading/body/actions. Initial reason or primary action focus; information-only choices focus the heading.",
+      "mobile": "Keep dialog within the viewport with scrollable body and reachable actions at 390 and 320 CSS px; 44 px touch targets.",
+      "keyboard": "Tab and Shift+Tab wrap through visible enabled controls, including backward from the initially focused heading. Escape returns to the opener or active pack tab.",
+      "limitations": "This retained page-specific variant is not the shared WorklistPanel. Reference-only describes catalogue rendering, not absence from the application. No catalogue business command is executed.",
+      "gaps": [
+        {
+          "id": "job-pack-dialog-gallery",
+          "expected": "An isolated live catalogue rendering for the page-specific dialog.",
+          "actual": "Exact source and application state fixtures are linked; no gallery renderer is bound.",
+          "action": "Retain the visible reference-only entry and use the I4 application browser proof; consider a gallery fixture in shared-control alignment.",
+          "priority": "Low",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "job-pack-sections",
+      "title": "Job Pack saved section presentation",
+      "category": "Boards & cards",
+      "module": "SV",
+      "purpose": "Structured re-presentation of exact saved pack content in both Job pack and Preparation. Frozen saved text stays authoritative.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Reference only",
+      "states": [
+        {
+          "id": "verified",
+          "label": "Verified saved section",
+          "description": "Labelled fields with the exact saved text disclosure."
+        },
+        {
+          "id": "fallback",
+          "label": "Unverified structure",
+          "description": "Denied or mismatched sources display the original saved text."
+        },
+        {
+          "id": "recipient",
+          "label": "Issued recipient view",
+          "description": "Exact permitted issue revision; no internal equipment IDs or links."
+        },
+        {
+          "id": "staff-provenance",
+          "label": "Staff provenance",
+          "description": "Recorded author, source and verification metadata beside hash-verified history; recipient metadata excluded."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/documents/components/client/job-pack-section-parts.tsx",
+          "symbol": "SectionParts"
+        },
+        {
+          "path": "src/documents/components/client/job-pack-sections.tsx",
+          "symbol": "SectionBody"
+        }
+      ],
+      "dependencies": [
+        "src/documents/section-readers.ts",
+        "src/documents/section-text.ts",
+        "src/documents/section-view.ts",
+        "src/app/styles/job-pack.css"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
+        "anchor": "",
+        "status": "Accepted r03 page treatment with accepted D6-A implementation decision; native acceptance separate"
+      },
+      "specification": "docs/design/development/components/job-pack-sections.md",
+      "used_on": [
+        "scope:SV-05",
+        "route:/service/packs/[id]"
+      ],
+      "desktop": "Reuse labelled information grids and task lists inside the existing r03 paper.",
+      "mobile": "Stack captured controls, wrap long prose and retain readable exact-text disclosures at 320 px.",
+      "keyboard": "Native details/summary works with Enter or Space and visible focus.",
+      "limitations": "Application fixtures exercise the real component. There is no isolated catalogue renderer; reference-only is catalogue coverage, not application status.",
+      "gaps": [
+        {
+          "id": "job-pack-sections-gallery",
+          "expected": "An isolated live catalogue renderer.",
+          "actual": "Actual application fixture and fallback cases are covered separately.",
+          "action": "Retain this visible binding and use the I6 application proof.",
+          "priority": "Low",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "job-pack-rail",
+      "title": "Job Pack readiness, crew and output rail",
+      "category": "Boards & cards",
+      "module": "SV",
+      "purpose": "Page-scoped r03 readiness, explicit crew response and output recovery facts. Uses server outcomes and current permissions.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Reference only",
+      "states": [
+        {
+          "id": "attention",
+          "label": "Action required",
+          "description": "Unsatisfied outcomes remain visible in the correct stage."
+        },
+        {
+          "id": "satisfied",
+          "label": "Satisfied details",
+          "description": "Native disclosure retains every satisfied assessment."
+        },
+        {
+          "id": "recovery",
+          "label": "Output recovery",
+          "description": "Exact revision, readable error and named recovery owner."
+        },
+        {
+          "id": "recipient",
+          "label": "Recipient",
+          "description": "Current issue and crew facts without staff history or ownership projections."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/documents/components/client/job-pack-rail.tsx",
+          "symbol": "ReadinessCard"
+        },
+        {
+          "path": "src/documents/components/client/job-pack-rail.tsx",
+          "symbol": "CrewCard"
+        },
+        {
+          "path": "src/documents/components/client/job-pack-rail.tsx",
+          "symbol": "OutputCard"
+        }
+      ],
+      "dependencies": [
+        "src/documents/pack-view.ts",
+        "src/documents/packs.ts",
+        "src/app/styles/job-pack.css"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
+        "anchor": "",
+        "status": "Accepted r03 with adopted D9/D10 density and read-model decisions; application owner acceptance separate"
+      },
+      "specification": "docs/design/development/components/job-pack-rail.md",
+      "used_on": [
+        "scope:SV-05",
+        "route:/service/packs/[id]"
+      ],
+      "desktop": "Right rail in the accepted r03 column; fixed logical stage order, visible attention and collapsed satisfied rows.",
+      "mobile": "Rail follows the paper in normal module scrolling. Disclosures and actions retain 44 px targets and wrap long names/reasons.",
+      "keyboard": "Native summary toggles with Enter or Space and shows focus. No action-required row is initially hidden.",
+      "limitations": "Actual application state fixtures exist; no isolated catalogue renderer. Counts present server outcomes and grant no authority.",
+      "gaps": [
+        {
+          "id": "job-pack-rail-gallery",
+          "expected": "Isolated live catalogue renderer.",
+          "actual": "Application fixtures cover the page-scoped implementation.",
+          "action": "Retain the visible source/consumer bindings and use the I7 browser proof.",
+          "priority": "Low",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "job-pack-entry",
+      "title": "Canonical visit job pack handover",
+      "category": "Boards & cards",
+      "module": "SV",
+      "purpose": "Open the current permitted pack or prepare through the server permission flag; never retain a stale action link.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Reference only",
+      "states": [
+        {
+          "id": "existing",
+          "label": "Existing pack",
+          "description": "Current permitted exact identity."
+        },
+        {
+          "id": "prepare",
+          "label": "Preparation available",
+          "description": "No visible pack and server can_prepare."
+        },
+        {
+          "id": "unavailable",
+          "label": "Unavailable",
+          "description": "No visible pack and no preparation permission."
+        },
+        {
+          "id": "loading",
+          "label": "Loading",
+          "description": "No prior link while refreshing."
+        },
+        {
+          "id": "denied",
+          "label": "Access unavailable",
+          "description": "Permission denial shows a status and refresh without a stale record link."
+        },
+        {
+          "id": "failed",
+          "label": "Read failed",
+          "description": "Server or transport error retains the shared alert and retry; no stale link."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/documents/components/client/job-pack-entry.tsx",
+          "symbol": "JobPackEntry"
+        }
+      ],
+      "dependencies": [
+        "src/components/business-ui.tsx",
+        "src/components/ui/button.tsx",
+        "src/documents/packs.ts",
+        "src/app/styles/job-pack.css",
+        "docs/testing/evidence/job-pack-i5/README.md"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
+        "anchor": "",
+        "status": "Accepted r03 with adopted D9/D10 density and read-model decisions; application owner acceptance separate"
+      },
+      "specification": "docs/design/development/components/job-pack-entry.md",
+      "used_on": [
+        "route:/service/technicians",
+        "route:/service/appointments/[id]"
+      ],
+      "desktop": "Shared ButtonLink and quiet refresh within the visit context.",
+      "mobile": "Text wraps; 44 px actions stay within the drawer or appointment panel.",
+      "keyboard": "Links and refresh are native keyboard controls; drawer owns focus trap/return.",
+      "limitations": "No isolated catalogue renderer. Browser state tests use the actual consumers. Link availability does not bypass Save authority.",
+      "gaps": [
+        {
+          "id": "job-pack-entry-gallery",
+          "expected": "Isolated live catalogue example",
+          "actual": "Actual consumer browser fixtures retained",
+          "action": "Use the I5 handover suite; catalogue rendering remains a separate extension.",
+          "priority": "Low",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "job-pack-entry-access-review",
+          "expected": "Owner review of access-unavailable and failed-read presentation in both consumers",
+          "actual": "Distinct states implemented; automated fixtures cover 403, 404 and 500; owner review pending",
+          "action": "Compare appointment and Field Technicians states on desktop and phone without granting pack authority.",
+          "priority": "Medium",
           "owner": "Dean Fiedler"
         }
       ],

@@ -2,6 +2,8 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
+ES-01 retains the existing `estimates` navigation identity and `/estimating` route with the label Intake & workload. Remove the duplicate unavailable Intake item from the Estimating menu order; Saved estimates is a local register destination. This changes neither shell capability checks nor its information icon. Native workload and existing wizard/specialist browser suites cover the consumer integration.
+
 **Owner:** Dean Fiedler · **Catalogue key:** `application-shell` · **Review:** Pending
 
 The actual ProductNavigation, ProductHeader and ShellControls surround this catalogue. Use the full application window to review them.
@@ -41,3 +43,11 @@ Changes to the source, styles, fixtures, specification or reference invalidate p
 ## CS native receiving
 
 The existing `system:shell` binding owns the inherited frame around CS pages. Page files do not directly import shell controls, so no false direct-consumer binding is added. The CS stylesheet retains a scoped phone-header containment correction within this real host. The [CS evidence](../../../testing/evidence/cs-native-completion/README.md) and owning page guides record workflow checks and inspected widths. Owner/device comparison remains pending in the explicit CS alignment item.
+
+## Service phone header correction
+
+I5 found legacy identity-dependent grid styles placing utilities over the Service navigation. The current shell flex rule now wins with local identity mounted. CRM’s deliberate second filter row remains explicit. Actual component and compiled shared-shell proofs are recorded in the [Job Pack I5 handover](../../../delivery/job-pack-integration-handover.md); owner/device review remains separate.
+
+## ES-01 native receiving
+
+The workload uses the inherited frame and global page-information control. A register-scoped phone rule restores the compact flex header where the older local-identity grid placed utilities over module navigation. The workload browser fixture checks the guide control remains inside its header. No shared shell implementation or isolated fixture changed; owner/device acceptance remains pending. See the [programme handover](../../../delivery/estimating-programme-handover.md).

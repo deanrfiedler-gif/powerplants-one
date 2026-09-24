@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { before, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
+import { readFileSync } from "node:fs";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { createSession } from "../../src/platform/identity";
@@ -20,6 +21,7 @@ import {
   blankValve,
 } from "../../src/estimating/fertigation/definition";
 import { valveCsv } from "../../src/estimating/fertigation/output";
+import { proposedPlacement } from "../../src/estimating/fertigation/import-placement";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -364,4 +366,50 @@ test("FN-T40/T41/T42 strict standalone schema1/2 and bounded CSV confirm new dra
     ).rowCount,
     0,
   );
+});
+test("FN-T111 a genuine r02 project imports once every held field is placed, and the placements are retained with the import", async () => {
+  const f = await fertigationFixture();
+  const input = {
+    ...(await proposal(f)),
+    name: "SYN imported r02 sample",
+    raw_json: readFileSync(
+      "tests/fixtures/fertigation-r02-sample-export.json",
+      "utf8",
+    ),
+  };
+  const preview = await previewNativeImport(f.p, "", input);
+  assert.equal(preview.held, true);
+  const command = {
+    ...input,
+    ...fertigationBase(),
+    proposal_signature: preview.proposal_signature,
+  };
+  await assert.rejects(
+    confirmNativeImport(f.p, "", command),
+    code("HeldFertigationImport"),
+  );
+  const placements = preview.losses.map((l) => ({
+    path: l.path,
+    disposition: proposedPlacement(l.path),
+  }));
+  const accepted = await confirmNativeImport(f.p, "", {
+    ...command,
+    ...fertigationBase(),
+    placements,
+  });
+  const detail = await readScope(f.p, input.id);
+  assert.equal(detail.revision.version, 1);
+  assert.ok(
+    detail.revision.proposal.evidence.some((e) =>
+      e.label.startsWith("Legacy r02 source values"),
+    ),
+  );
+  const stored = (
+    await database().query<{ provenance: { placements: unknown[] } }>(
+      "SELECT provenance FROM ppo.fertigation_imports WHERE scope_id=$1",
+      [input.id],
+    )
+  ).rows[0];
+  assert.equal(stored.provenance.placements.length, preview.losses.length);
+  assert.ok(accepted);
 });

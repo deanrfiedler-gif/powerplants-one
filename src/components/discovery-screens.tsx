@@ -283,7 +283,7 @@ export function DiscoveryList() {
   >("estimating/workspaces");
   return (
     <div className="est-screen">
-      <Link href="/estimating">Manual estimates</Link>
+      <Link href="/estimating">Estimating intake & workload</Link>
       <Heading title="Scope and options">
         <Link className="button" href="/estimating/discovery/new">
           New discovery workspace

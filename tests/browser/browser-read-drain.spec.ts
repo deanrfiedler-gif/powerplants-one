@@ -4,6 +4,38 @@ import { once } from "node:events";
 import type { AddressInfo } from "node:net";
 import { drainApiReadsForTeardown, finishApiReadsForTeardown, retainApiReadsForTeardown } from "../helpers/browser-read-drain";
 
+test("retained reads own separate connections without replaying commands", async ({ page }) => {
+  const reads: { connection: string | undefined; port: number | undefined }[] = [];
+  let commands = 0;
+  const server = createServer((request, response) => {
+    if (request.url === "/api/v1/read")
+      reads.push({ connection: request.headers.connection, port: request.socket.remotePort });
+    if (request.url === "/api/v1/command") commands++;
+    response.writeHead(200, { "Content-Type": "text/html" });
+    response.end("SYN fixture");
+  });
+  server.listen(0, "127.0.0.1");
+  await once(server, "listening");
+  try {
+    await retainApiReadsForTeardown(page);
+    await page.goto(`http://127.0.0.1:${(server.address() as AddressInfo).port}`);
+    await page.evaluate(async () => {
+      for (let n = 0; n < 3; n++) await (await fetch("/api/v1/read")).text();
+      await (await fetch("/api/v1/command", { method: "POST" })).text();
+    });
+    await finishApiReadsForTeardown(page);
+    expect(reads).toHaveLength(3);
+    expect(reads.map(read => read.connection)).toEqual(["close", "close", "close"]);
+    expect(new Set(reads.map(read => read.port)).size).toBe(3);
+    expect(commands).toBe(1);
+  } finally {
+    await drainApiReadsForTeardown(page);
+    await page.unrouteAll({ behavior: "wait" });
+    server.closeAllConnections();
+    await new Promise<void>(resolve => server.close(() => resolve()));
+  }
+});
+
 for (const abandonment of ["navigation", "AbortController", "teardown navigation"] as const) {
   test(`teardown waits for overlapping server reads abandoned by ${abandonment}`, async ({ page }) => {
     const started = Promise.withResolvers<void>();

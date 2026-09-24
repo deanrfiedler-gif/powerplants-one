@@ -141,13 +141,14 @@
       "sha256": "5b41481460984bdeb09f683b76a5ba30cdd805eb19f90735e725d01fedc6b825",
       "bytes": 481380,
       "scope_selector": "#ppo-job-pack",
-      "app_route": null,
-      "app_scope_selector": null,
-      "status": "Accepted design successor; not implemented. The shipped /service/packs screen predates the scoped-container pattern and has no scope container to compare against",
+      "app_route": "/service/packs/[id]",
+      "app_scope_selector": "#ppo-job-pack",
+      "status": "Implemented through I1-I7/I5; local conformance evidence and adopted adaptations recorded separately from owner/device acceptance",
       "predecessor": "job-pack-r02",
       "decision": "docs/decisions/job-pack-design.md",
       "change_record": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03-change-record.md",
-      "declared_tokens": 41
+      "declared_tokens": 41,
+      "integration": "docs/decisions/job-pack-integration.md"
     },
     {
       "id": "job-pack-r02",
@@ -405,6 +406,21 @@
       "application_proof": "tests/browser/customer-location.spec.ts",
       "authority": "Authorised CS native receiving implementation. Layout adaptations are proposed for owner visual/device review; no new accepted screenshot baseline.",
       "adaptations": "docs/delivery/cs-native-completion-handover.md"
+    },
+    {
+      "id": "job-pack-r03",
+      "route": "/service/packs/[id]",
+      "scope": "#ppo-job-pack",
+      "layout": "full-bleed",
+      "scroll_owner": "#ppo-job-pack",
+      "design": "docs/reference/ui/job-pack/powerplants-one-job-pack-r03.html",
+      "sha256": "5b41481460984bdeb09f683b76a5ba30cdd805eb19f90735e725d01fedc6b825",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+      "component_proof": "tests/ui/job-pack-design-conformance.spec.ts",
+      "application_proof": "tests/browser/job-pack-integration.spec.ts",
+      "authority": "Dean authorised completion of SV-05 and adopted D1-D10/DP-1-DP-22. Implementation and evidence do not grant owner acceptance.",
+      "adaptations": "docs/decisions/job-pack-integration.md"
     }
   ]
 }

@@ -12,7 +12,12 @@ export async function retainApiReadsForTeardown(page: Page) {
   await page.route("**/api/v1/**", async route => {
     if (route.request().method() !== "GET") return route.continue();
     const read = (async () => {
-      const response = await route.fetch();
+      // This forwarding request outlives browser navigation. Give it its own
+      // connection so rapid page changes cannot reuse an idle server socket
+      // at its keep-alive boundary (ECONNRESET). Commands still continue once.
+      const response = await route.fetch({
+        headers: { ...route.request().headers(), connection: "close" },
+      });
       await route.fulfill({ response });
     })();
     active.add(read);
