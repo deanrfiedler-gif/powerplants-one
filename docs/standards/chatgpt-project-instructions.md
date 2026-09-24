@@ -80,7 +80,7 @@ Test behaviour: permissions, booking conflicts, stale revisions, offline replay,
 
 Separate decisions, evidence, proposals and open questions; distinguish delivery, tests, acceptance and production readiness. Cite sources and limits.
 
-Preserve ES-02 exact costs and PJ-09 scoped close/reopen. ES-08: accepted design board (es08-design-board.md: D1–D15, DEC-R1/R2) guides the geometry build, which needs separate authority, WP-G00 first, no migration slot. ADR-0034 review is not engineering approval. Retain four CI lanes (ci-retained-suite-isolation.md).
+Preserve ES-02 exact costs and PJ-09 close/reopen. ES-01–10/Excel authority: estimating-native-programme.md; progress: estimating-programme-handover.md. ES-08 D1–D15/DEC-R1/R2: WP-G00 first; no migration slot, engineering approval or deployment. Retain four CI lanes (ci-retained-suite-isolation.md).
 
 Keep synthetic mailboxes private and bodies outside shared Activities; see demo-email-crm-integration.md. CI and Outlook acceptance are separate. SH-01–06: docs/delivery/sh-platform-handover.md; teams/DK/delivery pending.
 

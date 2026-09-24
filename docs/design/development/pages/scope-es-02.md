@@ -6,7 +6,7 @@ This is an editable working specification. Existing accepted page baselines take
 
 ## Purpose and task
 
-Retain delivered E2 discovery/options/manual costing. Complete broader revision comparison, structured multi-area scope and source-change handling.
+Retain the native five-step wizard delivered by PR #272, including exact revision comparison, structured multi-area scope, source-change handling, immutable alternatives and saved-cost reads. The 24 September reconciliation updates the workload return link and removes obsolete wording that denied the now-native ES-08 specialist integration. No discovery DTO, hash, command, schema or costing guarantee changes.
 
 1. Review Requirements, Configuration, Scope & delivery, Pricing and Review
 2. Keep alternatives and their exact revisions distinct

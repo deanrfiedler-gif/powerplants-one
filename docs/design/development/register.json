@@ -952,7 +952,7 @@
       "title": "Estimating intake and workload",
       "kind": "scope",
       "module": "ES",
-      "summary": "Extend the estimate/discovery registers with intake, allocation, estimator workload, clarification and returned briefs.",
+      "summary": "Native permission-scoped opportunity workload, exact discovery readiness/ownership and saved-estimate links. Intake allocation, acceptance, returns and priority policy remain Not configured.",
       "path": "/estimating",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -961,10 +961,14 @@
       "design_path": "docs/design/development/pages/scope-es-01.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "src/estimating/workload.ts",
+        "src/estimating/workload-query.ts",
+        "docs/delivery/estimating-programme-handover.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Native workload implemented; verification recorded in the programme handover",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -984,7 +988,7 @@
       "title": "Estimation Wizard · discovery, alternatives & revisions",
       "kind": "scope",
       "module": "ES",
-      "summary": "Retain delivered E2 discovery/options/manual costing. Complete broader revision comparison, structured multi-area scope and source-change handling.",
+      "summary": "Native five-step wizard, immutable alternatives/revisions, structured multi-area scope and exact manual-cost basis delivered by PR #272. Specialist wording reconciled; commercial approval remains separate.",
       "path": "/estimating/discovery",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -5228,22 +5232,26 @@
     },
     {
       "key": "route:/estimating",
-      "title": "Estimate register",
+      "title": "Estimating intake and workload",
       "kind": "route",
       "module": "ES",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "Native permission-scoped opportunity workload, exact discovery readiness/ownership and saved-estimate links. Intake allocation, acceptance, returns and priority policy remain Not configured.",
       "path": "/estimating",
       "source_paths": [
         "src/app/(business)/estimating/page.tsx"
       ],
       "guide_key": "guide.page.estimating",
       "design_path": "docs/design/development/pages/route-estimating.md",
-      "html_path": "docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html",
+      "html_path": null,
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "src/estimating/workload.ts",
+        "src/estimating/workload-query.ts",
+        "docs/delivery/estimating-programme-handover.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Native workload implemented; verification recorded in the programme handover",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
