@@ -5,7 +5,7 @@ import path from 'node:path';
 import {fileURLToPath,pathToFileURL} from 'node:url';
 import {createHash} from 'node:crypto';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
-const file=path.join(root,'docs/reference/ui/access-review/PPO-Users-Roles-and-Access-Review-r01.html'),out=path.join(root,'verification-evidence/access-review');
+const file=path.join(root,'docs/design/access-review/access-review.html'),out=path.join(root,'verification-evidence/access-review');
 await fs.mkdir(out,{recursive:true});
 /* The repository pins the Chrome channel. PPO_BROWSER_PATH is an explicit, recorded substitute for environments without it. */
 const substitute=process.env.PPO_BROWSER_PATH||null;

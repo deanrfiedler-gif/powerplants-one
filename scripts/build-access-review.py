@@ -11,7 +11,7 @@ import re
 
 root = Path(__file__).resolve().parents[1]
 source = root / "docs/design/access-review"
-target = root / "docs/reference/ui/access-review/PPO-Users-Roles-and-Access-Review-r01.html"
+target = root / "docs/design/access-review/access-review.html"
 permissions = root / "src/platform/permissions.ts"
 demo = root / "scripts/demo-database.ts"
 
@@ -55,7 +55,7 @@ generated = (
     )
     + ");})(globalThis);\n"
 )
-(source / "capabilities.js").write_text(generated, encoding="utf-8")
+(source / "capabilities.js").write_text(generated, encoding="utf-8", newline="\n")
 
 html = (source / "template.html").read_text(encoding="utf-8")
 for marker, filename in [
@@ -71,5 +71,5 @@ for marker, filename in [
     assert html.count(f"/* {marker} */") == 1, marker
     html = html.replace(f"/* {marker} */", content)
 target.parent.mkdir(parents=True, exist_ok=True)
-target.write_text(html, encoding="utf-8")
+target.write_text(html, encoding="utf-8", newline="\n")
 print(f"{target.relative_to(root)}\nSHA-256 {sha(target)}\nCapabilities {len(keys)} · hosted demo {len(hosted)}")

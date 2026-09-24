@@ -4406,9 +4406,13 @@
       ],
       "guide_key": "guide.ad.01",
       "design_path": "docs/design/development/pages/scope-ad-01.md",
-      "html_path": "docs/reference/ui/access-review/PPO-Users-Roles-and-Access-Review-r01.html",
+      "html_path": "docs/design/access-review/access-review.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/design/access-review/access-review.html",
+        "src/platform/permissions.ts",
+        "docs/design/access-review/capabilities.js"
+      ],
       "scope_status": "unbuilt",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
