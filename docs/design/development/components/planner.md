@@ -27,7 +27,7 @@ Tab/Shift+Tab and visible focus throughout. Use labelled controls as alternative
 ## States and interaction
 
 - **Default:** Representative synthetic content and normal interaction.
-- **Week:** Seven-day resource lane view.
+- **Week:** Seven-day resource lane view, with a continuing synthetic closure from 24 September 23:00 to 27 September 00:00 Australia/Sydney. It appears on 24, 25 and 26 September only; the end boundary is exclusive.
 - **Empty:** No matching example records; absence is distinct from failure.
 - **Read only:** Management actions unavailable in this example.
 
@@ -44,3 +44,5 @@ Changes to the source, styles, fixtures, specification or reference invalidate p
 ## Scheduling consumers
 
 PL-01 retains the existing PlannerBoard and appointment cards. Resource headings now link to scoped availability and competence evidence. The new long-label fixture exercises wrapping alongside the existing week, empty, proposed and read-only states. PL-02 to PL-05 use separate native compositions and do not claim this component as a direct consumer. See [Scheduling evidence](../../../testing/evidence/scheduling-resources/README.md); visual acceptance remains pending.
+
+The post-merge closure correction uses interval intersection in the display timezone, so a closure beginning before a day remains visible on that day. The existing `scope:PL-01` and `route:/schedule` consumer bindings remain exact. [Refinement evidence](../../../testing/evidence/scheduling-refinement/README.md) records checks separately from owner review.

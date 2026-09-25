@@ -4,7 +4,46 @@ export const plannerZones = [
   "Australia/Melbourne",
   "UTC",
 ];
-export function plannerContext(query: URLSearchParams) {
+export const changeQueues = [
+  "review",
+  "requests",
+  "contact",
+  "cancellations",
+  "history",
+] as const;
+export const demandCommitments = [
+  "Operational booking",
+  "Authorised demand",
+  "Proposed visit",
+  "Source plan",
+] as const;
+
+// Presentation criteria only. APIs still validate and authorise every read.
+// Never persist analytical sequences/exclusions or command payloads in a URL.
+export function reviewCriteria(query: URLSearchParams) {
+  const one = (key: string) =>
+    query.getAll(key).length === 1 ? query.get(key)! : "";
+  const member = (key: string, values: readonly string[], fallback = "") =>
+    values.includes(one(key)) ? one(key) : fallback;
+  const skill = one("skill");
+  return {
+    queue: member("queue", changeQueues, "review"),
+    selected: uuid.test(one("selected_id")) ? one("selected_id") : "",
+    domain: member("domain", ["Service", "Projects", "Engineering"]),
+    commitment: member("commitment", demandCommitments),
+    resource:
+      one("resource_id") === "unknown"
+        ? "unknown"
+        : plannerContext(query).resource,
+    skill:
+      skill.length <= 100 && !/[\u0000-\u001f\u007f]/.test(skill) ? skill : "",
+    unknownEffort: one("unknown_effort") === "1",
+  };
+}
+export function plannerContext(
+  query: URLSearchParams,
+  defaultDay = "2031-09-22",
+) {
   const one = (key: string) =>
     query.getAll(key).length === 1 ? (query.get(key) ?? "") : "";
   const day = one("day");
@@ -13,7 +52,7 @@ export function plannerContext(query: URLSearchParams) {
     !Number.isNaN(Date.parse(`${day}T12:00:00Z`)) &&
     new Date(`${day}T12:00:00Z`).toISOString().slice(0, 10) === day;
   return {
-    day: validDay ? day : "2031-09-22",
+    day: validDay ? day : defaultDay,
     mode: one("view") === "day" ? ("day" as const) : ("week" as const),
     zone: plannerZones.includes(one("timezone"))
       ? one("timezone")
@@ -64,6 +103,21 @@ export function safePlannerReturn(value: string | null) {
     uuid.test(q.get("appointment_id")!)
   )
     result.set("appointment_id", q.get("appointment_id")!);
+  const criteria = reviewCriteria(q);
+  if (match[1] === "/changes") {
+    result.set("queue", criteria.queue);
+    if (criteria.selected) result.set("selected_id", criteria.selected);
+  }
+  if (match[1] === "/capacity") {
+    for (const [key, value] of Object.entries({
+      domain: criteria.domain,
+      commitment: criteria.commitment,
+      resource_id: criteria.resource,
+      skill: criteria.skill,
+      unknown_effort: criteria.unknownEffort ? "1" : "",
+    }))
+      if (value) result.set(key, value);
+  }
   return "/schedule" + match[1] + "?" + result;
 }
 export function appointmentHref(id: string, returnTo: string) {

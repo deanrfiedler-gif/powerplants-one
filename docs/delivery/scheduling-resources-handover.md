@@ -2,10 +2,20 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-**Owner:** Dean Fiedler · **Date:** 24 September 2026 · **Status:** S1–S5 implemented for review; local verification and its baseline limits recorded separately from owner acceptance and deployment.
+**Owner:** Dean Fiedler · **Date:** 24 September 2026 · **Status:** S1–S5 merged in PR #310; follow-up refinement for review; local verification and its baseline limits recorded separately from owner acceptance and deployment.
 **Original base:** `ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc` · **Branch:** `feat/scheduling-resources-completion`.
 
-## Refreshed audit
+## Post-merge refinement
+
+The refreshed remote on 24 September is `0f10b7fb46a8ab512e9b019573ece272cf5920b9`. S1–S5 merged in #310 (`3040387`), followed by #312/#313 fertigation work. The sole open PR at refresh, #314, records an ES-02 design board and overlaps shared living documentation/register files; it adds no Scheduling source or migration. Current migration registry ends at 0048. This follow-up allocates none.
+
+Fresh worktree `tmp/scheduling-resources-refinement` / branch `feat/scheduling-resources-refinement` corrects continuing calendar closures, travel closure warnings, terminal follow-up classification and lost date/site/timezone/filter/selection context. All five existing workspaces and the booking engine are retained. Field Team's accepted r05 successor is correctly distinguished from its retained r04 predecessor in the living contracts. The root's uncommitted field-quality work and all existing worktrees remain untouched.
+
+[Refinement evidence](../testing/evidence/scheduling-refinement/README.md) records only checks actually executed for this follow-up. The original evidence below remains historical. Required CI, owner visual/device review, operational definitions and deployment are separate.
+
+Runtime/refinement tests are committed as `1bce81239a6ba0982201985ba9b40061c9f2f50c`. One full scheduling database run passed 34/34; existing browser regressions passed 36/36 plus warm-up, and the final new desktop/phone run passed 10/10 after correcting a test selector. The required unit run passed 422/426; all four Windows failures reproduced on untouched current main. The separate build and documentation checks passed. The evidence manifest retains 48 original captures, 42 inspected, including actual 200% Chrome zoom. No owner approval or deployment is inferred.
+
+## Original programme audit (historical)
 
 Fetched origin before implementation; it matched the prompt's audited head. During implementation PRs #299 (fertigation held-field placement) and #300 (Projects reconciliation) merged. Reconciled with main `6c5e7c4fcbaf05d712a46989faf2cf7cabb8ba72`, preserving their runtime and shared-register changes. The document-register append conflict retained both programmes. No Scheduling engine or migration changed upstream.
 

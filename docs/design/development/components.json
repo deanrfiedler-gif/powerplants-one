@@ -540,7 +540,7 @@
         {
           "id": "week",
           "label": "Week",
-          "description": "Seven-day resource lane view."
+          "description": "Seven-day resource lanes with a continuing calendar closure across three days; the exclusive end boundary is not closed."
         },
         {
           "id": "empty",
@@ -596,7 +596,7 @@
         {
           "id": "scheduling-native-review",
           "expected": "Shared controls remain readable in scheduling comparisons at desktop, 320 px and 200% zoom.",
-          "actual": "New scheduling consumers added; owner visual acceptance pending.",
+          "actual": "Multi-day closure rendering corrected and exercised in the Week fixture; owner visual acceptance remains pending.",
           "action": "Inspect captured runtime evidence and retain legacy booking-control exceptions.",
           "priority": "Medium",
           "owner": "Dean Fiedler"

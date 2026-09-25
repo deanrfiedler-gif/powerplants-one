@@ -235,6 +235,12 @@ export const plannerFixture: Schedule = {
         })),
       },
       skills: [],
+      exceptions: [{
+        id: fixtureId(232),
+        kind: "Closed",
+        start_at: "2026-09-24T13:00:00Z",
+        end_at: "2026-09-26T14:00:00Z",
+      }],
       blocks: [
         {
           id: fixtureId(231),

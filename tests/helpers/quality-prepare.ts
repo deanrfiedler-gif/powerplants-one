@@ -190,7 +190,20 @@ export async function prepareJourney(page: Page, info: TestInfo) {
       exact: true,
     }),
   ).toBeVisible();
-  await page.goto(`/sites/${id("70")}`);
+  // Site notes also arrive after navigation. Wait for this exact scoped read,
+  // then keep the normal rendering assertion and verify the returned identity.
+  const site = await observedResponse(page, "initial-site-read",
+    (response) => new URL(response.url()).pathname === `/api/v1/sites/${id("70")}` &&
+      response.request().method() === "GET",
+    () => page.goto(`/sites/${id("70")}`),
+    {
+      request: (request) => new URL(request.url()).pathname === `/api/v1/sites/${id("70")}` && request.method() === "GET",
+      timeout: 60000,
+    },
+  );
+  expect(site.status(), await site.text()).toBe(200);
+  expect(site.headers()["cache-control"]).toBe("private, no-store");
+  expect((await site.json()).items[0].id).toBe(id("70"));
   await expect(
     page.getByText(
       "SYN OEM query remains unresolved; follow-up activity will be implemented in P03.",

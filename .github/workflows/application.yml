@@ -622,13 +622,15 @@ jobs:
           npm run db:migrate
           npm run db:seed
           npm run db:health
+      # Reuse the build produced above, as the other browser lanes do. Cold dev
+      # compilation must not prevent the diagnostic procedures from executing.
       - name: Replay three original phone procedures with lifecycle diagnostics
         timeout-minutes: 25
         env:
           PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/p11-failure-replay/results.json
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
-          npx playwright test tests/browser/quality-journey.spec.ts tests/browser/quality-states.spec.ts tests/browser/reports.spec.ts --project=mobile-chromium --grep 'P11 selected UI service-to-Finance journey|P11 PT-29 all fifteen screen families|P09 complete UI return' --output verification-evidence/p11-failure-replay --reporter=list,json
+          npx playwright test --config=playwright.compiled.config.ts tests/browser/quality-journey.spec.ts tests/browser/quality-states.spec.ts tests/browser/reports.spec.ts --project=mobile-chromium --grep 'P11 selected UI service-to-Finance journey|P11 PT-29 all fifteen screen families|P09 complete UI return' --output verification-evidence/p11-failure-replay --reporter=list,json
       - name: Prepare original failure replay diagnostics
         if: always()
         id: failure_replay_review
