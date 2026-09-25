@@ -37,3 +37,7 @@ Drawer geometry must be compared with its CRM reference; shell utility panels ha
 Review at 1440 × 960, 1024 × 768, 820 × 800, 390 × 844 and 320 × 700 where relevant; check browser zoom and keyboard operation separately. Compare the same state and viewport with the retained reference. Record exact commit, reviewer, date, fixture state, viewport, result and evidence paths in the component review record. Automated source fingerprints do not grant acceptance.
 
 Changes to the source, styles, fixtures, specification or reference invalidate prior evidence. Update this master and its component record in the same pull request. Keep app business checks separate from catalogue presentation checks.
+
+## ES-01 consumer
+
+`/estimating` reuses WorklistPanel for the opportunity detail when the register is narrower than the 1360 px panel width (decision P7). The dialog, Escape handling and focus return are the shared implementation. The right-hand geometry (448 px, full height, header, scrolling body and Done footer) is scoped to the page, because the CRM drawer is a top sheet. The alignment item `es01-right-drawer` records this variant for review. At phone width the page uses cards instead of a drawer. The Estimating workload browser suite covers opening, the dialog name, Escape and focus return at 1359 px.

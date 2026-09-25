@@ -1,0 +1,209 @@
+{
+  "captured_at": "2026-09-24T23:10:10+00:00",
+  "source_parent": "7fb30f5bc4e5db8f12e28133fc09b27e5e38c05f",
+  "source_state": "Parent plus the working-copy changes committed with this evidence; see exact LF-normalised source hashes",
+  "server": "Local development server (npm run dev) against disposable PostgreSQL 16.13 database ppo_synthetic_test",
+  "node": "22.22.2 (the repository pins 24.21.0; not available in this environment)",
+  "playwright": "1.63.0",
+  "browser": "Bundled Chromium 141.0.7390.37 (the pinned Chrome channel is not installed in this environment)",
+  "context": {
+    "locale": "en-AU",
+    "timezone": "Australia/Brisbane",
+    "identity": "local synthetic coordinator"
+  },
+  "axe_core": "4.13.0, tags wcag2a wcag2aa wcag21a wcag21aa wcag22aa",
+  "fixture": "Database reset, then six synthetic opportunities: two without discovery, one with incomplete discovery, one with complete discovery, one legacy estimate with lines and one legacy scope-only estimate without lines",
+  "source_lf_sha256": {
+    "src/components/estimating-workload.tsx": "4ca7236176100774427deedccc29b8a66917ce7f69aba29184e48a6c4df70c1b",
+    "src/components/estimating-workload.css": "b1ff3dc8454f8c7efa503f36c9481f4eb8a6106985075f37dfe759fe177f9179",
+    "src/components/estimating-workload-guide.ts": "0bb9e73c60e4c010f66dd45a85c375e1ecf8d584d4769ba82b40b5a3113848a9",
+    "src/components/business-ui.tsx": "5e9f42e778bfc77493278834893b44172a01db5b21d8ac3f75af2da2104175d4",
+    "src/components/crm-worklist-tools.tsx": "d40140cb522071bdc65f568fb4b6a9b0247749cb718448c64ccab886be67d80e",
+    "src/estimating/workload.ts": "e50ac3019991babf7ab1100a10d523359557c9e9c43f9ebca36239d11ed65f12",
+    "src/estimating/workload-query.ts": "e8af03e6064e3d4c42f8c08feda70cfc770f79a76f93efd7c6d18ce7ae41e2ac",
+    "src/app/shared-layout.css": "416a6d5264555a0c25f25ae870b250c3d2d63271e4721ff81ba8b8d7ba15fa70",
+    "src/app/globals.css": "4dc09cc0bcbacc0adc43e9a5b40bff829c463ce478601831c283e1c86c84f372",
+    "tests/browser/estimating-workload.spec.ts": "eceb9584b2039060f1d879e0401346cc0f7455aa5ef24e6fa62dfef3d92c6a63"
+  },
+  "images": [
+    {
+      "file": "desktop-1440-panel.png",
+      "viewport": "1440 × 1000",
+      "route": "/estimating",
+      "layout": "panel",
+      "horizontal_overflow_px": 0,
+      "page_errors": 0,
+      "bytes": 240025,
+      "sha256": "030706bdd3fb242ce980ddeb49588be8ba34307dc5d08645fefc020802c732ce",
+      "axe": {
+        "violations": [
+          {
+            "id": "color-contrast",
+            "nodes": [
+              "kbd"
+            ]
+          }
+        ],
+        "incomplete_nodes": 0
+      }
+    },
+    {
+      "file": "desktop-1360-panel.png",
+      "viewport": "1360 × 900",
+      "route": "/estimating",
+      "layout": "panel",
+      "horizontal_overflow_px": 0,
+      "page_errors": 0,
+      "bytes": 203945,
+      "sha256": "30d30bc549b9ada565329aa147b77d7fa51bfc8b196477703456098aa9abc894",
+      "axe": {
+        "violations": [
+          {
+            "id": "color-contrast",
+            "nodes": [
+              "kbd"
+            ]
+          }
+        ],
+        "incomplete_nodes": 0
+      }
+    },
+    {
+      "file": "desktop-1359-drawer.png",
+      "viewport": "1359 × 900",
+      "route": "/estimating",
+      "layout": "drawer",
+      "horizontal_overflow_px": 0,
+      "page_errors": 0,
+      "bytes": 253204,
+      "sha256": "e80837c892197ff58f8e4d221ca19dc0c0852d32c5f24ea0f2f39592f64c8005",
+      "axe": {
+        "violations": [],
+        "incomplete_nodes": 3
+      }
+    },
+    {
+      "file": "tablet-1024-drawer.png",
+      "viewport": "1024 × 768",
+      "route": "/estimating",
+      "layout": "drawer",
+      "horizontal_overflow_px": 0,
+      "page_errors": 0,
+      "bytes": 183717,
+      "sha256": "91996d6a41e0b2e97da5e1f4383955a5d7da07ebcda4c0a47b1da4e68f7beaef",
+      "axe": {
+        "violations": [],
+        "incomplete_nodes": 0
+      }
+    },
+    {
+      "file": "phone-390-workload.png",
+      "viewport": "390 × 844",
+      "route": "/estimating",
+      "layout": "stack",
+      "horizontal_overflow_px": 0,
+      "page_errors": 0,
+      "bytes": 73131,
+      "sha256": "18eb412250679cd2e0353e0df1f28e013d0d51aaeb7e769c1ff0d1bd4cf4b709",
+      "axe": {
+        "violations": [],
+        "incomplete_nodes": 0
+      }
+    },
+    {
+      "file": "phone-390-filters.png",
+      "viewport": "390 × 844",
+      "route": "/estimating",
+      "layout": "stack",
+      "horizontal_overflow_px": 0,
+      "page_errors": 0,
+      "bytes": 50318,
+      "sha256": "2beb5abab8961dd7bee850e052660d1f8ee7cbbfad797f85ad161086f3bdf171",
+      "axe": {
+        "violations": [],
+        "incomplete_nodes": 0
+      }
+    },
+    {
+      "file": "phone-320-workload.png",
+      "viewport": "320 × 700",
+      "route": "/estimating",
+      "layout": "stack",
+      "horizontal_overflow_px": 0,
+      "page_errors": 0,
+      "bytes": 51300,
+      "sha256": "1f6007cfb1104721f796e3deb7de2b20416429212ade88d971e3771fae772a96",
+      "axe": {
+        "violations": [],
+        "incomplete_nodes": 0
+      }
+    },
+    {
+      "file": "desktop-css-zoom-200.png",
+      "viewport": "1440 × 1000",
+      "route": "/estimating",
+      "layout": "stack",
+      "horizontal_overflow_px": 0,
+      "page_errors": 0,
+      "bytes": 114723,
+      "sha256": "4642fa14e208e0f779834a711f851880a0df5557f4b69340c280a3f7341ac261",
+      "axe": null
+    },
+    {
+      "file": "desktop-1440-saved-estimates.png",
+      "viewport": "1440 × 900",
+      "route": "/estimating?tab=estimates",
+      "layout": null,
+      "horizontal_overflow_px": 0,
+      "page_errors": 0,
+      "bytes": 81877,
+      "sha256": "1750c68f1ac2e5455b16f0105466b92034e050ef2f94b6c2eb5ca06ad3f698a4",
+      "axe": {
+        "violations": [
+          {
+            "id": "color-contrast",
+            "nodes": [
+              "kbd"
+            ]
+          }
+        ],
+        "incomplete_nodes": 0
+      }
+    },
+    {
+      "file": "phone-390-saved-estimates.png",
+      "viewport": "390 × 844",
+      "route": "/estimating?tab=estimates",
+      "layout": null,
+      "horizontal_overflow_px": 0,
+      "page_errors": 0,
+      "bytes": 61968,
+      "sha256": "059669bfdf0396d1d740dee6f795e0d52f4decb1d21614aab612c2919649ba74",
+      "axe": {
+        "violations": [],
+        "incomplete_nodes": 0
+      }
+    },
+    {
+      "file": "desktop-1440-no-matches.png",
+      "viewport": "1440 × 900",
+      "route": "/estimating?q=SYN%20no%20such%20brief",
+      "layout": "panel",
+      "horizontal_overflow_px": 0,
+      "page_errors": 0,
+      "bytes": 125342,
+      "sha256": "2623d0d817c8e26e8d4fb3c367cead9dcd1e09f6fed90364c78d0d285a7f8659",
+      "axe": {
+        "violations": [
+          {
+            "id": "color-contrast",
+            "nodes": [
+              "kbd"
+            ]
+          }
+        ],
+        "incomplete_nodes": 0
+      }
+    }
+  ]
+}

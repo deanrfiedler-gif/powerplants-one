@@ -1,127 +1,635 @@
-.est-workload-nav {
+/* ES-01 intake and workload register. Decisions P1–P9, O1–O2 in
+   docs/decisions/es01-design-board.md. The layout attribute is measured from
+   the register's own width, so browser and CSS zoom follow the same rules. */
+.est-workload {
+  color: var(--ink);
+  min-width: 0;
+}
+.est-workload :focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+/* P4: two views of one route as section tabs. */
+.est-workload-tabs {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px 24px;
+  gap: 4px;
   border-bottom: 1px solid var(--line-strong);
-  margin-bottom: 20px;
-  padding-bottom: 12px;
+  margin: 0 0 20px;
 }
-.est-workload-nav a[aria-current] {
+.est-workload-tabs a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 16px;
+  border-bottom: 3px solid transparent;
+  color: var(--text-secondary);
+  font-weight: 500;
+  text-decoration: none;
+}
+.est-workload-tabs a:hover {
+  background: var(--surface-hover);
+  color: var(--navy);
+}
+.est-workload-tabs a[aria-current="page"] {
+  border-bottom-color: #347e2c;
+  color: var(--navy);
   font-weight: 700;
-  text-decoration-thickness: 3px;
-  text-underline-offset: 6px;
 }
+
+/* P5: search, owner and sort inline; the disclosure is used only when stacked. */
 .est-workload-filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  align-items: end;
+  gap: 12px 16px;
+  align-items: flex-end;
   padding: 16px;
   background: var(--white);
   border: 1px solid var(--line-strong);
+  border-radius: var(--radius-card);
 }
 .est-workload-filters label {
   display: flex;
-  flex: 1 1 180px;
   flex-direction: column;
   gap: 4px;
-  font-weight: 600;
   margin: 0;
+  font-weight: 600;
+  min-width: 0;
 }
-.est-workload-advanced summary {
-  cursor: pointer;
-  min-height: 44px;
-  padding: 12px 8px;
+.est-workload-search {
+  flex: 1 1 280px;
 }
-.est-workload-advanced summary:focus-visible {
-  outline: 2px solid var(--navy);
-  outline-offset: 2px;
-}
-.est-workload-advanced[open] {
-  flex: 1 1 100%;
-}
-.est-workload-advanced > div {
+.est-workload-more {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  padding-bottom: 12px;
+  gap: 12px 16px;
+  min-width: 0;
+}
+.est-workload-more label {
+  flex: 0 0 13.5rem;
 }
 .est-workload-filters input,
 .est-workload-filters select {
   width: 100%;
   min-width: 0;
   min-height: 44px;
-  padding: 8px;
+  padding: 8px 12px;
   font-size: 16px;
   border: 1px solid var(--control-border);
   border-radius: var(--radius-control);
   background: var(--white);
   color: var(--ink);
 }
+.est-workload-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  min-height: 44px;
+}
+.est-workload-toggle {
+  display: none;
+}
+.est-workload-readiness-select {
+  display: none !important;
+}
+
+/* P2: readiness as the shared segmented control, with permitted counts. */
+.est-workload-segments {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin: 16px 0 4px;
+}
+.est-workload-segments > span {
+  font-weight: 600;
+}
+.est-workload-segments .view-switch {
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+.est-workload-segments .view-switch button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  font-size: 14px;
+}
+/* shared-layout.css's global button hover outranks the shared .view-switch
+   hover (finding B6); keep the segmented control's own hover on this page. */
+.est-workload .est-workload-segments .view-switch button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--ink);
+}
+.est-workload
+  .est-workload-segments
+  .view-switch
+  button[aria-pressed="true"]:hover:not(:disabled) {
+  background: var(--white);
+  color: var(--navy);
+}
+.est-workload-count {
+  min-width: 22px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--neutral-surface);
+  color: var(--neutral);
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+.est-workload-summary {
+  margin: 12px 0 2px;
+  font-weight: 500;
+}
 .est-workload-limit {
+  margin: 0 0 16px;
   color: var(--text-secondary);
   font-size: 13px;
 }
-.est-workload-rows {
-  display: grid;
-  gap: 12px;
-  container-type: inline-size;
-  container-name: workload-cards;
+.est-workload-loading {
+  padding: 24px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-card);
+  background: var(--white);
+  color: var(--text-secondary);
 }
+
+/* P1: register rows with a persistent 448 px detail panel. */
+.est-workload-split {
+  display: grid;
+  gap: 20px;
+  align-items: start;
+}
+[data-layout="panel"] .est-workload-split {
+  grid-template-columns: minmax(0, 1fr) 448px;
+}
+.est-workload-list {
+  min-width: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-card);
+  background: var(--white);
+  overflow: hidden;
+}
+.est-workload-columns,
 .est-workload-row {
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr);
-  gap: 24px;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 0.9fr);
+  gap: 16px;
+  padding: 14px 20px;
 }
-.est-workload-row h2 {
-  font-size: 18px;
-  margin: 0;
+.est-workload-columns {
+  padding-block: 10px;
+  border-bottom: 1px solid var(--line-strong);
+  background: var(--surface-2);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
 }
-.est-workload-row h3 {
-  font-size: 15px;
-  margin: 0;
+.est-workload-row {
+  border-bottom: 1px solid var(--line-soft);
+  box-shadow: inset 3px 0 0 transparent;
+}
+.est-workload-row:last-child {
+  border-bottom: 0;
+}
+.est-workload-row[data-selected] {
+  background: #f0f6ed;
+  box-shadow: inset 3px 0 0 #315e43;
+}
+.est-workload-cell {
+  min-width: 0;
+}
+.est-workload-row h2,
+.est-workload-title {
+  margin: 2px 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 22px;
 }
 .est-workload-row p {
-  margin: 6px 0 12px;
+  margin: 2px 0;
   overflow-wrap: anywhere;
 }
-.est-workload-row dl {
+.est-workload-select {
+  display: inline;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--link);
+  font: inherit;
+  text-align: left;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+.est-workload-select[aria-pressed="true"] {
+  color: var(--navy);
+}
+/* The global button hover fills navy; these are text controls on this page. */
+.est-workload .est-workload-select:hover:not(:disabled) {
+  background: none;
+  color: var(--navy);
+  text-decoration-thickness: 2px;
+}
+.est-workload .est-workload-toggle:hover:not(:disabled) {
+  background: var(--surface-hover);
+  color: var(--ink);
+}
+.est-workload-ref {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+.est-workload-muted {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+.est-workload-panel {
+  position: sticky;
+  top: 16px;
+  min-width: 0;
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+  padding: 20px 24px 24px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-card);
+  background: var(--white);
+  box-shadow: var(--shadow-card);
+}
+.est-workload-panel-label {
+  margin: 0 0 4px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Detail: the same content in the panel, the drawer and the phone card. */
+.est-workload-detail {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.est-workload-detail header h2 {
+  margin: 2px 0 4px;
+  font-size: 20px;
+  line-height: 28px;
+}
+.est-workload-detail header p,
+.est-workload-detail > p {
+  margin: 4px 0;
+}
+.est-workload-section {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line-soft);
+}
+.est-workload-section h3 {
+  margin: 0 0 6px;
+  font-size: 15px;
+}
+.est-workload-section p {
+  margin: 4px 0 10px;
+}
+.est-workload-section dl {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
   gap: 4px 12px;
   margin: 0;
 }
-.est-workload-row dt {
+.est-workload-section dt {
   color: var(--text-secondary);
 }
-.est-workload-row dd {
+.est-workload-section dd {
   margin: 0;
+}
+.est-workload-section ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.est-workload-detail small,
+.est-saved-table small {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+.est-workload-notice {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 10px 12px;
+  border: 1px solid var(--info-border);
+  border-radius: var(--radius-control);
+  background: var(--info-surface);
+  color: var(--info);
+}
+.est-workload-notice .product-icon {
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+
+/* P7: below the panel width the detail opens as a right-hand modal drawer
+   with WorklistPanel behaviour (modal dialog, Escape, focus return). */
+.est-workload-register .crm-r38-panel {
+  position: fixed;
+  inset: 0 0 0 auto;
+  width: min(448px, 100vw);
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-left: 1px solid var(--line-strong);
+  box-shadow: 0 20px 70px #242a3740;
+  color: var(--ink);
+}
+.est-workload-register .crm-r38-panel[open] {
+  display: flex;
+  flex-direction: column;
+}
+.est-workload-register .crm-r38-panel::backdrop {
+  background: #242a372b;
+}
+.est-workload-register .crm-r38-panel > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--line-strong);
+}
+.est-workload-register .crm-r38-panel > header h2 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 26px;
   overflow-wrap: anywhere;
 }
-.est-workload-next,
-.est-workload-context {
-  border-left: 1px solid var(--line-soft);
-  padding-left: 20px;
-  min-width: 0;
+.est-workload-register .crm-r38-panel > header button {
+  flex: none;
+  width: 44px;
+  min-height: 44px;
+  padding: 10px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  background: var(--white);
+}
+.est-workload-register .crm-r38-panel-body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 16px 20px 24px;
+}
+.est-workload-register .crm-r38-panel > footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px 20px;
+  border-top: 1px solid var(--line-strong);
+  background: var(--paper);
+}
+.est-workload-register .crm-r38-panel > footer button {
+  min-height: 44px;
+  padding: 8px 20px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  background: var(--white);
+  color: var(--navy);
+  font-weight: 500;
+}
+
+/* P9: states. Empty is never failure; failure clears rows. */
+.est-workload-empty {
+  padding: 32px 24px;
+  border: 1px dashed var(--hairline);
+  border-radius: var(--radius-card);
+  background: var(--white);
+  text-align: center;
+}
+.est-workload-empty h2 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+.est-workload-empty p {
+  max-width: 60ch;
+  margin: 0 auto 12px;
+}
+.est-workload-failed {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 16px;
+  margin: 12px 0;
+}
+.est-workload-failed p {
+  margin: 0;
 }
 .est-workload-boundaries {
   margin-top: 20px;
+  padding: 20px 24px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-card);
+  background: var(--white);
 }
+.est-workload-boundaries h2 {
+  margin: 0 0 12px;
+  font-size: 18px;
+}
+.est-workload-need {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.est-workload-boundaries dl {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 4px 24px;
+  margin: 0 0 12px;
+}
+.est-workload-boundaries dt {
+  color: var(--text-secondary);
+}
+.est-workload-boundaries dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+/* P8: saved estimates as a table with right-aligned tabular amounts. */
+.est-saved-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  margin-bottom: 12px;
+}
+.est-saved-toolbar .est-workload-summary {
+  margin: 0;
+}
+.est-saved-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-card);
+  background: var(--white);
+}
+.est-saved-table th,
+.est-saved-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line-soft);
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+.est-saved-table thead th {
+  background: var(--surface-2);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+}
+.est-saved-table tbody th {
+  font-weight: 500;
+}
+.est-saved-table .est-amount {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Stacked (register 760 CSS px wide or less): readiness moves into the
+   disclosure and the retained selections are summarised. A container query,
+   so the first paint is already correct; it matches the measured layout. */
+.est-workload-register {
+  container: est-register / inline-size;
+}
+@container est-register (max-width: 760px) {
+  .est-workload-segments {
+    display: none;
+  }
+  .est-workload-toggle {
+    display: flex;
+    flex: 1 1 100%;
+    justify-content: flex-start;
+    gap: 8px;
+    align-items: flex-start;
+    min-height: 44px;
+    padding: 10px 0;
+    border: 0;
+    background: none;
+    color: var(--ink);
+    font: inherit;
+    font-weight: 600;
+    text-align: left;
+  }
+  .est-workload-toggle small {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 400;
+  }
+  .est-workload-toggle .product-icon {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    margin-top: 1px;
+    transform: rotate(-90deg);
+  }
+  .est-workload-toggle[aria-expanded="true"] .product-icon {
+    transform: none;
+  }
+  .est-workload-more {
+    display: none;
+    flex: 1 1 100%;
+  }
+  .est-workload-more[data-expanded] {
+    display: flex;
+  }
+  .est-workload-more label,
+  .est-workload-search {
+    flex-basis: 100%;
+  }
+  .est-workload-readiness-select {
+    display: flex !important;
+  }
+  [data-layout="stack"] .est-workload-list {
+    display: grid;
+    gap: 12px;
+    border: 0;
+    background: none;
+    overflow: visible;
+  }
+}
+/* Stacked cards carry the full detail inline (measured layout). */
+[data-layout="stack"] .est-workload-row h2 {
+  font-size: 18px;
+  line-height: 24px;
+}
+[data-layout="stack"] .est-workload-row {
+  display: block;
+  padding: 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-card);
+  background: var(--white);
+}
+@container est-register (max-width: 760px) {
+  .est-workload-boundaries dl {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+  .est-workload-boundaries dd {
+    margin-bottom: 8px;
+  }
+}
+@media (max-width: 700px) {
+  .est-saved-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .est-saved-table,
+  .est-saved-table tbody,
+  .est-saved-table tr,
+  .est-saved-table th,
+  .est-saved-table td {
+    display: block;
+  }
+  .est-saved-table tr {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .est-saved-table td,
+  .est-saved-table th {
+    padding: 4px 16px;
+    border: 0;
+  }
+  .est-saved-table td::before {
+    content: attr(data-label);
+    display: block;
+    color: var(--text-secondary);
+    font-size: 13px;
+  }
+  .est-saved-table .est-amount {
+    text-align: left;
+  }
+  .est-workload-tabs a {
+    flex: 1;
+    justify-content: center;
+    padding-inline: 8px;
+    text-align: center;
+  }
+}
+
+/* Shell: retained from the first native increment. */
 .workspace:has(.est-workload) .ppo-shell-header {
   container-type: inline-size;
   container-name: workload-header;
-}
-@container workload-cards (max-width: 900px) {
-  .est-workload-row {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 16px;
-  }
-  .est-workload-context,
-  .est-workload-next {
-    border-left: 0;
-    border-top: 1px solid var(--line-soft);
-    padding: 16px 0 0;
-  }
 }
 @container workload-header (max-width: 900px) {
   .workspace:has(.est-workload) .ppo-header-centre {
@@ -143,41 +651,5 @@
 @media (max-width: 780px) {
   .workspace:has(.est-workload) .topbar.ppo-shell-header {
     display: flex;
-  }
-}
-@media (max-width: 1000px) {
-  .est-workload-row {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  }
-  .est-workload-next {
-    grid-column: 1/-1;
-    border-left: 0;
-    border-top: 1px solid var(--line-soft);
-    padding: 16px 0 0;
-  }
-}
-@media (max-width: 600px) {
-  .est-workload-row {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 16px;
-  }
-  .est-workload-context {
-    border-left: 0;
-    border-top: 1px solid var(--line-soft);
-    padding: 16px 0 0;
-  }
-  .est-workload-filters label {
-    flex-basis: 100%;
-  }
-  .est-workload-advanced {
-    flex-basis: 100%;
-  }
-  .est-workload-nav {
-    gap: 12px 20px;
-  }
-  .est-workload-nav a {
-    min-height: 44px;
-    display: flex;
-    align-items: center;
   }
 }
