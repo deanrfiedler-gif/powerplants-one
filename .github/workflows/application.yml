@@ -183,6 +183,8 @@ jobs:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
         run: |
           node --env-file=.env.local --import tsx scripts/persistence-proof.ts write
+          mkdir -p verification-evidence/supply
+          node --env-file=.env.local --import tsx scripts/supply-restart-proof.ts write | tee verification-evidence/supply/restart-write.json
           docker restart "$PPO_POSTGRES_CONTAINER"
           for attempt in $(seq 1 30); do
             docker exec "$PPO_POSTGRES_CONTAINER" pg_isready -U ppo_local -d ppo_synthetic_test && break
@@ -211,6 +213,7 @@ jobs:
             sleep 1
           done
           test "$ppo_http_ready" = 1
+          node --env-file=.env.local --import tsx scripts/supply-restart-proof.ts verify | tee verification-evidence/supply/restart-verify.json
           npm run test:http
           mkdir -p verification-evidence/p11-http
           node --env-file=.env.local --import tsx --test --test-reporter=tap tests/integration/quality-http.test.ts 2>&1 | tee verification-evidence/p11-http/results.tap
@@ -227,6 +230,7 @@ jobs:
             verification-evidence/review-diagnostic-redactions.json
             verification-evidence/p11-http/
             verification-evidence/http/
+            verification-evidence/supply/
           retention-days: 14
       - name: Offline originals across application, PostgreSQL and browser process restarts
         if: ${{ matrix.suite == 'database' && !cancelled() && steps.database_setup.outcome == 'success' }}

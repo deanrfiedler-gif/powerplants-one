@@ -1,0 +1,19 @@
+✔ actual Field parts capture reconciles each issued service-stock unit once; restart retains original receipt (53986.7038ms)
+✔ Supply company/site reads, strict payloads, immutable identity and operation recovery (34896.8277ms)
+✔ Project demand, split shipment and quarantined partial receipt keep readiness blocked (2029.429ms)
+✔ record revisions cannot reduce supply or returns below retained physical evidence (2552.5024ms)
+✔ racing allocations conserve one source and failed writes leave no receipt/outbox (1270.8567ms)
+✔ pick, stage, partial movement and partial delivery retain exact outstanding and corrections (2047.3029ms)
+✔ customer remedy completes independently of supplier recovery, with remaining-return and restricted credits (3002.7488ms)
+✔ unknown source outcome reconciles the original operation and idempotent replay never repeats effect (385.6576ms)
+✔ Service promise delay creates one owned impact and preserves confirmed appointment (766.2374ms)
+✔ exact durable photo is scoped, hashed and replayable (183.1742ms)
+✔ reseed and upgrade preserve exact original records, revisions and revoked grants (195.9584ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 115502.1345

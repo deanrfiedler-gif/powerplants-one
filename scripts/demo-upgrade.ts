@@ -132,7 +132,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // copied from the coordinator's Company A scope/validity. Hosted identities
   // gain no source-review or commercial approval duty. Generic table grants
   // cover the additive records; upgrade/reseed proofs retain revoked grants.
-  if (latestMigrationVersion !== 48) throw Error("Review the existing-demo upgrade for this release.");
+  // 0049 adds synthetic Supply Chain coordination and immutable history/evidence.
+  // Seed 49 grants only existing local synthetic users, preserves revoked rows on conflict,
+  // and adds no hosted user or authority. No inventory/ERP effects; generic table grants apply.
+  if (latestMigrationVersion !== 49) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

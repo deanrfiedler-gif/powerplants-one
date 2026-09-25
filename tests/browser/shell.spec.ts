@@ -159,7 +159,7 @@ test("r17 preview preserves permissions, contextual navigation and page guidance
   await expect(page.getByRole("button", { name: "Page guide", exact: true })).toBeFocused();
   await page.getByRole("button", { name: "Change identity", exact: true }).click();
   await page.getByLabel("Preview workspace", { exact: true }).selectOption("supply");
-  await expect(page).toHaveURL(/\/work\?department=supply$/);
+  await expect(page).toHaveURL(/\/supply\/material-readiness$/);
   await page.reload();
   await page.getByRole("button", { name: "Change identity", exact: true }).click();
   await expect(page.getByLabel("Preview workspace", { exact: true })).toHaveValue("supply");

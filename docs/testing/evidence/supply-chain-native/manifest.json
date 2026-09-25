@@ -1,0 +1,606 @@
+{
+  "schema_version": 1,
+  "build_id": "10gJ-npmZg83l88QcfFvc",
+  "images": [
+    {
+      "file": "pick-form-1024.png",
+      "sha256": "982a0f70ab0816f27d197f0a953ebd7ba133858e8623399b5e5ebd4f362da6a7",
+      "width": 1024,
+      "height": 768,
+      "captured_at_utc": "2026-09-24T20:56:35.707122+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "pick-form-1440.png",
+      "sha256": "d11cc5c8ba796705aecd854851d930bdc6c8e5fe9452d84963a4fe81cfde3af3",
+      "width": 1440,
+      "height": 960,
+      "captured_at_utc": "2026-09-24T20:54:51.457940+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "pick-form-320.png",
+      "sha256": "46af64433cca169dd3f47ae8cb6deef8bc3612b6d80a8d9f7b9e55e9d83dadec",
+      "width": 320,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T21:00:50.882227+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "pick-form-390.png",
+      "sha256": "969ab7d98fed3d27b947f2796f736cdbcf69781187e05f738b3f9ba24d7e4dc4",
+      "width": 390,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:58:48.942466+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "pod-form-1024.png",
+      "sha256": "6989e71b9bbd6b7170117f23598ade7c5142bfc1f689dcf78c05be5c4e68ff09",
+      "width": 1024,
+      "height": 768,
+      "captured_at_utc": "2026-09-24T20:56:38.117272+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "pod-form-1440.png",
+      "sha256": "de1334153ff50aa6751a08f2016f18bfeba9d7cd6028aba8264fea1f2a752497",
+      "width": 1440,
+      "height": 960,
+      "captured_at_utc": "2026-09-24T20:54:54.735369+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "pod-form-320.png",
+      "sha256": "60f299d2b17333e1c35a249b75eb511329798f6660793db441d990654317d650",
+      "width": 320,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T21:00:54.695577+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "pod-form-390.png",
+      "sha256": "f3f3cef81a49c8ac62ad50926944ebcd6d6711a226e5f5b82cd1c07b6f42eeb4",
+      "width": 390,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:58:52.178756+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "receipt-form-1024.png",
+      "sha256": "697880a73977738f3c5b48aa33b94092430aa47b1108273edc7112041b598b24",
+      "width": 1024,
+      "height": 768,
+      "captured_at_utc": "2026-09-24T20:56:29.807245+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "receipt-form-1440.png",
+      "sha256": "ac7ddd7c8bf91248c44a2c15c578c4d3d8b266762b4eedb9deff95a9b58c6058",
+      "width": 1440,
+      "height": 960,
+      "captured_at_utc": "2026-09-24T20:54:44.676386+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "receipt-form-320.png",
+      "sha256": "518c7ac4057dd8ae73050ed46781f313992f36c39ed4495853a055b254019aa5",
+      "width": 320,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T21:00:44.442166+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "receipt-form-390.png",
+      "sha256": "a3f9f53514d0430e25aa8eee2910ba60672a78441520442799805e108b45bb2a",
+      "width": 390,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:58:41.014321+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "reference-fulfilment-r01-1440.png",
+      "sha256": "792b970e52f1759f493477290d167dbbabf473dea078425d8fc71289b75ff58c",
+      "width": 1440,
+      "height": 960,
+      "captured_at_utc": "2026-09-24T20:46:01.885676+00:00",
+      "source": "unchanged issued HTML"
+    },
+    {
+      "file": "reference-material-readiness-r03-1440.png",
+      "sha256": "98cb9d72dfe1546673b9f3783fc557df2697f4c3f4e827fd7eb46af0aae558e9",
+      "width": 1440,
+      "height": 960,
+      "captured_at_utc": "2026-09-24T20:46:00.780085+00:00",
+      "source": "unchanged issued HTML"
+    },
+    {
+      "file": "reference-returns-r01-1440.png",
+      "sha256": "b37a688e4b5092bfab24c3543ac392d86b9a4928c5603679f9bee5ad2c218bce",
+      "width": 1440,
+      "height": 960,
+      "captured_at_utc": "2026-09-24T20:46:02.766443+00:00",
+      "source": "unchanged issued HTML"
+    },
+    {
+      "file": "sc-01-detail-supply-320.png",
+      "sha256": "d99672da247412c8bf98ea1189a17ebb717b67cb302671eb5df2a0ae470bac6f",
+      "width": 320,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:59:22.303599+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-01-detail-supply-390.png",
+      "sha256": "ebf4466c7eeb272baf2129b2740db7300fcae21fd03b2834c63ec62aba53ffce",
+      "width": 390,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:57:06.975404+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-01-supply-1024.png",
+      "sha256": "5f01d9876de031937f90e6dc172aae1dfce38549a488578eae67fb5822f0318a",
+      "width": 1024,
+      "height": 768,
+      "captured_at_utc": "2026-09-24T20:55:23.387098+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-01-supply-1440.png",
+      "sha256": "8de18b6be22baf978886f9bf68ed782160de7ecb498e9a4adb1d6acc7decf01c",
+      "width": 1440,
+      "height": 960,
+      "captured_at_utc": "2026-09-24T20:53:21.635101+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-01-supply-320.png",
+      "sha256": "d99672da247412c8bf98ea1189a17ebb717b67cb302671eb5df2a0ae470bac6f",
+      "width": 320,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:59:22.141078+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-01-supply-390.png",
+      "sha256": "ebf4466c7eeb272baf2129b2740db7300fcae21fd03b2834c63ec62aba53ffce",
+      "width": 390,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:57:06.853179+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-02-detail-supply-320.png",
+      "sha256": "c616554608e54abc88f1e02445e2bb8729b6a18f055854d059811121b99f5f4d",
+      "width": 320,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:59:30.630570+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-02-detail-supply-390.png",
+      "sha256": "543162046d68c3bd51e989d1cb1661097413472fb80f5981103c30677a6b6163",
+      "width": 390,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:57:16.252445+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-02-supply-1024.png",
+      "sha256": "e4f2547893bb264b23a7d48aeee0a3149168f75dc47f87173f638ef602e55297",
+      "width": 1024,
+      "height": 768,
+      "captured_at_utc": "2026-09-24T20:55:31.042139+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-02-supply-1440.png",
+      "sha256": "e8d02fc3ca953cbebeeca8c7aa3b4af33514d9ac7a1a92243df193552af3190d",
+      "width": 1440,
+      "height": 960,
+      "captured_at_utc": "2026-09-24T20:53:30.328410+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-02-supply-320.png",
+      "sha256": "c616554608e54abc88f1e02445e2bb8729b6a18f055854d059811121b99f5f4d",
+      "width": 320,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:59:30.497347+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-02-supply-390.png",
+      "sha256": "543162046d68c3bd51e989d1cb1661097413472fb80f5981103c30677a6b6163",
+      "width": 390,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:57:16.019204+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-03-detail-supply-320.png",
+      "sha256": "08d14b954ce7f68e7959e208ebfacd67d2ac051dd6a2b9d097a803b562658a6b",
+      "width": 320,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:59:38.053931+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-03-detail-supply-390.png",
+      "sha256": "589ad71d39681d213a36ceedf9286628809b22881c42fc863d7553705cfb2b1b",
+      "width": 390,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:57:25.872189+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-03-supply-1024.png",
+      "sha256": "c8ffca998e85813f72d3be72f4da0d7de97d545e82adb83cdae446029bb08147",
+      "width": 1024,
+      "height": 768,
+      "captured_at_utc": "2026-09-24T20:55:37.266750+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-03-supply-1440.png",
+      "sha256": "73174da789199c64774a5819aec8c670511193ecd09bccfdf34b49da6d6a7a9e",
+      "width": 1440,
+      "height": 960,
+      "captured_at_utc": "2026-09-24T20:53:39.343865+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-03-supply-320.png",
+      "sha256": "08d14b954ce7f68e7959e208ebfacd67d2ac051dd6a2b9d097a803b562658a6b",
+      "width": 320,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:59:37.849642+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-03-supply-390.png",
+      "sha256": "589ad71d39681d213a36ceedf9286628809b22881c42fc863d7553705cfb2b1b",
+      "width": 390,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:57:25.710955+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-04-detail-supply-320.png",
+      "sha256": "de70c913e68e59d8a04a61e82793d576ad14132c2e14e1e2682c30703bbf8449",
+      "width": 320,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:59:47.592787+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-04-detail-supply-390.png",
+      "sha256": "01e67f7201b19ed57489d878c0fbcfb3f44dc9cc057e7f938e1e189d97d2c039",
+      "width": 390,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:57:33.621251+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-04-supply-1024.png",
+      "sha256": "36d3d6ead73bee6445c50c7e21a63bcb7a38d056f476ce3e5b56d08769ee3f27",
+      "width": 1024,
+      "height": 768,
+      "captured_at_utc": "2026-09-24T20:55:43.359674+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-04-supply-1440.png",
+      "sha256": "88d6b097d9463d75c812755734dcad8bea6a5c5615a30a0a3cd1db01e615744d",
+      "width": 1440,
+      "height": 960,
+      "captured_at_utc": "2026-09-24T20:53:48.222915+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-04-supply-320.png",
+      "sha256": "de70c913e68e59d8a04a61e82793d576ad14132c2e14e1e2682c30703bbf8449",
+      "width": 320,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:59:47.378191+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-04-supply-390.png",
+      "sha256": "01e67f7201b19ed57489d878c0fbcfb3f44dc9cc057e7f938e1e189d97d2c039",
+      "width": 390,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:57:33.457088+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-05-detail-supply-320.png",
+      "sha256": "60eefa27d8503739cb65616dc8661c52d68f2dc361861eb24cae5ea5f89afc16",
+      "width": 320,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:59:56.726417+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-05-detail-supply-390.png",
+      "sha256": "e07be2f8edc7a839ca1f88b39e9367b821830dafb5d50f364e8a81322c74d997",
+      "width": 390,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:57:43.017617+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-05-supply-1024.png",
+      "sha256": "ef19fe03f1cbc256c01f2ee5bd0f8ca94aa3da2757d54e32ad40ef2b1ada40a4",
+      "width": 1024,
+      "height": 768,
+      "captured_at_utc": "2026-09-24T20:55:49.078693+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-05-supply-1440.png",
+      "sha256": "aa0d77b534c92408db1c2f6dce7d04da4259b8313762a7d1c5a732dc0c3a6d91",
+      "width": 1440,
+      "height": 960,
+      "captured_at_utc": "2026-09-24T20:53:57.009917+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-05-supply-320.png",
+      "sha256": "60eefa27d8503739cb65616dc8661c52d68f2dc361861eb24cae5ea5f89afc16",
+      "width": 320,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:59:56.525189+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-05-supply-390.png",
+      "sha256": "e07be2f8edc7a839ca1f88b39e9367b821830dafb5d50f364e8a81322c74d997",
+      "width": 390,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:57:42.827003+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-06-detail-supply-320.png",
+      "sha256": "0af4b1550efe835e8a8956b20b7cad598d8743e6af19b7639faee7cec2205185",
+      "width": 320,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T21:00:06.431446+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-06-detail-supply-390.png",
+      "sha256": "a59280ee831cda3c1777021d80f41f6a5147ae4f7266d4b49d82e943301d7cdb",
+      "width": 390,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:57:53.788351+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-06-supply-1024.png",
+      "sha256": "9e16b142efbb7bd68d26ef43a97f3fcc66cc18d6c23dbad6961c262eac538d65",
+      "width": 1024,
+      "height": 768,
+      "captured_at_utc": "2026-09-24T20:55:55.324509+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-06-supply-1440.png",
+      "sha256": "a3121e57e5ecd67dbd4f728f1d5b9846777377491e6622f9d5ec855522391539",
+      "width": 1440,
+      "height": 960,
+      "captured_at_utc": "2026-09-24T20:54:06.361191+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-06-supply-320.png",
+      "sha256": "0af4b1550efe835e8a8956b20b7cad598d8743e6af19b7639faee7cec2205185",
+      "width": 320,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T21:00:06.261648+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-06-supply-390.png",
+      "sha256": "a59280ee831cda3c1777021d80f41f6a5147ae4f7266d4b49d82e943301d7cdb",
+      "width": 390,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:57:53.601139+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-07-detail-supply-320.png",
+      "sha256": "af2d5e6e04d89756de950b63becacbded9de172ff27f3e9ccb3c64b6cd3e4619",
+      "width": 320,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T21:00:14.263944+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-07-detail-supply-390.png",
+      "sha256": "8794a4f472a3e97e677a2d92ca229a1b6ab06ad067a8729dbc10e258318cd5f8",
+      "width": 390,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:58:04.532378+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-07-supply-1024.png",
+      "sha256": "88a21862b382ce0371611a75da020955b7a7a901b4124f3be58b94b679a63356",
+      "width": 1024,
+      "height": 768,
+      "captured_at_utc": "2026-09-24T20:56:01.472093+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-07-supply-1440.png",
+      "sha256": "892bd07bbfd6182644f2928afabe97bf303358adb23766d73fba330e4d63aab4",
+      "width": 1440,
+      "height": 960,
+      "captured_at_utc": "2026-09-24T20:54:15.161105+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-07-supply-320.png",
+      "sha256": "af2d5e6e04d89756de950b63becacbded9de172ff27f3e9ccb3c64b6cd3e4619",
+      "width": 320,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T21:00:14.120205+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-07-supply-390.png",
+      "sha256": "8794a4f472a3e97e677a2d92ca229a1b6ab06ad067a8729dbc10e258318cd5f8",
+      "width": 390,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:58:04.348274+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-08-detail-supply-320.png",
+      "sha256": "2301ba287aecbd4f676abd07a717d25947511cc0cbc8e55fbc0afedbc55573d9",
+      "width": 320,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T21:00:21.607070+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-08-detail-supply-390.png",
+      "sha256": "74f52299f10854c11e7bc8b2b29385a0c1067690ca29e3fc25f976d40aedb43b",
+      "width": 390,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:58:14.165900+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-08-supply-1024.png",
+      "sha256": "d7467555de668bc1d1206ffb3d45636812f56fd9806703a2e043872c6784a43f",
+      "width": 1024,
+      "height": 768,
+      "captured_at_utc": "2026-09-24T20:56:09.050529+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-08-supply-1440.png",
+      "sha256": "3abd6ec3c9fc91f2e71b1f56122692d6e7bf3e77d94cfa81532593dcfcc7e524",
+      "width": 1440,
+      "height": 960,
+      "captured_at_utc": "2026-09-24T20:54:23.212484+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-08-supply-320.png",
+      "sha256": "d13ebd42baf832d4bc239df77fc2ece1101256dd57ce13262d6f0a21ff26c50d",
+      "width": 320,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T21:00:21.457558+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-08-supply-390.png",
+      "sha256": "022c32d20736b64f19e8d9eea84f795277e648d03f189bdeaec4da05cd5fc6b9",
+      "width": 390,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:58:13.986608+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-09-detail-supply-320.png",
+      "sha256": "9e00344844290fa89c6625cea781c6d956fe9793093711f80c9d57a618c9b614",
+      "width": 320,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T21:00:30.301826+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-09-detail-supply-390.png",
+      "sha256": "70ff93b054effee4f21e89e101f3a816af811eda31211afe7ea2d458df5361f8",
+      "width": 390,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:58:25.129958+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-09-supply-1024.png",
+      "sha256": "80fa2f168ac5a0d5ac782b49aa78ce81b488ec092b0487e7cc30aba5a2084125",
+      "width": 1024,
+      "height": 768,
+      "captured_at_utc": "2026-09-24T20:56:17.576299+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-09-supply-1440.png",
+      "sha256": "d7941aa6a75a979aa2a7e25e36d925f275d5c7b28a60db966bc39cfab0216f61",
+      "width": 1440,
+      "height": 960,
+      "captured_at_utc": "2026-09-24T20:54:32.010571+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-09-supply-320.png",
+      "sha256": "9e00344844290fa89c6625cea781c6d956fe9793093711f80c9d57a618c9b614",
+      "width": 320,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T21:00:30.150281+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-09-supply-390.png",
+      "sha256": "70ff93b054effee4f21e89e101f3a816af811eda31211afe7ea2d458df5361f8",
+      "width": 390,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:58:24.934846+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-10-detail-supply-320.png",
+      "sha256": "37d573373a064973b8da71d1bd75080ec9932a6aba6e40b8b0d69a2e80c7b412",
+      "width": 320,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T21:00:41.599902+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-10-detail-supply-390.png",
+      "sha256": "365140544ca30b70fb6d59c018d322582728747c5aaddc3d35e2768772830afa",
+      "width": 390,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:58:38.923565+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-10-supply-1024.png",
+      "sha256": "f8f0857ccccfe7a7d314c8d5fc4bdd49f3aeecc07e2ad2a13758f6604f966305",
+      "width": 1024,
+      "height": 768,
+      "captured_at_utc": "2026-09-24T20:56:27.502608+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-10-supply-1440.png",
+      "sha256": "15c1bdfb167445ff586a8446e3e23294febe4d46a80ffa17821459c873e2c329",
+      "width": 1440,
+      "height": 960,
+      "captured_at_utc": "2026-09-24T20:54:41.953614+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-10-supply-320.png",
+      "sha256": "37d573373a064973b8da71d1bd75080ec9932a6aba6e40b8b0d69a2e80c7b412",
+      "width": 320,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T21:00:41.439152+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    },
+    {
+      "file": "sc-10-supply-390.png",
+      "sha256": "365140544ca30b70fb6d59c018d322582728747c5aaddc3d35e2768772830afa",
+      "width": 390,
+      "height": 844,
+      "captured_at_utc": "2026-09-24T20:58:38.761349+00:00",
+      "source": "compiled native application 6305a2cc5b844444dad30d3369c73788b45b2d15"
+    }
+  ]
+}

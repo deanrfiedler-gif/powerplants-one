@@ -36,6 +36,8 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 No exact ES-01 mockup or HTML is available. The related [ES-02 wizard](../../../reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html) is a downstream workflow reference, not the workload layout baseline.
 
+A proposed [ES-01 design board r01](../../../reference/ui/estimating/workload-design-board-r01/README.md) is retained for review: 14 artboards in the Powerplants One design system, not accepted. Key boards: [D1 · Workload desktop](../../../reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-D1-Workload-Desktop-1440-r01.png) (1440 × 1400), [D2 · Saved estimates](../../../reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-D2-Saved-Estimates-Desktop-1440-r01.png) (1440 × 900), [R1 · 1024 drawer](../../../reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R1-Tablet-1024-Drawer-r01.png) (1024 × 768), [R2 · Phone 390](../../../reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R2-Phone-390-Workload-r01.png) (390 × 2112) and [R4 · Phone 320](../../../reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R4-Phone-320-Workload-r01.png) (320 × 700). The user decision, proposals P1–P9, open questions O1–O2 and build findings B1–B5 are in the [design board record](../../../decisions/es01-design-board.md).
+
 ## Behaviour, handovers and verification
 
 The draft User Guide `guide.page.estimating` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.

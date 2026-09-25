@@ -41,7 +41,7 @@ const rails = {
   engineering: ["My Work", "Engineering workload", "Design basis & interfaces", "Drawings", "Materials & substitutions", "Change review", "Technical reviews", "Commissioning & as-built"],
   projects: ["My Work", "Projects", "Programme", "Acceptance & closeout"],
   service: ["My Work", "Service requests", "Work orders", "Schedule", "Field team", "Job packs", "Service review", "Equipment"],
-  supply: ["My Work"],
+  supply: ["My Work", "Material demand", "Purchasing", "Inbound shipments", "Receiving", "Stock & reservations", "Dispatch & delivery", "Returns & claims"],
   finance: ["My Work", "Finance handoffs", "Customer accounts"],
 };
 test("Sales Tasks uses the same saved action as My Work and completes that action once", async ({ page }) => {
