@@ -421,11 +421,57 @@ test("CR05 issued source review saves attributed feedback, commercial preparatio
     .getByRole("button", { name: "Prepare commercial discussion", exact: true })
     .click();
   await page.getByRole("tab", { name: "Customer review", exact: true }).click();
+  const aftercarePath = `/api/v1/sales/aftercare/${id}`;
+  const closureResponse = page.waitForResponse(
+    (response) =>
+      new URL(response.url()).pathname === aftercarePath &&
+      response.request().method() === "POST" &&
+      response.request().postDataJSON()?.action === "Close",
+  );
+  // The Close receipt is followed by a separate resource refresh. A poll of
+  // the previous revision is not proof that the saved closure reached the UI.
+  const closedRead = page.waitForResponse(async (response) => {
+    if (
+      new URL(response.url()).pathname !== aftercarePath ||
+      response.request().method() !== "GET"
+    )
+      return false;
+    if (!response.ok()) return true;
+    return (await response.json()).record?.state === "Closed";
+  });
   await page
     .getByRole("button", { name: "Close aftercare record", exact: true })
     .click();
+  const closure = await closureResponse;
+  expect(closure.ok()).toBe(true);
+  const receipt = await closure.json();
+  expect(receipt).toMatchObject({ record_id: id, state: "Closed" });
+  const refreshed = await closedRead;
+  expect(refreshed.ok()).toBe(true);
+  expect((await refreshed.json()).record).toMatchObject({
+    id,
+    state: "Closed",
+    version: receipt.record_version,
+  });
   await expect(page.getByText("Closed", { exact: true }).first()).toBeVisible();
+  // Document load does not include the asynchronous record read. Observe the
+  // reload's exact GET and saved version before starting the UI assertion;
+  // neither the action timeout nor the five-second render budget is changed.
+  const reloadedRead = page.waitForResponse(
+    (response) =>
+      new URL(response.url()).pathname === aftercarePath &&
+      response.request().method() === "GET",
+  );
   await page.reload();
+  const reloaded = await reloadedRead;
+  expect(reloaded.ok()).toBe(true);
+  const persisted = await reloaded.json();
+  expect(persisted.record).toMatchObject({
+    id,
+    state: "Closed",
+    version: receipt.record_version,
+  });
+  expect(persisted.record.content.review.feedback[0].statement).toBe(statement);
   await expect(page.getByText("Closed", { exact: true }).first()).toBeVisible();
   await captureSizes(page, info.outputPath.bind(info), "cr05");
   await page.keyboard.press("Tab");

@@ -278,6 +278,18 @@ export function WorkTimer({
       reloadJob();
     }
   });
+  const attendanceId = job.attendance?.id;
+  const observedAttendance = useRef(attendanceId);
+  const refreshArrival = useEffectEvent(() => reloadTimer());
+  useEffect(() => {
+    // Arrival is saved by the surrounding field workspace. Its refreshed job
+    // must immediately invalidate our pre-arrival timer authority; waiting for
+    // the periodic refresh leaves a newly authorised Start disabled.
+    if (observedAttendance.current !== attendanceId) {
+      observedAttendance.current = attendanceId;
+      refreshArrival();
+    }
+  }, [attendanceId]);
   useEffect(() => {
     // The elapsed display renders every second. Keep this subscription stable
     // while its event reads current callbacks and command/dialog state.

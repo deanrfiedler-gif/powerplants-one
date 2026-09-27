@@ -11,6 +11,7 @@ import { prepareJourney, committed } from "../helpers/quality-prepare";
 import { completion, submit, review, issue } from "../helpers/quality-report";
 import { png } from "../helpers/field";
 import { financeJourney } from "../helpers/quality-finance";
+import { returnVisit } from "../helpers/quality-return";
 import { keyActivate, keySelect, keyType } from "../helpers/quality-keyboard";
 // The fixed device-local booking values below represent UTC. Pin the browser
 // timezone so the same fixture has the same meaning on Windows and CI.
@@ -629,12 +630,50 @@ test("P11 selected UI service-to-Finance journey preserves controlled booking, p
         keyboard_scope:
           "Native Tab/typing/select arrows/Enter: complete intake, controlled booking move, exact field submission, exact reserved report response and Finance approval. Other journey steps use labelled UI controls. No screen-reader, real-device or whole-product conformance claim.",
         p12_limit:
-          "This selected journey does not execute the full PT-28 update/policy procedure or a completed return attendance. Full PT-30 and owner/device handover remain open; no restore or acceptance is inferred.",
+          "This record freezes the initial-visit checkpoint. P11-return-visit.json records the subsequent controlled return when completed. Full PT-28/PT-30 and owner/device handover remain open; no restore or acceptance is inferred.",
         page_errors: errors,
       },
       null,
       2,
     ),
   );
+  // The return technician uses a separate browser/device. Keep the first
+  // technician's owner-bound offline originals in the original context.
+  const returnContext = await context.browser()!.newContext({
+    baseURL: "http://127.0.0.1:3000",
+    viewport: page.viewportSize(),
+    isMobile: info.project.name.startsWith("mobile"),
+    hasTouch: info.project.name.startsWith("mobile"),
+    locale: "en-AU",
+    timezoneId: "UTC",
+  });
+  try {
+    const returnPage = await returnContext.newPage();
+    returnPage.setDefaultTimeout(15000);
+    returnPage.on("pageerror", (e) => errors.push(e.message));
+    await call(returnPage, "local-session", { profile: "coordinator" });
+    await returnPage.goto(`/service/reports/${rid}`);
+    await returnVisit(returnPage, info, {
+      ...source,
+      report_id: rid,
+      presentation,
+      return_proposal: proposal,
+      finance,
+    });
+  } finally {
+    await returnContext.close();
+  }
+  // Crew/history review intentionally locked the first device. Re-verify its
+  // original owner through the supported recovery UI before comparing bytes.
+  await identity(page, "assigned-technician");
+  await page.goto("/offline/index.html");
+  const ownerRead = page.waitForResponse(response =>
+    new URL(response.url()).pathname === "/api/v1/my-jobs" &&
+    response.request().method() === "GET");
+  await page.getByRole("button", { name: "Verify identity online", exact: true }).click();
+  expect((await ownerRead).ok()).toBe(true);
+  await expect(page.locator("#notice")).toContainText("Identity verified");
+  await expect(page.locator("#queue .status")).toHaveText(Array(5).fill("Server accepted and saved"));
+  expect((await localRows()).map((x: { original: unknown }) => x.original)).toEqual(originals);
   expect(errors).toEqual([]);
 });

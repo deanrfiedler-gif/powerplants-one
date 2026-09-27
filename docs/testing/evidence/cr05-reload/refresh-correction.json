@@ -1,0 +1,23 @@
+{
+  "runtime_source": "bd8e23f9a4e12314e49bddc48170eb0d4a73cba8",
+  "compiled_build": "UZPI1x18dLnHDUDBsGSWz",
+  "earlier_correction": "a17c6703424db4f7a75c09a0d16569a7bbcc1f95",
+  "local_results": {
+    "first_correction_delayed_refresh_expected_failure": 1,
+    "preceding_baseline_passed": 3,
+    "final_delayed_refresh_and_reload_passed": 2,
+    "final_wrong_reload_state_expected_failure": 1,
+    "final_normal_sales_passed": 8
+  },
+  "boundary": "Exact real responses held 6200ms in diagnostic copies only; normal Sales suite has no delay/substitution. Original timeouts and runtime unchanged. Compiled PID 35556; health HTTP200; no Playwright webServer. Earlier private proof environments untouched.",
+  "sha256_lf": {
+    "tests/browser/sales-workflows.spec.ts": "e1ca9a939d56417ab3353ea74b720858843e8cdc79cd8fe9d040dc5132d6ee8e",
+    "tmp/cr05-refresh-baseline.spec.ts": "47597a0c85de2ceacd9f211ad5f8eeb13a318b8a8e6a6bfb6d77439d0f389d35",
+    "tmp/cr05-refresh-corrected.spec.ts": "087859c984c1945f8a6bbde1dcf58cd1c4f88724e081617b62ef69bba9debe39",
+    "tmp/cr05-final-wrong-state.spec.ts": "68bb576ba3ceb4971517cefa1783a29931204d1a6e9bbf2c4102ffa42d32afd0",
+    "tmp/refresh-baseline.log": "663678966de01bad69c3f55f2f814a0bce16fd02f5beba76976ec1b85460bab8",
+    "tmp/refresh-corrected.log": "b2bd3bc91ff649176cae790f2addaf86f51c6583d4d012b2bdf424f98cb516d5",
+    "tmp/final-wrong-state.log": "6c25ad6250b57d12c16984c98a3be0fc3a72b29d29a1c72360b7de64dabb282b",
+    "tmp/final-sales.log": "29e1ca0ea3f51992705203a79d805873ab755dd3b6870b8f8eebf41fa66fd5fb"
+  }
+}

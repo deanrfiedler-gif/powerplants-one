@@ -1,0 +1,12 @@
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.58"}
+
+Running 2 tests using 1 worker
+
+(node:31944) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop-chromium] › tests\browser\quality-journey.spec.ts:20:1 › P11 selected UI service-to-Finance journey preserves controlled booking, personal originals, exact response and reconciled Travel no-posting (3.0m)
+(node:25816) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 [mobile-chromium] › tests\browser\quality-journey.spec.ts:20:1 › P11 selected UI service-to-Finance journey preserves controlled booking, personal originals, exact response and reconciled Travel no-posting (3.1m)
+
+  2 passed (6.5m)

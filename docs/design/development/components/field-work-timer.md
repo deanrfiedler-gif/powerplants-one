@@ -10,6 +10,8 @@ The Record detail keeps original arrival distinct from timer Start. Running and 
 
 The one-second elapsed display does not restart the 15-second server refresh subscription. Refresh reads the current dialog and unresolved-command state and pauses while either prevents it; closing a dialog restores the existing refresh cadence. The native browser fixture waits for an unsolicited server read while the clock is running. The integrated service fixture waits for both independent job/timer reads before using the arrival and pack controls.
 
+Saving actual arrival in the FI-01 host immediately refreshes the timer authority read. The `quality-return.ts` host fixture asserts Start is enabled within the ordinary five-second browser assertion budget, before the 15-second polling cadence. This affects only `/my-jobs/[id]`; the My Jobs banner binding is unchanged. Review status remains pending.
+
 The outgoing Service review handover uses the shared desktop Service operations rail or the phone More menu. It retains the current actor and server-side report permissions.
 
 ## Desktop
