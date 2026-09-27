@@ -32,3 +32,9 @@ The current PT-27 compiled benchmark has sixteen candidate misses (p95 3.42–10
 No new framework, service or external integration is selected. MYOB remains intended ERP authority, SharePoint owns business documents and native CAD retains authoring. This decision authorises synthetic repository work and reviewable PRs; it does not authorise business transactions, customer messages, operational migration or production promotion.
 
 Execution and remaining obligations: [consolidation handover](../delivery/repository-consolidation.md).
+
+## Next bounded acceptance increment — 27 September 2026
+
+Dean's continuing instruction to proceed covers the local PT-28 compatible-update component after the completed return-visit proof. Reuse the existing Node/TypeScript, PostgreSQL, Chromium and owner-bound offline store under ADR-0024; select no new technology. Use two clean compiled releases and one dedicated disposable database: old schema-1 work includes six accepted originals with lost responses, one never-submitted supported original and one explicitly unsupported fixture. Apply the existing additive 0050 migration, exercise the real service-worker waiting/activation lifecycle, recover exact originals and verify immutable issued bytes. Then restart the old application against the upgraded database to verify the bounded old-command rollback path; do not downgrade schema, restore a prior database or infer rollback safety for new Timer commands or external Finance outcomes.
+
+Changing scheduling policy is a separate business command with authority and future-booking impact requirements. The current source has no such publisher. Direct fixture/database edits cannot stand in for that procedure. Record this increment as a component result rather than complete PT-28, owner acceptance or hosted deployment.

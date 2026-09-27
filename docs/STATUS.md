@@ -6,6 +6,8 @@
 
 ## Current work
 
+Current repository-writing session: `codex/pt28-compatible-update-proof`, continuing Dean's instruction to proceed on 27 September. Rehearse an actual local compiled application update from `80b2f41` / schema 0049 to the timer/return candidate / schema 0050, preserving old offline originals, exact receipts and issued pack bytes. Software rollback keeps schema and accepted outcomes; policy publication and full PT-28 remain separate. Execution results will be recorded after the rehearsal.
+
 Dean authorised the [repository consolidation and service-verification decision](decisions/repository-consolidation.md) after the 27 September audit. The [execution ledger](delivery/repository-consolidation.md) records exact evidence and remaining work. Sequence: reconcile delivery records and unfinished migration allocations; complete the existing FI-01/FI-02 timer/offline branch; verify one continuous synthetic planned-service journey and retain performance/acceptance findings.
 
 The original `docs/field-quality-build-plan` checkout and its uncommitted planning/reference edits are preserved. Consolidation uses `codex/repository-consolidation` from current main. Timer/offline continues in `feat/fi01-fi02-field-timer-offline`. No PR was open at preflight; unfinished local branches remain real work, not delivered functionality.
