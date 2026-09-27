@@ -1,0 +1,46 @@
+{
+  "runtime_source": "ab61c06cf9298d650bfe5072970b97e0e80f1363",
+  "unchanged_main_comparison": "336ba908f5512db7d24057b0c4c3842a831e00be",
+  "compiled_build": "_i4X3PZ5XXPox0KlUAbj8",
+  "sha256_lf": {
+    "tests/browser/sales-workflows.spec.ts": "a46305a6fa02f4cc32ca220c8a2cb17b14ff3ac0ea71e728a3896c433d1a014b",
+    "tmp/cr05-baseline.spec.ts": "326ae5ea93c5a3dfd6a017b207c657df23fc2e08d3c48ef72ef341d9680645ba",
+    "tmp/cr05-corrected-delay.spec.ts": "21a6fb873932c09f96473877ec0e51948db9e241351d37e7c89ca270f726f498",
+    "tmp/cr05-wrong-state.spec.ts": "71fe509a467f608e5586f2fefb9f5e46bb7cf9f5d9a4b1e0c3f1f4329251593b",
+    "tmp/baseline-delay.log": "023506897d0cab584e369a6ff7fefb6394e811e1e260bf6f74f2b86a51ba8c56",
+    "tmp/corrected-delay.log": "cf1a719f6592cc42da85b781ac23cec055d518b47a900d585ccc81b459fa7e9a",
+    "tmp/wrong-state.log": "43ec5e7fabe830e4ada72006a6dc95927959bcbfe8171e43dd86e2860e8de8fb",
+    "tmp/sales-focused.log": "79271a8af268a689acd2e7105ca37b4e1e87a071e3a3581d8f5f0990ec9d9e8d",
+    "tmp/build.log": "8b1ae66d4fac51e9f972410abd3a2147086c9d5ca90dcc12d588dbc6f389ef0f"
+  },
+  "original_ci": {
+    "322": {
+      "run": 36313348099,
+      "job": 108603349591,
+      "passed": 519,
+      "skipped": 79,
+      "failed": 1
+    },
+    "323": {
+      "run": 36315063110,
+      "job": 108608105798,
+      "passed": 519,
+      "skipped": 79,
+      "failed": 1
+    },
+    "main": {
+      "run": 36314610335,
+      "job": 108606832229,
+      "passed": 520,
+      "skipped": 79,
+      "failed": 0
+    }
+  },
+  "local": {
+    "original_delay_expected_failure": 1,
+    "corrected_delay_passed": 2,
+    "wrong_state_expected_failure": 1,
+    "normal_sales_passed": 8
+  },
+  "boundary": "Private raw logs/traces remain in the isolated stack-verification checkout; no credentials, request bodies, session headers or profile data included."
+}
