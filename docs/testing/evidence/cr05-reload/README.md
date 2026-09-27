@@ -14,9 +14,13 @@ The test synchronised only with document `load`. `AftercareDetail` then starts a
 
 A controlled local reproduction kept the actual compiled runtime and real database response: the reload GET returned HTTP 200, Closed, version 7 in 524 ms, then a route held those exact response bytes for 6,200 ms before delivery. The original five-second assertion failed with the same loading state. The retained local trace confirms document reload completed before the pending record response reached the page. This demonstrates the synchronisation fault; the injected delay is not a measurement of CI or application performance.
 
+## Additional original retry
+
+The already-running retry of original #322 source `ab61c06` completed as another failure: [attempt 2, job 108614290307](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/36313348099/job/108614290307), again 519 passed / 79 skipped / one failed. This time line 427 failed **before reload**. Retained context shows **Close saved**, **Saved version 6**, **Review Completed** and **Loading the saved revision before the next action**. The save receipt and the following resource refresh are separate asynchronous operations. Waiting for the POST alone does not establish that its refreshed record reached the UI. No further original-head rerun was requested. [Minimal original retry record](original-retry.json) pins the private retained log/context.
+
 ## Correction and executed checks
 
-`tests/browser/sales-workflows.spec.ts` now observes the exact Close POST and validates its receipt. Before reload it registers the exact record GET waiter, then requires HTTP success, Closed state, the receipt's saved version and unchanged attributed feedback. The original post-reload visible Closed assertion remains at five seconds. No runtime change, skip, retry, blanket deadline change or performance-threshold change is introduced.
+`tests/browser/sales-workflows.spec.ts` now observes the exact Close POST and validates its receipt, then waits for the exact record refresh carrying Closed and checks it against the receipt version before the first unchanged visible assertion. It ignores an older pre-closure poll when selecting that refresh. Before reload it registers the exact record GET waiter, then requires HTTP success, Closed state, the receipt's saved version and unchanged attributed feedback. The original post-reload visible Closed assertion remains at five seconds. No runtime change, skip, retry, blanket deadline change or performance-threshold change is introduced.
 
 - Original delayed-response control: three preceding Sales cases passed; CR05 failed as expected.
 - Corrected delayed-response control: desktop and phone passed with the same 6,200 ms hold of the real response.
@@ -31,6 +35,12 @@ The compiled launcher was explicitly started with `--compiled`; its PID owned po
 [Minimal trace observations](trace-summary.json) retain only methods, timings, statuses and assertion parameters; [manifest](manifest.json) pins the source, local logs and private traces. Original CI artifacts and local raw traces remain private and distinct from corrected results. To reproduce the diagnostic, intercept only the exact aftercare GET immediately before reload, fetch the real response, hold it 6,200 ms, then fulfil with that response; for the negative control change only `record.state` to ReviewCompleted. These interventions are diagnostic copies of the spec, not committed application behaviour.
 
 PT-27 timing misses, complete PT-28/PT-30, independent physical-device/accessibility/visual review and production readiness remain open. No deployment or external business action occurred.
+
+## Saved-refresh correction verification
+
+The first correction `a17c670` still reproduced the newly observed pre-reload race when the actual post-close resource response was held for 6,200 ms: three preceding desktop Sales cases passed and CR05 failed at the unchanged first five-second Closed assertion. The real Closed response was HTTP 200/version 21 in 276 ms before the deliberate hold. The extended waiter then passed both desktop and phone with **both post-close and reload reads** held, including an older ReviewCompleted poll ahead of the saved Closed revision. The final normal compiled Sales suite passed all eight cases. A fresh negative control still failed the exact post-reload persisted-state assertion when only that response state was replaced. See the [separate follow-up manifest](refresh-correction.json); original evidence remains unchanged.
+
+These follow-up cases use the compiled runtime from `bd8e23f9a4e12314e49bddc48170eb0d4a73cba8`, build `UZPI1x18dLnHDUDBsGSWz`; Sales runtime matches main and the correction branch. The explicit compiled launcher PID 35556 owned port 3000 and `/api/v1/health` returned HTTP 200; fallback launchers stayed disabled. An initial readiness probe used the wrong `/api/health` path and was corrected before tests started. A local type-check invocation on the older #322 branch encountered generated `.next` references to the later #324 routes; the final stack is checked with matching source/build rather than deleting evidence or pretending that invocation passed.
 
 ## Corrected stack verification
 
