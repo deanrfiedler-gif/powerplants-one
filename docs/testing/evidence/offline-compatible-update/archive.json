@@ -1,0 +1,12 @@
+{
+  "documents": {
+    "files": 5,
+    "manifest_sha256": "161511392ac61d9abf9d36347df4392d9d5986af73d3e3b677b70cf3cd0a6982"
+  },
+  "profile": {
+    "files": 234,
+    "manifest_sha256": "99dd89a9d2bf42bfa3c2cafd34aad443a30b30efb1c10604ccc0378ed532722f"
+  },
+  "database_dump_sha256": "0e9ef33bc2f695145bcd96c8cd1700107cd994db64fcbf3920b4ec2d02a891e3",
+  "limits": "Stopped disposable source archive and exact closed-file copies only. No restore or PT-22 execution claim."
+}
