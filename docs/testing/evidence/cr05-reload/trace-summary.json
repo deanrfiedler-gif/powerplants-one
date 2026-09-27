@@ -1,0 +1,641 @@
+{
+  "baseline_delayed": [
+    {
+      "trace_sha256": "42bf779334d3d977122fc453b4398770334cec7dd5e6de52ef59e70970982845",
+      "project": "desktop",
+      "actions": [
+        {
+          "callId": "call@967",
+          "startTime": 52011.658,
+          "method": "expect",
+          "params": {
+            "selector": "internal:text=\"Closed\"s >> nth=0",
+            "expression": "to.be.visible",
+            "expectedValue": {
+              "value": {
+                "v": "undefined"
+              },
+              "handles": []
+            },
+            "isNot": false,
+            "timeout": 5000
+          }
+        },
+        {
+          "callId": "call@971",
+          "startTime": 52996.821,
+          "method": "reload",
+          "params": {
+            "waitUntil": "load"
+          }
+        },
+        {
+          "callId": "call@973",
+          "startTime": 53249.864,
+          "method": "expect",
+          "params": {
+            "selector": "internal:text=\"Closed\"s >> nth=0",
+            "expression": "to.be.visible",
+            "expectedValue": {
+              "value": {
+                "v": "undefined"
+              },
+              "handles": []
+            },
+            "isNot": false,
+            "timeout": 5000
+          }
+        }
+      ],
+      "requests": [
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:31:13.520Z",
+          "duration_ms": 485.428,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "start": "2026-09-27T12:31:15.538Z",
+          "duration_ms": 109.951,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:31:15.666Z",
+          "duration_ms": 378.252,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "start": "2026-09-27T12:31:16.534Z",
+          "duration_ms": 82.994,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:31:16.630Z",
+          "duration_ms": 284.331,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "start": "2026-09-27T12:31:16.969Z",
+          "duration_ms": 101.89399999999999,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:31:17.094Z",
+          "duration_ms": 300.322,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "start": "2026-09-27T12:31:18.718Z",
+          "duration_ms": 73.696,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:31:18.810Z",
+          "duration_ms": 317.2,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "start": "2026-09-27T12:31:19.191Z",
+          "duration_ms": 104.533,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:31:19.336Z",
+          "duration_ms": 309.31,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:31:20.481Z",
+          "duration_ms": -1,
+          "status": -1
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:31:11.863Z",
+          "duration_ms": 532.5999999999985,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "start": "2026-09-27T12:31:12.404Z",
+          "duration_ms": 136.25099999999657,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:31:17.907Z",
+          "duration_ms": 393.9320000000007,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:31:20.485Z",
+          "duration_ms": 517.4000000000015,
+          "status": 200
+        }
+      ]
+    }
+  ],
+  "corrected_delayed": [
+    {
+      "trace_sha256": "36b2b1994a54f4f30a60d5dbbb114dbca4ea204f868adc0513e6caa1b440a38d",
+      "project": "desktop",
+      "actions": [
+        {
+          "callId": "call@127",
+          "startTime": 14675.038,
+          "method": "expect",
+          "params": {
+            "selector": "internal:text=\"Closed\"s >> nth=0",
+            "expression": "to.be.visible",
+            "expectedValue": {
+              "value": {
+                "v": "undefined"
+              },
+              "handles": []
+            },
+            "isNot": false,
+            "timeout": 5000
+          }
+        },
+        {
+          "callId": "call@134",
+          "startTime": 15702.02,
+          "method": "reload",
+          "params": {
+            "waitUntil": "load"
+          }
+        },
+        {
+          "callId": "call@146",
+          "startTime": 22809.381,
+          "method": "expect",
+          "params": {
+            "selector": "internal:text=\"Closed\"s >> nth=0",
+            "expression": "to.be.visible",
+            "expectedValue": {
+              "value": {
+                "v": "undefined"
+              },
+              "handles": []
+            },
+            "isNot": false,
+            "timeout": 5000
+          }
+        }
+      ],
+      "requests": [
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:32:31.337Z",
+          "duration_ms": 547.142,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "start": "2026-09-27T12:32:33.260Z",
+          "duration_ms": 97.508,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:32:33.371Z",
+          "duration_ms": 345.269,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "start": "2026-09-27T12:32:34.213Z",
+          "duration_ms": 189.967,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:32:34.420Z",
+          "duration_ms": 300.021,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "start": "2026-09-27T12:32:35.144Z",
+          "duration_ms": 92.66000000000001,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:32:35.250Z",
+          "duration_ms": 264.486,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "start": "2026-09-27T12:32:36.216Z",
+          "duration_ms": 110.28500000000001,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:32:36.362Z",
+          "duration_ms": 544.629,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "start": "2026-09-27T12:32:37.283Z",
+          "duration_ms": 129.76500000000001,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:32:37.447Z",
+          "duration_ms": 428.982,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:32:38.743Z",
+          "duration_ms": 6770.379,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:32:45.716Z",
+          "duration_ms": -1,
+          "status": -1
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:32:29.525Z",
+          "duration_ms": 472.076,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "start": "2026-09-27T12:32:30.005Z",
+          "duration_ms": 67.72399999999925,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:32:30.077Z",
+          "duration_ms": 153.6260000000002,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "start": "2026-09-27T12:32:30.234Z",
+          "duration_ms": 53.38299999999981,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:32:35.547Z",
+          "duration_ms": 261.72899999999936,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:32:38.757Z",
+          "duration_ms": 539.5060000000012,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:32:45.723Z",
+          "duration_ms": 312.70400000000154,
+          "status": 200
+        }
+      ]
+    },
+    {
+      "trace_sha256": "42f99057f27e6a291bd81ece36af625358b1a75bb9657147ff3cffd47683202a",
+      "project": "mobile",
+      "actions": [
+        {
+          "callId": "call@127",
+          "startTime": 40679.701,
+          "method": "expect",
+          "params": {
+            "selector": "internal:text=\"Closed\"s >> nth=0",
+            "expression": "to.be.visible",
+            "expectedValue": {
+              "value": {
+                "v": "undefined"
+              },
+              "handles": []
+            },
+            "isNot": false,
+            "timeout": 5000
+          }
+        },
+        {
+          "callId": "call@134",
+          "startTime": 42437.749,
+          "method": "reload",
+          "params": {
+            "waitUntil": "load"
+          }
+        },
+        {
+          "callId": "call@146",
+          "startTime": 50249.484,
+          "method": "expect",
+          "params": {
+            "selector": "internal:text=\"Closed\"s >> nth=0",
+            "expression": "to.be.visible",
+            "expectedValue": {
+              "value": {
+                "v": "undefined"
+              },
+              "handles": []
+            },
+            "isNot": false,
+            "timeout": 5000
+          }
+        }
+      ],
+      "requests": [
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:32:55.801Z",
+          "duration_ms": 607.914,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "start": "2026-09-27T12:32:58.260Z",
+          "duration_ms": 130.422,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:32:58.420Z",
+          "duration_ms": 422.974,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "start": "2026-09-27T12:32:59.261Z",
+          "duration_ms": 110.918,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:32:59.389Z",
+          "duration_ms": 308.011,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "start": "2026-09-27T12:33:00.185Z",
+          "duration_ms": 123.235,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:33:00.335Z",
+          "duration_ms": 315.659,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "start": "2026-09-27T12:33:01.896Z",
+          "duration_ms": 101.274,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:33:02.038Z",
+          "duration_ms": 610.437,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "start": "2026-09-27T12:33:03.058Z",
+          "duration_ms": 340.85400000000004,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:33:03.437Z",
+          "duration_ms": 1348.3020000000001,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:33:05.839Z",
+          "duration_ms": 7095.363,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:33:13.223Z",
+          "duration_ms": -1,
+          "status": -1
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:32:52.813Z",
+          "duration_ms": 772.8689999999988,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "start": "2026-09-27T12:32:53.601Z",
+          "duration_ms": 198.96600000000035,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:32:53.813Z",
+          "duration_ms": 994.8220000000001,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "start": "2026-09-27T12:32:54.830Z",
+          "duration_ms": 103.20000000000073,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:33:01.181Z",
+          "duration_ms": 299.333000000006,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:33:05.857Z",
+          "duration_ms": 859.5780000000013,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:33:13.234Z",
+          "duration_ms": 328.10400000000664,
+          "status": 200
+        }
+      ]
+    }
+  ],
+  "wrong_state": [
+    {
+      "trace_sha256": "35d8be4f57dbdaa66884ec96a27bffe0062ee21d538f10b9e1d0c3166d0c6854",
+      "project": "desktop",
+      "actions": [
+        {
+          "callId": "call@127",
+          "startTime": 21179.692,
+          "method": "expect",
+          "params": {
+            "selector": "internal:text=\"Closed\"s >> nth=0",
+            "expression": "to.be.visible",
+            "expectedValue": {
+              "value": {
+                "v": "undefined"
+              },
+              "handles": []
+            },
+            "isNot": false,
+            "timeout": 5000
+          }
+        },
+        {
+          "callId": "call@134",
+          "startTime": 21720.057,
+          "method": "reload",
+          "params": {
+            "waitUntil": "load"
+          }
+        }
+      ],
+      "requests": [
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:34:08.490Z",
+          "duration_ms": 660.6529999999999,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "start": "2026-09-27T12:34:11.082Z",
+          "duration_ms": 173.084,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:34:11.271Z",
+          "duration_ms": 430.687,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "start": "2026-09-27T12:34:12.218Z",
+          "duration_ms": 242.926,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:34:12.488Z",
+          "duration_ms": 351.633,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "start": "2026-09-27T12:34:13.315Z",
+          "duration_ms": 149.003,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:34:13.497Z",
+          "duration_ms": 393.565,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "start": "2026-09-27T12:34:15.462Z",
+          "duration_ms": 157.993,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:34:15.651Z",
+          "duration_ms": 461.868,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "start": "2026-09-27T12:34:16.305Z",
+          "duration_ms": 156.405,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:34:16.489Z",
+          "duration_ms": 412.755,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:34:17.655Z",
+          "duration_ms": 612.917,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:34:18.653Z",
+          "duration_ms": -1,
+          "status": -1
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:34:05.824Z",
+          "duration_ms": 618.1380000000008,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "start": "2026-09-27T12:34:06.454Z",
+          "duration_ms": 192.90600000000086,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:34:06.655Z",
+          "duration_ms": 419.4830000000002,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "start": "2026-09-27T12:34:07.084Z",
+          "duration_ms": 137.77400000000125,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:34:14.463Z",
+          "duration_ms": 432.89900000000125,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "start": "2026-09-27T12:34:17.683Z",
+          "duration_ms": 568.3209999999999,
+          "status": 200
+        }
+      ]
+    }
+  ]
+}
