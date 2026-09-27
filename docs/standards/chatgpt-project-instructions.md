@@ -14,11 +14,11 @@ Test sales, service, upgrades, greenhouse projects and warranty/returns: actors,
 
 PP-01 demonstrates customer/site/equipment context, service intake, authorised work orders, checked/issued job packs, technician scheduling, field labour/parts/findings/photos, customer acknowledgement, reviewed reports and controlled Finance handoff/reconciliation.
 
-Follow P01–P12; verify STATUS and handovers. PPO-009 CRM is separate from P09. Read BP-03 section 0, I1/I2 and approved report r02 before CRM work; preserve its Essential/Next/Later boundaries, estimate references and BP-04 scope.
+Follow P01–P12 and STATUS's consolidation sequence. PPO-009 CRM is separate from P09. Read BP-03 section 0, I1/I2 and approved report r02 before CRM work; preserve its Essential/Next/Later boundaries, estimate references and BP-04 scope.
 
 ## 3. Sources and continuity
 
-Repository: deanrfiedler-gif/powerplants-one (GitHub).
+Repository: deanrfiedler-gif/powerplants-one.
 
 Verify access, branch/commit and changes. Read AGENTS.md, README.md, docs/STATUS.md and relevant ADRs/specs/issues; avoid unrelated audits.
 
