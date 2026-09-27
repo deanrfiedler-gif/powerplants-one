@@ -51,8 +51,8 @@
       "original_sha256": "6fa300495da90e7c2295d9f616fa6751bd09e05f7fa9526aae63a79c0e5161ad"
     },
     "compiled-build.txt": {
-      "sha256": "4666373d460184f9cf01cdc841f8f7feb71d5f1af2a7b45482e2c11779645eba",
-      "bytes": 21118,
+      "sha256": "07188a2a2ca904babf9e52cb5d0bce6bf6e577c013cefa39c95183e48a571b79",
+      "bytes": 21117,
       "original_sha256": "cbf8b3cc5c80209abd3f1eb4456d36993178b84d57e8bcf226d39d9494a42158"
     },
     "earlier-combined-run.txt": {
@@ -71,6 +71,6 @@
       "original_sha256": "d2926b357d2359a9fe80316c687687a4a43c82994836b5a9d68da975774ef53b"
     }
   },
-  "log_normalisation": "UTF-8; CRLF to LF; ANSI colour and trailing line whitespace removed. Original-byte hashes retained.",
+  "log_normalisation": "UTF-8; CRLF to LF; ANSI colour and trailing line whitespace removed; final blank log lines trimmed. Original-byte hashes retained.",
   "limits": "Synthetic browser/restart evidence. Captures show the scrolled return history viewport; no full-document, independent visual, physical-device, screen-reader or owner acceptance claim."
 }
