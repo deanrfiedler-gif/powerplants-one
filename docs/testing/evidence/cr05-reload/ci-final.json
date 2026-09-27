@@ -1,0 +1,104 @@
+{
+  "322": {
+    "head": "f3f560d4c00cd6905b2a9c60034be4633402803d",
+    "suites": {
+      "compiled": {
+        "job_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/36321799654/job/108626941923",
+        "conclusion": "SUCCESS",
+        "raw_log_sha256": "d19de70abbe2ea6a8554a88208ba4580d9a51f69050dd8dfa2938149b548a989",
+        "full_suite_passed": 520,
+        "full_suite_skipped": 79,
+        "selected_result_lines": [
+          "2026-09-27T13:36:42.6634008Z   \u2713  231 [desktop-chromium] \u203a tests/browser/sales-workflows.spec.ts:297:1 \u203a CR05 issued source review saves attributed feedback, commercial preparation and guarded closure with responsive controls (19.6s)",
+          "2026-09-27T13:54:57.0894106Z   \u2713  530 [mobile-chromium] \u203a tests/browser/sales-workflows.spec.ts:297:1 \u203a CR05 issued source review saves attributed feedback, commercial preparation and guarded closure with responsive controls (19.2s)",
+          "2026-09-27T13:59:16.3165889Z   79 skipped",
+          "2026-09-27T13:59:16.3166199Z   520 passed (41.0m)"
+        ]
+      },
+      "application": {
+        "job_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/36321799601/job/108626942818",
+        "conclusion": "SUCCESS",
+        "raw_log_sha256": "bc6c96a5a2cfdf3ea3a692d147caf3558afbd163adf9b58dcc86a1b57f6f1976",
+        "full_suite_passed": 520,
+        "full_suite_skipped": 79,
+        "selected_result_lines": [
+          "2026-09-27T13:21:00.8622779Z   14 passed (47.3s)",
+          "2026-09-27T13:22:26.0219625Z   15 passed (1.2m)",
+          "2026-09-27T13:23:52.8014797Z   17 passed (1.4m)",
+          "2026-09-27T13:44:53.2403579Z   \u2713  231 [desktop-chromium] \u203a tests/browser/sales-workflows.spec.ts:297:1 \u203a CR05 issued source review saves attributed feedback, commercial preparation and guarded closure with responsive controls (48.8s)",
+          "2026-09-27T14:03:54.6183410Z   \u2713  530 [mobile-chromium] \u203a tests/browser/sales-workflows.spec.ts:297:1 \u203a CR05 issued source review saves attributed feedback, commercial preparation and guarded closure with responsive controls (19.7s)",
+          "2026-09-27T14:08:17.0246499Z   79 skipped",
+          "2026-09-27T14:08:17.0246995Z   520 passed (43.5m)"
+        ]
+      }
+    }
+  },
+  "323": {
+    "head": "67aa70cb82e4afd9cba5c47fbbd65e363184693d",
+    "suites": {
+      "compiled": {
+        "job_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/36321828997/job/108627020453",
+        "conclusion": "SUCCESS",
+        "raw_log_sha256": "33e1103a7ef735508fb9cec79e27cf1f91664e045ed3ef50ac337802570d7a7c",
+        "full_suite_passed": 520,
+        "full_suite_skipped": 79,
+        "selected_result_lines": [
+          "2026-09-27T13:36:47.8286460Z   \u2713  231 [desktop-chromium] \u203a tests/browser/sales-workflows.spec.ts:297:1 \u203a CR05 issued source review saves attributed feedback, commercial preparation and guarded closure with responsive controls (19.3s)",
+          "2026-09-27T13:54:31.4502778Z   \u2713  530 [mobile-chromium] \u203a tests/browser/sales-workflows.spec.ts:297:1 \u203a CR05 issued source review saves attributed feedback, commercial preparation and guarded closure with responsive controls (19.2s)",
+          "2026-09-27T13:58:47.1321875Z   79 skipped",
+          "2026-09-27T13:58:47.1322312Z   520 passed (40.0m)"
+        ]
+      },
+      "application": {
+        "job_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/36321829007/job/108627020536",
+        "conclusion": "SUCCESS",
+        "raw_log_sha256": "46960a6bd399005dfba8b88acae23d43333a898d0eb30ce05ce88e93f25ef1b7",
+        "full_suite_passed": 520,
+        "full_suite_skipped": 79,
+        "selected_result_lines": [
+          "2026-09-27T13:21:18.6327765Z   14 passed (46.5s)",
+          "2026-09-27T13:22:44.6975288Z   15 passed (1.2m)",
+          "2026-09-27T13:24:13.7253590Z   17 passed (1.5m)",
+          "2026-09-27T13:44:42.9771074Z   \u2713  231 [desktop-chromium] \u203a tests/browser/sales-workflows.spec.ts:297:1 \u203a CR05 issued source review saves attributed feedback, commercial preparation and guarded closure with responsive controls (37.9s)",
+          "2026-09-27T14:03:19.6439199Z   \u2713  530 [mobile-chromium] \u203a tests/browser/sales-workflows.spec.ts:297:1 \u203a CR05 issued source review saves attributed feedback, commercial preparation and guarded closure with responsive controls (19.2s)",
+          "2026-09-27T14:07:44.8035159Z   79 skipped",
+          "2026-09-27T14:07:44.8035616Z   520 passed (42.7m)"
+        ]
+      }
+    }
+  },
+  "324": {
+    "head": "724e9d62988403806c9ceecb40d027fe3fd23bc8",
+    "suites": {
+      "compiled": {
+        "job_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/36321862430/job/108627116548",
+        "conclusion": "SUCCESS",
+        "raw_log_sha256": "32e7a2b692f48fbc89ecd6fd54f9f95d61b47dc21dd07b133f7fc81bcc453be1",
+        "full_suite_passed": 524,
+        "full_suite_skipped": 79,
+        "selected_result_lines": [
+          "2026-09-27T13:42:47.1085768Z   \u2713  233 [desktop-chromium] \u203a tests/browser/sales-workflows.spec.ts:297:1 \u203a CR05 issued source review saves attributed feedback, commercial preparation and guarded closure with responsive controls (19.9s)",
+          "2026-09-27T14:01:22.5901164Z   \u2713  534 [mobile-chromium] \u203a tests/browser/sales-workflows.spec.ts:297:1 \u203a CR05 issued source review saves attributed feedback, commercial preparation and guarded closure with responsive controls (19.5s)",
+          "2026-09-27T14:05:53.2786384Z   79 skipped",
+          "2026-09-27T14:05:53.2786847Z   524 passed (42.1m)"
+        ]
+      },
+      "application": {
+        "job_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/36321862426/job/108627116655",
+        "conclusion": "SUCCESS",
+        "raw_log_sha256": "37a35fd7b719e9fe495bdd316f2996b529c96b3061abd3478ec0fea577056a5d",
+        "full_suite_passed": 524,
+        "full_suite_skipped": 79,
+        "selected_result_lines": [
+          "2026-09-27T13:23:35.4576503Z   14 passed (47.0s)",
+          "2026-09-27T13:25:05.0015599Z   15 passed (1.3m)",
+          "2026-09-27T13:26:35.7679710Z   17 passed (1.5m)",
+          "2026-09-27T13:47:09.1817703Z   \u2713  233 [desktop-chromium] \u203a tests/browser/sales-workflows.spec.ts:297:1 \u203a CR05 issued source review saves attributed feedback, commercial preparation and guarded closure with responsive controls (22.0s)",
+          "2026-09-27T14:05:32.9031535Z   \u2713  534 [mobile-chromium] \u203a tests/browser/sales-workflows.spec.ts:297:1 \u203a CR05 issued source review saves attributed feedback, commercial preparation and guarded closure with responsive controls (19.4s)",
+          "2026-09-27T14:10:02.8608117Z   79 skipped",
+          "2026-09-27T14:10:02.8608903Z   524 passed (42.5m)"
+        ]
+      }
+    }
+  }
+}

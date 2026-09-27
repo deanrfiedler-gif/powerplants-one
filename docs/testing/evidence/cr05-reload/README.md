@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-**Owner:** Dean Fiedler. **Executed:** 27 September 2026. **Status:** Synthetic browser correction verified locally; current PR checks remain required. Functional proof does not grant visual or owner acceptance.
+**Owner:** Dean Fiedler. **Executed:** 27-28 September 2026 (Sydney; CI timestamps are UTC). **Status:** Synthetic browser correction verified locally and on final PR heads; all three protected merges completed. Functional proof does not grant visual or owner acceptance.
 
 ## Original failure and diagnosis
 
@@ -41,3 +41,17 @@ PT-27 timing misses, complete PT-28/PT-30, independent physical-device/accessibi
 The first correction `a17c670` still reproduced the newly observed pre-reload race when the actual post-close resource response was held for 6,200 ms: three preceding desktop Sales cases passed and CR05 failed at the unchanged first five-second Closed assertion. The real Closed response was HTTP 200/version 21 in 276 ms before the deliberate hold. The extended waiter then passed both desktop and phone with **both post-close and reload reads** held, including an older ReviewCompleted poll ahead of the saved Closed revision. The final normal compiled Sales suite passed all eight cases. A fresh negative control still failed the exact post-reload persisted-state assertion when only that response state was replaced. See the [separate follow-up manifest](refresh-correction.json); original evidence remains unchanged.
 
 These follow-up cases use the compiled runtime from `bd8e23f9a4e12314e49bddc48170eb0d4a73cba8`, build `UZPI1x18dLnHDUDBsGSWz`; Sales runtime matches main and the correction branch. The explicit compiled launcher PID 35556 owned port 3000 and `/api/v1/health` returned HTTP 200; fallback launchers stayed disabled. An initial readiness probe used the wrong `/api/health` path and was corrected before tests started. A local type-check invocation on the older #322 branch encountered generated `.next` references to the later #324 routes; the final stack is checked with matching source/build rather than deleting evidence or pretending that invocation passed.
+
+## Corrected stack verification
+
+At runtime source `bd8e23f9a4e12314e49bddc48170eb0d4a73cba8`, [fresh retained checks](stack/manifest.json) passed 14 policy units, seven real PostgreSQL cases and eight compiled desktop/phone browser cases (six policy/navigation plus two CR05), with a fresh build. The new disposable database was reset only while this task's application was stopped; earlier proof environments were untouched. Policy runtime still matches `89faa07`. Documentation planning was in progress, so this is an exact runtime/build pin, not a claim of an entirely clean working tree. Full fresh PR CI remains distinct.
+
+After the saved-refresh correction was merged through the complete source stack, matching-source type checking, full lint, foundation, prototype, naming and `studio:check` passed on local integration `493dda5`. The final register contains 321 entries, 167 routes and 29 components, with all 321/29 reviews still pending. This resolves the earlier generated-route mismatch without changing source or deleting the retained compiled build.
+
+After the final saved-refresh correction was pushed, only the still-running Application assurance workflows on superseded intermediate heads were cancelled: `36319765568` (`a17c670`), `36319846275` (`547c7a0`) and `36319987121` (`bd8e23f`). Their completed results and original failure evidence remain retained. They are not final-head passes; protected integration requires the new head-specific checks.
+
+## Final-head browser CI
+
+Both the compiled-suite workflow and the originally failing Application assurance browser lane passed on each final head: **#322 `f3f560d`: 520 passed / 79 skipped; #323 `67aa70c`: 520 passed / 79 skipped; #324 `724e9d6`: 524 passed / 79 skipped**. CR05 passed on desktop and phone in all six jobs. The [exact job URLs, head pins, result lines and private-log hashes](ci-final.json) distinguish these results from every original failure and superseded run. All skips already existed; none was added by this correction.
+
+Desktop CR05 whole-case durations in the Application assurance lane were 48.8, 37.9 and 22.0 seconds respectively, compared with 19.6, 19.3 and 19.9 seconds in the separate compiled workflow. These are whole-journey durations, not isolated GET/render measurements. The saved receipt, both exact read boundaries, persisted version/feedback and unchanged visible assertions passed despite that variation. No runtime latency improvement, threshold achievement or causal explanation for the original CI delay is claimed. Final database/aggregate checks and merge results are retained in the separate [protected integration record](integration.json) and policy handover.
