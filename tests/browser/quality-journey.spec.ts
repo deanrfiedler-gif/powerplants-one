@@ -663,6 +663,17 @@ test("P11 selected UI service-to-Finance journey preserves controlled booking, p
   } finally {
     await returnContext.close();
   }
+  // Crew/history review intentionally locked the first device. Re-verify its
+  // original owner through the supported recovery UI before comparing bytes.
+  await identity(page, "assigned-technician");
+  await page.goto("/offline/index.html");
+  const ownerRead = page.waitForResponse(response =>
+    new URL(response.url()).pathname === "/api/v1/my-jobs" &&
+    response.request().method() === "GET");
+  await page.getByRole("button", { name: "Verify identity online", exact: true }).click();
+  expect((await ownerRead).ok()).toBe(true);
+  await expect(page.locator("#notice")).toContainText("Identity verified");
+  await expect(page.locator("#queue .status")).toHaveText(Array(5).fill("Server accepted and saved"));
   expect((await localRows()).map((x: { original: unknown }) => x.original)).toEqual(originals);
   expect(errors).toEqual([]);
 });
