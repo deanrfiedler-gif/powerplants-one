@@ -1,0 +1,1 @@
+write: two selected journeys, 22 original outputs and retained record hashes passed

@@ -10,6 +10,8 @@ Dean authorised the [repository consolidation and service-verification decision]
 
 The original `docs/field-quality-build-plan` checkout and its uncommitted planning/reference edits are preserved. Consolidation uses `codex/repository-consolidation` from current main. Timer/offline continues in `feat/fi01-fi02-field-timer-offline`. No PR was open at preflight; unfinished local branches remain real work, not delivered functionality.
 
+Publication: [baseline PR #320](https://github.com/deanrfiedler-gif/powerplants-one/pull/320) has all seven required checks green. [Stacked timer/offline PR #321](https://github.com/deanrfiedler-gif/powerplants-one/pull/321) also contains the selected desktop/phone service journeys and same-record restart proof: 125 receipts and 22 exact issued files retained. Its refreshed full CI remains separate from local proof. Return proposals remain unassigned; full PT-28/PT-30, performance and owner/device obligations remain open. Neither PR is merged or deployed by this update.
+
 ## Verified repository and demo baseline
 
 | Area | Observed state | Limit |

@@ -1,0 +1,15 @@
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.58"}
+
+Running 8 tests using 1 worker
+
+(node:39752) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop-chromium] › tests\browser\field-timer.spec.ts:66:1 › FI01 accepted timer presentation, actual saved intervals and original-action recovery (31.6s)
+  ok 2 [desktop-chromium] › tests\browser\field-timer.spec.ts:233:1 › FI02 retained offline timer sequence survives reload and a lost server response (12.1s)
+  ok 3 [desktop-chromium] › tests\browser\offline.spec.ts:157:1 › P08 real offline UI interruption retains typed evidence and exact PNG, retries original receipt and saves draft (17.7s)
+  x  4 [desktop-chromium] › tests\browser\quality-journey.spec.ts:19:1 › P11 selected UI service-to-Finance journey preserves controlled booking, personal originals, exact response and reconciled Travel no-posting (3.3m)
+(node:36728) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 5 [mobile-chromium] › tests\browser\field-timer.spec.ts:66:1 › FI01 accepted timer presentation, actual saved intervals and original-action recovery (32.3s)
+  ok 6 [mobile-chromium] › tests\browser\field-timer.spec.ts:233:1 › FI02 retained offline timer sequence survives reload and a lost server response (13.0s)
+  ok 7 [mobile-chromium] › tests\browser\offline.spec.ts:157:1 › P08 real offline UI interruption retains typed evidence and exact PNG, retries original receipt and saves draft (15.4s)
