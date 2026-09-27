@@ -137,7 +137,7 @@ try {
     ).items[0];
     assert.equal(proposal.status, completedReturn ? "Cancelled" : "Proposed");
     assert.deepEqual(proposal.assignments, []);
-    assert.equal(proposal.customer_commitment, "Unknown");
+    assert.equal(proposal.customer_commitment, completedReturn ? "Changed" : "Unknown");
     if (completedReturn) {
       assert.equal(completedReturn.cancelled_proposal_id, proposal.id);
       const visit = (
