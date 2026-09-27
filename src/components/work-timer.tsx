@@ -1,6 +1,12 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  useEffect,
+  useEffectEvent,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import { Button } from "./ui/button";
 import { ErrorNotice, ReadState, Stamp, useResource } from "./business-ui";
 import { useCrmCommand } from "./crm-state";
@@ -266,20 +272,23 @@ export function WorkTimer({
     observer.observe(target);
     return () => observer.disconnect();
   }, [job.id]);
+  const refreshCurrent = useEffectEvent(() => {
+    if (!blocked && !dialog) {
+      reloadTimer();
+      reloadJob();
+    }
+  });
   useEffect(() => {
-    const refresh = () => {
-      if (!blocked && !dialog) {
-        reloadTimer();
-        reloadJob();
-      }
-    };
+    // The elapsed display renders every second. Keep this subscription stable
+    // while its event reads current callbacks and command/dialog state.
+    const refresh = () => refreshCurrent();
     window.addEventListener("focus", refresh);
     const h = setInterval(refresh, 15000);
     return () => {
       clearInterval(h);
       window.removeEventListener("focus", refresh);
     };
-  }, [reloadTimer, reloadJob, blocked, dialog]);
+  }, []);
   const mine = job.entries.filter(
     (e) =>
       e.attendance_id === job.attendance?.id &&

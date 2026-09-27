@@ -117,6 +117,20 @@ test("FI01 accepted timer presentation, actual saved intervals and original-acti
     JSON.parse(original).operation_id,
   );
 
+  // A live one-second elapsed display must not keep postponing the 15-second
+  // server refresh. No navigation, command or focus event triggers this read.
+  await expect(
+    page.getByRole("button", { name: "Stop work", exact: true }),
+  ).toBeEnabled();
+  const polled = await page.waitForResponse(
+    (response) =>
+      new URL(response.url()).pathname === `/api/v1/my-jobs/${job.id}/timer` &&
+      response.request().method() === "GET" &&
+      response.status() === 200,
+    { timeout: 20000 },
+  );
+  expect((await polled.json()).timer.state).toBe("Running");
+
   // Compare the actual accepted source, independently rendered at the same width.
   const reference = await page.context().newPage();
   const source = await readFile(

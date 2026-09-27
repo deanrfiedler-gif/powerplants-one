@@ -8,6 +8,10 @@ Owner: Dean Fiedler. Review: native host adaptations awaiting owner/device accep
 
 The Record detail keeps original arrival distinct from timer Start. Running and Paused remain open; Stop creates only positive ordinary P07 Time intervals. Stopped permits current-authority Resume; a frozen report does not. Unknown commands retain the original. The My Jobs banner never discloses inaccessible job details.
 
+The one-second elapsed display does not restart the 15-second server refresh subscription. Refresh reads the current dialog and unresolved-command state and pauses while either prevents it; closing a dialog restores the existing refresh cadence. The native browser fixture waits for an unsolicited server read while the clock is running. The integrated service fixture waits for both independent job/timer reads before using the arrival and pack controls.
+
+The outgoing Service review handover uses the shared desktop Service operations rail or the phone More menu. It retains the current actor and server-side report permissions.
+
 ## Desktop
 
 At 1440/1024/820 px use one document scroll and r05 header/clock/readouts/track/lists. The local proof includes actual 200% browser zoom rather than treating a smaller viewport as zoom.

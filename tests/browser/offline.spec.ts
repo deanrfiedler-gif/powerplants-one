@@ -233,7 +233,7 @@ test("P08 real offline UI interruption retains typed evidence and exact PNG, ret
   await expect(page.locator("#queue .status").first()).toHaveText("Sending");
   await screenshot(page, info, "sending");
   await expect(page.locator("#queue .status")).toHaveText(
-    Array(7).fill("ServerSaved"),
+    Array(7).fill("Server accepted and saved"),
   );
   await page.unroute("**/api/v1/sync/operations");
   const rows = await localRows(page),
@@ -285,7 +285,7 @@ test("P08 real offline UI interruption retains typed evidence and exact PNG, ret
     .getByRole("button", { name: "Send next batch / retry originals" })
     .click();
   await expect(page.locator("#queue .status")).toHaveText(
-    Array(8).fill("ServerSaved"),
+    Array(8).fill("Server accepted and saved"),
   );
   await screenshot(page, info, "server-saved-draft");
   const final = (await call(page.request, `my-jobs/${job.id}`)).items[0];

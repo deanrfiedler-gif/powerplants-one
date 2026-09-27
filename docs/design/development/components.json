@@ -2239,7 +2239,7 @@
         {
           "id": "running",
           "label": "Running",
-          "description": "Original task/equipment, whole-second elapsed display and saved event."
+          "description": "Original task/equipment, whole-second elapsed display and saved event; the independent 15-second server refresh survives display renders and observes current dialog/command guards."
         },
         {
           "id": "paused",
