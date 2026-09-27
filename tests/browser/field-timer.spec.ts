@@ -213,6 +213,20 @@ test("FI01 accepted timer presentation, actual saved intervals and original-acti
   await expect(
     page.getByRole("button", { name: "Resume work", exact: true }),
   ).toBeEnabled();
+  // This case asserts a positive Waiting entry. Fast compiled runners can
+  // reload and stop in the same whole second as Pause; that correctly saves
+  // only the event. Observe the browser clock crossing the persisted boundary
+  // instead of relying on navigation to consume time or inventing a duration.
+  const paused: TimerView = await call(`my-jobs/${job.id}/timer`);
+  expect(paused.timer?.state).toBe("Paused");
+  await expect
+    .poll(() =>
+      page.evaluate(
+        (since) => Math.floor(Date.now() / 1000) * 1000 - Date.parse(since),
+        paused.timer!.open_since!,
+      ),
+    )
+    .toBeGreaterThanOrEqual(1000);
   await page.getByRole("button", { name: "Stop work", exact: true }).click();
   await expect
     .poll(async () => (await call(`my-jobs/${job.id}/timer`)).timer.state)
@@ -223,6 +237,11 @@ test("FI01 accepted timer presentation, actual saved intervals and original-acti
       .filter((e) => e.kind === "Time")
       .map((e) => e.payload.time_kind),
   ).toEqual(["Labour", "Waiting"]);
+  expect(
+    saved.entries.find(
+      (e) => e.kind === "Time" && e.payload.time_kind === "Waiting",
+    )!.payload.elapsed_seconds,
+  ).toBeGreaterThanOrEqual(1);
   expect(saved.attendance!.id).toBe(job.attendance!.id);
   await login(page.request, baseURL!, "technician");
   expect(
