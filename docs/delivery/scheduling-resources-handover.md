@@ -46,3 +46,7 @@ PL-04 accepts no new command authority. Existing request/appointment versions, r
 [Executed evidence](../testing/evidence/scheduling-resources/README.md) is the maintained source of exact results and limitations. Working PL-01–05 and new route contracts, draft guides, component consumer bindings and API/data documentation accompany the implementation. Missing mockups and owner visual review remain explicit; no review fingerprint is copied or accepted.
 
 The next owner step is review of the concrete PR and native compositions, alongside the exact check results in the evidence record. All working visual review records and guides remain pending/Draft; captures do not grant acceptance. Required PR checks must be considered before merge. Deployment requires its separate release instruction.
+
+## Policy impact review continuation
+
+The [PL-04 policy impact handover](scheduling-policy-impact-handover.md) extends the existing module with a scoped duration/effective-date comparison and exact booking links. It introduces no new booking or publisher authority. The [decision](../decisions/scheduling-policy-impact-review.md) records the later transactional publication boundary.

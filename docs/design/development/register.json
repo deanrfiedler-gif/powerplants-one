@@ -10802,6 +10802,45 @@
         "scope:CS-06",
         "scope:FI-02"
       ]
+    },
+    {
+      "key": "route:/schedule/policy-impact",
+      "title": "Scheduling policy impact review",
+      "kind": "route",
+      "module": "PL",
+      "summary": "PL-04 read-only comparison of a proposed visit-duration limit and effective instant against permitted future bookings. No publication or saved impact tasks.",
+      "path": "/schedule/policy-impact",
+      "source_paths": [
+        "src/app/(business)/schedule/policy-impact/page.tsx"
+      ],
+      "guide_key": "guide.route-schedule-policy-impact",
+      "design_path": "docs/design/development/pages/route-schedule-policy-impact.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/testing/evidence/scheduling-policy-impact/desktop-review.png",
+        "docs/testing/evidence/scheduling-policy-impact/phone-review.png"
+      ],
+      "dependencies": [
+        "src/scheduling/policy-impact.ts",
+        "src/scheduling/policy-impact-model.ts",
+        "src/scheduling/components/client/workspace-navigation.client.tsx",
+        "src/app/styles/scheduling-workspaces.css",
+        "docs/decisions/scheduling-policy-impact-review.md"
+      ],
+      "scope_status": "Built synthetic read-only comparison; publication remains planned",
+      "visual_status": "Needs review",
+      "functional_status": "Focused verification recorded in docs/delivery/scheduling-policy-impact-handover.md",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:PL-04",
+        "route:/schedule/changes",
+        "scope:PL-01"
+      ]
     }
   ]
 }

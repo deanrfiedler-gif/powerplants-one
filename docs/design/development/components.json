@@ -159,7 +159,8 @@
         "route:/my-jobs/site-readiness",
         "scope:FI-01",
         "route:/my-jobs",
-        "route:/my-jobs/[id]"
+        "route:/my-jobs/[id]",
+        "route:/schedule/policy-impact"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -794,7 +795,8 @@
         "scope:EQ-08",
         "scope:EQ-09",
         "scope:FI-05",
-        "route:/my-jobs/site-readiness"
+        "route:/my-jobs/site-readiness",
+        "route:/schedule/policy-impact"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -1421,7 +1423,8 @@
         "route:/estimating",
         "scope:FI-01",
         "route:/my-jobs",
-        "route:/my-jobs/[id]"
+        "route:/my-jobs/[id]",
+        "route:/schedule/policy-impact"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",

@@ -22,6 +22,7 @@ export function SchedulingNavigation() {
         ["/schedule", "Planner"],
         ["/service/technicians", "Resources"],
         ["/schedule/changes", "Changes & follow-up"],
+        ["/schedule/policy-impact", "Policy impact"],
         ["/schedule/travel", "Travel review"],
         ["/schedule/capacity", "Demand & capacity"],
       ].map(([href, label]) => (

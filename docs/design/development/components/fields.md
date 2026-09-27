@@ -1,5 +1,7 @@
 # Form controls and save states
 
+PL-04 policy impact reuses Field and SelectField for an explicit effective time, timezone, maximum visit minutes and optional site. Host fixtures cover edited-input invalidation and strict server validation; no shared renderer or catalogue fixture changes. [Host contract](../pages/route-schedule-policy-impact.md); [verification](../../../delivery/scheduling-policy-impact-handover.md). Paired owner/device review remains open.
+
 <!-- versioning: git; committed history is authoritative -->
 
 **Owner:** Dean Fiedler · **Catalogue key:** `fields` · **Review:** Pending
