@@ -4,7 +4,7 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
-import { join } from "node:path";
+import { join, dirname } from "node:path";
 import { chromium, expect } from "@playwright/test";
 import { localConfig } from "../src/platform/config";
 import { database, closeDatabase } from "../src/platform/database";
@@ -19,7 +19,7 @@ assert.ok(
   "Supply the verified app PID",
 );
 const input = process.argv[3] ?? "tmp/service-journey-results";
-const output = "tmp/service-journey-restart";
+const output = process.argv[4] ?? "tmp/service-journey-restart";
 await mkdir(output, { recursive: true });
 const hash = (bytes: string | Buffer) =>
   createHash("sha256").update(bytes).digest("hex");
@@ -89,6 +89,12 @@ try {
   for (let index = 0; index < paths.length; index++) {
     const sourceBytes = await readFile(paths[index]);
     const source: Journey = JSON.parse(sourceBytes.toString("utf8"));
+    const returnPath = join(dirname(paths[index]), "P11-return-visit.json");
+    const completedReturn = (await readdir(dirname(paths[index]))).includes(
+      "P11-return-visit.json",
+    )
+      ? JSON.parse(await readFile(returnPath, "utf8"))
+      : null;
     assert.deepEqual(source.page_errors, []);
     const phone = paths[index].includes("mobile");
     const context = await browser.newContext({
@@ -129,9 +135,32 @@ try {
     const proposal = (
       await call(`appointments/${source.return_proposal.record_id}`)
     ).items[0];
-    assert.equal(proposal.status, "Proposed");
+    assert.equal(proposal.status, completedReturn ? "Cancelled" : "Proposed");
     assert.deepEqual(proposal.assignments, []);
     assert.equal(proposal.customer_commitment, "Unknown");
+    if (completedReturn) {
+      assert.equal(completedReturn.cancelled_proposal_id, proposal.id);
+      const visit = (
+        await call(`appointments/${completedReturn.appointment_id}`)
+      ).items[0];
+      assert.equal(visit.status, "Completed");
+      assert.equal(visit.work_order_id, source.work_order_id);
+      const returnedReport = (
+        await call(`reports/${completedReturn.report_id}`)
+      ).items[0];
+      assert.equal(returnedReport.status, "Issued");
+      assert.equal(
+        returnedReport.revisions[0].snapshot.completion.scope_outcome,
+        "Complete",
+      );
+      assert.deepEqual(returnedReport.responses, []);
+      for (const [path, expected] of Object.entries(
+        completedReturn.return_outputs,
+      )) {
+        await original(path);
+        assert.equal(outputs[`${index}:${path}`].sha256, expected);
+      }
+    }
     const report = (await call(`reports/${source.report_id}`)).items[0];
     assert.equal(report.status, "Issued");
     assert.equal(report.responses.length, 1);
@@ -191,6 +220,39 @@ try {
     );
     assert.ok([403, 404].includes(denied.status()));
     assert.match(denied.headers()["cache-control"], /no-store/);
+    if (completedReturn) {
+      await call("local-session", { profile: "assigned-technician" });
+      for (const [path, expected] of Object.entries(
+        completedReturn.return_photo,
+      )) {
+        await original(path);
+        assert.equal(outputs[`${index}:${path}`].sha256, expected);
+      }
+      const next = (await call(`my-jobs/${completedReturn.appointment_id}`))
+        .items[0];
+      assert.equal(next.attendance, null);
+      assert.equal(
+        next.entries.filter((e: { kind: string }) => e.kind === "Time").length,
+        1,
+      );
+      await page.goto(
+        `${config.origin}/my-jobs/${completedReturn.appointment_id}`,
+      );
+      const history = page.getByRole("heading", {
+        name: "Saved evidence and corrections",
+        exact: true,
+      });
+      await expect(history).toBeVisible();
+      await history.scrollIntoViewIfNeeded();
+      await expect(
+        page.getByRole("button", { name: /^Correct this .* entry$/ }),
+      ).toHaveCount(0);
+      if (phase === "verify")
+        await page.screenshot({
+          path: `${output}/${phone ? "phone" : "desktop"}-return-history.png`,
+          fullPage: true,
+        });
+    }
     assert.deepEqual(errors, []);
     retained.push({
       viewport: phone ? "phone" : "desktop",
@@ -201,6 +263,14 @@ try {
       return_proposal_id: source.return_proposal.record_id,
       finance_handoff_id: source.finance.handoff_id,
       return_status: proposal.status,
+      completed_return: completedReturn
+        ? {
+            source_sha256: hash(await readFile(returnPath)),
+            appointment_id: completedReturn.appointment_id,
+            report_id: completedReturn.report_id,
+            status: "Completed",
+          }
+        : null,
       customer_commitment: proposal.customer_commitment,
       customer_response: report.responses[0].response,
       finance_status: finance.handoff.status,
@@ -221,6 +291,7 @@ try {
     "tests/browser/quality-journey.spec.ts",
     "tests/helpers/quality-report.ts",
     "scripts/service-journey-restart-proof.ts",
+    "tests/helpers/quality-return.ts",
   ])
     sourceFiles[path] = hash(
       (await readFile(path, "utf8")).replace(/\r\n/g, "\n"),
@@ -291,7 +362,7 @@ try {
           boundary:
             "Existing desktop and phone selected journeys retained through actual application and PostgreSQL restart; same next-technician history and exact outputs.",
           limits:
-            "Return visits remain unassigned proposals. No second attendance, backup restore, compatible software update, policy publication, owner/device acceptance or full PT-28/PT-30 closure.",
+            "Completed return visits are proved only where completed_return is present; otherwise proposals remain unassigned. No backup restore, compatible software update, policy publication, owner/device acceptance or full PT-28/PT-30 closure.",
         },
         null,
         2,

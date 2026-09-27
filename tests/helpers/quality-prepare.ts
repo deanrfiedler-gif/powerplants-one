@@ -61,7 +61,7 @@ async function manualEvidence(form: Locator, purpose: string) {
       `SYN ${purpose}: reviewed fictional external visual inspection only. Stop before intervention; no shutdown or isolation work is authorised. Coordinator owns access and identification follow-up.`,
     );
 }
-async function readiness(
+export async function readiness(
   page: Page,
   wo: string,
   form: Locator,
@@ -89,7 +89,7 @@ async function readiness(
       .click(),
   );
 }
-async function contact(page: Page, aid: string, outcome: string) {
+export async function contact(page: Page, aid: string, outcome: string) {
   await page
     .getByRole("button", { name: "Record contact", exact: true })
     .click();
@@ -127,7 +127,7 @@ async function packDecision(
   );
   await expect(dialog).toHaveCount(0);
 }
-async function issuePack(page: Page, pid: string) {
+export async function issuePack(page: Page, pid: string) {
   await packDecision(
     page,
     `packs/${pid}/check`,

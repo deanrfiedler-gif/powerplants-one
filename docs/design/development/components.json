@@ -2234,7 +2234,7 @@
         {
           "id": "idle",
           "label": "Ready to start",
-          "description": "Current acknowledged pack and personal actual arrival precede timer Start."
+          "description": "Current acknowledged pack and personal actual arrival precede timer Start. Saving arrival immediately refreshes timer authority; no manual reload or 15-second polling wait is required."
         },
         {
           "id": "running",
@@ -2292,7 +2292,7 @@
       "desktop": "Padded host Record detail; one document scroll. Retain r05 record header, 96 px clock, readouts, visit track and time/activity lists.",
       "mobile": "64 px clock; labelled job menu; fixed timer dock above the existing 64 px navigation with 44 px minimum controls. Inspect 390/320 px and actual 200% browser zoom.",
       "keyboard": "Native labelled dialog focuses inside on open. Tab/Shift+Tab remain contained; Escape closes when no unresolved command prevents it and returns focus.",
-      "limitations": "Host fixture requires real permitted synthetic appointment/arrival and database. Tests/browser/field-timer.spec.ts provides reproducible states; this is not an isolated runnable catalogue example. Owner, physical-device and assistive-technology acceptance remain pending.",
+      "limitations": "Host fixture requires real permitted synthetic appointment/arrival and database. tests/browser/field-timer.spec.ts and tests/helpers/quality-return.ts provide reproducible states; this is not an isolated runnable catalogue example. Owner, physical-device and assistive-technology acceptance remain pending.",
       "gaps": [
         {
           "id": "field-timer-native-adaptations",
