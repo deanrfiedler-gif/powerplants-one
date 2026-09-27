@@ -1,0 +1,28 @@
+{
+  "source_head": "ab61c06cf9298d650bfe5072970b97e0e80f1363",
+  "run": 36313348099,
+  "attempt": 2,
+  "job": 108614290307,
+  "passed": 519,
+  "skipped": 79,
+  "failed": 1,
+  "failure_line": 427,
+  "phase": "after Close, before page.reload",
+  "retained_context": [
+    "Close saved.",
+    "Saved version 6",
+    "Review Completed",
+    "Loading the saved revision before the next action"
+  ],
+  "scope": "Original retry, not corrected CI. Exact transport phase remains unmeasured.",
+  "private_files": {
+    "pr322-retry-job.log": {
+      "sha256": "6579d20b0a8935d7a93b743b5d726fb60e46f2086414bcb16f943d064b800b72",
+      "bytes": 360241
+    },
+    "pr322-retry-context.md": {
+      "sha256": "8c8225c5a2b7c04e57456089ee452a1f31d829004dd7c5e20fc591fa3644673a",
+      "bytes": 75458
+    }
+  }
+}
