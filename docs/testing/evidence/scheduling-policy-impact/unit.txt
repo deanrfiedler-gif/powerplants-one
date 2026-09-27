@@ -1,0 +1,22 @@
+✔ planner civil-time conversion uses site timezone and refuses DST gaps and ambiguous repeats (21.8949ms)
+✔ duration equality fits; even a one-second excess requires review (1.9126ms)
+✔ effective time is half-open and crossing visits retain both reasons (0.1881ms)
+✔ comparison uses UTC instants across offsets and does not mutate inputs (0.1376ms)
+✔ competence distinguishes verified, expired, future, period expiry and unknown evidence (0.8877ms)
+✔ travel sorts buffered intervals, preserves explicit zero and half-open adjacent reservations (15.184ms)
+✔ travel detects nested and buffered overlaps without mixing resources or inactive assignments (0.4017ms)
+✔ travel exposes missing basis, excludes cancelled visits and retains unreserved proposals as proposals (0.1518ms)
+✔ capacity scenarios deduplicate exact sources, keep effort unknown and never mutate contributions (0.3277ms)
+✔ exact changes handover survives appointment recovery without arbitrary return destinations (1.8398ms)
+✔ review criteria survive safe round trips but duplicate or invalid criteria confer no authority (0.6803ms)
+✔ cancelled and completed contact activities do not become outstanding scheduling work (0.2798ms)
+✔ multi-day closures cover every intersecting local day across DST without closing the end boundary (12.4065ms)
+✔ travel review includes calendar closures touching buffers and excludes adjacent intervals (0.738ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 334.2279

@@ -1,0 +1,62 @@
+{
+  "source_commit": "89faa078a22525653e6e8f07cb82425372385b07",
+  "source_tree": "4b1102b1722a4f9787e5827375a12770e62ecaf2",
+  "database_tree": "dc4ef29e3cbf32164443845a4cd6c8b2481c5f62",
+  "compiled_build_id": "PvEW5-9M5Wh7oBNkZbDxh",
+  "environment": {
+    "node": "24.21.0",
+    "postgresql": "16.15",
+    "playwright": "1.63.0",
+    "chrome": "154.0.8037.58",
+    "os": "Windows"
+  },
+  "results": {
+    "unit": 14,
+    "database": 7,
+    "compiled_browser": 6
+  },
+  "database_source_note": "Same implementation in the working tree before source commit; test formatting followed execution. Compiled browser and retained unit runs used clean source_commit.",
+  "scope": "Synthetic read-only duration/effective-date comparison; no policy publication or full PT-28 acceptance.",
+  "artifacts": [
+    {
+      "path": "browser.txt",
+      "bytes": 1489,
+      "sha256": "65caee63dfc7dbaf3691564b59cd1a27945c95791765228447e5d81f6b8b0943"
+    },
+    {
+      "path": "capture-source.txt",
+      "bytes": 1510,
+      "sha256": "38be0a73aaa45de173f1f103dc0f7f311d99b16b68603259b456192ef4ad3e93"
+    },
+    {
+      "path": "database.txt",
+      "bytes": 826,
+      "sha256": "3247628c9e0f7a2616f48e5c4288398e11e8a8a8c1268e323d854c35ec028fc8"
+    },
+    {
+      "path": "desktop-overview.png",
+      "bytes": 131293,
+      "sha256": "b5dc37fd455a9177cd1f56cabf3c9ddb95fe6f00b691c7ec4b013cc99dcfe230"
+    },
+    {
+      "path": "desktop-review.png",
+      "bytes": 120325,
+      "sha256": "37b88cb4acc4f97d3f1b6e9193c120bfdcb8a5690e7a9474f3adee9ed8d85999"
+    },
+    {
+      "path": "phone-form.png",
+      "bytes": 55475,
+      "sha256": "958d267356bfa96defd89c7d43eb715e21f721bb82ff262e88012658770812f0"
+    },
+    {
+      "path": "phone-review.png",
+      "bytes": 74551,
+      "sha256": "07f43ba148383a73f4198ecd615fb8d94e2083beda03b4ce25c8eb398e6b7663"
+    },
+    {
+      "path": "unit.txt",
+      "bytes": 1553,
+      "sha256": "662e3733af890212a9ed2b517330527027b33a1d0fcd48618ab953b42aad5943"
+    }
+  ]
+}

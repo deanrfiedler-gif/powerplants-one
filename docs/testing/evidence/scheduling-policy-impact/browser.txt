@@ -1,0 +1,16 @@
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.58"}
+
+Running 6 tests using 1 worker
+
+(node:40400) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop-chromium] › tests\browser\policy-impact.spec.ts:11:1 › policy analysis is read-only, clears edited results and hands over the exact booking (5.9s)
+  ok 2 [desktop-chromium] › tests\browser\policy-impact.spec.ts:79:1 › failed refresh and identity changes clear prior analysis, with no publish endpoint (2.2s)
+  ok 3 [desktop-chromium] › tests\browser\scheduling-workspaces.spec.ts:25:1 › native scheduling pages retain context and reflow at coordination, phone and zoom widths (14.5s)
+(node:21420) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 4 [mobile-chromium] › tests\browser\policy-impact.spec.ts:11:1 › policy analysis is read-only, clears edited results and hands over the exact booking (3.4s)
+  ok 5 [mobile-chromium] › tests\browser\policy-impact.spec.ts:79:1 › failed refresh and identity changes clear prior analysis, with no publish endpoint (1.6s)
+  ok 6 [mobile-chromium] › tests\browser\scheduling-workspaces.spec.ts:25:1 › native scheduling pages retain context and reflow at coordination, phone and zoom widths (10.5s)
+
+  6 passed (47.9s)

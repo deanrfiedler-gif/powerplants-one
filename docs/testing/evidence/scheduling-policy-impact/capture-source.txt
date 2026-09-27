@@ -1,0 +1,21 @@
+import { chromium } from "playwright";
+const browser = await chromium.launch({ channel: "chrome", headless: true });
+try {
+  for (const width of [1440, 320]) {
+    const context = await browser.newContext({ viewport: { width, height: 900 }, locale: "en-AU", isMobile: width === 320, hasTouch: width === 320 });
+    const page = await context.newPage();
+    const session = await page.request.post("http://127.0.0.1:3000/api/v1/local-session", { headers: { Origin: "http://127.0.0.1:3000" }, data: { profile: "coordinator" } });
+    if (!session.ok()) throw Error("Synthetic session unavailable");
+    await page.goto("http://127.0.0.1:3000/schedule/policy-impact?day=2031-09-21&timezone=Australia/Brisbane");
+    await page.getByLabel("Proposed maximum visit (minutes)").fill("60");
+    await page.getByRole("button", { name: "Compare future bookings" }).click();
+    const link = page.getByRole("link", { name: /^Review .*APT/ }).first();
+    await link.waitFor({ state: "visible" });
+    await link.scrollIntoViewIfNeeded();
+    await page.screenshot({ path: `tmp/policy-card-${width}.png` });
+    const api = await page.request.get("http://127.0.0.1:3000/api/v1/schedule/policy-impact");
+    if (api.status() !== 200 || !api.headers()["cache-control"].includes("no-store")) throw Error("Source read cache boundary failed");
+    await context.close();
+  }
+  console.log("Policy card captures completed at 1440 and 320 CSS pixels; authenticated source GET is no-store.");
+} finally { await browser.close(); }
