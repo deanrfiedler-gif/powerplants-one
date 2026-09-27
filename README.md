@@ -2,7 +2,7 @@
 
 Personal prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance. The repository is public; the application, data and hosted demo remain private and synthetic.
 
-**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P01–P12 code merged; PT-22 synthetic recovery passed; integrated acceptance incomplete · **Deployment:** owner-triggered Azure run 34826209046 deployed `b8d33696`; image/health and signed-in synthetic record/Draft checks observed; managed PostgreSQL minor unverified · **Current state:** [docs/STATUS.md](docs/STATUS.md)
+**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P01–P12 code merged; PT-22 synthetic recovery passed; integrated acceptance incomplete · **Deployment:** Azure run 36204121972 deployed `80b2f41` on 26 September; database gate and web-health/access checks passed; fresh signed-in journey and managed PostgreSQL minor unverified · **Current state:** [docs/STATUS.md](docs/STATUS.md)
 
 This repository is Dean's personal prototype. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application with customer, contact, site, equipment, intake, owned follow-up and controlled work-order screens. P12 isolated recovery is merged with reviewed source and actual-main evidence. The written PT-22 synthetic restore procedure passed; full PT-28/PT-30 and independent owner/device acceptance remain outstanding. Company ownership, production approval and external-system write authority are not implied.
 
@@ -13,6 +13,7 @@ This repository is Dean's personal prototype. It contains the planning foundatio
 | [First Prototype Definition & Architecture](docs/prototype/README.md) | Selected service journey, BP-02/BP-07, data/API/Finance/document contracts, acceptance and ordered implementation |
 | [Adopted naming standard](docs/standards/naming-conventions.md) | Powerplants One / PPO naming, references, revisions and implementation rules |
 | [ChatGPT project instructions](docs/standards/chatgpt-project-instructions.md) | Copy-ready instructions for the dedicated design and development project |
+| [Consolidation and service verification](docs/delivery/repository-consolidation.md) | Current source/deployment, migration integration order and remaining complete-journey proof |
 | [Current project status](docs/STATUS.md) | What exists, what remains planned and how recent user decisions relate to the issued blueprint |
 | [Master Blueprint](docs/blueprints/BP-01-master-blueprint.md) | Scope Assurance & Development Planning Edition: seven domains, 78 parent requirements and release contracts |
 | [Documentation index](docs/README.md) | Where specifications, decisions, requirements and acceptance records belong |
@@ -61,7 +62,7 @@ Application code is in `src/`, explicit SQL migrations and fixtures are in `db/`
 
 ## Private hosted demo preparation
 
-The [Azure demo runbook](docs/delivery/azure-private-demo.md) defines the separate hosted runtime, owner setup, tester access and image updates. The latest observed owner-triggered run 34826209046 deployed source `b8d33696`, verified the selected web image was healthy/ready, compared the worker digest and passed health/anonymous-access checks. On 14 September, the signed-in synthetic verification journey persisted an Opportunity, initial Activity and estimate, then generated and reopened its exact Draft HTML/PDF. The two-page downloaded PDF matched its saved hash. [Evidence and limits](docs/delivery/issue-reconciliation-handover.md) retain the fixture identities and separate the remaining managed PostgreSQL minor, physical-device/accessibility and owner acceptance. Local development continues using the commands below.
+The [Azure demo runbook](docs/delivery/azure-private-demo.md) defines the separate hosted runtime, tester access and image updates. The latest observed [deployment run 36204121972](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/36204121972), on 26 September, deployed main `80b2f41`, passed its database gate and web-health/anonymous-access checks, and configured the worker with the same image digest. This audit did not repeat the signed-in record/output journey or verify actual worker execution or the managed PostgreSQL minor. The 14 September signed-in Draft evidence remains valid for its earlier source only. [Current consolidation and verification](docs/delivery/repository-consolidation.md) separates these facts from full service-journey, physical-device and owner acceptance.
 
 ## Run the local application
 
