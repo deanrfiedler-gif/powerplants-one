@@ -1,0 +1,17 @@
+{
+  "result": "Passed",
+  "server_before": 35456,
+  "server_after": 34952,
+  "database_before": "2026-09-27 16:12:55.793899+10",
+  "database_after": "2026-09-27 16:52:32.881145+10",
+  "retained_sha256": "de783a911ae8c5c0282d990bc4d32e624896eb7b328ad081119c4031664e9382",
+  "offline_originals_sha256": "7547177b2edc2cfb34005bef0955481c0855f0c2ed5d344e26f1307e3d6f51fc",
+  "checks": [
+    "Running timer and exact Time/event/arrival/receipt rows retained",
+    "Fresh browser process retained owner-bound IndexedDB original",
+    "Start replay returned original receipt after restart",
+    "Unsent Pause accepted once and exact replay did not duplicate it",
+    "Stop closed the remaining stretch"
+  ],
+  "limits": "Dedicated local compiled app and PostgreSQL; not hosted deployment, backup restore or owner acceptance"
+}

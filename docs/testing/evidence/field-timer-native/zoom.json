@@ -1,0 +1,16 @@
+{
+  "result": "Passed",
+  "actual_browser_zoom": "200%",
+  "physical_viewport": {
+    "width": 1440,
+    "height": 1200
+  },
+  "geometry": {
+    "innerWidth": 720,
+    "innerHeight": 600,
+    "devicePixelRatio": 2,
+    "scrollWidth": 720
+  },
+  "keyboard": "Enter opens the labelled dialog, focus is contained, Escape returns focus",
+  "limit": "Synthetic desktop Chrome; owner, screen-reader and physical-device acceptance remain separate"
+}

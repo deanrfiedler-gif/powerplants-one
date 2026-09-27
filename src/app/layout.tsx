@@ -35,6 +35,7 @@ import "./styles/scheduling-workspaces.css";
 import "../components/ui/controls.css";
 import "./styles/development.css";
 import "./styles/supply.css";
+import "./styles/work-timer.css";
 import "./styles/component-catalogue.css";
 export const metadata: Metadata = {
   title: "Powerplants One | Private prototype",

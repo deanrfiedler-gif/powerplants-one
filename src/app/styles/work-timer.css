@@ -1,0 +1,541 @@
+
+/* Powerplants One · FI-01 Field work timer · standalone content container · design r05
+   Presentation: the record page accepted on 23 September 2026 (concept canvas "Option 1"): a fixed record header carrying
+   the state and the timer controls, the job menu on the left from 1200 px, the live timer with one visit track, and
+   edge-to-edge Time recorded and Activity lists. Behaviour, states and data are r04's unless the change record says otherwise.
+   Tokens: the 41-token shared core plus --progress and --progress-surface, unchanged from r04. No new tokens. */
+#ppo-work-timer{
+ --navy:#242a37;--green:#62bb46;
+ --ink:var(--navy);--muted:#667181;--text-secondary:#596779;--link:#355b80;
+ --paper:#f5f6f8;--surface:#f6f7f9;--surface-2:#f7f8fa;--surface-3:#fcfcfd;--surface-hover:#f0f2f5;--surface-white:#fff;
+ --line:#e1e5eb;--line-strong:#dce2e9;--line-soft:#e9ecf1;--hairline:#cbd2dc;--control-border:#828e9f;
+ --success:#416d33;--success-surface:#edf5e9;--success-border:#d4e3cb;--success-icon:#527347;--success-tint:#f3f7f1;
+ --warning:#80530e;--warning-surface:#fff2d9;--warning-border:#efdbb6;--warning-accent:#c69539;--warning-icon:#9b6d27;--warning-tint:#fff8ec;
+ --danger:#993b2a;--danger-surface:#fff1ed;--danger-border:#edc6bd;--danger-accent:#ad4635;
+ --info:#346580;--info-surface:#e9f2f8;--info-border:#cfe0ec;--info-accent:#5d8db0;
+ --progress:#26746e;--progress-surface:#e4f2f0;
+ --neutral:#526078;--neutral-surface:#edf0f5;
+ --avatar-surface:#eaf1e5;--avatar-text:#45623b;
+ --focus:#365d8b;
+ box-sizing:border-box;display:block;width:100%;min-width:0;min-height:0;padding:0;color:var(--ink);background:var(--surface-white);font:14px/1.5 Roboto,Verdana,sans-serif;color-scheme:light}
+/* Increased contrast: the OS setting, or the preview switch. Token overrides only (r04). */
+#ppo-work-timer[data-contrast=more]{--muted:#4d5868;--text-secondary:#414b5a;--line:#9aa4b2;--line-soft:#b3bbc6;--line-strong:#828e9f;--hairline:#6b7688}
+@media(prefers-contrast:more){#ppo-work-timer:not([data-contrast=standard]){--muted:#4d5868;--text-secondary:#414b5a;--line:#9aa4b2;--line-soft:#b3bbc6;--line-strong:#828e9f;--hairline:#6b7688}}
+
+/* Local reset for elements globals.css styles bare (ui-style-specification §7.1). */
+#ppo-work-timer *,#ppo-work-timer *::before,#ppo-work-timer *::after{box-sizing:border-box}
+#ppo-work-timer [hidden]{display:none!important}
+#ppo-work-timer :is(h1,h2,h3,p,dl,dd,dt,ul,ol,fieldset,label,main,select,table){margin:0;letter-spacing:normal}
+#ppo-work-timer :is(h1,h2,h3){line-height:1.3}
+#ppo-work-timer :is(ul,ol){padding:0;list-style:none}
+#ppo-work-timer fieldset{border:0;padding:0;min-width:0}
+#ppo-work-timer label{font-weight:400}
+#ppo-work-timer :is(button,input,select,textarea){font:inherit;color:inherit}
+#ppo-work-timer a{color:var(--link)}
+#ppo-work-timer a:hover{color:var(--ink)}
+#ppo-work-timer :is(button,a,input,select,textarea,summary,[tabindex]):focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+#ppo-work-timer svg{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+#ppo-work-timer .sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+#ppo-work-timer .num{font-variant-numeric:tabular-nums}
+
+/* Buttons. E2: in a row the main action sits on the right; in a stack it sits on top. */
+#ppo-work-timer button,#ppo-work-timer .button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:8px 16px;border:1.5px solid var(--control-border);border-radius:6px;background:var(--surface-white);color:var(--navy);cursor:pointer;font-size:15px;font-weight:500;line-height:1.25;text-decoration:none;white-space:normal;touch-action:manipulation;transition:background-color .12s}
+#ppo-work-timer button:hover:not(:disabled),#ppo-work-timer .button:hover{background:var(--surface-hover)}
+#ppo-work-timer :is(button,.button).primary{background:var(--navy);border-color:var(--navy);color:#fff}
+#ppo-work-timer :is(button,.button).primary:hover:not(:disabled){background:#343c4c;border-color:#343c4c}
+#ppo-work-timer :is(button,.button)[aria-disabled=true]{background:var(--neutral-surface);border-color:var(--line-strong);color:var(--muted);cursor:not-allowed}
+#ppo-work-timer :is(button,.button).text{min-height:44px;padding:0;border:0;background:transparent;color:var(--link);font-size:14px}
+#ppo-work-timer :is(button,.button).text:hover:not(:disabled){background:transparent;text-decoration:underline}
+#ppo-work-timer :is(button,.button).text:disabled{color:var(--muted);cursor:default;text-decoration:none}
+#ppo-work-timer button.icon{width:44px;padding:0}
+#ppo-work-timer button.quiet{color:var(--text-secondary)}
+#ppo-work-timer tr:hover button.quiet,#ppo-work-timer tr:focus-within button.quiet,#ppo-work-timer button.quiet:focus-visible{color:var(--link)}
+@media(hover:none){#ppo-work-timer button.quiet{color:var(--link)}}
+
+/* Page frame: the job menu beside the work column from 1200 px (the shared secondary menu's docking width) */
+#ppo-work-timer .frame{display:flex;align-items:stretch;min-height:0;border-top:1px solid var(--line)}
+#ppo-work-timer .work{flex:1;min-width:0;display:flex;flex-direction:column}
+#ppo-work-timer .menu{flex:none;width:240px;padding:18px 10px;background:var(--paper);border-right:1px solid var(--line);color:var(--ink)}
+#ppo-work-timer .menu-title{display:flex;flex-direction:column;padding:4px 10px 16px}
+#ppo-work-timer .menu-title strong{font-size:18px;line-height:24px;font-weight:700}
+#ppo-work-timer .menu-title span{font-size:14px;color:var(--text-secondary);font-variant-numeric:tabular-nums;min-height:21px}
+#ppo-work-timer .menu nav li+li{margin-top:2px}
+#ppo-work-timer .menu nav a{position:relative;display:flex;align-items:center;gap:12px;min-height:42px;padding:8px 10px;border-radius:6px;color:var(--ink);font-size:14px;line-height:20px;text-decoration:none}
+#ppo-work-timer .menu nav a:hover{background:var(--surface-hover)}
+#ppo-work-timer .menu nav a svg{width:20px;height:20px;color:var(--text-secondary)}
+#ppo-work-timer .menu nav a[aria-current=page]{background:var(--surface-white);font-weight:500}
+#ppo-work-timer .menu nav a[aria-current=page] svg{color:var(--ink)}
+#ppo-work-timer .menu nav a > span:first-of-type{flex:1;min-width:0}
+#ppo-work-timer .menu .count{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:var(--neutral-surface);font-size:12px;font-weight:500}
+#ppo-work-timer .menu .meta{font-size:12px;line-height:16px;color:var(--muted);white-space:nowrap}
+#ppo-work-timer .menu-group{margin-top:18px;padding-top:18px;border-top:1px solid var(--line-soft)}
+#ppo-work-timer .menu-group h2{padding:0 10px 8px;font-size:12px;line-height:16px;font-weight:500;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+#ppo-work-timer .facts div{display:flex;flex-direction:column;gap:1px;padding:6px 10px}
+#ppo-work-timer .facts dt{font-size:13px;line-height:18px;color:var(--muted)}
+#ppo-work-timer .facts dd{font-size:14px;line-height:20px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+#ppo-work-timer .menu-close{display:none}
+#ppo-work-timer .menu-scrim{display:none}
+@media(max-width:1199px){
+ #ppo-work-timer .menu{display:none}
+ #ppo-work-timer[data-menu=open] .menu{position:fixed;z-index:40;top:0;bottom:0;left:0;display:block;width:min(300px,88vw);padding-top:52px;overflow-y:auto;box-shadow:0 10px 36px rgba(36,42,55,.16)}
+ #ppo-work-timer[data-menu=open] .menu-close{position:absolute;top:8px;right:8px;display:inline-flex;border:0;background:transparent}
+ #ppo-work-timer[data-menu=open] .menu-scrim{position:fixed;inset:0;z-index:39;display:block;background:rgba(36,42,55,.18)}
+}
+
+/* Record header: stays at the top while the page scrolls; condenses once the timer has scrolled away */
+#ppo-work-timer .head{position:sticky;top:0;z-index:20;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"crumbs ." "title actions" "ctx ctx";align-items:end;gap:4px 24px;padding:10px 24px 16px;background:var(--surface-white);box-shadow:0 1px 0 var(--line)}
+#ppo-work-timer .crumbs{grid-area:crumbs;display:flex;flex-wrap:wrap;align-items:center;gap:0 8px;font-size:13px;color:var(--text-secondary);font-variant-numeric:tabular-nums}
+#ppo-work-timer .crumbs a{display:inline-flex;align-items:center;gap:4px;min-height:32px;color:var(--text-secondary);font-weight:500;text-decoration:none}
+#ppo-work-timer .crumbs a:hover{color:var(--ink);text-decoration:underline}
+#ppo-work-timer .crumbs svg{width:16px;height:16px}
+#ppo-work-timer .crumbs .sep{color:var(--hairline)}
+#ppo-work-timer .title-row{grid-area:title;display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;min-width:0}
+#ppo-work-timer .head h1{font-size:24px;font-weight:700;line-height:1.3}
+#ppo-work-timer .since{font-size:14px;color:var(--text-secondary);font-variant-numeric:tabular-nums}
+#ppo-work-timer .actions{grid-area:actions;display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:10px}
+#ppo-work-timer .context{grid-area:ctx;display:flex;flex-wrap:wrap;align-items:center;gap:2px 24px;font-size:14px;color:var(--text-secondary)}
+#ppo-work-timer .context strong{font-weight:500;color:var(--ink)}
+#ppo-work-timer .mini{display:none}
+#ppo-work-timer .head[data-compact="1"]{grid-template-areas:"title actions";align-items:center;padding-top:8px;padding-bottom:8px}
+#ppo-work-timer .head[data-compact="1"] :is(.crumbs,.context,.since){display:none}
+#ppo-work-timer .head[data-compact="1"] h1{font-size:18px;white-space:nowrap}
+#ppo-work-timer .head[data-compact="1"] .mini{display:flex;align-items:baseline;gap:10px;padding-left:20px;border-left:1px solid var(--line)}
+#ppo-work-timer .mini .label{font-size:13px;font-weight:500;color:var(--text-secondary)}
+#ppo-work-timer .mini .num{font-size:24px;font-weight:500;letter-spacing:-.02em}
+#ppo-work-timer .mini .num small{font-size:15px;color:var(--text-secondary)}
+#ppo-work-timer .mini .note{font-size:13px;font-weight:700;color:var(--text-secondary)}
+#ppo-work-timer .mini .note.late{color:var(--warning)}
+
+/* State tag: tint, status text and a 1.5 px accent edge. Words, never colour alone. */
+#ppo-work-timer .tag{display:inline-flex;align-items:center;gap:9px;height:36px;padding:0 14px 0 12px;border-radius:6px;border:1.5px solid var(--neutral);background:var(--neutral-surface);color:var(--neutral);font-size:15px;font-weight:700;white-space:nowrap}
+#ppo-work-timer .tag svg{width:18px;height:18px}
+#ppo-work-timer .tag .live{display:block;width:10px;height:10px;border-radius:50%;background:currentColor}
+#ppo-work-timer .tag[data-state=ready]{background:var(--surface-white);border-color:var(--navy);color:var(--navy)}
+#ppo-work-timer .tag[data-state=blocked]{background:var(--surface-white);border:1.5px dashed var(--control-border);color:var(--navy)}
+#ppo-work-timer .tag[data-state=working]{background:var(--progress-surface);border-color:var(--progress);color:var(--progress)}
+#ppo-work-timer .tag[data-state=paused]{background:var(--warning-surface);border-color:var(--warning-accent);color:var(--warning)}
+#ppo-work-timer .tag[data-state=alert]{background:var(--danger-surface);border-color:var(--danger-accent);color:var(--danger)}
+#ppo-work-timer .tag[data-state=closed]{background:var(--success-surface);border-color:var(--success-icon);color:var(--success)}
+#ppo-work-timer .tag[data-state=elsewhere]{background:var(--info-surface);border-color:var(--info-accent);color:var(--info)}
+
+/* Banner rows: full-width tint and rule, no box and no side stripe (docs/decisions/notice-accent-rule-departure.md) */
+#ppo-work-timer .banner-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;padding:10px 24px;background:var(--warning-tint);border-bottom:1px solid var(--warning-border);color:var(--ink)}
+#ppo-work-timer .banner-row > svg{color:var(--warning-icon)}
+#ppo-work-timer .banner-row p{flex:1 1 320px;min-width:0;font-size:14px;line-height:1.45}
+#ppo-work-timer .banner-row p strong{font-weight:700}
+#ppo-work-timer .banner-row .acts{display:flex;flex-wrap:wrap;gap:0 20px}
+#ppo-work-timer .banner-row.danger{background:var(--danger-surface);border-color:var(--danger-border)}
+#ppo-work-timer .banner-row.danger > svg{color:var(--danger)}
+#ppo-work-timer .banner-row.info{background:var(--info-surface);border-color:var(--info-border)}
+#ppo-work-timer .banner-row.info > svg{color:var(--info)}
+#ppo-work-timer .banner-row.success{background:var(--success-tint);border-color:var(--success-border)}
+#ppo-work-timer .banner-row.success > svg{color:var(--success-icon)}
+
+/* Timer */
+#ppo-work-timer .timer-body{display:flex;flex-direction:column;gap:22px;padding:22px 24px 20px}
+#ppo-work-timer .timer-top{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:end;gap:32px}
+#ppo-work-timer .figure{display:flex;flex-direction:column;gap:8px}
+#ppo-work-timer .figure-label{font-size:14px;font-weight:500;color:var(--text-secondary)}
+#ppo-work-timer .elapsed{display:flex;align-items:baseline;font-weight:500;line-height:.92;letter-spacing:-.035em;font-variant-numeric:tabular-nums;white-space:nowrap}
+#ppo-work-timer .elapsed .hm{font-size:96px}
+#ppo-work-timer .elapsed .ss{margin-left:3px;font-size:40px;letter-spacing:-.01em;color:var(--text-secondary)}
+#ppo-work-timer .timer[data-still=true] .elapsed{color:var(--text-secondary)}
+#ppo-work-timer .timer[data-still=true] .elapsed .ss{color:var(--control-border)}
+#ppo-work-timer .timer[data-idle=true] .elapsed{color:var(--control-border)}
+#ppo-work-timer .timer[data-idle=true] .elapsed .ss{color:var(--hairline)}
+#ppo-work-timer .readouts{display:grid;grid-auto-columns:minmax(0,1fr);grid-auto-flow:column;justify-self:end;width:100%;max-width:560px}
+#ppo-work-timer .readouts[data-count="4"]{max-width:780px}
+#ppo-work-timer .readout{display:flex;flex-direction:column;gap:4px;min-width:0;padding:0 0 4px 24px;border-left:1px solid var(--line)}
+#ppo-work-timer .readout dt{font-size:13px;font-weight:500;color:var(--text-secondary)}
+#ppo-work-timer .readout dd{font-size:24px;font-weight:500;line-height:1.15;font-variant-numeric:tabular-nums;white-space:nowrap}
+#ppo-work-timer .readout dd + dd{font-size:13px;font-weight:400;line-height:1.5;color:var(--text-secondary);white-space:normal}
+#ppo-work-timer .readout .late{color:var(--warning)}
+#ppo-work-timer .readout .alert{color:var(--danger)}
+#ppo-work-timer .readout .info{color:var(--info)}
+#ppo-work-timer .readout .ok{color:var(--success)}
+#ppo-work-timer .reason{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;padding:10px 14px;border:1px solid var(--warning-border);border-radius:8px;background:var(--warning-tint);font-size:14px}
+#ppo-work-timer .reason svg{color:var(--warning-icon)}
+#ppo-work-timer .reason strong{font-weight:700}
+#ppo-work-timer .reason .spacer{flex:1}
+#ppo-work-timer .timer-foot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:0 16px;min-height:45px;padding:0 24px;border-top:1px solid var(--line-soft)}
+#ppo-work-timer .save-line{display:inline-flex;align-items:center;gap:6px;padding:6px 0;font-size:13px;color:var(--text-secondary)}
+#ppo-work-timer .save-line svg{width:16px;height:16px}
+#ppo-work-timer .save-line.alert{color:var(--danger)}
+#ppo-work-timer .wake{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0;border:0;background:transparent;color:var(--ink);font-size:14px;font-weight:400}
+#ppo-work-timer .wake:hover:not(:disabled){background:transparent}
+#ppo-work-timer .wake .knob{position:relative;flex:none;width:36px;height:22px;border-radius:15px;background:var(--control-border)}
+#ppo-work-timer .wake .knob::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .15s}
+#ppo-work-timer .wake[aria-checked=true] .knob{background:var(--navy)}
+#ppo-work-timer .wake[aria-checked=true] .knob::after{transform:translateX(14px)}
+#ppo-work-timer .wake:disabled{cursor:default;color:var(--muted)}
+#ppo-work-timer .wake:disabled .knob{background:var(--hairline)}
+#ppo-work-timer .wake small{display:block;font-size:12px;color:var(--muted);text-align:left}
+
+/* Visit track: the plan above the rail (booked bracket, overrun), the record on it (stretches), and a "now" pointer through both */
+#ppo-work-timer .track{position:relative;padding-top:38px}
+#ppo-work-timer .track .booked{position:absolute;top:25px;height:13px;border:1.5px solid var(--neutral);border-bottom:0;border-radius:3px 3px 0 0}
+#ppo-work-timer .track .booked-label{position:absolute;top:0;font-size:14px;line-height:1;color:var(--text-secondary);white-space:nowrap}
+#ppo-work-timer .track .over{position:absolute;top:25px;height:11px;border-top:1.5px solid var(--warning-icon);background:repeating-linear-gradient(135deg,var(--warning-icon) 0 1.5px,transparent 1.5px 5px)}
+#ppo-work-timer .track .over.clip{-webkit-mask-image:linear-gradient(to right,#000 55%,transparent);mask-image:linear-gradient(to right,#000 55%,transparent)}
+#ppo-work-timer .track .over-label{position:absolute;top:0;font-size:14px;line-height:1;font-weight:700;color:var(--warning);white-space:nowrap;transform:translateX(-100%)}
+#ppo-work-timer .rail{position:relative;height:30px;border-radius:5px;background:#eef0f3;overflow:hidden}
+#ppo-work-timer .rail .window{position:absolute;top:0;bottom:0;background:var(--line)}
+#ppo-work-timer .rail .seg{position:absolute;top:5px;bottom:5px;border-radius:3px;box-shadow:0 0 0 1px #eef0f3}
+#ppo-work-timer .rail .seg.running{border-top-right-radius:0;border-bottom-right-radius:0}
+#ppo-work-timer .rail .seg.clipped{-webkit-mask-image:linear-gradient(to right,#000 60%,transparent);mask-image:linear-gradient(to right,#000 60%,transparent)}
+#ppo-work-timer .rail .seg.attention{outline:2px solid var(--danger-accent);outline-offset:-2px}
+#ppo-work-timer .k-Labour{background:var(--progress)}
+#ppo-work-timer .k-Waiting{background:repeating-linear-gradient(135deg,var(--warning-icon) 0 3px,var(--warning-border) 3px 6px)}
+#ppo-work-timer .k-Break{background:var(--neutral)}
+#ppo-work-timer .k-Travel{background:repeating-linear-gradient(45deg,var(--info-accent) 0 3px,var(--info-border) 3px 6px)}
+#ppo-work-timer .k-Other{background:radial-gradient(circle,var(--control-border) 1.5px,var(--line-soft) 1.6px) 0 0/6px 6px}
+#ppo-work-timer .ticks{position:relative;height:15px;margin-top:7px}
+#ppo-work-timer .ticks i{position:absolute;top:0;width:1px;height:3px;margin-left:-.5px;background:var(--hairline)}
+#ppo-work-timer .ticks i.q{height:9px;background:var(--control-border)}
+#ppo-work-timer .ticks i.h{width:1.5px;height:15px;margin-left:-.75px;background:var(--neutral)}
+#ppo-work-timer .labels{position:relative;height:20px;margin-top:9px;font-size:14px;line-height:20px;color:var(--text-secondary);font-variant-numeric:tabular-nums}
+#ppo-work-timer .labels span{position:absolute;white-space:nowrap;transform:translateX(-50%)}
+#ppo-work-timer .labels span.first{transform:none}
+#ppo-work-timer .labels span.last{transform:translateX(-100%)}
+#ppo-work-timer .labels .now-label{font-weight:700;color:var(--ink)}
+#ppo-work-timer .labels .right-label{font-weight:700;color:var(--danger)}
+#ppo-work-timer .pointer{position:absolute;top:34px;width:2px;height:57px;margin-left:-1px;border-radius:1px;background:var(--ink)}
+#ppo-work-timer .pointer::before{content:"";position:absolute;top:-6px;left:-5px;border-left:6px solid transparent;border-right:6px solid transparent;border-top:7px solid var(--ink)}
+
+/* Job labour allowance (multi-visit jobs only) */
+#ppo-work-timer .allowance{display:flex;flex-direction:column;gap:12px;padding-top:18px;border-top:1px solid var(--line-soft)}
+#ppo-work-timer .allowance-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;font-size:14px;color:var(--text-secondary);font-variant-numeric:tabular-nums}
+#ppo-work-timer .allowance-head h3{font-size:14px;font-weight:500}
+#ppo-work-timer .allowance-head h3 span{font-weight:400}
+#ppo-work-timer .allowance-head strong{font-weight:700;color:var(--ink)}
+#ppo-work-timer .allowance-head .over{font-weight:700;color:var(--warning)}
+#ppo-work-timer .allow{position:relative;padding-top:26px}
+#ppo-work-timer .allow .quote{position:absolute;left:0;top:17px;height:9px;border:1.5px solid var(--neutral);border-bottom:0;border-radius:3px 3px 0 0}
+#ppo-work-timer .allow .fore{position:absolute;top:17px;height:7px;border-top:1.5px dashed var(--warning-icon);background:repeating-linear-gradient(135deg,var(--warning-icon) 0 1.5px,transparent 1.5px 5px)}
+#ppo-work-timer .allow .top-label{position:absolute;top:0;font-size:13px;line-height:1;color:var(--text-secondary);white-space:nowrap}
+#ppo-work-timer .allow .top-label.end{right:0;font-weight:700;color:var(--ink)}
+#ppo-work-timer .allow .bar{position:relative;height:22px;border-radius:5px;background:#eef0f3;overflow:hidden}
+#ppo-work-timer .allow .bar i{position:absolute;top:3px;bottom:3px}
+#ppo-work-timer .allow .bar .quoted{top:0;bottom:0;left:0;background:var(--line)}
+#ppo-work-timer .allow .bar .earlier{background:var(--neutral);border-radius:3px 0 0 3px}
+#ppo-work-timer .allow .bar .today{background:var(--progress)}
+#ppo-work-timer .allow .bar .forecast{border:1.5px dashed var(--ink);border-left:0;border-radius:0 3px 3px 0}
+#ppo-work-timer .allow .aticks{position:relative;height:11px;margin-top:3px}
+#ppo-work-timer .allow .aticks i{position:absolute;top:0;width:1px;height:5px;background:var(--control-border)}
+#ppo-work-timer .allow .aticks i.major{width:1.5px;height:9px;background:var(--neutral)}
+#ppo-work-timer .allow .alabels{position:relative;height:16px;margin-top:2px;font-size:13px;line-height:16px;color:var(--text-secondary);font-variant-numeric:tabular-nums}
+#ppo-work-timer .allow .alabels span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+#ppo-work-timer .allow .alabels span.first{transform:none}
+#ppo-work-timer .legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--text-secondary)}
+#ppo-work-timer .legend li{display:inline-flex;align-items:center;gap:6px}
+#ppo-work-timer .legend i{display:block;width:14px;height:10px;border-radius:2px}
+#ppo-work-timer .legend i.fore{border:1.5px dashed var(--ink)}
+#ppo-work-timer .legend i.earlier{background:var(--neutral)}
+#ppo-work-timer .legend i.today{background:var(--progress)}
+
+/* Sections: tables and lists run to the edges of the module; text keeps a 24 px inset */
+#ppo-work-timer .section-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:8px 16px;padding:22px 24px 12px}
+#ppo-work-timer .section-head h2{font-size:18px;font-weight:500}
+#ppo-work-timer .section-head p{font-size:14px;color:var(--text-secondary)}
+#ppo-work-timer .section-head .side{display:flex;align-items:center;gap:20px;font-size:14px;color:var(--text-secondary)}
+#ppo-work-timer .stretches{width:100%;border-collapse:collapse}
+#ppo-work-timer .stretches th{padding:10px 16px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--surface-white);font-size:13px;font-weight:500;color:var(--text-secondary);text-align:left;white-space:nowrap}
+#ppo-work-timer .stretches th .sorted{display:inline-flex;align-items:center;gap:4px;color:var(--ink)}
+#ppo-work-timer .stretches th svg{width:14px;height:14px}
+#ppo-work-timer .stretches td{padding:12px 16px;border-bottom:1px solid var(--line-soft);font-size:15px;font-variant-numeric:tabular-nums;vertical-align:middle}
+#ppo-work-timer .stretches :is(th,td):first-child{padding-left:24px}
+#ppo-work-timer .stretches :is(th,td):last-child{padding-right:24px;text-align:right}
+#ppo-work-timer .stretches .c-kind{width:118px}
+#ppo-work-timer .stretches .c-dur{width:120px;text-align:right;white-space:nowrap}
+#ppo-work-timer .stretches .c-state{width:170px}
+#ppo-work-timer .stretches .c-act{width:96px;padding-top:0;padding-bottom:0}
+#ppo-work-timer .stretches .when{display:block;font-weight:500;white-space:nowrap}
+#ppo-work-timer .stretches .note{display:block;margin-top:2px;font-size:14px;line-height:1.4;color:var(--text-secondary)}
+#ppo-work-timer .stretches .flag{display:inline-flex;margin-right:6px;padding:0 6px;border-radius:4px;background:var(--info-surface);color:var(--info);font-size:12px;font-weight:500;line-height:1.7}
+#ppo-work-timer .stretches tr.running{background:var(--progress-surface)}
+#ppo-work-timer .stretches tr.running.waiting{background:var(--warning-tint)}
+#ppo-work-timer .stretches tr.held{background:var(--warning-tint)}
+#ppo-work-timer .stretches tr.attention{background:var(--danger-surface)}
+#ppo-work-timer .stretches .show-more td{padding:4px 24px;text-align:center}
+#ppo-work-timer .chip{display:inline-flex;align-items:center;height:26px;padding:0 9px;border-radius:5px;background:var(--neutral-surface);color:var(--neutral);font-size:12px;font-weight:500;white-space:nowrap}
+#ppo-work-timer .chip.Labour{background:var(--progress-surface);color:var(--progress)}
+#ppo-work-timer .chip.Waiting{background:var(--warning-surface);color:var(--warning)}
+#ppo-work-timer .chip.Travel{background:var(--info-surface);color:var(--info)}
+#ppo-work-timer tr.running .chip{background:var(--surface-white);box-shadow:inset 0 0 0 1px currentColor}
+#ppo-work-timer .state{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:var(--text-secondary);white-space:nowrap}
+#ppo-work-timer .state svg{width:15px;height:15px;stroke-width:2}
+#ppo-work-timer .state.saved,#ppo-work-timer .state.locked{color:var(--success)}
+#ppo-work-timer .state.device{color:var(--warning)}
+#ppo-work-timer .state.running{color:var(--progress)}
+#ppo-work-timer .state.attention{color:var(--danger)}
+#ppo-work-timer .totals{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 24px;padding:12px 24px;border-bottom:1px solid var(--line);font-size:14px}
+#ppo-work-timer .totals ul{display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px}
+#ppo-work-timer .totals li{display:inline-flex;align-items:center;gap:8px}
+#ppo-work-timer .totals li:first-child{font-weight:500;color:var(--text-secondary)}
+#ppo-work-timer .totals i{display:block;width:18px;height:10px;border-radius:2px}
+#ppo-work-timer .totals b{font-weight:700;font-variant-numeric:tabular-nums}
+#ppo-work-timer .totals > span{color:var(--text-secondary)}
+#ppo-work-timer .empty{display:flex;align-items:center;gap:14px;padding:22px 24px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+#ppo-work-timer .empty .ring{display:grid;place-items:center;flex:none;width:40px;height:40px;border-radius:50%;background:var(--surface-2);border:1px solid var(--line);color:var(--text-secondary)}
+#ppo-work-timer .empty p{display:flex;flex-direction:column;gap:2px;font-size:14px;line-height:1.45;color:var(--text-secondary)}
+#ppo-work-timer .empty strong{font-size:15px;font-weight:500;color:var(--ink)}
+#ppo-work-timer .events{position:relative;padding-bottom:12px;border-top:1px solid var(--line)}
+#ppo-work-timer .events::before{content:"";position:absolute;left:107.5px;top:26px;bottom:26px;width:1px;background:var(--line)}
+#ppo-work-timer .events.single::before{display:none}
+#ppo-work-timer .events li{position:relative;display:grid;grid-template-columns:56px 32px minmax(0,1fr);gap:0 12px;align-items:start;padding:10px 24px}
+#ppo-work-timer .events time{padding-top:5px;font-size:14px;font-weight:500;color:var(--text-secondary);font-variant-numeric:tabular-nums}
+#ppo-work-timer .events .dotc{position:relative;z-index:1;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--surface-white)}
+#ppo-work-timer .events .dotc svg{width:16px;height:16px}
+#ppo-work-timer .events .dotc.progress{color:var(--progress)}
+#ppo-work-timer .events .dotc.warning{color:var(--warning-icon)}
+#ppo-work-timer .events .dotc.info{color:var(--info)}
+#ppo-work-timer .events .dotc.danger{color:var(--danger)}
+#ppo-work-timer .events .dotc.success{color:var(--success)}
+#ppo-work-timer .events .dotc.neutral{color:var(--neutral)}
+#ppo-work-timer .events .what{display:flex;flex-direction:column;gap:1px;padding-top:4px;font-size:14px;line-height:1.4}
+#ppo-work-timer .events .what strong{font-weight:500}
+#ppo-work-timer .events .what span{color:var(--text-secondary)}
+#ppo-work-timer .foot{margin-top:auto;padding:16px 24px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+
+/* Loading and no access */
+#ppo-work-timer .skel{display:block;height:14px;border-radius:4px;background:var(--neutral-surface);animation:wt-skel 1.6s ease-in-out infinite}
+#ppo-work-timer .denied{display:flex;justify-content:center;padding:96px 24px}
+#ppo-work-timer .denied > div{display:flex;flex-direction:column;align-items:center;gap:14px;max-width:460px;text-align:center}
+#ppo-work-timer .denied .ring{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:var(--surface-2);border:1px solid var(--line);color:var(--text-secondary)}
+#ppo-work-timer .denied .ring svg{width:24px;height:24px}
+#ppo-work-timer .denied h2{font-size:20px;font-weight:700}
+#ppo-work-timer .denied p{font-size:15px;line-height:1.5;color:var(--text-secondary)}
+
+/* My jobs list (phone-first; unchanged from r04 apart from the page inset) */
+#ppo-work-timer #view-list{max-width:760px;padding:8px 16px 24px}
+#ppo-work-timer .list-head{margin-bottom:16px}
+#ppo-work-timer .list-head h1{font-size:24px;font-weight:700}
+#ppo-work-timer .list-head p{font-size:14px;color:var(--text-secondary)}
+#ppo-work-timer .banner{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center;gap:4px 14px;min-height:72px;margin-bottom:20px;padding:12px 16px;border-radius:8px;background:var(--navy);color:#fff;text-decoration:none}
+#ppo-work-timer .banner:hover{background:#2d3444;color:#fff}
+#ppo-work-timer .banner .dot{display:block;width:12px;height:12px;border-radius:50%;background:var(--green)}
+#ppo-work-timer .banner[data-phase=paused] .dot,#ppo-work-timer .banner[data-alert=long] .dot{background:var(--warning-accent)}
+#ppo-work-timer .banner[data-phase=stopped] .dot{background:#aeb6c2}
+#ppo-work-timer .banner .what{min-width:0}
+#ppo-work-timer .banner .what strong{display:block;font-weight:700;font-size:16px}
+#ppo-work-timer .banner .what span{display:block;font-size:13px;color:#c9cfd8;overflow-wrap:anywhere}
+#ppo-work-timer .banner .count{display:grid;justify-items:end;font-size:28px;font-weight:500;letter-spacing:-.03em;line-height:1.05;font-variant-numeric:tabular-nums}
+#ppo-work-timer .banner .count small{font-size:12px;font-weight:400;letter-spacing:0;color:#c9cfd8}
+#ppo-work-timer .banner > svg{color:#c9cfd8}
+#ppo-work-timer .group{margin-bottom:22px}
+#ppo-work-timer .group h2{margin-bottom:8px;font-size:14px;font-weight:700;color:var(--text-secondary)}
+#ppo-work-timer .jobs{display:grid;gap:10px}
+#ppo-work-timer .job{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 14px;align-items:start;padding:14px 16px;background:#fff;border:1px solid var(--line-strong);border-radius:8px;color:var(--ink);text-decoration:none}
+#ppo-work-timer .job:hover{background:var(--surface-3);color:var(--ink)}
+#ppo-work-timer .job h3{font-size:16px;font-weight:700}
+#ppo-work-timer .job p{font-size:14px;color:var(--text-secondary)}
+#ppo-work-timer .job .meta{grid-column:1/-1;font-size:13px;color:var(--text-secondary)}
+#ppo-work-timer .badge{display:inline-flex;align-items:center;height:26px;padding:0 9px;border-radius:5px;background:var(--neutral-surface);color:var(--neutral);font-size:13px;font-weight:500;white-space:nowrap}
+#ppo-work-timer .badge.progress{background:var(--progress-surface);color:var(--progress)}
+#ppo-work-timer .badge.warning{background:var(--warning-surface);color:var(--warning)}
+#ppo-work-timer .badge.success{background:var(--success-surface);color:var(--success)}
+#ppo-work-timer .list-empty{font-size:14px;color:var(--text-secondary)}
+
+/* Phone control dock (phone only) */
+#ppo-work-timer .dock{display:none}
+
+/* Undo bar with an 8 s countdown ring on the button */
+#ppo-work-timer .snack{position:fixed;left:24px;bottom:24px;z-index:30;display:flex;align-items:center;gap:12px;width:min(520px,calc(100vw - 48px));padding:12px 12px 12px 18px;border-radius:8px;background:var(--navy);color:#fff;box-shadow:0 10px 36px rgba(36,42,55,.16)}
+#ppo-work-timer .snack p{flex:1;font-size:15px;font-weight:500;line-height:1.35}
+#ppo-work-timer .snack p small{display:block;font-size:13px;font-weight:400;color:#c9cfd8}
+#ppo-work-timer .snack button{gap:8px;min-height:44px;padding:0 14px;border:1px solid #6b7385;background:transparent;color:#fff}
+#ppo-work-timer .snack button:hover:not(:disabled){background:#343c4c}
+#ppo-work-timer .snack .ring{width:22px;height:22px;transform:rotate(-90deg)}
+#ppo-work-timer .snack .ring circle{fill:none;stroke-width:2.5}
+#ppo-work-timer .snack .ring .track-c{stroke:rgba(255,255,255,.22)}
+#ppo-work-timer .snack .ring .left{stroke:var(--green);stroke-linecap:round;stroke-dasharray:56.55;stroke-dashoffset:0;animation:wt-drain 8s linear forwards}
+#ppo-work-timer .snack:is(:hover,:focus-within) .ring .left{animation-play-state:paused}
+#ppo-work-timer .snack.enter{animation:wt-rise .16s ease-out}
+@media(min-width:1200px){#ppo-work-timer[data-menu=docked] .snack{left:264px}}
+@keyframes wt-drain{to{stroke-dashoffset:56.55}}
+@keyframes wt-rise{from{opacity:0;transform:translateY(8px)}}
+@keyframes wt-skel{50%{opacity:.55}}
+
+/* Sheets and dialogs: centred on desktop, a bottom sheet on the phone */
+#ppo-work-timer dialog{width:min(520px,calc(100vw - 32px));max-height:calc(100dvh - 40px);padding:0;border:1px solid var(--line-strong);border-radius:14px;background:#fff;color:var(--ink);box-shadow:0 10px 36px rgba(36,42,55,.16);overflow:auto}
+#ppo-work-timer dialog::backdrop{background:rgba(36,42,55,.22)}
+#ppo-work-timer .sheet-head{padding:18px 20px 6px}
+#ppo-work-timer .sheet-head h2{font-size:20px;font-weight:700}
+#ppo-work-timer .sheet-head h2:focus-visible{outline-offset:6px}
+#ppo-work-timer .sheet-head p{margin-top:4px;font-size:15px;line-height:1.45;color:var(--text-secondary)}
+#ppo-work-timer .sheet-body{display:flex;flex-direction:column;gap:12px;padding:10px 20px 18px;font-size:14px}
+#ppo-work-timer .sheet-actions{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:10px;padding:12px 20px 18px;border-top:1px solid var(--line);background:var(--surface-3)}
+#ppo-work-timer .sheet-actions button{min-height:52px;font-size:16px}
+#ppo-work-timer .group-label{font-size:13px;font-weight:500;color:var(--text-secondary)}
+#ppo-work-timer .group-label + *{margin-top:-4px}
+#ppo-work-timer .quick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#ppo-work-timer .tile{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;padding:8px 12px;border:1.5px solid var(--line-strong);border-radius:14px;background:#fff;color:var(--ink);text-align:left;font-weight:400}
+#ppo-work-timer .quick .tile{flex-direction:column;align-items:flex-start;gap:8px;min-height:96px;padding:12px 14px}
+#ppo-work-timer .tile .ico{display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:8px;background:var(--neutral-surface);color:var(--navy)}
+#ppo-work-timer .quick .tile .ico{width:40px;height:40px}
+#ppo-work-timer .tile .ico svg{width:20px;height:20px}
+#ppo-work-timer .tile .t{display:flex;flex-direction:column;gap:1px;flex:1;min-width:0}
+#ppo-work-timer .tile strong{font-size:16px;font-weight:500}
+#ppo-work-timer .quick .tile strong{font-weight:700}
+#ppo-work-timer .tile small{font-size:13px;color:var(--text-secondary)}
+#ppo-work-timer .tile .go{color:var(--text-secondary)}
+#ppo-work-timer .tile[aria-expanded=true]{border-color:var(--navy);box-shadow:0 0 0 2px rgba(36,42,55,.12)}
+#ppo-work-timer .noted{display:flex;flex-direction:column;gap:8px}
+#ppo-work-timer .note-block{display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--surface-3)}
+#ppo-work-timer .note-block label{font-size:14px;font-weight:700}
+#ppo-work-timer .note-block textarea{width:100%;min-height:76px;padding:10px 12px;border:1.5px solid var(--control-border);border-radius:8px;background:#fff;font-size:16px;line-height:1.45;resize:vertical}
+#ppo-work-timer .note-block textarea[aria-invalid=true]{border-color:var(--danger-accent)}
+#ppo-work-timer .note-block small{font-size:13px;color:var(--text-secondary)}
+#ppo-work-timer .note-block .primary{align-self:flex-end;min-height:52px;font-size:16px}
+#ppo-work-timer .field-error{font-size:13px;color:var(--danger)}
+#ppo-work-timer .summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2)}
+#ppo-work-timer .summary div{display:flex;flex-direction:column;gap:2px}
+#ppo-work-timer .summary dt{font-size:13px;color:var(--text-secondary)}
+#ppo-work-timer .summary dd{font-size:18px;font-weight:500;font-variant-numeric:tabular-nums}
+#ppo-work-timer .sheet-note{font-size:14px;color:var(--text-secondary)}
+#ppo-work-timer .choices{display:grid;gap:8px}
+#ppo-work-timer .choices legend{margin-bottom:8px;padding:0;font-size:14px;font-weight:700}
+#ppo-work-timer .choice{display:flex;gap:12px;align-items:flex-start;min-height:56px;padding:12px 14px;border:1.5px solid var(--line-strong);border-radius:14px;background:#fff;cursor:pointer}
+#ppo-work-timer .choice:hover{background:var(--surface-3)}
+#ppo-work-timer .choice:has(input:checked){border-color:var(--navy);box-shadow:0 0 0 2px rgba(36,42,55,.12)}
+#ppo-work-timer .choice input{width:20px;height:20px;margin:1px 0 0;accent-color:var(--navy);flex:none}
+#ppo-work-timer .choice span{display:flex;flex-direction:column;gap:1px}
+#ppo-work-timer .choice strong{font-size:16px;font-weight:500;font-variant-numeric:tabular-nums}
+#ppo-work-timer .choice small{font-size:13px;color:var(--text-secondary)}
+#ppo-work-timer .field{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:700}
+#ppo-work-timer .field :is(input,textarea){width:100%;min-height:44px;padding:9px 11px;border:1.5px solid var(--control-border);border-radius:6px;background:#fff;font-weight:400;line-height:1.5}
+#ppo-work-timer .field textarea{min-height:72px;resize:vertical}
+#ppo-work-timer .field small{font-size:13px;font-weight:400;color:var(--text-secondary)}
+#ppo-work-timer .result{padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2);font-size:14px;line-height:1.45}
+#ppo-work-timer .result strong{font-weight:700}
+#ppo-work-timer .stepper{display:grid;grid-template-columns:64px minmax(0,1fr) 64px;gap:12px;align-items:center}
+#ppo-work-timer .stepper button{width:64px;min-height:64px;padding:0}
+#ppo-work-timer .stepper button svg{width:26px;height:26px;stroke-width:2.2}
+#ppo-work-timer .stepper output{display:flex;align-items:baseline;justify-content:center;gap:6px;height:64px;padding-top:8px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2);font-variant-numeric:tabular-nums}
+#ppo-work-timer .stepper output b{font-size:40px;font-weight:500;letter-spacing:-.02em}
+#ppo-work-timer .stepper output span{font-size:18px;font-weight:500;color:var(--text-secondary)}
+
+/* Below 1200 px the job menu becomes an overlay and the work column takes the width */
+@media(max-width:900px){
+ #ppo-work-timer .head{grid-template-areas:"crumbs actions" "title title" "ctx ctx";align-items:center}
+ #ppo-work-timer .timer-top{grid-template-columns:minmax(0,1fr);gap:20px}
+ #ppo-work-timer .readouts{justify-self:stretch;max-width:none;padding-top:16px;border-top:1px solid var(--line-soft)}
+ #ppo-work-timer .readouts .readout:first-child{padding-left:0;border-left:0}
+}
+/* Phone: the controls move to a dock at the foot of the screen; the record header no longer condenses */
+@media(max-width:780px){
+ #ppo-work-timer{font-size:16px}
+ #ppo-work-timer .preview{margin:8px}
+ #ppo-work-timer .head{position:static;grid-template-areas:"crumbs" "title" "ctx";grid-template-columns:minmax(0,1fr);padding:4px 16px 14px}
+ #ppo-work-timer .head .actions{display:none}
+ #ppo-work-timer .head h1{font-size:20px}
+ #ppo-work-timer .context{flex-direction:column;align-items:flex-start;gap:0;font-size:14px}
+ #ppo-work-timer .banner-row{padding:10px 16px}
+ #ppo-work-timer .banner-row p{flex-basis:100%}
+ #ppo-work-timer .timer-body{gap:18px;padding:18px 16px}
+ #ppo-work-timer .elapsed .hm{font-size:64px}
+ #ppo-work-timer .elapsed .ss{font-size:28px}
+ #ppo-work-timer .readouts{grid-auto-flow:row;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 16px}
+ #ppo-work-timer .readouts .readout{padding:0;border-left:0}
+ #ppo-work-timer .readout dd{font-size:20px}
+ #ppo-work-timer .track .booked-label,#ppo-work-timer .track .over-label,#ppo-work-timer .labels{font-size:12px}
+ #ppo-work-timer .rail{height:20px}
+ #ppo-work-timer .rail .seg{top:3px;bottom:3px}
+ #ppo-work-timer .ticks i:not(.q):not(.h){display:none}
+ #ppo-work-timer .pointer{height:47px}
+ #ppo-work-timer .timer-foot{padding:0 16px}
+ #ppo-work-timer .section-head{padding:20px 16px 10px}
+ #ppo-work-timer .stretches thead{display:none}
+ #ppo-work-timer .stretches,#ppo-work-timer .stretches tbody{display:block}
+ #ppo-work-timer .stretches tr{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:2px 10px;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line-soft)}
+ #ppo-work-timer .stretches tr:first-child{border-top:1px solid var(--line)}
+ #ppo-work-timer .stretches td{display:block;padding:0!important;border:0;width:auto!important;text-align:left!important}
+ #ppo-work-timer .stretches .c-kind{grid-row:1;grid-column:1}
+ #ppo-work-timer .stretches .c-when{grid-row:1;grid-column:2}
+ #ppo-work-timer .stretches .c-dur{grid-row:1;grid-column:3;text-align:right!important}
+ #ppo-work-timer .stretches .c-state{grid-row:2;grid-column:2}
+ #ppo-work-timer .stretches .c-act{grid-row:2;grid-column:3;text-align:right!important}
+ #ppo-work-timer .stretches .c-act button{min-height:44px}
+ #ppo-work-timer .stretches .c-when .note{grid-column:1/-1}
+ #ppo-work-timer .stretches .show-more{display:block;padding:0 16px}
+ #ppo-work-timer .stretches .show-more button{width:100%;min-height:48px}
+ #ppo-work-timer .totals{padding:12px 16px}
+ #ppo-work-timer .events li{padding:10px 16px}
+ #ppo-work-timer .events::before{left:99.5px}
+ #ppo-work-timer .foot{padding:16px 16px 20px}
+ #ppo-work-timer .dock{position:sticky;bottom:0;z-index:25;display:block;padding:12px 16px calc(14px + env(safe-area-inset-bottom));background:var(--surface-white);border-top:1px solid var(--line-strong);box-shadow:0 -6px 18px rgba(36,42,55,.08)}
+ #ppo-work-timer .dock .compact{display:none;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;font-size:14px}
+ #ppo-work-timer .dock[data-compact="1"] .compact{display:flex}
+ #ppo-work-timer .dock .compact span{display:inline-flex;align-items:center;gap:8px;font-weight:500}
+ #ppo-work-timer .dock .compact .num{font-size:17px}
+ #ppo-work-timer .dock-buttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ #ppo-work-timer .dock-buttons.stack{grid-template-columns:minmax(0,1fr)}
+ #ppo-work-timer .dock-buttons button{min-height:64px;font-size:17px}
+ #ppo-work-timer .dock-buttons.stack button:not(.primary){min-height:56px;font-size:16px}
+ #ppo-work-timer .snack{left:12px;right:12px;width:auto;bottom:var(--snack-bottom,16px)}
+ #ppo-work-timer dialog{width:100vw;max-width:100vw;margin:auto 0 0;border:0;border-radius:14px 14px 0 0;max-height:94dvh;padding-bottom:env(safe-area-inset-bottom)}
+ #ppo-work-timer dialog::before{content:"";display:block;width:40px;height:4px;margin:8px auto 0;border-radius:2px;background:var(--hairline)}
+ #ppo-work-timer .sheet-head{padding:14px 16px 4px}
+ #ppo-work-timer .sheet-body{padding:8px 16px 16px}
+ #ppo-work-timer .sheet-actions{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);padding:12px 16px 18px}
+ #ppo-work-timer .sheet-actions.single{grid-template-columns:minmax(0,1fr)}
+ #ppo-work-timer .field :is(input,textarea){font-size:16px}
+ #ppo-work-timer .denied{padding:56px 16px}
+ #ppo-work-timer .banner{grid-template-columns:auto minmax(0,1fr) auto}
+ #ppo-work-timer .banner > svg{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+ #ppo-work-timer *{transition:none!important;scroll-behavior:auto!important}
+ #ppo-work-timer .snack.enter,#ppo-work-timer .skel{animation:none}
+ #ppo-work-timer .snack .ring{display:none}
+}
+@media(pointer:coarse){#ppo-work-timer :is(button,.button,.tile){min-height:44px}}
+/* Forced colours: restore boundaries that colour alone defined; keep the track's own colours */
+@media(forced-colors:active){
+ #ppo-work-timer :is(.banner,.snack,.dock,.tile,.choice,.result,.reason,.tag,.chip,.badge,.banner-row,.note-block){border:1px solid CanvasText}
+ #ppo-work-timer :is(.rail,.seg,.legend i,.totals i,.allow .bar,.allow .bar i){forced-color-adjust:none}
+ #ppo-work-timer .seg{outline:1px solid CanvasText}
+ #ppo-work-timer :is(.pointer,.ticks i,.allow .aticks i){forced-color-adjust:none;background:CanvasText}
+ #ppo-work-timer .wake .knob{border:1px solid CanvasText}
+ #ppo-work-timer :is(button,.button).primary{border:3px solid ButtonText}
+ #ppo-work-timer .tag .live{forced-color-adjust:none;background:CanvasText}
+}
+/* Native adaptations: current PPO shell owns scrolling and global navigation.
+   Token values and record/timer/table geometry above derive from accepted r05.
+   No simulated controls, embedded font or preview bar is shipped. */
+#ppo-work-timer{overflow-wrap:anywhere}
+#ppo-work-timer .head h1{overflow-wrap:anywhere;max-width:100%}
+#ppo-work-timer .head[data-compact="1"] h1{white-space:normal}
+#ppo-work-timer .timer-menu-toggle{display:none}
+#ppo-work-timer .timer-existing{padding:20px 24px}
+#ppo-work-timer .timer-existing :is(p,ul,ol){margin-block:10px}
+#ppo-work-timer .timer-existing :is(h2,h3){margin-block:12px}
+#ppo-work-timer .timer-existing .business-card{margin-block:16px}
+#ppo-work-timer .timer-empty{padding:20px 24px;color:var(--text-secondary)}
+#ppo-work-timer .timer-events{list-style:none;padding:0;margin:0}
+#ppo-work-timer .timer-events li{display:grid;grid-template-columns:minmax(100px,180px) minmax(0,1fr);gap:20px;padding:14px 24px;border-top:1px solid var(--line-soft)}
+#ppo-work-timer .timer-events small{color:var(--text-secondary)}
+#ppo-work-timer .field{display:flex;flex-direction:column;gap:6px;margin-top:16px}
+#ppo-work-timer .field :is(input,textarea,select){min-width:0;max-width:100%;min-height:44px;font-size:16px;padding:10px;border:1px solid var(--control-border);background:white;border-radius:6px}
+#ppo-work-timer .field textarea{min-height:88px}
+#ppo-work-timer .timer-pause-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-block:14px}
+#ppo-work-timer .timer-pause-options button[aria-pressed=true]{box-shadow:inset 0 0 0 2px var(--focus)}
+#ppo-work-timer .sheet-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+#ppo-work-timer .timer-menu-dialog nav a{display:flex;min-height:44px;align-items:center;padding:8px 10px}
+#ppo-work-timer .timer-menu-dialog .meta{margin-left:auto}
+#ppo-work-timer .timer-menu-dialog :is(.menu-title,.menu-group){margin-top:12px}
+.field-timer-banner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 20px;background:var(--info-surface);border:1px solid var(--info-border);border-radius:8px;margin-block:16px;overflow-wrap:anywhere}
+.field-timer-banner p{margin:4px 0 0}
+.field-timer-banner a{min-height:44px;display:flex;align-items:center}
+@media(max-width:1199px){#ppo-work-timer .timer-menu-toggle{display:inline-flex}}
+@media(max-width:780px){
+ #ppo-work-timer .work{padding-bottom:112px}
+ #ppo-work-timer .dock{position:fixed;left:0;right:0;bottom:calc(64px + env(safe-area-inset-bottom));z-index:35;padding:10px 16px;background:var(--surface-white)}
+ #ppo-work-timer .dock .compact{display:flex}
+ #ppo-work-timer .dock-buttons:has(>button:only-child){grid-template-columns:minmax(0,1fr)}
+ #ppo-work-timer .timer-existing{padding:16px}
+ #ppo-work-timer .timer-events li{grid-template-columns:1fr;gap:4px;padding:14px 16px}
+ #ppo-work-timer .timer-pause-options{grid-template-columns:1fr}
+ #ppo-work-timer .readout dd{white-space:normal}
+ .field-timer-banner{flex-wrap:wrap}
+}

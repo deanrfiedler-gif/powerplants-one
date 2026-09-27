@@ -75,3 +75,7 @@ The exact assigned-visit review reuses this control without changing its shared 
 ## ES-01 native consumer
 
 The Estimating workload and Saved estimates views use ErrorNotice with host loading, no-match, no-permitted-workload and no-access states. A failed read clears rows and readiness counts and offers a secondary Try loading again (decision P9). Placeholder rows were declined; loading uses status text. The shared implementation and catalogue fixtures are unchanged. The host browser suite covers the failed, recovered and revoked reads.
+
+## FI-01 timer consumer
+
+`WorkTimer` and `RunningTimerBanner` reuse this component on My Jobs/job detail. The real synthetic fixture is `tests/browser/field-timer.spec.ts`, including Running/Paused/Stopped, unknown original outcome and desktop/phone controls. Host scope `#ppo-work-timer` retains accepted r05 tokens. The offline workspace keeps its existing native controls and is not mapped as a React consumer. Owner/device review is outstanding; see the native timer decision and field programme handover.

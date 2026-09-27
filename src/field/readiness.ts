@@ -1,17 +1,11 @@
+import { fieldReadinessCommand } from "./readiness-command";
 import { randomUUID } from "node:crypto";
 import type { Principal } from "../platform/identity";
 import { transaction } from "../platform/database";
 import { AppError, unavailable } from "../platform/errors";
 import { sharedOperation } from "../platform/operations";
 import { hasPermission, type QueryClient } from "../platform/permissions";
-import {
-  common,
-  commonKeys,
-  label,
-  object,
-  uuid,
-  version,
-} from "../shared/validation";
+import { label, object, uuid } from "../shared/validation";
 import { visible } from "../shared/reads";
 import { csRecord, sourceBasis, hash, updateCs } from "../shared/cs/service";
 import {
@@ -286,23 +280,7 @@ export async function acknowledgeFieldReadiness(
   appointmentId: string,
   input: unknown,
 ) {
-  const r = object(input, [
-    ...commonKeys,
-    "record_id",
-    "expected_version",
-    "presented_hash",
-    "facility_ids",
-    "activity",
-  ]);
-  const command = {
-    ...common(r),
-    appointment_id: uuid(appointmentId, "appointment_id"),
-    record_id: uuid(r.record_id, "record_id"),
-    expected_version: version(r.expected_version),
-    presented_hash: label(r.presented_hash, "presented_hash", 64),
-    facility_ids: ids(r.facility_ids, "facility_ids"),
-    activity: label(r.activity, "activity", 100),
-  };
+  const command = fieldReadinessCommand(appointmentId, input);
   return sharedOperation(
     p,
     command,

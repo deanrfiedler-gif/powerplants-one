@@ -12,7 +12,9 @@ import { completion, submit, review, issue } from "../helpers/quality-report";
 import { png } from "../helpers/field";
 import { financeJourney } from "../helpers/quality-finance";
 import { keyActivate, keySelect, keyType } from "../helpers/quality-keyboard";
-test.use({ actionTimeout: 15000, navigationTimeout: 60000 });
+// The fixed device-local booking values below represent UTC. Pin the browser
+// timezone so the same fixture has the same meaning on Windows and CI.
+test.use({ actionTimeout: 15000, navigationTimeout: 60000, timezoneId: "UTC" });
 
 test("P11 selected UI service-to-Finance journey preserves controlled booking, personal originals, exact response and reconciled Travel no-posting", async ({
   page,
@@ -24,21 +26,25 @@ test("P11 selected UI service-to-Finance journey preserves controlled booking, p
   await call(page, "local-session", { profile: "coordinator" });
   // Retain the real status/body while making the initial asynchronous customer
   // read outlast the old 5s heading assertion. Concurrent reads share one delay.
-  const initialCustomerRead = "**/api/v1/customers/50000000-0000-4000-8000-000000000001/workspace";
+  const initialCustomerRead =
+    "**/api/v1/customers/50000000-0000-4000-8000-000000000001/workspace";
   let initialCustomerDelay: Promise<void> | undefined;
-  await page.route(initialCustomerRead, async route => {
+  await page.route(initialCustomerRead, async (route) => {
     const response = await route.fetch();
-    initialCustomerDelay ??= new Promise(resolve => setTimeout(resolve, 6500));
+    initialCustomerDelay ??= new Promise((resolve) =>
+      setTimeout(resolve, 6500),
+    );
     await initialCustomerDelay;
     await route.fulfill({ response });
   });
   // Exercise the same readiness boundary on the next page: its data can arrive
   // after the ordinary five-second visibility deadline without being a failure.
-  const initialSiteRead = "**/api/v1/sites/70000000-0000-4000-8000-000000000001";
+  const initialSiteRead =
+    "**/api/v1/sites/70000000-0000-4000-8000-000000000001";
   let initialSiteDelay: Promise<void> | undefined;
-  await page.route(initialSiteRead, async route => {
+  await page.route(initialSiteRead, async (route) => {
     const response = await route.fetch();
-    initialSiteDelay ??= new Promise(resolve => setTimeout(resolve, 6500));
+    initialSiteDelay ??= new Promise((resolve) => setTimeout(resolve, 6500));
     await initialSiteDelay;
     await route.fulfill({ response });
   });
@@ -50,15 +56,32 @@ test("P11 selected UI service-to-Finance journey preserves controlled booking, p
     // Wait for this actor's actual job read, then exercise the rendered
     // controls. An unrelated document load event is not job readiness.
     await Promise.all([
-      page.waitForResponse((response) =>
-        new URL(response.url()).pathname === `/api/v1/my-jobs/${aid}` &&
-        response.request().method() === "GET" && response.status() === 200,
-        { timeout: 60000 }),
+      page.waitForResponse(
+        (response) =>
+          new URL(response.url()).pathname === `/api/v1/my-jobs/${aid}` &&
+          response.request().method() === "GET" &&
+          response.status() === 200,
+        { timeout: 60000 },
+      ),
+      page.waitForResponse(
+        (response) =>
+          new URL(response.url()).pathname === `/api/v1/my-jobs/${aid}/timer` &&
+          response.request().method() === "GET" &&
+          response.status() === 200,
+        { timeout: 60000 },
+      ),
       page.goto(`/my-jobs/${aid}`, { waitUntil: "domcontentloaded" }),
     ]);
-    await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true }))
-      .toHaveAttribute("aria-busy", "false");
+    await expect(
+      page.getByRole("region", {
+        name: "Local demonstration identity",
+        exact: true,
+      }),
+    ).toHaveAttribute("aria-busy", "false");
     await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
+    await expect(
+      page.getByText("Loading permitted records…", { exact: true }),
+    ).toHaveCount(0);
   };
   for (const profile of ["assigned-technician", "second-technician"]) {
     await identity(page, profile);
@@ -344,7 +367,7 @@ test("P11 selected UI service-to-Finance journey preserves controlled booking, p
     })
     .click();
   await expect(page.locator("#queue .status")).toHaveText(
-    Array(5).fill("ServerSaved"),
+    Array(5).fill("Server accepted and saved"),
   );
   expect(
     (await localRows()).map((x: { original: unknown }) => x.original),
@@ -538,11 +561,18 @@ test("P11 selected UI service-to-Finance journey preserves controlled booking, p
   await identity(page, "second-technician");
   await page.goto(`/my-jobs/${aid}`);
   await expect(
-    page.getByRole("heading", { name: "Saved evidence and corrections", exact: true }),
+    page.getByRole("heading", {
+      name: "Saved evidence and corrections",
+      exact: true,
+    }),
   ).toBeVisible();
   expect((await call(page, `my-jobs/${aid}`)).items[0].attendance).toBeNull();
-  await expect(page.getByRole("button", { name: /^Correct this .* entry$/ })).toHaveCount(0);
-  await expect(page.getByRole("button", { name: "Save evidence online", exact: true })).toHaveCount(0);
+  await expect(
+    page.getByRole("button", { name: /^Correct this .* entry$/ }),
+  ).toHaveCount(0);
+  await expect(
+    page.getByRole("button", { name: "Save evidence online", exact: true }),
+  ).toHaveCount(0);
   await expect(
     page.getByText(/original offline finding/).first(),
   ).toBeVisible();
@@ -553,13 +583,36 @@ test("P11 selected UI service-to-Finance journey preserves controlled booking, p
     info,
     "journey-technician-original-and-correction-history",
   );
-  // r08 exposes Service routes in the module tabs on both viewports.
-  // Opening the global phone Menu would intentionally cover those tabs.
-  await page.getByRole("navigation", { name: "Service navigation", exact: true }).getByRole("link", { name: "Service review", exact: true }).click();
+  // The native FI-01 Record detail uses the shared shell rather than the old
+  // Service module tabs. Follow its real desktop/phone navigation handover.
+  if (info.project.name.startsWith("mobile")) {
+    await page
+      .getByRole("navigation", { name: "Mobile navigation", exact: true })
+      .getByRole("button", { name: "More", exact: true })
+      .click();
+    await page
+      .getByRole("dialog")
+      .getByRole("link", { name: "Service review", exact: true })
+      .click();
+  } else {
+    await page
+      .getByRole("navigation", {
+        name: "Service operations shortcuts",
+        exact: true,
+      })
+      .getByRole("link", { name: "Service review", exact: true })
+      .click();
+  }
   await page.getByRole("link", { name: issued.reference, exact: true }).click();
-  await expect(page.getByRole("heading", { name: /Revision 2 · Issued/ })).toBeVisible();
-  await expect(page.getByText(/FINANCE_PRIVATE_CANARY|P11_PRIVATE_REVIEW_CANARY/)).toHaveCount(0);
-  await expect(page.getByRole("button", { name: "Commit exact review", exact: true })).toHaveCount(0);
+  await expect(
+    page.getByRole("heading", { name: /Revision 2 · Issued/ }),
+  ).toBeVisible();
+  await expect(
+    page.getByText(/FINANCE_PRIVATE_CANARY|P11_PRIVATE_REVIEW_CANARY/),
+  ).toHaveCount(0);
+  await expect(
+    page.getByRole("button", { name: "Commit exact review", exact: true }),
+  ).toHaveCount(0);
   await capture(page, info, "journey-next-technician-permitted-issued-report");
   await writeFile(
     info.outputPath("P11-selected-journey.json"),
@@ -576,7 +629,7 @@ test("P11 selected UI service-to-Finance journey preserves controlled booking, p
         keyboard_scope:
           "Native Tab/typing/select arrows/Enter: complete intake, controlled booking move, exact field submission, exact reserved report response and Finance approval. Other journey steps use labelled UI controls. No screen-reader, real-device or whole-product conformance claim.",
         p12_limit:
-          "PT-30 full status remains blocked by its written completed P12 precondition; no restore or handover acceptance inferred.",
+          "This selected journey does not execute the full PT-28 update/policy procedure or a completed return attendance. Full PT-30 and owner/device handover remain open; no restore or acceptance is inferred.",
         page_errors: errors,
       },
       null,

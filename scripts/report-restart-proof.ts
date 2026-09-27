@@ -139,7 +139,7 @@ try {
     const proof = JSON.parse(await readFile(file, "utf8"));
     await page.goto(origin + "/offline/index.html");
     if (phase === "submit") {
-      await expect(page.locator("#queue")).toContainText("LocalSaved");
+      await expect(page.locator("#queue")).toContainText("Local saved · queued");
       const result = await call(page, "sync/operations", {
         operations: [proof.submission],
       });
@@ -147,7 +147,7 @@ try {
       proof.submission_receipt = result.outcomes[0].receipt;
       // The browser has no accepted result yet. It retries the immutable original.
       await page.locator("#sync").click();
-      await expect(page.locator("#queue")).toContainText("ServerSaved");
+      await expect(page.locator("#queue")).toContainText("Server accepted and saved");
       await call(page, "local-session", { profile: "coordinator" });
       let r = (await call(page, `reports/${proof.report_id}`)).items[0];
       await call(page, `reports/${r.id}/review`, decision(r));

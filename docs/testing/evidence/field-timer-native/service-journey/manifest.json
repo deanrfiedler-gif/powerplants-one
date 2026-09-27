@@ -1,0 +1,59 @@
+{
+  "source_head": "7f36e92281b21e047d4b1893d0d4271647d70187",
+  "compiled_build": "havMNdfiaP5eHOKy3c8hz",
+  "runtime_source_state": "Clean source at 7f36e92 for the selected journeys and restart; documentation records added afterwards. The preceding six timer/offline cases ran the equivalent runtime while its fix was uncommitted.",
+  "image_scope": "Initial next-technician visit viewport after restart. History content and private-data boundaries are asserted by the browser; these screenshots do not show every history entry or constitute owner acceptance.",
+  "files": [
+    {
+      "path": "docs/testing/evidence/field-timer-native/service-journey/browser.txt",
+      "bytes": 916,
+      "sha256": "15735384a87f33cff9b9d6285214aecd502dd1196d3eda873101b7a63d516009"
+    },
+    {
+      "path": "docs/testing/evidence/field-timer-native/service-journey/compiled-build.txt",
+      "bytes": 21116,
+      "sha256": "65ba07ad1b0da7ac0bf37257020b87f9d18d6b4ceba64767b98ac3ba4d5e3505"
+    },
+    {
+      "path": "docs/testing/evidence/field-timer-native/service-journey/component-replay.txt",
+      "bytes": 1708,
+      "sha256": "e6e656ec1af2fe279349f262d9da1834388734a177fc17bfd75f74ca672e64e4"
+    },
+    {
+      "path": "docs/testing/evidence/field-timer-native/service-journey/desktop-journey.json",
+      "bytes": 4304,
+      "sha256": "fc2f0d74fee8c8686a6635ead9162443d4007a8ee4f62a88ef99fd7813b27f11"
+    },
+    {
+      "path": "docs/testing/evidence/field-timer-native/service-journey/desktop-visit.png",
+      "bytes": 135789,
+      "sha256": "c6e69fc16a82bbbae09ecd140506a4ad5671fef5306b526229da0985c36a4036"
+    },
+    {
+      "path": "docs/testing/evidence/field-timer-native/service-journey/phone-journey.json",
+      "bytes": 4304,
+      "sha256": "563766cb5a0e7219c9639640d7b8544faebfc94e618d67a98257e6298acc4f58"
+    },
+    {
+      "path": "docs/testing/evidence/field-timer-native/service-journey/phone-visit.png",
+      "bytes": 67579,
+      "sha256": "2a1fcd6db8db8e8875f209607beb666e7020beca0f9ed54dae10d05da626d6ff"
+    },
+    {
+      "path": "docs/testing/evidence/field-timer-native/service-journey/restart-verify.txt",
+      "bytes": 85,
+      "sha256": "f01db2d84de6ee517b9107b641b99a666f5617c9bc911b0f5557bb72382a1142"
+    },
+    {
+      "path": "docs/testing/evidence/field-timer-native/service-journey/restart-write.txt",
+      "bytes": 84,
+      "sha256": "3be2745779a599b135f8d86045b633a07b6ca34c7df2c926bde8dce6850671d8"
+    },
+    {
+      "path": "docs/testing/evidence/field-timer-native/service-journey/verified.json",
+      "bytes": 15184,
+      "sha256": "4fe7bfb3a719e3e36f3ae0cb2e06e32023c1c6d7a3acefa6256aed19bafdb97f"
+    }
+  ],
+  "log_normalisation": "Retained console text uses LF and omits trailing whitespace; original local logs and issued output bytes are unchanged."
+}

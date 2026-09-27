@@ -187,9 +187,9 @@
       "sha256": "baa89ad975cdcbcba005a5a7f487279bb6c9e5ef89df9a3dece3286b21603d29",
       "bytes": 509938,
       "scope_selector": "#ppo-work-timer",
-      "app_route": null,
-      "app_scope_selector": null,
-      "status": "Accepted design; not implemented. The application has no timer yet, so there is no scope container to compare against",
+      "app_route": "/my-jobs/[id]",
+      "app_scope_selector": "#ppo-work-timer",
+      "status": "Accepted r05 presentation; native implementation under review. Paired synthetic evidence does not grant owner or device acceptance.",
       "predecessor": null,
       "decision": "docs/decisions/field-work-timer-design.md",
       "change_record": "docs/reference/ui/field-work-timer/powerplants-one-field-work-timer-r05-change-record.md",
@@ -526,6 +526,21 @@
       "application_proof": "tests/browser/job-pack-integration.spec.ts",
       "authority": "Dean authorised completion of SV-05 and adopted D1-D10/DP-1-DP-22. Implementation and evidence do not grant owner acceptance.",
       "adaptations": "docs/decisions/job-pack-integration.md"
+    },
+    {
+      "id": "fi01-timer-native",
+      "route": "/my-jobs/[id]",
+      "scope": "#ppo-work-timer",
+      "layout": "padded",
+      "scroll_owner": "document",
+      "design": "docs/reference/ui/field-work-timer/powerplants-one-field-work-timer-r05.html",
+      "sha256": "baa89ad975cdcbcba005a5a7f487279bb6c9e5ef89df9a3dece3286b21603d29",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+      "component_proof": "tests/browser/field-timer.spec.ts",
+      "application_proof": "tests/browser/field-timer.spec.ts",
+      "authority": "User authorised repository consolidation and completion of existing FI-01/FI-02 work. Native adaptations and owner acceptance remain separate.",
+      "adaptations": "docs/decisions/field-timer-native.md"
     }
   ]
 }

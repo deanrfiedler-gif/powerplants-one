@@ -68,6 +68,11 @@
           "id": "default",
           "label": "Default",
           "description": "Representative synthetic content and normal interaction."
+        },
+        {
+          "id": "field-timer-host",
+          "label": "Field timer host",
+          "description": "Real assigned-visit fixture in tests/browser/field-timer.spec.ts: running, paused, stopped and original-action recovery at desktop/phone widths. Not an isolated catalogue fixture."
         }
       ],
       "implementation": [
@@ -80,7 +85,9 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/components/work-timer.tsx",
+        "src/app/styles/work-timer.css"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -149,7 +156,10 @@
         "scope:SC-09",
         "scope:SC-10",
         "scope:FI-05",
-        "route:/my-jobs/site-readiness"
+        "route:/my-jobs/site-readiness",
+        "scope:FI-01",
+        "route:/my-jobs",
+        "route:/my-jobs/[id]"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -177,6 +187,14 @@
           "expected": "Paired native ES-03 source/form/comparison states against retained supplier-pricing design.",
           "actual": "New native consumers; functional evidence and paired owner acceptance remain separately recorded.",
           "action": "Inspect normal, stale, denied and original-operation recovery at desktop, phone and enlarged widths; preserve reference bytes.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fi01-host-review",
+          "expected": "Accepted r05 timer in its real shell with shared controls.",
+          "actual": "Native timer and browser comparison added; owner/device and assistive-technology review pending.",
+          "action": "Inspect paired captures and real fixture states; retain source bytes and do not infer review from test passes.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1328,6 +1346,11 @@
           "id": "offline",
           "label": "Offline",
           "description": "Inspect the offline variant and its explanatory messages."
+        },
+        {
+          "id": "field-timer-host",
+          "label": "Field timer host",
+          "description": "Real assigned-visit fixture in tests/browser/field-timer.spec.ts: running, paused, stopped and original-action recovery at desktop/phone widths. Not an isolated catalogue fixture."
         }
       ],
       "implementation": [
@@ -1341,7 +1364,9 @@
         "src/app/globals.css",
         "src/development/component-examples.tsx",
         "src/development/component-fixtures.ts",
-        "src/app/styles/customers.css"
+        "src/app/styles/customers.css",
+        "src/components/work-timer.tsx",
+        "src/app/styles/work-timer.css"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -1393,7 +1418,10 @@
         "scope:FI-05",
         "route:/my-jobs/site-readiness",
         "scope:ES-01",
-        "route:/estimating"
+        "route:/estimating",
+        "scope:FI-01",
+        "route:/my-jobs",
+        "route:/my-jobs/[id]"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -1429,6 +1457,14 @@
           "expected": "Paired native ES-03 source/form/comparison states against retained supplier-pricing design.",
           "actual": "New native consumers; functional evidence and paired owner acceptance remain separately recorded.",
           "action": "Inspect normal, stale, denied and original-operation recovery at desktop, phone and enlarged widths; preserve reference bytes.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fi01-host-review",
+          "expected": "Accepted r05 timer in its real shell with shared controls.",
+          "actual": "Native timer and browser comparison added; owner/device and assistive-technology review pending.",
+          "action": "Inspect paired captures and real fixture states; retain source bytes and do not infer review from test passes.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2179,6 +2215,90 @@
           "expected": "Owner review of access-unavailable and failed-read presentation in both consumers",
           "actual": "Distinct states implemented; automated fixtures cover 403, 404 and 500; owner review pending",
           "action": "Compare appointment and Field Technicians states on desktop and phone without granting pack authority.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "field-work-timer",
+      "title": "Personal field work timer",
+      "category": "Mobile",
+      "module": "FI",
+      "purpose": "Open a permitted assigned job to inspect the durable timer and the My Jobs running-timer link. The host supplies actual arrival, authoritative source context and original-action recovery.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "idle",
+          "label": "Ready to start",
+          "description": "Current acknowledged pack and personal actual arrival precede timer Start."
+        },
+        {
+          "id": "running",
+          "label": "Running",
+          "description": "Original task/equipment, whole-second elapsed display and saved event; the independent 15-second server refresh survives display renders and observes current dialog/command guards."
+        },
+        {
+          "id": "paused",
+          "label": "Paused",
+          "description": "Break/Travel or required waiting/safety/other note; paused time remains open."
+        },
+        {
+          "id": "stopped",
+          "label": "Stopped",
+          "description": "Closed P07 intervals and retained events; Resume requires current authority."
+        },
+        {
+          "id": "unknown",
+          "label": "Unknown outcome",
+          "description": "Confirm the same original action before another transition."
+        },
+        {
+          "id": "offline",
+          "label": "Offline host",
+          "description": "Owned downloaded context and ordered pending originals in the dedicated offline workspace; no isolated React fixture claim."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/work-timer.tsx",
+          "symbol": "WorkTimer"
+        },
+        {
+          "path": "src/components/work-timer.tsx",
+          "symbol": "RunningTimerBanner"
+        }
+      ],
+      "dependencies": [
+        "src/app/styles/work-timer.css",
+        "src/field/timer-model.ts",
+        "src/offline/timer.ts",
+        "docs/decisions/field-timer-native.md"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/field-work-timer/powerplants-one-field-work-timer-r05.html",
+        "anchor": "ppo-work-timer",
+        "status": "Accepted r05 presentation; native host adaptations and owner review remain separate."
+      },
+      "specification": "docs/design/development/components/field-work-timer.md",
+      "used_on": [
+        "scope:FI-01",
+        "route:/my-jobs",
+        "route:/my-jobs/[id]"
+      ],
+      "desktop": "Padded host Record detail; one document scroll. Retain r05 record header, 96 px clock, readouts, visit track and time/activity lists.",
+      "mobile": "64 px clock; labelled job menu; fixed timer dock above the existing 64 px navigation with 44 px minimum controls. Inspect 390/320 px and actual 200% browser zoom.",
+      "keyboard": "Native labelled dialog focuses inside on open. Tab/Shift+Tab remain contained; Escape closes when no unresolved command prevents it and returns focus.",
+      "limitations": "Host fixture requires real permitted synthetic appointment/arrival and database. Tests/browser/field-timer.spec.ts provides reproducible states; this is not an isolated runnable catalogue example. Owner, physical-device and assistive-technology acceptance remain pending.",
+      "gaps": [
+        {
+          "id": "field-timer-native-adaptations",
+          "expected": "Paired owner review against accepted timer r05 in the native shell.",
+          "actual": "Native implementation and synthetic paired evidence; unavailable allowance, retained Undo evidence and explicit arrival differ from the preview.",
+          "action": "Review the native decision and field programme evidence; retain source bytes and record owner acceptance separately.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

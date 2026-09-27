@@ -25,6 +25,8 @@ export const commands = [
   "CompletionDraft",
   "SubmitCompletion",
   "CustomerResponse",
+  "Timer",
+  "FieldReadiness",
 ] as const;
 export type Command = (typeof commands)[number];
 export type Original = {

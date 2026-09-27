@@ -1,4 +1,5 @@
 "use client";
+import { RunningTimerBanner, WorkTimer } from "./work-timer";
 import { CompletionSubmission } from "./report-screens";
 import Link from "next/link";
 import Image from "next/image";
@@ -296,6 +297,7 @@ export function MyJobsScreen() {
         }
       />
       <PreviewLabel />
+      <RunningTimerBanner />
       <ReadState loading={r.loading} error={r.error} retry={r.reload} />
       {r.data && !r.loading && !r.error && (
         <>
@@ -1344,27 +1346,24 @@ export function FieldJobScreen({ id }: { id: string }) {
   const job = r.data?.items[0];
   return (
     <>
-      <PageHeader
+      {!job && <PageHeader
         eyebrow="Technician workspace · SC-10"
-        title={job?.reference ?? "Field Job"}
+        title="Field Job"
         description={
-          job
-            ? `${job.customer_name} · ${job.site.name}`
-            : r.loading ? "Loading current assigned context" : "Current assigned context is unavailable"
+          r.loading ? "Loading current assigned context" : "Current assigned context is unavailable"
         }
         action={
           <button className="secondary" onClick={r.reload}>
             Refresh job
           </button>
         }
-      />
+      />}
       <PreviewLabel />
-      <p>
-        <Link href="/my-jobs">← My Jobs</Link>
-      </p>
       <ReadState loading={r.loading} error={r.error} retry={r.reload} retained={!!job} />
       {job && (
-        <>
+        <WorkTimer job={job} reloadJob={r.reload} onSection={setTab} onCorrect={e=>{
+          setSource(e);setTab("Capture");requestAnimationFrame(()=>document.getElementById("field-execution")?.scrollIntoView({block:"start"}));
+        }}>
           <div className="field-summary">
             <Status value={job.status} />
             <span>
@@ -1375,7 +1374,7 @@ export function FieldJobScreen({ id }: { id: string }) {
             </span>
           </div>
           <p><Link href={`/my-jobs/site-readiness?appointment_id=${job.id}`}>Review Site induction, risk and biosecurity</Link></p>
-          <section className="business-card">
+          <section id="field-context" className="business-card">
             <h2>Current work context</h2>
             <p>
               <strong>Scheduled:</strong>{" "}
@@ -1399,7 +1398,7 @@ export function FieldJobScreen({ id }: { id: string }) {
               <strong>Location:</strong> {job.site.location}
             </p>
             {job.contact && (
-              <p>
+              <p id="field-contact">
                 <strong>Contact:</strong> {job.contact.name} ·{" "}
                 {job.contact.phone ?? "Phone unknown"} ·{" "}
                 {job.contact.email ?? "Email unknown"}
@@ -1418,7 +1417,7 @@ export function FieldJobScreen({ id }: { id: string }) {
             <p>
               <strong>Exclusions:</strong> {job.scope.exclusions}
             </p>
-            {job.scope.items.map((t) => (
+            <div id="field-equipment">{job.scope.items.map((t) => (
               <div className="field-task" key={t.id}>
                 <h3>
                   {t.sequence}. {t.description}
@@ -1437,7 +1436,7 @@ export function FieldJobScreen({ id }: { id: string }) {
                   </p>
                 ))}
               </div>
-            ))}
+            ))}</div>
             <details>
               <summary>Source versions and exact pack</summary>
               <p>
@@ -1476,7 +1475,7 @@ export function FieldJobScreen({ id }: { id: string }) {
           <StartPanel job={job} reload={r.reload} />
           {!job.attendance && <EvidenceHistory job={job} />}
           {job.attendance && (
-            <>
+            <div id="field-execution">
               <nav className="field-tabs" aria-label="Field workspace sections">
                 {["Capture", "Photos", "History", "Completion"].map((t) => (
                   <button
@@ -1558,7 +1557,7 @@ export function FieldJobScreen({ id }: { id: string }) {
                   </section>
                 ))}
               </div>
-            </>
+            </div>
           )}
           {job.follow_ups.length > 0 && (
             <section className="business-card">
@@ -1577,7 +1576,7 @@ export function FieldJobScreen({ id }: { id: string }) {
             after another crew member saves. Leaving this page loses unsaved
             form contents.
           </p>
-        </>
+        </WorkTimer>
       )}
     </>
   );

@@ -790,9 +790,9 @@ test("P09 online submission refuses retained offline originals and recovers the 
   expect(retained).toEqual([{ original: wire, state: "LocalSaved" }]);
   await proof(page, info, "online-submission-local-original-refused");
   await page.goto("/offline/index.html");
-  await expect(page.locator("#queue")).toContainText("LocalSaved");
+  await expect(page.locator("#queue")).toContainText("Local saved · queued");
   await page.locator("#sync").click();
-  await expect(page.locator("#queue")).toContainText("ServerSaved");
+  await expect(page.locator("#queue")).toContainText("Server accepted and saved");
   const report = (await call(page, `reports/${cmd.id}`)).items[0];
   expect(report.revisions).toHaveLength(1);
   expect(report.status).toBe("Submitted");

@@ -1,0 +1,134 @@
+{
+  "captured_date": "2026-09-27",
+  "base_commit": "80b2f418b90a69d267ac2e65682a5b560a8b4356",
+  "working_head": "c91119bca9c8f9f267292103ff6f77858777d9f8",
+  "source_state": "Uncommitted implementation in the preserved timer worktree at capture time; per-file LF-normalised hashes below identify the executed work. Publication commit is recorded in the PR.",
+  "compiled_build_id": "Jw6PJXQsHLNRxX5pLa6eI",
+  "runtime": "Node 24.21.0; PostgreSQL 16.15; Chrome 154.0.8037.58; Playwright 1.63.0; Windows; guarded ppo_synthetic_test",
+  "accepted_reference_sha256": "baa89ad975cdcbcba005a5a7f487279bb6c9e5ef89df9a3dece3286b21603d29",
+  "source_lf_sha256": {
+    "src/field/timer-model.ts": "474cdad73a24da384b82f125afd3017c8b818477851f14b20094c0db095503f2",
+    "src/field/timer.ts": "98b536bedaeb976a72018035caaddcb45374d5c133fb85d1f6ccddd0184645a7",
+    "src/components/work-timer.tsx": "fd32fd5597dffbf8e8e2693e5d317b706d171493992951d4cdc37e60c420cde0",
+    "src/app/styles/work-timer.css": "614224d5d5e078fded4a1e3a00cf92e33bf3b1ddf35cfd421e84e4f39d143862",
+    "src/offline/timer.ts": "415b5259c04727390e66c282e6210c0c2196357092489f9defe2fa1f7dfb1510",
+    "src/offline/field-extensions.ts": "aee6848b1e0945c3615ee88688c019d9eb7e6c239d596e79a8484e6eb460dd47",
+    "db/migrations/0050-field-work-timers.sql": "5ceba1aa2ce9c547cbfb59f0d5fe1938ffe2e2363873b5856b9dbb4e9c2c8a8a",
+    "tests/browser/field-timer.spec.ts": "785df8ae548e1e6d5c94ba1fd4311d11cd53fd9319563214f087d36d0895ed84",
+    "scripts/field-timer-restart-proof.ts": "b052001ea2c59f738935332a36982c5da100de4d6668aa55c37ba2722449a717",
+    "scripts/field-timer-zoom-proof.ts": "ce80450b85204e82e14b2eae0c6e79f509d6296a2b388c9fa63c5dc7743a4924"
+  },
+  "captures": [
+    {
+      "path": "docs/testing/evidence/field-timer-native/captures/desktop-timer-native-1024.png",
+      "bytes": 107159,
+      "sha256": "52e7b724f628217b09577770bb37081f2a6eb226894d4f2e6bc19872128bc4b7",
+      "origin": "Final compiled FI-01/FI-02 browser run; synthetic fixture"
+    },
+    {
+      "path": "docs/testing/evidence/field-timer-native/captures/desktop-timer-native-1440.png",
+      "bytes": 135693,
+      "sha256": "bda6d57e81e3c51035d58265e201aefd0f449e8510738b3ad3d1d9ef60a1d0c0",
+      "origin": "Final compiled FI-01/FI-02 browser run; synthetic fixture"
+    },
+    {
+      "path": "docs/testing/evidence/field-timer-native/captures/desktop-timer-native-820.png",
+      "bytes": 90750,
+      "sha256": "ee5100c806bad65a0a1f9787a3bd3ac3d3cea934680651c1ea603bfd053d46af",
+      "origin": "Final compiled FI-01/FI-02 browser run; synthetic fixture"
+    },
+    {
+      "path": "docs/testing/evidence/field-timer-native/captures/desktop-timer-reference-1024.png",
+      "bytes": 102405,
+      "sha256": "17de1bd7fb73350e2b747532b1bd9b0ffafcd6594e70854dd75c27949b1f4fee",
+      "origin": "Final compiled FI-01/FI-02 browser run; synthetic fixture"
+    },
+    {
+      "path": "docs/testing/evidence/field-timer-native/captures/desktop-timer-reference-1440.png",
+      "bytes": 142372,
+      "sha256": "ac61435ec8d97054fe7fd4e1cd116053d2d1e2e4119c55044d922dab4e84e623",
+      "origin": "Final compiled FI-01/FI-02 browser run; synthetic fixture"
+    },
+    {
+      "path": "docs/testing/evidence/field-timer-native/captures/desktop-timer-reference-820.png",
+      "bytes": 92127,
+      "sha256": "d7d6384aacec6eb39512d2dede85251c5bb49942e8cb593cab47679a880d1db2",
+      "origin": "Final compiled FI-01/FI-02 browser run; synthetic fixture"
+    },
+    {
+      "path": "docs/testing/evidence/field-timer-native/captures/phone-timer-native-320.png",
+      "bytes": 67177,
+      "sha256": "e61481cdcc4ec72e124331b886920d4555e98ca533d58c3c2e24cf181f460de8",
+      "origin": "Final compiled FI-01/FI-02 browser run; synthetic fixture"
+    },
+    {
+      "path": "docs/testing/evidence/field-timer-native/captures/phone-timer-native-390.png",
+      "bytes": 68438,
+      "sha256": "da1cc0c968c01dbdd1e66a49dd19e8ede21e978cec299c8df640fe7cf2b295ad",
+      "origin": "Final compiled FI-01/FI-02 browser run; synthetic fixture"
+    },
+    {
+      "path": "docs/testing/evidence/field-timer-native/captures/phone-timer-reference-320.png",
+      "bytes": 55399,
+      "sha256": "ed000ac80ec0b4db27c6104d8b9d1f33e7b4b8a1368c90f6b05a8a7ffb6296f6",
+      "origin": "Final compiled FI-01/FI-02 browser run; synthetic fixture"
+    },
+    {
+      "path": "docs/testing/evidence/field-timer-native/captures/phone-timer-reference-390.png",
+      "bytes": 64858,
+      "sha256": "9e71d8881c3c96336f79748a2d854de6d694c47af41bbd75aabe1bc72052db75",
+      "origin": "Final compiled FI-01/FI-02 browser run; synthetic fixture"
+    },
+    {
+      "path": "docs/testing/evidence/field-timer-native/captures/desktop-timer-offline-retained.png",
+      "bytes": 571844,
+      "sha256": "b854581a50d667cbd1c3d54bdee0bb9a09f5ca4538d11548083a9164e220242a",
+      "origin": "Final compiled FI-01/FI-02 browser run; synthetic fixture"
+    },
+    {
+      "path": "docs/testing/evidence/field-timer-native/captures/phone-timer-offline-retained.png",
+      "bytes": 543720,
+      "sha256": "96820c8e9b1395f5cfb3ca38789c66840795fa93be2c83a2c3c1418024527cca",
+      "origin": "Final compiled FI-01/FI-02 browser run; synthetic fixture"
+    },
+    {
+      "path": "docs/testing/evidence/field-timer-native/captures/restart-before.png",
+      "bytes": 536802,
+      "sha256": "3a14df460e69e301093e91df8cd56b61ba472a99286128d04e76b3d6f0a47c39",
+      "origin": "Actual local application/PostgreSQL/browser restart or Chrome 200% zoom proof"
+    },
+    {
+      "path": "docs/testing/evidence/field-timer-native/captures/restart-after.png",
+      "bytes": 200214,
+      "sha256": "5110ce649e169be7284844032b8f34fd9919ae4c70ea7991de8954791e0bb38a",
+      "origin": "Actual local application/PostgreSQL/browser restart or Chrome 200% zoom proof"
+    },
+    {
+      "path": "docs/testing/evidence/field-timer-native/captures/restart-zoom-page.png",
+      "bytes": 119989,
+      "sha256": "b27d20f541cbd0cb8519a7f39aded79e9f6a9638063e6a347678f6324b9093bf",
+      "origin": "Actual local application/PostgreSQL/browser restart or Chrome 200% zoom proof"
+    },
+    {
+      "path": "docs/testing/evidence/field-timer-native/captures/restart-zoom-dialog.png",
+      "bytes": 82426,
+      "sha256": "df075a245a9c3dd11a88315a957bcff5f9b138286c9102458eea9512cc5ae1cb",
+      "origin": "Actual local application/PostgreSQL/browser restart or Chrome 200% zoom proof"
+    }
+  ],
+  "owner_review": null,
+  "deployment": "Not attempted",
+  "retained_checks": {
+    "docs/testing/evidence/field-timer-native/logs/timer-browser-release.txt": "3dc78fb8f4c6842e2dda65e6222f42de9e47ed04b12ac4e637fcd219d27cdc64",
+    "docs/testing/evidence/field-timer-native/logs/timer-database-final.txt": "aeda2e85c6fb611012c16fe034af5562f2214ac2e06cddee4c15140a3eb9b8af",
+    "docs/testing/evidence/field-timer-native/logs/timer-foundation-release.txt": "5a45c5cae6eafe99a819486e89e48a5988b7910b739e3bdb9b974f6482f44c13",
+    "docs/testing/evidence/field-timer-native/logs/timer-naming-release.txt": "ba710918b497f4b122983152a223e44ebbd1ac459eaadbabad507f8a1e79940f",
+    "docs/testing/evidence/field-timer-native/logs/timer-prototype-release.txt": "f7b48b580707ab4071e3dcda23d38936db1c757240cbc5996bf54ed4fceb2ff3",
+    "docs/testing/evidence/field-timer-native/logs/timer-regression-final.txt": "0a3f466719a6dcd80c13cef07100ea42d957331728c6f995c77cc404dbea7e39",
+    "docs/testing/evidence/field-timer-native/logs/timer-studio-final-publish.txt": "769d63703339bc7d1b2126c83012a7974584fd7cf6451ef29e4e075bce9b38da",
+    "docs/testing/evidence/field-timer-native/logs/timer-type-reviewed.txt": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28",
+    "docs/testing/evidence/field-timer-native/logs/timer-unit-final.txt": "0692c693fbc0c11f826764f45afb3ddea9f548c58774256459ac64e2e9870d70",
+    "docs/testing/evidence/field-timer-native/verified.json": "dc4dfacc3f3e601c81ad5f80656e4b1179f3506afd05d99e172116ab0bf410c9",
+    "docs/testing/evidence/field-timer-native/zoom.json": "6cb1f1a98fe09e989e463ca9351f45745ed268ca1961ba915188afeb5c825846"
+  }
+}
