@@ -1,0 +1,202 @@
+{
+  "runtime_source": "89faa078a22525653e6e8f07cb82425372385b07",
+  "helper_source": "02fd842ee9c18d6cafd9050adff88c3fde07d3e8",
+  "compiled_build": "UZPI1x18dLnHDUDBsGSWz",
+  "original_ci": {
+    "head": "a3b5d49e47d70e85840594cb4259a595d24b125c",
+    "run": 36326775139,
+    "job": 108640939566,
+    "outcome": "one desktop pass; one mobile failure",
+    "stop_http_status": 201,
+    "completion_http_status": 422,
+    "completion_http_ms": 40.44154800000251
+  },
+  "control": {
+    "outcome": "expected original-heading failure",
+    "same_instant": "2026-09-27T16:08:11.000Z",
+    "stop_status": 201,
+    "completion_status": 422,
+    "completion_code": "DeclarationConflict"
+  },
+  "intermediate": {
+    "source": "e38c1f76d9c0a5bc4e391013371233367703e6e8",
+    "phone": "passed; seven captured seconds",
+    "desktop": "failed before return at initial acknowledgement; compact 0 at click, 1 afterward; no POST"
+  },
+  "checks": {
+    "existing_timer_units": 4,
+    "existing_postgresql_boundary_cases": 3,
+    "final_compiled_journeys": 2,
+    "typecheck": "passed",
+    "changed_helper_lint": "passed",
+    "format_limit": "quality-prepare full-file warning also occurs on unchanged source; unrelated formatting retained",
+    "full_lint": "passed",
+    "documentation_assurance": [
+      "foundation passed",
+      "prototype passed",
+      "naming passed"
+    ],
+    "design_register": {
+      "entries": 321,
+      "routes": 167,
+      "components": 29,
+      "pending_entries": 321,
+      "pending_components": 29,
+      "stale": 0
+    }
+  },
+  "compiled_listener_pids": {
+    "control": 33060,
+    "intermediate": 34180,
+    "final": 37580
+  },
+  "environment": "Own port-55440 ppo_synthetic_test, private document store, Chrome 154.0.8037.58; explicit compiled HTTP-200 readiness and owned listener; webServer undefined.",
+  "final_journeys": [
+    {
+      "project": "desktop",
+      "timer_interval": {
+        "entry_id": "1420992e-0c0e-409d-a7ba-8e6ae9ec9ea9",
+        "start_at": "2026-09-27T16:21:07.000Z",
+        "end_at": "2026-09-27T16:21:11.000Z",
+        "elapsed_seconds": 4
+      },
+      "appointment_status": "Completed",
+      "scope_outcome": "Complete",
+      "preserved_output_count": 11,
+      "return_output_count": 6
+    },
+    {
+      "project": "phone",
+      "timer_interval": {
+        "entry_id": "dfe086eb-740c-4810-8619-6a4bc163f47e",
+        "start_at": "2026-09-27T16:23:57.000Z",
+        "end_at": "2026-09-27T16:24:01.000Z",
+        "elapsed_seconds": 4
+      },
+      "appointment_status": "Completed",
+      "scope_outcome": "Complete",
+      "preserved_output_count": 11,
+      "return_output_count": 6
+    }
+  ],
+  "private_files": {
+    "tmp/main-integration-failure-108640939566.log": {
+      "bytes": 199666,
+      "sha256": "3a2f1b11d89c365d8326437c1f4bd7bde77dd371bcc125d4a8b65e2ab85e658f"
+    },
+    "tmp/main-return-original/p11-journey-browser/results.json": {
+      "bytes": 1200186,
+      "sha256": "63d55a819fb3777b8e99c9af4a5cdf98ffbc0b2fe4e292f629e2ca532d12aaea"
+    },
+    "tmp/return-zero-original.log": {
+      "bytes": 4879,
+      "sha256": "d9b31a5fdf7a831671643fb7d7c405a4df647833d2eec5628c5c79bc741998e6"
+    },
+    "tmp/return-positive.log": {
+      "bytes": 3808,
+      "sha256": "33bd45d7053b46cf81100f50259cb3e0285e995d9d4c49a9dc96f17e80a4d9da"
+    },
+    "tmp/return-final.log": {
+      "bytes": 928,
+      "sha256": "7b0eadb7f4188d5d56b32c0b71d8313c2f312c01291f2e2645e46e4c39dd33e3"
+    },
+    "tmp/return-timer-boundary-checks.log": {
+      "bytes": 880,
+      "sha256": "b36fe3d8fadd1644101a5edb0fc5a851f997cd89754cf467e8d41e0e9733cd63"
+    },
+    "tmp/return-typecheck.log": {
+      "bytes": 55,
+      "sha256": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28"
+    },
+    "tmp/return-prepare-format-baseline.log": {
+      "bytes": 149,
+      "sha256": "7c331ea82e5915df90767a44d2f91dfccc6a5c945a659b775d553becba86a834"
+    },
+    "tmp/return-final-results/quality-journey-P11-select-868e2-econciled-Travel-no-posting-desktop-chromium/P11-return-visit.json": {
+      "bytes": 4411,
+      "sha256": "28b9eee32362dfccbef1ccff80bd44ac24a51e57ccb2af12b70e24fe8eb2fe6a"
+    },
+    "tmp/return-final-results/quality-journey-P11-select-868e2-econciled-Travel-no-posting-mobile-chromium/P11-return-visit.json": {
+      "bytes": 4411,
+      "sha256": "0f8cc6952b4a613515d08209b97839907015c145bae2de15462c422b4de88ba8"
+    },
+    "tmp/return-zero-original-results/return-timer-control-P11-s-0a5a8-econciled-Travel-no-posting-mobile-chromium/zero-completion.json": {
+      "bytes": 291,
+      "sha256": "0b4987236026043f3ed53c4927db34623bb55d87549b33fecbba130f33b8b814"
+    },
+    "tmp/return-zero-original-results/return-timer-control-P11-s-0a5a8-econciled-Travel-no-posting-mobile-chromium/zero-stop.json": {
+      "bytes": 500,
+      "sha256": "f3cf7f709ec5fabacb18003001339c37a74467723e7a9bb2e1ff6b5295ac0852"
+    },
+    "tmp/return-zero-original-results/return-timer-control-P11-s-0a5a8-econciled-Travel-no-posting-mobile-chromium/trace.zip": {
+      "bytes": 102824943,
+      "sha256": "ff1ddbf5713642670330463843abf534a612332761608902ce3117805c458bfc"
+    },
+    "tmp/return-positive-results/quality-journey-P11-select-868e2-econciled-Travel-no-posting-desktop-chromium/trace.zip": {
+      "bytes": 30792601,
+      "sha256": "73b8881068ae66e8c3a326f3d175f53ce6675b6df2905ad35f0b6159e5b61c13"
+    },
+    "tmp/return-positive-results/quality-journey-P11-select-868e2-econciled-Travel-no-posting-mobile-chromium/trace.zip": {
+      "bytes": 119156856,
+      "sha256": "8af343c5e20a05efbefb569bd097cd8921274fbb5f241d266d68447dd6184dd2"
+    },
+    "tmp/return-final-results/quality-journey-P11-select-868e2-econciled-Travel-no-posting-desktop-chromium/trace.zip": {
+      "bytes": 129608999,
+      "sha256": "995ef6e55c12d37bec11b8e0a806e91c1c7b092e289e95a4674eeb6fb1e374da"
+    },
+    "tmp/return-final-results/quality-journey-P11-select-868e2-econciled-Travel-no-posting-mobile-chromium/trace.zip": {
+      "bytes": 114989060,
+      "sha256": "066a8eea6cd900d1f0671cbc6e865642e74e86a379e55ca886149ced04272330"
+    },
+    "tmp/main-return-original/p11-journey-browser/quality-journey-P11-select-868e2-econciled-Travel-no-posting-mobile-chromium/error-context.md": {
+      "bytes": 19329,
+      "sha256": "571a0d54d20f1b676789757cab593905e38f9899750ed0bdaace85e8f873fd1e"
+    },
+    "tmp/return-final-typecheck.log": {
+      "bytes": 55,
+      "sha256": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28"
+    },
+    "tmp/return-final-lint.log": {
+      "bytes": 46,
+      "sha256": "144b8ef738aebf80f098340cd52aae1ca2b3b236fc5859b5d6806e5ec9ac9f64"
+    },
+    "tmp/return-final-studio.log": {
+      "bytes": 446,
+      "sha256": "f00c0ee174de999513135e2f448956514490757c3dbac58d9f35d4fa9552e3c9"
+    },
+    "tmp/return-foundation.log": {
+      "bytes": 343,
+      "sha256": "0ff6dc20db33b39c33b30d96573a81ea3ee7c7777242c8be7779a1f0d88a1d9b"
+    },
+    "tmp/return-prototype.log": {
+      "bytes": 551,
+      "sha256": "f7b48b580707ab4071e3dcda23d38936db1c757240cbc5996bf54ed4fceb2ff3"
+    },
+    "tmp/return-naming.log": {
+      "bytes": 306,
+      "sha256": "ecc0d2249c3f1bd22e6ca34bd9c01bf1e5abf69f3f15f0e392e592851f5474a2"
+    },
+    "tmp/protected-documentation-integration.json": {
+      "bytes": 8688,
+      "sha256": "69c7c5aee0b69aa457e75aa727bf35d03883c687f170e6886faf1b5beca6b0f5"
+    }
+  },
+  "documentation_integration": {
+    "number": 325,
+    "reviewed_head": "79c4bfbfb1642d2811696d83c525009cc311c024",
+    "merge_commit": "c71d14b06eb7c228b494933b82b331754959ae16",
+    "merged_at": "2026-09-27T16:25:10Z",
+    "merged_tree": "5ecccd040f793968c34cd215abd01bd48dcda3ff",
+    "checked_head_tree": "5ecccd040f793968c34cd215abd01bd48dcda3ff",
+    "passed_checks": 16,
+    "required_contexts": [
+      "Check documentation foundation",
+      "CRM desktop and mobile persistence and interaction proof",
+      "CRM header and board visual checks",
+      "Desktop and mobile browser suite against the compiled application",
+      "E1 manual estimate, draft output and restart proof",
+      "Email Calendar persisted journey and server permissions",
+      "P01\u2013P11 and CRM I1\u2013I2 local application and PostgreSQL proof"
+    ]
+  }
+}
