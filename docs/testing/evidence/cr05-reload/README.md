@@ -31,3 +31,7 @@ The compiled launcher was explicitly started with `--compiled`; its PID owned po
 [Minimal trace observations](trace-summary.json) retain only methods, timings, statuses and assertion parameters; [manifest](manifest.json) pins the source, local logs and private traces. Original CI artifacts and local raw traces remain private and distinct from corrected results. To reproduce the diagnostic, intercept only the exact aftercare GET immediately before reload, fetch the real response, hold it 6,200 ms, then fulfil with that response; for the negative control change only `record.state` to ReviewCompleted. These interventions are diagnostic copies of the spec, not committed application behaviour.
 
 PT-27 timing misses, complete PT-28/PT-30, independent physical-device/accessibility/visual review and production readiness remain open. No deployment or external business action occurred.
+
+## Corrected stack verification
+
+At runtime source `bd8e23f9a4e12314e49bddc48170eb0d4a73cba8`, [fresh retained checks](stack/manifest.json) passed 14 policy units, seven real PostgreSQL cases and eight compiled desktop/phone browser cases (six policy/navigation plus two CR05), with a fresh build. The new disposable database was reset only while this task's application was stopped; earlier proof environments were untouched. Policy runtime still matches `89faa07`. Documentation planning was in progress, so this is an exact runtime/build pin, not a claim of an entirely clean working tree. Full fresh PR CI remains distinct.

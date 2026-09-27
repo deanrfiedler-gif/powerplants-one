@@ -117,3 +117,5 @@ The [PPO Assistant direction and architecture decision](ppo-assistant-direction.
 The [27 September consolidation decision](repository-consolidation.md) authorises current-source reconciliation, ordered migration integration and the synthetic service-verification milestone. It preserves operational and owner-acceptance boundaries.
 
 The [scheduling policy impact decision](scheduling-policy-impact-review.md) defines the read-only PL-04 duration/effective-date comparison and the separate transactional publication continuation under PT-28.
+
+The [controlled scheduling-policy publication plan](scheduling-policy-publication.md) records the next API-C26/EVT-12 synthetic contract and reconciled 0053 allocation; no publication implementation or schema is added.
