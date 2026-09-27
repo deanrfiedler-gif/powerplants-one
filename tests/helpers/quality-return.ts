@@ -219,16 +219,22 @@ export async function returnVisit(page: Page, info: TestInfo, source: Source) {
       page.getByText("Current applicable issue", { exact: true }),
     ).toBeVisible();
     await openJob();
+    const acknowledge = page.getByRole("button", {
+      name: "I have read and acknowledge this exact pack",
+      exact: true,
+    });
+    // Scrolling past the timer changes the sticky header's height. Finish that
+    // observed transition before a pointer click; the first combined replay
+    // clicked during compaction and dispatched no acknowledgement request.
+    await acknowledge.scrollIntoViewIfNeeded();
+    await expect(page.locator("#ppo-work-timer .head")).toHaveAttribute(
+      "data-compact",
+      "1",
+    );
     await committed(
       page,
       `pack-issues/${pack.current_issue_id}/acknowledge`,
-      () =>
-        page
-          .getByRole("button", {
-            name: "I have read and acknowledge this exact pack",
-            exact: true,
-          })
-          .click(),
+      () => acknowledge.click(),
     );
   }
   // The other technician performs this return; first-visit attendance is never
