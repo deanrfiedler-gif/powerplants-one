@@ -337,12 +337,37 @@ export async function returnVisit(page: Page, info: TestInfo, source: Source) {
       page.getByLabel("Capture context", { exact: true }),
     ).toHaveValue("");
   }
+  // Arrival rounds the earliest timer instant up to a whole second. A fast
+  // fixture can otherwise Stop in that same second and correctly save no time.
+  const running = (await call(page, `my-jobs/${aid}/timer`)).timer;
+  expect(running.state).toBe("Running");
+  const firstCapturedSecond = Date.parse(running.open_since) + 1000;
+  expect(Number.isFinite(firstCapturedSecond)).toBe(true);
+  await expect
+    .poll(() => page.evaluate(() => Date.now()), {
+      message: "Stop must follow a positive captured timer interval",
+    })
+    .toBeGreaterThanOrEqual(firstCapturedSecond);
   await committed(page, `my-jobs/${aid}/timer`, () =>
     page.getByRole("button", { name: "Stop work", exact: true }).click(),
   );
   await expect(
     page.getByRole("button", { name: "Resume work", exact: true }),
   ).toBeEnabled();
+  await expect(
+    page
+      .getByRole("region", { name: "Time recorded", exact: true })
+      .getByRole("row")
+      .filter({ hasText: "Server saved" }),
+  ).toHaveCount(1);
+  const recordedTimes = (
+    await call(page, `my-jobs/${aid}`)
+  ).items[0].entries.filter(
+    (e: { kind: string; actor_id: string }) =>
+      e.kind === "Time" && e.actor_id === job.attendance.actor_id,
+  );
+  expect(recordedTimes).toHaveLength(1);
+  expect(recordedTimes[0].payload.elapsed_seconds).toBeGreaterThan(0);
   await page.getByRole("button", { name: "Completion", exact: true }).click();
   await page
     .getByLabel("Overall scope outcome", { exact: true })
@@ -383,9 +408,11 @@ export async function returnVisit(page: Page, info: TestInfo, source: Source) {
         "SYN this external visual task passed the fresh return checklist; prior unsuccessful evidence is retained.",
       );
   }
-  await page
-    .getByRole("button", { name: "Save completion draft", exact: true })
-    .click();
+  await committed(page, `appointments/${aid}/completion-draft`, () =>
+    page
+      .getByRole("button", { name: "Save completion draft", exact: true })
+      .click(),
+  );
   await expect(
     page.getByRole("heading", { name: /Saved completion draft v1/ }),
   ).toBeVisible();
@@ -474,6 +501,12 @@ export async function returnVisit(page: Page, info: TestInfo, source: Source) {
     pack_id: pid,
     issue_id: pack.current_issue_id,
     report_id: rid,
+    timer_interval: {
+      entry_id: recordedTimes[0].id,
+      start_at: recordedTimes[0].payload.start_at,
+      end_at: recordedTimes[0].payload.end_at,
+      elapsed_seconds: recordedTimes[0].payload.elapsed_seconds,
+    },
     presentation,
     appointment_status: report.appointment.status,
     scope_outcome: report.revisions[0].snapshot.completion.scope_outcome,
