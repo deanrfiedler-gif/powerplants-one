@@ -115,3 +115,5 @@ The [PPO Assistant direction and architecture decision](ppo-assistant-direction.
 - [Field readiness over CS-06](field-readiness-native.md): FI-05 assigned-visit review reuses CS snapshots/events with current assignment and receipt authority; induction remains unverified without a Person binding.
 
 The [27 September consolidation decision](repository-consolidation.md) authorises current-source reconciliation, ordered migration integration and the synthetic service-verification milestone. It preserves operational and owner-acceptance boundaries.
+
+The [scheduling policy impact decision](scheduling-policy-impact-review.md) defines the read-only PL-04 duration/effective-date comparison and the separate transactional publication continuation under PT-28.

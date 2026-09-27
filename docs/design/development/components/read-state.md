@@ -1,5 +1,7 @@
 # Loading, empty, error and recovery
 
+PL-04 policy impact reuses ReadState/ErrorNotice for source and analysis reads. Its host removes old result counts/cards on loading, failure, changed input and identity change. Zero findings never imply publication approval. Host browser fixtures exercise failed refresh, retry and denial; shared renderer/catalogue fixtures remain unchanged. [Contract](../pages/route-schedule-policy-impact.md); [verification](../../../delivery/scheduling-policy-impact-handover.md). Owner acceptance remains open.
+
 SC-01–SC-10 reuse ErrorNotice with domain-owned loading, filtered-empty, denied, saved and uncertain-operation states. No new shared renderer or fixture behaviour is introduced. The host keeps original save identity/content in identity-scoped session storage and asks the server to recover the original receipt. These host states are covered by the Supply Chain browser/HTTP proof, not inferred from component catalogue examples. Draft visual/owner review remains separate.
 
 <!-- versioning: git; committed history is authoritative -->

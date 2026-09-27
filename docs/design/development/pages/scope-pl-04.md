@@ -44,3 +44,7 @@ Incoming: period/site/resource queue or exact PL-05 appointment handover. Outgoi
 Queue and selected appointment are retained in the page address and in the allowlisted return from appointment controls. Only Open and InProgress follow-up Activities enter Customer follow-up or contribute an outstanding task to Needs review; Completed and Cancelled remain history. An independent pending request, changed commitment or scope review can still require review.
 
 [Refinement verification](../../../testing/evidence/scheduling-refinement/README.md) records actual checks and review limits. Visual status remains Needs review; no fingerprint is adopted.
+
+## Policy impact comparison
+
+The secondary `/schedule/policy-impact` route uses the r20 Review / comparison page type within PL-04. It compares a temporary duration/effective-time proposal with permitted future Confirmed bookings and hands exact appointments back to this queue. No policy, booking, document or owned task is saved. The [page-specific contract](route-schedule-policy-impact.md) records its proposed native composition, missing exact mockup, shared controls and desktop/mobile requirements. Publication remains separate.

@@ -1,5 +1,7 @@
 # Buttons and action links
 
+PL-04 policy impact adds `/schedule/policy-impact` as a consumer of the existing Button renderer for comparison and refresh. Host fixtures cover normal/loading/error and input-reset states; shared rendering and catalogue examples are unchanged. The [host contract](../pages/route-schedule-policy-impact.md) and [handover](../../../delivery/scheduling-policy-impact-handover.md) retain visual/owner acceptance separately.
+
 SC-01–SC-10 consume Button for capture, allocation, filters and original-operation recovery. Shared rendering and catalogue fixtures are unchanged. Host tests in `tests/browser/supply.spec.ts` cover disabled, saving, saved, conflict and recovery compositions at 1440/1024/390/320 px; see the Supply Chain handover for executed results. Consumer bindings preserve Draft review and do not grant owner acceptance.
 
 <!-- versioning: git; committed history is authoritative -->

@@ -69873,6 +69873,159 @@
         "src/components/field-readiness-screen.tsx",
         "docs/decisions/field-readiness-native.md"
       ]
+    },
+    {
+      "guide_key": "guide.route-schedule-policy-impact",
+      "entry_key": "route:/schedule/policy-impact",
+      "title": "Review a scheduling rule change",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic read-only workflow",
+      "source_commit": "3fd6ec192b137707ef69c83b0cf36ea0b85283fb",
+      "related_entry_keys": [
+        "scope:PL-04",
+        "route:/schedule/changes",
+        "scope:PL-01"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Compare a proposed maximum visit duration and future effective time with currently permitted Confirmed bookings. This is transient analysis within PL-04, not policy publication or saved follow-up."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "prerequisites",
+          "title": "Before you start",
+          "paragraphs": [
+            "Sign in with scheduling and work-order read access. The synthetic published policy supplies unchanged contact, crew and expiry terms. Real operational rule ownership remains unresolved."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [
+            "Read Published rule. Enter a proposed effective time, explicitly choose its timezone and enter 1–1440 whole visit minutes. Optionally restrict the site, then select Compare future bookings."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Page tour",
+          "paragraphs": [
+            "Published rule shows its version, dates and evidence. The form precedes counts and review cards. Comparison provenance discloses source and scenario hashes as evidence identifiers, not authorisation."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information and boundaries",
+          "paragraphs": [
+            "Only permitted future, unstarted Confirmed visits pinned to the selected policy and overlapping the scenario are compared. Started, completed, cancelled, proposed and differently pinned visits are excluded. Travel minutes are separate.",
+            "A visit ending exactly at the effective instant is outside the scenario. A crossing visit requires review. A visit exactly as long as the limit fits. The original policy expiry is retained."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Tasks and decisions",
+          "paragraphs": [
+            "Inspect review reasons, service owner and appointment/schedule/crew versions. Use the exact booking link to open existing controlled scheduling review. No Activity is created.",
+            "Editing input removes old results. Compare again to read current bookings. Refresh published rule clears analysis; it does not save the proposal."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Analysis covers only the disclosed current access scope and comparison. Zero results do not approve publication or dispatch. Existing booking controls own later move, contact and preparation consequences."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "states",
+          "title": "States and results",
+          "paragraphs": [
+            "Loading and failed reads remove prior results. Denial hides policy and booking evidence. No matching review means only that this bounded duration/effective-date comparison found none.",
+            "More than 200 matching permitted bookings is a refusal, never a truncated success. Narrow the site or choose a later effective time and retain the narrower scope."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "example",
+          "title": "Synthetic example",
+          "paragraphs": [
+            "For the seeded September 2031 visit, compare a 60-minute maximum effective before its two-hour interval. The card reports the excess; the appointment remains on its original policy. This is not a recommended operational limit."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Errors and recovery",
+          "paragraphs": [
+            "Retry loading obtains fresh evidence. For a stale policy, Refresh published rule and compare again. Ambiguous or nonexistent local times require a different explicit time.",
+            "Changing identity or reloading discards analysis. This page does not publish, write offline operations or recover publication receipts."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline",
+          "paragraphs": [
+            "Controls and cards stack on phones. Labels, visible focus, native selects and Enter form submission remain available. The page requires an online current server read. Emulation is separate from physical-device, screen-reader and native zoom acceptance."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related guidance",
+          "paragraphs": [
+            "Use PL-04 Changes & follow-up for controlled appointment review and PL-01 for the planner. The architecture decision and delivery handover identify planned publication obligations."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "review",
+          "title": "Review and evidence",
+          "paragraphs": [
+            "Draft guide; owner, visual and operational acceptance remain pending. Checks and inspected captures are recorded in the delivery handover. No review fingerprint has been adopted."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ]
     }
   ]
 }
