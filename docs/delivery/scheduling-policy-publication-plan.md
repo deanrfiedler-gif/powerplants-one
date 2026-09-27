@@ -8,7 +8,7 @@ Traceability: SVC-04/05, DAT-06, NFR-08, D-015/D-020, TR-03/08, API-R04, API-C26
 
 ## Baseline and migration reconciliation
 
-Start from the integrated #322/#323/#324 baseline recorded in STATUS and the handover, after normal protected merges. Keep the CR05 reload correction; do not reconstruct the stack from its dated original heads. The runtime introduced by #324 remains pinned to `89faa078a22525653e6e8f07cb82425372385b07`; it is only a scoped read-only duration preview, not a durable publication review.
+Start from integrated main `a3b5d49e47d70e85840594cb4259a595d24b125c` after the normal protected merges of #322/#323/#324 recorded in STATUS and the handover. Keep the CR05 reload correction; do not reconstruct the stack from its dated original heads. The runtime introduced by #324 remains pinned to `89faa078a22525653e6e8f07cb82425372385b07`; it is only a scoped read-only duration preview, not a durable publication review.
 
 The actual disposable schema was inspected after applying the current registry. It contains 49 migrations through **0050**, with historic **0016** absent and reserved. `ppo.scheduling_policies` is Published-only and synthetic-only; UPDATE/DELETE are rejected by `scheduling_policy_immutable`. Its contact and all-crew flags must remain true. Appointments retain `scheduling_policy_id`; immutable appointment revisions retain their exact snapshot and hash. There is no proposal, publication chain or policy-impact persistence table. The separate `policy_version_id` belongs to readiness and must not be repurposed as a scheduling-policy version.
 

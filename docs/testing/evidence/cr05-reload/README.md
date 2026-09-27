@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-**Owner:** Dean Fiedler. **Executed:** 27 September 2026. **Status:** Synthetic browser correction verified locally; current PR checks remain required. Functional proof does not grant visual or owner acceptance.
+**Owner:** Dean Fiedler. **Executed:** 27-28 September 2026 (Sydney; CI timestamps are UTC). **Status:** Synthetic browser correction verified locally and on final PR heads; all three protected merges completed. Functional proof does not grant visual or owner acceptance.
 
 ## Original failure and diagnosis
 
@@ -54,4 +54,4 @@ After the final saved-refresh correction was pushed, only the still-running Appl
 
 Both the compiled-suite workflow and the originally failing Application assurance browser lane passed on each final head: **#322 `f3f560d`: 520 passed / 79 skipped; #323 `67aa70c`: 520 passed / 79 skipped; #324 `724e9d6`: 524 passed / 79 skipped**. CR05 passed on desktop and phone in all six jobs. The [exact job URLs, head pins, result lines and private-log hashes](ci-final.json) distinguish these results from every original failure and superseded run. All skips already existed; none was added by this correction.
 
-Desktop CR05 whole-case durations in the Application assurance lane were 48.8, 37.9 and 22.0 seconds respectively, compared with 19.6, 19.3 and 19.9 seconds in the separate compiled workflow. These are whole-journey durations, not isolated GET/render measurements. The saved receipt, both exact read boundaries, persisted version/feedback and unchanged visible assertions passed despite that variation. No runtime latency improvement, threshold achievement or causal explanation for the original CI delay is claimed. Final database/aggregate checks and merge results are recorded separately in the integration handover.
+Desktop CR05 whole-case durations in the Application assurance lane were 48.8, 37.9 and 22.0 seconds respectively, compared with 19.6, 19.3 and 19.9 seconds in the separate compiled workflow. These are whole-journey durations, not isolated GET/render measurements. The saved receipt, both exact read boundaries, persisted version/feedback and unchanged visible assertions passed despite that variation. No runtime latency improvement, threshold achievement or causal explanation for the original CI delay is claimed. Final database/aggregate checks and merge results are retained in the separate [protected integration record](integration.json) and policy handover.
