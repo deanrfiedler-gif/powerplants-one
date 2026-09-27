@@ -3,7 +3,7 @@ import { createHash, randomUUID } from "node:crypto";
 import { execFileSync, spawn } from "node:child_process";
 import { mkdir, open, readFile, writeFile } from "node:fs/promises";
 import { createServer } from "node:net";
-import { resolve, join } from "node:path";
+import { resolve, join, relative, isAbsolute } from "node:path";
 import { chromium, expect, type Page } from "@playwright/test";
 import { localConfig } from "../src/platform/config";
 import { database, closeDatabase } from "../src/platform/database";
@@ -33,6 +33,18 @@ assert.equal(
 );
 const release = resolve(releaseArgument),
   root = resolve(rootArgument);
+assert.ok(
+  process.env.PPO_DOCUMENT_DIRECTORY,
+  "Supply an explicit private document directory",
+);
+const documents = resolve(process.env.PPO_DOCUMENT_DIRECTORY);
+for (const checkout of [release, process.cwd()]) {
+  const path = relative(checkout, documents);
+  assert.ok(
+    path.startsWith("..") || isAbsolute(path),
+    "Documents must be outside both release checkouts",
+  );
+}
 const privateDirectory = join(root, "private"),
   evidence = join(root, "review");
 const profile = join(privateDirectory, "profile"),
@@ -104,7 +116,10 @@ async function packOutputs(page: Page, id: string) {
     const response = await page.request.get(
       `${config.origin}/api/v1/pack-issues/${id}/${format}`,
     );
-    assert.ok(response.ok());
+    assert.ok(
+      response.ok(),
+      `Exact pack ${format} returned ${response.status()}`,
+    );
     outputs[format] = hash(await response.body());
   }
   return outputs;
@@ -439,6 +454,19 @@ try {
       before.originals,
     );
     await capture(page, `${phase}-waiting`);
+    // Leave the final controlled field page while the browser is still alive,
+    // allowing normal activation to settle before closing its process. Closing
+    // and immediately reopening Chromium can resume the old client first.
+    await page.goto("/");
+    await page.waitForFunction(async () => {
+      const registration =
+        await navigator.serviceWorker.getRegistration("/offline/");
+      return (
+        !registration?.waiting &&
+        !registration?.installing &&
+        registration?.active?.state === "activated"
+      );
+    });
     await context!.close();
     context = undefined;
     ({ page, version } = await browser());
