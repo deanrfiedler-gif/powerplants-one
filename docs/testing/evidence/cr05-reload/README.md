@@ -45,3 +45,7 @@ These follow-up cases use the compiled runtime from `bd8e23f9a4e12314e49bddc4817
 ## Corrected stack verification
 
 At runtime source `bd8e23f9a4e12314e49bddc48170eb0d4a73cba8`, [fresh retained checks](stack/manifest.json) passed 14 policy units, seven real PostgreSQL cases and eight compiled desktop/phone browser cases (six policy/navigation plus two CR05), with a fresh build. The new disposable database was reset only while this task's application was stopped; earlier proof environments were untouched. Policy runtime still matches `89faa07`. Documentation planning was in progress, so this is an exact runtime/build pin, not a claim of an entirely clean working tree. Full fresh PR CI remains distinct.
+
+After the saved-refresh correction was merged through the complete source stack, matching-source type checking, full lint, foundation, prototype, naming and `studio:check` passed on local integration `493dda5`. The final register contains 321 entries, 167 routes and 29 components, with all 321/29 reviews still pending. This resolves the earlier generated-route mismatch without changing source or deleting the retained compiled build.
+
+After the final saved-refresh correction was pushed, only the still-running Application assurance workflows on superseded intermediate heads were cancelled: `36319765568` (`a17c670`), `36319846275` (`547c7a0`) and `36319987121` (`bd8e23f`). Their completed results and original failure evidence remain retained. They are not final-head passes; protected integration requires the new head-specific checks.
