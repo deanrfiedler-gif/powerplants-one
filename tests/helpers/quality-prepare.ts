@@ -579,16 +579,21 @@ export async function prepareJourney(page: Page, info: TestInfo) {
       page.getByText("Current applicable issue", { exact: true }),
     ).toBeVisible();
     await page.goto(`/my-jobs/${aid}`);
+    const acknowledge = page.getByRole("button", {
+      name: "I have read and acknowledge this exact pack",
+      exact: true,
+    });
+    // Scrolling compacts the timer header and moves this control. Observe the
+    // resulting layout before Playwright measures the pointer-click position.
+    await acknowledge.scrollIntoViewIfNeeded();
+    await expect(page.locator("#ppo-work-timer .head")).toHaveAttribute(
+      "data-compact",
+      "1",
+    );
     await committed(
       page,
       `pack-issues/${oldPack.current_issue_id}/acknowledge`,
-      () =>
-        page
-          .getByRole("button", {
-            name: "I have read and acknowledge this exact pack",
-            exact: true,
-          })
-          .click(),
+      () => acknowledge.click(),
     );
     await capture(page, info, `journey-first-issue-ack-${profile}`);
   }
