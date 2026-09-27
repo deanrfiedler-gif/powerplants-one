@@ -6,6 +6,8 @@
 
 ## Current work
 
+Current repository-writing session: `codex/service-return-verification` in the isolated `tmp/stack-verification` checkout. Dean authorised sequential stabilisation and protected integration of #322/#323/#324. The recurring CR05 saved-closure reload failure is a missing asynchronous read boundary in the test; the correction verifies the exact closure receipt and reload version before the unchanged UI assertion. [Original failures, controlled reproduction and corrected checks](testing/evidence/cr05-reload/README.md). Both originally failing lanes actually used the compiled application; the earlier development-server label was incorrect. Fresh required PR checks remain mandatory. Root planning/reference edits and unfinished Maintenance, Products and Excel-import work remain untouched.
+
 Dean authorised the [repository consolidation and service-verification decision](decisions/repository-consolidation.md) after the 27 September audit. The [execution ledger](delivery/repository-consolidation.md) records exact evidence and remaining work. Sequence: reconcile delivery records and unfinished migration allocations; complete the existing FI-01/FI-02 timer/offline branch; verify one continuous synthetic planned-service journey and retain performance/acceptance findings.
 
 The original `docs/field-quality-build-plan` checkout and its uncommitted planning/reference edits are preserved. Consolidation uses `codex/repository-consolidation` from current main. Timer/offline continues in `feat/fi01-fi02-field-timer-offline`. No PR was open at preflight; unfinished local branches remain real work, not delivered functionality.
