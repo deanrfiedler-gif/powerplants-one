@@ -1,0 +1,1 @@
+Old shell reactivated through normal waiting/close/reopen; eight originals unchanged, none locally accepted, exact pack endpoints available. No cache, registration, IndexedDB or database reset.

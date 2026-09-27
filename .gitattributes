@@ -25,3 +25,4 @@ docs/testing/evidence/es02-native-r01/failed/*.txt text eol=lf
 docs/testing/evidence/es08-native-r01/*.txt text eol=lf
 # Completed service-return evidence uses exact text hashes in its manifest.
 docs/testing/evidence/field-timer-native/service-return/*.txt text eol=lf
+docs/testing/evidence/offline-compatible-update/*.txt text eol=lf
