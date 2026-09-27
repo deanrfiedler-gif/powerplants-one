@@ -1,0 +1,76 @@
+{
+  "restart_source_head": "83bccf16e118f6b9ec7079c0babecf2749bd3d3b",
+  "browser_source_head": "f1fa3fb1933fdd0dd4efd6d096d7c66a8c737795",
+  "compiled_build": "prLqj_WN7yBXfyQzCjMz2",
+  "source_files_sha256_lf": {
+    "src/components/work-timer.tsx": "b4bcfe82075ff9f0003c6916f4dc70560af9d8449c721c9310fcacadf7997d82",
+    "tests/browser/quality-journey.spec.ts": "93c14443e89e08a0bfdafa31761d38a5372937a684f25ea501e1fe2024ed0345",
+    "tests/helpers/quality-report.ts": "779ebd4733cec48c9119b78db1069b7959c3659c20fc253bb18d4c6feb12e373",
+    "scripts/service-journey-restart-proof.ts": "03f2a8db1b939a2b34316ea92c4023baee4472a3a47ad625d03166305018f0b0",
+    "tests/helpers/quality-return.ts": "8acb08f5698615be3ce06a8047605911e28056c29a648f9f9478625306a3d1fa"
+  },
+  "files": {
+    "desktop-initial-visit.json": {
+      "sha256": "e991f6681421ddc72b8972ed4a70d212b748a7f277942c88a439a0b57962581b",
+      "bytes": 4327,
+      "original_sha256": "e991f6681421ddc72b8972ed4a70d212b748a7f277942c88a439a0b57962581b"
+    },
+    "desktop-return-visit.json": {
+      "sha256": "0023d82a32e54449f803b49907660e1d141cc175c1ab90ddd3a6dc956283c00d",
+      "bytes": 4217,
+      "original_sha256": "0023d82a32e54449f803b49907660e1d141cc175c1ab90ddd3a6dc956283c00d"
+    },
+    "desktop-return-history.png": {
+      "sha256": "0b80e3939f8937af24bf02ed84d2273f9b3adb181d2d3b73e8e3bbc91b61fc60",
+      "bytes": 103327,
+      "original_sha256": "0b80e3939f8937af24bf02ed84d2273f9b3adb181d2d3b73e8e3bbc91b61fc60"
+    },
+    "mobile-initial-visit.json": {
+      "sha256": "99ab5d6a4d52888e3b475161f9137b8416cdc84dd6a1464f99eff1af053af01d",
+      "bytes": 4327,
+      "original_sha256": "99ab5d6a4d52888e3b475161f9137b8416cdc84dd6a1464f99eff1af053af01d"
+    },
+    "mobile-return-visit.json": {
+      "sha256": "6a9ef84be7208120bfbe1755bb60bb46c676ae592e2ac610ac23fd27b690dc4d",
+      "bytes": 4217,
+      "original_sha256": "6a9ef84be7208120bfbe1755bb60bb46c676ae592e2ac610ac23fd27b690dc4d"
+    },
+    "mobile-return-history.png": {
+      "sha256": "22fac8d21f89efa507da095ad4a76a7b5b36a4212939f7169e76d99bdb0e7b76",
+      "bytes": 51551,
+      "original_sha256": "22fac8d21f89efa507da095ad4a76a7b5b36a4212939f7169e76d99bdb0e7b76"
+    },
+    "verified.json": {
+      "sha256": "91a7c602af4507f7c90315ff6230ee2e9cc1556f4b992eb6c437b78d103b8438",
+      "bytes": 18707,
+      "original_sha256": "91a7c602af4507f7c90315ff6230ee2e9cc1556f4b992eb6c437b78d103b8438"
+    },
+    "browser.txt": {
+      "sha256": "c0d11004a08c922596a891d6c66e264b8dd2b0b3c2adb1a88017b0ba9e262674",
+      "bytes": 916,
+      "original_sha256": "6fa300495da90e7c2295d9f616fa6751bd09e05f7fa9526aae63a79c0e5161ad"
+    },
+    "compiled-build.txt": {
+      "sha256": "4666373d460184f9cf01cdc841f8f7feb71d5f1af2a7b45482e2c11779645eba",
+      "bytes": 21118,
+      "original_sha256": "cbf8b3cc5c80209abd3f1eb4456d36993178b84d57e8bcf226d39d9494a42158"
+    },
+    "earlier-combined-run.txt": {
+      "sha256": "792875bd16bd33373833243f0e8f3bbfcf7a09aa402c77991ee1fb0239b986e7",
+      "bytes": 9999,
+      "original_sha256": "f94cd195ad55928ffe577bc267b2ba55bfb01f8915619d70c1a98070d46e56cb"
+    },
+    "restart-write.txt": {
+      "sha256": "6d89daf0dbdddcbc73cb64083e4dbebe2e0057f86ede8269bc8d3d80bb6bbfcd",
+      "bytes": 84,
+      "original_sha256": "a2bada4e722f2ebd183de42a96898f11e782b55ae4a30c9a39973aebef509d2d"
+    },
+    "restart-verify.txt": {
+      "sha256": "b056bcde92377df34b9ba3b0096000606bf89c72f2a6f09aadc03b2d21267217",
+      "bytes": 85,
+      "original_sha256": "d2926b357d2359a9fe80316c687687a4a43c82994836b5a9d68da975774ef53b"
+    }
+  },
+  "log_normalisation": "UTF-8; CRLF to LF; ANSI colour and trailing line whitespace removed. Original-byte hashes retained.",
+  "limits": "Synthetic browser/restart evidence. Captures show the scrolled return history viewport; no full-document, independent visual, physical-device, screen-reader or owner acceptance claim."
+}

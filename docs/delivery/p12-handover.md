@@ -42,3 +42,9 @@ The first integration source `da92832331d8ca653aeff88657c80f47840c517c` failed t
 | PT-27 and device/accessibility | P11 raw load and original review evidence retained | Candidate three-second p95 was missed in all 16 measured groups; physical-device and screen-reader review remain absent |
 
 P12 component delivery does not close the complete PP-01 acceptance boundary. Current main’s maintenance and the CRM/E1 originals are preserved; no workflow content is authored by this integration. No hosted deployment/reset, operational data migration, ERP/SharePoint effect or customer distribution is included.
+
+## Later selected service-return component — 27 September 2026
+
+The historical procedure table above describes its original source. The later `codex/service-return-verification` branch completes both selected desktop/phone narratives through a second technician's return attendance, photo-backed checks and a separately issued report on the same work order. Original reserved customer responses and reconciled Finance outputs remain unchanged. Clean browser source `f1fa3fb` passed both journeys; clean restart source `83bccf1` preserved 175 receipts, 61 checked tables and 36 exact files across application/PostgreSQL restart. See the [retained evidence and limits](../testing/evidence/field-timer-native/README.md#completed-service-return-follow-up).
+
+This is additional PT-30 component evidence, not complete PT-30 acceptance. PT-28's compatible application update, scheduling-policy publication and future-booking impacts remain unexecuted; source inspection found no existing policy publication command. All P01–P12 prerequisites, earlier findings, PT-27 candidate misses and owner/device acceptance retain their separate disposition. The restart does not repeat PT-22's isolated backup/restore procedure.
