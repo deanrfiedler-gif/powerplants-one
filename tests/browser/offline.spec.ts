@@ -549,8 +549,8 @@ test("P08 persistent browser process restart retains two jobs and original evide
     .getByRole("button", { name: "Send next batch / retry originals" })
     .click();
   await expect(page.locator("#queue .status")).toHaveText([
-    "ServerSaved",
-    "ServerSaved",
+    "Server accepted and saved",
+    "Server accepted and saved",
   ]);
   await context.close();
 });
@@ -570,7 +570,7 @@ test("P08 UI time conflict keeps original local evidence and keyboard recovery c
   await page
     .getByRole("button", { name: "Send next batch / retry originals" })
     .click();
-  await expect(page.locator("#queue .status")).toHaveText(["ServerSaved"]);
+  await expect(page.locator("#queue .status")).toHaveText(["Server accepted and saved"]);
   await page.getByLabel("Evidence type", { exact: true }).selectOption("Time");
   await page
     .getByLabel("Capture context", { exact: true })
@@ -589,17 +589,17 @@ test("P08 UI time conflict keeps original local evidence and keyboard recovery c
     .getByRole("button", { name: "Send next batch / retry originals" })
     .click();
   await expect(page.locator("#queue .status")).toHaveText([
-    "ServerSaved",
-    "ServerSaved",
+    "Server accepted and saved",
+    "Server accepted and saved",
   ]);
   await save(page);
   await page
     .getByRole("button", { name: "Send next batch / retry originals" })
     .click();
   await expect(page.locator("#queue .status")).toHaveText([
-    "ServerSaved",
-    "ServerSaved",
-    "Conflict",
+    "Server accepted and saved",
+    "Server accepted and saved",
+    "Conflict · original retained",
   ]);
   await expect(page.locator("#queue")).toContainText("overlaps");
   const originals = (await localRows(page)).map(

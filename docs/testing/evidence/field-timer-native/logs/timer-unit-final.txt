@@ -1,0 +1,20 @@
+✔ CS06 seasonal boundaries include both dates, span new year and refuse uncovered seconds (75.0231ms)
+✔ CS06 overnight windows retain the evening anchor; DST repeated hours cannot conceal a gap (12.6784ms)
+✔ CS06 evidence remains individual, reviewed, exact-revision and exact-Facility; missing windows are not unrestricted (7.3563ms)
+✔ FI01 rapid actions never round before millisecond arrival or the prior timer event (3.0999ms)
+✔ FI01 timer input refuses ambiguous precision, unowned meaning and incomplete pause context (1.8089ms)
+✔ FI02 local timer orders retained originals without treating the preview as a server receipt (0.7026ms)
+✔ FI02 failed, duplicate, missing and unresolved predecessors block later local timer intent (0.5254ms)
+✔ P07 strict media inspects exact PNG chunks, dimensions, CRC and decompressed content (5.4184ms)
+✔ P07 exact decimal and discriminated payload validators reject finance fields and ambiguous values (0.9556ms)
+✔ P09 strict submission rejects malformed versions, unknown fields and unbound local placeholders (5.0212ms)
+✔ P09 response choices retain exact context and refuse fabricated unavailable identities (1.2809ms)
+✔ P09 entry review refuses duplicate IDs and private override fields (14.5128ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1945.4169

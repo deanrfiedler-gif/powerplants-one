@@ -242,5 +242,5 @@ test("P08 partial browser storage clearing is detected without a false receipt o
     "Possible eviction or clearing",
   );
   await expect(page.locator("#queue .queue-row")).toHaveCount(0);
-  await expect(page.locator("body")).not.toContainText("ServerSaved");
+  await expect(page.locator("body")).not.toContainText("Server accepted and saved");
 });

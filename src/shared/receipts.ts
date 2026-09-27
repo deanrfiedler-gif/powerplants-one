@@ -1,3 +1,4 @@
+import { timerReceiptAuthority } from "../field/timer";
 import { receiptAuthority as supplyReceiptAuthority } from "../supply/context";
 import { fieldReadinessReceiptAuthority } from "../field/readiness";
 import { aftercareReceiptAuthority } from "../sales/aftercare-service";
@@ -5,7 +6,10 @@ import { handoverReceiptAuthority } from "../sales/handover-service";
 import { personEditAuthority } from "./contacts/commands";
 import { sourceReceiptAuthority } from "../estimating/sources/context";
 import { readEquipmentChange } from "../equipment/changes";
-import { equipmentEvidenceRecord, calibrationAuthority } from "../equipment/evidence";
+import {
+  equipmentEvidenceRecord,
+  calibrationAuthority,
+} from "../equipment/evidence";
 import { csRecord } from "./cs/service";
 import { companyContext } from "./authority";
 import { createResolutionAuthority } from "../estimating/specialist/recovery";
@@ -21,7 +25,11 @@ import { commissioningReceiptAuthority } from "../engineering/commissioning/comm
 import { emailContext } from "../email/service";
 import { leadReceiptAuthority } from "../crm/leads/receipt-authority";
 import { acceptedOpportunityOriginal } from "../crm/receipt-authority";
-import { financeContext, financeAccount, receiptCapability } from "../finance/context";
+import {
+  financeContext,
+  financeAccount,
+  receiptCapability,
+} from "../finance/context";
 import { acceptedEstimateContext, quoteContext } from "../estimating/context";
 import { discoveryReceiptAuthority } from "../estimating/discovery-workspace-context";
 import { authoriseProjectReceipt } from "../projects/service";
@@ -56,71 +64,183 @@ export async function readOperation(
   );
   const r = result.rows[0];
   if (!r) throw unavailable();
-  if (r.object_type === "SupplyRecord") {
-    await supplyReceiptAuthority(client,p,r.record_id,r.command);
+  if (r.object_type === "Appointment" && r.command?.startsWith("FieldTimer:")) {
+    await timerReceiptAuthority(client, p, r.record_id, operation_id);
+  } else if (r.object_type === "SupplyRecord") {
+    await supplyReceiptAuthority(client, p, r.record_id, r.command);
   } else if (r.object_type === "CostSource") {
-    await sourceReceiptAuthority(client,p,r.record_id,r.command);
+    await sourceReceiptAuthority(client, p, r.record_id, r.command);
   } else if (r.object_type === "AftercareRecord") {
-    await aftercareReceiptAuthority(client,p,r.record_id,r.command);
+    await aftercareReceiptAuthority(client, p, r.record_id, r.command);
   } else if (r.object_type === "SalesHandover") {
-    await handoverReceiptAuthority(client,p,r.record_id,r.command);
-  } else if (r.command === "FieldReadinessAcknowledge" && r.object_type === "SiteReadiness") {
-    await fieldReadinessReceiptAuthority(client,p,r.record_id,operation_id);
-  } else if (["SiteReadiness","SiteSurvey","AccountPlan"].includes(r.object_type)) {
-    const row=await csRecord(client,p,r.object_type==="SiteReadiness"?"Readiness":r.object_type==="SiteSurvey"?"Survey":"AccountPlan",r.record_id,true);
-    if(r.command?.startsWith("CsCreate:"))await companyContext(client,p,row.company_id,row.site_id,"shared.create");
+    await handoverReceiptAuthority(client, p, r.record_id, r.command);
+  } else if (
+    r.command === "FieldReadinessAcknowledge" &&
+    r.object_type === "SiteReadiness"
+  ) {
+    await fieldReadinessReceiptAuthority(client, p, r.record_id, operation_id);
+  } else if (
+    ["SiteReadiness", "SiteSurvey", "AccountPlan"].includes(r.object_type)
+  ) {
+    const row = await csRecord(
+      client,
+      p,
+      r.object_type === "SiteReadiness"
+        ? "Readiness"
+        : r.object_type === "SiteSurvey"
+          ? "Survey"
+          : "AccountPlan",
+      r.record_id,
+      true,
+    );
+    if (r.command?.startsWith("CsCreate:"))
+      await companyContext(
+        client,
+        p,
+        row.company_id,
+        row.site_id,
+        "shared.create",
+      );
   } else if (r.command === "RevisePerson") {
     await personEditAuthority(client, p, r.record_id);
-  } else if (r.command === "EndAffiliation" || r.command === "SetSitePrimaryContact") {
-    const row = await visible(client,p,r.command === "EndAffiliation" ? "Organisation" : "Site",r.record_id);
-    await companyContext(client,p,row.company_id,r.command === "SetSitePrimaryContact" ? row.id : null,"shared.edit");
+  } else if (
+    r.command === "EndAffiliation" ||
+    r.command === "SetSitePrimaryContact"
+  ) {
+    const row = await visible(
+      client,
+      p,
+      r.command === "EndAffiliation" ? "Organisation" : "Site",
+      r.record_id,
+    );
+    await companyContext(
+      client,
+      p,
+      row.company_id,
+      r.command === "SetSitePrimaryContact" ? row.id : null,
+      "shared.edit",
+    );
   } else if (r.command?.startsWith("Acceptance:")) {
-    await acceptanceReceiptAuthority(client,p,r.record_id,r.command);
+    await acceptanceReceiptAuthority(client, p, r.record_id, r.command);
   } else if (r.object_type === "EmailMessage") {
-    const message = await emailContext(client,p,r.record_id,true);
+    const message = await emailContext(client, p, r.record_id, true);
     if (r.command === "CreateEmailFollowUp") {
       if (!message.followup_id) throw unavailable();
-      const activity = await visibleActivity(client,p,message.followup_id);
-      if (!(await hasPermission(client,p,"activity.edit",activity.company_id,activity.site_id ?? undefined))) throw unavailable();
+      const activity = await visibleActivity(client, p, message.followup_id);
+      if (
+        !(await hasPermission(
+          client,
+          p,
+          "activity.edit",
+          activity.company_id,
+          activity.site_id ?? undefined,
+        ))
+      )
+        throw unavailable();
     }
   } else if (r.object_type === "Lead") {
-    await leadReceiptAuthority(client,p,r.record_id,r.command);
+    await leadReceiptAuthority(client, p, r.record_id, r.command);
   } else if (r.object_type === "FinancialHandoff") {
-    await financeContext(client,p,r.record_id,receiptCapability(r.command));
+    await financeContext(client, p, r.record_id, receiptCapability(r.command));
   } else if (r.object_type === "FinanceAccount") {
-    await financeAccount(client,p,r.record_id);
+    await financeAccount(client, p, r.record_id);
   } else if (r.object_type === "EstimatingWorkspace") {
-    return transaction(async c=>{
-      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE",[p.workspace_id]);
-      if (r.command === "ResolveFertigationCreate") await fertigationCreateResolutionAuthority(c,p,r.record_id,operation_id);
-      else if (r.command === "ResolveSpecialistCreate") await createResolutionAuthority(c,p,r.record_id,operation_id);
-      else await discoveryReceiptAuthority(c,p,r.record_id,operation_id);
+    return transaction(async (c) => {
+      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [
+        p.workspace_id,
+      ]);
+      if (r.command === "ResolveFertigationCreate")
+        await fertigationCreateResolutionAuthority(
+          c,
+          p,
+          r.record_id,
+          operation_id,
+        );
+      else if (r.command === "ResolveSpecialistCreate")
+        await createResolutionAuthority(c, p, r.record_id, operation_id);
+      else await discoveryReceiptAuthority(c, p, r.record_id, operation_id);
       return r.result as OperationReceipt;
     });
   } else if (r.object_type === "FertigationScope") {
-    if (!await fertigationAcceptedAuthority(client,p,r.record_id,operation_id)) throw unavailable();
+    if (
+      !(await fertigationAcceptedAuthority(
+        client,
+        p,
+        r.record_id,
+        operation_id,
+      ))
+    )
+      throw unavailable();
   } else if (r.object_type === "SpecialistConfiguration") {
-    if (!await specialistAcceptedAuthority(client,p,r.record_id,operation_id)) throw unavailable();
+    if (
+      !(await specialistAcceptedAuthority(client, p, r.record_id, operation_id))
+    )
+      throw unavailable();
   } else if (r.object_type === "Estimate") {
-    if (r.command === "ApplySpecialistConfiguration" && (!r.specialist_id || !await specialistAcceptedAuthority(client,p,r.specialist_id,operation_id))) throw unavailable();
-    if(!(await acceptedEstimateContext(client,p,r.record_id,operation_id)))throw unavailable();
+    if (
+      r.command === "ApplySpecialistConfiguration" &&
+      (!r.specialist_id ||
+        !(await specialistAcceptedAuthority(
+          client,
+          p,
+          r.specialist_id,
+          operation_id,
+        )))
+    )
+      throw unavailable();
+    if (!(await acceptedEstimateContext(client, p, r.record_id, operation_id)))
+      throw unavailable();
   } else if (r.object_type === "DraftQuoteRevision") {
-    await quoteContext(client,p,r.record_id,"estimating.quote.prepare");
-    await quoteContext(client,p,r.record_id);
+    await quoteContext(client, p, r.record_id, "estimating.quote.prepare");
+    await quoteContext(client, p, r.record_id);
   } else if (r.object_type === "EquipmentChange") {
-    if (!["ProposeEquipmentChange", "ReviewEquipmentChange"].includes(r.command)) throw unavailable();
+    if (
+      !["ProposeEquipmentChange", "ReviewEquipmentChange"].includes(r.command)
+    )
+      throw unavailable();
     await readEquipmentChange(client, p, r.record_id, true);
-  } else if (["EquipmentBackup", "EquipmentBulletin", "EquipmentSupport"].includes(r.object_type)) {
-    const kind = r.object_type === "EquipmentBackup" ? "backups" : r.object_type === "EquipmentBulletin" ? "bulletins" : "support";
-    const commands = {backups:["CreateEquipmentbackups","ReviewEquipmentBackup"],bulletins:["CreateEquipmentbulletins","ReviewEquipmentBulletin","CloseEquipmentBulletin"],support:["CreateEquipmentsupport"]};
+  } else if (
+    ["EquipmentBackup", "EquipmentBulletin", "EquipmentSupport"].includes(
+      r.object_type,
+    )
+  ) {
+    const kind =
+      r.object_type === "EquipmentBackup"
+        ? "backups"
+        : r.object_type === "EquipmentBulletin"
+          ? "bulletins"
+          : "support";
+    const commands = {
+      backups: ["CreateEquipmentbackups", "ReviewEquipmentBackup"],
+      bulletins: [
+        "CreateEquipmentbulletins",
+        "ReviewEquipmentBulletin",
+        "CloseEquipmentBulletin",
+      ],
+      support: ["CreateEquipmentsupport"],
+    };
     if (!commands[kind].includes(r.command)) throw unavailable();
-    await equipmentEvidenceRecord(client,p,kind,r.record_id,true);
+    await equipmentEvidenceRecord(client, p, kind, r.record_id, true);
   } else if (r.object_type === "CalibrationEvidence") {
     if (r.command !== "RecordEquipmentCalibration") throw unavailable();
-    await calibrationAuthority(client,p,r.record_id,true);
+    await calibrationAuthority(client, p, r.record_id, true);
   } else if (r.object_type === "EngineeringPackage") {
-    if (r.command?.startsWith("EngineeringControl:")) await engineeringControlReceiptAuthority(client,p,r.record_id,operation_id);
-    else await engineeringRow(client, p, r.record_id, r.command === "CreateEngineeringRequest" ? "engineering.create" : "engineering.edit");
+    if (r.command?.startsWith("EngineeringControl:"))
+      await engineeringControlReceiptAuthority(
+        client,
+        p,
+        r.record_id,
+        operation_id,
+      );
+    else
+      await engineeringRow(
+        client,
+        p,
+        r.record_id,
+        r.command === "CreateEngineeringRequest"
+          ? "engineering.create"
+          : "engineering.edit",
+      );
   } else if (r.object_type === "EngineeringChange") {
     // EN-07 originals: present scope and the same duty the command needed, before the receipt is disclosed.
     await changeReceiptAuthority(client, p, r.record_id, r.command);
@@ -129,14 +249,28 @@ export async function readOperation(
     await commissioningReceiptAuthority(client, p, r.record_id, r.command);
   } else if (r.object_type.startsWith("Material")) {
     // EN-06 originals: present scope and the same duty the command needed, before the receipt is disclosed.
-    await materialReceiptAuthority(client, p, r.object_type, r.record_id, r.command);
+    await materialReceiptAuthority(
+      client,
+      p,
+      r.object_type,
+      r.record_id,
+      r.command,
+    );
   } else if (r.object_type === "Project") {
     await authoriseProjectReceipt(client, p, r.record_id, r.command);
   } else if (r.object_type === "Opportunity") {
-    return transaction(async c=>{
-      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE",[p.workspace_id]);
-      const accepted=await acceptedOpportunityOriginal(c,p,r.record_id,operation_id,r.command);
-      if(!accepted)throw unavailable();
+    return transaction(async (c) => {
+      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [
+        p.workspace_id,
+      ]);
+      const accepted = await acceptedOpportunityOriginal(
+        c,
+        p,
+        r.record_id,
+        operation_id,
+        r.command,
+      );
+      if (!accepted) throw unavailable();
       return accepted.receipt;
     });
   } else if (r.object_type === "ServiceReport") {
@@ -294,10 +428,28 @@ export async function readOperation(
   } else {
     // Unknown shared commands never inherit create authority. CS-05 edits and
     // Equipment service membership originals need the same current edit duty.
-    if (!["RecordSharedHistory", "ReviseOrganisationIdentity", "ReviseAssetIdentity",
-      "AddAffiliation", "AddSiteParty", "ProposeMapping", "CreateOrganisation", "CreatePerson",
-      "CreateSite", "CreateFacility", "CreateAsset", "CreateFacilityDetails", "ReviseFacilityDetails",
-      "SetFacilityPin", "RemoveFacilityPin", "AddAssetServedFacility", "EndAssetServedFacility"].includes(r.command)) throw unavailable();
+    if (
+      ![
+        "RecordSharedHistory",
+        "ReviseOrganisationIdentity",
+        "ReviseAssetIdentity",
+        "AddAffiliation",
+        "AddSiteParty",
+        "ProposeMapping",
+        "CreateOrganisation",
+        "CreatePerson",
+        "CreateSite",
+        "CreateFacility",
+        "CreateAsset",
+        "CreateFacilityDetails",
+        "ReviseFacilityDetails",
+        "SetFacilityPin",
+        "RemoveFacilityPin",
+        "AddAssetServedFacility",
+        "EndAssetServedFacility",
+      ].includes(r.command)
+    )
+      throw unavailable();
     const cap: Capability =
       r.command === "RecordSharedHistory"
         ? "shared.history.record"
@@ -307,8 +459,11 @@ export async function readOperation(
               "AddAffiliation",
               "AddSiteParty",
               "ProposeMapping",
-              "ReviseFacilityDetails", "SetFacilityPin", "RemoveFacilityPin",
-              "AddAssetServedFacility", "EndAssetServedFacility",
+              "ReviseFacilityDetails",
+              "SetFacilityPin",
+              "RemoveFacilityPin",
+              "AddAssetServedFacility",
+              "EndAssetServedFacility",
             ].includes(r.command)
           ? "shared.edit"
           : "shared.create";

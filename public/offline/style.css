@@ -244,3 +244,13 @@ div[hidden] {
     height: 420px;
   }
 }
+
+/* FI01/FI05 extend the existing owner-bound P08 workspace. */
+.field-extension { border-top: 1px solid #cbd3db; margin-top: 1.5rem; padding-top: 1rem; overflow-wrap: anywhere; }
+.field-extension label { display: flex; flex-direction: column; gap: .4rem; min-height: 44px; }
+.field-extension label:has(input[type="checkbox"]) { flex-direction: row; align-items: center; gap: .7rem; }
+.field-extension input[type="checkbox"] { width: 1.25rem; height: 1.25rem; flex: 0 0 1.25rem; }
+.field-extension input,.field-extension select,.field-extension textarea { max-width: 100%; min-height: 44px; font-size: 16px; }
+.field-extension button { min-height: 44px; white-space: normal; }
+.field-extension fieldset { min-width: 0; }
+.queue-summary { font-weight: 700; }

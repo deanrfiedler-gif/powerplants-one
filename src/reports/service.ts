@@ -1,3 +1,4 @@
+import { assertTimerFinished } from "../field/timer";
 import { leadsAvailable } from "../crm/leads/context";
 import { randomUUID } from "node:crypto";
 import type { Principal } from "../platform/identity";
@@ -105,6 +106,7 @@ export async function submitCompletion(
     (c) =>
       attendanceContext(c, p, id, cmd.attendance_id, "field.completion.own"),
     async (c, ctx) => {
+      await assertTimerFinished(c, p, cmd.attendance_id);
       sameVersion(
         ctx.a.version,
         cmd.expected_appointment_version,

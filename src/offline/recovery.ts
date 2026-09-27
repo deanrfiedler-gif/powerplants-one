@@ -21,6 +21,7 @@ import {
   choice,
 } from "../shared/validation";
 import { readReport, presentationBytes } from "../reports/service";
+import { readTimer } from "../field/timer";
 import { readFieldJob } from "../field/reads";
 import { fieldContext } from "../field/context";
 import { insertActivity } from "../activities/activities";
@@ -162,6 +163,11 @@ export async function downloadContext(
   return {
     owner: p,
     report_presentations,
+    timer: (
+      await database().query("SELECT to_regclass('ppo.field_timers') relation")
+    ).rows[0].relation
+      ? await readTimer(p, id)
+      : undefined,
     verified_at: new Date().toISOString(),
     expires_at: new Date(Date.now() + 86400000).toISOString(),
     authority,

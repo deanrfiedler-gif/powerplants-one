@@ -32,10 +32,22 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-Accepted presentation baseline: [field work timer r05](../../../reference/ui/field-work-timer/powerplants-one-field-work-timer-r05.html) ([decision](../../../decisions/field-work-timer-design.md), [change record](../../../reference/ui/field-work-timer/powerplants-one-field-work-timer-r05-change-record.md)). It governs the work timer on the job page and the running-timer banner in My Jobs, at 1440, 1024, 820 and 390 px. The timer is not implemented, so no application comparison exists; the visual review status below stays open until the built page is compared with the baseline.
+Accepted presentation baseline: [field work timer r05](../../../reference/ui/field-work-timer/powerplants-one-field-work-timer-r05.html) ([decision](../../../decisions/field-work-timer-design.md), [change record](../../../reference/ui/field-work-timer/powerplants-one-field-work-timer-r05-change-record.md)). It governs the work timer on the job page and the running-timer banner in My Jobs, at 1440, 1024, 820 and 390 px. The native timer is implemented with proposed host adaptations. Paired captures and synthetic checks are recorded in the field programme handover; owner visual and device review remain open.
 
 ## Behaviour, handovers and verification
 
 The draft User Guide `guide.fi.01` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## Current native field contract
+
+FI-01 uses r20 Record detail for the job and Register / worklist for My Jobs. Accepted timer r05 supplies the scoped record header, 96/64 px clock, three readouts, visit track and activity lists. The existing shell supplies global navigation and document scrolling. The mobile timer dock clears the existing 64 px navigation and retains 44 px actions. Shared Button, ReadState, ErrorNotice, Stamp, LocalDateTimeField and original-command recovery remain the host controls.
+
+Actual arrival stays an explicit prior action. Start work selects the original task and optional affected equipment. Pause provides immediate Break/Travel or a required note for waiting/unsafe/other. Stop closes the open stretch; completion/report review remains separate. An unresolved result retains the same original action. No allowance source exists, so the job details show Not established. Undo retains accepted intervals and appends compensation. My Jobs links back to the current personal timer; inaccessible work is not disclosed.
+
+Proposed adaptations: host shell/document scroll, explicit arrival, unavailable allowance and immutable Undo evidence. Review loading, Running, Paused, Stopped, changed authority, competing timer, uncertain result, forgotten finish and report freeze. Source/application captures cover 1440/1024/820/390/320 px; actual 200% Chrome zoom was checked; physical devices and owner visual acceptance remain separate.
+
+Incoming and outgoing handovers, source hashes and exact limitations are in [the native decision](../../../decisions/field-timer-native.md). Current evidence is in [the field programme handover](../../../delivery/field-quality-native-handover.md). Retained r05 bytes and review fingerprints are unchanged.
+
+Current paired captures and actual 200% Chrome zoom/keyboard results are in [the timer evidence record](../../../testing/evidence/field-timer-native/README.md). Source/application evidence is separate from owner approval.

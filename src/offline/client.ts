@@ -163,6 +163,9 @@ export async function synchronise(
             "AuthorityChanged",
             "AuthorityReviewRequired",
             "VersionConflict",
+            "SourceChanged",
+            "TimerStateChanged",
+            "PersonalTimerActive",
           ].includes(outcome.code ?? "")
         )
           await invalidateContexts(p);

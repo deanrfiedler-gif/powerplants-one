@@ -1,0 +1,18 @@
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.58"}
+
+Running 8 tests using 1 worker
+
+(node:26200) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop-chromium] › tests\browser\offline-storage.spec.ts:152:1 › P08 unavailable IndexedDB and detected eviction refuse persistence claims (1.4s)
+  ok 2 [desktop-chromium] › tests\browser\offline.spec.ts:450:1 › P08 persistent browser process restart retains two jobs and original evidence during actual offline navigation (23.8s)
+  ok 3 [desktop-chromium] › tests\browser\offline.spec.ts:558:1 › P08 UI time conflict keeps original local evidence and keyboard recovery controls (10.8s)
+  ok 4 [desktop-chromium] › tests\browser\reports.spec.ts:725:1 › P09 online submission refuses retained offline originals and recovers the same original through explicit sync (14.9s)
+(node:31096) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 5 [mobile-chromium] › tests\browser\offline-storage.spec.ts:152:1 › P08 unavailable IndexedDB and detected eviction refuse persistence claims (2.2s)
+  ok 6 [mobile-chromium] › tests\browser\offline.spec.ts:450:1 › P08 persistent browser process restart retains two jobs and original evidence during actual offline navigation (19.8s)
+  ok 7 [mobile-chromium] › tests\browser\offline.spec.ts:558:1 › P08 UI time conflict keeps original local evidence and keyboard recovery controls (12.1s)
+  ok 8 [mobile-chromium] › tests\browser\reports.spec.ts:725:1 › P09 online submission refuses retained offline originals and recovers the same original through explicit sync (11.3s)
+
+  8 passed (1.8m)

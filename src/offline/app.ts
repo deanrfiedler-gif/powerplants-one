@@ -23,6 +23,7 @@ import {
   type LocalBytes,
 } from "./store";
 import { api, HttpFailure, verifyOwner, synchronise, base64 } from "./client";
+import { renderOfflineTimer, renderOfflineReadiness } from "./field-extensions";
 import {
   fieldKinds,
   timeKinds,
@@ -44,6 +45,7 @@ let owner: Owner | null = null,
   dirty = false,
   sending = false;
 const previewUrls = new Set<string>();
+const extensionDirty = { timer: false, readiness: false };
 function releasePreviews() {
   for (const url of previewUrls) URL.revokeObjectURL(url);
   previewUrls.clear();
@@ -113,6 +115,8 @@ function wipe() {
   releasePreviews();
   owner = null;
   selected = null;
+  extensionDirty.timer = false;
+  extensionDirty.readiness = false;
   $("workspace").hidden = true;
   $("job").replaceChildren();
   $("jobs").replaceChildren();
@@ -156,7 +160,9 @@ async function reconnect() {
       "Identity verified. Download or refresh a job to recheck its current permissions and authority.",
     );
   } catch (error) {
-    notice("Identity verification did not finish. Saved originals remain retained.");
+    notice(
+      "Identity verification did not finish. Saved originals remain retained.",
+    );
     throw error;
   } finally {
     control.disabled = false;
@@ -430,18 +436,36 @@ async function renderJob() {
         throw new Error(
           "Your start already has a saved identity. Recover that original instead of creating another.",
         );
-      const op = await make("Start", {
-        reason: "Synthetic offline personal start intent",
-        expected_version: j.version,
-        schedule_version: c.authority.schedule_version,
-        assignment_id: c.authority.assignment_id,
-        assignment_version: c.authority.assignment_version,
-        issue_id: c.authority.issue_id,
-        issue_hash: c.authority.issue_hash,
-        scope_revision_id: c.authority.scope_revision_id,
-        scope_version: c.authority.scope_version,
-        captured_at: new Date().toISOString(),
-      });
+      const reviews = (await queue(requireOwner())).filter(
+        (x) =>
+          x.original.appointment_id === j.id &&
+          x.original.command === "FieldReadiness" &&
+          !x.status.receipt,
+      );
+      if (
+        reviews.some((x) =>
+          ["Failed", "Conflict", "ReviewRequired"].includes(x.status.state),
+        )
+      )
+        throw new Error(
+          "Resolve or preserve the retained readiness review before preparing a new arrival. It grants no work authority.",
+        );
+      const op = await make(
+        "Start",
+        {
+          reason: "Synthetic offline personal start intent",
+          expected_version: j.version,
+          schedule_version: c.authority.schedule_version,
+          assignment_id: c.authority.assignment_id,
+          assignment_version: c.authority.assignment_version,
+          issue_id: c.authority.issue_id,
+          issue_hash: c.authority.issue_hash,
+          scope_revision_id: c.authority.scope_revision_id,
+          scope_version: c.authority.scope_version,
+          captured_at: new Date().toISOString(),
+        },
+        reviews.map((x) => x.original.operation_id),
+      );
       await commitOperations(requireOwner(), [op]);
       await renderQueue();
       notice(
@@ -484,6 +508,28 @@ async function renderJob() {
       "warning",
     ),
   );
+  const timer = element("section"),
+    readiness = element("section");
+  timer.className = "field-extension";
+  readiness.className = "field-extension";
+  box.append(timer, readiness);
+  const controls = {
+    owner: requireOwner,
+    context: safeJob,
+    make,
+    attendance,
+    refreshQueue: renderQueue,
+    contextSaved: (context: CachedJob) => {
+      selected = context;
+    },
+    message: notice,
+    error: showError,
+    dirty: (kind: "timer" | "readiness", value: boolean) => {
+      extensionDirty[kind] = value;
+    },
+  };
+  await renderOfflineTimer(timer, controls);
+  await renderOfflineReadiness(readiness, controls);
   const capture = element("div");
   capture.id = "capture-form";
   box.append(capture);
@@ -920,6 +966,18 @@ function renderCompletion() {
                     : 1,
               })),
           ];
+        if (
+          rows.some(
+            (x) =>
+              x.original.command === "Timer" &&
+              (!x.status.receipt ||
+                Number(x.original.payload.expected_version) >=
+                  (safeJob().timer?.timer?.version ?? 0)),
+          )
+        )
+          throw new Error(
+            "Send retained timer actions and download the resulting exact time entries before preparing completion. No timer interval will be silently omitted.",
+          );
         const distinct = [...new Map(entries.map((x) => [x.id, x])).values()];
         const deps = [
           ...new Set([
@@ -1003,7 +1061,37 @@ async function renderQueue() {
   const p = requireOwner(),
     rows = await queue(p),
     box = $("queue");
-  box.replaceChildren();
+  const pending = rows.filter(
+      (r) => !r.status.receipt && !r.status.recovery,
+    ).length,
+    photos = rows.filter(
+      (r) => r.original.command === "AttachmentUpload" && !r.status.receipt,
+    ).length,
+    attention = rows.filter(
+      (r) =>
+        ["Failed", "Conflict", "ReviewRequired"].includes(r.status.state) ||
+        r.status.recovery,
+    ).length;
+  box.replaceChildren(
+    element(
+      "p",
+      `${pending} pending originals · ${photos} pending photos · ${attention} need attention · ${rows.length} retained originals`,
+      "queue-summary",
+    ),
+    element(
+      "p",
+      "Local saved means queued on this device. Send explicitly, then check the exact server receipt. Failed or conflicted originals remain retained for recovery.",
+    ),
+  );
+  const labels: Record<string, string> = {
+    LocalSaved: "Local saved · queued",
+    Pending: "Queued · waiting for an earlier item",
+    Sending: "Sending",
+    ServerSaved: "Server accepted and saved",
+    ReviewRequired: "Review required · original retained",
+    Conflict: "Conflict · original retained",
+    Failed: "Failed · original retained",
+  };
   for (const row of rows) {
     const op = row.original,
       a = element("article", undefined, "queue-row"),
@@ -1011,16 +1099,18 @@ async function renderQueue() {
     heading.append(
       element(
         "strong",
-        `${op.command}${op.payload.kind ? ` · ${op.payload.kind}` : ""}`,
+        `${op.command === "Timer" ? `Work timer · ${op.payload.action}` : op.command === "FieldReadiness" ? "Site readiness review" : op.command}${op.payload.kind ? ` · ${op.payload.kind}` : ""}`,
       ),
-      element("span", row.status.state, "status"),
+      element("span", labels[row.status.state] ?? row.status.state, "status"),
     );
     a.append(
       heading,
-      element("p", `Original operation ${op.operation_id}`, "hash"),
       element(
         "p",
-        row.status.message ?? "Saved on this device. No server acceptance yet.",
+        row.status.message ??
+          (row.status.receipt
+            ? "The server accepted this original; its exact receipt is retained."
+            : "Saved on this device. No server acceptance yet."),
       ),
     );
     if (row.status.receipt)
@@ -1324,6 +1414,7 @@ window.addEventListener("beforeunload", (e) => {
   // Saving one form does not make another form's unsaved input durable.
   if (
     dirty ||
+    Object.values(extensionDirty).some(Boolean) ||
     [...document.querySelectorAll(".dirty")].some((state) =>
       state.textContent?.startsWith("Unsaved changes"),
     )

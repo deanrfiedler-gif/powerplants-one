@@ -4,7 +4,7 @@
 
 **Owner:** Dean Fiedler · **Schema:** 1 · **Review:** Paired visual and device acceptance pending.
 
-The component catalogue extends the existing local development workspace at `/development/design-system`. It is backed by `../components.json`, these Markdown specifications and the actual runtime components. It contains 19 runnable examples, one real host-shell entry and four reference-only patterns across ten categories. These are coverage counts, not approval or proof that every application-specific variant has been migrated.
+The component catalogue extends the existing local development workspace at `/development/design-system`. It is backed by `../components.json`, these Markdown specifications and the actual runtime components. It contains 19 runnable examples, two host entries and eight reference-only patterns across ten categories. These are coverage counts, not approval or proof that every application-specific variant has been migrated.
 
 ## Browsing and comparison
 
@@ -16,7 +16,7 @@ The page register links back to mapped components. Used on identifies maintained
 
 ## Coverage contract
 
-Runnable requires a code-owned renderer ID, declared states, a real application export, design reference, desktop/mobile contract and owning page/system. Host example means the actual shell around the catalogue; it is not an isolated fixture. Reference only means proposed or unbound work and is excluded from runnable counts. New categories and families must be inventoried before claiming expanded coverage. Never mark a placeholder as a completed component.
+Runnable requires a code-owned renderer ID, declared states, a real application export, design reference, desktop/mobile contract and owning page/system. Host example means an actual owning application page or the shell around the catalogue; it is not an isolated fixture. The personal field timer requires a permitted synthetic appointment and actual arrival; its browser fixture supplies that real context without inventing a catalogue session. Reference only means proposed or unbound work and is excluded from runnable counts. New categories and families must be inventoried before claiming expanded coverage. Never mark a placeholder as a completed component.
 
 | Family | Current real examples | Explicit limits |
 |---|---|---|
