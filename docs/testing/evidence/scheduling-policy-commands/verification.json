@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "baseline_commit": "0d294d1d337eb0a5c81a16da59c91d7f772aad96",
+  "implementation_commit": "b885237f91caaea35cecf1b52b6985fa08ff4692",
+  "corrected_proof_commit": "883fa87ca371f89314ab91a083dce00af4b2ce80",
+  "pull_request": "https://github.com/deanrfiedler-gif/powerplants-one/pull/329",
+  "scope": "Synthetic internal handlers and isolated HTTP harness. No live route, Step 4 enforcement, owner acceptance or production readiness.",
+  "new_distinct_handler_cases_passing_after_corrections": 23,
+  "retained_step2_persistence_cases_passing": 11,
+  "selected_estimating_upgrade_cases_passing": 4,
+  "quality_and_hosted_upgrade_cases_passing": 8,
+  "source_sha256": {
+    "db/migrations/0054-scheduling-policy-commands.sql": "7dce7c45d1e3872a8884ee9a0d5a8ce4ff698aebec743703f60b27d5701bed84",
+    "db/seed-scheduling-policy-commands.sql": "c065865630543ef33d70dbeeb2a5f360afef9853c868b008fad7da74f79f6058",
+    "scripts/check-access-review-browser.mjs": "3da7da3e91d06dbd9af125f182c2adbc04181ffd4cacacb2e0c516ecde076922",
+    "scripts/check-access-review-model.mjs": "67dd0e5b8e574daeb50f699b3a3fa06262a71d1765472cc9410384aa164a0eea",
+    "scripts/demo-upgrade.ts": "4912219983855ab585df033507f58d404c003fb60587e917575377f096bddf5a",
+    "scripts/migration-registry.ts": "1134a9448e957c0fd6e906b8c7ed3035e925eb331dc8ca51488ed55217f0fc2c",
+    "src/platform/identity.ts": "d0ce734d62f8b43f7b373754bd10b4231708df90f5771d0a31b7ceeff7de8abc",
+    "src/platform/operations.ts": "94ee775868ea82da6089e7791c0116888f90f318e9911e7a7a870e5adb4c2d47",
+    "src/platform/permissions.ts": "3a66471219b8fc8113e420ccb4749cfeb6493412a1e5901f8b076b6e213d7223",
+    "src/scheduling/booking-rules.ts": "ae5f21a901b1835d7efe51e9eb4243e76fd6b4715e0fb06ebf57f8564b0b3da7",
+    "src/scheduling/planner.ts": "d7fda01d4a9333d95fa0426c7a2d8fa233e7ae9c58ad564bfbd76bef8ab57a96",
+    "src/scheduling/policy-authority.ts": "fa98ec59d4ddf7845061ce286b4bc1dd775dbfef30a839e29e8c4111a814b570",
+    "src/scheduling/policy-commands.ts": "ec95730295e7365eea30e07ec64ede4f3d0be26fb02a03ccaa2f3999debab168",
+    "src/scheduling/policy-http.ts": "07b5dc543178f164467869b9ca2c9424aa70fa0f6fb122ba8e824561cde1cbb5",
+    "src/scheduling/policy-population.ts": "e3de9b894690b10e0fd671ffd7351412e4b15ee2b53d7dca8dc9ace4af6bf67b",
+    "src/scheduling/policy-resolution.ts": "691b8d11081e8699b02b59753c13abe6b18f9e011c1cd72e76aa83884dece151",
+    "src/shared/receipts.ts": "8c25724f0dd36f0bbf6161561c97d56d9b8908f5bfe73f78c64f339dedf8eda5",
+    "tests/database/field-timer-boundaries.test.ts": "d1cfb34696f1ef6ec22735386562f8786ccbfd86558c228c6f5456a4ad9e6281",
+    "tests/database/field.test.ts": "10941e5b8f3e24bdce355b7db9765fb504dd65b2365a1ccda15b27fdff992f92",
+    "tests/database/finance-upgrade.test.ts": "4f565ebf0ce5196f9d0b43613e6dec344df74a200dcc3f3e4a3b821a542f15b8",
+    "tests/database/leads-projects-integration.test.ts": "f16e40d61fac3c783a5ff92c0da387deaee4f4647c7a48b80e8a1119230bf198",
+    "tests/database/offline.test.ts": "c260a301a120dd8b9e8801b31d1bc65eb2e76da6879baa453bc64696bc6c7187",
+    "tests/database/packs.test.ts": "4814d6b62923c0171cf3ed21c3b16d0eb7184466939ab07c46637a5c195f59db",
+    "tests/database/planner.test.ts": "ffdcff9a49958c3d35dc29e9bda195dbfb3d38d5053d58da93c2bdac2d8f7b16",
+    "tests/database/policy-command-http.test.ts": "07975034e9d193f3b76d6250ed0754ba788a39e64e7f998ee723f5c7ec3b90f1",
+    "tests/database/policy-commands.test.ts": "9ceddccc6a3a39584fb9201406dd9a1954ebeefd8893cc9fd96245382b509982",
+    "tests/database/policy-concurrency.test.ts": "4ce1741631c86df24c3074555f43ce535b5617cc42bef3115370e5e168056877",
+    "tests/database/policy-dispositions.test.ts": "75ba449565b40f904e835f1a9b2dbd5538c6a539a0bd4e8729432ed8d5e23db1",
+    "tests/database/policy-persistence.test.ts": "2bcd76d504825b4efaf319ed3f066a0ee89bc8a26d8a83746d9af21b99010be9",
+    "tests/database/quality-upgrade.test.ts": "4caece2541110346af4b09600a1da8027eef22acca43956c7f814710983cefcd",
+    "tests/database/reports.test.ts": "4e204b459fc1fafb8db7995413d538cc9d8e02b12cb91be4c11d9557f37b8e9f",
+    "tests/demo/upgrade.test.ts": "65df23864d4aab26e18f9ffcf7f4715d477ed34d5f62ee7ad6ce65f14e4c680b",
+    "tests/helpers/engineering-materials-grants.ts": "2b340084c2f59acc0e29d9b5091ae7a61a06917dc8251dfe63c9ea02151397b2",
+    "tests/helpers/policy-commands.ts": "ce04aa0662151fddca3f91a52676e68ae3fe2ba37ba815d020bdde0dc6f3a886",
+    "tests/helpers/policy-concurrency.ts": "b2a2896e9a189de32a445850de0106862764331be495281b7ea0cd05e123f615",
+    "tests/helpers/policy-http-harness.ts": "0b0a920bc62a0c3fb2dbfa59bc217d09dc34aeade150f38844021eaa8e5f4aa4",
+    "tests/unit/policy-activation.test.ts": "b0d9df812bc5c76ad97c70efd5d3df399eb59d83c8978a95bf3d2d25f437f35f"
+  },
+  "private_log_records": [
+    {
+      "name": "main-units.log",
+      "tests": 565,
+      "passed": 561,
+      "failed": 4,
+      "skipped": 0,
+      "sha256": "2690392f37323352ee02895de68412f31df3a02e79579baf58edae2221696d3b"
+    },
+    {
+      "name": "commands-all-r3.log",
+      "tests": 15,
+      "passed": 12,
+      "failed": 3,
+      "skipped": 0,
+      "sha256": "5cfeb2f81f060cb1c4307528c8f9cd0aed705add7bbef34ab13339c4024fcbba"
+    },
+    {
+      "name": "commands-transport-r4.log",
+      "tests": 8,
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0,
+      "sha256": "9c18f0cdfb1b88a6ee7f280f779f35de7c066fd39b7e99ceba21078316e4b09d"
+    },
+    {
+      "name": "commands-core-r5.log",
+      "tests": 13,
+      "passed": 8,
+      "failed": 5,
+      "skipped": 0,
+      "sha256": "836b90f92c4392cbf63f807e01502bc20edf4833f00d733eee925a7cdb35d336"
+    },
+    {
+      "name": "dispositions-r6.log",
+      "tests": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "sha256": "aceb13e18bf6a6d720f543072be94c89e886c425d420c93abf348397e5060036"
+    },
+    {
+      "name": "commands-final-r7.log",
+      "tests": 30,
+      "passed": 29,
+      "failed": 1,
+      "skipped": 0,
+      "sha256": "302b3a4059a71d31cd3fc8ddc624509fcb96b417fa00447237589c5938e6341d"
+    },
+    {
+      "name": "retained-originals-r8.log",
+      "tests": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "sha256": "5a55a11241c5b2c1fe4c9db748be3de13abe1201aeb42a94c6a8a10bcec5103a"
+    },
+    {
+      "name": "static-r1.log",
+      "tests": 566,
+      "passed": 562,
+      "failed": 4,
+      "skipped": 0,
+      "sha256": "1868cf3536ce4713cd6d64025e1ad51061098a83347d60009e7062d517bf05aa"
+    }
+  ],
+  "checks_preserved": "No changed database timeouts, test skips, assertions or performance thresholds. Earlier failures and unchanged-main Windows failures retained."
+}
