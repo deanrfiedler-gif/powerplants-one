@@ -14,6 +14,17 @@ export type OperationReceipt = {
   warnings: string[];
   task_ids: string[];
 };
+// A typed command may need these identities before the deferred evidence graph is
+// complete. Defaults preserve every existing command's receipt/outbox semantics.
+export type OperationResult = {
+  id: string; version: number; state: string; updated_at: Date;
+  receipt_id?: string; audit_event_id?: string;
+  audit_details?: Record<string, unknown>;
+  publication_event?: {
+    family: string; policy_id: string; policy_version: number;
+    policy_hash: string; review_id: string; review_hash: string; population_hash: string; impact_count: number;
+  };
+};
 export async function lockOperation(
   client: PoolClient,
   p: Principal,
@@ -46,7 +57,7 @@ export async function recordOperation(
   client: PoolClient,
   p: Principal,
   input: { operation_id: string; reason: string },
-  result: { id: string; version: number; state: string; updated_at: Date },
+  result: OperationResult,
   object_type: string,
   kind: string,
   hash: string,
@@ -59,14 +70,14 @@ export async function recordOperation(
     record_version: result.version,
     state: result.state,
     accepted_at: result.updated_at.toISOString(),
-    receipt_id: randomUUID(),
+    receipt_id: result.receipt_id ?? randomUUID(),
     warnings: [],
     task_ids: [event_id],
   };
   await client.query(
     `INSERT INTO ppo.audit_events(id,workspace_id,actor_id,object_type,object_id,operation_id,outcome,reason,details) VALUES($1,$2,$3,$4,$5,$6,'Accepted',$7,$8)`,
     [
-      randomUUID(),
+      result.audit_event_id ?? randomUUID(),
       p.workspace_id,
       p.actor_id,
       object_type,
@@ -99,6 +110,7 @@ export async function recordOperation(
       {
         record_id: result.id,
         record_version: result.version,
+        ...(kind === "PolicyOrTemplatePublished" ? result.publication_event : {}),
         ...(object_type === "Ticket" ? {} : { object_type }),
         ...(object_type === "ScheduleChangeRequest" &&
         kind === "AppointmentChanged"
@@ -133,13 +145,7 @@ export async function sharedOperation<T>(
   mutate: (
     client: PoolClient,
     context: T,
-  ) => Promise<{
-    id: string;
-    version: number;
-    state: string;
-    updated_at: Date;
-    audit_details?: Record<string, unknown>;
-  }>,
+  ) => Promise<OperationResult>,
   object_type: string,
   kind: string,
   additionalOperationIds: readonly string[] = [],

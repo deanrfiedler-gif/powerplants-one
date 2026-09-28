@@ -54,6 +54,7 @@ export const migrationFiles = [
   "0050-field-work-timers.sql",
   // 0051 Maintenance/Warranty and 0052 Products remain reserved.
   "0053-scheduling-policy-publication.sql",
+  "0054-scheduling-policy-commands.sql",
 ] as const;
 export const seedFiles = [
   [2, "seed.sql"],
@@ -85,8 +86,9 @@ export const seedFiles = [
   [48, "seed-estimating-sources.sql"],
   [49, "seed-supply.sql"],
   [53, "seed-scheduling-policy-publication.sql"],
+  [54, "seed-scheduling-policy-commands.sql"],
 ] as const;
-export const latestMigrationVersion = 53;
+export const latestMigrationVersion = 54;
 
 // Separate hosted-only track (ADR-0021): schema that only exists where real identity does.
 // Version 1 is the issued identity baseline and is never re-applied or rewritten.

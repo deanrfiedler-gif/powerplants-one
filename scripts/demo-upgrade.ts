@@ -146,7 +146,11 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // Runtime grants cover the new tables; immutable triggers and deferred graph checks
   // remain in force. No policy command, tester duty, audit/outbox enum or dispatch change.
   // Reserved 0051/0052 stay absent: this loop applies actual missing registry entries.
-  if (latestMigrationVersion !== 53) throw Error("Review the existing-demo upgrade for this release.");
+  // 0054 adds internal-only command evidence and two distinct local synthetic duties.
+  // Typed identities flush pending 0026 events; issued sources remain unchanged.
+  // Seed replay preserves revoked grants and adds no hosted tester authority.
+  // Commands stay unregistered until Step 4 enforcement is proved.
+  if (latestMigrationVersion !== 54) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

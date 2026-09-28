@@ -102,7 +102,7 @@ export function assertOnlyEngineeringSeedGrantsAdded(original: Grant[], upgraded
   assert.equal(sourceReviewer.length,3);
   const technical = original.filter(g=>g.user_id===coordinator&&g.company_id===companyA&&g.scope_type==="Company"&&g.capability==="engineering.read").flatMap(g=>[[profiles.reviewer,"engineering.technical.review"],[profiles.release,"engineering.technical.issue"],[profiles.release,"engineering.technical.distribute"],[coordinator,"engineering.technical.source"]].map(([user_id,capability])=>({...g,user_id,capability})));
   assert.equal(technical.length,4);
-  const expected=[...earlier,...acceptanceSeedGrants(original,earlier),...customerReview,...technical,...sourceReviewer,...supplySeedGrants(original)];
+  const expected=[...earlier,...acceptanceSeedGrants(original,earlier),...customerReview,...technical,...sourceReviewer,...supplySeedGrants(original),...schedulingPolicySeedGrants(original)];
   assert.equal(materials.length, 31);
   assert.equal(changes.length, 21); // twelve reads for three profiles and nine duty grants
   assert.equal(commissioning.length, 18); // four reads for one profile, six duty grants and eight My Work action grants
@@ -113,4 +113,17 @@ export function assertOnlyEngineeringSeedGrantsAdded(original: Grant[], upgraded
 export function supplySeedGrants(original: Grant[]): Grant[] {
  const readers=new Set([1,2,5,7,8,10,11,12,13,14].map(n=>`30000000-0000-4000-8000-${String(n).padStart(12,"0")}`));
  return original.filter(g=>readers.has(String(g.user_id))&&g.capability==="shared.read").flatMap(g=>(g.user_id===coordinator?["supply.read","supply.coordinate","supply.inspect","supply.fulfil","supply.return","supply.custody"]:["supply.read"]).map(capability=>({...g,capability})));
+}
+
+// Seed 54: exact independent Workspace read scopes and ONE duty for each fictional
+// identity. No inference from existing coordinators or hosted profiles.
+export function schedulingPolicySeedGrants(original: Grant[]): Grant[] {
+  const template = original.find(g => new Date(g.valid_from as string | Date).toISOString() === "2026-01-01T00:00:00.000Z");
+  assert(template, "Existing fixture includes the explicit 2026 baseline instant");
+  const workspace = "10000000-0000-4000-8000-000000000001";
+  return ["review", "publish"].flatMap((duty, index) => ["shared.read", "schedule.read", "service.work_order.read", "service.ticket.read", "activity.read", `schedule.policy.${duty}`].map(capability => ({
+    ...template, workspace_id: workspace, user_id: `a0540000-0000-4000-8000-00000000000${index + 1}`,
+    company_id: null, capability, scope_type: "Workspace", scope_id: workspace, site_id: null,
+    valid_from: template.valid_from, valid_to: null,
+  })));
 }
