@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { schedulingPolicySeedGrants } from "../helpers/engineering-materials-grants";
 import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { after, before, test } from "node:test";
@@ -122,7 +123,7 @@ async function clone(
   );
 }
 
-test("populated 0050 upgrade preserves every old row/hash, registers actual 0053 with reserved gaps and trusted root only", async () => {
+test("populated 0050 upgrade preserves every old row/hash, registers 0053/0054 with reserved gaps and exact narrow authority additions", async () => {
   const names = (await tables()).filter((t) => t !== "seed_receipts"),
     beforeRows = await snapshot(names);
   const oldLedger = (
@@ -135,26 +136,35 @@ test("populated 0050 upgrade preserves every old row/hash, registers actual 0053
   ).rows;
   await migrate();
   await seed();
-  assert.deepEqual(await snapshot(names), beforeRows);
+  const upgraded = await snapshot(names);
+  for (const name of names.filter(n => !["users", "permission_grants"].includes(n))) assert.deepEqual(upgraded[name], beforeRows[name]);
+  const ids = new Set(beforeRows.users.map((r: { id: string }) => r.id));
+  assert.deepEqual(upgraded.users.filter((r: { id: string }) => ids.has(r.id)), beforeRows.users);
+  assert.deepEqual(upgraded.users.filter((r: { id: string }) => !ids.has(r.id)).map((r: { id: string }) => r.id).sort(),
+    ["a0540000-0000-4000-8000-000000000001", "a0540000-0000-4000-8000-000000000002"]);
+  const grantIds = new Set(beforeRows.permission_grants.map((r: { id: string }) => r.id));
+  assert.deepEqual(upgraded.permission_grants.filter((r: { id: string }) => grantIds.has(r.id)), beforeRows.permission_grants);
+  const shape = (rows: Record<string, unknown>[]) => rows.map(({ id: _id, ...r }) => { void _id; return canonical(r); }).sort();
+  assert.deepEqual(shape(upgraded.permission_grants.filter((r: { id: string }) => !grantIds.has(r.id))), shape(schedulingPolicySeedGrants(beforeRows.permission_grants)));
   const ledger = (
     await database().query(
       "SELECT * FROM public.ppo_migrations ORDER BY version",
     )
   ).rows;
-  assert.deepEqual(ledger.slice(0, -1), oldLedger);
-  assert.equal(ledger.at(-1).version, 53);
+  assert.deepEqual(ledger.slice(0, -2), oldLedger);
+  assert.equal(ledger.at(-1).version, 54);
   assert.deepEqual(
     ledger.map((r) => r.version),
     [
       ...Array.from({ length: 50 }, (_, i) => i + 1).filter((n) => n !== 16),
-      53,
+      53, 54,
     ],
   );
   const receipts = (
     await database().query("SELECT * FROM ppo.seed_receipts ORDER BY version")
   ).rows;
-  assert.deepEqual(receipts.slice(0, -1), oldReceipts);
-  assert.equal(receipts.at(-1).version, 53);
+  assert.deepEqual(receipts.slice(0, -2), oldReceipts);
+  assert.equal(receipts.at(-1).version, 54);
   await transaction(async (db) => {
     const chain = await loadPolicyChain(db, workspace);
     assert.equal(chain.members.length, 1);
@@ -640,7 +650,7 @@ test("direct reseed and runner retries preserve an advanced head, later evidence
   );
 });
 
-test("fresh installation applies only registered files through 0053, retains reserved gaps and repeats without changes", async () => {
+test("fresh installation applies only registered files through 0054, retains reserved gaps and repeats without changes", async () => {
   await database().query(await sql("migrations/0001-recover.sql"));
   await database().query(
     "DROP TABLE IF EXISTS public.ppo_migrations,public.ppo_demo_migrations",
@@ -655,7 +665,7 @@ test("fresh installation applies only registered files through 0053, retains res
     ).rows.map((r) => r.version),
     [
       ...Array.from({ length: 50 }, (_, i) => i + 1).filter((n) => n !== 16),
-      53,
+      53, 54,
     ],
   );
   const first = await snapshot(await tables());

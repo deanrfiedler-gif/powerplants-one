@@ -1,4 +1,5 @@
 import { timerReceiptAuthority } from "../field/timer";
+import { policyReceiptAuthority } from "../scheduling/policy-authority";
 import { receiptAuthority as supplyReceiptAuthority } from "../supply/context";
 import { fieldReadinessReceiptAuthority } from "../field/readiness";
 import { aftercareReceiptAuthority } from "../sales/aftercare-service";
@@ -64,7 +65,13 @@ export async function readOperation(
   );
   const r = result.rows[0];
   if (!r) throw unavailable();
-  if (r.object_type === "Appointment" && r.command?.startsWith("FieldTimer:")) {
+  if (["SchedulingPolicyProposal", "SchedulingPolicyReview", "SchedulingPolicyPublication", "SchedulingPolicyResolution"].includes(r.object_type)) {
+    return transaction(async c => {
+      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [p.workspace_id]);
+      await policyReceiptAuthority(c, p, r.object_type, r.record_id);
+      return r.result as OperationReceipt;
+    });
+  } else if (r.object_type === "Appointment" && r.command?.startsWith("FieldTimer:")) {
     await timerReceiptAuthority(client, p, r.record_id, operation_id);
   } else if (r.object_type === "SupplyRecord") {
     await supplyReceiptAuthority(client, p, r.record_id, r.command);

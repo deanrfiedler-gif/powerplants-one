@@ -1,3 +1,4 @@
+import { fitsWorkingInterval, matchesConfirmedContact, visitFitsPolicy } from "./booking-rules";
 import { randomUUID } from "node:crypto";
 import type { PoolClient } from "pg";
 import { transaction } from "../platform/database";
@@ -307,9 +308,7 @@ async function guardBooking(
       "PolicyUnavailable",
     );
   if (
-    start < pol.effective_from ||
-    end > pol.effective_to ||
-    (end.getTime() - start.getTime()) / 60000 > pol.max_visit_minutes
+    !visitFitsPolicy(start, end, pol)
   )
     blocked(
       "end_at",
@@ -414,12 +413,7 @@ async function guardBooking(
   ).rows[0];
   if (
     !move &&
-    (!lastContact ||
-      lastContact.outcome !== "Confirmed" ||
-      lastContact.start_at.getTime() !== start.getTime() ||
-      lastContact.end_at.getTime() !== end.getTime() ||
-      lastContact.recipient_id !== site.primary_contact_id ||
-      a.customer_commitment !== "Confirmed")
+    !matchesConfirmedContact(lastContact, start, end, site.primary_contact_id, a.customer_commitment)
   )
     blocked(
       "customer_commitment",
@@ -487,12 +481,7 @@ async function guardBooking(
         "SkillOrTravelInvalid",
       );
     // PostgreSQL converts both endpoints into the calendar timezone, including DST. No browser timezone guess.
-    const fits = (
-      await c.query(
-        `SELECT EXISTS(SELECT 1 FROM ppo.calendar_intervals i WHERE i.workspace_id=$1 AND i.calendar_id=$2 AND i.weekday=extract(dow FROM $3::timestamptz AT TIME ZONE $5) AND ($3::timestamptz AT TIME ZONE $5)::date=(($4::timestamptz-interval '1 microsecond') AT TIME ZONE $5)::date AND $3::timestamptz >= (((($3::timestamptz AT TIME ZONE $5)::date)::timestamp + make_interval(mins=>i.start_minute)) AT TIME ZONE $5) AND $4::timestamptz <= (((($3::timestamptz AT TIME ZONE $5)::date)::timestamp + make_interval(mins=>i.end_minute)) AT TIME ZONE $5)) AS fits`,
-        [p.workspace_id, calendar.id, before, after, calendar.timezone],
-      )
-    ).rows[0].fits;
+    const fits = await fitsWorkingInterval(c, p.workspace_id, calendar, before, after);
     if (!fits)
       blocked(
         "calendar",

@@ -89,6 +89,8 @@ export type Capability =
   | "pack.acknowledge"
   | "schedule.read"
   | "schedule.manage"
+  | "schedule.policy.review"
+  | "schedule.policy.publish"
   | "schedule.request"
   | "schedule.contact"
   | "service.work_order.read"
