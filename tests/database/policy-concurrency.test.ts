@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { after, beforeEach, test } from "node:test";
-import { closeDatabase } from "../../src/platform/database";
+import { closeDatabase, database } from "../../src/platform/database";
+import { setTimeout } from "node:timers/promises";
 import {
   publishSchedulingPolicy,
   reviewSchedulingPolicy,
@@ -320,4 +321,70 @@ test("C26 confirmation winning the graph lock invalidates the full reviewed popu
     (await rows("SELECT version FROM ppo.scheduling_policy_heads"))[0].version,
     1,
   );
+});
+
+test("C26 grant expiry during complete source visibility prevents original receipt disclosure", async () => {
+  const f = await reviewed();
+  await publishSchedulingPolicy(f.publisher, f.publish);
+  const gate = await database().connect();
+  let replay:
+    | Promise<
+        PromiseSettledResult<
+          Awaited<ReturnType<typeof publishSchedulingPolicy>>
+        >
+      >
+    | undefined;
+  try {
+    await gate.query("BEGIN");
+    await gate.query("LOCK TABLE ppo.work_orders IN ACCESS EXCLUSIVE MODE");
+    const pid = (await gate.query("SELECT pg_backend_pid() pid")).rows[0].pid;
+    const expires = (
+      await rows(
+        "UPDATE ppo.permission_grants SET valid_to=clock_timestamp()+interval '5 seconds' WHERE user_id=$1 AND capability='schedule.policy.publish' RETURNING valid_to",
+        [f.publisher.actor_id],
+      )
+    )[0].valid_to as Date;
+    replay = Promise.allSettled([
+      publishSchedulingPolicy(f.publisher, f.publish),
+    ]).then(([value]) => value);
+    const deadline = Date.now() + 8000;
+    let observed = false;
+    while (Date.now() < deadline) {
+      const waiting = await rows(
+        "SELECT query FROM pg_stat_activity WHERE datname=current_database() AND $1=ANY(pg_blocking_pids(pid))",
+        [pid],
+      );
+      if (waiting.some((x) => /FROM ppo.work_orders w/.test(x.query))) {
+        observed = true;
+        break;
+      }
+      await setTimeout(15);
+    }
+    assert(
+      observed,
+      "Original reached complete-source visibility while holding the shared graph lock",
+    );
+    await setTimeout(Math.max(0, expires.getTime() - Date.now() + 25));
+    await gate.query("COMMIT");
+    const result = await replay;
+    assert.equal(
+      result.status,
+      "rejected",
+      "Expired publisher must not receive the accepted original",
+    );
+    if (result.status === "rejected")
+      assert.equal(result.reason.code, "PolicyAuthorityRequired");
+    assert.equal(
+      (
+        await rows(
+          "SELECT count(*)::int n FROM ppo.scheduling_policy_publications",
+        )
+      )[0].n,
+      1,
+    );
+  } finally {
+    await gate.query("ROLLBACK");
+    await replay;
+    gate.release();
+  }
 });

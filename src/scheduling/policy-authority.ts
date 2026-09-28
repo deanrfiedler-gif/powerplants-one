@@ -24,7 +24,7 @@ export function policyForbidden(): never {
     "Current workspace policy authority and complete source visibility are required.",
   );
 }
-export async function policyAuthority(
+async function policyDutySnapshot(
   c: PoolClient,
   p: Principal,
   duty: PolicyDuty,
@@ -56,6 +56,14 @@ export async function policyAuthority(
       )
     )
       policyForbidden();
+  return sourceJSON({ user, grants });
+}
+export async function policyAuthority(
+  c: PoolClient,
+  p: Principal,
+  duty: PolicyDuty,
+) {
+  await policyDutySnapshot(c, p, duty);
   // Current complete source closure, including linked tickets and ALL historical
   // scope assets, precedes receipt recovery. A filtered preview never supplies it.
   const orders = (
@@ -70,7 +78,10 @@ export async function policyAuthority(
     if (!(e instanceof AppError)) throw e;
     policyForbidden();
   }
-  return sourceJSON({ user, grants });
+  // A duty/read grant can expire while the complete traversal waits on a source.
+  // Recheck current identity and every explicit Workspace grant at disclosure,
+  // including identical original recovery, without reapplying historical review gates.
+  return policyDutySnapshot(c, p, duty);
 }
 export async function ownerEvidence(
   c: PoolClient,
