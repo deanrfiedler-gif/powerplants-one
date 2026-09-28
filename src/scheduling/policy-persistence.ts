@@ -73,6 +73,13 @@ export async function loadPolicyChain(
   for (const row of rows) {
     equal(row.canonical_content, canonical(row.content), "policy_bytes");
     const policy = policyContent(row.content);
+    equal(policy.id, row.policy_id, "stored_policy_id");
+    equal(policy.version, row.policy_version, "stored_policy_version");
+    equal(
+      row.predecessor_id,
+      chain?.head.policy.id ?? null,
+      "stored_predecessor",
+    );
     equal(row.content_hash, digest(policy), "policy_hash");
     let review_binding = null;
     if (chain) {
@@ -148,12 +155,14 @@ export async function loadReview(
     )
   ).rows[0];
   if (!row) invalid("review", "Saved review required.");
-  const candidates = (
+  const storedCandidates = (
     await db.query(
       "SELECT content FROM ppo.scheduling_policy_candidates WHERE workspace_id=$1 AND review_id=$2 ORDER BY ordinal",
       [workspace, reviewId],
     )
-  ).rows.map(({ content }) => {
+  ).rows.map(({ content }) => content);
+  equal(storedCandidates, row.content.candidates, "stored_population");
+  const candidates = storedCandidates.map((content) => {
     const { dependency_fingerprint, ...candidate } = content;
     equal(dependency_fingerprint, digest(candidate.dependencies));
     return candidate;
