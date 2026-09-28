@@ -232,8 +232,14 @@ test("FI01 additive 0049 upgrade retains existing time, arrivals, receipts and r
       "SELECT version,sha256,applied_at FROM public.ppo_migrations ORDER BY version",
     )
   ).rows;
-  assert.deepEqual(migrationsAfter.slice(0, -1), migrationsBefore);
-  assert.equal(migrationsAfter.at(-1).version, 50);
+  assert.deepEqual(
+    migrationsAfter.slice(0, migrationsBefore.length),
+    migrationsBefore,
+  );
+  assert.deepEqual(
+    migrationsAfter.slice(migrationsBefore.length).map((row) => row.version),
+    [50, 53],
+  );
   await seed();
   await migrate();
   await seed();
