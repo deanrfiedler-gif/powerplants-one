@@ -5,6 +5,7 @@ import { transaction } from "../src/platform/database";
 import { migrationFiles, seedFiles, latestMigrationVersion, demoMigrationFiles, latestDemoMigrationVersion, existingDemoChecksumMatches } from "./migration-registry";
 import { demoWorkspace, demoCompany, grantRuntimePrivileges } from "./demo-runtime";
 import { ensurePackReviewer } from "./demo-reviewer";
+import { bootstrapDemoSchedulingPolicy } from "./demo-policy-bootstrap";
 
 const additions = ["crm.lead.read", "crm.lead.create", "crm.lead.edit", "crm.lead.convert",
   "project.read", "project.create", "project.edit", "engineering.read", "engineering.create", "engineering.edit",
@@ -212,7 +213,11 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
       for (const [version, file] of seedFiles.filter(([v]) => v > 17)) {
         if (receipts.rows.some(row => row.version === version)) continue;
         console.log(`Demo upgrade stage: apply-seed-${version}`);
-        await db.query(await read(file));
+        // Seed 53's issued SQL describes the later fresh fixture. Older hosted
+        // P05 roots retain their original expiry; bind only the reviewed exact
+        // root variant, without changing installed SQL, policy rows or pins.
+        if (version === 53) await bootstrapDemoSchedulingPolicy(db, await read(file));
+        else await db.query(await read(file));
         await db.query("INSERT INTO ppo.seed_receipts(version) VALUES($1)", [version]);
       }
       // Hosted-only schema before the grants below, so new tables are covered by them.

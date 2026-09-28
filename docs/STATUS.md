@@ -6,6 +6,8 @@
 
 ## Current work
 
+Step 3 PR [#329](https://github.com/deanrfiedler-gif/powerplants-one/pull/329) merged normally as `5c19c05d718c61e2ddfa3ead72ed2834ebdeeaaf` after all 21 head checks passed. The later manual Azure update [#78](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/36396313531) failed at seed 53, before web/worker rollout: the retained root has the original 2027 expiry while the new bootstrap seed assumes the 2032 fresh fixture. The [bounded hosted repair](decisions/azure-existing-demo-upgrade.md#28-september--retained-scheduling-root-at-update-78) preserves both originals and installed seed bytes, recognising only the two exact known roots. [Regression and recovery evidence](testing/evidence/azure-update-78/README.md) remains separate from source implementation and deployment. Publication activation remains closed pending Step 4.
+
 Dean's authorised sequential stabilisation and integration of #322/#323/#324 is complete. All three were reviewed and merged normally in dependency order after current head checks passed. #324 was marked ready only after source review; dependent PRs were retargeted to main after their predecessors merged. No protection override, force-push, deployment or external business action occurred.
 
 | PR | Checked head | Protected merge | Merged at (UTC) | Result |

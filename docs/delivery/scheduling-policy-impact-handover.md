@@ -145,3 +145,8 @@ Step 3 local command verification passes all 24 distinct new handler/HTTP cases 
 
 
 The complete existing Planner suite passes 19/19. The affected upgrade pass found FI-01's additional full grant snapshot; the correction preserves every prior row and checks exactly seed 54's twelve new grants through the existing exact helper. All nine selected affected upgrades pass after correction, and both complete timer suites pass 7/7 with zero skips. The original failure and corrected source/log hashes remain in the Step 3 evidence. AGENTS.md records the newly identified consumer so later grants cannot silently weaken this preservation proof.
+
+
+## Retained hosted root correction after Step 3
+
+Step 3 merged through #329 as `5c19c05d718c61e2ddfa3ead72ed2834ebdeeaaf`. Azure update #78 then exposed a seed-data compatibility gap: the hosted immutable root retains its original 2027 expiry, whereas seed 53 captures the 2032 fresh fixture. The [hosted repair decision](../decisions/azure-existing-demo-upgrade.md#28-september--retained-scheduling-root-at-update-78) and [regression evidence](../testing/evidence/azure-update-78/README.md) preserve the original source and installed seed bytes, using only two exact known canonical roots. This corrects bootstrap metadata only. It neither publishes a successor nor opens the live/offline activation boundary; Step 4 must still implement and verify enforcement together.

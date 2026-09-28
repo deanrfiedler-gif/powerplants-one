@@ -42,7 +42,7 @@ jobs:
           "$RUNNER_TEMP/actionlint" -shellcheck='' .github/workflows/azure-demo-deploy.yml .github/workflows/azure-demo-check.yml
       - run: npm run lint && npm run typecheck && npm run test:unit
       - name: Verify hosted identity mapping against disposable PostgreSQL
-        run: node --import tsx --test --test-concurrency=1 tests/demo/database.test.ts tests/demo/upgrade.test.ts
+        run: node --import tsx --test --test-concurrency=1 tests/demo/database.test.ts tests/demo/upgrade.test.ts tests/demo/scheduling-policy-upgrade.test.ts
       - name: Desktop and phone UI with individual invited actor fixtures
         run: |
           python3 - <<'PYENV'
