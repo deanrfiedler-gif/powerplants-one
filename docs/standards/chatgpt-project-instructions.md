@@ -86,7 +86,7 @@ CS: follow ADR-0042 and cs-native-completion-handover.md. Preserve CS-05 identit
 
 Fertigation: follow `docs/delivery/priva-fertigation-native-handover.md`. Preserve exact scopes, neutral context and unverified supplier conclusions. Merge/deployment need separate authorisation.
 
-Scheduling: docs/decisions/scheduling-resources-architecture.md; scheduling-policy-impact-review.md (read-only); scheduling-policy-publication.md (plan/0053). Keep scoped reads, unknown effort/travel, pins/bytes, 0051/0052.
+Scheduling: docs/decisions/scheduling-resources-architecture.md; scheduling-policy-impact-review.md (read-only); scheduling-policy-publication.md (0053 storage). Keep scoped reads, unknown effort/travel, pins/bytes, 0051/0052.
 
 Sales CR-01–05: follow ADR-0046 and sales-native-completion-handover.md. Preserve frozen submissions, immutable Won due, source-scoped receipts and aftercare unknown policies. Receiving creates no downstream work.
 
