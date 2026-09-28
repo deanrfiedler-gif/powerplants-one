@@ -139,7 +139,14 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // offline factual recovery commands. It rewrites no existing evidence, identity,
   // seed or grant. Generic runtime privileges include the additive tables.
   // Existing reports without timers retain their original submission contract.
-  if (latestMigrationVersion !== 50) throw Error("Review the existing-demo upgrade for this release.");
+  // 0053: additive scheduling family, immutable proposals/reviews/publications/impacts
+  // and typed Activity companions. Only publication has an identity because the existing
+  // receipt FK requires it; pending identity events are flushed before the additive CHECK.
+  // Seed 53 binds the exact trusted root and never resets a head or adds users/grants.
+  // Runtime grants cover the new tables; immutable triggers and deferred graph checks
+  // remain in force. No policy command, tester duty, audit/outbox enum or dispatch change.
+  // Reserved 0051/0052 stay absent: this loop applies actual missing registry entries.
+  if (latestMigrationVersion !== 53) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

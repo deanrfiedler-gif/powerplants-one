@@ -76,7 +76,7 @@ Policy publication and impact resolution never rewrite an issued pack/report, or
 
 ## Schema and implementation sequence
 
-The following names are proposed, not existing tables or endpoints. Keep the implementation in the adopted TypeScript/Next.js/PostgreSQL stack under ADR-0010; no framework, service, dependency or generic rule engine is selected.
+The original relational split below guides the implementation; [Step 2 storage](../../db/migrations/0053-scheduling-policy-publication.sql) now supplies the actual table names. No publication endpoints exist. Keep the implementation in the adopted TypeScript/Next.js/PostgreSQL stack under ADR-0010; no framework, service, dependency or generic rule engine is selected.
 
 The proposed relational split is:
 
@@ -120,6 +120,6 @@ For new capabilities, regenerate AD-01 from LF source with `python3 scripts/buil
 | Compiled browser | Explicit owned compiled launcher, HTTP readiness and `webServer: undefined`; reviewer/publisher identity separation, immutable proposal edit/successor, stale refusal, valid publish, exact post-reload receipt/state, lost-response identical retry, altered retry refusal, owned impact link and blocked start; desktop 1440/1024 and phone 390/320, keyboard/reflow and errors. No test skip or assertion-budget increase. |
 | Bytes and assurance | Exact pre-existing policy/booking/revision/issued pack/report/PNG/offline hashes unchanged after publish/retry/resolution/restart; full required CI plus foundation/prototype/naming and `studio:check`; actual source review and source-linked register guidance. Capture review is not owner acceptance. |
 
-Step 1 source and component verification are recorded in the [implementation handover](scheduling-policy-impact-handover.md#step-1-pure-publication-contracts). The next bounded implementation is **Step 2**, after Step 1 protected integration and a fresh check of main and the provisional 0053 allocation. Add only the reviewed persistence/seed increment and its fresh/upgrade/reseed proofs; preserve reserved 0051/0052 and all existing applied bytes. Do not begin with a direct SQL policy edit or a publisher button over the temporary preview.
+Step 1 source and component verification are recorded in the [implementation handover](scheduling-policy-impact-handover.md#step-1-pure-publication-contracts). Step 1 is merged through #327. The [Step 2 persistence contribution](../testing/evidence/scheduling-policy-persistence/README.md) refreshed main to `a9840183`, verified 0053 was free and implements the actual additive migration/bootstrap with reserved 0051/0052 intact. It introduces no reviewer/publisher grants or live commands. After protected Step 2 integration, the next bounded implementation is **Step 3**: guarded review/publication/resolution commands, current complete-population evaluation, scoped authority, shared locking and exact recovery. Do not expose a publisher button over the temporary preview.
 
 No deployment, live integration, production migration, business transaction or customer communication is authorised. MYOB, SharePoint and native CAD retain their existing authority. This plan does not close PT-28/PT-30, the existing PT-27 performance misses or independent owner/device/accessibility acceptance.
