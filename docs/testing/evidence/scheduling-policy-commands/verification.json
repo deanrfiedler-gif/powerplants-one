@@ -5,7 +5,7 @@
   "corrected_proof_commit": "883fa87ca371f89314ab91a083dce00af4b2ce80",
   "pull_request": "https://github.com/deanrfiedler-gif/powerplants-one/pull/329",
   "scope": "Synthetic internal handlers and isolated HTTP harness. No live route, Step 4 enforcement, owner acceptance or production readiness.",
-  "new_distinct_handler_cases_passing_after_corrections": 23,
+  "new_distinct_handler_cases_passing_after_corrections": 24,
   "retained_step2_persistence_cases_passing": 11,
   "selected_estimating_upgrade_cases_passing": 4,
   "quality_and_hosted_upgrade_cases_passing": 8,
@@ -128,6 +128,30 @@
       "failed": 0,
       "skipped": 0,
       "sha256": "be6d5eb771f26fc8b2a6b6fc1db604d33aa4460e3e65b261b9ffc2df5f6db89a"
+    },
+    {
+      "name": "expiry-negative-r11.log",
+      "tests": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "sha256": "f50532e29dbd7e2762f7273915a62e420f1423fd1462a4aa713a6ccb2a12103f"
+    },
+    {
+      "name": "integrated-main-unit-comparison.log",
+      "tests": 7,
+      "passed": 3,
+      "failed": 4,
+      "skipped": 0,
+      "sha256": "f1eff15ef70126bf4f947027fef79882b0ecc93a0a71c804166a6f3d46e25023"
+    },
+    {
+      "name": "commands-final-r12.log",
+      "tests": 24,
+      "passed": 24,
+      "failed": 0,
+      "skipped": 0,
+      "sha256": "061c9f316028ba9b4519a055e9582b77ea4e3c5d11df6960be6724a2e5ff7ce0"
     }
   ],
   "checks_preserved": "No changed database timeouts, test skips, assertions or performance thresholds. Earlier failures and unchanged-main Windows failures retained.",
@@ -138,5 +162,20 @@
   },
   "planner_cases_passing": 19,
   "affected_upgrade_cases_passing_after_correction": 9,
-  "complete_timer_cases_passing": 7
+  "complete_timer_cases_passing": 7,
+  "duty_boundary_correction_commit": "7763c411f3efcfff1db5491fe4acf5f87a613bb0",
+  "duty_boundary_correction_sha256": {
+    "src/scheduling/policy-authority.ts": "7cd4131a2b677ca385e9e1727fdc02723af3f9217dfb43d83f6af3a83797f03b",
+    "tests/database/policy-concurrency.test.ts": "6458ca000e1dee1f29d68a9f7c5bde88253590205fe1bfad09f7a8a410c26378"
+  },
+  "integrated_main_unit_comparison_commit": "0d294d1d337eb0a5c81a16da59c91d7f772aad96",
+  "final_complete_handler_run": {
+    "source_commit": "7763c411f3efcfff1db5491fe4acf5f87a613bb0",
+    "log": "commands-final-r12.log",
+    "duration_ms": 682915.9264,
+    "tests": 24,
+    "passed": 24,
+    "failed": 0,
+    "skipped": 0
+  }
 }
