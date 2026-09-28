@@ -120,3 +120,14 @@ This reviewer can finish TR-04 at **Checked**. It cannot clear `needs_review`: t
 worker does that only after a separate `pack.issue` authority finalises an exact current issue.
 Live acceptance must therefore end with dispatch held and identify pack issue as the next explicit
 authority decision, not silently widen the reviewer.
+
+
+## 28 September ? retained scheduling root at update #78
+
+Dean reported that [Update Azure private demo #78](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/36396313531), source `5c19c05d718c61e2ddfa3ead72ed2834ebdeeaaf`, failed after Step 3 integration. The complete operator log ends at **apply-seed-53**, with SQLSTATE `23514`; migrations 53 and 54 ran within the same subsequently rolled-back transaction. The workflow did not advance the web or worker images. Read-only inspection found no publication tables and confirmed the retained synthetic root expires on `2027-01-01T00:00:00.000Z`. Seed 53 instead describes the current fresh fixture's `2032-01-02T00:00:00.000Z` expiry. Commit `3cb76a4` shifted fresh fixture dates, deliberately leaving retained hosted records intact. Previous upgrade tests reconstructed old schemas with today's fixture, so they missed this data-version boundary.
+
+Keep every installed migration and seed byte unchanged. The hosted operator now recognises only the two exact canonical P05 content hashes: retained `19874ea4e67397f9d197c181f84a97246925f3c9634fde8e6de6c3c2109ba304` and current `130d586ec49c5e23dffd49916148babc6ddf329a442e054ecc1c29f9089cca44`. Current fixtures execute the unchanged SQL seed. The retained variant creates only family/member/head bootstrap metadata from its actual immutable source, using existing canonical contracts and database guards. Unknown content refuses the complete upgrade. A saved chain is validated and never reset. The seed receipt, subsequent seed 54, grants and all migrations remain inside the existing operator transaction and lock. No new schema, migration allocation, capability or hosted duty is required.
+
+Extending the old expiry, weakening the exact-content guard, editing installed seed 53, fabricating a publication/review, resetting the demo or accepting arbitrary policy content are rejected alternatives. This repair is limited to the hosted upgrade path; it is not a general legacy-local reseeder. Step 3 remains unavailable through live and offline routes until Step 4 enforcement is verified. The database bootstrap grants no publication authority.
+
+[Verification](../testing/evidence/azure-update-78/README.md) distinguishes the failing-source reproduction, actual-handler upgrade/rollback/retry proof, protected integration and eventual private-demo recovery. No owner acceptance, production integration or external business action follows from these checks.

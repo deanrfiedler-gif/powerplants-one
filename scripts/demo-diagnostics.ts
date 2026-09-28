@@ -13,6 +13,7 @@ const knownFailures = new Map([
   ["Missing baseline or incompatible migration; preserve and review this database.", "incompatible-migration-history"],
   ["Existing hosted identity migration must match.", "identity-history-mismatch"],
   ["Missing baseline or unknown seed receipts; preserve this database.", "seed-history-mismatch"],
+  ["Unrecognised scheduling seed root; preserve and review this database.", "scheduling-seed-root-mismatch"],
   ["Existing testers need the explicit upgrade-and-deploy operation.", "tester-upgrade-required"],
   ["Runtime role needs the explicit database upgrade.", "runtime-grants-required"],
   ["Runtime role has unexpected identity privileges.", "runtime-identity-privileges"],
