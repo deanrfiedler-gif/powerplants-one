@@ -20,7 +20,7 @@ import { readBundle } from "../../src/documents/worker";
 import { downloadContext, preserveRecovery } from "../../src/offline/recovery";
 import { operation } from "../helpers/offline";
 import { confirmed, id } from "../helpers/packs";
-import { acknowledged, startInput } from "../helpers/field";
+import { acknowledged, startInput, entry } from "../helpers/field";
 import {
   base,
   principal,
@@ -214,7 +214,22 @@ test("C26 actual start shares the graph lock; issued files/pins survive and actu
       "scheduling_policies",
     ]);
   const context = await downloadContext(technician, job.id, {});
-  const offline = operation(technician, job, "Start", { ...cmd, ...base() });
+  const offlineStart = operation(technician, job, "Start", {
+    ...cmd,
+    ...base(),
+  });
+  // Restricted recovery accepts factual originals, never an authority intent.
+  // Its unresolved causal start stays local; publication must preserve these bytes.
+  const offline = operation(
+    technician,
+    job,
+    "Capture",
+    {
+      ...entry({ ...job, attendance: { id: randomUUID() } }),
+      attendance_id: { operation_id: offlineStart.operation_id },
+    },
+    [offlineStart.operation_id],
+  );
   await preserveRecovery(technician, {
     grant_id: context.recovery.id,
     token: context.recovery.token,
