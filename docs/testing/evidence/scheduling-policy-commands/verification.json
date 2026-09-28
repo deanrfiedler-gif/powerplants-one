@@ -112,7 +112,31 @@
       "failed": 4,
       "skipped": 0,
       "sha256": "1868cf3536ce4713cd6d64025e1ad51061098a83347d60009e7062d517bf05aa"
+    },
+    {
+      "name": "affected-regressions-r9.log",
+      "tests": 40,
+      "passed": 39,
+      "failed": 1,
+      "skipped": 0,
+      "sha256": "80e231cbca096e59656667790ec4453eaab9ecdfdb1700c42bb346a720662860"
+    },
+    {
+      "name": "timer-grants-r10.log",
+      "tests": 7,
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "sha256": "be6d5eb771f26fc8b2a6b6fc1db604d33aa4460e3e65b261b9ffc2df5f6db89a"
     }
   ],
-  "checks_preserved": "No changed database timeouts, test skips, assertions or performance thresholds. Earlier failures and unchanged-main Windows failures retained."
+  "checks_preserved": "No changed database timeouts, test skips, assertions or performance thresholds. Earlier failures and unchanged-main Windows failures retained.",
+  "fi01_grant_correction_commit": "2d2f9e77b1a642e0ffcc766b09aa66c2b24f8801",
+  "fi01_grant_correction_sha256": {
+    "AGENTS.md": "c7a5a7f1028fdeb70e7766359479b4587df23dbd17ed9486ed749129318b5547",
+    "tests/database/field-timer-boundaries.test.ts": "e40e903c3402c9ee49e5979b10adb0ee15ec7f807f9ab2e2e5727ea39a9ebb67"
+  },
+  "planner_cases_passing": 19,
+  "affected_upgrade_cases_passing_after_correction": 9,
+  "complete_timer_cases_passing": 7
 }
