@@ -177,6 +177,8 @@ export function BusinessSession({ children, hosted = false }: { children: React.
               ["changes-verifier", "Taylor — commissioning verifier"],
               ["commissioning-equipment", "Morgan — Equipment records"],
               ["estimating-source-reviewer", "Synthetic source evidence reviewer"],
+              ["scheduling-policy-reviewer", "Scheduling policy reviewer"],
+              ["scheduling-policy-publisher", "Scheduling policy publisher"],
               ["other-workspace", "Other workspace"],
               ["technician", "Technician — assignment unavailable"],
               ["second-technician", "Morgan — assigned technician"],

@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "baseline": "bfc4b78deb0f065838bf22488c6f41d0fce214d2",
+  "branch": "codex/scheduling-step5",
+  "source_status": "Checked working tree; LF-normalised hashes identify source independently of the later commit and CI head.",
+  "build_id": "AfOgbsn-QgchVwT4bNqIV",
+  "environment": {
+    "node": "24.21.0",
+    "npm": "11.19.0",
+    "browser": "Chrome 154.0.8037.93",
+    "postgres_major": 16,
+    "database_name": "ppo_synthetic_test",
+    "task_database_ports": [
+      55771,
+      55772
+    ],
+    "task_app_ports": [
+      3105,
+      3000
+    ],
+    "postgres": "16.15"
+  },
+  "source_sha256_lf": {
+    ".github/workflows/application-compiled.yml": "6f5b7f130d407bb34be966be35f4032aedac07cffc195a4276bf30cee9999446",
+    "src/app/api/v1/schedule/policy-records/route.ts": "ba93792fcc9f2bf5a8996a228d2f23628d41e5bc32ac853ce6b4a97fcfc42275",
+    "src/app/styles/scheduling-workspaces.css": "5cc0df1ba330340d3d10f6ecd6946a694b3bfe395ba69d08e99dc5b48b7fe1ba",
+    "src/components/business-session.tsx": "a7f2d56133d6fb0437085a2557318358fbf43272d490b6a81735252f7166052d",
+    "src/components/session-signal.ts": "d7c756c4da659a06a83f29932579b5fb35f05dd0189ac89fc5c78fb82255b9ff",
+    "src/scheduling/components/client/policy-impact.client.tsx": "74d53225f8de6eb45552b888db5af4a977f6ab20fd458530e57d32e43ffacf42",
+    "src/scheduling/components/client/policy-publication.client.tsx": "ad1ddc017604b3581dbf4c9966669e50350c64a60950ddf670782b76eb2b7482",
+    "src/scheduling/policy-authority.ts": "36a4b492d28b52c8bc136fecfa21555e0c8165281fb3730f5009fe0095e59811",
+    "src/scheduling/policy-commands.ts": "683f202dc7ab1727e6a924524e8f981c615dfb52c39b29971e3d34d4520db917",
+    "src/scheduling/policy-evidence-model.ts": "9a9f10b26bdfea42caa16892a4d47e7f0d664e526c7e696bb5fc606cce8cb317",
+    "src/scheduling/policy-journal.ts": "7b8fb85ea13e15723bb5ecef2a958f9e0a02bac1d84fca35edaca38caf525593",
+    "src/scheduling/policy-records.ts": "ed60c01d559321c46ece3c0b11265562d7428c779dfcfd4ecc91c83125fc340b",
+    "src/shared/ui/use-recoverable-command.ts": "4dc7d82b91932688e5376e3103ce635ca86e4612c183c3a74b2414835eac17dc",
+    "tests/database/policy-concurrency.test.ts": "78ab881d433cedc4d8114656669167039032d3bbdec8ee7a2aa6ae6a6b989634",
+    "tests/database/policy-records.test.ts": "dfc63f3e52ffa96968870be906a53819d4d95ffe3b72dfc8b1b8897d1ee39611",
+    "tests/helpers/policy-http-harness.ts": "d308dd656ead6b2945ab8cda0a548d8df13d871273bcc32dabae0da2f3703d4a",
+    "tests/scheduling-browser/publication.spec.ts": "a5428018865a69f4a7d5b59080a13ffe3a9d0419e512a7de3fcb133d036ccd4d",
+    "tests/unit/policy-journal.test.ts": "1a2821573ce1cfd590abfb158e97391b5bc3b2d1e6082e5db84733378bb45c6d"
+  },
+  "private_logs_sha256": {
+    "policy-db-final.txt": "5ee0c2ec9279e991698772ddaaadc336d946ba6b02c09dbdfeb8f9b3786b27ae",
+    "scheduling-db-regressions.txt": "8a6814c90ba141df075edf8c6ab3846d71d0c277ba8bd17c17e61b2465d0fbb5",
+    "browser-final-source.txt": "f7c67020d1fbe18f562ecdd5da6f6e910508c849650bf179a6b12b11968fa399",
+    "browser-successor.txt": "fb9f3950ae5daddd8f39621ea292604df375e955556f64af14ae6a3dc92897b5",
+    "browser-regressions.txt": "b35d22e81ed8daf8e409f50678c1f2908aea14c074e3002ace7749d6e3c44c77",
+    "policy-units-final.txt": "c639f675e84cef996a60f30154158463c959bdad2be34ad2d25f2db1586d198e",
+    "units-full.txt": "8caa6721280240cfc812e0ea10719ade7669f03cde6c2c8edbec2d8882879045",
+    "main-unit-control.txt": "91579a039af4d7cd43265b37a1a324fbc8023e00557e6e28989e43978b9339d7",
+    "build-final-source.txt": "af89e69e2de7a7389db84bfdc23c3382eb618f7d5a3e024788ff82a3f9416ce6",
+    "typecheck-final.txt": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28",
+    "lint-final-source.txt": "144b8ef738aebf80f098340cd52aae1ca2b3b236fc5859b5d6806e5ec9ac9f64",
+    "foundation-final.txt": "494f35b8a4d2820d8f9db9815c081738764eefa057bdde65c1b23d92efdfe23e",
+    "prototype-final.txt": "f7b48b580707ab4071e3dcda23d38936db1c757240cbc5996bf54ed4fceb2ff3",
+    "naming-final.txt": "4fe73b58365a22beec3f186e3e4607a8daa6ac3f1c9a8c80719c5af10bdd3611",
+    "studio-final.txt": "aa13bc1da483c5fb4d11282f1747de6ca79bef345c378e24c5f7bdfa904f4d4d",
+    "restart-write.txt": "49bd77308dcdad0bb319ef5d84e8dfe297c122abb2ff3a6da1a73ec2b8ccbf8a",
+    "restart-verify.txt": "cdf8ac1185851c34ebc5abc35d8e2314739f67525954abe3d148fded0b3c7ba8",
+    "typecheck-handover.txt": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28",
+    "studio-handover.txt": "aa13bc1da483c5fb4d11282f1747de6ca79bef345c378e24c5f7bdfa904f4d4d",
+    "foundation-handover.txt": "ef5d00bbf10e417201d235ce6aa25d76104578b78299262b65b05bbbd66f34db",
+    "prototype-handover.txt": "f7b48b580707ab4071e3dcda23d38936db1c757240cbc5996bf54ed4fceb2ff3",
+    "naming-handover.txt": "4fe73b58365a22beec3f186e3e4607a8daa6ac3f1c9a8c80719c5af10bdd3611"
+  },
+  "captures": {
+    "desktop-empty-review-1440.png": {
+      "sha256": "41044ec487e75374a33f6d4bcec224369a490f6f223c347825c8212186c0bdff",
+      "width": 1440,
+      "height": 1000,
+      "review": "Inspected source self-review; implementation/proposed only"
+    },
+    "desktop-limit-refusal-1440.png": {
+      "sha256": "4f9b4d510e16203fc38ea568d13cfd8c7d7b720776d93b714f8ccfeee29797e3",
+      "width": 1440,
+      "height": 1000,
+      "review": "Inspected source self-review; implementation/proposed only"
+    },
+    "desktop-publication-1024.png": {
+      "sha256": "17600f63188b775fcde7e56459e3de42958e4ad8eaf0231ddde2f02dca3b6f1a",
+      "width": 1024,
+      "height": 960,
+      "review": "Inspected source self-review; implementation/proposed only"
+    },
+    "desktop-review-1024.png": {
+      "sha256": "20fd4092bb2fb6ae6408e450bac37442c02e472468c318cdc2b908670109f51b",
+      "width": 1024,
+      "height": 960,
+      "review": "Inspected source self-review; implementation/proposed only"
+    },
+    "desktop-review-1440.png": {
+      "sha256": "1725dac14b657343175c598e0434baa05f98a1f2f99b8434da28247e22e1b787",
+      "width": 1440,
+      "height": 960,
+      "review": "Inspected source self-review; implementation/proposed only"
+    },
+    "phone-empty-review-390.png": {
+      "sha256": "4c21a2aaaf2d7f16873e1f6d8c5d6ee1cf530b77aa12316e51a7d921ff44dbbf",
+      "width": 390,
+      "height": 844,
+      "review": "Inspected source self-review; implementation/proposed only"
+    },
+    "phone-limit-refusal-390.png": {
+      "sha256": "a32bcc948b73b419ee137283f263df075c06fd5b3b61693dea39ab1fe0dc3736",
+      "width": 390,
+      "height": 844,
+      "review": "Inspected source self-review; implementation/proposed only"
+    },
+    "phone-publication-320.png": {
+      "sha256": "8f85d5f07e680106ed59ac4a5eb64590e3aa3818442d27e1a2fb62c630626605",
+      "width": 320,
+      "height": 960,
+      "review": "Inspected source self-review; implementation/proposed only"
+    },
+    "phone-review-320.png": {
+      "sha256": "944ef4d8a2e6f39e2af9788692a0ce0def1316b18c9f18fec8dd64222cbd872e",
+      "width": 320,
+      "height": 960,
+      "review": "Inspected source self-review; implementation/proposed only"
+    },
+    "phone-review-390.png": {
+      "sha256": "0b466f9628b371f438fb55b403f80f209c2e395013918be0d329359a1d5fee90",
+      "width": 390,
+      "height": 960,
+      "review": "Inspected source self-review; implementation/proposed only"
+    }
+  },
+  "limits": [
+    "No owner/physical-device/assistive-technology or accepted mockup review",
+    "No merge or deployment",
+    "No full PT-28/PT-30 or Step 6 programme completion",
+    "Four full Windows unit failures reproduced on unchanged current main"
+  ],
+  "preserved": [
+    "Issued source snapshots",
+    "Installed migration and seed bytes",
+    "Reserved 0051/0052 allocations",
+    "Retained-root repair",
+    "All existing capabilities and grants",
+    "78 parent IDs",
+    "Original root, unrelated worktrees and other sessions infrastructure"
+  ],
+  "inspection": {
+    "reviewer": "Codex source self-review",
+    "date": "2026-10-01",
+    "result": "All ten listed captures inspected for readable wrapping, shell containment and distinct evidence/refusal states; no accepted visual baseline, physical-device or owner review."
+  }
+}

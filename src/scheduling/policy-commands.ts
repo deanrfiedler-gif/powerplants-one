@@ -1,11 +1,14 @@
-// API-C26 internal handlers. Deliberately NOT registered by src/app or offline sync.
-// Step 4 must activate these together with selection/readiness/start/offline holds.
+// API-C26 online handlers; Step 4 registered these with coordinated enforcement.
+// Publication and resolution remain absent from offline sync.
 import { randomUUID } from "node:crypto";
 import type { PoolClient } from "pg";
 import { transaction } from "../platform/database";
 import { AppError, unavailable } from "../platform/errors";
 import type { Principal } from "../platform/identity";
 import { canonical, sharedOperation } from "../platform/operations";
+import type { OperationReceipt } from "../platform/operations";
+import { policyImpactHolds } from "./policy-holds";
+import type { PolicyEvidence } from "./policy-evidence-model";
 import { syncContext } from "../platform/sync-context";
 import {
   insertActivity,
@@ -16,6 +19,7 @@ import { common, commonKeys, object, invalid } from "../shared/validation";
 import {
   ownerEvidence,
   policyAuthority,
+  policyReadAuthority,
   type PolicyDuty,
 } from "./policy-authority";
 import type { PolicyCandidate } from "./policy-dependencies";
@@ -102,8 +106,22 @@ async function currentProposal(
   p: Principal,
   ref: ReturnType<typeof reference>,
   chain: PolicyChain,
+  historicalSource = false,
 ) {
-  const proposal = await loadProposal(c, p.workspace_id, ref.id, chain);
+  const savedHead = historicalSource
+    ? (
+        await c.query<{ expected_head_version: number }>(
+          "SELECT expected_head_version FROM ppo.scheduling_policy_proposals WHERE workspace_id=$1 AND id=$2",
+          [p.workspace_id, ref.id],
+        )
+      ).rows[0]?.expected_head_version
+    : null;
+  const proposal = await loadProposal(
+    c,
+    p.workspace_id,
+    ref.id,
+    savedHead ? chainPrefix(chain, savedHead) : chain,
+  );
   equal(proposalReference(proposal), ref, "proposal");
   if (
     (
@@ -148,7 +166,7 @@ export async function proposeSchedulingPolicy(p: Principal, input: unknown) {
         "head",
       );
       const predecessor = cmd.predecessor_proposal
-        ? await currentProposal(c, p, cmd.predecessor_proposal, chain)
+        ? await currentProposal(c, p, cmd.predecessor_proposal, chain, true)
         : null;
       if (predecessor && predecessor.proposer_id !== p.actor_id)
         throw unavailable();
@@ -601,19 +619,12 @@ export async function readPolicyEvidence(
   p: Principal,
   kind: "proposal" | "review" | "publication",
   recordId: string,
-) {
+): Promise<PolicyEvidence> {
   return transaction(async (c) => {
     await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [
       p.workspace_id,
     ]);
-    // Either dedicated duty can read the evidence, but each requires complete reads.
-    try {
-      await policyAuthority(c, p, "schedule.policy.review");
-    } catch (e) {
-      if (!(e instanceof AppError) || e.code !== "PolicyAuthorityRequired")
-        throw e;
-      await policyAuthority(c, p, "schedule.policy.publish");
-    }
+    await policyReadAuthority(c, p);
     const table = {
       proposal: "scheduling_policy_proposals",
       review: "scheduling_policy_reviews",
@@ -627,16 +638,6 @@ export async function readPolicyEvidence(
     ).rows[0];
     if (!row) throw unavailable();
     const chain = await loadPolicyChain(c, p.workspace_id);
-    if (kind === "publication")
-      return {
-        publication: row,
-        impacts: (
-          await c.query(
-            "SELECT i.*,a.activity_id FROM ppo.scheduling_policy_impacts i JOIN ppo.scheduling_policy_impact_activities a ON (a.workspace_id,a.impact_id)=(i.workspace_id,i.id) WHERE i.workspace_id=$1 AND i.publication_id=$2 ORDER BY i.id",
-            [p.workspace_id, row.id],
-          )
-        ).rows,
-      };
     const proposalRow =
       kind === "proposal"
         ? row
@@ -648,36 +649,134 @@ export async function readPolicyEvidence(
           ).rows[0];
     const prefix = chainPrefix(chain, proposalRow.expected_head_version),
       proposal = await loadProposal(c, p.workspace_id, proposalRow.id, prefix);
-    if (kind === "proposal") return { proposal };
+    const successor = (
+      await c.query<{ id: string }>(
+        "SELECT id FROM ppo.scheduling_policy_proposals WHERE workspace_id=$1 AND predecessor_id=$2 ORDER BY proposed_at DESC,id LIMIT 1",
+        [p.workspace_id, proposal.id],
+      )
+    ).rows[0];
+    const latest = (
+      await c.query<{ id: string }>(
+        "SELECT id FROM ppo.scheduling_policy_reviews WHERE workspace_id=$1 AND proposal_id=$2 ORDER BY evaluated_at DESC,id LIMIT 1",
+        [p.workspace_id, proposal.id],
+      )
+    ).rows[0];
+    const published = (
+      await c.query<{ id: string }>(
+        "SELECT id FROM ppo.scheduling_policy_publications WHERE workspace_id=$1 AND proposal_id=$2",
+        [p.workspace_id, proposal.id],
+      )
+    ).rows[0];
+    const related = {
+      successor_proposal_id: successor?.id ?? null,
+      latest_review_id: latest?.id ?? null,
+      publication_id: published?.id ?? null,
+    };
+    if (kind === "proposal") {
+      await policyReadAuthority(c, p);
+      return { proposal, ...related };
+    }
+    const reviewId = kind === "publication" ? row.review_id : row.id;
     const review = await loadReview(
         c,
         p.workspace_id,
-        row.id,
+        reviewId,
         prefix,
         proposal,
       ),
-      context = await reviewContext(c, p.workspace_id, row.id);
-    return {
+      context = await reviewContext(c, p.workspace_id, reviewId);
+    const candidate_labels = (
+      await c.query<{
+        appointment_id: string;
+        reference: string;
+        site_name: string;
+        owner_name: string;
+      }>(
+        `SELECT a.id AS appointment_id,a.display_number AS reference,s.display_name AS site_name,u.display_name AS owner_name
+       FROM ppo.appointments a JOIN ppo.sites s ON (s.workspace_id,s.id)=(a.workspace_id,a.site_id)
+       JOIN ppo.scheduling_policy_candidates pc ON pc.workspace_id=a.workspace_id AND pc.appointment_id=a.id AND pc.review_id=$2
+       JOIN ppo.users u ON u.workspace_id=pc.workspace_id AND u.id=(pc.content->'dependencies'->'ownership'->'service_owner'->'user'->>'id')::uuid
+       WHERE a.workspace_id=$1 ORDER BY a.id`,
+        [p.workspace_id, reviewId],
+      )
+    ).rows;
+    const common = {
+      candidate_labels,
       proposal,
+      ...related,
       review,
       context: { ...context.content, content_hash: context.content_hash },
       selected_policy: policyReference(
         policyContent(context.content.selected_policy),
       ),
     };
+    if (kind === "review") {
+      await policyReadAuthority(c, p);
+      return common;
+    }
+    // Current holds and Activity identities are typed reads, never receipt.task_ids.
+    const links = (
+      await c.query<{
+        id: string;
+        appointment_id: string;
+        activity_id: string;
+      }>(
+        `SELECT i.id,i.appointment_id,a.activity_id FROM ppo.scheduling_policy_impacts i
+       JOIN ppo.scheduling_policy_impact_activities a ON (a.workspace_id,a.impact_id)=(i.workspace_id,i.id)
+       WHERE i.workspace_id=$1 AND i.publication_id=$2 ORDER BY i.id`,
+        [p.workspace_id, row.id],
+      )
+    ).rows;
+    const impacts = [];
+    for (const link of links) {
+      const hold = (await policyImpactHolds(c, p, link.appointment_id)).find(
+        (i) => i.impact_id === link.id,
+      );
+      if (!hold) throw unavailable();
+      impacts.push({ ...link, ...hold });
+    }
+    let receipt: OperationReceipt | null = null;
+    // Reopening a publication does not allow another actor to browse its receipt.
+    if (row.created_by === p.actor_id) {
+      await policyAuthority(c, p, "schedule.policy.publish");
+      receipt =
+        (
+          await c.query<{ result: OperationReceipt }>(
+            "SELECT result FROM ppo.operation_receipts WHERE workspace_id=$1 AND actor_id=$2 AND operation_id=$3 AND id=$4",
+            [p.workspace_id, p.actor_id, row.operation_id, row.receipt_id],
+          )
+        ).rows[0]?.result ?? null;
+      if (!receipt) throw unavailable();
+    }
+    await policyReadAuthority(c, p);
+    if (receipt) await policyAuthority(c, p, "schedule.policy.publish");
+    return {
+      ...common,
+      publication: {
+        id: String(row.id),
+        version: Number(row.version),
+        created_at: row.created_at.toISOString() as string,
+        created_by: String(row.created_by),
+        policy_id: String(row.policy_id),
+        policy_hash: String(row.policy_hash),
+        head_version: Number(row.head_version),
+        receipt_id: String(row.receipt_id),
+      },
+      impacts,
+      receipt,
+    };
   });
 }
 
-// Online preparation for a dedicated reviewer/publisher. Full family validation
-// and complete workspace source visibility precede disclosure.
+// Online preparation validates the whole current family under dedicated authority.
 export async function readPolicyFamily(p: Principal) {
-  return transaction(async c => {
-    await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [p.workspace_id]);
-    try { await policyAuthority(c, p, "schedule.policy.review"); }
-    catch (e) {
-      if (!(e instanceof AppError) || e.code !== "PolicyAuthorityRequired") throw e;
-      await policyAuthority(c, p, "schedule.policy.publish");
-    }
-    return loadPolicyChain(c, p.workspace_id);
+  return transaction(async (c) => {
+    await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [
+      p.workspace_id,
+    ]);
+    await policyReadAuthority(c, p);
+    const chain = await loadPolicyChain(c, p.workspace_id);
+    await policyReadAuthority(c, p);
+    return chain;
   });
 }

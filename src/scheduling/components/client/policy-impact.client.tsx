@@ -1,5 +1,7 @@
 "use client";
 import { PolicyHolds } from "./policy-holds.client";
+import { PolicyPublicationWorkspace } from "./policy-publication.client";
+import { useShell } from "../../../components/shell-provider";
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -23,6 +25,11 @@ import {
 } from "../../policy-impact-model";
 
 export function PolicyImpactScreen() {
+  const { context } = useShell();
+  if (!context) return <p role="status">Loading current Scheduling access…</p>;
+  return <PolicyImpactBody key={context.preference_scope}/>;
+}
+function PolicyImpactBody() {
   const initial = plannerContext(
     new URLSearchParams(useSearchParams().toString()),
   );
@@ -75,14 +82,14 @@ export function PolicyImpactScreen() {
       <PageHeader
         eyebrow="PL-04 · Policy impact"
         title="Review a scheduling rule change"
-        description="Compare a proposed visit-duration limit with permitted future bookings."
+        description="Compare a visit-duration change, or reopen saved policy evidence under your current duty."
       />
       <p>
-        This is a temporary comparison. The published rule, bookings and
-        documents stay unchanged. Publication and saved follow-up are not
-        available here.
+        The temporary comparison leaves the published rule, bookings and documents unchanged.
       </p>
+      <PolicyPublicationWorkspace />
       <PolicyHolds />
+      <h2>Temporary scoped comparison</h2>
       <ReadState {...source} retry={() => change(source.reload)} />
       {policy && (
         <>

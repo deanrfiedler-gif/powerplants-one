@@ -1,0 +1,19 @@
+{
+  "source_head": "bfc4b78+Step5-working-tree",
+  "app_pids": [
+    29260,
+    20760
+  ],
+  "postgres_started": [
+    "2026-09-30T22:45:05.917Z",
+    "2026-09-30T23:48:54.977Z"
+  ],
+  "preserved_tables": 32,
+  "originals_sha256": "4f6a3a51e53d25aa3728f65c1675ee5b88747ff18f979b9640b1ebb30990f6b9",
+  "html_sha256": "938179619e55cc018abab3503ed93d989f95a9f70f52d9135d15be4d7dd5fc0b",
+  "pdf_sha256": "4af18ee1c3db2b188034fd2d49e3b68eabd5d5d51ca697bd966cc276d409a30c",
+  "png_sha256": "8e0e39097d1e122a86d83ed2c236f3bc8de8b82c46a945fbe71b6bf0a059203e",
+  "accepted_operation": "fe07ad8f-bc99-473c-b91b-fb036f3bc7a6",
+  "held_start": "d309290f-a909-4411-bc95-c59b19cebf21",
+  "result": "Exact accepted recovery, delayed Start ReviewRequired, altered retry Conflict, publication replay and all snapshots/files unchanged"
+}

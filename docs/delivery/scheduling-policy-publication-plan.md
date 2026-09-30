@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-**Owner:** Dean Fiedler. **Prepared:** 27 September 2026. **Status:** Historical sequence with Steps 1–3 merged; Step 4 coordinated enforcement contribution is tracked in the current handover. Source review, visual review, owner acceptance and production readiness remain separate.
+**Owner:** Dean Fiedler. **Prepared:** 27 September 2026. **Status:** Historical sequence with Steps 1–4 merged; Step 5 native interface is tracked in the current handover. Source review, visual review, owner acceptance and production readiness remain separate.
 
 Traceability: SVC-04/05, DAT-06, NFR-08, D-015/D-020, TR-03/08, API-R04, API-C26, EVT-12, PT-08/09/28 and AT-35. Preserve all 78 parent IDs. [Current integration and evidence](scheduling-policy-impact-handover.md), [read-only decision](../decisions/scheduling-policy-impact-review.md), [publication design](../decisions/scheduling-policy-publication.md) and [consolidation allocation](../decisions/repository-consolidation.md) govern this continuation.
 
@@ -132,3 +132,7 @@ Step 2 is protected-integrated through #328 at `0d294d1d` after all 20 current-h
 ## Step 4 checkpoint — 30 September 2026
 
 Current main was refreshed to `a9cead1` after #330. The [decision](../decisions/scheduling-policy-publication.md#step-4-coordinated-enforcement-and-compatibility--30-september-2026), [handover](scheduling-policy-impact-handover.md) and [verification](../testing/evidence/scheduling-policy-enforcement/README.md) supersede dated implementation/activation passages above. The contribution uses existing schema through 0054 and dedicated duties; no allocated migration or issued source changes. The next interface increment remains Step 5. No merge/deployment or owner/production acceptance is included.
+
+## Step 5 checkpoint - 1 October 2026
+
+Refreshed main is Step 4's normal protected merge `bfc4b78` through #331 after all 18 final-head checks succeeded. Earlier activation-closed, absent-route and contribution-only statements describe their historical increments. Step 5 delivers the native PL-04 interface and bounded discovery/reopening additions in the [current handover](scheduling-policy-impact-handover.md#step-5-native-interface). The existing six-step programme remains; the broader Step 6 acceptance programme is not started or claimed by interface tests.

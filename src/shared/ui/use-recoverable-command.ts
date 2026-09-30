@@ -7,12 +7,14 @@ export type Receipt = { operation_id: string; record_id: string; record_version:
 type Options = {
   key: string; scope: CommandScope; accepts: (entry: JournalEntry) => boolean;
   transport: <T>(path: string, body?: unknown) => Promise<T>; enabled?: boolean;
+  // Opt-in for commands whose result identity is allocated by the server.
+  acceptsReceipt?: (entry: JournalEntry, receipt: Receipt) => boolean;
 };
 const changed = "ppo-command-journal-changed";
 
 // Opt-in, one unresolved operation per key and tab. Only explicit retry sends
 // a retained body. Every restoration first reads the actor-bound server receipt.
-export function useRecoverableCommand({ key, scope, accepts, transport, enabled = true }: Options) {
+export function useRecoverableCommand({ key, scope, accepts, transport, enabled = true, acceptsReceipt }: Options) {
   const [pending, setPending] = useState<JournalEntry | null>(null);
   const [accepted, setAccepted] = useState<{ entry: JournalEntry; receipt: Receipt } | null>(null);
   const [error, setError] = useState<unknown>(null);
@@ -36,7 +38,7 @@ export function useRecoverableCommand({ key, scope, accepts, transport, enabled 
     try {
       const result = await options.current.transport<Receipt>(recover ? `operations/${entry.body.operation_id}` : entry.path, recover ? undefined : entry.body);
       if (!live.current || token !== generation.current) return null;
-      if (result.operation_id !== entry.body.operation_id || result.record_id !== entry.record_id || !result.receipt_id || !result.accepted_at)
+      if (result.operation_id !== entry.body.operation_id || !(acceptsReceipt ? acceptsReceipt(entry, result) : result.record_id === entry.record_id) || !result.receipt_id || !result.accepted_at)
         throw Error("The original receipt could not be verified. No replacement command was sent.");
       setAccepted({ entry, receipt: result }); setPending(null);
       const minimal: JournalEntry = { ...entry, phase: "accepted", body: { operation_id: entry.body.operation_id, schema_version: 1 } };
@@ -60,7 +62,7 @@ export function useRecoverableCommand({ key, scope, accepts, transport, enabled 
         try { sessionStorage.removeItem(key); setPending(null); publish(); }
         catch { /* Retain the exact original if storage becomes unavailable. */ }
       }
-      setError(recover ? { message: "The original outcome is still unknown or unavailable under current authority. An unavailable receipt does not prove saving failed." } :
+      setError(recover ? { status: failure.status, code: failure.code, message: "The original outcome is still unknown or unavailable under current authority. An unavailable receipt does not prove saving failed." } :
         e instanceof Error ? { message: e.message } : e);
       return null;
     } finally {

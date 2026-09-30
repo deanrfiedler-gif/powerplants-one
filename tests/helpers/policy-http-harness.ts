@@ -12,6 +12,7 @@ import { POST as publish } from "../../src/app/api/v1/schedule/policy-publicatio
 import { GET as publicationRead } from "../../src/app/api/v1/schedule/policy-publications/[id]/route";
 import { GET as impactRead } from "../../src/app/api/v1/schedule/policy-impacts/[id]/route";
 import { POST as resolve } from "../../src/app/api/v1/schedule/policy-impacts/[id]/resolve/route";
+import { GET as recordsRead } from "../../src/app/api/v1/schedule/policy-records/route";
 const handlers = {propose,review,publish,resolve,proposalRead,reviewRead,publicationRead,impactRead};
 import { closeDatabase, transaction } from "../../src/platform/database";
 import { createSession, sessionCookie } from "../../src/platform/identity";
@@ -35,10 +36,11 @@ test("isolated API-C26 HTTP adapters enforce transport/current authority, no-sto
     reviewed: handlers.reviewRead,
     publication: handlers.publicationRead,
     impact: handlers.impactRead,
+    records: recordsRead,
   };
   let discardPublicationResponse = true;
   const server = createServer(async (req, res) => {
-    const [route, record = ""] = (req.url ?? "/").slice(1).split("/");
+    const [route, record = ""] = new URL(req.url ?? "/", origin).pathname.slice(1).split("/");
     const handler = routes[route as keyof typeof routes];
     if (!handler) {
       res.writeHead(404);
@@ -133,6 +135,10 @@ test("isolated API-C26 HTTP adapters enforce transport/current authority, no-sto
       422,
     );
     const receipt = await checked(await request("/propose", command), 201);
+    const discovered = await checked(await request("/records?kind=proposal&limit=1"), 200);
+    assert.equal(discovered.items[0].id, receipt.record_id);
+    assert.equal(discovered.can_review, true);
+    await checked(await request("/records?site_id=" + randomUUID()), 422);
     assert.deepEqual(
       await checked(await request("/propose", command), 200),
       receipt,
@@ -209,6 +215,7 @@ test("isolated API-C26 HTTP adapters enforce transport/current authority, no-sto
       200,
     );
     assert.equal(published.publication.receipt_id, original.receipt_id);
+    assert.deepEqual(published.receipt, original);
     await rows(
       "UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='schedule.policy.publish'",
       [publishSession.principal.actor_id],
@@ -219,6 +226,8 @@ test("isolated API-C26 HTTP adapters enforce transport/current authority, no-sto
     );
     assert.equal(denied.code, "PolicyAuthorityRequired");
     assert(!JSON.stringify(denied).includes(original.record_id));
+    await checked(await request("/records?kind=publication", undefined, publishSession.token), 403);
+    await checked(await request(`/publication/${original.record_id}`, undefined, publishSession.token), 403);
     assert.equal(
       (
         await rows(
