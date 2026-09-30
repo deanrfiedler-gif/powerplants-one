@@ -1,3 +1,4 @@
+import { policyImpactHolds } from "../scheduling/policy-holds";
 import { leadsAvailable } from "../crm/leads/context";
 import { crmAvailable } from "../crm/context";
 import type { Principal } from "../platform/identity";
@@ -19,6 +20,7 @@ export async function listMyJobs(p: Principal, input: unknown = {}) {
     resource: "MyJobs",
   });
   return transaction(async (c) => {
+    await c.query("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ");
     await requireCapability(c, p, "field.read.own");
     const candidates = (
       await c.query(
@@ -37,6 +39,7 @@ export async function listMyJobs(p: Principal, input: unknown = {}) {
               [p.workspace_id, a.id, p.actor_id],
             )
           ).rows[0];
+        const policy_impacts = await policyImpactHolds(c, p, a.id);
         results.push({
           id: a.id,
           reference: a.display_number,
@@ -48,7 +51,8 @@ export async function listMyJobs(p: Principal, input: unknown = {}) {
           status: a.status,
           version: a.version,
           my_started_at: mine?.received_at ?? null,
-          dispatch_hold: a.dispatch_hold,
+          dispatch_hold: a.dispatch_hold || policy_impacts.some(x => x.held),
+          policy_impacts,
         });
         if (results.length > pg.limit) break;
       } catch (e) {
@@ -63,6 +67,7 @@ export async function listMyJobs(p: Principal, input: unknown = {}) {
 }
 export async function readFieldJob(p: Principal, id: string) {
   return transaction(async (c) => {
+    await c.query("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ");
     const { a, w, r, assignment } = await fieldContext(
         c,
         p,

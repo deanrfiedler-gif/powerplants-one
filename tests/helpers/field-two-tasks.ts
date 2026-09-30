@@ -203,7 +203,7 @@ export async function twoTaskStarted() {
     scope_version: scope.version,
     policy_version_id: scope.policy_version_id,
     scheduling_policy_id: id("a0"),
-    scheduling_policy_version: 1,
+    scheduling_policy_version: 1, scheduling_policy_hash: "130d586ec49c5e23dffd49916148babc6ddf329a442e054ecc1c29f9089cca44", publication_head_version: 1, selected_policy: {id: "a0000000-0000-4000-8000-000000000001", version: 1, content_hash: "130d586ec49c5e23dffd49916148babc6ddf329a442e054ecc1c29f9089cca44"},
     crew: [9, 2].map((n, i) => ({
       resource_id: id("a4", n),
       resource_version: 1,

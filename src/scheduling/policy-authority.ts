@@ -1,4 +1,4 @@
-import type { PoolClient } from "pg";
+import type { QueryClient } from "../platform/permissions";
 import type { Principal } from "../platform/identity";
 import { AppError, unavailable } from "../platform/errors";
 import { hasPermission, type Capability } from "../platform/permissions";
@@ -25,7 +25,7 @@ export function policyForbidden(): never {
   );
 }
 async function policyDutySnapshot(
-  c: PoolClient,
+  c: QueryClient,
   p: Principal,
   duty: PolicyDuty,
 ) {
@@ -59,7 +59,7 @@ async function policyDutySnapshot(
   return sourceJSON({ user, grants });
 }
 export async function policyAuthority(
-  c: PoolClient,
+  c: QueryClient,
   p: Principal,
   duty: PolicyDuty,
 ) {
@@ -84,7 +84,7 @@ export async function policyAuthority(
   return policyDutySnapshot(c, p, duty);
 }
 export async function ownerEvidence(
-  c: PoolClient,
+  c: QueryClient,
   p: Principal,
   actor: string,
   company: string,
@@ -137,7 +137,7 @@ export async function ownerEvidence(
   };
 }
 export async function policyResolutionAuthority(
-  c: PoolClient,
+  c: QueryClient,
   p: Principal,
   impactId: string,
 ) {
@@ -149,27 +149,20 @@ export async function policyResolutionAuthority(
   ).rows[0];
   if (!impact) throw unavailable();
   const { a, w } = await visibleAppointment(c, p, impact.appointment_id);
-  for (const cap of policyReads)
-    if (!(await hasPermission(c, p, cap, a.company_id, a.site_id)))
-      throw unavailable();
   if (
-    !(await hasPermission(c, p, "schedule.manage", a.company_id, a.site_id)) &&
-    !(
-      w.service_owner_id === p.actor_id &&
-      (await hasPermission(
-        c,
-        p,
-        "service.work_order.edit",
-        a.company_id,
-        a.site_id,
-      ))
-    )
+    !(await canResolvePolicyImpact(
+      c,
+      p,
+      a.company_id,
+      a.site_id,
+      w.service_owner_id,
+    ))
   )
     throw unavailable();
   return { impact, a, w };
 }
 export async function policyReceiptAuthority(
-  c: PoolClient,
+  c: QueryClient,
   p: Principal,
   type: string,
   recordId: string,
@@ -191,4 +184,20 @@ export async function policyReceiptAuthority(
         ? "schedule.policy.publish"
         : "schedule.policy.review",
     );
+}
+
+export async function canResolvePolicyImpact(
+  c: QueryClient,
+  p: Principal,
+  company: string,
+  site: string,
+  owner: string,
+) {
+  for (const cap of policyReads)
+    if (!(await hasPermission(c, p, cap, company, site))) return false;
+  return (
+    (await hasPermission(c, p, "schedule.manage", company, site)) ||
+    (owner === p.actor_id &&
+      (await hasPermission(c, p, "service.work_order.edit", company, site)))
+  );
 }

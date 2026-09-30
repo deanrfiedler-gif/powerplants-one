@@ -73,3 +73,6 @@ LocalDateTimeField accepts an optional canonical `validationField` independently
 ## FI-05 field readiness consumer
 
 The exact assigned-visit review reuses this control without changing its shared implementation. Loading, denied, unsaved, saving, stale, unknown-result recovery and server-saved states remain distinct. Fixtures and retained-source/lost-response journeys are in tests/browser/field-readiness.spec.ts; actual visual evidence is tracked by the Field Work programme handover. Owner/device acceptance remains pending.
+
+
+Scheduling Step 4 uses this shared control contract for online booking-policy preparation and impact resolution. Consumer bindings are maintained in components.json; exact immutable evidence is supplied by the host. Unknown results preserve the original command, freeze changed evidence and provide an unchanged retry. Loading or failed reads never indicate a cleared hold. Desktop/phone and owner visual acceptance remain pending.

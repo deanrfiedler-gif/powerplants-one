@@ -8,7 +8,7 @@ export async function serialised<T, U>(
   first: () => Promise<T>,
   second: () => Promise<U>,
   operationRetry = false,
-  barrier: "publication" | "appointment" = "publication",
+  barrier: "publication" | "appointment" | "resolution" = "publication",
 ) {
   const gate = await database().connect(),
     key = 540003;
@@ -20,9 +20,11 @@ export async function serialised<T, U>(
   const table =
     barrier === "publication"
       ? "scheduling_policy_publications"
-      : "appointments";
+      : barrier === "resolution"
+        ? "scheduling_policy_resolutions"
+        : "appointments";
   await rows(
-    `CREATE TRIGGER policy_publication_barrier AFTER ${barrier === "publication" ? "INSERT" : "UPDATE"} ON ppo.${table} FOR EACH ROW EXECUTE FUNCTION ppo.policy_publication_barrier()`,
+    `CREATE TRIGGER policy_publication_barrier AFTER ${barrier === "appointment" ? "UPDATE" : "INSERT"} ON ppo.${table} FOR EACH ROW EXECUTE FUNCTION ppo.policy_publication_barrier()`,
   );
   const waitFor = async (blocker: number, query?: RegExp) => {
     const until = Date.now() + 8000;

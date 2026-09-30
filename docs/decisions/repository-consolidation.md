@@ -47,3 +47,5 @@ On 28 September, Step 2 refreshed main to `a9840183` (#327) and reconfirmed 0053
 
 
 Step 3 refreshed protected main to `0d294d1d` after #328 and allocated additive 0054 for actual internal command evidence and dedicated synthetic duties. Installed 0053 remains unchanged; 0051/0052 stay reserved and absent. Later Maintenance/Products integration must prove both install orders against the actual installed schema through 0054. The [Step 3 decision](scheduling-policy-publication.md#step-3-command-boundary--28-september-2026) retains the closed activation boundary and hosted tester authority separation.
+
+Step 4 refreshed main to `a9cead1` after #330 on 30 September 2026 and inspected live schema through 0054. It reuses current tables, duties and locks; no migration/seed/grant/capability is added. The retained-root repair bytes and reserved 0051/0052 remain unchanged. The [coordinated enforcement/rollback decision](scheduling-policy-publication.md#step-4-coordinated-enforcement-and-compatibility--30-september-2026) supersedes earlier closed-activation planning only for the complete verified Step 4 contribution.

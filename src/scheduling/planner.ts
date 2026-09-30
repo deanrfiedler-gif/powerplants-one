@@ -1,3 +1,7 @@
+import { canResolvePolicyImpact, policyReads } from "./policy-authority";
+import { policyStorageAvailable } from "./policy-persistence";
+import { policyImpactHolds } from "./policy-holds";
+import { bookingPolicy } from "./booking-policy";
 import { fitsWorkingInterval, matchesConfirmedContact, visitFitsPolicy } from "./booking-rules";
 import { randomUUID } from "node:crypto";
 import type { PoolClient } from "pg";
@@ -11,7 +15,7 @@ import {
   type Capability,
   type QueryClient,
 } from "../platform/permissions";
-import { sharedOperation } from "../platform/operations";
+import { canonical, sharedOperation } from "../platform/operations";
 import {
   authoriseActivityInput,
   insertActivity,
@@ -41,6 +45,7 @@ import {
 import {
   bookingCommand,
   bookingFields,
+  bookingPolicyFields,
   bookingKeys,
   crewFields,
   interval,
@@ -299,7 +304,18 @@ async function guardBooking(
       "The exact proposed scope/readiness policy no longer matches.",
       "ScopeReviewRequired",
     );
-  const pol = await schedulingPolicy(c, p, cmd.scheduling_policy_id);
+  const selection = await bookingPolicy(c, p, { ...a, start_at: start, end_at: end });
+  const pol = await schedulingPolicy(c, p, cmd.scheduling_policy_id, false);
+  if (cmd.scheduling_policy_id !== selection.policy.id ||
+      cmd.scheduling_policy_hash !== selection.policy.content_hash ||
+      cmd.publication_head_version !== selection.family_head_version ||
+      canonical(cmd.selected_policy ?? null) !== canonical(selection.selected_policy))
+    throw new AppError(409, "VersionConflict", "Published scheduling authority changed. Prepare and review this visit again.");
+  if (!visitFitsPolicy(start, end, {
+    ...selection.applicable,
+    effective_from: new Date(selection.applicable.effective_from),
+    effective_to: new Date(selection.applicable.effective_to),
+  })) blocked("end_at", "The proposed visit must fit the applicable published policy. Retain the booking and review a controlled change or replacement.");
   sameVersion(pol.version, cmd.scheduling_policy_version, "scheduling policy");
   if (a.scheduling_policy_id && a.scheduling_policy_id !== pol.id)
     blocked(
@@ -550,6 +566,9 @@ async function guardBooking(
     readiness_policy_id: r.policy_version_id,
     scheduling_policy_id: pol.id,
     scheduling_policy_version: pol.version,
+    scheduling_policy_hash: selection.policy.content_hash,
+    publication_head_version: selection.family_head_version,
+    applicable_policy: selection.selected_policy,
     site_version: site.version,
     required_skill_codes: required,
     authorisation_controls: authControls,
@@ -1037,6 +1056,7 @@ export async function decideChangeRequest(
             "scheduling_policy_id",
           ),
           scheduling_policy_version: version(r.scheduling_policy_version),
+          ...bookingPolicyFields(r),
         }
       : {}),
   };
@@ -1323,9 +1343,10 @@ export async function appointmentDetail(c: QueryClient, p: Principal, id: string
     proposal,
     history,
     policy,
+    policy_impacts: await policyImpactHolds(c, p, id),
     readiness: await readiness(c, p, r, a.id),
     authorisation_blockers: await blockers(c, p, w, r),
-    actions: await appointmentActions(c, p, a),
+    actions: { ...await appointmentActions(c, p, a), can_resolve_policy: await canResolvePolicyImpact(c, p, a.company_id, a.site_id, w.service_owner_id) },
   };
 }
 export async function scheduleSummaries(c: QueryClient, p: Principal, ids: string[]) {
@@ -1349,6 +1370,7 @@ export async function scheduleSummaries(c: QueryClient, p: Principal, ids: strin
         can_manage: boolean;
         can_request: boolean;
         can_contact: boolean;
+        can_resolve_policy: boolean;
       }
     >(
       `SELECT a.*,w.display_number AS work_order_display_number,w.version AS work_order_version,
@@ -1358,7 +1380,10 @@ export async function scheduleSummaries(c: QueryClient, p: Principal, ids: strin
         site.display_name AS site_name,site.primary_contact_id,customer.display_name AS customer_name,
         ${scopeSql("a.company_id", "a.site_id", "schedule.manage")} AS can_manage,
         ${scopeSql("a.company_id", "a.site_id", "schedule.request")} AS can_request,
-        ${scopeSql("a.company_id", "a.site_id", "schedule.contact")} AS can_contact
+        ${scopeSql("a.company_id", "a.site_id", "schedule.contact")} AS can_contact,
+        (${policyReads.map(cap => scopeSql("a.company_id", "a.site_id", cap)).join(" AND ")}
+         AND (${scopeSql("a.company_id", "a.site_id", "schedule.manage")}
+           OR (w.service_owner_id=$2 AND ${scopeSql("a.company_id", "a.site_id", "service.work_order.edit")}))) AS can_resolve_policy
        FROM ppo.appointments a
        JOIN ppo.work_orders w ON (w.workspace_id,w.id)=(a.workspace_id,a.work_order_id)
        JOIN ppo.sites site ON (site.workspace_id,site.id)=(a.workspace_id,a.site_id)
@@ -1408,15 +1433,21 @@ export async function scheduleSummaries(c: QueryClient, p: Principal, ids: strin
     rows.map((a) => a.scheduling_policy_id ?? SCHEDULING_POLICY_ID),
   ))
     policies.set(id, await schedulingPolicy(c, p, id, false));
-  return rows.map(({ can_manage, can_request, can_contact, ...a }) => ({
+  const impacts = new Map<string, Awaited<ReturnType<typeof policyImpactHolds>>>();
+  if (await policyStorageAvailable(c)) {
+    const affected = (await c.query("SELECT DISTINCT appointment_id FROM ppo.scheduling_policy_impacts WHERE workspace_id=$1 AND appointment_id=ANY($2::uuid[])", [p.workspace_id, permitted])).rows;
+    for (const row of affected) impacts.set(row.appointment_id, await policyImpactHolds(c, p, row.appointment_id));
+  }
+  return rows.map(({ can_manage, can_request, can_contact, can_resolve_policy, ...a }) => ({
     ...a,
     projection: "ScheduleSummary" as const,
+    policy_impacts: impacts.get(a.id) ?? [],
     assignments: assignments.filter((x) => x.appointment_id === a.id),
     requests: requests
       .filter((x) => x.appointment_id === a.id)
       .map(({ id, status }) => ({ id, status })),
     policy: policies.get(a.scheduling_policy_id ?? SCHEDULING_POLICY_ID)!,
-    actions: { can_manage, can_request, can_contact },
+    actions: { can_manage, can_request, can_contact, can_resolve_policy },
   }));
 }
 export async function readAppointment(

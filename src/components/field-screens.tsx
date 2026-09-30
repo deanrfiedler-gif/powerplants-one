@@ -281,6 +281,7 @@ export function MyJobsScreen() {
       status: string;
       my_started_at: string | null;
       dispatch_hold: boolean;
+      policy_impacts: import("../scheduling/policy-holds").PolicyHold[];
     }>
   >(`my-jobs${cursor ? `?cursor=${encodeURIComponent(cursor)}` : ""}`);
   return (
@@ -331,6 +332,8 @@ export function MyJobsScreen() {
                         <>
                           Your start saved <Stamp value={j.my_started_at} />
                         </>
+                      ) : j.policy_impacts?.some(x => x.held) ? (
+                        "Scheduling policy hold. Open the job for its owner and required resolution."
                       ) : j.dispatch_hold ? (
                         "Review preparation before starting."
                       ) : (

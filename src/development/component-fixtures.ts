@@ -274,3 +274,10 @@ export function areaFixture() {
   ];
   return value;
 }
+
+export const schedulingPolicyHoldFixture: import("../scheduling/policy-holds").PolicyHold = {
+  impact_id: fixtureId(220), publication_id: fixtureId(221), owner_id: fixtureId(222),
+  owner_name: "Synthetic scheduling owner", reason: "DurationLimitExceeded",
+  disposition: "Unresolved", held: true,
+  next_action: "Make a controlled change, then obtain a fresh policy-impact resolution.",
+};

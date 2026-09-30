@@ -703,7 +703,7 @@ test("P06 P05 confirmed move invalidates real pack/assignment applicability and 
     scope_version: a.scope_version,
     policy_version_id: a.policy_version_id,
     scheduling_policy_id: id("a0"),
-    scheduling_policy_version: 1,
+    scheduling_policy_version: 1, scheduling_policy_hash: "130d586ec49c5e23dffd49916148babc6ddf329a442e054ecc1c29f9089cca44", publication_head_version: 1, selected_policy: {id: "a0000000-0000-4000-8000-000000000001", version: 1, content_hash: "130d586ec49c5e23dffd49916148babc6ddf329a442e054ecc1c29f9089cca44"},
     start_at: "2031-09-24T03:00:00Z",
     end_at: "2031-09-24T05:00:00Z",
     crew: [9].map((n, i) => ({

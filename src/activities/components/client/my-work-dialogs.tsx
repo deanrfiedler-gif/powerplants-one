@@ -1,4 +1,5 @@
 "use client";
+import { PolicyHolds } from "../../../scheduling/components/client/policy-holds.client";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useIdentity } from "../../../components/business-session";
@@ -120,6 +121,7 @@ export function ActivityDrawer({
         </>
       }
     >
+      <PolicyHolds activityId={row.id} />
       <dl className="mw-facts">
         <div>
           <dt>When</dt>

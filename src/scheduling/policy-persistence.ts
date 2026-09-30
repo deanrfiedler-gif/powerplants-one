@@ -1,7 +1,8 @@
 // Internal persistence adapters only. No routes, authority decisions, graph locks or
 // command receipts. Callers own a transaction and supply independently loaded server
 // records; Step 3 must establish complete visibility/population and current authority.
-import type { PoolClient } from "pg";
+import type { QueryClient } from "../platform/permissions";
+import { AppError } from "../platform/errors";
 import { canonical } from "../platform/operations";
 import { invalid } from "../shared/validation";
 import {
@@ -38,10 +39,30 @@ function restored(row: {
   return { ...row.content, content_hash: row.content_hash };
 }
 
+// Only genuinely older schemas may use root-only compatibility. Missing tables
+// in an installed publication schema are damage, never evidence of old authority.
+export async function policyStorageAvailable(c: QueryClient) {
+  const row = (
+    await c.query(`SELECT
+    to_regclass('ppo.scheduling_policy_heads') AS heads,
+    to_regclass('ppo.scheduling_policy_impacts') AS impacts,
+    to_regclass('ppo.scheduling_policy_families') AS family,
+    EXISTS(SELECT 1 FROM ppo.seed_receipts WHERE version>=53) AS installed`)
+  ).rows[0];
+  if (!row.heads && !row.impacts && !row.family && !row.installed) return false;
+  if (!row.heads || !row.impacts)
+    throw new AppError(
+      422,
+      "PolicyUnavailable",
+      "Installed scheduling policy storage is incomplete. Restore current authority before continuing.",
+    );
+  return true;
+}
+
 /** Read the complete saved chain, checking each publication against its original
  * proposal, review and source prefix. Old review bindings never use today's head. */
 export async function loadPolicyChain(
-  db: PoolClient,
+  db: QueryClient,
   workspace: string,
 ): Promise<PolicyChain> {
   const workspace_id = id(workspace);
@@ -121,7 +142,7 @@ export async function loadPolicyChain(
 }
 
 export async function loadProposal(
-  db: PoolClient,
+  db: QueryClient,
   workspace: string,
   proposalId: string,
   chain: PolicyChain,
@@ -141,7 +162,7 @@ export async function loadProposal(
 }
 
 export async function loadReview(
-  db: PoolClient,
+  db: QueryClient,
   workspace: string,
   reviewId: string,
   chain: PolicyChain,
@@ -177,7 +198,7 @@ export async function loadReview(
 }
 
 export async function savePolicyProposal(
-  db: PoolClient,
+  db: QueryClient,
   input: unknown,
   server: { workspace_id: string; proposer_id: string },
 ) {
@@ -219,7 +240,7 @@ export async function savePolicyProposal(
 }
 
 export async function savePolicyReview(
-  db: PoolClient,
+  db: QueryClient,
   input: unknown,
   server: {
     workspace_id: string;

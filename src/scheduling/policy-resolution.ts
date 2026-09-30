@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import type { PoolClient } from "pg";
+import type { QueryClient } from "../platform/permissions";
 import { transaction } from "../platform/database";
 import { AppError } from "../platform/errors";
 import type { Principal } from "../platform/identity";
@@ -29,11 +29,12 @@ import {
   reference,
 } from "./policy-values";
 
-async function freshEvidence(
-  c: PoolClient,
+export async function freshPolicyImpactEvidence(
+  c: QueryClient,
   p: Principal,
   appointmentId: string,
   replacementId: string | null,
+  checkingDisposition = false,
 ) {
   const chain = await loadPolicyChain(c, p.workspace_id),
     sources = await policySources(c, p),
@@ -70,7 +71,13 @@ async function freshEvidence(
     return {
       appointment: rowReference(row),
       selected_policy: selected,
-      excluded: exclusion(sources, row, at),
+      // Reaching the scheduled start is not a later source change. New
+      // resolutions still require a future booking; a saved disposition may
+      // remain current at arrival if every dependency remains exact.
+      excluded:
+        checkingDisposition && exclusion(sources, row, at) === "NotFuture"
+          ? null
+          : exclusion(sources, row, at),
       candidate,
     };
   };
@@ -85,18 +92,37 @@ async function freshEvidence(
       [p.workspace_id, a.id],
     )
   ).rows;
+  const controlled_changes = (
+    await c.query(
+      `SELECT r.id,r.operation_id,r.payload_hash,r.result,e.details
+    FROM ppo.operation_receipts r JOIN ppo.audit_events e
+    ON (e.workspace_id,e.actor_id,e.operation_id)=(r.workspace_id,r.actor_id,r.operation_id)
+    WHERE r.workspace_id=$1 AND (r.record_id=$2 OR e.details->>'appointment_id'=$2::text)
+    AND e.details->>'command' IN ('MoveAppointment','DecideScheduleChangeRequest:accept') ORDER BY r.id`,
+      [p.workspace_id, a.id],
+    )
+  ).rows;
   const evidence = {
     schema_version: 1,
     head: chain.head,
     current,
     replacement,
     cancellation,
+    controlled_changes,
   };
   return {
-    recheck_before: nextPolicyBoundary(sources, at, [
-      a,
-      ...(replacementId ? [sources.one("appointments", replacementId)] : []),
-    ]),
+    recheck_before: nextPolicyBoundary(
+      sources,
+      at,
+      checkingDisposition
+        ? []
+        : [
+            a,
+            ...(replacementId
+              ? [sources.one("appointments", replacementId)]
+              : []),
+          ],
+    ),
     evidence,
     dependency_fingerprint: digest(evidence),
     at,
@@ -115,7 +141,7 @@ export async function readPolicyImpact(
       p.workspace_id,
     ]);
     const { impact } = await policyResolutionAuthority(c, p, id(impactId));
-    const fresh = await freshEvidence(
+    const fresh = await freshPolicyImpactEvidence(
       c,
       p,
       impact.appointment_id,
@@ -130,15 +156,15 @@ export async function readPolicyImpact(
     const latest = history.at(-1);
     // Activity state is deliberately absent from disposition evidence. Completing a
     // task creates no resolution; subsequent scheduling/source changes make it stale.
-    const latestFresh =
-      latest && latest.replacement_id !== replacementId
-        ? await freshEvidence(
-            c,
-            p,
-            impact.appointment_id,
-            latest.replacement_id,
-          )
-        : fresh;
+    const latestFresh = latest
+      ? await freshPolicyImpactEvidence(
+          c,
+          p,
+          impact.appointment_id,
+          latest.replacement_id,
+          true,
+        )
+      : fresh;
     return {
       impact,
       activity_ids: (
@@ -230,7 +256,7 @@ export async function resolveSchedulingPolicyImpact(
           : null,
         "resolution_predecessor",
       );
-      const fresh = await freshEvidence(
+      const fresh = await freshPolicyImpactEvidence(
         c,
         p,
         a.id,
@@ -244,6 +270,11 @@ export async function resolveSchedulingPolicyImpact(
       const current = fresh.evidence.current;
       if (cmd.outcome === "VerifiedNoConflict") {
         if (
+          !fresh.evidence.controlled_changes.some(
+            (x) =>
+              Number(x.details.appointment_version ?? x.result.record_version) >
+              impact.content.dependencies.booking.appointment.version,
+          ) ||
           current.excluded ||
           !current.selected_policy ||
           current.candidate.evaluation.outcome !== "Compliant"

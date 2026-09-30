@@ -57,6 +57,15 @@ function booking(
     policy_version_id: a.policy_version_id,
     scheduling_policy_id: id("a0"),
     scheduling_policy_version: 1,
+    scheduling_policy_hash:
+      "130d586ec49c5e23dffd49916148babc6ddf329a442e054ecc1c29f9089cca44",
+    publication_head_version: 1,
+    selected_policy: {
+      id: "a0000000-0000-4000-8000-000000000001",
+      version: 1,
+      content_hash:
+        "130d586ec49c5e23dffd49916148babc6ddf329a442e054ecc1c29f9089cca44",
+    },
     crew: crew(),
   };
 }
@@ -116,86 +125,101 @@ for (const action of [
   "cancel",
   "change-acceptance",
 ] as const) {
-  test(`C26 shared-lock serialization with existing ${action}; this is NOT Step 4 impact-hold enforcement`, async () => {
-    const actor = await principal();
-    if (action !== "confirm") await confirmed();
-    const a = (
-      await readAppointment(actor, id("a8", action === "confirm" ? 2 : 9))
-    ).items[0];
-    const cmd = {
-      ...booking(a),
-      crew: action === "confirm" ? crew([id("a4", 5)]) : crew(),
-    };
-    let requestId: string | undefined;
-    if (action === "change-acceptance") {
-      requestId = randomUUID();
-      await createChangeRequest(actor, a.id, {
-        ...base(),
-        id: requestId,
-        expected_version: a.version,
-        source_type: "Manual",
-        source_reference: "SYN C26 competing change",
-        source_version: "1",
-        start_at: new Date(a.start_at).toISOString(),
-        end_at: new Date(a.end_at).toISOString(),
-        crew: cmd.crew,
-      });
-    }
-    const f = await reviewed();
-    const other = () =>
-      action === "confirm"
-        ? confirmAppointment(actor, a.id, cmd)
-        : action === "move"
-          ? moveAppointment(actor, a.id, {
-              ...cmd,
-              start_at: new Date(a.start_at).toISOString(),
-              end_at: new Date(a.end_at).toISOString(),
-            })
-          : action === "cancel"
-            ? cancelAppointment(actor, a.id, {
-                ...base(),
-                expected_version: a.version,
-                expected_work_order_version: a.work_order_version,
-                expected_assignment_version: a.assignment_version,
+  for (const publicationFirst of [true, false])
+    test(`C26 shared-lock ${action}: ${publicationFirst ? "publication" : "booking"} wins; Step 4 rechecks exact preparation and population`, async () => {
+      const actor = await principal();
+      if (action !== "confirm") await confirmed();
+      const a = (
+        await readAppointment(actor, id("a8", action === "confirm" ? 2 : 9))
+      ).items[0];
+      const cmd = {
+        ...booking(a),
+        crew: action === "confirm" ? crew([id("a4", 5)]) : crew(),
+      };
+      let requestId: string | undefined;
+      if (action === "change-acceptance") {
+        requestId = randomUUID();
+        await createChangeRequest(actor, a.id, {
+          ...base(),
+          id: requestId,
+          expected_version: a.version,
+          source_type: "Manual",
+          source_reference: "SYN C26 competing change",
+          source_version: "1",
+          start_at: new Date(a.start_at).toISOString(),
+          end_at: new Date(a.end_at).toISOString(),
+          crew: cmd.crew,
+        });
+      }
+      const f = await reviewed();
+      const other = () =>
+        action === "confirm"
+          ? confirmAppointment(actor, a.id, cmd)
+          : action === "move"
+            ? moveAppointment(actor, a.id, {
+                ...cmd,
+                start_at: new Date(a.start_at).toISOString(),
+                end_at: new Date(a.end_at).toISOString(),
               })
-            : decideChangeRequest(
-                actor,
-                requestId!,
-                (() => {
-                  const { crew: _crew, ...v } = cmd;
-                  void _crew;
-                  return { ...v, expected_request_version: 1 };
-                })(),
-                "accept",
-              );
-    const [published, changed] = await serialised(
-      () => publishSchedulingPolicy(f.publisher, f.publish),
-      other,
-    );
-    assert.equal(published.status, "fulfilled");
-    assert.equal(
-      changed.status,
-      "fulfilled",
-      changed.status === "rejected" ? String(changed.reason) : undefined,
-    );
-    assert.equal(
-      (
-        await rows(
-          "SELECT scheduling_policy_id FROM ppo.appointments WHERE id=$1",
-          [a.id],
-        )
-      )[0].scheduling_policy_id,
-      id("a0"),
-    );
-    // The next review enumerates actual changed state, never the former candidate list.
-    await assert.rejects(
-      reviewSchedulingPolicy(f.reviewer, {
-        ...f.reviewCommand,
-        ...base(),
-        id: randomUUID(),
-      }),
-    );
-  });
+            : action === "cancel"
+              ? cancelAppointment(actor, a.id, {
+                  ...base(),
+                  expected_version: a.version,
+                  expected_work_order_version: a.work_order_version,
+                  expected_assignment_version: a.assignment_version,
+                })
+              : decideChangeRequest(
+                  actor,
+                  requestId!,
+                  (() => {
+                    const { crew: _crew, ...v } = cmd;
+                    void _crew;
+                    return { ...v, expected_request_version: 1 };
+                  })(),
+                  "accept",
+                );
+      const publish = () => publishSchedulingPolicy(f.publisher, f.publish);
+      const results = publicationFirst
+        ? await serialised(publish, other)
+        : await serialised(other, publish, false, "appointment");
+      const [published, changed] = publicationFirst
+        ? results
+        : [results[1], results[0]];
+      assert.equal(
+        published.status,
+        publicationFirst ? "fulfilled" : "rejected",
+      );
+      if (!publicationFirst && published.status === "rejected")
+        assert.equal(published.reason.code, "InvalidData");
+      assert.equal(
+        changed.status,
+        !publicationFirst || action === "cancel" ? "fulfilled" : "rejected",
+      );
+      if (
+        publicationFirst &&
+        action !== "cancel" &&
+        changed.status === "rejected"
+      )
+        assert.equal(changed.reason.code, "VersionConflict");
+      assert.equal(
+        (
+          await rows(
+            "SELECT scheduling_policy_id FROM ppo.appointments WHERE id=$1",
+            [a.id],
+          )
+        )[0].scheduling_policy_id,
+        publicationFirst && action === "confirm" ? null : id("a0"),
+      );
+      // The next review enumerates actual changed state, never the former candidate list.
+      if (publicationFirst)
+        await assert.rejects(
+          reviewSchedulingPolicy(f.reviewer, {
+            ...f.reviewCommand,
+            ...base(),
+            id: randomUUID(),
+          }),
+        );
+    });
 }
 test("C26 actual start shares the graph lock; issued files/pins survive and actual attendance becomes an explicit exclusion", async () => {
   const issued = await acknowledged(),
@@ -245,7 +269,7 @@ test("C26 actual start shares the graph lock; issued files/pins survive and actu
   const earlierReceipts = await rows(
     "SELECT * FROM ppo.operation_receipts ORDER BY id",
   );
-  const f = await reviewed();
+  const f = await reviewed(240);
   const [published, started] = await serialised(
     () => publishSchedulingPolicy(f.publisher, f.publish),
     () => startAttendance(technician, job.id, cmd),

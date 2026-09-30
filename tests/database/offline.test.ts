@@ -682,7 +682,7 @@ for (const change of ["reassign", "amend", "scope"] as const)
         scope_version: a.scope_version,
         policy_version_id: a.policy_version_id,
         scheduling_policy_id: fixtureId("a0"),
-        scheduling_policy_version: 1,
+        scheduling_policy_version: 1, scheduling_policy_hash: "130d586ec49c5e23dffd49916148babc6ddf329a442e054ecc1c29f9089cca44", publication_head_version: 1, selected_policy: {id: "a0000000-0000-4000-8000-000000000001", version: 1, content_hash: "130d586ec49c5e23dffd49916148babc6ddf329a442e054ecc1c29f9089cca44"},
         start_at: new Date(
           new Date(a.start_at).getTime() + 3600000,
         ).toISOString(),

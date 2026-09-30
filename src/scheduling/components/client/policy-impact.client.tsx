@@ -1,4 +1,5 @@
 "use client";
+import { PolicyHolds } from "./policy-holds.client";
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -81,6 +82,7 @@ export function PolicyImpactScreen() {
         documents stay unchanged. Publication and saved follow-up are not
         available here.
       </p>
+      <PolicyHolds />
       <ReadState {...source} retry={() => change(source.reload)} />
       {policy && (
         <>

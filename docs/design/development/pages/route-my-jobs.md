@@ -51,3 +51,8 @@ Proposed adaptations: host shell/document scroll, explicit arrival, unavailable 
 Incoming and outgoing handovers, source hashes and exact limitations are in [the native decision](../../../decisions/field-timer-native.md). Current evidence is in [the field programme handover](../../../delivery/field-quality-native-handover.md). Retained r05 bytes and review fingerprints are unchanged.
 
 Current paired captures and actual 200% Chrome zoom/keyboard results are in [the timer evidence record](../../../testing/evidence/field-timer-native/README.md). Source/application evidence is separate from owner approval.
+
+
+## Scheduling Step 4
+
+The assigned-job list derives the scheduling hold from current durable impact evidence, retaining the existing appointment and reservation. Job detail shows the reason, responsible owner, source publication and required controlled resolution among the independent start blockers. Desktop and phone must keep the full reason readable, with wrapped identifiers and a reachable Start context/error. The server refuses current holds even when a cached flag or prior offline timestamp says otherwise. Exact accepted originals still recover; factual evidence remains recoverable. No issued Step 4 image is available. Automated captures in the Step 4 evidence directory do not confer visual/owner/device acceptance; the existing timer baseline remains distinct.

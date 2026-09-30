@@ -14,18 +14,40 @@ async function files(dir: string): Promise<string[]> {
     )
   ).flat();
 }
-test("Step 3 mutators have no live application/offline registration or user-selectable activation bypass", async () => {
+test("Step 4 registers only the intended online guarded routes; offline registration and activation bypass remain absent", async () => {
+  const allowed = new Set([
+    "src/app/api/v1/schedule/policy-family/route.ts",
+    "src/app/api/v1/schedule/policy-proposals/route.ts",
+    "src/app/api/v1/schedule/policy-proposals/[id]/route.ts",
+    "src/app/api/v1/schedule/policy-reviews/route.ts",
+    "src/app/api/v1/schedule/policy-reviews/[id]/route.ts",
+    "src/app/api/v1/schedule/policy-publications/route.ts",
+    "src/app/api/v1/schedule/policy-publications/[id]/route.ts",
+    "src/app/api/v1/schedule/policy-impacts/[id]/route.ts",
+    "src/app/api/v1/schedule/policy-impacts/[id]/resolve/route.ts",
+  ]);
   for (const name of [
     ...(await files("src/app")),
     ...(await files("src/offline")),
   ].filter((x) => /\.[cm]?[jt]sx?$/.test(x))) {
     const text = await readFile(name, "utf8");
+    const key = name.replaceAll("\\", "/");
+    if (allowed.has(key)) {
+      assert.match(text, /scheduling\/policy-http/);
+      allowed.delete(key);
+      continue;
+    }
     assert.doesNotMatch(
       text,
       /policy-(commands|http|resolution)|(?:publishSchedulingPolicy|resolveSchedulingPolicyImpact)/,
       name,
     );
   }
+  assert.equal(
+    allowed.size,
+    0,
+    "All coordinated online registrations must exist",
+  );
   for (const name of [
     "policy-commands.ts",
     "policy-http.ts",

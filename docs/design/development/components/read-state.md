@@ -81,3 +81,11 @@ The Estimating workload and Saved estimates views use ErrorNotice with host load
 ## FI-01 timer consumer
 
 `WorkTimer` and `RunningTimerBanner` reuse this component on My Jobs/job detail. The real synthetic fixture is `tests/browser/field-timer.spec.ts`, including Running/Paused/Stopped, unknown original outcome and desktop/phone controls. Host scope `#ppo-work-timer` retains accepted r05 tokens. The offline workspace keeps its existing native controls and is not mapped as a React consumer. Owner/device review is outstanding; see the native timer decision and field programme handover.
+
+
+Scheduling Step 4 uses this shared control contract for online booking-policy preparation and impact resolution. Consumer bindings are maintained in components.json; exact immutable evidence is supplied by the host. Unknown results preserve the original command, freeze changed evidence and provide an unchanged retry. Loading or failed reads never indicate a cleared hold. Desktop/phone and owner visual acceptance remain pending.
+
+
+### Background policy preparation
+
+`ReadState` and `ErrorNotice` accept `focusOnError` (default `true`). Automatic booking-policy preparation passes `false`: errors remain visible alerts with their field explanations and retry, while native date editing keeps focus. Explicit command failures and resolution evaluation retain the default focus behavior. The `background-error` catalogue state uses the actual component. The Step 4 host test waits for an invalid interval response and verifies that focus stays on the editable start control; the existing complete keyboard journey remains required with unchanged assertions and deadlines. Owner/assistive-technology acceptance is pending.
