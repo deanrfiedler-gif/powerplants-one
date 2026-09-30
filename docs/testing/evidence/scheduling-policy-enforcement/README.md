@@ -8,7 +8,7 @@ Task-owned PostgreSQL 16.15 clusters use loopback ports 55769 (serial database r
 
 ## Completed local proof
 
-[Verification metadata](verification.json) records LF-normalised source hashes, exact private-log hashes and eight capture hashes. These are component results, not an assertion about all PR checks. Current-head CI and broader regression totals are reported on the pull request; interrupted or still-running suites are not counted here.
+[Verification metadata](verification.json) records LF-normalised source hashes, exact private-log hashes and eight capture hashes. These are component results, not an assertion about all PR checks. Current-head CI and broader regression totals are reported on [PR #331](https://github.com/deanrfiedler-gif/powerplants-one/pull/331); interrupted or still-running suites are not counted here.
 
 | Proof | Completed result | Boundary covered |
 |---|---|---|
@@ -17,6 +17,8 @@ Task-owned PostgreSQL 16.15 clusters use loopback ports 55769 (serial database r
 | Scheduling/policy units | 128/128, zero failures/skips | Chain boundaries, fixed terms, immutable evidence, selectors, activation routes and no offline/bypass registration. |
 | Hosted database and upgrade suites | 15/15, zero failures/skips, 180.9 s | Both exact known retained roots, unknown-root refusal, late-failure rollback/retry, runtime grants, original sessions/CRM/booking evidence and unchanged installed bytes. |
 | Compiled Step 4 journeys | 2/2, zero failures/skips/flakes, 74.5 s | Desktop and phone; publication against stale preparation, editable invalid intervals, owner/field holds, Start refusal, controlled cancellation/resolution and lost-response exact retry. |
+| Existing compiled browser regressions | 55/55, zero failures/skips/flakes, including warm-up | Planner, policy-impact, scheduling workspaces, field/readiness, offline, packs and work orders on desktop and phone. |
+| Planner projection correction | 2/2, zero failures/skips, 25.2 s | Existing exact summary/detail facts and current permission/scope equivalence. |
 | Actual app/PostgreSQL restart | Passed; [metadata](restart.json) | Different process IDs and postmaster start times; 32 durable table fingerprints, accepted offline receipt, delayed Start review, factual recovery originals and exact HTML/PDF/PNG. Session lifecycle audits are allowed; all business audits remain exact. |
 | Legacy compatibility | Three exact receipts recovered | Unmodified refreshed main creates confirmation/move/change-acceptance originals, then this code recovers them unchanged and refuses a new request missing complete preparation. Private original file hash is retained in metadata. |
 | Build, lint and type check | Passed | Compiled Next application and registered route exports; no added dependencies. |
@@ -34,6 +36,10 @@ Browser captures include [desktop hold](desktop-appointment-hold-1440.png), [102
 The initial positive resolution/start case exposed the stored pack flag: acknowledgements made while a policy hold existed could leave the SQL attendance guard blocked after a valid resolution. Start now reconciles that derived flag only after all current server checks, within the same transaction and existing SQL dispatch guard. The corrected positive test proves independent crew acknowledgement, controlled amendment/reissue, fresh resolution, actual start, Current capture authority and unchanged earlier issued bytes.
 
 The first renewed-hold fixture overlapped a seeded reservation; its proposed finish was corrected to remain outside that reservation. An interrupted turn terminated the private task cluster and incomplete race run. PostgreSQL recovered its existing data; interrupted cases are rerun and are not counted as complete evidence. The isolated positive case then passed without skips. Initial type checking caught the inherited Playwright web-server union; the dedicated config now declares its owned compiled launcher explicitly. Initial documentation checks caught a missing evidence link/component viewport headings and an overlong copied instruction block; all were corrected before the passing checks. The first legacy-receipt snapshot comparison included new Session login audits; the proof now preserves all earlier audit rows while allowing those additional login records, without excluding business audit changes.
+
+The first PR CI head exposed a real projection omission: appointment detail included `can_resolve_policy`, while the batched planner summary did not. The unchanged quality equivalence assertion failed. The corrected summary uses the same current scoped read duties and scheduler/actual-owner rule in the existing batched query; both original quality-planner cases pass. No assertion or performance budget was weakened.
+
+The first optional local HTTP invocation preceded listener readiness (ten transport refusals). After readiness, eight of ten passed; the remaining two required the existing persistence-proof setup files, which had not yet been created. Those incomplete setup attempts are not claimed as passing HTTP/restart evidence. The independently completed Step 4 real-process restart above uses its own private exact originals.
 
 ## Activation and limits
 

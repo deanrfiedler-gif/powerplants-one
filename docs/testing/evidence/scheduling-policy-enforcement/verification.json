@@ -46,7 +46,7 @@
     "src/scheduling/components/client/policy-holds.client.tsx": "b4804ca0a3c38a0d2c5c0639313e2c14f5fa55f439021e6bcef8b2634ae07599",
     "src/scheduling/components/client/policy-impact.client.tsx": "b7101d492107c5f1c17bd31db84216f7e9ad232a195f058f5eeedf5988f2836d",
     "src/scheduling/components/client/policy-resolution.client.tsx": "568f7daea5b855e83d9320a69800d4401e6e6653bf66c627b85297fb87848926",
-    "src/scheduling/planner.ts": "44517d5e3a148ac3b10ec9b6798fffcd27ff2d25204371f7ddae8fd4b45d5891",
+    "src/scheduling/planner.ts": "6f379d89f912cea0bbcdfeb08d0bb516b87a889587cec1bb09818254839fe805",
     "src/scheduling/policy-authority.ts": "b4d93a426a5ba89e1bd57fff89f648526bc78913ab26825b947d34de2bf3ded5",
     "src/scheduling/policy-commands.ts": "be6e128f15ac2bdf1f468bcc9acf81c5d1b6e012014de86ab86d8c9034bf6663",
     "src/scheduling/policy-hold-reads.ts": "8dac076ebb2466a8ab5af90d91eec4077f1a90b2c86e11084dc64ada7508ea73",
@@ -96,7 +96,12 @@
     "restart-verify.log": "01f82f7a46cb9180f10a2e4b14291b3b95ec224e742846649cd5b8dca2226689",
     "legacy-main-write.log": "e049164d5f99f56755e3725b8c65301ceaaa0c18366e7c1309801febccb73646",
     "legacy-step4-verified.log": "aead32872a895a2d040053258c9e32134abaf7cef1b5b36660d66a0fc81c587b",
-    "enforcement-reviewed.log": "9e740f50ecb698b3563dd7b6e57e5ca65042efaad0b8531b0d2da492226138ab"
+    "enforcement-reviewed.log": "9e740f50ecb698b3563dd7b6e57e5ca65042efaad0b8531b0d2da492226138ab",
+    "quality-planner-corrected.log": "c6b3d429a2f347e0c19f97ef62961530e61abd2db827e5a366343362a5d97b0f",
+    "browser-regressions.log": "e89eff1b00c33d5c079b73b4573031c701b302a39a646923179f2380a0140446",
+    "browser-regression-results.json": "8738315329736f6294f4b86e5f65dc19f0e976a505c496663d898c00a5a1a4cb",
+    "build-summary-correction.log": "8cd2b582bbdee9e7094358c56327c9460e5b5d4ab1991800a0e88b587270546e",
+    "lint-summary-correction.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   },
   "capture_sha256": {
     "desktop-appointment-hold-1024.png": "3df7c1999323e0158982c607ed48b03cc363ad1036cc008713de66302290953e",
@@ -155,6 +160,20 @@
       "fail": 0,
       "skip": 0,
       "duration_ms": 79624.8255
+    },
+    "quality_planner_correction": {
+      "pass": 2,
+      "fail": 0,
+      "skip": 0,
+      "duration_ms": 25217.4679
+    },
+    "compiled_existing_journeys": {
+      "startTime": "2026-09-30T10:03:41.679Z",
+      "duration": 354320.64400000003,
+      "expected": 55,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
     }
   },
   "limits": [
@@ -162,5 +181,11 @@
     "Independent visual, owner, physical-device and accessibility acceptance remain pending",
     "Full PT-28/PT-30 and existing PT-27 work remain open",
     "CI and broader regression completion are reported separately against the PR head"
-  ]
+  ],
+  "initial_ci_correction": {
+    "job": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/36700333183/job/109838007821",
+    "defect": "Planner summary omitted can_resolve_policy present on appointment detail; existing equivalence assertion correctly failed",
+    "correction": "Project identical scoped policyReads and scheduler/actual-owner capability predicate in the batched query; preserve assertion and query batching"
+  },
+  "pull_request": "https://github.com/deanrfiedler-gif/powerplants-one/pull/331"
 }
