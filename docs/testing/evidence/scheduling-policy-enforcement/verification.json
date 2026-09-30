@@ -76,7 +76,8 @@
     "tests/http/planner.test.ts": "7e3f5943b24577adeb5adb88e25c56fe7cf892e5fc1c2102eb8b48a7c174d82e",
     "tests/scheduling-browser/enforcement.spec.ts": "e1c276804253c66d41157b72b8bcf0beb0393dde93491273ab27a0c8e12bd10f",
     "tests/unit/policy-activation.test.ts": "eeb6f91b7561ab85848f3cef6591f591b235c667e7818207870e067a4c6a3e97",
-    "src/components/business-ui.tsx": "37167424c94b2a95fac014e53b5fb6f893dc8d676d7c928045e65e4495c072e5"
+    "src/components/business-ui.tsx": "37167424c94b2a95fac014e53b5fb6f893dc8d676d7c928045e65e4495c072e5",
+    "tests/browser/policy-impact.spec.ts": "1161cc94630e6630b4906b587c3a27b3ca53731915a02cd59026cc3d39004202"
   },
   "private_log_sha256": {
     "policy-full.log": "063a8c692e4fbcf588c84b27ed0d0bb5f78f092c907a3cd3701d04218bd0e927",
@@ -116,7 +117,17 @@
     "focus-reproduction.log": "131d2e9bceb8b06fcc170c34c321ab822f2b43ec441151bcaa1279fb48a8d1dd",
     "build-storage-focus.log": "3e5d662a1b9ca7d5127d9be6bc408acc2256302fccd4ee744d96c1c9f44693f8",
     "lint-storage-focus.log": "144b8ef738aebf80f098340cd52aae1ca2b3b236fc5859b5d6806e5ec9ac9f64",
-    "studio-storage-focus.log": "aa13bc1da483c5fb4d11282f1747de6ca79bef345c378e24c5f7bdfa904f4d4d"
+    "studio-storage-focus.log": "aa13bc1da483c5fb4d11282f1747de6ca79bef345c378e24c5f7bdfa904f4d4d",
+    "identity-baseline-reproduced.log": "6fb013941c3e37fe4d3a1aa2bcea92fed975e45c094fdcaebe32b8558801cbc5",
+    "identity-baseline-results.json": "7cfd1e1d5a1097cb6372ec312e13731eb53ef77963da0d57279b9fcfe2321643",
+    "identity-baseline-synchronised.log": "b0a9dcdf64326350f1253494843e3b3130e207986fa9bd8858e03ba91df73452",
+    "identity-baseline-synchronised-results.json": "ce89153fff65902719ddf40c036e3515e944d93042c7705a9e5ede63a1bbdaa2",
+    "identity-current-compiled.log": "a7485433e5c87e9f465e7cdcae7c0e2f4a684b454414d28cb522e2d59272e314",
+    "identity-current-compiled-results.json": "af4a7e2750defded7ce4fe4f35c8c821b1409b75155259ad0de1d4b377383ed1",
+    "identity-test-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "ci-final-quality.log": "f602de7b3f60b77e9b9aac8c0caac3d4ce55766a3a9db8c7452b089976146567",
+    "ci-final-compiled.log": "d6fbae73e106ae413b877242bcae0a19e0112828624823da2c1a7d015ccdd9aa",
+    "ci-final-browser-failure.log": "e54567eece9991f09364c24adf42c3fa71880821c9ff723a559c6695af1ba8cf"
   },
   "capture_sha256": {
     "desktop-appointment-hold-1024.png": "3df7c1999323e0158982c607ed48b03cc363ad1036cc008713de66302290953e",
@@ -229,6 +240,42 @@
       "fail": 0,
       "skip": 0,
       "duration_ms": 155549.1488
+    },
+    "identity_synchronised_baseline": {
+      "startTime": "2026-09-30T11:40:28.157Z",
+      "duration": 19527.061,
+      "expected": 4,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "identity_synchronised_compiled": {
+      "startTime": "2026-09-30T11:41:28.787Z",
+      "duration": 89789.957,
+      "expected": 5,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "ci_application_at_dc26137": {
+      "head": "dc26137ef8f3363ebe80dab8a7bca2190e253341",
+      "units": {
+        "pass": 566,
+        "fail": 0
+      },
+      "compiled_browser": {
+        "pass": 524,
+        "skip": 79,
+        "fail": 0
+      },
+      "step4_browser": {
+        "pass": 2,
+        "skip": 0,
+        "fail": 0
+      },
+      "restart_preserved_tables": 32,
+      "job": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/36704515818/job/109851488785",
+      "limit": "Completed component results; this head also exposed the separately documented identity-test race. Final-head CI is reported on the PR."
     }
   },
   "limits": [
@@ -247,5 +294,21 @@
     "job": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/36701618519/job/109842139524",
     "defect": "Automatic preparation errors stole native date editing focus; deterministic regression failed against compiled 6f1e01c",
     "correction": "Only automatic preparation reads opt out of error focus; existing keyboard and shared control assertions and deadlines retained"
+  },
+  "identity_transition_correction": {
+    "job": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/36704515852/job/109851490561",
+    "observed_head": "dc26137ef8f3363ebe80dab8a7bca2190e253341",
+    "baseline": "a9cead152a99a89be1476284e7c5d6fc4c462f5f",
+    "baseline_application_diff": false,
+    "negative_control": {
+      "startTime": "2026-09-30T11:39:09.638Z",
+      "duration": 20905.402,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "control": "Original 403 assertion retained in a private test copy; only a 1500 ms POST transport delay added. Original main application and original tracked test remain unchanged.",
+    "correction": "Wait for successful local-session response, returned displayed identity and aria-busy=false before the unchanged scope assertion. No original assertion, timeout or threshold removed or changed."
   }
 }

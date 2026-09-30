@@ -111,9 +111,25 @@ test("failed refresh and identity changes clear prior analysis, with no publish 
     .getByRole("button", { name: "Change identity", exact: true })
     .click();
   await page.getByLabel("Identity", { exact: true }).selectOption("systems");
+  // Clearing the old page happens before the session cookie changes. Verify
+  // the completed identity transition before asserting the new server scope.
+  const identityChanged = page.waitForResponse(
+    (response) =>
+      new URL(response.url()).pathname === "/api/v1/local-session" &&
+      response.request().method() === "POST",
+  );
   await page
     .getByRole("button", { name: "Use this identity", exact: true })
     .click();
+  const changed = await identityChanged;
+  expect(changed.status()).toBe(200);
+  const current = await changed.json();
+  const identity = page.getByRole("region", {
+    name: "Local demonstration identity",
+    exact: true,
+  });
+  await expect(identity.locator("strong").first()).toHaveText(current.display_name);
+  await expect(identity).toHaveAttribute("aria-busy", "false");
   await expect(
     page.getByRole("heading", { name: "Bookings requiring review" }),
   ).toHaveCount(0);
