@@ -64,16 +64,23 @@ test("compiled Step 4: stale preparation, immediate field hold, controlled cance
     .getByRole("button", { name: "Review current booking policy" })
     .click();
   await expect(form.getByText(/Publication head 2/)).toBeVisible();
-  // Invalid intermediate intervals remain editable; only the save is unavailable.
-  await form
-    .getByLabel("Start (site time)", { exact: true })
-    .fill("2031-09-23T11:00");
+  // Automatic policy-read failures must not steal focus during native date editing.
+  const startControl = form.getByLabel("Start (site time)", { exact: true });
+  const finishControl = form.getByLabel("Finish (site time)", { exact: true });
+  const invalidStart = new Date(
+    Date.parse((await finishControl.inputValue()) + "Z") + 86400000,
+  )
+    .toISOString()
+    .slice(0, 16);
+  await startControl.fill(invalidStart);
+  await expect(
+    form.getByRole("alert").filter({ hasText: "Finish must follow start." }),
+  ).toBeVisible();
+  await expect(startControl).toBeFocused();
   await expect(
     form.getByRole("button", { name: "Save proposed move" }),
   ).toBeDisabled();
-  await expect(
-    form.getByLabel("Finish (site time)", { exact: true }),
-  ).toBeEnabled();
+  await expect(finishControl).toBeEnabled();
   await form.getByRole("button", { name: "Close proposal" }).click();
   await page.reload();
   await expect(page.getByText(/Responsible owner:/).first()).toBeVisible();

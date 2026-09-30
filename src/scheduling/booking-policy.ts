@@ -1,7 +1,7 @@
 import type { QueryClient } from "../platform/permissions";
 import type { Principal } from "../platform/identity";
 import { AppError } from "../platform/errors";
-import { loadPolicyChain } from "./policy-persistence";
+import { loadPolicyChain, policyStorageAvailable } from "./policy-persistence";
 import {
   POLICY_FAMILY,
   policyContent,
@@ -28,11 +28,7 @@ export async function bookingPolicy(
   // Populated upgrade proofs run this code against pre-publication schemas.
   // With no publication storage there can be no successor or durable hold.
   // Never fall back if the storage exists but its lineage is incomplete/corrupt.
-  const hasPublication = (
-    await c.query(
-      "SELECT to_regclass('ppo.scheduling_policy_heads') AS relation",
-    )
-  ).rows[0].relation;
+  const hasPublication = await policyStorageAvailable(c);
   const chain = hasPublication
     ? await loadPolicyChain(c, p.workspace_id)
     : await legacyRoot(c, p);

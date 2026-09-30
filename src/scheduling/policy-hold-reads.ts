@@ -6,6 +6,7 @@ import { visibleActivity } from "../activities/activities";
 import { envelope } from "../shared/reads";
 import { object } from "../shared/validation";
 import { visibleAppointment } from "./planner";
+import { policyStorageAvailable } from "./policy-persistence";
 import { policyImpactHolds } from "./policy-holds";
 
 export async function readPolicyHolds(
@@ -18,14 +19,7 @@ export async function readPolicyHolds(
     await c.query("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ");
     if (activityId) await visibleActivity(c, p, activityId);
     else await requireCapability(c, p, "schedule.read");
-    if (
-      !(
-        await c.query(
-          "SELECT to_regclass('ppo.scheduling_policy_impacts') AS relation",
-        )
-      ).rows[0].relation
-    )
-      return envelope([]);
+    if (!(await policyStorageAvailable(c))) return envelope([]);
     const rows = (
       await c.query(
         `SELECT DISTINCT i.appointment_id FROM ppo.scheduling_policy_impacts i

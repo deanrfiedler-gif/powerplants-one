@@ -1383,6 +1383,11 @@
           "id": "field-timer-host",
           "label": "Field timer host",
           "description": "Real assigned-visit fixture in tests/browser/field-timer.spec.ts: running, paused, stopped and original-action recovery at desktop/phone widths. Not an isolated catalogue fixture."
+        },
+        {
+          "id": "background-error",
+          "label": "Background validation error",
+          "description": "Visible alert and retry preserve focus while automatic booking-policy preparation checks edited fields. Explicit command failures still focus their error notice."
         }
       ],
       "implementation": [

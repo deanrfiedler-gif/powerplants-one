@@ -473,7 +473,7 @@ function BookingForm({
         </div>
       )}
       {mode !== "request" && <section aria-label="Booking policy preparation">
-        <ReadState {...policyPreparation} retry={policyPreparation.reload} />
+        <ReadState {...policyPreparation} retry={policyPreparation.reload} focusOnError={false} />
         {policyPreparation.data && !policyPreparation.loading && !policyPreparation.error && <p>
           Booking policy: {policyPreparation.data.policy.name} · v{policyPreparation.data.policy.version} · Publication head {policyPreparation.data.family_head_version}.
           {basis.status !== "Proposed" && " The saved policy pin is retained; the proposed interval is also checked against the applicable published policy."}
@@ -912,7 +912,7 @@ export function RequestDecision({
         (a.actions.can_manage || request.created_by === p.actor_id) && (
           <>
             <ErrorNotice error={command.error} />
-            <ReadState {...policyPreparation} retry={policyPreparation.reload} />
+            <ReadState {...policyPreparation} retry={policyPreparation.reload} focusOnError={false} />
             <button type="button" className="secondary" onClick={policyPreparation.reload}>Review current booking policy</button>
             <Field
               name={`decision-${request.id}`}

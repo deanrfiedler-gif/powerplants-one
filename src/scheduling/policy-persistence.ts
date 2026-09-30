@@ -2,6 +2,7 @@
 // command receipts. Callers own a transaction and supply independently loaded server
 // records; Step 3 must establish complete visibility/population and current authority.
 import type { QueryClient } from "../platform/permissions";
+import { AppError } from "../platform/errors";
 import { canonical } from "../platform/operations";
 import { invalid } from "../shared/validation";
 import {
@@ -36,6 +37,26 @@ function restored(row: {
   equal(row.canonical_content, canonical(row.content), "canonical_bytes");
   equal(row.content_hash, digest(row.content), "stored_hash");
   return { ...row.content, content_hash: row.content_hash };
+}
+
+// Only genuinely older schemas may use root-only compatibility. Missing tables
+// in an installed publication schema are damage, never evidence of old authority.
+export async function policyStorageAvailable(c: QueryClient) {
+  const row = (
+    await c.query(`SELECT
+    to_regclass('ppo.scheduling_policy_heads') AS heads,
+    to_regclass('ppo.scheduling_policy_impacts') AS impacts,
+    to_regclass('ppo.scheduling_policy_families') AS family,
+    EXISTS(SELECT 1 FROM ppo.seed_receipts WHERE version>=53) AS installed`)
+  ).rows[0];
+  if (!row.heads && !row.impacts && !row.family && !row.installed) return false;
+  if (!row.heads || !row.impacts)
+    throw new AppError(
+      422,
+      "PolicyUnavailable",
+      "Installed scheduling policy storage is incomplete. Restore current authority before continuing.",
+    );
+  return true;
 }
 
 /** Read the complete saved chain, checking each publication against its original

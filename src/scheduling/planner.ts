@@ -1,4 +1,5 @@
 import { canResolvePolicyImpact, policyReads } from "./policy-authority";
+import { policyStorageAvailable } from "./policy-persistence";
 import { policyImpactHolds } from "./policy-holds";
 import { bookingPolicy } from "./booking-policy";
 import { fitsWorkingInterval, matchesConfirmedContact, visitFitsPolicy } from "./booking-rules";
@@ -1433,7 +1434,7 @@ export async function scheduleSummaries(c: QueryClient, p: Principal, ids: strin
   ))
     policies.set(id, await schedulingPolicy(c, p, id, false));
   const impacts = new Map<string, Awaited<ReturnType<typeof policyImpactHolds>>>();
-  if ((await c.query("SELECT to_regclass('ppo.scheduling_policy_impacts') AS relation")).rows[0].relation) {
+  if (await policyStorageAvailable(c)) {
     const affected = (await c.query("SELECT DISTINCT appointment_id FROM ppo.scheduling_policy_impacts WHERE workspace_id=$1 AND appointment_id=ANY($2::uuid[])", [p.workspace_id, permitted])).rows;
     for (const row of affected) impacts.set(row.appointment_id, await policyImpactHolds(c, p, row.appointment_id));
   }

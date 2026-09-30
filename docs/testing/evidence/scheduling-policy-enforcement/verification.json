@@ -34,25 +34,25 @@
     "src/components/activity-screens.tsx": "fea6c153a53ab3df036fcd402a7e4601f505ece14387508538b95f15b07ec591",
     "src/components/field-screens.tsx": "73dfa6dc949485ccc656efbd13ce98d3a9a1c21211a005b71321007c2ec8063b",
     "src/components/work-order-screens.tsx": "18546b6c6f99be7cf23129458a9e4a5cb133638451d50dc37a8705596aecb8bf",
-    "src/development/component-examples.tsx": "5da6e27950d3ebd56badd0edc7338f8890b35a178efb4f0f3b7cd4751759f9a1",
+    "src/development/component-examples.tsx": "3605df5be3340fcba3a6cfeb0d9e749410bf72739d2653a6d2e19d3ec2ff4519",
     "src/development/component-fixtures.ts": "3579da922cb82d83b62324bad4aef9229caaad69ad310ccacf1c866b694f5985",
     "src/documents/context.ts": "8ea2870a80a703faf4456fce878126fb2fe8492722f910224837b6c01881bca5",
     "src/documents/packs.ts": "a7a70e856a4616ae9d9b6633461a9f1639abff8f5b23a5c6999703d6d069f77d",
     "src/field/reads.ts": "09b72c57ce72cc5e6793535ed9b0260c9e21e1a845edeab549381c7a7ea03f4e",
     "src/field/start.ts": "02372cd3f15d86630b1a5d6ad3600caed3bd6283aedab715e850a8ed4c1f4cfe",
     "src/scheduling/booking-journal.ts": "831608e486d874dfd1f7bedfa3a197eba5dbdd66f728c445ebe56e821c6c8e6a",
-    "src/scheduling/booking-policy.ts": "afed72c9e9b8a1ea2d5f7cfc6f8931050fcb1d09950357ef3d40e8bd61c88876",
-    "src/scheduling/components/client/planner-screens.client.tsx": "99741534e50c1114f709a8847b6b4dec78c6b1044db8fe703500813b7fcaba1e",
+    "src/scheduling/booking-policy.ts": "b8bc23cafda807932b85253f703317634c3988677fe6f7bfe70b64e41771f28f",
+    "src/scheduling/components/client/planner-screens.client.tsx": "b4f5f3a3124a58223eda600c80cbaefc6f3462db5491e5d71c55fd5a31e2130f",
     "src/scheduling/components/client/policy-holds.client.tsx": "b4804ca0a3c38a0d2c5c0639313e2c14f5fa55f439021e6bcef8b2634ae07599",
     "src/scheduling/components/client/policy-impact.client.tsx": "b7101d492107c5f1c17bd31db84216f7e9ad232a195f058f5eeedf5988f2836d",
     "src/scheduling/components/client/policy-resolution.client.tsx": "568f7daea5b855e83d9320a69800d4401e6e6653bf66c627b85297fb87848926",
-    "src/scheduling/planner.ts": "6f379d89f912cea0bbcdfeb08d0bb516b87a889587cec1bb09818254839fe805",
+    "src/scheduling/planner.ts": "81e64a5dffd05c1424081daa4e1f3657ce7a85ad0865a803aef84c204a07ec6e",
     "src/scheduling/policy-authority.ts": "b4d93a426a5ba89e1bd57fff89f648526bc78913ab26825b947d34de2bf3ded5",
     "src/scheduling/policy-commands.ts": "be6e128f15ac2bdf1f468bcc9acf81c5d1b6e012014de86ab86d8c9034bf6663",
-    "src/scheduling/policy-hold-reads.ts": "8dac076ebb2466a8ab5af90d91eec4077f1a90b2c86e11084dc64ada7508ea73",
-    "src/scheduling/policy-holds.ts": "68ff8a04f87aa2d5ec55052bbc5fc696ea1c927bd5e5d9b7166f8625037748eb",
+    "src/scheduling/policy-hold-reads.ts": "4730cfcfb08593d9bffdb60d98534d2e9f24431e5b41d58b386645e8c425004f",
+    "src/scheduling/policy-holds.ts": "351aeabdb2bf2eb0b280138538d8a797e4230dd088da87d5fd350630b9717631",
     "src/scheduling/policy-http.ts": "135b83c75efb9c15306b7979a8a5c0b0d6922956ca48979e0dd93a16c4e09474",
-    "src/scheduling/policy-persistence.ts": "cb3628f8ad3bb33da410a3685b824e9cedc78d0d4a862f8119fbd1e8a677b9cc",
+    "src/scheduling/policy-persistence.ts": "6cadf0325256466d9fe60e075f28eb291d35dc6dcf9f12f5e7458f2783af3c19",
     "src/scheduling/policy-population.ts": "982180a7c585bc0f02729a5b6996bfadc8e05a6326cd431afe86f08261a02a8d",
     "src/scheduling/policy-resolution.ts": "2b32129b85aa3cdbbea04399053b6227334b9a6a8ee876ce9a0513266b72a01f",
     "src/scheduling/validation.ts": "3d1cd97c2f1418ba86b9e0d2c4665a4c885c937b3738284055517619418c95f0",
@@ -65,7 +65,7 @@
     "tests/database/planner.test.ts": "a995939b545bb848f072aaacadd98bfc95f15ddcbcd4e49490c8bdab05b642bc",
     "tests/database/policy-concurrency.test.ts": "2f70c6387debd148598afc5699a7ee609e7f2fbe2f03d37226083fd454bd8b1a",
     "tests/database/policy-dispositions.test.ts": "7aa420fbcf1ab8cf1504290cb564265a3fff6ff8adce1d33d34e46d25e20aacd",
-    "tests/database/policy-enforcement.test.ts": "d5c8e4490c261829dda5f27083d35d08f54308a20be9c7f8ccde5bea5f06a1e7",
+    "tests/database/policy-enforcement.test.ts": "a721e445720f1e49e05faeb2d342103ac58b42d32dbfff9c852d7064cd840d2c",
     "tests/database/scheduling-workspaces.test.ts": "7b2a3acd6f68e14a4edddf3a91ead66de0abf94e0659b0a91781c99d08644563",
     "tests/demo/database.test.ts": "0e4f8a321340c08a34a6135b42e06030db980cb919e6f39b8356a49f7b68b7b4",
     "tests/helpers/field-http.ts": "98d6c13a6a2c2d9b2d0b009c3bace610a13a8292f0652eab2d195bc8ca6bf77f",
@@ -74,8 +74,9 @@
     "tests/helpers/policy-concurrency.ts": "1e8129e50b6cb1c3811409b58a51015f7d1edf7fd797d9ea408c905f78e44a6f",
     "tests/helpers/policy-http-harness.ts": "73a14dd02506cf4254eeec651ed251b36b6ece57e4d4e402af4760c6fe27ced2",
     "tests/http/planner.test.ts": "7e3f5943b24577adeb5adb88e25c56fe7cf892e5fc1c2102eb8b48a7c174d82e",
-    "tests/scheduling-browser/enforcement.spec.ts": "64e115d8be2f23a84cb9378f6c999f5f25c50d20724f679a7cd07ea1d277389b",
-    "tests/unit/policy-activation.test.ts": "eeb6f91b7561ab85848f3cef6591f591b235c667e7818207870e067a4c6a3e97"
+    "tests/scheduling-browser/enforcement.spec.ts": "e1c276804253c66d41157b72b8bcf0beb0393dde93491273ab27a0c8e12bd10f",
+    "tests/unit/policy-activation.test.ts": "eeb6f91b7561ab85848f3cef6591f591b235c667e7818207870e067a4c6a3e97",
+    "src/components/business-ui.tsx": "37167424c94b2a95fac014e53b5fb6f893dc8d676d7c928045e65e4495c072e5"
   },
   "private_log_sha256": {
     "policy-full.log": "063a8c692e4fbcf588c84b27ed0d0bb5f78f092c907a3cd3701d04218bd0e927",
@@ -101,7 +102,21 @@
     "browser-regressions.log": "e89eff1b00c33d5c079b73b4573031c701b302a39a646923179f2380a0140446",
     "browser-regression-results.json": "8738315329736f6294f4b86e5f65dc19f0e976a505c496663d898c00a5a1a4cb",
     "build-summary-correction.log": "8cd2b582bbdee9e7094358c56327c9460e5b5d4ab1991800a0e88b587270546e",
-    "lint-summary-correction.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    "lint-summary-correction.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "affected-regressions.log": "15745af549dc20c1130e6fab93718fc25fdf9adc97422b8cd1b17f6d6c5e65d6",
+    "populated-upgrades.log": "269b0d6226f9f44d788d6d075d8a509ce29e4d0d3d49b4ddf87deb13a54f6e73",
+    "http-regressions-complete.log": "6b62a634a0eee472a945b80d55d807d0317b378897d7243d4acba5f38d4a9e81",
+    "http-prescribed-write.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "http-prescribed-verify.log": "f0af05582fef30ec079cbe2a9868d80d2399f81df8974ad33da984d6bc42cc49",
+    "storage-compatibility.log": "34717e4e957f0686a2ba68b45938d5fdd58143f6c1601ac7b5a126326c1e16e7",
+    "browser-final.log": "bd23d0a27f894fee05c65a1e9824f1118a93d6851617fad641e33d33c77fc010",
+    "browser-final-results.json": "151bd8f3c58c9b80f14fc0600ce83303e7072ef05ca45c96973a451856edb0f4",
+    "keyboard-catalogue.log": "61bc72555f02bec61de6db8ce0a6d4ddc83fd9906de7adbae40f114d08821651",
+    "keyboard-catalogue-results.json": "5cb4b13070c28c89cc388aa92d0a41b809ce9b81916a4f3f2716078f73f4930b",
+    "focus-reproduction.log": "131d2e9bceb8b06fcc170c34c321ab822f2b43ec441151bcaa1279fb48a8d1dd",
+    "build-storage-focus.log": "3e5d662a1b9ca7d5127d9be6bc408acc2256302fccd4ee744d96c1c9f44693f8",
+    "lint-storage-focus.log": "144b8ef738aebf80f098340cd52aae1ca2b3b236fc5859b5d6806e5ec9ac9f64",
+    "studio-storage-focus.log": "aa13bc1da483c5fb4d11282f1747de6ca79bef345c378e24c5f7bdfa904f4d4d"
   },
   "capture_sha256": {
     "desktop-appointment-hold-1024.png": "3df7c1999323e0158982c607ed48b03cc363ad1036cc008713de66302290953e",
@@ -174,6 +189,46 @@
       "skipped": 0,
       "unexpected": 0,
       "flaky": 0
+    },
+    "compiled_step4_final": {
+      "startTime": "2026-09-30T10:39:16.576Z",
+      "duration": 41819.868,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "compiled_keyboard_catalogue": {
+      "startTime": "2026-09-30T10:40:07.492Z",
+      "duration": 345925.556,
+      "expected": 11,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "affected_database_regressions": {
+      "pass": 164,
+      "fail": 0,
+      "skip": 0,
+      "duration_ms": 2711289.8652
+    },
+    "populated_upgrades": {
+      "pass": 43,
+      "fail": 0,
+      "skip": 0,
+      "duration_ms": 663163.2385
+    },
+    "compiled_http": {
+      "pass": 10,
+      "fail": 0,
+      "skip": 0,
+      "duration_ms": 24969.0364
+    },
+    "storage_compatibility": {
+      "pass": 18,
+      "fail": 0,
+      "skip": 0,
+      "duration_ms": 155549.1488
     }
   },
   "limits": [
@@ -187,5 +242,10 @@
     "defect": "Planner summary omitted can_resolve_policy present on appointment detail; existing equivalence assertion correctly failed",
     "correction": "Project identical scoped policyReads and scheduler/actual-owner capability predicate in the batched query; preserve assertion and query batching"
   },
-  "pull_request": "https://github.com/deanrfiedler-gif/powerplants-one/pull/331"
+  "pull_request": "https://github.com/deanrfiedler-gif/powerplants-one/pull/331",
+  "second_ci_correction": {
+    "job": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/36701618519/job/109842139524",
+    "defect": "Automatic preparation errors stole native date editing focus; deterministic regression failed against compiled 6f1e01c",
+    "correction": "Only automatic preparation reads opt out of error focus; existing keyboard and shared control assertions and deadlines retained"
+  }
 }

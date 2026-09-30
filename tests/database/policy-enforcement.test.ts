@@ -2,7 +2,10 @@ import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { after, beforeEach, test } from "node:test";
 import { closeDatabase, transaction } from "../../src/platform/database";
-import { prepareBookingPolicy } from "../../src/scheduling/booking-policy";
+import {
+  bookingPolicy,
+  prepareBookingPolicy,
+} from "../../src/scheduling/booking-policy";
 import { publishSchedulingPolicy } from "../../src/scheduling/policy-commands";
 import {
   readPolicyImpact,
@@ -153,8 +156,14 @@ test("Step 4 selection uses visit boundaries and immutable head evidence; stale 
     }),
     code("OperationConflict"),
   );
-  const futureReady = await transaction(c => dispatchReadiness(c, b.p, b.a.id));
-  assert(futureReady.reasons.includes("The booked scheduling policy is not yet effective for actual attendance."));
+  const futureReady = await transaction((c) =>
+    dispatchReadiness(c, b.p, b.a.id),
+  );
+  assert(
+    futureReady.reasons.includes(
+      "The booked scheduling policy is not yet effective for actual attendance.",
+    ),
+  );
   const historic = (await readAppointment(b.p, id("a8"))).items[0];
   assert.equal(historic.scheduling_policy_id, id("a0"));
   assert.equal(historic.policy.id, id("a0"));
@@ -258,7 +267,10 @@ test("Step 4 publication winning real graph lock refuses actual and delayed offl
   assert.equal(started.status, "rejected");
   if (started.status === "rejected")
     assert.equal(started.reason.code, "StartBlocked");
-  assert.equal((await listMyJobs(p)).items.find(x => x.id === job.id)!.dispatch_hold, true);
+  assert.equal(
+    (await listMyJobs(p)).items.find((x) => x.id === job.id)!.dispatch_hold,
+    true,
+  );
   for (let i = 0; i < 2; i++) {
     const result = await syncBatch(p, { operations: [original] });
     assert.equal(result.outcomes[0].state, "ReviewRequired");
@@ -436,4 +448,30 @@ test("Step 4 controlled amendment, independent crew acknowledgements and fresh r
     "Current",
   );
   assert.deepEqual(await readBundle(p, oldManifest), oldBytes);
+});
+
+test("Step 4 damaged installed storage cannot fall back to legacy booking or clear durable holds", async () => {
+  const b = await booking(2);
+  await transaction(async (c) => {
+    // Transaction-local catalogue damage; the original names are restored
+    // before commit (and rollback on error). No constraint or trigger is disabled.
+    await c.query(
+      "ALTER TABLE ppo.scheduling_policy_heads RENAME TO step4_test_heads",
+    );
+    await c.query(
+      "ALTER TABLE ppo.scheduling_policy_impacts RENAME TO step4_test_impacts",
+    );
+    await assert.rejects(bookingPolicy(c, b.p, b.a), code("PolicyUnavailable"));
+    await assert.rejects(
+      policyImpactHolds(c, b.p, b.a.id),
+      code("PolicyUnavailable"),
+    );
+    await c.query(
+      "ALTER TABLE ppo.step4_test_heads RENAME TO scheduling_policy_heads",
+    );
+    await c.query(
+      "ALTER TABLE ppo.step4_test_impacts RENAME TO scheduling_policy_impacts",
+    );
+  });
+  assert.deepEqual(await prepareBookingPolicy(b.p, b.a.id), b.preparation);
 });

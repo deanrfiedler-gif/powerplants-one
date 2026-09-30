@@ -596,7 +596,7 @@ function FeedbackExample({ state }: { state: string }) {
   const [retried, setRetried] = useState(false);
   const error = useMemo(
     () =>
-      state === "error"
+      ["error", "background-error"].includes(state)
         ? {
             message:
               "Example connection failed. Your previously loaded details remain available.",
@@ -623,6 +623,7 @@ function FeedbackExample({ state }: { state: string }) {
         loading={state === "loading"}
         error={retried ? null : error}
         retained={state === "error"}
+        focusOnError={state !== "background-error"}
         retry={() => setRetried(true)}
       />
       {state === "empty" && (

@@ -52,3 +52,5 @@ The post-merge closure correction uses interval intersection in the display time
 The `policy-hold` catalogue fixture keeps the original appointment and reservation visible and names a published scheduling hold. It does not simulate resolution authority. The host prepares the proposed interval using exact policy/published-head evidence; the server rechecks every save. Controlled moves retain the historic pin. New holds and stale resolutions remain distinct from customer contact, preparation and pack acknowledgement.
 
 Review policy preparation and impact reason/owner/publication at desktop and 390/320 px. Shared Button, fields, ReadState and ErrorNotice retain their contracts; legacy planner buttons remain an existing exception. There is no issued Step 4 mockup. Owner visual/device acceptance is pending. See `docs/testing/evidence/scheduling-policy-enforcement/README.md` for actual functional evidence; no review fingerprint is granted.
+
+Automatic policy preparation must show failures without moving focus out of a date being edited. Save stays unavailable until complete preparation succeeds; explicit command errors retain normal focus and recovery.

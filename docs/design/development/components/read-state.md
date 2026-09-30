@@ -84,3 +84,8 @@ The Estimating workload and Saved estimates views use ErrorNotice with host load
 
 
 Scheduling Step 4 uses this shared control contract for online booking-policy preparation and impact resolution. Consumer bindings are maintained in components.json; exact immutable evidence is supplied by the host. Unknown results preserve the original command, freeze changed evidence and provide an unchanged retry. Loading or failed reads never indicate a cleared hold. Desktop/phone and owner visual acceptance remain pending.
+
+
+### Background policy preparation
+
+`ReadState` and `ErrorNotice` accept `focusOnError` (default `true`). Automatic booking-policy preparation passes `false`: errors remain visible alerts with their field explanations and retry, while native date editing keeps focus. Explicit command failures and resolution evaluation retain the default focus behavior. The `background-error` catalogue state uses the actual component. The Step 4 host test waits for an invalid interval response and verifies that focus stays on the editable start control; the existing complete keyboard journey remains required with unchanged assertions and deadlines. Owner/assistive-technology acceptance is pending.

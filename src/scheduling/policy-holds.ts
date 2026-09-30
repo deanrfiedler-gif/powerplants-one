@@ -2,6 +2,7 @@ import type { QueryClient } from "../platform/permissions";
 import type { Principal } from "../platform/identity";
 import { AppError } from "../platform/errors";
 import { visibleAppointment } from "./planner";
+import { policyStorageAvailable } from "./policy-persistence";
 import { freshPolicyImpactEvidence } from "./policy-resolution";
 import { canonical } from "../platform/operations";
 import { digest, equal } from "./policy-values";
@@ -25,27 +26,7 @@ export async function policyImpactHolds(
   id: string,
 ): Promise<PolicyHold[]> {
   const { a } = await visibleAppointment(c, p, id);
-  if (
-    !(
-      await c.query(
-        "SELECT to_regclass('ppo.scheduling_policy_impacts') AS relation",
-      )
-    ).rows[0].relation
-  ) {
-    if (
-      (
-        await c.query(
-          "SELECT to_regclass('ppo.scheduling_policy_heads') AS relation",
-        )
-      ).rows[0].relation
-    )
-      throw new AppError(
-        422,
-        "PolicyUnavailable",
-        "Published policy impact storage is unavailable.",
-      );
-    return [];
-  }
+  if (!(await policyStorageAvailable(c))) return [];
   const impacts = (
     await c.query(
       `SELECT i.*,u.display_name AS owner_name,

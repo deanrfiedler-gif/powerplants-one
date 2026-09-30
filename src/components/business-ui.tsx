@@ -77,7 +77,7 @@ function validationControl(field: string, scope: ParentNode = document) {
     });
   return matches.length === 1 ? matches[0] : undefined;
 }
-export function ErrorNotice({ error }: { error: unknown }) {
+export function ErrorNotice({ error, focusOnError = true }: { error: unknown; focusOnError?: boolean }) {
   const [targets, setTargets] = useState<Record<string, string>>({});
   const notice = useCallback((node: HTMLDivElement | null) => {
     if (node && error) {
@@ -86,9 +86,9 @@ export function ErrorNotice({ error }: { error: unknown }) {
         const control = validationControl(field, node.closest("form") ?? document);
         return control?.id ? [[field, control.id]] : [];
       })));
-      node.focus();
+      if (focusOnError) node.focus();
     }
-  }, [error]);
+  }, [error, focusOnError]);
   if (!error) return null;
   const e = error as Failure;
   return (
@@ -460,17 +460,19 @@ export function ReadState({
   error,
   retry,
   retained = false,
+  focusOnError = true,
 }: {
   loading: boolean;
   error: unknown;
   retry: () => void;
   retained?: boolean;
+  focusOnError?: boolean;
 }) {
   return (
     <>
       {loading && <p role="status">Loading permitted records…</p>}
       {retained && (loading || !!error) && <p role="status">Previously loaded details are retained. Current status is unconfirmed until loading succeeds.</p>}
-      <ErrorNotice error={error} />
+      <ErrorNotice error={error} focusOnError={focusOnError} />
       {!!error && (
         <button className="secondary" onClick={retry}>
           Retry loading
