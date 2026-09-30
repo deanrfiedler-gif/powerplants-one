@@ -69,6 +69,9 @@ export const bookingKeys = [
   "policy_version_id",
   "scheduling_policy_id",
   "scheduling_policy_version",
+  "scheduling_policy_hash",
+  "publication_head_version",
+  "selected_policy",
   "crew",
 ];
 export function bookingFields(r: Record<string, unknown>) {
@@ -81,6 +84,7 @@ export function bookingFields(r: Record<string, unknown>) {
     policy_version_id: uuid(r.policy_version_id, "policy_version_id"),
     scheduling_policy_id: uuid(r.scheduling_policy_id, "scheduling_policy_id"),
     scheduling_policy_version: version(r.scheduling_policy_version),
+    ...bookingPolicyFields(r),
     crew: crewFields(r.crew),
   };
 }
@@ -127,3 +131,14 @@ export function timezone(value: unknown) {
   }
   return value;
 }
+
+// Missing new fields are retained only so already accepted legacy originals can
+// recover their exact canonical receipt. New operations require complete preparation in the guard.
+export function bookingPolicyFields(r: Record<string, unknown>) {
+  return {
+    ...(r.scheduling_policy_hash === undefined ? {} : { scheduling_policy_hash: hashValue(r.scheduling_policy_hash) }),
+    ...(r.selected_policy === undefined ? {} : { selected_policy: reference(r.selected_policy) }),
+    ...(r.publication_head_version === undefined ? {} : { publication_head_version: version(r.publication_head_version) }),
+  };
+}
+import { hashValue, reference } from "./policy-values";

@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-**Owner:** Dean Fiedler. **Prepared:** 27 September 2026. **Status:** Concrete next synthetic implementation plan; publication is not implemented. Source review, visual review, owner acceptance and production readiness remain separate.
+**Owner:** Dean Fiedler. **Prepared:** 27 September 2026. **Status:** Historical sequence with Steps 1–3 merged; Step 4 coordinated enforcement contribution is tracked in the current handover. Source review, visual review, owner acceptance and production readiness remain separate.
 
 Traceability: SVC-04/05, DAT-06, NFR-08, D-015/D-020, TR-03/08, API-R04, API-C26, EVT-12, PT-08/09/28 and AT-35. Preserve all 78 parent IDs. [Current integration and evidence](scheduling-policy-impact-handover.md), [read-only decision](../decisions/scheduling-policy-impact-review.md), [publication design](../decisions/scheduling-policy-publication.md) and [consolidation allocation](../decisions/repository-consolidation.md) govern this continuation.
 
@@ -128,3 +128,7 @@ No deployment, live integration, production migration, business transaction or c
 ## Step 3 implementation checkpoint
 
 Step 2 is protected-integrated through #328 at `0d294d1d` after all 20 current-head checks passed. The [Step 3 handover](scheduling-policy-impact-handover.md#step-3-guarded-synthetic-command-contribution) and [verification](../testing/evidence/scheduling-policy-commands/README.md) now record additive 0054 and the actual internal authority/evaluation/proposal/review/publication/resolution handlers. The acceptance matrix above remains the full programme obligation; Step 3 command and serialization proof does not claim Step 4 holds or Step 5 browser publication acceptance. Live route activation remains unavailable until Step 4 controls are implemented and verified together. Installed 0053 and reserved 0051/0052 are unchanged.
+
+## Step 4 checkpoint — 30 September 2026
+
+Current main was refreshed to `a9cead1` after #330. The [decision](../decisions/scheduling-policy-publication.md#step-4-coordinated-enforcement-and-compatibility--30-september-2026), [handover](scheduling-policy-impact-handover.md) and [verification](../testing/evidence/scheduling-policy-enforcement/README.md) supersede dated implementation/activation passages above. The contribution uses existing schema through 0054 and dedicated duties; no allocated migration or issued source changes. The next interface increment remains Step 5. No merge/deployment or owner/production acceptance is included.

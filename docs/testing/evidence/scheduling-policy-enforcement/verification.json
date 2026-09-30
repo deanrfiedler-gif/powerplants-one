@@ -1,0 +1,166 @@
+{
+  "baseline": "a9cead152a99a89be1476284e7c5d6fc4c462f5f",
+  "branch": "codex/scheduling-step4",
+  "date": "2026-09-30",
+  "environment": {
+    "node": "24.21.0",
+    "npm": "11.19.0",
+    "postgres": "16.15",
+    "chrome": "154.0.8037.93",
+    "database": "ppo_synthetic_test",
+    "isolated_ports": [
+      55769,
+      55770
+    ]
+  },
+  "source_sha256_lf": {
+    ".github/workflows/application-compiled.yml": "090c5851b3e8edc7a36326704ae1eaaf055f1828858d7e42a556bb8b47f75cdf",
+    "playwright.scheduling.config.ts": "0045afd30d2dd3f4c0c3326227f6b1b5b17917f934bd8e8b4cd862c7e00fde9b",
+    "scripts/persistence-proof.ts": "fea1d4f6e1069327ae71fe8004b2dcac49911865c1e2216a977ea5a034a783f6",
+    "scripts/scheduling-policy-restart-proof.ts": "2debbb08203e714377a28d909e5cb76352e16b1adc5b683b0894d3c7980caa76",
+    "src/activities/components/client/my-work-dialogs.tsx": "9dda572304d592bdde0eccf369262a8760939c0544337540a968757ab5bc8a06",
+    "src/app/api/v1/activities/[id]/policy-impacts/route.ts": "d9b890bd5c2cdac99f48454a11f047cf845d0490131f9b170b9ccbcde2319e34",
+    "src/app/api/v1/appointments/[id]/booking-policy/route.ts": "b5e70ff4e233180fdd4ba0b91ab57fc4ca49d3822632ed056af1e52ef58aeb3e",
+    "src/app/api/v1/schedule/policy-family/route.ts": "395a51e5a25785cf65b43b2b4d85ac865764d5c9201b7b3c1aacadfbc99dff47",
+    "src/app/api/v1/schedule/policy-holds/route.ts": "2569b2b705332bc08f92bfedae2a788a8099fe14423a19b73a3f82b35cc241ca",
+    "src/app/api/v1/schedule/policy-impacts/[id]/resolve/route.ts": "34906491dba13e2b688c7d50334250c499d6dfd8637f93a719e61a0959a80cea",
+    "src/app/api/v1/schedule/policy-impacts/[id]/route.ts": "075afda49fc87966fa68b72fe24fc46a8c90f41dcc36cab23a642998e32ecec6",
+    "src/app/api/v1/schedule/policy-proposals/[id]/route.ts": "03a3363f936bc1dc01cf083a1fcb9753e4118c30c8f7464e341284ceb24a8396",
+    "src/app/api/v1/schedule/policy-proposals/route.ts": "15acec4779556dcf1a3a493c761223caf8cf36dab16ce297e45ac2709a2656cf",
+    "src/app/api/v1/schedule/policy-publications/[id]/route.ts": "1224ff0a2dfc64e185e11350e6112587ea30b714270305b3f2f8ecbfc37c02cc",
+    "src/app/api/v1/schedule/policy-publications/route.ts": "e4df21844aa27b0119a4492b64941e101a97ede1ff342cc6db2991141fd8544e",
+    "src/app/api/v1/schedule/policy-reviews/[id]/route.ts": "a9c9ee82eea1d69d5aab2a6f717035562ae54b9da884b070fa71998b07de4eaa",
+    "src/app/api/v1/schedule/policy-reviews/route.ts": "877289b728c38c7911f209a90b38e68e5b6e602f6db138ad59b36ff3f148e062",
+    "src/components/activity-screens.tsx": "fea6c153a53ab3df036fcd402a7e4601f505ece14387508538b95f15b07ec591",
+    "src/components/field-screens.tsx": "73dfa6dc949485ccc656efbd13ce98d3a9a1c21211a005b71321007c2ec8063b",
+    "src/components/work-order-screens.tsx": "18546b6c6f99be7cf23129458a9e4a5cb133638451d50dc37a8705596aecb8bf",
+    "src/development/component-examples.tsx": "5da6e27950d3ebd56badd0edc7338f8890b35a178efb4f0f3b7cd4751759f9a1",
+    "src/development/component-fixtures.ts": "3579da922cb82d83b62324bad4aef9229caaad69ad310ccacf1c866b694f5985",
+    "src/documents/context.ts": "8ea2870a80a703faf4456fce878126fb2fe8492722f910224837b6c01881bca5",
+    "src/documents/packs.ts": "a7a70e856a4616ae9d9b6633461a9f1639abff8f5b23a5c6999703d6d069f77d",
+    "src/field/reads.ts": "09b72c57ce72cc5e6793535ed9b0260c9e21e1a845edeab549381c7a7ea03f4e",
+    "src/field/start.ts": "02372cd3f15d86630b1a5d6ad3600caed3bd6283aedab715e850a8ed4c1f4cfe",
+    "src/scheduling/booking-journal.ts": "831608e486d874dfd1f7bedfa3a197eba5dbdd66f728c445ebe56e821c6c8e6a",
+    "src/scheduling/booking-policy.ts": "afed72c9e9b8a1ea2d5f7cfc6f8931050fcb1d09950357ef3d40e8bd61c88876",
+    "src/scheduling/components/client/planner-screens.client.tsx": "99741534e50c1114f709a8847b6b4dec78c6b1044db8fe703500813b7fcaba1e",
+    "src/scheduling/components/client/policy-holds.client.tsx": "b4804ca0a3c38a0d2c5c0639313e2c14f5fa55f439021e6bcef8b2634ae07599",
+    "src/scheduling/components/client/policy-impact.client.tsx": "b7101d492107c5f1c17bd31db84216f7e9ad232a195f058f5eeedf5988f2836d",
+    "src/scheduling/components/client/policy-resolution.client.tsx": "568f7daea5b855e83d9320a69800d4401e6e6653bf66c627b85297fb87848926",
+    "src/scheduling/planner.ts": "44517d5e3a148ac3b10ec9b6798fffcd27ff2d25204371f7ddae8fd4b45d5891",
+    "src/scheduling/policy-authority.ts": "b4d93a426a5ba89e1bd57fff89f648526bc78913ab26825b947d34de2bf3ded5",
+    "src/scheduling/policy-commands.ts": "be6e128f15ac2bdf1f468bcc9acf81c5d1b6e012014de86ab86d8c9034bf6663",
+    "src/scheduling/policy-hold-reads.ts": "8dac076ebb2466a8ab5af90d91eec4077f1a90b2c86e11084dc64ada7508ea73",
+    "src/scheduling/policy-holds.ts": "68ff8a04f87aa2d5ec55052bbc5fc696ea1c927bd5e5d9b7166f8625037748eb",
+    "src/scheduling/policy-http.ts": "135b83c75efb9c15306b7979a8a5c0b0d6922956ca48979e0dd93a16c4e09474",
+    "src/scheduling/policy-persistence.ts": "cb3628f8ad3bb33da410a3685b824e9cedc78d0d4a862f8119fbd1e8a677b9cc",
+    "src/scheduling/policy-population.ts": "982180a7c585bc0f02729a5b6996bfadc8e05a6326cd431afe86f08261a02a8d",
+    "src/scheduling/policy-resolution.ts": "2b32129b85aa3cdbbea04399053b6227334b9a6a8ee876ce9a0513266b72a01f",
+    "src/scheduling/validation.ts": "3d1cd97c2f1418ba86b9e0d2c4665a4c885c937b3738284055517619418c95f0",
+    "src/service/work-orders.ts": "76662b2a0130cf548810eed181725f2bf44ef4cc122ecc7410ee49e90c220e46",
+    "tests/browser/packs.spec.ts": "a00d41d48f971ee54fa7e9f4f521bb0444a9686521ac9de84c1b9d0d569edc74",
+    "tests/browser/planner.spec.ts": "c0c07c53d330b9c161f7c7f74d52f9e05a90570f6a7ad6ddb2b62c87d54e4d00",
+    "tests/database/field.test.ts": "377ab530bcc61401d18481f7a354ebd3c97ce19d3a293653a5eed449fbdd0f90",
+    "tests/database/offline.test.ts": "788c4e425e9657b0c1673127e69594647bc1b53217c817ca2333c11511ad9a80",
+    "tests/database/packs.test.ts": "b40eadcd6e218cd9caccbad96642912a58797f90db675ac95561e291eef20d19",
+    "tests/database/planner.test.ts": "a995939b545bb848f072aaacadd98bfc95f15ddcbcd4e49490c8bdab05b642bc",
+    "tests/database/policy-concurrency.test.ts": "2f70c6387debd148598afc5699a7ee609e7f2fbe2f03d37226083fd454bd8b1a",
+    "tests/database/policy-dispositions.test.ts": "7aa420fbcf1ab8cf1504290cb564265a3fff6ff8adce1d33d34e46d25e20aacd",
+    "tests/database/policy-enforcement.test.ts": "d5c8e4490c261829dda5f27083d35d08f54308a20be9c7f8ccde5bea5f06a1e7",
+    "tests/database/scheduling-workspaces.test.ts": "7b2a3acd6f68e14a4edddf3a91ead66de0abf94e0659b0a91781c99d08644563",
+    "tests/demo/database.test.ts": "0e4f8a321340c08a34a6135b42e06030db980cb919e6f39b8356a49f7b68b7b4",
+    "tests/helpers/field-http.ts": "98d6c13a6a2c2d9b2d0b009c3bace610a13a8292f0652eab2d195bc8ca6bf77f",
+    "tests/helpers/field-two-tasks.ts": "b9b244a9b71c167378df218bb439a947a2ddbae6fcf06d64639c04286f778454",
+    "tests/helpers/packs.ts": "5ba7bcde007c12156868f458d1db32159a519bc13a6bb9cb5198a4e6cd8f8d6f",
+    "tests/helpers/policy-concurrency.ts": "1e8129e50b6cb1c3811409b58a51015f7d1edf7fd797d9ea408c905f78e44a6f",
+    "tests/helpers/policy-http-harness.ts": "73a14dd02506cf4254eeec651ed251b36b6ece57e4d4e402af4760c6fe27ced2",
+    "tests/http/planner.test.ts": "7e3f5943b24577adeb5adb88e25c56fe7cf892e5fc1c2102eb8b48a7c174d82e",
+    "tests/scheduling-browser/enforcement.spec.ts": "64e115d8be2f23a84cb9378f6c999f5f25c50d20724f679a7cd07ea1d277389b",
+    "tests/unit/policy-activation.test.ts": "eeb6f91b7561ab85848f3cef6591f591b235c667e7818207870e067a4c6a3e97"
+  },
+  "private_log_sha256": {
+    "policy-full.log": "063a8c692e4fbcf588c84b27ed0d0bb5f78f092c907a3cd3701d04218bd0e927",
+    "policy-units.log": "052cb29b3eeaa99acc7d12f602beded49f6892e1f32e7af3a5384ba2edb47469",
+    "unit-before-routes.log": "aa79b28bc01fc03ade2238d4313a224b613f546afde51e5674c34f22603d4860",
+    "baseline-windows-units.log": "f60b2f158ba5ca627d8bf687b0b81fe82c7f87185dcda0344bc7ad24f2f75c2f",
+    "browser-reviewed.log": "d5a58851f12dee9be4707c64842448f6e83225827e3ddb5b285b4ca2341cde8c",
+    "browser-reviewed-results.json": "872141433292dda5a72b45fa21310213566789b91e1dfa841ac891034b8b2142",
+    "build-reviewed.log": "eb231d0aaf1df2076f8f90e526dbc66afb80f865bbf49ce4aa2179909fabed3a",
+    "lint-reviewed.log": "144b8ef738aebf80f098340cd52aae1ca2b3b236fc5859b5d6806e5ec9ac9f64",
+    "typecheck-reviewed.log": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28",
+    "foundation-final.log": "e5c66b2d946551a07465a6f3498b86f182aebbb15298b62857874de082786bc6",
+    "naming-final.log": "766b6b88d310d8062c3119940778f5010486d5a0472176ce0f5150900f7014f0",
+    "prototype.log": "f7b48b580707ab4071e3dcda23d38936db1c757240cbc5996bf54ed4fceb2ff3",
+    "studio-final.log": "aa13bc1da483c5fb4d11282f1747de6ca79bef345c378e24c5f7bdfa904f4d4d",
+    "hosted-upgrades.log": "5f03bbcee5cf0e037207e4db1d4814118c235f2df4fb2414b4175c8f697be376",
+    "restart-write.log": "49bd77308dcdad0bb319ef5d84e8dfe297c122abb2ff3a6da1a73ec2b8ccbf8a",
+    "restart-verify.log": "01f82f7a46cb9180f10a2e4b14291b3b95ec224e742846649cd5b8dca2226689",
+    "legacy-main-write.log": "e049164d5f99f56755e3725b8c65301ceaaa0c18366e7c1309801febccb73646",
+    "legacy-step4-verified.log": "aead32872a895a2d040053258c9e32134abaf7cef1b5b36660d66a0fc81c587b",
+    "enforcement-reviewed.log": "9e740f50ecb698b3563dd7b6e57e5ca65042efaad0b8531b0d2da492226138ab"
+  },
+  "capture_sha256": {
+    "desktop-appointment-hold-1024.png": "3df7c1999323e0158982c607ed48b03cc363ad1036cc008713de66302290953e",
+    "desktop-appointment-hold-1440.png": "4c8ce2f60037eea25149391640d50917dab667cf65cdae088aef544c47ed0294",
+    "desktop-field-start-held.png": "5b754f5ac466a2a094ff773d2ed29712c3e40c633c60a2bc968899047231c1e9",
+    "desktop-resolution-recovered.png": "a552088032e7d07081a2fe45bef65b333eb471746e98586308a2ce8054d90530",
+    "mobile-appointment-hold-320.png": "203a94c3bbb6da0e5c19157e59b1da3eabd6e2be19a556434f8be69caa413a12",
+    "mobile-appointment-hold-390.png": "32b95a0b2ea46306edb3e36f188271f1b798e0077782cae1b58a2365b95d3b9a",
+    "mobile-field-start-held.png": "dac5604df236450f23504dd7f7f6d865e492244be8dda2c70ebd4bb5e88cff99",
+    "mobile-resolution-recovered.png": "6e50e6c4c5f4fe1ac13633a3354e71b484e1f7c887cbd84831e313a2ea1cc185"
+  },
+  "completed": {
+    "policy_database_http": {
+      "pass": 45,
+      "fail": 0,
+      "skip": 0,
+      "duration_ms": 717376.5643
+    },
+    "policy_units": {
+      "pass": 128,
+      "fail": 0,
+      "skip": 0
+    },
+    "all_units_windows": {
+      "pass": 562,
+      "fail": 4,
+      "skip": 0,
+      "unchanged_main_affected_files": {
+        "pass": 3,
+        "fail": 4,
+        "skip": 0
+      }
+    },
+    "compiled_step4": {
+      "startTime": "2026-09-30T09:57:17.129Z",
+      "duration": 74512.857,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "hosted_upgrades": {
+      "pass": 15,
+      "fail": 0,
+      "skip": 0,
+      "duration_ms": 180854.7322
+    },
+    "legacy_booking_receipts": {
+      "confirmed": true,
+      "moved": true,
+      "change_accepted": true,
+      "originals_sha256": "b3472ed34a955eacd4d941cc68372a2873ca7d89521bea5f460f239404e402b9"
+    },
+    "final_enforcement": {
+      "pass": 5,
+      "fail": 0,
+      "skip": 0,
+      "duration_ms": 79624.8255
+    }
+  },
+  "limits": [
+    "Synthetic component proof, source self-review and automated browser captures only",
+    "Independent visual, owner, physical-device and accessibility acceptance remain pending",
+    "Full PT-28/PT-30 and existing PT-27 work remain open",
+    "CI and broader regression completion are reported separately against the PR head"
+  ]
+}

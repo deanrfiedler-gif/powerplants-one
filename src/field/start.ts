@@ -1,3 +1,4 @@
+import { policyImpactHolds } from "../scheduling/policy-holds";
 import { randomUUID } from "node:crypto";
 import type { Principal } from "../platform/identity";
 import { sharedOperation } from "../platform/operations";
@@ -132,6 +133,10 @@ export async function startAttendance(
           "Captured time is more than five minutes ahead of the server.",
         );
       await readBundle(p, issue.manifest); // Exact P06 bytes must still be retrievable, never regenerated.
+      // The graph remains locked, but authority can expire while exact files are
+      // being read. Recheck durable dispositions at the final start boundary.
+      if ((await policyImpactHolds(c, p, id)).some(x => x.held))
+        throw new AppError(422, "StartBlocked", "Scheduling policy authority requires a fresh controlled resolution.");
       const acknowledgements = (
         await c.query(
           "SELECT k.id,k.recipient_id,k.actor_id,k.presented_hash,k.acknowledged_at FROM ppo.pack_acknowledgements k JOIN ppo.pack_recipients r ON r.id=k.recipient_id WHERE r.workspace_id=$1 AND r.issue_id=$2 ORDER BY k.actor_id",
@@ -181,6 +186,15 @@ export async function startAttendance(
           [snapshot],
         )
       ).rows[0].hash;
+      // Reconcile the derived pack flag only after all independent and policy
+      // guards pass. The existing database dispatch guard checks this transition;
+      // attendance and appointment still commit or roll back together.
+      const saved = (
+        await c.query(
+          "UPDATE ppo.appointments SET status='InProgress',dispatch_hold=false,pack_requirement='Acknowledged',actual_start_at=coalesce(actual_start_at,$4),version=version+1,updated_by=$3,updated_at=clock_timestamp() WHERE workspace_id=$1 AND id=$2 RETURNING *",
+          [p.workspace_id, id, p.actor_id, now],
+        )
+      ).rows[0];
       const attendance = await insert(c, "field_attendances", {
         id: randomUUID(),
         workspace_id: p.workspace_id,
@@ -203,12 +217,6 @@ export async function startAttendance(
         operation_id: cmd.operation_id,
         reason: cmd.reason,
       });
-      const saved = (
-        await c.query(
-          "UPDATE ppo.appointments SET status='InProgress',actual_start_at=coalesce(actual_start_at,$4),version=version+1,updated_by=$3,updated_at=clock_timestamp() WHERE workspace_id=$1 AND id=$2 RETURNING *",
-          [p.workspace_id, id, p.actor_id, now],
-        )
-      ).rows[0];
       return {
         id,
         version: saved.version,

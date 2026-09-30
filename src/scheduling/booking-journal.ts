@@ -17,7 +17,7 @@ export function acceptsBookingEntry(entry: JournalEntry) {
     visits: ["id", "scope_revision_id", "scope_version", "start_at", "end_at", "requested_window_start", "requested_window_end", "customer_commitment", "preparation_status"],
     readiness: ["assessment"],
     contacts: ["id", "recipient_id", "channel", "outcome", "occurred_at", "notes"],
-    confirm: ["expected_work_order_version", "expected_assignment_version", "scope_revision_id", "scope_version", "policy_version_id", "scheduling_policy_id", "scheduling_policy_version", "crew"],
+    confirm: ["expected_work_order_version", "expected_assignment_version", "scope_revision_id", "scope_version", "policy_version_id", "scheduling_policy_id", "scheduling_policy_version", "scheduling_policy_hash", "publication_head_version", "selected_policy", "crew"],
   };
   if (!Object.keys(b).every(k => [...common, ...fields[action]].includes(k)) || !Number.isSafeInteger(b.expected_version) || Number(b.expected_version) < 1) return false;
   const targetId = entry.target.split("?")[0].split("/").pop();

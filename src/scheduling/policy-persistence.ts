@@ -1,7 +1,7 @@
 // Internal persistence adapters only. No routes, authority decisions, graph locks or
 // command receipts. Callers own a transaction and supply independently loaded server
 // records; Step 3 must establish complete visibility/population and current authority.
-import type { PoolClient } from "pg";
+import type { QueryClient } from "../platform/permissions";
 import { canonical } from "../platform/operations";
 import { invalid } from "../shared/validation";
 import {
@@ -41,7 +41,7 @@ function restored(row: {
 /** Read the complete saved chain, checking each publication against its original
  * proposal, review and source prefix. Old review bindings never use today's head. */
 export async function loadPolicyChain(
-  db: PoolClient,
+  db: QueryClient,
   workspace: string,
 ): Promise<PolicyChain> {
   const workspace_id = id(workspace);
@@ -121,7 +121,7 @@ export async function loadPolicyChain(
 }
 
 export async function loadProposal(
-  db: PoolClient,
+  db: QueryClient,
   workspace: string,
   proposalId: string,
   chain: PolicyChain,
@@ -141,7 +141,7 @@ export async function loadProposal(
 }
 
 export async function loadReview(
-  db: PoolClient,
+  db: QueryClient,
   workspace: string,
   reviewId: string,
   chain: PolicyChain,
@@ -177,7 +177,7 @@ export async function loadReview(
 }
 
 export async function savePolicyProposal(
-  db: PoolClient,
+  db: QueryClient,
   input: unknown,
   server: { workspace_id: string; proposer_id: string },
 ) {
@@ -219,7 +219,7 @@ export async function savePolicyProposal(
 }
 
 export async function savePolicyReview(
-  db: PoolClient,
+  db: QueryClient,
   input: unknown,
   server: {
     workspace_id: string;

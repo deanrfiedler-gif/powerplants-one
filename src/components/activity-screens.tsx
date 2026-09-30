@@ -1,4 +1,5 @@
 "use client";
+import { PolicyHolds } from "../scheduling/components/client/policy-holds.client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -34,6 +35,7 @@ export function ActivityDetail({ id }: { id: string }) {
   const r = useResource<Envelope<Activity>>(`activities/${id}`);
   return (
     <>
+      <PolicyHolds activityId={id} />
       <Link href="/work">← My Work</Link>
       <ReadState loading={r.loading} error={r.error} retry={r.reload} />
       {!isDenied(r.error) && r.data?.items[0] && (

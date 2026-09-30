@@ -221,8 +221,8 @@ export async function authority(
   }
   const policy = (
     await c.query(
-      "SELECT * FROM ppo.scheduling_policies WHERE workspace_id=$1 AND id=$2 AND effective_from<=clock_timestamp() AND effective_to>=greatest(clock_timestamp(),$3)",
-      [p.workspace_id, a.scheduling_policy_id, a.end_at],
+      "SELECT * FROM ppo.scheduling_policies WHERE workspace_id=$1 AND id=$2 AND status='Published' AND effective_from<=$4 AND effective_to>=greatest(clock_timestamp(),$3)",
+      [p.workspace_id, a.scheduling_policy_id, a.end_at, a.start_at],
     )
   ).rows[0];
   if (!policy)

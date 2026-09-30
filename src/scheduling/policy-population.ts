@@ -1,6 +1,7 @@
 // Trusted complete server population. No caller-supplied candidates, site filter or
 // preview digest enters this loader. All reads run inside the shared graph boundary.
-import type { PoolClient, QueryResultRow } from "pg";
+import type { QueryResultRow } from "pg";
+import type { QueryClient } from "../platform/permissions";
 import type { Principal } from "../platform/identity";
 import { AppError } from "../platform/errors";
 import { canonical } from "../platform/operations";
@@ -84,7 +85,7 @@ const sourceTables = [
   "field_timers",
 ] as const;
 type Table = (typeof sourceTables)[number];
-export async function policySources(c: PoolClient, p: Principal) {
+export async function policySources(c: QueryClient, p: Principal) {
   const rows = {} as Record<Table, Row[]>;
   // Single-client sequential statements retain transaction/lock ordering. Full sets
   // avoid LIMIT/pagination silently turning absence into unread evidence.
@@ -142,7 +143,7 @@ export const rowReference = (row: Row, projection: unknown = row) => ({
   version: row.version as number,
   content_hash: sourceHash(projection),
 });
-export async function observationTime(c: PoolClient): Promise<string> {
+export async function observationTime(c: QueryClient): Promise<string> {
   return (
     await c.query("SELECT clock_timestamp() AS at")
   ).rows[0].at.toISOString();
@@ -171,7 +172,7 @@ export function exclusion(s: Sources, a: Row, at: string): string | null {
 function overlaps(a: Row, start: Date, end: Date) {
   return a.start_at < end && a.end_at > start;
 }
-async function bookingBase(c: PoolClient, p: Principal, a: Row) {
+async function bookingBase(c: QueryClient, p: Principal, a: Row) {
   const w = await visibleWorkOrder(c, p, a.work_order_id),
     r = await scopeDetail(c, p, w, a.scope_revision_id),
     site = await visible(c, p, "Site", a.site_id),
@@ -189,7 +190,7 @@ async function bookingBase(c: PoolClient, p: Principal, a: Row) {
 }
 type EvaluationCache = Map<string, ReturnType<typeof bookingBase>>;
 export async function evaluatePolicyBooking(
-  c: PoolClient,
+  c: QueryClient,
   p: Principal,
   s: Sources,
   chain: PolicyChain,
@@ -788,7 +789,7 @@ export function nextPolicyBoundary(
 }
 
 export async function loadPolicyPopulation(
-  c: PoolClient,
+  c: QueryClient,
   p: Principal,
   chain: PolicyChain,
   proposal: PolicyProposal,

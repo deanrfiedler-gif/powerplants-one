@@ -108,6 +108,7 @@ type Visit = {
   scope_version: number;
   scope_review_required: boolean;
   readiness: Assessment[];
+  policy_impacts?: import("../scheduling/policy-holds").PolicyHold[] | null;
 };
 export type Order = {
   id: string;
@@ -1484,6 +1485,9 @@ export function WorkOrderDetail({ id }: { id: string }) {
                     proposal retains its original scope context.
                   </p>
                 )}
+                {v.policy_impacts?.filter(x => x.held).map(x => <p className="callout" key={x.impact_id}>
+                  Scheduling policy hold: {x.reason}. Owner: {x.owner_name}. Source publication: <span className="record-id">{x.publication_id}</span>. {x.next_action}
+                </p>)}
                 <ReadinessTable rows={v.readiness} />
                 {w.actions.can_assess &&
                   v.status !== "Cancelled" &&

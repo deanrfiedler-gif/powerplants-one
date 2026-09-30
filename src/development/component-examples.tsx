@@ -31,6 +31,7 @@ import { addDays } from "../projects/model";
 import { type ExampleId } from "./component-model";
 import {
   appointmentFixture,
+  schedulingPolicyHoldFixture,
   areaFixture,
   customerRecordTabsFixture,
   salesEvidenceFixture,
@@ -379,6 +380,7 @@ function PlannerExample({
     ...appointmentFixture,
     status: state === "proposed" ? "Proposed" : "Confirmed",
     scope_review_required: state === "review-required",
+    policy_impacts: state === "policy-hold" ? [schedulingPolicyHoldFixture] : [],
     actions: {
       ...appointmentFixture.actions,
       can_manage: state !== "read-only",

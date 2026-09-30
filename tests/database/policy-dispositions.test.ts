@@ -59,6 +59,15 @@ const command = (
   policy_version_id: a.policy_version_id,
   scheduling_policy_id: id("a0"),
   scheduling_policy_version: 1,
+  scheduling_policy_hash:
+    "130d586ec49c5e23dffd49916148babc6ddf329a442e054ecc1c29f9089cca44",
+  publication_head_version: 2,
+  selected_policy: {
+    id: "a0000000-0000-4000-8000-000000000001",
+    version: 1,
+    content_hash:
+      "130d586ec49c5e23dffd49916148babc6ddf329a442e054ecc1c29f9089cca44",
+  },
   crew: crew(),
 });
 const resolution = (
@@ -261,4 +270,35 @@ test("C26 publication versus resolution shares graph lock and refuses a disposit
     ).receipt.state,
     "Cancelled",
   );
+});
+
+test("C26 resolution winning graph lock commits exact evidence before later publication makes it stale", async () => {
+  const a = await confirmed(),
+    owner = await principal(),
+    f = await reviewed();
+  await publishSchedulingPolicy(f.publisher, f.publish);
+  const impact = await impactFor(a.id);
+  await cancelAppointment(owner, a.id, {
+    ...base(),
+    expected_version: a.version,
+    expected_work_order_version: a.work_order_version,
+    expected_assignment_version: a.assignment_version,
+  });
+  const read = await readPolicyImpact(owner, impact),
+    next = await reviewed(90, "2031-09-22T00:30:00.000Z");
+  const original = resolution(read, "Cancelled");
+  const [disposition, publication] = await serialised(
+    () => resolveSchedulingPolicyImpact(owner, impact, original),
+    () => publishSchedulingPolicy(next.publisher, next.publish),
+    false,
+    "resolution",
+  );
+  assert.equal(publication.status, "fulfilled");
+  assert.equal(disposition.status, "fulfilled");
+  assert.equal((await readPolicyImpact(owner, impact)).disposition, "Stale");
+  if (disposition.status === "fulfilled")
+    assert.deepEqual(
+      (await resolveSchedulingPolicyImpact(owner, impact, original)).receipt,
+      disposition.value.receipt,
+    );
 });

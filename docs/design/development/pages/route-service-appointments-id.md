@@ -44,3 +44,11 @@ Acceptance evidence is pending. Capture matching original-reference and applicat
 ## Canonical Job Pack handover
 
 JobPackEntry reuses shared buttons and ReadState. The current server read chooses Open job pack or permitted Prepare job pack with the exact appointment identity. No visible pack is distinct from a denied read (access-unavailable status) and a failed request (shared error alert). Refresh hides prior links; no denial grants access. Desktop/phone text wraps and 44 px controls remain within the existing panel or trapped drawer. [I5 handover](../../../delivery/job-pack-integration-handover.md) records evidence; the existing appointment/booking authority is unchanged.
+
+## Scheduling Step 4 integration
+
+Preserve this entry's scope ID and page type. Reuse shared fields, Button, ReadState/ErrorNotice and existing appointment/planner controls. Incoming handovers: exact published selection, immutable impact, retained booking pin and owned Activity. Outgoing handovers: controlled appointment/resolution receipt and refreshed readiness; customer, pack, Finance and issued documents retain their separate authority.
+
+Desktop must show the impact reason, responsible owner, source publication and permitted next action. Booking preparation follows the proposed interval and publication head, including future policies; stale saves retain entries and need fresh review. Completing an Activity or acknowledging a pack cannot clear the policy hold. Later source changes restore it. The appointment's online resolution disclosure requires controlled change/cancellation/replacement and fresh evaluation. Uncertain responses retry the original unchanged.
+
+At 390/320 px, stack fields/actions, wrap exact identifiers and keep hold/recovery text readable without horizontal overflow. Retain keyboard alternatives to drag and native disclosure/label semantics. Delayed offline Start is rechecked on reconnect and may remain ReviewRequired with original evidence retained. Publication and resolution are online only. No Step 4 issued mockup is available; the existing retained HTML remains the source reference. Additional content is a proposed visual departure pending owner review. Functional evidence: `docs/testing/evidence/scheduling-policy-enforcement/README.md`; captures and source checks do not grant visual/device/owner acceptance.

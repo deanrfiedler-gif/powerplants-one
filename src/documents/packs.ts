@@ -1,3 +1,4 @@
+import { policyImpactHolds } from "../scheduling/policy-holds";
 import { sectionView } from "./section-view";
 import { visibleActivity } from "../activities/activities";
 import { randomUUID } from "node:crypto";
@@ -325,6 +326,13 @@ export async function dispatchReadiness(
 ) {
   const { a } = await visibleAppointment(c, p, id);
   const reasons: string[] = [];
+  const policy_impacts = await policyImpactHolds(c, p, id);
+  // Preparation may use a future pin, but publication does not bring its actual
+  // attendance authority forward. Retain the existing current-effective guard.
+  if ((await c.query("SELECT 1 FROM ppo.scheduling_policies WHERE workspace_id=$1 AND id=$2 AND effective_from>clock_timestamp()", [p.workspace_id, a.scheduling_policy_id])).rowCount)
+    reasons.push("The booked scheduling policy is not yet effective for actual attendance.");
+  for (const impact of policy_impacts.filter(x => x.held))
+    reasons.push(`Scheduling policy hold (${impact.disposition}): ${impact.reason}. Owner: ${impact.owner_name}. Publication: ${impact.publication_id}. ${impact.next_action}`);
   try {
     await authority(c, p, id, allowStarted);
   } catch (e) {
@@ -397,6 +405,7 @@ export async function dispatchReadiness(
     dispatch_hold: reasons.length > 0,
     component_ready: reasons.length === 0,
     actual_start_implemented: true,
+    policy_impacts,
     reasons,
     recipients,
   };

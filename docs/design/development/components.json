@@ -160,7 +160,9 @@
         "scope:FI-01",
         "route:/my-jobs",
         "route:/my-jobs/[id]",
-        "route:/schedule/policy-impact"
+        "route:/schedule/policy-impact",
+        "route:/service/appointments/[id]",
+        "route:/work/[id]"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -585,6 +587,11 @@
           "id": "long-label",
           "label": "Long resource label",
           "description": "Wrapping resource identity with a controlled availability and competence link."
+        },
+        {
+          "id": "policy-hold",
+          "label": "Published policy hold",
+          "description": "Unresolved durable publication impact remains visible while the original reservation and policy pin are retained."
         }
       ],
       "implementation": [
@@ -629,6 +636,14 @@
           "action": "Inspect captured runtime evidence and retain legacy booking-control exceptions.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "scheduling-step4-review",
+          "expected": "Review policy preparation, durable hold reasons and exact resolution recovery on desktop and phone.",
+          "actual": "Step 4 source and synthetic functional proof are being verified; owner visual/device review remains pending.",
+          "action": "Review the exact Step 4 captures and affected shared controls without copying an acceptance fingerprint.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "review": null
@@ -662,6 +677,11 @@
           "id": "read-only",
           "label": "Read only",
           "description": "Management actions unavailable in this example."
+        },
+        {
+          "id": "policy-hold",
+          "label": "Published policy hold",
+          "description": "Unresolved durable publication impact remains visible while the original reservation and policy pin are retained."
         }
       ],
       "implementation": [
@@ -695,6 +715,14 @@
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "Dispatch remains held in this current component; catalogue fixtures do not represent a dispatch-ready visit.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "scheduling-step4-review",
+          "expected": "Review policy preparation, durable hold reasons and exact resolution recovery on desktop and phone.",
+          "actual": "Step 4 source and synthetic functional proof are being verified; owner visual/device review remains pending.",
+          "action": "Review the exact Step 4 captures and affected shared controls without copying an acceptance fingerprint.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -796,7 +824,9 @@
         "scope:EQ-09",
         "scope:FI-05",
         "route:/my-jobs/site-readiness",
-        "route:/schedule/policy-impact"
+        "route:/schedule/policy-impact",
+        "route:/service/appointments/[id]",
+        "route:/work/[id]"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -1424,7 +1454,9 @@
         "scope:FI-01",
         "route:/my-jobs",
         "route:/my-jobs/[id]",
-        "route:/schedule/policy-impact"
+        "route:/schedule/policy-impact",
+        "route:/service/appointments/[id]",
+        "route:/work/[id]"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -2302,6 +2334,81 @@
           "expected": "Paired owner review against accepted timer r05 in the native shell.",
           "actual": "Native implementation and synthetic paired evidence; unavailable allowance, retained Undo evidence and explicit arrival differ from the preview.",
           "action": "Review the native decision and field programme evidence; retain source bytes and record owner acceptance separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "scheduling-policy-impacts",
+      "title": "Published scheduling impacts and resolution",
+      "category": "Scheduling",
+      "module": "Service",
+      "purpose": "Read authorised durable holds and resolve only against fresh controlled booking evidence.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "unresolved",
+          "label": "Unresolved hold",
+          "description": "Immediate owned hold from publication, including a future policy."
+        },
+        {
+          "id": "stale",
+          "label": "Stale resolution",
+          "description": "Later relevant source changes restore start hold."
+        },
+        {
+          "id": "current",
+          "label": "Current resolution",
+          "description": "Independent customer, pack and readiness requirements remain."
+        },
+        {
+          "id": "uncertain",
+          "label": "Uncertain response",
+          "description": "Retry the unchanged resolution; retained original receipt is authoritative."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/scheduling/components/client/policy-holds.client.tsx",
+          "symbol": "PolicyHolds"
+        },
+        {
+          "path": "src/scheduling/components/client/policy-resolution.client.tsx",
+          "symbol": "PolicyResolution"
+        }
+      ],
+      "dependencies": [
+        "src/components/business-ui.tsx",
+        "src/components/ui/button.tsx",
+        "src/scheduling/policy-holds.ts",
+        "src/scheduling/policy-resolution.ts"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+        "anchor": "states",
+        "status": "Retained shared states reference; no issued Step 4 mockup; owner visual review pending"
+      },
+      "specification": "docs/design/development/components/scheduling-policy-impacts.md",
+      "used_on": [
+        "route:/service/appointments/[id]",
+        "route:/schedule/policy-impact",
+        "route:/work",
+        "route:/work/[id]"
+      ],
+      "desktop": "Keep reason, responsible owner, source publication and next action together. Existing record detail owns the resolution controls.",
+      "mobile": "Stack labels and actions; wrap exact identifiers without horizontal overflow at 390/320 px.",
+      "keyboard": "Native details, labelled fields and shared buttons; all actions available without dragging.",
+      "limitations": "Online host only; no proposal/review/publication UI or offline resolution. Fixture card does not confer authority.",
+      "gaps": [
+        {
+          "id": "scheduling-step4-review",
+          "expected": "Review policy preparation, durable hold reasons and exact resolution recovery on desktop and phone.",
+          "actual": "Step 4 source and synthetic functional proof are being verified; owner visual/device review remains pending.",
+          "action": "Review the exact Step 4 captures and affected shared controls without copying an acceptance fingerprint.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

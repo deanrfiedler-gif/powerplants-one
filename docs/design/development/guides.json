@@ -14293,7 +14293,7 @@
       "prepared_at": "2026-09-24",
       "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits.",
+      "runtime_evidence": "Scheduling Step 4: docs/testing/evidence/scheduling-policy-enforcement/README.md records exact executed checks; visual and owner/device review pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -14353,7 +14353,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Calendar closures span every intersecting day in the display timezone, including a continuing closure that starts before the visible day. The end boundary is exclusive. Published working intervals and busy reservations remain independent; this display correction changes no booking guard."
+            "Calendar closures span every intersecting day in the display timezone, including a continuing closure that starts before the visible day. The end boundary is exclusive. Published working intervals and busy reservations remain independent; this display correction changes no booking guard.",
+            "Review current booking policy prepares the proposed interval, including published future windows. Confirmation, moves and request acceptance carry exact policy/hash and publication-head evidence. A stale save requires fresh preparation; existing bookings retain their historic pin."
           ],
           "steps": [
             "Select a day/week, display timezone and permitted site or resource. Working hours, anonymous busy reservations and travel buffers remain separate from visit times.",
@@ -14401,7 +14402,8 @@
           "title": "Troubleshooting",
           "paragraphs": [
             "For read failure, use Refresh or Retry. A denied source is unavailable, not empty capacity. Narrow the window/site when the bounded read refuses.",
-            "For stale booking/request versions, reopen the current record and compare before a new decision. The original failed move preserves the old booking. For uncertain sends keep the original operation and retry unchanged."
+            "For stale booking/request versions, reopen the current record and compare before a new decision. The original failed move preserves the old booking. For uncertain sends keep the original operation and retry unchanged.",
+            "Scheduling Step 4: a published impact holds unstarted work immediately, even when the policy starts later. Activity completion or pack acknowledgement does not clear it. Use the named owner and booking link for a controlled change or cancellation/replacement, evaluate current evidence, then save the guarded resolution online. Later source changes restore the hold. Retry an uncertain save unchanged to recover its receipt. Delayed offline Start is rechecked against current authority; ReviewRequired retains its original."
           ],
           "steps": [],
           "rows": [],
@@ -14850,7 +14852,7 @@
       "prepared_at": "2026-09-24",
       "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits.",
+      "runtime_evidence": "Scheduling Step 4: docs/testing/evidence/scheduling-policy-enforcement/README.md records exact executed checks; visual and owner/device review pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -14958,7 +14960,8 @@
           "title": "Troubleshooting",
           "paragraphs": [
             "For read failure, use Refresh or Retry. A denied source is unavailable, not empty capacity. Narrow the window/site when the bounded read refuses.",
-            "For stale booking/request versions, reopen the current record and compare before a new decision. The original failed move preserves the old booking. For uncertain sends keep the original operation and retry unchanged."
+            "For stale booking/request versions, reopen the current record and compare before a new decision. The original failed move preserves the old booking. For uncertain sends keep the original operation and retry unchanged.",
+            "Scheduling Step 4: a published impact holds unstarted work immediately, even when the policy starts later. Activity completion or pack acknowledgement does not clear it. Use the named owner and booking link for a controlled change or cancellation/replacement, evaluate current evidence, then save the guarded resolution online. Later source changes restore the hold. Retry an uncertain save unchanged to recover its receipt. Delayed offline Start is rechecked against current authority; ReviewRequired retains its original."
           ],
           "steps": [],
           "rows": [],
@@ -15222,7 +15225,7 @@
       "prepared_at": "2026-09-27",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See field programme handover; synthetic browser evidence is separate from guide approval.",
+      "runtime_evidence": "Scheduling Step 4: docs/testing/evidence/scheduling-policy-enforcement/README.md records exact executed checks; visual and owner/device review pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -15318,7 +15321,8 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "If the result is unknown, confirm the original action before making a different one. A stale timer version requires refresh. If assignment or capture access is lost, retain the open original and ask Service to restore legitimate scope; do not use another identity."
+            "If the result is unknown, confirm the original action before making a different one. A stale timer version requires refresh. If assignment or capture access is lost, retain the open original and ask Service to restore legitimate scope; do not use another identity.",
+            "Scheduling Step 4: a published impact holds unstarted work immediately, even when the policy starts later. Activity completion or pack acknowledgement does not clear it. Use the named owner and booking link for a controlled change or cancellation/replacement, evaluate current evidence, then save the guarded resolution online. Later source changes restore the hold. Retry an uncertain save unchanged to recover its receipt. Delayed offline Start is rechecked against current authority; ReviewRequired retains its original."
           ],
           "steps": [],
           "rows": [],
@@ -44641,7 +44645,7 @@
       "prepared_at": "2026-09-24",
       "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits.",
+      "runtime_evidence": "Scheduling Step 4: docs/testing/evidence/scheduling-policy-enforcement/README.md records exact executed checks; visual and owner/device review pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -44701,7 +44705,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Calendar closures span every intersecting day in the display timezone, including a continuing closure that starts before the visible day. The end boundary is exclusive. Published working intervals and busy reservations remain independent; this display correction changes no booking guard."
+            "Calendar closures span every intersecting day in the display timezone, including a continuing closure that starts before the visible day. The end boundary is exclusive. Published working intervals and busy reservations remain independent; this display correction changes no booking guard.",
+            "Review current booking policy prepares the proposed interval, including published future windows. Confirmation, moves and request acceptance carry exact policy/hash and publication-head evidence. A stale save requires fresh preparation; existing bookings retain their historic pin."
           ],
           "steps": [
             "Select a day/week, display timezone and permitted site or resource. Working hours, anonymous busy reservations and travel buffers remain separate from visit times.",
@@ -44749,7 +44754,8 @@
           "title": "Troubleshooting",
           "paragraphs": [
             "For read failure, use Refresh or Retry. A denied source is unavailable, not empty capacity. Narrow the window/site when the bounded read refuses.",
-            "For stale booking/request versions, reopen the current record and compare before a new decision. The original failed move preserves the old booking. For uncertain sends keep the original operation and retry unchanged."
+            "For stale booking/request versions, reopen the current record and compare before a new decision. The original failed move preserves the old booking. For uncertain sends keep the original operation and retry unchanged.",
+            "Scheduling Step 4: a published impact holds unstarted work immediately, even when the policy starts later. Activity completion or pack acknowledgement does not clear it. Use the named owner and booking link for a controlled change or cancellation/replacement, evaluate current evidence, then save the guarded resolution online. Later source changes restore the hold. Retry an uncertain save unchanged to recover its receipt. Delayed offline Start is rechecked against current authority; ReviewRequired retains its original."
           ],
           "steps": [],
           "rows": [],
@@ -44825,7 +44831,7 @@
       "prepared_at": "2026-09-24",
       "source_commit": "aed0c00",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "I5: two component and 46 compiled browser cases passed, with four and seven deliberate skips respectively. Paired/print inspection recorded in docs/testing/evidence/job-pack-i5/README.md; owner/device acceptance separate.",
+      "runtime_evidence": "Scheduling Step 4: docs/testing/evidence/scheduling-policy-enforcement/README.md records exact executed checks; visual and owner/device review pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -44913,7 +44919,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Task sequence for review against the applicable running release.",
+            "Review current booking policy prepares the proposed interval, including published future windows. Confirmation, moves and request acceptance carry exact policy/hash and publication-head evidence. A stale save requires fresh preparation; existing bookings retain their historic pin."
           ],
           "steps": [
             "Confirm the record reference and customer/site context in this record workspace.",
@@ -44987,7 +44994,9 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
+          "paragraphs": [
+            "Scheduling Step 4: a published impact holds unstarted work immediately, even when the policy starts later. Activity completion or pack acknowledgement does not clear it. Use the named owner and booking link for a controlled change or cancellation/replacement, evaluate current evidence, then save the guarded resolution online. Later source changes restore the hold. Retry an uncertain save unchanged to recover its receipt. Delayed offline Start is rechecked against current authority; ReviewRequired retains its original."
+          ],
           "steps": [],
           "rows": [
             [
@@ -47508,7 +47517,7 @@
       "prepared_at": "2026-09-23",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Scheduling Step 4: docs/testing/evidence/scheduling-policy-enforcement/README.md records exact executed checks; visual and owner/device review pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -47669,7 +47678,9 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
+          "paragraphs": [
+            "Scheduling Step 4: a published impact holds unstarted work immediately, even when the policy starts later. Activity completion or pack acknowledgement does not clear it. Use the named owner and booking link for a controlled change or cancellation/replacement, evaluate current evidence, then save the guarded resolution online. Later source changes restore the hold. Retry an uncertain save unchanged to recover its receipt. Delayed offline Start is rechecked against current authority; ReviewRequired retains its original."
+          ],
           "steps": [],
           "rows": [
             [
@@ -49016,7 +49027,7 @@
       "prepared_at": "2026-09-23",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Scheduling Step 4: docs/testing/evidence/scheduling-policy-enforcement/README.md records exact executed checks; visual and owner/device review pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -49177,7 +49188,9 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
+          "paragraphs": [
+            "Scheduling Step 4: a published impact holds unstarted work immediately, even when the policy starts later. Activity completion or pack acknowledgement does not clear it. Use the named owner and booking link for a controlled change or cancellation/replacement, evaluate current evidence, then save the guarded resolution online. Later source changes restore the hold. Retry an uncertain save unchanged to recover its receipt. Delayed offline Start is rechecked against current authority; ReviewRequired retains its original."
+          ],
           "steps": [],
           "rows": [
             [
@@ -50165,7 +50178,7 @@
       "prepared_at": "2026-09-23",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Scheduling Step 4: docs/testing/evidence/scheduling-policy-enforcement/README.md records exact executed checks; visual and owner/device review pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -50326,7 +50339,9 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
+          "paragraphs": [
+            "Scheduling Step 4: a published impact holds unstarted work immediately, even when the policy starts later. Activity completion or pack acknowledgement does not clear it. Use the named owner and booking link for a controlled change or cancellation/replacement, evaluate current evidence, then save the guarded resolution online. Later source changes restore the hold. Retry an uncertain save unchanged to recover its receipt. Delayed offline Start is rechecked against current authority; ReviewRequired retains its original."
+          ],
           "steps": [],
           "rows": [
             [
@@ -69989,7 +70004,8 @@
           "title": "Errors and recovery",
           "paragraphs": [
             "Retry loading obtains fresh evidence. For a stale policy, Refresh published rule and compare again. Ambiguous or nonexistent local times require a different explicit time.",
-            "Changing identity or reloading discards analysis. This page does not publish, write offline operations or recover publication receipts."
+            "Changing identity or reloading discards analysis. This page does not publish, write offline operations or recover publication receipts.",
+            "Scheduling Step 4: a published impact holds unstarted work immediately, even when the policy starts later. Activity completion or pack acknowledgement does not clear it. Use the named owner and booking link for a controlled change or cancellation/replacement, evaluate current evidence, then save the guarded resolution online. Later source changes restore the hold. Retry an uncertain save unchanged to recover its receipt. Delayed offline Start is rechecked against current authority; ReviewRequired retains its original."
           ],
           "steps": [],
           "headers": [],
@@ -70025,7 +70041,8 @@
           "headers": [],
           "rows": []
         }
-      ]
+      ],
+      "runtime_evidence": "Scheduling Step 4: docs/testing/evidence/scheduling-policy-enforcement/README.md records exact executed checks; visual and owner/device review pending."
     }
   ]
 }

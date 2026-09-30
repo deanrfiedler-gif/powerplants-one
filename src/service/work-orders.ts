@@ -1,5 +1,6 @@
+import { policyImpactHolds } from "../scheduling/policy-holds";
 import { createHash, randomUUID } from "node:crypto";
-import { database } from "../platform/database";
+import { database, transaction } from "../platform/database";
 import { AppError, unavailable } from "../platform/errors";
 import type { Principal } from "../platform/identity";
 import { sharedOperation } from "../platform/operations";
@@ -1034,8 +1035,9 @@ export async function proposeVisit(p: Principal, id: string, input: unknown) {
   );
 }
 export async function readWorkOrder(p: Principal, id: string) {
-  const c = database(),
-    w = await visibleWorkOrder(c, p, id);
+  return transaction(async c => {
+  await c.query("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ");
+  const w = await visibleWorkOrder(c, p, id);
   const scopes = [];
   const ids = (
     await c.query(
@@ -1061,6 +1063,7 @@ export async function readWorkOrder(p: Principal, id: string) {
       v.scope_revision_id !== w.scope_revision_id ||
       r?.version !== v.scope_version;
     v.readiness = r ? await readiness(c, p, r, v.id) : [];
+    v.policy_impacts = await hasPermission(c, p, "schedule.read", w.company_id, w.site_id) ? await policyImpactHolds(c, p, v.id) : null;
   }
   const site = await visible(c, p, "Site", w.site_id),
     customer = await visible(c, p, "Organisation", w.customer_id);
@@ -1114,6 +1117,7 @@ export async function readWorkOrder(p: Principal, id: string) {
       financial_disposition: "PendingFinanceReview",
     },
   ]);
+  });
 }
 export async function listWorkOrders(p: Principal, input: unknown = {}) {
   const c = database();

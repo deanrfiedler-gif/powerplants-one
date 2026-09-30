@@ -667,3 +667,17 @@ export async function readPolicyEvidence(
     };
   });
 }
+
+// Online preparation for a dedicated reviewer/publisher. Full family validation
+// and complete workspace source visibility precede disclosure.
+export async function readPolicyFamily(p: Principal) {
+  return transaction(async c => {
+    await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [p.workspace_id]);
+    try { await policyAuthority(c, p, "schedule.policy.review"); }
+    catch (e) {
+      if (!(e instanceof AppError) || e.code !== "PolicyAuthorityRequired") throw e;
+      await policyAuthority(c, p, "schedule.policy.publish");
+    }
+    return loadPolicyChain(c, p.workspace_id);
+  });
+}
