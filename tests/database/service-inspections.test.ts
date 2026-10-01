@@ -24,6 +24,7 @@ import { recordCalibration } from "../../src/equipment/evidence";
 import { saveCs, readCs } from "../../src/shared/cs/service";
 import { rename } from "node:fs/promises";
 import { join } from "node:path";
+import { homedir } from "node:os";
 import {
   previewEquipmentChange,
   proposeEquipmentChange,
@@ -493,7 +494,8 @@ test("FI03 concurrent crew/procedures, stale saves, invalid units and inaccessib
     0,
   );
   const path = join(
-    process.env.PPO_DOCUMENT_DIRECTORY!,
+    process.env.PPO_DOCUMENT_DIRECTORY ??
+      join(homedir(), ".ppo-synthetic-documents"),
     f.tech.workspace_id,
     evidence.storage_id!,
   );
