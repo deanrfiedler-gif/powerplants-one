@@ -15,7 +15,7 @@ expect(config.database_name).toBe("ppo_synthetic_test");
 const root = resolve(process.env.PPO_STEP6_DIRECTORY!);
 expect(root.startsWith(resolve(process.cwd()))).toBe(false);
 const phase = process.env.PPO_STEP6_PHASE;
-expect(["prepare", "publish", "resolve", "rollback", "finish"]).toContain(phase);
+expect(["prepare", "publish", "resolve", "rollback", "finish", "history"]).toContain(phase);
 const hash = (v: string | Buffer) => createHash("sha256").update(v).digest("hex");
 type Saved = { source: ReturnSource; prepared: PreparedReturn; offline: OfflineProof; worker: string;
   policy?: Awaited<ReturnType<typeof publishReturnPolicy>> };
@@ -162,7 +162,7 @@ test(`Step 6 ${phase}: retained continuous service and compatible recovery`, asy
         await capture(offlinePage, info, "step6-rollback-retained");
         await writeFile(join(root, "review", "worker-rollback.json"), JSON.stringify(transition, null, 2));
       } finally { await context.close(); }
-    } else {
+    } else if (phase === "finish") {
       await call(page, "local-session", { profile: "coordinator" });
       await page.goto(`/service/appointments/${saved.prepared.aid}`);
       await resolveReturn(page, info, saved.prepared.aid, false);
@@ -175,6 +175,49 @@ test(`Step 6 ${phase}: retained continuous service and compatible recovery`, asy
         await offlinePage.goto("/offline/index.html");
         expect((await offlineRows(offlinePage)).map(r => r.original)).toEqual(saved.offline.originals);
       } finally { await context.close(); }
+    } else {
+      const completed = JSON.parse(await readFile(join(root, "review", "completed-return.json"), "utf8"));
+      await call(page, "local-session", { profile: "second-technician" });
+      await page.goto(`/my-jobs/${saved.source.appointment_id}`);
+      await expect(page.getByText(/SYN corrected finding/).first()).toBeVisible();
+      await page.goto(`/service/reports/${saved.source.report_id}`);
+      await expect(page.getByRole("heading", { name: /Revision 2 · Issued/ })).toBeVisible();
+      await identity(page, "assigned-technician");
+      await page.goto(`/my-jobs/${completed.appointment_id}`);
+      await expect(page.getByRole("heading", { name: "Saved evidence and corrections", exact: true })).toBeVisible();
+      expect((await call(page, `my-jobs/${completed.appointment_id}`)).items[0].attendance).toBeNull();
+      await capture(page, info, "step6-after-restart-next-technician-history");
+      await page.goto(`/service/reports/${completed.report_id}`);
+      await expect(page.getByRole("heading", { name: /Revision 1 · Issued/ })).toBeVisible();
+      const report = (await call(page, `reports/${completed.report_id}`)).items[0];
+      expect(report.responses).toEqual([]);
+      expect(report.work_order.status).toBe("Authorised");
+      await identity(page, "coordinator");
+      expect((await call(page, `reports/${saved.source.report_id}`)).items[0].responses[0].response).toBe("AcceptedWithReservations");
+      for (const [path, sha256] of Object.entries({ ...completed.preserved_outputs, ...completed.return_outputs })) {
+        if (path.startsWith("finance/")) continue;
+        const r = await page.request.get(`/api/v1/${path}`); expect(r.ok()).toBe(true);
+        expect(hash(await r.body())).toBe(sha256);
+      }
+      await identity(page, "finance-reconciler");
+      const finance = await call(page, `finance/handoffs/${saved.source.finance.handoff_id}`);
+      expect(finance.handoff).toEqual(saved.prepared.priorFinance.handoff);
+      expect(finance.targets).toEqual(saved.prepared.priorFinance.targets);
+      for (const [path, sha256] of Object.entries(saved.prepared.priorFinanceBytes)) {
+        const r = await page.request.get(`/api/v1/${path}`); expect(r.ok()).toBe(true);
+        expect(hash(await r.body())).toBe(sha256);
+      }
+      const originalContext = await persistent(info, "initial-profile");
+      try {
+        const originalPage = originalContext.pages()[0];
+        await call(originalPage, "local-session", { profile: "assigned-technician" });
+        await originalPage.goto("/offline/index.html");
+        await originalPage.getByRole("button", { name: "Verify identity online", exact: true }).click();
+        await expect(originalPage.locator("#notice")).toContainText("Identity verified");
+        const originals = JSON.parse(await readFile(join(root, "private", "initial-originals.json"), "utf8"));
+        expect((await offlineRows(originalPage)).map(r => r.original)).toEqual(originals);
+        await expect(originalPage.locator("#queue .status")).toHaveText(Array(5).fill("Server accepted and saved"));
+      } finally { await originalContext.close(); }
     }
   }
   expect(errors).toEqual([]);

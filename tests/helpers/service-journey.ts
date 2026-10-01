@@ -89,16 +89,17 @@ export async function serviceJourney(
       page.getByText("Current applicable issue", { exact: true }),
     ).toBeVisible();
     await openPersonalJob();
+    const acknowledge = page.getByRole("button", {
+      name: "I have read and acknowledge this exact pack", exact: true,
+    });
+    // As in preparation/return acknowledgement, scrolling compacts the timer
+    // header. Observe that layout before measuring the pointer target.
+    await acknowledge.scrollIntoViewIfNeeded();
+    await expect(page.locator("#ppo-work-timer .head")).toHaveAttribute("data-compact", "1");
     await committed(
       page,
       `pack-issues/${source.current_issue_id}/acknowledge`,
-      () =>
-        page
-          .getByRole("button", {
-            name: "I have read and acknowledge this exact pack",
-            exact: true,
-          })
-          .click(),
+      () => acknowledge.click(),
     );
     await capture(page, info, `journey-personal-ack-${profile}`);
   }
