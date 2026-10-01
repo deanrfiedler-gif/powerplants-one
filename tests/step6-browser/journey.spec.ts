@@ -235,12 +235,13 @@ test(`Step 6 ${phase}: retained continuous service and compatible recovery`, asy
       await call(page, "local-session", { profile: "coordinator" });
       const before = (await call(page, `appointments/${saved.prepared.aid}`))
         .items[0];
-      saved.policy = await publishReturnPolicy(
-        page,
-        info,
-        saved.source,
-        saved.prepared,
-      );
+      if (!saved.policy)
+        saved.policy = await publishReturnPolicy(
+          page,
+          info,
+          saved.source,
+          saved.prepared,
+        );
       const after = saved.policy.held;
       for (const key of [
         "scheduling_policy_id",
@@ -251,6 +252,7 @@ test(`Step 6 ${phase}: retained continuous service and compatible recovery`, asy
         "assignment_version",
       ])
         expect(after[key], key).toEqual(before[key]);
+      await save(saved);
       await held(page, saved.prepared.aid, info);
       const context = await persistent(info, "return-profile");
       try {

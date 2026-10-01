@@ -97,8 +97,9 @@ export async function publishReturnPolicy(
     })
     .click();
   const refused = await refusal;
-  expect(refused.status()).toBe(409);
+  expect(refused.status()).toBe(422);
   const stale = await refused.json();
+  expect(stale.code).toBe("ValidationFailed");
   await expect(page.getByText(/Publication was not accepted/)).toBeVisible();
   await capture(page, info, "step6-stale-review-refused");
   const reviewed = await review(page, proposal);
@@ -164,11 +165,9 @@ export async function publishReturnPolicy(
     exact: true,
   });
   await region.getByText("Exact accepted receipt", { exact: true }).click();
-  const impact = region
-    .locator("article")
-    .filter({
-      has: page.locator(`a[href='/service/appointments/${saved.aid}']`),
-    });
+  const impact = region.locator("article").filter({
+    has: page.locator(`a[href='/service/appointments/${saved.aid}']`),
+  });
   await expect(impact.getByText(/Start held/)).toBeVisible();
   const activity = await impact
     .getByRole("link", { name: "Open owned Activity", exact: true })
