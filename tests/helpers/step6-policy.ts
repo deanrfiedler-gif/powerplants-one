@@ -99,7 +99,7 @@ export async function publishReturnPolicy(
   const refused = await refusal;
   expect(refused.status()).toBe(422);
   const stale = await refused.json();
-  expect(stale.code).toBe("ValidationFailed");
+  expect(stale.code).toBe("InvalidData");
   await expect(page.getByText(/Publication was not accepted/)).toBeVisible();
   await capture(page, info, "step6-stale-review-refused");
   const reviewed = await review(page, proposal);
