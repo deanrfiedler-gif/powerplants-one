@@ -74,6 +74,11 @@ async function held(page: Page, aid: string, info: TestInfo) {
 }
 test.afterAll(closeDatabase);
 test(`Step 6 ${phase}: retained continuous service and compatible recovery`, async ({ page }, info) => {
+  // Starting a process is not HTTP readiness. The operator separately records
+  // ownership/release; wait for that compiled listener before any business call.
+  await expect.poll(async () => {
+    try { return (await page.request.get("/")).ok(); } catch { return false; }
+  }, { timeout: 60000 }).toBe(true);
   await mkdir(join(root, "private"), { recursive: true });
   await mkdir(join(root, "review"), { recursive: true });
   const errors: string[] = [];
