@@ -15561,22 +15561,20 @@
       "title": "Inspection and commissioning form runner",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Implemented synthetic online workflow",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-10-01",
+      "source_commit": "feb01e57c1ffdab0a5f8d1a5664ab5144bd37ccd",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "docs/testing/evidence/service-inspections/README.md",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Inspection and commissioning form runner to work towards this outcome: Results are tied to the correct template and context.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "Never manufacture a pass or measured value to satisfy a required field."
+            "Capture and independently review exact synthetic Service procedures against real appointments, equipment occurrences and issued scope. EN-08 retains its separate Engineering host."
           ],
           "steps": [],
           "rows": [],
@@ -15586,9 +15584,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Exact template, test item, criteria, units, photographs and instrument.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Capture needs current assignment, personal actual attendance, acknowledged issued pack, authorised scope and applicable FI-05 preparation. Read access alone permits no capture.",
+            "Review needs scoped report authority, Service work-order editing authority and named Service ownership. The performer cannot independently review their own attempt."
           ],
           "steps": [],
           "rows": [],
@@ -15597,56 +15594,29 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Confirm the applicable template and test basis",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Open My inspections for an assigned visit, or Inspection review for submitted permitted visits. Confirm identity and context. Choose exact procedure version, equipment/task and initial attempt or retained predecessor. Inspect the source and preparation before opening."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Inspection and commissioning form runner · Page + mobile flow"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Visit context links to My Jobs and Preparation. Exact procedure sources, attempt history, evidence, owned defects and retained outputs remain distinct. Every record is checked against current server authority."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Exact template, test item, criteria, units, photographs and instrument.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Record raw value, unit, actual test time and instrument. Only listed conversions and precision apply. Missing criteria and unknown applicability remain outstanding.",
+            "Retain a suitable instrument and exact calibration at use. Later renewal cannot repair historical evidence. Originals support verified PNG up to 4 MiB or plain text up to 64 KiB."
           ],
           "steps": [],
           "rows": [],
@@ -15656,13 +15626,10 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
+            "Save the draft before submitting. Attach originals to their exact checks. Submission freezes the attempt and atomically creates or reuses required owned defects and corrective Activities.",
+            "Review exact frozen evidence: accept, return, request clarification or hold with a reason and follow-up owner/date. A defect owner records correction; a fresh linked retest gets fresh readings/evidence and independent review."
           ],
-          "steps": [
-            "Confirm the applicable template and test basis",
-            "Capture observations with units and instrument evidence",
-            "Submit a complete attributable inspection record"
-          ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
@@ -15670,9 +15637,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Results are tied to the correct template and context.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Never manufacture a pass or measured value to satisfy a required field."
+            "Only a correctly linked, passing, independently accepted retest closes its defect. Completing an Activity alone closes no defect.",
+            "The permitted Service owner may issue an internal scoped HTML/PDF outcome. It completes no appointment, work order, Project, customer acceptance or Finance process. FI-06 incident clearance and general template authoring are unavailable."
           ],
           "steps": [],
           "rows": [],
@@ -15681,45 +15647,18 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Saved server drafts, unsaved browser entries, saving, stale-version conflict and uncertain original are separate. New source/configuration/readiness findings retain history while withdrawing current applicability."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare exact template, test item, criteria, units, photographs and instrument. Follow the task sequence and check that results are tied to the correct template and context. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Inspection and commissioning form runner has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Never manufacture a pass or measured value to satisfy a required field."
+            "Synthetic 120 kPa fails the fictional 180–260 kPa criterion. Retain correction and a new 215 kPa retest with fresh evidence for independent acceptance. These limits are not engineering approval."
           ],
           "steps": [],
           "rows": [],
@@ -15728,45 +15667,20 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "Keep the current tab after uncertain transport. Check the original receipt or retry the unchanged original; do not create another action. Same-tab reload retains recovery, but closing the tab or clearing storage removes that browser copy.",
+            "Conflict retains entries; compare the newer saved record before explicit version adoption. Resolve unreadable documents, preparation and authority before a new action."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Fields and evidence wrap at 390/320 px. Tab/Shift+Tab reach labelled controls; Enter operates native details/buttons. Closing the global guide returns focus.",
+            "Inspection capture is online only. Disconnection leaves unsent input in memory; reconnect and inspect saved state. Existing Offline workspace operations remain separately governed."
           ],
           "steps": [],
           "rows": [],
@@ -15776,8 +15690,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "See the Service inspection decision, F02-A acceptance requirements, field programme handover and exact verification evidence. Retained Quality r01 is a proposed reference; accepted native desktop/phone images are missing."
           ],
           "steps": [],
           "rows": [],
@@ -15787,9 +15700,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide. Independent owner, visual, physical-device and screen-reader acceptance remain pending. Functional evidence, screenshots and commits do not grant approval."
           ],
           "steps": [],
           "rows": [],
@@ -15805,9 +15716,15 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
-        "docs/delivery/p07-handover.md"
+        "docs/delivery/p07-handover.md",
+        "src/inspections/service-screen.tsx",
+        "src/app/service-inspections.css",
+        "src/inspections/service-context.ts",
+        "src/inspections/service-commands.ts",
+        "docs/decisions/service-inspections.md",
+        "docs/testing/evidence/service-inspections/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Native FI-03/FI-04 capture, review, correction/retest and internal outcome; acceptance remains pending.",
       "document_id": "PPO-GUIDE-FI-03",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -15817,7 +15734,8 @@
       "workflow_basis": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
-        "docs/delivery/p07-handover.md"
+        "docs/delivery/p07-handover.md",
+        "docs/decisions/service-inspections.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -15828,22 +15746,20 @@
       "title": "Inspection review, defects and retests",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Implemented synthetic online workflow",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-10-01",
+      "source_commit": "feb01e57c1ffdab0a5f8d1a5664ab5144bd37ccd",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "docs/testing/evidence/service-inspections/README.md",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Inspection review, defects and retests to work towards this outcome: Every defect has a reviewed disposition.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "A retest supplements the original failure; it must not erase that history."
+            "Capture and independently review exact synthetic Service procedures against real appointments, equipment occurrences and issued scope. EN-08 retains its separate Engineering host."
           ],
           "steps": [],
           "rows": [],
@@ -15853,9 +15769,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Inspection revision, defects, criteria, corrective work and retest evidence.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Capture needs current assignment, personal actual attendance, acknowledged issued pack, authorised scope and applicable FI-05 preparation. Read access alone permits no capture.",
+            "Review needs scoped report authority, Service work-order editing authority and named Service ownership. The performer cannot independently review their own attempt."
           ],
           "steps": [],
           "rows": [],
@@ -15864,56 +15779,29 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Review the submitted results and exceptions",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Open My inspections for an assigned visit, or Inspection review for submitted permitted visits. Confirm identity and context. Choose exact procedure version, equipment/task and initial attempt or retained predecessor. Inspect the source and preparation before opening."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Inspection review, defects and retests · Page"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Visit context links to My Jobs and Preparation. Exact procedure sources, attempt history, evidence, owned defects and retained outputs remain distinct. Every record is checked against current server authority."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Inspection revision, defects, criteria, corrective work and retest evidence.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Record raw value, unit, actual test time and instrument. Only listed conversions and precision apply. Missing criteria and unknown applicability remain outstanding.",
+            "Retain a suitable instrument and exact calibration at use. Later renewal cannot repair historical evidence. Originals support verified PNG up to 4 MiB or plain text up to 64 KiB."
           ],
           "steps": [],
           "rows": [],
@@ -15923,13 +15811,10 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
+            "Save the draft before submitting. Attach originals to their exact checks. Submission freezes the attempt and atomically creates or reuses required owned defects and corrective Activities.",
+            "Review exact frozen evidence: accept, return, request clarification or hold with a reason and follow-up owner/date. A defect owner records correction; a fresh linked retest gets fresh readings/evidence and independent review."
           ],
-          "steps": [
-            "Review the submitted results and exceptions",
-            "Assign corrective actions and any hold/release decision",
-            "Retain original and retest outcomes separately"
-          ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
@@ -15937,9 +15822,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Every defect has a reviewed disposition.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A retest supplements the original failure; it must not erase that history."
+            "Only a correctly linked, passing, independently accepted retest closes its defect. Completing an Activity alone closes no defect.",
+            "The permitted Service owner may issue an internal scoped HTML/PDF outcome. It completes no appointment, work order, Project, customer acceptance or Finance process. FI-06 incident clearance and general template authoring are unavailable."
           ],
           "steps": [],
           "rows": [],
@@ -15948,45 +15832,18 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Saved server drafts, unsaved browser entries, saving, stale-version conflict and uncertain original are separate. New source/configuration/readiness findings retain history while withdrawing current applicability."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare inspection revision, defects, criteria, corrective work and retest evidence. Follow the task sequence and check that every defect has a reviewed disposition. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Inspection review, defects and retests has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A retest supplements the original failure; it must not erase that history."
+            "Synthetic 120 kPa fails the fictional 180–260 kPa criterion. Retain correction and a new 215 kPa retest with fresh evidence for independent acceptance. These limits are not engineering approval."
           ],
           "steps": [],
           "rows": [],
@@ -15995,45 +15852,20 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "Keep the current tab after uncertain transport. Check the original receipt or retry the unchanged original; do not create another action. Same-tab reload retains recovery, but closing the tab or clearing storage removes that browser copy.",
+            "Conflict retains entries; compare the newer saved record before explicit version adoption. Resolve unreadable documents, preparation and authority before a new action."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Fields and evidence wrap at 390/320 px. Tab/Shift+Tab reach labelled controls; Enter operates native details/buttons. Closing the global guide returns focus.",
+            "Inspection capture is online only. Disconnection leaves unsent input in memory; reconnect and inspect saved state. Existing Offline workspace operations remain separately governed."
           ],
           "steps": [],
           "rows": [],
@@ -16043,8 +15875,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "See the Service inspection decision, F02-A acceptance requirements, field programme handover and exact verification evidence. Retained Quality r01 is a proposed reference; accepted native desktop/phone images are missing."
           ],
           "steps": [],
           "rows": [],
@@ -16054,9 +15885,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide. Independent owner, visual, physical-device and screen-reader acceptance remain pending. Functional evidence, screenshots and commits do not grant approval."
           ],
           "steps": [],
           "rows": [],
@@ -16069,9 +15898,15 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
-        "docs/delivery/p07-handover.md"
+        "docs/delivery/p07-handover.md",
+        "src/inspections/service-screen.tsx",
+        "src/app/service-inspections.css",
+        "src/inspections/service-context.ts",
+        "src/inspections/service-commands.ts",
+        "docs/decisions/service-inspections.md",
+        "docs/testing/evidence/service-inspections/README.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Native FI-03/FI-04 capture, review, correction/retest and internal outcome; acceptance remains pending.",
       "document_id": "PPO-GUIDE-FI-04",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -16081,7 +15916,8 @@
       "workflow_basis": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
-        "docs/delivery/p07-handover.md"
+        "docs/delivery/p07-handover.md",
+        "docs/decisions/service-inspections.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -70046,6 +69882,336 @@
         }
       ],
       "runtime_evidence": "Step 6 integrated update/restart/compatible rollback and service-return evidence: docs/testing/evidence/scheduling-step6/README.md. Independent visual/owner/device acceptance remains pending."
+    },
+    {
+      "guide_key": "guide.route-my-jobs-inspections",
+      "entry_key": "route:/my-jobs/inspections",
+      "title": "my jobs / inspections",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Implemented synthetic online workflow",
+      "source_commit": "feb01e57c1ffdab0a5f8d1a5664ab5144bd37ccd",
+      "related_entry_keys": [],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Capture and independently review exact synthetic Service procedures against real appointments, equipment occurrences and issued scope. EN-08 retains its separate Engineering host."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Capture needs current assignment, personal actual attendance, acknowledged issued pack, authorised scope and applicable FI-05 preparation. Read access alone permits no capture.",
+            "Review needs scoped report authority, Service work-order editing authority and named Service ownership. The performer cannot independently review their own attempt."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [
+            "Open My inspections for an assigned visit, or Inspection review for submitted permitted visits. Confirm identity and context. Choose exact procedure version, equipment/task and initial attempt or retained predecessor. Inspect the source and preparation before opening."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [
+            "Visit context links to My Jobs and Preparation. Exact procedure sources, attempt history, evidence, owned defects and retained outputs remain distinct. Every record is checked against current server authority."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "Record raw value, unit, actual test time and instrument. Only listed conversions and precision apply. Missing criteria and unknown applicability remain outstanding.",
+            "Retain a suitable instrument and exact calibration at use. Later renewal cannot repair historical evidence. Originals support verified PNG up to 4 MiB or plain text up to 64 KiB."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [
+            "Save the draft before submitting. Attach originals to their exact checks. Submission freezes the attempt and atomically creates or reuses required owned defects and corrective Activities.",
+            "Review exact frozen evidence: accept, return, request clarification or hold with a reason and follow-up owner/date. A defect owner records correction; a fresh linked retest gets fresh readings/evidence and independent review."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Only a correctly linked, passing, independently accepted retest closes its defect. Completing an Activity alone closes no defect.",
+            "The permitted Service owner may issue an internal scoped HTML/PDF outcome. It completes no appointment, work order, Project, customer acceptance or Finance process. FI-06 incident clearance and general template authoring are unavailable."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [
+            "Saved server drafts, unsaved browser entries, saving, stale-version conflict and uncertain original are separate. New source/configuration/readiness findings retain history while withdrawing current applicability."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "examples",
+          "title": "Worked examples",
+          "paragraphs": [
+            "Synthetic 120 kPa fails the fictional 180–260 kPa criterion. Retain correction and a new 215 kPa retest with fresh evidence for independent acceptance. These limits are not engineering approval."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "Keep the current tab after uncertain transport. Check the original receipt or retry the unchanged original; do not create another action. Same-tab reload retains recovery, but closing the tab or clearing storage removes that browser copy.",
+            "Conflict retains entries; compare the newer saved record before explicit version adoption. Resolve unreadable documents, preparation and authority before a new action."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline use",
+          "paragraphs": [
+            "Fields and evidence wrap at 390/320 px. Tab/Shift+Tab reach labelled controls; Enter operates native details/buttons. Closing the global guide returns focus.",
+            "Inspection capture is online only. Disconnection leaves unsent input in memory; reconnect and inspect saved state. Existing Offline workspace operations remain separately governed."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related guidance and procedures",
+          "paragraphs": [
+            "See the Service inspection decision, F02-A acceptance requirements, field programme handover and exact verification evidence. Retained Quality r01 is a proposed reference; accepted native desktop/phone images are missing."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "review",
+          "title": "Guide review and feedback",
+          "paragraphs": [
+            "Draft guide. Independent owner, visual, physical-device and screen-reader acceptance remain pending. Functional evidence, screenshots and commits do not grant approval."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ],
+      "prepared_at": "2026-10-01",
+      "runtime_evidence": "docs/testing/evidence/service-inspections/README.md",
+      "change_summary": "Native FI-03/FI-04 capture, review, correction/retest and internal outcome; acceptance remains pending.",
+      "workflow_basis": [
+        "docs/decisions/service-inspections.md"
+      ],
+      "source_paths": [
+        "src/inspections/service-screen.tsx",
+        "src/app/service-inspections.css",
+        "src/inspections/service-context.ts",
+        "src/inspections/service-commands.ts",
+        "docs/decisions/service-inspections.md",
+        "docs/testing/evidence/service-inspections/README.md"
+      ]
+    },
+    {
+      "guide_key": "guide.route-service-inspections",
+      "entry_key": "route:/service/inspections",
+      "title": "service / inspections",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Implemented synthetic online workflow",
+      "source_commit": "feb01e57c1ffdab0a5f8d1a5664ab5144bd37ccd",
+      "related_entry_keys": [],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Capture and independently review exact synthetic Service procedures against real appointments, equipment occurrences and issued scope. EN-08 retains its separate Engineering host."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Capture needs current assignment, personal actual attendance, acknowledged issued pack, authorised scope and applicable FI-05 preparation. Read access alone permits no capture.",
+            "Review needs scoped report authority, Service work-order editing authority and named Service ownership. The performer cannot independently review their own attempt."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [
+            "Open My inspections for an assigned visit, or Inspection review for submitted permitted visits. Confirm identity and context. Choose exact procedure version, equipment/task and initial attempt or retained predecessor. Inspect the source and preparation before opening."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [
+            "Visit context links to My Jobs and Preparation. Exact procedure sources, attempt history, evidence, owned defects and retained outputs remain distinct. Every record is checked against current server authority."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "Record raw value, unit, actual test time and instrument. Only listed conversions and precision apply. Missing criteria and unknown applicability remain outstanding.",
+            "Retain a suitable instrument and exact calibration at use. Later renewal cannot repair historical evidence. Originals support verified PNG up to 4 MiB or plain text up to 64 KiB."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [
+            "Save the draft before submitting. Attach originals to their exact checks. Submission freezes the attempt and atomically creates or reuses required owned defects and corrective Activities.",
+            "Review exact frozen evidence: accept, return, request clarification or hold with a reason and follow-up owner/date. A defect owner records correction; a fresh linked retest gets fresh readings/evidence and independent review."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Only a correctly linked, passing, independently accepted retest closes its defect. Completing an Activity alone closes no defect.",
+            "The permitted Service owner may issue an internal scoped HTML/PDF outcome. It completes no appointment, work order, Project, customer acceptance or Finance process. FI-06 incident clearance and general template authoring are unavailable."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [
+            "Saved server drafts, unsaved browser entries, saving, stale-version conflict and uncertain original are separate. New source/configuration/readiness findings retain history while withdrawing current applicability."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "examples",
+          "title": "Worked examples",
+          "paragraphs": [
+            "Synthetic 120 kPa fails the fictional 180–260 kPa criterion. Retain correction and a new 215 kPa retest with fresh evidence for independent acceptance. These limits are not engineering approval."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "Keep the current tab after uncertain transport. Check the original receipt or retry the unchanged original; do not create another action. Same-tab reload retains recovery, but closing the tab or clearing storage removes that browser copy.",
+            "Conflict retains entries; compare the newer saved record before explicit version adoption. Resolve unreadable documents, preparation and authority before a new action."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline use",
+          "paragraphs": [
+            "Fields and evidence wrap at 390/320 px. Tab/Shift+Tab reach labelled controls; Enter operates native details/buttons. Closing the global guide returns focus.",
+            "Inspection capture is online only. Disconnection leaves unsent input in memory; reconnect and inspect saved state. Existing Offline workspace operations remain separately governed."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related guidance and procedures",
+          "paragraphs": [
+            "See the Service inspection decision, F02-A acceptance requirements, field programme handover and exact verification evidence. Retained Quality r01 is a proposed reference; accepted native desktop/phone images are missing."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "review",
+          "title": "Guide review and feedback",
+          "paragraphs": [
+            "Draft guide. Independent owner, visual, physical-device and screen-reader acceptance remain pending. Functional evidence, screenshots and commits do not grant approval."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ],
+      "prepared_at": "2026-10-01",
+      "runtime_evidence": "docs/testing/evidence/service-inspections/README.md",
+      "change_summary": "Native FI-03/FI-04 capture, review, correction/retest and internal outcome; acceptance remains pending.",
+      "workflow_basis": [
+        "docs/decisions/service-inspections.md"
+      ],
+      "source_paths": [
+        "src/inspections/service-screen.tsx",
+        "src/app/service-inspections.css",
+        "src/inspections/service-context.ts",
+        "src/inspections/service-commands.ts",
+        "docs/decisions/service-inspections.md",
+        "docs/testing/evidence/service-inspections/README.md"
+      ]
     }
   ]
 }

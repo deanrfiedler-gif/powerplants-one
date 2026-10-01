@@ -1,0 +1,32 @@
+{
+  "references": [
+    {
+      "name": "quality-r01",
+      "path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
+      "sha256": "7f0e7531c2f4b8d592e4e269225d45da0d870db4361879465149164eb4cf9db3",
+      "tokens": {
+        "--line-strong": "",
+        "--focus": "",
+        "--radius-card": ""
+      }
+    },
+    {
+      "name": "theme-r20",
+      "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r20.html",
+      "sha256": "c68a499e857b1705d47bd6598d4b2e89526bf0861a0d234394c3da023f19b617",
+      "tokens": {
+        "--line-strong": "#dce2e9",
+        "--focus": "#365d8b",
+        "--radius-card": "7px"
+      }
+    }
+  ],
+  "native": {
+    "--line-strong": "#dce2e9",
+    "--focus": "#365d8b",
+    "--radius-card": "8px"
+  },
+  "result": "Passed bounded source/token comparison",
+  "adaptations": "Existing shared shell and 8px card token; separate real-appointment FI03/FI04 routes replace the proposed combined Quality/incident workspace. No FI06 or owner baseline adoption.",
+  "acceptance": "Independent visual/owner/device/screen-reader acceptance pending"
+}

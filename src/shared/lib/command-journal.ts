@@ -13,11 +13,11 @@ export type JournalEntry = {
 export type StoragePort = Pick<Storage, "getItem" | "setItem" | "removeItem">;
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 export const sameScope = (a: CommandScope, b: CommandScope) => a.actor_id === b.actor_id && a.workspace_id === b.workspace_id;
-export function readJournal(storage: StoragePort, key: string, scope: CommandScope, accepts: (entry: JournalEntry) => boolean): JournalEntry | null {
+export function readJournal(storage: StoragePort, key: string, scope: CommandScope, accepts: (entry: JournalEntry) => boolean, limit = 32768): JournalEntry | null {
   const raw = storage.getItem(key);
   if (!raw) return null;
   try {
-    if (raw.length > 32768) throw Error();
+    if (raw.length > limit) throw Error();
     const e = JSON.parse(raw) as JournalEntry;
     if (e.version !== 1 || !uuid.test(e.scope?.actor_id) || !uuid.test(e.scope?.workspace_id)) throw Error();
     // An identity mismatch exposes none of the previous actor's content.
@@ -30,10 +30,10 @@ export function readJournal(storage: StoragePort, key: string, scope: CommandSco
     throw Error("The same-tab recovery record is unreadable. No new command has been sent. Inspect the saved record before clearing recovery data.");
   }
 }
-export function writeJournal(storage: StoragePort, key: string, entry: JournalEntry, accepts: (entry: JournalEntry) => boolean) {
+export function writeJournal(storage: StoragePort, key: string, entry: JournalEntry, accepts: (entry: JournalEntry) => boolean, limit = 32768) {
   const raw = JSON.stringify(entry);
-  if (raw.length > 32768 || !accepts(entry)) throw Error("The recovery record exceeds its supported bounds. No command was sent.");
-  const previous = readJournal(storage, key, entry.scope, accepts);
+  if (raw.length > limit || !accepts(entry)) throw Error("The recovery record exceeds its supported bounds. No command was sent.");
+  const previous = readJournal(storage, key, entry.scope, accepts, limit);
   if (previous && JSON.stringify(previous) !== raw) throw Error("Resolve the original pending operation before starting another saved action.");
   storage.setItem(key, raw);
   if (storage.getItem(key) !== raw) throw Error("Same-tab recovery storage could not be verified. No command was sent.");

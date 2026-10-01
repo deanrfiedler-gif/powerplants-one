@@ -162,7 +162,11 @@
         "route:/my-jobs/[id]",
         "route:/schedule/policy-impact",
         "route:/service/appointments/[id]",
-        "route:/work/[id]"
+        "route:/work/[id]",
+        "scope:FI-03",
+        "scope:FI-04",
+        "route:/my-jobs/inspections",
+        "route:/service/inspections"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -826,7 +830,11 @@
         "route:/my-jobs/site-readiness",
         "route:/schedule/policy-impact",
         "route:/service/appointments/[id]",
-        "route:/work/[id]"
+        "route:/work/[id]",
+        "scope:FI-03",
+        "scope:FI-04",
+        "route:/my-jobs/inspections",
+        "route:/service/inspections"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -1014,7 +1022,11 @@
         "scope:EQ-08",
         "scope:EQ-09",
         "scope:FI-05",
-        "route:/my-jobs/site-readiness"
+        "route:/my-jobs/site-readiness",
+        "scope:FI-03",
+        "scope:FI-04",
+        "route:/my-jobs/inspections",
+        "route:/service/inspections"
       ],
       "desktop": "Submit an empty title to focus the summary, then follow its link to the field. Correct the title and save to clear the example error.",
       "mobile": "Summary and inline errors must remain visible at 320 px and 200% zoom.",
@@ -1403,7 +1415,9 @@
         "src/development/component-fixtures.ts",
         "src/app/styles/customers.css",
         "src/components/work-timer.tsx",
-        "src/app/styles/work-timer.css"
+        "src/app/styles/work-timer.css",
+        "src/shared/lib/command-journal.ts",
+        "src/shared/ui/use-recoverable-command.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -1461,7 +1475,11 @@
         "route:/my-jobs/[id]",
         "route:/schedule/policy-impact",
         "route:/service/appointments/[id]",
-        "route:/work/[id]"
+        "route:/work/[id]",
+        "scope:FI-03",
+        "scope:FI-04",
+        "route:/my-jobs/inspections",
+        "route:/service/inspections"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -1505,6 +1523,14 @@
           "expected": "Accepted r05 timer in its real shell with shared controls.",
           "actual": "Native timer and browser comparison added; owner/device and assistive-technology review pending.",
           "action": "Inspect paired captures and real fixture states; retain source bytes and do not infer review from test passes.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "service-inspection-recovery",
+          "expected": "Retain bounded exact originals before transport.",
+          "actual": "Service evidence journal uses an explicit size limit; other consumers retain 32 KiB.",
+          "action": "Verify same-tab recovery, quota refusal and identity changes in the host fixture.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2469,6 +2495,94 @@
           "expected": "Review native immutable proposal, complete evaluation, publication, recovery and owned handovers at 1440/1024/390/320 CSS px.",
           "actual": "New composition is implementation/proposed evidence with no accepted editor mockup.",
           "action": "Inspect retained Step 5 captures separately from owner, physical-device and accessibility acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "service-inspections",
+      "title": "Service inspection journey",
+      "category": "Forms",
+      "module": "FI",
+      "purpose": "Exact appointment inspection drafts, independent review and retained retests.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "draft",
+          "label": "Draft",
+          "description": "Saved and unsaved raw readings with exact basis."
+        },
+        {
+          "id": "conflict",
+          "label": "Conflict",
+          "description": "Explicit current-version adoption retains local entries."
+        },
+        {
+          "id": "uncertain",
+          "label": "Uncertain result",
+          "description": "Recover original ID and payload."
+        },
+        {
+          "id": "returned",
+          "label": "Returned",
+          "description": "Original submission and owned correction retained."
+        },
+        {
+          "id": "retest",
+          "label": "Fresh retest",
+          "description": "Independent acceptance of correctly linked evidence."
+        },
+        {
+          "id": "issued",
+          "label": "Retained outcome",
+          "description": "Exact internal bytes and separate current applicability."
+        },
+        {
+          "id": "disconnected",
+          "label": "Disconnected",
+          "description": "No offline inspection protocol; unsent input is not saved."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/inspections/service-screen.tsx",
+          "symbol": "ServiceInspectionScreen"
+        }
+      ],
+      "dependencies": [
+        "src/inspections/service-screen.tsx",
+        "src/app/service-inspections.css",
+        "src/inspections/service-context.ts",
+        "src/inspections/service-commands.ts",
+        "docs/decisions/service-inspections.md",
+        "docs/testing/evidence/service-inspections/README.md"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
+        "anchor": "inspection-form",
+        "status": "Proposed Quality reference; native Service adaptation pending independent review"
+      },
+      "specification": "docs/design/development/components/service-inspections.md",
+      "used_on": [
+        "scope:FI-03",
+        "scope:FI-04",
+        "route:/my-jobs/inspections",
+        "route:/service/inspections"
+      ],
+      "desktop": "Padded shell, wrapped cards and two-column fields at 1440/1024; one shell content scroll owner.",
+      "mobile": "Stack 390/320; 16 px inputs, 44 px controls; verify actual 200% zoom.",
+      "keyboard": "Native labels, fieldsets, details and buttons; validation retains input; guide focus returns.",
+      "limitations": "Real permitted synthetic appointment/database/issued pack required. No isolated renderer or offline queue. Owner/device/screen-reader acceptance pending.",
+      "gaps": [
+        {
+          "id": "service-inspection-native-adaptation",
+          "expected": "Accepted native desktop/phone compositions.",
+          "actual": "Proposed Quality r01 adapted to existing shell; accepted images missing.",
+          "action": "Review compiled captures and states independently before adopting a baseline.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

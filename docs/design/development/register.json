@@ -2658,29 +2658,38 @@
       "title": "Inspection and commissioning form runner",
       "kind": "scope",
       "module": "FI",
-      "summary": "Implement reusable inspection/commissioning form execution with versioned templates, units, criteria, photographs and instrument evidence.",
+      "summary": "Persisted Service appointment procedure capture with exact versioned basis, raw readings and durable drafts.",
       "path": "/my-jobs/inspections",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/inspections/service-screen.tsx"
       ],
       "guide_key": "guide.fi.03",
       "design_path": "docs/design/development/pages/scope-fi-03.md",
       "html_path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/inspections/service-screen.tsx",
+        "src/app/service-inspections.css",
+        "src/inspections/service-context.ts",
+        "src/inspections/service-commands.ts",
+        "docs/decisions/service-inspections.md",
+        "docs/testing/evidence/service-inspections/README.md"
+      ],
+      "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "See docs/testing/evidence/service-inspections/README.md",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 63,
       "related_keys": [
-        "scope:SV-05",
-        "scope:EQ-09",
-        "scope:DK-06",
-        "scope:FI-05"
+        "scope:FI-04",
+        "route:/my-jobs/inspections",
+        "route:/service/inspections",
+        "scope:FI-05",
+        "scope:EQ-09"
       ],
       "reviewer": null
     },
@@ -2689,26 +2698,38 @@
       "title": "Inspection review, defects and retests",
       "kind": "scope",
       "module": "FI",
-      "summary": "Implement inspection review, defects, holds/releases, corrective action and retained retests.",
+      "summary": "Independent Service review, owned corrections, retained fresh retests and exact internal inspection output.",
       "path": "/service/inspections",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/inspections/service-screen.tsx"
       ],
       "guide_key": "guide.fi.04",
       "design_path": "docs/design/development/pages/scope-fi-04.md",
       "html_path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/inspections/service-screen.tsx",
+        "src/app/service-inspections.css",
+        "src/inspections/service-context.ts",
+        "src/inspections/service-commands.ts",
+        "docs/decisions/service-inspections.md",
+        "docs/testing/evidence/service-inspections/README.md"
+      ],
+      "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "See docs/testing/evidence/service-inspections/README.md",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 64,
       "related_keys": [
-        "scope:FI-03"
+        "scope:FI-03",
+        "route:/my-jobs/inspections",
+        "route:/service/inspections",
+        "scope:FI-05",
+        "scope:EQ-09"
       ],
       "reviewer": null
     },
@@ -10875,6 +10896,86 @@
         "scope:PL-01",
         "route:/service/appointments/[id]",
         "route:/work/[id]"
+      ]
+    },
+    {
+      "key": "route:/my-jobs/inspections",
+      "title": "my jobs / inspections",
+      "kind": "route",
+      "module": "FI",
+      "summary": "Persisted Service appointment procedure capture with exact versioned basis, raw readings and durable drafts.",
+      "path": "/my-jobs/inspections",
+      "source_paths": [
+        "src/app/(business)/my-jobs/inspections/page.tsx",
+        "src/inspections/service-screen.tsx"
+      ],
+      "guide_key": "guide.route-my-jobs-inspections",
+      "design_path": "docs/design/development/pages/route-my-jobs-inspections.md",
+      "html_path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/inspections/service-screen.tsx",
+        "src/app/service-inspections.css",
+        "src/inspections/service-context.ts",
+        "src/inspections/service-commands.ts",
+        "docs/decisions/service-inspections.md",
+        "docs/testing/evidence/service-inspections/README.md"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "See docs/testing/evidence/service-inspections/README.md",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:FI-03",
+        "scope:FI-04",
+        "route:/service/inspections",
+        "scope:FI-05",
+        "scope:EQ-09"
+      ]
+    },
+    {
+      "key": "route:/service/inspections",
+      "title": "service / inspections",
+      "kind": "route",
+      "module": "FI",
+      "summary": "Independent Service review, owned corrections, retained fresh retests and exact internal inspection output.",
+      "path": "/service/inspections",
+      "source_paths": [
+        "src/app/(business)/service/inspections/page.tsx",
+        "src/inspections/service-screen.tsx"
+      ],
+      "guide_key": "guide.route-service-inspections",
+      "design_path": "docs/design/development/pages/route-service-inspections.md",
+      "html_path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/inspections/service-screen.tsx",
+        "src/app/service-inspections.css",
+        "src/inspections/service-context.ts",
+        "src/inspections/service-commands.ts",
+        "docs/decisions/service-inspections.md",
+        "docs/testing/evidence/service-inspections/README.md"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "See docs/testing/evidence/service-inspections/README.md",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:FI-03",
+        "scope:FI-04",
+        "route:/my-jobs/inspections",
+        "scope:FI-05",
+        "scope:EQ-09"
       ]
     }
   ]

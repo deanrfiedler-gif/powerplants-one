@@ -9,12 +9,13 @@ type Options = {
   transport: <T>(path: string, body?: unknown) => Promise<T>; enabled?: boolean;
   // Opt-in for commands whose result identity is allocated by the server.
   acceptsReceipt?: (entry: JournalEntry, receipt: Receipt) => boolean;
+  journalLimit?: number;
 };
 const changed = "ppo-command-journal-changed";
 
 // Opt-in, one unresolved operation per key and tab. Only explicit retry sends
 // a retained body. Every restoration first reads the actor-bound server receipt.
-export function useRecoverableCommand({ key, scope, accepts, transport, enabled = true, acceptsReceipt }: Options) {
+export function useRecoverableCommand({ key, scope, accepts, transport, enabled = true, acceptsReceipt, journalLimit = 32768 }: Options) {
   const [pending, setPending] = useState<JournalEntry | null>(null);
   const [accepted, setAccepted] = useState<{ entry: JournalEntry; receipt: Receipt } | null>(null);
   const [error, setError] = useState<unknown>(null);
@@ -43,7 +44,7 @@ export function useRecoverableCommand({ key, scope, accepts, transport, enabled 
       setAccepted({ entry, receipt: result }); setPending(null);
       const minimal: JournalEntry = { ...entry, phase: "accepted", body: { operation_id: entry.body.operation_id, schema_version: 1 } };
       try {
-        const active = readJournal(sessionStorage, key, options.current.scope, options.current.accepts);
+        const active = readJournal(sessionStorage, key, options.current.scope, options.current.accepts, journalLimit);
         if (!active || active.body.operation_id === entry.body.operation_id) {
           const raw = JSON.stringify(minimal);
           const previous = sessionStorage.getItem(key + ":accepted");
@@ -80,8 +81,8 @@ export function useRecoverableCommand({ key, scope, accepts, transport, enabled 
     const load = (event?: Event) => {
       if (!enabled || !live.current) return;
       try {
-        const original = readJournal(sessionStorage, key, options.current.scope, options.current.accepts);
-        const saved = original ? null : readJournal(sessionStorage, key + ":accepted", options.current.scope, options.current.accepts);
+        const original = readJournal(sessionStorage, key, options.current.scope, options.current.accepts, journalLimit);
+        const saved = original ? null : readJournal(sessionStorage, key + ":accepted", options.current.scope, options.current.accepts, journalLimit);
         if ((original && original.phase !== "pending") || (saved && saved.phase !== "accepted")) throw Error("Recovery data has an invalid state. No new command was sent.");
         setPending(original); setReady(true);
         const entry = original ?? saved;
@@ -103,16 +104,16 @@ export function useRecoverableCommand({ key, scope, accepts, transport, enabled 
     window.addEventListener(changed, load);
     window.addEventListener("ppo-session-lock", lock);
     return () => { liveRef.current = false; generationRef.current++; window.removeEventListener(changed, load); window.removeEventListener("ppo-session-lock", lock); };
-  }, [key, scopeKey, enabled]);
+  }, [key, scopeKey, enabled, journalLimit]);
 
   async function send(path: string, fields: Record<string, unknown>, target: string, label: string, recordId: string): Promise<Receipt | null> {
     if (!enabled || !ready || flying() || !live.current) return null;
     try {
-      if (readJournal(sessionStorage, key, scope, accepts)) throw Error("Resolve the original pending operation before starting another saved action.");
+      if (readJournal(sessionStorage, key, scope, accepts, journalLimit)) throw Error("Resolve the original pending operation before starting another saved action.");
       const entry = writeJournal(sessionStorage, key, {
         version: 1, scope: { actor_id: scope.actor_id, workspace_id: scope.workspace_id }, path, target, label, record_id: recordId, phase: "pending",
         body: { ...fields, operation_id: crypto.randomUUID(), schema_version: 1 },
-      }, accepts);
+      }, accepts, journalLimit);
       sessionStorage.removeItem(key + ":accepted");
       setAccepted(null); setPending(entry);
       lastLookup.current = `pending:${entry.body.operation_id}`;

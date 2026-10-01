@@ -39,6 +39,8 @@ Stages are a dependency order, not dates or a revised completion percentage. Exi
 
 ## Second package — equipment, visit readiness and inspection
 
+**Current bounded delivery (1 October 2026):** FI-03/FI-04 now implements the online synthetic Service inspection part of F02-A after merged Scheduling Step 6, reusing Equipment, FI-05 and the shared EN-08 engine. See the [programme handover](field-quality-native-handover.md) and [exact verification evidence](../testing/evidence/service-inspections/README.md). Owner/device/screen-reader/visual acceptance, human benefit measurements and any future offline inspection protocol remain separate; this does not close the whole stage or authorise deployment.
+
 **Actor/outcome:** a technician scans the correct equipment, checks approved visit constraints, records a versioned inspection and hands a failed check to a reviewer without losing or duplicating evidence.
 
 Prepare a synthetic equipment/site pair, a moved asset history, permitted document, one approved fictional inspection template, explicit reading unit/limit provenance, an instrument/calibration record, crop-access window and a required tool. Keep fictional engineering values visibly synthetic; seek actual limits only for an operational template.

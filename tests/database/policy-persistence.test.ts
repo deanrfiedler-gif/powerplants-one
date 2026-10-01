@@ -123,7 +123,7 @@ async function clone(
   );
 }
 
-test("populated 0050 upgrade preserves every old row/hash, registers 0053/0054 with reserved gaps and exact narrow authority additions", async () => {
+test("populated 0050 upgrade preserves every old row/hash, registers 0053–0055 with reserved gaps and exact authority/instrument additions", async () => {
   const names = (await tables()).filter((t) => t !== "seed_receipts"),
     beforeRows = await snapshot(names);
   const oldLedger = (
@@ -137,7 +137,20 @@ test("populated 0050 upgrade preserves every old row/hash, registers 0053/0054 w
   await migrate();
   await seed();
   const upgraded = await snapshot(names);
-  for (const name of names.filter(n => !["users", "permission_grants"].includes(n))) assert.deepEqual(upgraded[name], beforeRows[name]);
+  for (const name of names.filter(n => !["users", "permission_grants", "inspection_instruments"].includes(n))) assert.deepEqual(upgraded[name], beforeRows[name]);
+  const instrumentIds=new Set(beforeRows.inspection_instruments.map((r:{id:string})=>r.id));
+  assert.deepEqual(upgraded.inspection_instruments.filter((r:{id:string})=>instrumentIds.has(r.id)),beforeRows.inspection_instruments);
+  const addedInstruments=upgraded.inspection_instruments.filter((r:{id:string})=>!instrumentIds.has(r.id));
+  assert.equal(addedInstruments.length,1);
+  const {created_at,...instrument}=addedInstruments[0];
+  assert(Number.isFinite(Date.parse(created_at)));
+  assert.deepEqual(instrument,{
+    id:"e9550000-0000-4000-8000-000000000003",workspace_id:workspace,company_id:"20000000-0000-4000-8000-000000000001",
+    version:1,synthetic:true,reference:"SYN-SERVICE-PG-001",description:"Fictional Service pressure gauge; synthetic tests only",
+    calibration_reference:"SYN-SERVICE-CAL-001",calibration_version:"1",valid_from:"2026-01-01",valid_to:"2032-12-31",
+    withdrawn_effective_from:null,withdrawn_reason:null,withdrawn_recorded_at:null,adapter:"SyntheticCalibrationFixture",
+    measurement_type:"Pressure",measurement_range:"0–1000 kPa",measurement_unit:"kPa",certificate_reference:"SYN-SERVICE-CERT-001",certificate_revision:"1",predecessor_id:null
+  });
   const ids = new Set(beforeRows.users.map((r: { id: string }) => r.id));
   assert.deepEqual(upgraded.users.filter((r: { id: string }) => ids.has(r.id)), beforeRows.users);
   assert.deepEqual(upgraded.users.filter((r: { id: string }) => !ids.has(r.id)).map((r: { id: string }) => r.id).sort(),
@@ -151,20 +164,20 @@ test("populated 0050 upgrade preserves every old row/hash, registers 0053/0054 w
       "SELECT * FROM public.ppo_migrations ORDER BY version",
     )
   ).rows;
-  assert.deepEqual(ledger.slice(0, -2), oldLedger);
-  assert.equal(ledger.at(-1).version, 54);
+  assert.deepEqual(ledger.slice(0, -3), oldLedger);
+  assert.equal(ledger.at(-1).version, 55);
   assert.deepEqual(
     ledger.map((r) => r.version),
     [
       ...Array.from({ length: 50 }, (_, i) => i + 1).filter((n) => n !== 16),
-      53, 54,
+      53, 54, 55,
     ],
   );
   const receipts = (
     await database().query("SELECT * FROM ppo.seed_receipts ORDER BY version")
   ).rows;
-  assert.deepEqual(receipts.slice(0, -2), oldReceipts);
-  assert.equal(receipts.at(-1).version, 54);
+  assert.deepEqual(receipts.slice(0, -3), oldReceipts);
+  assert.equal(receipts.at(-1).version, 55);
   await transaction(async (db) => {
     const chain = await loadPolicyChain(db, workspace);
     assert.equal(chain.members.length, 1);
@@ -650,7 +663,7 @@ test("direct reseed and runner retries preserve an advanced head, later evidence
   );
 });
 
-test("fresh installation applies only registered files through 0054, retains reserved gaps and repeats without changes", async () => {
+test("fresh installation applies only registered files through 0055, retains reserved gaps and repeats without changes", async () => {
   await database().query(await sql("migrations/0001-recover.sql"));
   await database().query(
     "DROP TABLE IF EXISTS public.ppo_migrations,public.ppo_demo_migrations",
@@ -665,7 +678,7 @@ test("fresh installation applies only registered files through 0054, retains res
     ).rows.map((r) => r.version),
     [
       ...Array.from({ length: 50 }, (_, i) => i + 1).filter((n) => n !== 16),
-      53, 54,
+      53, 54, 55,
     ],
   );
   const first = await snapshot(await tables());

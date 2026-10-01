@@ -1,0 +1,30 @@
+{
+  "result": "Passed",
+  "before": {
+    "build": "D49Y9dS7Qw2QbEKy6RmRr",
+    "postgres_started": "2026-10-01T09:24:44.567Z",
+    "postgres": "PostgreSQL 16.15, compiled by Visual C++ build 1944, 64-bit",
+    "at": "2026-10-01T09:37:44.149Z"
+  },
+  "after": {
+    "build": "D49Y9dS7Qw2QbEKy6RmRr",
+    "postgres_started": "2026-10-01T09:37:52.465Z",
+    "postgres": "PostgreSQL 16.15, compiled by Visual C++ build 1944, 64-bit",
+    "at": "2026-10-01T09:39:01.475Z"
+  },
+  "tables": 10,
+  "exact_original_receipt": true,
+  "concurrent_personal_drafts": 2,
+  "unchanged_draft_save_receipts": true,
+  "files": [
+    {
+      "sha256": "16be15cbfec8b7f03880ff0a54211cc248fd6f722e467e1aded16a92012ba1fb",
+      "bytes": 84644
+    },
+    {
+      "sha256": "77f0216f59d1c549bfd72a5d2aff1335e3c48fd80f4d21a0a0b5dbf988c0bb81",
+      "bytes": 126677
+    }
+  ],
+  "scope": "Actual app/PostgreSQL restart with unchanged compiled build; no offline inspection claim"
+}
