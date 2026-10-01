@@ -1,12 +1,12 @@
-import { expect, type Page, type BrowserContext, type TestInfo } from "@playwright/test";
+import {
+  expect,
+  type Page,
+  type BrowserContext,
+  type TestInfo,
+} from "@playwright/test";
 import { writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
-import {
-  call,
-  identity,
-  capture,
-  saveOriginal,
-} from "./quality-browser";
+import { call, identity, capture, saveOriginal } from "./quality-browser";
 import { prepareJourney, committed } from "./quality-prepare";
 import { completion, submit, review, issue } from "./quality-report";
 import { png } from "./field";
@@ -90,12 +90,16 @@ export async function serviceJourney(
     ).toBeVisible();
     await openPersonalJob();
     const acknowledge = page.getByRole("button", {
-      name: "I have read and acknowledge this exact pack", exact: true,
+      name: "I have read and acknowledge this exact pack",
+      exact: true,
     });
     // As in preparation/return acknowledgement, scrolling compacts the timer
     // header. Observe that layout before measuring the pointer target.
     await acknowledge.scrollIntoViewIfNeeded();
-    await expect(page.locator("#ppo-work-timer .head")).toHaveAttribute("data-compact", "1");
+    await expect(page.locator("#ppo-work-timer .head")).toHaveAttribute(
+      "data-compact",
+      "1",
+    );
     await committed(
       page,
       `pack-issues/${source.current_issue_id}/acknowledge`,
@@ -636,7 +640,13 @@ export async function serviceJourney(
       2,
     ),
   );
-  const saved = { ...source, report_id: rid, presentation, return_proposal: proposal, finance };
+  const saved = {
+    ...source,
+    report_id: rid,
+    presentation,
+    return_proposal: proposal,
+    finance,
+  };
   if (initialOnly) {
     expect(errors).toEqual([]);
     return { source: saved, originals };
@@ -671,14 +681,22 @@ export async function serviceJourney(
   // original owner through the supported recovery UI before comparing bytes.
   await identity(page, "assigned-technician");
   await page.goto("/offline/index.html");
-  const ownerRead = page.waitForResponse(response =>
-    new URL(response.url()).pathname === "/api/v1/my-jobs" &&
-    response.request().method() === "GET");
-  await page.getByRole("button", { name: "Verify identity online", exact: true }).click();
+  const ownerRead = page.waitForResponse(
+    (response) =>
+      new URL(response.url()).pathname === "/api/v1/my-jobs" &&
+      response.request().method() === "GET",
+  );
+  await page
+    .getByRole("button", { name: "Verify identity online", exact: true })
+    .click();
   expect((await ownerRead).ok()).toBe(true);
   await expect(page.locator("#notice")).toContainText("Identity verified");
-  await expect(page.locator("#queue .status")).toHaveText(Array(5).fill("Server accepted and saved"));
-  expect((await localRows()).map((x: { original: unknown }) => x.original)).toEqual(originals);
+  await expect(page.locator("#queue .status")).toHaveText(
+    Array(5).fill("Server accepted and saved"),
+  );
+  expect(
+    (await localRows()).map((x: { original: unknown }) => x.original),
+  ).toEqual(originals);
   expect(errors).toEqual([]);
   return { source: saved, originals };
 }

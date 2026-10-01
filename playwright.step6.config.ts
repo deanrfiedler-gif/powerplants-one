@@ -17,7 +17,9 @@ export default defineConfig({
     navigationTimeout: 60000,
     timezoneId: "UTC",
     locale: "en-AU",
-    viewport: mobile ? { width: 390, height: 844 } : { width: 1440, height: 1000 },
+    viewport: mobile
+      ? { width: 390, height: 844 }
+      : { width: 1440, height: 1000 },
     isMobile: mobile,
     hasTouch: mobile,
     trace: "retain-on-failure",

@@ -25,7 +25,11 @@ export type ReturnSource = {
 
 // Continue the actual proposal from this same service/Finance journey. Every
 // mutation uses a rendered control; API reads establish exact persisted facts.
-export async function prepareReturnVisit(page: Page, info: TestInfo, source: ReturnSource) {
+export async function prepareReturnVisit(
+  page: Page,
+  info: TestInfo,
+  source: ReturnSource,
+) {
   let aid = source.return_proposal.record_id;
   await identity(page, "coordinator");
   const before = (await call(page, `appointments/${aid}`)).items[0];
@@ -205,12 +209,36 @@ export async function prepareReturnVisit(page: Page, info: TestInfo, source: Ret
       () => acknowledge.click(),
     );
   }
-  return { aid, pid, pack, historicReport, servicePaths, priorService, priorFinance,
-    financePaths, priorFinanceBytes };
+  return {
+    aid,
+    pid,
+    pack,
+    historicReport,
+    servicePaths,
+    priorService,
+    priorFinance,
+    financePaths,
+    priorFinanceBytes,
+  };
 }
 export type PreparedReturn = Awaited<ReturnType<typeof prepareReturnVisit>>;
-export async function completeReturnVisit(page: Page, info: TestInfo, source: ReturnSource, saved: PreparedReturn) {
-  const { aid, pid, pack, historicReport, servicePaths, priorService, priorFinance, financePaths, priorFinanceBytes } = saved;
+export async function completeReturnVisit(
+  page: Page,
+  info: TestInfo,
+  source: ReturnSource,
+  saved: PreparedReturn,
+) {
+  const {
+    aid,
+    pid,
+    pack,
+    historicReport,
+    servicePaths,
+    priorService,
+    priorFinance,
+    financePaths,
+    priorFinanceBytes,
+  } = saved;
   // The other technician performs this return; first-visit attendance is never
   // copied, borrowed from a crew acknowledgement or inferred from the booking.
   await openReturnJob(page, aid);
@@ -433,7 +461,9 @@ export async function completeReturnVisit(page: Page, info: TestInfo, source: Re
   await openReturnJob(page, aid);
   const history = (await call(page, `my-jobs/${aid}`)).items[0];
   expect(history.attendance).toBeNull();
-  const returnPhoto = await exactOutputs(page, [`attachments/${photo.id}/bytes`]);
+  const returnPhoto = await exactOutputs(page, [
+    `attachments/${photo.id}/bytes`,
+  ]);
   expect(returnPhoto[`attachments/${photo.id}/bytes`]).toBe(photo.sha256);
   expect(
     history.entries.filter((e: { kind: string }) => e.kind === "Checklist"),
@@ -500,39 +530,41 @@ export async function completeReturnVisit(page: Page, info: TestInfo, source: Re
 }
 
 async function openReturnJob(page: Page, aid: string) {
-    // Both independent reads own the initial host readiness. Do not click the
-    // first briefly rendered pack control while the timer host is refreshing.
-    const responses = await Promise.all([
-      ...[`/api/v1/my-jobs/${aid}`, `/api/v1/my-jobs/${aid}/timer`].map(
-        (path) =>
-          page.waitForResponse(
-            (r) =>
-              new URL(r.url()).pathname === path &&
-              r.request().method() === "GET",
-          ),
+  // Both independent reads own the initial host readiness. Do not click the
+  // first briefly rendered pack control while the timer host is refreshing.
+  const responses = await Promise.all([
+    ...[`/api/v1/my-jobs/${aid}`, `/api/v1/my-jobs/${aid}/timer`].map((path) =>
+      page.waitForResponse(
+        (r) =>
+          new URL(r.url()).pathname === path && r.request().method() === "GET",
       ),
-      page.goto(`/my-jobs/${aid}`),
-    ]);
-    for (const response of responses.slice(0, 2))
-      expect(response!.ok()).toBe(true);
-    await expect(
-      page.getByText("Loading permitted records…", { exact: true }),
-    ).toHaveCount(0);
-  }
+    ),
+    page.goto(`/my-jobs/${aid}`),
+  ]);
+  for (const response of responses.slice(0, 2))
+    expect(response!.ok()).toBe(true);
+  await expect(
+    page.getByText("Loading permitted records…", { exact: true }),
+  ).toHaveCount(0);
+}
 
 async function exactOutputs(page: Page, paths: string[]) {
-    const out: Record<string, string> = {};
-    for (const path of paths) {
-      const r = await page.request.get(`/api/v1/${path}`);
-      expect(r.ok(), `${path}: ${r.ok() ? "" : await r.text()}`).toBe(true);
-      expect(r.headers()["cache-control"]).toContain("no-store");
-      out[path] = createHash("sha256")
-        .update(await r.body())
-        .digest("hex");
-    }
-    return out;
+  const out: Record<string, string> = {};
+  for (const path of paths) {
+    const r = await page.request.get(`/api/v1/${path}`);
+    expect(r.ok(), `${path}: ${r.ok() ? "" : await r.text()}`).toBe(true);
+    expect(r.headers()["cache-control"]).toContain("no-store");
+    out[path] = createHash("sha256")
+      .update(await r.body())
+      .digest("hex");
   }
-export async function returnVisit(page: Page, info: TestInfo, source: ReturnSource) {
+  return out;
+}
+export async function returnVisit(
+  page: Page,
+  info: TestInfo,
+  source: ReturnSource,
+) {
   const saved = await prepareReturnVisit(page, info, source);
   return completeReturnVisit(page, info, source, saved);
 }
