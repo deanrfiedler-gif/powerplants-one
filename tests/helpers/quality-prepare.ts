@@ -598,7 +598,7 @@ export async function prepareJourney(page: Page, info: TestInfo) {
     await capture(page, info, `journey-first-issue-ack-${profile}`);
   }
   const offlineContext = await page.context().browser()!.newContext({
-    baseURL: "http://127.0.0.1:3000",
+    baseURL: `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`,
     locale: "en-AU",
     viewport: page.viewportSize(),
     isMobile: mobile,

@@ -1,0 +1,55 @@
+{
+  "environment": {
+    "os": "Windows",
+    "node": "24.21.0",
+    "npm": "11.19.0",
+    "postgres": "16.15",
+    "playwright": "1.63.0",
+    "chrome": "154.0.8037.93",
+    "database": "ppo_synthetic_test",
+    "application_port": 57460,
+    "database_port": 57461,
+    "regression_database_port": 57464,
+    "network": "loopback; no shaping",
+    "timezone": "UTC",
+    "locale": "en-AU"
+  },
+  "releases": [
+    {
+      "name": "baseline",
+      "compiled_source": "afce0d65e3ade60824ac6ebea91b4b10635fca68",
+      "checkout_head_at_export": "afce0d65e3ade60824ac6ebea91b4b10635fca68",
+      "source_tree": "4b1102b1722a4f9787e5827375a12770e62ecaf2",
+      "database_tree": "dc4ef29e3cbf32164443845a4cd6c8b2481c5f62",
+      "public_tree": "690cddf641ac9f32783d6be72f167a85ef099d8b",
+      "build_id": "wupLsNt5nQ2SuE-Rj5fLw",
+      "lock_sha256": "5f7a88abb6cd16b001525d7f59ff8a7204cf40b9e1121567fdc949a65951051e",
+      "worker_sha256": "e96e337e8e97edbcb133714f161aa5d90af7f2ef6f028d74b3db70d089a5675e",
+      "offline_app_sha256": "1e3de26aaa10218eecf963814e3b07edeff51494a76a1addac5fcd3ae970aea0"
+    },
+    {
+      "name": "candidate",
+      "compiled_source": "95c0887e35369aea90fc5d91b800b299784d19fa",
+      "checkout_head_at_export": "934ba55f5c23b290602c28322779508cc7d3d735",
+      "source_tree": "bbf673359c4e1111b17d79bb2c95a02b606dbd6a",
+      "database_tree": "c8687114a3da35dee24e31a46eb184999b2acb44",
+      "public_tree": "690cddf641ac9f32783d6be72f167a85ef099d8b",
+      "build_id": "vyuX5b0Yg8b8Tj-qRioV-",
+      "lock_sha256": "5f7a88abb6cd16b001525d7f59ff8a7204cf40b9e1121567fdc949a65951051e",
+      "worker_sha256": "e96e337e8e97edbcb133714f161aa5d90af7f2ef6f028d74b3db70d089a5675e",
+      "offline_app_sha256": "1e3de26aaa10218eecf963814e3b07edeff51494a76a1addac5fcd3ae970aea0"
+    },
+    {
+      "name": "rollback",
+      "compiled_source": "bfc4b78deb0f065838bf22488c6f41d0fce214d2",
+      "checkout_head_at_export": "bfc4b78deb0f065838bf22488c6f41d0fce214d2",
+      "source_tree": "51ae63357de02c324ed684f1b14858c7c894c481",
+      "database_tree": "c8687114a3da35dee24e31a46eb184999b2acb44",
+      "public_tree": "690cddf641ac9f32783d6be72f167a85ef099d8b",
+      "build_id": "W4MnfSD_dv2ZcjDoR-w6O",
+      "lock_sha256": "5f7a88abb6cd16b001525d7f59ff8a7204cf40b9e1121567fdc949a65951051e",
+      "worker_sha256": "e96e337e8e97edbcb133714f161aa5d90af7f2ef6f028d74b3db70d089a5675e",
+      "offline_app_sha256": "1e3de26aaa10218eecf963814e3b07edeff51494a76a1addac5fcd3ae970aea0"
+    }
+  ]
+}

@@ -58,3 +58,9 @@ This supersedes only the earlier unexecuted compatible-application-update compon
 ## Bounded policy impact review — 27 September
 
 The [native PL-04 duration/effective-date comparison](scheduling-policy-impact-handover.md) provides a read-only affected-booking review and exact controlled-booking handover. It creates no policy revision or owned impact task. API-C26 publication and complete PT-28/PT-30 remain outstanding; the earlier compatible-update and rollback evidence keeps its original scope.
+
+## Scheduling Step 6 current execution — 1 October 2026
+
+The [Step 6 acceptance map](../testing/evidence/scheduling-step6/README.md) supersedes earlier unexecuted policy/update/rollback and continuous-return statements for its exact desktop/phone sources. PT-28's written local synthetic procedure passed, including published holds and retained synthetic Finance through compatible Step 4 rollback. The continuous PT-30 technical narrative, real app/PostgreSQL restarts and next-technician history executed successfully. Full owner/prior-case acceptance, PT-27 and physical-device/screen-reader/visual review remain open. [Owner walkthrough](scheduling-step6-owner-walkthrough.md).
+
+PT-22 retains its earlier `d28cfc25/aeaf966a` isolated-restore pass. Step 6 retained native Windows checkpoints but performed no restore; neither those archives nor a restart are a repeated PT-22. Step 6 protected integration is pending and no deployment occurred.

@@ -1,0 +1,154 @@
+[
+  {
+    "file": "desktop-review.png",
+    "bytes": 133235,
+    "sha256": "2ff0f0860efe2c551eae5fe3d8d7984aaa2e6c9fa36f205960f61927b3371482",
+    "source_capture": "desktop3/publish-results/journey-Step-6-publish-ret-d7fd7-ice-and-compatible-recovery-desktop-step6/P11-step6-complete-reviewed-return.png",
+    "capture_metadata": {
+      "scenario": "step6-complete-reviewed-return",
+      "full_page": false,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "executed_checkout": "7321abc1dc72a535f986f2e0fbcb9492b55dde13",
+      "executed_tree": "5d0024253bc056f278b3c437b7fc8d3b02feca98",
+      "byte_count": 133235,
+      "sha256": "2ff0f0860efe2c551eae5fe3d8d7984aaa2e6c9fa36f205960f61927b3371482"
+    },
+    "review": "Source self-review only; independent visual approval pending"
+  },
+  {
+    "file": "desktop-recovery.png",
+    "bytes": 258618,
+    "sha256": "f833ea3828ad14f22bbb099a3756d0878cc3b57811cf01bea7e439a81bc761e0",
+    "source_capture": "desktop3/publish-results/journey-Step-6-publish-ret-d7fd7-ice-and-compatible-recovery-desktop-step6/P11-step6-update-original-recovery-full.png",
+    "capture_metadata": {
+      "scenario": "step6-update-original-recovery",
+      "full_page": true,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "executed_checkout": "7321abc1dc72a535f986f2e0fbcb9492b55dde13",
+      "executed_tree": "5d0024253bc056f278b3c437b7fc8d3b02feca98",
+      "byte_count": 258618,
+      "sha256": "f833ea3828ad14f22bbb099a3756d0878cc3b57811cf01bea7e439a81bc761e0"
+    },
+    "review": "Source self-review only; independent visual approval pending"
+  },
+  {
+    "file": "desktop-hold.png",
+    "bytes": 131302,
+    "sha256": "d920254fb2c8ff8a1a620bfe42c5c4bff5a577ccc7f8c23599806c3e6be14481",
+    "source_capture": "desktop3/rollback-results/journey-Step-6-rollback-re-5d243-ice-and-compatible-recovery-desktop-step6/P11-step6-current-start-held.png",
+    "capture_metadata": {
+      "scenario": "step6-current-start-held",
+      "full_page": false,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "executed_checkout": "c66096654e169e35340e0d9a055876e5754b66be",
+      "executed_tree": "c1a28bf042a5e9558ea9980899cf595b1739648a",
+      "byte_count": 131302,
+      "sha256": "d920254fb2c8ff8a1a620bfe42c5c4bff5a577ccc7f8c23599806c3e6be14481"
+    },
+    "review": "Source self-review only; independent visual approval pending"
+  },
+  {
+    "file": "desktop-history.png",
+    "bytes": 137291,
+    "sha256": "5fa4860a4b43f4bde1ddccdf9053bc1e4863f28767914adec989d70a85443ff1",
+    "source_capture": "desktop3/history-results/journey-Step-6-history-ret-55066-ice-and-compatible-recovery-desktop-step6/P11-step6-after-restart-next-technician-history.png",
+    "capture_metadata": {
+      "scenario": "step6-after-restart-next-technician-history",
+      "full_page": false,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "executed_checkout": "c66096654e169e35340e0d9a055876e5754b66be",
+      "executed_tree": "c1a28bf042a5e9558ea9980899cf595b1739648a",
+      "byte_count": 137291,
+      "sha256": "5fa4860a4b43f4bde1ddccdf9053bc1e4863f28767914adec989d70a85443ff1"
+    },
+    "review": "Source self-review only; independent visual approval pending"
+  },
+  {
+    "file": "phone-review.png",
+    "bytes": 73010,
+    "sha256": "7d79f759bfe0a882538b8270e741b32f7d1b755db0aee08f2a8db3ef5a54fa1e",
+    "source_capture": "mobile/publish-results/journey-Step-6-publish-ret-d7fd7-ice-and-compatible-recovery-mobile-step6/P11-step6-complete-reviewed-return.png",
+    "capture_metadata": {
+      "scenario": "step6-complete-reviewed-return",
+      "full_page": false,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "executed_checkout": "934ba55f5c23b290602c28322779508cc7d3d735",
+      "executed_tree": "5a920ca5776527a7a9845e216dd69b7ef5991a12",
+      "byte_count": 73010,
+      "sha256": "7d79f759bfe0a882538b8270e741b32f7d1b755db0aee08f2a8db3ef5a54fa1e"
+    },
+    "review": "Source self-review only; independent visual approval pending"
+  },
+  {
+    "file": "phone-recovery.png",
+    "bytes": 250039,
+    "sha256": "edea623e0ca3c9b151b3c5bc1f24f08dc9aec1fc14cede15fd7fed0145245e3e",
+    "source_capture": "mobile/publish-results/journey-Step-6-publish-ret-d7fd7-ice-and-compatible-recovery-mobile-step6/P11-step6-update-original-recovery-full.png",
+    "capture_metadata": {
+      "scenario": "step6-update-original-recovery",
+      "full_page": true,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "executed_checkout": "934ba55f5c23b290602c28322779508cc7d3d735",
+      "executed_tree": "5a920ca5776527a7a9845e216dd69b7ef5991a12",
+      "byte_count": 250039,
+      "sha256": "edea623e0ca3c9b151b3c5bc1f24f08dc9aec1fc14cede15fd7fed0145245e3e"
+    },
+    "review": "Source self-review only; independent visual approval pending"
+  },
+  {
+    "file": "phone-hold.png",
+    "bytes": 64581,
+    "sha256": "b9ac6cd6294c40202c5aa2ca77c115b36e12e344dd9f6ab3d6321db5f055912f",
+    "source_capture": "mobile/rollback-results/journey-Step-6-rollback-re-5d243-ice-and-compatible-recovery-mobile-step6/P11-step6-current-start-held.png",
+    "capture_metadata": {
+      "scenario": "step6-current-start-held",
+      "full_page": false,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "executed_checkout": "934ba55f5c23b290602c28322779508cc7d3d735",
+      "executed_tree": "5a920ca5776527a7a9845e216dd69b7ef5991a12",
+      "byte_count": 64581,
+      "sha256": "b9ac6cd6294c40202c5aa2ca77c115b36e12e344dd9f6ab3d6321db5f055912f"
+    },
+    "review": "Source self-review only; independent visual approval pending"
+  },
+  {
+    "file": "phone-history.png",
+    "bytes": 67756,
+    "sha256": "32cf077bd6620befd8faca8e53b379a6aa6bb19a9cd863c0fc9d049ca242ab7c",
+    "source_capture": "mobile/history-results/journey-Step-6-history-ret-55066-ice-and-compatible-recovery-mobile-step6/P11-step6-after-restart-next-technician-history.png",
+    "capture_metadata": {
+      "scenario": "step6-after-restart-next-technician-history",
+      "full_page": false,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "executed_checkout": "934ba55f5c23b290602c28322779508cc7d3d735",
+      "executed_tree": "5a920ca5776527a7a9845e216dd69b7ef5991a12",
+      "byte_count": 67756,
+      "sha256": "32cf077bd6620befd8faca8e53b379a6aa6bb19a9cd863c0fc9d049ca242ab7c"
+    },
+    "review": "Source self-review only; independent visual approval pending"
+  }
+]

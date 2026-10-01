@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-**Owner:** Dean Fiedler. **Prepared:** 27 September 2026. **Status:** Historical sequence with Steps 1–4 merged; Step 5 native interface is tracked in the current handover. Source review, visual review, owner acceptance and production readiness remain separate.
+**Owner:** Dean Fiedler. **Prepared:** 27 September 2026. **Status:** Steps 1–5 merged; Step 6 technical execution recorded, with protected integration pending. The sequence below retains its historical checkpoints. Source review, visual review, owner acceptance and production readiness remain separate.
 
 Traceability: SVC-04/05, DAT-06, NFR-08, D-015/D-020, TR-03/08, API-R04, API-C26, EVT-12, PT-08/09/28 and AT-35. Preserve all 78 parent IDs. [Current integration and evidence](scheduling-policy-impact-handover.md), [read-only decision](../decisions/scheduling-policy-impact-review.md), [publication design](../decisions/scheduling-policy-publication.md) and [consolidation allocation](../decisions/repository-consolidation.md) govern this continuation.
 
@@ -136,3 +136,7 @@ Current main was refreshed to `a9cead1` after #330. The [decision](../decisions/
 ## Step 5 checkpoint - 1 October 2026
 
 Refreshed main is Step 4's normal protected merge `bfc4b78` through #331 after all 18 final-head checks succeeded. Earlier activation-closed, absent-route and contribution-only statements describe their historical increments. Step 5 delivers the native PL-04 interface and bounded discovery/reopening additions in the [current handover](scheduling-policy-impact-handover.md#step-5-native-interface). The existing six-step programme remains; the broader Step 6 acceptance programme is not started or claimed by interface tests.
+
+## Step 6 execution checkpoint — 1 October 2026
+
+Step 5 is protected-integrated through #332 at `95c0887` (17 successful final-head checks). [Step 6 execution and acceptance map](../testing/evidence/scheduling-step6/README.md) records the completed desktop/phone technical programme and retained original failures. PT-28 passed its local synthetic procedure; continuous PT-30 technical execution is recorded without granting full owner/prior-case acceptance. Actual compatible rollback uses Step 4 `bfc4b78`, never pre-enforcement code or a restored old database. The six-step sequence is technically exercised; Step 6 protected integration and independent acceptance remain pending. No deployment is included.
