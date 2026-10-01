@@ -62,7 +62,9 @@ export function useRecoverableCommand({ key, scope, accepts, transport, enabled 
         try { sessionStorage.removeItem(key); setPending(null); publish(); }
         catch { /* Retain the exact original if storage becomes unavailable. */ }
       }
-      setError(recover ? { status: failure.status, code: failure.code, message: "The original outcome is still unknown or unavailable under current authority. An unavailable receipt does not prove saving failed." } :
+      // A 404 original lookup is inconclusive; retain its explicit unchanged retry.
+      // Actual authentication/authority refusals still invalidate protected views.
+      setError(recover ? { status: failure.status === 404 ? undefined : failure.status, code: failure.code, message: "The original outcome is still unknown or unavailable under current authority. An unavailable receipt does not prove saving failed." } :
         e instanceof Error ? { message: e.message } : e);
       return null;
     } finally {

@@ -2454,7 +2454,7 @@
       "desktop": "Keep reason, responsible owner, source publication and next action together. Existing record detail owns the resolution controls.",
       "mobile": "Stack labels and actions; wrap exact identifiers without horizontal overflow at 390/320 px.",
       "keyboard": "Native details, labelled fields and shared buttons; all actions available without dragging.",
-      "limitations": "Online host only; no accepted policy-editor mockup, no offline publication/resolution, no owner/device acceptance. Shared journal opt-in permits server-allocated publication result IDs; booking receipt binding remains unchanged.",
+      "limitations": "Online host only; no accepted policy-editor mockup, no offline publication/resolution, no owner/device acceptance. Shared journal opt-in permits server-allocated publication result IDs; booking receipt binding remains unchanged. An unavailable original receipt retains explicit unchanged recovery; actual authority refusals hide protected evidence.",
       "gaps": [
         {
           "id": "scheduling-step4-review",

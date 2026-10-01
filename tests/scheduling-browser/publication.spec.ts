@@ -616,3 +616,71 @@ test("a superseding immutable proposal refuses the displayed publisher review an
     }),
   ).toBeDisabled();
 });
+
+test("an unavailable original receipt retains the explicit unchanged publication retry after reload", async ({
+  page,
+}, info) => {
+  const f = await reviewed();
+  await login(page.request, "scheduling-policy-publisher");
+  await page.goto(`${root}?review=${f.review.id}`);
+  await expect(
+    page.getByRole("heading", { name: "Complete saved review", exact: true }),
+  ).toBeVisible();
+  const originals: string[] = [];
+  await page.route("**/api/v1/schedule/policy-publications", async (route) => {
+    originals.push(route.request().postData()!);
+    if (originals.length === 1) await route.abort("failed");
+    else await route.continue();
+  });
+  await page
+    .getByLabel("Action reason", { exact: true })
+    .fill("SYN original request did not reach the server");
+  await page
+    .getByRole("button", {
+      name: "Publish exact reviewed proposal",
+      exact: true,
+    })
+    .click();
+  await expect(
+    page.getByRole("heading", {
+      name: "Outcome not yet confirmed",
+      exact: true,
+    }),
+  ).toBeVisible();
+  const lookup = page.waitForResponse(
+    (r) =>
+      r.url().includes("/api/v1/operations/") && r.request().method() === "GET",
+  );
+  await page.reload();
+  expect((await lookup).status()).toBe(404);
+  await expect(
+    page.getByRole("button", { name: "Retry unchanged original", exact: true }),
+  ).toBeVisible();
+  expect(
+    await rows("SELECT id FROM ppo.scheduling_policy_publications"),
+  ).toHaveLength(0);
+  await expect(
+    page.getByRole("link", { name: "Open accepted publication", exact: true }),
+  ).toHaveCount(0);
+  await page
+    .getByRole("heading", { name: "Outcome not yet confirmed", exact: true })
+    .scrollIntoViewIfNeeded();
+  await page.screenshot({
+    path: info.outputPath("unknown-receipt-retry.png"),
+    fullPage: true,
+  });
+  await page
+    .getByRole("button", { name: "Retry unchanged original", exact: true })
+    .click();
+  await expect(
+    page.getByRole("link", { name: "Open accepted publication", exact: true }),
+  ).toBeVisible();
+  expect(originals).toHaveLength(2);
+  expect(originals[1]).toBe(originals[0]);
+  expect(
+    await rows("SELECT id FROM ppo.scheduling_policy_publications"),
+  ).toHaveLength(1);
+  expect(
+    await rows("SELECT id FROM ppo.scheduling_policy_impacts"),
+  ).toHaveLength(1);
+});

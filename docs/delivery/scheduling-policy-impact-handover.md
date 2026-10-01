@@ -182,7 +182,7 @@ Owned publication impacts link exact appointments and authorised typed Activity 
 
 [Exact implementation verification and limits](../testing/evidence/scheduling-policy-interface/README.md) distinguish source, compiled functional checks and inspected implementation captures from visual/owner/device/accessibility acceptance. The new editor composition has no accepted mockup. No merge or deployment is included.
 
-Local Step 5 proof: 49/49 policy database/HTTP cases, 31/31 existing Scheduling database cases, 14/14 compiled native cases across the complete and concurrent-successor runs, 47/47 existing compiled Scheduling/shared-control cases, and 129/129 focused units. Actual app/PostgreSQL restart preserves 32 table fingerprints and exact receipt/HTML/PDF/PNG originals. Four Windows unit failures reproduce unchanged on current main. Build/type/lint and foundation/prototype/naming/studio pass. Ten inspected captures remain proposed implementation evidence; current-head PR CI and owner acceptance are separate.
+Local Step 5 proof: 49/49 policy database/HTTP cases, 31/31 existing Scheduling database cases, 16/16 compiled native cases including concurrent successors and unavailable original-receipt recovery, 47/47 existing compiled Scheduling/shared-control cases, and 129/129 focused units. Actual app/PostgreSQL restart preserves 32 table fingerprints and exact receipt/HTML/PDF/PNG originals. Four Windows unit failures reproduce unchanged on current main. Build/type/lint and foundation/prototype/naming/studio pass. Twelve inspected captures remain proposed implementation evidence; current-head PR CI and owner acceptance are separate.
 
 ### Concrete Step 6 handover
 
