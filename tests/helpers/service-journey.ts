@@ -13,7 +13,7 @@ import { png } from "./field";
 import { financeJourney } from "./quality-finance";
 import { returnVisit } from "./quality-return";
 import { keyActivate, keySelect, keyType } from "./quality-keyboard";
-// Reused unchanged selected narrative. Step 6 stops only at the saved initial
+// Reuses the selected narrative and its assertions. Step 6 pauses at the saved initial
 // report/Finance boundary; the ordinary P11 suite still completes its return.
 export async function serviceJourney(
   { page, context }: { page: Page; context: BrowserContext },

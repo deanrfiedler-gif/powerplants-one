@@ -51,3 +51,7 @@ Final recovery review reproduced a missing retry control against committed `75aa
 ## Review and limits
 
 No accepted policy-editor mockup exists. New composition and captures are implementation/proposed evidence only. Source self-review, inspected emulated desktop/phone captures, functional proof and deployment are distinct. No visual fingerprint or owner acceptance is adopted. Step 6 remains the broader integrated policy/compatible-update/rollback acceptance programme; Step 5 does not close full PT-28/PT-30, existing PT-27 misses or owner/device/accessibility obligations. No merge or deployment is included.
+
+## Subsequent protected integration and Step 6
+
+GitHub confirms #332 merged as `95c0887e35369aea90fc5d91b800b299784d19fa` at 2026-10-01T03:18:26Z after all 17 checks on `c07ec122c9ba5e8eb70e8c7b09fad787fe3425e3` succeeded. Earlier “no merge included” wording describes this contribution's then-current authority, not today's main. Its original counts/captures and unexplained Reports timeout retain their limits. [Step 6](../scheduling-step6/README.md) separately records the newer integrated procedure; no deployment or independent acceptance follows from either record.

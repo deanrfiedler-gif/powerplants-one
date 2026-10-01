@@ -64,3 +64,7 @@ The existing PL-04 policy-impact route adds `PolicyPublicationWorkspace` for imm
 Host state fixtures are exercised against task-owned synthetic PostgreSQL by `tests/scheduling-browser/publication.spec.ts`: proposal, successor/original, complete empty/compliant/affected review, over-limit refusal, stale publication, accepted publication, uncertain response/reload, revoked/switching identity and typed owned handovers. These are host integration examples, not an isolated runnable gallery or accepted mockup. Desktop and phone requirements and exact evidence are in `docs/testing/evidence/scheduling-policy-interface/README.md`.
 
 Reuse the shared online journal with an opt-in receipt check for server-allocated publication IDs; all other consumers retain their exact record-ID check. The journal never defines saved evidence, automatically posts on reload or clears an appointment hold. Owner/visual/device review and the component alignment item remain pending.
+
+## Step 6 functional evidence
+
+[Integrated execution and release map](../../../testing/evidence/scheduling-step6/README.md) and [owner walkthrough](../../../delivery/scheduling-step6-owner-walkthrough.md) add update/restart/rollback and Service/Finance handovers. Scope, page type, reused components, incoming/outgoing bindings and implementation are unchanged. No new accepted mockup exists; visual/guide/component review remains pending and no fingerprint is adopted.

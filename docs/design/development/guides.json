@@ -14852,7 +14852,7 @@
       "prepared_at": "2026-09-24",
       "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Scheduling Step 4: docs/testing/evidence/scheduling-policy-enforcement/README.md records exact executed checks; visual and owner/device review pending.",
+      "runtime_evidence": "Step 6 integrated update/restart/compatible rollback and service-return evidence: docs/testing/evidence/scheduling-step6/README.md. Independent visual/owner/device acceptance remains pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -14982,7 +14982,8 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related contracts: ADR-0010, ADR-0039, PPO-SCHED-ADR, SC-07/08 and the Scheduling & Resources handover. Operational SOP and source ownership approval remain separate."
+            "Related contracts: ADR-0010, ADR-0039, PPO-SCHED-ADR, SC-07/08 and the Scheduling & Resources handover. Operational SOP and source ownership approval remain separate.",
+            "Owner walkthrough and remaining acceptance: docs/delivery/scheduling-step6-owner-walkthrough.md. Retain unsupported originals and use only a demonstrated compatible rollback; tests do not grant owner or visual review."
           ],
           "steps": [],
           "rows": [],
@@ -70026,7 +70027,8 @@
           "section_id": "resources",
           "title": "Related guidance",
           "paragraphs": [
-            "Use exact appointment and Activity links for owned handover. The publication decision, service API contract and scheduling-policy-impact handover define current authority, receipt and Step 6 boundaries."
+            "Use exact appointment and Activity links for owned handover. The publication decision, service API contract and scheduling-policy-impact handover define current authority, receipt and Step 6 boundaries.",
+            "Owner walkthrough and remaining acceptance: docs/delivery/scheduling-step6-owner-walkthrough.md. Retain unsupported originals and use only a demonstrated compatible rollback; tests do not grant owner or visual review."
           ],
           "steps": [],
           "headers": [],
@@ -70043,7 +70045,7 @@
           "rows": []
         }
       ],
-      "runtime_evidence": "docs/testing/evidence/scheduling-policy-interface/README.md; visual, owner and physical-device acceptance remain separate."
+      "runtime_evidence": "Step 6 integrated update/restart/compatible rollback and service-return evidence: docs/testing/evidence/scheduling-step6/README.md. Independent visual/owner/device acceptance remains pending."
     }
   ]
 }

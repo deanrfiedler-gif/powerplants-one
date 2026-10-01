@@ -2,10 +2,11 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-**Owner:** Dean Fiedler · **Date:** 27 September 2026 · **Branch:** `codex/scheduling-policy-impact-review`
-**Status:** Native synthetic read-only increment integrated through #324; controlled publication is planned, while owner acceptance and deployment remain separate.
+**Owner:** Dean Fiedler. **Current status — 1 October 2026:** Steps 1–5 are merged through #332; Step 6 technical execution is recorded below, with its protected integration and independent acceptance pending. No deployment is included.
 
-## Delivered boundary
+**Original checkpoint — 27 September 2026:** `codex/scheduling-policy-impact-review`, read-only increment integrated through #324. The original sections below retain that scope and evidence; later dated checkpoints supersede its then-planned publication.
+
+## Original read-only delivered boundary
 
 `/schedule/policy-impact` extends PL-04 with a temporary comparison of the exact published synthetic rule against a proposed maximum visit duration and future effective instant. The original expiry and all other policy terms remain fixed. The screen reports permitted overlapping future Confirmed bookings that exceed the duration or cross the effective instant, with exact versions, service owner and a handover to the existing appointment review. Changing inputs or identity clears the analysis. No proposed operational value is prefilled as a recommendation.
 
@@ -187,3 +188,11 @@ Local Step 5 proof: 49/49 policy database/HTTP cases, 31/31 existing Scheduling 
 ### Concrete Step 6 handover
 
 After Step 5 protected integration, refresh main and record the then-current source and complete CI evidence. Step 6 owns the broader continuous service narrative and policy/compatible-update recovery programme: preserved accepted receipts, pinned bookings, issued HTML/PDF/PNG and unsupported offline originals through compatible software update, actual restart and a rollback retaining all Step 4 enforcement. Exercise full actor handovers and unresolved/renewed holds under current source authority. Keep old/mixed writers stopped where compatibility is not demonstrated. Record owner, physical-device, screen-reader and visual acceptance separately, and disposition PT-27 misses. Step 5's bounded interface tests alone close neither PT-28 nor PT-30.
+
+## Step 6 executed recovery and continuous journey — 1 October 2026
+
+Step 5 subsequently merged through #332 as `95c0887e35369aea90fc5d91b800b299784d19fa`, after all 17 checks on `c07ec122` succeeded. Earlier contribution-only language retains its dated scope; deployment was not performed.
+
+[Step 6 execution](../testing/evidence/scheduling-step6/README.md) supplies the concrete handover above: fresh desktop/phone service-to-reserved-report/Finance/owned-return narratives, real 50→54 update, native independent policy duties, stale review refusal, exact lost-response recovery, owned impacts, controlled resolution and restored stale holds, actual app/PostgreSQL restarts, and compiled `bfc4b78` rollback retaining every Step 4 enforcement path. The same records, browser originals and issued files remain; no SQL mutation substitutes for an actor command. Original reservations, reconciled synthetic Finance and return ownership do not imply unrelated closure.
+
+PT-28 written local synthetic procedure Passed; PT-30's continuous technical narrative is executed, while full owner/prior-case acceptance remains open. [Owner walkthrough](scheduling-step6-owner-walkthrough.md) lists exact review steps and outstanding obligations. Fifty-five focused regressions pass; original failures and harness corrections remain in the evidence. PT-27 misses, Step 5 Reports timeout and independent owner/device/screen-reader/visual review remain separate. This Step 6 PR is not merged or deployed; installed SQL/seed bytes, #330's two-root/unknown-root guard and reserved 0051/0052 remain unchanged.
