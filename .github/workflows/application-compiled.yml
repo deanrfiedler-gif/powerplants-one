@@ -76,7 +76,7 @@ jobs:
         run: |
           echo "Compiled build ${{ steps.build.outputs.build_id }} for source ${PPO_SOURCE_HEAD}"
           npx playwright test --config=playwright.compiled.config.ts --reporter=list,json
-      - name: Scheduling Step 4 isolated publication and hold journeys
+      - name: Scheduling Steps 4–5 isolated publication, recovery and hold journeys
         if: ${{ !cancelled() && steps.database_setup.outcome == 'success' && steps.build.outcome == 'success' }}
         env:
           PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/scheduling-step4-browser/results.json

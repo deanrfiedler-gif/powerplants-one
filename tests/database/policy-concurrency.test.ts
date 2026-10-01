@@ -311,6 +311,7 @@ test("C26 actual start shares the graph lock; issued files/pins survive and actu
   const excluded = next.context.exclusions.find(
     (x: { appointment: { id: string } }) => x.appointment.id === job.id,
   );
+  assert(excluded);
   assert.equal(excluded.reason, "Started");
   assert.equal(excluded.attendance.length, 1);
 });

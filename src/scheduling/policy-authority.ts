@@ -83,6 +83,28 @@ export async function policyAuthority(
   // including identical original recovery, without reapplying historical review gates.
   return policyDutySnapshot(c, p, duty);
 }
+/** Discovery is limited to the existing dedicated duties, never booking edit. */
+export async function policyReadAuthority(c: QueryClient, p: Principal) {
+  const allowed = async (duty: PolicyDuty) => {
+    try {
+      await policyDutySnapshot(c, p, duty);
+      return true;
+    } catch (e) {
+      if (!(e instanceof AppError) || e.code !== "PolicyAuthorityRequired")
+        throw e;
+      return false;
+    }
+  };
+  const can_review = await allowed("schedule.policy.review");
+  const can_publish = await allowed("schedule.policy.publish");
+  if (!can_review && !can_publish) policyForbidden();
+  await policyAuthority(
+    c,
+    p,
+    can_review ? "schedule.policy.review" : "schedule.policy.publish",
+  );
+  return { can_review, can_publish };
+}
 export async function ownerEvidence(
   c: QueryClient,
   p: Principal,

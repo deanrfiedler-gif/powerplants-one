@@ -15,3 +15,13 @@ Desktop shows each impact's reason, responsible owner, source publication and pe
 Phone: stack labels, fields and buttons, wrap identifiers at 390/320 px and retain visible errors, owner and next action. Native details and labelled controls support keyboard use; no hover/drag requirement. Policy commands require online authority. Read failure is unknown, never a cleared hold. Current resolution leaves independent customer/preparation/pack controls in force. A later change restores a stale hold; already started/completed work retains its history.
 
 Host states are Unresolved, Stale, Current and uncertain response; the companion appointment-card `policy-hold` fixture is synthetic presentation only. Functional desktop/phone evidence is recorded in the Step 4 evidence directory. Owner visual, screen-reader and physical-device acceptance remain pending; no accepted fingerprint is recorded.
+
+## Step 5 native policy evidence host
+
+The existing PL-04 policy-impact route adds `PolicyPublicationWorkspace` for immutable proposal/successor, complete server review, exact publication, stable reopening and original-operation recovery. It retains the Review / comparison classification described in the policy-impact page contract. `PolicyHolds` and the existing appointment `PolicyResolution` retain their roles. No second resolution mechanism is added.
+
+Host state fixtures are exercised against task-owned synthetic PostgreSQL by `tests/scheduling-browser/publication.spec.ts`: proposal, successor/original, complete empty/compliant/affected review, over-limit refusal, stale publication, accepted publication, uncertain response/reload, revoked/switching identity and typed owned handovers. These are host integration examples, not an isolated runnable gallery or accepted mockup. Desktop and phone requirements and exact evidence are in `docs/testing/evidence/scheduling-policy-interface/README.md`.
+
+Reuse the shared online journal with an opt-in receipt check for server-allocated publication IDs; all other consumers retain their exact record-ID check. The journal never defines saved evidence, automatically posts on reload or clears an appointment hold. Owner/visual/device review and the component alignment item remain pending.
+
+An unavailable original receipt keeps the retained operation and explicit unchanged retry available. It establishes neither success nor failure. Actual authority denial hides protected evidence. The host fixture includes a request lost before server acceptance, a 404 lookup after reload, and one exact original retry producing one publication/impact set.

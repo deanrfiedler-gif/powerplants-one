@@ -2518,7 +2518,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Scheduling Step 4: exact source and executed checks in docs/testing/evidence/scheduling-policy-enforcement/README.md; owner/device review pending.",
+      "functional_status": "Native policy comparison/publication interface and Step 4 owned-impact handovers implemented; see scheduling-policy-interface evidence. Full parent acceptance remains open.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -10834,7 +10834,7 @@
       "title": "Scheduling policy impact review",
       "kind": "route",
       "module": "PL",
-      "summary": "PL-04 read-only comparison of a proposed visit-duration limit and effective instant against permitted future bookings. No publication or saved impact tasks.",
+      "summary": "PL-04 temporary comparison, immutable proposals/successors, complete server reviews, explicit publication and current owned impacts.",
       "path": "/schedule/policy-impact",
       "source_paths": [
         "src/app/(business)/schedule/policy-impact/page.tsx"
@@ -10853,11 +10853,16 @@
         "src/app/styles/scheduling-workspaces.css",
         "docs/decisions/scheduling-policy-impact-review.md",
         "src/scheduling/policy-holds.ts",
-        "src/scheduling/components/client/policy-holds.client.tsx"
+        "src/scheduling/components/client/policy-holds.client.tsx",
+        "src/scheduling/components/client/policy-publication.client.tsx",
+        "src/scheduling/policy-records.ts",
+        "src/scheduling/policy-commands.ts",
+        "src/scheduling/policy-journal.ts",
+        "docs/decisions/scheduling-policy-publication.md"
       ],
-      "scope_status": "Built synthetic read-only comparison; publication remains planned",
+      "scope_status": "Built synthetic comparison and native policy workflow; wider acceptance remains open",
       "visual_status": "Needs review",
-      "functional_status": "Scheduling Step 4: exact source and executed checks in docs/testing/evidence/scheduling-policy-enforcement/README.md; owner/device review pending.",
+      "functional_status": "Step 5 exact executed checks: docs/testing/evidence/scheduling-policy-interface/README.md; Step 4 enforcement retained.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -10867,7 +10872,9 @@
       "related_keys": [
         "scope:PL-04",
         "route:/schedule/changes",
-        "scope:PL-01"
+        "scope:PL-01",
+        "route:/service/appointments/[id]",
+        "route:/work/[id]"
       ]
     }
   ]

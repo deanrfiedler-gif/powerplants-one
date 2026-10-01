@@ -86,7 +86,7 @@ CS: follow ADR-0042 and cs-native-completion-handover.md. Preserve CS-05 identit
 
 Fertigation: follow `docs/delivery/priva-fertigation-native-handover.md`. Preserve exact scopes, neutral context and unverified supplier conclusions. Merge/deployment need separate authorisation.
 
-Scheduling: scheduling-resources-architecture.md and scheduling-policy-publication.md. Step 4 binds exact visit policy/head and enforces durable impacts in readiness, actual Start and delayed offline Start. Preserve pins, originals and reservations. Resolve only by controlled change/cancellation/replacement plus fresh evidence; acknowledgement/Activity completion is insufficient. Dedicated online duties only; Step 5 UI remains separate. No older-code rollback after activation. Retain #330 repair, installed SQL and reserved 0051/0052; PT-28/PT-30 and owner/device/visual acceptance stay separate.
+Scheduling: scheduling-resources-architecture.md / scheduling-policy-publication.md. Steps 4–5 bind exact policy/head, immutable PL-04 proposals, complete reviews and dedicated explicit publication. Recover exact originals; use typed Activity links. Holds govern readiness/Start and delayed offline Start. Preserve pins/reservations. Resolution needs controlled change/cancellation/replacement and fresh evidence, never acknowledgement/Activity completion. No older-code rollback. Retain #330 repair, installed SQL and reserved 0051/0052; Step 6, PT-28/PT-30 and owner/device/visual acceptance remain separate.
 
 Sales CR-01–05: follow ADR-0046 and sales-native-completion-handover.md. Preserve frozen submissions, immutable Won due, source-scoped receipts and aftercare unknown policies. Receiving creates no downstream work.
 

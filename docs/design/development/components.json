@@ -1707,6 +1707,11 @@
           "id": "service-phone-identity",
           "label": "Service phone identity",
           "description": "Utilities remain inside the header with local identity mounted; CRM filter row remains intentional."
+        },
+        {
+          "id": "scheduling-policy-duties",
+          "label": "Scheduling dedicated duties",
+          "description": "Real local identity selector exposes existing distinct reviewer/publisher profiles. PL-04 browser host fixtures verify Scheduling navigation, direct links and identity-lock clearing; no new grants or hosted identities."
         }
       ],
       "implementation": [
@@ -1735,7 +1740,9 @@
         "src/app/styles/my-work.css",
         "src/shell/secondary-menu.tsx",
         "src/app/styles/equipment.css",
-        "docs/testing/evidence/job-pack-i5/README.md"
+        "docs/testing/evidence/job-pack-i5/README.md",
+        "src/components/business-session.tsx",
+        "src/components/session-signal.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -1806,6 +1813,14 @@
           "expected": "Owner/device review of the phone identity correction",
           "actual": "Component and compiled proof recorded separately in I5",
           "action": "Review retained phone captures and shared-shell results.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "pl04-shell-duty-review",
+          "expected": "Independent desktop/phone review of dedicated-duty navigation and identity transitions.",
+          "actual": "Synthetic host proof covers navigation and in-flight protected evidence clearing; owner/device acceptance remains open.",
+          "action": "Use the Step 5 host captures and browser fixture during paired shell review.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2347,10 +2362,10 @@
     },
     {
       "id": "scheduling-policy-impacts",
-      "title": "Published scheduling impacts and resolution",
+      "title": "Scheduling policy evidence, publication and owned impacts",
       "category": "Scheduling",
       "module": "Service",
-      "purpose": "Read authorised durable holds and resolve only against fresh controlled booking evidence.",
+      "purpose": "Keep immutable proposal/review/publication evidence distinct from temporary comparison and resolve holds only through the existing appointment workflow.",
       "owner": "Dean Fiedler",
       "example": null,
       "coverage": "Host example",
@@ -2374,6 +2389,31 @@
           "id": "uncertain",
           "label": "Uncertain response",
           "description": "Retry the unchanged resolution; retained original receipt is authoritative."
+        },
+        {
+          "id": "proposal",
+          "label": "Immutable proposal",
+          "description": "Synthetic saved proposal and linked successor; exact source/head and fixed terms."
+        },
+        {
+          "id": "review",
+          "label": "Complete saved review",
+          "description": "Server complete empty/compliant/affected population, exclusions and 200-candidate refusal."
+        },
+        {
+          "id": "publication",
+          "label": "Exact publication",
+          "description": "Explicit reviewed action and accepted receipt; no Start approval."
+        },
+        {
+          "id": "recovery",
+          "label": "Publication recovery",
+          "description": "Lost response and reload retain unchanged original; altered retry refuses."
+        },
+        {
+          "id": "denied",
+          "label": "Revoked or switched identity",
+          "description": "Protected evidence and in-flight results clear; ordinary comparison remains permission-scoped."
         }
       ],
       "implementation": [
@@ -2384,13 +2424,20 @@
         {
           "path": "src/scheduling/components/client/policy-resolution.client.tsx",
           "symbol": "PolicyResolution"
+        },
+        {
+          "path": "src/scheduling/components/client/policy-publication.client.tsx",
+          "symbol": "PolicyPublicationWorkspace"
         }
       ],
       "dependencies": [
         "src/components/business-ui.tsx",
         "src/components/ui/button.tsx",
         "src/scheduling/policy-holds.ts",
-        "src/scheduling/policy-resolution.ts"
+        "src/scheduling/policy-resolution.ts",
+        "src/scheduling/policy-journal.ts",
+        "src/shared/ui/use-recoverable-command.ts",
+        "src/scheduling/policy-evidence-model.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -2407,13 +2454,21 @@
       "desktop": "Keep reason, responsible owner, source publication and next action together. Existing record detail owns the resolution controls.",
       "mobile": "Stack labels and actions; wrap exact identifiers without horizontal overflow at 390/320 px.",
       "keyboard": "Native details, labelled fields and shared buttons; all actions available without dragging.",
-      "limitations": "Online host only; no proposal/review/publication UI or offline resolution. Fixture card does not confer authority.",
+      "limitations": "Online host only; no accepted policy-editor mockup, no offline publication/resolution, no owner/device acceptance. Shared journal opt-in permits server-allocated publication result IDs; booking receipt binding remains unchanged. An unavailable original receipt retains explicit unchanged recovery; actual authority refusals hide protected evidence.",
       "gaps": [
         {
           "id": "scheduling-step4-review",
           "expected": "Review policy preparation, durable hold reasons and exact resolution recovery on desktop and phone.",
           "actual": "Step 4 source and synthetic functional proof are being verified; owner visual/device review remains pending.",
           "action": "Review the exact Step 4 captures and affected shared controls without copying an acceptance fingerprint.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "scheduling-step5-review",
+          "expected": "Review native immutable proposal, complete evaluation, publication, recovery and owned handovers at 1440/1024/390/320 CSS px.",
+          "actual": "New composition is implementation/proposed evidence with no accepted editor mockup.",
+          "action": "Inspect retained Step 5 captures separately from owner, physical-device and accessibility acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

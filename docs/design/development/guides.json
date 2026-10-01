@@ -69898,7 +69898,7 @@
       "reviewer": null,
       "reviewed_at": null,
       "reviewed_content_hash": null,
-      "content_mode": "Native synthetic read-only workflow",
+      "content_mode": "Native synthetic comparison, immutable policy evidence and guarded online publication",
       "source_commit": "3fd6ec192b137707ef69c83b0cf36ea0b85283fb",
       "related_entry_keys": [
         "scope:PL-04",
@@ -69910,7 +69910,7 @@
           "section_id": "purpose",
           "title": "Purpose and applicability",
           "paragraphs": [
-            "Compare a proposed maximum visit duration and future effective time with currently permitted Confirmed bookings. This is transient analysis within PL-04, not policy publication or saved follow-up."
+            "Compare a duration change or create, reopen, review and publish exact immutable policy evidence within PL-04. Temporary comparison is separate from complete server review and gives no publication or dispatch approval."
           ],
           "steps": [],
           "headers": [],
@@ -69920,7 +69920,7 @@
           "section_id": "prerequisites",
           "title": "Before you start",
           "paragraphs": [
-            "Sign in with scheduling and work-order read access. The synthetic published policy supplies unchanged contact, crew and expiry terms. Real operational rule ownership remains unresolved."
+            "Temporary comparison retains existing scheduling/work-order/source reads. Saved workflow requires the dedicated workspace policy reviewer or publisher plus complete source visibility. Local synthetic identity choices expose these existing distinct duties; neither acquires booking-edit or dispatch authority."
           ],
           "steps": [],
           "headers": [],
@@ -69930,7 +69930,7 @@
           "section_id": "quick-start",
           "title": "Quick start",
           "paragraphs": [
-            "Read Published rule. Enter a proposed effective time, explicitly choose its timezone and enter 1–1440 whole visit minutes. Optionally restrict the site, then select Compare future bookings."
+            "The reviewer enters maximum visit minutes, an explicit local effective time/timezone and a reason. Save immutable proposal, then request a complete server review. Copy its stable review link for the distinct publisher to inspect and explicitly publish. Reopen saved records remains available after reload."
           ],
           "steps": [],
           "headers": [],
@@ -69940,7 +69940,7 @@
           "section_id": "page-tour",
           "title": "Page tour",
           "paragraphs": [
-            "Published rule shows its version, dates and evidence. The form precedes counts and review cards. Comparison provenance discloses source and scenario hashes as evidence identifiers, not authorisation."
+            "Saved workflow contains the current publication head, exact source/fixed terms, editable unsaved proposal, saved evidence and action controls. Reopen saved records pages proposals, reviews and publications. Temporary scoped comparison and published holds remain separate sections."
           ],
           "steps": [],
           "headers": [],
@@ -69950,8 +69950,8 @@
           "section_id": "information",
           "title": "Information and boundaries",
           "paragraphs": [
-            "Only permitted future, unstarted Confirmed visits pinned to the selected policy and overlapping the scenario are compared. Started, completed, cancelled, proposed and differently pinned visits are excluded. Travel minutes are separate.",
-            "A visit ending exactly at the effective instant is outside the scenario. A crossing visit requires review. A visit exactly as long as the limit fits. The original policy expiry is retained."
+            "Only 1–1440 whole visit minutes and a future effective instant change. Expiry, customer-contact rules, all-crew competency and source provenance stay fixed. Ambiguous/nonexistent civil times require another explicit time. Travel remains separate.",
+            "Complete review covers the server workspace-family candidate population, including ancestor pins and compliant candidates, with all seven evaluation dimensions, exclusions, reasons and accountable owners. A filtered or zero-result comparison cannot establish completeness. The server refuses over 200 candidates without truncation."
           ],
           "steps": [],
           "headers": [],
@@ -69961,8 +69961,8 @@
           "section_id": "tasks",
           "title": "Tasks and decisions",
           "paragraphs": [
-            "Inspect review reasons, service owner and appointment/schedule/crew versions. Use the exact booking link to open existing controlled scheduling review. No Activity is created.",
-            "Editing input removes old results. Compare again to read current bookings. Refresh published rule clears analysis; it does not save the proposal."
+            "Edit as immutable successor retains the original proposal and links a new version. After head advancement the successor binds the current source/head; old reviews cannot publish it. Select the exact saved review rather than assuming the latest list item is approval.",
+            "The publisher reads the exact proposal/source/review hashes, effective instant and immediate hold consequences, enters an action reason and explicitly publishes. A stale refusal never refreshes or substitutes a different proposal automatically."
           ],
           "steps": [],
           "headers": [],
@@ -69972,7 +69972,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Analysis covers only the disclosed current access scope and comparison. Zero results do not approve publication or dispatch. Existing booking controls own later move, contact and preparation consequences."
+            "Only the accepted server receipt establishes publication success. The saved publication retains exact policy/publication/receipt identity. Typed Activity and appointment links hand unresolved impacts to their accountable owner.",
+            "Publication does not repin bookings or grant dispatch/Start approval. Activity completion or pack acknowledgement cannot clear a hold. Use Step 4 controlled appointment amendment/cancellation/replacement and fresh resolution; all independent readiness checks remain."
           ],
           "steps": [],
           "headers": [],
@@ -69982,8 +69983,8 @@
           "section_id": "states",
           "title": "States and results",
           "paragraphs": [
-            "Loading and failed reads remove prior results. Denial hides policy and booking evidence. No matching review means only that this bounded duration/effective-date comparison found none.",
-            "More than 200 matching permitted bookings is a refusal, never a truncated success. Narrow the site or choose a later effective time and retain the narrower scope."
+            "Unsaved edits, saved immutable proposals, completed reviews, published records and unresolved/current/stale impacts have separate labels. Loading, unavailable, denied and failed reads clear prior protected success evidence.",
+            "No saved records is a discovery result. A complete empty review is a server result with full coverage, while zero comparison results describe only the selected read scope. Limit refusal creates no partial review."
           ],
           "steps": [],
           "headers": [],
@@ -69993,7 +69994,7 @@
           "section_id": "example",
           "title": "Synthetic example",
           "paragraphs": [
-            "For the seeded September 2031 visit, compare a 60-minute maximum effective before its two-hour interval. The card reports the excess; the appointment remains on its original policy. This is not a recommended operational limit."
+            "A fictional 75-minute future limit affects a two-hour visit. The reviewer saves a proposal and completes the server review; a separate publisher publishes those exact references. The booking retains its original pin and receives an owned hold. This is a test scenario, not an adopted operational duration."
           ],
           "steps": [],
           "headers": [],
@@ -70003,9 +70004,9 @@
           "section_id": "recovery",
           "title": "Errors and recovery",
           "paragraphs": [
-            "Retry loading obtains fresh evidence. For a stale policy, Refresh published rule and compare again. Ambiguous or nonexistent local times require a different explicit time.",
-            "Changing identity or reloading discards analysis. This page does not publish, write offline operations or recover publication receipts.",
-            "Scheduling Step 4: a published impact holds unstarted work immediately, even when the policy starts later. Activity completion or pack acknowledgement does not clear it. Use the named owner and booking link for a controlled change or cancellation/replacement, evaluate current evidence, then save the guarded resolution online. Later source changes restore the hold. Retry an uncertain save unchanged to recover its receipt. Delayed offline Start is rechecked against current authority; ReviewRequired retains its original."
+            "For uncertainty, retain the original operation and payload. Check original receipt or explicitly Retry unchanged original. Reload first checks the original actor-bound receipt; it never automatically posts a replacement publication. Same-tab storage is recovery assistance, not the saved-record database.",
+            "Closing the tab or changing identity removes the local recovery copy. Use stable links or authorised saved-record discovery to reopen committed evidence. Denial does not prove the original failed. Current authority is checked before receipt disclosure.",
+            "Stale source/head/proposal/review requires an explicit successor or fresh complete review as appropriate. Correctable input stays editable after a definitive refusal. Publication and resolution are online-only."
           ],
           "steps": [],
           "headers": [],
@@ -70015,7 +70016,7 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline",
           "paragraphs": [
-            "Controls and cards stack on phones. Labels, visible focus, native selects and Enter form submission remain available. The page requires an online current server read. Emulation is separate from physical-device, screen-reader and native zoom acceptance."
+            "At 1440/1024/390/320 CSS px, fields/cards and actions wrap within the shell scroll owner. Native controls, labelled validation and visible focus support keyboard use. Record opening focuses the saved heading; successor editing focuses its form heading. Emulation is separate from physical-device/assistive-technology acceptance."
           ],
           "steps": [],
           "headers": [],
@@ -70025,7 +70026,7 @@
           "section_id": "resources",
           "title": "Related guidance",
           "paragraphs": [
-            "Use PL-04 Changes & follow-up for controlled appointment review and PL-01 for the planner. The architecture decision and delivery handover identify planned publication obligations."
+            "Use exact appointment and Activity links for owned handover. The publication decision, service API contract and scheduling-policy-impact handover define current authority, receipt and Step 6 boundaries."
           ],
           "steps": [],
           "headers": [],
@@ -70035,14 +70036,14 @@
           "section_id": "review",
           "title": "Review and evidence",
           "paragraphs": [
-            "Draft guide; owner, visual and operational acceptance remain pending. Checks and inspected captures are recorded in the delivery handover. No review fingerprint has been adopted."
+            "Draft guide and proposed composition. No accepted policy-editor image exists. Exact implementation captures and functional checks are recorded separately in the Step 5 evidence; no review fingerprint or owner acceptance is adopted."
           ],
           "steps": [],
           "headers": [],
           "rows": []
         }
       ],
-      "runtime_evidence": "Scheduling Step 4: docs/testing/evidence/scheduling-policy-enforcement/README.md records exact executed checks; visual and owner/device review pending."
+      "runtime_evidence": "docs/testing/evidence/scheduling-policy-interface/README.md; visual, owner and physical-device acceptance remain separate."
     }
   ]
 }
