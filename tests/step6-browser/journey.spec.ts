@@ -43,6 +43,7 @@ expect([
   "prepare",
   "publish",
   "resolve",
+  "recover-resolution",
   "rollback",
   "finish",
   "history",
@@ -291,6 +292,7 @@ test(`Step 6 ${phase}: retained continuous service and compatible recovery`, asy
       await call(page, "local-session", { profile: "coordinator" });
       await page.goto(`/service/appointments/${saved.prepared.aid}`);
       saved.prepared = await amendReturn(page, saved.prepared);
+      await save(saved);
       const resolution = await resolveReturn(
         page,
         info,
@@ -309,6 +311,25 @@ test(`Step 6 ${phase}: retained continuous service and compatible recovery`, asy
       await changePreparation(page, saved.source, saved.prepared.aid);
       await page.goto(`/service/appointments/${saved.prepared.aid}`);
       await expect(page.getByText(/Stale/).first()).toBeVisible();
+      await held(page, saved.prepared.aid, info);
+      await save(saved);
+    } else if (phase === "recover-resolution") {
+      // Operator recovery after a harness interruption. The original endpoint,
+      // request and receipt must come from retained evidence, never reconstruction.
+      const retained = JSON.parse(
+        await readFile(join(root, "private", "resolution.json"), "utf8"),
+      );
+      await call(page, "local-session", { profile: "coordinator" });
+      expect(await call(page, retained.path, retained.original)).toEqual(
+        retained.receipt,
+      );
+      const pack = (await call(page, `packs/${saved.prepared.pid}`)).items[0];
+      saved.prepared = { ...saved.prepared, pack };
+      await page.goto(`/service/appointments/${saved.prepared.aid}`);
+      await expect(
+        page.getByText(/Current disposition: Current/),
+      ).toBeVisible();
+      await changePreparation(page, saved.source, saved.prepared.aid);
       await held(page, saved.prepared.aid, info);
       await save(saved);
     } else if (phase === "rollback") {

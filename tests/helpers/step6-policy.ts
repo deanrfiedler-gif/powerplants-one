@@ -238,6 +238,7 @@ export async function resolveReturn(
     await page
       .getByRole("button", { name: "Retry original resolution", exact: true })
       .click();
+    await expect(page.getByText(/Current disposition: Current/)).toBeVisible();
     expect(inputs).toHaveLength(2);
     expect(inputs[1]).toBe(inputs[0]);
     expect(receipts[1]).toEqual(receipts[0]);
