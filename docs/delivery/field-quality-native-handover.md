@@ -6,6 +6,8 @@ Owner: Dean Fiedler. State: implementation in progress. This is not a completion
 
 ## FI-03/FI-04 Service increment
 
+Delivery: [PR #334](https://github.com/deanrfiedler-gif/powerplants-one/pull/334). Local technical verification is complete; final-head CI is followed on the PR. Independent acceptance and deployment remain separate. The evidence index preserves original failures, source/build identities, exact restart/output comparisons and inspected desktop/phone/zoom captures.
+
 Started only after Step 6 PR #333 merged into main `feb01e57c1ffdab0a5f8d1a5664ab5144bd37ccd`; all 17 reported checks passed and no relevant blocking permission/data-loss/recovery finding remained. Owner/device/visual/screen-reader and performance findings remain open. Unrelated worktrees and earlier databases/evidence are preserved.
 
 Native `/my-jobs/inspections` and `/service/inspections` consume the shared engine. Service drafts partition by performer and exact procedure/equipment/scope/binding; EN-08 keeps its Engineering host and existing draft contract. Current assigned capture duties remain distinct from named Service-owner review/release. Failed/incomplete submission atomically retains owned defects and RestrictedService Activities. Correction, fresh linked retest and independent acceptance precede closure; Activity completion alone closes nothing.
