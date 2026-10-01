@@ -4,7 +4,7 @@
 
 Owner: Dean Fiedler. Synthetic implementation evidence; independent owner, visual, physical-device and screen-reader acceptance remain pending. No deployment or operational engineering approval.
 
-Delivery: [PR #334](https://github.com/deanrfiedler-gif/powerplants-one/pull/334). Implementation commit `f3fa0b02e256a4f12b37dabadd8050f31e27f57d` contains the exact runtime trees in the identity record. The follow-up handover commit changes documentation only. Final-head CI results are recorded in the PR validation section and check runs; no local result is substituted for CI.
+Delivery: [PR #334](https://github.com/deanrfiedler-gif/powerplants-one/pull/334). Implementation commit `f3fa0b02e256a4f12b37dabadd8050f31e27f57d` contains the exact runtime trees in the identity record. The first follow-up handover commit changes documentation only. A later CI correction changes the inspection browser fixture dates, without changing application, SQL, seed or shared test-helper behaviour. Final-head CI results are recorded in the PR validation section and check runs; no local result is substituted for CI.
 
 ## Starting point
 
@@ -76,6 +76,10 @@ Private original logs are retained with hashes in the evidence index. Early fixt
 Browser runs 01–05 retained their failures: an incorrect Customer/Site action route, rerun fixture conflict, starting before every crew acknowledgement, an exact label locator that included option text, a wrong expected denial status, and checking for issued UI before the renderer returned. Corrections use established `/actions`, task-database backups before reset, all acknowledgements before Start, accessible combobox roles, the existing 403 capability gate and the actual release response before the unchanged UI assertion. Runs 06 and 07 passed both desktop and phone journeys. One duplicate local launcher encountered an occupied port; subsequent runs explicitly wait for the task-owned app. The first restart launcher omitted PostgreSQL's task port and failed to bind the default; corrected startup explicitly used 57563. No unrelated process or database was stopped.
 
 The original browser release wait is retained as a performance observation; explicit request completion is not evidence of a new performance target. Release timings are recorded alongside final browser results. Scheduling Step 6's existing performance findings and unsupported offline originals remain unchanged.
+
+The first complete CI runs at `708a798cfc1007b208bff3d21f028ae0e9f19826` exposed a shared-crew fixture collision: P09 reports already books 10–11 December 2031. Both browser lanes correctly refused the new inspection fixtures at the same times. The Service inspection fixtures now own 3–4 November 2031, which are unused by the other browser journeys. All four local inspection/reference cases pass with these dates. No booking guard, assertion, skip or deadline changed. The original compiled lane recorded 525 passes, three failures and 79 existing project-specific skips; the application browser lane recorded 526 passes, the two fixture failures and the same existing skips.
+
+The compiled lane's third failure was P09's existing online/offline report test: its Submission reason remained hidden with Capture selected after the test clicked Completion. The independent application browser lane passed that exact report test on the same source. Its cause is unproven; the final PR validation records the unchanged-main comparison and repeat outcome. Initial local report comparisons used the suite's hard-coded port-3000 Origin against task port 57560 and were correctly refused by the local gateway. The comparison harness retains a copy with only its two Origin literals changed to the task port; original tests and application guards remain intact. Private original CI/local logs and comparison evidence are retained outside Git.
 
 ## Limits
 

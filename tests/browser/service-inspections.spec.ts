@@ -164,7 +164,8 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
   await login(request, "coordinator");
   const setup = await prepareIsolatedFieldAppointment(
     call,
-    info.project.name.startsWith("mobile") ? "2031-12-11" : "2031-12-10",
+    // Own slots in the serial shared-crew suite; P09 reports retains 10–11 December.
+    info.project.name.startsWith("mobile") ? "2031-11-04" : "2031-11-03",
   );
   const site = "70000000-0000-4000-8000-000000000001",
     owner = "30000000-0000-4000-8000-000000000001";
