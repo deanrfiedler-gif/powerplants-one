@@ -326,6 +326,8 @@ test(`Step 6 ${phase}: retained continuous service and compatible recovery`, asy
       const pack = (await call(page, `packs/${saved.prepared.pid}`)).items[0];
       saved.prepared = { ...saved.prepared, pack };
       await page.goto(`/service/appointments/${saved.prepared.aid}`);
+      await page.getByText("Resolve scheduling impact after a controlled change", { exact: true }).click();
+      await page.getByRole("button", { name: "Evaluate current booking", exact: true }).click();
       await expect(
         page.getByText(/Current disposition: Current/),
       ).toBeVisible();
