@@ -1,11 +1,12 @@
 // The shared inspection core's server side. Every function here runs inside the caller's transaction and
 // takes the caller's already-authorised context: this module owns attempts, results, evidence, review, defects
 // and retest lineage for a typed host, and knows nothing about commissioning. EN-08 is its first consumer; a
-// later FI-03/FI-04 workspace reads and writes these same rows through these same functions.
+// FI-03/FI-04 consumer reads and writes these same rows through these same functions.
 import { createHash, randomUUID } from "node:crypto";
 import type { PoolClient } from "pg";
 import type { ActivityInput } from "../activities/activities";
 import { authoriseActivityInput, insertActivity } from "../activities/activities";
+import { endOfLocalDay } from "../activities/work-view";
 import { documentStore, digest } from "../documents/store";
 import { entryContext } from "../field/context";
 import { inspectPng } from "../field/media";
@@ -44,7 +45,7 @@ export async function resolveHost(c: QueryClient, p: Principal, host: Host): Pro
 // ---------------------------------------------------------------------------------------------
 export type AttemptRow = {
   id: string; company_id: string; site_id: string | null; host_type: Host["host_type"]; host_id: string; version: number; created_at: Date; created_by: string; updated_at: Date;
-  attempt_number: number; predecessor_id: string | null; state: "Draft" | "Submitted"; plan_source: { type: string; id: string; reference: string; hash: string }; plan: CheckDefinition[]; plan_hash: string;
+  attempt_number: number; predecessor_id: string | null; state: "Draft" | "Submitted"; plan_source: { type: string; id: string; reference: string; hash: string; slot?: string }; plan: CheckDefinition[]; plan_hash: string;
   scope_keys: string[]; check_keys: string[]; configuration_reference: string | null; configuration_source_id: string | null; performer_id: string; occurred_at: Date | null; timezone: string | null; clock_concern: string | null;
   prerequisites: Prerequisite[]; findings: string | null; content_hash: string; submitted_hash: string | null; submitted_at: Date | null; submitted_by: string | null; received_at: Date | null; performer_name: string;
 };
@@ -99,8 +100,9 @@ export async function loadInspections(c: QueryClient, p: Principal, hostType: Ho
     return {
       row, results: results.filter((r) => r.attempt_id === row.id), evidence: evidence.filter((e) => e.attempt_id === row.id), reviews: mine, review: reviewState(row.state, mine), defects: links.filter((l) => l.attempt_id === row.id),
       instruments: uses.filter((u) => u.attempt_id === row.id).map((u) => {
-        const now = live.find((i) => i.id === u.instrument_id) ?? null, calibration = now ? calibrationOf(now) : null;
-        // Assessed against the live record, so a retrospective withdrawal reaches a retained attempt; the snapshot shows what was relied on.
+        const now = live.find((i) => i.id === u.instrument_id) ?? null, calibration = row.host_type === "ServiceAppointment" ? retainedCalibration(u.snapshot, now) : now ? calibrationOf(now) : null;
+        // Retrospective withdrawal reaches a retained attempt. Service keeps its exact test-time certificate;
+        // Engineering retains its established live-record assessment contract.
         return { ...u, live: now, ...(occurred ? assessInstrument(calibration, occurred) : { assessment: "Unknown" as const, reason: "The test time is not recorded yet." }), expired_today: !!calibration && today > calibration.valid_to };
       }),
     };
@@ -110,6 +112,15 @@ export async function loadInspections(c: QueryClient, p: Principal, hostType: Ho
 export const instrumentColumns = "id,reference,description,calibration_reference,calibration_version,valid_from::text,valid_to::text,withdrawn_effective_from::text,withdrawn_reason,to_jsonb(inspection_instruments)->>'measurement_type' AS measurement_type,to_jsonb(inspection_instruments)->>'measurement_range' AS measurement_range,to_jsonb(inspection_instruments)->>'measurement_unit' AS measurement_unit,to_jsonb(inspection_instruments)->>'certificate_reference' AS certificate_reference,to_jsonb(inspection_instruments)->>'certificate_revision' AS certificate_revision";
 export const calibrationOf = (i: Pick<InstrumentRow, "calibration_reference" | "calibration_version" | "valid_from" | "valid_to" | "withdrawn_effective_from" | "withdrawn_reason">): Calibration =>
   ({ reference: i.calibration_reference, version: i.calibration_version, valid_from: i.valid_from, valid_to: i.valid_to, withdrawn_effective_from: i.withdrawn_effective_from, withdrawn_reason: i.withdrawn_reason });
+// Renewals never repair historical Service use. A later withdrawal can still
+// invalidate use of the retained certificate; unavailable live authority stays unknown.
+export function retainedCalibration(snapshot: InstrumentUseRow["snapshot"], live: InstrumentRow | null): Calibration | null {
+  if (!live || !snapshot.calibration_reference || !snapshot.valid_from || !snapshot.valid_to) return null;
+  const retained = calibrationOf(snapshot);
+  if (live.withdrawn_effective_from && (!retained.withdrawn_effective_from || live.withdrawn_effective_from < retained.withdrawn_effective_from))
+    return { ...retained, withdrawn_effective_from: live.withdrawn_effective_from, withdrawn_reason: live.withdrawn_reason };
+  return retained;
+}
 // The calendar date of an instant at the site. A test at 23:30 site time is that site day's test, wherever the server runs.
 export function localDate(instant: Date, timezone: string | null) {
   const parts = new Intl.DateTimeFormat("en-CA", { timeZone: timezone ?? "UTC", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(instant);
@@ -127,8 +138,10 @@ export type OpenInput = { id: string; host: ResolvedHost; plan_source: AttemptRo
 export async function openAttempt(c: PoolClient, p: Principal, input: OpenInput) {
   const known = new Set(input.plan.map((d) => d.key));
   if (!input.check_keys.length || input.check_keys.some((k) => !known.has(k))) throw refuse("InvalidData", "Choose checks of the approved test basis.");
-  // A draft in progress is finished or abandoned in words before another is opened: two live drafts would race for one defect.
-  const draft = (await c.query<{ attempt_number: number }>("SELECT attempt_number FROM ppo.inspection_attempts WHERE workspace_id=$1 AND host_type=$2 AND host_id=$3 AND state='Draft' LIMIT 1", [p.workspace_id, input.host.host_type, input.host.host_id])).rows[0];
+  // Engineering retains one host-wide draft. Service partitions by performer and exact
+  // procedure/equipment/context; submission still serializes through the owning host.
+  const slot = input.host.host_type === "ServiceAppointment" ? input.plan_source.slot : null;
+  const draft = (await c.query<{ attempt_number: number }>("SELECT attempt_number FROM ppo.inspection_attempts WHERE workspace_id=$1 AND host_type=$2 AND host_id=$3 AND state='Draft' AND ($4::text IS NULL OR (plan_source->>'slot'=$4 AND performer_id=$5)) LIMIT 1", [p.workspace_id, input.host.host_type, input.host.host_id, slot ?? null, input.performer_id])).rows[0];
   if (draft) throw refuse("DraftOpen", `Attempt ${String(draft.attempt_number).padStart(2, "0")} is still a draft. Submit it before opening another.`, 409);
   const number = (await c.query<{ next: number }>("SELECT coalesce(max(attempt_number),0)+1 AS next FROM ppo.inspection_attempts WHERE workspace_id=$1 AND host_type=$2 AND host_id=$3", [p.workspace_id, input.host.host_type, input.host.host_id])).rows[0].next;
   const hash = planHash(input.plan), empty = { plan_hash: hash, scope_keys: input.scope_keys, check_keys: input.check_keys, configuration_reference: null, configuration_source_id: null, performer_id: input.performer_id, occurred_at: null, timezone: input.timezone, clock_concern: null, prerequisites: input.prerequisites, findings: null };
@@ -168,12 +181,14 @@ export async function saveAttempt(c: PoolClient, p: Principal, host: Host, attem
   for (const [i, r] of input.readings.entries())
     await c.query("INSERT INTO ppo.inspection_results(id,workspace_id,company_id,attempt_id,check_key,entry_state,raw_value,unit,choice,reason,note,sort_order) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)",
       [randomUUID(), p.workspace_id, row.company_id, row.id, r.check_key, r.state, r.state === "Recorded" ? r.value : null, r.state === "Recorded" ? r.unit : null, r.state === "Recorded" ? r.choice : null, r.reason, r.note, i]);
+  const retainedUses = row.host_type === "ServiceAppointment" && row.occurred_at?.toISOString() === input.occurred_at
+    ? (await c.query<InstrumentUseRow>("SELECT instrument_id,snapshot FROM ppo.inspection_instrument_uses WHERE workspace_id=$1 AND attempt_id=$2", [p.workspace_id,row.id])).rows : [];
   await c.query("DELETE FROM ppo.inspection_instrument_uses WHERE workspace_id=$1 AND attempt_id=$2", [p.workspace_id, row.id]);
   for (const id of new Set(input.instrument_ids)) {
     const found = (await c.query<InstrumentRow>(`SELECT ${instrumentColumns} FROM ppo.inspection_instruments WHERE workspace_id=$1 AND company_id=$2 AND id=$3`, [p.workspace_id, row.company_id, id])).rows[0];
     if (!found) throw refuse("InvalidData", "Choose an instrument from this company's calibration records.");
     const { id: _id, ...snapshot } = found; void _id;
-    await c.query("INSERT INTO ppo.inspection_instrument_uses(workspace_id,company_id,attempt_id,instrument_id,snapshot) VALUES($1,$2,$3,$4,$5)", [p.workspace_id, row.company_id, row.id, id, JSON.stringify(snapshot)]);
+    await c.query("INSERT INTO ppo.inspection_instrument_uses(workspace_id,company_id,attempt_id,instrument_id,snapshot) VALUES($1,$2,$3,$4,$5)", [p.workspace_id, row.company_id, row.id, id, JSON.stringify(retainedUses.find(u=>u.instrument_id===id)?.snapshot ?? snapshot)]);
   }
   return (await rehash(c, p, row, "configuration_reference=$4,configuration_source_id=$5,occurred_at=$6,timezone=$7,clock_concern=$8,prerequisites=$9,findings=$10",
     [input.configuration_reference, input.configuration_source_id, input.occurred_at, input.timezone ?? row.timezone, input.clock_concern, JSON.stringify(input.prerequisites), input.findings])).at;
@@ -239,7 +254,7 @@ export async function submitAttempt(c: PoolClient, p: Principal, host: Host, att
   const { results, uses, evidence } = await rehash(c, p, row), definitions = row.plan.filter((d) => row.check_keys.includes(d.key));
   const instruments = await Promise.all(uses.map(async (u) => {
     const live = (await c.query<InstrumentRow>(`SELECT ${instrumentColumns} FROM ppo.inspection_instruments WHERE workspace_id=$1 AND id=$2`, [p.workspace_id, u.instrument_id])).rows[0];
-    return { reference: live.reference, ...(row.occurred_at ? assessInstrument(calibrationOf(live), localDate(row.occurred_at, row.timezone)) : { assessment: "Unknown" as const, reason: null }) };
+    return { reference: u.snapshot.reference, ...(row.occurred_at ? assessInstrument(row.host_type === "ServiceAppointment" ? retainedCalibration(u.snapshot, live ?? null) : live ? calibrationOf(live) : null, localDate(row.occurred_at, row.timezone)) : { assessment: "Unknown" as const, reason: null }) };
   }));
   const stops = submissionBlockers(definitions, null, {
     readings: results.map((r) => toReading(r, evidence)), evidence: evidence.map((e) => ({ id: e.id, check_key: e.check_key, state: e.state, label: e.label })), prerequisites: row.prerequisites, instruments,
@@ -249,9 +264,11 @@ export async function submitAttempt(c: PoolClient, p: Principal, host: Host, att
   if (stops.length) throw blocked("SubmissionBlocked", stops);
   const failed: { definition: CheckDefinition; reason: string | null }[] = [];
   for (const r of results) {
-    const d = definitions.find((x) => x.key === r.check_key)!, e = evaluate(d, toReading(r, evidence));
-    await c.query("UPDATE ppo.inspection_results SET evaluation=$3,evaluation_reason=$4,compared=$5,rule_version=$6 WHERE workspace_id=$1 AND id=$2", [p.workspace_id, r.id, e.evaluation, e.reason, e.compared, ruleVersion]);
-    if (e.evaluation === "Fail" && d.required) failed.push({ definition: d, reason: e.reason });
+    const d = definitions.find((x) => x.key === r.check_key)!, e = host.host_type === "ServiceAppointment" && (d.condition?.outcome === "Unknown" || d.instrument_required && instruments.some(i=>i.assessment==="Unknown"))
+      ? {evaluation:"UnableToAssess" as const,reason:"Applicability or calibration is unverified; the required check remains outstanding.",compared:null}
+      : evaluate(d, toReading(r, evidence));
+    await c.query("UPDATE ppo.inspection_results SET evaluation=$3,evaluation_reason=$4,compared=$5,rule_version=$6 WHERE workspace_id=$1 AND id=$2", [p.workspace_id, r.id, e.evaluation, e.reason, e.compared, host.host_type === "ServiceAppointment" ? "service-inspection-rules-1" : ruleVersion]);
+    if (d.required && (e.evaluation === "Fail" || (host.host_type === "ServiceAppointment" && ["NotTested", "UnableToAssess"].includes(e.evaluation)))) failed.push({ definition: d, reason: e.reason ?? r.reason ?? "Required check incomplete" });
   }
   const submitted = (await c.query<AttemptRow>("UPDATE ppo.inspection_attempts SET version=version+1,updated_at=clock_timestamp(),updated_by=$3,state='Submitted',submitted_hash=content_hash,submitted_at=clock_timestamp(),submitted_by=$3,received_at=clock_timestamp(),submit_operation_id=$4 WHERE workspace_id=$1 AND id=$2 RETURNING *",
     [p.workspace_id, row.id, p.actor_id, operationId])).rows[0];
@@ -273,17 +290,19 @@ async function raiseDefect(c: PoolClient, p: Principal, a: AttemptRow, d: CheckD
   }
   const id = randomUUID(), number = (await c.query<{ next: number }>("SELECT coalesce(max(defect_number),0)+1 AS next FROM ppo.inspection_defects WHERE workspace_id=$1 AND host_type=$2 AND host_id=$3", [p.workspace_id, a.host_type, a.host_id])).rows[0].next,
     reference = `DEF-${String(number).padStart(3, "0")}`, title = `${d.name}: failed${reason ? ` (${reason.replace(/\.$/, "")})` : ""}`.slice(0, 200);
-  const activity = await ownedAction(c, p, owner, `${owner.host_reference} · ${reference} · ${title}. Correct the cause and arrange a fresh retest; closing this action does not close the defect.`);
+  const activity = await ownedAction(c, p, owner, `${owner.host_reference} · ${reference} · ${title}. Correct the cause and arrange a fresh retest; closing this action does not close the defect.`, a.host_type === "ServiceAppointment");
+  if (a.host_type === "ServiceAppointment" && !activity) throw refuse("OwnedActionUnavailable", "The required corrective Activity could not be assigned with current permissions. Nothing was submitted.");
   await c.query(`INSERT INTO ppo.inspection_defects(id,workspace_id,company_id,host_type,host_id,created_by,updated_by,defect_number,reference,check_key,scope_key,title,severity,owner_id,due,source_attempt_id,activity_id)
     VALUES($1,$2,$3,$4,$5,$6,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)`, [id, p.workspace_id, a.company_id, a.host_type, a.host_id, p.actor_id, number, reference, d.key, d.scope_key, title, owner.severity, owner.owner_id, owner.due, a.id, activity]);
   await c.query("INSERT INTO ppo.inspection_defect_attempts(workspace_id,company_id,defect_id,attempt_id,relation) VALUES($1,$2,$3,$4,'Raised')", [p.workspace_id, a.company_id, id, a.id]);
   return { id, reference, created: true, check_key: d.key };
 }
 // One owned action in My Work for one defect, where both the person raising it and its owner may hold one.
-// Where they may not, the defect stands on its own with its owner and date, and nothing pretends otherwise.
-async function ownedAction(c: PoolClient, p: Principal, owner: DefectOwner, summary: string): Promise<string | null> {
+// Engineering may retain an owned defect without an Activity. Service requires the
+// normal RestrictedService Activity handover atomically or refuses submission.
+async function ownedAction(c: PoolClient, p: Principal, owner: DefectOwner, summary: string, service = false): Promise<string | null> {
   if (!owner.site_id) return null;
-  const input: ActivityInput = { id: randomUUID(), company_id: owner.company_id, site_id: owner.site_id, kind: "TechnicalFollowUp", owner_id: owner.owner_id, summary: summary.slice(0, 2000), due_at: `${owner.due}T23:59:59.000Z`, due_needed: false, due_date_only: true, access_class: "Internal", links: [{ object_type: "Site", object_id: owner.site_id }] };
+  const input: ActivityInput = { id: randomUUID(), company_id: owner.company_id, site_id: owner.site_id, kind: "TechnicalFollowUp", owner_id: owner.owner_id, summary: summary.slice(0, 2000), due_at: service ? endOfLocalDay(owner.due) : `${owner.due}T23:59:59.000Z`, due_needed: false, due_date_only: true, access_class: service ? "RestrictedService" : "Internal", links: [{ object_type: "Site", object_id: owner.site_id }] };
   try { await authoriseActivityInput(c, p, input); } catch (e) { if (e instanceof AppError && [403, 404, 422].includes(e.status)) return null; throw e; }
   await insertActivity(c, p, input);
   return input.id;
@@ -311,7 +330,10 @@ export async function reviewAttempt(c: PoolClient, p: Principal, host: Host, att
   if (input.decision === "Accepted") {
     // Closes exactly the defects whose own check this attempt freshly passed. Every other obligation stays open.
     const passing = (await c.query<{ id: string; reference: string }>(`SELECT d.id,d.reference FROM ppo.inspection_defects d JOIN ppo.inspection_results r ON (r.workspace_id,r.attempt_id,r.check_key)=(d.workspace_id,$2::uuid,d.check_key)
-      WHERE d.workspace_id=$1 AND d.host_type=$3 AND d.host_id=$4 AND d.state<>'Closed' AND d.source_attempt_id<>$2 AND r.evaluation='Pass'`, [p.workspace_id, row.id, row.host_type, row.host_id])).rows;
+      WHERE d.workspace_id=$1 AND d.host_type=$3 AND d.host_id=$4 AND d.state<>'Closed' AND d.source_attempt_id<>$2 AND r.evaluation='Pass'
+      AND ($3<>'ServiceAppointment' OR (d.state='CorrectionRecorded' AND d.correction_at IS NOT NULL AND d.correction_at<=$5
+        AND $6::uuid IS NOT NULL AND EXISTS(SELECT 1 FROM ppo.inspection_defect_attempts l WHERE l.workspace_id=d.workspace_id AND l.defect_id=d.id AND l.attempt_id=$6)
+        AND EXISTS(SELECT 1 FROM ppo.inspection_defect_attempts l WHERE l.workspace_id=d.workspace_id AND l.defect_id=d.id AND l.attempt_id=$2 AND l.relation='Retest')))`, [p.workspace_id, row.id, row.host_type, row.host_id, row.occurred_at, row.predecessor_id])).rows;
     for (const d of passing) {
       await c.query("UPDATE ppo.inspection_defects SET version=version+1,updated_at=clock_timestamp(),updated_by=$3,state='Closed',closed_by_attempt_id=$4,closed_review_id=$5,closed_at=clock_timestamp() WHERE workspace_id=$1 AND id=$2", [p.workspace_id, d.id, p.actor_id, row.id, input.id]);
       closed.push(d.reference);

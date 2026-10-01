@@ -4,6 +4,18 @@
 
 Owner: Dean Fiedler. State: implementation in progress. This is not a completion, acceptance or deployment claim.
 
+## FI-03/FI-04 Service increment
+
+Delivery: [PR #334](https://github.com/deanrfiedler-gif/powerplants-one/pull/334). Local technical verification is complete; final-head CI is followed on the PR. Independent acceptance and deployment remain separate. The evidence index preserves original failures, source/build identities, exact restart/output comparisons and inspected desktop/phone/zoom captures.
+
+Started only after Step 6 PR #333 merged into main `feb01e57c1ffdab0a5f8d1a5664ab5144bd37ccd`; all 17 reported checks passed and no relevant blocking permission/data-loss/recovery finding remained. Owner/device/visual/screen-reader and performance findings remain open. Unrelated worktrees and earlier databases/evidence are preserved.
+
+Native `/my-jobs/inspections` and `/service/inspections` consume the shared engine. Service drafts partition by performer and exact procedure/equipment/scope/binding; EN-08 keeps its Engineering host and existing draft contract. Current assigned capture duties remain distinct from named Service-owner review/release. Failed/incomplete submission atomically retains owned defects and RestrictedService Activities. Correction, fresh linked retest and independent acceptance precede closure; Activity completion alone closes nothing.
+
+Migration/seed 0055 adds immutable Service catalogue/retirement/binding/event/output tables, two fictional procedures and a separate fictional pressure instrument. No new capability, grant, user or framework. Installed SQL/seed bytes, reserved 0051/0052 and the retained-root repair remain unchanged. [Decision](../decisions/service-inspections.md), [contract](../contracts/service-inspections.md), [verification](../testing/evidence/service-inspections/README.md).
+
+Controlled internal inspection output retains exact reviewed sources and original bytes, with current applicability separate. It completes no appointment/work order/Project/customer/Finance process. Capture is online only; same-tab original recovery is not an offline inspection protocol. FI-06 has no authoritative incident clearance source. Native captures grant no owner acceptance. Next bounded work is independent walkthrough/acceptance of this journey, followed by a separately decided FI-06 incident contract.
+
 ## Execution preflight
 
 Fetched main `0f10b7fb46a8ab512e9b019573ece272cf5920b9`, tree `a5b0624f19205909e67b83b437bc1edb79510f3a`, on 24 September 2026. GitHub reported only unrelated ES-02 PR #314 open. Recent relevant merges include Customer/Site #285/#287, Equipment #302, Engineering #305/#307 and existing EN-08 #270, Scheduling #310, Job Pack #304/#306/#309/#311, Service register #312 and accepted timer #292. Their code is present in this base; historical STATUS wording does not reverse these merges.

@@ -10,7 +10,7 @@ Public repo, private demo; other projects’ naming, IDs and gates do not govern
 
 Preserve seven domains: Sales (CRM); Estimating & Quotation; Engineering & Design Control; Projects & Commercial Delivery; Service Operations; Supply Chain; Finance & Commercial Controls. Reuse shared customers, contacts, sites, equipment, documents, identity, activity, audit and reporting.
 
-Test actors, approvals, handovers, exceptions and completion across sales, service, upgrades, greenhouse projects and warranty/returns. Roles remain proposed.
+Test actors, approvals, handovers and exceptions across sales, service, projects and returns. Roles remain proposed.
 
 PP-01 covers customer/site/equipment, intake, authorised work, checked/issued packs, scheduling, field labour/parts/findings/photos, customer acknowledgement, reviewed reports and controlled Finance handoff/reconciliation.
 
@@ -20,7 +20,7 @@ Follow P01–P12 and STATUS's consolidation sequence. PPO-009 CRM is separate fr
 
 Repo: deanrfiedler-gif/powerplants-one.
 
-Verify access, branch/commit and changes. Read AGENTS.md, README.md, docs/STATUS.md and relevant ADRs/specs/issues.
+Verify access/commit/changes; read AGENTS.md, README, docs/STATUS.md and ADRs/specs.
 
 Masters: BP-01/02/07, relevant contracts/handover.
 
@@ -72,11 +72,7 @@ Repository work grants no paid-service, deployment, access, live-transaction, mi
 
 ## 9. Verification and communication
 
-Run foundation, prototype and naming checks.
-
-Test permissions, conflicts, staleness, replay, deduplication, document integrity and Finance reconciliation. Inspect screens; record commit/environment.
-
-Separate decisions/evidence/proposals/questions and delivery/verification/acceptance/deployment. Cite sources and limits.
+Run foundation/prototype/naming checks; test authority, conflicts, replay, integrity and reconciliation. Inspect screens; retain source/environment. Separate decisions, proof, acceptance and deployment.
 
 ES-01–10/Excel: estimating-native-programme.md and estimating-programme-handover.md. Preserve ES-02 exact costs, PJ-09 close/reopen and ES-03 exact bindings (estimating-cost-sources.md). ES-02 families: es02-design-board.md; P2–P9 proposed. ES-01 board: es01-design-board.md; P1–P9 decided. ES-08: WP-G00 before D1–D15/DEC-R1/R2. No implied migration allocation, engineering approval or deployment. Retain CI lanes (ci-retained-suite-isolation.md).
 
@@ -94,3 +90,5 @@ Equipment: ADR-0045 / equipment-native-completion-handover.md. Reuse Assets, CS,
 
 SC-01–10: BP-08 / ADR-0049. Separate stock observations, custody, consumption, transactions and restricted credits. Live ERP: Not configured. Retain SC-08 source/hash warnings; SC-10 evidence is not owner acceptance.
 FI: field-quality-native-handover.md. FI-05 reuses CS-06; induction needs a Person link. Acknowledgement grants no work authority.
+
+FI-03/FI-04: service-inspections.md and field-quality-native-handover.md. Shared engine, exact Service bindings, owned defects, fresh retests and independent scoped release; online only, no FI-06 clearance.

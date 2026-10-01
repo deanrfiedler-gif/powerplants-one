@@ -1,0 +1,87 @@
+{
+  "kind": "Retained synthetic CI follow-up; no owner acceptance",
+  "runtime_commit": "f3fa0b02e256a4f12b37dabadd8050f31e27f57d",
+  "first_ci_head": "708a798cfc1007b208bff3d21f028ae0e9f19826",
+  "browser_fixture_commit": "bd9d772dde7c08e3647d80ce7133da82004c3bb0",
+  "database_fixture_sha256": "81536c723ec86b88257697c55512baada06598f169f4a617b323c29863937a90",
+  "first_ci": {
+    "compiled_browser": {
+      "existing_project_skips": 79,
+      "passed": 525,
+      "failed": 3
+    },
+    "application_browser": {
+      "existing_project_skips": 79,
+      "passed": 526,
+      "failed": 2
+    },
+    "database": {
+      "skipped": 0,
+      "passed": 670,
+      "failed": 1
+    },
+    "unit": {
+      "passed": 570,
+      "failed": 0
+    }
+  },
+  "corrected_local": {
+    "unchanged_main_reports": "4/4 passed; two Origin port literals only",
+    "configured_service_database": "5/5 passed",
+    "compiled_report_inspection_reference": "8/8 passed",
+    "unset_directory_service_case": "1/1 passed with task-owned homedir preload"
+  },
+  "final_ci": "See PR 334 check runs and validation section for the final head",
+  "private_files": [
+    {
+      "name": "ci-708a798-compiled-failure.txt",
+      "bytes": 239251,
+      "sha256": "bf92e3bbc437f6ca8b44c1a46d3ac6a73628cabb1fb91f7407449b7bce372778"
+    },
+    {
+      "name": "ci-708a798-browser.txt",
+      "bytes": 386991,
+      "sha256": "5a39ece026091377d00febfaf09ed0163fd818c6ac58f02dc5a7c9a6d873a7be"
+    },
+    {
+      "name": "ci-708a798-database.txt",
+      "bytes": 523680,
+      "sha256": "3dc07d1d39df5495febf390131bf47db2f91dfb8ce56388dfe420d79f541b05b"
+    },
+    {
+      "name": "main-reports-browser.txt",
+      "bytes": 1293,
+      "sha256": "da23b165238f3a12196bc8d5a98191181e5f5bb191a4dffaf8391d19d0d8069f"
+    },
+    {
+      "name": "browser-ci-correction-02.txt",
+      "bytes": 14431,
+      "sha256": "80c8c3132111bab8549aebcfc02262ce60e251fbb2c26bc9a00446c1315e3993"
+    },
+    {
+      "name": "browser-ci-pair-03.txt",
+      "bytes": 2045,
+      "sha256": "6bc1b4e8017ea567e8d6f384c4d971c5fef592edf4a657ccbbaeeff1f94abdc4"
+    },
+    {
+      "name": "database-service-root-configured.txt",
+      "bytes": 771,
+      "sha256": "35efc32b02fbb4165137e310d2fa18f450215bdaab0917437839309aab5d9cc3"
+    },
+    {
+      "name": "database-service-root-default.txt",
+      "bytes": 1517,
+      "sha256": "861611b8a0ae1c60f82b44f27ab6ffd8514846cad8fa77fc9aa016c53aa8801c"
+    },
+    {
+      "name": "database-service-root-default-02.txt",
+      "bytes": 245,
+      "sha256": "2e1cc2cc336675b2d1b65dd4e1254f253f534a9de5c7d2c5cda669aa8b167daa"
+    },
+    {
+      "name": "isolated-default-home.mjs",
+      "bytes": 410,
+      "sha256": "c51ea37c2f3b584edd527eba5c3136e087570c2945f59683ae2307100cf1f439"
+    }
+  ]
+}

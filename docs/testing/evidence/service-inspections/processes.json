@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-01T19:37:52.9026087+10:00",
+  "before_app_pid": 24200,
+  "postgres_port": 57563,
+  "build": "D49Y9dS7Qw2QbEKy6RmRr",
+  "postgres_directory": "task-owned/browser-pg",
+  "after_app_pid": 31144,
+  "database": "ppo_synthetic_test"
+}

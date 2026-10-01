@@ -3,7 +3,7 @@ import type { QueryClient } from "../platform/permissions";
 import { AppError } from "../platform/errors";
 import { commissioningAccess } from "../engineering/commissioning/context";
 import { commissioningHref } from "../shell/navigation";
-import { resolveHost } from "../inspections/service";
+import { serviceInspectionAccess } from "../inspections/service-context";
 import type { Host } from "../inspections/model";
 
 // Reuse the owning consumer's authority, including internal/receiver and live assignment limits.
@@ -14,9 +14,14 @@ export async function equipmentInspectionHost(
 ) {
   try {
     if (host.host_type === "ServiceAppointment") {
-      await resolveHost(c, p, host);
+      try { await serviceInspectionAccess(c,p,host.host_id,"capture"); }
+      catch (error) {
+        if (!(error instanceof AppError) || ![403,404].includes(error.status)) throw error;
+        await serviceInspectionAccess(c,p,host.host_id,"review");
+        return { href:`/service/inspections?appointment_id=${host.host_id}`,label:"Service inspection review" };
+      }
       return {
-        href: `/my-jobs/${host.host_id}`,
+        href: `/my-jobs/inspections?appointment_id=${host.host_id}`,
         label: "Assigned Service inspection",
       };
     }

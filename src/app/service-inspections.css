@@ -1,0 +1,97 @@
+.service-inspections {
+  max-width: 1400px;
+  margin: auto;
+  padding: 24px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.service-inspections .business-card {
+  margin: 16px 0;
+  padding: 20px;
+  background: var(--white);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-card);
+}
+.service-inspections fieldset {
+  min-width: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-control);
+  padding: 16px;
+  margin: 12px 0;
+}
+.service-inspections label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 10px 0;
+}
+.service-inspections input,
+.service-inspections select,
+.service-inspections textarea {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  font-size: 16px;
+  min-height: 44px;
+}
+.service-inspections textarea {
+  min-height: 96px;
+}
+.inspection-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 16px;
+}
+.inspection-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line-strong);
+}
+.inspection-summary span,
+.inspection-summary small {
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.inspection-warning {
+  padding: 12px;
+  border-left: 4px solid var(--warning);
+  background: var(--warning-surface);
+}
+.service-inspections pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: inherit;
+  max-width: 100%;
+}
+.service-inspections summary {
+  cursor: pointer;
+  min-height: 44px;
+  padding: 10px 0;
+}
+.service-inspections .button-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.service-inspections .ppo-button {
+  max-width: 100%;
+  white-space: normal;
+}
+.service-inspections :focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+@media (max-width: 600px) {
+  .service-inspections {
+    padding: 16px;
+  }
+  .service-inspections .business-card {
+    padding: 12px;
+  }
+  .service-inspections fieldset {
+    padding: 10px;
+  }
+}

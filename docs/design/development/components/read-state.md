@@ -89,3 +89,7 @@ Scheduling Step 4 uses this shared control contract for online booking-policy pr
 ### Background policy preparation
 
 `ReadState` and `ErrorNotice` accept `focusOnError` (default `true`). Automatic booking-policy preparation passes `false`: errors remain visible alerts with their field explanations and retry, while native date editing keeps focus. Explicit command failures and resolution evaluation retain the default focus behavior. The `background-error` catalogue state uses the actual component. The Step 4 host test waits for an invalid interval response and verifies that focus stays on the editable start control; the existing complete keyboard journey remains required with unchanged assertions and deadlines. Owner/assistive-technology acceptance is pending.
+
+## Service inspection binding
+
+FI-03/FI-04 use original recovery with a bounded 6,000,000-character evidence journal; other consumers retain 32 KiB. Storage/quota failure precedes transport. Identity changes clear visible recovery. The host fixture covers saved, unsaved, conflict, uncertain and disconnected states. Disconnected input is not a saved offline draft.

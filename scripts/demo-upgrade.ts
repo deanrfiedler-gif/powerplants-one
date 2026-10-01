@@ -151,7 +151,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // Typed identities flush pending 0026 events; issued sources remain unchanged.
   // Seed replay preserves revoked grants and adds no hosted tester authority.
   // Commands stay unregistered until Step 4 enforcement is proved.
-  if (latestMigrationVersion !== 54) throw Error("Review the existing-demo upgrade for this release.");
+  // 0055 adds immutable Service template/binding/event/output tables only. Seed
+  // 55 supplies fictional catalogue versions and an instrument, with no users or grants. Shared
+  // attempts and installed SQL/seed bytes remain intact; 0051/0052 stay reserved.
+  if (latestMigrationVersion !== 55) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({
