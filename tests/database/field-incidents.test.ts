@@ -341,6 +341,25 @@ test("FI06 complete persisted incident, independent passing inspection hold, Act
     ).toString(),
     "PRIVATE-BYTES-CANARY",
   );
+  const retainedPath = join(
+    process.env.PPO_DOCUMENT_DIRECTORY ??
+      join(homedir(), ".ppo-synthetic-documents"),
+    f.co.workspace_id,
+    privateEvidence,
+  );
+  await rename(retainedPath, retainedPath + ".retained");
+  try {
+    assert.equal((await incidentRead(f.second, q.id)).operational_hold, true);
+    assert.equal((await incidentRead(f.co, q.id)).outputs[0].current, false);
+    assert.equal(
+      (await transaction((c) => incidentHolds(c, f.second, f.id))).length,
+      1,
+    );
+    assert.deepEqual(await readBundle(f.co, v.outputs[0].bundle), bytes);
+  } finally {
+    await rename(retainedPath + ".retained", retainedPath);
+  }
+  assert.equal((await incidentRead(f.co, q.id)).operational_hold, false);
   await send(f.co, q.id, "reopen");
   assert.equal(
     (await transaction((c) => incidentHolds(c, f.tech, f.id))).length,
@@ -348,8 +367,11 @@ test("FI06 complete persisted incident, independent passing inspection hold, Act
   );
   const reopened = await incidentRead(f.co, q.id);
   assert.equal(reopened.outputs[0].current, false);
-  await database().query("UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='incident.read'",[f.second.actor_id]);
-  assert.equal((await readActivity(f.second,task.id)).incident_source,null);
+  await database().query(
+    "UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='incident.read'",
+    [f.second.actor_id],
+  );
+  assert.equal((await readActivity(f.second, task.id)).incident_source, null);
   assert.deepEqual(await readBundle(f.co, reopened.outputs[0].bundle), bytes);
   assert.match(JSON.stringify(reopened.events), /Original factual observation/);
   assert.match(JSON.stringify(reopened.events), /Corrected observation/);

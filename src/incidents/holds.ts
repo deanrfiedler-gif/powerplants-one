@@ -2,7 +2,7 @@ import type { QueryClient } from "../platform/permissions";
 import type { Principal } from "../platform/identity";
 import { AppError } from "../platform/errors";
 import { visibleAppointment } from "../scheduling/planner";
-import { sourceBinding } from "./context";
+import { sourceBinding, closedEvidenceCurrent } from "./context";
 
 // Only stable identity and affected scope cross this operational boundary.
 // Closed history stays issued; changed sources withdraw its current clearance.
@@ -71,7 +71,10 @@ export async function incidentHolds(
           latest.scope_item_id,
           latest.asset_id,
         );
-        active = !current.known || current.source_hash !== latest.source_hash;
+        active =
+          !current.known ||
+          current.source_hash !== latest.source_hash ||
+          !(await closedEvidenceCurrent(c, p, id));
       } catch (e) {
         if (!(e instanceof AppError) || ![403, 404, 422].includes(e.status))
           throw e;

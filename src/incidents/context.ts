@@ -1,3 +1,4 @@
+import { evidenceBytes } from "../inspections/service";
 import type { Principal } from "../platform/identity";
 import {
   hasPermission,
@@ -252,4 +253,34 @@ export async function activityIncidentSource(
     if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
     return null;
   }
+}
+
+// Internal authority check only: affected users receive a held/clear result,
+// never the bytes or identifiers of Restricted evidence.
+export async function closedEvidenceCurrent(
+  c: QueryClient,
+  p: Principal,
+  id: string,
+) {
+  const originals = (
+    await c.query<{
+      storage_id: string;
+      content_hash: string;
+      byte_count: number;
+    }>(
+      "SELECT id AS storage_id,content_hash,byte_count FROM ppo.incident_evidence WHERE workspace_id=$1 AND incident_id=$2 ORDER BY id",
+      [p.workspace_id, id],
+    )
+  ).rows;
+  if (!originals.length) return false;
+  for (const original of originals) {
+    try {
+      await evidenceBytes(p, original);
+    } catch (e) {
+      if (!(e instanceof AppError) || ![403, 404, 503].includes(e.status))
+        throw e;
+      return false;
+    }
+  }
+  return true;
 }

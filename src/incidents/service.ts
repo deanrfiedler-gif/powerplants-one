@@ -25,6 +25,7 @@ import { escapeHtml } from "../documents/render";
 import { parse } from "./validation";
 import {
   access,
+  closedEvidenceCurrent,
   appointmentAccess,
   binding,
   latestBinding,
@@ -803,6 +804,8 @@ export async function readIncident(c: QueryClient, p: Principal, id: string) {
       duties[action] = false;
     }
   }
+  const originalsCurrent =
+    row.state !== "Closed" || (await closedEvidenceCurrent(c, p, id));
   const equipment = await visible(c, p, "Asset", b.asset_id),
     site = await visible(c, p, "Site", row.site_id);
   const reporter = (
@@ -839,7 +842,9 @@ export async function readIncident(c: QueryClient, p: Principal, id: string) {
     operational_hold:
       row.state !== "Draft" &&
       (row.state === "Closed"
-        ? !current?.known || current.source_hash !== b.source_hash
+        ? !current?.known ||
+          current.source_hash !== b.source_hash ||
+          !originalsCurrent
         : row.hold || row.assessment === "Unassessed"),
     actions: g.actions.map((a) => ({
       ...a,
@@ -873,6 +878,7 @@ export async function readIncident(c: QueryClient, p: Principal, id: string) {
       ...o,
       current:
         row.state === "Closed" &&
+        originalsCurrent &&
         o.review_hash === row.accepted_hash &&
         current?.source_hash === b.source_hash,
     })),
