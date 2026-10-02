@@ -4,6 +4,8 @@
 
 Owner: Dean Fiedler. Synthetic implementation evidence, not business acceptance, operating policy or deployment approval. [Acceptance matrix and human checklist](../../field-incidents-acceptance.md), [decision](../../../decisions/field-incidents.md) and [API/data contract](../../../contracts/field-incidents.md).
 
+Delivery: [PR #335](https://github.com/deanrfiedler-gif/powerplants-one/pull/335). Implementation `dc72d1f`, isolated browser fixture dates `3979944`, retained verification/captures `c28d440`. Final-head CI is recorded in that PR and its checks; no merge or deployment is included.
+
 ## Starting point and ownership
 
 Refreshed main was `4ecef7f1820a269a2ec69d55859e66dea8c37989`. PR #334 merged at 2026-10-01T13:04:08Z from final checked head `ab63fd8be6172fec31c167de8cca96f2b0e50308`; all 21 checks passed. PR #333 was already merged. The exact GitHub response is indexed with the private original logs. Living STATUS/programme passages now distinguish those merged increments from the current incident work; #334's issued evidence and archived chronology remain unchanged.
