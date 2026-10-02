@@ -1,3 +1,4 @@
+import { incidentSeedGrants } from "../helpers/engineering-materials-grants";
 import assert from "node:assert/strict";
 import { canonical } from "../../src/platform/operations";
 import { schedulingPolicySeedGrants } from "../helpers/engineering-materials-grants";
@@ -240,7 +241,7 @@ test("FI01 additive 0049 upgrade retains existing time, arrivals, receipts and r
   );
   assert.deepEqual(
     migrationsAfter.slice(migrationsBefore.length).map((row) => row.version),
-    [50, 53, 54, 55],
+    [50, 53, 54, 55, 56],
   );
   await seed();
   await migrate();
@@ -252,7 +253,7 @@ test("FI01 additive 0049 upgrade retains existing time, arrivals, receipts and r
       continue;
     }
     // Preserve every earlier grant, including its ID and revocation, and require
-    // exactly seed 54's twelve narrow grants; no additional grant is tolerated.
+    // exactly seed 54's twelve and seed 56's nine narrow grants; no additional grant is tolerated.
     const ids = new Set(before[i].map((x) => x.row.id));
     assert.deepEqual(
       after[i].filter((x) => ids.has(x.row.id)),
@@ -261,7 +262,7 @@ test("FI01 additive 0049 upgrade retains existing time, arrivals, receipts and r
     const additions = after[i]
       .filter((x) => !ids.has(x.row.id))
       .map((x) => x.row);
-    assert.equal(additions.length, 12);
+    assert.equal(additions.length, 21);
     const shape = (grants: Record<string, unknown>[]) =>
       grants
         .map(({ id: _id, ...value }) => {
@@ -271,7 +272,7 @@ test("FI01 additive 0049 upgrade retains existing time, arrivals, receipts and r
         .sort();
     assert.deepEqual(
       shape(additions),
-      shape(schedulingPolicySeedGrants(before[i].map((x) => x.row))),
+      shape([...schedulingPolicySeedGrants(before[i].map((x) => x.row)),...incidentSeedGrants(before[i].map((x) => x.row))]),
     );
   }
   assert.equal(

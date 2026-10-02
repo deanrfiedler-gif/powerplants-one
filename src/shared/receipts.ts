@@ -1,4 +1,5 @@
 import { timerReceiptAuthority } from "../field/timer";
+import { incidentReceiptAuthority } from "../incidents/service";
 import { serviceInspectionReceiptAuthority } from "../inspections/service-commands";
 import { policyReceiptAuthority } from "../scheduling/policy-authority";
 import { receiptAuthority as supplyReceiptAuthority } from "../supply/context";
@@ -72,6 +73,8 @@ export async function readOperation(
       await policyReceiptAuthority(c, p, r.object_type, r.record_id);
       return r.result as OperationReceipt;
     });
+  } else if (r.object_type === "Incident") {
+    await incidentReceiptAuthority(client,p,r.record_id,r.command,operation_id);
   } else if (r.object_type === "Appointment" && r.command?.startsWith("ServiceInspection:")) {
     await serviceInspectionReceiptAuthority(client,p,r.record_id,r.command);
   } else if (r.object_type === "Appointment" && r.command?.startsWith("FieldTimer:")) {

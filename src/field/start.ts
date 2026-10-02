@@ -1,4 +1,5 @@
 import { policyImpactHolds } from "../scheduling/policy-holds";
+import { incidentHolds } from "../incidents/holds";
 import { randomUUID } from "node:crypto";
 import type { Principal } from "../platform/identity";
 import { sharedOperation } from "../platform/operations";
@@ -137,6 +138,8 @@ export async function startAttendance(
       // being read. Recheck durable dispositions at the final start boundary.
       if ((await policyImpactHolds(c, p, id)).some(x => x.held))
         throw new AppError(422, "StartBlocked", "Scheduling policy authority requires a fresh controlled resolution.");
+      if ((await incidentHolds(c, p, id)).length)
+        throw new AppError(422, "StartBlocked", "Incident scope hold requires authorised review. Factual reporting remains available.");
       const acknowledgements = (
         await c.query(
           "SELECT k.id,k.recipient_id,k.actor_id,k.presented_hash,k.acknowledged_at FROM ppo.pack_acknowledgements k JOIN ppo.pack_recipients r ON r.id=k.recipient_id WHERE r.workspace_id=$1 AND r.issue_id=$2 ORDER BY k.actor_id",

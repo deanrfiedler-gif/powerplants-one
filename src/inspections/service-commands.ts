@@ -1,4 +1,5 @@
 import { randomUUID } from "node:crypto";
+import { incidentHolds } from "../incidents/holds";
 import type { Principal } from "../platform/identity";
 import { transaction } from "../platform/database";
 import { sharedOperation } from "../platform/operations";
@@ -548,6 +549,8 @@ export async function inspectionCommand(
         );
       }
       if (cmd.action !== "release") throw unavailable();
+      if ((await incidentHolds(c,p,id,at.binding)).length)
+        stop("IncidentHold", "This exact inspection scope has an independent incident hold. Passing evidence does not clear it.");
       if (at.review !== "Accepted" || at.row.performer_id === p.actor_id)
         stop(
           "IndependentAcceptanceRequired",
@@ -602,7 +605,7 @@ export async function inspectionCommand(
           "Appointment and work-order completion",
           "Project/customer acceptance",
           "Finance",
-          "FI-06 incident clearance unavailable",
+          "Other incident scopes; this inspection never closes an incident",
         ],
         handover: {
           owned_corrective_work: "Existing Activity records",
@@ -631,6 +634,8 @@ export async function inspectionCommand(
       });
       // Rendering can be slow: recheck current authority before committing the output.
       await serviceInspectionAccess(c, p, id, "review", "release");
+      if ((await incidentHolds(c,p,id,at.binding)).length)
+        stop("IncidentHold", "The incident restriction must be resolved before scoped release.");
       const refreshed = (
         await loadServiceInspections(c, p, id, "review")
       ).attempts.find((x) => x.row.id === at.row.id);

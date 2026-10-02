@@ -93,3 +93,7 @@ Scheduling Step 4 uses this shared control contract for online booking-policy pr
 ## Service inspection binding
 
 FI-03/FI-04 use original recovery with a bounded 6,000,000-character evidence journal; other consumers retain 32 KiB. Storage/quota failure precedes transport. Identity changes clear visible recovery. The host fixture covers saved, unsaved, conflict, uncertain and disconnected states. Disconnected input is not a saved offline draft.
+
+## FI-06 consumer
+
+IncidentScreen uses this shared control on scope:FI-06 and its three /service/incidents routes. Host/state fixtures: tests/browser/field-incidents.spec.ts and tests/database/field-incidents.test.ts. Review dirty/conflict/uncertain, denied/restricted and reopened outcomes at 1440/1024/390/320 and actual 200% zoom; owner acceptance pending.

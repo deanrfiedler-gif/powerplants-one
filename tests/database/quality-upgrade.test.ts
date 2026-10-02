@@ -1,3 +1,4 @@
+import { incidentSeedGrants } from "../helpers/engineering-materials-grants";
 import { supplySeedGrants } from "../helpers/engineering-materials-grants";
 import { schedulingPolicySeedGrants } from "../helpers/engineering-materials-grants";
 import { acceptanceSeedGrants } from "../helpers/engineering-materials-grants";
@@ -226,6 +227,7 @@ for (const state of ["Approved", "OutcomeUnknown", "Reconciled"]) {
       ...companyAGrants.filter(g=>g.value.capability==="estimating.read").map(g=>({...g.value,capability:"estimating.source.review",user_id:"e5030045-0000-4000-8000-000000000001"})));
       expected.push(...supplySeedGrants(originalGrants.map(g=>g.value)).map(g=>({...g,capability:String(g.capability)})));
       expected.push(...schedulingPolicySeedGrants(originalGrants.map(g=>g.value)).map(g=>({...g,capability:String(g.capability)})));
+      expected.push(...incidentSeedGrants(originalGrants.map(g=>g.value)).map(g=>({...g,capability:String(g.capability)})));
       const sorted = (gs: Record<string, unknown>[]) => gs.map(g => JSON.stringify(grantShape(g))).sort();
     assert.deepEqual(sorted(added.map(g => g.value)), sorted(expected));
     assert.deepEqual({ ...afterUpgrade, permission_grants: originalGrants }, before);

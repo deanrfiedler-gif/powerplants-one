@@ -4,9 +4,19 @@
 
 Owner: Dean Fiedler. State: implementation in progress. This is not a completion, acceptance or deployment claim.
 
+## FI-06 current increment — 2 October 2026
+
+The isolated `codex/field-incidents` increment implements online synthetic factual reports, retained corrections, restricted details/evidence, exact scope holds, actual owned Activities and independent closure with Internal HTML/PDF. [Decision](../decisions/field-incidents.md), [contract](../contracts/field-incidents.md), [acceptance matrix and owner checklist](../testing/field-incidents-acceptance.md), [actual evidence](../testing/evidence/field-incidents/README.md). Migration/seed 0056 adds typed identity, six incident tables and five dedicated capabilities; nine grants to three existing local fictional identities, no new users. Earlier SQL/seed bytes and allocation reservations remain intact.
+
+An incident is separate from a defect, action, acknowledgement and technical acceptance. Passing inspection and Completed Activity leave its hold in place. Closure checks its owned evidence and linked defect's separate accepted retest; it clears no unrelated blocker and completes no receiving appointment/project/customer/Finance process. Reopening and relevant source changes withdraw current clearance while preserving issued bytes. During active attendance, holds affect current authority and delayed Start replay but do not edit timers, stop equipment or cancel attendance. Existing P08 capture retains ReviewRequired evidence. No new offline incident/inspection protocol or external notification is available.
+
+Baseline F02-A technical walkthrough repeated against merged main: 5/5 database and 4/4 compiled desktop/phone cases passed. Retained #334 proof remains valid for unchanged shared-engine/EN-08 boundaries; affected regressions and fresh FI-06 evidence are recorded separately. No owner participation, physical-device, screen-reader or independent visual acceptance occurred. Concrete human checklist remains open without blocking this authorised synthetic implementation.
+
+Current programme: FI-01/FI-02/FI-05 and FI-03/FI-04 are merged within documented boundaries. FI-06 is the present reviewable increment. FI-07 response refinement, full owner/device/accessibility acceptance and performance work remain. Earlier remaining-programme lists below are historical checkpoints superseded by this paragraph. Next bounded runtime increment is FI-07 response review/refinement against persisted incident and inspection blockers; decide its exact receiving contract first. No merge/deployment in this task.
+
 ## FI-03/FI-04 Service increment
 
-Delivery: [PR #334](https://github.com/deanrfiedler-gif/powerplants-one/pull/334). Local technical verification is complete; final-head CI is followed on the PR. Independent acceptance and deployment remain separate. The evidence index preserves original failures, source/build identities, exact restart/output comparisons and inspected desktop/phone/zoom captures.
+Delivery: [PR #334](https://github.com/deanrfiedler-gif/powerplants-one/pull/334). Merged at 2026-10-01T13:04:08Z as `4ecef7f1820a269a2ec69d55859e66dea8c37989`; all 21 checks passed on final head `ab63fd8be6172fec31c167de8cca96f2b0e50308`. Original technical evidence is retained unchanged. Independent acceptance and deployment remain separate. The evidence index preserves original failures, source/build identities, exact restart/output comparisons and inspected desktop/phone/zoom captures.
 
 Started only after Step 6 PR #333 merged into main `feb01e57c1ffdab0a5f8d1a5664ab5144bd37ccd`; all 17 reported checks passed and no relevant blocking permission/data-loss/recovery finding remained. Owner/device/visual/screen-reader and performance findings remain open. Unrelated worktrees and earlier databases/evidence are preserved.
 
@@ -14,7 +24,7 @@ Native `/my-jobs/inspections` and `/service/inspections` consume the shared engi
 
 Migration/seed 0055 adds immutable Service catalogue/retirement/binding/event/output tables, two fictional procedures and a separate fictional pressure instrument. No new capability, grant, user or framework. Installed SQL/seed bytes, reserved 0051/0052 and the retained-root repair remain unchanged. [Decision](../decisions/service-inspections.md), [contract](../contracts/service-inspections.md), [verification](../testing/evidence/service-inspections/README.md).
 
-Controlled internal inspection output retains exact reviewed sources and original bytes, with current applicability separate. It completes no appointment/work order/Project/customer/Finance process. Capture is online only; same-tab original recovery is not an offline inspection protocol. FI-06 has no authoritative incident clearance source. Native captures grant no owner acceptance. Next bounded work is independent walkthrough/acceptance of this journey, followed by a separately decided FI-06 incident contract.
+Controlled internal inspection output retains exact reviewed sources and original bytes, with current applicability separate. It completes no appointment/work order/Project/customer/Finance process. Capture is online only; same-tab original recovery is not an offline inspection protocol. The merged inspection baseline had no FI-06 authority; the present incident contract above supersedes that boundary. Native captures grant no owner acceptance. Independent human walkthrough remains open.
 
 ## Execution preflight
 

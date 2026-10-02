@@ -171,7 +171,7 @@ function Visit({
             <h2>{v.appointment.display_number}</h2>
             <p>
               {v.work_order.display_number} · {v.appointment.status} ·{" "}
-              <Link href={`/my-jobs/${id}`}>Visit and issued pack</Link> ·{" "}
+              <Link href={`/my-jobs/${id}`}>Visit and issued pack</Link> · <Link href={`/service/incidents/new?appointment_id=${id}`}>Report incident</Link> ·{" "}
               <Link href={`/my-jobs/site-readiness?appointment_id=${id}`}>
                 Preparation
               </Link>
@@ -354,10 +354,11 @@ function Visit({
           <section className="business-card">
             <h2>Retained inspection output</h2>
             <p>
-              Internal audience only. Incident clearance is unavailable. An
+              Internal audience only. Current incident restrictions are checked separately. An
               inspection outcome completes no visit, work order, Project,
               customer acceptance or Finance process.
             </p>
+            {!!v.incident_holds.length&&<p role="status">Incident scope restrictions are active. Passing inspection evidence does not clear them; earlier issued bytes remain historical evidence.</p>}
             {v.outputs.length ? (
               v.outputs.map((o) => (
                 <p key={o.id}>
