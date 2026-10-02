@@ -362,7 +362,9 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
   await proof(page, info, "report-list");
   const job = await startedJob(
     page,
-    info.project.name.startsWith("mobile") ? "2031-12-11" : "2031-12-10",
+    info.project.name.startsWith("mobile")
+      ? (process.env.PPO_P09_MOBILE_DAY ?? "2031-12-11")
+      : (process.env.PPO_P09_DESKTOP_DAY ?? "2031-12-10"),
   );
   await page.goto(`/my-jobs/${job.id}`);
   await page
