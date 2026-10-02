@@ -16123,22 +16123,20 @@
       "title": "Incident and corrective-action record",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Implemented workflow",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-02",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "docs/testing/evidence/field-incidents/README.md",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Incident and corrective-action record to work towards this outcome: An incident has accountable recovery and retained evidence.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "Do not infer blame or publish sensitive personal information in general notes."
+            "Report a factual event in its permitted exact appointment/equipment scope, retain corrections, create owned corrective work and independently close only that incident. This is a synthetic coordination policy, not a risk assessment or operating procedure."
           ],
           "steps": [],
           "rows": [],
@@ -16148,9 +16146,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Incident time/context, evidence, affected people, restrictions and action owner.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Confirm your current identity, assigned visit or Service review authority, exact affected task/equipment and occurrence time. Reporting is available before Start and under a readiness or incident hold. Use fictional data only."
           ],
           "steps": [],
           "rows": [],
@@ -16159,56 +16155,28 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Capture factual observations and immediate follow-up",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Open Report incident from an assigned visit or inspection workspace. Choose exact scope, record facts and any restricted details, then save the draft and submit it for triage. Check the server receipt before leaving."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Incident and corrective-action record · Page + form"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "The register lists permitted operational summaries. Capture binds the original source. The record shows facts, current source assessment, corrective Activities, evidence, review commands and retained issued outcomes. Read access grants no write or sensitive authority."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Incident time/context, evidence, affected people, restrictions and action owner.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Record classification (Unknown is permitted), occurrence time, observations, immediate response already taken and source reference. Put sensitive detail only in Restricted details or Restricted evidence. Server reporting time and reporter are attributable."
           ],
           "steps": [],
           "rows": [],
@@ -16218,13 +16186,9 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
+            "An authorised reviewer records assessment, priority, owner, due date and reason, retaining the hold. Create an owned corrective Activity; its owner performs work and appends original evidence. Return or clarify with a reason. Reassignment goes through the Activity then is explicitly adopted here; append fresh evidence after reassignment or reopening. A linked inspection defect needs its own correction and fresh independently accepted retest."
           ],
-          "steps": [
-            "Capture factual observations and immediate follow-up",
-            "Restrict sensitive details to the appropriate audience",
-            "Review corrective action and closure evidence"
-          ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
@@ -16232,9 +16196,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "An incident has accountable recovery and retained evidence.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Do not infer blame or publish sensitive personal information in general notes."
+            "An independent reviewer accepts exact action evidence and the complete current closure graph, then closes and issues the internal scoped HTML/PDF. A passing inspection or Completed Activity never closes the incident. Reopening or changed sources restores a restriction without changing issued bytes. Recheck all other receiving-domain blockers."
           ],
           "steps": [],
           "rows": [],
@@ -16243,45 +16205,18 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Draft is reporter-only and imposes no hold. Submission imposes a scope hold. Unknown assessment blocks closure. Returned and ClarificationRequired retain accepted observations. Accepted is still held until exact closure. Overdue incomplete actions block closure; completed late work retains dates. Closed output may become historical when sources change."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare incident time/context, evidence, affected people, restrictions and action owner. Follow the task sequence and check that an incident has accountable recovery and retained evidence. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Incident and corrective-action record has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Do not infer blame or publish sensitive personal information in general notes."
+            "SYN observed external leak: retain original observation, return an unclear description, append correction evidence, complete the owned Activity and independently accept exact evidence. A separate passing pressure inspection does not remove the incident hold. Similar labels on two events do not merge their obligations."
           ],
           "steps": [],
           "rows": [],
@@ -16290,45 +16225,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "Unsaved entries remain page memory. Failed validation retains correctable input. A conflict requires comparison and explicit current-version adoption. An uncertain result requires Check original receipt or Retry unchanged original; never create a replacement operation. Reload can recover the original request in the same tab. Closing the tab removes that browser recovery copy, not the persisted server record."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use Tab/Shift+Tab, native selects and labelled buttons. The global guide opens without discarding input; Escape returns focus. Incident operations are online only. Last-known disconnected context cannot authorise work. Existing P08 delayed Start revalidates holds; factual capture can be retained as ReviewRequired."
           ],
           "steps": [],
           "rows": [],
@@ -16338,8 +16246,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "Read docs/contracts/field-incidents.md and docs/testing/field-incidents-acceptance.md. Related inspections, site readiness and My Work retain their own authority. External notification, emergency response, legal reporting, customer/Finance completion and equipment control are unavailable."
           ],
           "steps": [],
           "rows": [],
@@ -16349,9 +16256,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner Dean Fiedler; guide prepared 2 October 2026. Synthetic technical walkthrough evidence is recorded separately. Owner participation, physical device, screen reader and independent visual acceptance remain outstanding. Editing this guide grants no review or deployment approval."
           ],
           "steps": [],
           "rows": [],
@@ -16359,14 +16264,20 @@
         }
       ],
       "related_entry_keys": [
-        "scope:FI-04"
+        "route:/service/incidents/[id]",
+        "route:/service/incidents/new",
+        "route:/service/incidents",
+        "scope:FI-03",
+        "scope:FI-04",
+        "scope:FI-05",
+        "scope:EQ-01"
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
-        "docs/delivery/p07-handover.md"
+        "src/incidents/screen.tsx",
+        "docs/contracts/field-incidents.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Authored current FI-06 persisted synthetic workflow and recovery; independent acceptance pending.",
       "document_id": "PPO-GUIDE-FI-06",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -16374,9 +16285,8 @@
       "supersedes": null,
       "section_aliases": {},
       "workflow_basis": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
-        "docs/delivery/p07-handover.md"
+        "docs/contracts/field-incidents.md",
+        "docs/decisions/field-incidents.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -50023,7 +49933,8 @@
           "paragraphs": [
             "Use Activity detail to work towards this outcome: The activity has a truthful outcome or a current owner and next step.",
             "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "An unknown due date is different from an overdue date. Completing an activity does not complete its linked job."
+            "An unknown due date is different from an overdue date. Completing an activity does not complete its linked job.",
+            "For incident corrective work, use Return to incident and corrective evidence when your current incident access permits it. Completing the Activity records the work outcome; independent incident evidence acceptance and closure remain separate."
           ],
           "steps": [],
           "rows": [],
@@ -50247,14 +50158,17 @@
         }
       ],
       "related_entry_keys": [
-        "scope:SH-02"
+        "scope:SH-02",
+        "scope:FI-06"
       ],
       "source_paths": [
         "src/app/(business)/work/[id]/page.tsx",
         "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "src/incidents/activity-handover.tsx",
+        "docs/contracts/field-incidents.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Added the permitted stored FI-06 return handover and completion/closure distinction; independent review remains pending.",
       "document_id": "PPO-GUIDE-PAGE-WORK-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -70212,6 +70126,201 @@
         "docs/decisions/service-inspections.md",
         "docs/testing/evidence/service-inspections/README.md"
       ]
+    },
+    {
+      "guide_key": "guide.route-service-incidents-id",
+      "entry_key": "route:/service/incidents/[id]",
+      "title": "service / incidents /  id ",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Implemented workflow",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [
+        "scope:FI-06",
+        "route:/service/incidents/new",
+        "route:/service/incidents",
+        "scope:FI-03",
+        "scope:FI-04",
+        "scope:FI-05",
+        "scope:EQ-01"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Report a factual event in its permitted exact appointment/equipment scope, retain corrections, create owned corrective work and independently close only that incident. This is a synthetic coordination policy, not a risk assessment or operating procedure."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [
+            "Open Report incident from an assigned visit or inspection workspace. Choose exact scope, record facts and any restricted details, then save the draft and submit it for triage. Check the server receipt before leaving."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "Unsaved entries remain page memory. Failed validation retains correctable input. A conflict requires comparison and explicit current-version adoption. An uncertain result requires Check original receipt or Retry unchanged original; never create a replacement operation. Reload can recover the original request in the same tab. Closing the tab removes that browser recovery copy, not the persisted server record."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-10-02",
+      "runtime_evidence": "docs/testing/evidence/field-incidents/README.md",
+      "source_paths": [
+        "src/app/(business)/service/incidents/[id]/page.tsx",
+        "src/incidents/screen.tsx",
+        "docs/contracts/field-incidents.md"
+      ],
+      "workflow_basis": [
+        "docs/contracts/field-incidents.md",
+        "docs/decisions/field-incidents.md"
+      ],
+      "change_summary": "Authored current FI-06 persisted synthetic workflow and recovery; independent acceptance pending."
+    },
+    {
+      "guide_key": "guide.route-service-incidents-new",
+      "entry_key": "route:/service/incidents/new",
+      "title": "service / incidents / new",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Implemented workflow",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [
+        "scope:FI-06",
+        "route:/service/incidents/[id]",
+        "route:/service/incidents",
+        "scope:FI-03",
+        "scope:FI-04",
+        "scope:FI-05",
+        "scope:EQ-01"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Report a factual event in its permitted exact appointment/equipment scope, retain corrections, create owned corrective work and independently close only that incident. This is a synthetic coordination policy, not a risk assessment or operating procedure."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [
+            "Open Report incident from an assigned visit or inspection workspace. Choose exact scope, record facts and any restricted details, then save the draft and submit it for triage. Check the server receipt before leaving."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "Unsaved entries remain page memory. Failed validation retains correctable input. A conflict requires comparison and explicit current-version adoption. An uncertain result requires Check original receipt or Retry unchanged original; never create a replacement operation. Reload can recover the original request in the same tab. Closing the tab removes that browser recovery copy, not the persisted server record."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-10-02",
+      "runtime_evidence": "docs/testing/evidence/field-incidents/README.md",
+      "source_paths": [
+        "src/app/(business)/service/incidents/new/page.tsx",
+        "src/incidents/screen.tsx",
+        "docs/contracts/field-incidents.md"
+      ],
+      "workflow_basis": [
+        "docs/contracts/field-incidents.md",
+        "docs/decisions/field-incidents.md"
+      ],
+      "change_summary": "Authored current FI-06 persisted synthetic workflow and recovery; independent acceptance pending."
+    },
+    {
+      "guide_key": "guide.route-service-incidents",
+      "entry_key": "route:/service/incidents",
+      "title": "service / incidents",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Implemented workflow",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [
+        "scope:FI-06",
+        "route:/service/incidents/[id]",
+        "route:/service/incidents/new",
+        "scope:FI-03",
+        "scope:FI-04",
+        "scope:FI-05",
+        "scope:EQ-01"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Report a factual event in its permitted exact appointment/equipment scope, retain corrections, create owned corrective work and independently close only that incident. This is a synthetic coordination policy, not a risk assessment or operating procedure."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [
+            "Open Report incident from an assigned visit or inspection workspace. Choose exact scope, record facts and any restricted details, then save the draft and submit it for triage. Check the server receipt before leaving."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "Unsaved entries remain page memory. Failed validation retains correctable input. A conflict requires comparison and explicit current-version adoption. An uncertain result requires Check original receipt or Retry unchanged original; never create a replacement operation. Reload can recover the original request in the same tab. Closing the tab removes that browser recovery copy, not the persisted server record."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-10-02",
+      "runtime_evidence": "docs/testing/evidence/field-incidents/README.md",
+      "source_paths": [
+        "src/app/(business)/service/incidents/page.tsx",
+        "src/incidents/screen.tsx",
+        "docs/contracts/field-incidents.md"
+      ],
+      "workflow_basis": [
+        "docs/contracts/field-incidents.md",
+        "docs/decisions/field-incidents.md"
+      ],
+      "change_summary": "Authored current FI-06 persisted synthetic workflow and recovery; independent acceptance pending."
     }
   ]
 }

@@ -102,7 +102,7 @@ export function assertOnlyEngineeringSeedGrantsAdded(original: Grant[], upgraded
   assert.equal(sourceReviewer.length,3);
   const technical = original.filter(g=>g.user_id===coordinator&&g.company_id===companyA&&g.scope_type==="Company"&&g.capability==="engineering.read").flatMap(g=>[[profiles.reviewer,"engineering.technical.review"],[profiles.release,"engineering.technical.issue"],[profiles.release,"engineering.technical.distribute"],[coordinator,"engineering.technical.source"]].map(([user_id,capability])=>({...g,user_id,capability})));
   assert.equal(technical.length,4);
-  const expected=[...earlier,...acceptanceSeedGrants(original,earlier),...customerReview,...technical,...sourceReviewer,...supplySeedGrants(original),...schedulingPolicySeedGrants(original)];
+  const expected=[...earlier,...acceptanceSeedGrants(original,earlier),...customerReview,...technical,...sourceReviewer,...supplySeedGrants(original),...schedulingPolicySeedGrants(original),...incidentSeedGrants(original)];
   assert.equal(materials.length, 31);
   assert.equal(changes.length, 21); // twelve reads for three profiles and nine duty grants
   assert.equal(commissioning.length, 18); // four reads for one profile, six duty grants and eight My Work action grants
@@ -113,6 +113,14 @@ export function assertOnlyEngineeringSeedGrantsAdded(original: Grant[], upgraded
 export function supplySeedGrants(original: Grant[]): Grant[] {
  const readers=new Set([1,2,5,7,8,10,11,12,13,14].map(n=>`30000000-0000-4000-8000-${String(n).padStart(12,"0")}`));
  return original.filter(g=>readers.has(String(g.user_id))&&g.capability==="shared.read").flatMap(g=>(g.user_id===coordinator?["supply.read","supply.coordinate","supply.inspect","supply.fulfil","supply.return","supply.custody"]:["supply.read"]).map(capability=>({...g,capability})));
+}
+
+// Seed 56 preserves each existing exact fictional scope; it creates no user.
+export function incidentSeedGrants(original: Grant[]): Grant[] {
+  return original.flatMap(g => g.user_id === coordinator && g.capability === "service.work_order.edit"
+    ? ["incident.read","incident.report","incident.review","incident.close","incident.sensitive"].map(capability=>({...g,capability}))
+    : ["30000000-0000-4000-8000-000000000010","30000000-0000-4000-8000-000000000011"].includes(String(g.user_id)) && g.capability === "field.read.own"
+      ? ["incident.read","incident.report"].map(capability=>({...g,capability})) : []);
 }
 
 // Seed 54: exact independent Workspace read scopes and ONE duty for each fictional

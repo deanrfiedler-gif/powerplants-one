@@ -57,6 +57,10 @@ jobs:
           npm run build
           test -f .next/BUILD_ID
           echo "build_id=$(cat .next/BUILD_ID)" >> "$GITHUB_OUTPUT"
+      - name: Configure disposable PostgreSQL lock capacity
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: bash scripts/configure-test-postgres.sh
       - name: Configure disposable loopback database
         id: database_setup
         run: |

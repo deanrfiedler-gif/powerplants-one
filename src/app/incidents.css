@@ -1,0 +1,85 @@
+.incidents {
+  max-width: 1400px;
+  margin: auto;
+  padding: 24px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.incidents .business-card {
+  margin: 16px 0;
+  padding: 20px;
+  background: var(--white);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-card);
+}
+.incidents fieldset {
+  min-width: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-control);
+  padding: 16px;
+  margin: 12px 0;
+}
+.incidents label {
+  display: block;
+  margin: 10px 0;
+}
+.incidents label > select,
+.incidents label > input {
+  display: block;
+  margin-top: 6px;
+}
+.incidents input,
+.incidents select,
+.incidents textarea {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  font-size: 16px;
+  min-height: 44px;
+}
+.incidents textarea {
+  min-height: 96px;
+}
+.incident-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 16px;
+}
+.incident-summary {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line-strong);
+}
+.incident-notice {
+  border-left: 4px solid var(--warning);
+  padding: 12px;
+  background: var(--warning-surface);
+}
+.incidents details {
+  padding: 12px 0;
+}
+.incidents summary {
+  cursor: pointer;
+  min-height: 44px;
+}
+.incidents button {
+  white-space: normal;
+  max-width: 100%;
+  min-height: 44px;
+}
+.incidents .button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 14px 0;
+}
+@media (max-width: 600px) {
+  .incidents {
+    padding: 12px;
+  }
+  .incidents .business-card {
+    padding: 12px;
+  }
+  .incidents fieldset {
+    padding: 10px;
+  }
+}

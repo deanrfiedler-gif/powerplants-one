@@ -26,12 +26,14 @@ jobs:
     name: P01–P11 ${{ matrix.suite }} proof
     runs-on: ubuntu-24.04
     # Each lane owns its disposable database; all original phases remain serial
-    # within their lane. The stable p01 gate below requires every lane to pass.
+    # within their lane. HTTP/restart proofs start at their original clean-reset
+    # boundary; the full database suite keeps its original serial execution.
+    # The stable p01 gate requires every lane to pass within the same deadline.
     timeout-minutes: 90
     strategy:
       fail-fast: false
       matrix:
-        suite: [browser, finance, reports, database]
+        suite: [browser, finance, reports, database, http]
     services:
       postgres:
         image: postgres:16.15
@@ -67,6 +69,10 @@ jobs:
         run: npm run browser:install
       - name: Static, unit and build checks
         run: npm run check
+      - name: Configure disposable PostgreSQL lock capacity
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: bash scripts/configure-test-postgres.sh
       - name: Configure disposable loopback database
         id: database_setup
         run: |
@@ -175,10 +181,10 @@ jobs:
         if: ${{ matrix.suite == 'database' && !cancelled() && steps.database_setup.outcome == 'success' }}
         run: npm run test:db
       - name: Restore deterministic fixtures for HTTP and browser suites
-        if: ${{ matrix.suite == 'database' && !cancelled() && steps.database_setup.outcome == 'success' }}
+        if: ${{ matrix.suite == 'http' && !cancelled() && steps.database_setup.outcome == 'success' }}
         run: PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
       - name: Prove persistence across PostgreSQL process restart
-        if: ${{ matrix.suite == 'database' && !cancelled() && steps.database_setup.outcome == 'success' }}
+        if: ${{ matrix.suite == 'http' && !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
         run: |
@@ -192,7 +198,7 @@ jobs:
           done
           node --env-file=.env.local --import tsx scripts/persistence-proof.ts verify
       - name: Actual HTTP routes and startup boundary
-        if: ${{ matrix.suite == 'database' && !cancelled() && steps.database_setup.outcome == 'success' }}
+        if: ${{ matrix.suite == 'http' && !cancelled() && steps.database_setup.outcome == 'success' }}
         run: |
           if npm start; then exit 1; fi
           node --env-file=.env.local --import tsx scripts/local-server.ts > "$RUNNER_TEMP/ppo-http.log" 2>&1 &
@@ -218,11 +224,11 @@ jobs:
           mkdir -p verification-evidence/p11-http
           node --env-file=.env.local --import tsx --test --test-reporter=tap tests/integration/quality-http.test.ts 2>&1 | tee verification-evidence/p11-http/results.tap
       - name: Prepare HTTP review diagnostics
-        if: ${{ matrix.suite == 'database' && always() }}
+        if: ${{ matrix.suite == 'http' && always() }}
         id: http_review
         run: python3 scripts/prepare-review-evidence.py
       - name: Preserve original HTTP component evidence immediately
-        if: ${{ matrix.suite == 'database' && always() && steps.http_review.outcome == 'success' }}
+        if: ${{ matrix.suite == 'http' && always() && steps.http_review.outcome == 'success' }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: P11-HTTP-evidence
@@ -233,7 +239,7 @@ jobs:
             verification-evidence/supply/
           retention-days: 14
       - name: Offline originals across application, PostgreSQL and browser process restarts
-        if: ${{ matrix.suite == 'database' && !cancelled() && steps.database_setup.outcome == 'success' }}
+        if: ${{ matrix.suite == 'http' && !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
         run: |
@@ -308,6 +314,10 @@ jobs:
         run: npm run browser:install
       - name: Static, unit and build checks
         run: npm run check
+      - name: Configure disposable PostgreSQL lock capacity
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: bash scripts/configure-test-postgres.sh
       - name: Configure disposable loopback database
         id: database_setup
         run: |
@@ -443,6 +453,10 @@ jobs:
         run: npm run browser:install
       - name: Static, unit and build checks
         run: npm run check
+      - name: Configure disposable PostgreSQL lock capacity
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: bash scripts/configure-test-postgres.sh
       - name: Configure disposable loopback database
         id: database_setup
         run: |
@@ -536,6 +550,10 @@ jobs:
         run: npm run browser:install
       - name: Static, unit and build checks
         run: npm run check
+      - name: Configure disposable PostgreSQL lock capacity
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: bash scripts/configure-test-postgres.sh
       - name: Configure disposable loopback database
         run: |
           cp .env.example .env.local
@@ -614,6 +632,10 @@ jobs:
         run: npm run browser:install
       - name: Static, unit and build checks
         run: npm run check
+      - name: Configure disposable PostgreSQL lock capacity
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: bash scripts/configure-test-postgres.sh
       - name: Configure disposable loopback database
         id: database_setup
         run: |

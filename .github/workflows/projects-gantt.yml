@@ -52,6 +52,10 @@ jobs:
           npm ci
           npm run browser:install
           npm run check
+      - name: Configure disposable PostgreSQL lock capacity
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: bash scripts/configure-test-postgres.sh
       - name: Configure disposable database
         run: |
           cp .env.example .env.local

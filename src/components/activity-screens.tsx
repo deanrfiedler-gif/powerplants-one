@@ -1,4 +1,5 @@
 "use client";
+import { IncidentActivityHandover } from "../incidents/activity-handover";
 import { PolicyHolds } from "../scheduling/components/client/policy-holds.client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -117,6 +118,7 @@ function ActivityEditor({
           </span>
         </SummaryPair>
       </dl>
+      {a.incident_source && <IncidentActivityHandover href={a.incident_source.href} />}
       <div className="related-links">
         {a.links.map((l) => (
           <RecordLink key={l.object_id} type={l.object_type} id={l.object_id}>

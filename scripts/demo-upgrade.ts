@@ -154,7 +154,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // 0055 adds immutable Service template/binding/event/output tables only. Seed
   // 55 supplies fictional catalogue versions and an instrument, with no users or grants. Shared
   // attempts and installed SQL/seed bytes remain intact; 0051/0052 stay reserved.
-  if (latestMigrationVersion !== 55) throw Error("Review the existing-demo upgrade for this release.");
+  // 0056 adds isolated incident storage. Seed 56 grants only the three named
+  // local synthetic profiles, never hosted testers; existing rows and revoked
+  // grants remain unchanged. Populated upgrade/reseed proof is required.
+  if (latestMigrationVersion !== 56) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

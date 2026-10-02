@@ -13,9 +13,10 @@ import { criterionText, inspectionLabel } from "../../inspections/model";
 import { configurationLabel, stamp, type Access, type Loaded, type ReleaseRow } from "./context";
 import { label, obligationPresentation, receivingPresentation, redlinePresentation, type Destination } from "./model";
 
-export type OutputKind = "OUT-12" | "OUT-13";
+export type OutputKind = "OUT-12" | "OUT-13" | "IncidentOutcome";
 export type Audience = "Internal" | "Customer";
 export const templateDefinitions: Record<OutputKind, string> = {
+  IncidentOutcome: "FI-06 synthetic scoped incident outcome, Internal audience; restricted details excluded; no operational approval.",
   "OUT-12": "PPO OUT-12 commissioning/test record; semantic HTML/A4 v1; escaped plain text; no external requests; fictional limits labelled; audience filtered before rendering; tagged PDF requested; no PDF/UA claim.",
   "OUT-13": "PPO OUT-13 handover pack; semantic HTML/A4 v1; escaped plain text; no external requests; audience filtered before rendering; tagged PDF requested; no PDF/UA claim.",
 };

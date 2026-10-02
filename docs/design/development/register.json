@@ -2779,26 +2779,41 @@
       "title": "Incident and corrective-action record",
       "kind": "scope",
       "module": "FI",
-      "summary": "Implement incidents and corrective actions with evidence, ownership, restricted details and reviewed closure.",
+      "summary": "Persisted synthetic factual reporting, scoped holds, owned Activities and independently reviewed incident closure.",
       "path": "/service/incidents",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/incidents/screen.tsx"
       ],
       "guide_key": "guide.fi.06",
       "design_path": "docs/design/development/pages/scope-fi-06.md",
       "html_path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/incidents/screen.tsx",
+        "src/app/incidents.css",
+        "src/incidents/service.ts",
+        "src/incidents/context.ts",
+        "src/incidents/holds.ts",
+        "docs/decisions/field-incidents.md",
+        "docs/testing/evidence/field-incidents/README.md"
+      ],
+      "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "See docs/testing/evidence/field-incidents/README.md",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 65,
       "related_keys": [
-        "scope:FI-04"
+        "route:/service/incidents/[id]",
+        "route:/service/incidents/new",
+        "route:/service/incidents",
+        "scope:FI-03",
+        "scope:FI-04",
+        "scope:FI-05",
+        "scope:EQ-01"
       ],
       "reviewer": null
     },
@@ -10976,6 +10991,135 @@
         "route:/my-jobs/inspections",
         "scope:FI-05",
         "scope:EQ-09"
+      ]
+    },
+    {
+      "key": "route:/service/incidents/[id]",
+      "title": "service / incidents /  id ",
+      "kind": "route",
+      "module": "FI",
+      "summary": "Persisted synthetic factual reporting, scoped holds, owned Activities and independently reviewed incident closure.",
+      "path": "/service/incidents/[id]",
+      "source_paths": [
+        "src/app/(business)/service/incidents/[id]/page.tsx",
+        "src/incidents/screen.tsx"
+      ],
+      "guide_key": "guide.route-service-incidents-id",
+      "design_path": "docs/design/development/pages/route-service-incidents-id.md",
+      "html_path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/incidents/screen.tsx",
+        "src/app/incidents.css",
+        "src/incidents/service.ts",
+        "src/incidents/context.ts",
+        "src/incidents/holds.ts",
+        "docs/decisions/field-incidents.md",
+        "docs/testing/evidence/field-incidents/README.md"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "See docs/testing/evidence/field-incidents/README.md",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:FI-06",
+        "route:/service/incidents/new",
+        "route:/service/incidents",
+        "scope:FI-03",
+        "scope:FI-04",
+        "scope:FI-05",
+        "scope:EQ-01"
+      ]
+    },
+    {
+      "key": "route:/service/incidents/new",
+      "title": "service / incidents / new",
+      "kind": "route",
+      "module": "FI",
+      "summary": "Persisted synthetic factual reporting, scoped holds, owned Activities and independently reviewed incident closure.",
+      "path": "/service/incidents/new",
+      "source_paths": [
+        "src/app/(business)/service/incidents/new/page.tsx",
+        "src/incidents/screen.tsx"
+      ],
+      "guide_key": "guide.route-service-incidents-new",
+      "design_path": "docs/design/development/pages/route-service-incidents-new.md",
+      "html_path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/incidents/screen.tsx",
+        "src/app/incidents.css",
+        "src/incidents/service.ts",
+        "src/incidents/context.ts",
+        "src/incidents/holds.ts",
+        "docs/decisions/field-incidents.md",
+        "docs/testing/evidence/field-incidents/README.md"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "See docs/testing/evidence/field-incidents/README.md",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:FI-06",
+        "route:/service/incidents/[id]",
+        "route:/service/incidents",
+        "scope:FI-03",
+        "scope:FI-04",
+        "scope:FI-05",
+        "scope:EQ-01"
+      ]
+    },
+    {
+      "key": "route:/service/incidents",
+      "title": "service / incidents",
+      "kind": "route",
+      "module": "FI",
+      "summary": "Persisted synthetic factual reporting, scoped holds, owned Activities and independently reviewed incident closure.",
+      "path": "/service/incidents",
+      "source_paths": [
+        "src/app/(business)/service/incidents/page.tsx",
+        "src/incidents/screen.tsx"
+      ],
+      "guide_key": "guide.route-service-incidents",
+      "design_path": "docs/design/development/pages/route-service-incidents.md",
+      "html_path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/incidents/screen.tsx",
+        "src/app/incidents.css",
+        "src/incidents/service.ts",
+        "src/incidents/context.ts",
+        "src/incidents/holds.ts",
+        "docs/decisions/field-incidents.md",
+        "docs/testing/evidence/field-incidents/README.md"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "See docs/testing/evidence/field-incidents/README.md",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:FI-06",
+        "route:/service/incidents/[id]",
+        "route:/service/incidents/new",
+        "scope:FI-03",
+        "scope:FI-04",
+        "scope:FI-05",
+        "scope:EQ-01"
       ]
     }
   ]

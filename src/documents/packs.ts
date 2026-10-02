@@ -1,4 +1,5 @@
 import { policyImpactHolds } from "../scheduling/policy-holds";
+import { incidentHolds } from "../incidents/holds";
 import { sectionView } from "./section-view";
 import { visibleActivity } from "../activities/activities";
 import { randomUUID } from "node:crypto";
@@ -323,10 +324,13 @@ export async function dispatchReadiness(
   p: Principal,
   id: string,
   allowStarted = false,
+  inspectionCapture = false,
 ) {
   const { a } = await visibleAppointment(c, p, id);
   const reasons: string[] = [];
   const policy_impacts = await policyImpactHolds(c, p, id);
+  const incident_holds = await incidentHolds(c, p, id);
+  if (!inspectionCapture) for (const hold of incident_holds) reasons.push(hold.message);
   // Preparation may use a future pin, but publication does not bring its actual
   // attendance authority forward. Retain the existing current-effective guard.
   if ((await c.query("SELECT 1 FROM ppo.scheduling_policies WHERE workspace_id=$1 AND id=$2 AND effective_from>clock_timestamp()", [p.workspace_id, a.scheduling_policy_id])).rowCount)
@@ -406,6 +410,7 @@ export async function dispatchReadiness(
     component_ready: reasons.length === 0,
     actual_start_implemented: true,
     policy_impacts,
+    incident_holds,
     reasons,
     recipients,
   };

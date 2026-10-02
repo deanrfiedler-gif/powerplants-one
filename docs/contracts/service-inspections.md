@@ -31,3 +31,7 @@ Release binds one exact accepted attempt/review and its procedure/equipment/scop
 ## Recovery
 
 Initial scope is online. Server drafts persist across reload and application/database restart. Unsaved entries stay in browser memory. Before transport, one bounded unchanged original is retained in actor-scoped session storage; Service evidence opts into a 6,000,000-character limit and quota refusal sends nothing. Existing consumers keep 32 KiB. Same-tab reload recovers the original; closing the tab/clearing storage removes that browser copy. There is no offline inspection queue or inferred offline proof.
+
+## FI-06 consumer interaction
+
+The incident contract adds a separate current restriction to readiness, Start and exact inspection release. Factual inspection capture/correction/retest remains available under an incident hold when its own assignment, attendance, preparation, scheduling and source requirements pass. Passing evidence never closes an incident. Release rechecks exact incident applicability under the shared transaction before and after rendering; historical outputs keep original bytes. Current hold information contains no incident facts or restricted evidence. The original 0055 contract and evidence remain the baseline.

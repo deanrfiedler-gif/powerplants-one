@@ -1,0 +1,37 @@
+{
+  "result": "Passed exact application/PostgreSQL restart comparison",
+  "before": {
+    "build": "AeYSVMnsm8P5WGqr_9cEb",
+    "application_pid": 22588,
+    "postgres_started": "2026-10-02T00:33:24.801Z",
+    "postgres": "PostgreSQL 16.15, compiled by Visual C++ build 1944, 64-bit",
+    "at": "2026-10-02T01:03:51.075Z"
+  },
+  "after": {
+    "build": "AeYSVMnsm8P5WGqr_9cEb",
+    "application_pid": 27856,
+    "postgres_started": "2026-10-02T01:04:51.697Z",
+    "postgres": "PostgreSQL 16.15, compiled by Visual C++ build 1944, 64-bit",
+    "at": "2026-10-02T01:09:35.520Z"
+  },
+  "table_counts": {
+    "incidents": 1,
+    "incident_bindings": 1,
+    "incident_actions": 1,
+    "incident_evidence": 2,
+    "incident_events": 14,
+    "incident_outputs": 1,
+    "receipts": 14,
+    "activities": 1
+  },
+  "files": {
+    "b9b0c5c2-4305-44e4-a357-ebc0543b53e5": "f29ae3981878341f16d30029b95020cffc75d5e3f94f632a0040c6c5b2faca67",
+    "f3146f79-8aa5-4236-8376-feb1ebe53398": "26ced8cac23321bae05bc61e76d7062e9f0594173893acfd6d16d80e4dea369e",
+    "29831b2e-3440-4616-8895-bcdf0062013b.html": "691d8e13c6253cba41a27f8c2210788e9fa14f242fc7e84a3599b596b9091e7c",
+    "29831b2e-3440-4616-8895-bcdf0062013b.pdf": "38c23aee13f9191d43d67cf159417898ca04f39683cf42eb29defca63771268a"
+  },
+  "current_state": "OnHold",
+  "scope_held": true,
+  "original_sha256": "a732795a33addb98dd50f4c3fd150666498d34b21c6d4e405ec8c6b5fd0dfb18",
+  "limitations": "Synthetic local only. No owner/device/screen-reader or deployment approval."
+}

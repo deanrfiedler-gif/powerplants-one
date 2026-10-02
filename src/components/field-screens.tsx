@@ -1377,7 +1377,7 @@ export function FieldJobScreen({ id }: { id: string }) {
             </span>
           </div>
           <p><Link href={`/my-jobs/site-readiness?appointment_id=${job.id}`}>Review Site induction, risk and biosecurity</Link></p>
-          <p><Link href={`/my-jobs/inspections?appointment_id=${job.id}`}>Capture Service inspections and retained retests</Link></p>
+          <p><Link href={`/my-jobs/inspections?appointment_id=${job.id}`}>Capture Service inspections and retained retests</Link> · <Link href={`/service/incidents/new?appointment_id=${job.id}`}>Report incident</Link></p>
           <section id="field-context" className="business-card">
             <h2>Current work context</h2>
             <p>

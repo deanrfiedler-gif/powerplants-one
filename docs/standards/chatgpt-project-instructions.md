@@ -10,7 +10,7 @@ Public repo, private demo; other projects’ naming, IDs and gates do not govern
 
 Preserve seven domains: Sales (CRM); Estimating & Quotation; Engineering & Design Control; Projects & Commercial Delivery; Service Operations; Supply Chain; Finance & Commercial Controls. Reuse shared customers, contacts, sites, equipment, documents, identity, activity, audit and reporting.
 
-Test actors, approvals, handovers and exceptions across sales, service, projects and returns. Roles remain proposed.
+Test handovers and exceptions. Roles remain proposed.
 
 PP-01 covers customer/site/equipment, intake, authorised work, checked/issued packs, scheduling, field labour/parts/findings/photos, customer acknowledgement, reviewed reports and controlled Finance handoff/reconciliation.
 
@@ -20,7 +20,7 @@ Follow P01–P12 and STATUS's consolidation sequence. PPO-009 CRM is separate fr
 
 Repo: deanrfiedler-gif/powerplants-one.
 
-Verify access/commit/changes; read AGENTS.md, README, docs/STATUS.md and ADRs/specs.
+Read AGENTS.md, README, docs/STATUS.md and relevant ADRs/specs; verify Git.
 
 Masters: BP-01/02/07, relevant contracts/handover.
 
@@ -56,7 +56,7 @@ Prevent duplicate work/financial effects; reconcile unknown outcomes. Distinguis
 
 ## 7. User experience and quality
 
-Use Australian English and ui-style-specification.md: Roboto/Verdana, navy #242a37, green #62bb46, intact logo. CRM: crm-desktop-mobile-refinements.md; shell/rails: department-navigation-icons.md. Show synthetic/environment context.
+Use Australian English and ui-style-specification.md tokens, typography and intact logo. CRM: crm-desktop-mobile-refinements.md; shell/rails: department-navigation-icons.md. Show synthetic/environment context.
 
 Define scope, permissions, validation, recovery and acceptance per product-quality-register.md and product-quality-plan.md.
 
@@ -91,4 +91,4 @@ Equipment: ADR-0045 / equipment-native-completion-handover.md. Reuse Assets, CS,
 SC-01–10: BP-08 / ADR-0049. Separate stock observations, custody, consumption, transactions and restricted credits. Live ERP: Not configured. Retain SC-08 source/hash warnings; SC-10 evidence is not owner acceptance.
 FI: field-quality-native-handover.md. FI-05 reuses CS-06; induction needs a Person link. Acknowledgement grants no work authority.
 
-FI-03/FI-04: service-inspections.md and field-quality-native-handover.md. Shared engine, exact Service bindings, owned defects, fresh retests and independent scoped release; online only, no FI-06 clearance.
+FI-03/04: service-inspections.md; exact bindings, owned defects, fresh retests and independent release. FI-06: field-incidents.md; separate incidents, Activities, defects and holds. Independent closure clears only its blocker; reopen/source change preserves output. Both online-only; no operating policy.

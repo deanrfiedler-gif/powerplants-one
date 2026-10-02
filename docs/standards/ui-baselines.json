@@ -571,6 +571,51 @@
       "application_proof": "tests/browser/service-inspections.spec.ts",
       "authority": "User-authorised synthetic Service increment; independent visual/owner acceptance pending.",
       "adaptations": "docs/decisions/service-inspections.md"
+    },
+    {
+      "id": "fi06-incidents-register",
+      "route": "/service/incidents",
+      "scope": "#ppo-incidents",
+      "layout": "padded",
+      "scroll_owner": "#main",
+      "design": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
+      "sha256": "7f0e7531c2f4b8d592e4e269225d45da0d870db4361879465149164eb4cf9db3",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r20.html",
+      "shared_sha256": "c68a499e857b1705d47bd6598d4b2e89526bf0861a0d234394c3da023f19b617",
+      "component_proof": "tests/browser/field-incidents.spec.ts",
+      "application_proof": "tests/browser/field-incidents.spec.ts",
+      "authority": "User-authorised synthetic Service increment; independent visual/owner acceptance pending.",
+      "adaptations": "docs/decisions/field-incidents.md"
+    },
+    {
+      "id": "fi06-incidents-capture",
+      "route": "/service/incidents/new",
+      "scope": "#ppo-incidents",
+      "layout": "padded",
+      "scroll_owner": "#main",
+      "design": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
+      "sha256": "7f0e7531c2f4b8d592e4e269225d45da0d870db4361879465149164eb4cf9db3",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r20.html",
+      "shared_sha256": "c68a499e857b1705d47bd6598d4b2e89526bf0861a0d234394c3da023f19b617",
+      "component_proof": "tests/browser/field-incidents.spec.ts",
+      "application_proof": "tests/browser/field-incidents.spec.ts",
+      "authority": "User-authorised synthetic Service increment; independent visual/owner acceptance pending.",
+      "adaptations": "docs/decisions/field-incidents.md"
+    },
+    {
+      "id": "fi06-incidents-record",
+      "route": "/service/incidents/[id]",
+      "scope": "#ppo-incidents",
+      "layout": "padded",
+      "scroll_owner": "#main",
+      "design": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
+      "sha256": "7f0e7531c2f4b8d592e4e269225d45da0d870db4361879465149164eb4cf9db3",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r20.html",
+      "shared_sha256": "c68a499e857b1705d47bd6598d4b2e89526bf0861a0d234394c3da023f19b617",
+      "component_proof": "tests/browser/field-incidents.spec.ts",
+      "application_proof": "tests/browser/field-incidents.spec.ts",
+      "authority": "User-authorised synthetic Service increment; independent visual/owner acceptance pending.",
+      "adaptations": "docs/decisions/field-incidents.md"
     }
   ]
 }

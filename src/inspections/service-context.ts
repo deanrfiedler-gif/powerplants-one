@@ -1,3 +1,4 @@
+import { incidentHolds } from "../incidents/holds";
 import { createHash } from "node:crypto";
 import type { Principal } from "../platform/identity";
 import { AppError, unavailable } from "../platform/errors";
@@ -104,7 +105,7 @@ export async function requireCapture(c: QueryClient, p: Principal, id: string) {
       "Record your own actual attendance from My Jobs before inspecting.",
     );
   const ctx = await attendanceContext(c, p, id, row.id);
-  if ((await currentCaptureState(c, p, ctx)) !== "Current")
+  if ((await currentCaptureState(c, p, ctx, true)) !== "Current")
     stop(
       "InspectionHeld",
       "Current scope, assignment, issued pack and readiness must permit this inspection.",
@@ -171,7 +172,7 @@ export async function serviceBinding(
         [p.workspace_id, appointment],
       )
     ).rows[0] ?? null;
-  const readiness = await dispatchReadiness(c, p, appointment, true);
+  const readiness = await dispatchReadiness(c, p, appointment, true, true);
   const sources = (
     await c.query<{ id: string }>(
       "SELECT id FROM ppo.site_readiness WHERE workspace_id=$1 AND site_id=$2 ORDER BY id",
@@ -417,6 +418,7 @@ export async function loadServiceInspections(
     defects: loaded.defects,
     links: loaded.links,
     outputs,
+    incident_holds:await incidentHolds(c,p,id),
     events,
     mode,
   };

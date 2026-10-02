@@ -79,3 +79,7 @@ The source register, authored evidence form, independent review and estimate com
 ## PL-04 dedicated local duties
 
 The existing local identity selector includes the distinct fictional scheduling policy reviewer and publisher. Neither receives booking-edit authority. Host fixtures in `tests/scheduling-browser/publication.spec.ts` exercise Scheduling navigation, direct saved-record URLs and identity switches while a protected read is in flight. Session lock clears both PL-01 and PL-04 local journals and remounts the business view; another actor cannot inherit displayed evidence. Hosted identities and grants are unchanged. [Step 5 verification](../../../testing/evidence/scheduling-policy-interface/README.md) is implementation evidence; paired shell/device acceptance stays open.
+
+## FI-06 consumer
+
+IncidentScreen uses this shared control on scope:FI-06 and its three /service/incidents routes. Host/state fixtures: tests/browser/field-incidents.spec.ts and tests/database/field-incidents.test.ts. Review dirty/conflict/uncertain, denied/restricted and reopened outcomes at 1440/1024/390/320 and actual 200% zoom; owner acceptance pending.

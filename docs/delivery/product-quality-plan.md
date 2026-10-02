@@ -39,7 +39,7 @@ Stages are a dependency order, not dates or a revised completion percentage. Exi
 
 ## Second package — equipment, visit readiness and inspection
 
-**Current bounded delivery (1 October 2026):** FI-03/FI-04 now implements the online synthetic Service inspection part of F02-A after merged Scheduling Step 6, reusing Equipment, FI-05 and the shared EN-08 engine. See the [programme handover](field-quality-native-handover.md) and [exact verification evidence](../testing/evidence/service-inspections/README.md). Owner/device/screen-reader/visual acceptance, human benefit measurements and any future offline inspection protocol remain separate; this does not close the whole stage or authorise deployment.
+**Current bounded delivery (2 October 2026):** Merged PR #334 (21/21 final-head checks) implements the online synthetic Service inspection part of F02-A after merged Scheduling Step 6, reusing Equipment, FI-05 and the shared EN-08 engine. See the [programme handover](field-quality-native-handover.md) and [exact verification evidence](../testing/evidence/service-inspections/README.md). Owner/device/screen-reader/visual acceptance, human benefit measurements and any future offline inspection protocol remain separate; this does not close the whole stage or authorise deployment.
 
 **Actor/outcome:** a technician scans the correct equipment, checks approved visit constraints, records a versioned inspection and hands a failed check to a reviewer without losing or duplicating evidence.
 
@@ -78,3 +78,7 @@ Business pilot and production promotion require the selected complete journeys, 
 For each item record implementation PR, source, component result, executed journey result, owner review and deployment separately. The scope-adoption task can complete while the overarching feature tracker stays open. Unknown inputs receive an owner role and exact requested evidence; they do not silently disappear or become assumed policy.
 
 This repository contribution belongs to the product-quality adoption session in workspace `16405d635a01`, branch `docs/product-quality-adoption`. Open #178/#179/#180 and independently advanced audit branches retain their work. Reconcile current `docs/STATUS.md` and the document register before merge; do not overwrite newer entries with this snapshot.
+
+## FI-06 adjacent incident boundary
+
+The [FI-06 contract](../contracts/field-incidents.md) adds separate incidents, owned corrective Activities and independent scoped outcomes to persisted Service context. It supports F02-A/F08-A without treating either as full incident acceptance. See the [acceptance matrix](../testing/field-incidents-acceptance.md). F03 remains technical bulletins. Q01–Q05 dispositions and human acceptance are bounded in actual evidence; no general telemetry/alert platform or deployment is claimed.

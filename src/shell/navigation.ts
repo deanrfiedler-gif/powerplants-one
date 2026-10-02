@@ -105,6 +105,7 @@ export const destinations: ShellDestination[] = [
   {"id": "reports", "label": "Service review", "icon": "nav-service-review", "readiness": "ready", "href": "/service/reports", "workspace": "service", "requires": ["report.read"]},
   {"id": "jobs", "label": "My jobs", "icon": "nav-service", "readiness": "ready", "href": "/my-jobs", "workspace": "service", "requires": ["field.read.own"]},
   {"id": "inspection-capture", "label": "My inspections", "icon": "nav-service", "readiness": "ready", "href": "/my-jobs/inspections", "workspace": "service", "requires": ["field.read.own"]},
+  {"id": "incidents", "label": "Incidents and actions", "icon": "nav-service-review", "readiness": "ready", "href": "/service/incidents", "workspace": "service", "requires": ["incident.read"]},
   {"id": "inspection-review", "label": "Inspection review", "icon": "nav-service-review", "readiness": "ready", "href": "/service/inspections", "workspace": "service", "requires": ["report.read", "service.work_order.edit"]},
   {"id": "supply", "label": "Material demand", "icon": "nav-demand", "href": "/supply/material-readiness", "requires": ["supply.read"], "readiness": "ready", "workspace": "supply"},
   {"id": "purchasing", "label": "Purchasing", "icon": "nav-purchasing", "href": "/supply/purchasing", "requires": ["supply.read"], "readiness": "ready", "workspace": "supply"},

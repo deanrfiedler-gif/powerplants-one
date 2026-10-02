@@ -1,0 +1,15 @@
+{
+  "tokens": {
+    "--focus": "#365d8b",
+    "--line-strong": "#dce2e9",
+    "--radius-card": "8px"
+  },
+  "theme": {
+    "--focus": "#365d8b",
+    "--line-strong": "#dce2e9",
+    "--radius-card": "7px"
+  },
+  "source": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
+  "adaptations": "Three native routes, in-flow evidence/history and existing 8px shared card token; proposed reference only.",
+  "acceptance": "Independent owner, device, visual and screen-reader acceptance pending"
+}

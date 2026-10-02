@@ -1,3 +1,4 @@
+import { activityIncidentSource } from "../incidents/context";
 import { projectRow } from "../projects/service";
 import { projectVisibility, projectsAvailable } from "../projects/visibility";
 import { leadsAvailable, leadVisibility, visibleLead } from "../crm/leads/context";
@@ -579,6 +580,7 @@ export async function readActivity(p: Principal, id: string) {
     updated_at: a.updated_at.toISOString(),
     synthetic: true,
     links,
+    incident_source: await activityIncidentSource(c,p,id),
     can_edit:
       ["Open", "InProgress"].includes(a.status) &&
       (await hasPermission(
