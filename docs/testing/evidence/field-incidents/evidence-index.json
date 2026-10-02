@@ -143,6 +143,21 @@
       "sha256": "aff27e0020abf48729a8a70af244dda768dbb2daa04f1e0c8e0ed3867051f4af"
     },
     {
+      "file": "ci-9ad1e53-database-timeout.json",
+      "bytes": 334,
+      "sha256": "1b171196f400dff8bb31242722fd657c1d8eb3d1242aa01efe0861389d5028a9"
+    },
+    {
+      "file": "ci-application-db-536de5a.txt",
+      "bytes": 290494,
+      "sha256": "af223c2c692d4df4b4019e7d10566e1684577ece39c7424404fdfa7dcd8f4322"
+    },
+    {
+      "file": "ci-application-db-original.txt",
+      "bytes": 921803,
+      "sha256": "e1aaee982d6900bcc5b8346e4f1e4e5116e04e8b81e32954ce63f4657613cf63"
+    },
+    {
       "file": "ci-demo-failure-01.txt",
       "bytes": 45480,
       "sha256": "907e74ee13ff3b1d6b560a567d40826770e7203cd6b9f16300fd3d842fb3a62d"
