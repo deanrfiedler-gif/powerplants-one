@@ -3,6 +3,7 @@ import { chromium, expect } from "@playwright/test";
 import { mkdir, readFile, writeFile, mkdtemp } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
+import { execFileSync } from "node:child_process";
 import { localConfig } from "../src/platform/config";
 const config = localConfig();
 assert.equal(config.database_name, "ppo_synthetic_test");
@@ -129,6 +130,9 @@ try {
     JSON.stringify(
       {
         executed_at: new Date().toISOString(),
+        executed_checkout: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(),
+        executed_tree: execFileSync("git", ["rev-parse", "HEAD^{tree}"], { encoding: "utf8" }).trim(),
+        compiled_build: (await readFile(".next/BUILD_ID", "utf8")).trim(),
         geometry,
         widths,
         result:

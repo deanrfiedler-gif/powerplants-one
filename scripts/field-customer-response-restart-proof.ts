@@ -2,6 +2,7 @@
 // Private originals and configuration remain outside Git; no service is managed here.
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
+import { execFileSync } from "node:child_process";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { request } from "playwright";
@@ -12,6 +13,13 @@ assert.equal(config.database_name, "ppo_synthetic_test");
 const [mode, directory, journeyPath] = process.argv.slice(2);
 assert(["write", "verify"].includes(mode) && directory);
 const root = resolve(directory);
+const applicationPid = Number(process.env.PPO_FI07_APP_PID);
+assert(Number.isSafeInteger(applicationPid) && applicationPid > 0, "Pass the verified task-owned application PID");
+const source = {
+  executed_checkout: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(),
+  executed_tree: execFileSync("git", ["rev-parse", "HEAD^{tree}"], { encoding: "utf8" }).trim(),
+  compiled_build: (await readFile(".next/BUILD_ID", "utf8")).trim(),
+};
 await mkdir(root, { recursive: true });
 const prior =
   mode === "verify"
@@ -105,12 +113,17 @@ try {
   };
   if (prior) {
     assert.notEqual(boot, prior.boot, "PostgreSQL must really restart");
+    assert.notEqual(applicationPid, prior.application_pid, "Application must really restart");
+    assert.deepEqual(source, prior.source);
     assert.deepEqual(facts, prior.facts);
     await writeFile(
       join(root, "restart.json"),
       JSON.stringify(
         {
           verified_at: new Date().toISOString(),
+          source,
+          before_application_pid: prior.application_pid,
+          after_application_pid: applicationPid,
           before_boot: prior.boot,
           after_boot: boot,
           journey,
@@ -127,7 +140,7 @@ try {
   } else
     await writeFile(
       join(root, "original.json"),
-      JSON.stringify({ journey, boot, facts }, null, 2),
+      JSON.stringify({ journey, boot, facts, source, application_pid: applicationPid }, null, 2),
     );
 } finally {
   await client.dispose();
