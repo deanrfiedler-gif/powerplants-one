@@ -834,14 +834,30 @@ test("FI07 native attendance acknowledgement, lost receipt, report reservation a
   await expect(page.getByRole("heading", { name: "Customer report presentation", exact: true })).toBeFocused();
   await page.getByRole("button", { name: "Return to staff review", exact: true }).click();
   await expect(open).toBeFocused(); await open.click();
-  await page.getByLabel("Response concerns", { exact: true }).selectOption("AttendanceFacts");
+  await page.getByLabel("Response concerns", { exact: true }).focus();
+  await page.keyboard.press("ArrowDown");
+  await expect(page.getByLabel("Response concerns", { exact: true })).toHaveValue("AttendanceFacts");
+  await page.keyboard.press("Tab");
+  await expect(page.getByLabel("Customer response", { exact: true })).toBeFocused();
   await expect(page.getByLabel("Customer response", { exact: true })).toHaveValue("");
-  await page.getByLabel("Stated respondent name (synthetic)", { exact: true }).fill("SYN FI07 audience representative");
-  await page.getByLabel("Stated respondent role", { exact: true }).fill("SYN site witness");
-  await page.getByRole("button", { name: "Save response to presented content", exact: true }).click();
+  await page.keyboard.press("Tab");
+  await expect(page.getByLabel("Stated respondent name (synthetic)", { exact: true })).toBeFocused();
+  await page.keyboard.type("SYN FI07 audience representative");
+  await page.keyboard.press("Tab");
+  await expect(page.getByLabel("Stated respondent role", { exact: true })).toBeFocused();
+  await page.keyboard.type("SYN site witness");
+  for (const label of ["Optional synthetic signature PNG", "Response remarks / reservations", "Owned next action (required unless accepted)", "Captured at (ISO date with timezone)"]) {
+    await page.keyboard.press("Tab");
+    await expect(page.getByLabel(label, { exact: true })).toBeFocused();
+  }
+  await page.keyboard.press("Tab");
+  await expect(page.getByRole("button", { name: "Save response to presented content", exact: true })).toBeFocused();
+  await page.keyboard.press("Enter");
   await expect(page.getByRole("alert").first()).toBeFocused();
   await expect(page.getByLabel("Stated respondent name (synthetic)", { exact: true })).toHaveValue("SYN FI07 audience representative");
-  await page.getByLabel("Customer response", { exact: true }).selectOption("Accepted");
+  await page.getByLabel("Customer response", { exact: true }).focus();
+  await page.keyboard.press("ArrowDown");
+  await expect(page.getByLabel("Customer response", { exact: true })).toHaveValue("Accepted");
   await page.getByLabel("Optional synthetic signature PNG", { exact: true }).setInputFiles({ name: "synthetic-fi07-mark.png", mimeType: "image/png", buffer: png(104) });
   await expect(page.getByText("Checking the selected synthetic PNG…", { exact: true })).toHaveCount(0);
   let original: Record<string, unknown> | undefined;
