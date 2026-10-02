@@ -922,7 +922,9 @@ test("FI07 native attendance acknowledgement, lost receipt, report reservation a
   await expect(cached.getByLabel("Customer response", { exact: true })).toHaveValue("");
   await cached.getByLabel("Response concerns", { exact: true }).selectOption("Attendance facts only");
   await cached.getByRole("button", { name: "Save customer response on this device", exact: true }).click();
-  await expect(page.locator("#error")).toContainText("response");
+  await expect(page.locator("#error")).toHaveText("Check the highlighted details. Choose Accepted, AcceptedWithReservations, Declined, Unavailable, Disputed.");
+  await expect(page.locator("#error")).toBeFocused();
+  await expect(cached.getByLabel("Response concerns", { exact: true })).toHaveValue("Attendance facts only");
   await expect(page.locator("#queue .queue-row")).toHaveCount(0);
   await cached.getByLabel("Customer response", { exact: true }).selectOption("Unavailable");
   await cached.getByLabel("Response remarks / unavailable reason", { exact: true }).fill("SYN witness unavailable for this exact issued attendance presentation");
