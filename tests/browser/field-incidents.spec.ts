@@ -134,8 +134,8 @@ test("FI06 compiled factual report, original recovery, return, owned correction,
   const setup = await prepareIsolatedFieldAppointment(
     call,
     info.project.name.startsWith("mobile")
-      ? (process.env.PPO_INCIDENT_MOBILE_DAY ?? "2031-11-13")
-      : (process.env.PPO_INCIDENT_DESKTOP_DAY ?? "2031-11-12"),
+      ? (process.env.PPO_INCIDENT_MOBILE_DAY ?? "2031-12-23")
+      : (process.env.PPO_INCIDENT_DESKTOP_DAY ?? "2031-12-17"),
   );
   await login(page.request, "assigned-technician");
   await page.goto(
@@ -252,7 +252,7 @@ test("FI06 compiled factual report, original recovery, return, owned correction,
     .selectOption("30000000-0000-4000-8000-000000000010");
   await page
     .getByLabel("Due time (UTC)", { exact: true })
-    .fill("2031-11-20T00:00:00Z");
+    .fill("2031-12-24T00:00:00Z");
   await page
     .getByRole("combobox", { name: "Synthetic priority", exact: true })
     .selectOption("Routine");
