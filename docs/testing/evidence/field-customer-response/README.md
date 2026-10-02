@@ -1,6 +1,6 @@
 # FI-07 executed evidence
 
-Owner: Dean Fiedler. Synthetic technical verification in progress; this working ledger is updated with executed results before PR delivery. No owner/device/screen-reader/independent visual acceptance or deployment is claimed.
+Owner: Dean Fiedler. Bounded synthetic implementation delivered for review in [PR #336](https://github.com/deanrfiedler-gif/powerplants-one/pull/336). No owner/device/screen-reader/independent visual acceptance, merge or deployment is claimed. Final-commit CI is reported against the PR's exact head separately from the local executions below.
 
 ## Starting point and retained evidence
 
@@ -12,7 +12,7 @@ Historical P07/P08/P09, #334 Service inspection and #335 incident evidence retai
 
 ## Infrastructure and original failures
 
-Task-owned PostgreSQL 16.15 clusters on loopback 55707 (retained compiled journey) and 55708 (resettable domain verification), each database named ppo_synthetic_test, with max_locks_per_transaction=256. Compiled app loopback 3000. Private credentials, profiles, original queued payloads, databases and raw logs remain outside Git.
+Task-owned PostgreSQL 16.15 clusters on loopback 55707 (retained compiled journey), 55708 (resettable domain verification) and 55710 (UTF-8 populated upgrades), each database named ppo_synthetic_test, with max_locks_per_transaction=256. The failed 55709 encoding setup remains separately preserved. Compiled app loopback 3000; Node 24.21.0, Playwright 1.63.0 and Chrome 154.0.8037.97. Private credentials, profiles, original queued payloads, databases and raw logs remain outside Git.
 
 Baseline browser startup attempted a second server before the task-owned server was ready (EADDRINUSE); the intended compiled server then served the passing journey. Subsequent proof uses explicit existing-server configuration.
 
@@ -30,4 +30,35 @@ Desktop and phone native FI-07 journeys passed 2/2 after those corrections. The 
 
 The final offline-correction rejection and populated 0056→0057 preservation cases passed 2/2. Their first additional cluster was accidentally initialised with Windows-1252 encoding and refused existing seed text before reaching FI-07. That failed cluster/log is preserved; the passing rerun uses a separately owned UTF-8 cluster on 55710. The incomplete 55709 attempt is not a product regression. No existing database was replaced.
 
-Final source, remaining regressions, restart/layout evidence and final-head CI are appended as performed.
+## Final local execution and exact provenance
+
+Runtime implementation is committed at 9f45101f68f61837c41c05a7e00d8de55304a0a6. Subsequent commits before evidence publication refine test assertions, isolated fixture dates and proof provenance; they do not change runtime, migration, permission, template or offline protocol bytes. Compiled build UJXb9SE21VdEKo9tQs7aJ is the final local build. Earlier uncommitted captures are retained privately and are not relabelled as clean-source proof.
+
+| Execution | Result and source |
+|---|---|
+| Complete final FI-07 persisted suite | 9/9 passed at unchanged 120-second per-test limit; all five choices, no response, actual incident/inspection restrictions, current source/audience/permissions, concurrent clarification, Activities, lost/repeated operations, immutable marks, offline originals and populated 0056→0057 preservation |
+| Affected domain regressions | 88/88 passed: reports, reports-offline, service-inspections, field-incidents, field-readiness, finance-boundaries and quality-reports. Includes separate actual crew attendance, independent Service inspection acceptance, FI-06 holds, controlled output corruption/recovery and every late P09 transaction failure. Run began in the implementation working tree; final-head CI is a separate fresh execution. |
+| Selected populated upgrade/registry proofs | 16/16 passed across Field/timer, P08, packs, planner, Finance, policy persistence, Leads/Projects, Estimating E1/E2 and hosted-demo upgrades. Preserves original checksums, reserved 0051/0052, grants/users, identity backfill across 0026, CRLF installed history and repeat seeds. No seed or grant is added by 0057. |
+| Final compiled P09 + FI-07 + reference comparison | 6/6 passed on clean c3d4709baa920146314d6b4c5d9b367f47687574 / tree 96e1fea524ed0beb27b43509e56c605a152353e6. Desktop and phone each execute factual return/correction, separate internal review, original output, proposed return visit, successor review/issue/fresh response, and the new FI-07 lost receipt/clarification/offline journey. |
+| Explicit keyboard completion follow-up | 2/2 passed on clean 3549d73. Tab visits each field in order; arrows select the subject/response; typed respondent details survive blank-choice refusal; the alert receives focus; Enter saves/recoveries retain the same original. The same run exercises offline Unavailable with no identity/mark, reload and repeated explicit sync. |
+| Actual application and PostgreSQL restart | Passed on c3d4709, same compiled build: application PID 18612→27608 and PostgreSQL boot 05:18:20→06:58:30 UTC. All 13 table fingerprints, 377 receipts, original response/mark and exact draft HTML plus issued HTML/PDF/manifest remained identical. An initial verify request preceded server readiness and received ECONNREFUSED; the original was preserved and verification succeeded after the actual listener was ready. |
+| Native geometry and visual inspection | 1440/1024/390/320 passed: one main content scroll owner, no horizontal overflow, exact HTML expands without an inner vertical scroller, save buttons unobscured. Actual Chrome 200% has 720 CSS pixels / DPR 2 at 1440 physical pixels. Enter/Escape guide focus return passed. Native record, presentation, response/save, history and zoom captures were inspected; reference r02/r20 was loaded independently. This is technical inspection, not independent visual acceptance. |
+| Application/repository assurance | Final local build, typecheck, lint, studio, foundation, prototype and naming passed. Studio: 326 entries, 172 routes, 33 components; all review states remain pending. Naming: 7,993 copy-ready instruction characters. Local units remain 566/570 with precisely the same four failures in the full unchanged-main run. |
+
+The 55709 Windows-1252 seed failure was also reproduced by the unchanged-main seed command. The final UTF-8 run succeeds. No environment failure is used to excuse an attributable regression; no assertion, timeout, performance target, PostgreSQL guard or separate HTTP/restart lane was weakened.
+
+The extended offline browser test first asserted a word absent from the existing validation message. The form correctly refused the blank choice and kept its subject; the corrected test asserts the exact five-choice message, alert focus and retained subject. Initial CI on 9f45101 reproduced that test error in the [reports lane](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/36975169324/job/110737308461). The [HTTP lane](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/36975169324/job/110737308567) reported a runner shutdown signal/exit 143 after 35 passing assertions, with 12 cases interrupted and zero assertion failures; it is not a completed HTTP proof. The final corrected head is checked afresh in PR #336. The initial run's failures are not retrospectively labelled green.
+
+## Retained review package
+
+[Artifact hashes and private-log fingerprints](artifacts.json), [restart comparison](restart.json), [four-width/zoom measurements](layout/geometry.json), [read-only history provenance](history/history.json), exact synthetic [desktop HTML](outputs/desktop-issued.html) / [PDF](outputs/desktop-issued.pdf) and [phone HTML](outputs/mobile-issued.html) / [PDF](outputs/mobile-issued.pdf) retain their original bytes. No raw command payload, private storage manifest, profile, credentials or trace archive is published.
+
+Useful paired views: [1440 native record](layout/record-1440.png), [1024 record](layout/record-1024.png), [390 response](layout/response-390.png), [320 exact evidence](layout/presentation-320.png), [320 reachable save](layout/response-save-320.png), [200% zoom](layout/zoom-record.png), [desktop history](history/history-1440.png), [phone history](history/history-390.png), [proposed r02 response](reference/desktop-FI07-service-r02-response.png) and [phone reference](reference/mobile-FI07-service-r02-response.png). Long original evidence deliberately uses the native content scroll rather than being cropped or altered.
+
+The released shell guide still identifies its legacy guide as being prepared; the maintained FI-07/report working guides appear as Development draft guide. No guide publication or owner review is invented. The r02 issued-only proposal is adapted explicitly to retain P09 DraftEvidence, optional synthetic marks, current server authority and real owned Activities. Accepted native FI-07 mockups remain missing.
+
+## Handover limits
+
+The [acceptance matrix](../../field-customer-response-acceptance.md) is the concrete owner/device/screen-reader/independent visual checklist. Customer attendance acknowledgement, exact report response, internal technical review and Finance authority remain separate. No pre-review customer signature, portal, external distribution, offline correction/review/issue/incident operation or automatic receiving-domain completion is available. Return preparation creates only a Proposed visit through the existing command.
+
+Next bounded increment: closed-visit arrival and return-visit entry guidance. Wider Field Work owner/device acceptance, PT-28/PT-30 consolidation and existing performance findings remain programme work, with broader SV-06/SV-07 orchestration separate.

@@ -6,7 +6,7 @@ Owner: Dean Fiedler. State: implementation in progress. This is not a completion
 
 ## FI-07 current increment — 2 October 2026
 
-The bounded increment reuses P07/P09 attendance, review, exact presentations, controlled issue, five customer responses, owner-bound offline replay and Activities. It adds a distinct attendance-facts acknowledgement after Service review, append-only response corrections and explicit online receipt recovery/current restriction context. Existing /service/reports destinations preserve scope FI-07.
+[PR #336](https://github.com/deanrfiedler-gif/powerplants-one/pull/336) delivers the bounded increment for review. It reuses P07/P09 attendance, review, exact presentations, controlled issue, five customer responses, owner-bound offline replay and Activities. It adds a distinct attendance-facts acknowledgement after Service review, append-only response corrections and explicit online receipt recovery/current restriction context. Existing /service/reports destinations preserve scope FI-07.
 
 [Decision](../decisions/field-customer-response.md), [API/data contract](../contracts/field-customer-response.md), [acceptance matrix and human checklist](../testing/field-customer-response-acceptance.md), [executed evidence and PR](../testing/evidence/field-customer-response/README.md). Migration 0057 adds one immutable context/lineage companion table. No capability/grant/seed/user/template changes. Original installed bytes and allocation reservations remain intact.
 
@@ -26,7 +26,7 @@ Final FI-06 database proof passes 6/6; compiled journey/reference 5/5; fresh EN-
 
 Baseline F02-A technical walkthrough repeated against merged main: 5/5 database and 4/4 compiled desktop/phone cases passed. Retained #334 proof remains valid for unchanged shared-engine/EN-08 boundaries; affected regressions and fresh FI-06 evidence are recorded separately. No owner participation, physical-device, screen-reader or independent visual acceptance occurred. Concrete human checklist remains open without blocking this authorised synthetic implementation.
 
-Current programme: FI-01/FI-02/FI-05 and FI-03/FI-04 are merged within documented boundaries. FI-06 is the present reviewable increment. FI-07 response refinement, full owner/device/accessibility acceptance and performance work remain. Earlier remaining-programme lists below are historical checkpoints superseded by this paragraph. Next bounded runtime increment is FI-07 response review/refinement against persisted incident and inspection blockers; decide its exact receiving contract first. No merge/deployment in this task.
+At FI-06 publication, FI-01/FI-02/FI-05 and FI-03/FI-04 were merged within documented boundaries and FI-07 was the next runtime increment. FI-06 is now merged with the exact final CI evidence recorded above. The FI-07 section is the current programme handover; these older checkpoints retain their original technical boundaries and do not imply deployment or human acceptance.
 
 ## FI-03/FI-04 Service increment
 

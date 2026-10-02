@@ -16302,7 +16302,7 @@
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-10-02",
-      "source_commit": "cc27e1e42b04954a33547c98f19ab245b0a1d3ae",
+      "source_commit": "c3d4709baa920146314d6b4c5d9b367f47687574",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "docs/testing/evidence/field-customer-response/README.md",
       "sections": [
@@ -45640,7 +45640,7 @@
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-10-02",
-      "source_commit": "cc27e1e42b04954a33547c98f19ab245b0a1d3ae",
+      "source_commit": "c3d4709baa920146314d6b4c5d9b367f47687574",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "docs/testing/evidence/field-customer-response/README.md",
       "sections": [
@@ -45818,7 +45818,7 @@
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-10-02",
-      "source_commit": "cc27e1e42b04954a33547c98f19ab245b0a1d3ae",
+      "source_commit": "c3d4709baa920146314d6b4c5d9b367f47687574",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "docs/testing/evidence/field-customer-response/README.md",
       "sections": [
