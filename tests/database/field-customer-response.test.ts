@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { after, beforeEach, test } from "node:test";
 import { randomUUID } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
+import { homedir } from "node:os";
 import { join } from "node:path";
 import { reset, migrate, seed } from "../../scripts/database";
 import {
@@ -554,7 +555,8 @@ test("FI07-08 missing original evidence, revoked evidence access and wrong prese
     await rows("SELECT * FROM ppo.field_attachments WHERE id=$1", [q.photo.id])
   )[0];
   const path = join(
-    process.env.PPO_DOCUMENT_DIRECTORY!,
+    process.env.PPO_DOCUMENT_DIRECTORY ??
+      join(homedir(), ".ppo-synthetic-documents"),
     q.p.workspace_id,
     attachment.storage_item_id,
   );

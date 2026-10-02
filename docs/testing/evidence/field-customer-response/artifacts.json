@@ -407,6 +407,111 @@
       "private_log": "ci-initial-http.txt",
       "bytes": 192141,
       "sha256": "3acb1c730c9aa944563f9550b875a1ecc9914dc9d17fccd20d2283487abeb8c4"
+    },
+    {
+      "private_log": "ci-main-http-original.txt",
+      "bytes": 191012,
+      "sha256": "2095b321d459b1d663f5bafc8963cf3bbf3ef687042a5917f5d892b46e3e21b9"
+    },
+    {
+      "private_log": "ci-main-http-debug.txt",
+      "bytes": 388980,
+      "sha256": "4ad6c739ef2f537922e31901542f2d3c67397efa1508b73030f14c43276c4ef5"
+    },
+    {
+      "private_log": "ci-main-attempt2.zip",
+      "bytes": 256880,
+      "sha256": "8571727b71f5afba195dd37520a7283c8f7a6e51eb2c498bd0fc176c84f76deb"
+    },
+    {
+      "private_log": "ci-final-http.txt",
+      "bytes": 218609,
+      "sha256": "fb752128d14d504e2212ac96b2d677cc5d898ad491fb2c8aa11449bce04b85ee"
+    },
+    {
+      "private_log": "ci-final-reports-ebc.txt",
+      "bytes": 209232,
+      "sha256": "2526c9bcdaad8f75c14908e715e4c63855e89e52ec9de98477f8b57420825c46"
+    },
+    {
+      "private_log": "ci-552-database.txt",
+      "bytes": 491917,
+      "sha256": "a1f9333b66f6c61d2419eb71eeff9ed0b440dfcfc8390fc41da3a3aced7b719d"
+    },
+    {
+      "private_log": "main-en07-order-diagnostic-source.txt",
+      "bytes": 27750,
+      "sha256": "6503d8e96106e1189127bad68dc96f96e4bf6a8a0ee34cd3157d2e57396ceea4"
+    },
+    {
+      "private_log": "main-en07-order-diagnostic.txt",
+      "bytes": 1258,
+      "sha256": "23fed2deea3c60f67a094a8c32f0f8577d3860ff04deabd3bec5f21642d3db5d"
+    },
+    {
+      "private_log": "fixed-en07-order-diagnostic-source.txt",
+      "bytes": 28354,
+      "sha256": "09c69096b7b0efaf96bc80e4a2a708e8e796b871a2dddedfc805257c80cef8bf"
+    },
+    {
+      "private_log": "fixed-en07-order-diagnostic.txt",
+      "bytes": 272,
+      "sha256": "5dcfb5de6eb09c9525f7cd75606d4ea8dbbe6287460440ced90fba96220fabf8"
+    },
+    {
+      "private_log": "en07-race-fix.txt",
+      "bytes": 272,
+      "sha256": "201b0447426792054ce5fd9f44edcca08a10b69e70c248d264e45000fd93c379"
+    },
+    {
+      "private_log": "fi07-storage-path-fix.txt",
+      "bytes": 253,
+      "sha256": "e57f9e51a047c2f96e2ad1194586ded83cd7ba4cfc3ceb4e04882cb930f01775"
+    },
+    {
+      "private_log": "fi07-db-storage-final.txt",
+      "bytes": 1230,
+      "sha256": "9f22a638f0b9d273e2b8cb852cf4bd9f23237d1568e763957f33befabf2a0e8e"
+    },
+    {
+      "private_log": "main-en07-race-1.txt",
+      "bytes": 272,
+      "sha256": "fc648672873bf3d53a9777f64aec8aeda8ce8b18a0f6debe53b9cd94134c7f06"
+    },
+    {
+      "private_log": "main-en07-race-2.txt",
+      "bytes": 272,
+      "sha256": "be8a529841e8f96192b44863ec50d2a11f0f326f1756b697345aaac7c53b75b9"
+    },
+    {
+      "private_log": "main-en07-race-3.txt",
+      "bytes": 272,
+      "sha256": "8196e145f1c1ff7c9e690da6324e9159c299d3dca244dfaf7b7728e8c3bc2035"
+    },
+    {
+      "private_log": "main-en07-race-4.txt",
+      "bytes": 271,
+      "sha256": "4dbd90722fdd2f2a0c0761f9091dffae000bd4e18385dd0eb110c0e3778d0744"
+    },
+    {
+      "private_log": "main-en07-race-5.txt",
+      "bytes": 272,
+      "sha256": "afe50b9897bcf9975bf75e7dea7d2d5304c5cf10978f78c2ae1e617d46a17305"
+    },
+    {
+      "private_log": "main-en07-race-6.txt",
+      "bytes": 272,
+      "sha256": "52f83bd3d6197e6c759439a09846ca8a957905d79207cf888fda3541162650fc"
+    },
+    {
+      "private_log": "main-en07-race-7.txt",
+      "bytes": 272,
+      "sha256": "5ba62068752ea9df1460363c052c5e6940aa77c8458f08d2899e837a4bacfaa1"
+    },
+    {
+      "private_log": "main-en07-race-8.txt",
+      "bytes": 271,
+      "sha256": "746c5159fdc8834589a31f245c551a8227863bf1fa70a788ddd781e7027d21af"
     }
   ]
 }

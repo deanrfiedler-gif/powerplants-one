@@ -140,10 +140,21 @@ test("EN07-A25 A29 A32 A33 A37 A40 A41 A43 A50: accepted is not implemented; the
   const p = await s.preview(id, three), version = (await s.detail(id)).change.version;
   assert.equal(p.confirm_label, "Submit 3 implementation handovers");
   const body = command("SYN implementation handover", { action: "confirm", change_id: id, expected_version: version, preview_hash: p.preview_hash, requests: three });
-  const [first, race] = await Promise.all([s.engineer(`${s.base}/handovers`, body), s.engineer(`${s.base}/handovers`, { ...body, operation_id: randomUUID() })]);
+  const competingBody = { ...body, operation_id: randomUUID() };
+  const [first, race] = await Promise.all([s.engineer(`${s.base}/handovers`, body), s.engineer(`${s.base}/handovers`, competingBody)]);
   assert.deepEqual([first.status, race.status].sort(), [201, 409]); // parallel confirmations never create a second set
-  assert.equal((await s.engineer(`${s.base}/handovers`, body)).status, first.status === 201 ? 200 : 409);
-  assert.equal(code(await s.engineer(`${s.base}/handovers`, { ...body, reason: "SYN different content under the same operation" })), first.status === 201 ? "OperationConflict" : "OperationConflict");
+  // Either original may win. Only the accepted operation has a receipt/hash;
+  // the losing operation still has a stale expected version, not a receipt.
+  const acceptedBody = first.status === 201 ? body : competingBody;
+  const accepted = first.status === 201 ? first : race;
+  const refusedBody = first.status === 201 ? competingBody : body;
+  const replay = await s.engineer(`${s.base}/handovers`, acceptedBody);
+  assert.equal(replay.status, 200);
+  assert.deepEqual(replay.body, accepted.body);
+  assert.equal(code(await s.engineer(`${s.base}/handovers`, { ...acceptedBody, reason: "SYN different content under the same operation" })), "OperationConflict");
+  const refused = await s.engineer(`${s.base}/handovers`, refusedBody);
+  assert.equal(refused.status, 409);
+  assert.equal(code(refused), "VersionConflict");
   assert.equal((await s.detail(id)).requests.filter((r) => r.purpose === "Implementation").length, 3);
 
   // A31 A32 A33: each receiver answers only for their own destination; outcomes stay separate; a correction keeps the identity.
