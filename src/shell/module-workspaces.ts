@@ -1,6 +1,8 @@
 // The shell allocates the viewport once; full-bleed modules own their toolbar,
 // spacing and scroll surface. Other pages retain their established composition.
 export const moduleWorkspaces = [
+  { route: "/service/reports", moduleId: "FI-07", scope: "ppo-reports", layout: "padded", navigation: "workspace", baseline: "fi07-reports-register" },
+  { route: "/service/reports/[id]", moduleId: "FI-07", scope: "ppo-reports", layout: "padded", navigation: "workspace", baseline: "fi07-reports-record" },
   { route: "/service/incidents", moduleId: "FI-06", scope: "ppo-incidents", layout: "padded", navigation: "workspace", baseline: "fi06-incidents-register" },
   { route: "/service/incidents/new", moduleId: "FI-06", scope: "ppo-incidents", layout: "padded", navigation: "workspace", baseline: "fi06-incidents-capture" },
   { route: "/service/incidents/[id]", moduleId: "FI-06", scope: "ppo-incidents", layout: "padded", navigation: "workspace", baseline: "fi06-incidents-record" },

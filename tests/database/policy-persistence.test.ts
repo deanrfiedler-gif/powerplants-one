@@ -124,7 +124,7 @@ async function clone(
   );
 }
 
-test("populated 0050 upgrade preserves every old row/hash, registers 0053–0056 with reserved gaps and exact authority/instrument additions", async () => {
+test("populated 0050 upgrade preserves every old row/hash, registers 0053–0057 with reserved gaps and exact authority/instrument additions", async () => {
   const names = (await tables()).filter((t) => t !== "seed_receipts"),
     beforeRows = await snapshot(names);
   const oldLedger = (
@@ -165,13 +165,13 @@ test("populated 0050 upgrade preserves every old row/hash, registers 0053–0056
       "SELECT * FROM public.ppo_migrations ORDER BY version",
     )
   ).rows;
-  assert.deepEqual(ledger.slice(0, -4), oldLedger);
-  assert.equal(ledger.at(-1).version, 56);
+  assert.deepEqual(ledger.slice(0, -5), oldLedger);
+  assert.equal(ledger.at(-1).version, 57);
   assert.deepEqual(
     ledger.map((r) => r.version),
     [
       ...Array.from({ length: 50 }, (_, i) => i + 1).filter((n) => n !== 16),
-      53, 54, 55, 56,
+      53, 54, 55, 56, 57,
     ],
   );
   const receipts = (
@@ -664,7 +664,7 @@ test("direct reseed and runner retries preserve an advanced head, later evidence
   );
 });
 
-test("fresh installation applies only registered files through 0056, retains reserved gaps and repeats without changes", async () => {
+test("fresh installation applies only registered files through 0057, retains reserved gaps and repeats without changes", async () => {
   await database().query(await sql("migrations/0001-recover.sql"));
   await database().query(
     "DROP TABLE IF EXISTS public.ppo_migrations,public.ppo_demo_migrations",
@@ -679,7 +679,7 @@ test("fresh installation applies only registered files through 0056, retains res
     ).rows.map((r) => r.version),
     [
       ...Array.from({ length: 50 }, (_, i) => i + 1).filter((n) => n !== 16),
-      53, 54, 55, 56,
+      53, 54, 55, 56, 57,
     ],
   );
   const first = await snapshot(await tables());

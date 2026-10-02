@@ -2822,25 +2822,38 @@
       "title": "Customer attendance and report response",
       "kind": "scope",
       "module": "FI",
-      "summary": "Attendance/report response capabilities have an existing P07/P09 foundation. Retain and verify their distinct meanings; no new standalone route is established by this inventory.",
+      "summary": "FI-07 uses the existing P07/P09 report destinations: customer attendance acknowledgement, exact report response, retained corrections and owned follow-up; internal Service acceptance remains separate.",
       "path": "/service/reports",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
       ],
       "guide_key": "guide.fi.07",
       "design_path": "docs/design/development/pages/scope-fi-07.md",
-      "html_path": null,
+      "html_path": "docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "src/components/report-screens.tsx",
+        "src/reports/service.ts",
+        "src/reports/response-context.ts",
+        "src/reports/validation.ts",
+        "src/shared/ui/use-recoverable-command.ts",
+        "src/offline/app.ts",
+        "docs/decisions/field-customer-response.md",
+        "docs/testing/evidence/field-customer-response/README.md"
+      ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "FI-07 persisted synthetic verification is recorded separately in docs/testing/evidence/field-customer-response/README.md. Human acceptance pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 7,
-      "related_keys": [],
+      "related_keys": [
+        "route:/service/reports",
+        "route:/service/reports/[id]",
+        "route:/work/[id]"
+      ],
       "reviewer": null
     },
     {
@@ -6552,7 +6565,7 @@
       "title": "Service report detail",
       "kind": "route",
       "module": "SV",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "FI-07 uses the existing P07/P09 report destinations: customer attendance acknowledgement, exact report response, retained corrections and owned follow-up; internal Service acceptance remains separate.",
       "path": "/service/reports/[id]",
       "source_paths": [
         "src/app/(business)/service/reports/[id]/page.tsx"
@@ -6561,10 +6574,19 @@
       "design_path": "docs/design/development/pages/route-service-reports-id.md",
       "html_path": "docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "src/components/report-screens.tsx",
+        "src/reports/service.ts",
+        "src/reports/response-context.ts",
+        "src/reports/validation.ts",
+        "src/shared/ui/use-recoverable-command.ts",
+        "src/offline/app.ts",
+        "docs/decisions/field-customer-response.md",
+        "docs/testing/evidence/field-customer-response/README.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "FI-07 persisted synthetic verification is recorded separately in docs/testing/evidence/field-customer-response/README.md. Human acceptance pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6572,7 +6594,10 @@
       "build_rank": 66,
       "related_keys": [
         "scope:SV-06",
-        "scope:SV-07"
+        "scope:SV-07",
+        "scope:FI-07",
+        "route:/service/reports",
+        "route:/work/[id]"
       ],
       "reviewer": null
     },
@@ -6581,7 +6606,7 @@
       "title": "Service review & reports",
       "kind": "route",
       "module": "SV",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "FI-07 uses the existing P07/P09 report destinations: customer attendance acknowledgement, exact report response, retained corrections and owned follow-up; internal Service acceptance remains separate.",
       "path": "/service/reports",
       "source_paths": [
         "src/app/(business)/service/reports/page.tsx"
@@ -6590,10 +6615,19 @@
       "design_path": "docs/design/development/pages/route-service-reports.md",
       "html_path": "docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "src/components/report-screens.tsx",
+        "src/reports/service.ts",
+        "src/reports/response-context.ts",
+        "src/reports/validation.ts",
+        "src/shared/ui/use-recoverable-command.ts",
+        "src/offline/app.ts",
+        "docs/decisions/field-customer-response.md",
+        "docs/testing/evidence/field-customer-response/README.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "FI-07 persisted synthetic verification is recorded separately in docs/testing/evidence/field-customer-response/README.md. Human acceptance pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6601,7 +6635,10 @@
       "build_rank": 66,
       "related_keys": [
         "scope:SV-06",
-        "scope:SV-07"
+        "scope:SV-07",
+        "scope:FI-07",
+        "route:/service/reports/[id]",
+        "route:/work/[id]"
       ],
       "reviewer": null
     },
@@ -7134,7 +7171,9 @@
       "image_paths": [],
       "dependencies": [
         "src/scheduling/policy-holds.ts",
-        "src/scheduling/components/client/policy-holds.client.tsx"
+        "src/scheduling/components/client/policy-holds.client.tsx",
+        "src/reports/context.ts",
+        "src/components/activity-screens.tsx"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -7145,7 +7184,8 @@
       "owner": "Dean Fiedler",
       "build_rank": 2,
       "related_keys": [
-        "scope:SH-02"
+        "scope:SH-02",
+        "scope:FI-07"
       ],
       "reviewer": null
     },

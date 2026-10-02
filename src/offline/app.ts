@@ -1667,32 +1667,38 @@ function renderReports(box: HTMLElement) {
         show.append(frame);
         const presentedAt = new Date().toISOString(),
           f = element("form"),
+          fields = element("fieldset"),
+          subject = field(fields, "Response concerns", "Report content", "text", ["Report content", "Attendance facts only"]),
           choice = field(
-            f,
+            fields,
             "Customer response",
-            "Accepted",
+            "",
             "text",
-            responseChoices,
+            ["", ...responseChoices],
           ),
-          name = field(f, "Stated respondent name (synthetic)"),
-          role = field(f, "Stated respondent role"),
+          name = field(fields, "Stated respondent name (synthetic)"),
+          role = field(fields, "Stated respondent role"),
           remarks = field(
-            f,
+            fields,
             "Response remarks / unavailable reason",
             "",
             "textarea",
           ),
-          next = field(f, "Owned next contact action", "", "textarea"),
+          next = field(fields, "Owned next contact action", "", "textarea"),
           signature = field(
-            f,
+            fields,
             "Optional synthetic signature PNG",
             "",
             "file",
           ) as HTMLInputElement,
           save = element("button", "Save customer response on this device");
         signature.accept = "image/png";
+        subject.onchange = () => { signature.value = ""; };
+        (choice as HTMLSelectElement).options[0].text = "Choose an explicit response";
+        f.prepend(element("p", "Attendance acknowledgement concerns only the named technician’s attendance facts in this exact cached presentation. Neither subject grants technical clearance, work authority or Finance approval. Current source, audience, evidence and permission are rechecked on explicit replay. Corrections to saved responses are made online from their original history."));
         save.type = "submit";
-        f.append(save);
+        fields.append(save);
+        f.append(fields);
         show.append(f);
         let responseSaved = false;
         f.onsubmit = (e) => {
@@ -1700,6 +1706,7 @@ function renderReports(box: HTMLElement) {
           if (responseSaved || save.disabled) return;
           void perform(async () => {
             save.disabled = true;
+            fields.disabled = true;
             try {
               safeJob();
               let mark = null;
@@ -1716,6 +1723,7 @@ function renderReports(box: HTMLElement) {
               }
               const body = {
                 id: crypto.randomUUID(),
+                subject: subject.value === "Attendance facts only" ? "AttendanceFacts" : "ReportContent",
                 presentation_id: v.id,
                 revision_id: v.revision_id,
                 presentation_kind: v.kind,
@@ -1749,6 +1757,7 @@ function renderReports(box: HTMLElement) {
               );
             } finally {
               save.disabled = responseSaved;
+              fields.disabled = responseSaved;
             }
           });
         };

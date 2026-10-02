@@ -4,7 +4,19 @@
 
 Owner: Dean Fiedler. State: implementation in progress. This is not a completion, acceptance or deployment claim.
 
-## FI-06 current increment — 2 October 2026
+## FI-07 current increment — 2 October 2026
+
+The bounded increment reuses P07/P09 attendance, review, exact presentations, controlled issue, five customer responses, owner-bound offline replay and Activities. It adds a distinct attendance-facts acknowledgement after Service review, append-only response corrections and explicit online receipt recovery/current restriction context. Existing /service/reports destinations preserve scope FI-07.
+
+[Decision](../decisions/field-customer-response.md), [API/data contract](../contracts/field-customer-response.md), [acceptance matrix and human checklist](../testing/field-customer-response-acceptance.md), [executed evidence and PR](../testing/evidence/field-customer-response/README.md). Migration 0057 adds one immutable context/lineage companion table. No capability/grant/seed/user/template changes. Original installed bytes and allocation reservations remain intact.
+
+Customer acknowledgement is not internal attendance acceptance, technical acceptance, incident release, work authority or Finance approval. Corrections retain original responses and optional marks; report changes require successor review/issue/fresh response. Existing Activities own actual follow-up, due dates and outcomes. Return preparation stays with the existing work-order Proposed visit command, separate from scheduling acceptance/confirmation and packs.
+
+FI-06 #335 is verified merged at cc27e1e42b04954a33547c98f19ab245b0a1d3ae, 2 October 04:41:08 UTC, with all 23 checks successful on ace43bdbe3ceb489a085831731b022a1bb2cb683. Its original evidence below remains historical; this paragraph supersedes its review/next-increment wording.
+
+Remaining programme: owner/physical-device/screen-reader/independent visual acceptance; closed-visit arrival and return-visit entry guidance as the next bounded increment; complete PT-28/PT-30 cross-domain Field Work walkthrough and benefit measurement. Wider SV-06/SV-07 orchestration remains separate. No merge or deployment is part of FI-07 delivery.
+
+## FI-06 delivered increment — 2 October 2026
 
 Delivery: [PR #335](https://github.com/deanrfiedler-gif/powerplants-one/pull/335). The isolated `codex/field-incidents` increment implements online synthetic factual reports, retained corrections, restricted details/evidence, exact scope holds, actual owned Activities and independent closure with Internal HTML/PDF. [Decision](../decisions/field-incidents.md), [contract](../contracts/field-incidents.md), [acceptance matrix and owner checklist](../testing/field-incidents-acceptance.md), [actual evidence](../testing/evidence/field-incidents/README.md). Migration/seed 0056 adds typed identity, six incident tables and five dedicated capabilities; nine grants to three existing local fictional identities, no new users. Earlier SQL/seed bytes and allocation reservations remain intact.
 

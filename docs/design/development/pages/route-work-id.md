@@ -52,3 +52,7 @@ At 390/320 px, stack fields/actions, wrap exact identifiers and keep hold/recove
 ## FI-06 corrective handover
 
 An incident-owned Activity provides Return to incident and corrective evidence from its stored association when current incident access permits it. Activity completion remains separate from evidence acceptance, incident closure and hold release. No restricted instruction or evidence is copied into the Activity. The native link uses the existing record layout at desktop/phone widths; retain keyboard focus and wrap the explanatory text. Compiled fixture: tests/browser/field-incidents.spec.ts. Independent review remains pending.
+
+## FI-07 receiving handover
+
+A permitted report follow-up exposes Return to original service report and response. Existing Activity owner/due update and owner completion commands retain history; completing contact does not rewrite a customer response or close an incident/defect. The reverse link independently checks current report scope. See the FI-07 contract and evidence.

@@ -262,6 +262,8 @@ export function validatePayload(op: WireOperation) {
       break;
     case "CustomerResponse":
       responseCommand(op.target_id!, b);
+      if (b.supersedes_response_id !== undefined)
+        throw new AppError(422, "OfflineResponseCorrectionUnsupported", "Retain the original. Correct or clarify a saved response online from its exact retained history.");
       break;
     case "CompletionDraft":
       completionCommand(op.appointment_id, b);

@@ -119,6 +119,7 @@ function ActivityEditor({
         </SummaryPair>
       </dl>
       {a.incident_source && <IncidentActivityHandover href={a.incident_source.href} />}
+      {a.report_source && <p><Link href={a.report_source.href}>Return to original service report and response</Link>. Completing this Activity does not change a customer response, internal attendance acceptance, incident or inspection defect.</p>}
       <div className="related-links">
         {a.links.map((l) => (
           <RecordLink key={l.object_id} type={l.object_type} id={l.object_id}>

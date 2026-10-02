@@ -149,3 +149,7 @@ During pre-merge verification, the independent CRM design audit revision merged 
 D-024 branding/acknowledgement wording is not operationally accepted by synthetic rendering. Device security/retention, private adapter backup/restore ownership, independent review, owner acceptance and SharePoint/MYOB interfaces remain unverified. No hosting, production migration, live integrations, real customer communication or paid/access/rule changes are delivered.
 
 The [P10 starter](p10-starter-prompt.md) is preparation only. It requires completed P09 external publication, live main/contracts/newer decisions and separate P10 authority. P09 creates no Finance handoff, allocation, billable treatment, account balance, stock transaction, invoice, payment, ERP reference or downstream fixture. Stop at P09 publication and P10 preparation.
+
+## FI-07 bounded extension — 2 October 2026
+
+[Customer attendance and response contract](../contracts/field-customer-response.md) extends the existing response command with an explicit attendance/report subject and append-only correction relationship. Internal attendance_acceptances remains Service review. Both exact presentation modes and original offline payload/receipt compatibility remain. Migration 0057 is additive with no seed, grant, user or template change. [Decision](../decisions/field-customer-response.md) and [fresh evidence](../testing/evidence/field-customer-response/README.md) govern this increment; historical evidence above retains its original source.
