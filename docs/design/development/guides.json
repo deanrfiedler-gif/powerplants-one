@@ -16297,22 +16297,20 @@
       "title": "Customer attendance and report response",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Existing foundation + proposed completion",
+      "content_mode": "Implemented bounded FI-07 with retained P07/P09",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-10-02",
+      "source_commit": "c3d4709baa920146314d6b4c5d9b367f47687574",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "docs/testing/evidence/field-customer-response/README.md",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Customer attendance and report response to work towards this outcome: A customer response has an unambiguous meaning.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "Attendance acknowledgement is not approval of all work, report content or charges."
+            "Record a customer acknowledgement of attendance facts or a response to exact report content. Internal Service review, customer response, technical acceptance and Finance authority are different records. FI-07 uses the existing Service reports register and report detail."
           ],
           "steps": [],
           "rows": [],
@@ -16322,9 +16320,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Visit attendance evidence, report revision, customer response and authority.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Confirm your current identity, permitted company/site, named technician attendance, appointment/work order, exact scope and current report revision. A reviewed DraftEvidence or IssuedReport presentation is required. Read access does not grant response, review or issue authority."
           ],
           "steps": [],
           "rows": [],
@@ -16333,56 +16329,29 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Identify whether the response concerns attendance or report content",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Open the report from My Jobs, Service reports or its owned Activity. Check internal review and current restrictions. Present the exact retained HTML. Choose Response concerns and an explicit customer response. Save and obtain the server receipt; follow any owned next action."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Customer attendance and report response · Mobile review flows"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "The record shows attendance/internal review, current source applicability and restrictions, exact completion/reviews, controlled files, presentations, response history and owned follow-up. The presentation shows exact customer-safe content; Return to staff review returns keyboard focus to its opener."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Visit attendance evidence, report revision, customer response and authority.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Response concerns is Report content or Attendance facts only. Attendance acknowledgement concerns the named technician’s original attendance in that exact presentation; it does not accept technical work. Accepted, Accepted with reservations, Declined, Unavailable and Disputed remain supported. No response is never acceptance.",
+            "State respondent name and role for an available respondent. Unavailable records an explanation and next action without invented identity or mark. Any optional PNG is a synthetic stated mark, not independently verified identity or legal signature assurance."
           ],
           "steps": [],
           "rows": [],
@@ -16392,13 +16361,10 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Non-Accepted choices require meaningful remarks and an owned next action. Follow-up belongs to the current Service owner with Due date needed until explicitly set through the Activity.",
+            "Use Correct or clarify this response to append a reasoned successor on the same subject/presentation. Original facts and marks remain. Changed report facts require the existing correction, submission, review, issue and fresh response cycle. Never move a mark to changed content or another subject."
           ],
-          "steps": [
-            "Identify whether the response concerns attendance or report content",
-            "Record the response against the correct event/revision",
-            "Keep outstanding findings and follow-up visible"
-          ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
@@ -16406,9 +16372,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "A customer response has an unambiguous meaning.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Attendance acknowledgement is not approval of all work, report content or charges."
+            "A saved response is a factual receipt only. It does not close an incident, resolve an inspection defect, clear a hold, authorise work, approve billing or complete another domain record.",
+            "Open original owned response action to set owner/due date or record the actual outcome through Activities/My Work. Completion retains the reservation/dispute and links back to the report. The existing work-order return proposal prepares a visit; scheduling acceptance, confirmation, availability and packs remain separate."
           ],
           "steps": [],
           "rows": [],
@@ -16417,45 +16382,19 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Unsaved input, saving, saved, validation failure, stale/conflict and uncertain result have explicit wording. A blank response cannot save. A source, audience or authority change can refuse fresh capture while original records remain.",
+            "An incident hold or inspection failure permits only factual capture about unchanged exact content. Current restrictions are separate from the observed restrictions retained at receipt. Missing context never appears clear."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare visit attendance evidence, report revision, customer response and authority. Follow the task sequence and check that a customer response has an unambiguous meaning. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Customer attendance and report response has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Attendance acknowledgement is not approval of all work, report content or charges."
+            "A customer acknowledges the technician’s attendance on DraftEvidence, then disputes an IssuedReport finding. These are separate responses. A clarification of the dispute can reuse its open Activity; completing that contact does not rewrite either response or resolve a defect."
           ],
           "steps": [],
           "rows": [],
@@ -16464,45 +16403,20 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "Correct rejected fields without losing other input. For an uncertain online result, retain the tab and use Check original response receipt or Retry unchanged response. Reload first checks the original receipt; it never invents a replacement operation. Closing the tab removes that online recovery copy.",
+            "If source or audience changed, retain the factual input and obtain a fresh reviewed presentation. Historical files remain exact. PDF retrieval does not capture a response."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use labelled controls by keyboard with visible focus; guidance preserves input and returns focus. The exact HTML expands in the native page scroll at 1440/1024/390/320 widths and browser zoom. Physical-device and screen-reader acceptance remain open.",
+            "The existing owner-bound offline workspace supports exact cached draft/issued response capture and explicit replay, including new attendance acknowledgements. It rechecks current permission/source/audience/evidence. Old queued originals retain their original hashes. Corrections use the online history. No offline review, issue, incident operation or background sending is supported."
           ],
           "steps": [],
           "rows": [],
@@ -16512,8 +16426,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "See docs/decisions/field-customer-response.md, docs/contracts/field-customer-response.md, docs/testing/field-customer-response-acceptance.md and the executed evidence index. Retained Service Review & Reports r02 is a proposed reference, not native acceptance."
           ],
           "steps": [],
           "rows": [],
@@ -16523,9 +16436,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft working guidance owned by Dean Fiedler. No accepted native FI-07 mockup is available. Functional evidence, independent visual review, owner acceptance, physical-device/screen-reader testing and deployment remain separate."
           ],
           "steps": [],
           "rows": [],
@@ -45724,22 +45635,20 @@
       "title": "Service report detail",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Implemented bounded FI-07 with retained P07/P09",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-10-02",
+      "source_commit": "c3d4709baa920146314d6b4c5d9b367f47687574",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "docs/testing/evidence/field-customer-response/README.md",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Service report detail to work towards this outcome: A reviewed report reflects evidence and retained responsibilities.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "A completed visit does not mean all customer issues are resolved."
+            "Record a customer acknowledgement of attendance facts or a response to exact report content. Internal Service review, customer response, technical acceptance and Finance authority are different records. FI-07 uses the existing Service reports register and report detail."
           ],
           "steps": [],
           "rows": [],
@@ -45749,9 +45658,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Submitted field evidence, findings, labour/parts, remaining work and report revision.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Confirm your current identity, permitted company/site, named technician attendance, appointment/work order, exact scope and current report revision. A reviewed DraftEvidence or IssuedReport presentation is required. Read access does not grant response, review or issue authority."
           ],
           "steps": [],
           "rows": [],
@@ -45760,56 +45667,29 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Confirm the record reference and customer/site context in this record workspace.",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Open the report from My Jobs, Service reports or its owned Activity. Check internal review and current restrictions. Present the exact retained HTML. Choose Response concerns and an explicit customer response. Save and obtain the server receipt; follow any owned next action."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Service report detail · Record workspace"
-            ],
-            [
-              "Application links",
-              "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "The record shows attendance/internal review, current source applicability and restrictions, exact completion/reviews, controlled files, presentations, response history and owned follow-up. The presentation shows exact customer-safe content; Return to staff review returns keyboard focus to its opener."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Submitted field evidence, findings, labour/parts, remaining work and report revision.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Response concerns is Report content or Attendance facts only. Attendance acknowledgement concerns the named technician’s original attendance in that exact presentation; it does not accept technical work. Accepted, Accepted with reservations, Declined, Unavailable and Disputed remain supported. No response is never acceptance.",
+            "State respondent name and role for an available respondent. Unavailable records an explanation and next action without invented identity or mark. Any optional PNG is a synthetic stated mark, not independently verified identity or legal signature assurance."
           ],
           "steps": [],
           "rows": [],
@@ -45819,14 +45699,10 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Non-Accepted choices require meaningful remarks and an owned next action. Follow-up belongs to the current Service owner with Due date needed until explicitly set through the Activity.",
+            "Use Correct or clarify this response to append a reasoned successor on the same subject/presentation. Original facts and marks remain. Changed report facts require the existing correction, submission, review, issue and fresh response cycle. Never move a mark to changed content or another subject."
           ],
-          "steps": [
-            "Confirm the record reference and customer/site context in this record workspace.",
-            "Review the exact technician submission",
-            "Resolve unclear evidence and separate follow-up work",
-            "Issue the controlled report through the permitted review workflow"
-          ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
@@ -45834,9 +45710,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "A reviewed report reflects evidence and retained responsibilities.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A completed visit does not mean all customer issues are resolved."
+            "A saved response is a factual receipt only. It does not close an incident, resolve an inspection defect, clear a hold, authorise work, approve billing or complete another domain record.",
+            "Open original owned response action to set owner/due date or record the actual outcome through Activities/My Work. Completion retains the reservation/dispute and links back to the report. The existing work-order return proposal prepares a visit; scheduling acceptance, confirmation, availability and packs remain separate."
           ],
           "steps": [],
           "rows": [],
@@ -45845,45 +45720,19 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Unsaved input, saving, saved, validation failure, stale/conflict and uncertain result have explicit wording. A blank response cannot save. A source, audience or authority change can refuse fresh capture while original records remain.",
+            "An incident hold or inspection failure permits only factual capture about unchanged exact content. Current restrictions are separate from the observed restrictions retained at receipt. Missing context never appears clear."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare submitted field evidence, findings, labour/parts, remaining work and report revision. Follow the task sequence and check that a reviewed report reflects evidence and retained responsibilities. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Service report detail has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A completed visit does not mean all customer issues are resolved."
+            "A customer acknowledges the technician’s attendance on DraftEvidence, then disputes an IssuedReport finding. These are separate responses. A clarification of the dispute can reuse its open Activity; completing that contact does not rewrite either response or resolve a defect."
           ],
           "steps": [],
           "rows": [],
@@ -45892,45 +45741,20 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "Correct rejected fields without losing other input. For an uncertain online result, retain the tab and use Check original response receipt or Retry unchanged response. Reload first checks the original receipt; it never invents a replacement operation. Closing the tab removes that online recovery copy.",
+            "If source or audience changed, retain the factual input and obtain a fresh reviewed presentation. Historical files remain exact. PDF retrieval does not capture a response."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use labelled controls by keyboard with visible focus; guidance preserves input and returns focus. The exact HTML expands in the native page scroll at 1440/1024/390/320 widths and browser zoom. Physical-device and screen-reader acceptance remain open.",
+            "The existing owner-bound offline workspace supports exact cached draft/issued response capture and explicit replay, including new attendance acknowledgements. It rechecks current permission/source/audience/evidence. Old queued originals retain their original hashes. Corrections use the online history. No offline review, issue, incident operation or background sending is supported."
           ],
           "steps": [],
           "rows": [],
@@ -45940,8 +45764,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "See docs/decisions/field-customer-response.md, docs/contracts/field-customer-response.md, docs/testing/field-customer-response-acceptance.md and the executed evidence index. Retained Service Review & Reports r02 is a proposed reference, not native acceptance."
           ],
           "steps": [],
           "rows": [],
@@ -45951,9 +45774,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft working guidance owned by Dean Fiedler. No accepted native FI-07 mockup is available. Functional evidence, independent visual review, owner acceptance, physical-device/screen-reader testing and deployment remain separate."
           ],
           "steps": [],
           "rows": [],
@@ -45992,22 +45813,20 @@
       "title": "Service review & reports",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Implemented bounded FI-07 with retained P07/P09",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-10-02",
+      "source_commit": "c3d4709baa920146314d6b4c5d9b367f47687574",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "docs/testing/evidence/field-customer-response/README.md",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Service review & reports to work towards this outcome: A reviewed report reflects evidence and retained responsibilities.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "A completed visit does not mean all customer issues are resolved."
+            "Record a customer acknowledgement of attendance facts or a response to exact report content. Internal Service review, customer response, technical acceptance and Finance authority are different records. FI-07 uses the existing Service reports register and report detail."
           ],
           "steps": [],
           "rows": [],
@@ -46017,9 +45836,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Submitted field evidence, findings, labour/parts, remaining work and report revision.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Confirm your current identity, permitted company/site, named technician attendance, appointment/work order, exact scope and current report revision. A reviewed DraftEvidence or IssuedReport presentation is required. Read access does not grant response, review or issue authority."
           ],
           "steps": [],
           "rows": [],
@@ -46028,56 +45845,29 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Review the exact technician submission",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Open the report from My Jobs, Service reports or its owned Activity. Check internal review and current restrictions. Present the exact retained HTML. Choose Response concerns and an explicit customer response. Save and obtain the server receipt; follow any owned next action."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Service review & reports · Register / workspace"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "The record shows attendance/internal review, current source applicability and restrictions, exact completion/reviews, controlled files, presentations, response history and owned follow-up. The presentation shows exact customer-safe content; Return to staff review returns keyboard focus to its opener."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Submitted field evidence, findings, labour/parts, remaining work and report revision.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Response concerns is Report content or Attendance facts only. Attendance acknowledgement concerns the named technician’s original attendance in that exact presentation; it does not accept technical work. Accepted, Accepted with reservations, Declined, Unavailable and Disputed remain supported. No response is never acceptance.",
+            "State respondent name and role for an available respondent. Unavailable records an explanation and next action without invented identity or mark. Any optional PNG is a synthetic stated mark, not independently verified identity or legal signature assurance."
           ],
           "steps": [],
           "rows": [],
@@ -46087,13 +45877,10 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Non-Accepted choices require meaningful remarks and an owned next action. Follow-up belongs to the current Service owner with Due date needed until explicitly set through the Activity.",
+            "Use Correct or clarify this response to append a reasoned successor on the same subject/presentation. Original facts and marks remain. Changed report facts require the existing correction, submission, review, issue and fresh response cycle. Never move a mark to changed content or another subject."
           ],
-          "steps": [
-            "Review the exact technician submission",
-            "Resolve unclear evidence and separate follow-up work",
-            "Issue the controlled report through the permitted review workflow"
-          ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
@@ -46101,9 +45888,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "A reviewed report reflects evidence and retained responsibilities.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A completed visit does not mean all customer issues are resolved."
+            "A saved response is a factual receipt only. It does not close an incident, resolve an inspection defect, clear a hold, authorise work, approve billing or complete another domain record.",
+            "Open original owned response action to set owner/due date or record the actual outcome through Activities/My Work. Completion retains the reservation/dispute and links back to the report. The existing work-order return proposal prepares a visit; scheduling acceptance, confirmation, availability and packs remain separate."
           ],
           "steps": [],
           "rows": [],
@@ -46112,45 +45898,19 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Unsaved input, saving, saved, validation failure, stale/conflict and uncertain result have explicit wording. A blank response cannot save. A source, audience or authority change can refuse fresh capture while original records remain.",
+            "An incident hold or inspection failure permits only factual capture about unchanged exact content. Current restrictions are separate from the observed restrictions retained at receipt. Missing context never appears clear."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare submitted field evidence, findings, labour/parts, remaining work and report revision. Follow the task sequence and check that a reviewed report reflects evidence and retained responsibilities. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Service review & reports has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A completed visit does not mean all customer issues are resolved."
+            "A customer acknowledges the technician’s attendance on DraftEvidence, then disputes an IssuedReport finding. These are separate responses. A clarification of the dispute can reuse its open Activity; completing that contact does not rewrite either response or resolve a defect."
           ],
           "steps": [],
           "rows": [],
@@ -46159,45 +45919,20 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "Correct rejected fields without losing other input. For an uncertain online result, retain the tab and use Check original response receipt or Retry unchanged response. Reload first checks the original receipt; it never invents a replacement operation. Closing the tab removes that online recovery copy.",
+            "If source or audience changed, retain the factual input and obtain a fresh reviewed presentation. Historical files remain exact. PDF retrieval does not capture a response."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use labelled controls by keyboard with visible focus; guidance preserves input and returns focus. The exact HTML expands in the native page scroll at 1440/1024/390/320 widths and browser zoom. Physical-device and screen-reader acceptance remain open.",
+            "The existing owner-bound offline workspace supports exact cached draft/issued response capture and explicit replay, including new attendance acknowledgements. It rechecks current permission/source/audience/evidence. Old queued originals retain their original hashes. Corrections use the online history. No offline review, issue, incident operation or background sending is supported."
           ],
           "steps": [],
           "rows": [],
@@ -46207,8 +45942,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "See docs/decisions/field-customer-response.md, docs/contracts/field-customer-response.md, docs/testing/field-customer-response-acceptance.md and the executed evidence index. Retained Service Review & Reports r02 is a proposed reference, not native acceptance."
           ],
           "steps": [],
           "rows": [],
@@ -46218,9 +45952,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft working guidance owned by Dean Fiedler. No accepted native FI-07 mockup is available. Functional evidence, independent visual review, owner acceptance, physical-device/screen-reader testing and deployment remain separate."
           ],
           "steps": [],
           "rows": [],
@@ -50031,7 +49763,8 @@
           "paragraphs": [
             "The activity has a truthful outcome or a current owner and next step.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "An unknown due date is different from an overdue date. Completing an activity does not complete its linked job."
+            "An unknown due date is different from an overdue date. Completing an activity does not complete its linked job.",
+            "FI-07 report follow-ups provide a permitted link back to the original response. Owner/due changes and completion use this Activity’s existing commands and history; completion never rewrites a customer reservation/dispute or closes an incident/inspection defect."
           ],
           "steps": [],
           "rows": [],

@@ -138,6 +138,9 @@ export function responseCommand(id: string, input: unknown) {
     "presented_at",
     "captured_at",
     "signature",
+    "subject",
+    "supersedes_response_id",
+    "correction_reason",
   ]);
   const response = choice(r.response, "response", responseChoices),
     remarks = optionalNarrative(r.remarks, "remarks", 4000),
@@ -164,6 +167,23 @@ export function responseCommand(id: string, input: unknown) {
     captured_at = instant(r.captured_at, "captured_at");
   if (presented_at > captured_at)
     invalid("captured_at", "Capture cannot precede presentation.");
+  // Preserve the exact normalised P09 operation hash for retained originals.
+  // New fields are included only when explicitly supplied, never defaulted
+  // into a schema-1 payload that was queued or accepted before FI-07.
+  const extension: {
+    subject?: "ReportContent" | "AttendanceFacts";
+    supersedes_response_id?: string;
+    correction_reason?: string;
+  } = {};
+  if (r.subject !== undefined)
+    extension.subject = choice(r.subject, "subject", ["ReportContent", "AttendanceFacts"] as const);
+  if (r.supersedes_response_id !== undefined) {
+    extension.supersedes_response_id = uuid(r.supersedes_response_id, "supersedes_response_id");
+    extension.correction_reason = narrative(r.correction_reason, "correction_reason", 2000);
+    if (extension.correction_reason.length < 10)
+      invalid("correction_reason", "Explain the correction or clarification in at least 10 characters.");
+  } else if (r.correction_reason !== undefined)
+    invalid("supersedes_response_id", "Select the original response being corrected.");
   let signature: null | {
     sha256: string;
     byte_count: number;
@@ -216,5 +236,6 @@ export function responseCommand(id: string, input: unknown) {
     presented_at,
     captured_at,
     signature,
+    ...extension,
   };
 }

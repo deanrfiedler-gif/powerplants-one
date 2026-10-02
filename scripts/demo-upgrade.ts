@@ -157,7 +157,11 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // 0056 adds isolated incident storage. Seed 56 grants only the three named
   // local synthetic profiles, never hosted testers; existing rows and revoked
   // grants remain unchanged. Populated upgrade/reseed proof is required.
-  if (latestMigrationVersion !== 56) throw Error("Review the existing-demo upgrade for this release.");
+  // 0057 adds one immutable response-context companion and its exact-binding
+  // trigger. No existing row, identity, template, seed, grant or user changes.
+  // Generic runtime grants cover the companion; invited testers gain no duty.
+  // Populated P09 and hosted-upgrade proofs retain originals and ledger hashes.
+  if (latestMigrationVersion !== 57) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

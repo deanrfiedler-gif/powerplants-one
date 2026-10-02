@@ -19,7 +19,8 @@ import { verifiedAttachmentBytes } from "../field/attachments";
 import { inspectPng } from "../field/media";
 import { visible, envelope } from "../shared/reads";
 import { object, uuid } from "../shared/validation";
-import { activityVisibility } from "../activities/activities";
+import { activityVisibility, visibleActivity } from "../activities/activities";
+import { currentResponseBinding, responseApplicability, responseContextsInstalled } from "./response-context";
 import { crmAvailable } from "../crm/context";
 import {
   reportContext,
@@ -81,6 +82,7 @@ export async function verifyEvidence(
     ).rows[0];
     if (
       !file ||
+      file.access_class !== "RestrictedService" ||
       file.status !== "Available" ||
       file.version !== a.version ||
       file.content_hash !== a.sha256
@@ -625,6 +627,9 @@ export async function recordResponse(p: Principal, id: string, input: unknown) {
     (c) => reportContext(c, p, id, "report.respond"),
     async (c, ctx) => {
       sameVersion(ctx.report.version, cmd.expected_report_version, "report");
+      const extended = await responseContextsInstalled(c);
+      if (!extended && (cmd.subject || cmd.supersedes_response_id))
+        fail("ResponseUpgradeRequired", "This response requires the FI-07 schema. Retain the original input.");
       const v = (
         await c.query(
           "SELECT * FROM ppo.report_presentations WHERE workspace_id=$1 AND report_id=$2 AND id=$3",
@@ -665,8 +670,25 @@ export async function recordResponse(p: Principal, id: string, input: unknown) {
           "ResponseTimeInvalid",
           "Presentation must follow availability and capture must not be in the future.",
         );
+      const current = await currentResponseBinding(c, p, ctx, v.revision_id);
+      await verifyEvidence(c, p, v.revision_id);
       // Verify exact retained presentation bytes on acceptance; metadata is not evidence.
       await presentationBytes(p, id, v.id);
+      let predecessor: { id: string; follow_up_activity_id: string | null; signature_hash: string | null } | null = null;
+      if (cmd.supersedes_response_id) {
+        predecessor = (await c.query(
+          `SELECT r.id,r.follow_up_activity_id,r.signature_hash FROM ppo.customer_responses r
+           LEFT JOIN ppo.customer_response_contexts x ON (x.workspace_id,x.response_id)=(r.workspace_id,r.id)
+           WHERE r.workspace_id=$1 AND r.report_id=$2 AND r.id=$3 AND r.presentation_id=$4
+             AND coalesce(x.subject,'ReportContent')=$5
+             AND NOT EXISTS(SELECT 1 FROM ppo.customer_response_contexts n WHERE n.workspace_id=r.workspace_id AND n.supersedes_response_id=r.id)`,
+          [p.workspace_id,id,cmd.supersedes_response_id,v.id,cmd.subject ?? "ReportContent"],
+        )).rows[0] ?? null;
+        if (!predecessor)
+          fail("ResponseCorrectionConflict", "The original response has changed or does not belong to this exact subject and presentation. Compare its retained history.");
+        if (cmd.signature && cmd.signature.sha256 === predecessor?.signature_hash)
+          fail("SignatureReassociationRefused", "A correction requires a fresh response and optional fresh mark. The original mark stays with its original response.");
+      }
       let signatureKey = null;
       if (cmd.signature) {
         const bytes = Buffer.from(cmd.signature.content_base64, "base64");
@@ -683,14 +705,17 @@ export async function recordResponse(p: Principal, id: string, input: unknown) {
         if (
           (
             await c.query(
-              "SELECT 1 FROM ppo.customer_responses WHERE workspace_id=$1 AND report_id=$2 AND signature_hash=$3 AND presented_hash<>$4",
-              [p.workspace_id, id, cmd.signature.sha256, v.content_hash],
+              extended ? `SELECT 1 FROM ppo.customer_responses r LEFT JOIN ppo.customer_response_contexts x ON (x.workspace_id,x.response_id)=(r.workspace_id,r.id)
+                WHERE r.workspace_id=$1 AND r.report_id=$2 AND r.signature_hash=$3
+                  AND (r.presented_hash<>$4 OR coalesce(x.subject,'ReportContent')<>$5)`
+                : "SELECT 1 FROM ppo.customer_responses WHERE workspace_id=$1 AND report_id=$2 AND signature_hash=$3 AND presented_hash<>$4",
+              extended ? [p.workspace_id, id, cmd.signature.sha256, v.content_hash, cmd.subject ?? "ReportContent"] : [p.workspace_id, id, cmd.signature.sha256, v.content_hash],
             )
           ).rowCount
         )
           fail(
             "SignatureReassociationRefused",
-            "The prior response mark belongs to different presented content. Obtain a new synthetic mark for this revision; no signature transfer is permitted.",
+            "The prior response mark belongs to different presented content or a different response subject. Obtain a fresh synthetic mark; no signature transfer is permitted.",
           );
         const bundle = Buffer.from(
           canonical({
@@ -711,16 +736,28 @@ export async function recordResponse(p: Principal, id: string, input: unknown) {
           signatureKey,
         );
       }
-      const follow =
+      let follow =
         cmd.response !== "Accepted"
-          ? await followUp(
+          ? predecessor?.follow_up_activity_id ?? null
+          : null;
+      if (follow) {
+        const activity = await visibleActivity(c, p, follow);
+        if (!["Open", "InProgress"].includes(activity.status)) follow = null;
+      }
+      if (cmd.response !== "Accepted" && !follow)
+        follow = await followUp(
               c,
               p,
               ctx,
               "CustomerResponse",
-              `${cmd.response}: ${cmd.remarks}. Next: ${cmd.next_action}`,
-            )
-          : null;
+              `${cmd.subject === "AttendanceFacts" ? "Attendance acknowledgement · " : ""}${cmd.response}: ${cmd.remarks}. Next: ${cmd.next_action}`,
+            );
+      // Storage may have taken time. Recheck the current actor, source, audience
+      // and original evidence before publishing the factual receipt.
+      const finalContext = await reportContext(c, p, id, "report.respond");
+      sameVersion(finalContext.report.version, cmd.expected_report_version, "report");
+      const finalBinding = await currentResponseBinding(c, p, finalContext, v.revision_id);
+      await verifyEvidence(c, p, v.revision_id);
       const response = await insert(c, "customer_responses", {
         id: cmd.id,
         workspace_id: p.workspace_id,
@@ -741,6 +778,16 @@ export async function recordResponse(p: Principal, id: string, input: unknown) {
         signature_bytes: cmd.signature?.byte_count ?? null,
         follow_up_activity_id: follow,
       });
+      if (extended) await insert(c, "customer_response_contexts", {
+        workspace_id: p.workspace_id,
+        response_id: response.id,
+        subject: cmd.subject ?? "ReportContent",
+        review_id: current.review.id,
+        supersedes_response_id: cmd.supersedes_response_id ?? null,
+        correction_reason: cmd.correction_reason ?? null,
+        source_binding: finalBinding.binding,
+        restrictions: finalBinding.restrictions,
+      });
       return {
         id: response.id,
         version: 1,
@@ -753,6 +800,8 @@ export async function recordResponse(p: Principal, id: string, input: unknown) {
           presentation_kind: v.kind,
           presented_hash: v.content_hash,
           follow_up_activity_id: follow,
+          subject: cmd.subject ?? "ReportContent",
+          supersedes_response_id: cmd.supersedes_response_id ?? null,
         },
       };
     },
@@ -825,10 +874,19 @@ export async function readReport(
     proofReadPhase("report-responses-start");
     const responses = (
       await c.query(
-        "SELECT id,presentation_id,presented_hash,response,respondent_name,respondent_role,remarks,next_action,presented_at,captured_at,received_at,signature_hash,signature_bytes,follow_up_activity_id FROM ppo.customer_responses WHERE workspace_id=$1 AND report_id=$2 ORDER BY received_at DESC",
+        "SELECT r.id,r.presentation_id,r.presented_hash,r.response,r.respondent_name,r.respondent_role,r.remarks,r.next_action,r.presented_at,r.captured_at,r.received_at,r.signature_hash,r.signature_bytes,r.follow_up_activity_id,r.actor_id,u.display_name AS captured_by FROM ppo.customer_responses r JOIN ppo.users u ON (u.workspace_id,u.id)=(r.workspace_id,r.actor_id) WHERE r.workspace_id=$1 AND r.report_id=$2 ORDER BY r.received_at DESC",
         [p.workspace_id, id],
       )
     ).rows;
+    const responseContexts = await responseContextsInstalled(c) ? (await c.query(
+      "SELECT x.response_id,x.subject,x.review_id,x.supersedes_response_id,x.correction_reason,x.restrictions FROM ppo.customer_response_contexts x JOIN ppo.customer_responses r ON (r.workspace_id,r.id)=(x.workspace_id,x.response_id) WHERE r.workspace_id=$1 AND r.report_id=$2",
+      [p.workspace_id,id],
+    )).rows : [];
+    const attendanceAcceptance = (await c.query(
+      "SELECT attendance_id,review_id,accepted_end_at FROM ppo.attendance_acceptances WHERE workspace_id=$1 AND report_id=$2",
+      [p.workspace_id,id],
+    )).rows[0] ?? null;
+    const applicability = await responseApplicability(c, p, ctx);
     proofReadPhase("report-issues-start");
     const issues = (
       await c.query(
@@ -846,7 +904,7 @@ export async function readReport(
     proofReadPhase("report-follow-ups-start");
     const follow_ups = (
       await c.query(
-        `SELECT a.id,a.summary,a.status,a.owner_id,a.due_needed,u.display_name AS owner_name,f.kind FROM ppo.report_follow_ups f JOIN ppo.activities a ON a.id=f.activity_id JOIN ppo.users u ON u.id=a.owner_id WHERE f.workspace_id=$1 AND f.report_id=$3 AND ${activityVisibility("a", await crmAvailable(c), await leadsAvailable(c))} ORDER BY f.created_at`,
+        `SELECT a.id,a.summary,a.status,a.owner_id,a.due_at,a.due_needed,a.version,u.display_name AS owner_name,f.kind FROM ppo.report_follow_ups f JOIN ppo.activities a ON a.id=f.activity_id JOIN ppo.users u ON u.id=a.owner_id WHERE f.workspace_id=$1 AND f.report_id=$3 AND ${activityVisibility("a", await crmAvailable(c), await leadsAvailable(c))} ORDER BY f.created_at`,
         [p.workspace_id, p.actor_id, id],
       )
     ).rows;
@@ -927,7 +985,9 @@ export async function readReport(
           })),
         })),
         presentations,
-        responses,
+        responses: responses.map(v => ({ ...v, subject: "ReportContent", supersedes_response_id: null, correction_reason: null, restrictions: null, ...responseContexts.find(x => x.response_id === v.id) })),
+        attendance_acceptance: attendanceAcceptance,
+        response_applicability: applicability,
         issues,
         jobs: internal_review ? jobs : [],
         follow_ups,
@@ -989,6 +1049,8 @@ export async function presentationBytes(
   ).rows[0];
   if (!i) throw unavailable();
   const b = await readReportBundle(p, i.manifest);
+  if (digest(b.html) !== v.content_hash || digest(b.html) !== v.html_hash)
+    fail("ExactDocumentUnavailable", "The exact retained presentation is unavailable. Its original reference is retained.");
   return { ...b, manifest: i.manifest, issued_at: i.issued_at as Date };
 }
 

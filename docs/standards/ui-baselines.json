@@ -616,6 +616,36 @@
       "application_proof": "tests/browser/field-incidents.spec.ts",
       "authority": "User-authorised synthetic Service increment; independent visual/owner acceptance pending.",
       "adaptations": "docs/decisions/field-incidents.md"
+    },
+    {
+      "id": "fi07-reports-register",
+      "route": "/service/reports",
+      "scope": "#ppo-reports",
+      "layout": "padded",
+      "scroll_owner": "#main",
+      "design": "docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html",
+      "sha256": "42280f8285591c03455920557bda95620c5e3c1918ccab6b24c6465cb153b810",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r20.html",
+      "shared_sha256": "c68a499e857b1705d47bd6598d4b2e89526bf0861a0d234394c3da023f19b617",
+      "component_proof": "tests/browser/reports.spec.ts",
+      "application_proof": "tests/browser/reports.spec.ts",
+      "authority": "User-authorised bounded synthetic FI-07; independent visual/owner acceptance pending.",
+      "adaptations": "docs/decisions/field-customer-response.md"
+    },
+    {
+      "id": "fi07-reports-record",
+      "route": "/service/reports/[id]",
+      "scope": "#ppo-reports",
+      "layout": "padded",
+      "scroll_owner": "#main",
+      "design": "docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html",
+      "sha256": "42280f8285591c03455920557bda95620c5e3c1918ccab6b24c6465cb153b810",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r20.html",
+      "shared_sha256": "c68a499e857b1705d47bd6598d4b2e89526bf0861a0d234394c3da023f19b617",
+      "component_proof": "tests/browser/reports.spec.ts",
+      "application_proof": "tests/browser/reports.spec.ts",
+      "authority": "User-authorised bounded synthetic FI-07; independent visual/owner acceptance pending.",
+      "adaptations": "docs/decisions/field-customer-response.md"
     }
   ]
 }

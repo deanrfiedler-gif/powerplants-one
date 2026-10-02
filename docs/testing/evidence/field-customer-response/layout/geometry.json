@@ -1,0 +1,92 @@
+{
+  "executed_at": "2026-10-02T06:56:50.487Z",
+  "executed_checkout": "c3d4709baa920146314d6b4c5d9b367f47687574",
+  "executed_tree": "96e1fea524ed0beb27b43509e56c605a152353e6",
+  "compiled_build": "UJXb9SE21VdEKo9tQs7aJ",
+  "geometry": {
+    "innerWidth": 720,
+    "innerHeight": 600,
+    "devicePixelRatio": 2,
+    "scrollWidth": 720
+  },
+  "widths": [
+    {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "owners": [
+        "main"
+      ],
+      "evidence": {
+        "width": 1322,
+        "scrollWidth": 1322,
+        "scrollHeight": 2797,
+        "viewportHeight": 2797
+      },
+      "reachability": {
+        "top": 673.109375,
+        "bottom": 717.109375,
+        "viewport": 1000,
+        "unobscured": true
+      }
+    },
+    {
+      "width": 1024,
+      "scrollWidth": 1024,
+      "owners": [
+        "main"
+      ],
+      "evidence": {
+        "width": 906,
+        "scrollWidth": 906,
+        "scrollHeight": 2869,
+        "viewportHeight": 2869
+      },
+      "reachability": {
+        "top": 672.328125,
+        "bottom": 716.328125,
+        "viewport": 1000,
+        "unobscured": true
+      }
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "owners": [
+        "main"
+      ],
+      "evidence": {
+        "width": 332,
+        "scrollWidth": 332,
+        "scrollHeight": 5049,
+        "viewportHeight": 5049
+      },
+      "reachability": {
+        "top": 366.46875,
+        "bottom": 410.46875,
+        "viewport": 844,
+        "unobscured": true
+      }
+    },
+    {
+      "width": 320,
+      "scrollWidth": 320,
+      "owners": [
+        "main"
+      ],
+      "evidence": {
+        "width": 262,
+        "scrollWidth": 262,
+        "scrollHeight": 6081,
+        "viewportHeight": 6081
+      },
+      "reachability": {
+        "top": 360.0625,
+        "bottom": 415.84375,
+        "viewport": 844,
+        "unobscured": true
+      }
+    }
+  ],
+  "result": "Actual Chrome 200% zoom, guide keyboard/focus return and 1440/1024/390/320 exact presentation geometry",
+  "acceptance": "Physical-device, screen-reader and independent visual/owner acceptance pending"
+}

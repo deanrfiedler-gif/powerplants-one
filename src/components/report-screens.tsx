@@ -1,5 +1,5 @@
 "use client";
-import { useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import {
   api,
@@ -19,6 +19,10 @@ import { responseChoices } from "../reports/validation";
 import { sha256 } from "../offline/protocol";
 import { queue } from "../offline/store";
 import { useIdentity } from "./business-session";
+import { Button } from "./ui/button";
+import { useRecoverableCommand } from "../shared/ui/use-recoverable-command";
+import type { JournalEntry } from "../shared/lib/command-journal";
+import { useUnsavedChanges } from "./record-ui";
 type Report = Awaited<ReturnType<typeof readReport>>["items"][number];
 type Presentation = {
   id: string;
@@ -33,6 +37,7 @@ function Input({
   options,
   multiline = false,
   type = "text",
+  field,
 }: {
   label: string;
   value: string;
@@ -40,6 +45,7 @@ function Input({
   options?: readonly string[];
   multiline?: boolean;
   type?: string;
+  field?: string;
 }) {
   const id = useId();
   return (
@@ -48,18 +54,20 @@ function Input({
       {options ? (
         <select
           id={id}
+          data-validation-field={field}
           value={value}
           onChange={(e) => onChange(e.target.value)}
         >
           {options.map((v) => (
             <option key={v} value={v}>
-              {friendly(v)}
+              {v ? friendly(v) : "Choose an explicit response"}
             </option>
           ))}
         </select>
       ) : multiline ? (
         <textarea
           id={id}
+          data-validation-field={field}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           rows={3}
@@ -67,12 +75,53 @@ function Input({
       ) : (
         <input
           id={id}
+          data-validation-field={field}
           type={type}
           value={value}
           onChange={(e) => onChange(e.target.value)}
         />
       )}
     </div>
+  );
+}
+export function ExactReportPresentation({ html }: { html: string }) {
+  const frame = useRef<HTMLIFrameElement>(null);
+  useEffect(() => {
+    const el = frame.current;
+    let observer: ResizeObserver | undefined;
+    const fit = () => {
+      observer?.disconnect();
+      const body = el?.contentDocument?.body;
+      if (!el || !body) return;
+      const resize = () => {
+        const style = el.contentWindow?.getComputedStyle(body);
+        const height =
+          body.getBoundingClientRect().height +
+          parseFloat(style?.marginTop || "0") +
+          parseFloat(style?.marginBottom || "0");
+        el.style.height = `${Math.ceil(Math.max(360, height)) + 4}px`;
+      };
+      observer = new ResizeObserver(resize);
+      observer.observe(body);
+      resize();
+    };
+    el?.addEventListener("load", fit);
+    fit();
+    return () => {
+      el?.removeEventListener("load", fit);
+      observer?.disconnect();
+    };
+  }, [html]);
+  // Retained renderer bytes only. Scripts, forms, popups and navigation remain
+  // sandboxed; same-origin enables sizing without altering the exact document.
+  return (
+    <iframe
+      ref={frame}
+      title="Exact customer-safe report presentation"
+      sandbox="allow-same-origin"
+      className="report-preview"
+      srcDoc={html}
+    />
   );
 }
 function Synthetic() {
@@ -214,7 +263,7 @@ export function ReportListScreen() {
   >("reports");
   // One main landmark belongs to the shell; these screens are sections within it.
   return (
-    <div className="business-shell report-screen">
+    <div id="ppo-reports" className="business-shell report-screen">
       <RegisterHeading
         title="Service review and reports"
         description="Recent permitted reports from a bounded 200-record window. Older reports remain linked to their original attendance."
@@ -394,19 +443,29 @@ function ResponseForm({
   v,
   presentedAt,
   reload,
+  command: c,
+  correction,
+  onDirty,
 }: {
   r: Report;
   v: Presentation;
   presentedAt: string;
   reload: () => void;
+  command: ReturnType<typeof useRecoverableCommand>;
+  correction?: Report["responses"][number];
+  onDirty: () => void;
 }) {
-  const c = useCommand(),
-    [id] = useState(() => crypto.randomUUID()),
-    [choice, setChoice] = useState("Accepted"),
-    [name, setName] = useState(""),
-    [role, setRole] = useState(""),
-    [remarks, setRemarks] = useState(""),
-    [next, setNext] = useState(""),
+  const [dirty, setDirty] = useState(false);
+  const subjectId = useId();
+  useUnsavedChanges(dirty, !!c.pending);
+  const [id] = useState(() => crypto.randomUUID()),
+    [subject, setSubject] = useState(correction?.subject ?? "ReportContent"),
+    [choice, setChoice] = useState(""),
+    [name, setName] = useState(correction?.respondent_name ?? ""),
+    [role, setRole] = useState(correction?.respondent_role ?? ""),
+    [remarks, setRemarks] = useState(correction?.remarks ?? ""),
+    [next, setNext] = useState(correction?.next_action ?? ""),
+    [correctionReason, setCorrectionReason] = useState(""),
     [captured, setCaptured] = useState(""),
     [signature, setSignature] = useState<null | {
       sha256: string;
@@ -419,145 +478,242 @@ function ResponseForm({
   return (
     <form
       className="business-card"
+      onChange={() => {
+        setDirty(true);
+        onDirty();
+      }}
       onSubmit={async (e) => {
         e.preventDefault();
         if (markLoading || fileError || c.busy) return;
         const capturedAt = captured || new Date().toISOString();
         setCaptured(capturedAt);
         if (
-          await c.send(`reports/${r.id}/respond`, {
+          await c.send(
+            `reports/${r.id}/respond`,
+            {
+              id,
+              presentation_id: v.id,
+              revision_id: v.revision_id,
+              presentation_kind: v.kind,
+              presented_hash: v.content_hash,
+              expected_report_version: r.version,
+              response: choice,
+              respondent_name: choice === "Unavailable" ? null : name,
+              respondent_role: choice === "Unavailable" ? null : role,
+              remarks: remarks || null,
+              next_action: next || null,
+              presented_at: presentedAt,
+              captured_at: capturedAt,
+              signature: choice === "Unavailable" ? null : signature,
+              reason: "Synthetic customer response to exact presented content.",
+              subject,
+              ...(correction
+                ? {
+                    supersedes_response_id: correction.id,
+                    correction_reason: correctionReason,
+                  }
+                : {}),
+            },
+            `/service/reports/${r.id}`,
+            "Customer response",
             id,
-            presentation_id: v.id,
-            revision_id: v.revision_id,
-            presentation_kind: v.kind,
-            presented_hash: v.content_hash,
-            expected_report_version: r.version,
-            response: choice,
-            respondent_name: choice === "Unavailable" ? null : name,
-            respondent_role: choice === "Unavailable" ? null : role,
-            remarks: remarks || null,
-            next_action: next || null,
-            presented_at: presentedAt,
-            captured_at: capturedAt,
-            signature: choice === "Unavailable" ? null : signature,
-            reason: "Synthetic customer response to exact presented content.",
-          })
+          )
         )
           reload();
       }}
     >
       <h2>Record customer response</h2>
-      <p>
-        <strong>{friendly(v.kind)}</strong> · exact content{" "}
-        <code>{v.content_hash}</code>
-      </p>
-      <p>
-        Presentation recorded <Stamp value={presentedAt} />. A fictional name or
-        synthetic mark is not independently verified identity, project
-        acceptance or Finance approval.
-      </p>
-      <Input
-        label="Customer response"
-        value={choice}
-        onChange={(value) => {
-          setChoice(value);
-          if (value === "Unavailable") {
-            markSelection.current++;
-            setSignature(null);
-            setFileError(null);
-            setMarkLoading(false);
-          }
-        }}
-        options={responseChoices}
-      />
-      {choice !== "Unavailable" && (
-        <>
-          <Input
-            label="Stated respondent name (synthetic)"
-            value={name}
-            onChange={setName}
-          />
-          <Input
-            label="Stated respondent role"
-            value={role}
-            onChange={setRole}
-          />
-          <label className="report-field">
-            Optional synthetic signature PNG
-            <input
-              type="file"
-              accept="image/png"
-              onChange={async (e) => {
-                const selection = ++markSelection.current;
-                setFileError(null);
-                setSignature(null);
-                setMarkLoading(true);
-                try {
-                  const f = e.target.files?.[0];
-                  if (!f) return;
-                  if (f.size > 4194304)
-                    throw Error("Choose a PNG no larger than 4 MiB.");
-                  const bytes = new Uint8Array(await f.arrayBuffer());
-                  let text = "";
-                  for (let n = 0; n < bytes.length; n += 32768)
-                    text += String.fromCharCode(
-                      ...bytes.subarray(n, n + 32768),
-                    );
-                  const hash = await sha256(bytes);
-                  if (selection !== markSelection.current) return;
-                  setSignature({
-                    sha256: hash,
-                    byte_count: bytes.length,
-                    content_base64: btoa(text),
-                  });
-                } catch (error) {
-                  if (selection === markSelection.current)
-                    setFileError({ message: (error as Error).message });
-                } finally {
-                  if (selection === markSelection.current)
-                    setMarkLoading(false);
-                }
-              }}
+      <fieldset
+        disabled={c.busy || !!c.pending || !c.ready}
+        className="report-response-fields"
+      >
+        <legend>
+          {correction
+            ? "Correct or clarify the selected response"
+            : "New independent response"}
+        </legend>
+        {correction ? (
+          <p>
+            Original response <code>{correction.id}</code> is retained. This
+            records a successor about the same exact content.
+          </p>
+        ) : null}
+        <div className="report-field">
+          <label htmlFor={subjectId}>Response concerns</label>
+          <select
+            id={subjectId}
+            value={subject}
+            disabled={!!correction}
+            onChange={(e) => {
+              setSubject(e.target.value);
+              setSignature(null);
+              markSelection.current++;
+              setMarkLoading(false);
+              setFileError(null);
+            }}
+          >
+            <option value="ReportContent">Report content</option>
+            <option value="AttendanceFacts">Attendance facts only</option>
+          </select>
+        </div>
+        <p>
+          {subject === "AttendanceFacts"
+            ? "Customer acknowledgement of the named technician’s attendance facts in this exact presentation. This does not accept technical work or the whole report."
+            : "Customer response to the exact report content shown. This is separate from acknowledgement of attendance and internal Service review."}
+        </p>
+        <p>
+          <strong>{friendly(v.kind)}</strong> · exact content{" "}
+          <code>{v.content_hash}</code>
+        </p>
+        <p>
+          Presentation recorded <Stamp value={presentedAt} />. A fictional name
+          or synthetic mark is not independently verified identity, project
+          acceptance or Finance approval.
+        </p>
+        <Input
+          label="Customer response"
+          field="response"
+          value={choice}
+          onChange={(value) => {
+            setChoice(value);
+            if (value === "Unavailable") {
+              markSelection.current++;
+              setSignature(null);
+              setFileError(null);
+              setMarkLoading(false);
+            }
+          }}
+          options={["", ...responseChoices]}
+        />
+        {choice !== "Unavailable" && (
+          <>
+            <Input
+              label="Stated respondent name (synthetic)"
+              field="respondent_name"
+              value={name}
+              onChange={setName}
             />
-          </label>
-        </>
-      )}
-      <Input
-        label={
-          choice === "Unavailable"
-            ? "Unavailable reason"
-            : "Response remarks / reservations"
-        }
-        value={remarks}
-        onChange={setRemarks}
-        multiline
-      />
-      <Input
-        label="Owned next action (required unless accepted)"
-        value={next}
-        onChange={setNext}
-        multiline
-      />
-      <p>Follow-up is assigned to the current service owner.</p>
-      <Input
-        label="Captured at (ISO date with timezone)"
-        value={captured}
-        onChange={setCaptured}
-      />
-      <p>
-        Leave capture time blank to record the first save attempt. An uncertain
-        retry retains that exact time.
+            <Input
+              label="Stated respondent role"
+              field="respondent_role"
+              value={role}
+              onChange={setRole}
+            />
+            <label className="report-field">
+              Optional synthetic signature PNG
+              <input
+                key={subject}
+                type="file"
+                accept="image/png"
+                onChange={async (e) => {
+                  const selection = ++markSelection.current;
+                  setFileError(null);
+                  setSignature(null);
+                  setMarkLoading(true);
+                  try {
+                    const f = e.target.files?.[0];
+                    if (!f) return;
+                    if (f.size > 4194304)
+                      throw Error("Choose a PNG no larger than 4 MiB.");
+                    const bytes = new Uint8Array(await f.arrayBuffer());
+                    let text = "";
+                    for (let n = 0; n < bytes.length; n += 32768)
+                      text += String.fromCharCode(
+                        ...bytes.subarray(n, n + 32768),
+                      );
+                    const hash = await sha256(bytes);
+                    if (selection !== markSelection.current) return;
+                    setSignature({
+                      sha256: hash,
+                      byte_count: bytes.length,
+                      content_base64: btoa(text),
+                    });
+                  } catch (error) {
+                    if (selection === markSelection.current)
+                      setFileError({ message: (error as Error).message });
+                  } finally {
+                    if (selection === markSelection.current)
+                      setMarkLoading(false);
+                  }
+                }}
+              />
+            </label>
+          </>
+        )}
+        <Input
+          field="remarks"
+          label={
+            choice === "Unavailable"
+              ? "Unavailable reason"
+              : "Response remarks / reservations"
+          }
+          value={remarks}
+          onChange={setRemarks}
+          multiline
+        />
+        <Input
+          label="Owned next action (required unless accepted)"
+          field="next_action"
+          value={next}
+          onChange={setNext}
+          multiline
+        />
+        <p>Follow-up is assigned to the current service owner.</p>
+        {correction && (
+          <Input
+            label="Correction or clarification reason"
+            field="correction_reason"
+            value={correctionReason}
+            onChange={setCorrectionReason}
+            multiline
+          />
+        )}
+        <Input
+          label="Captured at (ISO date with timezone)"
+          value={captured}
+          onChange={setCaptured}
+        />
+        <p>
+          Leave capture time blank to record the first save attempt. An
+          uncertain retry retains that exact time.
+        </p>
+        {markLoading && (
+          <p role="status">Checking the selected synthetic PNG…</p>
+        )}
+        <ErrorNotice error={fileError ?? c.error} />
+        <Button
+          type="submit"
+          variant="primary"
+          disabled={
+            c.busy || !!c.pending || !c.ready || !!fileError || markLoading
+          }
+        >
+          Save response to presented content
+        </Button>
+      </fieldset>
+      <p role="status">
+        {c.busy
+          ? "Saving — awaiting the original receipt"
+          : c.pending
+            ? "Uncertain result — recover the unchanged original below"
+            : c.error
+              ? "Not saved — correct the input or compare current source"
+              : "Unsaved response — choose an explicit response before saving"}
       </p>
-      {markLoading && <p role="status">Checking the selected synthetic PNG…</p>}
-      <ErrorNotice error={fileError ?? c.error} />
-      <button disabled={c.busy || !!fileError || markLoading}>
-        Save response to presented content
-      </button>
-      <p role="status">{c.saved}</p>
     </form>
   );
 }
 export function ReportScreen({ id }: { id: string }) {
+  const identity = useIdentity();
+  const responseCommand = useRecoverableCommand({
+    key: `ppo.report-response.${identity.actor_id}.${id}`,
+    scope: identity,
+    accepts: (entry: JournalEntry) =>
+      entry.path === `reports/${id}/respond` &&
+      entry.target === `/service/reports/${id}`,
+    transport: api,
+    journalLimit: 6_000_000,
+  });
   const resource = useResource<Envelope<Report>>(`reports/${id}`),
     r = resource.data?.items[0],
     c = useCommand(),
@@ -568,13 +724,27 @@ export function ReportScreen({ id }: { id: string }) {
       at: string;
       version: number;
       html: string;
+      correction?: Report["responses"][number];
     } | null>(null),
     [error, setError] = useState<unknown>(null);
+  const [responseDirty, setResponseDirty] = useState(false);
   const reload = () => {
+    setResponseDirty(false);
     setShown(null);
     resource.reload();
   };
-  async function preview(v: Presentation) {
+  const presentationOpener = useRef<string>("");
+  const wasShown = useRef(false);
+  useEffect(() => {
+    if (shown) document.getElementById("report-presentation-heading")?.focus();
+    else if (wasShown.current)
+      document.getElementById(presentationOpener.current)?.focus();
+    wasShown.current = !!shown;
+  }, [shown]);
+  async function preview(
+    v: Presentation,
+    correction?: Report["responses"][number],
+  ) {
     try {
       setError(null);
       const res = await fetch(
@@ -588,27 +758,96 @@ export function ReportScreen({ id }: { id: string }) {
           message:
             "The presented bytes differ from the exact report hash. Refresh and recover the original report.",
         };
-      setShown({ v, at: new Date().toISOString(), version: r!.version, html });
+      setShown({
+        v,
+        at: new Date().toISOString(),
+        version: r!.version,
+        html,
+        correction,
+      });
+      setResponseDirty(false);
     } catch (e) {
       setError(e);
     }
   }
-  if (isDenied(error) || isDenied(c.error))
-    return <ErrorNotice error={isDenied(error) ? error : c.error} />;
+  const recovery = (
+    <section className="business-card" aria-label="Customer response recovery">
+      <p role="status">
+        {responseCommand.busy
+          ? "Checking or saving original response…"
+          : responseCommand.pending
+            ? "Uncertain response — original operation retained"
+            : responseCommand.saved || "No unresolved online response"}
+      </p>
+      <p>
+        Unsaved input stays on this page. An uncertain online operation survives
+        reload in this tab; closing the tab removes that recovery copy. Existing
+        offline response capture uses the separate owner-bound offline
+        workspace.
+      </p>
+      {!shown && <ErrorNotice error={responseCommand.error} />}
+      {responseCommand.pending && (
+        <div className="button-row">
+          <Button
+            disabled={responseCommand.busy}
+            onClick={async () => {
+              if (await responseCommand.recover()) reload();
+            }}
+          >
+            Check original response receipt
+          </Button>
+          <Button
+            disabled={responseCommand.busy}
+            onClick={async () => {
+              if (await responseCommand.retry()) reload();
+            }}
+          >
+            Retry unchanged response
+          </Button>
+        </div>
+      )}
+    </section>
+  );
+  if (isDenied(error) || isDenied(c.error) || isDenied(responseCommand.error))
+    return (
+      <ErrorNotice
+        error={
+          isDenied(error)
+            ? error
+            : isDenied(c.error)
+              ? c.error
+              : responseCommand.error
+        }
+      />
+    );
   if (r && shown)
     return (
-      <div className="business-shell report-screen">
-        <h1>Customer report presentation</h1>
+      <div id="ppo-reports" className="business-shell report-screen">
+        <h1 id="report-presentation-heading" tabIndex={-1}>
+          Customer report presentation
+        </h1>
         <Synthetic />
-        <button className="secondary" onClick={() => setShown(null)}>
+        <Button
+          disabled={responseCommand.busy || !!responseCommand.pending}
+          onClick={() => {
+            if (
+              responseDirty &&
+              !window.confirm(
+                "Return to staff review and discard this unsaved response?",
+              )
+            )
+              return;
+            setShown(null);
+          }}
+        >
           Return to staff review
-        </button>
-        <iframe
-          title="Exact customer-safe report presentation"
-          sandbox=""
-          className="report-preview"
-          srcDoc={shown.html}
-        />
+        </Button>
+        <ExactReportPresentation html={shown.html} />
+        <p>
+          Current context: {friendly(r.response_applicability.state)}. This
+          retained presentation and any factual response grant no new work
+          authority or technical clearance.
+        </p>
         {r.can_respond &&
         shown.v.revision_id === r.revisions[0].id &&
         ["Reviewed", "Issued"].includes(r.status) ? (
@@ -618,6 +857,9 @@ export function ReportScreen({ id }: { id: string }) {
             v={shown.v}
             presentedAt={shown.at}
             reload={reload}
+            command={responseCommand}
+            correction={shown.correction}
+            onDirty={() => setResponseDirty(true)}
           />
         ) : (
           <p>
@@ -625,10 +867,11 @@ export function ReportScreen({ id }: { id: string }) {
             cannot be transferred to a successor.
           </p>
         )}
+        {recovery}
       </div>
     );
   return (
-    <div className="business-shell report-screen">
+    <div id="ppo-reports" className="business-shell report-screen">
       <Link href="/service/reports">All service reports</Link>
       <h1>{r?.reference ?? "Service report"}</h1>
       <Synthetic />
@@ -656,9 +899,9 @@ export function ReportScreen({ id }: { id: string }) {
               Visit: <strong>{friendly(r.appointment.status)}</strong> · This
               technician’s attendance:{" "}
               <strong>
-                {r.reviews.some((review) => review.decision === "Approved")
-                  ? "Accepted"
-                  : "Awaiting accepted review"}
+                {r.attendance_acceptance
+                  ? "Internally accepted by Service review"
+                  : "Awaiting internal Service acceptance"}
               </strong>{" "}
               · Work order: {r.work_order.status} · Finance: {r.finance_state}
             </p>
@@ -676,6 +919,60 @@ export function ReportScreen({ id }: { id: string }) {
               It is not a confirmed booking.
             </p>
           </section>
+          <section
+            className="business-card"
+            aria-label="Attendance and current response context"
+          >
+            <h2>Attendance, customer response and current restrictions</h2>
+            <p>
+              {r.revisions[0].snapshot.customer.name} ·{" "}
+              {r.revisions[0].snapshot.site.name} ·{" "}
+              {r.revisions[0].snapshot.attendance.name}
+            </p>
+            <p>
+              Actual attendance{" "}
+              <code>{r.revisions[0].snapshot.attendance.id}</code> ·{" "}
+              <Stamp value={r.revisions[0].snapshot.attendance.start_at} /> to{" "}
+              <Stamp value={r.revisions[0].snapshot.attendance.end_at} />
+            </p>
+            <p>
+              Exact scope{" "}
+              <code>
+                {r.revisions[0].snapshot.attendance.scope_revision_id}
+              </code>
+              . Customer acknowledgement is separate from internal acceptance
+              and report-content response.
+            </p>
+            <p>
+              <strong>{friendly(r.response_applicability.state)}</strong> ·{" "}
+              {r.response_applicability.message}
+            </p>
+            {r.response_applicability.restrictions ? (
+              <p>
+                Incident:{" "}
+                {friendly(r.response_applicability.restrictions.incident)} ·
+                Inspection:{" "}
+                {friendly(r.response_applicability.restrictions.inspection)} ·
+                Readiness:{" "}
+                {friendly(r.response_applicability.restrictions.readiness)}
+              </p>
+            ) : (
+              <p>Current technical context is not established here.</p>
+            )}
+            <p>
+              Recording a factual response never clears a hold or defect,
+              permits work, completes another record or approves Finance.
+              Independent scheduling, inspection and incident controls remain in
+              force.
+            </p>
+            {!r.responses.some((x) => x.subject === "AttendanceFacts") && (
+              <p>No customer attendance acknowledgement recorded.</p>
+            )}
+            {!r.responses.some((x) => x.subject === "ReportContent") && (
+              <p>No report-content response recorded.</p>
+            )}
+          </section>
+          {recovery}
           <section className="business-card">
             <h2>Exact submitted completion</h2>
             <p>
@@ -851,9 +1148,40 @@ export function ReportScreen({ id }: { id: string }) {
                     : "prior revision retained"}
                 </h3>
                 <p className="report-hash">{v.content_hash}</p>
-                <button onClick={() => void preview(v)}>
+                <p>
+                  Attendance acknowledgement:{" "}
+                  {r.responses.some(
+                    (x) =>
+                      x.presentation_id === v.id &&
+                      x.subject === "AttendanceFacts",
+                  )
+                    ? "recorded for this exact presentation"
+                    : "no response yet"}
+                  . Report-content response:{" "}
+                  {r.responses.some(
+                    (x) =>
+                      x.presentation_id === v.id &&
+                      x.subject === "ReportContent",
+                  )
+                    ? "recorded for this exact presentation"
+                    : "no response yet"}
+                  .
+                </p>
+                {v.kind === "DraftEvidence" && (
+                  <p>
+                    A response to this draft never becomes a response to an
+                    issued report.
+                  </p>
+                )}
+                <Button
+                  id={`present-${v.id}`}
+                  onClick={(e) => {
+                    presentationOpener.current = e.currentTarget.id;
+                    void preview(v);
+                  }}
+                >
                   Present {friendly(v.kind)}
-                </button>
+                </Button>
                 {v.kind === "IssuedReport" && (
                   <a
                     href={`/api/v1/reports/${id}/pdf?presentation_id=${v.id}`}
@@ -871,42 +1199,106 @@ export function ReportScreen({ id }: { id: string }) {
             {r.responses.length === 0 && (
               <p>No response has been accepted by the server.</p>
             )}
-            {r.responses.map(
-              (v: {
-                id: string;
-                response: string;
-                respondent_name: string | null;
-                remarks: string | null;
-                next_action: string | null;
-                presented_hash: string;
-                received_at: string;
-                signature_hash: string | null;
-              }) => (
-                <article key={v.id}>
-                  <h3>
-                    {friendly(v.response)} ·{" "}
-                    {v.respondent_name ?? "No respondent available"}
-                  </h3>
-                  <p>{v.remarks}</p>
-                  <p>{v.next_action}</p>
-                  <p className="report-hash">
-                    Bound content: {v.presented_hash}
-                  </p>
+            {r.responses.map((v) => (
+              <article key={v.id}>
+                <p>
+                  <strong>
+                    {v.subject === "AttendanceFacts"
+                      ? "Customer attendance acknowledgement"
+                      : "Report-content response"}
+                  </strong>{" "}
+                  · <code>{v.id}</code>
+                </p>
+                <h3>
+                  {friendly(v.response)} ·{" "}
+                  {v.respondent_name ?? "No respondent available"}
+                </h3>
+                <p>{v.remarks}</p>
+                <p>{v.next_action}</p>
+                <p>
+                  Stated role: {v.respondent_role ?? "No respondent"} · Captured
+                  by: {v.captured_by}
+                </p>
+                <p>
+                  Presented <Stamp value={v.presented_at} /> · Captured{" "}
+                  <Stamp value={v.captured_at} />
+                </p>
+                <p>
+                  {friendly(
+                    r.presentations.find((p) => p.id === v.presentation_id)
+                      ?.kind ?? "Unavailable",
+                  )}{" "}
+                  · Presentation <code>{v.presentation_id}</code>
+                </p>
+                <p>
+                  {r.presentations.find((p) => p.id === v.presentation_id)
+                    ?.revision_id === r.revisions[0].id &&
+                  ["Reviewed", "Issued"].includes(r.status)
+                    ? "Response concerns the current report revision; current applicability is separate."
+                    : "Historical response; no transfer to current or successor content."}
+                </p>
+                {v.supersedes_response_id && (
                   <p>
-                    Server received <Stamp value={v.received_at} />
+                    Corrects / clarifies <code>{v.supersedes_response_id}</code>
+                    : {v.correction_reason}
                   </p>
-                  {v.signature_hash && (
-                    <a
-                      href={`/api/v1/customer-responses/${v.id}/signature`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      View protected original synthetic mark
-                    </a>
+                )}
+                {r.responses.some((x) => x.supersedes_response_id === v.id) && (
+                  <p>Retained original with an explicit successor response.</p>
+                )}
+                {v.restrictions && (
+                  <p>
+                    At receipt — Incident: {friendly(v.restrictions.incident)} ·
+                    Inspection: {friendly(v.restrictions.inspection)} ·
+                    Readiness: {friendly(v.restrictions.readiness)}. No
+                    clearance granted.
+                  </p>
+                )}
+                {v.follow_up_activity_id &&
+                  r.follow_ups.some(
+                    (f) => f.id === v.follow_up_activity_id,
+                  ) && (
+                    <p>
+                      <Link href={`/work/${v.follow_up_activity_id}`}>
+                        Open original owned response action
+                      </Link>
+                    </p>
                   )}
-                </article>
-              ),
-            )}
+                <p className="report-hash">Bound content: {v.presented_hash}</p>
+                <p>
+                  Server received <Stamp value={v.received_at} />
+                </p>
+                {v.signature_hash && (
+                  <a
+                    href={`/api/v1/customer-responses/${v.id}/signature`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    View protected original synthetic mark
+                  </a>
+                )}
+                {r.can_respond &&
+                  !r.responses.some((x) => x.supersedes_response_id === v.id) &&
+                  ["Reviewed", "Issued"].includes(r.status) &&
+                  r.presentations.find((p) => p.id === v.presentation_id)
+                    ?.revision_id === r.revisions[0].id && (
+                    <Button
+                      id={`correct-${v.id}`}
+                      onClick={(e) => {
+                        const presentation = r.presentations.find(
+                          (p) => p.id === v.presentation_id,
+                        );
+                        if (presentation) {
+                          presentationOpener.current = e.currentTarget.id;
+                          void preview(presentation, v);
+                        }
+                      }}
+                    >
+                      Correct or clarify this response
+                    </Button>
+                  )}
+              </article>
+            ))}
           </section>
           {r.can_amend && ["Reviewed", "Issued"].includes(r.status) && (
             <section className="business-card">
@@ -948,11 +1340,19 @@ export function ReportScreen({ id }: { id: string }) {
                 summary: string;
                 owner_name: string;
                 status: string;
+                due_at: string | null;
+                due_needed: boolean;
               }) => (
                 <p key={f.id}>
                   <Link href={`/work/${f.id}`}>{f.summary}</Link>
                   <br />
                   {f.owner_name} · {f.status}
+                  {" · "}
+                  {f.due_needed ? (
+                    "Due date needed"
+                  ) : (
+                    <Stamp value={f.due_at} />
+                  )}
                 </p>
               ),
             )}

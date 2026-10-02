@@ -40,3 +40,18 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 The draft User Guide `guide.page.service.reports.id` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+
+## FI-07 native contract and conformance
+
+Scope FI-07 remains Customer attendance and report response. r20 Register / worklist is the discovery type; report detail is Document & evidence workspace with supporting Record detail and Form / guided workflow. Runtime module-workspaces and ui-baselines declare padded layout, #ppo-reports and shell #main scroll ownership.
+
+The original report, actual technician attendance, company/site, work order/appointment, exact scope, reviewed audience, revision and presentation remain identifiable. Internal attendance acceptance is labelled separately from customer attendance acknowledgement and report-content response. Empty response remains unsaved. Historical and successor responses show their exact presentation, original stated identity/role, capturing actor, times, qualification and explicit predecessor; issued files remain separately retrievable.
+
+Incoming: P07 actual attendance/completion, P09 exact review/audience/presentation/issue, FI-03/FI-04 inspection findings, readiness/FI-05 and FI-06 holds. Outgoing: immutable response/clarification; permitted Activity with actual owner/due/outcome and reverse source link; existing work-order visit proposal. Customer response grants no work, inspection, incident, scheduling or Finance authority.
+
+Reused components: existing shell/information-icon mapping, shared Button from src/components/ui/button.tsx, ReadState/ErrorNotice, Stamp, recoverable-command journal and ExactReportPresentation. New response/recovery buttons retain shared variants; legacy review/issue controls remain a scoped exception. The exact HTML frame expands without changing retained bytes. Long hashes and fields wrap, with the same decisions at 1440/1024/390/320 CSS px and actual 200% zoom. Heading/validation focus, return to the presentation opener and guide return are observable requirements.
+
+Proposed departures from retained Service Review & Reports r02: preserve DraftEvidence and IssuedReport; add explicit attendance-facts subject, append-only correction and receipt recovery; retain in-flow original evidence/history rather than copying demonstration persistence or issued-only controls. The application uses the existing 8px card token where r20 proposes 7px. No accepted native FI-07 desktop or phone mockup exists. Source/native captures are technical comparison evidence, not owner visual acceptance.
+
+See [decision](../../../decisions/field-customer-response.md), [acceptance matrix](../../../testing/field-customer-response-acceptance.md) and [executed evidence](../../../testing/evidence/field-customer-response/README.md). Visual review, physical-device/screen-reader acceptance and deployment remain separate; no review fingerprint is assigned.

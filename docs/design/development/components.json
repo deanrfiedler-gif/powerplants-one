@@ -78,6 +78,11 @@
           "id": "fi06-host",
           "label": "FI-06 host",
           "description": "Saved, dirty, conflict, uncertain, restricted and reopened fixtures in tests/browser/field-incidents.spec.ts; no isolated incident renderer."
+        },
+        {
+          "id": "fi07-host",
+          "label": "FI-07 response host",
+          "description": "tests/browser/reports.spec.ts: explicit empty response, correctable validation, exact presentation focus return, uncertain original receipt, saved history and owned clarification. Host fixture, not isolated catalogue state."
         }
       ],
       "implementation": [
@@ -175,7 +180,10 @@
         "scope:FI-06",
         "route:/service/incidents/[id]",
         "route:/service/incidents/new",
-        "route:/service/incidents"
+        "route:/service/incidents",
+        "scope:FI-07",
+        "route:/service/reports",
+        "route:/service/reports/[id]"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -219,6 +227,14 @@
           "expected": "Independent desktop/phone acceptance of native incident consumers.",
           "actual": "Proposed reference adapted to current shell; owner acceptance pending.",
           "action": "Inspect source/native captures, keyboard and actual zoom evidence.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-fi07",
+          "expected": "Review exact response host at desktop/phone and actual 200% zoom.",
+          "actual": "Shared controls adopted for new response/recovery controls. Legacy Service review/issue controls remain a scoped exception.",
+          "action": "Review recorded FI-07 evidence with owner, physical device and screen reader.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1010,6 +1026,11 @@
           "id": "fi06-host",
           "label": "FI-06 host",
           "description": "Saved, dirty, conflict, uncertain, restricted and reopened fixtures in tests/browser/field-incidents.spec.ts; no isolated incident renderer."
+        },
+        {
+          "id": "fi07-host",
+          "label": "FI-07 response host",
+          "description": "tests/browser/reports.spec.ts: explicit empty response, correctable validation, exact presentation focus return, uncertain original receipt, saved history and owned clarification. Host fixture, not isolated catalogue state."
         }
       ],
       "implementation": [
@@ -1069,7 +1090,10 @@
         "scope:FI-06",
         "route:/service/incidents/[id]",
         "route:/service/incidents/new",
-        "route:/service/incidents"
+        "route:/service/incidents",
+        "scope:FI-07",
+        "route:/service/reports",
+        "route:/service/reports/[id]"
       ],
       "desktop": "Submit an empty title to focus the summary, then follow its link to the field. Correct the title and save to clear the example error.",
       "mobile": "Summary and inline errors must remain visible at 320 px and 200% zoom.",
@@ -1105,6 +1129,14 @@
           "expected": "Independent desktop/phone acceptance of native incident consumers.",
           "actual": "Proposed reference adapted to current shell; owner acceptance pending.",
           "action": "Inspect source/native captures, keyboard and actual zoom evidence.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "validation-fi07",
+          "expected": "Review exact response host at desktop/phone and actual 200% zoom.",
+          "actual": "Shared controls adopted for new response/recovery controls. Legacy Service review/issue controls remain a scoped exception.",
+          "action": "Review recorded FI-07 evidence with owner, physical device and screen reader.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1456,6 +1488,11 @@
           "id": "fi06-host",
           "label": "FI-06 host",
           "description": "Saved, dirty, conflict, uncertain, restricted and reopened fixtures in tests/browser/field-incidents.spec.ts; no isolated incident renderer."
+        },
+        {
+          "id": "fi07-host",
+          "label": "FI-07 response host",
+          "description": "tests/browser/reports.spec.ts: explicit empty response, correctable validation, exact presentation focus return, uncertain original receipt, saved history and owned clarification. Host fixture, not isolated catalogue state."
         }
       ],
       "implementation": [
@@ -1539,7 +1576,10 @@
         "scope:FI-06",
         "route:/service/incidents/[id]",
         "route:/service/incidents/new",
-        "route:/service/incidents"
+        "route:/service/incidents",
+        "scope:FI-07",
+        "route:/service/reports",
+        "route:/service/reports/[id]"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -1599,6 +1639,14 @@
           "expected": "Independent desktop/phone acceptance of native incident consumers.",
           "actual": "Proposed reference adapted to current shell; owner acceptance pending.",
           "action": "Inspect source/native captures, keyboard and actual zoom evidence.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "read-state-fi07",
+          "expected": "Review exact response host at desktop/phone and actual 200% zoom.",
+          "actual": "Shared controls adopted for new response/recovery controls. Legacy Service review/issue controls remain a scoped exception.",
+          "action": "Review recorded FI-07 evidence with owner, physical device and screen reader.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2802,6 +2850,85 @@
           "expected": "Accepted native desktop/phone compositions.",
           "actual": "Native FI-06 host uses proposed Quality reference; accepted images missing.",
           "action": "Review compiled captures and states independently before adopting a baseline.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "field-customer-response",
+      "title": "Exact attendance acknowledgement and report response",
+      "category": "Forms",
+      "module": "FI",
+      "purpose": "Separate actual attendance/internal acceptance, customer acknowledgement, exact report response and owned work.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "no-response",
+          "label": "No response",
+          "description": "No inferred acceptance."
+        },
+        {
+          "id": "presentation",
+          "label": "Exact presentation",
+          "description": "Immutable customer-safe HTML, independently sized without changing bytes."
+        },
+        {
+          "id": "correction",
+          "label": "Explicit correction",
+          "description": "Same subject/content predecessor retained."
+        },
+        {
+          "id": "recovery",
+          "label": "Original recovery",
+          "description": "Same-tab journal and existing owner-bound offline queue are separate."
+        },
+        {
+          "id": "restricted",
+          "label": "Current restrictions",
+          "description": "No incident details or clearance implied."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/report-screens.tsx",
+          "symbol": "ExactReportPresentation"
+        }
+      ],
+      "dependencies": [
+        "src/components/report-screens.tsx",
+        "src/reports/service.ts",
+        "src/reports/response-context.ts",
+        "src/reports/validation.ts",
+        "src/shared/ui/use-recoverable-command.ts",
+        "src/offline/app.ts",
+        "docs/decisions/field-customer-response.md",
+        "docs/testing/evidence/field-customer-response/README.md"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html",
+        "anchor": "",
+        "status": "Proposed retained reference; native acceptance pending"
+      },
+      "specification": "docs/design/development/components/field-customer-response.md",
+      "used_on": [
+        "scope:FI-07",
+        "route:/service/reports",
+        "route:/service/reports/[id]"
+      ],
+      "desktop": "One shell #main scroll owner, long exact HTML and wrapped identities.",
+      "mobile": "390/320 CSS px and 200% actual zoom; labelled explicit response fields; original bytes unchanged.",
+      "keyboard": "Heading focus on presentation, Return focus to opener, validation focus and shared buttons.",
+      "limitations": "Native host requires permitted reviewed synthetic attendance. No isolated fixture, authenticated customer portal or signature assurance. Legacy review/issue controls remain scoped exceptions.",
+      "gaps": [
+        {
+          "id": "fi07-native-acceptance",
+          "expected": "Accepted native report-response composition and physical/device evidence.",
+          "actual": "Retained r02 is proposed and issued-only; native supports both existing presentation modes with explicit attendance subject.",
+          "action": "Owner review of adaptations; physical-device, screen-reader and independent visual acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

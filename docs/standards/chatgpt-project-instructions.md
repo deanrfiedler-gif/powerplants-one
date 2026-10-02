@@ -8,7 +8,7 @@ Public repo, private demo; other projects’ naming, IDs and gates do not govern
 
 ## 2. Scope and delivery
 
-Preserve seven domains: Sales (CRM); Estimating & Quotation; Engineering & Design Control; Projects & Commercial Delivery; Service Operations; Supply Chain; Finance & Commercial Controls. Reuse shared customers, contacts, sites, equipment, documents, identity, activity, audit and reporting.
+Preserve BP-01’s seven domains and shared customers, contacts, sites, equipment, documents, identity, activity, audit and reporting.
 
 Test handovers and exceptions. Roles remain proposed.
 
@@ -74,7 +74,7 @@ Repository work grants no paid-service, deployment, access, live-transaction, mi
 
 Run foundation/prototype/naming checks; test authority, conflicts, replay, integrity and reconciliation. Inspect screens; retain source/environment. Separate decisions, proof, acceptance and deployment.
 
-ES-01–10/Excel: estimating-native-programme.md and estimating-programme-handover.md. Preserve ES-02 exact costs, PJ-09 close/reopen and ES-03 exact bindings (estimating-cost-sources.md). ES-02 families: es02-design-board.md; P2–P9 proposed. ES-01 board: es01-design-board.md; P1–P9 decided. ES-08: WP-G00 before D1–D15/DEC-R1/R2. No implied migration allocation, engineering approval or deployment. Retain CI lanes (ci-retained-suite-isolation.md).
+ES-01–10/Excel: estimating-native-programme.md and estimating-programme-handover.md. Preserve ES-02 exact costs, PJ-09 close/reopen and ES-03 exact bindings (estimating-cost-sources.md). ES-02 families: es02-design-board.md; P2–P9 proposed. ES-01 board: es01-design-board.md; P1–P9 decided. ES-08: WP-G00 before D1–D15/DEC-R1/R2. No implied migration allocation, engineering approval or deployment. CI: ci-retained-suite-isolation.md.
 
 Mail: preserve private mailboxes and body separation (demo-email-crm-integration.md); CI is not Outlook acceptance. SH-01–06: docs/delivery/sh-platform-handover.md; teams/DK/delivery pending.
 
@@ -82,7 +82,7 @@ CS: follow ADR-0042 and cs-native-completion-handover.md. Preserve CS-05 identit
 
 Fertigation: follow `docs/delivery/priva-fertigation-native-handover.md`. Preserve exact scopes, neutral context and unverified supplier conclusions. Merge/deployment need separate authorisation.
 
-Scheduling: scheduling-policy-publication.md. Bind exact policy/head, immutable proposals, complete reviews and distinct publication duties. Recover originals; use typed Activity links. Preserve pins/reservations. Holds govern readiness/Start, including offline Start. Resolution needs controlled change/cancellation/replacement and fresh evidence; acknowledgement/Activity completion cannot clear it. Rollback needs Step 4 enforcement/parsers. Step 6 records PT-28 synthetic pass and continuous PT-30; owner/prior-case acceptance stays open. Retain #330, installed SQL and reserved 0051/0052.
+Scheduling: scheduling-policy-publication.md. Bind exact policy/head, immutable proposals, complete reviews and distinct publication duties. Recover originals; use typed Activity links. Preserve pins/reservations. Holds govern readiness/Start, including offline Start. Resolution needs controlled change/cancellation/replacement and fresh evidence; acknowledgement/Activity completion cannot clear it. Rollback needs Step 4 enforcement/parsers. Step 6 records PT-28 synthetic pass and continuous PT-30; human acceptance remains open. Retain #330, installed SQL and reserved 0051/0052.
 
 Sales CR-01–05: follow ADR-0046 and sales-native-completion-handover.md. Preserve frozen submissions, immutable Won due, source-scoped receipts and aftercare unknown policies. Receiving creates no downstream work.
 
@@ -91,4 +91,6 @@ Equipment: ADR-0045 / equipment-native-completion-handover.md. Reuse Assets, CS,
 SC-01–10: BP-08 / ADR-0049. Separate stock observations, custody, consumption, transactions and restricted credits. Live ERP: Not configured. Retain SC-08 source/hash warnings; SC-10 evidence is not owner acceptance.
 FI: field-quality-native-handover.md. FI-05 reuses CS-06; induction needs a Person link. Acknowledgement grants no work authority.
 
-FI-03/04: service-inspections.md; exact bindings, owned defects, fresh retests and independent release. FI-06: field-incidents.md; separate incidents, Activities, defects and holds. Independent closure clears only its blocker; reopen/source change preserves output. Both online-only; no operating policy.
+FI-03/04: service-inspections.md; exact bindings, owned defects, fresh retests and independent release. FI-06: field-incidents.md; separate incidents, Activities, defects and holds. Closure clears only its blocker; reopen/source change preserves output. Both online-only; no operating policy.
+
+FI-07: field-customer-response.md separates attendance acknowledgement, exact response and internal review; preserves P09 modes/offline originals; grants no work/technical/Finance authority.

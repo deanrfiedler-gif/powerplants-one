@@ -178,3 +178,21 @@ export async function recipient(
     throw unavailable();
   return { id, name: person.display_name, version: person.version };
 }
+
+// Activity permission alone never discloses a report. Keep the reverse handover
+// stable and minimal, and recheck report scope before returning its destination.
+export async function activityReportSource(c: QueryClient, p: Principal, activityId: string) {
+  if (!(await c.query("SELECT to_regclass('ppo.report_follow_ups') AS storage")).rows[0].storage) return null;
+  const link = (await c.query(
+    "SELECT report_id FROM ppo.report_follow_ups WHERE workspace_id=$1 AND activity_id=$2 LIMIT 1",
+    [p.workspace_id, activityId],
+  )).rows[0];
+  if (!link) return null;
+  try {
+    await reportContext(c, p, link.report_id);
+    return { href: `/service/reports/${link.report_id}` };
+  } catch (e) {
+    if (!(e instanceof AppError) || ![403,404].includes(e.status)) throw e;
+    return null;
+  }
+}
