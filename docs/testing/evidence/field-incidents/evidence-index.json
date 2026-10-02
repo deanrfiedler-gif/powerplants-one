@@ -143,6 +143,11 @@
       "sha256": "aff27e0020abf48729a8a70af244dda768dbb2daa04f1e0c8e0ed3867051f4af"
     },
     {
+      "file": "ci-demo-failure-01.txt",
+      "bytes": 45480,
+      "sha256": "907e74ee13ff3b1d6b560a567d40826770e7203cd6b9f16300fd3d842fb3a62d"
+    },
+    {
       "file": "focus-initdb.txt",
       "bytes": 1062,
       "sha256": "278d1bd4527d5c0eadd8e24117ac6eb3480a6c5a35fafd79aeacc18b2e5b270b"
