@@ -1,0 +1,36 @@
+{
+  "base": "4ecef7f1820a269a2ec69d55859e66dea8c37989",
+  "branch": "codex/field-incidents",
+  "runtime_trees": {
+    "src": "d43aae11f97bc9998ca2a4af59df058a892b4977",
+    "db": "d3ca32ab47e5bafd0d6f00772bb6b2d43868d015",
+    "scripts": "ef4344207821c715b62701e79bbbac65f89ae75c",
+    "tests": "d8582afeef9e77b4e6a41e3cb94dc6a5437ad495"
+  },
+  "build_id": "AeYSVMnsm8P5WGqr_9cEb",
+  "node": "v24.21.0",
+  "npm": "11.19.0",
+  "postgres": "16.15",
+  "browser": "Chrome 154.0.8037.93",
+  "playwright": "1.63.0",
+  "package_lock_blob": "d5b275c33cf83e5dc0fb61dd9ca4346066c7ee60",
+  "migration_0056_sha256": "aac258eba0f4051399a913966d8ae55636d6530bd1e2633f7f9ff51ea54824b6",
+  "seed_0056_sha256": "f1e38450e00f91b3065b8ccb4dd9dc2fd21e686a1cf953224881099c6128fe9d",
+  "note": "Compiled src/db/scripts trees are exact. The follow-up test-only commit isolates browser dates; it changes no runtime source. Documentation and captures are separate. Installed SQL/seed bytes through 0055 and the dependency lockfile are unchanged. The final zoom proof tool adds settled register/capture screenshots and uses viewport screenshots at real 200% zoom; its exact bytes are identified separately.",
+  "implementation_commit": "dc72d1fbe0f32973a952c5dabea9b3de79d5a29a",
+  "verification_source_commit": "39799442bee60cef453ae8886835206badc57c99",
+  "verification_tool_sha256": {
+    "scripts\\field-incidents-restart-proof.ts": "046a7ed513d13dc75004b8effd5e9de2ce5cc85fe7a88e4a03429f5dfdd9a628",
+    "scripts\\field-incidents-zoom-proof.ts": "5744f618e1b67655693d9b30a9a3f0bc3f0c963094d41e9397d234ed3659ac4f"
+  },
+  "retained_references": [
+    {
+      "path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
+      "sha256": "7f0e7531c2f4b8d592e4e269225d45da0d870db4361879465149164eb4cf9db3"
+    },
+    {
+      "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r20.html",
+      "sha256": "c68a499e857b1705d47bd6598d4b2e89526bf0861a0d234394c3da023f19b617"
+    }
+  ]
+}

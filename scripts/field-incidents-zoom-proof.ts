@@ -54,7 +54,6 @@ try {
   await expect(guide).toBeFocused();
   await page.screenshot({
     path: join(root, "zoom-record.png"),
-    fullPage: true,
   });
   await settings.locator("#zoomLevel").selectOption("1");
   const widths = [];
@@ -89,6 +88,48 @@ try {
       .scrollIntoViewIfNeeded();
     await page.screenshot({ path: join(root, `evidence-${width}.png`) });
     widths.push(view);
+  }
+  for (const surface of ["register", "capture"]) {
+    await page.goto(
+      config.origin +
+        (surface === "register"
+          ? "/service/incidents"
+          : `/service/incidents/new?appointment_id=${proof.journey.appointment}`),
+    );
+    if (surface === "register") {
+      await expect(
+        page.locator(`a[href="/service/incidents/${proof.journey.incident}"]`),
+      ).toBeVisible();
+    } else {
+      await page
+        .getByRole("combobox", {
+          name: "Exact affected scope and equipment",
+          exact: true,
+        })
+        .selectOption({ index: 1 });
+      await expect(
+        page.getByRole("button", { name: "Save incident draft", exact: true }),
+      ).toBeEnabled();
+    }
+    for (const width of [1440, 1024, 390, 320]) {
+      await page.setViewportSize({ width, height: width < 600 ? 844 : 1000 });
+      await page.locator("#main").evaluate((e) => {
+        e.scrollTop = 0;
+      });
+      assert.equal(
+        await page.evaluate(() => document.documentElement.scrollWidth),
+        width,
+      );
+      await page.screenshot({ path: join(root, `${surface}-${width}.png`) });
+      if (surface === "capture") {
+        await page
+          .getByLabel("Operational summary", { exact: true })
+          .scrollIntoViewIfNeeded();
+        await page.screenshot({
+          path: join(root, `capture-fields-${width}.png`),
+        });
+      }
+    }
   }
   const outputPage = await context.newPage();
   await outputPage.setViewportSize({ width: 1440, height: 1000 });

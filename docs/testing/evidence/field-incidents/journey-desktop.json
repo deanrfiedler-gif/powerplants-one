@@ -1,0 +1,9 @@
+{
+  "appointment": "1c93ec45-4a4e-4eef-9f8e-d4dea3adf8fc",
+  "incident": "77f173a4-d6e3-472a-8f6a-c6d34bc830be",
+  "action": "67680a29-4aff-4ca7-b0e7-9fdb17929309",
+  "activity": "5ced1fd5-a5de-4a6b-9cc2-017043ef1bcc",
+  "output": "29831b2e-3440-4616-8895-bcdf0062013b",
+  "output_sha256": "691d8e13c6253cba41a27f8c2210788e9fa14f242fc7e84a3599b596b9091e7c",
+  "result": "Passed compiled online journey and original recovery; independent acceptance pending"
+}

@@ -2730,6 +2730,31 @@
           "id": "activity-return",
           "label": "Activity return",
           "description": "Stable server-permitted incident destination; Activity completion leaves incident authority separate."
+        },
+        {
+          "id": "saved",
+          "label": "Saved",
+          "description": "Accepted server receipt and current saved record."
+        },
+        {
+          "id": "unsaved",
+          "label": "Unsaved",
+          "description": "Correctable local input with navigation protection."
+        },
+        {
+          "id": "saving",
+          "label": "Saving",
+          "description": "Original operation pending; duplicate controls disabled."
+        },
+        {
+          "id": "failed",
+          "label": "Failed",
+          "description": "Validation or authority refusal preserves correctable input."
+        },
+        {
+          "id": "closed",
+          "label": "Closed",
+          "description": "Exact reviewed outcome with separate current applicability."
         }
       ],
       "implementation": [
