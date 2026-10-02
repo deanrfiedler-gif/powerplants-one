@@ -44,6 +44,10 @@ jobs:
           npm run typecheck
           npm run test:unit
           npm run browser:install
+      - name: Configure disposable PostgreSQL lock capacity
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: bash scripts/configure-test-postgres.sh
       - name: PostgreSQL permissions and atomic persistence
         run: |
           cp .env.example .env.local

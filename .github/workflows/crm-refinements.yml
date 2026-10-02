@@ -80,6 +80,10 @@ jobs:
         run: npm run browser:install
       - name: Static, unit and build checks
         run: npm run check
+      - name: Configure disposable PostgreSQL lock capacity
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: bash scripts/configure-test-postgres.sh
       - name: Configure disposable loopback database
         id: database_setup
         run: |
