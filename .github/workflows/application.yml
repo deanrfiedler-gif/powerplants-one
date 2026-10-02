@@ -201,7 +201,11 @@ jobs:
         if: ${{ matrix.suite == 'http' && !cancelled() && steps.database_setup.outcome == 'success' }}
         run: |
           if npm start; then exit 1; fi
-          node --env-file=.env.local --import tsx scripts/local-server.ts > "$RUNNER_TEMP/ppo-http.log" 2>&1 &
+          # Reuse the completed check/build output. The development server was
+          # killed during the full suite on unchanged main as well as FI-07;
+          # concurrent route compilation is not the HTTP contract under test.
+          # Keep this separate HTTP/restart lane and every assertion/deadline.
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > "$RUNNER_TEMP/ppo-http.log" 2>&1 &
           ppo_server_pid=$!
           ppo_http_cleanup() {
             kill "$ppo_server_pid" 2>/dev/null || true
