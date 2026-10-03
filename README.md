@@ -2,11 +2,13 @@
 
 Personal prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance. The repository is public; the application, data and hosted demo remain private and synthetic.
 
-**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P01–P12 code merged; PT-22 synthetic recovery passed; integrated acceptance incomplete · **Deployment:** Azure run 36204121972 deployed `80b2f41` on 26 September; database gate and web-health/access checks passed; fresh signed-in journey and managed PostgreSQL minor unverified · **Current state:** [docs/STATUS.md](docs/STATUS.md)
+**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P01–P12 code merged; PT-22 synthetic recovery passed; integrated acceptance incomplete · **Deployment:** separate manual Azure run 37094645952 completed for `6e8b898` on 3 October; fresh signed-in journey, actual worker execution and managed PostgreSQL minor unverified · **Current state:** [docs/STATUS.md](docs/STATUS.md)
 
-This repository is Dean's personal prototype. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application with customer, contact, site, equipment, intake, owned follow-up and controlled work-order screens. P12 isolated recovery is merged with reviewed source and actual-main evidence. The written PT-22 synthetic restore procedure passed; full PT-28/PT-30 and independent owner/device acceptance remain outstanding. Company ownership, production approval and external-system write authority are not implied.
+This repository is Dean's personal prototype. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application with customer, contact, site, equipment, intake, owned follow-up and controlled work-order screens. P12 isolated recovery is merged with reviewed source and actual-main evidence. The written PT-22 synthetic restore procedure passed; Step 6's bounded written PT-28 synthetic procedure has passed; full PT-30/PP-01 and independent owner/device acceptance remain outstanding. Company ownership, production approval and external-system write authority are not implied.
 
 ## Start here
+
+Current acceptance work: [Field Work prerequisite ledger](docs/testing/field-integrated-acceptance-ledger.md), [runnable owner walkthrough](docs/delivery/field-integrated-owner-walkthrough.md) and [benefit measurement](docs/testing/field-benefit-measurement.md). #337 is merged; fresh verification, human observations and benefits remain separately recorded.
 
 | Document | Purpose |
 |---|---|
@@ -63,7 +65,7 @@ Application code is in `src/`, explicit SQL migrations and fixtures are in `db/`
 
 ## Private hosted demo preparation
 
-The [Azure demo runbook](docs/delivery/azure-private-demo.md) defines the separate hosted runtime, tester access and image updates. The latest observed [deployment run 36204121972](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/36204121972), on 26 September, deployed main `80b2f41`, passed its database gate and web-health/anonymous-access checks, and configured the worker with the same image digest. This audit did not repeat the signed-in record/output journey or verify actual worker execution or the managed PostgreSQL minor. The 14 September signed-in Draft evidence remains valid for its earlier source only. [Current consolidation and verification](docs/delivery/repository-consolidation.md) separates these facts from full service-journey, physical-device and owner acceptance.
+The [Azure demo runbook](docs/delivery/azure-private-demo.md) defines the separate hosted runtime, tester access and image updates. The latest observed [deployment run 37094645952](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094645952), manually dispatched on 3 October against main `6e8b898`, completed its database gate and web/worker image update. This acceptance task only read that separate run; it performed no deployment. The 26 September deployment of `80b2f41` remains historical evidence. This audit did not repeat the signed-in record/output journey or verify actual worker execution or the managed PostgreSQL minor. The 14 September signed-in Draft evidence remains valid for its earlier source only. [Current consolidation and verification](docs/delivery/repository-consolidation.md) separates these facts from full service-journey, physical-device and owner acceptance.
 
 ## Run the local application
 

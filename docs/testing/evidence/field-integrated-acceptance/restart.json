@@ -1,0 +1,18 @@
+{
+  "build": "NlpmlalVafLoVSRWWJdSP",
+  "at": "2026-10-03T04:11:01.9242200Z",
+  "previous_app": 23712,
+  "current_app": 27708,
+  "closed_ports_verified": [
+    3022,
+    55810
+  ],
+  "current_postgres": 38916,
+  "previous_postgres": 38176,
+  "first_relaunch_result": "Process27708 stalled before opening3022; prepare.txt records ECONNREFUSED. Original attempt retained. Cause unresolved.",
+  "verified_continuation_app": 33644,
+  "verified_continuation_log": "app-restarted-02.txt",
+  "comparison": "after-restart-preservation.json",
+  "result": "320 business tables and8 exact files preserved, same cluster, schema57 and exact migration/seed ledger; sessions/Session audit alone excluded.",
+  "limit": "Application/PostgreSQL restart, not PT-22 backup restore. Narrative has no optional signature mark. A separate fresh FI-07 optional-mark restart passed on the current build; see optional-mark-restart.json."
+}

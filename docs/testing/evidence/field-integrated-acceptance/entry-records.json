@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "origin": "http://127.0.0.1:3022",
+  "source": "25d07c28bf47c9ea273858fef8fb84a2a8fee664",
+  "build": "d0Nswty-1THRjkeJfR-CD",
+  "customer": "50000000-0000-4000-8000-000000000001",
+  "site": "70000000-0000-4000-8000-000000000001",
+  "work_order_id": "06e126ae-c3f5-4245-a86e-961281426c70",
+  "original_visit_id": "97a4254d-ea7a-4448-9c85-280fc6a322b0",
+  "original_report_id": "9b993939-3432-411e-acf4-6b9a7ce024b0",
+  "original_proposal_id": "a5e8052d-5bb3-4316-8e0d-889ad2a78733",
+  "original_pack_issue_id": "10e8b3b6-bf0c-40dd-b07c-e295da0c469f",
+  "finance_handoff_id": "6c53a21b-5bdd-45b9-8925-c2a7327da03b",
+  "separate_visit_id": "bbf7bcf6-35a8-465e-9b7b-61ee8515ec42",
+  "separate_report_id": "23395470-d046-4f27-b057-92e80faeba30",
+  "lineage_limit": "Same work order and explicit preparation reason; no general parent-return relationship.",
+  "initial_source": "6e8b898aeb150b0a4b42c3087605556a057986ad",
+  "initial_build": "NlpmlalVafLoVSRWWJdSP"
+}

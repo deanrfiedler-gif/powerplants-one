@@ -1,0 +1,570 @@
+{
+  "observed_at": "2026-10-03T05:42:10.025618+00:00",
+  "pr337": {
+    "headRefOid": "41c6f2c909947e93608a2850198b374de671f1e4",
+    "mergeCommit": {
+      "oid": "6e8b898aeb150b0a4b42c3087605556a057986ad"
+    },
+    "mergedAt": "2026-10-03T03:45:54Z",
+    "number": 337,
+    "state": "MERGED",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-03T02:24:22Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37086277719/job/111097150354",
+        "name": "P01–P11 browser proof",
+        "startedAt": "2026-10-03T01:29:23Z",
+        "status": "COMPLETED",
+        "workflowName": "Application assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-03T01:36:16Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37086277745/job/111097150189",
+        "name": "leads",
+        "startedAt": "2026-10-03T01:29:28Z",
+        "status": "COMPLETED",
+        "workflowName": "CRM Leads implementation"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-03T01:31:25Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37086277705/job/111097150548",
+        "name": "CRM header and board visual checks",
+        "startedAt": "2026-10-03T01:29:23Z",
+        "status": "COMPLETED",
+        "workflowName": "CRM refinements assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-03T02:05:01Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37086277673/job/111097149904",
+        "name": "Desktop and mobile browser suite against the compiled application",
+        "startedAt": "2026-10-03T01:29:23Z",
+        "status": "COMPLETED",
+        "workflowName": "Compiled application browser assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-03T01:29:53Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37086277714/job/111097149935",
+        "name": "register",
+        "startedAt": "2026-10-03T01:29:23Z",
+        "status": "COMPLETED",
+        "workflowName": "Development register integrity"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-03T01:29:44Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37086277710/job/111097150043",
+        "name": "Check documentation foundation",
+        "startedAt": "2026-10-03T01:29:24Z",
+        "status": "COMPLETED",
+        "workflowName": "Documentation assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-03T01:35:00Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37086277677/job/111097150048",
+        "name": "Email Calendar persisted journey and server permissions",
+        "startedAt": "2026-10-03T01:29:23Z",
+        "status": "COMPLETED",
+        "workflowName": "Email Calendar journey assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-03T01:53:31Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37086277715/job/111097149963",
+        "name": "E1 manual estimate, draft output and restart proof",
+        "startedAt": "2026-10-03T01:29:23Z",
+        "status": "COMPLETED",
+        "workflowName": "Estimating E1 assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-03T01:46:00Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37086277719/job/111097150415",
+        "name": "P01–P11 finance proof",
+        "startedAt": "2026-10-03T01:29:23Z",
+        "status": "COMPLETED",
+        "workflowName": "Application assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-03T01:35:29Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37086277719/job/111097150346",
+        "name": "P01–P11 reports proof",
+        "startedAt": "2026-10-03T01:29:23Z",
+        "status": "COMPLETED",
+        "workflowName": "Application assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-03T02:51:20Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37086277719/job/111097150305",
+        "name": "P01–P11 database proof",
+        "startedAt": "2026-10-03T01:29:23Z",
+        "status": "COMPLETED",
+        "workflowName": "Application assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-03T01:35:46Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37086277719/job/111097150391",
+        "name": "P01–P11 http proof",
+        "startedAt": "2026-10-03T01:29:23Z",
+        "status": "COMPLETED",
+        "workflowName": "Application assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-03T01:40:54Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37086277719/job/111097150141",
+        "name": "P11 focused integrated quality and access proof",
+        "startedAt": "2026-10-03T01:29:23Z",
+        "status": "COMPLETED",
+        "workflowName": "Application assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-03T01:44:57Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37086277705/job/111097150457",
+        "name": "CRM desktop and mobile persistence and interaction proof",
+        "startedAt": "2026-10-03T01:29:23Z",
+        "status": "COMPLETED",
+        "workflowName": "CRM refinements assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-03T01:35:30Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37086277719/job/111097150286",
+        "name": "P11 focused original HTTP and output isolation proof",
+        "startedAt": "2026-10-03T01:29:23Z",
+        "status": "COMPLETED",
+        "workflowName": "Application assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-03T01:43:51Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37086277719/job/111097150406",
+        "name": "P11 declared load and raw core-read performance proof",
+        "startedAt": "2026-10-03T01:29:25Z",
+        "status": "COMPLETED",
+        "workflowName": "Application assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-03T01:34:52Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37086277719/job/111097150269",
+        "name": "P11 three original browser failures diagnostic replay",
+        "startedAt": "2026-10-03T01:29:24Z",
+        "status": "COMPLETED",
+        "workflowName": "Application assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-03T02:51:26Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37086277719/job/111111836446",
+        "name": "P01–P11 and CRM I1–I2 local application and PostgreSQL proof",
+        "startedAt": "2026-10-03T02:51:23Z",
+        "status": "COMPLETED",
+        "workflowName": "Application assurance"
+      }
+    ],
+    "url": "https://github.com/deanrfiedler-gif/powerplants-one/pull/337"
+  },
+  "post_merge_main_runs": [
+    {
+      "conclusion": "success",
+      "createdAt": "2026-10-03T03:52:41Z",
+      "databaseId": 37094645952,
+      "event": "workflow_dispatch",
+      "name": "Update Azure private demo",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "createdAt": "2026-10-03T03:45:56Z",
+      "databaseId": 37094294480,
+      "event": "push",
+      "name": "Email Calendar journey assurance",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "createdAt": "2026-10-03T03:45:56Z",
+      "databaseId": 37094294454,
+      "event": "push",
+      "name": "CRM refinements assurance",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "createdAt": "2026-10-03T03:45:56Z",
+      "databaseId": 37094294470,
+      "event": "push",
+      "name": "Estimating E1 assurance",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "createdAt": "2026-10-03T03:45:56Z",
+      "databaseId": 37094294456,
+      "event": "push",
+      "name": "Documentation assurance",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "createdAt": "2026-10-03T03:45:56Z",
+      "databaseId": 37094294455,
+      "event": "push",
+      "name": "Development register integrity",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "createdAt": "2026-10-03T03:45:56Z",
+      "databaseId": 37094294477,
+      "event": "push",
+      "name": "Compiled application browser assurance",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "createdAt": "2026-10-03T03:45:56Z",
+      "databaseId": 37094294453,
+      "event": "push",
+      "name": "Application assurance",
+      "status": "completed"
+    }
+  ],
+  "post_merge_jobs": {
+    "conclusion": "success",
+    "jobs": [
+      {
+        "completedAt": "2026-10-03T03:55:06Z",
+        "conclusion": "success",
+        "databaseId": 111120929210,
+        "name": "P11 focused integrated quality and access proof",
+        "startedAt": "2026-10-03T03:45:59Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111120929210"
+      },
+      {
+        "completedAt": "2026-10-03T03:52:31Z",
+        "conclusion": "success",
+        "databaseId": 111120929329,
+        "name": "P11 three original browser failures diagnostic replay",
+        "startedAt": "2026-10-03T03:45:59Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111120929329"
+      },
+      {
+        "completedAt": "2026-10-03T04:00:52Z",
+        "conclusion": "success",
+        "databaseId": 111120929341,
+        "name": "P11 declared load and raw core-read performance proof",
+        "startedAt": "2026-10-03T03:45:59Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111120929341"
+      },
+      {
+        "completedAt": "2026-10-03T03:51:46Z",
+        "conclusion": "success",
+        "databaseId": 111120929376,
+        "name": "P11 focused original HTTP and output isolation proof",
+        "startedAt": "2026-10-03T03:45:58Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111120929376"
+      },
+      {
+        "completedAt": "2026-10-03T03:50:27Z",
+        "conclusion": "success",
+        "databaseId": 111120929382,
+        "name": "P01–P11 http proof",
+        "startedAt": "2026-10-03T03:45:59Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111120929382"
+      },
+      {
+        "completedAt": "2026-10-03T04:39:40Z",
+        "conclusion": "success",
+        "databaseId": 111120929396,
+        "name": "P01–P11 browser proof",
+        "startedAt": "2026-10-03T03:45:59Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111120929396"
+      },
+      {
+        "completedAt": "2026-10-03T03:54:37Z",
+        "conclusion": "success",
+        "databaseId": 111120929411,
+        "name": "P01–P11 reports proof",
+        "startedAt": "2026-10-03T03:45:59Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111120929411"
+      },
+      {
+        "completedAt": "2026-10-03T05:08:36Z",
+        "conclusion": "success",
+        "databaseId": 111120929443,
+        "name": "P01–P11 database proof",
+        "startedAt": "2026-10-03T03:45:59Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111120929443"
+      },
+      {
+        "completedAt": "2026-10-03T04:03:30Z",
+        "conclusion": "success",
+        "databaseId": 111120929554,
+        "name": "P01–P11 finance proof",
+        "startedAt": "2026-10-03T03:45:59Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111120929554"
+      },
+      {
+        "completedAt": "2026-10-03T05:08:40Z",
+        "conclusion": "success",
+        "databaseId": 111134256067,
+        "name": "P01–P11 and CRM I1–I2 local application and PostgreSQL proof",
+        "startedAt": "2026-10-03T05:08:38Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111134256067"
+      }
+    ],
+    "status": "completed"
+  },
+  "limits": "PR337 final-head checks are separate from observed post-merge statuses at this timestamp. The manual Azure deployment was performed separately; this task only read its completed workflow. No signed-in journey, worker execution or owner acceptance is inferred.",
+  "this_contribution": "Final checked head and CI outcome will be recorded on the reviewable PR after all final-head checks complete; no merge/deploy.",
+  "open_prs_at_final_preparation": [
+    {
+      "baseRefOid": "6e8b898aeb150b0a4b42c3087605556a057986ad",
+      "headRefOid": "0e3e54fdde17bff447c37d638845f6f64c36db28",
+      "number": 338,
+      "state": "OPEN",
+      "title": "ES-04: review exact saved estimates with scoped decisions and recovery",
+      "shared_files": [
+        "docs/STATUS.md",
+        "docs/design/development/components.json",
+        "docs/design/development/guides.json",
+        "docs/standards/chatgpt-project-instructions.md"
+      ],
+      "disposition": "ES-04 remains separate. Shared STATUS, components, guides and maintained instructions require source-aware merge reconciliation. Its migration 0058 is not on current main and is not part of this schema-57 evidence. No worktree or branch changed."
+    }
+  ],
+  "database_completion": {
+    "source": "6e8b898aeb150b0a4b42c3087605556a057986ad",
+    "run": 37094294453,
+    "job": 111120929443,
+    "started_at": "2026-10-03T03:45:59Z",
+    "completed_at": "2026-10-03T05:08:36Z",
+    "job_elapsed_seconds": 4957,
+    "limit_seconds": 5400,
+    "units_passed": 571,
+    "database_passed": 690,
+    "private_log": "main-database.log"
+  },
+  "earlier_in_progress_observation": {
+    "conclusion": "",
+    "jobs": [
+      {
+        "completedAt": "2026-10-03T03:55:06Z",
+        "conclusion": "success",
+        "databaseId": 111120929210,
+        "name": "P11 focused integrated quality and access proof",
+        "startedAt": "2026-10-03T03:45:59Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111120929210"
+      },
+      {
+        "completedAt": "2026-10-03T03:52:31Z",
+        "conclusion": "success",
+        "databaseId": 111120929329,
+        "name": "P11 three original browser failures diagnostic replay",
+        "startedAt": "2026-10-03T03:45:59Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111120929329"
+      },
+      {
+        "completedAt": "2026-10-03T04:00:52Z",
+        "conclusion": "success",
+        "databaseId": 111120929341,
+        "name": "P11 declared load and raw core-read performance proof",
+        "startedAt": "2026-10-03T03:45:59Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111120929341"
+      },
+      {
+        "completedAt": "2026-10-03T03:51:46Z",
+        "conclusion": "success",
+        "databaseId": 111120929376,
+        "name": "P11 focused original HTTP and output isolation proof",
+        "startedAt": "2026-10-03T03:45:58Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111120929376"
+      },
+      {
+        "completedAt": "2026-10-03T03:50:27Z",
+        "conclusion": "success",
+        "databaseId": 111120929382,
+        "name": "P01–P11 http proof",
+        "startedAt": "2026-10-03T03:45:59Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111120929382"
+      },
+      {
+        "completedAt": "2026-10-03T04:39:40Z",
+        "conclusion": "success",
+        "databaseId": 111120929396,
+        "name": "P01–P11 browser proof",
+        "startedAt": "2026-10-03T03:45:59Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111120929396"
+      },
+      {
+        "completedAt": "2026-10-03T03:54:37Z",
+        "conclusion": "success",
+        "databaseId": 111120929411,
+        "name": "P01–P11 reports proof",
+        "startedAt": "2026-10-03T03:45:59Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111120929411"
+      },
+      {
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "databaseId": 111120929443,
+        "name": "P01–P11 database proof",
+        "startedAt": "2026-10-03T03:45:59Z",
+        "status": "in_progress",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111120929443"
+      },
+      {
+        "completedAt": "2026-10-03T04:03:30Z",
+        "conclusion": "success",
+        "databaseId": 111120929554,
+        "name": "P01–P11 finance proof",
+        "startedAt": "2026-10-03T03:45:59Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111120929554"
+      }
+    ],
+    "status": "in_progress"
+  },
+  "latest_main_observation": {
+    "conclusion": "success",
+    "jobs": [
+      {
+        "completedAt": "2026-10-03T03:55:06Z",
+        "conclusion": "success",
+        "databaseId": 111120929210,
+        "name": "P11 focused integrated quality and access proof",
+        "startedAt": "2026-10-03T03:45:59Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111120929210"
+      },
+      {
+        "completedAt": "2026-10-03T03:52:31Z",
+        "conclusion": "success",
+        "databaseId": 111120929329,
+        "name": "P11 three original browser failures diagnostic replay",
+        "startedAt": "2026-10-03T03:45:59Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111120929329"
+      },
+      {
+        "completedAt": "2026-10-03T04:00:52Z",
+        "conclusion": "success",
+        "databaseId": 111120929341,
+        "name": "P11 declared load and raw core-read performance proof",
+        "startedAt": "2026-10-03T03:45:59Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111120929341"
+      },
+      {
+        "completedAt": "2026-10-03T03:51:46Z",
+        "conclusion": "success",
+        "databaseId": 111120929376,
+        "name": "P11 focused original HTTP and output isolation proof",
+        "startedAt": "2026-10-03T03:45:58Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111120929376"
+      },
+      {
+        "completedAt": "2026-10-03T03:50:27Z",
+        "conclusion": "success",
+        "databaseId": 111120929382,
+        "name": "P01–P11 http proof",
+        "startedAt": "2026-10-03T03:45:59Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111120929382"
+      },
+      {
+        "completedAt": "2026-10-03T04:39:40Z",
+        "conclusion": "success",
+        "databaseId": 111120929396,
+        "name": "P01–P11 browser proof",
+        "startedAt": "2026-10-03T03:45:59Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111120929396"
+      },
+      {
+        "completedAt": "2026-10-03T03:54:37Z",
+        "conclusion": "success",
+        "databaseId": 111120929411,
+        "name": "P01–P11 reports proof",
+        "startedAt": "2026-10-03T03:45:59Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111120929411"
+      },
+      {
+        "completedAt": "2026-10-03T05:08:36Z",
+        "conclusion": "success",
+        "databaseId": 111120929443,
+        "name": "P01–P11 database proof",
+        "startedAt": "2026-10-03T03:45:59Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111120929443"
+      },
+      {
+        "completedAt": "2026-10-03T04:03:30Z",
+        "conclusion": "success",
+        "databaseId": 111120929554,
+        "name": "P01–P11 finance proof",
+        "startedAt": "2026-10-03T03:45:59Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111120929554"
+      },
+      {
+        "completedAt": "2026-10-03T05:08:40Z",
+        "conclusion": "success",
+        "databaseId": 111134256067,
+        "name": "P01–P11 and CRM I1–I2 local application and PostgreSQL proof",
+        "startedAt": "2026-10-03T05:08:38Z",
+        "status": "completed",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094294453/job/111134256067"
+      }
+    ],
+    "status": "completed"
+  }
+}

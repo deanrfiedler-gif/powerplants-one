@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "session": "Field Work after PR337",
+  "date_prepared": "2026-10-03",
+  "owner": "Dean Fiedler",
+  "availability_evidence": "User replied Me, then Desktop browser and keyboard in this task.",
+  "participant": "Dean Fiedler",
+  "actual_role": "Prototype owner",
+  "available_methods": [
+    "desktop browser",
+    "keyboard"
+  ],
+  "source": "25d07c28bf47c9ea273858fef8fb84a2a8fee664",
+  "build": "d0Nswty-1THRjkeJfR-CD",
+  "review_started_at": null,
+  "device": null,
+  "browser_version": null,
+  "screen_reader": null,
+  "tasks": [
+    {
+      "id": "H01",
+      "status": "Pending",
+      "observed_at": null,
+      "actual_comment": null,
+      "assistance": null
+    },
+    {
+      "id": "H02",
+      "status": "Pending",
+      "observed_at": null,
+      "actual_comment": null,
+      "assistance": null
+    },
+    {
+      "id": "H03",
+      "status": "Pending",
+      "observed_at": null,
+      "actual_comment": null,
+      "assistance": null
+    },
+    {
+      "id": "H04",
+      "status": "Pending",
+      "observed_at": null,
+      "actual_comment": null,
+      "assistance": null
+    },
+    {
+      "id": "H05",
+      "status": "Pending",
+      "observed_at": null,
+      "actual_comment": null,
+      "assistance": null
+    },
+    {
+      "id": "H06",
+      "status": "Pending",
+      "observed_at": null,
+      "actual_comment": null,
+      "assistance": null
+    },
+    {
+      "id": "H07",
+      "status": "Pending",
+      "observed_at": null,
+      "actual_comment": null,
+      "assistance": null
+    },
+    {
+      "id": "H08",
+      "status": "Pending",
+      "observed_at": null,
+      "actual_comment": null,
+      "assistance": null
+    },
+    {
+      "id": "H09",
+      "status": "Pending",
+      "observed_at": null,
+      "actual_comment": null,
+      "assistance": null
+    },
+    {
+      "id": "H10",
+      "status": "Pending",
+      "observed_at": null,
+      "actual_comment": null,
+      "assistance": null
+    },
+    {
+      "id": "H11",
+      "status": "Pending",
+      "observed_at": null,
+      "actual_comment": null,
+      "assistance": null
+    }
+  ],
+  "owner_decision": null,
+  "independent_review": null,
+  "other_participants": [],
+  "limits": "Availability is not participation or acceptance. Physical phone, screen reader and independent visual/Service/technician review pending.",
+  "session_offered": "Current compiled original-visit URL and walkthrough supplied in this task. Actual H02/H03/H09 observations requested; no response yet.",
+  "initial_source": "6e8b898aeb150b0a4b42c3087605556a057986ad",
+  "initial_build": "NlpmlalVafLoVSRWWJdSP",
+  "build_limit": "Current offered session; actual review source/device/date must be captured when participation occurs. No observations supplied."
+}

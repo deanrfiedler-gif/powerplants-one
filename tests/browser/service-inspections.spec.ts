@@ -165,7 +165,9 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
   const setup = await prepareIsolatedFieldAppointment(
     call,
     // Own slots in the serial shared-crew suite; P09 reports retains 10–11 December.
-    info.project.name.startsWith("mobile") ? "2031-11-04" : "2031-11-03",
+    info.project.name.startsWith("mobile")
+      ? (process.env.PPO_INSPECTION_MOBILE_DAY ?? "2031-11-04")
+      : (process.env.PPO_INSPECTION_DESKTOP_DAY ?? "2031-11-03"),
   );
   const site = "70000000-0000-4000-8000-000000000001",
     owner = "30000000-0000-4000-8000-000000000001";
@@ -292,9 +294,27 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
   await page
     .getByRole("button", { name: "Refresh saved records", exact: true })
     .click();
-  await page
-    .getByRole("button", { name: "Retry unchanged original", exact: true })
-    .click();
+  // A receipt and its subsequent saved-record read are separate boundaries.
+  // Wait for the exact recovered draft before the unchanged visible assertion;
+  // an in-flight save must not consume that assertion's five-second window.
+  await Promise.all([
+    page.waitForResponse(
+      async (response) =>
+        response.url().endsWith(`/api/v1/${api}`) &&
+        response.request().method() === "GET" &&
+        response.status() === 200 &&
+        (await response.json()).attempts.some(
+          (a: View["attempts"][number]) =>
+            a.row.version === 5 &&
+            a.row.findings ===
+              "SYN retained through an actual disconnected request.",
+        ),
+      { timeout: 15000 },
+    ),
+    page
+      .getByRole("button", { name: "Retry unchanged original", exact: true })
+      .click(),
+  ]);
   await expect(
     page.getByText("Saved draft · version 5", { exact: true }),
   ).toBeVisible();
@@ -463,8 +483,33 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
   expect(fresh.results.find((r) => r.unit === "bar")?.raw_value).toBe("2.1");
   expect(after.defects[0].state).toBe("CorrectionRecorded");
   await login(page.request, "coordinator");
-  await page.goto(review);
-  await page.getByRole("button", { name: /^Attempt 2 ·/ }).click();
+  // Returning to this actor restores its original review receipt. Selection
+  // must visibly honour that existing guard instead of swallowing an enabled
+  // button's click. Hold the real lookup response, without fabricating a receipt.
+  let releaseLookup!: () => void;
+  const heldLookup = new Promise<void>((resolve) => { releaseLookup = resolve; });
+  const lookupStarted = page.waitForRequest((request) =>
+    request.method() === "GET" && request.url().includes("/api/v1/operations/"),
+  );
+  const lookupFinished = page.waitForResponse((response) =>
+    response.request().method() === "GET" && response.url().includes("/api/v1/operations/"),
+  );
+  await page.route("**/api/v1/operations/*", async (route) => {
+    const response = await route.fetch();
+    await heldLookup;
+    await route.fulfill({ response });
+  });
+  const secondAttempt = page.getByRole("button", { name: /^Attempt 2 ·/ });
+  try {
+    await page.goto(review);
+    await lookupStarted;
+    await expect(secondAttempt).toBeDisabled();
+  } finally {
+    releaseLookup();
+    await lookupFinished;
+    await page.unroute("**/api/v1/operations/*");
+  }
+  await secondAttempt.click();
   await page
     .getByRole("combobox", { name: "Decision", exact: true })
     .selectOption("Accepted");

@@ -13,6 +13,7 @@ import { png } from "./field";
 import { financeJourney } from "./quality-finance";
 import { returnVisit } from "./quality-return";
 import { keyActivate, keySelect, keyType } from "./quality-keyboard";
+import { originalMinute } from "./acceptance-timer";
 // Reuses the selected narrative and its assertions. Step 6 pauses at the saved initial
 // report/Finance boundary; the ordinary P11 suite still completes its return.
 export async function serviceJourney(
@@ -20,6 +21,7 @@ export async function serviceJourney(
   info: TestInfo,
   initialOnly = false,
   verifyVisitGuidance = false,
+  measureOriginalTimer = false,
 ) {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
@@ -128,6 +130,9 @@ export async function serviceJourney(
   expect(job.attendance.actor_id).toBe(
     (await call(page, "local-session")).actor_id,
   );
+  const timerEntry = measureOriginalTimer
+    ? await originalMinute(page, info, aid)
+    : undefined;
   const start = Date.parse(
     info.project.name.startsWith("mobile")
       ? "2026-08-24T04:00:00Z"
@@ -378,7 +383,7 @@ export async function serviceJourney(
     (await localRows()).map((x: { original: unknown }) => x.original),
   ).toEqual(originals);
   job = (await call(page, `my-jobs/${aid}`)).items[0];
-  expect(job.entries).toHaveLength(7);
+  expect(job.entries).toHaveLength(timerEntry ? 8 : 7);
   expect(
     await (
       await page.request.get(
@@ -548,6 +553,7 @@ export async function serviceJourney(
     )
     .toBe(1);
   const finance = await financeJourney(page, info, {
+    timerEntry,
     work_order_id: source.work_order_id,
     report_id: rid,
     reference: issued.reference,

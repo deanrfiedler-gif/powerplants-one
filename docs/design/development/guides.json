@@ -15038,7 +15038,7 @@
       "prepared_at": "2026-10-03",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "docs/testing/evidence/field-closed-visit/README.md separates fresh proof, retained regressions and unperformed human acceptance.",
+      "runtime_evidence": "docs/testing/evidence/field-closed-visit/README.md separates fresh proof, retained regressions and unperformed human acceptance. Current integrated source-bound proof and actual human-status record: docs/testing/evidence/field-integrated-acceptance/README.md.",
       "sections": [
         {
           "section_id": "purpose",
@@ -15159,7 +15159,8 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "See the field timer native decision and field programme handover linked from the design record. This draft guide is not an approved operational SOP."
+            "See the field timer native decision and field programme handover linked from the design record. This draft guide is not an approved operational SOP.",
+            "The current Field Work owner walkthrough records exact synthetic entry records, distinct role handovers, keyboard/layout/recovery observations and measurement tasks. Actual owner, Service/technician, physical-device, screen-reader and independent visual review remain separately recorded; a technical pass is not acceptance or measured benefit."
           ],
           "steps": [],
           "rows": [],
@@ -15188,9 +15189,12 @@
         "docs/delivery/p07-handover.md",
         "docs/decisions/field-timer-native.md",
         "docs/delivery/field-quality-native-handover.md",
-        "docs/decisions/field-closed-visit-guidance.md"
+        "docs/decisions/field-closed-visit-guidance.md",
+        "docs/delivery/field-integrated-owner-walkthrough.md",
+        "docs/testing/field-integrated-acceptance-ledger.md",
+        "docs/testing/field-benefit-measurement.md"
       ],
-      "change_summary": "Bounded closed-visit and separate-visit entry guidance; existing scope and review status retained.",
+      "change_summary": "Add current integrated owner-session and benefit-measurement references; prior source provenance and review state retained.",
       "document_id": "PPO-GUIDE-FI-01",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -15217,7 +15221,7 @@
       "prepared_at": "2026-10-03",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "docs/testing/evidence/field-closed-visit/README.md separates fresh proof, retained regressions and unperformed human acceptance.",
+      "runtime_evidence": "docs/testing/evidence/field-closed-visit/README.md separates fresh proof, retained regressions and unperformed human acceptance. Current integrated source-bound proof and actual human-status record: docs/testing/evidence/field-integrated-acceptance/README.md.",
       "sections": [
         {
           "section_id": "purpose",
@@ -15337,7 +15341,8 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "See the field timer native decision and field programme handover linked from the design record. This draft guide is not an approved operational SOP."
+            "See the field timer native decision and field programme handover linked from the design record. This draft guide is not an approved operational SOP.",
+            "The current Field Work owner walkthrough records exact synthetic entry records, distinct role handovers, keyboard/layout/recovery observations and measurement tasks. Actual owner, Service/technician, physical-device, screen-reader and independent visual review remain separately recorded; a technical pass is not acceptance or measured benefit."
           ],
           "steps": [],
           "rows": [],
@@ -15367,9 +15372,12 @@
         "docs/delivery/p07-handover.md",
         "docs/decisions/field-timer-native.md",
         "docs/delivery/field-quality-native-handover.md",
-        "docs/decisions/field-closed-visit-guidance.md"
+        "docs/decisions/field-closed-visit-guidance.md",
+        "docs/delivery/field-integrated-owner-walkthrough.md",
+        "docs/testing/field-integrated-acceptance-ledger.md",
+        "docs/testing/field-benefit-measurement.md"
       ],
-      "change_summary": "Bounded closed-visit and separate-visit entry guidance; existing scope and review status retained.",
+      "change_summary": "Add current integrated owner-session and benefit-measurement references; prior source provenance and review state retained.",
       "document_id": "PPO-GUIDE-FI-02",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -15397,7 +15405,7 @@
       "prepared_at": "2026-10-01",
       "source_commit": "feb01e57c1ffdab0a5f8d1a5664ab5144bd37ccd",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "docs/testing/evidence/service-inspections/README.md",
+      "runtime_evidence": "docs/testing/evidence/service-inspections/README.md Current held-receipt lookup and exact saved-read evidence: docs/testing/evidence/field-integrated-acceptance/README.md.",
       "sections": [
         {
           "section_id": "purpose",
@@ -15519,7 +15527,8 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "See the Service inspection decision, F02-A acceptance requirements, field programme handover and exact verification evidence. Retained Quality r01 is a proposed reference; accepted native desktop/phone images are missing."
+            "See the Service inspection decision, F02-A acceptance requirements, field programme handover and exact verification evidence. Retained Quality r01 is a proposed reference; accepted native desktop/phone images are missing.",
+            "While the original receipt is being checked or remains unresolved, attempt selection is disabled. Recover that original, then choose the intended attempt. This does not grant review authority or clear changed-source, incident or inspection controls. Record owner observations in the current Field Work walkthrough."
           ],
           "steps": [],
           "rows": [],
@@ -15551,9 +15560,10 @@
         "src/inspections/service-context.ts",
         "src/inspections/service-commands.ts",
         "docs/decisions/service-inspections.md",
-        "docs/testing/evidence/service-inspections/README.md"
+        "docs/testing/evidence/service-inspections/README.md",
+        "docs/testing/evidence/field-integrated-acceptance/README.md"
       ],
-      "change_summary": "Native FI-03/FI-04 capture, review, correction/retest and internal outcome; acceptance remains pending.",
+      "change_summary": "Reflect the existing original-command guard in attempt-selection availability; accepted references and owner review unchanged.",
       "document_id": "PPO-GUIDE-FI-03",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -15582,7 +15592,7 @@
       "prepared_at": "2026-10-01",
       "source_commit": "feb01e57c1ffdab0a5f8d1a5664ab5144bd37ccd",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "docs/testing/evidence/service-inspections/README.md",
+      "runtime_evidence": "docs/testing/evidence/service-inspections/README.md Current held-receipt lookup and exact saved-read evidence: docs/testing/evidence/field-integrated-acceptance/README.md.",
       "sections": [
         {
           "section_id": "purpose",
@@ -15704,7 +15714,8 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "See the Service inspection decision, F02-A acceptance requirements, field programme handover and exact verification evidence. Retained Quality r01 is a proposed reference; accepted native desktop/phone images are missing."
+            "See the Service inspection decision, F02-A acceptance requirements, field programme handover and exact verification evidence. Retained Quality r01 is a proposed reference; accepted native desktop/phone images are missing.",
+            "While the original receipt is being checked or remains unresolved, attempt selection is disabled. Recover that original, then choose the intended attempt. This does not grant review authority or clear changed-source, incident or inspection controls. Record owner observations in the current Field Work walkthrough."
           ],
           "steps": [],
           "rows": [],
@@ -15733,9 +15744,10 @@
         "src/inspections/service-context.ts",
         "src/inspections/service-commands.ts",
         "docs/decisions/service-inspections.md",
-        "docs/testing/evidence/service-inspections/README.md"
+        "docs/testing/evidence/service-inspections/README.md",
+        "docs/testing/evidence/field-integrated-acceptance/README.md"
       ],
-      "change_summary": "Native FI-03/FI-04 capture, review, correction/retest and internal outcome; acceptance remains pending.",
+      "change_summary": "Reflect the existing original-command guard in attempt-selection availability; accepted references and owner review unchanged.",
       "document_id": "PPO-GUIDE-FI-04",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -15764,7 +15776,7 @@
       "prepared_at": "2026-10-03",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "docs/testing/evidence/field-closed-visit/README.md separates fresh proof, retained regressions and unperformed human acceptance.",
+      "runtime_evidence": "docs/testing/evidence/field-closed-visit/README.md separates fresh proof, retained regressions and unperformed human acceptance. Current integrated source-bound proof and actual human-status record: docs/testing/evidence/field-integrated-acceptance/README.md.",
       "sections": [
         {
           "section_id": "purpose",
@@ -15901,7 +15913,8 @@
           "title": "Related guidance",
           "paragraphs": [
             "Use the owning Site readiness guide (CS-06), exact job (FI-01), issued Job Pack (SV-05) and the existing offline guide (FI-02) within their implemented scope.",
-            "The Quality/Site Assurance r01 HTML is a proposed presentation reference. Operational procedures and safety authority are not established by its synthetic fixtures."
+            "The Quality/Site Assurance r01 HTML is a proposed presentation reference. Operational procedures and safety authority are not established by its synthetic fixtures.",
+            "The current Field Work owner walkthrough records exact synthetic entry records, distinct role handovers, keyboard/layout/recovery observations and measurement tasks. Actual owner, Service/technician, physical-device, screen-reader and independent visual review remain separately recorded; a technical pass is not acceptance or measured benefit."
           ],
           "steps": [],
           "rows": [],
@@ -15935,9 +15948,12 @@
         "src/field/readiness.ts",
         "src/components/field-readiness-screen.tsx",
         "docs/decisions/field-readiness-native.md",
-        "docs/decisions/field-closed-visit-guidance.md"
+        "docs/decisions/field-closed-visit-guidance.md",
+        "docs/delivery/field-integrated-owner-walkthrough.md",
+        "docs/testing/field-integrated-acceptance-ledger.md",
+        "docs/testing/field-benefit-measurement.md"
       ],
-      "change_summary": "Bounded closed-visit and separate-visit entry guidance; existing scope and review status retained.",
+      "change_summary": "Add current integrated owner-session and benefit-measurement references; prior source provenance and review state retained.",
       "document_id": "PPO-GUIDE-FI-05",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -16142,7 +16158,7 @@
       "prepared_at": "2026-10-02",
       "source_commit": "c3d4709baa920146314d6b4c5d9b367f47687574",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "docs/testing/evidence/field-customer-response/README.md",
+      "runtime_evidence": "docs/testing/evidence/field-customer-response/README.md Current integrated source-bound proof and actual human-status record: docs/testing/evidence/field-integrated-acceptance/README.md.",
       "sections": [
         {
           "section_id": "purpose",
@@ -16264,7 +16280,8 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "See docs/decisions/field-customer-response.md, docs/contracts/field-customer-response.md, docs/testing/field-customer-response-acceptance.md and the executed evidence index. Retained Service Review & Reports r02 is a proposed reference, not native acceptance."
+            "See docs/decisions/field-customer-response.md, docs/contracts/field-customer-response.md, docs/testing/field-customer-response-acceptance.md and the executed evidence index. Retained Service Review & Reports r02 is a proposed reference, not native acceptance.",
+            "The current Field Work owner walkthrough records exact synthetic entry records, distinct role handovers, keyboard/layout/recovery observations and measurement tasks. Actual owner, Service/technician, physical-device, screen-reader and independent visual review remain separately recorded; a technical pass is not acceptance or measured benefit."
           ],
           "steps": [],
           "rows": [],
@@ -16284,9 +16301,12 @@
       "related_entry_keys": [],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/delivery/p07-handover.md"
+        "docs/delivery/p07-handover.md",
+        "docs/delivery/field-integrated-owner-walkthrough.md",
+        "docs/testing/field-integrated-acceptance-ledger.md",
+        "docs/testing/field-benefit-measurement.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Add current integrated owner-session and benefit-measurement references; prior source provenance and review state retained.",
       "document_id": "PPO-GUIDE-FI-07",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -41486,7 +41506,7 @@
       "prepared_at": "2026-10-03",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "docs/testing/evidence/field-closed-visit/README.md separates fresh proof, retained regressions and unperformed human acceptance.",
+      "runtime_evidence": "docs/testing/evidence/field-closed-visit/README.md separates fresh proof, retained regressions and unperformed human acceptance. Current integrated source-bound proof and actual human-status record: docs/testing/evidence/field-integrated-acceptance/README.md.",
       "sections": [
         {
           "section_id": "purpose",
@@ -41606,7 +41626,8 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "See the field timer native decision and field programme handover linked from the design record. This draft guide is not an approved operational SOP."
+            "See the field timer native decision and field programme handover linked from the design record. This draft guide is not an approved operational SOP.",
+            "The current Field Work owner walkthrough records exact synthetic entry records, distinct role handovers, keyboard/layout/recovery observations and measurement tasks. Actual owner, Service/technician, physical-device, screen-reader and independent visual review remain separately recorded; a technical pass is not acceptance or measured benefit."
           ],
           "steps": [],
           "rows": [],
@@ -41634,9 +41655,12 @@
         "docs/delivery/p07-handover.md",
         "docs/decisions/field-timer-native.md",
         "docs/delivery/field-quality-native-handover.md",
-        "docs/decisions/field-closed-visit-guidance.md"
+        "docs/decisions/field-closed-visit-guidance.md",
+        "docs/delivery/field-integrated-owner-walkthrough.md",
+        "docs/testing/field-integrated-acceptance-ledger.md",
+        "docs/testing/field-benefit-measurement.md"
       ],
-      "change_summary": "Bounded closed-visit and separate-visit entry guidance; existing scope and review status retained.",
+      "change_summary": "Add current integrated owner-session and benefit-measurement references; prior source provenance and review state retained.",
       "document_id": "PPO-GUIDE-PAGE-MY-JOBS-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -41663,7 +41687,7 @@
       "prepared_at": "2026-10-03",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "docs/testing/evidence/field-closed-visit/README.md separates fresh proof, retained regressions and unperformed human acceptance.",
+      "runtime_evidence": "docs/testing/evidence/field-closed-visit/README.md separates fresh proof, retained regressions and unperformed human acceptance. Current integrated source-bound proof and actual human-status record: docs/testing/evidence/field-integrated-acceptance/README.md.",
       "sections": [
         {
           "section_id": "purpose",
@@ -41783,7 +41807,8 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "See the field timer native decision and field programme handover linked from the design record. This draft guide is not an approved operational SOP."
+            "See the field timer native decision and field programme handover linked from the design record. This draft guide is not an approved operational SOP.",
+            "The current Field Work owner walkthrough records exact synthetic entry records, distinct role handovers, keyboard/layout/recovery observations and measurement tasks. Actual owner, Service/technician, physical-device, screen-reader and independent visual review remain separately recorded; a technical pass is not acceptance or measured benefit."
           ],
           "steps": [],
           "rows": [],
@@ -41812,9 +41837,12 @@
         "docs/delivery/p07-handover.md",
         "docs/decisions/field-timer-native.md",
         "docs/delivery/field-quality-native-handover.md",
-        "docs/decisions/field-closed-visit-guidance.md"
+        "docs/decisions/field-closed-visit-guidance.md",
+        "docs/delivery/field-integrated-owner-walkthrough.md",
+        "docs/testing/field-integrated-acceptance-ledger.md",
+        "docs/testing/field-benefit-measurement.md"
       ],
-      "change_summary": "Bounded closed-visit and separate-visit entry guidance; existing scope and review status retained.",
+      "change_summary": "Add current integrated owner-session and benefit-measurement references; prior source provenance and review state retained.",
       "document_id": "PPO-GUIDE-PAGE-MY-JOBS",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -44345,7 +44373,7 @@
       "prepared_at": "2026-10-03",
       "source_commit": "aed0c00",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "docs/testing/evidence/field-closed-visit/README.md separates fresh proof, retained regressions and unperformed human acceptance.",
+      "runtime_evidence": "docs/testing/evidence/field-closed-visit/README.md separates fresh proof, retained regressions and unperformed human acceptance. Current integrated source-bound proof and actual human-status record: docs/testing/evidence/field-integrated-acceptance/README.md.",
       "sections": [
         {
           "section_id": "purpose",
@@ -44564,7 +44592,8 @@
           "title": "Related guidance and procedures",
           "paragraphs": [
             "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them.",
+            "The current Field Work owner walkthrough records exact synthetic entry records, distinct role handovers, keyboard/layout/recovery observations and measurement tasks. Actual owner, Service/technician, physical-device, screen-reader and independent visual review remain separately recorded; a technical pass is not acceptance or measured benefit."
           ],
           "steps": [],
           "rows": [],
@@ -44592,9 +44621,12 @@
       "source_paths": [
         "src/app/(business)/service/appointments/[id]/page.tsx",
         "docs/blueprints/BP-07-service-operations.md",
-        "docs/decisions/field-closed-visit-guidance.md"
+        "docs/decisions/field-closed-visit-guidance.md",
+        "docs/delivery/field-integrated-owner-walkthrough.md",
+        "docs/testing/field-integrated-acceptance-ledger.md",
+        "docs/testing/field-benefit-measurement.md"
       ],
-      "change_summary": "Bounded closed-visit and separate-visit entry guidance; existing scope and review status retained.",
+      "change_summary": "Add current integrated owner-session and benefit-measurement references; prior source provenance and review state retained.",
       "document_id": "PPO-GUIDE-PAGE-SERVICE-APPOINTMENTS-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -45507,7 +45539,7 @@
       "prepared_at": "2026-10-02",
       "source_commit": "c3d4709baa920146314d6b4c5d9b367f47687574",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "docs/testing/evidence/field-customer-response/README.md",
+      "runtime_evidence": "docs/testing/evidence/field-customer-response/README.md Current integrated source-bound proof and actual human-status record: docs/testing/evidence/field-integrated-acceptance/README.md.",
       "sections": [
         {
           "section_id": "purpose",
@@ -45629,7 +45661,8 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "See docs/decisions/field-customer-response.md, docs/contracts/field-customer-response.md, docs/testing/field-customer-response-acceptance.md and the executed evidence index. Retained Service Review & Reports r02 is a proposed reference, not native acceptance."
+            "See docs/decisions/field-customer-response.md, docs/contracts/field-customer-response.md, docs/testing/field-customer-response-acceptance.md and the executed evidence index. Retained Service Review & Reports r02 is a proposed reference, not native acceptance.",
+            "The current Field Work owner walkthrough records exact synthetic entry records, distinct role handovers, keyboard/layout/recovery observations and measurement tasks. Actual owner, Service/technician, physical-device, screen-reader and independent visual review remain separately recorded; a technical pass is not acceptance or measured benefit."
           ],
           "steps": [],
           "rows": [],
@@ -45654,9 +45687,12 @@
         "src/app/(business)/service/reports/[id]/page.tsx",
         "docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html",
         "docs/delivery/p09-handover.md",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "docs/delivery/field-integrated-owner-walkthrough.md",
+        "docs/testing/field-integrated-acceptance-ledger.md",
+        "docs/testing/field-benefit-measurement.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Add current integrated owner-session and benefit-measurement references; prior source provenance and review state retained.",
       "document_id": "PPO-GUIDE-PAGE-SERVICE-REPORTS-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -46861,7 +46897,7 @@
       "prepared_at": "2026-10-03",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "docs/testing/evidence/field-closed-visit/README.md separates fresh proof, retained regressions and unperformed human acceptance.",
+      "runtime_evidence": "docs/testing/evidence/field-closed-visit/README.md separates fresh proof, retained regressions and unperformed human acceptance. Current integrated source-bound proof and actual human-status record: docs/testing/evidence/field-integrated-acceptance/README.md.",
       "sections": [
         {
           "section_id": "purpose",
@@ -47078,7 +47114,8 @@
           "title": "Related guidance and procedures",
           "paragraphs": [
             "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them.",
+            "The current Field Work owner walkthrough records exact synthetic entry records, distinct role handovers, keyboard/layout/recovery observations and measurement tasks. Actual owner, Service/technician, physical-device, screen-reader and independent visual review remain separately recorded; a technical pass is not acceptance or measured benefit."
           ],
           "steps": [],
           "rows": [],
@@ -47107,9 +47144,12 @@
         "src/app/(business)/service/work-orders/[id]/page.tsx",
         "docs/reference/ui/service/PPO-Work-Orders-Workspace-r01.html",
         "docs/blueprints/BP-07-service-operations.md",
-        "docs/decisions/field-closed-visit-guidance.md"
+        "docs/decisions/field-closed-visit-guidance.md",
+        "docs/delivery/field-integrated-owner-walkthrough.md",
+        "docs/testing/field-integrated-acceptance-ledger.md",
+        "docs/testing/field-benefit-measurement.md"
       ],
-      "change_summary": "Bounded closed-visit and separate-visit entry guidance; existing scope and review status retained.",
+      "change_summary": "Add current integrated owner-session and benefit-measurement references; prior source provenance and review state retained.",
       "document_id": "PPO-GUIDE-PAGE-SERVICE-WORK-ORDERS-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -69542,7 +69582,8 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "See the Service inspection decision, F02-A acceptance requirements, field programme handover and exact verification evidence. Retained Quality r01 is a proposed reference; accepted native desktop/phone images are missing."
+            "See the Service inspection decision, F02-A acceptance requirements, field programme handover and exact verification evidence. Retained Quality r01 is a proposed reference; accepted native desktop/phone images are missing.",
+            "While the original receipt is being checked or remains unresolved, attempt selection is disabled. Recover that original, then choose the intended attempt. This does not grant review authority or clear changed-source, incident or inspection controls. Record owner observations in the current Field Work walkthrough."
           ],
           "steps": [],
           "rows": [],
@@ -69560,8 +69601,8 @@
         }
       ],
       "prepared_at": "2026-10-01",
-      "runtime_evidence": "docs/testing/evidence/service-inspections/README.md",
-      "change_summary": "Native FI-03/FI-04 capture, review, correction/retest and internal outcome; acceptance remains pending.",
+      "runtime_evidence": "docs/testing/evidence/service-inspections/README.md Current held-receipt lookup and exact saved-read evidence: docs/testing/evidence/field-integrated-acceptance/README.md.",
+      "change_summary": "Reflect the existing original-command guard in attempt-selection availability; accepted references and owner review unchanged.",
       "workflow_basis": [
         "docs/decisions/service-inspections.md"
       ],
@@ -69571,7 +69612,8 @@
         "src/inspections/service-context.ts",
         "src/inspections/service-commands.ts",
         "docs/decisions/service-inspections.md",
-        "docs/testing/evidence/service-inspections/README.md"
+        "docs/testing/evidence/service-inspections/README.md",
+        "docs/testing/evidence/field-integrated-acceptance/README.md"
       ]
     },
     {
@@ -69707,7 +69749,8 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "See the Service inspection decision, F02-A acceptance requirements, field programme handover and exact verification evidence. Retained Quality r01 is a proposed reference; accepted native desktop/phone images are missing."
+            "See the Service inspection decision, F02-A acceptance requirements, field programme handover and exact verification evidence. Retained Quality r01 is a proposed reference; accepted native desktop/phone images are missing.",
+            "While the original receipt is being checked or remains unresolved, attempt selection is disabled. Recover that original, then choose the intended attempt. This does not grant review authority or clear changed-source, incident or inspection controls. Record owner observations in the current Field Work walkthrough."
           ],
           "steps": [],
           "rows": [],
@@ -69725,8 +69768,8 @@
         }
       ],
       "prepared_at": "2026-10-01",
-      "runtime_evidence": "docs/testing/evidence/service-inspections/README.md",
-      "change_summary": "Native FI-03/FI-04 capture, review, correction/retest and internal outcome; acceptance remains pending.",
+      "runtime_evidence": "docs/testing/evidence/service-inspections/README.md Current held-receipt lookup and exact saved-read evidence: docs/testing/evidence/field-integrated-acceptance/README.md.",
+      "change_summary": "Reflect the existing original-command guard in attempt-selection availability; accepted references and owner review unchanged.",
       "workflow_basis": [
         "docs/decisions/service-inspections.md"
       ],
@@ -69736,7 +69779,8 @@
         "src/inspections/service-context.ts",
         "src/inspections/service-commands.ts",
         "docs/decisions/service-inspections.md",
-        "docs/testing/evidence/service-inspections/README.md"
+        "docs/testing/evidence/service-inspections/README.md",
+        "docs/testing/evidence/field-integrated-acceptance/README.md"
       ]
     },
     {
