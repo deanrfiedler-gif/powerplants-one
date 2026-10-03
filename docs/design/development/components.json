@@ -83,6 +83,11 @@
           "id": "fi07-host",
           "label": "FI-07 response host",
           "description": "tests/browser/reports.spec.ts: explicit empty response, correctable validation, exact presentation focus return, uncertain original receipt, saved history and owned clarification. Host fixture, not isolated catalogue state."
+        },
+        {
+          "id": "es07-host",
+          "label": "ES-07 receiving host",
+          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page."
         }
       ],
       "implementation": [
@@ -192,7 +197,9 @@
         "route:/estimating/estimates/[id]/review",
         "route:/estimating/quotes/[id]/release",
         "scope:ES-05",
-        "route:/estimating/quotes/[id]/response"
+        "route:/estimating/quotes/[id]/response",
+        "route:/estimating/quotes/[id]/conversion",
+        "scope:ES-07"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -252,6 +259,14 @@
           "expected": "Truthful personal history and permission-aware separate-visit navigation with recoverable original commands.",
           "actual": "Native host adaptation; no accepted closed-visit mockup or independent visual acceptance.",
           "action": "Review the closed-visit acceptance matrix and actual host fixtures at four widths and 200% zoom.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-es07",
+          "expected": "Native receiving host at desktop/phone with exact recovery.",
+          "actual": "Shared control consumer added; independent visual/device acceptance pending.",
+          "action": "Review real host fixtures and retained reference; do not infer approval from passing tests.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -817,6 +832,11 @@
           "id": "fi06-host",
           "label": "FI-06 host",
           "description": "Saved, dirty, conflict, uncertain, restricted and reopened fixtures in tests/browser/field-incidents.spec.ts; no isolated incident renderer."
+        },
+        {
+          "id": "es07-host",
+          "label": "ES-07 receiving host",
+          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page."
         }
       ],
       "implementation": [
@@ -897,7 +917,9 @@
         "route:/estimating/estimates/[id]/review",
         "route:/estimating/quotes/[id]/release",
         "scope:ES-05",
-        "route:/estimating/quotes/[id]/response"
+        "route:/estimating/quotes/[id]/response",
+        "route:/estimating/quotes/[id]/conversion",
+        "scope:ES-07"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -949,6 +971,14 @@
           "expected": "Independent desktop/phone acceptance of native incident consumers.",
           "actual": "Proposed reference adapted to current shell; owner acceptance pending.",
           "action": "Inspect source/native captures, keyboard and actual zoom evidence.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fields-es07",
+          "expected": "Native receiving host at desktop/phone with exact recovery.",
+          "actual": "Shared control consumer added; independent visual/device acceptance pending.",
+          "action": "Review real host fixtures and retained reference; do not infer approval from passing tests.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1052,6 +1082,11 @@
           "id": "fi07-host",
           "label": "FI-07 response host",
           "description": "tests/browser/reports.spec.ts: explicit empty response, correctable validation, exact presentation focus return, uncertain original receipt, saved history and owned clarification. Host fixture, not isolated catalogue state."
+        },
+        {
+          "id": "es07-host",
+          "label": "ES-07 receiving host",
+          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page."
         }
       ],
       "implementation": [
@@ -1118,7 +1153,9 @@
         "route:/estimating/estimates/[id]/review",
         "route:/estimating/quotes/[id]/release",
         "scope:ES-05",
-        "route:/estimating/quotes/[id]/response"
+        "route:/estimating/quotes/[id]/response",
+        "route:/estimating/quotes/[id]/conversion",
+        "scope:ES-07"
       ],
       "desktop": "Submit an empty title to focus the summary, then follow its link to the field. Correct the title and save to clear the example error.",
       "mobile": "Summary and inline errors must remain visible at 320 px and 200% zoom.",
@@ -1162,6 +1199,14 @@
           "expected": "Review exact response host at desktop/phone and actual 200% zoom.",
           "actual": "Shared controls adopted for new response/recovery controls. Legacy Service review/issue controls remain a scoped exception.",
           "action": "Review recorded FI-07 evidence with owner, physical device and screen reader.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "validation-es07",
+          "expected": "Native receiving host at desktop/phone with exact recovery.",
+          "actual": "Shared control consumer added; independent visual/device acceptance pending.",
+          "action": "Review real host fixtures and retained reference; do not infer approval from passing tests.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1518,6 +1563,11 @@
           "id": "fi07-host",
           "label": "FI-07 response host",
           "description": "tests/browser/reports.spec.ts: explicit empty response, correctable validation, exact presentation focus return, uncertain original receipt, saved history and owned clarification. Host fixture, not isolated catalogue state."
+        },
+        {
+          "id": "es07-host",
+          "label": "ES-07 receiving host",
+          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page."
         }
       ],
       "implementation": [
@@ -1613,7 +1663,9 @@
         "route:/estimating/estimates/[id]/review",
         "route:/estimating/quotes/[id]/release",
         "scope:ES-05",
-        "route:/estimating/quotes/[id]/response"
+        "route:/estimating/quotes/[id]/response",
+        "route:/estimating/quotes/[id]/conversion",
+        "scope:ES-07"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -1691,6 +1743,14 @@
           "action": "Review the closed-visit acceptance matrix and actual host fixtures at four widths and 200% zoom.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "read-state-es07",
+          "expected": "Native receiving host at desktop/phone with exact recovery.",
+          "actual": "Shared control consumer added; independent visual/device acceptance pending.",
+          "action": "Review real host fixtures and retained reference; do not infer approval from passing tests.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "review": null
@@ -1709,6 +1769,11 @@
           "id": "default",
           "label": "Default",
           "description": "Representative synthetic content and normal interaction."
+        },
+        {
+          "id": "es07-host",
+          "label": "ES-07 receiving host",
+          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page."
         }
       ],
       "implementation": [
@@ -1757,7 +1822,9 @@
         "route:/estimating/estimates/[id]/review",
         "route:/estimating/quotes/[id]/release",
         "scope:ES-05",
-        "route:/estimating/quotes/[id]/response"
+        "route:/estimating/quotes/[id]/response",
+        "route:/estimating/quotes/[id]/conversion",
+        "scope:ES-07"
       ],
       "desktop": "Keep a readable label with each tone; business state and tone are not equivalent.",
       "mobile": "Chips wrap without truncating operational meaning.",
@@ -1785,6 +1852,14 @@
           "expected": "ES-01 readiness chips use the design system's attention and success tones without changing other callers' value mapping.",
           "actual": "Status accepts an optional tone override; ES-01 maps Scope clarification to attention, Discovery complete to success and the other two states to neutral. Catalogue examples are unchanged because the rendered tones are the existing set.",
           "action": "Review the ES-01 readiness chips on the running page at desktop and phone widths; record owner acceptance or a correction.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "status-es07",
+          "expected": "Native receiving host at desktop/phone with exact recovery.",
+          "actual": "Shared control consumer added; independent visual/device acceptance pending.",
+          "action": "Review real host fixtures and retained reference; do not infer approval from passing tests.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -3298,6 +3373,102 @@
           "expected": "Owner-reviewed native adaptation with device and screen-reader evidence.",
           "actual": "Staff evidence page; customer signing/reference iframe not adopted. Exact accepted native images unavailable.",
           "action": "Compare retained reference and bounded native task; keep functional proof separate.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "quotation-conversion",
+      "title": "Exact receiving and controlled conversion",
+      "category": "Forms",
+      "module": "ES",
+      "purpose": "Attributable receiving, explicit item resolution, frozen plan and atomic native Forecast demand with original recovery.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "ready",
+          "label": "Received",
+          "description": "Exact unconditioned preparation received."
+        },
+        {
+          "id": "returned",
+          "label": "Held / Returned",
+          "description": "Owned incomplete pack with retained correction."
+        },
+        {
+          "id": "mapping",
+          "label": "Unresolved items",
+          "description": "Missing, ambiguous, obsolete or incompatible mappings hold review."
+        },
+        {
+          "id": "plan",
+          "label": "Reviewed plan",
+          "description": "Immutable source and target commands; no target yet."
+        },
+        {
+          "id": "stale",
+          "label": "Changed basis",
+          "description": "Compare proposal; affected plan held."
+        },
+        {
+          "id": "converted",
+          "label": "Converted",
+          "description": "Actual linked native demand and original receipts."
+        },
+        {
+          "id": "exception",
+          "label": "Retained effects",
+          "description": "Later corrections retain original targets."
+        },
+        {
+          "id": "unknown",
+          "label": "Original outcome unknown",
+          "description": "Recover original before replacement; reload and exact retry."
+        },
+        {
+          "id": "denied",
+          "label": "Unavailable",
+          "description": "Current authority removes protected content."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/quotation-conversion.tsx",
+          "symbol": "QuotationConversion"
+        }
+      ],
+      "dependencies": [
+        "src/components/quotation-release.css",
+        "src/estimating/conversion/reads.ts",
+        "src/estimating/conversion/service.ts",
+        "src/estimating/conversion/context.ts",
+        "docs/contracts/quotation-conversion.md",
+        "src/shared/ui/use-recoverable-command.ts"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",
+        "anchor": "",
+        "status": "Retained proposed reference; native acceptance pending"
+      },
+      "specification": "docs/design/development/components/quotation-conversion.md",
+      "used_on": [
+        "route:/estimating/quotes/[id]/conversion",
+        "scope:ES-07"
+      ],
+      "desktop": "One shell scroll owner; exact binding, recovery, four decision regions, source/target review and immutable history.",
+      "mobile": "Stacked panels at 390/320 px; wrap identities and preserve labelled fields and original recovery above forms.",
+      "keyboard": "Native labelled inputs, shared buttons, visible focus and error focus; no drag-only decision.",
+      "limitations": "Actual fixtures in tests/browser/quotation-conversion.spec.ts. Supply Demand Forecast only; no operational master, ERP order, customer signature or work authority.",
+      "gaps": [
+        {
+          "id": "es07-native-acceptance",
+          "expected": "Owner-reviewed native receiving adaptation with device and screen-reader evidence.",
+          "actual": "Bounded Product-to-Forecast conversion; broader ERP and multi-target reference flows not adopted. Accepted native images unavailable.",
+          "action": "Review native/reference task differences and captured execution states separately from business acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

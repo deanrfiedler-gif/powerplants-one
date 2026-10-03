@@ -1,5 +1,8 @@
 # Quotation response and negotiation implementation handover
 
+**Current reconciliation, 4 October 2026:** ES-04 #338, ES-05 #340 and ES-06 #341 are merged; refreshed main is `e3bbb76fb97bd4271bc657b0e6c2e6231ec24707`. All 24 final ES-06 checks passed. Historical pre-merge statements below retain their checkpoint context. The [ES-07 contribution](quotation-conversion-handover.md) adds exact independent receiving, explicit one-off resolution, reviewed immutable plans and actual native Forecast demand; operational policy and owner acceptance remain separate.
+
+
 <!-- versioning: git; committed history is authoritative -->
 
 Reviewable [PR #341](https://github.com/deanrfiedler-gif/powerplants-one/pull/341). Final-head CI and merge/deployment status are read from that PR; this ledger records completed local proof.

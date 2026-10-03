@@ -169,7 +169,9 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // 0060 adds immutable subordinate staff response evidence and an internal outbox kind.
   // No seed, identity, grant or hosted user changes; existing generic table privileges apply.
   // Original release/Draft bytes and ledgers are covered by populated and hosted upgrade proof.
-  if (latestMigrationVersion !== 60) throw Error("Review the existing-demo upgrade for this release.");
+  // 0061 adds immutable receiving/plans and native demand links; no seeds or grants.
+  // Existing runtime privileges and Supply duties apply; populated upgrades preserve originals.
+  if (latestMigrationVersion !== 61) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

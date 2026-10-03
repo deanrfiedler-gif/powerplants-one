@@ -1367,7 +1367,7 @@
       ],
       "scope_status": "Bounded native staff response; operational authority not configured",
       "visual_status": "Needs review",
-      "functional_status": "Verification in progress; see quotation-response-handover.md",
+      "functional_status": "Merged #341; final checked head a373016 passed 24 checks. See response handover.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -1376,28 +1376,37 @@
       "related_keys": [
         "scope:ES-05",
         "scope:ES-07",
-        "route:/estimating/quotes/[id]/response"
+        "route:/estimating/quotes/[id]/response",
+        "route:/estimating/quotes/[id]/conversion"
       ],
       "reviewer": null
     },
     {
       "key": "scope:ES-07",
-      "title": "One-off item resolution and conversion",
+      "title": "Receiving, one-off resolution and controlled conversion",
       "kind": "scope",
       "module": "ES",
-      "summary": "Implement one-off item resolution, external mapping, target-line review, conversion and uncertain-outcome reconciliation.",
-      "path": "/estimating/conversion",
+      "summary": "Exact receiving, immutable reviewed plan and atomic native Forecast demand with original recovery.",
+      "path": "/estimating/quotes/[id]/conversion",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/estimating/quotes/[id]/conversion/page.tsx"
       ],
       "guide_key": "guide.es.07",
       "design_path": "docs/design/development/pages/scope-es-07.md",
       "html_path": "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/components/quotation-conversion.tsx",
+        "src/components/quotation-release.css",
+        "src/estimating/conversion/reads.ts",
+        "src/estimating/conversion/service.ts",
+        "src/estimating/conversion/context.ts",
+        "docs/contracts/quotation-conversion.md"
+      ],
+      "scope_status": "Bounded native synthetic Supply Demand conversion; operational policy not configured",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "See quotation-conversion-handover.md for executed evidence",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -1405,9 +1414,8 @@
       "build_rank": 54,
       "related_keys": [
         "scope:ES-06",
-        "scope:AD-05",
-        "scope:PD-02",
-        "route:/estimating/quotes/[id]/response"
+        "scope:SC-01",
+        "route:/estimating/quotes/[id]/conversion"
       ],
       "reviewer": null
     },
@@ -11325,7 +11333,7 @@
       ],
       "scope_status": "Bounded native staff response; operational authority not configured",
       "visual_status": "Needs review",
-      "functional_status": "Verification in progress; see quotation-response-handover.md",
+      "functional_status": "Merged #341; final checked head a373016 passed 24 checks. See response handover.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -11335,7 +11343,45 @@
       "related_keys": [
         "scope:ES-05",
         "scope:ES-07",
-        "scope:ES-06"
+        "scope:ES-06",
+        "route:/estimating/quotes/[id]/conversion"
+      ]
+    },
+    {
+      "key": "route:/estimating/quotes/[id]/conversion",
+      "title": "Receiving, one-off resolution and controlled conversion",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Exact receiving, immutable reviewed plan and atomic native Forecast demand with original recovery.",
+      "path": "/estimating/quotes/[id]/conversion",
+      "source_paths": [
+        "src/app/(business)/estimating/quotes/[id]/conversion/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-quotes-id-conversion",
+      "design_path": "docs/design/development/pages/route-estimating-quotes-id-conversion.md",
+      "html_path": "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/quotation-conversion.tsx",
+        "src/components/quotation-release.css",
+        "src/estimating/conversion/reads.ts",
+        "src/estimating/conversion/service.ts",
+        "src/estimating/conversion/context.ts",
+        "docs/contracts/quotation-conversion.md"
+      ],
+      "scope_status": "Bounded native synthetic Supply Demand conversion; operational policy not configured",
+      "visual_status": "Needs review",
+      "functional_status": "See quotation-conversion-handover.md for executed evidence",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 54,
+      "related_keys": [
+        "scope:ES-06",
+        "scope:ES-07",
+        "scope:SC-01"
       ]
     }
   ]

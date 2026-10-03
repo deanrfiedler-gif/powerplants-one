@@ -72,6 +72,34 @@ const result = (
   updated_at: new Date(r.updated_at),
   audit_details,
 });
+// Shared native creation contract, usable inside an already locked domain transaction.
+// The caller records the original Supply:Create operation in that same transaction.
+export async function createSupplyRecordInTransaction(
+  c: PoolClient,
+  p: Principal,
+  input: unknown,
+) {
+  const cmd = recordCommand(input);
+  await newContext(c, p, cmd);
+  const {
+    operation_id: _operation,
+    schema_version: _schema,
+    reason,
+    expected_version: _version,
+    ...values
+  } = cmd;
+  void _operation;
+  void _schema;
+  void _version;
+  return (await insert(c, "supply_records", {
+    ...values,
+    parent_id: cmd.data.demand_id ?? null,
+    workspace_id: p.workspace_id,
+    last_reason: reason,
+    created_by: p.actor_id,
+    updated_by: p.actor_id,
+  })) as SupplyRecord;
+}
 export async function saveRecord(p: Principal, input: unknown, update = false) {
   const cmd = recordCommand(input, update);
   return sharedOperation(
@@ -121,15 +149,7 @@ export async function saveRecord(p: Principal, input: unknown, update = false) {
             [p.workspace_id, cmd.id, ...entries.map(([, v]) => v)],
           )
         ).rows[0];
-      } else
-        saved = await insert(c, "supply_records", {
-          ...values,
-          parent_id: cmd.data.demand_id ?? null,
-          workspace_id: p.workspace_id,
-          last_reason: reason,
-          created_by: p.actor_id,
-          updated_by: p.actor_id,
-        });
+      } else saved = await createSupplyRecordInTransaction(c, p, input);
       if (before && materialChanges(before, saved).length)
         await impacts(
           c,

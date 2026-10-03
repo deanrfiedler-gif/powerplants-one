@@ -1,0 +1,12 @@
+{
+  "baseline": "e3bbb76fb97bd4271bc657b0e6c2e6231ec24707",
+  "captured_host": "Final native host with historical decision details; compiled desktop/mobile run",
+  "review": "Execution captures inspected; owner and independent paired visual acceptance pending",
+  "sha256": {
+    "docs\\testing\\evidence\\quotation-conversion\\desktop.png": "3e14cf647bc746cda1ea75f55ff66283012879d510fdc96ae52fa2f8a37eee72",
+    "docs\\testing\\evidence\\quotation-conversion\\mobile-320.png": "5db89ef822cbbf148ab84e07390d5c40931aef8d6ed95b256575ebd0e555647e",
+    "src/components/quotation-conversion.tsx": "0adc07d51e052be1057dd69b387c7398a0f057244e6ea09406f2f63f969072c7",
+    "src/components/quotation-release.css": "52d249b4dfe9e546810e9a9fbfe50ce2bd55afe49efb6536d52f090974d0216c",
+    "tests/browser/quotation-conversion.spec.ts": "2b435d9761da89f3a9dc1cc26e5ec037a85146a77063e4c0ea9c5a55304d7490"
+  }
+}

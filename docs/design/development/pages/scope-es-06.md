@@ -21,3 +21,5 @@ States: unissued/unavailable, no report, Accepted, Declined, conditional accepta
 Incoming: exact immutable ES-05 issue and original manifest/source/recipient/terms/template. Outgoing: material change to the ES-05 successor path; exact response plus owned review note and unresolved receiving checks for ES-07. This page sends and converts nothing.
 
 Declared departure: bounded authenticated staff capture replaces the proposed customer signing/iframe surface for this increment. Multiple options, operative commercial content, sample validity/withdrawal and local-storage authority are not adopted. See the [native decision](../../../decisions/quotation-response-native.md). Independent paired visual, physical-device, screen-reader and owner acceptance remain pending; no review fingerprint is promoted. [Executed evidence](../../../testing/evidence/quotation-response/README.md) remains separate.
+
+The exact response now links to the separate ES-07 receiving page. That page records receiving and bounded native Forecast demand conversion; this response component still only reports and prepares. See the [ES-07 contract](../../../contracts/quotation-conversion.md).
