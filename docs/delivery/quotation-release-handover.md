@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. 3 October 2026. Implemented on `codex/quotation-release`, [PR #340](https://github.com/deanrfiedler-gif/powerplants-one/pull/340), stacked on [ES-04 PR #338](https://github.com/deanrfiedler-gif/powerplants-one/pull/338). This document records actual source and proof separately from owner acceptance, merge and deployment.
+Owner: Dean Fiedler. 3 October 2026. Implemented on `codex/quotation-release`, [PR #340](https://github.com/deanrfiedler-gif/powerplants-one/pull/340), based on merged [ES-04 PR #338](https://github.com/deanrfiedler-gif/powerplants-one/pull/338) (main `48b2abd`, merged independently on 3 October). This document records actual source and proof separately from owner acceptance, merge and deployment.
 
 ## Implemented boundary
 
@@ -41,6 +41,12 @@ The focused FI07-07 case passes locally against the task-owned resettable databa
 ## Scheduling successor focus integration
 
 The parent repair `b00dab0` fixes a delayed-head focus race also reproduced on unchanged main. [Original failure, source hashes and complete 18-case parent proof](../testing/evidence/scheduling-successor-focus/README.md) are retained with the implementation and live guide/component records. After integrating it as `bec9340`, this ES-05 checkout also passed a fresh production build (including TypeScript), studio integrity and both compiled desktop/mobile delayed-head focus cases. Parent and child Scheduling implementation/test bytes match. This focused follow-up changes no quotation command, migration, grant or issued output. Fresh final-head CI remains separate.
+
+## Retained assurance repair after run 37112227931
+
+The failed head `69e0ffa` passed quotation-specific assurance and the standalone compiled browser check. Its primary browser lane passed 549 cases and failed desktop CR05 before its saved review finished loading; the original context and subsequent screenshot retain both states. An unchanged-main compiled control passed normally and reproduced the same assertion failure when its real review response was delayed six seconds. The corrected test awaits that original exact-record response before retaining all UI assertions. This is a test readiness correction, not a changed commercial workflow.
+
+The database job reached its 90-minute limit with 703 cases passed and no assertion failure; it did not complete. The full suite now uses two native Node shards, each serial against its own disposable database. Both remain mandatory under the existing aggregate, with unchanged individual and job deadlines. Local full-suite selection is unchanged. [Decision, measured comparison and alternatives](../decisions/ci-retained-suite-isolation.md#es-05-full-database-suite-budget) and [repair verification](../testing/evidence/quotation-assurance-repair/README.md) keep the failed original separate from corrected-source proof.
 
 ## Next boundary
 
