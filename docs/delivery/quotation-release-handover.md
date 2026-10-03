@@ -32,6 +32,12 @@ Codex inspected original desktop, phone and 320px views. This is not accepted pa
 
 The baseline checkout, unfinished Excel parser/worktree, all other unfinished contributions, original issued references and retained private restart evidence are preserved. Main was refreshed again at `6e8b898`; open Field Work #339 has no competing migration allocation. No merge, deployment, live integration, communication or operational transaction occurred.
 
+## FI07 populated-upgrade follow-up
+
+PR #338's reported database failure exposed a missing FI07-07 expectation for grants and later migrations. This stacked contribution includes the parent repair and extends the same strict proof through 0059: all original grants/users and business evidence survive unchanged; exactly eighteen combined seed-58/59 grants and the two complete local quotation user rows are added; migration additions are `[57, 58, 59]` and seed additions `[58, 59]`. A second migration/seed run preserves the first run's grants, users and ledgers exactly. Original report response/receipt replay and issued HTML/PDF hashes remain checked.
+
+The focused FI07-07 case passes locally against the task-owned resettable database. This is additional evidence to the nine passing customer-response cases on the repaired parent; it is not a claim that the full child database suite has rerun. The fix changes test expectations and documentation only. The existing restart databases and issued originals remain preserved. Fresh final-head CI is still required.
+
 ## Next boundary
 
 ES-06 must record the exact issue, permitted selection and attributable customer-response/correction facts without transferring acceptance. Material negotiation requires an explicit ES-05 successor. ES-07 then separates handover sending, receiving, item/target-line review and idempotent downstream creation. Neither Excel import nor specialist expansion is a prerequisite for the initial manual journey.

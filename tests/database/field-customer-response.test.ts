@@ -48,7 +48,7 @@ import {
   inspect,
 } from "../helpers/service-inspections";
 import { inspectionCommand } from "../../src/inspections/service-commands";
-import { estimateReviewSeedGrants } from "../helpers/engineering-materials-grants";
+import { estimateReviewSeedGrants, quotationReleaseSeedGrants } from "../helpers/engineering-materials-grants";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Use only ppo_synthetic_test");
@@ -662,9 +662,9 @@ test("FI07-07 populated 0056 upgrade preserves original response hashes, output 
     "report_presentations",
     "customer_responses",
     "report_templates",
-    "users",
     "operation_receipts",
   ]);
+  const users = await rows("SELECT * FROM ppo.users ORDER BY id");
   const grants = await rows("SELECT * FROM ppo.permission_grants ORDER BY id");
   const ledger = await rows(
     "SELECT * FROM public.ppo_migrations ORDER BY version",
@@ -675,14 +675,14 @@ test("FI07-07 populated 0056 upgrade preserves original response hashes, output 
   const bytes = await presentationBytes(q.p, q.report.id, cmd.presentation_id);
   await migrate();
   await seed();
-  const firstUpgrade = await snapshot(["permission_grants", "seed_receipts"]);
+  const firstUpgrade = await snapshot(["permission_grants", "users", "seed_receipts"]);
   const firstLedger = await rows(
     "SELECT * FROM public.ppo_migrations ORDER BY version",
   );
   await migrate();
   await seed();
   assert.deepEqual(
-    await snapshot(["permission_grants", "seed_receipts"]),
+    await snapshot(["permission_grants", "users", "seed_receipts"]),
     firstUpgrade,
   );
   assert.deepEqual(
@@ -700,7 +700,6 @@ test("FI07-07 populated 0056 upgrade preserves original response hashes, output 
       "report_presentations",
       "customer_responses",
       "report_templates",
-      "users",
       "operation_receipts",
     ]),
     originals,
@@ -715,20 +714,43 @@ test("FI07-07 populated 0056 upgrade preserves original response hashes, output 
       .filter(([key]) => key !== "id")
       .sort(([a], [b]) => a.localeCompare(b))),
   )).sort();
-  const expectedGrants = estimateReviewSeedGrants(grants);
-  assert.equal(expectedGrants.length, 5);
+  const expectedGrants = [...estimateReviewSeedGrants(grants), ...quotationReleaseSeedGrants(grants)];
+  assert.equal(expectedGrants.length, 18);
   assert.deepEqual(
     grantContents(upgradedGrants.filter((g) => !originalGrantIds.has(g.id))),
     grantContents(expectedGrants),
   );
+  const upgradedUsers = await rows("SELECT * FROM ppo.users ORDER BY id");
+  const originalUserIds = new Set(users.map((u) => u.id));
+  assert.deepEqual(upgradedUsers.filter((u) => originalUserIds.has(u.id)), users);
+  assert.deepEqual(upgradedUsers.filter((u) => !originalUserIds.has(u.id)), [
+    {
+      id: "e5050059-0000-4000-8000-000000000001",
+      workspace_id: "10000000-0000-4000-8000-000000000001",
+      issuer: "PPO-LocalSynthetic",
+      subject_id: "quotation-approver",
+      display_name: "SYN Quotation approver",
+      active: true,
+      synthetic: true,
+    },
+    {
+      id: "e5050059-0000-4000-8000-000000000002",
+      workspace_id: "10000000-0000-4000-8000-000000000001",
+      issuer: "PPO-LocalSynthetic",
+      subject_id: "quotation-issuer",
+      display_name: "SYN Quotation issuer",
+      active: true,
+      synthetic: true,
+    },
+  ]);
   const after = await rows(
     "SELECT * FROM public.ppo_migrations ORDER BY version",
   );
   assert.deepEqual(after.filter((row) => row.version <= 56), ledger);
-  assert.deepEqual(after.filter((row) => row.version > 56).map((row) => row.version), [57, 58]);
+  assert.deepEqual(after.filter((row) => row.version > 56).map((row) => row.version), [57, 58, 59]);
   const afterSeeds = await rows("SELECT * FROM ppo.seed_receipts ORDER BY version");
   assert.deepEqual(afterSeeds.filter((row) => row.version <= 56), seedLedger);
-  assert.deepEqual(afterSeeds.filter((row) => row.version > 56).map((row) => row.version), [58]);
+  assert.deepEqual(afterSeeds.filter((row) => row.version > 56).map((row) => row.version), [58, 59]);
   assert.deepEqual(
     (await recordResponse(q.p, q.report.id, cmd)).receipt,
     saved.receipt,
