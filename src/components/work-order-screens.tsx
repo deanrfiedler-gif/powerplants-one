@@ -1221,22 +1221,27 @@ function VisitForm({
     [windowEnd, setWindowEnd] = useState(""),
     [commitment, setCommitment] = useState("Unknown"),
     [preparation, setPreparation] = useState("Unknown"),
-    [expected, setExpected] = useState(w.version),
-    [basis, setBasis] = useState(r),
+    [expected, setExpected] = useState<number | null>(null),
+    [basis, setBasis] = useState<Scope | null>(null),
     [id, setId] = useState(() => crypto.randomUUID());
   const cmd = useBookingCommand();
+  const proposalScope = basis ?? r;
   return (
     <ValidationFields error={cmd.error}>
       <form
+        onChangeCapture={() => {
+          setExpected((current) => current ?? w.version);
+          setBasis((current) => current ?? r);
+        }}
         onSubmit={async (e) => {
           e.preventDefault();
           const result = await cmd.send(
             `service/work-orders/${w.id}/visits`,
             {
               id,
-              expected_version: expected,
-              scope_revision_id: basis.id,
-              scope_version: basis.version,
+              expected_version: expected ?? w.version,
+              scope_revision_id: proposalScope.id,
+              scope_version: proposalScope.version,
               start_at: start ? new Date(start).toISOString() : null,
               end_at: end ? new Date(end).toISOString() : null,
               requested_window_start: windowStart
@@ -1260,6 +1265,8 @@ function VisitForm({
             setWindowEnd("");
             setCommitment("Unknown");
             setPreparation("Unknown");
+            setExpected(null);
+            setBasis(null);
             setId(crypto.randomUUID());
             onSaved();
           }
@@ -1276,7 +1283,7 @@ function VisitForm({
           }
         >
           <ConflictReview
-            version={expected}
+            version={expected ?? w.version}
             latest={w.version}
             onAdopt={() => {
               cmd.clear();
@@ -1285,8 +1292,8 @@ function VisitForm({
             }}
           />
           <p>
-            Proposal basis: work order v{expected}, scope r{basis.revision} · v
-            {basis.version}. Comparing saved changes retains your input; adopt
+            Proposal basis: work order v{expected ?? w.version}, scope r{proposalScope.revision} · v
+            {proposalScope.version}. Comparing saved changes retains your input; adopt
             reviewed current context explicitly.
           </p>
           <p>
