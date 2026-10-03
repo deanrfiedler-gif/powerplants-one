@@ -1,0 +1,110 @@
+{
+  "date": "2026-10-03",
+  "source_commit": "ea67777b35fa5cd347da45fc2b3ef33d612ec4bd",
+  "source_claim": "Compiled runtime source matches these committed file bytes; later evidence-only changes do not alter runtime source.",
+  "build_id": "2UNA4XbTVlXZEmaNWYuqg",
+  "runtime_source_sha256": {
+    "db/migrations/0059-quotation-release.sql": "14cb6b3e80552f7b435122b64a05cad3626f4cad7a37b0b0a5cd7a4f41f6df41",
+    "db/seed-quotation-release.sql": "20a318ffa26a1f37c0434476d9850dee10651971036432d50e72da2cf8c447df",
+    "scripts/quotation-release-restart.ts": "466374c56945503688713301ba02567a2beec5fa95d71eb99df2a8f85c54d267",
+    "src/app/(business)/estimating/quotes/[id]/release/page.tsx": "6b7980cd3b8eb2df86d5bf8da0405f1368b7b0b1f3333a329463b03a077b521f",
+    "src/app/api/v1/estimating/quotes/[id]/release/approval/route.ts": "fd3173d4c82ae031b35df5a8b7c05b78f5ebdf665824c9b9e3dffef105ad9e9b",
+    "src/app/api/v1/estimating/quotes/[id]/release/distribution/route.ts": "3d08f2db461bba430a40ce3be2eb5f953d53030ad5f5382ee89490185007639c",
+    "src/app/api/v1/estimating/quotes/[id]/release/issue/route.ts": "11961ce46afb66b935349d8a9324778432ba3900eb544d73028b277a8bba2711",
+    "src/app/api/v1/estimating/quotes/[id]/release/prepare/route.ts": "156b3e5e08740b3d01e157584e2af6862efe96664969c3de683308dbd5036438",
+    "src/app/api/v1/estimating/quotes/[id]/release/route.ts": "c59b81dd52408f2f506cbd84d48d902f42a8486254fe9cb00909dcff3aabe1e6",
+    "src/components/business-session.tsx": "23fa8144467f7cacd81130b803d2615e477b710929366cbe25096459d3b0c536",
+    "src/components/estimating-screens.tsx": "33a1bcee3c48d5841b5a8ef9b91be7a313f47503f9ee55a91d046bce510bcac1",
+    "src/components/quotation-release.css": "52d249b4dfe9e546810e9a9fbfe50ce2bd55afe49efb6536d52f090974d0216c",
+    "src/components/quotation-release.tsx": "0e0686a4a17993d30b750d7b1b2c09451c269126676ecf360d3e02789fa872e2",
+    "src/estimating/context.ts": "a4a5e5dd3906ee7801450d777fae291c7ccd97eec003affbd546ab9eb02b71ab",
+    "src/estimating/reads.ts": "d63b7fd00573589723d12e97d575dae6f6dc2c7b19dcabf47e016305b973b158",
+    "src/estimating/release/context.ts": "c4612d2ef7dc954e13a558ff2f47d50895caecc80f174b2a26be13c43d2cc611",
+    "src/estimating/release/policy.ts": "8d800d49b43dfbae4e210bd5a55b2995c23206c5ca675bdf69e0d8fb51593357",
+    "src/estimating/release/reads.ts": "1be95ca43d12f54e6ceb6c80c3059d9e768c523be3e3c7525a338834506cbf94",
+    "src/estimating/release/recipient.ts": "8b2bf82a3dd44695f99cd1d1d2a9f66e21039856e494df17c138961160d636ea",
+    "src/estimating/release/service.ts": "72d4dd3d455e447d75c1a8c08a21b4a7c77577c9248ab7bed26c151d94d45332",
+    "src/estimating/release/template.ts": "d6c8a1a6ef5ed7b1f82b7720fbe6f2d0cd38a1d8af48595706cab1b564a4a55a",
+    "src/estimating/release/validation.ts": "f39ce03debee26496dd3da27cba803fb91985b1928c92e497e6b4ae1018012f8",
+    "src/estimating/worker.ts": "78c760dcbce6a7daf54346e1fd0677ae300100c748f2b808bca6ef4d6ae1b531",
+    "src/platform/identity.ts": "9456d4420cffc25c7a10c34e91bd66c2de08f7334e1c8c99c26ac5ab814da6b5",
+    "src/platform/permissions.ts": "15b6a36a788b0cd33af11da6d642af3c9fc9fb5cf8e0c0e250a23c37e9aacb21",
+    "src/shared/receipts.ts": "12afc0419b514d288385e9fa5db9e341859670801268c3195ccb15b5284a177d"
+  },
+  "runtime": {
+    "node": "24.21.0",
+    "npm": "11.19.0",
+    "postgresql": "16.15",
+    "playwright": "1.63.0",
+    "chrome": "154.0.8037.97",
+    "database": "ppo_synthetic_test"
+  },
+  "restart": {
+    "application_restarted": true,
+    "postgresql_restarted": true,
+    "exact_original_replays": 4,
+    "unchanged_rows_by_kind": {
+      "base": 1,
+      "estimate": 1,
+      "event": 4,
+      "quote": 2,
+      "receipt": 10,
+      "review": 4,
+      "version": 1
+    },
+    "original_files": [
+      {
+        "kind": "html",
+        "sha256": "b3cb35d677a7d8a291738761c9dac598ce3e92d715691d4de5a7a7866c521fa1"
+      },
+      {
+        "kind": "pdf",
+        "sha256": "c98c2d9dc874294b6899e35caa49bfe7dfb8aea2e21782f40e7d5d979a7dd7b6"
+      },
+      {
+        "kind": "html",
+        "sha256": "e15d72bafd7866658a7716e0916171c49dd3cae6258b69d509a7599a481bb6e2"
+      },
+      {
+        "kind": "pdf",
+        "sha256": "5a02a3ac3665ac477a2ef76ecb5880ba2d559cb5ab22b8624ae699f5f70ef59d"
+      }
+    ]
+  },
+  "images": [
+    {
+      "path": "issued-desktop.png",
+      "width": 1440,
+      "height": 1000,
+      "state": "Issued and simulated-delivered overview",
+      "sha256": "0a8214245773f4350525e36a488f448c56e45c18fe5adea487e0d2066721b445",
+      "inspected_by": "Codex",
+      "result": "Readable controls and wrapping in the captured viewport; no horizontal overflow in automated width checks"
+    },
+    {
+      "path": "issued-phone.png",
+      "width": 390,
+      "height": 844,
+      "state": "Stacked release overview",
+      "sha256": "805cc5017627acc8837cbf141e883753c397e09823f53954bee519a0c2b46750",
+      "inspected_by": "Codex",
+      "result": "Readable controls and wrapping in the captured viewport; no horizontal overflow in automated width checks"
+    },
+    {
+      "path": "changed-basis-320.png",
+      "width": 320,
+      "height": 844,
+      "state": "Changed preparation basis and exact recipient disclosure",
+      "sha256": "b74786f366264e4cd091118421895833ba65d9597c55c0dfcca223f7040f679e",
+      "inspected_by": "Codex",
+      "result": "Readable controls and wrapping in the captured viewport; no horizontal overflow in automated width checks"
+    }
+  ],
+  "review_status": "Bounded agent inspection only; visual baseline and owner acceptance pending",
+  "limitations": [
+    "No accepted paired native reference screenshots; retained ES-05 r02 remains reference-only",
+    "Physical device, screen-reader and 200% browser zoom acceptance not claimed",
+    "Long technical identities remain visible in expanded evidence; human-friendly history attribution is a subsequent usability refinement",
+    "No commercial validity, live distribution, external integration, merge or deployment"
+  ]
+}
