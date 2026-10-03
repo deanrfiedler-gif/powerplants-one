@@ -12,7 +12,7 @@
     },
     {
       "path": "db/migrations/0060-quotation-response.sql",
-      "sha256": "be007de57db5cd499d6258067aba4eaf0d84320918133f7d598020b9bdae812b"
+      "sha256": "375da07fb363f4889afcc358dd9e2a7a785547fc11a7adbb423c780add053050"
     },
     {
       "path": "docs/testing/evidence/quotation-response/desktop.png",
@@ -132,7 +132,7 @@
     },
     {
       "path": "tests/database/quotation-response.test.ts",
-      "sha256": "785dc12cbb56d951619ae2b0ac87a40f3a79c2e102f5c3918ee28c6af48aacf1"
+      "sha256": "c5f6089e426e62a12493a61fced6ce42b1e0bf882aa9a53593a87c290c9d26b3"
     },
     {
       "path": "tests/database/reports.test.ts",

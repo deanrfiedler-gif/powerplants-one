@@ -16,9 +16,11 @@ CREATE TABLE ppo.quote_response_events (
  FOREIGN KEY(workspace_id,revision_id,response_id) REFERENCES ppo.quote_response_events(workspace_id,revision_id,id),
  FOREIGN KEY(workspace_id,created_by) REFERENCES ppo.users(workspace_id,id),
  CHECK(jsonb_typeof(detail)='object' AND octet_length(detail::text)<=16384),
- CHECK((action IN ('Record','Correct') AND report IS NOT NULL AND jsonb_typeof(report)='object'
-   AND report->>'outcome' IN ('Accepted','Declined','Clarification','Negotiation')
-   AND length(btrim(report->>'respondent')) BETWEEN 1 AND 200 AND length(btrim(report->>'claimed_role')) BETWEEN 1 AND 200
+ CONSTRAINT ck_quote_response_report CHECK((action IN ('Record','Correct') AND report IS NOT NULL AND jsonb_typeof(report)='object'
+   AND coalesce(report->>'outcome','') IN ('Accepted','Declined','Clarification','Negotiation')
+   AND coalesce(length(btrim(report->>'respondent')),0) BETWEEN 1 AND 200 AND coalesce(length(btrim(report->>'claimed_role')),0) BETWEEN 1 AND 200
+   AND jsonb_typeof(report->'respondent')='string' AND jsonb_typeof(report->'claimed_role')='string'
+   AND (report->'conditions'='null'::jsonb OR (jsonb_typeof(report->'conditions')='string' AND length(report->>'conditions')<=2000))
    AND report ?& ARRAY['outcome','respondent','claimed_role','responded_at','conditions'] AND octet_length(report::text)<=16384 AND detail='{}'::jsonb)
    OR (action IN ('Answer','Confirm','Prepare') AND report IS NULL AND response_id IS NOT NULL)),
  CHECK(action<>'Correct' OR response_id IS NOT NULL)

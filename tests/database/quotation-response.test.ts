@@ -4,7 +4,7 @@ import { join } from "node:path";
 import assert from "node:assert/strict";
 import { before, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
-import { database, closeDatabase } from "../../src/platform/database";
+import { database, closeDatabase, transaction } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { reset, migrate, seed } from "../../scripts/database";
 import { createSession } from "../../src/platform/identity";
@@ -351,8 +351,8 @@ test("ES06 missing output holds a new response but cannot erase or prevent autho
 test("ES06 direct insert needs exact issue/hash and deferred atomic evidence", async () => {
   const f = await responseFixture(),
     command = response(f.d);
-  const insert = (hash: string) =>
-    database().query(
+  const insert = (hash: string, report: unknown = command.report, client: Pick<ReturnType<typeof database>, "query"> = database()) =>
+    client.query(
       `INSERT INTO ppo.quote_response_events
     (id,workspace_id,quote_id,revision_id,issue_id,sequence,action,response_id,output_hash,report,detail,evidence,reason,created_by,operation_id)
     VALUES($1,$2,$3,$4,$5,1,'Record',NULL,$6,$7,'{}','SYN','SYN',$8,$9)`,
@@ -363,13 +363,19 @@ test("ES06 direct insert needs exact issue/hash and deferred atomic evidence", a
         f.id,
         f.d.issue.id,
         hash,
-        command.report,
+        report,
         f.owner.actor_id,
         randomUUID(),
       ],
     );
   await assert.rejects(insert("a".repeat(64)), code("23514"));
   await assert.rejects(insert(f.d.issue.output_hash), code("23514"));
+  for (const change of [{ respondent: null }, { claimed_role: null }, { outcome: null }, { respondent: 42 }, { conditions: {} }]) {
+    await assert.rejects(transaction(async c => {
+      await insert(f.d.issue.output_hash, { ...command.report, ...change }, c);
+      throw Error("Malformed attribution must fail before deferred evidence validation");
+    }), (e: unknown) => !!e && typeof e === "object" && "constraint" in e && e.constraint === "ck_quote_response_report");
+  }
   assert.equal((await readResponse(f.owner, f.id)).events.length, 0);
 });
 test("ES06 populated 0059 upgrade preserves release/review, receipts, grants, identities and exact Draft/issue bytes", async () => {
