@@ -161,7 +161,11 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // trigger. No existing row, identity, template, seed, grant or user changes.
   // Generic runtime grants cover the companion; invited testers gain no duty.
   // Populated P09 and hosted-upgrade proofs retain originals and ledger hashes.
-  if (latestMigrationVersion !== 57) throw Error("Review the existing-demo upgrade for this release.");
+  // 0058 adds immutable subordinate estimate-review evidence and three explicit
+  // local-only grants to the existing source reviewer; no hosted roles, users or
+  // original estimate/quotation/output rows change. Generic runtime table grants
+  // cover the sidecar; populated upgrade and exact grant assertions cover the seed.
+  if (latestMigrationVersion !== 58) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

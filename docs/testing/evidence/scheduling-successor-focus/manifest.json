@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "baseline_source": "8c14233d328bae1378bd3db6b579673262c506bb",
+  "candidate_base": "6ba8b1e6db19095bbe8af8597f074e5bc5b209df",
+  "build_id": "K6xlSS_9KQYqTw7pk-cPW",
+  "implementation": {
+    "path": "src/scheduling/components/client/policy-publication.client.tsx",
+    "sha256": "02863999b806cc37b1d1232435140d663d5192f1fcd0938206bb8dcdbaacf257"
+  },
+  "regression": {
+    "path": "tests/scheduling-browser/successor-focus.spec.ts",
+    "sha256": "03a2f01acaccdc24abbfeba5ceb7c0161d2e0784d208ff517141b7ce27e11ee7"
+  },
+  "original_ci": {
+    "run": 37108440454,
+    "job": 111161435964,
+    "artifact": 11269826301,
+    "scheduling_passed": 15,
+    "scheduling_failed": 1
+  },
+  "baseline": {
+    "ordinary_mobile_passed": 3,
+    "delayed_head_failed": 1,
+    "assertion": "Unsaved successor edits heading toBeFocused; unchanged five-second deadline."
+  },
+  "candidate": {
+    "compiled_scheduling_passed": 18,
+    "failed": 0,
+    "build": "passed",
+    "typecheck": "passed",
+    "lint": "passed",
+    "foundation": "passed",
+    "prototype": "passed",
+    "naming": "passed",
+    "studio": "passed"
+  },
+  "captures": [
+    {
+      "file": "desktop-successor-focus.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "sha256": "3b8f46d7e6b23504603b0c68d1869de374a357fc66740f9d4dc44cef52a46ad7",
+      "capture": "Immediately after the passing heading-focus assertion; synthetic fixture."
+    },
+    {
+      "file": "mobile-successor-focus.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "2e5cb199a9cbd4ca87ab4ef69d63e75fb401f06c61c05b8f47f65ba8dcaf8e12",
+      "capture": "Immediately after the passing heading-focus assertion; synthetic fixture."
+    }
+  ],
+  "review": "Codex inspected both captures for readable unclipped content. Programmatic focus is separately asserted. No paired accepted reference, owner, physical-device or screen-reader acceptance."
+}

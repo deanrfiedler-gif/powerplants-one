@@ -25,3 +25,9 @@ Host state fixtures are exercised against task-owned synthetic PostgreSQL by `te
 Reuse the shared online journal with an opt-in receipt check for server-allocated publication IDs; all other consumers retain their exact record-ID check. The journal never defines saved evidence, automatically posts on reload or clears an appointment hold. Owner/visual/device review and the component alignment item remain pending.
 
 An unavailable original receipt keeps the retained operation and explicit unchanged retry available. It establishes neither success nor failure. Actual authority denial hides protected evidence. The host fixture includes a request lost before server acceptance, a 404 lookup after reload, and one exact original retry producing one publication/impact set.
+
+## Successor focus while the head loads
+
+Only the `PolicyPublicationWorkspace` consumer at `/schedule/policy-impact` changes. An explicit Edit request retains focus intent until its permitted successor form mounts, even when the separate current-head read arrives later than the saved proposal. Repeated Edit focuses the existing heading; ordinary field updates do not steal focus. Appointment hold/resolution consumers retain their existing bindings and behaviour.
+
+The real-host `tests/scheduling-browser/successor-focus.spec.ts` fixture holds the actual current-head response across browser paints, releases its unchanged contents, and checks heading focus, typing focus and repeated Edit on desktop and phone. [Original failure, unchanged-main comparison and repair proof](../../../testing/evidence/scheduling-successor-focus/README.md) remain separate from owner/device/visual acceptance. No review fingerprint is adopted.

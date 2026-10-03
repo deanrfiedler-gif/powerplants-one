@@ -39,3 +39,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 The draft User Guide `guide.es.04` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## Native bounded implementation — 3 October 2026
+
+The saved-estimate entry now links `/estimating/estimates/[id]/review`. Exact submissions, independent evidence-review kinds, attributable findings/corrections and selective applicability are implemented. The proposed review queue remains unbuilt. Commercial approval and pricing exceptions remain Not configured. Reuses the estimate-review host component, shared controls and original-operation journal; incoming/outgoing boundaries and desktop/mobile requirements are in [the native page contract](route-estimating-estimates-id-review.md). Source presence and automated proof do not grant visual, owner or deployment acceptance.

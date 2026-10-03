@@ -1,0 +1,19 @@
+{
+  "source_commit": "8e3d348",
+  "date": "2026-10-03",
+  "runtime": "Windows; Node 24.21.0; PostgreSQL 16.15; Playwright 1.63.0; pinned Chrome 154.0.8037.97; compiled application",
+  "source": "Task-owned local synthetic PostgreSQL and actual native route; original PNG bytes copied without editing",
+  "inspection": "Agent inspected both viewports: readable review basis and separately labelled review kinds; no horizontal clipping. Viewport captures do not show the entire scrollable record. UUID-heavy attribution remains a usability limitation. No owner, physical-device, screen-reader or full reference-conformance acceptance.",
+  "screenshots": [
+    {
+      "file": "reviewed-overview-desktop.png",
+      "sha256": "ed0591e0f309beb7269ce54049991e8fd719aa529b21bca0eeb3f8ec0cff98f7",
+      "source_test_capture": "estimating-review-ES04-exa-ad8db-tion-and-independent-review-desktop-chromium/reviewed-history.png"
+    },
+    {
+      "file": "review-basis-320.png",
+      "sha256": "e25e42720d4123881c4cf39d50debd20a8545c0aad95a5c652b728dc13cc0500",
+      "source_test_capture": "estimating-review-ES04-sta-5f58d-e-evidence-at-narrow-widths-mobile-chromium/review-320.png"
+    }
+  ]
+}
