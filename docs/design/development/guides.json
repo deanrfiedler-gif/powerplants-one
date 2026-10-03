@@ -6059,246 +6059,153 @@
     {
       "guide_key": "guide.es.04",
       "entry_key": "scope:ES-04",
-      "title": "Estimate review and pricing exceptions",
+      "title": "Saved estimate review",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Bounded native synthetic workflow",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-10-03",
+      "source_commit": "6e8b898",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "Not run for this guide",
       "sections": [
         {
           "section_id": "purpose",
-          "title": "Purpose and outcome",
+          "title": "Purpose and applicability",
           "paragraphs": [
-            "Use Estimate review and pricing exceptions to work towards this outcome: Findings and disposition are traceable to the reviewed estimate.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "Review completion must not silently grant discount authority or issue a quotation."
+            "Review exact saved synthetic estimate evidence. Completeness, source-price and technical review are independent of commercial approval. This page cannot issue a quotation."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "before",
-          "title": "Before you start",
+          "title": "Before starting",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Exact estimate revision, pricing exceptions, findings and reviewer authority.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use current permitted customer/opportunity/site context and a saved estimate with complete manual lines. Owner submission requires estimating.edit; each reviewer needs its explicit review duty and all underlying reads. The owner, version author and submitter cannot review their own work."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Review the submitted costing basis and assumptions",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Open a saved estimate, choose Review exact saved estimate, inspect its version/hash and submit with a rationale. The synthetic source reviewer has separately seeded completeness, price and technical duties. These local duties are not commercial delegation."
           ],
-          "rows": [],
-          "headers": []
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "page-tour",
-          "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Estimate review and pricing exceptions · Page"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "title": "Page tour",
+          "paragraphs": [
+            "The source panel names the saved revision and review sequence. Expand submitted scope and cost evidence. Three review cards distinguish applicable decisions from changed facts. Correction and decision forms precede immutable history; exact history links open their original saved cost version."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "information",
-          "title": "Information you need",
+          "title": "Information and fields",
           "paragraphs": [
-            "Exact estimate revision, pricing exceptions, findings and reviewer authority.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Reason is mandatory and retained with the actor. Returned requires a finding against the whole submitted estimate or one exact line. The native form accepts one finding per return. Responses identify each original finding; changing scope or costs requires a saved successor first. Blank prices are never fabricated."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "tasks",
-          "title": "Complete the main task",
+          "title": "Tasks",
           "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
+            "Owners respond to every outstanding finding and submit the current saved revision. Independent reviewers choose the review kind and Reviewed or Returned, then supply the rationale and any required finding. A recorded decision cannot be edited. Clarification can resubmit unchanged content after return."
           ],
-          "steps": [
-            "Review the submitted costing basis and assumptions",
-            "Return specific findings to their owners",
-            "Record the permitted review outcome for that exact revision"
-          ],
-          "rows": [],
-          "headers": []
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Findings and disposition are traceable to the reviewed estimate.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Review completion must not silently grant discount authority or issue a quotation."
+            "Reviewed means all three currently applicable evidence reviews exist for the current submitted estimate. It does not approve pricing exceptions, release Engineering work or authorise quotation issue. Commercial approval and pricing-exception rules remain Not configured in this increment."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "states",
-          "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "title": "States and boundaries",
+          "paragraphs": [
+            "Not reviewed, Reviewed, Returned and Changed basis are distinct. A later manual-price or typed-source observation invalidates price applicability without erasing unaffected technical/completeness evidence. Scope changes affect scope reviews. Every earlier decision keeps its own actor/submission."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "examples",
-          "title": "Worked examples",
+          "title": "Synthetic example",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare exact estimate revision, pricing exceptions, findings and reviewer authority. Follow the task sequence and check that findings and disposition are traceable to the reviewed estimate. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Estimate review and pricing exceptions has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Review completion must not silently grant discount authority or issue a quotation."
+            "Submit a controls estimate. Return its incomplete scope statement. Save the clarified scope, respond to the original finding and submit a successor. Record independent review. A later sell-price change requires price review while unchanged technical evidence stays linked to the original decision."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "recovery",
-          "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "title": "Recovery and stale changes",
+          "paragraphs": [
+            "Outcome unknown holds replacement commands. Check original outcome or retry the exact original; an unavailable receipt is not proof of failure. Reload recovers the actor-bound same-tab command. A changed sequence keeps entered fields and asks you to compare before Use current review basis. Permission failure removes protected evidence."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "mobile",
-          "title": "Mobile, keyboard and offline use",
+          "title": "Mobile, keyboard and offline",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Cards stack below 900 CSS px; UUIDs and reasons wrap at 390/320 px. Use labelled native fields, shared buttons and keyboard focus. The command journal is same-tab recovery only; there is no offline submission or review."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "resources",
-          "title": "Related guidance and procedures",
+          "title": "Resources",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "Read docs/contracts/estimating-review.md, docs/decisions/estimating-review-native.md and docs/delivery/estimating-review-handover.md. ES-04 r01 is the retained proposed reference. No exact desktop/mobile design image was supplied for this native composition."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "review",
-          "title": "Guide review and feedback",
+          "title": "Review status",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "This guide is Draft. Source presence and automated component proof do not grant owner, visual, physical-device or screen-reader acceptance, merge or deployment."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         }
       ],
       "related_entry_keys": [
-        "scope:ES-03"
+        "route:/estimating/estimates/[id]",
+        "scope:ES-03",
+        "scope:ES-05"
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -39922,7 +39829,8 @@
           "paragraphs": [
             "Use Estimate detail to work towards this outcome: An estimator has a clear, current basis for work.",
             "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "A workload entry is not an approved price or an issued quotation."
+            "A workload entry is not an approved price or an issued quotation.",
+            "Review exact saved estimate opens ES-04. A version_id link selects that immutable historical cost version; current version is displayed separately. Formal evidence review is distinct from E1 Draft preparation and commercial approval."
           ],
           "steps": [],
           "rows": [],
@@ -70120,6 +70028,156 @@
         "docs/decisions/field-incidents.md"
       ],
       "change_summary": "Authored current FI-06 persisted synthetic workflow and recovery; independent acceptance pending."
+    },
+    {
+      "guide_key": "guide.route-estimating-estimates-id-review",
+      "entry_key": "route:/estimating/estimates/[id]/review",
+      "title": "Saved estimate review",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Bounded native synthetic workflow",
+      "source_commit": "6e8b898",
+      "related_entry_keys": [
+        "route:/estimating/estimates/[id]",
+        "scope:ES-03",
+        "scope:ES-05"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Review exact saved synthetic estimate evidence. Completeness, source-price and technical review are independent of commercial approval. This page cannot issue a quotation."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "prerequisites",
+          "title": "Before starting",
+          "paragraphs": [
+            "Use current permitted customer/opportunity/site context and a saved estimate with complete manual lines. Owner submission requires estimating.edit; each reviewer needs its explicit review duty and all underlying reads. The owner, version author and submitter cannot review their own work."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [
+            "Open a saved estimate, choose Review exact saved estimate, inspect its version/hash and submit with a rationale. The synthetic source reviewer has separately seeded completeness, price and technical duties. These local duties are not commercial delegation."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Page tour",
+          "paragraphs": [
+            "The source panel names the saved revision and review sequence. Expand submitted scope and cost evidence. Three review cards distinguish applicable decisions from changed facts. Correction and decision forms precede immutable history; exact history links open their original saved cost version."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information and fields",
+          "paragraphs": [
+            "Reason is mandatory and retained with the actor. Returned requires a finding against the whole submitted estimate or one exact line. The native form accepts one finding per return. Responses identify each original finding; changing scope or costs requires a saved successor first. Blank prices are never fabricated."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Tasks",
+          "paragraphs": [
+            "Owners respond to every outstanding finding and submit the current saved revision. Independent reviewers choose the review kind and Reviewed or Returned, then supply the rationale and any required finding. A recorded decision cannot be edited. Clarification can resubmit unchanged content after return."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Reviewed means all three currently applicable evidence reviews exist for the current submitted estimate. It does not approve pricing exceptions, release Engineering work or authorise quotation issue. Commercial approval and pricing-exception rules remain Not configured in this increment."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "states",
+          "title": "States and boundaries",
+          "paragraphs": [
+            "Not reviewed, Reviewed, Returned and Changed basis are distinct. A later manual-price or typed-source observation invalidates price applicability without erasing unaffected technical/completeness evidence. Scope changes affect scope reviews. Every earlier decision keeps its own actor/submission."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "example",
+          "title": "Synthetic example",
+          "paragraphs": [
+            "Submit a controls estimate. Return its incomplete scope statement. Save the clarified scope, respond to the original finding and submit a successor. Record independent review. A later sell-price change requires price review while unchanged technical evidence stays linked to the original decision."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Recovery and stale changes",
+          "paragraphs": [
+            "Outcome unknown holds replacement commands. Check original outcome or retry the exact original; an unavailable receipt is not proof of failure. Reload recovers the actor-bound same-tab command. A changed sequence keeps entered fields and asks you to compare before Use current review basis. Permission failure removes protected evidence."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline",
+          "paragraphs": [
+            "Cards stack below 900 CSS px; UUIDs and reasons wrap at 390/320 px. Use labelled native fields, shared buttons and keyboard focus. The command journal is same-tab recovery only; there is no offline submission or review."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Resources",
+          "paragraphs": [
+            "Read docs/contracts/estimating-review.md, docs/decisions/estimating-review-native.md and docs/delivery/estimating-review-handover.md. ES-04 r01 is the retained proposed reference. No exact desktop/mobile design image was supplied for this native composition."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "review",
+          "title": "Review status",
+          "paragraphs": [
+            "This guide is Draft. Source presence and automated component proof do not grant owner, visual, physical-device or screen-reader acceptance, merge or deployment."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-10-03"
     }
   ]
 }

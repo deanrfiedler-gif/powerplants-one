@@ -188,7 +188,8 @@
         "route:/service/reports",
         "route:/service/reports/[id]",
         "scope:FI-02",
-        "route:/service/work-orders/[id]"
+        "route:/service/work-orders/[id]",
+        "route:/estimating/estimates/[id]/review"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -889,7 +890,8 @@
         "scope:FI-06",
         "route:/service/incidents/[id]",
         "route:/service/incidents/new",
-        "route:/service/incidents"
+        "route:/service/incidents",
+        "route:/estimating/estimates/[id]/review"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -1106,7 +1108,8 @@
         "route:/service/incidents",
         "scope:FI-07",
         "route:/service/reports",
-        "route:/service/reports/[id]"
+        "route:/service/reports/[id]",
+        "route:/estimating/estimates/[id]/review"
       ],
       "desktop": "Submit an empty title to focus the summary, then follow its link to the field. Correct the title and save to clear the example error.",
       "mobile": "Summary and inline errors must remain visible at 320 px and 200% zoom.",
@@ -1597,7 +1600,8 @@
         "route:/service/reports",
         "route:/service/reports/[id]",
         "scope:FI-02",
-        "route:/service/work-orders/[id]"
+        "route:/service/work-orders/[id]",
+        "route:/estimating/estimates/[id]/review"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -1737,7 +1741,8 @@
         "scope:EQ-08",
         "scope:EQ-09",
         "scope:ES-01",
-        "route:/estimating"
+        "route:/estimating",
+        "route:/estimating/estimates/[id]/review"
       ],
       "desktop": "Keep a readable label with each tone; business state and tone are not equivalent.",
       "mobile": "Chips wrap without truncating operational meaning.",
@@ -2985,6 +2990,91 @@
           "expected": "Accepted native report-response composition and physical/device evidence.",
           "actual": "Retained r02 is proposed and issued-only; native supports both existing presentation modes with explicit attendance subject.",
           "action": "Owner review of adaptations; physical-device, screen-reader and independent visual acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "estimate-review",
+      "title": "Exact estimate review and correction",
+      "category": "Forms",
+      "module": "ES",
+      "purpose": "Separate scoped completeness, source-price and technical evidence from commercial approval.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "unsubmitted",
+          "label": "Not submitted",
+          "description": "No review inferred from saved cost data."
+        },
+        {
+          "id": "submitted",
+          "label": "Exact submission",
+          "description": "Saved revision and three fingerprints retained."
+        },
+        {
+          "id": "returned",
+          "label": "Returned findings",
+          "description": "Attributable originals and correction responses."
+        },
+        {
+          "id": "changed",
+          "label": "Changed basis",
+          "description": "Only affected review applicability changes."
+        },
+        {
+          "id": "reviewed",
+          "label": "Reviewed",
+          "description": "Commercial approval remains separate."
+        },
+        {
+          "id": "recovery",
+          "label": "Outcome unknown",
+          "description": "Same-tab original receipt and retry."
+        },
+        {
+          "id": "denied",
+          "label": "Unavailable",
+          "description": "Protected forms and evidence removed."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/estimate-review.tsx",
+          "symbol": "EstimateReview"
+        }
+      ],
+      "dependencies": [
+        "src/components/estimate-review.css",
+        "src/estimating/review/reads.ts",
+        "src/estimating/review/service.ts",
+        "src/shared/ui/use-recoverable-command.ts",
+        "docs/contracts/estimating-review.md"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/estimate-review/PPO-Estimate-Review-and-Pricing-Exceptions-r01.html",
+        "anchor": "",
+        "status": "Proposed retained reference; native owner acceptance pending"
+      },
+      "specification": "docs/design/development/components/estimate-review.md",
+      "used_on": [
+        "route:/estimating/estimates/[id]/review",
+        "scope:ES-04"
+      ],
+      "desktop": "One shell scroll owner, three review cards, exact-source disclosure, bounded forms and history.",
+      "mobile": "Stacked labelled cards below 900 CSS px; wrap long identifiers at 390/320 px; preserve recovery actions.",
+      "keyboard": "Native labelled inputs, shared buttons, visible focus and error focus; no drag-only decision.",
+      "limitations": "Host fixture only. tests/browser/estimating-review.spec.ts supplies real scoped synthetic records. Commercial approval, thresholds, technical release and ES-05 issue are unavailable.",
+      "gaps": [
+        {
+          "id": "es04-review-acceptance",
+          "expected": "Owner-reviewed native adaptation of retained ES-04 r01 with independent physical-device and screen-reader proof.",
+          "actual": "One exact estimate review page implements the bounded evidence task; no queue, six-view shell or demonstration threshold is adopted. No exact reference image available.",
+          "action": "Review the native page and retained reference side by side; retain functional proof separately.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

@@ -8,6 +8,7 @@ import { aftercareReceiptAuthority } from "../sales/aftercare-service";
 import { handoverReceiptAuthority } from "../sales/handover-service";
 import { personEditAuthority } from "./contacts/commands";
 import { sourceReceiptAuthority } from "../estimating/sources/context";
+import { reviewReceiptAuthority } from "../estimating/review/context";
 import { readEquipmentChange } from "../equipment/changes";
 import {
   equipmentEvidenceRecord,
@@ -190,6 +191,13 @@ export async function readOperation(
     )
       throw unavailable();
   } else if (r.object_type === "Estimate") {
+    if (r.command?.startsWith("EstimateReview:")) {
+      return transaction(async c => {
+        await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE",[p.workspace_id]);
+        await reviewReceiptAuthority(c,p,r.record_id,operation_id);
+        return r.result as OperationReceipt;
+      });
+    }
     if (
       r.command === "ApplySpecialistConfiguration" &&
       (!r.specialist_id ||

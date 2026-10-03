@@ -4,7 +4,11 @@
 
 Owner: Dean Fiedler. Implementation authorised by the 24 September 2026 programme prompt. Review, business acceptance and deployment remain separate.
 
-## Refreshed starting point
+## Current reconciliation — 3 October 2026
+
+Main `6e8b898` integrates workload, schema-2 costing, cost sources at 0048, Screen Systems and fertigation. Registry ends at 0057 before the ES-04 contribution. The [current review handover](estimating-review-handover.md) supersedes dated missing-work and migration statements below: ES-04 review is implemented in its isolated contribution, while commercial approval/ES-05–07 and remaining import/configuration/feedback work retain their separate dependencies. No open PR or competing review contribution was found at refresh; unfinished local work is preserved.
+
+## Historical refreshed starting point
 
 GitHub access and `git fetch --all --prune` succeeded on 24 September 2026. Local `main` and `origin/main` were `ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc`; the main working tree was clean. The dedicated worktree is `tmp/estimating-intake-wizard-refinement`, branch `feat/estimating-intake-wizard-refinement`.
 

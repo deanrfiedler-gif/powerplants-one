@@ -40,3 +40,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 The draft User Guide `guide.page.estimating.estimates.id` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## Exact review integration
+
+Review exact saved estimate opens the ES-04 native record. A `version_id` entry link now selects that original saved cost version and shows the current version separately. Existing E1 cost editing and Draft output remain unchanged. Reuse the shared link and preserve the original template/bytes. See [native review](route-estimating-estimates-id-review.md).

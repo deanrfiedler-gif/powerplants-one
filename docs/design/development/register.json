@@ -1271,26 +1271,35 @@
       "title": "Estimate review and pricing exceptions",
       "kind": "scope",
       "module": "ES",
-      "summary": "Implement estimate review, pricing exceptions, findings, corrections and separately authorised approval.",
+      "summary": "Exact saved-estimate submission, independent completeness/source-price/technical review, retained findings and controlled correction; commercial approval remains separate.",
       "path": "/estimating/reviews",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/estimating/estimates/[id]/review/page.tsx"
       ],
       "guide_key": "guide.es.04",
       "design_path": "docs/design/development/pages/scope-es-04.md",
       "html_path": "docs/reference/ui/estimate-review/PPO-Estimate-Review-and-Pricing-Exceptions-r01.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/components/estimate-review.tsx",
+        "src/components/estimate-review.css",
+        "src/estimating/review/service.ts",
+        "src/estimating/review/reads.ts",
+        "docs/contracts/estimating-review.md"
+      ],
+      "scope_status": "Bounded native review; commercial approval not configured",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Automated component proof; see estimating-review-handover.md",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 50,
       "related_keys": [
-        "scope:ES-03"
+        "route:/estimating/estimates/[id]/review",
+        "scope:ES-03",
+        "scope:ES-05"
       ],
       "reviewer": null
     },
@@ -11197,6 +11206,43 @@
         "scope:FI-04",
         "scope:FI-05",
         "scope:EQ-01"
+      ]
+    },
+    {
+      "key": "route:/estimating/estimates/[id]/review",
+      "title": "Saved estimate review",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Exact saved-estimate submission, independent completeness/source-price/technical review, retained findings and controlled correction; commercial approval remains separate.",
+      "path": "/estimating/estimates/[id]/review",
+      "source_paths": [
+        "src/app/(business)/estimating/estimates/[id]/review/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-estimates-id-review",
+      "design_path": "docs/design/development/pages/route-estimating-estimates-id-review.md",
+      "html_path": "docs/reference/ui/estimate-review/PPO-Estimate-Review-and-Pricing-Exceptions-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/estimate-review.tsx",
+        "src/components/estimate-review.css",
+        "src/estimating/review/service.ts",
+        "src/estimating/review/reads.ts",
+        "docs/contracts/estimating-review.md"
+      ],
+      "scope_status": "Bounded native review; commercial approval not configured",
+      "visual_status": "Needs review",
+      "functional_status": "Automated component proof; see estimating-review-handover.md",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 50,
+      "related_keys": [
+        "scope:ES-04",
+        "route:/estimating/estimates/[id]",
+        "scope:ES-03",
+        "scope:ES-05"
       ]
     }
   ]
