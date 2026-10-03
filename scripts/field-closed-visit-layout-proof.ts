@@ -49,6 +49,9 @@ try {
       exact: true,
     });
     await expect(region).toBeVisible();
+    await expect(
+      page.locator('#ppo-work-timer .work > p[role="status"]'),
+    ).toHaveCount(0);
     const view = await page.evaluate(() => ({
       width: innerWidth,
       height: innerHeight,
@@ -70,13 +73,18 @@ try {
     // alternate header compaction and move the content on every frame.
     const positions = await page.locator(".field-start").evaluate(async (e) => {
       const values: number[] = [];
+      await new Promise(requestAnimationFrame);
+      await new Promise(requestAnimationFrame);
       for (let i = 0; i < 30; i++) {
         await new Promise(requestAnimationFrame);
         values.push(e.getBoundingClientRect().top);
       }
       return values;
     });
-    assert(Math.max(...positions) - Math.min(...positions) < 1);
+    assert(
+      Math.max(...positions) - Math.min(...positions) < 1,
+      JSON.stringify({ width, positions }),
+    );
     const label = zoom ? "zoom" : String(width);
     await page.locator(".field-start").scrollIntoViewIfNeeded();
     await page.screenshot({ path: join(output, `closed-${label}.png`) });
@@ -180,6 +188,9 @@ try {
       exact: true,
     }),
   ).toHaveCount(0);
+  await page
+    .getByText(/Cached visit state: Completed\./)
+    .scrollIntoViewIfNeeded();
   await page.screenshot({ path: join(output, "offline-closed-390.png") });
   assert.deepEqual(errors, []);
   await writeFile(

@@ -589,10 +589,15 @@ export async function serviceJourney(
     if (info.project.name.startsWith("mobile")) {
       await page.setViewportSize({ width: 320, height: 844 });
       await page.locator("#main").evaluate((e) => e.scrollTo(0, 0));
+      await expect(
+        page.locator('#ppo-work-timer .work > p[role="status"]'),
+      ).toHaveCount(0);
       const positions = await page
         .locator(".field-start")
         .evaluate(async (e) => {
           const values: number[] = [];
+          await new Promise(requestAnimationFrame);
+          await new Promise(requestAnimationFrame);
           for (let i = 0; i < 30; i++) {
             await new Promise(requestAnimationFrame);
             values.push(e.getBoundingClientRect().top);

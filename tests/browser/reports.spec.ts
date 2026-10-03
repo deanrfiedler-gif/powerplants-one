@@ -19,7 +19,7 @@ async function call(page: Page, path: string, body?: unknown) {
       body === undefined
         ? {}
         : {
-            Origin: "http://127.0.0.1:3000",
+            Origin: new URL(page.url()).origin,
             "Content-Type": "application/json",
           },
     data: body,
@@ -685,7 +685,7 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
   const refused = await page.request.post(
     `/api/v1/reports/${reportId}/respond`,
     {
-      headers: { Origin: "http://127.0.0.1:3000" },
+      headers: { Origin: new URL(page.url()).origin },
       data: {
         ...base(),
         id: crypto.randomUUID(),
