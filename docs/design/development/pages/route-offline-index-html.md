@@ -49,3 +49,8 @@ Keep download, cached verification, locally saved, queued, server saved, failed,
 Incoming and outgoing handovers, source hashes and exact limitations are in [the native decision](../../../decisions/field-timer-native.md). Current evidence is in [the field programme handover](../../../delivery/field-quality-native-handover.md). Retained r05 bytes and review fingerprints are unchanged.
 
 Current paired captures and actual 200% Chrome zoom/keyboard results are in [the timer evidence record](../../../testing/evidence/field-timer-native/README.md). Source/application evidence is separate from owner approval.
+
+
+## Closed cached visit
+
+FI-02 retains its r20 Document & evidence workspace adaptation and original owner-bound queue. Cached closed/non-startable visits show state-specific personal facts and hide new arrival/acknowledgement intent. Previously retained operations are never deleted or moved to a later visit. Current return preparation/scheduling stays online through My Jobs and existing Service destinations. No protocol/schema version, journal payload, background sender or new route. Inspect 1440/1024/390/320 and actual 200% zoom, keyboard labels and retained failure/recovery alongside the existing offline proof. Native closed-visit mockups and human acceptance remain unavailable. See the closed-visit decision and evidence ledger.

@@ -25,3 +25,12 @@ At 390/320 px retain the 64 px clock and timer dock above global navigation. Dia
 Host state fixtures are in `tests/browser/field-timer.spec.ts`; restart/zoom procedures are in `scripts/field-timer-restart-proof.ts` and `scripts/field-timer-zoom-proof.ts`. The dedicated offline controls use the same timer model and existing owned queue, not the React catalogue renderer. Failed/missing predecessors block further local intent. Server acceptance is explicit.
 
 See [native rules and proposed adaptations](../../../decisions/field-timer-native.md) and [the programme evidence](../../../delivery/field-quality-native-handover.md). Missing allowance, explicit arrival, host navigation and immutable Undo evidence are declared adaptations; none grants owner approval. No isolated runnable example or physical-device/screen-reader acceptance is claimed.
+
+
+## Closed-visit consumer bindings
+
+The FI-01 My Jobs detail host reuses these controls for truthful personal history. FI-02 uses its separate offline host and shared model; FI-05 and Service work-order/appointment records are receiving destinations, not WorkTimer consumers. Reproducible host states: `tests/helpers/service-journey.ts` (closed original without own attendance and completed separate return), `tests/browser/field-closed-visit.spec.ts` (validation, stale refusal, interrupted response/reload and original continuation), and `tests/database/field-closed-visit.test.ts` (scoped/unavailable navigation and delayed cached originals). These are persisted host examples, not an isolated gallery acceptance.
+
+Inspect readable identifiers/history, one content scroll, 1440/1024/390/320 widths, keyboard links/focus recovery and actual 200% zoom. Pending read removes current receiving actions; saved history survives. No accepted native mockup exists for this addition; timer r05 bytes remain unchanged. Review/fingerprints remain unassigned. See `docs/decisions/field-closed-visit-guidance.md` and the corresponding execution ledger.
+
+At 320 px a long closed-visit banner could place the clock below the viewport. The observer now compacts only after the clock scrolls above the main content viewport, avoiding alternating header heights. The read-only layout proof checks 30 stable frames before navigation. This native host correction does not modify the accepted r05 source.

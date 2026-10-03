@@ -2,11 +2,23 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. State: implementation in progress. This is not a completion, acceptance or deployment claim.
+Owner: Dean Fiedler. State: bounded closed-visit increment implemented for review; wider programme and human acceptance remain open. No deployment is claimed.
 
-## FI-07 current increment — 2 October 2026
+## Closed-visit entry increment — 3 October 2026
 
-[PR #336](https://github.com/deanrfiedler-gif/powerplants-one/pull/336) delivers the bounded increment for review. It reuses P07/P09 attendance, review, exact presentations, controlled issue, five customer responses, owner-bound offline replay and Activities. It adds a distinct attendance-facts acknowledgement after Service review, append-only response corrections and explicit online receipt recovery/current restriction context. Existing /service/reports destinations preserve scope FI-07.
+The bounded FI-01/FI-02/FI-05 addition distinguishes closed appointment, the viewer's own retained arrival, timer state, submitted evidence, internal acceptance and FI-07 customer response. Further attendance links to current accessible work-order visits and appointment records. Other visits are explicitly same-order context, not invented return lineage. Service prepares through the existing visit-proposal command; current receiving authorities independently own readiness, customer contact, scheduling, assignment and exact fresh pack.
+
+The work-order proposal form now uses the existing same-tab booking journal: validation/stale refusals retain correctable inputs, an uncertain response retains the immutable operation, and reload recovers its exact receipt before another send. Cached closed visits cannot offer a fresh arrival, and existing queued originals remain unchanged. No schema, capability, grant, seed, user, template, route or offline protocol is introduced.
+
+[State/action and handover decision](../decisions/field-closed-visit-guidance.md), [acceptance matrix](../testing/field-closed-visit-acceptance.md), [fresh and retained proof](../testing/evidence/field-closed-visit/README.md). Native host design remains proposed; accepted timer r05 is unchanged and a specific accepted closed-visit mockup is missing. No merge or deployment is part of this contribution.
+
+Fresh local proof: 4/4 compiled original/return and proposal-recovery cases, 10/10 timer/offline/readiness/incident browser regressions and 8/8 P09/FI-07 report cases. Four widths, actual 200% Chrome zoom, keyboard/focus and exact app/PostgreSQL restart pass. The restart retains 65 whole-task table fingerprints, 532 receipts and 36 journey files; FI-07 separately retains its optional mark. Final-head CI, original local failures and the broader database result are separate in the execution ledger/PR. No owner or independent visual acceptance is inferred.
+
+Next concrete bounded programme work: conduct the owner-led integrated Field Work/PT-30 walkthrough using the retained original and completed-return cases; adjudicate remaining prior cases and record benefit measures (completion time, mistaken arrival/preparation attempts and comprehension). PT-28's Step 6 technical pass remains scoped to its written procedure. Physical-device, screen-reader and independent visual review remain open. Wider SV-06/SV-07 orchestration is not delivered here.
+
+## FI-07 merged increment — 3 October 2026
+
+[PR #336](https://github.com/deanrfiedler-gif/powerplants-one/pull/336) merged at 2026-10-02T23:02:09Z as `8eeb0ffe0f8f760611caf64e501649f564940a5e`. All 22 final-head checks passed on `b3119b2721352d3ea7cca99e0d087b9696fa544c`. It reuses P07/P09 attendance, review, exact presentations, controlled issue, five customer responses, owner-bound offline replay and Activities. It adds a distinct attendance-facts acknowledgement after Service review, append-only response corrections and explicit online receipt recovery/current restriction context. Existing /service/reports destinations preserve scope FI-07.
 
 [Decision](../decisions/field-customer-response.md), [API/data contract](../contracts/field-customer-response.md), [acceptance matrix and human checklist](../testing/field-customer-response-acceptance.md), [executed evidence and PR](../testing/evidence/field-customer-response/README.md). Migration 0057 adds one immutable context/lineage companion table. No capability/grant/seed/user/template changes. Original installed bytes and allocation reservations remain intact.
 
@@ -14,7 +26,7 @@ Customer acknowledgement is not internal attendance acceptance, technical accept
 
 FI-06 #335 is verified merged at cc27e1e42b04954a33547c98f19ab245b0a1d3ae, 2 October 04:41:08 UTC, with all 23 checks successful on ace43bdbe3ceb489a085831731b022a1bb2cb683. Its original evidence below remains historical; this paragraph supersedes its review/next-increment wording.
 
-Remaining programme: owner/physical-device/screen-reader/independent visual acceptance; closed-visit arrival and return-visit entry guidance as the next bounded increment; complete PT-28/PT-30 cross-domain Field Work walkthrough and benefit measurement. Wider SV-06/SV-07 orchestration remains separate. No merge or deployment is part of FI-07 delivery.
+The current closed-visit increment above supersedes FI-07's earlier next-step wording. Historical FI-07 evidence remains unchanged; merge is not deployment or human acceptance.
 
 ## FI-06 delivered increment — 2 October 2026
 
@@ -26,7 +38,7 @@ Final FI-06 database proof passes 6/6; compiled journey/reference 5/5; fresh EN-
 
 Baseline F02-A technical walkthrough repeated against merged main: 5/5 database and 4/4 compiled desktop/phone cases passed. Retained #334 proof remains valid for unchanged shared-engine/EN-08 boundaries; affected regressions and fresh FI-06 evidence are recorded separately. No owner participation, physical-device, screen-reader or independent visual acceptance occurred. Concrete human checklist remains open without blocking this authorised synthetic implementation.
 
-At FI-06 publication, FI-01/FI-02/FI-05 and FI-03/FI-04 were merged within documented boundaries and FI-07 was the next runtime increment. FI-06 is now merged with the exact final CI evidence recorded above. The FI-07 section is the current programme handover; these older checkpoints retain their original technical boundaries and do not imply deployment or human acceptance.
+At FI-06 publication, FI-01/FI-02/FI-05 and FI-03/FI-04 were merged within documented boundaries and FI-07 was the next runtime increment. FI-06 is now merged with the exact final CI evidence recorded above. The closed-visit guidance section above is the current programme handover; these older checkpoints retain their original technical boundaries and do not imply deployment or human acceptance.
 
 ## FI-03/FI-04 Service increment
 

@@ -1,0 +1,83 @@
+{
+  "verified_at": "2026-10-03T01:19:57.329Z",
+  "source": {
+    "executed_checkout": "431f37a3c48e1b93795a25c0bcecc0addfd88f50",
+    "executed_tree": "b8b3f099dc42655a8e17611c685157ba2cb63942",
+    "compiled_build": "l0OevtzixFI7ylRmFL-4h"
+  },
+  "before_application_pid": 26820,
+  "after_application_pid": 37952,
+  "before_boot": "2026-10-02T23:54:04.876Z",
+  "after_boot": "2026-10-03T01:17:24.985Z",
+  "journey": {
+    "report": "f224dc38-095e-4cd5-9d76-c25148d6aba2",
+    "appointment": "146942ca-d2ee-4335-a81d-7c3eed64164b",
+    "response": "5f684f03-bb8c-4564-befc-e6a5396de29c",
+    "operation": "cd190242-0f6a-4734-a605-85c895eedea8",
+    "follow_up": "e5957269-87e4-4be4-aab5-42d6e6c27079",
+    "issued": "c7e94de4-5e50-4997-becc-fc45502d39c5"
+  },
+  "tables": {
+    "field_attendances": {
+      "count": 14,
+      "hash": "b5468fc02d4934f3bf6c37efca2b05eb3abeb0ebbb3f744843eeeec550fb696f"
+    },
+    "field_entries": {
+      "count": 37,
+      "hash": "f00e6f08e74050fa8b87299783477d694301a7d612d9b1e0217b0ee7b969e12d"
+    },
+    "attendance_acceptances": {
+      "count": 8,
+      "hash": "1fcfc8ef609a9006df3c6aa946e200191bf82b5d441d81ef4fe34102d6b1f232"
+    },
+    "report_revisions": {
+      "count": 16,
+      "hash": "11a06fc40220a331d815a727a0deb9b7d4433ce30d78128f4c3e4240142dd183"
+    },
+    "report_reviews": {
+      "count": 14,
+      "hash": "6cb6afb073759bd51d5b9265f135b6a88f3bc5505e4f3b79f2d3c71dbc997e7c"
+    },
+    "report_presentations": {
+      "count": 20,
+      "hash": "66c6cbf3b3adbcd7507cdc340e67348f58f4e3aa93d78b42ec2fd4c08c15ac5c"
+    },
+    "report_issues": {
+      "count": 10,
+      "hash": "b22c649cb6e9896d21494e49b26a00d1939aae86f147bc3063d169aaa4631606"
+    },
+    "customer_responses": {
+      "count": 20,
+      "hash": "311ce74334f3cfc44637d7251c96c1e3aaea562e513e67ec150af9cefa98283e"
+    },
+    "customer_response_contexts": {
+      "count": 20,
+      "hash": "d3e402c9ae073beedf626c64c65ba3ba0372d5e3029abc490b869d78bb0945f6"
+    },
+    "report_follow_ups": {
+      "count": 60,
+      "hash": "8752d0e2e37e703e2bffda3b336e36579bddcd4276c3524238e55c5678444c96"
+    },
+    "activities": {
+      "count": 125,
+      "hash": "c6fdfe6c30a7537275206cd954d6263a4b0ae63f5fe3945f8c6f9387ecae4921"
+    },
+    "operation_receipts": {
+      "count": 532,
+      "hash": "7a942595117de1da30c93332b4389c3b9d1611b03c454dd4ceac806f15cdaa44"
+    },
+    "report_templates": {
+      "count": 2,
+      "hash": "d709f2bda06e3149eed320dd48aa6d9ce408a49281549600bb46aec99058cfd8"
+    }
+  },
+  "files": {
+    "c7e94de4-5e50-4997-becc-fc45502d39c5-html": "e6b096ae9a587974b470feefb0ed2b8d876b50aa3a327e0c264e53f107246806",
+    "c7e94de4-5e50-4997-becc-fc45502d39c5-pdf": "c3c116e3ed49845709815461f81cabecacb23ece64495a28b04f4a7e6fce958d",
+    "c7e94de4-5e50-4997-becc-fc45502d39c5-manifest": "f19078080a614dfefe1ddbef913be08c8410d83af1fd91818f56c0d60d22f827",
+    "e62eae63-c369-4312-a0a0-f2f53cd97413-html": "760a49a917e1b9299fb7a093f8050ec615b1eee63e183615f11d30c8f1b1b1b9",
+    "5f684f03-bb8c-4564-befc-e6a5396de29c-mark": "571e29b0e222659c11c54958ba151e975d488d0f88b3eb720b39d4d9e5082abe"
+  },
+  "receipt_id": "bd05f2e1-5f9b-4b36-b1dd-e0e0f8b94457",
+  "result": "Exact facts, original receipts, HTML/PDF and marks preserved across application and PostgreSQL restart"
+}

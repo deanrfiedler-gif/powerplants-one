@@ -1,4 +1,5 @@
 "use client";
+import { visitArrivalGuidance } from "../field/visit-guidance";
 import Link from "next/link";
 import {
   useEffect,
@@ -223,12 +224,14 @@ export function RunningTimerBanner() {
 }
 export function WorkTimer({
   job,
+  jobCurrent,
   reloadJob,
   onCorrect,
   onSection,
   children,
 }: {
   job: Job;
+  jobCurrent: boolean;
   reloadJob: () => void;
   onCorrect: (entry: TimeEntry) => void;
   onSection: (section: string) => void;
@@ -266,8 +269,15 @@ export function WorkTimer({
     const target = figure.current;
     if (!target) return;
     const observer = new IntersectionObserver(
-      ([e]) => setCompact(!e.isIntersecting),
-      { threshold: 0 },
+      // A clock below a narrow viewport has not been scrolled past. Treating
+      // both directions alike alternately shrinks/expands the header until
+      // the clock crosses the lower edge on every frame.
+      ([e]) =>
+        setCompact(
+          !e.isIntersecting &&
+            e.boundingClientRect.bottom <= (e.rootBounds?.top ?? 0),
+        ),
+      { threshold: 0, root: work.current?.closest("main") ?? null },
     );
     observer.observe(target);
     return () => observer.disconnect();
@@ -325,39 +335,46 @@ export function WorkTimer({
         .filter(([k]) => k !== "Labour")
         .reduce((n, [, x]) => n + x, 0) +
       (t?.state === "Paused" ? openSeconds : 0);
-  const label = v?.capture_closed
-    ? "Timer closed"
-    : t?.state === "Running"
-      ? openSeconds > 43200
-        ? "Timer still running"
-        : "Working"
-      : t?.state === "Paused"
-        ? "Paused"
-        : t?.state === "Stopped"
-          ? "Stopped"
-          : v?.currentness === "Current"
-            ? "Ready to start"
-            : "Can't start yet";
-  const state = v?.capture_closed
-    ? "closed"
-    : t?.state === "Running"
-      ? openSeconds > 43200
-        ? "alert"
-        : "working"
-      : t?.state === "Paused"
-        ? "paused"
-        : t?.state === "Stopped"
-          ? "stopped"
-          : v?.currentness === "Current"
-            ? "ready"
-            : "blocked";
+  const closedWithoutAttendance =
+    !job.attendance && visitArrivalGuidance(job.status, false).closed;
+  const label = closedWithoutAttendance
+    ? "Visit closed"
+    : v?.capture_closed
+      ? "Timer closed"
+      : t?.state === "Running"
+        ? openSeconds > 43200
+          ? "Timer still running"
+          : "Working"
+        : t?.state === "Paused"
+          ? "Paused"
+          : t?.state === "Stopped"
+            ? "Stopped"
+            : v?.currentness === "Current"
+              ? "Ready to start"
+              : "Can't start yet";
+  const state =
+    closedWithoutAttendance || v?.capture_closed
+      ? "closed"
+      : t?.state === "Running"
+        ? openSeconds > 43200
+          ? "alert"
+          : "working"
+        : t?.state === "Paused"
+          ? "paused"
+          : t?.state === "Stopped"
+            ? "stopped"
+            : v?.currentness === "Current"
+              ? "ready"
+              : "blocked";
   const current =
+    jobCurrent &&
     !!v &&
     !r.loading &&
     !r.error &&
     v.currentness === "Current" &&
     !v.capture_closed;
   const canFinish =
+    jobCurrent &&
     !!v &&
     !r.loading &&
     !r.error &&
@@ -515,7 +532,11 @@ export function WorkTimer({
   );
   const controls = (phone = false) => (
     <>
-      {!t || t.state === "Stopped" ? (
+      {closedWithoutAttendance ? (
+        <Button variant="primary" className="primary" disabled>
+          Visit closed
+        </Button>
+      ) : !t || t.state === "Stopped" ? (
         <Button
           variant="primary"
           className="primary"
@@ -631,9 +652,16 @@ export function WorkTimer({
           {v?.currentness !== "Current" && (
             <div className="banner-row">
               <p>
-                {job.attendance
-                  ? "Work authority needs review. You can retain already observed time; starting or resuming requires current authority."
-                  : "Review the current pack and record your actual arrival below before starting the work timer."}
+                {v?.capture_closed
+                  ? "This attendance's evidence is frozen. Timer history remains; further physical work needs a separate visit."
+                  : visitArrivalGuidance(job.status, !!job.attendance).closed
+                    ? visitArrivalGuidance(job.status, !!job.attendance).visit +
+                      (job.attendance
+                        ? " Your own attendance and timer history remain. Resolve already observed time under the existing evidence rules."
+                        : " You have no recorded arrival here. Further attendance requires a separate visit.")
+                    : job.attendance
+                      ? "Work authority needs review. You can retain already observed time; starting or resuming requires current authority."
+                      : visitArrivalGuidance(job.status, false).next}
               </p>
             </div>
           )}

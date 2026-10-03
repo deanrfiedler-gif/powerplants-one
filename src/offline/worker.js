@@ -12,6 +12,7 @@ const SHELL = [
     "offline/timer",
     "offline/field-extensions",
     "field/timer-model",
+    "field/visit-guidance",
     "field/readiness-command",
     "shared/cs/model",
     "reports/validation",

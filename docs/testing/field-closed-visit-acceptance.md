@@ -1,0 +1,34 @@
+# Closed-visit and separate-visit guidance acceptance
+
+<!-- versioning: git; committed history is authoritative -->
+
+Owner: Dean Fiedler. Working acceptance matrix; execution not implied. [Decision and state matrix](../decisions/field-closed-visit-guidance.md). Parent traceability: SVC-02/03/05/06/07/08/10/11, NFR-01/07/09; API-C12–18, API-C24/C26, TR-09–13 and existing FI-01/FI-02/FI-05/FI-07 scopes.
+
+| ID | Required observable proof | Evidence/disposition |
+|---|---|---|
+| CV-01 | Confirmed and InProgress; no own start versus own immutable attendance; another crew member never counts as self | Fresh `field-closed-visit.test.ts` CV-01/02 and compiled desktop/phone original + return journeys pass; unchanged P07/timer regressions cover simultaneous personal capture |
+| CV-02 | CompletedPendingReview, Completed and Cancelled refuse new arrival; retained own captured/received/accepted end and report state remain distinct | Fresh CV-01/02 and CV-04/05 pass; compiled original and second attendance retain personal identities, accepted end and separate report revisions |
+| CV-03 | Unknown/non-startable and changed scope; no unsupported Superseded/ReturnRequired state invented | Fresh pure state matrix covers every actual state plus unknown; CV-01/02 server StartBlocked proof. No general Superseded/ReturnRequired state or lineage exists |
+| CV-04 | Existing Unknown/Blocked proposal, Preparing proposal, confirmed assigned visit and controlled cancellation/new proposal retain original; no guessed lineage | Fresh complete desktop/phone journey follows existing Unknown proposal → explicit cancellation → separate Preparing proposal → booking/assignment/fresh pack → own arrival. Original proposal remains. Blocked/preparation and changed scope have pure guidance coverage |
+| CV-05 | Repeated proposal, concurrent writers, lost response/reload and unchanged receipt recovery produce one appointment/effect; correctable input survives stale/validation | Fresh CV-04/05 simultaneous/repeated command proof passes. `field-closed-visit.spec.ts` passes desktop/phone: validation, stale comparison/adoption preserving dates, lost response, reload, original receipt and one allocated proposal |
+| CV-06 | Wrong company/site/order/scope, direct URL, read-only duty and inaccessible receiving record reveal no hidden identifiers/counts/details | Fresh CV-06 tests exact company/site/order candidate filtering, read-only actions and revoked direct reads. Receiving source visibility reuses P11 summary/detail-equivalence and current scope predicates; their unchanged regressions retain that proof |
+| CV-07 | Changed owner/assignment/permission/scope/pack/policy; current read and command revalidation, no broad grants | Fresh scoped/replay cases and continuous changed-scope/current-pack journey; retained Step 6 Scheduling update/rollback and FI-05 ownership/assignment/policy proof retain their scope. Affected regression results are in the execution ledger |
+| CV-08 | Current/new incident hold or inspection restriction remains independent of closure/customer response/Activity | Unchanged FI-06/FI-03/04 authority and issued evidence retained. Fresh incident, inspection and P08 regression executions are recorded in the ledger; closed guidance grants no clearance |
+| CV-09 | Old downloaded visit; delayed Start refused; original accepted start receipt recovered; timer/evidence original stays old-visit-bound | Fresh CV-09 delayed Start ReviewRequired/conflict, repeated original outcome and accepted original receipt recovery pass. Compiled continuous journey preserves P08 originals; closed download omits online navigation/actions and new arrival controls |
+| CV-10 | Complete original Service/Finance/reservation journey → separate second technician arrival/timer/evidence/report/review; original records/outputs unchanged | Fresh desktop/phone compiled continuous journeys pass on `46e55e7` (build `h8vCWBlfho3hjrQkWXcnk`); final timer presentation continuation uses build `l0OevtzixFI7ylRmFL-4h`. Original reservation, owned Activity, Finance reconciliation and earlier exact output hashes persist |
+| CV-11 | Actual app/PostgreSQL restart preserves original rows, receipts, reports, responses/marks, Activities, Finance and issued bytes | Fresh actual compiled-app/PostgreSQL restart passes: see exact `restart.json` record/output hashes and `customer-response-restart.json` for original receipt and optional customer marks. Different application PIDs and database boot times are recorded |
+| CV-12 | 1440/1024/390/320, actual browser 200%, keyboard/focus return, readable IDs/history, one scroll owner, failure/recovery | Fresh four-width and actual Chrome 200% proof passes on final runtime build, with keyboard receiving links, guide focus return, one main scroll owner, wrapped IDs and 30 stable frames. Validation/stale/uncertain recovery passed desktop/phone. Human acceptance remains separate |
+
+The six actual appointment states are Proposed, Confirmed, InProgress, CompletedPendingReview, Completed and Cancelled. General supersession is not implemented. A cancelled predecessor remains history; no schema relationship is invented. Preparing is not readiness or booking acceptance.
+
+## Human acceptance checklist
+
+- [ ] Dean follows both crew identities from closed original facts to the existing receiving records, confirms wording is understandable and records owner acceptance separately.
+- [ ] Service owner/coordinator checks proposal reuse and explicit cancellation/replacement reasoning, scope/readiness/contact/booking/pack duties and unresolved owned work.
+- [ ] A technician uses a physical phone and desktop keyboard: closed-state guidance, long IDs/history, 320/390 layout, reachable actions and recovery without losing input.
+- [ ] Representative screen-reader user checks headings, status/error announcements, link purposes, labels and focus return; record browser/device/assistive-technology versions.
+- [ ] Independent visual reviewer compares retained timer r05 and shared controls at 1440/1024/390/320 and actual 200% zoom; explicitly adjudicates the proposed host guidance. Missing accepted closed-visit mockups remain recorded.
+- [ ] Owner completes remaining full PT-30 demonstration/prior-case closure and cross-domain Field Work narrative. Step 6's bounded written PT-28 pass remains source-specific; this increment is not a new complete PT-28 update/rollback execution.
+- [ ] Record baseline and follow-up task completion time, misdirected arrival attempts, repeated preparation attempts and user comprehension for benefit measurement. Automated success is not measured business benefit.
+
+Unsupported receiving actions: offline preparation/scheduling/review/issue/inspection/incident workflow, general return lineage, automatic replacement/assignment/closure, transfer of old customer or pack acknowledgement, external notifications, production integration, merge and deployment.

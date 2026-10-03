@@ -1,4 +1,5 @@
 "use client";
+import { visitArrivalGuidance, visitPreparationGuidance } from "../../../field/visit-guidance";
 import { PolicyResolution } from "./policy-resolution.client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
@@ -76,6 +77,7 @@ export type Appointment = {
   assignment_version: number;
   schedule_version: number;
   status: string;
+  actual_start_at?: string | null;
   start_at: string;
   end_at: string;
   site_timezone: string;
@@ -1018,6 +1020,12 @@ export function AppointmentScreen({ id }: { id: string }) {
               Showing the last successful read. Current availability is unknown.
             </p>
           )}
+          <section className="panel" aria-label="Visit entry guidance">
+            <p>{visitPreparationGuidance(a.status, a.preparation_status, a.scope_review_required)}</p>
+            {visitArrivalGuidance(a.status, false).closed && <p>Further physical attendance needs a separate visit. Original personal evidence, internal Service acceptance and customer responses remain distinct.</p>}
+            {!resource.loading && !resource.error && <Link href={`/service/work-orders/${a.work_order_id}#planned-visits`}>Review existing work-order visits and preparation</Link>}
+            <p>Opening a record does not grant preparation, scheduling or work authority.</p>
+          </section>
           <p>
             <Link href={showAppointmentDates(a, returnTo)}>
               Show its dates / View in planner
@@ -1054,7 +1062,7 @@ export function AppointmentScreen({ id }: { id: string }) {
             </p>
           )}
           <div className="button-row planner-actions">
-            {a.actions.can_manage && a.status !== "Cancelled" && (
+            {a.actions.can_manage && ["Proposed", "Confirmed"].includes(a.status) && !a.actual_start_at && (
               <>
                 <button
                   disabled={resource.loading || !!resource.error}

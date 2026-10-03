@@ -89,7 +89,7 @@ Sales CR-01–05: follow ADR-0046 and sales-native-completion-handover.md. Prese
 Equipment: ADR-0045 / equipment-native-completion-handover.md. Reuse Assets, CS, Inspection and SH; scanning is read-only. Preserve originals and historic context. Recovery grants no controller-restore authority; support grants no replacement authority.
 
 SC-01–10: BP-08 / ADR-0049. Separate stock observations, custody, consumption, transactions and restricted credits. Live ERP: Not configured. Retain SC-08 source/hash warnings; SC-10 evidence is not owner acceptance.
-FI: field-quality-native-handover.md. FI-05 reuses CS-06; induction needs a Person link. Acknowledgement grants no work authority.
+FI: field-quality-native-handover.md; field-closed-visit-guidance.md. Separate return attendance. FI-05: CS-06; induction needs Person.
 
 FI-03/04: service-inspections.md; exact bindings, owned defects, fresh retests and independent release. FI-06: field-incidents.md; separate incidents, Activities, defects and holds. Closure clears only its blocker; reopen/source change preserves output. Both online-only; no operating policy.
 

@@ -601,3 +601,12 @@ An original-operation receipt lookup returning 404 leaves the result unknown or 
 ## FI-07 bounded extension — 2 October 2026
 
 [Customer attendance and response contract](../contracts/field-customer-response.md) extends the existing response command with an explicit attendance/report subject and append-only correction relationship. Internal attendance_acceptances remains Service review. Both exact presentation modes and original offline payload/receipt compatibility remain. Migration 0057 is additive with no seed, grant, user or template change. [Decision](../decisions/field-customer-response.md) and [fresh evidence](../testing/evidence/field-customer-response/README.md) govern this increment; historical evidence above retains its original source.
+
+
+## Closed-visit guidance projection — 3 October 2026
+
+`GET my-jobs/:id` adds `arrival_actions` (current existing start/acknowledge duties) and, only for CompletedPendingReview/Completed/Cancelled, `visit_navigation`. It uses exact current workspace/company/site/work-order scope and the existing Scheduling summaries visibility checks; it returns only readable other appointments, their status/preparation/customer commitment, scope-review flag and receiving links. A My Jobs link also requires current own field-read/assignment. No inaccessible count or inferred return/predecessor relation is exposed. Source failure is a failed read, not an empty clear result.
+
+This is online contextual navigation. P08 download explicitly removes it and sets online arrival actions false; the established offline Start/acknowledgement handlers use their original cached authority and replay protocol. Cached closed visits disable new arrival intent without editing existing originals. No API-C command shape, journal version, receipt, endpoint or P08 schema changes.
+
+The existing `POST service/work-orders/:id/visits` is now entered from the work-order form through the same owner-bound booking journal already used by Scheduling. It retains one uncertain original and exact receipt continuation across same-tab reload. All current server version/scope/permission rules and separate readiness, contact, confirmation, pack, arrival and review commands remain authoritative. [State/action and receiving contract](../decisions/field-closed-visit-guidance.md).
