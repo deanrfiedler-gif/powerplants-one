@@ -335,7 +335,11 @@ export function WorkTimer({
         .filter(([k]) => k !== "Labour")
         .reduce((n, [, x]) => n + x, 0) +
       (t?.state === "Paused" ? openSeconds : 0);
-  const label = v?.capture_closed
+  const closedWithoutAttendance =
+    !job.attendance && visitArrivalGuidance(job.status, false).closed;
+  const label = closedWithoutAttendance
+    ? "Visit closed"
+    : v?.capture_closed
     ? "Timer closed"
     : t?.state === "Running"
       ? openSeconds > 43200
@@ -348,7 +352,7 @@ export function WorkTimer({
           : v?.currentness === "Current"
             ? "Ready to start"
             : "Can't start yet";
-  const state = v?.capture_closed
+  const state = closedWithoutAttendance || v?.capture_closed
     ? "closed"
     : t?.state === "Running"
       ? openSeconds > 43200
@@ -527,7 +531,11 @@ export function WorkTimer({
   );
   const controls = (phone = false) => (
     <>
-      {!t || t.state === "Stopped" ? (
+      {closedWithoutAttendance ? (
+        <Button variant="primary" className="primary" disabled>
+          Visit closed
+        </Button>
+      ) : !t || t.state === "Stopped" ? (
         <Button
           variant="primary"
           className="primary"
