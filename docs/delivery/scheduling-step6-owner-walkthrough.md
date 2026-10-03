@@ -30,3 +30,7 @@ Use the private per-run configuration with only its matching retained PostgreSQL
 - [ ] Review the final PR and final-head checks, then decide protected integration separately. Merge and deployment are not performed by this task.
 
 No customer communication, live integration, Azure change, production migration or business transaction is included. MYOB, SharePoint and native CAD retain their existing responsibilities.
+
+## Current session after #337
+
+Step 6 merged through #333; its review-the-retained-evidence instructions above remain source-bound. Use the [current runnable Field Work session](field-integrated-owner-walkthrough.md) for this increment and the [acceptance ledger](../testing/field-integrated-acceptance-ledger.md) for source-specific prior-case dispositions. The Step 4 rollback described in the original evidence is not authorised against the later schema57 database.

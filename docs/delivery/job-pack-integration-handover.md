@@ -4,6 +4,13 @@
 
 Owner: Dean Fiedler. SV-05 / SC-06; SVC-03, SVC-06, OUT-09. I5 is the final bounded Job Pack increment, after I4 #304, I6 #306 and I7 #309. This record does not close the wider SV-01–SV-08 programme.
 
+## Current acceptance checkpoint — 3 October 2026
+
+PR [#337](https://github.com/deanrfiedler-gif/powerplants-one/pull/337) is merged as `6e8b898aeb150b0a4b42c3087605556a057986ad` at `2026-10-03T03:45:54Z`; all 18 final-head checks passed on `41c6f2c909947e93608a2850198b374de671f1e4`. FI-03/04 #334, FI-06 #335, FI-07 #336 and Scheduling Step 6 #333 are also merged. Dated pending/next-increment statements elsewhere in this handover retain their original checkpoints and are superseded for current integration by this paragraph. Post-merge checks are recorded separately in the [current execution ledger](../testing/evidence/field-integrated-acceptance/README.md).
+
+The [acceptance/prerequisite ledger](../testing/field-integrated-acceptance-ledger.md) maps every written PT to its exact source, evidence scope, remaining obligation and owner. Step 6's bounded written PT-28 pass is retained; full PT-30/PP-01, PT-27 findings and actual independent/owner acceptance remain open. The [current-build owner session](field-integrated-owner-walkthrough.md) and [benefit instrument](../testing/field-benefit-measurement.md) are prepared separately from technical execution. No merge or deployment of this acceptance increment is authorised or performed.
+
+
 ## Delivered behaviour
 
 Field Technicians and appointment detail open the canonical permitted pack, or offer preparation when no visible pack is returned and the server permits preparation. Failed/denied/loading reads remove stale links. Header actions follow the adopted limit, with appointment context in section 01 and earlier exact issue access retained. Browser A4 print releases the shell’s clipping containers and includes all saved sections, a repeating reference/revision/state and page numbers; the workbench warning distinguishes it from the exact controlled issue. Unsaved form entries are excluded. The production output mechanism and domain authority are unchanged.

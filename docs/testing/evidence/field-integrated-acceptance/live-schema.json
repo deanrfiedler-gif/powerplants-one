@@ -1,0 +1,472 @@
+{
+  "at": "2026-10-03T04:45:36.897Z",
+  "database": "ppo_synthetic_test",
+  "triggers": [],
+  "columns": [
+    {
+      "table_name": "appointments",
+      "column_name": "id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "workspace_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "company_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "site_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "version",
+      "data_type": "integer"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "synthetic",
+      "data_type": "boolean"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "created_by",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "updated_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "updated_by",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "display_number",
+      "data_type": "text"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "work_order_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "status",
+      "data_type": "text"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "start_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "end_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "site_timezone",
+      "data_type": "text"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "requested_window_start",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "requested_window_end",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "customer_commitment",
+      "data_type": "text"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "preparation_status",
+      "data_type": "text"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "dispatch_hold",
+      "data_type": "boolean"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "policy_version_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "scope_revision_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "scope_version",
+      "data_type": "integer"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "assignment_version",
+      "data_type": "integer"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "schedule_version",
+      "data_type": "integer"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "scheduling_policy_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "booking_snapshot",
+      "data_type": "jsonb"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "booking_hash",
+      "data_type": "text"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "pack_requirement",
+      "data_type": "text"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "cancellation_reason",
+      "data_type": "text"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "cancelled_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "actual_start_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_name": "appointments",
+      "column_name": "actual_end_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_name": "customer_response_contexts",
+      "column_name": "workspace_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "customer_response_contexts",
+      "column_name": "response_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "customer_response_contexts",
+      "column_name": "subject",
+      "data_type": "text"
+    },
+    {
+      "table_name": "customer_response_contexts",
+      "column_name": "review_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "customer_response_contexts",
+      "column_name": "supersedes_response_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "customer_response_contexts",
+      "column_name": "correction_reason",
+      "data_type": "text"
+    },
+    {
+      "table_name": "customer_response_contexts",
+      "column_name": "source_binding",
+      "data_type": "jsonb"
+    },
+    {
+      "table_name": "customer_response_contexts",
+      "column_name": "restrictions",
+      "data_type": "jsonb"
+    },
+    {
+      "table_name": "field_attendances",
+      "column_name": "id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "field_attendances",
+      "column_name": "workspace_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "field_attendances",
+      "column_name": "company_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "field_attendances",
+      "column_name": "site_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "field_attendances",
+      "column_name": "appointment_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "field_attendances",
+      "column_name": "actor_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "field_attendances",
+      "column_name": "assignment_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "field_attendances",
+      "column_name": "assignment_version",
+      "data_type": "integer"
+    },
+    {
+      "table_name": "field_attendances",
+      "column_name": "schedule_version",
+      "data_type": "integer"
+    },
+    {
+      "table_name": "field_attendances",
+      "column_name": "scope_revision_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "field_attendances",
+      "column_name": "scope_version",
+      "data_type": "integer"
+    },
+    {
+      "table_name": "field_attendances",
+      "column_name": "scope_hash",
+      "data_type": "text"
+    },
+    {
+      "table_name": "field_attendances",
+      "column_name": "issue_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "field_attendances",
+      "column_name": "issue_hash",
+      "data_type": "text"
+    },
+    {
+      "table_name": "field_attendances",
+      "column_name": "captured_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_name": "field_attendances",
+      "column_name": "received_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_name": "field_attendances",
+      "column_name": "authority_snapshot",
+      "data_type": "jsonb"
+    },
+    {
+      "table_name": "field_attendances",
+      "column_name": "authority_hash",
+      "data_type": "text"
+    },
+    {
+      "table_name": "field_attendances",
+      "column_name": "operation_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "field_attendances",
+      "column_name": "reason",
+      "data_type": "text"
+    },
+    {
+      "table_name": "field_timer_events",
+      "column_name": "id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "field_timer_events",
+      "column_name": "workspace_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "field_timer_events",
+      "column_name": "appointment_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "field_timer_events",
+      "column_name": "actor_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "field_timer_events",
+      "column_name": "attendance_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "field_timer_events",
+      "column_name": "version",
+      "data_type": "integer"
+    },
+    {
+      "table_name": "field_timer_events",
+      "column_name": "action",
+      "data_type": "text"
+    },
+    {
+      "table_name": "field_timer_events",
+      "column_name": "state_before",
+      "data_type": "text"
+    },
+    {
+      "table_name": "field_timer_events",
+      "column_name": "state_after",
+      "data_type": "text"
+    },
+    {
+      "table_name": "field_timer_events",
+      "column_name": "occurred_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_name": "field_timer_events",
+      "column_name": "received_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_name": "field_timer_events",
+      "column_name": "reason",
+      "data_type": "text"
+    },
+    {
+      "table_name": "field_timer_events",
+      "column_name": "note",
+      "data_type": "text"
+    },
+    {
+      "table_name": "field_timer_events",
+      "column_name": "pause_reason",
+      "data_type": "text"
+    },
+    {
+      "table_name": "field_timer_events",
+      "column_name": "open_since",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_name": "field_timer_events",
+      "column_name": "time_kind",
+      "data_type": "text"
+    },
+    {
+      "table_name": "field_timer_events",
+      "column_name": "scope_item_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "field_timer_events",
+      "column_name": "asset_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "field_timer_events",
+      "column_name": "entry_root_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "field_timer_events",
+      "column_name": "undo_event_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "field_timer_events",
+      "column_name": "operation_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "field_timer_events",
+      "column_name": "authority_state",
+      "data_type": "text"
+    },
+    {
+      "table_name": "operation_receipts",
+      "column_name": "id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "operation_receipts",
+      "column_name": "workspace_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "operation_receipts",
+      "column_name": "actor_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "operation_receipts",
+      "column_name": "operation_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "operation_receipts",
+      "column_name": "record_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_name": "operation_receipts",
+      "column_name": "payload_hash",
+      "data_type": "text"
+    },
+    {
+      "table_name": "operation_receipts",
+      "column_name": "schema_version",
+      "data_type": "integer"
+    },
+    {
+      "table_name": "operation_receipts",
+      "column_name": "result",
+      "data_type": "jsonb"
+    },
+    {
+      "table_name": "operation_receipts",
+      "column_name": "received_at",
+      "data_type": "timestamp with time zone"
+    }
+  ]
+}

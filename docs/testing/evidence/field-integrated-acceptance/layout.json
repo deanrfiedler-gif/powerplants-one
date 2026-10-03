@@ -1,0 +1,106 @@
+{
+  "executed_at": "2026-10-03T04:33:25.457Z",
+  "head": "c9acb5081871832a3b4daf542b173faf0da1fa08",
+  "compiled_build": "NlpmlalVafLoVSRWWJdSP",
+  "measurements": [
+    {
+      "zoom": "100%",
+      "width": 1440,
+      "height": 1000,
+      "dpr": 1,
+      "scrollWidth": 1440,
+      "owners": [
+        "main"
+      ],
+      "link": {
+        "left": 360,
+        "right": 539.1875,
+        "top": 664.171875,
+        "bottom": 708.171875,
+        "unobscured": true
+      },
+      "keyboard": "Receiving link Enter; guide Enter/Escape and focus return passed",
+      "own_attendance": "d5d5b867-77f3-4ab9-8c26-51ebd84b975c"
+    },
+    {
+      "zoom": "100%",
+      "width": 1024,
+      "height": 1000,
+      "dpr": 1,
+      "scrollWidth": 1024,
+      "owners": [
+        "main"
+      ],
+      "link": {
+        "left": 120,
+        "right": 299.1875,
+        "top": 745.765625,
+        "bottom": 789.765625,
+        "unobscured": true
+      },
+      "keyboard": "Receiving link Enter; guide Enter/Escape and focus return passed",
+      "own_attendance": "d5d5b867-77f3-4ab9-8c26-51ebd84b975c"
+    },
+    {
+      "zoom": "100%",
+      "width": 390,
+      "height": 844,
+      "dpr": 1,
+      "scrollWidth": 390,
+      "owners": [
+        "main"
+      ],
+      "link": {
+        "left": 28,
+        "right": 207.1875,
+        "top": 365.546875,
+        "bottom": 409.546875,
+        "unobscured": true
+      },
+      "keyboard": "Receiving link Enter; guide Enter/Escape and focus return passed",
+      "own_attendance": "d5d5b867-77f3-4ab9-8c26-51ebd84b975c"
+    },
+    {
+      "zoom": "100%",
+      "width": 320,
+      "height": 844,
+      "dpr": 1,
+      "scrollWidth": 320,
+      "owners": [
+        "main"
+      ],
+      "link": {
+        "left": 28,
+        "right": 207.1875,
+        "top": 366.046875,
+        "bottom": 410.046875,
+        "unobscured": true
+      },
+      "keyboard": "Receiving link Enter; guide Enter/Escape and focus return passed",
+      "own_attendance": "d5d5b867-77f3-4ab9-8c26-51ebd84b975c"
+    },
+    {
+      "zoom": "200%",
+      "width": 720,
+      "height": 600,
+      "dpr": 2,
+      "scrollWidth": 720,
+      "owners": [
+        "main"
+      ],
+      "link": {
+        "left": 28,
+        "right": 207.1796875,
+        "top": 243.9609375,
+        "bottom": 287.9609375,
+        "unobscured": true
+      },
+      "keyboard": "Receiving link Enter; guide Enter/Escape and focus return passed",
+      "own_attendance": "d5d5b867-77f3-4ab9-8c26-51ebd84b975c"
+    }
+  ],
+  "offline_closed": "Downloaded closed original has no new arrival or acknowledgement control; retained P08 replay remains separate.",
+  "page_errors": [],
+  "limits": "Technical Chrome inspection; physical-device, screen-reader, owner and independent visual acceptance remain pending.",
+  "original_failure": "layout.txt: first receiving navigation reached exact hash URL but did not finish within unchanged5000ms assertion. Same-script retry passed; cause unresolved."
+}
