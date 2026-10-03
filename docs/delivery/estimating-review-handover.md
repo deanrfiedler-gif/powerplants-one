@@ -44,6 +44,10 @@ The FI07-07 failure reproduced locally on the unchanged PR head. This was an omi
 
 The entire `tests/database/field-customer-response.test.ts` suite passes **9/9** locally with the same isolated PostgreSQL/renderer configuration; the originally failing populated upgrade passes. TypeScript and full ESLint pass. `AGENTS.md` now includes this cross-module consumer in the migration, grant and user checklist. Foundation, prototype, naming and studio checks also pass; all 78 parent IDs and 22 issued sources remain intact. Fresh final-head CI remains pending and is separate from these local results. After repair commit `a1cb353`, GitHub reported a `docs/STATUS.md` conflict with newer main and therefore scheduled no PR checks. Reconciliation retains both ES-04 and the merged Field Work status from `8c14233`; it does not merge the contribution PR. Refreshed main is `8c14233` after #339; its FI07 test has the same earlier expectations. PR #340 must additionally account for its own seed/migration 0059, thirteen grants and two users.
 
+## Subsequent compiled Scheduling failure
+
+At `6ba8b1e`, the isolated mobile Scheduling successor journey failed heading focus. The code/test are unchanged from current main; ordinary main replays passed three times, while deliberately delaying the separate current-head read reproduced the same failure. The repair retains the explicit focus request until the permitted form mounts and preserves typing/repeated-Edit behaviour. [Original CI artifact, unchanged-main comparison and exact checks](../testing/evidence/scheduling-successor-focus/README.md) remain separate from the earlier FI07 repair and final-head CI. The policy-impact guide, page and component bindings are maintained with the fix; no schema, command authority or issued bytes change.
+
 ## Remaining programme and decisions
 
 | Scope | Current reconciliation and next concrete work |

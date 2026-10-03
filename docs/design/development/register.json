@@ -10984,7 +10984,7 @@
       ],
       "scope_status": "Built synthetic comparison and native policy workflow; wider acceptance remains open",
       "visual_status": "Needs review",
-      "functional_status": "Step 6 integrated update/restart/compatible rollback and service-return evidence: docs/testing/evidence/scheduling-step6/README.md. Independent visual/owner/device acceptance remains pending.",
+      "functional_status": "Step 6 integrated update/restart/compatible rollback and service-return evidence: docs/testing/evidence/scheduling-step6/README.md. Independent visual/owner/device acceptance remains pending. Delayed-head successor focus repair and unchanged-main reproduction: docs/testing/evidence/scheduling-successor-focus/README.md.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
