@@ -38,6 +38,10 @@ PR #338's reported database failure exposed a missing FI07-07 expectation for gr
 
 The focused FI07-07 case passes locally against the task-owned resettable database. This is additional evidence to the nine passing customer-response cases on the repaired parent; it is not a claim that the full child database suite has rerun. The fix changes test expectations and documentation only. The existing restart databases and issued originals remain preserved. Fresh final-head CI is still required.
 
+## Scheduling successor focus integration
+
+The parent repair `b00dab0` fixes a delayed-head focus race also reproduced on unchanged main. [Original failure, source hashes and complete 18-case parent proof](../testing/evidence/scheduling-successor-focus/README.md) are retained with the implementation and live guide/component records. After integrating it as `bec9340`, this ES-05 checkout also passed a fresh production build (including TypeScript), studio integrity and both compiled desktop/mobile delayed-head focus cases. Parent and child Scheduling implementation/test bytes match. This focused follow-up changes no quotation command, migration, grant or issued output. Fresh final-head CI remains separate.
+
 ## Next boundary
 
 ES-06 must record the exact issue, permitted selection and attributable customer-response/correction facts without transferring acceptance. Material negotiation requires an explicit ES-05 successor. ES-07 then separates handover sending, receiving, item/target-line review and idempotent downstream creation. Neither Excel import nor specialist expansion is a prerequisite for the initial manual journey.
