@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. State: implementation in progress. This is not a completion, acceptance or deployment claim.
+Owner: Dean Fiedler. State: bounded closed-visit increment implemented for review; wider programme and human acceptance remain open. No deployment is claimed.
 
 ## Closed-visit entry increment — 3 October 2026
 
@@ -11,6 +11,8 @@ The bounded FI-01/FI-02/FI-05 addition distinguishes closed appointment, the vie
 The work-order proposal form now uses the existing same-tab booking journal: validation/stale refusals retain correctable inputs, an uncertain response retains the immutable operation, and reload recovers its exact receipt before another send. Cached closed visits cannot offer a fresh arrival, and existing queued originals remain unchanged. No schema, capability, grant, seed, user, template, route or offline protocol is introduced.
 
 [State/action and handover decision](../decisions/field-closed-visit-guidance.md), [acceptance matrix](../testing/field-closed-visit-acceptance.md), [fresh and retained proof](../testing/evidence/field-closed-visit/README.md). Native host design remains proposed; accepted timer r05 is unchanged and a specific accepted closed-visit mockup is missing. No merge or deployment is part of this contribution.
+
+Fresh local proof: 4/4 compiled original/return and proposal-recovery cases, 10/10 timer/offline/readiness/incident browser regressions and 8/8 P09/FI-07 report cases. Four widths, actual 200% Chrome zoom, keyboard/focus and exact app/PostgreSQL restart pass. The restart retains 65 whole-task table fingerprints, 532 receipts and 36 journey files; FI-07 separately retains its optional mark. Final-head CI, original local failures and the broader database result are separate in the execution ledger/PR. No owner or independent visual acceptance is inferred.
 
 Next concrete bounded programme work: conduct the owner-led integrated Field Work/PT-30 walkthrough using the retained original and completed-return cases; adjudicate remaining prior cases and record benefit measures (completion time, mistaken arrival/preparation attempts and comprehension). PT-28's Step 6 technical pass remains scoped to its written procedure. Physical-device, screen-reader and independent visual review remain open. Wider SV-06/SV-07 orchestration is not delivered here.
 

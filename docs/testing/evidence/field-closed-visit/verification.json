@@ -1,0 +1,184 @@
+{
+  "baseline_main": "8eeb0ffe0f8f760611caf64e501649f564940a5e",
+  "continuous_journey_runtime_head": "46e55e763862ded874f4822a97fdfb7686e89b39",
+  "final_presentation_runtime_checkpoint": "f6053c4",
+  "final_compiled_build": "l0OevtzixFI7ylRmFL-4h",
+  "restart_proof_head": "431f37a3c48e1b93795a25c0bcecc0addfd88f50",
+  "results": {
+    "new_database_cases": {
+      "passed": 4,
+      "total": 4
+    },
+    "affected_database": {
+      "passed": 153,
+      "failed": 1,
+      "skipped": 0,
+      "total": 154,
+      "duration_ms": 5264858.9264
+    },
+    "timed_out_case_focused_main": {
+      "passed": 1,
+      "total": 1
+    },
+    "timed_out_case_focused_branch": {
+      "passed": 1,
+      "total": 1
+    },
+    "units": {
+      "passed": 567,
+      "failed": 4,
+      "total": 571
+    },
+    "unchanged_main_units": {
+      "passed": 566,
+      "failed": 4,
+      "total": 570
+    },
+    "continuous_and_recovery_browser": {
+      "passed": 4,
+      "total": 4
+    },
+    "timer_offline_readiness_incident_browser": {
+      "passed": 10,
+      "total": 10
+    },
+    "reports_corrected_browser": {
+      "passed": 8,
+      "total": 8
+    },
+    "original_mixed_browser": {
+      "passed": 12,
+      "failed": 6,
+      "total": 18
+    },
+    "unchanged_main_origin_reproduction": {
+      "passed": 0,
+      "failed": 1,
+      "total": 1
+    },
+    "restart": {
+      "table_fingerprints": 65,
+      "whole_task_receipts": 532,
+      "journey_files": 36
+    },
+    "fi07_restart": {
+      "table_fingerprints": 13,
+      "files": 5,
+      "optional_mark_files": 1
+    },
+    "layout": {
+      "widths": [
+        1440,
+        1024,
+        390,
+        320
+      ],
+      "actual_browser_zoom": "200%",
+      "keyboard_and_focus_return": "Passed",
+      "scroll_owner": "main",
+      "stable_frames": 30
+    },
+    "static_and_assurance": "Build, type, lint, studio, foundation, prototype and naming passed"
+  },
+  "human_acceptance": {
+    "owner": "Not performed",
+    "physical_device": "Not performed",
+    "screen_reader": "Not performed",
+    "independent_visual": "Not performed"
+  },
+  "private_original_log_hashes": {
+    "cv-db-02.txt": {
+      "bytes": 654,
+      "sha256": "495d7865631882ca1c531bd5c47d4a75204b7355590fb192ccb41982af3633eb"
+    },
+    "affected-db-01.txt": {
+      "bytes": 17771,
+      "sha256": "3d4e9774bba9710431be4975025dde2211c63db1b30b7a0a5949aef1a17dbbee"
+    },
+    "main-rollback-case.txt": {
+      "bytes": 218,
+      "sha256": "89f3c9ae87ddab0fdb018586a1e0710ef74d56f24f022e8403f8fb9307aef11b"
+    },
+    "branch-rollback-case.txt": {
+      "bytes": 217,
+      "sha256": "cbe7e2381cd84016e8ae5b5f00d92dfc586185fc0ea11d54cc6cc4bf0aef0dc9"
+    },
+    "units-01.txt": {
+      "bytes": 62491,
+      "sha256": "c29906c4b210443091a6b3b9125e53fe804abb41a4cddbe8468577ead52555a3"
+    },
+    "main-units.txt": {
+      "bytes": 62520,
+      "sha256": "c2a53bf9e141ef5ca7e1a4fd5b2e95675e904f318e9d0835f0c95eaca0fd793f"
+    },
+    "clean-final-browser-02.txt": {
+      "bytes": 1245,
+      "sha256": "7d111fe8addeb1cdbed232108a8e29bc1e042dd910edfec35612f0f858e33145"
+    },
+    "final-regression-browser.txt": {
+      "bytes": 22060,
+      "sha256": "158ad75734a4d18c26f00ec939289cad49a6b885566b5851084c5177a18abf5a"
+    },
+    "reports-regression-02.txt": {
+      "bytes": 1806,
+      "sha256": "bb508744ff68e8ae0533ebc7e7721d976f3e665bbedca8e7a4fccd3e19f4e389"
+    },
+    "main-origin-comparison.txt": {
+      "bytes": 3151,
+      "sha256": "1b23c11ed8c24efadb4a4656ca104bc276878644591a16397649355e65c728f9"
+    },
+    "build-final-04.txt": {
+      "bytes": 22923,
+      "sha256": "21d34b7ba4bb23fc975f953182dbe24572995e46f6c7dc2f5521fbdf39eed003"
+    },
+    "type-final-05.txt": {
+      "bytes": 55,
+      "sha256": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28"
+    },
+    "lint-final-04.txt": {
+      "bytes": 46,
+      "sha256": "144b8ef738aebf80f098340cd52aae1ca2b3b236fc5859b5d6806e5ec9ac9f64"
+    },
+    "lint-final-05.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "studio-final-04.txt": {
+      "bytes": 446,
+      "sha256": "1466e5d07dad89e1007c975893236b07bcdd12fc887ae625da86ac9793463f2f"
+    },
+    "naming-final-06.txt": {
+      "bytes": 306,
+      "sha256": "2bed6f509cad0c5fc79ece51386293a34c34244ce1760356e2847319f951cd67"
+    },
+    "foundation-final-06.txt": {
+      "bytes": 343,
+      "sha256": "9a95bdbcdccfd290fe1df2c563770e43e63ab8a62a601ab20307938e9cacb623"
+    },
+    "prototype-final-05.txt": {
+      "bytes": 551,
+      "sha256": "f7b48b580707ab4071e3dcda23d38936db1c757240cbc5996bf54ed4fceb2ff3"
+    },
+    "layout-final.txt": {
+      "bytes": 124,
+      "sha256": "8b640b892599012ea78901c3dd845a1ad8e3d925eb9e0977d933d4fc98df1381"
+    },
+    "restart-write.txt": {
+      "bytes": 85,
+      "sha256": "a2bada4e722f2ebd183de42a96898f11e782b55ae4a30c9a39973aebef509d2d"
+    },
+    "restart-verify.txt": {
+      "bytes": 86,
+      "sha256": "d2926b357d2359a9fe80316c687687a4a43c82994836b5a9d68da975774ef53b"
+    },
+    "fi07-restart-write.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "fi07-restart-verify.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "limits": "Local checkpoint proof is separate from final-commit PR CI. One original database timeout has an unresolved cause despite passing unchanged-limit focused main/branch reruns. Four Windows unit failures reproduce on unchanged main. No skip, deadline or performance threshold was changed."
+}
