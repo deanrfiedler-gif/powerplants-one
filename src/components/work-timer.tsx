@@ -269,8 +269,15 @@ export function WorkTimer({
     const target = figure.current;
     if (!target) return;
     const observer = new IntersectionObserver(
-      ([e]) => setCompact(!e.isIntersecting),
-      { threshold: 0 },
+      // A clock below a narrow viewport has not been scrolled past. Treating
+      // both directions alike alternately shrinks/expands the header until
+      // the clock crosses the lower edge on every frame.
+      ([e]) =>
+        setCompact(
+          !e.isIntersecting &&
+            e.boundingClientRect.bottom <= (e.rootBounds?.top ?? 0),
+        ),
+      { threshold: 0, root: work.current?.closest("main") ?? null },
     );
     observer.observe(target);
     return () => observer.disconnect();
