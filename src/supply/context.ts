@@ -14,6 +14,7 @@ import { visibleWorkOrder } from "../service/work-orders";
 import { visibleAppointment } from "../scheduling/planner";
 import { engineeringRow } from "../engineering/service";
 import type { SupplyRecord, RecordKind, FactKind } from "./model";
+import { conversionSourceAuthority } from "../estimating/conversion/source-authority";
 export const createCapability: Record<RecordKind, Capability> = {
   Demand: "supply.coordinate",
   Supply: "supply.coordinate",
@@ -130,6 +131,7 @@ export async function supplyRecord(
   await companyContext(c, p, r.company_id, r.site_id, "supply.read");
   await companyContext(c, p, r.company_id, r.site_id, cap);
   await linkedContext(c, p, r);
+  await conversionSourceAuthority(c, p, r.id);
   return r;
 }
 export async function newContext(

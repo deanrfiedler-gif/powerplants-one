@@ -158,6 +158,9 @@ function ResponseBody({
           exact estimate option
         </p>
         <div className="release-actions">
+          <ButtonLink href={`/estimating/quotes/${d.revision.id}/conversion`}>
+            Open ES-07 receiving
+          </ButtonLink>
           <ButtonLink href={`/estimating/quotes/${d.revision.id}/release`}>
             Open exact ES-05 issue
           </ButtonLink>

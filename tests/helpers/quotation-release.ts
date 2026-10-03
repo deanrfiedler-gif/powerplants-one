@@ -25,10 +25,12 @@ export async function reviewed(p:Principal,r:Principal,id:string) {
     await decideEstimateReview(r,id,{...crmBase(),submission_id:d.submissions.at(-1)!.id,expected_version:d.estimate.version,expected_review_version:d.sequence,kind,outcome:"Reviewed",findings:[]});
   }
 }
-export async function releaseFixture() {
+export async function releaseFixture(extraProducts=0) {
   const owner=(await createSession("coordinator")).principal,reviewer=(await createSession("estimating-source-reviewer")).principal,
     approver=(await createSession("quotation-approver")).principal,issuer=(await createSession("quotation-issuer")).principal,o=crmCreate();
-  await createOpportunity(owner,o);const input=estimateInput(o.id);await createEstimate(owner,input);
+  await createOpportunity(owner,o);const input=estimateInput(o.id);
+  for(let i=0;i<extraProducts;i++) input.lines.push({...input.lines[0],id:randomUUID(),description:`SYN additional Product ${i+1}`,quantity:"3.125"});
+  await createEstimate(owner,input);
   await reviewed(owner,reviewer,input.id);
   const estimate=await readEstimate(owner,input.id),draft=quoteCommand(estimate.saved);
   await prepareQuote(owner,input.id,draft);

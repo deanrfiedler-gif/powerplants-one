@@ -6,6 +6,8 @@
 
 This folder is the Git master for the local and protected hosted Design & Development workspace. Open `/development/page-register` through the local application or the **Design and build workspace** icon next to global search. `/development/design-system` is the component catalogue: real tables, cards, Gantt, scheduling, forms, navigation, overlays, feedback and mobile examples, linked references and alignment records. See the [component maintenance contract](components/README.md). Local mode retains its loopback gateway. The private hosted demo permits only the configured owner through an active Microsoft session; every page, preview and reference endpoint checks access. Set `PPO_DEVELOPMENT_WORKSPACE=off` to disable the workspace. See the [hosted access and release decision](../../decisions/hosted-design-workspace.md).
 
+Current ES-07 contribution: 330 entries, 176 source routes and 37 component records (19 runnable examples, ten hosts, eight reference-only patterns). All 330 page reviews and 37 component reviews remain pending. Exact receiving and native Forecast demand use the existing ES-07 key, scoped quotation route and separate [contract](../../contracts/quotation-conversion.md); the figures below describe retained baseline/import milestones.
+
 ## What is maintained
 
 | Source | Responsibility |

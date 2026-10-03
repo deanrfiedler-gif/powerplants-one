@@ -9,6 +9,7 @@ import { fieldReadinessReceiptAuthority } from "../field/readiness";
 import { aftercareReceiptAuthority } from "../sales/aftercare-service";
 import { handoverReceiptAuthority } from "../sales/handover-service";
 import { personEditAuthority } from "./contacts/commands";
+import { conversionReceiptAuthority } from "../estimating/conversion/context";
 import { sourceReceiptAuthority } from "../estimating/sources/context";
 import { reviewReceiptAuthority } from "../estimating/review/context";
 import { readEquipmentChange } from "../equipment/changes";
@@ -74,6 +75,12 @@ export async function readOperation(
     return transaction(async c => {
       await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [p.workspace_id]);
       await policyReceiptAuthority(c, p, r.object_type, r.record_id);
+      return r.result as OperationReceipt;
+    });
+  } else if (r.object_type === "DraftQuoteRevision" && r.command?.startsWith("QuoteConversion:")) {
+    return transaction(async c => {
+      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [p.workspace_id]);
+      await conversionReceiptAuthority(c,p,r.record_id,operation_id);
       return r.result as OperationReceipt;
     });
   } else if (r.object_type === "DraftQuoteRevision" && r.command?.startsWith("QuoteResponse:")) {
