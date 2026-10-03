@@ -1,0 +1,752 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-03T05:42:10.025618+00:00",
+  "runtime_source": "25d07c28bf47c9ea273858fef8fb84a2a8fee664",
+  "build": "d0Nswty-1THRjkeJfR-CD",
+  "harness_checkpoint": "c9acb5081871832a3b4daf542b173faf0da1fa08",
+  "environment": {
+    "os": "Windows",
+    "node": "24.21.0",
+    "npm": "11.19.0",
+    "postgresql": "16.15",
+    "playwright": "1.63.0",
+    "chrome": "154.0.8037.97",
+    "database": "ppo_synthetic_test",
+    "schema": 57,
+    "network": "loopback, unshaped",
+    "locale": "en-AU",
+    "timezone": "UTC",
+    "journey_ports": [
+      3022,
+      55810
+    ],
+    "regression_ports": [
+      3023,
+      55811
+    ],
+    "max_locks_per_transaction": 256
+  },
+  "phases": [
+    {
+      "phase": "initial",
+      "executed_at": "2026-10-03T04:08:34.472Z",
+      "result": "Passed",
+      "cases": 1,
+      "log": "initial.txt",
+      "page_errors": [],
+      "runtime_source": "6e8b898aeb150b0a4b42c3087605556a057986ad",
+      "build": "NlpmlalVafLoVSRWWJdSP"
+    },
+    {
+      "phase": "prepare",
+      "executed_at": "2026-10-03T04:21:03.029Z",
+      "result": "Passed",
+      "cases": 1,
+      "log": "prepare-03.txt",
+      "page_errors": [],
+      "runtime_source": "6e8b898aeb150b0a4b42c3087605556a057986ad",
+      "build": "NlpmlalVafLoVSRWWJdSP"
+    },
+    {
+      "phase": "finish",
+      "executed_at": "2026-10-03T04:24:39.839Z",
+      "result": "Passed",
+      "cases": 1,
+      "log": "finish.txt",
+      "page_errors": [],
+      "runtime_source": "6e8b898aeb150b0a4b42c3087605556a057986ad",
+      "build": "NlpmlalVafLoVSRWWJdSP"
+    },
+    {
+      "phase": "history",
+      "executed_at": "2026-10-03T04:28:52.314Z",
+      "result": "Passed",
+      "cases": 1,
+      "log": "history.txt",
+      "page_errors": [],
+      "runtime_source": "6e8b898aeb150b0a4b42c3087605556a057986ad",
+      "build": "NlpmlalVafLoVSRWWJdSP"
+    },
+    {
+      "phase": "history-current",
+      "result": "Passed",
+      "cases": 1,
+      "duration_seconds": 24.9,
+      "log": "history-current.txt",
+      "runtime_source": "25d07c28bf47c9ea273858fef8fb84a2a8fee664",
+      "build": "d0Nswty-1THRjkeJfR-CD",
+      "limit": "Same saved records continued after the bounded inspection UI correction; initial phases remain bound to their original build."
+    }
+  ],
+  "checks": {
+    "build": {
+      "result": "Passed",
+      "source": "25d07c28bf47c9ea273858fef8fb84a2a8fee664",
+      "build": "d0Nswty-1THRjkeJfR-CD",
+      "log": "build-final.txt"
+    },
+    "lint": {
+      "result": "Passed",
+      "logs": [
+        "lint.txt",
+        "lint-02.txt",
+        "lint-03.txt",
+        "lint-inspection.txt"
+      ]
+    },
+    "types": {
+      "result": "Passed",
+      "logs": [
+        "typecheck-final.txt",
+        "typecheck-02.txt",
+        "typecheck-03.txt",
+        "typecheck-inspection.txt"
+      ]
+    },
+    "units": {
+      "result": "568/571 passed;3 failures reproduced on unchanged main",
+      "log": "units-final.txt",
+      "original_main": "567/571, same4 failures before route-source separator correction",
+      "probe": "windows-path-probe.json"
+    },
+    "persisted": {
+      "result": "28/28 passed;0 skips",
+      "log": "affected-db.txt",
+      "elapsed_ms": 914965
+    },
+    "p07_rollback": {
+      "result": "Exact named case passed branch22.027s/main62.432s; unchanged120s limit; original timeout cause unresolved",
+      "logs": [
+        "p07-rollback-branch-02.txt",
+        "p07-rollback-main-02.txt"
+      ]
+    },
+    "browser_original": {
+      "result": "12 failed/6 passed; deliberate P07 trigger remained in disposable fixture",
+      "log": "browser.txt",
+      "cause": "PostgreSQL logged SYN late rollback challenge on browser commands; reset regression cluster only, narrative untouched."
+    },
+    "browser_after_fixture_reset": {
+      "result": "17 passed/1 failed/0 skips",
+      "log": "browser-02.txt",
+      "finding": "Inspection retry exact saved-record read had not completed at display assertion; see failures.json."
+    },
+    "inspection_old_control": {
+      "result": "Expected failure at same5000ms version5 assertion with6000ms delayed receipt",
+      "log": "inspection-negative-03.txt",
+      "source": "Unchanged origin/main test with isolated fixture date and controlled response delay; no application alteration."
+    },
+    "inspection_corrected_control": {
+      "result": "Full case passed 1/1 with controlled delayed real response",
+      "log": "inspection-corrected-delay-03.txt",
+      "limit": "Test boundary correction against original compiled runtime, separate from UI correction."
+    },
+    "inspection_corrected_normal": {
+      "result": "2/2 passed; 0 skips; desktop 58.5s, emulated phone 53.0s",
+      "log": "inspection-final-02.txt",
+      "source": "25d07c28bf47c9ea273858fef8fb84a2a8fee664",
+      "build": "d0Nswty-1THRjkeJfR-CD",
+      "assertions": "Real actor-bound receipt held, attempt selection disabled, released then full review workflow completed. No fabricated response."
+    },
+    "foundation": {
+      "result": "Passed",
+      "log": "foundation-final.txt"
+    },
+    "prototype": {
+      "result": "Passed;30PT,78parents",
+      "log": "prototype-final.txt"
+    },
+    "naming": {
+      "result": "Passed;7967 instruction characters",
+      "log": "naming-final.txt"
+    },
+    "studio": {
+      "result": "Passed;326entries,172routes,33components; all reviews pending",
+      "log": "studio-final-02.txt"
+    },
+    "layout": {
+      "result": "Four widths, actual200% zoom, keyboard focus and one content scroll owner passed; first navigation timeout retained",
+      "manifest": "layout.json"
+    },
+    "history_final_guard": {
+      "result": "Passed with existing canonical private-path/Git guard; same retained records",
+      "log": "history-02.txt"
+    },
+    "initial_build": {
+      "result": "Passed",
+      "source": "6e8b898aeb150b0a4b42c3087605556a057986ad",
+      "build": "NlpmlalVafLoVSRWWJdSP",
+      "log": "../field-acceptance-build.txt",
+      "limit": "App source unchanged; development guides are loaded from current Git files."
+    },
+    "inspection_old_ui": {
+      "result": "Expected failure: enabled attempt selection during held original lookup",
+      "log": "inspection-old-ui.txt",
+      "source": "6e8b898aeb150b0a4b42c3087605556a057986ad",
+      "build": "NlpmlalVafLoVSRWWJdSP"
+    },
+    "current_build_preservation": {
+      "result": "320 business tables and 11 exact files unchanged",
+      "before": "before-ui-fix-preservation.json",
+      "after": "after-ui-fix-preservation.json",
+      "limit": "Application rebuild/continuation, not a second narrative PostgreSQL restart."
+    },
+    "optional_mark_restart": {
+      "result": "Passed: 13 tables, 5 exact files including optional mark and original actor-bound receipt",
+      "manifest": "optional-mark-restart.json",
+      "limit": "Separate fresh FI-07 fixture; not a mark on the main narrative and not PT-22 restore."
+    },
+    "post_merge_main": {
+      "result": "Automatic post-merge workflows succeeded, distinct from PR337 final-head checks",
+      "source": "6e8b898aeb150b0a4b42c3087605556a057986ad",
+      "units": "571/571",
+      "database": "690/690",
+      "full_database_job_seconds": 4957,
+      "unchanged_limit_seconds": 5400,
+      "run": 37094294453
+    },
+    "performance_main": {
+      "result": "320 development and 320 compiled samples; both profiles 0 errors; all 16 compiled groups miss candidate 3000ms p95",
+      "manifest": "performance-main.json",
+      "limit": "Technical latency, not human task benefit."
+    }
+  },
+  "private_log_hashes": [
+    {
+      "name": "affected-db.txt",
+      "sha256": "669271fda9020fbaa0c553aaa851b18196a9ea82cccea14e8f340d02f786bd5b",
+      "bytes": 3765
+    },
+    {
+      "name": "after-restart.txt",
+      "sha256": "dc71f4ba70c70e1d1aa7d2e9d29ea660688d60577deaf94b1d44bf0935dda1a1",
+      "bytes": 68
+    },
+    {
+      "name": "after-ui-fix.txt",
+      "sha256": "915d57196f6b0c390f99be9fc5953520d32874be931194de117cf04af049a2c1",
+      "bytes": 67
+    },
+    {
+      "name": "app-restarted-02.txt",
+      "sha256": "0f215129f512be210876a456ece6f4ded1fe4381e0c6f2add3780e1949a7e12d",
+      "bytes": 124
+    },
+    {
+      "name": "app-restarted.err",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "name": "app-restarted.out",
+      "sha256": "eed3a0f7aa7306291c19f8b8ce59321192285726a5ba70fae1992321bfc9c465",
+      "bytes": 123
+    },
+    {
+      "name": "app-stop.txt",
+      "sha256": "501fd96f3f76c8cd79f987012ee2b377995d0bda9be445e07f1d31f767cf0025",
+      "bytes": 261
+    },
+    {
+      "name": "app.err",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "name": "app.out",
+      "sha256": "fedc7ab3df5799743732f9c4047d08824d5f0664e013c93264acc1f67ea7fb02",
+      "bytes": 123
+    },
+    {
+      "name": "before-restart.txt",
+      "sha256": "42dbb1799f7b3a028c762439c8ee697f553f6f9b41527928981b053536065202",
+      "bytes": 62
+    },
+    {
+      "name": "before-ui-fix.txt",
+      "sha256": "12cf5af5206519160ddedd52ebb9966de802ca9b6860a530ac5bbb42bb3995a1",
+      "bytes": 62
+    },
+    {
+      "name": "browser-02.txt",
+      "sha256": "5c221668f7ce79a74289cf5b6d148207e5cc71928d41e150d8d637b8563bf0c4",
+      "bytes": 6742
+    },
+    {
+      "name": "browser.txt",
+      "sha256": "3b3fc8932942b965f875b6f47be814fc4286559b88647fa774428b469d85bdb8",
+      "bytes": 43324
+    },
+    {
+      "name": "build-final.txt",
+      "sha256": "0f1a3c4bbf3a321b01ac48544f59ed988f65ebcf518b8f6963779b2b80567071",
+      "bytes": 22920
+    },
+    {
+      "name": "final-preservation.txt",
+      "sha256": "87cb787870282636cf39d0d316978dc43129d584f9dfc48834b1adc93af5980c",
+      "bytes": 54
+    },
+    {
+      "name": "finish.txt",
+      "sha256": "3b76f6a064fee6e21a717920ae9b7587186530b54660f2839f0f14f2a86eab0f",
+      "bytes": 502
+    },
+    {
+      "name": "foundation-02.txt",
+      "sha256": "f1161317148251be1c61192d0fffd684a1f0361fe2853a974f894429a9bf7b18",
+      "bytes": 455
+    },
+    {
+      "name": "foundation-03.txt",
+      "sha256": "64cbb5dcc330c5958a80dd630be64f17d3fbe25bc1a443511f646d1086e4b00a",
+      "bytes": 343
+    },
+    {
+      "name": "foundation.txt",
+      "sha256": "ac068bd98aa29227d2b41f677ec81cf493d4ac82280f3771d658278095dd5a08",
+      "bytes": 385
+    },
+    {
+      "name": "history-02.txt",
+      "sha256": "6e88eb22aeaffe0e1e35816072e092abffa3bcc94d98704aec9fec782577599a",
+      "bytes": 502
+    },
+    {
+      "name": "history-current.txt",
+      "sha256": "00a57cfbd08431a4cb17a5309ffbeb839954e16addbfbe8f3b33a3ea2f6ade4e",
+      "bytes": 502
+    },
+    {
+      "name": "history.txt",
+      "sha256": "be848ab658f57fbd4ba7b3c08e22469a31b06fbd3528dbb73bf2b63c088c34f0",
+      "bytes": 502
+    },
+    {
+      "name": "initial.txt",
+      "sha256": "847994a76ef8e74a4014a30975bb385b6c1409f015e646b2deac6461e83ae639",
+      "bytes": 694
+    },
+    {
+      "name": "inspection-corrected-delay-02.txt",
+      "sha256": "d14f95796518165199158fde9c8f07029bef402bd64bce66e6a816b81f97cb63",
+      "bytes": 3371
+    },
+    {
+      "name": "inspection-corrected-delay-03.txt",
+      "sha256": "500efe3cc41104f97b607a107424db23e25822ebf4e26fd2776285a0ff41746c",
+      "bytes": 527
+    },
+    {
+      "name": "inspection-corrected-delay.txt",
+      "sha256": "ad20d6b65fd4e24479f38888fd4b890871557b4fda0db62169e1b0f30a4b3d1e",
+      "bytes": 3970
+    },
+    {
+      "name": "inspection-final-02.txt",
+      "sha256": "bba4b541e29c215b2db96b4a6b2d0cf6383596a91061c6b2ab6c3d49b31b8985",
+      "bytes": 872
+    },
+    {
+      "name": "inspection-final.txt",
+      "sha256": "4316cd388897f70d763bf5fae213ea88c91fbd8c2acd5320811996429742dde7",
+      "bytes": 290
+    },
+    {
+      "name": "inspection-negative-02.txt",
+      "sha256": "2e13e9a7561e43b250bff856ddb67fa158ccaac0dd280a92cbb6069a00a605e7",
+      "bytes": 664
+    },
+    {
+      "name": "inspection-negative-03.txt",
+      "sha256": "4b3f8faaf498f26dc75b3491a0d042d7d03ee52f21a05b4cc46916cbe2d9778f",
+      "bytes": 4074
+    },
+    {
+      "name": "inspection-negative.txt",
+      "sha256": "1928cf85eb254e750d086f4a184475c1def62768ca668211f177ae2573484384",
+      "bytes": 1368
+    },
+    {
+      "name": "inspection-old-ui.txt",
+      "sha256": "0837c8031566f652ff71693354f8a8b23525ea348825c8bee46a24a11fa9ea6e",
+      "bytes": 3614
+    },
+    {
+      "name": "inspection-overlap-stop.txt",
+      "sha256": "beeb31f38b9f1541343541eb2e5756b6e03ab7b381e28f97b165a7f5f8259a23",
+      "bytes": 867
+    },
+    {
+      "name": "journey-current-app.txt",
+      "sha256": "798ec91efe8c5c6e9e4892ed19271e024774d8eb7fbd08f7f88928a2cf53b2c4",
+      "bytes": 126
+    },
+    {
+      "name": "journey-init.txt",
+      "sha256": "5b3ec72fd196a344f61f0181f8fcd4ab27530f80c14a48ccb660785149570c57",
+      "bytes": 977
+    },
+    {
+      "name": "journey-migrate.txt",
+      "sha256": "c6f4da1e54538519856825d27639b368688fdeadf97c4464f45cedd4cdd0205d",
+      "bytes": 29
+    },
+    {
+      "name": "journey-seed.txt",
+      "sha256": "adb0699b45f327d6797cafdf6a9c7b7692face1ed7356dc84f6c901e2e784d09",
+      "bytes": 26
+    },
+    {
+      "name": "journey-start.err",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "name": "journey-start.txt",
+      "sha256": "46038efb813fbca18a92272496901190638dea3f97b51f7af0daa1ca2eb13818",
+      "bytes": 54
+    },
+    {
+      "name": "layout-02.txt",
+      "sha256": "8b640b892599012ea78901c3dd845a1ad8e3d925eb9e0977d933d4fc98df1381",
+      "bytes": 124
+    },
+    {
+      "name": "layout.txt",
+      "sha256": "d51a25a1e84e8187d3a8eb11d7cb5ecacbae26f48c7280eae14176f84bb0e59a",
+      "bytes": 2531
+    },
+    {
+      "name": "lint-02.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "name": "lint-03.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "name": "lint-inspection.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "name": "lint.txt",
+      "sha256": "144b8ef738aebf80f098340cd52aae1ca2b3b236fc5859b5d6806e5ec9ac9f64",
+      "bytes": 46
+    },
+    {
+      "name": "marks-after.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "name": "marks-app-stop.txt",
+      "sha256": "13ea4511ad9235865e83c129f3712b3507099d0b48340befc952be532141079b",
+      "bytes": 87
+    },
+    {
+      "name": "marks-before.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "name": "marks-pg-start.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "name": "marks-pg-stop.txt",
+      "sha256": "3a6747065de8c2dbc66a6baa73d5ab09c2c03eb8851704f973ac4b886e6805f2",
+      "bytes": 59
+    },
+    {
+      "name": "naming-02.txt",
+      "sha256": "91729793dbf7d8c29bc54336c484e719cd0badb93f4f5a26df5ef6b59c4c9cb4",
+      "bytes": 306
+    },
+    {
+      "name": "naming.txt",
+      "sha256": "0062eccaaef122c0aa13a71b440b68e10bd62b5b378de9ecc5b0417b15119d95",
+      "bytes": 373
+    },
+    {
+      "name": "p07-rollback-branch-02.txt",
+      "sha256": "80a2d7b2ac437268bf2ea6bf48178aea52cb94b7c2568481f044132395aa4cc9",
+      "bytes": 218
+    },
+    {
+      "name": "p07-rollback-branch.txt",
+      "sha256": "a9aa4e525eca353f2bdc4bf0fb0e783079714ffa0cdf1b45f21ba0fbce9062be",
+      "bytes": 170
+    },
+    {
+      "name": "p07-rollback-main-02.txt",
+      "sha256": "b6d8e152d899491f9768bce588274717bfd486fdaaca04b62a9449e6d4478f9c",
+      "bytes": 218
+    },
+    {
+      "name": "p07-rollback-main.txt",
+      "sha256": "90dacd171661aaca44038e2f3833d9736ceba50622f0bc48d7c54eface8c3f29",
+      "bytes": 170
+    },
+    {
+      "name": "p08-publication.txt",
+      "sha256": "f96de4b0407ae5d8fd975fbb9afbdc0542253695ccab676effd0ab504e2d025c",
+      "bytes": 7811
+    },
+    {
+      "name": "p11-publication.txt",
+      "sha256": "a7dc5e66225fd8da1de46dbb16313c1695edfe7fa8f689419c99064219221bd5",
+      "bytes": 64245
+    },
+    {
+      "name": "pg-restart.err",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "name": "pg-restart.txt",
+      "sha256": "46038efb813fbca18a92272496901190638dea3f97b51f7af0daa1ca2eb13818",
+      "bytes": 54
+    },
+    {
+      "name": "pg-stop.txt",
+      "sha256": "3a6747065de8c2dbc66a6baa73d5ab09c2c03eb8851704f973ac4b886e6805f2",
+      "bytes": 59
+    },
+    {
+      "name": "prebuild-stop-3022.txt",
+      "sha256": "c1074bc959c8ac503a071b75a43e4402ab38705d48ddaf78f8b29b1638d3c0fe",
+      "bytes": 86
+    },
+    {
+      "name": "prebuild-stop-3023.txt",
+      "sha256": "df70a45037da0e335ccfbbf938be81f9e7c434877629a16d9835f85e671f452d",
+      "bytes": 87
+    },
+    {
+      "name": "prepare-02.txt",
+      "sha256": "5748c8ba7158d1ce19afc44c9fab478b9e57eefc5a6d8263fe1074fa9f108687",
+      "bytes": 4268
+    },
+    {
+      "name": "prepare-03.txt",
+      "sha256": "5a91858e12b4535b390332d46c3072144eee20f14494bdc5150ea029af3d323e",
+      "bytes": 502
+    },
+    {
+      "name": "prepare.txt",
+      "sha256": "d3d3dc4f5ef1c1aebd5b6a92ef0a9383c7e0cc64124411ffa180c97b67de9e52",
+      "bytes": 3763
+    },
+    {
+      "name": "prototype.txt",
+      "sha256": "f7b48b580707ab4071e3dcda23d38936db1c757240cbc5996bf54ed4fceb2ff3",
+      "bytes": 551
+    },
+    {
+      "name": "regression-app-02.txt",
+      "sha256": "eff9b8a814a6f2cd6381665bd1bb2b54429cbb079d24fdb19671c3d41ff7e7b5",
+      "bytes": 1474
+    },
+    {
+      "name": "regression-app-03.txt",
+      "sha256": "e3ea8f05cffb1e07b37677d0a7bc01108a7636f7d0b2772b6fe3af4d829d04e7",
+      "bytes": 1576
+    },
+    {
+      "name": "regression-app-04.txt",
+      "sha256": "d52fa41e869c3228333957d5a30f77a58b4015ebf4b48eb329ee5351f953801e",
+      "bytes": 125
+    },
+    {
+      "name": "regression-app.txt",
+      "sha256": "1c27a892cba5dbac156b5aca845f24240f252a474a0a13263ee2a3a9465e45ba",
+      "bytes": 125
+    },
+    {
+      "name": "regression-before-reset-stop.txt",
+      "sha256": "e6fa7d7b59990e7f7d5baa537d1d31c5740513b42bce68209626df289810522c",
+      "bytes": 86
+    },
+    {
+      "name": "regression-current-app.txt",
+      "sha256": "9404720a08923da7eefbf1a40f466a32459729fe23b494c91803362a413c01b9",
+      "bytes": 125
+    },
+    {
+      "name": "regression-init.txt",
+      "sha256": "76fd04e6723518ee67384cb07f82f309f0597476f79258eefbb2b0ba3b4ef02b",
+      "bytes": 983
+    },
+    {
+      "name": "regression-marks-restarted.txt",
+      "sha256": "b30560e0f292a521be5f23d69889a76d8c4124921a09cad1ccb8b455e923ecdd",
+      "bytes": 125
+    },
+    {
+      "name": "regression-migrate.txt",
+      "sha256": "c6f4da1e54538519856825d27639b368688fdeadf97c4464f45cedd4cdd0205d",
+      "bytes": 29
+    },
+    {
+      "name": "regression-reset.txt",
+      "sha256": "f908e18a260220a3758abc9b0eacba7df2cf16ee75a3e45ff0b5e58e200b96e5",
+      "bytes": 27
+    },
+    {
+      "name": "regression-seed.txt",
+      "sha256": "adb0699b45f327d6797cafdf6a9c7b7692face1ed7356dc84f6c901e2e784d09",
+      "bytes": 26
+    },
+    {
+      "name": "regression-start.err",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "name": "regression-start.txt",
+      "sha256": "46038efb813fbca18a92272496901190638dea3f97b51f7af0daa1ca2eb13818",
+      "bytes": 54
+    },
+    {
+      "name": "regression-startup-stop.txt",
+      "sha256": "bb895ddce3518e899bff38c77b1d6814c94014681ab8cba0ff04997889bb3d4c",
+      "bytes": 87
+    },
+    {
+      "name": "stalled-app-stop.txt",
+      "sha256": "ddd681bba5c17d28b457c4ac96c292882aa952ed602119d94c154ae1ed67a460",
+      "bytes": 174
+    },
+    {
+      "name": "studio-02.txt",
+      "sha256": "1466e5d07dad89e1007c975893236b07bcdd12fc887ae625da86ac9793463f2f",
+      "bytes": 446
+    },
+    {
+      "name": "studio-final.txt",
+      "sha256": "1466e5d07dad89e1007c975893236b07bcdd12fc887ae625da86ac9793463f2f",
+      "bytes": 446
+    },
+    {
+      "name": "studio-inspection.txt",
+      "sha256": "c5068f4b6f3f80f8f7a3e86ff07abf31149b90c45cd4ac15382691e229a1ae91",
+      "bytes": 546
+    },
+    {
+      "name": "studio.txt",
+      "sha256": "1466e5d07dad89e1007c975893236b07bcdd12fc887ae625da86ac9793463f2f",
+      "bytes": 446
+    },
+    {
+      "name": "type-initial.txt",
+      "sha256": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28",
+      "bytes": 55
+    },
+    {
+      "name": "typecheck-02.txt",
+      "sha256": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28",
+      "bytes": 55
+    },
+    {
+      "name": "typecheck-03.txt",
+      "sha256": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28",
+      "bytes": 55
+    },
+    {
+      "name": "typecheck-final.txt",
+      "sha256": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28",
+      "bytes": 55
+    },
+    {
+      "name": "typecheck-inspection.txt",
+      "sha256": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28",
+      "bytes": 55
+    },
+    {
+      "name": "units-branch.txt",
+      "sha256": "78e3ef0a458800a10f6dbedf63cb9b25a5d8046f3e78ce7e2bebbf95bc89181f",
+      "bytes": 62578
+    },
+    {
+      "name": "units-final.txt",
+      "sha256": "a0362d2140fdae87548843503322eb83f8fd2d6939b6eea6addc84bc1d124dba",
+      "bytes": 61642
+    },
+    {
+      "name": "units-main.txt",
+      "sha256": "f88bb2f84a147220d034b20e423e5cddd7591d543e93769e8b5dc2d6f6d23d80",
+      "bytes": 62563
+    },
+    {
+      "name": "warm-routes-fixed.txt",
+      "sha256": "e96e0ab2b6712f87fd8784fd042e3093f58f386967265c2a240b9dad10514942",
+      "bytes": 417
+    },
+    {
+      "name": "foundation-final.txt",
+      "sha256": "da3975b32443838d52b5c887af90beda92841199c5acff9ebe2c7ccbd11a2fc8",
+      "bytes": 343
+    },
+    {
+      "name": "prototype-final.txt",
+      "sha256": "f7b48b580707ab4071e3dcda23d38936db1c757240cbc5996bf54ed4fceb2ff3",
+      "bytes": 551
+    },
+    {
+      "name": "naming-final.txt",
+      "sha256": "91729793dbf7d8c29bc54336c484e719cd0badb93f4f5a26df5ef6b59c4c9cb4",
+      "bytes": 306
+    },
+    {
+      "name": "studio-final-02.txt",
+      "sha256": "1466e5d07dad89e1007c975893236b07bcdd12fc887ae625da86ac9793463f2f",
+      "bytes": 446
+    }
+  ],
+  "source_hashes": {
+    "tests/acceptance-browser/journey.spec.ts": "b963778d820866372e66c848070bb2e5c1832b051b48d5c5f1f73d1aa5c103d3",
+    "tests/helpers/acceptance-timer.ts": "7f1fc605eab2aac455860dbec9547d8550ff7fdd7776d57c4c9551ebaa80ec53",
+    "tests/helpers/service-journey.ts": "23b55fe683203654e74a09e94b9a32616c33037e095a31d904b99945d015041e",
+    "tests/helpers/quality-finance.ts": "387397efd85c2e103c11619e7eb6c61d62dbfed864e4a3657fe496962c9386f3",
+    "scripts/warm-routes.ts": "c80f8ffb5c51f9c45636e89003e290476ae42cfb9d120ee889ca17203caf599b",
+    "playwright.acceptance.config.ts": "cc87d602725b81e521e1cb84b0ce1142bf3889e7afb3fa7f0d6194515900508b",
+    "tests/browser/service-inspections.spec.ts": "829e751701992aa08e8b31632e82e7cf0df1c7da120122a087a28bd307b3c067",
+    "src/inspections/service-screen.tsx": "6187900e27ae8fa08b5d1f09a346b3c73d1f9d070bc8dc084de98026adc8b0b5"
+  },
+  "retained_evidence": [
+    "../field-closed-visit/README.md",
+    "../scheduling-step6/README.md",
+    "../field-customer-response/README.md"
+  ],
+  "changes": {
+    "application": true,
+    "schema": false,
+    "migration": false,
+    "seed": false,
+    "capability": false,
+    "grant": false,
+    "user": false,
+    "template": false,
+    "route": false,
+    "dependency": false,
+    "offline_protocol": false,
+    "verification_harness": true,
+    "route_manifest_source_separator": true,
+    "inspection_verification_read_boundary": true,
+    "application_detail": "Inspection attempt button disabled during existing busy or unresolved-original guard; no new semantics."
+  },
+  "acceptance": {
+    "independent_review": "Pending",
+    "owner": "Session offered; actual observations pending",
+    "benefit": "Unmeasured; no baseline or follow-up samples",
+    "PT_30": "Technical narrative passed; prerequisites and human acceptance remain open",
+    "PP_01": "Open"
+  },
+  "initial_runtime_source": "6e8b898aeb150b0a4b42c3087605556a057986ad",
+  "initial_build": "NlpmlalVafLoVSRWWJdSP"
+}

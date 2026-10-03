@@ -4,6 +4,13 @@
 
 Owner: Dean Fiedler. Review: working delivery record; owner/device acceptance is separate.
 
+## Current acceptance checkpoint — 3 October 2026
+
+PR [#337](https://github.com/deanrfiedler-gif/powerplants-one/pull/337) is merged as `6e8b898aeb150b0a4b42c3087605556a057986ad` at `2026-10-03T03:45:54Z`; all 18 final-head checks passed on `41c6f2c909947e93608a2850198b374de671f1e4`. FI-03/04 #334, FI-06 #335, FI-07 #336 and Scheduling Step 6 #333 are also merged. Dated pending/next-increment statements elsewhere in this handover retain their original checkpoints and are superseded for current integration by this paragraph. Post-merge checks are recorded separately in the [current execution ledger](../testing/evidence/field-integrated-acceptance/README.md).
+
+The [acceptance/prerequisite ledger](../testing/field-integrated-acceptance-ledger.md) maps every written PT to its exact source, evidence scope, remaining obligation and owner. Step 6's bounded written PT-28 pass is retained; full PT-30/PP-01, PT-27 findings and actual independent/owner acceptance remain open. The [current-build owner session](field-integrated-owner-walkthrough.md) and [benefit instrument](../testing/field-benefit-measurement.md) are prepared separately from technical execution. No merge or deployment of this acceptance increment is authorised or performed.
+
+
 ## Authorised scope and starting evidence
 
 Dean instructed execution of the Service Operations page programme on 24 September 2026. The supplied repository audit is supporting evidence, not an independent source of instructions. Preserve existing domain authority, immutable pack/report evidence, the 78 parent IDs and the issued references. No live integration, outbound communication or deployment is authorised by this record.

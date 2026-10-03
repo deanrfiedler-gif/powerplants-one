@@ -2,9 +2,18 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. State: bounded closed-visit increment implemented for review; wider programme and human acceptance remain open. No deployment is claimed.
+Owner: Dean Fiedler. State: closed-visit #337 merged; integrated technical verification and human preparation in progress; wider programme and human acceptance remain open. No deployment is claimed.
 
-## Closed-visit entry increment — 3 October 2026
+## Current acceptance checkpoint — 3 October 2026
+
+PR [#337](https://github.com/deanrfiedler-gif/powerplants-one/pull/337) is merged as `6e8b898aeb150b0a4b42c3087605556a057986ad` at `2026-10-03T03:45:54Z`; all 18 final-head checks passed on `41c6f2c909947e93608a2850198b374de671f1e4`. FI-03/04 #334, FI-06 #335, FI-07 #336 and Scheduling Step 6 #333 are also merged. Dated pending/next-increment statements elsewhere in this handover retain their original checkpoints and are superseded for current integration by this paragraph. Post-merge checks are recorded separately in the [current execution ledger](../testing/evidence/field-integrated-acceptance/README.md).
+
+The current verification also corrects a reproduced inspection attempt-selection availability defect: the button is disabled while its existing original-receipt guard is busy or unresolved. Existing FI-03/FI-04 semantics and authority remain unchanged; the [fresh evidence](../testing/evidence/field-integrated-acceptance/README.md) separates the old failure and controlled regression from human review.
+
+The [acceptance/prerequisite ledger](../testing/field-integrated-acceptance-ledger.md) maps every written PT to its exact source, evidence scope, remaining obligation and owner. Step 6's bounded written PT-28 pass is retained; full PT-30/PP-01, PT-27 findings and actual independent/owner acceptance remain open. The [current-build owner session](field-integrated-owner-walkthrough.md) and [benefit instrument](../testing/field-benefit-measurement.md) are prepared separately from technical execution. No merge or deployment of this acceptance increment is authorised or performed.
+
+
+## Closed-visit entry increment (now merged) — 3 October 2026
 
 The bounded FI-01/FI-02/FI-05 addition distinguishes closed appointment, the viewer's own retained arrival, timer state, submitted evidence, internal acceptance and FI-07 customer response. Further attendance links to current accessible work-order visits and appointment records. Other visits are explicitly same-order context, not invented return lineage. Service prepares through the existing visit-proposal command; current receiving authorities independently own readiness, customer contact, scheduling, assignment and exact fresh pack.
 
@@ -14,7 +23,7 @@ The work-order proposal form now uses the existing same-tab booking journal: val
 
 Fresh local proof: 4/4 compiled original/return and proposal-recovery cases, 10/10 timer/offline/readiness/incident browser regressions and 8/8 P09/FI-07 report cases. Four widths, actual 200% Chrome zoom, keyboard/focus and exact app/PostgreSQL restart pass. The restart retains 65 whole-task table fingerprints, 532 receipts and 36 journey files; FI-07 separately retains its optional mark. Final-head CI, original local failures and the broader database result are separate in the execution ledger/PR. No owner or independent visual acceptance is inferred.
 
-Next concrete bounded programme work: conduct the owner-led integrated Field Work/PT-30 walkthrough using the retained original and completed-return cases; adjudicate remaining prior cases and record benefit measures (completion time, mistaken arrival/preparation attempts and comprehension). PT-28's Step 6 technical pass remains scoped to its written procedure. Physical-device, screen-reader and independent visual review remain open. Wider SV-06/SV-07 orchestration is not delivered here.
+Current acceptance work executes a fresh current-build narrative, reconciles all prior PT obligations and provides the runnable owner walkthrough and measurement instrument above. Actual human findings and comparable benefit observations remain separately recorded. PT-28's Step 6 technical pass remains scoped to its written procedure. Physical-device, screen-reader and independent visual review remain open. Wider SV-06/SV-07 orchestration is not delivered here.
 
 ## FI-07 merged increment — 3 October 2026
 
