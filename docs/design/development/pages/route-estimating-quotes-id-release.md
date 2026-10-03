@@ -27,3 +27,7 @@ Required host states: Draft source, Prepared, render pending/failed/ready, Appro
 ## Executed contribution evidence
 
 [Proof and original inspected captures](../../../testing/evidence/quotation-release/README.md) record the compiled desktop/mobile journey and its limitations. Source and functional proof are present; paired visual baseline and owner acceptance remain pending.
+
+## ES-06 receiving link
+
+An exact issued revision now links to the staff response page. Reported acceptance, corrections and negotiation remain separate from ES-05 approval/issue; the link passes this exact revision. See [response contract](../../../contracts/quotation-response.md). The shared panel stylesheet also serves ES-06; its controls and tokens are unchanged.

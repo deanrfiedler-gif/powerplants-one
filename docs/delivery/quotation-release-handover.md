@@ -1,5 +1,8 @@
 # Synthetic quotation release implementation handover
 
+**Current reconciliation, 3 October 2026:** ES-04 #338 and ES-05 #340 are merged in refreshed main `ab4acd687f6a4911ebc5f3f1bd8f09d5ff1e1547`; all 24 final ES-05 checks passed. Historical pre-merge wording below is superseded. [ES-06 contribution](quotation-response-handover.md) adds exact staff-recorded responses, immutable correction and controlled negotiation, with separate ES-07 review preparation. Receiving/item conversion remains next.
+
+
 <!-- versioning: git; committed history is authoritative -->
 
 Owner: Dean Fiedler. 3 October 2026. Implemented on `codex/quotation-release`, [PR #340](https://github.com/deanrfiedler-gif/powerplants-one/pull/340), based on merged [ES-04 PR #338](https://github.com/deanrfiedler-gif/powerplants-one/pull/338) (main `48b2abd`, merged independently on 3 October). This document records actual source and proof separately from owner acceptance, merge and deployment.

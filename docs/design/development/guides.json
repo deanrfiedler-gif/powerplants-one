@@ -6246,7 +6246,8 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Prepare and independently approve an exact synthetic quotation, issue its original output and record a distribution simulation. Nothing here sends a customer message or authorises work or payment."
+            "Prepare and independently approve an exact synthetic quotation, issue its original output and record a distribution simulation. Nothing here sends a customer message or authorises work or payment.",
+            "An exact issued revision links to ES-06 staff response. Release and simulation create no response or conversion."
           ],
           "steps": [],
           "rows": [],
@@ -6405,243 +6406,149 @@
       "title": "Quotation response and negotiation",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Bounded native synthetic workflow",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-10-03",
+      "source_commit": "ab4acd687f6a4911ebc5f3f1bd8f09d5ff1e1547",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See quotation-response-handover.md; verification in progress",
       "sections": [
         {
           "section_id": "purpose",
-          "title": "Purpose and outcome",
+          "title": "Purpose and applicability",
           "paragraphs": [
-            "Use Quotation response and negotiation to work towards this outcome: A response is bound to a specific offer and its conditions.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "Acceptance of an old revision does not approve a changed offer."
+            "Record an attributable staff-reported synthetic response to one exact issued quotation. Reported acceptance is not verified authority, legal signature or permission to start work."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
-          "section_id": "before",
+          "section_id": "prerequisites",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Issued offer revision, recipient response, selected options and conditions.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Open an issued ES-05 revision. The current estimator needs preparation permission and current original-entity/source access. One whole manual option is supported."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Identify the exact offer the customer responded to",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Inspect Exact offer binding and original PDF/HTML. Enter reason, synthetic evidence, stated respondent, claimed role, reported UTC time and outcome. Acknowledge synthetic recording, Record exact reported response, then Open saved response."
           ],
-          "rows": [],
-          "headers": []
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
-          "section_id": "page-tour",
-          "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Quotation response and negotiation · Page"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "section_id": "tour",
+          "title": "Page tour",
+          "paragraphs": [
+            "Exact issue and policy gaps, original recovery, reported outcome, staff capture, clarification, ES-07 readiness and immutable history remain distinct."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "information",
-          "title": "Information you need",
+          "title": "Information and fields",
           "paragraphs": [
-            "Issued offer revision, recipient response, selected options and conditions.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Reported time follows issue and precedes recording. Conditions hold receiving preparation. The server supplies recorder and recording time; role remains a claim."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "tasks",
-          "title": "Complete the main task",
+          "title": "Tasks",
           "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
+            "Record explicitly follows the preceding report. Correct appends a full correction of the current report. Information-only clarification requires an answer and separately reported confirmation using the attribution fields. Material Negotiation holds this issue and requires an ES-05 successor."
           ],
-          "steps": [
-            "Identify the exact offer the customer responded to",
-            "Record acceptance, decline or negotiation evidence",
-            "Prepare a successor offer when content changes"
-          ],
-          "rows": [],
-          "headers": []
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "A response is bound to a specific offer and its conditions.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Acceptance of an old revision does not approve a changed offer."
+            "Prepare exact ES-07 review handover only from a current unconditioned acceptance with resolved clarification. Enter due date and receiving note; the estimator owns preparation. Nothing is sent, received or converted."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "states",
-          "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "title": "States and exceptions",
+          "paragraphs": [
+            "Changed response or successor holds old preparation; originals remain. Unresolved conditions/material negotiation hold receiving. Validity/expiry, withdrawal, signature and authority policy remain Not configured."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "examples",
-          "title": "Worked examples",
+          "title": "Worked example",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare issued offer revision, recipient response, selected options and conditions. Follow the task sequence and check that a response is bound to a specific offer and its conditions. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Quotation response and negotiation has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Acceptance of an old revision does not approve a changed offer."
+            "A fictional buyer reports acceptance. Staff record it and prepare review. An erroneous acceptance is corrected to Declined; original acceptance and preparation remain, with preparation held."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "Recover original response receipt or Retry exact original after an uncertain result. Missing receipt is inconclusive and replacements stay disabled. After a definitive stale refusal, Refresh permitted evidence and Use current response basis after comparison; text remains."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Stacked panels and wrapped hashes retain labelled controls at 390/320 px. No offline command. Physical-device and screen-reader acceptance remain separate."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "Read quotation-response contract, native decision and handover. ES-05 owns changed content; ES-07 owns independent receiving, item resolution and conversion. Reference HTML does not establish runtime authority."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide. Source, functional proof, visual review, owner acceptance and deployment are separate."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         }
       ],
       "related_entry_keys": [
-        "scope:ES-05"
+        "scope:ES-05",
+        "scope:ES-07"
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -6684,7 +6591,8 @@
           "paragraphs": [
             "Use One-off item resolution and conversion to work towards this outcome: Each accepted line has one traceable conversion outcome.",
             "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "Do not create duplicate downstream effects after a timeout. MYOB ownership remains authoritative where applicable."
+            "Do not create duplicate downstream effects after a timeout. MYOB ownership remains authoritative where applicable.",
+            "Native ES-06 supplies an exact issue/response and prepared review note. Independent receiving, item resolution and duplicate-safe conversion remain next; preparation is not receipt."
           ],
           "steps": [],
           "rows": [],
@@ -70146,7 +70054,8 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Prepare and independently approve an exact synthetic quotation, issue its original output and record a distribution simulation. Nothing here sends a customer message or authorises work or payment."
+            "Prepare and independently approve an exact synthetic quotation, issue its original output and record a distribution simulation. Nothing here sends a customer message or authorises work or payment.",
+            "An exact issued revision links to ES-06 staff response. Release and simulation create no response or conversion."
           ],
           "steps": [],
           "rows": [],
@@ -70275,6 +70184,156 @@
       ],
       "prepared_at": "2026-10-03",
       "runtime_evidence": "Verification in progress; see quotation-release-handover.md"
+    },
+    {
+      "guide_key": "guide.route-estimating-quotes-id-response",
+      "entry_key": "route:/estimating/quotes/[id]/response",
+      "title": "Quotation response and negotiation",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Bounded native synthetic workflow",
+      "source_commit": "ab4acd687f6a4911ebc5f3f1bd8f09d5ff1e1547",
+      "related_entry_keys": [
+        "scope:ES-05",
+        "scope:ES-07"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Record an attributable staff-reported synthetic response to one exact issued quotation. Reported acceptance is not verified authority, legal signature or permission to start work."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "prerequisites",
+          "title": "Before you start",
+          "paragraphs": [
+            "Open an issued ES-05 revision. The current estimator needs preparation permission and current original-entity/source access. One whole manual option is supported."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [
+            "Inspect Exact offer binding and original PDF/HTML. Enter reason, synthetic evidence, stated respondent, claimed role, reported UTC time and outcome. Acknowledge synthetic recording, Record exact reported response, then Open saved response."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "tour",
+          "title": "Page tour",
+          "paragraphs": [
+            "Exact issue and policy gaps, original recovery, reported outcome, staff capture, clarification, ES-07 readiness and immutable history remain distinct."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information and fields",
+          "paragraphs": [
+            "Reported time follows issue and precedes recording. Conditions hold receiving preparation. The server supplies recorder and recording time; role remains a claim."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Tasks",
+          "paragraphs": [
+            "Record explicitly follows the preceding report. Correct appends a full correction of the current report. Information-only clarification requires an answer and separately reported confirmation using the attribution fields. Material Negotiation holds this issue and requires an ES-05 successor."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Prepare exact ES-07 review handover only from a current unconditioned acceptance with resolved clarification. Enter due date and receiving note; the estimator owns preparation. Nothing is sent, received or converted."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "states",
+          "title": "States and exceptions",
+          "paragraphs": [
+            "Changed response or successor holds old preparation; originals remain. Unresolved conditions/material negotiation hold receiving. Validity/expiry, withdrawal, signature and authority policy remain Not configured."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "examples",
+          "title": "Worked example",
+          "paragraphs": [
+            "A fictional buyer reports acceptance. Staff record it and prepare review. An erroneous acceptance is corrected to Declined; original acceptance and preparation remain, with preparation held."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Troubleshooting",
+          "paragraphs": [
+            "Recover original response receipt or Retry exact original after an uncertain result. Missing receipt is inconclusive and replacements stay disabled. After a definitive stale refusal, Refresh permitted evidence and Use current response basis after comparison; text remains."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline use",
+          "paragraphs": [
+            "Stacked panels and wrapped hashes retain labelled controls at 390/320 px. No offline command. Physical-device and screen-reader acceptance remain separate."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related guidance and procedures",
+          "paragraphs": [
+            "Read quotation-response contract, native decision and handover. ES-05 owns changed content; ES-07 owns independent receiving, item resolution and conversion. Reference HTML does not establish runtime authority."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "review",
+          "title": "Guide review and feedback",
+          "paragraphs": [
+            "Draft guide. Source, functional proof, visual review, owner acceptance and deployment are separate."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-10-03",
+      "runtime_evidence": "See quotation-response-handover.md; verification in progress"
     }
   ]
 }

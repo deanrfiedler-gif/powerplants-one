@@ -23,3 +23,7 @@ The reference's six views and r03 operative commercial content remain reference-
 ## States, examples and evidence
 
 Required host states: Draft source, Prepared, render pending/failed/ready, Approved/Returned, exact Issued, Unknown simulation and attributable resolution, changed source, stale entered proposal, unknown original operation, permission refusal and retained earlier issue. The [contract](../../../contracts/quotation-release.md) and [handover](../../../delivery/quotation-release-handover.md) keep functional proof separate from visual acceptance and deployment. The actual host fixtures are in `tests/browser/quotation-release.spec.ts`. [Executed proof and original inspected captures](../../../testing/evidence/quotation-release/README.md) cover desktop/mobile recovery, 320px disclosure, current permission refusal and distinct release facts. No review fingerprint is accepted.
+
+## ES-06 receiving link
+
+An exact issued revision now links to the staff response page. Reported acceptance, corrections and negotiation remain separate from ES-05 approval/issue; the link passes this exact revision. See [response contract](../../../contracts/quotation-response.md). The shared panel stylesheet also serves ES-06; its controls and tokens are unchanged.

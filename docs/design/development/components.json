@@ -191,7 +191,8 @@
         "route:/service/work-orders/[id]",
         "route:/estimating/estimates/[id]/review",
         "route:/estimating/quotes/[id]/release",
-        "scope:ES-05"
+        "scope:ES-05",
+        "route:/estimating/quotes/[id]/response"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -895,7 +896,8 @@
         "route:/service/incidents",
         "route:/estimating/estimates/[id]/review",
         "route:/estimating/quotes/[id]/release",
-        "scope:ES-05"
+        "scope:ES-05",
+        "route:/estimating/quotes/[id]/response"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -1115,7 +1117,8 @@
         "route:/service/reports/[id]",
         "route:/estimating/estimates/[id]/review",
         "route:/estimating/quotes/[id]/release",
-        "scope:ES-05"
+        "scope:ES-05",
+        "route:/estimating/quotes/[id]/response"
       ],
       "desktop": "Submit an empty title to focus the summary, then follow its link to the field. Correct the title and save to clear the example error.",
       "mobile": "Summary and inline errors must remain visible at 320 px and 200% zoom.",
@@ -1609,7 +1612,8 @@
         "route:/service/work-orders/[id]",
         "route:/estimating/estimates/[id]/review",
         "route:/estimating/quotes/[id]/release",
-        "scope:ES-05"
+        "scope:ES-05",
+        "route:/estimating/quotes/[id]/response"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -1752,7 +1756,8 @@
         "route:/estimating",
         "route:/estimating/estimates/[id]/review",
         "route:/estimating/quotes/[id]/release",
-        "scope:ES-05"
+        "scope:ES-05",
+        "route:/estimating/quotes/[id]/response"
       ],
       "desktop": "Keep a readable label with each tone; business state and tone are not equivalent.",
       "mobile": "Chips wrap without truncating operational meaning.",
@@ -3191,13 +3196,108 @@
       "desktop": "Four separate stage cards, exact source/output disclosures, shared decision fields and immutable history within one shell scroll owner.",
       "mobile": "Stacked cards below 900 CSS px; 390/320 px wrapping and preserved original recovery controls.",
       "keyboard": "Native labelled inputs, shared buttons, visible focus and error focus; no drag-only decision.",
-      "limitations": "Host example with actual synthetic records. No operative terms, financial exceptions, validity period, live distribution, customer response or conversion. Native visual and owner review pending.",
+      "limitations": "Host example with actual synthetic records. Exact issued revision links to ES-06; release creates no customer response or conversion. Operative policy and visual/owner acceptance remain pending.",
       "gaps": [
         {
           "id": "es05-native-acceptance",
           "expected": "Reviewed native adaptation of the retained ES-05 r02 and customer presentation, with independent device and screen-reader evidence.",
           "actual": "Bounded E1-based synthetic document and one release record page; the six-view reference and r03 commercial content remain reference-only. Exact accepted native reference images are unavailable.",
           "action": "Review native evidence against retained references; keep functional and owner acceptance separate.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "quotation-response",
+      "title": "Exact quotation response and negotiation",
+      "category": "Forms",
+      "module": "ES",
+      "purpose": "Retain attributable reports and corrections against one immutable issue, with clarification and separate receiving preparation.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "empty",
+          "label": "No response",
+          "description": "One exact issued offer."
+        },
+        {
+          "id": "reported",
+          "label": "Accepted / Declined",
+          "description": "Attributed reports without verified authority."
+        },
+        {
+          "id": "clarification",
+          "label": "Information clarification",
+          "description": "Answer and reported confirmation needed."
+        },
+        {
+          "id": "negotiation",
+          "label": "Material negotiation",
+          "description": "ES-05 successor required."
+        },
+        {
+          "id": "corrected",
+          "label": "Corrected",
+          "description": "Original retained with explicit relation."
+        },
+        {
+          "id": "prepared",
+          "label": "Prepared review",
+          "description": "Not sent, received or converted."
+        },
+        {
+          "id": "held",
+          "label": "Superseded or conditional",
+          "description": "Prepared history retained but held."
+        },
+        {
+          "id": "unknown",
+          "label": "Original outcome unknown",
+          "description": "Recover before replacement."
+        },
+        {
+          "id": "denied",
+          "label": "Unavailable",
+          "description": "Protected evidence removed."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/quotation-response.tsx",
+          "symbol": "QuotationResponse"
+        }
+      ],
+      "dependencies": [
+        "src/components/quotation-release.css",
+        "src/estimating/response/reads.ts",
+        "src/estimating/response/service.ts",
+        "docs/contracts/quotation-response.md",
+        "src/shared/ui/use-recoverable-command.ts"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/quoting/PPO-Quotation-Response-and-Negotiation-r01.html",
+        "anchor": "",
+        "status": "Retained proposed reference; native acceptance pending"
+      },
+      "specification": "docs/design/development/components/quotation-response.md",
+      "used_on": [
+        "route:/estimating/quotes/[id]/response",
+        "scope:ES-06"
+      ],
+      "desktop": "One shell scroll owner; exact issue disclosure, attribution fields, separate clarification/receiving panels and immutable history.",
+      "mobile": "Stacked panels at 390/320 px; wrap identities and preserve labelled fields and original recovery above forms.",
+      "keyboard": "Native labelled inputs, shared buttons, visible focus and error focus; no drag-only decision.",
+      "limitations": "Actual host fixtures in tests/browser/quotation-response.spec.ts. No customer authentication, signature, operative validity/withdrawal, external send or conversion. Acceptance pending.",
+      "gaps": [
+        {
+          "id": "es06-native-acceptance",
+          "expected": "Owner-reviewed native adaptation with device and screen-reader evidence.",
+          "actual": "Staff evidence page; customer signing/reference iframe not adopted. Exact accepted native images unavailable.",
+          "action": "Compare retained reference and bounded native task; keep functional proof separate.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

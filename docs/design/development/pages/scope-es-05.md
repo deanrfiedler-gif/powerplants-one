@@ -43,3 +43,7 @@ Acceptance evidence is pending. Capture matching original-reference and applicat
 ## Bounded native release
 
 The native `/estimating/quotes/[id]/release` workflow extends the existing quotation and renderer with exact independent synthetic approval, issue and recorded distribution. [Current guidance](route-estimating-quotes-id-release.md) and [execution evidence](../../../delivery/quotation-release-handover.md) govern the implemented subset. The retained six-view/r03 design, owner acceptance and operational commercial policy remain separate.
+
+## ES-06 receiving link
+
+An exact issued revision now links to the staff response page. Reported acceptance, corrections and negotiation remain separate from ES-05 approval/issue; the link passes this exact revision. See [response contract](../../../contracts/quotation-response.md). The shared panel stylesheet also serves ES-06; its controls and tokens are unchanged.

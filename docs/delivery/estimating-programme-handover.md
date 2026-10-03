@@ -1,5 +1,8 @@
 # Native Estimating and Quotation programme
 
+**Current reconciliation, 3 October 2026:** ES-04 #338 and ES-05 #340 are merged in refreshed main `ab4acd687f6a4911ebc5f3f1bd8f09d5ff1e1547`; all 24 final ES-05 checks passed. Historical pre-merge wording below is superseded. [ES-06 contribution](quotation-response-handover.md) adds exact staff-recorded responses, immutable correction and controlled negotiation, with separate ES-07 review preparation. Receiving/item conversion remains next.
+
+
 <!-- versioning: git; committed history is authoritative -->
 
 Owner: Dean Fiedler. Implementation authorised by the 24 September 2026 programme prompt. Review, business acceptance and deployment remain separate.
