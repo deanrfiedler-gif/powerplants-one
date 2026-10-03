@@ -5,6 +5,13 @@
 **Owner:** Dean Fiedler · **Date:** 24 September 2026 · **Status:** S1–S5 merged in PR #310; follow-up refinement for review; local verification and its baseline limits recorded separately from owner acceptance and deployment.
 **Original base:** `ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc` · **Branch:** `feat/scheduling-resources-completion`.
 
+## Current acceptance checkpoint — 3 October 2026
+
+PR [#337](https://github.com/deanrfiedler-gif/powerplants-one/pull/337) is merged as `6e8b898aeb150b0a4b42c3087605556a057986ad` at `2026-10-03T03:45:54Z`; all 18 final-head checks passed on `41c6f2c909947e93608a2850198b374de671f1e4`. FI-03/04 #334, FI-06 #335, FI-07 #336 and Scheduling Step 6 #333 are also merged. Dated pending/next-increment statements elsewhere in this handover retain their original checkpoints and are superseded for current integration by this paragraph. Post-merge checks are recorded separately in the [current execution ledger](../testing/evidence/field-integrated-acceptance/README.md).
+
+The [acceptance/prerequisite ledger](../testing/field-integrated-acceptance-ledger.md) maps every written PT to its exact source, evidence scope, remaining obligation and owner. Step 6's bounded written PT-28 pass is retained; full PT-30/PP-01, PT-27 findings and actual independent/owner acceptance remain open. The [current-build owner session](field-integrated-owner-walkthrough.md) and [benefit instrument](../testing/field-benefit-measurement.md) are prepared separately from technical execution. No merge or deployment of this acceptance increment is authorised or performed.
+
+
 ## Post-merge refinement
 
 The refreshed remote on 24 September is `0f10b7fb46a8ab512e9b019573ece272cf5920b9`. S1–S5 merged in #310 (`3040387`), followed by #312/#313 fertigation work. The sole open PR at refresh, #314, records an ES-02 design board and overlaps shared living documentation/register files; it adds no Scheduling source or migration. Current migration registry ends at 0048. This follow-up allocates none.

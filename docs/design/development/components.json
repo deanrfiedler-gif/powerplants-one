@@ -2731,6 +2731,11 @@
           "id": "disconnected",
           "label": "Disconnected",
           "description": "No offline inspection protocol; unsent input is not saved."
+        },
+        {
+          "id": "recovering",
+          "label": "Recovering original",
+          "description": "Attempt selection is disabled while the existing original-command guard is busy or unresolved; a recovered original restores the permitted controls."
         }
       ],
       "implementation": [
@@ -2745,7 +2750,8 @@
         "src/inspections/service-context.ts",
         "src/inspections/service-commands.ts",
         "docs/decisions/service-inspections.md",
-        "docs/testing/evidence/service-inspections/README.md"
+        "docs/testing/evidence/service-inspections/README.md",
+        "docs/testing/evidence/field-integrated-acceptance/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
@@ -2761,7 +2767,7 @@
       ],
       "desktop": "Padded shell, wrapped cards and two-column fields at 1440/1024; one shell content scroll owner.",
       "mobile": "Stack 390/320; 16 px inputs, 44 px controls; verify actual 200% zoom.",
-      "keyboard": "Native labels, fieldsets, details and buttons; validation retains input; guide focus returns.",
+      "keyboard": "Native labels, fieldsets, details and buttons; validation retains input; guide focus returns. Attempt selection visibly follows the existing recovery guard; it cannot accept a click that the guard silently ignores.",
       "limitations": "Real permitted synthetic appointment/database/issued pack required. No isolated renderer or offline queue. Owner/device/screen-reader acceptance pending.",
       "gaps": [
         {
@@ -2769,6 +2775,14 @@
           "expected": "Accepted native desktop/phone compositions.",
           "actual": "Proposed Quality r01 adapted to existing shell; accepted images missing.",
           "action": "Review compiled captures and states independently before adopting a baseline.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "inspection-recovery-availability",
+          "expected": "Attempt buttons reflect the existing recovery guard during original receipt lookup.",
+          "actual": "Bounded native disabled state and held-lookup regression; independent visual/keyboard review pending.",
+          "action": "Review recovering and recovered attempt selection in the current owner session; retain existing FI-03/FI-04 bindings and proposed-reference status.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

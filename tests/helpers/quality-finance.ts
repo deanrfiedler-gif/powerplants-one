@@ -17,7 +17,12 @@ async function state(page: Page, value: string) {
 export async function financeJourney(
   page: Page,
   info: TestInfo,
-  source: { work_order_id: string; report_id: string; reference: string },
+  source: {
+    work_order_id: string;
+    report_id: string;
+    reference: string;
+    timerEntry?: string;
+  },
 ) {
   const uncertain = info.project.name.startsWith("mobile");
   const mode = uncertain ? "SyntheticApi" : "SyntheticManual";
@@ -54,6 +59,7 @@ export async function financeJourney(
           name: /Allocation \d+ · Captured Labour time/,
         }),
       })
+      .filter({ hasText: "Captured / reviewed: 90 MIN" })
       .last(),
     material = page
       .locator("section")
@@ -78,13 +84,34 @@ export async function financeJourney(
     .fill(
       "F-06 two EA on a fictional service charge; no warehouse issue or stock movement.",
     );
+  if (source.timerEntry) {
+    const minute = page
+      .locator("section")
+      .filter({
+        has: page.getByRole("heading", {
+          name: /Allocation \d+ · Captured Labour time/,
+        }),
+      })
+      .filter({ hasText: "Captured / reviewed: 1 MIN" })
+      .last();
+    await expect(minute.getByLabel(/Allocated quantity/)).toHaveValue("1");
+    await minute.getByLabel(/Disposition \d+/).selectOption("NonBillable");
+    await minute
+      .getByLabel(/Disposition reason/)
+      .fill(
+        "SYN one actual elapsed demonstration minute, independently reviewed non-billable with no posting; not a business-benefit measurement.",
+      );
+  }
   await time.getByRole("button", { name: /Add split allocation/ }).click();
-  await page.getByLabel("Allocated quantity 4", { exact: true }).fill("30");
+  const split = source.timerEntry ? 5 : 4;
   await page
-    .getByLabel("Disposition 4", { exact: true })
+    .getByLabel(`Allocated quantity ${split}`, { exact: true })
+    .fill("30");
+  await page
+    .getByLabel(`Disposition ${split}`, { exact: true })
     .selectOption("NonBillable");
   await page
-    .getByLabel("Disposition reason 4", { exact: true })
+    .getByLabel(`Disposition reason ${split}`, { exact: true })
     .fill(
       "F-06 reviewed non-billable thirty minutes remain allocated and cannot be silently reused.",
     );

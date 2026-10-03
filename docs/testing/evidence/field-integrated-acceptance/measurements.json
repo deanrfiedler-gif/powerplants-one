@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "authority": "BP-01 section22 / D-004",
+  "status": "Unmeasured",
+  "owner": "Dean Fiedler; Service measurement owner to confirm",
+  "cohort": null,
+  "proposed_cohort": "Matched synthetic planned visual inspection with partial original and separate attendance; not adopted operational pilot",
+  "baseline_source": null,
+  "success_threshold": null,
+  "measurement_window": null,
+  "timezone": "Australia/Sydney",
+  "inclusion_exclusion_rules": null,
+  "baseline_sample_count": 0,
+  "follow_up_sample_count": 0,
+  "paired_sample_count": 0,
+  "trials": [],
+  "technical_timing_separate": true,
+  "decision_requested": "Owner asked to identify cohort, comparable baseline and threshold; no answer received at preparation."
+}

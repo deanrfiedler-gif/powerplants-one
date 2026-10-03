@@ -21,3 +21,7 @@ Quality r01 is a proposed reference. Accepted native desktop/phone images are mi
 ## Mobile
 
 390/320: stacked controls, no horizontal page overflow, readable evidence and 200% browser zoom.
+
+## Original-receipt selection availability — 3 October 2026
+
+Attempt buttons are disabled while the existing command guard is busy or has an unresolved original. They become selectable after recovery; permission and applicability still govern receiving actions. The fixture holds the real actor-bound receipt response and verifies disabled selection followed by enabled selection, on desktop and phone. `tests/browser/service-inspections.spec.ts` also awaits the exact recovered draft read before its unchanged display assertion. Existing FI-03/FI-04 and both inspection-route bindings remain; no new authority or offline protocol. [Current evidence](../../../testing/evidence/field-integrated-acceptance/README.md) records actual outcomes. Review remains pending; no fingerprint or accepted native mockup is manufactured.
