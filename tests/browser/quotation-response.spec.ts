@@ -223,3 +223,32 @@ test("ES06 stale concurrent evidence retains entries; material negotiation requi
     ),
   ).toBeVisible();
 });
+
+test("ES06 information-only clarification needs an answer and reported confirmation before new acceptance", async ({ page }) => {
+  const f = await responseHttpFixture();
+  await identity(page);
+  await page.goto("/" + responsePath(f.id));
+  await enter(page);
+  await page.getByLabel("Reported outcome").selectOption("Clarification");
+  await page.getByRole("button", { name: "Record exact reported response" }).click();
+  await saved(page);
+  await expect(page.getByRole("button", { name: "Prepare exact ES-07 review handover" })).toBeDisabled();
+  await enter(page);
+  await page.getByLabel("Information-only answer", { exact: true }).fill("SYN explanation of the existing drawing reference; offer content unchanged");
+  await page.getByRole("button", { name: "Record information-only answer" }).click();
+  await saved(page);
+  expect((await responseDetail(f.owner, f.id)).state.unresolved).toHaveLength(1);
+  await enter(page);
+  await page.getByRole("button", { name: "Record respondent confirmation" }).click();
+  await saved(page);
+  expect((await responseDetail(f.owner, f.id)).state.unresolved).toHaveLength(0);
+  await expect(page.getByRole("button", { name: "Prepare exact ES-07 review handover" })).toBeDisabled();
+  await enter(page);
+  await page.getByLabel("Reported outcome").selectOption("Accepted");
+  await page.getByRole("button", { name: "Record exact reported response" }).click();
+  await saved(page);
+  const d = await responseDetail(f.owner, f.id);
+  expect(d.state.ready).toBe(true);
+  expect(d.events.map(e => e.action)).toEqual(["Record", "Answer", "Confirm", "Record"]);
+  expect(d.events.map(e => e.output_hash)).toEqual(Array(4).fill(f.d.issue.output_hash));
+});

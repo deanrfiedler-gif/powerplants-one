@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. Stable ES-06 / `route:/estimating/quotes/[id]/response`. Native `QuotationResponse`; r20 Document & evidence workspace with guided staff capture. [Retained ES-06 r01](../../../reference/ui/quoting/PPO-Quotation-Response-and-Negotiation-r01.html) and [companion](../../../reference/ui/quoting/PPO-Quotation-Response-and-Negotiation-Report-r01.md) remain unchanged. Accepted native desktop/mobile images are unavailable.
+Owner: Dean Fiedler. Stable ES-06 / `route:/estimating/quotes/[id]/response`. Native `QuotationResponse`; r20 Document & evidence workspace with guided staff capture. [Retained ES-06 r01](../../../reference/ui/quoting/PPO-Quotation-Response-and-Negotiation-r01.html) and [companion](../../../reference/ui/quoting/PPO-Quotation-Response-and-Negotiation-Report-r01.md) remain unchanged. Accepted native desktop/mobile reference images are unavailable. Unedited execution captures: [desktop](../../../testing/evidence/quotation-response/desktop.png), [320 px](../../../testing/evidence/quotation-response/mobile-320.png); source hashes and review limits remain in the evidence ledger.
 
 ## Desktop
 

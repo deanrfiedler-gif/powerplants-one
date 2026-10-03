@@ -14,7 +14,7 @@ Native `/estimating/quotes/[id]/response` records one exact immutable issue's re
 
 ## Verification record
 
-Execution is in progress. [Evidence ledger](../testing/evidence/quotation-response/README.md) records exact completed checks and original failures. Queued/running checks are not passing results. Live schema was inspected at 0059 in a new task-owned loopback PostgreSQL instance containing only `ppo_synthetic_test`; retained earlier databases were not reset.
+Local ES-06 PostgreSQL 10/10, ES-04 6/6, ES-05 10/10, compiled HTTP 7/7, combined desktop/mobile 19/19 and final-source response/shared-control 15/15 pass. Actual app/PostgreSQL restart preserves seven original commands and all four original output files. Hosted upgrade 5/5 and repaired complete policy-persistence 11/11 pass; the [evidence ledger](../testing/evidence/quotation-response/README.md) records the broader upgrade sweep, exact failures/repairs and static checks. Full units pass 574/577; the three Windows private-path failures reproduce on unchanged main. Queued/running PR checks are not passing results. Live schema was inspected at 0059 in a new task-owned loopback PostgreSQL instance containing only `ppo_synthetic_test`; retained earlier databases were not reset.
 
 Design register and guides remain Draft/Needs review. Exact accepted native reference images, independent owner/device/screen-reader and paired visual acceptance are unavailable. No merge, deployment or operational authority is implied.
 

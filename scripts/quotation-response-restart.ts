@@ -37,11 +37,16 @@ async function snapshot(id: string) {
     SELECT 'estimate' kind,to_jsonb(e) value FROM ppo.estimates e WHERE id=$1
     UNION ALL SELECT 'version',to_jsonb(v) FROM ppo.estimate_versions v WHERE estimate_id=$1
     UNION ALL SELECT 'review',to_jsonb(r) FROM ppo.estimate_review_events r WHERE estimate_id=$1
+    UNION ALL SELECT 'quote-header',to_jsonb(q) FROM ppo.draft_quotes q WHERE estimate_id=$1
     UNION ALL SELECT 'quote',to_jsonb(q) FROM ppo.draft_quote_revisions q WHERE estimate_id=$1
+    UNION ALL SELECT 'job',to_jsonb(j) FROM ppo.estimate_quote_jobs j WHERE revision_id IN(SELECT id FROM ppo.draft_quote_revisions WHERE estimate_id=$1)
+    UNION ALL SELECT 'attempt',to_jsonb(a) FROM ppo.estimate_quote_attempts a WHERE job_id IN(SELECT j.id FROM ppo.estimate_quote_jobs j JOIN ppo.draft_quote_revisions q ON q.id=j.revision_id WHERE q.estimate_id=$1)
     UNION ALL SELECT 'base',to_jsonb(b) FROM ppo.quote_release_bases b WHERE revision_id IN(SELECT id FROM ppo.draft_quote_revisions WHERE estimate_id=$1)
     UNION ALL SELECT 'event',to_jsonb(e) FROM ppo.quote_release_events e WHERE revision_id IN(SELECT id FROM ppo.draft_quote_revisions WHERE estimate_id=$1)
     UNION ALL SELECT 'response',to_jsonb(e) FROM ppo.quote_response_events e WHERE revision_id IN(SELECT id FROM ppo.draft_quote_revisions WHERE estimate_id=$1)
     UNION ALL SELECT 'receipt',to_jsonb(r) FROM ppo.operation_receipts r WHERE record_id=$1 OR record_id IN(SELECT id FROM ppo.draft_quote_revisions WHERE estimate_id=$1)
+    UNION ALL SELECT 'audit',to_jsonb(a) FROM ppo.audit_events a WHERE object_id=$1 OR object_id IN(SELECT id FROM ppo.draft_quote_revisions WHERE estimate_id=$1)
+    UNION ALL SELECT 'outbox',to_jsonb(j) FROM ppo.outbox_jobs j WHERE operation_id IN(SELECT operation_id FROM ppo.operation_receipts WHERE record_id=$1 OR record_id IN(SELECT id FROM ppo.draft_quote_revisions WHERE estimate_id=$1))
   ) evidence ORDER BY kind,value::text`,
       [id],
     )

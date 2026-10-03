@@ -125,7 +125,7 @@ async function clone(
   );
 }
 
-test("populated 0050 upgrade preserves every old row/hash, registers 0053–0059 with reserved gaps and exact authority/instrument additions", async () => {
+test("populated 0050 upgrade preserves every old row/hash, registers 0053–0060 with reserved gaps and exact authority/instrument additions", async () => {
   const names = (await tables()).filter((t) => t !== "seed_receipts"),
     beforeRows = await snapshot(names);
   const oldLedger = (
@@ -166,7 +166,7 @@ test("populated 0050 upgrade preserves every old row/hash, registers 0053–0059
       "SELECT * FROM public.ppo_migrations ORDER BY version",
     )
   ).rows;
-  assert.deepEqual(ledger.slice(0, -7), oldLedger);
+  assert.deepEqual(ledger.slice(0, -8), oldLedger);
   assert.equal(ledger.at(-1).version, 60);
   assert.deepEqual(
     ledger.map((r) => r.version),
