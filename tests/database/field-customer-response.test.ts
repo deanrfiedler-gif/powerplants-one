@@ -48,6 +48,7 @@ import {
   inspect,
 } from "../helpers/service-inspections";
 import { inspectionCommand } from "../../src/inspections/service-commands";
+import { estimateReviewSeedGrants } from "../helpers/engineering-materials-grants";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Use only ppo_synthetic_test");
@@ -661,18 +662,33 @@ test("FI07-07 populated 0056 upgrade preserves original response hashes, output 
     "report_presentations",
     "customer_responses",
     "report_templates",
-    "permission_grants",
     "users",
     "operation_receipts",
   ]);
+  const grants = await rows("SELECT * FROM ppo.permission_grants ORDER BY id");
   const ledger = await rows(
     "SELECT * FROM public.ppo_migrations ORDER BY version",
+  );
+  const seedLedger = await rows(
+    "SELECT * FROM ppo.seed_receipts ORDER BY version",
   );
   const bytes = await presentationBytes(q.p, q.report.id, cmd.presentation_id);
   await migrate();
   await seed();
+  const firstUpgrade = await snapshot(["permission_grants", "seed_receipts"]);
+  const firstLedger = await rows(
+    "SELECT * FROM public.ppo_migrations ORDER BY version",
+  );
   await migrate();
   await seed();
+  assert.deepEqual(
+    await snapshot(["permission_grants", "seed_receipts"]),
+    firstUpgrade,
+  );
+  assert.deepEqual(
+    await rows("SELECT * FROM public.ppo_migrations ORDER BY version"),
+    firstLedger,
+  );
   assert.deepEqual(
     await snapshot([
       "field_attendances",
@@ -684,17 +700,35 @@ test("FI07-07 populated 0056 upgrade preserves original response hashes, output 
       "report_presentations",
       "customer_responses",
       "report_templates",
-      "permission_grants",
       "users",
       "operation_receipts",
     ]),
     originals,
   );
+  const upgradedGrants = await rows(
+    "SELECT * FROM ppo.permission_grants ORDER BY id",
+  );
+  const originalGrantIds = new Set(grants.map((g) => g.id));
+  assert.deepEqual(upgradedGrants.filter((g) => originalGrantIds.has(g.id)), grants);
+  const grantContents = (values: typeof grants) => values.map((g) => JSON.stringify(
+    Object.fromEntries(Object.entries(g)
+      .filter(([key]) => key !== "id")
+      .sort(([a], [b]) => a.localeCompare(b))),
+  )).sort();
+  const expectedGrants = estimateReviewSeedGrants(grants);
+  assert.equal(expectedGrants.length, 5);
+  assert.deepEqual(
+    grantContents(upgradedGrants.filter((g) => !originalGrantIds.has(g.id))),
+    grantContents(expectedGrants),
+  );
   const after = await rows(
     "SELECT * FROM public.ppo_migrations ORDER BY version",
   );
-  assert.deepEqual(after.slice(0, -1), ledger);
-  assert.equal(after.at(-1).version, 57);
+  assert.deepEqual(after.filter((row) => row.version <= 56), ledger);
+  assert.deepEqual(after.filter((row) => row.version > 56).map((row) => row.version), [57, 58]);
+  const afterSeeds = await rows("SELECT * FROM ppo.seed_receipts ORDER BY version");
+  assert.deepEqual(afterSeeds.filter((row) => row.version <= 56), seedLedger);
+  assert.deepEqual(afterSeeds.filter((row) => row.version > 56).map((row) => row.version), [58]);
   assert.deepEqual(
     (await recordResponse(q.p, q.report.id, cmd)).receipt,
     saved.receipt,
