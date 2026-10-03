@@ -40,3 +40,7 @@ No exact image or HTML reference is linked. Keep this gap visible.
 The draft User Guide `guide.page.estimating.quotes.id` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## Controlled synthetic release
+
+Permitted staff can open the ES-05 release workspace from an exact Draft. New synthetic release revisions use that workspace and retain separate preparation/approval/issue/distribution facts. E1 Draft output and safe-only reader boundaries remain retained. See [release guidance](route-estimating-quotes-id-release.md).

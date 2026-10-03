@@ -1,3 +1,4 @@
+import { releaseRecipientAuthority } from "./release/recipient";
 import type { Principal } from "../platform/identity";
 import { AppError, unavailable } from "../platform/errors";
 import { hasPermission, scopeSql, type QueryClient } from "../platform/permissions";
@@ -71,6 +72,7 @@ export async function quoteContext(c:QueryClient,p:Principal,id:string,cap:Estim
   const q=(await c.query<QuoteRevision>("SELECT * FROM ppo.draft_quote_revisions WHERE workspace_id=$1 AND id=$2",[p.workspace_id,uuid(id,"revision_id")])).rows[0];
   if(!q) throw unavailable();
   const e=await estimateContext(c,p,q.estimate_id,cap,q.estimate_version_id);
+  await releaseRecipientAuthority(c,p,q,e,cap);
   return {q,e};
 }
 // Both GET recovery and command replay must authorise the accepted version,

@@ -189,7 +189,9 @@
         "route:/service/reports/[id]",
         "scope:FI-02",
         "route:/service/work-orders/[id]",
-        "route:/estimating/estimates/[id]/review"
+        "route:/estimating/estimates/[id]/review",
+        "route:/estimating/quotes/[id]/release",
+        "scope:ES-05"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -891,7 +893,9 @@
         "route:/service/incidents/[id]",
         "route:/service/incidents/new",
         "route:/service/incidents",
-        "route:/estimating/estimates/[id]/review"
+        "route:/estimating/estimates/[id]/review",
+        "route:/estimating/quotes/[id]/release",
+        "scope:ES-05"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -1109,7 +1113,9 @@
         "scope:FI-07",
         "route:/service/reports",
         "route:/service/reports/[id]",
-        "route:/estimating/estimates/[id]/review"
+        "route:/estimating/estimates/[id]/review",
+        "route:/estimating/quotes/[id]/release",
+        "scope:ES-05"
       ],
       "desktop": "Submit an empty title to focus the summary, then follow its link to the field. Correct the title and save to clear the example error.",
       "mobile": "Summary and inline errors must remain visible at 320 px and 200% zoom.",
@@ -1601,7 +1607,9 @@
         "route:/service/reports/[id]",
         "scope:FI-02",
         "route:/service/work-orders/[id]",
-        "route:/estimating/estimates/[id]/review"
+        "route:/estimating/estimates/[id]/review",
+        "route:/estimating/quotes/[id]/release",
+        "scope:ES-05"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -1742,7 +1750,9 @@
         "scope:EQ-09",
         "scope:ES-01",
         "route:/estimating",
-        "route:/estimating/estimates/[id]/review"
+        "route:/estimating/estimates/[id]/review",
+        "route:/estimating/quotes/[id]/release",
+        "scope:ES-05"
       ],
       "desktop": "Keep a readable label with each tone; business state and tone are not equivalent.",
       "mobile": "Chips wrap without truncating operational meaning.",
@@ -3075,6 +3085,92 @@
           "expected": "Owner-reviewed native adaptation of retained ES-04 r01 with independent physical-device and screen-reader proof.",
           "actual": "One exact estimate review page implements the bounded evidence task; no queue, six-view shell or demonstration threshold is adopted. No exact reference image available.",
           "action": "Review the native page and retained reference side by side; retain functional proof separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "quotation-release",
+      "title": "Exact synthetic quotation release",
+      "category": "Forms",
+      "module": "ES",
+      "purpose": "Separate exact preparation, independent approval, issue and simulated distribution on the existing quotation.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "draft",
+          "label": "Draft source",
+          "description": "No release approval inferred."
+        },
+        {
+          "id": "prepared",
+          "label": "Prepared",
+          "description": "Exact recipient, source and non-operative conditions retained."
+        },
+        {
+          "id": "approved",
+          "label": "Approved",
+          "description": "Independent exact-output decision only."
+        },
+        {
+          "id": "issued",
+          "label": "Issued",
+          "description": "Immutable approved output and explicit preceding issue."
+        },
+        {
+          "id": "unknown",
+          "label": "Outcome unknown",
+          "description": "Retain original operation or simulation attempt."
+        },
+        {
+          "id": "changed",
+          "label": "Changed basis",
+          "description": "New decision held until deliberate successor."
+        },
+        {
+          "id": "denied",
+          "label": "Unavailable",
+          "description": "Protected evidence removed."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/quotation-release.tsx",
+          "symbol": "QuotationRelease"
+        }
+      ],
+      "dependencies": [
+        "src/components/quotation-release.css",
+        "src/estimating/release/reads.ts",
+        "src/estimating/release/service.ts",
+        "src/shared/ui/use-recoverable-command.ts",
+        "docs/contracts/quotation-release.md"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/quoting/PPO-Quotation-Approval-Issue-and-Distribution-r02.html",
+        "anchor": "",
+        "status": "Retained proposed reference; native acceptance pending"
+      },
+      "specification": "docs/design/development/components/quotation-release.md",
+      "used_on": [
+        "route:/estimating/quotes/[id]/release",
+        "route:/estimating/quotes/[id]",
+        "scope:ES-05"
+      ],
+      "desktop": "Four separate stage cards, exact source/output disclosures, shared decision fields and immutable history within one shell scroll owner.",
+      "mobile": "Stacked cards below 900 CSS px; 390/320 px wrapping and preserved original recovery controls.",
+      "keyboard": "Native labelled inputs, shared buttons, visible focus and error focus; no drag-only decision.",
+      "limitations": "Host example with actual synthetic records. No operative terms, financial exceptions, validity period, live distribution, customer response or conversion. Native visual and owner review pending.",
+      "gaps": [
+        {
+          "id": "es05-native-acceptance",
+          "expected": "Reviewed native adaptation of the retained ES-05 r02 and customer presentation, with independent device and screen-reader evidence.",
+          "actual": "Bounded E1-based synthetic document and one release record page; the six-view reference and r03 commercial content remain reference-only. Exact accepted native reference images are unavailable.",
+          "action": "Review native evidence against retained references; keep functional and owner acceptance separate.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

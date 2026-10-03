@@ -6230,25 +6230,23 @@
     {
       "guide_key": "guide.es.05",
       "entry_key": "scope:ES-05",
-      "title": "Quotation approval, issue and distribution",
+      "title": "Synthetic quotation release",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Existing foundation + proposed completion",
+      "content_mode": "Bounded native synthetic workflow",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-10-03",
+      "source_commit": "0e3e54f",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Verification in progress; see quotation-release-handover.md",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Quotation approval, issue and distribution to work towards this outcome: An exact issue and its distribution evidence are retained.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "Draft, approved, issued, sent, delivered and acknowledged are distinct states."
+            "Prepare and independently approve an exact synthetic quotation, issue its original output and record a distribution simulation. Nothing here sends a customer message or authorises work or payment."
           ],
           "steps": [],
           "rows": [],
@@ -6258,9 +6256,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Exact quotation, approval basis, recipient, issue purpose and attachments.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use a saved estimate whose current completeness, source-price and technical reviews are Reviewed. The owner prepares; the local Quotation approver and separate Quotation issuer have explicit Company A duties. All underlying current entity/source permissions still apply."
           ],
           "steps": [],
           "rows": [],
@@ -6269,56 +6265,28 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Inspect the saved Draft and its cost/scope basis",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Open the exact Draft quotation and choose Open controlled quotation release. Compare the source and named recipient, enter a rationale, explicitly acknowledge the non-operative policy, then Prepare synthetic release successor."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Quotation approval, issue and distribution · Page + review flow"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Four cards keep preparation, approval, issue and simulation separate. Source details show exact bindings; document links open retained output. Controlled steps precede immutable history and original-operation recovery."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Exact quotation, approval basis, recipient, issue purpose and attachments.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "The current estimate option and include/print choices are retained. Recipient identifiers/record versions, original review decisions and demonstration terms/template are bound. Operative terms, thresholds, validity period and optional commercial packages are Not configured or unavailable."
           ],
           "steps": [],
           "rows": [],
@@ -6328,13 +6296,9 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
+            "After preparation, the owner generates or recovers the exact output. The independent approver inspects it and records Approved for synthetic issue only or Returned. A separate issuer records Issue exact synthetic document. Distribution is a recorded simulation against that issue."
           ],
-          "steps": [
-            "Inspect the saved Draft and its cost/scope basis",
-            "Complete required approval before controlled issue",
-            "Track distribution outcomes against the issued revision"
-          ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
@@ -6342,9 +6306,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "An exact issue and its distribution evidence are retained.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Draft, approved, issued, sent, delivered and acknowledged are distinct states."
+            "Confirm the separate saved state and open its exact revision. A ready output is not issued; issue is not distribution; simulated delivery is not a customer response. ES-06 and ES-07 remain separate receiving steps."
           ],
           "steps": [],
           "rows": [],
@@ -6353,45 +6315,18 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Returned requires new preparation. Changed source, recipient or template holds new approval/issue. Earlier issues and their bytes remain retained. Unknown distribution holds a new attempt until attributable resolution of the original attempt."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare exact quotation, approval basis, recipient, issue purpose and attachments. Follow the task sequence and check that an exact issue and its distribution evidence are retained. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Quotation approval, issue and distribution has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Draft, approved, issued, sent, delivered and acknowledged are distinct states."
+            "The coordinator prepares a reviewed synthetic manual estimate. Quotation approver approves its exact retained PDF/HTML. Quotation issuer issues it and records Unknown, then resolves that same simulation as SimulatedDelivered. The original Unknown event remains in history; no communication is sent."
           ],
           "steps": [],
           "rows": [],
@@ -6400,45 +6335,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "After a lost response, Check original outcome or Retry exact original; an unavailable receipt is inconclusive. Keep the same operation and body. Refresh current evidence after a stale refusal, compare it, then Use current release basis. Entered rationale is retained. Denied reads remove protected content."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Stacked cards and wrapped identities retain every action at narrow widths. Use native labels, disclosures and keyboard focus. There is no offline release queue. Physical-device, screen-reader and 200% zoom acceptance are separate."
           ],
           "steps": [],
           "rows": [],
@@ -6448,8 +6356,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "Read the quotation-release contract, native decision and execution handover. The exact saved estimate and earlier quotation revisions remain linked from the record. Retained reference designs do not establish operational terms or deployment."
           ],
           "steps": [],
           "rows": [],
@@ -6459,9 +6366,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "This is a bounded native synthetic workflow with verification in progress. Owner and visual acceptance are pending. Source presence, functional proof and deployment are separately recorded."
           ],
           "steps": [],
           "rows": [],
@@ -70178,6 +70083,153 @@
         }
       ],
       "prepared_at": "2026-10-03"
+    },
+    {
+      "guide_key": "guide.route-estimating-quotes-id-release",
+      "entry_key": "route:/estimating/quotes/[id]/release",
+      "title": "Synthetic quotation release",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Bounded native synthetic workflow",
+      "source_commit": "0e3e54f",
+      "related_entry_keys": [],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Prepare and independently approve an exact synthetic quotation, issue its original output and record a distribution simulation. Nothing here sends a customer message or authorises work or payment."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Use a saved estimate whose current completeness, source-price and technical reviews are Reviewed. The owner prepares; the local Quotation approver and separate Quotation issuer have explicit Company A duties. All underlying current entity/source permissions still apply."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [
+            "Open the exact Draft quotation and choose Open controlled quotation release. Compare the source and named recipient, enter a rationale, explicitly acknowledge the non-operative policy, then Prepare synthetic release successor."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [
+            "Four cards keep preparation, approval, issue and simulation separate. Source details show exact bindings; document links open retained output. Controlled steps precede immutable history and original-operation recovery."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "The current estimate option and include/print choices are retained. Recipient identifiers/record versions, original review decisions and demonstration terms/template are bound. Operative terms, thresholds, validity period and optional commercial packages are Not configured or unavailable."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [
+            "After preparation, the owner generates or recovers the exact output. The independent approver inspects it and records Approved for synthetic issue only or Returned. A separate issuer records Issue exact synthetic document. Distribution is a recorded simulation against that issue."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Confirm the separate saved state and open its exact revision. A ready output is not issued; issue is not distribution; simulated delivery is not a customer response. ES-06 and ES-07 remain separate receiving steps."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [
+            "Returned requires new preparation. Changed source, recipient or template holds new approval/issue. Earlier issues and their bytes remain retained. Unknown distribution holds a new attempt until attributable resolution of the original attempt."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "examples",
+          "title": "Worked examples",
+          "paragraphs": [
+            "The coordinator prepares a reviewed synthetic manual estimate. Quotation approver approves its exact retained PDF/HTML. Quotation issuer issues it and records Unknown, then resolves that same simulation as SimulatedDelivered. The original Unknown event remains in history; no communication is sent."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Troubleshooting",
+          "paragraphs": [
+            "After a lost response, Check original outcome or Retry exact original; an unavailable receipt is inconclusive. Keep the same operation and body. Refresh current evidence after a stale refusal, compare it, then Use current release basis. Entered rationale is retained. Denied reads remove protected content."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline use",
+          "paragraphs": [
+            "Stacked cards and wrapped identities retain every action at narrow widths. Use native labels, disclosures and keyboard focus. There is no offline release queue. Physical-device, screen-reader and 200% zoom acceptance are separate."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related guidance and procedures",
+          "paragraphs": [
+            "Read the quotation-release contract, native decision and execution handover. The exact saved estimate and earlier quotation revisions remain linked from the record. Retained reference designs do not establish operational terms or deployment."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "review",
+          "title": "Guide review and feedback",
+          "paragraphs": [
+            "This is a bounded native synthetic workflow with verification in progress. Owner and visual acceptance are pending. Source presence, functional proof and deployment are separately recorded."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ],
+      "prepared_at": "2026-10-03",
+      "runtime_evidence": "Verification in progress; see quotation-release-handover.md"
     }
   ]
 }

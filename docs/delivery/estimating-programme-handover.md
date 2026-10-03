@@ -8,6 +8,8 @@ Owner: Dean Fiedler. Implementation authorised by the 24 September 2026 programm
 
 Main `6e8b898` integrates workload, schema-2 costing, cost sources at 0048, Screen Systems and fertigation. Registry ends at 0057 before the ES-04 contribution. The [current review handover](estimating-review-handover.md) supersedes dated missing-work and migration statements below: ES-04 review is implemented in its isolated contribution, while commercial approval/ES-05–07 and remaining import/configuration/feedback work retain their separate dependencies. No open PR or competing review contribution was found at refresh; unfinished local work is preserved.
 
+The subsequent [ES-05 contribution](quotation-release-handover.md) adds exact synthetic release preparation, independent approval, issue and separately recorded distribution simulation on the existing quotation. Its dependency is ES-04 PR #338; operative commercial policy remains Not configured. Migration/seed 0059 is allocated only in that isolated contribution. A later refresh still found main at `6e8b898`; open Field Work PR #339 has no migration allocation and is preserved. Neither contribution has been merged or deployed by this task.
+
 ## Historical refreshed starting point
 
 GitHub access and `git fetch --all --prune` succeeded on 24 September 2026. Local `main` and `origin/main` were `ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc`; the main working tree was clean. The dedicated worktree is `tmp/estimating-intake-wizard-refinement`, branch `feat/estimating-intake-wizard-refinement`.

@@ -1,5 +1,7 @@
 # Current prototype status
 
+**ES-05 contribution in progress:** the [native release decision](decisions/quotation-release-native.md), [contract](contracts/quotation-release.md) and [handover](delivery/quotation-release-handover.md) describe the synthetic successor workflow on ES-04 PR #338. Initial real-database/renderer and unit proof passes; final native/restart/upgrade proof and reviewable PR publication remain in progress. Operative policy, external delivery, owner acceptance and deployment remain separate.
+
 **Updated:** 3 October 2026. **Owner:** Dean Fiedler. **Verified baseline:** refreshed `origin/main` at `8eeb0ffe0f8f760611caf64e501649f564940a5e` after merged FI-07 PR #336. Public repository; private synthetic prototype and demo. Code delivery, functional proof, visual review, owner acceptance and deployment are separate facts.
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
