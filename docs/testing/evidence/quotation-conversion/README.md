@@ -25,3 +25,9 @@ Native Supply Demand Forecast is the only target. All Product lines convert atom
 ## Retained captures and source attribution
 
 [Desktop](desktop.png) is the actual 1440 × 1000 compiled host. [320 px](mobile-320.png) shows the exact binding disclosure in the mobile host. These unedited execution captures were inspected for readable wrapping and retained controls; they are not an independent paired visual review. Capture hashes are in `capture-manifest.json`; source file hashes identify the captured host.
+
+## Retained-suite upgrade assertion repair
+
+The additional 101-case local run passed 100 cases across ES-04, E1/E2, ES-05/06/07, Supply, policy persistence and hosted upgrades. Its single failure was the ES-05 populated-0058 assertion: actual three later migrations versus an expected two. All preceding preserved-row/ledger checks passed. The repair replaces the count with the exact ordered `[59, 60, 61]` list, retaining all grant/user/original-output checks. AGENTS.md now names all quotation upgrade consumers. No runtime behaviour, test deadline or assertion is weakened. The corrected populated-0058 case passes locally (1/1), including exact preserved rows, grants/users and Draft bytes after repeated upgrade/seed. The final PR-head CI is recorded in [PR #342](https://github.com/deanrfiedler-gif/powerplants-one/pull/342).
+
+The 11-case ES-07 database suite passed completely in that run, including the extra target-basis/SQL-forgery proof and all Product targets rolling back after injected failure. First-head `490230e` also passed the full dedicated [ES-07 CI job](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37157274950), including its actual restart and 15 browser cases. This is earlier-head evidence; the repaired final head requires its own checks.
