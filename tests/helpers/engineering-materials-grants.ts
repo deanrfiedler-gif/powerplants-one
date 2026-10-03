@@ -102,7 +102,7 @@ export function assertOnlyEngineeringSeedGrantsAdded(original: Grant[], upgraded
   assert.equal(sourceReviewer.length,3);
   const technical = original.filter(g=>g.user_id===coordinator&&g.company_id===companyA&&g.scope_type==="Company"&&g.capability==="engineering.read").flatMap(g=>[[profiles.reviewer,"engineering.technical.review"],[profiles.release,"engineering.technical.issue"],[profiles.release,"engineering.technical.distribute"],[coordinator,"engineering.technical.source"]].map(([user_id,capability])=>({...g,user_id,capability})));
   assert.equal(technical.length,4);
-  const expected=[...earlier,...acceptanceSeedGrants(original,earlier),...customerReview,...technical,...sourceReviewer,...supplySeedGrants(original),...schedulingPolicySeedGrants(original),...incidentSeedGrants(original),...estimateReviewSeedGrants(original)];
+  const expected=[...earlier,...acceptanceSeedGrants(original,earlier),...customerReview,...technical,...sourceReviewer,...supplySeedGrants(original),...schedulingPolicySeedGrants(original),...incidentSeedGrants(original),...estimateReviewSeedGrants(original),...quotationReleaseSeedGrants(original)];
   assert.equal(materials.length, 31);
   assert.equal(changes.length, 21); // twelve reads for three profiles and nine duty grants
   assert.equal(commissioning.length, 18); // four reads for one profile, six duty grants and eight My Work action grants
@@ -139,4 +139,10 @@ export function schedulingPolicySeedGrants(original: Grant[]): Grant[] {
 export function estimateReviewSeedGrants(original: Grant[]): Grant[] {
   const duties = original.filter(g => g.user_id === coordinator && g.company_id === companyA && g.scope_type === "Company" && g.capability === "estimating.read").flatMap(g => ["estimating.review.completeness", "estimating.review.price", "estimating.review.technical"].map(capability => ({ ...g, user_id: "e5030045-0000-4000-8000-000000000001", capability })));
   return [...duties,...original.filter(g => g.user_id === coordinator && g.company_id === companyA && g.scope_type === "Company" && ["crm.opportunity.read","shared.internal.read"].includes(String(g.capability))).map(g=>({...g,user_id:"e5030045-0000-4000-8000-000000000001"}))];
+}
+
+export function quotationReleaseSeedGrants(original: Grant[]): Grant[] {
+  const source=original.filter(g=>g.user_id===coordinator&&g.company_id===companyA&&g.scope_type==="Company");
+  const profiles=["e5050059-0000-4000-8000-000000000001","e5050059-0000-4000-8000-000000000002"];
+  return [...source.filter(g=>["shared.read","shared.internal.read","crm.opportunity.read","estimating.read","estimating.quote.read"].includes(String(g.capability))).flatMap(g=>profiles.map(user_id=>({...g,user_id}))),...source.filter(g=>g.capability==="estimating.read").flatMap(g=>[[profiles[0],"estimating.quote.approve"],[profiles[1],"estimating.quote.issue"],[profiles[1],"estimating.quote.distribute"]].map(([user_id,capability])=>({...g,user_id,capability})))];
 }

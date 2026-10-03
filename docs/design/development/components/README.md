@@ -4,7 +4,7 @@
 
 **Owner:** Dean Fiedler · **Schema:** 1 · **Review:** Paired visual and device acceptance pending.
 
-The component catalogue extends the existing local development workspace at `/development/design-system`. It is backed by `../components.json`, these Markdown specifications and the actual runtime components. It contains 19 runnable examples, six host entries and eight reference-only patterns across ten categories, including the FI-07 exact-response host. These are coverage counts, not approval or proof that every application-specific variant has been migrated.
+The component catalogue extends the existing local development workspace at `/development/design-system`. It is backed by `../components.json`, these Markdown specifications and the actual runtime components. It contains 19 runnable examples, eight host entries and eight reference-only patterns across ten categories, including the FI-07 exact-response, ES-04 estimate-review and ES-05 quotation-release hosts. These are coverage counts, not approval or proof that every application-specific variant has been migrated.
 
 ## Browsing and comparison
 

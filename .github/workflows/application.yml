@@ -27,13 +27,18 @@ jobs:
     runs-on: ubuntu-24.04
     # Each lane owns its disposable database; all original phases remain serial
     # within their lane. HTTP/restart proofs start at their original clean-reset
-    # boundary; the full database suite keeps its original serial execution.
+    # boundary; each native database shard keeps serial file execution.
     # The stable p01 gate requires every lane to pass within the same deadline.
     timeout-minutes: 90
     strategy:
       fail-fast: false
       matrix:
-        suite: [browser, finance, reports, database, http]
+        suite: [browser, finance, reports, http]
+        include:
+          - suite: database-1
+            database_shard: 1/2
+          - suite: database-2
+            database_shard: 2/2
     services:
       postgres:
         image: postgres:16.15
@@ -178,8 +183,10 @@ jobs:
         if: ${{ matrix.suite == 'reports' && !cancelled() && steps.database_setup.outcome == 'success' }}
         run: npx playwright test --config=playwright.compiled.config.ts tests/browser/reports.spec.ts --output verification-evidence/p09-focused-browser --reporter=list
       - name: Real PostgreSQL behaviour and competing transactions
-        if: ${{ matrix.suite == 'database' && !cancelled() && steps.database_setup.outcome == 'success' }}
-        run: npm run test:db
+        if: ${{ startsWith(matrix.suite, 'database-') && !cancelled() && steps.database_setup.outcome == 'success' }}
+        env:
+          PPO_DATABASE_SHARD: ${{ matrix.database_shard }}
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-shard="$PPO_DATABASE_SHARD" tests/database/*.test.ts
       - name: Restore deterministic fixtures for HTTP and browser suites
         if: ${{ matrix.suite == 'http' && !cancelled() && steps.database_setup.outcome == 'success' }}
         run: PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset

@@ -336,7 +336,23 @@ test("CR05 issued source review saves attributed feedback, commercial preparatio
   });
   const options = await call(page, `sales/aftercare/${id}/options`);
   expect(options.people.length).toBeGreaterThan(0);
+  // Navigation can finish before the exact saved review reaches the browser.
+  // Hold the real response beyond the unchanged UI assertion window so this
+  // ordering is exercised on both viewports without retrying or replacing data.
+  await page.route(`**/api/v1/sales/aftercare/${id}`, async (route) => {
+    const response = await route.fetch();
+    await new Promise((resolve) => setTimeout(resolve, 6000));
+    await route.fulfill({ response });
+  }, { times: 1 });
+  const reviewRead = page.waitForResponse((response) =>
+    new URL(response.url()).pathname === `/api/v1/sales/aftercare/${id}` &&
+    response.request().method() === "GET",
+  );
   await page.goto(`/sales/aftercare/${id}`);
+  const response = await reviewRead;
+  expect(response.status()).toBe(200);
+  expect(await response.finished()).toBeNull();
+  expect((await response.json()).record.id).toBe(id);
   await expect(
     page.getByRole("tab", { name: "Customer review", exact: true }),
   ).toBeVisible();

@@ -165,7 +165,8 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // local-only grants to the existing source reviewer; no hosted roles, users or
   // original estimate/quotation/output rows change. Generic runtime table grants
   // cover the sidecar; populated upgrade and exact grant assertions cover the seed.
-  if (latestMigrationVersion !== 58) throw Error("Review the existing-demo upgrade for this release.");
+  // 0059 adds subordinate synthetic release facts and two local-only fixtures; no hosted command duty.
+  if (latestMigrationVersion !== 59) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

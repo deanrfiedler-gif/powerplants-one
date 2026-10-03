@@ -74,7 +74,7 @@ Repo work grants no paid-service, deployment, access, live-transaction, migratio
 
 Run foundation/prototype/naming checks; test authority, conflicts, replay, integrity and reconciliation. Inspect screens; retain source/environment.
 
-ES-01–10/Excel: estimating-native-programme.md and estimating-programme-handover.md. Preserve ES-02 exact costs, PJ-09 close/reopen and ES-03 exact bindings (estimating-cost-sources.md). ES-02: es02-design-board.md; P2–P9 proposed. ES-01 board: es01-design-board.md; P1–P9 decided. ES-08: WP-G00 before D1–D15/DEC-R1/R2. No implied migration, approval or deployment. ES-04: estimating-review.md. CI: ci-retained-suite-isolation.md.
+ES-01–10/Excel: estimating-native-programme.md; estimating-programme-handover.md. Preserve exact costs/bindings (estimating-cost-sources.md) and PJ-09 close/reopen. Boards: es02-design-board.md (P2–P9 proposed); es01-design-board.md (P1–P9 decided). ES-08: WP-G00 before D1–D15/DEC-R1/R2. ES-04: estimating-review.md. ES-05: quotation-release-native.md; synthetic; real terms/authority unavailable. CI: ci-retained-suite-isolation.md.
 
 Mail: preserve private mailboxes and body separation (demo-email-crm-integration.md); CI is not Outlook acceptance. SH-01–06: docs/delivery/sh-platform-handover.md; teams/DK/delivery pending.
 

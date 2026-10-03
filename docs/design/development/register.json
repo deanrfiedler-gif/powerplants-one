@@ -1308,19 +1308,26 @@
       "title": "Quotation approval, issue and distribution",
       "kind": "scope",
       "module": "ES",
-      "summary": "Extend the current Draft quotation foundation with approval, controlled issue, distribution and superseded-revision handling.",
+      "summary": "Exact synthetic quotation preparation, independent approval, controlled issue and recorded distribution simulation; no operative terms or live send.",
       "path": "/estimating/quotes",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/estimating/quotes/[id]/release/page.tsx"
       ],
       "guide_key": "guide.es.05",
       "design_path": "docs/design/development/pages/scope-es-05.md",
       "html_path": "docs/reference/ui/quoting/PPO-Quotation-Approval-Issue-and-Distribution-r02.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/components/quotation-release.tsx",
+        "src/components/quotation-release.css",
+        "src/estimating/release/service.ts",
+        "src/estimating/release/reads.ts",
+        "docs/contracts/quotation-release.md"
+      ],
+      "scope_status": "Bounded native synthetic release",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Verification in progress; see quotation-release-handover.md",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -1330,7 +1337,8 @@
         "route:/estimating/quotes",
         "scope:ES-04",
         "scope:DK-03",
-        "scope:DK-06"
+        "scope:DK-06",
+        "route:/estimating/quotes/[id]/release"
       ],
       "reviewer": null
     },
@@ -11243,6 +11251,43 @@
         "route:/estimating/estimates/[id]",
         "scope:ES-03",
         "scope:ES-05"
+      ]
+    },
+    {
+      "key": "route:/estimating/quotes/[id]/release",
+      "title": "Synthetic quotation release",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Exact synthetic quotation preparation, independent approval, controlled issue and recorded distribution simulation; no operative terms or live send.",
+      "path": "/estimating/quotes/[id]/release",
+      "source_paths": [
+        "src/app/(business)/estimating/quotes/[id]/release/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-quotes-id-release",
+      "design_path": "docs/design/development/pages/route-estimating-quotes-id-release.md",
+      "html_path": "docs/reference/ui/quoting/PPO-Quotation-Approval-Issue-and-Distribution-r02.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/quotation-release.tsx",
+        "src/components/quotation-release.css",
+        "src/estimating/release/service.ts",
+        "src/estimating/release/reads.ts",
+        "docs/contracts/quotation-release.md"
+      ],
+      "scope_status": "Bounded native synthetic release",
+      "visual_status": "Needs review",
+      "functional_status": "Verification in progress; see quotation-release-handover.md",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 52,
+      "related_keys": [
+        "scope:ES-05",
+        "route:/estimating/quotes/[id]",
+        "scope:ES-04",
+        "scope:ES-06"
       ]
     }
   ]
