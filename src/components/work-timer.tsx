@@ -340,31 +340,32 @@ export function WorkTimer({
   const label = closedWithoutAttendance
     ? "Visit closed"
     : v?.capture_closed
-    ? "Timer closed"
-    : t?.state === "Running"
-      ? openSeconds > 43200
-        ? "Timer still running"
-        : "Working"
-      : t?.state === "Paused"
-        ? "Paused"
-        : t?.state === "Stopped"
-          ? "Stopped"
-          : v?.currentness === "Current"
-            ? "Ready to start"
-            : "Can't start yet";
-  const state = closedWithoutAttendance || v?.capture_closed
-    ? "closed"
-    : t?.state === "Running"
-      ? openSeconds > 43200
-        ? "alert"
-        : "working"
-      : t?.state === "Paused"
-        ? "paused"
-        : t?.state === "Stopped"
-          ? "stopped"
-          : v?.currentness === "Current"
-            ? "ready"
-            : "blocked";
+      ? "Timer closed"
+      : t?.state === "Running"
+        ? openSeconds > 43200
+          ? "Timer still running"
+          : "Working"
+        : t?.state === "Paused"
+          ? "Paused"
+          : t?.state === "Stopped"
+            ? "Stopped"
+            : v?.currentness === "Current"
+              ? "Ready to start"
+              : "Can't start yet";
+  const state =
+    closedWithoutAttendance || v?.capture_closed
+      ? "closed"
+      : t?.state === "Running"
+        ? openSeconds > 43200
+          ? "alert"
+          : "working"
+        : t?.state === "Paused"
+          ? "paused"
+          : t?.state === "Stopped"
+            ? "stopped"
+            : v?.currentness === "Current"
+              ? "ready"
+              : "blocked";
   const current =
     jobCurrent &&
     !!v &&

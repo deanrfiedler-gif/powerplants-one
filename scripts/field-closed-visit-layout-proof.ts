@@ -66,6 +66,17 @@ try {
     assert.equal(view.scrollWidth, width);
     assert.deepEqual(view.owners, ["main"]);
     if (zoom) assert.equal(view.dpr, 2);
+    // In particular, a clock initially below a 320 px viewport must not
+    // alternate header compaction and move the content on every frame.
+    const positions = await page.locator(".field-start").evaluate(async (e) => {
+      const values: number[] = [];
+      for (let i = 0; i < 30; i++) {
+        await new Promise(requestAnimationFrame);
+        values.push(e.getBoundingClientRect().top);
+      }
+      return values;
+    });
+    assert(Math.max(...positions) - Math.min(...positions) < 1);
     const label = zoom ? "zoom" : String(width);
     await page.locator(".field-start").scrollIntoViewIfNeeded();
     await page.screenshot({ path: join(output, `closed-${label}.png`) });
@@ -139,6 +150,37 @@ try {
   await settings.locator("#zoomLevel").selectOption("2");
   assert.equal(await settings.locator("#zoomLevel").inputValue(), "2");
   await inspect(720, true);
+  await settings.locator("#zoomLevel").selectOption("1");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(config.origin + "/offline/index.html");
+  await expect(page.locator("#workspace")).toBeVisible();
+  await page
+    .getByLabel("Assigned job to download")
+    .selectOption(source.appointment_id);
+  const download = page.getByRole("button", {
+    name: "Download selected job",
+    exact: true,
+  });
+  await download.click();
+  // Same explicit download boundary used by the retained P08 journey.
+  await expect(download).toBeEnabled({ timeout: 45000 });
+  await expect(page.locator("#notice")).toContainText(
+    "Job context and exact pack saved",
+  );
+  await expect(page.getByText(/Cached visit state: Completed\./)).toBeVisible();
+  await expect(
+    page.getByRole("button", {
+      name: "Save provisional start intent",
+      exact: true,
+    }),
+  ).toHaveCount(0);
+  await expect(
+    page.getByRole("button", {
+      name: "Save my pack acknowledgement intent",
+      exact: true,
+    }),
+  ).toHaveCount(0);
+  await page.screenshot({ path: join(output, "offline-closed-390.png") });
   assert.deepEqual(errors, []);
   await writeFile(
     join(output, "geometry.json"),
@@ -153,6 +195,8 @@ try {
         }).trim(),
         compiled_build: (await readFile(".next/BUILD_ID", "utf8")).trim(),
         measurements,
+        offline_closed:
+          "Downloaded closed original has no new arrival or acknowledgement control; retained P08 replay remains separate.",
         page_errors: errors,
         limits:
           "Technical Chrome inspection; physical-device, screen-reader, owner and independent visual acceptance remain pending.",

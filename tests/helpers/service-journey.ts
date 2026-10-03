@@ -582,6 +582,26 @@ export async function serviceJourney(
     await expect(page.locator(".field-start")).toContainText(
       "Another crew member's attendance is not your attendance",
     );
+    await expect(page.locator("#ppo-work-timer .head .tag")).toHaveText(
+      "Visit closed",
+    );
+    const viewport = page.viewportSize();
+    if (info.project.name.startsWith("mobile")) {
+      await page.setViewportSize({ width: 320, height: 844 });
+      await page.locator("#main").evaluate((e) => e.scrollTo(0, 0));
+      const positions = await page
+        .locator(".field-start")
+        .evaluate(async (e) => {
+          const values: number[] = [];
+          for (let i = 0; i < 30; i++) {
+            await new Promise(requestAnimationFrame);
+            values.push(e.getBoundingClientRect().top);
+          }
+          return values;
+        });
+      expect(Math.max(...positions) - Math.min(...positions)).toBeLessThan(1);
+      if (viewport) await page.setViewportSize(viewport);
+    }
     const entry = page.getByRole("region", {
       name: "Further attendance",
       exact: true,

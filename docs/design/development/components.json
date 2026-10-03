@@ -744,10 +744,7 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts",
-        "src/field/visit-guidance.ts",
-        "src/components/field-visit-entry.tsx",
-        "docs/decisions/field-closed-visit-guidance.md"
+        "src/development/component-fixtures.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -756,9 +753,7 @@
       },
       "specification": "docs/design/development/components/appointment.md",
       "used_on": [
-        "route:/schedule",
-        "route:/service/appointments/[id]",
-        "route:/service/work-orders/[id]"
+        "route:/schedule"
       ],
       "desktop": "Keep site timezone, scope revision, dispatch hold and customer commitment distinct.",
       "mobile": "Times and readiness copy wrap; Move or reassign remains available as a non-drag control when permitted.",
@@ -778,14 +773,6 @@
           "expected": "Review policy preparation, durable hold reasons and exact resolution recovery on desktop and phone.",
           "actual": "Step 4 source and synthetic functional proof are being verified; owner visual/device review remains pending.",
           "action": "Review the exact Step 4 captures and affected shared controls without copying an acceptance fingerprint.",
-          "priority": "Medium",
-          "owner": "Dean Fiedler"
-        },
-        {
-          "id": "appointment-closed-visit-host",
-          "expected": "Truthful personal history and permission-aware separate-visit navigation with recoverable original commands.",
-          "actual": "Native host adaptation; no accepted closed-visit mockup or independent visual acceptance.",
-          "action": "Review the closed-visit acceptance matrix and actual host fixtures at four widths and 200% zoom.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2559,9 +2546,7 @@
       "used_on": [
         "scope:FI-01",
         "route:/my-jobs",
-        "route:/my-jobs/[id]",
-        "scope:FI-02",
-        "scope:FI-05"
+        "route:/my-jobs/[id]"
       ],
       "desktop": "Padded host Record detail; one document scroll. Retain r05 record header, 96 px clock, readouts, visit track and time/activity lists.",
       "mobile": "64 px clock; labelled job menu; fixed timer dock above the existing 64 px navigation with 44 px minimum controls. Inspect 390/320 px and actual 200% browser zoom.",
@@ -2579,7 +2564,7 @@
         {
           "id": "field-work-timer-closed-visit-host",
           "expected": "Truthful personal history and permission-aware separate-visit navigation with recoverable original commands.",
-          "actual": "Native host adaptation; no accepted closed-visit mockup or independent visual acceptance.",
+          "actual": "Native host adaptation; no accepted closed-visit mockup or independent visual acceptance. Header compaction now distinguishes a clock below the viewport from one scrolled above it; 320 px stability requires fresh proof.",
           "action": "Review the closed-visit acceptance matrix and actual host fixtures at four widths and 200% zoom.",
           "priority": "Medium",
           "owner": "Dean Fiedler"

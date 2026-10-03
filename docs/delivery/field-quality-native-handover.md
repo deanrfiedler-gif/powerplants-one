@@ -36,7 +36,7 @@ Final FI-06 database proof passes 6/6; compiled journey/reference 5/5; fresh EN-
 
 Baseline F02-A technical walkthrough repeated against merged main: 5/5 database and 4/4 compiled desktop/phone cases passed. Retained #334 proof remains valid for unchanged shared-engine/EN-08 boundaries; affected regressions and fresh FI-06 evidence are recorded separately. No owner participation, physical-device, screen-reader or independent visual acceptance occurred. Concrete human checklist remains open without blocking this authorised synthetic implementation.
 
-At FI-06 publication, FI-01/FI-02/FI-05 and FI-03/FI-04 were merged within documented boundaries and FI-07 was the next runtime increment. FI-06 is now merged with the exact final CI evidence recorded above. The FI-07 section is the current programme handover; these older checkpoints retain their original technical boundaries and do not imply deployment or human acceptance.
+At FI-06 publication, FI-01/FI-02/FI-05 and FI-03/FI-04 were merged within documented boundaries and FI-07 was the next runtime increment. FI-06 is now merged with the exact final CI evidence recorded above. The closed-visit guidance section above is the current programme handover; these older checkpoints retain their original technical boundaries and do not imply deployment or human acceptance.
 
 ## FI-03/FI-04 Service increment
 

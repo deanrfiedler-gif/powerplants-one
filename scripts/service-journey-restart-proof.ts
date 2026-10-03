@@ -50,7 +50,7 @@ async function records() {
       `SELECT table_name FROM information_schema.tables WHERE table_schema='ppo'
       AND table_type='BASE TABLE' AND (table_name IN
       ('work_orders','appointments','operation_receipts','service_reports','customer_responses',
-       'customer_response_contexts','activities','activity_links')
+       'customer_response_contexts','activities','activity_links','attendance_acceptances')
       OR table_name ~ '^(field_|report_|finance_|pack_)') ORDER BY table_name`,
     )
   ).rows;

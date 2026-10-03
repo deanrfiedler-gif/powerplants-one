@@ -46,10 +46,3 @@ Changes to the source, styles, fixtures, specification or reference invalidate p
 The `policy-hold` catalogue fixture keeps the original appointment and reservation visible and names a published scheduling hold. It does not simulate resolution authority. The host prepares the proposed interval using exact policy/published-head evidence; the server rechecks every save. Controlled moves retain the historic pin. New holds and stale resolutions remain distinct from customer contact, preparation and pack acknowledgement.
 
 Review policy preparation and impact reason/owner/publication at desktop and 390/320 px. Shared Button, fields, ReadState and ErrorNotice retain their contracts; legacy planner buttons remain an existing exception. There is no issued Step 4 mockup. Owner visual/device acceptance is pending. See `docs/testing/evidence/scheduling-policy-enforcement/README.md` for actual functional evidence; no review fingerprint is granted.
-
-
-## Closed-visit consumer bindings
-
-The FI-01/FI-02/FI-05 and My Jobs hosts reuse these controls for truthful personal history; Service work-order/appointment hosts provide the existing receiving path. Reproducible host states: `tests/helpers/service-journey.ts` (closed original without own attendance and completed separate return), `tests/browser/field-closed-visit.spec.ts` (validation, stale refusal, interrupted response/reload and original continuation), and `tests/database/field-closed-visit.test.ts` (scoped/unavailable navigation and delayed cached originals). These are persisted host examples, not an isolated gallery acceptance.
-
-Inspect readable identifiers/history, one content scroll, 1440/1024/390/320 widths, keyboard links/focus recovery and actual 200% zoom. Pending read removes current receiving actions; saved history survives. No accepted native mockup exists for this addition; timer r05 bytes remain unchanged. Review/fingerprints remain unassigned. See `docs/decisions/field-closed-visit-guidance.md` and the corresponding execution ledger.

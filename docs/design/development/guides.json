@@ -15367,7 +15367,9 @@
       ],
       "related_entry_keys": [
         "route:/my-jobs/[id]",
-        "route:/my-jobs"
+        "route:/my-jobs",
+        "route:/service/work-orders/[id]",
+        "route:/service/appointments/[id]"
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -15542,7 +15544,10 @@
         }
       ],
       "related_entry_keys": [
-        "route:/offline/index.html"
+        "route:/offline/index.html",
+        "route:/my-jobs/[id]",
+        "route:/service/work-orders/[id]",
+        "route:/service/appointments/[id]"
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -16106,7 +16111,10 @@
       "related_entry_keys": [
         "scope:FI-01",
         "scope:CS-06",
-        "scope:FI-02"
+        "scope:FI-02",
+        "route:/my-jobs/[id]",
+        "route:/service/work-orders/[id]",
+        "route:/service/appointments/[id]"
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -41804,7 +41812,9 @@
         }
       ],
       "related_entry_keys": [
-        "scope:FI-01"
+        "scope:FI-01",
+        "route:/service/work-orders/[id]",
+        "route:/service/appointments/[id]"
       ],
       "source_paths": [
         "src/app/(business)/my-jobs/[id]/page.tsx",
@@ -41979,7 +41989,10 @@
         }
       ],
       "related_entry_keys": [
-        "scope:FI-01"
+        "scope:FI-01",
+        "route:/my-jobs/[id]",
+        "route:/service/work-orders/[id]",
+        "route:/service/appointments/[id]"
       ],
       "source_paths": [
         "src/app/(business)/my-jobs/page.tsx",
@@ -44759,7 +44772,9 @@
         }
       ],
       "related_entry_keys": [
-        "scope:SV-04"
+        "scope:SV-04",
+        "route:/my-jobs/[id]",
+        "route:/service/work-orders/[id]"
       ],
       "source_paths": [
         "src/app/(business)/service/appointments/[id]/page.tsx",
@@ -47271,7 +47286,9 @@
         }
       ],
       "related_entry_keys": [
-        "scope:SV-03"
+        "scope:SV-03",
+        "route:/my-jobs/[id]",
+        "route:/service/appointments/[id]"
       ],
       "source_paths": [
         "src/app/(business)/service/work-orders/[id]/page.tsx",
@@ -51155,7 +51172,10 @@
         }
       ],
       "related_entry_keys": [
-        "scope:FI-02"
+        "scope:FI-02",
+        "route:/my-jobs/[id]",
+        "route:/service/work-orders/[id]",
+        "route:/service/appointments/[id]"
       ],
       "source_paths": [
         "public/offline/index.html",
