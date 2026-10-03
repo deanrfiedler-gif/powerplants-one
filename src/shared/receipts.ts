@@ -1,4 +1,5 @@
 import { releaseReceiptAuthority } from "../estimating/release/context";
+import { responseReceiptAuthority } from "../estimating/response/context";
 import { timerReceiptAuthority } from "../field/timer";
 import { incidentReceiptAuthority } from "../incidents/service";
 import { serviceInspectionReceiptAuthority } from "../inspections/service-commands";
@@ -73,6 +74,12 @@ export async function readOperation(
     return transaction(async c => {
       await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [p.workspace_id]);
       await policyReceiptAuthority(c, p, r.object_type, r.record_id);
+      return r.result as OperationReceipt;
+    });
+  } else if (r.object_type === "DraftQuoteRevision" && r.command?.startsWith("QuoteResponse:")) {
+    return transaction(async c => {
+      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [p.workspace_id]);
+      await responseReceiptAuthority(c,p,r.record_id,operation_id);
       return r.result as OperationReceipt;
     });
   } else if (r.object_type === "DraftQuoteRevision" && r.command?.startsWith("QuoteRelease:")) {

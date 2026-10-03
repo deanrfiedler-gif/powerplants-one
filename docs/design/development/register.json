@@ -1338,7 +1338,8 @@
         "scope:ES-04",
         "scope:DK-03",
         "scope:DK-06",
-        "route:/estimating/quotes/[id]/release"
+        "route:/estimating/quotes/[id]/release",
+        "route:/estimating/quotes/[id]/response"
       ],
       "reviewer": null
     },
@@ -1347,26 +1348,35 @@
       "title": "Quotation response and negotiation",
       "kind": "scope",
       "module": "ES",
-      "summary": "Implement quotation response, negotiation, selected options, acceptance/decline/expiry and revised-offer handling.",
+      "summary": "Exact staff-recorded synthetic response, immutable correction, controlled negotiation and separate ES-07 review preparation.",
       "path": "/estimating/quotes?tab=responses",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/estimating/quotes/[id]/response/page.tsx"
       ],
       "guide_key": "guide.es.06",
       "design_path": "docs/design/development/pages/scope-es-06.md",
       "html_path": "docs/reference/ui/quoting/PPO-Quotation-Response-and-Negotiation-r01.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/components/quotation-response.tsx",
+        "src/components/quotation-release.css",
+        "src/estimating/response/reads.ts",
+        "src/estimating/response/service.ts",
+        "docs/contracts/quotation-response.md"
+      ],
+      "scope_status": "Bounded native staff response; operational authority not configured",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Verification in progress; see quotation-response-handover.md",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 53,
       "related_keys": [
-        "scope:ES-05"
+        "scope:ES-05",
+        "scope:ES-07",
+        "route:/estimating/quotes/[id]/response"
       ],
       "reviewer": null
     },
@@ -1396,7 +1406,8 @@
       "related_keys": [
         "scope:ES-06",
         "scope:AD-05",
-        "scope:PD-02"
+        "scope:PD-02",
+        "route:/estimating/quotes/[id]/response"
       ],
       "reviewer": null
     },
@@ -11287,6 +11298,43 @@
         "scope:ES-05",
         "route:/estimating/quotes/[id]",
         "scope:ES-04",
+        "scope:ES-06",
+        "route:/estimating/quotes/[id]/response"
+      ]
+    },
+    {
+      "key": "route:/estimating/quotes/[id]/response",
+      "title": "Quotation response and negotiation",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Exact staff-recorded synthetic response, immutable correction, controlled negotiation and separate ES-07 review preparation.",
+      "path": "/estimating/quotes/[id]/response",
+      "source_paths": [
+        "src/app/(business)/estimating/quotes/[id]/response/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-quotes-id-response",
+      "design_path": "docs/design/development/pages/route-estimating-quotes-id-response.md",
+      "html_path": "docs/reference/ui/quoting/PPO-Quotation-Response-and-Negotiation-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/quotation-response.tsx",
+        "src/components/quotation-release.css",
+        "src/estimating/response/reads.ts",
+        "src/estimating/response/service.ts",
+        "docs/contracts/quotation-response.md"
+      ],
+      "scope_status": "Bounded native staff response; operational authority not configured",
+      "visual_status": "Needs review",
+      "functional_status": "Verification in progress; see quotation-response-handover.md",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 53,
+      "related_keys": [
+        "scope:ES-05",
+        "scope:ES-07",
         "scope:ES-06"
       ]
     }

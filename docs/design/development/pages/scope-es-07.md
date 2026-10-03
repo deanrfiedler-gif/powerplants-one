@@ -39,3 +39,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 The draft User Guide `guide.es.07` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## Current ES-06 incoming boundary
+
+The native response page prepares an owned review note for one exact issue and reported acceptance. It exposes conditions, authority/policy gaps and changed applicability; it does not send, receive or convert. Next implement independently attributable receipt, item/target-line review and duplicate-safe per-target conversion. [Current contract](../../../contracts/quotation-response.md). ES-07 remains unbuilt; reference HTML is not runtime authority.

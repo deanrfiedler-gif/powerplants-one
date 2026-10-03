@@ -216,6 +216,7 @@ function ReleaseBody({
           </section>
         </div>
         {d.hold && <p role="status">{d.hold}</p>}
+        {d.issue && <ButtonLink href={`/estimating/quotes/${d.revision.id}/response`}>Open exact quotation response</ButtonLink>}
         {!!d.preview.problems.length && (
           <ul>
             {d.preview.problems.map((p) => (
