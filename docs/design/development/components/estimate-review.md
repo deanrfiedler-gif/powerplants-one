@@ -25,3 +25,7 @@ The reference's six views, queue and fictional thresholds remain reference-only.
 ## Evidence and guide
 
 The draft guide `guide.route-estimating-estimates-id-review` contains prerequisites, tasks, outcomes and recovery. Host fixtures in `tests/browser/estimating-review.spec.ts` use actual scoped synthetic records for all implemented states. See [executed evidence](../../../delivery/estimating-review-handover.md). Source presence, functional proof, visual review, owner acceptance and deployment remain separate. No review fingerprint has been asserted as accepted.
+
+## Inspected synthetic viewport captures
+
+[Desktop reviewed overview](../../../testing/evidence/estimating-review/reviewed-overview-desktop.png) and [320px review basis](../../../testing/evidence/estimating-review/review-basis-320.png) were inspected against native source `8e3d348`; [provenance and limits](../../../testing/evidence/estimating-review/manifest.json). These are runtime captures, not adopted reference designs. Full visual/owner review stays pending.
