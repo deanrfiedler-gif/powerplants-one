@@ -1,13 +1,16 @@
 # Native Estimating and Quotation programme
 
-**Current reconciliation, 3 October 2026:** ES-04 #338 and ES-05 #340 are merged in refreshed main `ab4acd687f6a4911ebc5f3f1bd8f09d5ff1e1547`; all 24 final ES-05 checks passed. Historical pre-merge wording below is superseded. [ES-06 contribution](quotation-response-handover.md) adds exact staff-recorded responses, immutable correction and controlled negotiation, with separate ES-07 review preparation. Receiving/item conversion remains next.
+**Current reconciliation, 4 October 2026:** ES-04 #338, ES-05 #340 and ES-06 #341 are merged; refreshed main is `e3bbb76fb97bd4271bc657b0e6c2e6231ec24707`. All 24 final ES-06 checks passed. Historical pre-merge statements below retain their checkpoint context. The [ES-07 contribution](quotation-conversion-handover.md) adds exact independent receiving, explicit one-off resolution, reviewed immutable plans and actual native Forecast demand; operational policy and owner acceptance remain separate.
+
+
+**Retained 3 October checkpoint:** ES-04 #338 and ES-05 #340 are merged in refreshed main `ab4acd687f6a4911ebc5f3f1bd8f09d5ff1e1547`; all 24 final ES-05 checks passed. Historical pre-merge wording below is superseded. [ES-06 contribution](quotation-response-handover.md) adds exact staff-recorded responses, immutable correction and controlled negotiation, with separate ES-07 review preparation. Receiving/item conversion remains next.
 
 
 <!-- versioning: git; committed history is authoritative -->
 
 Owner: Dean Fiedler. Implementation authorised by the 24 September 2026 programme prompt. Review, business acceptance and deployment remain separate.
 
-## Current reconciliation — 3 October 2026
+## Retained pre-merge reconciliation — 3 October 2026
 
 Main `6e8b898` integrates workload, schema-2 costing, cost sources at 0048, Screen Systems and fertigation. Registry ends at 0057 before the ES-04 contribution. The [current review handover](estimating-review-handover.md) supersedes dated missing-work and migration statements below: ES-04 review is implemented in its isolated contribution, while commercial approval/ES-05–07 and remaining import/configuration/feedback work retain their separate dependencies. No open PR or competing review contribution was found at refresh; unfinished local work is preserved.
 

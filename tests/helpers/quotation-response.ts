@@ -22,8 +22,8 @@ export const response = (d: ResponseDetail, outcome = "Accepted") => ({
     conditions: null as string | null,
   },
 });
-export async function responseFixture() {
-  const f = await releaseFixture(),
+export async function responseFixture(extraProducts = 0) {
+  const f = await releaseFixture(extraProducts),
     r = await prepared(f);
   await issued(f, r.id);
   return { ...f, id: r.id, d: await readResponse(f.owner, r.id) };

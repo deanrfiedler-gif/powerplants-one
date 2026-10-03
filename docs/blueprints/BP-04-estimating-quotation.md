@@ -26,6 +26,8 @@ five-step refinement, structured discovery and exact saved-cost read contract.
 This bounded implementation does not adopt the remaining BP-04 commercial policy
 or change EST-01–EST-09, MYOB, SharePoint or native CAD ownership.
 
+**Native implementation update, 4 October 2026:** ES-04 review, ES-05 synthetic release and ES-06 recorded response are merged through #338/#340/#341. The current [ES-07 contract](../contracts/quotation-conversion.md) adds separately attributable receiving, explicit one-off Product resolution, immutable target review and atomic native Supply Demand Forecast creation. This bounded target creates no ERP order, operational master or work authority. Broader target/policy proposals below remain separate; all EST parent IDs are unchanged. See the [programme handover](../delivery/estimating-programme-handover.md) for actual evidence and unresolved policy.
+
 ## 2. Domain ownership
 
 | Record or fact | Owner and integration rule |

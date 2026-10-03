@@ -1,5 +1,8 @@
 # Synthetic quotation release implementation handover
 
+**Current reconciliation, 4 October 2026:** ES-04 #338, ES-05 #340 and ES-06 #341 are merged; refreshed main is `e3bbb76fb97bd4271bc657b0e6c2e6231ec24707`. All 24 final ES-06 checks passed. Historical pre-merge statements below retain their checkpoint context. The [ES-07 contribution](quotation-conversion-handover.md) adds exact independent receiving, explicit one-off resolution, reviewed immutable plans and actual native Forecast demand; operational policy and owner acceptance remain separate.
+
+
 **Current reconciliation, 3 October 2026:** ES-04 #338 and ES-05 #340 are merged in refreshed main `ab4acd687f6a4911ebc5f3f1bd8f09d5ff1e1547`; all 24 final ES-05 checks passed. Historical pre-merge wording below is superseded. [ES-06 contribution](quotation-response-handover.md) adds exact staff-recorded responses, immutable correction and controlled negotiation, with separate ES-07 review preparation. Receiving/item conversion remains next.
 
 

@@ -440,8 +440,8 @@ test("ES06 populated 0059 upgrade preserves release/review, receipts, grants, id
       "SELECT * FROM public.ppo_migrations ORDER BY version",
     )
   ).rows;
-  assert.deepEqual(after.slice(0, -1), ledger);
-  assert.equal(after.at(-1).version, 60);
+  assert.deepEqual(after.slice(0, -2), ledger);
+  assert.deepEqual(after.slice(-2).map(r=>r.version), [60, 61]);
   assert.deepEqual(
     (await database().query("SELECT * FROM ppo.seed_receipts ORDER BY version"))
       .rows,

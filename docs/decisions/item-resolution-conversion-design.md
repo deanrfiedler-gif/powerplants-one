@@ -1,4 +1,6 @@
 ---
+
+**Native reconciliation, 4 October 2026:** ES-05/06 are merged through #340/#341. The [ES-07 native decision](quotation-conversion-native.md) and [contract](../contracts/quotation-conversion.md) implement a bounded independent receiving and Product-to-native-Forecast-demand path. The broader reference below, including external item mapping, hypothetical tax capabilities and multi-target simulation, remains proposed design. Issued HTML/companion evidence is unchanged.
 document_id: PPO-ES07-DES
 title: One-off item resolution and conversion design and receiving handover
 date: 2026-09-16
