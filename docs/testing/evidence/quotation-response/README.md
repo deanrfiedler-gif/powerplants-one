@@ -2,6 +2,8 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
+Reviewable [PR #341](https://github.com/deanrfiedler-gif/powerplants-one/pull/341). Final-head CI and merge/deployment status are read from that PR; this ledger records completed local proof.
+
 Owner: Dean Fiedler. Baseline `ab4acd687f6a4911ebc5f3f1bd8f09d5ff1e1547`. Task-owned Windows / Node 24.21.0 / npm 11.19.0 / PostgreSQL 16.15; exact retained issued references are unchanged. Private configuration, database files, logs and original output checkpoints remain outside Git.
 
 Executed 3–4 October 2026. Baseline was fetched again before publication and remains unchanged. Local proof uses two new isolated clusters on ports 56560/56561; both databases are named `ppo_synthetic_test`. Earlier proof databases and Excel import work are retained. Runtime compiled from `aa20dae`; subsequent edits extend test/evidence coverage and correct a migration-ledger expectation. [Source and capture hashes](manifest.json) identify the exact working files. Final PR-head CI is recorded on the pull request; pending/running jobs are not passes.

@@ -2,6 +2,8 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
+Reviewable [PR #341](https://github.com/deanrfiedler-gif/powerplants-one/pull/341). Final-head CI and merge/deployment status are read from that PR; this ledger records completed local proof.
+
 Owner: Dean Fiedler. 3 October 2026. Source implementation, automated proof, visual review, owner acceptance and deployment are separate.
 
 ## Reconciled baseline and contribution
