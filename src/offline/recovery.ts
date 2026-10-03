@@ -178,6 +178,10 @@ export async function downloadContext(
     },
     job: {
       ...job,
+      // Receiving navigation/current permissions are online read projections,
+      // never downloaded authority or another visit's cached context.
+      visit_navigation: null,
+      arrival_actions: { can_start: false, can_acknowledge: false },
       entries: job.entries.filter((e) => e.actor_id === p.actor_id),
       attachments: job.attachments.filter((e) => e.actor_id === p.actor_id),
       follow_ups: [],

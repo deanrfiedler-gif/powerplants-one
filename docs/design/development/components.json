@@ -97,7 +97,10 @@
         "src/development/component-examples.tsx",
         "src/development/component-fixtures.ts",
         "src/components/work-timer.tsx",
-        "src/app/styles/work-timer.css"
+        "src/app/styles/work-timer.css",
+        "src/field/visit-guidance.ts",
+        "src/components/field-visit-entry.tsx",
+        "docs/decisions/field-closed-visit-guidance.md"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -183,7 +186,9 @@
         "route:/service/incidents",
         "scope:FI-07",
         "route:/service/reports",
-        "route:/service/reports/[id]"
+        "route:/service/reports/[id]",
+        "scope:FI-02",
+        "route:/service/work-orders/[id]"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -235,6 +240,14 @@
           "expected": "Review exact response host at desktop/phone and actual 200% zoom.",
           "actual": "Shared controls adopted for new response/recovery controls. Legacy Service review/issue controls remain a scoped exception.",
           "action": "Review recorded FI-07 evidence with owner, physical device and screen reader.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-closed-visit-host",
+          "expected": "Truthful personal history and permission-aware separate-visit navigation with recoverable original commands.",
+          "actual": "Native host adaptation; no accepted closed-visit mockup or independent visual acceptance.",
+          "action": "Review the closed-visit acceptance matrix and actual host fixtures at four widths and 200% zoom.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -731,7 +744,10 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/field/visit-guidance.ts",
+        "src/components/field-visit-entry.tsx",
+        "docs/decisions/field-closed-visit-guidance.md"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -740,7 +756,9 @@
       },
       "specification": "docs/design/development/components/appointment.md",
       "used_on": [
-        "route:/schedule"
+        "route:/schedule",
+        "route:/service/appointments/[id]",
+        "route:/service/work-orders/[id]"
       ],
       "desktop": "Keep site timezone, scope revision, dispatch hold and customer commitment distinct.",
       "mobile": "Times and readiness copy wrap; Move or reassign remains available as a non-drag control when permitted.",
@@ -760,6 +778,14 @@
           "expected": "Review policy preparation, durable hold reasons and exact resolution recovery on desktop and phone.",
           "actual": "Step 4 source and synthetic functional proof are being verified; owner visual/device review remains pending.",
           "action": "Review the exact Step 4 captures and affected shared controls without copying an acceptance fingerprint.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "appointment-closed-visit-host",
+          "expected": "Truthful personal history and permission-aware separate-visit navigation with recoverable original commands.",
+          "actual": "Native host adaptation; no accepted closed-visit mockup or independent visual acceptance.",
+          "action": "Review the closed-visit acceptance matrix and actual host fixtures at four widths and 200% zoom.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1510,7 +1536,10 @@
         "src/components/work-timer.tsx",
         "src/app/styles/work-timer.css",
         "src/shared/lib/command-journal.ts",
-        "src/shared/ui/use-recoverable-command.ts"
+        "src/shared/ui/use-recoverable-command.ts",
+        "src/field/visit-guidance.ts",
+        "src/components/field-visit-entry.tsx",
+        "docs/decisions/field-closed-visit-guidance.md"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -1579,7 +1608,9 @@
         "route:/service/incidents",
         "scope:FI-07",
         "route:/service/reports",
-        "route:/service/reports/[id]"
+        "route:/service/reports/[id]",
+        "scope:FI-02",
+        "route:/service/work-orders/[id]"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -1647,6 +1678,14 @@
           "expected": "Review exact response host at desktop/phone and actual 200% zoom.",
           "actual": "Shared controls adopted for new response/recovery controls. Legacy Service review/issue controls remain a scoped exception.",
           "action": "Review recorded FI-07 evidence with owner, physical device and screen reader.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "read-state-closed-visit-host",
+          "expected": "Truthful personal history and permission-aware separate-visit navigation with recoverable original commands.",
+          "actual": "Native host adaptation; no accepted closed-visit mockup or independent visual acceptance.",
+          "action": "Review the closed-visit acceptance matrix and actual host fixtures at four widths and 200% zoom.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2471,6 +2510,21 @@
           "id": "offline",
           "label": "Offline host",
           "description": "Owned downloaded context and ordered pending originals in the dedicated offline workspace; no isolated React fixture claim."
+        },
+        {
+          "id": "closed-own",
+          "label": "Closed with my attendance",
+          "description": "Retained personal identity/times and frozen history; no reopening or new arrival."
+        },
+        {
+          "id": "closed-other",
+          "label": "Closed without my attendance",
+          "description": "Another crew member is not the viewer; no new arrival and only scoped current receiving links."
+        },
+        {
+          "id": "return-preparation",
+          "label": "Separate visit preparation",
+          "description": "Existing incomplete/prepared/history states from current receiving projections, with no inferred return lineage."
         }
       ],
       "implementation": [
@@ -2481,13 +2535,20 @@
         {
           "path": "src/components/work-timer.tsx",
           "symbol": "RunningTimerBanner"
+        },
+        {
+          "path": "src/components/field-visit-entry.tsx",
+          "symbol": "FieldVisitEntry"
         }
       ],
       "dependencies": [
         "src/app/styles/work-timer.css",
         "src/field/timer-model.ts",
         "src/offline/timer.ts",
-        "docs/decisions/field-timer-native.md"
+        "docs/decisions/field-timer-native.md",
+        "src/field/visit-guidance.ts",
+        "src/components/field-visit-entry.tsx",
+        "docs/decisions/field-closed-visit-guidance.md"
       ],
       "reference": {
         "path": "docs/reference/ui/field-work-timer/powerplants-one-field-work-timer-r05.html",
@@ -2498,7 +2559,9 @@
       "used_on": [
         "scope:FI-01",
         "route:/my-jobs",
-        "route:/my-jobs/[id]"
+        "route:/my-jobs/[id]",
+        "scope:FI-02",
+        "scope:FI-05"
       ],
       "desktop": "Padded host Record detail; one document scroll. Retain r05 record header, 96 px clock, readouts, visit track and time/activity lists.",
       "mobile": "64 px clock; labelled job menu; fixed timer dock above the existing 64 px navigation with 44 px minimum controls. Inspect 390/320 px and actual 200% browser zoom.",
@@ -2510,6 +2573,14 @@
           "expected": "Paired owner review against accepted timer r05 in the native shell.",
           "actual": "Native implementation and synthetic paired evidence; unavailable allowance, retained Undo evidence and explicit arrival differ from the preview.",
           "action": "Review the native decision and field programme evidence; retain source bytes and record owner acceptance separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "field-work-timer-closed-visit-host",
+          "expected": "Truthful personal history and permission-aware separate-visit navigation with recoverable original commands.",
+          "actual": "Native host adaptation; no accepted closed-visit mockup or independent visual acceptance.",
+          "action": "Review the closed-visit acceptance matrix and actual host fixtures at four widths and 200% zoom.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

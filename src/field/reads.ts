@@ -3,7 +3,9 @@ import { leadsAvailable } from "../crm/leads/context";
 import { crmAvailable } from "../crm/context";
 import type { Principal } from "../platform/identity";
 import { transaction } from "../platform/database";
-import { requireCapability } from "../platform/permissions";
+import { hasPermission, requireCapability } from "../platform/permissions";
+import { visitNavigation } from "./visit-navigation";
+import { visitArrivalGuidance } from "./visit-guidance";
 import { AppError } from "../platform/errors";
 import { envelope, page, visible } from "../shared/reads";
 import { object, uuid } from "../shared/validation";
@@ -51,7 +53,7 @@ export async function listMyJobs(p: Principal, input: unknown = {}) {
           status: a.status,
           version: a.version,
           my_started_at: mine?.received_at ?? null,
-          dispatch_hold: a.dispatch_hold || policy_impacts.some(x => x.held),
+          dispatch_hold: a.dispatch_hold || policy_impacts.some((x) => x.held),
           policy_impacts,
         });
         if (results.length > pg.limit) break;
@@ -163,6 +165,25 @@ export async function readFieldJob(p: Principal, id: string) {
         {
           report,
           accepted_end_at,
+          arrival_actions: {
+            can_start: await hasPermission(
+              c,
+              p,
+              "field.start.own",
+              a.company_id,
+              a.site_id,
+            ),
+            can_acknowledge: await hasPermission(
+              c,
+              p,
+              "pack.acknowledge",
+              a.company_id,
+              a.site_id,
+            ),
+          },
+          visit_navigation: visitArrivalGuidance(a.status, !!attendance).closed
+            ? await visitNavigation(c, p, a, w)
+            : null,
           id: a.id,
           reference: a.display_number,
           version: a.version,

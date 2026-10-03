@@ -6,6 +6,7 @@ const modules = [
   "offline/timer",
   "offline/field-extensions",
   "field/timer-model",
+  "field/visit-guidance",
   "field/readiness-command",
   "shared/cs/model",
   "offline/store",

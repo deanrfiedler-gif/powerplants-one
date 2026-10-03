@@ -15223,10 +15223,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-27",
+      "prepared_at": "2026-10-03",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Scheduling Step 4: docs/testing/evidence/scheduling-policy-enforcement/README.md records exact executed checks; visual and owner/device review pending.",
+      "runtime_evidence": "docs/testing/evidence/field-closed-visit/README.md separates fresh proof, retained regressions and unperformed human acceptance.",
       "sections": [
         {
           "section_id": "purpose",
@@ -15292,7 +15292,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Stop the timer, inspect saved intervals and resolve outstanding evidence. Report submission, Service acceptance and Finance handling remain separate actions."
+            "Stop the timer, inspect saved intervals and resolve outstanding evidence. Report submission, Service acceptance and Finance handling remain separate actions.",
+            "Further attendance needs a separate visit. Use Further attendance to inspect accessible other visits and the work-order planned visits. No general return lineage is inferred. Preparing does not mean booked, customer confirmed, competent/assigned, current pack acknowledged or permitted to start."
           ],
           "steps": [],
           "rows": [],
@@ -15302,7 +15303,8 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Running and Paused mean there is still an open stretch. Stopped closes it. Locally saved or queued is not server acceptance; a receipt belongs to one unchanged original action. Changed authority can retain factual evidence for review without granting approval."
+            "Running and Paused mean there is still an open stretch. Stopped closes it. Locally saved or queued is not server acceptance; a receipt belongs to one unchanged original action. Changed authority can retain factual evidence for review without granting approval.",
+            "Closed visits retain your attendance when one exists. Another crew member's attendance is not yours. CompletedPendingReview, Completed and Cancelled refuse a new arrival. Stopped time, submitted evidence, internal acceptance and customer response describe different facts."
           ],
           "steps": [],
           "rows": [],
@@ -15323,7 +15325,8 @@
           "title": "Troubleshooting",
           "paragraphs": [
             "If the result is unknown, confirm the original action before making a different one. A stale timer version requires refresh. If assignment or capture access is lost, retain the open original and ask Service to restore legitimate scope; do not use another identity.",
-            "Scheduling Step 4: a published impact holds unstarted work immediately, even when the policy starts later. Activity completion or pack acknowledgement does not clear it. Use the named owner and booking link for a controlled change or cancellation/replacement, evaluate current evidence, then save the guarded resolution online. Later source changes restore the hold. Retry an uncertain save unchanged to recover its receipt. Delayed offline Start is rechecked against current authority; ReviewRequired retains its original."
+            "Scheduling Step 4: a published impact holds unstarted work immediately, even when the policy starts later. Activity completion or pack acknowledgement does not clear it. Use the named owner and booking link for a controlled change or cancellation/replacement, evaluate current evidence, then save the guarded resolution online. Later source changes restore the hold. Retry an uncertain save unchanged to recover its receipt. Delayed offline Start is rechecked against current authority; ReviewRequired retains its original.",
+            "Propose a visit only with current Service preparation authority. Reuse a suitable existing proposal where supported. An incomplete proposal that cannot be corrected requires explicit controlled cancellation and a separately prepared proposal; retain both. Validation and stale refusals keep input; uncertain saves retain the original operation and recover its receipt before another save."
           ],
           "steps": [],
           "rows": [],
@@ -15333,7 +15336,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "The phone dock keeps timer actions above navigation. Tab and Shift+Tab follow labelled controls; Escape closes an unlocked timer dialog and returns focus. Use the dedicated Offline workspace for downloaded work. Device, screen-reader and actual browser zoom acceptance remain pending."
+            "The phone dock keeps timer actions above navigation. Tab and Shift+Tab follow labelled controls; Escape closes an unlocked timer dialog and returns focus. Use the dedicated Offline workspace for downloaded work. Device, screen-reader and actual browser zoom acceptance remain pending.",
+            "Current receiving actions are online only. Downloaded visit context remains visibly cached; pending originals stay bound to that visit and are adjudicated on replay. Never move an old arrival, timer event or acknowledgement to a later visit."
           ],
           "steps": [],
           "rows": [],
@@ -15353,7 +15357,8 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Draft updated 27 September 2026 for the native FI-01/FI-02 implementation. Owner review and publication remain pending. Tests and commits do not grant review."
+            "Draft updated 27 September 2026 for the native FI-01/FI-02 implementation. Owner review and publication remain pending. Tests and commits do not grant review.",
+            "Closed-visit additions prepared 3 October 2026. Source and automated proof do not grant owner, visual, physical-device or screen-reader acceptance."
           ],
           "steps": [],
           "rows": [],
@@ -15368,9 +15373,10 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/delivery/p07-handover.md",
         "docs/decisions/field-timer-native.md",
-        "docs/delivery/field-quality-native-handover.md"
+        "docs/delivery/field-quality-native-handover.md",
+        "docs/decisions/field-closed-visit-guidance.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Bounded closed-visit and separate-visit entry guidance; existing scope and review status retained.",
       "document_id": "PPO-GUIDE-FI-01",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -15394,10 +15400,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-27",
+      "prepared_at": "2026-10-03",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See field programme handover; synthetic browser evidence is separate from guide approval.",
+      "runtime_evidence": "docs/testing/evidence/field-closed-visit/README.md separates fresh proof, retained regressions and unperformed human acceptance.",
       "sections": [
         {
           "section_id": "purpose",
@@ -15463,7 +15469,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Stop the timer, inspect saved intervals and resolve outstanding evidence. Report submission, Service acceptance and Finance handling remain separate actions."
+            "Stop the timer, inspect saved intervals and resolve outstanding evidence. Report submission, Service acceptance and Finance handling remain separate actions.",
+            "Further attendance needs a separate visit. Use Further attendance to inspect accessible other visits and the work-order planned visits. No general return lineage is inferred. Preparing does not mean booked, customer confirmed, competent/assigned, current pack acknowledged or permitted to start."
           ],
           "steps": [],
           "rows": [],
@@ -15473,7 +15480,8 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Running and Paused mean there is still an open stretch. Stopped closes it. Locally saved or queued is not server acceptance; a receipt belongs to one unchanged original action. Changed authority can retain factual evidence for review without granting approval."
+            "Running and Paused mean there is still an open stretch. Stopped closes it. Locally saved or queued is not server acceptance; a receipt belongs to one unchanged original action. Changed authority can retain factual evidence for review without granting approval.",
+            "Closed visits retain your attendance when one exists. Another crew member's attendance is not yours. CompletedPendingReview, Completed and Cancelled refuse a new arrival. Stopped time, submitted evidence, internal acceptance and customer response describe different facts."
           ],
           "steps": [],
           "rows": [],
@@ -15493,7 +15501,8 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "If the result is unknown, confirm the original action before making a different one. A stale timer version requires refresh. If assignment or capture access is lost, retain the open original and ask Service to restore legitimate scope; do not use another identity."
+            "If the result is unknown, confirm the original action before making a different one. A stale timer version requires refresh. If assignment or capture access is lost, retain the open original and ask Service to restore legitimate scope; do not use another identity.",
+            "Propose a visit only with current Service preparation authority. Reuse a suitable existing proposal where supported. An incomplete proposal that cannot be corrected requires explicit controlled cancellation and a separately prepared proposal; retain both. Validation and stale refusals keep input; uncertain saves retain the original operation and recover its receipt before another save."
           ],
           "steps": [],
           "rows": [],
@@ -15503,7 +15512,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "The saved workspace supports reload while offline under the same owner. A different identity cannot take over the local queue. Undo and forgotten finish use the online timer. Mobile emulation evidence does not establish physical-device acceptance."
+            "The saved workspace supports reload while offline under the same owner. A different identity cannot take over the local queue. Undo and forgotten finish use the online timer. Mobile emulation evidence does not establish physical-device acceptance.",
+            "Current receiving actions are online only. Downloaded visit context remains visibly cached; pending originals stay bound to that visit and are adjudicated on replay. Never move an old arrival, timer event or acknowledgement to a later visit."
           ],
           "steps": [],
           "rows": [],
@@ -15523,7 +15533,8 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Draft updated 27 September 2026 for the native FI-01/FI-02 implementation. Owner review and publication remain pending. Tests and commits do not grant review."
+            "Draft updated 27 September 2026 for the native FI-01/FI-02 implementation. Owner review and publication remain pending. Tests and commits do not grant review.",
+            "Closed-visit additions prepared 3 October 2026. Source and automated proof do not grant owner, visual, physical-device or screen-reader acceptance."
           ],
           "steps": [],
           "rows": [],
@@ -15538,9 +15549,10 @@
         "docs/delivery/p08-handover.md",
         "docs/delivery/p07-handover.md",
         "docs/decisions/field-timer-native.md",
-        "docs/delivery/field-quality-native-handover.md"
+        "docs/delivery/field-quality-native-handover.md",
+        "docs/decisions/field-closed-visit-guidance.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Bounded closed-visit and separate-visit entry guidance; existing scope and review status retained.",
       "document_id": "PPO-GUIDE-FI-02",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -15932,10 +15944,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-24",
+      "prepared_at": "2026-10-03",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/delivery/field-quality-native-handover.md",
+      "runtime_evidence": "docs/testing/evidence/field-closed-visit/README.md separates fresh proof, retained regressions and unperformed human acceptance.",
       "sections": [
         {
           "section_id": "purpose",
@@ -16012,7 +16024,8 @@
           "title": "Completion and handover",
           "paragraphs": [
             "Saved to the server confirms only that the personal review was retained. Verify it in Your retained reviews for this visit, then return to the exact job.",
-            "Work permission, pack acknowledgement, attendance, inspection acceptance, report issue and Finance outcomes remain with their owning commands."
+            "Work permission, pack acknowledgement, attendance, inspection acceptance, report issue and Finance outcomes remain with their owning commands.",
+            "Further attendance needs a separate visit. Use Further attendance to inspect accessible other visits and the work-order planned visits. No general return lineage is inferred. Preparing does not mean booked, customer confirmed, competent/assigned, current pack acknowledged or permitted to start."
           ],
           "steps": [],
           "rows": [],
@@ -16024,7 +16037,8 @@
           "paragraphs": [
             "Loading waits for an authorised server read. No readiness source means unknown, not ready. Current source and context are distinct from satisfied evidence.",
             "Unsaved notes are held in the open page only. Saving disables conflicting controls. Saved to the server is the accepted original receipt.",
-            "An uncertain result retains the original action for Check the original acknowledgement. Do not change its meaning or create a replacement while its outcome is unknown."
+            "An uncertain result retains the original action for Check the original acknowledgement. Do not change its meaning or create a replacement while its outcome is unknown.",
+            "Closed visits retain your attendance when one exists. Another crew member's attendance is not yours. CompletedPendingReview, Completed and Cancelled refuse a new arrival. Stopped time, submitted evidence, internal acceptance and customer response describe different facts."
           ],
           "steps": [],
           "rows": [],
@@ -16046,7 +16060,8 @@
           "paragraphs": [
             "If sources or scheduling change, refresh and read the changed context. A stale command is refused. Review the displayed instructions, explicitly choose the new context and confirm again.",
             "If saving times out, keep the page open and choose Check the original acknowledgement. Recovery checks the original receipt and replays only the identical original when needed.",
-            "Revoked assignment or access blocks reads and new writes; existing evidence remains retained. This online page has no durable local queue. Do not rely on a closed or reloaded unsaved form."
+            "Revoked assignment or access blocks reads and new writes; existing evidence remains retained. This online page has no durable local queue. Do not rely on a closed or reloaded unsaved form.",
+            "Propose a visit only with current Service preparation authority. Reuse a suitable existing proposal where supported. An incomplete proposal that cannot be corrected requires explicit controlled cancellation and a separately prepared proposal; retain both. Validation and stale refusals keep input; uncertain saves retain the original operation and recover its receipt before another save."
           ],
           "steps": [],
           "rows": [],
@@ -16057,7 +16072,8 @@
           "title": "Mobile, keyboard and offline",
           "paragraphs": [
             "The same labelled sections stack on a phone. Use Tab/Shift+Tab, Space for checkboxes and Enter for form submission; focus stays visible. No page-specific drawer or dialog is required.",
-            "This increment requires an online server response. FI-02 offline extension remains programme work; a cached page or network indicator is not evidence of current authority or a successful save."
+            "This increment requires an online server response. FI-02 offline extension remains programme work; a cached page or network indicator is not evidence of current authority or a successful save.",
+            "Current receiving actions are online only. Downloaded visit context remains visibly cached; pending originals stay bound to that visit and are adjudicated on replay. Never move an old arrival, timer event or acknowledgement to a later visit."
           ],
           "steps": [],
           "rows": [],
@@ -16079,7 +16095,8 @@
           "title": "Review and evidence",
           "paragraphs": [
             "Draft guide for implemented synthetic behaviour. Owner/device/visual acceptance and deployment remain separate. Tests and actual captures are recorded in the Field Work programme handover.",
-            "Keep this stable guide current through Git; an export or test pass does not grant review."
+            "Keep this stable guide current through Git; an export or test pass does not grant review.",
+            "Closed-visit additions prepared 3 October 2026. Source and automated proof do not grant owner, visual, physical-device or screen-reader acceptance."
           ],
           "steps": [],
           "rows": [],
@@ -16097,9 +16114,10 @@
         "docs/delivery/p07-handover.md",
         "src/field/readiness.ts",
         "src/components/field-readiness-screen.tsx",
-        "docs/decisions/field-readiness-native.md"
+        "docs/decisions/field-readiness-native.md",
+        "docs/decisions/field-closed-visit-guidance.md"
       ],
-      "change_summary": "Exact assigned CS-06 source review, original-operation recovery and explicit authority boundaries.",
+      "change_summary": "Bounded closed-visit and separate-visit entry guidance; existing scope and review status retained.",
       "document_id": "PPO-GUIDE-FI-05",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -41644,10 +41662,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-27",
+      "prepared_at": "2026-10-03",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See field programme handover; synthetic browser evidence is separate from guide approval.",
+      "runtime_evidence": "docs/testing/evidence/field-closed-visit/README.md separates fresh proof, retained regressions and unperformed human acceptance.",
       "sections": [
         {
           "section_id": "purpose",
@@ -41713,7 +41731,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Stop the timer, inspect saved intervals and resolve outstanding evidence. Report submission, Service acceptance and Finance handling remain separate actions."
+            "Stop the timer, inspect saved intervals and resolve outstanding evidence. Report submission, Service acceptance and Finance handling remain separate actions.",
+            "Further attendance needs a separate visit. Use Further attendance to inspect accessible other visits and the work-order planned visits. No general return lineage is inferred. Preparing does not mean booked, customer confirmed, competent/assigned, current pack acknowledged or permitted to start."
           ],
           "steps": [],
           "rows": [],
@@ -41723,7 +41742,8 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Running and Paused mean there is still an open stretch. Stopped closes it. Locally saved or queued is not server acceptance; a receipt belongs to one unchanged original action. Changed authority can retain factual evidence for review without granting approval."
+            "Running and Paused mean there is still an open stretch. Stopped closes it. Locally saved or queued is not server acceptance; a receipt belongs to one unchanged original action. Changed authority can retain factual evidence for review without granting approval.",
+            "Closed visits retain your attendance when one exists. Another crew member's attendance is not yours. CompletedPendingReview, Completed and Cancelled refuse a new arrival. Stopped time, submitted evidence, internal acceptance and customer response describe different facts."
           ],
           "steps": [],
           "rows": [],
@@ -41743,7 +41763,8 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "If the result is unknown, confirm the original action before making a different one. A stale timer version requires refresh. If assignment or capture access is lost, retain the open original and ask Service to restore legitimate scope; do not use another identity."
+            "If the result is unknown, confirm the original action before making a different one. A stale timer version requires refresh. If assignment or capture access is lost, retain the open original and ask Service to restore legitimate scope; do not use another identity.",
+            "Propose a visit only with current Service preparation authority. Reuse a suitable existing proposal where supported. An incomplete proposal that cannot be corrected requires explicit controlled cancellation and a separately prepared proposal; retain both. Validation and stale refusals keep input; uncertain saves retain the original operation and recover its receipt before another save."
           ],
           "steps": [],
           "rows": [],
@@ -41753,7 +41774,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "The phone dock keeps timer actions above navigation. Tab and Shift+Tab follow labelled controls; Escape closes an unlocked timer dialog and returns focus. Use the dedicated Offline workspace for downloaded work. Device, screen-reader and actual browser zoom acceptance remain pending."
+            "The phone dock keeps timer actions above navigation. Tab and Shift+Tab follow labelled controls; Escape closes an unlocked timer dialog and returns focus. Use the dedicated Offline workspace for downloaded work. Device, screen-reader and actual browser zoom acceptance remain pending.",
+            "Current receiving actions are online only. Downloaded visit context remains visibly cached; pending originals stay bound to that visit and are adjudicated on replay. Never move an old arrival, timer event or acknowledgement to a later visit."
           ],
           "steps": [],
           "rows": [],
@@ -41773,7 +41795,8 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Draft updated 27 September 2026 for the native FI-01/FI-02 implementation. Owner review and publication remain pending. Tests and commits do not grant review."
+            "Draft updated 27 September 2026 for the native FI-01/FI-02 implementation. Owner review and publication remain pending. Tests and commits do not grant review.",
+            "Closed-visit additions prepared 3 October 2026. Source and automated proof do not grant owner, visual, physical-device or screen-reader acceptance."
           ],
           "steps": [],
           "rows": [],
@@ -41787,9 +41810,10 @@
         "src/app/(business)/my-jobs/[id]/page.tsx",
         "docs/delivery/p07-handover.md",
         "docs/decisions/field-timer-native.md",
-        "docs/delivery/field-quality-native-handover.md"
+        "docs/delivery/field-quality-native-handover.md",
+        "docs/decisions/field-closed-visit-guidance.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Bounded closed-visit and separate-visit entry guidance; existing scope and review status retained.",
       "document_id": "PPO-GUIDE-PAGE-MY-JOBS-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -41813,10 +41837,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-27",
+      "prepared_at": "2026-10-03",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See field programme handover; synthetic browser evidence is separate from guide approval.",
+      "runtime_evidence": "docs/testing/evidence/field-closed-visit/README.md separates fresh proof, retained regressions and unperformed human acceptance.",
       "sections": [
         {
           "section_id": "purpose",
@@ -41882,7 +41906,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Stop the timer, inspect saved intervals and resolve outstanding evidence. Report submission, Service acceptance and Finance handling remain separate actions."
+            "Stop the timer, inspect saved intervals and resolve outstanding evidence. Report submission, Service acceptance and Finance handling remain separate actions.",
+            "Further attendance needs a separate visit. Use Further attendance to inspect accessible other visits and the work-order planned visits. No general return lineage is inferred. Preparing does not mean booked, customer confirmed, competent/assigned, current pack acknowledged or permitted to start."
           ],
           "steps": [],
           "rows": [],
@@ -41892,7 +41917,8 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Running and Paused mean there is still an open stretch. Stopped closes it. Locally saved or queued is not server acceptance; a receipt belongs to one unchanged original action. Changed authority can retain factual evidence for review without granting approval."
+            "Running and Paused mean there is still an open stretch. Stopped closes it. Locally saved or queued is not server acceptance; a receipt belongs to one unchanged original action. Changed authority can retain factual evidence for review without granting approval.",
+            "Closed visits retain your attendance when one exists. Another crew member's attendance is not yours. CompletedPendingReview, Completed and Cancelled refuse a new arrival. Stopped time, submitted evidence, internal acceptance and customer response describe different facts."
           ],
           "steps": [],
           "rows": [],
@@ -41912,7 +41938,8 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "If the result is unknown, confirm the original action before making a different one. A stale timer version requires refresh. If assignment or capture access is lost, retain the open original and ask Service to restore legitimate scope; do not use another identity."
+            "If the result is unknown, confirm the original action before making a different one. A stale timer version requires refresh. If assignment or capture access is lost, retain the open original and ask Service to restore legitimate scope; do not use another identity.",
+            "Propose a visit only with current Service preparation authority. Reuse a suitable existing proposal where supported. An incomplete proposal that cannot be corrected requires explicit controlled cancellation and a separately prepared proposal; retain both. Validation and stale refusals keep input; uncertain saves retain the original operation and recover its receipt before another save."
           ],
           "steps": [],
           "rows": [],
@@ -41922,7 +41949,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "The phone dock keeps timer actions above navigation. Tab and Shift+Tab follow labelled controls; Escape closes an unlocked timer dialog and returns focus. Use the dedicated Offline workspace for downloaded work. Device, screen-reader and actual browser zoom acceptance remain pending."
+            "The phone dock keeps timer actions above navigation. Tab and Shift+Tab follow labelled controls; Escape closes an unlocked timer dialog and returns focus. Use the dedicated Offline workspace for downloaded work. Device, screen-reader and actual browser zoom acceptance remain pending.",
+            "Current receiving actions are online only. Downloaded visit context remains visibly cached; pending originals stay bound to that visit and are adjudicated on replay. Never move an old arrival, timer event or acknowledgement to a later visit."
           ],
           "steps": [],
           "rows": [],
@@ -41942,7 +41970,8 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Draft updated 27 September 2026 for the native FI-01/FI-02 implementation. Owner review and publication remain pending. Tests and commits do not grant review."
+            "Draft updated 27 September 2026 for the native FI-01/FI-02 implementation. Owner review and publication remain pending. Tests and commits do not grant review.",
+            "Closed-visit additions prepared 3 October 2026. Source and automated proof do not grant owner, visual, physical-device or screen-reader acceptance."
           ],
           "steps": [],
           "rows": [],
@@ -41956,9 +41985,10 @@
         "src/app/(business)/my-jobs/page.tsx",
         "docs/delivery/p07-handover.md",
         "docs/decisions/field-timer-native.md",
-        "docs/delivery/field-quality-native-handover.md"
+        "docs/delivery/field-quality-native-handover.md",
+        "docs/decisions/field-closed-visit-guidance.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Bounded closed-visit and separate-visit entry guidance; existing scope and review status retained.",
       "document_id": "PPO-GUIDE-PAGE-MY-JOBS",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -44486,10 +44516,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-24",
+      "prepared_at": "2026-10-03",
       "source_commit": "aed0c00",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Scheduling Step 4: docs/testing/evidence/scheduling-policy-enforcement/README.md records exact executed checks; visual and owner/device review pending.",
+      "runtime_evidence": "docs/testing/evidence/field-closed-visit/README.md separates fresh proof, retained regressions and unperformed human acceptance.",
       "sections": [
         {
           "section_id": "purpose",
@@ -44596,7 +44626,8 @@
             "An appointment has an explicit scheduling and acknowledgement state.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
             "A proposed time, a confirmed booking and a technician acknowledgement are different.",
-            "From appointment detail or the Field Technicians Job pack tab, open the current permitted pack. When no visible pack is returned and preparation is permitted, use Prepare job pack. Refresh pack status checks the current read; failed or denied reads remove earlier links. Preparation still checks visit and approved-scope authority on Save."
+            "From appointment detail or the Field Technicians Job pack tab, open the current permitted pack. When no visible pack is returned and preparation is permitted, use Prepare job pack. Refresh pack status checks the current read; failed or denied reads remove earlier links. Preparation still checks visit and approved-scope authority on Save.",
+            "Further attendance needs a separate visit. Use Further attendance to inspect accessible other visits and the work-order planned visits. No general return lineage is inferred. Preparing does not mean booked, customer confirmed, competent/assigned, current pack acknowledged or permitted to start."
           ],
           "steps": [],
           "rows": [],
@@ -44605,7 +44636,9 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
+          "paragraphs": [
+            "Closed visits retain your attendance when one exists. Another crew member's attendance is not yours. CompletedPendingReview, Completed and Cancelled refuse a new arrival. Stopped time, submitted evidence, internal acceptance and customer response describe different facts."
+          ],
           "steps": [],
           "rows": [
             [
@@ -44653,7 +44686,8 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "Scheduling Step 4: a published impact holds unstarted work immediately, even when the policy starts later. Activity completion or pack acknowledgement does not clear it. Use the named owner and booking link for a controlled change or cancellation/replacement, evaluate current evidence, then save the guarded resolution online. Later source changes restore the hold. Retry an uncertain save unchanged to recover its receipt. Delayed offline Start is rechecked against current authority; ReviewRequired retains its original."
+            "Scheduling Step 4: a published impact holds unstarted work immediately, even when the policy starts later. Activity completion or pack acknowledgement does not clear it. Use the named owner and booking link for a controlled change or cancellation/replacement, evaluate current evidence, then save the guarded resolution online. Later source changes restore the hold. Retry an uncertain save unchanged to recover its receipt. Delayed offline Start is rechecked against current authority; ReviewRequired retains its original.",
+            "Propose a visit only with current Service preparation authority. Reuse a suitable existing proposal where supported. An incomplete proposal that cannot be corrected requires explicit controlled cancellation and a separately prepared proposal; retain both. Validation and stale refusals keep input; uncertain saves retain the original operation and recover its receipt before another save."
           ],
           "steps": [],
           "rows": [
@@ -44692,7 +44726,8 @@
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
             "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable.",
+            "Current receiving actions are online only. Downloaded visit context remains visibly cached; pending originals stay bound to that visit and are adjudicated on replay. Never move an old arrival, timer event or acknowledgement to a later visit."
           ],
           "steps": [],
           "rows": [],
@@ -44715,7 +44750,8 @@
           "paragraphs": [
             "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
             "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application.",
+            "Closed-visit additions prepared 3 October 2026. Source and automated proof do not grant owner, visual, physical-device or screen-reader acceptance."
           ],
           "steps": [],
           "rows": [],
@@ -44727,9 +44763,10 @@
       ],
       "source_paths": [
         "src/app/(business)/service/appointments/[id]/page.tsx",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "docs/decisions/field-closed-visit-guidance.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Bounded closed-visit and separate-visit entry guidance; existing scope and review status retained.",
       "document_id": "PPO-GUIDE-PAGE-SERVICE-APPOINTMENTS-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -46993,10 +47030,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-03",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Scheduling Step 4: docs/testing/evidence/scheduling-policy-enforcement/README.md records exact executed checks; visual and owner/device review pending.",
+      "runtime_evidence": "docs/testing/evidence/field-closed-visit/README.md separates fresh proof, retained regressions and unperformed human acceptance.",
       "sections": [
         {
           "section_id": "purpose",
@@ -47101,7 +47138,8 @@
           "paragraphs": [
             "An authorised work order has a clear basis for delivery.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A request is not a work order; extra work requires the applicable authority."
+            "A request is not a work order; extra work requires the applicable authority.",
+            "Further attendance needs a separate visit. Use Further attendance to inspect accessible other visits and the work-order planned visits. No general return lineage is inferred. Preparing does not mean booked, customer confirmed, competent/assigned, current pack acknowledged or permitted to start."
           ],
           "steps": [],
           "rows": [],
@@ -47110,7 +47148,9 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
+          "paragraphs": [
+            "Closed visits retain your attendance when one exists. Another crew member's attendance is not yours. CompletedPendingReview, Completed and Cancelled refuse a new arrival. Stopped time, submitted evidence, internal acceptance and customer response describe different facts."
+          ],
           "steps": [],
           "rows": [
             [
@@ -47158,7 +47198,8 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "Scheduling Step 4: a published impact holds unstarted work immediately, even when the policy starts later. Activity completion or pack acknowledgement does not clear it. Use the named owner and booking link for a controlled change or cancellation/replacement, evaluate current evidence, then save the guarded resolution online. Later source changes restore the hold. Retry an uncertain save unchanged to recover its receipt. Delayed offline Start is rechecked against current authority; ReviewRequired retains its original."
+            "Scheduling Step 4: a published impact holds unstarted work immediately, even when the policy starts later. Activity completion or pack acknowledgement does not clear it. Use the named owner and booking link for a controlled change or cancellation/replacement, evaluate current evidence, then save the guarded resolution online. Later source changes restore the hold. Retry an uncertain save unchanged to recover its receipt. Delayed offline Start is rechecked against current authority; ReviewRequired retains its original.",
+            "Propose a visit only with current Service preparation authority. Reuse a suitable existing proposal where supported. An incomplete proposal that cannot be corrected requires explicit controlled cancellation and a separately prepared proposal; retain both. Validation and stale refusals keep input; uncertain saves retain the original operation and recover its receipt before another save."
           ],
           "steps": [],
           "rows": [
@@ -47197,7 +47238,8 @@
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
             "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable.",
+            "Current receiving actions are online only. Downloaded visit context remains visibly cached; pending originals stay bound to that visit and are adjudicated on replay. Never move an old arrival, timer event or acknowledgement to a later visit."
           ],
           "steps": [],
           "rows": [],
@@ -47220,7 +47262,8 @@
           "paragraphs": [
             "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
             "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application.",
+            "Closed-visit additions prepared 3 October 2026. Source and automated proof do not grant owner, visual, physical-device or screen-reader acceptance."
           ],
           "steps": [],
           "rows": [],
@@ -47233,9 +47276,10 @@
       "source_paths": [
         "src/app/(business)/service/work-orders/[id]/page.tsx",
         "docs/reference/ui/service/PPO-Work-Orders-Workspace-r01.html",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "docs/decisions/field-closed-visit-guidance.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Bounded closed-visit and separate-visit entry guidance; existing scope and review status retained.",
       "document_id": "PPO-GUIDE-PAGE-SERVICE-WORK-ORDERS-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -50973,10 +51017,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-27",
+      "prepared_at": "2026-10-03",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See field programme handover; synthetic browser evidence is separate from guide approval.",
+      "runtime_evidence": "docs/testing/evidence/field-closed-visit/README.md; cached context remains distinct from server authority.",
       "sections": [
         {
           "section_id": "purpose",
@@ -51052,7 +51096,8 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Running and Paused mean there is still an open stretch. Stopped closes it. Locally saved or queued is not server acceptance; a receipt belongs to one unchanged original action. Changed authority can retain factual evidence for review without granting approval."
+            "Running and Paused mean there is still an open stretch. Stopped closes it. Locally saved or queued is not server acceptance; a receipt belongs to one unchanged original action. Changed authority can retain factual evidence for review without granting approval.",
+            "A cached closed or non-startable visit explains its retained state and does not offer a new arrival intent. Existing queued originals remain on the original visit; replay rechecks current authority. Open current My Jobs online for receiving actions. No return-navigation data or online action grants are downloaded."
           ],
           "steps": [],
           "rows": [],
@@ -51117,7 +51162,8 @@
         "docs/delivery/p08-handover.md",
         "docs/delivery/p07-handover.md",
         "docs/decisions/field-timer-native.md",
-        "docs/delivery/field-quality-native-handover.md"
+        "docs/delivery/field-quality-native-handover.md",
+        "docs/decisions/field-closed-visit-guidance.md"
       ],
       "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
       "document_id": "PPO-GUIDE-PAGE-OFFLINE-INDEX-HTML",

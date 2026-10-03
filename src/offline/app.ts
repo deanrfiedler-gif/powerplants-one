@@ -7,6 +7,7 @@ import {
   type WireOperation,
   type Command,
 } from "./protocol";
+import { visitArrivalGuidance } from "../field/visit-guidance";
 import {
   ownership,
   unlock,
@@ -423,6 +424,25 @@ async function renderJob() {
     );
     box.append(details);
   }
+  const arrival = visitArrivalGuidance(
+    j.status,
+    !!j.attendance,
+    !!j.actual_start_at,
+  );
+  box.append(
+    element(
+      "p",
+      `Cached visit state: ${j.status}. ${arrival.visit} ${arrival.personal}`,
+      "warning",
+    ),
+  );
+  if (!arrival.startable)
+    box.append(
+      element(
+        "p",
+        "No new arrival intent is available from this cached state. Existing queued originals remain unchanged. Review current My Jobs online; preparation and scheduling are unavailable offline.",
+      ),
+    );
   const intents = element("div", undefined, "actions");
   intents.append(
     button("Save provisional start intent", async () => {
@@ -499,7 +519,7 @@ async function renderJob() {
     ),
   );
   box.append(
-    intents,
+    ...(arrival.startable ? [intents] : []),
     element(
       "p",
       j.attendance

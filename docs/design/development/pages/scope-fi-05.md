@@ -47,3 +47,16 @@ The draft User Guide `guide.fi.05` carries prerequisites, tasks, outcomes and re
 Quality r01 is a proposed standalone reference. Native FI-05 uses the existing shell and vertically ordered cards instead of reproducing its multi-domain package rail. No runtime release/hold/induction policy is copied from its fixture. Exact reference captures are retained in the evidence manifest; the implementation agent inspected desktop/phone pairs. Owner visual acceptance remains pending. The source HTML remains unchanged.
 
 Changed source/visit context refuses a stale save; the old note/snapshot remains. An uncertain command keeps its original identity for receipt recovery. The page is online only at this increment; FI-02 extension is tracked separately. Denied reads clear current source content. The global information icon maps this route to its maintained draft guide.
+
+
+## Closed-visit guidance — 3 October 2026
+
+Existing scope IDs and r20 page type remain: My Jobs uses **Register / worklist**; the job, work-order and appointment hosts use **Record detail**. No new route. Incoming context is the exact appointment, current assignment, scope and personal attendance; outgoing handovers use the existing Service work-order planned visits and appointment records. A link grants no preparation, booking, capture or technical authority.
+
+A closed appointment shows retained personal attendance identity/times when present, otherwise explicitly says no personal arrival exists. CompletedPendingReview, Completed and Cancelled cannot offer another arrival. Stopped timer, frozen evidence, internal Service acceptance and customer response stay distinct. Proposed is not booked; unknown states are unavailable. Other visits on the same work order are scoped navigation, not inferred return lineage. The receiving appointment shows incomplete preparation versus Preparing and retains separate customer, assignment, readiness and exact-pack requirements.
+
+Reuse ButtonLink, ReadState, ErrorNotice, Stamp, the existing booking-operation recovery and timer host. Current-source read failure removes receiving links and disables arrival/pack actions without destroying pending originals. Downloaded context strips these live actions; cached closed visits cannot create new arrival intent, while retained operations remain on their original visit. Work-order proposal validation/stale errors retain input; an uncertain response keeps the immutable original and prevents another submission until adjudicated.
+
+Desktop 1440/1024 and phone 390/320: retain one content scroll owner, readable wrapping identifiers/history and labelled actions. Keyboard users can follow the work-order/appointment links; recovery continuation is focusable. Inspect actual 200% browser zoom independently of narrow viewports. Accepted timer r05 remains unchanged; this contextual host addition is proposed for owner review. **No accepted native closed-visit mockup exists.** Implementation captures are functional/layout observations, not visual acceptance.
+
+See [state/action decision](../../../decisions/field-closed-visit-guidance.md), [acceptance matrix](../../../testing/field-closed-visit-acceptance.md) and [execution ledger](../../../testing/evidence/field-closed-visit/README.md). Owner, physical-device, screen-reader and independent visual reviews remain open.

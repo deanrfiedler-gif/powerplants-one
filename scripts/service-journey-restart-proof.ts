@@ -49,7 +49,8 @@ async function records() {
     await database().query<{ table_name: string }>(
       `SELECT table_name FROM information_schema.tables WHERE table_schema='ppo'
       AND table_type='BASE TABLE' AND (table_name IN
-      ('work_orders','appointments','operation_receipts','service_reports','customer_responses')
+      ('work_orders','appointments','operation_receipts','service_reports','customer_responses',
+       'customer_response_contexts','activities','activity_links')
       OR table_name ~ '^(field_|report_|finance_|pack_)') ORDER BY table_name`,
     )
   ).rows;

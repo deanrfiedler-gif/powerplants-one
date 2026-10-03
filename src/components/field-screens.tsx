@@ -1,5 +1,7 @@
 "use client";
 import { RunningTimerBanner, WorkTimer } from "./work-timer";
+import { FieldVisitEntry } from "./field-visit-entry";
+import { visitArrivalGuidance } from "../field/visit-guidance";
 import { CompletionSubmission } from "./report-screens";
 import Link from "next/link";
 import Image from "next/image";
@@ -72,6 +74,24 @@ type Task = {
   }[];
 };
 export type Job = Ref & {
+  arrival_actions: { can_start: boolean; can_acknowledge: boolean };
+  visit_navigation: {
+    work_order_href: string;
+    can_propose: boolean;
+    visits: {
+      id: string;
+      reference: string;
+      status: string;
+      start_at: string;
+      end_at: string;
+      site_timezone: string;
+      preparation_status: string;
+      customer_commitment: string;
+      scope_review_required: boolean;
+      appointment_href: string;
+      field_href: string | null;
+    }[];
+  } | null;
   report?: {
     id: string;
     version: number;
@@ -328,11 +348,30 @@ export function MyJobsScreen() {
                       <Stamp value={j.end_at} timezone={j.site_timezone} />
                     </p>
                     <p>
-                      {j.my_started_at ? (
+                      {visitArrivalGuidance(j.status, !!j.my_started_at)
+                        .closed ? (
+                        <>
+                          {
+                            visitArrivalGuidance(j.status, !!j.my_started_at)
+                              .visit
+                          }{" "}
+                          {j.my_started_at ? (
+                            <>
+                              Your own attendance was received:{" "}
+                              <Stamp value={j.my_started_at} />.
+                            </>
+                          ) : (
+                            "You have no recorded arrival on this visit."
+                          )}
+                        </>
+                      ) : !visitArrivalGuidance(j.status, !!j.my_started_at)
+                          .startable ? (
+                        visitArrivalGuidance(j.status, !!j.my_started_at).visit
+                      ) : j.my_started_at ? (
                         <>
                           Your start saved <Stamp value={j.my_started_at} />
                         </>
-                      ) : j.policy_impacts?.some(x => x.held) ? (
+                      ) : j.policy_impacts?.some((x) => x.held) ? (
                         "Scheduling policy hold. Open the job for its owner and required resolution."
                       ) : j.dispatch_hold ? (
                         "Review preparation before starting."
@@ -363,34 +402,71 @@ export function MyJobsScreen() {
     </>
   );
 }
-function StartPanel({ job, reload }: { job: Job; reload: () => void }) {
+function StartPanel({
+  job,
+  reload,
+  current,
+}: {
+  job: Job;
+  reload: () => void;
+  current: boolean;
+}) {
   const p = useIdentity(),
     s = useSubmission(reload),
     [reason, setReason] = useState("");
   const recipient = job.readiness.recipients.find(
     (x) => x.user_id === p.actor_id,
   );
+  const guidance = visitArrivalGuidance(
+    job.status,
+    !!job.attendance,
+    !!job.actual_start_at,
+  );
   return (
     <section className="business-card field-start">
       <h2>Your attendance</h2>
+      {guidance.visit && <p>{guidance.visit}</p>}
+      {!current && (
+        <p role="status">
+          Showing retained context. Refresh must succeed before a new arrival or
+          receiving action.
+        </p>
+      )}
       {job.attendance ? (
         <>
           <p className="success-notice">Your actual start is server-saved.</p>
+          <p className="hash-text">
+            Your retained attendance: {job.attendance.id}
+          </p>
           <p>
             Received <Stamp value={job.attendance.received_at} />. Captured{" "}
             <Stamp value={job.attendance.captured_at} />.
           </p>
+          {job.accepted_end_at && (
+            <p>
+              Internal Service acceptance fixes your attendance end at{" "}
+              <Stamp value={job.accepted_end_at} />. Customer response and
+              Finance remain separate.
+            </p>
+          )}
+          {job.report && (
+            <p>
+              Your evidence report: <Status value={job.report.status} /> ·
+              revision {job.report.revision}. Report correction does not reopen
+              attendance.
+            </p>
+          )}
           <small>
             Booking duration and crew acknowledgement have created no labour
             entries.
           </small>
         </>
+      ) : !guidance.startable ? (
+        <p>{guidance.personal}</p>
       ) : (
         <>
           <p>
-            {job.actual_start_at
-              ? "Another crew member has started. Record only your own attendance."
-              : "Read the authorised scope and current job pack before recording your own start."}
+            {guidance.personal} {guidance.next}
           </p>
           {job.pack?.current_issue_id && (
             <p>
@@ -404,26 +480,29 @@ function StartPanel({ job, reload }: { job: Job; reload: () => void }) {
               </Link>
             </p>
           )}
-          {recipient && !recipient.acknowledged_at && (
-            <button
-              onClick={() =>
-                void s.run(
-                  `pack-issues/${job.pack!.current_issue_id}/acknowledge`,
-                  {
-                    reason:
-                      "SYN personal acknowledgement after reading the exact issued job pack",
-                    assignment_id: recipient.assignment_id,
-                    assignment_version: recipient.assignment_version,
-                    presented_hash: job.pack!.output_hash,
-                    captured_at: new Date().toISOString(),
-                  },
-                )
-              }
-              disabled={s.busy || s.uncertain}
-            >
-              I have read and acknowledge this exact pack
-            </button>
-          )}
+          {job.status === "Confirmed" &&
+            job.arrival_actions.can_acknowledge &&
+            recipient &&
+            !recipient.acknowledged_at && (
+              <button
+                onClick={() =>
+                  void s.run(
+                    `pack-issues/${job.pack!.current_issue_id}/acknowledge`,
+                    {
+                      reason:
+                        "SYN personal acknowledgement after reading the exact issued job pack",
+                      assignment_id: recipient.assignment_id,
+                      assignment_version: recipient.assignment_version,
+                      presented_hash: job.pack!.output_hash,
+                      captured_at: new Date().toISOString(),
+                    },
+                  )
+                }
+                disabled={!current || s.busy || s.uncertain}
+              >
+                I have read and acknowledge this exact pack
+              </button>
+            )}
           <ul>
             {job.readiness.recipients.map((x) => (
               <li key={x.id}>
@@ -434,44 +513,52 @@ function StartPanel({ job, reload }: { job: Job; reload: () => void }) {
               </li>
             ))}
           </ul>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              void s.run(`appointments/${job.id}/start`, {
-                expected_version: job.version,
-                schedule_version: job.schedule_version,
-                assignment_id: job.assignment.id,
-                assignment_version: job.assignment_version,
-                issue_id: job.pack?.current_issue_id,
-                issue_hash: job.pack?.output_hash,
-                scope_revision_id: job.scope_revision_id,
-                scope_version: job.scope_version,
-                captured_at: new Date().toISOString(),
-                reason,
-              });
-            }}
-          >
-            <fieldset disabled={s.busy || s.uncertain}>
-              <Field
-                name="start-reason"
-                label="Start context"
-                value={reason}
-                onChange={(v) => {
-                  setReason(v);
-                  s.dirty();
-                }}
-                required
-                multiline
-                maxLength={1000}
-                hint="Explain the actual start, including any difference from the scheduled time. Synthetic demonstration only."
-              />
-              <button disabled={!job.pack?.current_issue_id}>
-                Record my actual start
-              </button>
-            </fieldset>
-          </form>
+          {job.arrival_actions.can_start ? (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                void s.run(`appointments/${job.id}/start`, {
+                  expected_version: job.version,
+                  schedule_version: job.schedule_version,
+                  assignment_id: job.assignment.id,
+                  assignment_version: job.assignment_version,
+                  issue_id: job.pack?.current_issue_id,
+                  issue_hash: job.pack?.output_hash,
+                  scope_revision_id: job.scope_revision_id,
+                  scope_version: job.scope_version,
+                  captured_at: new Date().toISOString(),
+                  reason,
+                });
+              }}
+            >
+              <fieldset disabled={!current || s.busy || s.uncertain}>
+                <Field
+                  name="start-reason"
+                  label="Start context"
+                  value={reason}
+                  onChange={(v) => {
+                    setReason(v);
+                    s.dirty();
+                  }}
+                  required
+                  multiline
+                  maxLength={1000}
+                  hint="Explain the actual start, including any difference from the scheduled time. Synthetic demonstration only."
+                />
+                <button disabled={!job.pack?.current_issue_id}>
+                  Record my actual start
+                </button>
+              </fieldset>
+            </form>
+          ) : (
+            <p>
+              Your current access permits reading this visit, but not recording
+              arrival. Ask the Service owner to review the required authority.
+            </p>
+          )}
         </>
       )}
+      {guidance.closed && <p>{guidance.next}</p>}
       <SaveState s={s} dirty={!!reason && !job.attendance} />
     </section>
   );
@@ -1349,24 +1436,40 @@ export function FieldJobScreen({ id }: { id: string }) {
   const job = r.data?.items[0];
   return (
     <>
-      {!job && <PageHeader
-        eyebrow="Technician workspace · SC-10"
-        title="Field Job"
-        description={
-          r.loading ? "Loading current assigned context" : "Current assigned context is unavailable"
-        }
-        action={
-          <button className="secondary" onClick={r.reload}>
-            Refresh job
-          </button>
-        }
-      />}
+      {!job && (
+        <PageHeader
+          eyebrow="Technician workspace · SC-10"
+          title="Field Job"
+          description={
+            r.loading
+              ? "Loading current assigned context"
+              : "Current assigned context is unavailable"
+          }
+          action={
+            <button className="secondary" onClick={r.reload}>
+              Refresh job
+            </button>
+          }
+        />
+      )}
       <PreviewLabel />
       <ReadState loading={r.loading} error={r.error} retry={r.reload} retained={!!job} />
       {job && (
-        <WorkTimer job={job} reloadJob={r.reload} onSection={setTab} onCorrect={e=>{
-          setSource(e);setTab("Capture");requestAnimationFrame(()=>document.getElementById("field-execution")?.scrollIntoView({block:"start"}));
-        }}>
+        <WorkTimer
+          job={job}
+          jobCurrent={!r.loading && !r.error}
+          reloadJob={r.reload}
+          onSection={setTab}
+          onCorrect={(e) => {
+            setSource(e);
+            setTab("Capture");
+            requestAnimationFrame(() =>
+              document
+                .getElementById("field-execution")
+                ?.scrollIntoView({ block: "start" }),
+            );
+          }}
+        >
           <div className="field-summary">
             <Status value={job.status} />
             <span>
@@ -1376,8 +1479,20 @@ export function FieldJobScreen({ id }: { id: string }) {
               {job.work_order.reference} · {job.work_order.status}
             </span>
           </div>
-          <p><Link href={`/my-jobs/site-readiness?appointment_id=${job.id}`}>Review Site induction, risk and biosecurity</Link></p>
-          <p><Link href={`/my-jobs/inspections?appointment_id=${job.id}`}>Capture Service inspections and retained retests</Link> · <Link href={`/service/incidents/new?appointment_id=${job.id}`}>Report incident</Link></p>
+          <p>
+            <Link href={`/my-jobs/site-readiness?appointment_id=${job.id}`}>
+              Review Site induction, risk and biosecurity
+            </Link>
+          </p>
+          <p>
+            <Link href={`/my-jobs/inspections?appointment_id=${job.id}`}>
+              Capture Service inspections and retained retests
+            </Link>{" "}
+            ·{" "}
+            <Link href={`/service/incidents/new?appointment_id=${job.id}`}>
+              Report incident
+            </Link>
+          </p>
           <section id="field-context" className="business-card">
             <h2>Current work context</h2>
             <p>
@@ -1459,9 +1574,11 @@ export function FieldJobScreen({ id }: { id: string }) {
           {job.readiness.reasons.length > 0 && (
             <section className="business-card field-blockers">
               <h2>
-                {job.attendance
-                  ? "Stop further work — authority needs review"
-                  : "Start blockers"}
+                {visitArrivalGuidance(job.status, !!job.attendance).closed
+                  ? "Retained visit — current restrictions"
+                  : job.attendance
+                    ? "Stop further work — authority needs review"
+                    : "Start blockers"}
               </h2>
               <ul>
                 {job.readiness.reasons.map((x, i) => (
@@ -1476,7 +1593,14 @@ export function FieldJobScreen({ id }: { id: string }) {
               )}
             </section>
           )}
-          <StartPanel job={job} reload={r.reload} />
+          <StartPanel
+            job={job}
+            reload={r.reload}
+            current={!r.loading && !r.error}
+          />
+          {job.visit_navigation && !r.loading && !r.error && (
+            <FieldVisitEntry navigation={job.visit_navigation} />
+          )}
           {!job.attendance && <EvidenceHistory job={job} />}
           {job.attendance && (
             <div id="field-execution">

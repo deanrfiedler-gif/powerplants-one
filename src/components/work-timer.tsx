@@ -1,4 +1,5 @@
 "use client";
+import { visitArrivalGuidance } from "../field/visit-guidance";
 import Link from "next/link";
 import {
   useEffect,
@@ -223,12 +224,14 @@ export function RunningTimerBanner() {
 }
 export function WorkTimer({
   job,
+  jobCurrent,
   reloadJob,
   onCorrect,
   onSection,
   children,
 }: {
   job: Job;
+  jobCurrent: boolean;
   reloadJob: () => void;
   onCorrect: (entry: TimeEntry) => void;
   onSection: (section: string) => void;
@@ -352,12 +355,14 @@ export function WorkTimer({
             ? "ready"
             : "blocked";
   const current =
+    jobCurrent &&
     !!v &&
     !r.loading &&
     !r.error &&
     v.currentness === "Current" &&
     !v.capture_closed;
   const canFinish =
+    jobCurrent &&
     !!v &&
     !r.loading &&
     !r.error &&
@@ -631,9 +636,16 @@ export function WorkTimer({
           {v?.currentness !== "Current" && (
             <div className="banner-row">
               <p>
-                {job.attendance
-                  ? "Work authority needs review. You can retain already observed time; starting or resuming requires current authority."
-                  : "Review the current pack and record your actual arrival below before starting the work timer."}
+                {v?.capture_closed
+                  ? "This attendance's evidence is frozen. Timer history remains; further physical work needs a separate visit."
+                  : visitArrivalGuidance(job.status, !!job.attendance).closed
+                    ? visitArrivalGuidance(job.status, !!job.attendance).visit +
+                      (job.attendance
+                        ? " Your own attendance and timer history remain. Resolve already observed time under the existing evidence rules."
+                        : " You have no recorded arrival here. Further attendance requires a separate visit.")
+                    : job.attendance
+                      ? "Work authority needs review. You can retain already observed time; starting or resuming requires current authority."
+                      : visitArrivalGuidance(job.status, false).next}
               </p>
             </div>
           )}

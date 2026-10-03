@@ -19,6 +19,7 @@ export async function serviceJourney(
   { page, context }: { page: Page; context: BrowserContext },
   info: TestInfo,
   initialOnly = false,
+  verifyVisitGuidance = false,
 ) {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
@@ -571,6 +572,47 @@ export async function serviceJourney(
     }),
   ).toBeVisible();
   expect((await call(page, `my-jobs/${aid}`)).items[0].attendance).toBeNull();
+  if (verifyVisitGuidance) {
+    await expect(
+      page.getByRole("button", { name: "Record my actual start", exact: true }),
+    ).toHaveCount(0);
+    await expect(page.locator(".field-start")).toContainText(
+      "This visit is closed. No new arrival",
+    );
+    await expect(page.locator(".field-start")).toContainText(
+      "Another crew member's attendance is not your attendance",
+    );
+    const entry = page.getByRole("region", {
+      name: "Further attendance",
+      exact: true,
+    });
+    await expect(entry).toContainText("Preparation is incomplete");
+    await expect(
+      entry.getByRole("link", { name: /Review appointment/ }),
+    ).toHaveAttribute("href", `/service/appointments/${proposal.record_id}`);
+    await expect(
+      entry.getByRole("link", { name: /Open my assigned job/ }),
+    ).toHaveCount(0);
+    await capture(page, info, "closed-original-no-own-attendance");
+    const nav = entry.getByRole("link", {
+      name: "Review work-order visits",
+      exact: true,
+    });
+    await nav.focus();
+    await page.keyboard.press("Enter");
+    await expect(page).toHaveURL(
+      new RegExp(
+        `/service/work-orders/${source.work_order_id}#planned-visits$`,
+      ),
+    );
+    await expect(
+      page.getByText("Propose a visit", { exact: true }),
+    ).toHaveCount(0);
+    await page.goBack();
+    await expect(
+      page.getByRole("heading", { name: "Your attendance", exact: true }),
+    ).toBeVisible();
+  }
   await expect(
     page.getByRole("button", { name: /^Correct this .* entry$/ }),
   ).toHaveCount(0);

@@ -49,3 +49,8 @@ Required proofs: concurrent originals and tabs, changed operation reuse, stale v
 | Outgoing | Closed positive intervals enter the existing P07 correction lineage. Report submission needs a stopped timer; Service review and Finance acceptance retain their separate authorities. |
 | Proposed adaptations | Keep explicit actual arrival outside timer Start; display Not established for an unavailable allowance; retain previously accepted intervals on Undo; omit the preview's simulated time and cross-job automatic stop/start; use the host document scroll and existing navigation. These runtime adaptations are reviewable, not a new owner-approved visual baseline. |
 | Evidence | `tests/browser/field-timer.spec.ts` independently loads retained r05 and compares the compiled application at 1440/1024/820/390/320 px. Source and shared-control bytes remain unchanged. Owner, physical-device, assistive-technology and actual browser zoom review remain open. |
+
+
+## Closed-visit host guidance — 3 October 2026
+
+The [bounded companion decision](field-closed-visit-guidance.md) adds truthful actor-specific arrival/closure text and current receiving navigation. It does not alter timer events, freeze/authority rules, accepted r05 geometry, P08 operations or P09 acceptance. A stale/failed parent read disables new timer starts/resumes as well as arrival/acknowledgement; safe finish and immutable original recovery retain their existing server guards.
