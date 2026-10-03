@@ -69419,7 +69419,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline",
           "paragraphs": [
-            "At 1440/1024/390/320 CSS px, fields/cards and actions wrap within the shell scroll owner. Native controls, labelled validation and visible focus support keyboard use. Record opening focuses the saved heading; successor editing focuses its form heading. Emulation is separate from physical-device/assistive-technology acceptance."
+            "At 1440/1024/390/320 CSS px, fields/cards and actions wrap within the shell scroll owner. Native controls, labelled validation and visible focus support keyboard use. Record opening focuses the saved heading; successor editing focuses its form heading. Emulation is separate from physical-device/assistive-technology acceptance.",
+            "If the saved proposal opens before the current publication head finishes loading, Edit still selects successor editing. The form opens with focus on its heading when that read completes. Typing keeps focus in the field; selecting Edit again returns focus to the existing heading."
           ],
           "steps": [],
           "headers": [],

@@ -241,6 +241,14 @@ function PolicyWorkspaceBody({
     [localError, setLocalError] = useState<Failure | null>(null),
     [refused, setRefused] = useState(false);
   const formHeading = useRef<HTMLHeadingElement>(null);
+  const focusSuccessor = useRef(false);
+  const mountFormHeading = useCallback((node: HTMLHeadingElement | null) => {
+    formHeading.current = node;
+    if (node && focusSuccessor.current) {
+      focusSuccessor.current = false;
+      node.focus();
+    }
+  }, []);
   const focusRecord = useCallback((node: HTMLHeadingElement | null) => {
     node?.focus();
   }, []);
@@ -270,7 +278,13 @@ function PolicyWorkspaceBody({
     setEffective(localDateTime(proposal.effective_from, zone));
     setEditing(true);
     setLocalError(null);
-    requestAnimationFrame(() => formHeading.current?.focus());
+    // The current-head read may still be loading when the saved proposal opens.
+    // Retain the user's focus request until the permitted form actually mounts.
+    focusSuccessor.current = true;
+    if (formHeading.current) {
+      focusSuccessor.current = false;
+      formHeading.current.focus();
+    }
   }
   async function save(event: FormEvent) {
     event.preventDefault();
@@ -491,7 +505,7 @@ function PolicyWorkspaceBody({
       )}
       {canReview && (!kind || editing) && chain && (
         <form onSubmit={save} className="scheduling-card">
-          <h3 ref={formHeading} tabIndex={-1}>
+          <h3 ref={mountFormHeading} tabIndex={-1}>
             {editing ? "Unsaved successor edits" : "Unsaved policy proposal"}
           </h3>
           <p>

@@ -2623,6 +2623,11 @@
           "description": "Synthetic saved proposal and linked successor; exact source/head and fixed terms."
         },
         {
+          "id": "successor-loading",
+          "label": "Successor requested while head loads",
+          "description": "The saved proposal arrives first. Edit retains its focus request until the permitted form mounts; typing keeps focus and another explicit Edit focuses the existing heading."
+        },
+        {
           "id": "review",
           "label": "Complete saved review",
           "description": "Server complete empty/compliant/affected population, exclusions and 200-candidate refusal."
@@ -2680,7 +2685,7 @@
       ],
       "desktop": "Keep reason, responsible owner, source publication and next action together. Existing record detail owns the resolution controls.",
       "mobile": "Stack labels and actions; wrap exact identifiers without horizontal overflow at 390/320 px.",
-      "keyboard": "Native details, labelled fields and shared buttons; all actions available without dragging.",
+      "keyboard": "Native details, labelled fields and shared buttons; all actions available without dragging. On /schedule/policy-impact, explicit successor editing focuses its form when mounted, including a delayed current-head read; ordinary field updates do not move focus.",
       "limitations": "Online host only; no accepted policy-editor mockup, no offline publication/resolution, no owner/device acceptance. Shared journal opt-in permits server-allocated publication result IDs; booking receipt binding remains unchanged. An unavailable original receipt retains explicit unchanged recovery; actual authority refusals hide protected evidence.",
       "gaps": [
         {
@@ -2696,6 +2701,14 @@
           "expected": "Review native immutable proposal, complete evaluation, publication, recovery and owned handovers at 1440/1024/390/320 CSS px.",
           "actual": "New composition is implementation/proposed evidence with no accepted editor mockup.",
           "action": "Inspect retained Step 5 captures separately from owner, physical-device and accessibility acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "scheduling-successor-focus-review",
+          "expected": "The successor heading receives focus even if the separate current-head read completes after Edit.",
+          "actual": "The frame-based focus request can run before the form exists; reproduced on unchanged main. The mount-bound repair passes all 18 compiled Scheduling cases, including delayed-head focus on desktop and phone; owner/device review remains pending.",
+          "action": "Retain desktop/mobile delayed-read regression evidence in docs/testing/evidence/scheduling-successor-focus/README.md; owner/device acceptance remains pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

@@ -55,3 +55,7 @@ Inspected Step 5 implementation captures: [review 1440](../../../testing/evidenc
 [Integrated execution and release map](../../../testing/evidence/scheduling-step6/README.md) and [owner walkthrough](../../../delivery/scheduling-step6-owner-walkthrough.md) add update/restart/rollback and Service/Finance handovers. Scope, page type, reused components, incoming/outgoing bindings and implementation are unchanged. No new accepted mockup exists; visual/guide/component review remains pending and no fingerprint is adopted.
 
 Step 6 inspected implementation review captures: [1440×1000 desktop](../../../testing/evidence/scheduling-step6/desktop-review.png) and [390×844 phone emulation](../../../testing/evidence/scheduling-step6/phone-review.png). These show the complete saved two-booking review in the existing shell; they do not replace the missing accepted editor mockup.
+
+## Delayed-head successor focus
+
+The saved proposal and current publication head are separate permitted reads. Selecting Edit before the head finishes loading must focus the successor heading when its form mounts. Repeating Edit focuses an already mounted heading; typing must retain field focus. This applies to desktop and phone without changing page type, scope, incoming evidence or outgoing handovers. [Source-specific failure and regression evidence](../../../testing/evidence/scheduling-successor-focus/README.md) does not replace the missing accepted editor mockup or grant owner/device acceptance.
