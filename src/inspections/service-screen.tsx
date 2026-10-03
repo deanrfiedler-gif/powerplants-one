@@ -236,6 +236,7 @@ function Visit({
                 <div key={a.row.id} className="inspection-summary">
                   <Button
                     aria-pressed={selected === a.row.id}
+                    disabled={command.busy || !!command.pending}
                     onClick={() => choose(a.row.id)}
                   >
                     Attempt {a.row.attempt_number} · {a.row.performer_name}

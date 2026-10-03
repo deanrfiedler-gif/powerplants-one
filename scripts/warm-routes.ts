@@ -51,7 +51,7 @@ export function enumerateRoutes(appDir = join(process.cwd(), "src", "app")): Rou
       }
       const kind: RouteKind | null =
         name === "route.ts" || name === "route.tsx" ? "api" : name === "page.tsx" ? "page" : null;
-      if (kind) found.push({ path: routePathFromFile(appDir, full), kind, source: relative(process.cwd(), full) });
+      if (kind) found.push({ path: routePathFromFile(appDir, full), kind, source: relative(process.cwd(), full).replaceAll("\\", "/") });
     }
   };
   walk(appDir);

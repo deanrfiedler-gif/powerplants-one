@@ -1,6 +1,6 @@
 import { test, expect, chromium } from "@playwright/test";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { join, resolve, relative, isAbsolute } from "node:path";
+import { join, resolve } from "node:path";
 import { createHash } from "node:crypto";
 import { localConfig } from "../../src/platform/config";
 import { serviceJourney } from "../helpers/service-journey";
@@ -11,12 +11,11 @@ import {
   type PreparedReturn,
 } from "../helpers/quality-return";
 import { call, identity, capture } from "../helpers/quality-browser";
+import { privatePath } from "../../scripts/recovery";
 
 const config = localConfig();
 expect(config.database_name).toBe("ppo_synthetic_test");
 const root = resolve(process.env.PPO_ACCEPTANCE_DIRECTORY!);
-const outside = relative(process.cwd(), root);
-expect(outside.startsWith("..") || isAbsolute(outside)).toBe(true);
 const phase = process.env.PPO_ACCEPTANCE_PHASE;
 expect(["initial", "prepare", "finish", "history"]).toContain(phase);
 type Saved = {
@@ -27,6 +26,8 @@ type Saved = {
 };
 
 test("Current Field Work narrative keeps original and separate attendance through explicit restart phases", async ({}, info) => {
+  // Reuse the existing canonical-path, symlink and Git-ancestor refusal.
+  await privatePath(root, false);
   await mkdir(join(root, "private"), { recursive: true });
   await mkdir(join(root, "review"), { recursive: true });
   const path = join(root, "private", "journey.json");
@@ -62,6 +63,7 @@ test("Current Field Work narrative keeps original and separate attendance throug
     } else {
       saved = JSON.parse(await readFile(path, "utf8"));
       await call(page, "local-session", { profile: "coordinator" });
+      await page.goto(`/service/reports/${saved.source.report_id}`);
       if (phase === "prepare") {
         expect(saved.prepared).toBeUndefined();
         saved.prepared = await prepareReturnVisit(page, info, saved.source);
