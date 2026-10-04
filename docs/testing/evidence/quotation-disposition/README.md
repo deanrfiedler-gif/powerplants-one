@@ -33,3 +33,15 @@ Executable coverage: `tests/database/quotation-disposition.test.ts`, `tests/http
 Final-head CI is not implied by these local results. The pull request checks and its final validation comment record the exact head, mandatory database shards and both broad browser outcomes. No queued or running result is a pass.
 
 The expanded disposition PostgreSQL run passed 13/13, including maximum six-place quantities, forged direct-SQL refusal, downstream allocations/source edits, owner revocation, atomic rollback, concurrent effects and the populated 0061 upgrade. The compiled host plus shared component catalogue passed 15/15 (six desktop/mobile disposition cases, eight catalogue cases and warm-up). Final display and reserved-native-command changes receive their own subsequent proof; these counts do not silently inherit it.
+
+## Final implementation proof
+
+Application source `b49817a2b0c4dc83015e2488733b3e9e6e03e924` compiled successfully. The reserved native-operation refusal and native replay case, populated-0050 upgrade and fresh registry proof passed 3/3. The original policy upgrade's preserved-ledger slice was corrected from nine to ten additions, retaining the exact `[53,54,55,56,57,58,59,60,61,62]` list. Final HTTP passed 1/1. The final desktop/mobile disposition run passed 7/7 including warm-up, with original/current company/entity keys and unsaved target-switch protection.
+
+Actual PostgreSQL postmaster and application restart passed. Seventeen original release, response, receiving, resolution, plan, conversion, disposition and native receipts recovered and replayed exactly; all four original Draft/issued HTML/PDF files were byte-identical. Snapshot comparisons preserve original source and native records, histories, receipts, audits, outboxes and generated Impact/MaterialAction links. The earlier applied quantity remains exactly `1.375001`, version 2, while a later corrected response holds a subsequent pending review after restart. Checkpoint and retained database remain on task-owned port 5590; no proof database is repurposed.
+
+Final foundation, prototype, naming and studio checks passed. The screenshot-only capture correction replaces a tall element capture (blank clipped space outside the shell's scroll viewport) with real viewport captures; it changes no functional assertion, retry or deadline. Layout inspection, paired visual review and owner acceptance remain different evidence.
+
+## Inspected execution captures
+
+The corrected capture cases passed 2/2 without retries. Unedited [desktop](desktop.png) (1440 × 1000) and [mobile 320 px](mobile-320.png) (320 × 740, emulated touch context) show the actual compiled native comparison. Codex inspected readable source/target quantities and wrapped original/current company/entity keys. The [capture manifest](capture-manifest.json) records exact image and source hashes. This limited layout inspection is not independent paired visual, physical-device, screen-reader or owner acceptance; no live register fingerprint was promoted.

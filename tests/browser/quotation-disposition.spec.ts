@@ -97,21 +97,22 @@ test("ES07 disposition desktop/mobile native quantity action recovers committed 
   await page
     .getByText("Reviewed downstream dependencies", { exact: true })
     .click();
-  const section = page
-    .locator("section")
-    .filter({
-      has: page.getByRole("heading", {
-        name: "5. Disposition of completed targets",
-      }),
-    });
-  await section.screenshot({ path: info.outputPath("disposition.png") });
+  // The host scrolls inside the shell; element screenshots taller than that
+  // viewport capture blank clipped space. Retain the actual visible viewport.
+  await page
+    .getByRole("heading", { name: "5. Disposition of completed targets" })
+    .evaluate((node) => node.scrollIntoView({ block: "start" }));
+  await page.screenshot({ path: info.outputPath("disposition.png") });
   await page.setViewportSize({ width: 320, height: 740 });
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth + 1,
     ),
   ).toBe(true);
-  await section.screenshot({ path: info.outputPath("disposition-320.png") });
+  await page
+    .getByText("Original and current source evidence", { exact: true })
+    .evaluate((node) => node.scrollIntoView({ block: "start" }));
+  await page.screenshot({ path: info.outputPath("disposition-320.png") });
 });
 test("ES07 disposition unknown unsent action holds replacement through reload and inconclusive lookup until exact retry", async ({
   page,
