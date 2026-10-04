@@ -54,6 +54,8 @@ Native Scheduling captures exposed legacy identity-grid rules placing header uti
 
 ## Native Engineering consumers
 
+The EN-02 host fixture also opens Page guide while a real post-save read is pending, then releases that read. The Engineering inspector owns focus only for a newly selected record; refreshing the same selection must not close a shell panel by taking focus. Guide Escape/opener restoration and inspector close/reselection remain explicit keyboard destinations. The `scope:EN-02` consumer and `engineering-guide-during-refresh` state bind this regression to the existing shell host; shell outside-focus dismissal is unchanged. [PR #344 execution evidence](../../../testing/evidence/quotation-supply-followup/README.md) records the baseline failure and candidate proof separately from owner/device acceptance.
+
 EN-02–EN-05 reuse the shared menu and workspace controls under #ppo-engineering-control. The rail exposes basis, drawings and reviews; queries remain contextual. ProductHeader resolves module/view breadcrumbs and the information icon resolves route-specific guidance. Existing EN-06–EN-08 controls/defaults remain. Below 1100 CSS px the native Engineering workspace owns one scroll surface for context, controls and the selected record; it never leaves a tiny inner evidence viewport. Host fixture states: author, reviewer, issuer, read-only, denied and authority not configured. Functional evidence and paired review remain in the programme handover; no review fingerprint is adopted.
 
 ## Sales native mobile containment

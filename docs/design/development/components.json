@@ -2029,6 +2029,11 @@
           "id": "fi06-host",
           "label": "FI-06 host",
           "description": "Saved, dirty, conflict, uncertain, restricted and reopened fixtures in tests/browser/field-incidents.spec.ts; no isolated incident renderer."
+        },
+        {
+          "id": "engineering-guide-during-refresh",
+          "label": "Engineering guide during refresh",
+          "description": "The real EN-02 browser fixture holds the post-save GET, opens Page guide, then releases the unchanged read. The guide retains focus; Escape returns to its opener, closing the inspector returns to the row, and reselecting the row focuses its heading."
         }
       ],
       "implementation": [
@@ -2059,7 +2064,8 @@
         "src/app/styles/equipment.css",
         "docs/testing/evidence/job-pack-i5/README.md",
         "src/components/business-session.tsx",
-        "src/components/session-signal.ts"
+        "src/components/session-signal.ts",
+        "src/engineering/control/components/workspace.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -2071,7 +2077,8 @@
         "system:shell",
         "scope:ES-01",
         "scope:ES-03",
-        "scope:FI-06"
+        "scope:FI-06",
+        "scope:EN-02"
       ],
       "desktop": "Review the real global search, workspace switcher, rail, More and utility controls around this catalogue. Shell access can be unavailable without a running identity/database service.",
       "mobile": "Resize the actual browser window to review the mobile shell; component-frame presets do not resize the surrounding application. Native shell controls must remain inside the 64px header, including local identity at 390px and 320px; the legacy CRM grid must not overlay the first page action.",
@@ -2147,6 +2154,14 @@
           "expected": "Independent desktop/phone acceptance of native incident consumers.",
           "actual": "Proposed reference adapted to current shell; owner acceptance pending.",
           "action": "Inspect source/native captures, keyboard and actual zoom evidence.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "engineering-refresh-focus-review",
+          "expected": "Background refresh preserves focus in the open guide while explicit record selection and inspector closure retain their focus destinations.",
+          "actual": "A focus race was reproduced on unchanged main after the PR #344 development-browser failure. The bounded inspector fix and deterministic desktop/mobile regression are part of the same PR; final results belong to its execution ledger.",
+          "action": "Review the exact-head functional evidence in docs/testing/evidence/quotation-supply-followup/README.md. Paired visual, owner and device acceptance remain pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

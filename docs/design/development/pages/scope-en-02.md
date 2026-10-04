@@ -46,3 +46,5 @@ Outgoing: exact reviewed basis/document/issue sources through the existing EN-06
 
 Guide: guide.en.02. The global information icon resolves route-specific native guidance and the draft development article.
 Evidence: docs/delivery/engineering-native-control-handover.md. Functional proof, visual review, business acceptance and deployment are separate. Review fields remain blank until actual review; no deployment is authorised.
+
+Selecting a record focuses its heading when the permitted inspector is available. Refreshing the same record must preserve focus in an open guide or current control. Close inspector returns to its register row; reselecting that row focuses the inspector again. This keyboard contract applies on desktop and phone across the shared EN-02–EN-05 workspace. The delayed post-save read regression and unchanged-main failure are recorded in the [PR #344 execution ledger](../../../testing/evidence/quotation-supply-followup/README.md). No layout, accepted reference or review fingerprint changes.

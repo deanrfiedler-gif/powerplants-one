@@ -7939,7 +7939,8 @@
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
             "At 390 × 844 and 320 CSS px the inspector replaces the list; Close inspector returns to the register. The secondary menu becomes an overlay below the docked breakpoint. Long references wrap.",
-            "Tab/Shift+Tab reach labelled controls; visible focus and Escape/focus return are required. Pending/unknown operations retain their context. No offline mutation queue is provided."
+            "Tab/Shift+Tab reach labelled controls; visible focus and Escape/focus return are required. Pending/unknown operations retain their context. No offline mutation queue is provided.",
+            "Selecting a record focuses its inspector heading after the permitted record arrives. A background refresh of that same record preserves focus in the open page guide or current control. Escape closes the guide and returns to its opener; Close inspector returns to the selected register row."
           ],
           "steps": [],
           "rows": [],

@@ -1586,7 +1586,7 @@
       ],
       "scope_status": "Native implementation present; review separate",
       "visual_status": "Needs review",
-      "functional_status": "Native command, database and browser evidence retained in programme handover; acceptance separate",
+      "functional_status": "Native command, database and browser evidence retained in programme handover; PR #344 adds deterministic post-save guide-focus regression; exact-head results in Supply follow-up execution ledger; acceptance separate",
       "deployment_status": "Not deployed by this programme",
       "review_fingerprint": null,
       "reviewed_at": null,

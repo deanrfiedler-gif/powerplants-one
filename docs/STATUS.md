@@ -6,6 +6,8 @@
 
 **Owner:** Dean Fiedler. Public repository; private synthetic prototype. Operational authority, signing, expiry/withdrawal, item governance and live integrations remain Not configured.
 
+PR #344 head `116194e` passed 25/27 checks; its development-browser EN-02 guide assertion and dependent aggregate gate failed. A delayed post-save read reproduced the focus race on unchanged main. The same PR repairs inspector focus ownership and adds deterministic desktop/mobile coverage; fresh final-head results belong to the PR and linked execution ledger. No passing prior-head result is promoted to the repair.
+
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
 ## Current work

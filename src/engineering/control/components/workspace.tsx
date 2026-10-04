@@ -140,18 +140,26 @@ function Workspace({
     ? records.find((r) => r.id === selectedId)
     : undefined;
   const returnTo = useRef<string | null>(null),
-    inspectorHeading = useRef<HTMLHeadingElement>(null);
+    inspectorHeading = useRef<HTMLHeadingElement>(null),
+    focusedSelection = useRef<string | null>(null);
   useEffect(() => {
+    if (!selectedId) focusedSelection.current = null;
     if (read.loading) return;
-    if (selectedId) inspectorHeading.current?.focus();
-    else if (returnTo.current) {
+    // A completed background refresh must not steal focus from a guide or form.
+    // Keep the selection request until its permitted inspector is available.
+    if (selectedId) {
+      if (focusedSelection.current !== selectedId && inspectorHeading.current) {
+        inspectorHeading.current.focus();
+        focusedSelection.current = selectedId;
+      }
+    } else if (returnTo.current) {
       const opener = document.getElementById(returnTo.current);
       if (opener) {
         opener.focus();
         returnTo.current = null;
       }
     }
-  }, [selectedId, read.loading]);
+  }, [selectedId, selected?.id, read.loading]);
   const released = (r: ControlRecord) =>
     kind === "deliverable" &&
     data!.records.issue.some(
