@@ -1396,7 +1396,9 @@
       "design_path": "docs/design/development/pages/scope-es-07.md",
       "html_path": "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",
       "image_paths": [
-        "docs/testing/evidence/quotation-supply-followup/supply-followup-desktop.png"
+        "docs/testing/evidence/quotation-supply-followup/supply-followup-desktop.png",
+        "docs/testing/evidence/quotation-supply-followup/supply-followup-mobile.png",
+        "docs/testing/evidence/quotation-supply-followup/supply-followup-320.png"
       ],
       "dependencies": [
         "src/components/quotation-conversion.tsx",
@@ -11388,7 +11390,9 @@
       "design_path": "docs/design/development/pages/route-estimating-quotes-id-conversion.md",
       "html_path": "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",
       "image_paths": [
-        "docs/testing/evidence/quotation-supply-followup/supply-followup-desktop.png"
+        "docs/testing/evidence/quotation-supply-followup/supply-followup-desktop.png",
+        "docs/testing/evidence/quotation-supply-followup/supply-followup-mobile.png",
+        "docs/testing/evidence/quotation-supply-followup/supply-followup-320.png"
       ],
       "dependencies": [
         "src/components/quotation-conversion.tsx",

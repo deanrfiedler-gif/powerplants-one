@@ -1,0 +1,53 @@
+{
+  "scope": "Local synthetic proof; final PR-head CI and owner acceptance separate",
+  "date": "2026-10-04",
+  "implementation_commit": "01018d6e491efb0e12e0fcc1dc6daf15b27fcd20",
+  "local_units": {
+    "total": 584,
+    "passed": 581,
+    "baseline_windows_failures": 3,
+    "baseline_commit": "4efce794bd688cad854388d44305123c828a4c23"
+  },
+  "compiled_http_passed": 4,
+  "corrected_compiled_host_passed": 9,
+  "earlier_shared_component_passed": 8,
+  "restart": {
+    "original_receipts": 26,
+    "original_files": [
+      {
+        "id": "1c1c90d6-0d83-41c9-aedf-cbb9e992fb84",
+        "kind": "html",
+        "name": "1c1c90d6-0d83-41c9-aedf-cbb9e992fb84.html",
+        "hash": "4676096f16d7e5988dae577ff98f8e303bd3d05f3e94e40b0bdd1cb7510fb0ec"
+      },
+      {
+        "id": "1c1c90d6-0d83-41c9-aedf-cbb9e992fb84",
+        "kind": "pdf",
+        "name": "1c1c90d6-0d83-41c9-aedf-cbb9e992fb84.pdf",
+        "hash": "0e06edeec41e76bafa17aeb2b2bbf7200840a50ca09591d35654f63bc27a742d"
+      },
+      {
+        "id": "a356ab94-aa85-4632-a021-7131b84f04c3",
+        "kind": "html",
+        "name": "a356ab94-aa85-4632-a021-7131b84f04c3.html",
+        "hash": "6df6a2516211abaeed9a900028b965a0789fd3d87318b0765409f6a2b1c174c9"
+      },
+      {
+        "id": "a356ab94-aa85-4632-a021-7131b84f04c3",
+        "kind": "pdf",
+        "name": "a356ab94-aa85-4632-a021-7131b84f04c3.pdf",
+        "hash": "0b4f1a9eae817007c4d8fa185b04a30f3b2f52d6005228eb2038eed2ad1292df"
+      }
+    ],
+    "snapshot_rows": 468,
+    "checkpoint_sha256": "b47ed83f6cea5c3e78801219c1f29efbdfb9d76f182dac4c4cb955e48db31831",
+    "pending_review_held": true
+  },
+  "captures": {
+    "supply-followup-320.png": "49290574674823c4ab73d5e24a302e6fa319adca534bd3eac2cd3dce770dab72",
+    "supply-followup-desktop.png": "dd3c6507936f0041b4f8be3be012975d4633c362b7fcc0a4f33f939cc5a167ab",
+    "supply-followup-mobile.png": "03e4e560740da5dc9baa2067fd880e1091cc94f250c345cb4020170a1473c8c6"
+  },
+  "human_acceptance": "Pending",
+  "deployment": "Not performed"
+}
