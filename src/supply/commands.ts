@@ -108,63 +108,82 @@ export async function saveRecord(p: Principal, input: unknown, update = false) {
     `Supply:${update ? "Revise" : "Create"}`,
     async (c) => {
       if (update) await supplyRecord(c, p, cmd.id, createCapability[cmd.kind]);
+      if (update) {
+        const { nativeDispositionReceiptAuthority } =
+          await import("../estimating/disposition/context");
+        await nativeDispositionReceiptAuthority(c, p, cmd.id, cmd.operation_id);
+      }
       await newContext(c, p, cmd);
       return update ? await supplyRecord(c, p, cmd.id) : null;
     },
     async (c, before) => {
-      if (before) currentVersion(before.version, cmd.expected_version);
-      const {
-        operation_id: _operation,
-        schema_version: _schema,
-        reason,
-        expected_version: _version,
-        ...values
-      } = cmd;
-      void _operation;
-      void _schema;
-      void _version;
-      let saved: SupplyRecord;
-      if (before) {
-        if (before.kind === "Demand") {
-          const issued = (
-            await c.query(
-              "SELECT COALESCE(sum(quantity),0)::text n FROM ppo.supply_records WHERE workspace_id=$1 AND parent_id=$2 AND kind='Custody'",
-              [p.workspace_id, before.id],
-            )
-          ).rows[0].n;
-          check(
-            decimal(cmd.quantity) >= decimal(issued),
-            "Demand cannot fall below retained service-stock issues.",
-          );
-        }
-        const entries = Object.entries({
-          ...values,
-          parent_id: cmd.data.demand_id ?? null,
-          last_reason: reason,
-          updated_by: p.actor_id,
-        });
-        saved = (
-          await c.query(
-            `UPDATE ppo.supply_records SET ${entries.map(([k], i) => `${k}=$${i + 3}`).join(",")},version=version+1,updated_at=clock_timestamp() WHERE workspace_id=$1 AND id=$2 RETURNING *`,
-            [p.workspace_id, cmd.id, ...entries.map(([, v]) => v)],
-          )
-        ).rows[0];
-      } else saved = await createSupplyRecordInTransaction(c, p, input);
-      if (before && materialChanges(before, saved).length)
-        await impacts(
-          c,
-          p,
-          saved,
-          reason,
-          `${before.version}`,
-          `${saved.version}`,
-          materialChanges(before, saved).join(", "),
-        );
-      return result(saved);
+      if (before)
+        return result(await reviseSupplyRecordInTransaction(c, p, cmd));
+      return result(await createSupplyRecordInTransaction(c, p, input));
     },
     "SupplyRecord",
     "SupplyRecorded",
   );
+}
+// Reuse the native revision and impact contract inside an already locked transaction.
+// The caller must record the original Supply:Revise receipt atomically.
+export async function reviseSupplyRecordInTransaction(
+  c: PoolClient,
+  p: Principal,
+  input: unknown,
+) {
+  const cmd = recordCommand(input, true);
+  const before = await supplyRecord(c, p, cmd.id, createCapability[cmd.kind]);
+  await newContext(c, p, cmd);
+  if (before) currentVersion(before.version, cmd.expected_version);
+  const {
+    operation_id: _operation,
+    schema_version: _schema,
+    reason,
+    expected_version: _version,
+    ...values
+  } = cmd;
+  void _operation;
+  void _schema;
+  void _version;
+  let saved: SupplyRecord;
+  if (before) {
+    if (before.kind === "Demand") {
+      const issued = (
+        await c.query(
+          "SELECT COALESCE(sum(quantity),0)::text n FROM ppo.supply_records WHERE workspace_id=$1 AND parent_id=$2 AND kind='Custody'",
+          [p.workspace_id, before.id],
+        )
+      ).rows[0].n;
+      check(
+        decimal(cmd.quantity) >= decimal(issued),
+        "Demand cannot fall below retained service-stock issues.",
+      );
+    }
+    const entries = Object.entries({
+      ...values,
+      parent_id: cmd.data.demand_id ?? null,
+      last_reason: reason,
+      updated_by: p.actor_id,
+    });
+    saved = (
+      await c.query(
+        `UPDATE ppo.supply_records SET ${entries.map(([k], i) => `${k}=$${i + 3}`).join(",")},version=version+1,updated_at=clock_timestamp() WHERE workspace_id=$1 AND id=$2 RETURNING *`,
+        [p.workspace_id, cmd.id, ...entries.map(([, v]) => v)],
+      )
+    ).rows[0];
+  } else saved = await createSupplyRecordInTransaction(c, p, input);
+  if (before && materialChanges(before, saved).length)
+    await impacts(
+      c,
+      p,
+      saved,
+      reason,
+      `${before.version}`,
+      `${saved.version}`,
+      materialChanges(before, saved).join(", "),
+    );
+  return saved;
 }
 async function addFact(
   c: PoolClient,

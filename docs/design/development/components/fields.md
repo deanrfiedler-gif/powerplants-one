@@ -92,3 +92,7 @@ QuotationResponse reuses this control on the exact issued-response page. Host fi
 ## ES-07 receiving consumer
 
 `QuotationConversion` uses this control in exact receiving, resolution, plan and original recovery. Host fixture: `tests/browser/quotation-conversion.spec.ts`. Consumer bindings and states are maintained in components.json. No shared-control behaviour changes or new global tokens. Visual/device acceptance remains pending.
+
+## ES-07 disposition consumer
+
+The ES-07 disposition host reuses Field and SelectField for per-target retain/revise/hold, exact positive decimal quantity, owned follow-up, reason and evidence. Stale evidence preserves entered values and requires explicit comparison before submission. Desktop/mobile and recovery fixtures: `tests/browser/quotation-disposition.spec.ts`. Exact accepted mockup images and paired owner/device review remain unavailable/pending.

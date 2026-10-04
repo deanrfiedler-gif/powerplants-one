@@ -171,7 +171,9 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // Original release/Draft bytes and ledgers are covered by populated and hosted upgrade proof.
   // 0061 adds immutable receiving/plans and native demand links; no seeds or grants.
   // Existing runtime privileges and Supply duties apply; populated upgrades preserve originals.
-  if (latestMigrationVersion !== 61) throw Error("Review the existing-demo upgrade for this release.");
+  // 0062 adds immutable completed-conversion disposition; generic privileges cover it.
+  // No seed/grant/user/identity rewrite; exact populated 0061 and hosted upgrades are required.
+  if (latestMigrationVersion !== 62) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

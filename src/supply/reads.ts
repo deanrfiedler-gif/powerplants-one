@@ -395,7 +395,7 @@ export async function recover(p: Principal, id: string) {
   ).rows[0];
   if (!r) throw unavailable();
   const { receiptAuthority } = await import("./context");
-  await receiptAuthority(c, p, r.record_id, r.command);
+  await receiptAuthority(c, p, r.record_id, r.command, id);
   return r.result;
 }
 export type SupplyWorkspace = Awaited<ReturnType<typeof workspace>>;

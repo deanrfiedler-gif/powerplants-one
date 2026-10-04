@@ -21,3 +21,7 @@ States include missing preparation, owned Held/Returned, Received, Missing/Ambig
 Incoming: exact ES-06 preparation, issue/output and applicable recorded response. Outgoing: real native Supply Demand Forecast records and exact original receipts. Receiving, sending, commercial approval and work release remain distinct. No sending event is fabricated.
 
 Declared departure from the broader reference: only included Product lines become native Forecast demand; other lines retain commercial evidence. OneOff creates a line-bound internal identity, no operational master or ERP mapping. ERP orders and multiple target aggregates remain deferred. See the [native decision](../../../decisions/quotation-conversion-native.md). Independent paired visual, physical-device, screen-reader and owner acceptance remain pending; no fingerprint is promoted.
+
+## Completed disposition host
+
+The owning host now includes `QuotationDispositions` and the fifth review/application region. Follow the [page contract](../pages/route-estimating-quotes-id-conversion.md#completed-target-disposition) for desktop/mobile states, exact source/target comparison, selective stale proposals and owned holds. The shared recovery journal blocks both conversion and disposition replacements while an original is uncertain. Native Supply revision effects and original recovery remain server obligations. Real fixture/state examples are in `tests/browser/quotation-disposition.spec.ts`; review status remains pending.

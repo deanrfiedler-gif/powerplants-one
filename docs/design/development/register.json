@@ -1386,7 +1386,7 @@
       "title": "Receiving, one-off resolution and controlled conversion",
       "kind": "scope",
       "module": "ES",
-      "summary": "Exact receiving, immutable reviewed plan and atomic native Forecast demand with original recovery.",
+      "summary": "Exact receiving and completed-target exception disposition with immutable per-target decisions and real native Forecast quantity revision.",
       "path": "/estimating/quotes/[id]/conversion",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -1402,11 +1402,15 @@
         "src/estimating/conversion/reads.ts",
         "src/estimating/conversion/service.ts",
         "src/estimating/conversion/context.ts",
-        "docs/contracts/quotation-conversion.md"
+        "docs/contracts/quotation-conversion.md",
+        "src/components/quotation-disposition.tsx",
+        "src/estimating/disposition/context.ts",
+        "src/estimating/disposition/service.ts",
+        "docs/decisions/quotation-disposition-native.md"
       ],
-      "scope_status": "Bounded native synthetic Supply Demand conversion; operational policy not configured",
+      "scope_status": "Bounded native conversion and completed-target disposition; operational policy not configured",
       "visual_status": "Needs review",
-      "functional_status": "See quotation-conversion-handover.md for executed evidence",
+      "functional_status": "See quotation-disposition execution ledger; owner acceptance separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -11352,7 +11356,7 @@
       "title": "Receiving, one-off resolution and controlled conversion",
       "kind": "route",
       "module": "ES",
-      "summary": "Exact receiving, immutable reviewed plan and atomic native Forecast demand with original recovery.",
+      "summary": "Exact receiving and completed-target exception disposition with immutable per-target decisions and real native Forecast quantity revision.",
       "path": "/estimating/quotes/[id]/conversion",
       "source_paths": [
         "src/app/(business)/estimating/quotes/[id]/conversion/page.tsx"
@@ -11367,11 +11371,15 @@
         "src/estimating/conversion/reads.ts",
         "src/estimating/conversion/service.ts",
         "src/estimating/conversion/context.ts",
-        "docs/contracts/quotation-conversion.md"
+        "docs/contracts/quotation-conversion.md",
+        "src/components/quotation-disposition.tsx",
+        "src/estimating/disposition/context.ts",
+        "src/estimating/disposition/service.ts",
+        "docs/decisions/quotation-disposition-native.md"
       ],
-      "scope_status": "Bounded native synthetic Supply Demand conversion; operational policy not configured",
+      "scope_status": "Bounded native conversion and completed-target disposition; operational policy not configured",
       "visual_status": "Needs review",
-      "functional_status": "See quotation-conversion-handover.md for executed evidence",
+      "functional_status": "See quotation-disposition execution ledger; owner acceptance separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

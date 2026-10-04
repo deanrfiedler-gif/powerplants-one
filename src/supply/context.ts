@@ -189,6 +189,7 @@ export async function receiptAuthority(
   p: Principal,
   id: string,
   command: string,
+  operation?: string,
 ) {
   if (!command.startsWith("Supply:")) throw unavailable();
   const part = command.slice(7);
@@ -207,6 +208,10 @@ export async function receiptAuthority(
     throw unavailable();
   if (part === "Fact:Credit" && !(await financeAllowed(c, p, r)))
     throw unavailable();
+  if (operation) {
+    const { nativeDispositionReceiptAuthority } = await import("../estimating/disposition/context");
+    await nativeDispositionReceiptAuthority(c, p, id, operation);
+  }
 }
 export const captureCapability = (kind: RecordKind): Capability =>
   kind === "Supply"
