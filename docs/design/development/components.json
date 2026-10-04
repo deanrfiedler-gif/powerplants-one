@@ -2039,6 +2039,11 @@
           "id": "notification-history-window",
           "label": "Notification history window",
           "description": "Use the real SH notification bell and inbox with repeated Activity events. Each event keeps its identity and source revision while current details and permissions are read afresh. Loading, denied and partial sources remain explicit."
+        },
+        {
+          "id": "my-work-breakpoint-read",
+          "label": "My Work breakpoint read",
+          "description": "Cross the 780px phone boundary in both directions. The newly mounted overview reads current data; observe its exact response before checking the rendered layout. Same-layout resizing requires no invented read; refused responses remain failures."
         }
       ],
       "implementation": [
@@ -2085,7 +2090,8 @@
         "scope:ES-03",
         "scope:FI-06",
         "scope:EN-02",
-        "scope:SH-03"
+        "scope:SH-03",
+        "scope:SH-01"
       ],
       "desktop": "Review the real global search, workspace switcher, rail, More and utility controls around this catalogue. Shell access can be unavailable without a running identity/database service.",
       "mobile": "Resize the actual browser window to review the mobile shell; component-frame presets do not resize the surrounding application. Native shell controls must remain inside the 64px header, including local identity at 390px and 320px; the legacy CRM grid must not overlay the first page action.",
@@ -2177,6 +2183,14 @@
           "expected": "Populated event history remains responsive without stale authority, lost events or hidden owned work.",
           "actual": "PR #344 adds request-scoped distinct-source reads in bounded batches. Original five-second browser assertions and the seven-width/five-page reflow matrix remain; final results belong to its execution ledger.",
           "action": "Review the populated notification and reflow evidence; no visual or owner acceptance is granted by source or test completion.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "my-work-breakpoint-read-review",
+          "expected": "Responsive proof distinguishes a fresh overview read from completed rendering while retaining current access and existing deadlines.",
+          "actual": "PR #344 observes the native breakpoint remount through the existing My Work transport helper. A held real GET reproduces the earlier busy-state assertion; exact-head results remain in the execution ledger.",
+          "action": "Review the two-direction responsive-readiness and real overview evidence. Keep visual and owner acceptance pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

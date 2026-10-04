@@ -41,4 +41,6 @@ Use text and optional record type. Pagination requires one type and a cursor tie
 
 The shared responsive proof loads each of the five SH interiors once and resizes the mounted page through 1440, 1280, 1024, 768, 430, 390 and 320 CSS px. All 35 page/width combinations, readiness/overflow assertions, captures and six review perspectives remain, in both browser projects. The original 180-second deadline is unchanged. [PR #344 evidence](../../../testing/evidence/quotation-supply-followup/README.md) records the earlier repeated-navigation timeout and the candidate result separately; this grants no new visual acceptance.
 
+My Work remounts its overview when crossing 780px. The shared fixture observes that fresh exact data response with its existing transport budget before checking layout; this preserves the separate render deadline and current native reads.
+
 [SH verification](../../../testing/evidence/sh-platform/README.md) records actual checks, inspected captures and CI repairs; [handover](../../../delivery/sh-platform-handover.md) records scope and dependencies. Images above predate the merged development-workspace shell controls and require a fresh paired review for that integration. No review fingerprint or owner acceptance is claimed. The article `guide.sh.04` remains Draft.

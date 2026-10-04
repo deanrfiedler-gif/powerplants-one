@@ -43,3 +43,5 @@ Acceptance evidence is pending. Capture matching original-reference and applicat
 ## SH continuation
 
 Retain the existing desktop/phone My Work structure. Review and notification counts now follow shared source projections and qualify unavailable or bounded data. Personal view editing retains existing IDs and supports explicit criteria updates; team sharing remains Not configured. See [SH handover](../../../delivery/sh-platform-handover.md) and [verification](../../../testing/evidence/sh-platform/README.md). Merged shell controls require fresh integration review; no fingerprint or approval is added.
+
+When crossing the 780px phone boundary, the overview mounts its other presentation and reads current data again. The responsive proof observes that exact GET before its unchanged render assertion; it must not mistake a still-loading overview for completed layout. PR #344's [readiness correction](../../../decisions/shared-notification-read-efficiency.md) and [execution ledger](../../../testing/evidence/quotation-supply-followup/README.md) retain both the failed run and subsequent evidence. Source, functional proof and owner/visual acceptance remain separate.

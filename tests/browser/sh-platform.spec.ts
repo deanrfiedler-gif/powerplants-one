@@ -13,7 +13,7 @@ import {
 } from "../helpers/engineering-changes";
 import type { SignIn } from "../helpers/engineering-materials";
 import { finishApiReadsForTeardown, retainApiReadsForTeardown } from "../helpers/browser-read-drain";
-import { navigateToMyWork } from "../helpers/my-work-navigation";
+import { navigateToMyWork, resizeMyWork } from "../helpers/my-work-navigation";
 
 test.beforeEach(async ({ page, baseURL }) => {
   await retainApiReadsForTeardown(page);
@@ -244,7 +244,7 @@ test("SH review perspectives, responsive geometry and current My Work interiors"
       await navigateToMyWork(page, path);
     else await page.goto(path);
     for (const width of [1440, 1280, 1024, 768, 430, 390, 320]) {
-      await page.setViewportSize({ width, height: 900 });
+      await resizeMyWork(page, { width, height: 900 });
       await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
       if (path.startsWith("/search"))
         await expect(page.getByText(/results on this page/)).toBeVisible();

@@ -10,6 +10,8 @@ PR #344 head `116194e` passed 25/27 checks; its development-browser EN-02 guide 
 
 The next head, `9519f1c`, passed both Engineering regressions, 584 units, 756 PostgreSQL tests, the compiled broad browser suite and complete Supply restart proof. Its development-browser run failed two existing SH cases: a still-loading bell and the total responsive-tour deadline. [Bounded notification reads and retained reflow coverage](decisions/shared-notification-read-efficiency.md) address those failures in the same PR; all historical results and the separate final-head obligation remain in the execution ledger.
 
+Head `483fd66` completed with 24 successful checks, two failures and one cancellation. Both database shards passed 757 tests; the development run passed 577 / retained 79 skips and exposed a fresh-read boundary when My Work remounted at 768px. Its aggregate failed. Compiled broad browsers passed 578 / retained 79 skips, then the existing 60-minute job limit cancelled later retained proof. The next correction observes the remount with existing data/render budgets and [isolates the independent compiled proof groups](decisions/ci-compiled-browser-suite.md#4-october-2026--preserve-compiled-broad-and-retained-proof-within-separate-bounded-jobs) behind the stable mandatory gate. Final-head proof remains separate from these completed and unexecuted portions.
+
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
 ## Current work
