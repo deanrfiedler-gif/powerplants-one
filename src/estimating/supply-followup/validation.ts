@@ -134,11 +134,7 @@ export function reviewInput(id: string, value: unknown) {
             "Absent",
           ]),
           observed_at: instant(r.observed_at, "observed_at"),
-          lookup_evidence: narrative(
-            r.lookup_evidence,
-            "lookup_evidence",
-            2000,
-          ),
+          lookup_evidence: label(r.lookup_evidence, "lookup_evidence", 1000),
         }
       : {}),
     allocation_id:

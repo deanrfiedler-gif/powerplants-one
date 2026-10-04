@@ -163,17 +163,34 @@ test("ES07 dependency executes exact native successor, conserves shared quantiti
   assert.equal(t.outcome!.execution_id, f.t.execution_id);
 });
 test("ES07 dependency records evidenced Failed on Forecast demand without changing quantity or needing an allocation", async () => {
-  const f=await completedFixture(); let t=await currentFollowup(f);
-  const original=supplyFact("ExternalOutcome",t.basis.conversion.target.version,{source_operation:"SYN-failed-reservation-"+randomUUID(),effect:"Reservation",state:"Unknown"});
-  await recordFact(f.owner,t.target_id,original);
-  t=await currentFollowup(f); await referSupply(f.owner,f.id,referral(t));
-  t=await currentFollowup(f); await receiveSupply(f.owner,f.id,acknowledgement(t));
-  t=await currentFollowup(f); await reviewSupply(f.owner,f.id,reservationReview(t,"Failed"));
-  t=await currentFollowup(f); await applySupply(f.owner,f.id,supplyApply(t));
-  t=await currentFollowup(f); assert.equal(t.reservation_dependencies[0].fact.data.state,"Failed");
-  assert.equal(t.basis.conversion.target.data.demand_class,"Forecast");
-  assert.equal(t.basis.conversion.target.quantity,"2"); assert.equal(t.basis.conversion.dependencies.allocations.length,0);
-  assert.ok((await readConversion(f.owner,f.id)).dispositions[0].revision_holds.length);
+  const f = await completedFixture();
+  let t = await currentFollowup(f);
+  const original = supplyFact(
+    "ExternalOutcome",
+    t.basis.conversion.target.version,
+    {
+      source_operation: "SYN-failed-reservation-" + randomUUID(),
+      effect: "Reservation",
+      state: "Unknown",
+    },
+  );
+  await recordFact(f.owner, t.target_id, original);
+  t = await currentFollowup(f);
+  await referSupply(f.owner, f.id, referral(t));
+  t = await currentFollowup(f);
+  await receiveSupply(f.owner, f.id, acknowledgement(t));
+  t = await currentFollowup(f);
+  await reviewSupply(f.owner, f.id, reservationReview(t, "Failed"));
+  t = await currentFollowup(f);
+  await applySupply(f.owner, f.id, supplyApply(t));
+  t = await currentFollowup(f);
+  assert.equal(t.reservation_dependencies[0].fact.data.state, "Failed");
+  assert.equal(t.basis.conversion.target.data.demand_class, "Forecast");
+  assert.equal(t.basis.conversion.target.quantity, "2");
+  assert.equal(t.basis.conversion.dependencies.allocations.length, 0);
+  assert.ok(
+    (await readConversion(f.owner, f.id)).dispositions[0].revision_holds.length,
+  );
 });
 test("ES07 dependency refuses unsupported facts, unaccepted work and partial/invented payloads; retains owned holds", async () => {
   const f = await fixture();
@@ -183,7 +200,7 @@ test("ES07 dependency refuses unsupported facts, unaccepted work and partial/inv
     { completeness: "Partial" },
     { source_operation: "replacement" },
   ])
-    await assert.rejects(
+    await assert.rejects(async () =>
       reviewSupply(f.owner, f.id, { ...reservationReview(f.t), ...changes }),
     );
   await receiveSupply(f.owner, f.id, acknowledgement(f.t, "Returned"));
@@ -226,7 +243,8 @@ test("ES07 dependency selectively holds changed native and quotation evidence an
   assert.equal(t.review!.predecessor_id, original.id);
   const d = await readConversion(f.owner, f.id);
   await receiveQuotation(f.owner, f.id, {
-    ...receiving(d, "Held"),
+    ...receiving(d, f.owner.actor_id),
+    decision: "Held",
     reason: "SYN corrected source receiving",
   });
   assert.equal((await currentFollowup(f)).can_apply, false);

@@ -7,6 +7,8 @@
 
 Owner: Dean Fiedler. 4 October 2026. Source presence, completed runtime proof, final PR-head CI, visual review, owner acceptance and deployment are separate.
 
+## Retained #344 contribution record
+
 Main was refreshed to #343 merge `4efce794bd688cad854388d44305123c828a4c23`. GitHub confirms its final checked head `b88147451a493ce1cef148215e8028a97a0f7ccf` and 26 successful checks. Earlier conversion/disposition ledgers remain unchanged historical evidence. This isolated contribution preserves existing worktrees, unfinished Excel import and retained restart databases.
 
 The [adopted bounded contract](../contracts/quotation-supply-followup.md) adds attributable referral from an exact held completed conversion, assigned Supply receiving at `/supply/changes`, explicit acceptance/return/hold, immutable actual allocation-position review and separately applied outcomes. Supported native action is quantity-only revision of one existing allocation on already Approved demand using the original Supply command, exact versions/units and conservation. Zero retains allocation identity and has no ERP release/cancellation meaning. Consequential targets retain useful continuing-hold decisions.
