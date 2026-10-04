@@ -348,7 +348,8 @@ test("EN02 loading, validation, stale comparison and saving preserve the authore
 }) => {
   const s = await made("stale");
   let releaseRead = () => {},
-    releaseSave = () => {};
+    releaseSave = () => {},
+    releaseRefresh = () => {};
   try {
     const basis = saveFields("basis", basisContent(s.source));
     await accepted(s.author, s.base, command(basis));
@@ -371,6 +372,7 @@ test("EN02 loading, validation, stale comparison and saving preserve the authore
         .filter({ hasText: "Loading exact Engineering records" }),
     ).toBeVisible();
     releaseRead();
+    await expect(page.locator(".ec-inspector-head h2")).toBeFocused();
     await page
       .getByRole("button", { name: "Edit draft basis", exact: true })
       .click({ timeout: 60000 });
@@ -430,6 +432,15 @@ test("EN02 loading, validation, stale comparison and saving preserve the authore
       "Saving the exact operation",
     );
     await expect(title).toBeDisabled();
+    // Hold the real post-save read until the user has opened the guide. The
+    // native save and response are unchanged; this fixes the ordering explicitly.
+    const refreshGate = new Promise<void>((resolve) => {
+      releaseRefresh = resolve;
+    });
+    await page.route(`**/api/v1/${s.base}*`, async (route) => {
+      if (route.request().method() === "GET") await refreshGate;
+      await route.continue();
+    });
     releaseSave();
     await expect(dialog).toHaveCount(0);
     const saved = ((await s.author(s.base)).body as ControlRead).records
@@ -438,9 +449,30 @@ test("EN02 loading, validation, stale comparison and saving preserve the authore
     expect(saved.title).toBe("SYN-PPO retained local draft");
     await page.getByRole("button", { name: "Page guide", exact: true }).click();
     await expect(page.getByRole("dialog")).toContainText("Design basis");
+    const guideClose = page.getByRole("dialog").getByRole("button", {
+      name: "Close panel",
+      exact: true,
+    });
+    await expect(guideClose).toBeFocused();
+    releaseRefresh();
+    await expect(page.locator(".ec-inspector-head h2")).toHaveText(saved.title);
+    await expect(page.locator(".ec-detail")).toBeEnabled();
+    await expect(page.getByRole("dialog")).toContainText("Design basis");
+    await expect(guideClose).toBeFocused();
+    await page.keyboard.press("Escape");
+    await expect(
+      page.getByRole("button", { name: "Page guide", exact: true }),
+    ).toBeFocused();
+    await page
+      .getByRole("button", { name: "Close inspector", exact: true })
+      .click();
+    await expect(page.locator(`#ec-record-${basis.id}`)).toBeFocused();
+    await page.locator(`#ec-record-${basis.id}`).click();
+    await expect(page.locator(".ec-inspector-head h2")).toBeFocused();
   } finally {
     releaseRead();
     releaseSave();
+    releaseRefresh();
     await page.unrouteAll({ behavior: "wait" });
     await s.dispose();
   }

@@ -746,7 +746,7 @@ test("ES07 populated 0061 upgrade preserves complete commercial/conversion/nativ
   );
   assert.deepEqual(
     after.filter((r) => r.version > 61).map((r) => r.version),
-    [62],
+    [62, 63],
   );
   await migrate();
   await seed();

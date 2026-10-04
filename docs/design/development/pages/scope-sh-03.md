@@ -38,4 +38,6 @@ Opening or reading a notice never changes source status. Source completion remai
 
 Each notice retains event identity/time and source version. Current text and access are resolved again when opened. Inbox is a bounded slice of 200 notices, with a visible limit; owned obligations are read independently.
 
+Repeated events share one fresh authoritative Activity read within the same inbox response, with at most four reads in flight. No source content or authority is cached between requests. Preserve each event's ordering, personal state and immutable source version. The bell and full inbox retain explicit loading and partial/denied states. [Bounded read decision](../../../decisions/shared-notification-read-efficiency.md) and [PR #344 evidence](../../../testing/evidence/quotation-supply-followup/README.md) record this performance repair separately from visual acceptance.
+
 [SH verification](../../../testing/evidence/sh-platform/README.md) records actual checks, inspected captures and CI repairs; [handover](../../../delivery/sh-platform-handover.md) records scope and dependencies. Images above predate the merged development-workspace shell controls and require a fresh paired review for that integration. No review fingerprint or owner acceptance is claimed. The article `guide.sh.03` remains Draft.

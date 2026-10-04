@@ -62,8 +62,11 @@ export type Notice = {
   stale: boolean;
   category: "OwnedWork";
 };
-async function resolve(p: Principal, row: NoticeRow): Promise<Notice> {
-  const a = await readActivity(p, row.source_id);
+function notice(
+  p: Principal,
+  row: NoticeRow,
+  a: Awaited<ReturnType<typeof readActivity>>,
+): Notice {
   return {
     ...row,
     event_at: row.event_at.toISOString(),
@@ -79,6 +82,9 @@ async function resolve(p: Principal, row: NoticeRow): Promise<Notice> {
     stale: row.source_version !== null && row.source_version !== a.version,
     category: "OwnedWork",
   };
+}
+async function resolve(p: Principal, row: NoticeRow): Promise<Notice> {
+  return notice(p, row, await readActivity(p, row.source_id));
 }
 const selectNotices = `SELECT n.id,n.source_id,n.source_version,n.event_at,coalesce(s.version,0) AS version,coalesce(s.is_read,false) AS is_read,coalesce(s.archived,false) AS archived
  FROM ppo.notification_events n LEFT JOIN ppo.notification_states s ON (s.workspace_id,s.user_id,s.notification_id)=(n.workspace_id,n.recipient_id,n.id)`;
@@ -99,12 +105,30 @@ export async function notificationInbox(p: Principal, input: unknown = {}) {
   ).rows;
   const items: Notice[] = [];
   let failures = 0;
-  for (const row of rows.slice(0, limit))
-    try {
-      items.push(await resolve(p, row));
-    } catch (e) {
-      if (!(e instanceof AppError && [403, 404].includes(e.status))) failures++;
+  // Historical events share one current, authoritative source read in this
+  // response. Never retain it across requests or bypass the Activity reader.
+  const current = new Map<string, ReturnType<typeof readActivity>>();
+  const window = rows.slice(0, limit);
+  for (let offset = 0; offset < window.length; offset += 4) {
+    const batch = await Promise.allSettled(
+      window.slice(offset, offset + 4).map(async (row) => {
+        let source = current.get(row.source_id);
+        if (!source) {
+          source = readActivity(p, row.source_id);
+          current.set(row.source_id, source);
+        }
+        return notice(p, row, await source);
+      }),
+    );
+    for (const result of batch) {
+      if (result.status === "fulfilled") items.push(result.value);
+      else if (!(
+        result.reason instanceof AppError &&
+        [403, 404].includes(result.reason.status)
+      ))
+        failures++;
     }
+  }
   // Required work is independently read from source obligations, including records with no notice.
   const obligations = (
     await database().query(

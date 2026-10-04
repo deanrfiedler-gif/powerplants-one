@@ -13,7 +13,7 @@ import {
 } from "../helpers/engineering-changes";
 import type { SignIn } from "../helpers/engineering-materials";
 import { finishApiReadsForTeardown, retainApiReadsForTeardown } from "../helpers/browser-read-drain";
-import { navigateToMyWork } from "../helpers/my-work-navigation";
+import { navigateToMyWork, resizeMyWork } from "../helpers/my-work-navigation";
 
 test.beforeEach(async ({ page, baseURL }) => {
   await retainApiReadsForTeardown(page);
@@ -230,19 +230,21 @@ test("SH review perspectives, responsive geometry and current My Work interiors"
   page,
 }, info) => {
   test.setTimeout(180000); // Seven widths × five routes plus six review perspectives.
-  for (const width of [1440, 1280, 1024, 768, 430, 390, 320]) {
-    await page.setViewportSize({ width, height: 900 });
-    for (const path of [
-      "/work",
-      "/work/actions",
-      "/work/updates",
-      "/work/reviews",
-      "/search?q=SYN",
-    ]) {
-      if (path === "/work" || path === "/work/actions")
-        await navigateToMyWork(page, path);
-      else
-        await page.goto(path);
+  // Exercise each mounted page's real reflow. Rebooting every page for every
+  // width adds thirty full navigations without adding a viewport assertion.
+  for (const path of [
+    "/work",
+    "/work/actions",
+    "/work/updates",
+    "/work/reviews",
+    "/search?q=SYN",
+  ]) {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    if (path === "/work" || path === "/work/actions")
+      await navigateToMyWork(page, path);
+    else await page.goto(path);
+    for (const width of [1440, 1280, 1024, 768, 430, 390, 320]) {
+      await resizeMyWork(page, { width, height: 900 });
       await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
       if (path.startsWith("/search"))
         await expect(page.getByText(/results on this page/)).toBeVisible();

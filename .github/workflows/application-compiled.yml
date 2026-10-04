@@ -16,8 +16,32 @@ defaults:
 jobs:
   compiled:
     name: Desktop and mobile browser suite against the compiled application
+    needs: compiled_suites
+    if: always()
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    timeout-minutes: 5
+    steps:
+      - name: Require every compiled proof group to complete successfully
+        env:
+          PPO_SUITE_RESULT: ${{ needs.compiled_suites.result }}
+        run: test "$PPO_SUITE_RESULT" = success
+
+  compiled_suites:
+    name: Compiled application ${{ matrix.suite }} proof
+    runs-on: ubuntu-24.04
+    # The complete broad invocation keeps its original limit. Independent
+    # retained fixtures and process restarts own a separate disposable database.
+    timeout-minutes: ${{ matrix.timeout_minutes }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - suite: browser
+            timeout_minutes: 60
+            artifact_name: compiled-application-browser-evidence
+          - suite: retained
+            timeout_minutes: 25
+            artifact_name: compiled-application-retained-evidence
     services:
       postgres:
         image: postgres:16.15
@@ -74,19 +98,19 @@ jobs:
           npm run db:seed
           npm run db:health
       - name: Desktop and mobile browser checks against the compiled application
-        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
+        if: ${{ matrix.suite == 'browser' && !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
           PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/compiled-browser/results.json
         run: |
           echo "Compiled build ${{ steps.build.outputs.build_id }} for source ${PPO_SOURCE_HEAD}"
           npx playwright test --config=playwright.compiled.config.ts --reporter=list,json
       - name: Scheduling Steps 4–5 isolated publication, recovery and hold journeys
-        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' && steps.build.outcome == 'success' }}
+        if: ${{ matrix.suite == 'retained' && !cancelled() && steps.database_setup.outcome == 'success' && steps.build.outcome == 'success' }}
         env:
           PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/scheduling-step4-browser/results.json
         run: node --env-file=.env.local node_modules/@playwright/test/cli.js test --config=playwright.scheduling.config.ts --output verification-evidence/scheduling-step4-browser --reporter=list,json
       - name: Retain timer originals across real process restarts
-        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' && steps.build.outcome == 'success' }}
+        if: ${{ matrix.suite == 'retained' && !cancelled() && steps.database_setup.outcome == 'success' && steps.build.outcome == 'success' }}
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
         run: |
@@ -121,7 +145,7 @@ jobs:
           cp tmp/field-timer-restart/verified.json tmp/field-timer-restart/before.png tmp/field-timer-restart/after.png verification-evidence/field-timer-restart/
           cp tmp/field-timer-restart/zoom.json tmp/field-timer-restart/zoom-page.png tmp/field-timer-restart/zoom-dialog.png verification-evidence/field-timer-restart/
       - name: Scheduling policy originals across app and PostgreSQL restart
-        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' && steps.build.outcome == 'success' }}
+        if: ${{ matrix.suite == 'retained' && !cancelled() && steps.database_setup.outcome == 'success' && steps.build.outcome == 'success' }}
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
           PPO_POLICY_RESTART_DIRECTORY: ${{ runner.temp }}/ppo-scheduling-policy-restart
@@ -162,7 +186,7 @@ jobs:
         if: ${{ always() && steps.browser_review.outcome == 'success' }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: compiled-application-browser-evidence
+          name: ${{ matrix.artifact_name }}
           path: |
             test-results/
             verification-evidence/

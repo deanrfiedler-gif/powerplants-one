@@ -1,4 +1,5 @@
 "use client";
+import { SupplyFollowupQueue } from "../../components/quotation-supply-followup";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -126,6 +127,7 @@ function Workspace({ slug }: { slug: string }) {
       className="supply-workspace"
       aria-label={page.title}
     >
+      {slug === "changes" && <SupplyFollowupQueue />}
       <header className="supply-header">
         <div>
           <p className="supply-eyebrow">
@@ -286,7 +288,10 @@ function Workspace({ slug }: { slug: string }) {
           aria-label="Selected Supply Chain record"
         >
           {selected && (
-            <Button className="supply-back-to-list" onClick={() => query("record", "", true)}>
+            <Button
+              className="supply-back-to-list"
+              onClick={() => query("record", "", true)}
+            >
               Back to worklist
             </Button>
           )}

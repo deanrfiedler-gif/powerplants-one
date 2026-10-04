@@ -213,3 +213,7 @@ The [E2 decision package](../decisions/estimating-e2-rules.md), [detailed design
 ## 13. Subsequent Quotation Builder design
 
 The 9 September [Quotation Builder design](quotation-builder-design.md) and [decision](../decisions/quotation-builder-design.md) extend the quotation authoring direction with a standalone template-first journey. All twelve reference sections map to explicit inputs; synthetic grouped pricing and exact saved drafts demonstrate the output. No application, formal issue, tax or AI implementation is introduced by that design.
+
+## Owned completed-conversion Supply follow-up — 4 October 2026
+
+The [SYN-ES07-03 contract](../contracts/quotation-supply-followup.md) implements attributable referral, named-owner acceptance/return/hold, immutable shared-allocation review and separately applied native outcomes. It reuses quantity-only `Supply:Allocate` on already Approved demand, retaining allocation identity and Incoming/Usable basis, including native zero. No demand class, ERP reservation, supplier commitment or stock movement changes. Returned evidence requires explicit new ES-07 disposition; Activities and Supply outcomes do not automatically clear quotation exceptions. Prior evidence and operational holds remain. The contract and execution ledger distinguish implementation from acceptance and deployment.

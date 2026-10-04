@@ -1,5 +1,8 @@
 # Saved-estimate review implementation handover
 
+**Current reconciliation, 4 October 2026:** #343 is merged as `4efce794bd688cad854388d44305123c828a4c23`. Its final PR head `b88147451a493ce1cef148215e8028a97a0f7ccf` passed all 26 checks: 582 units, 740 PostgreSQL cases and both broad browser runs with 570 passed / 79 retained skips each. Post-merge checks and deployment are separate. ES-04–07 remain integrated. The current [owned Supply follow-up](quotation-supply-followup-handover.md) implements exact referral, receiving, allocation review/action and returned evidence under a bounded synthetic contract. Earlier pre-merge wording is retained as historical evidence.
+
+
 **Current reconciliation, 4 October 2026:** ES-04 #338, ES-05 #340, ES-06 #341 and ES-07 #342 are merged. Refreshed main is `a32b3b53c45bdc74061f3612c15d71c0544504d8`; #342 final head `2edcf91dab9245c4ead866920463ce902fabe267` passed all 25 checks, including 580 units and 727 PostgreSQL cases across both mandatory isolated shards. Earlier pre-merge statements retain their dated checkpoint meaning. The current [completed-conversion disposition decision](../decisions/quotation-disposition-native.md) adds explicit retention, continuing holds and eligible native Forecast quantity revision. Operational policy, owner acceptance and deployment remain separate.
 
 

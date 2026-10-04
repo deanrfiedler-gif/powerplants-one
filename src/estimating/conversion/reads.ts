@@ -1,3 +1,5 @@
+import { followupContext } from "../supply-followup/context";
+import { followupAvailable } from "../supply-followup/authority";
 import type { Principal } from "../../platform/identity";
 import { transaction } from "../../platform/database";
 import { AppError } from "../../platform/errors";
@@ -25,6 +27,8 @@ export async function readConversion(
         ? d
         : await conversionContext(c, p, originalRevision);
     const dispositions = [];
+    const followups = [];
+    const supplySchema = await followupAvailable(c);
     const dispositionSchema = (
       await c.query(
         "SELECT to_regclass('ppo.quote_disposition_events') present",
@@ -32,9 +36,27 @@ export async function readConversion(
     ).rows[0].present;
     for (const target of dispositionSchema ? original.targets : []) {
       await dispositionHistoryAuthority(c, p, target.target_id);
-      dispositions.push(
-        await dispositionTarget(c, p, original, target.target_id),
+      const disposition = await dispositionTarget(
+        c,
+        p,
+        original,
+        target.target_id,
       );
+      dispositions.push(disposition);
+      if (supplySchema) {
+        const { supply_followup: _returned, ...basis } =
+          disposition.basis as typeof disposition.basis & {
+            supply_followup?: unknown;
+          };
+        void _returned;
+        followups.push(
+          await followupContext(c, p, originalRevision, target.target_id, {
+            context: original,
+            basis,
+            resolved: disposition.status === "Resolved",
+          }),
+        );
+      }
     }
     let canWrite = false;
     try {
@@ -69,6 +91,7 @@ export async function readConversion(
       executions: d.executions,
       targets: d.targets,
       dispositions,
+      followups,
       original_conversion_revision: originalRevision,
       policy: conversionPolicy,
       can_write: canWrite,

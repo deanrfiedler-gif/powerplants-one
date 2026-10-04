@@ -32,7 +32,7 @@ export function QuotationDispositions({
     d.dispositions.find((t) => t.target_id === targetId) ?? d.dispositions[0];
   if (!t) return null;
   return (
-    <section className="release-panel">
+    <section className="release-panel" id="completed-dispositions">
       <h2>5. Disposition of completed targets</h2>
       <p>
         The original conversion remains completed. Review each affected target

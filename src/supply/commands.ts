@@ -322,69 +322,88 @@ export async function allocate(p: Principal, input: unknown) {
     p,
     cmd,
     "Supply:Allocate",
-    async (c) => ({
-      d: await supplyRecord(c, p, cmd.demand_id, "supply.coordinate"),
-      s: await supplyRecord(c, p, cmd.supply_id, "supply.coordinate"),
-    }),
-    async (c, { d, s }) => {
-      currentVersion(d.version, cmd.demand_version);
-      currentVersion(s.version, cmd.supply_version);
-      const old = (
-        await c.query(
-          "SELECT * FROM ppo.supply_allocations WHERE workspace_id=$1 AND id=$2",
-          [p.workspace_id, cmd.id],
-        )
-      ).rows[0];
-      if (old) {
-        if (old.demand_id !== d.id || old.supply_id !== s.id)
-          throw unavailable();
-        currentVersion(old.version, cmd.expected_version);
-      } else if (cmd.expected_version !== null) throw unavailable();
-      if (
-        d.company_id !== s.company_id ||
-        d.item !== s.item ||
-        d.unit !== s.unit ||
-        cmd.unit !== d.unit
-      )
-        invalid(
-          "unit",
-          "An allocation needs the same company, item and exact unit.",
-        );
-      if (old)
-        await c.query(
-          "UPDATE ppo.supply_allocations SET quantity=$3,version=version+1,reason=$4,updated_by=$5,updated_at=clock_timestamp() WHERE workspace_id=$1 AND id=$2",
-          [p.workspace_id, cmd.id, cmd.quantity, cmd.reason, p.actor_id],
-        );
-      else
-        await insert(c, "supply_allocations", {
-          id: cmd.id,
-          workspace_id: p.workspace_id,
-          company_id: d.company_id,
-          demand_id: d.id,
-          supply_id: s.id,
-          quantity: cmd.quantity,
-          unit: cmd.unit,
-          basis: cmd.basis,
-          reason: cmd.reason,
-          updated_by: p.actor_id,
-        });
-      const saved = await touch(c, p, d, cmd.reason);
-      await touch(c, p, s, cmd.reason);
-      await impacts(
+    async (c) => {
+      await supplyRecord(c, p, cmd.demand_id, "supply.coordinate");
+      await supplyRecord(c, p, cmd.supply_id, "supply.coordinate");
+      const { nativeFollowupReceiptAuthority } =
+        await import("../estimating/supply-followup/authority");
+      await nativeFollowupReceiptAuthority(
         c,
         p,
-        saved,
-        cmd.reason,
-        String(d.version),
-        String(saved.version),
-        "allocation",
+        cmd.demand_id,
+        cmd.operation_id,
       );
-      return result(saved, { allocation_id: cmd.id });
     },
+    async (c) =>
+      result(await allocateInTransaction(c, p, cmd), { allocation_id: cmd.id }),
     "SupplyRecord",
     "SupplyRecorded",
   );
 }
+// Same native validation, conservation guards, history and impacts inside a caller's
+// locked transaction. The caller records the original Supply:Allocate receipt atomically.
+export async function allocateInTransaction(
+  c: PoolClient,
+  p: Principal,
+  input: unknown,
+) {
+  const cmd = allocationCommand(input);
+  const d = await supplyRecord(c, p, cmd.demand_id, "supply.coordinate");
+  const s = await supplyRecord(c, p, cmd.supply_id, "supply.coordinate");
+  currentVersion(d.version, cmd.demand_version);
+  currentVersion(s.version, cmd.supply_version);
+  const old = (
+    await c.query(
+      "SELECT * FROM ppo.supply_allocations WHERE workspace_id=$1 AND id=$2",
+      [p.workspace_id, cmd.id],
+    )
+  ).rows[0];
+  if (old) {
+    if (old.demand_id !== d.id || old.supply_id !== s.id) throw unavailable();
+    currentVersion(old.version, cmd.expected_version);
+  } else if (cmd.expected_version !== null) throw unavailable();
+  if (
+    d.company_id !== s.company_id ||
+    d.item !== s.item ||
+    d.unit !== s.unit ||
+    cmd.unit !== d.unit
+  )
+    invalid(
+      "unit",
+      "An allocation needs the same company, item and exact unit.",
+    );
+  if (old)
+    await c.query(
+      "UPDATE ppo.supply_allocations SET quantity=$3,version=version+1,reason=$4,updated_by=$5,updated_at=clock_timestamp() WHERE workspace_id=$1 AND id=$2",
+      [p.workspace_id, cmd.id, cmd.quantity, cmd.reason, p.actor_id],
+    );
+  else
+    await insert(c, "supply_allocations", {
+      id: cmd.id,
+      workspace_id: p.workspace_id,
+      company_id: d.company_id,
+      demand_id: d.id,
+      supply_id: s.id,
+      quantity: cmd.quantity,
+      unit: cmd.unit,
+      basis: cmd.basis,
+      reason: cmd.reason,
+      updated_by: p.actor_id,
+    });
+  const saved = await touch(c, p, d, cmd.reason);
+  await touch(c, p, s, cmd.reason);
+  await impacts(
+    c,
+    p,
+    saved,
+    cmd.reason,
+    String(d.version),
+    String(saved.version),
+    "allocation",
+  );
+  return saved;
+}
+
 function check(condition: boolean, message: string): asserts condition {
   if (!condition) throw new AppError(422, "InvalidTransition", message);
 }
