@@ -282,6 +282,9 @@ test("ES07 dependency native reservation reconciliation has separate review, ret
   let t = (await conversionDetail(f.owner, f.id)).followups[0];
   expect(t.reservation_dependencies[0].fact.id).toBe(f.unknown.id);
   await evidence(page);
+  await page
+    .getByText(new RegExp(`^Exact review ${t.review!.id}:`))
+    .evaluate((n) => n.scrollIntoView({ block: "center" }));
   await page.screenshot({ path: info.outputPath("reservation-review.png") });
   let sends = 0;
   let lost!: () => void;
@@ -326,6 +329,9 @@ test("ES07 dependency native reservation reconciliation has separate review, ret
       () => document.documentElement.scrollWidth <= innerWidth + 1,
     ),
   ).toBe(true);
+  await page
+    .getByText("Native reservation outcome dependencies", { exact: true })
+    .evaluate((n) => n.scrollIntoView({ block: "start" }));
   await page.screenshot({
     path: info.outputPath("reservation-return-320.png"),
   });
