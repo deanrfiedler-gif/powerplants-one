@@ -104,12 +104,16 @@ export async function nativeFollowupReceiptAuthority(
   if (!(await followupAvailable(c))) return;
   const e = (
     await c.query<FollowupEvent>(
-      "SELECT * FROM ppo.quote_supply_events WHERE workspace_id=$1 AND target_id=$2 AND command->>'operation_id'=$3 ORDER BY sequence DESC LIMIT 1",
-      [p.workspace_id, target, operation],
+      "SELECT * FROM ppo.quote_supply_events WHERE workspace_id=$1 AND command->>'operation_id'=$2 ORDER BY sequence DESC LIMIT 1",
+      [p.workspace_id, operation],
     )
   ).rows[0];
   if (!e) return;
-  if (e.action !== "Apply" || e.created_by !== p.actor_id)
+  if (
+    e.target_id !== target ||
+    e.action !== "Apply" ||
+    e.created_by !== p.actor_id
+  )
     followupConflict(
       "This native operation is reserved to its exact Supply review. Apply that review before recovering the original native receipt.",
     );

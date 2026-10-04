@@ -115,6 +115,39 @@ test("ES07 Supply real exact allocation mutation preserves shared demand and ret
     allocate(f.owner, reviewed.command),
     code("SupplyFollowupConflict"),
   );
+  const retargeted = {
+    ...f.allocations[1],
+    operation_id: reviewed.command!.operation_id,
+    expected_version: 1,
+    demand_version: otherBefore.record.version,
+    supply_version: t.basis.position[0].supply.version,
+    quantity: "7.5",
+  };
+  await assert.rejects(
+    allocate(f.owner, retargeted),
+    code("SupplyFollowupConflict"),
+  );
+  const wrongCommand = {
+    ...supplyInput("Supply"),
+    operation_id: reviewed.command!.operation_id,
+  };
+  await assert.rejects(
+    saveRecord(f.owner, wrongCommand),
+    code("InvalidRelationship"),
+  );
+  assert.equal(
+    (await database().query("SELECT 1 FROM ppo.supply_records WHERE id=$1", [
+      wrongCommand.id,
+    ])).rowCount,
+    0,
+  );
+  assert.equal(
+    (await database().query(
+      "SELECT 1 FROM ppo.operation_receipts WHERE workspace_id=$1 AND operation_id=$2",
+      [f.owner.workspace_id, reviewed.command!.operation_id],
+    )).rowCount,
+    0,
+  );
   const saved = await applySupply(f.owner, f.id, cmd);
   t = await currentFollowup(f);
   assert.equal(t.status, "Allocation adjusted");
@@ -150,6 +183,10 @@ test("ES07 Supply real exact allocation mutation preserves shared demand and ret
   assert.deepEqual(
     (await allocate(f.owner, reviewed.command)).receipt,
     t.outcome!.native_receipt,
+  );
+  await assert.rejects(
+    allocate(f.owner, retargeted),
+    code("SupplyFollowupConflict"),
   );
   assert.deepEqual(
     await readOperation(f.owner, reviewed.command!.operation_id),

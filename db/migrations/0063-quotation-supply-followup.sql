@@ -90,3 +90,14 @@ BEGIN
  RETURN NEW;
 END $$;
 CREATE CONSTRAINT TRIGGER quote_supply_evidence AFTER INSERT ON ppo.quote_supply_events DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION ppo.quote_supply_evidence();
+-- A reserved native operation cannot be consumed by another target or command
+-- family while its review is pending. Defer so the genuine receipt and outcome
+-- can be inserted in either order within their one atomic application.
+CREATE FUNCTION ppo.quote_supply_operation_reservation() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+ IF EXISTS(SELECT 1 FROM ppo.quote_supply_events e WHERE e.workspace_id=NEW.workspace_id AND e.action='Review' AND e.command->>'operation_id'=NEW.operation_id::text)
+ AND NOT EXISTS(SELECT 1 FROM ppo.quote_supply_events e WHERE e.workspace_id=NEW.workspace_id AND e.action='Apply' AND e.command->>'operation_id'=NEW.operation_id::text AND e.created_by=NEW.actor_id AND e.target_id=NEW.record_id AND e.native_receipt=NEW.result)
+ THEN RAISE EXCEPTION 'Reserved Supply operation requires its exact applied review and native outcome' USING ERRCODE='23514'; END IF;
+ RETURN NEW;
+END $$;
+CREATE CONSTRAINT TRIGGER quote_supply_operation_reservation AFTER INSERT ON ppo.operation_receipts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION ppo.quote_supply_operation_reservation();
