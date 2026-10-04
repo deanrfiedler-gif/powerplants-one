@@ -58,6 +58,16 @@ test("SH notification event, explicit read, source guard, grouped state and pref
   });
   expect(created.status()).toBe(201);
   await page.goto("/work/updates");
+  // The page and bell independently load the same current-authority inbox.
+  // Finish the page's existing assertion before opening the second reader;
+  // the always-visible navigation link is not a loaded-bell signal.
+  await expect(
+    page.getByRole("heading", { name: "Notifications", exact: true }),
+  ).toBeVisible();
+  await page.getByLabel("Find updates").fill(title);
+  await expect(
+    page.getByRole("button", { name: title, exact: true }),
+  ).toBeVisible();
   if (!isMobile) {
     await page
       .getByRole("button", { name: "Notifications", exact: true })
@@ -69,13 +79,6 @@ test("SH notification event, explicit read, source guard, grouped state and pref
     await page.screenshot({ path: info.outputPath("notification-bell.png") });
     await page.keyboard.press("Escape");
   }
-  await expect(
-    page.getByRole("heading", { name: "Notifications", exact: true }),
-  ).toBeVisible();
-  await page.getByLabel("Find updates").fill(title);
-  await expect(
-    page.getByRole("button", { name: title, exact: true }),
-  ).toBeVisible();
   await page.getByRole("button", { name: title, exact: true }).click();
   const detail = page.getByRole("dialog", { name: "Notification detail" });
   await expect(detail.getByText("Date needed", { exact: true })).toBeVisible();
