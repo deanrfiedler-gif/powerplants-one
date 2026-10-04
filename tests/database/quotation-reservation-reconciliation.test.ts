@@ -238,7 +238,7 @@ test("ES07 dependency current authority precedes effects, original receipts and 
   let t = await currentFollowup(f);
   const grants = (
     await database().query(
-      "DELETE FROM ppo.permission_grants WHERE actor_id=$1 AND capability='supply.coordinate' RETURNING *",
+      "DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='supply.coordinate' RETURNING *",
       [f.owner.actor_id],
     )
   ).rows;
@@ -256,7 +256,7 @@ test("ES07 dependency current authority precedes effects, original receipts and 
   const original = supplyApply({ ...t, sequence: t.sequence - 1 });
   const readGrants = (
     await database().query(
-      "DELETE FROM ppo.permission_grants WHERE actor_id=$1 AND capability='supply.read' RETURNING *",
+      "DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='supply.read' RETURNING *",
       [f.owner.actor_id],
     )
   ).rows;

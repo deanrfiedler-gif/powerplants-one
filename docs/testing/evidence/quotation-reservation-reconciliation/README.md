@@ -12,7 +12,7 @@ No open PR or suitable unfinished dependency contribution existed. The isolated 
 
 ## Execution checkpoints
 
-The first focused database run timed out its first case at the unchanged 120-second limit; four subsequent cases failed waiting for the interrupted transaction's workspace lock. No passing retry or deadline extension is claimed. A separate task-owned baseline cluster and the unchanged #344 checked tree provide a controlled comparison. Results and any repairs are appended here after execution.
+The first focused database run timed out its first case at the unchanged 120-second limit; four subsequent cases failed waiting for the interrupted transaction's workspace lock. No passing retry or deadline extension is claimed. A separate task-owned baseline cluster and the unchanged #344 checked tree provide a controlled comparison. The baseline exact-allocation case also timed out at the unchanged 120-second limit on its clean source tree and separate cluster (161.9 seconds total). This reproduces a local timeout, not proof that every subsequent error has the same cause. A targeted candidate diagnostic retains its own result. Full isolated Linux CI remains required.
 
 The initial build exposed an invalid UTF-8 byte from a Windows editing script. The new UI text was repaired to UTF-8; subsequent editing explicitly uses UTF-8. The failed build is retained outside Git. Three focused validation units pass, including exact canonical compatibility of prior #344 review payloads. A pre-final type check passed; final-source validation remains separate.
 
