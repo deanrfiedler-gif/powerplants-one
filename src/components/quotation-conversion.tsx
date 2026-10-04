@@ -18,10 +18,11 @@ import type { JournalEntry } from "../shared/lib/command-journal";
 import type { readConversion } from "../estimating/conversion/reads";
 import { resolutionStates } from "../estimating/conversion/validation";
 import "./quotation-release.css";
+import { QuotationSupplyFollowups } from "./quotation-supply-followup";
 import { QuotationDispositions } from "./quotation-disposition";
 type Detail = Awaited<ReturnType<typeof readConversion>>;
 const accepts = (e: JournalEntry) =>
-  /^estimating\/quotes\/[a-f0-9-]{36}\/conversion\/(receive|resolve|plan|execute|disposition-review|disposition-apply)$/.test(
+  /^estimating\/quotes\/[a-f0-9-]{36}\/conversion\/(receive|resolve|plan|execute|disposition-review|disposition-apply|supply-refer|supply-receive|supply-review|supply-apply)$/.test(
     e.path,
   ) && /^\/estimating\/quotes\/[a-f0-9-]{36}\/conversion$/.test(e.target);
 const capture = (d: Detail) => ({
@@ -607,6 +608,26 @@ function ConversionBody({
             body,
             `/${path}`,
             "Synthetic completed-conversion disposition",
+            d.revision.id,
+          );
+        }}
+      />
+      <QuotationSupplyFollowups
+        targets={d.followups}
+        actor={identity.actor_id ?? ""}
+        blocked={
+          !command.ready ||
+          command.busy ||
+          !!command.pending ||
+          !!command.accepted ||
+          !d.can_write
+        }
+        send={async (kind, body) => {
+          await command.send(
+            `${path}/${kind}`,
+            body,
+            `/${path}`,
+            "Synthetic owned Supply follow-up",
             d.revision.id,
           );
         }}

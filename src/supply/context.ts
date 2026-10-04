@@ -209,8 +209,12 @@ export async function receiptAuthority(
   if (part === "Fact:Credit" && !(await financeAllowed(c, p, r)))
     throw unavailable();
   if (operation) {
-    const { nativeDispositionReceiptAuthority } = await import("../estimating/disposition/context");
+    const { nativeDispositionReceiptAuthority } =
+      await import("../estimating/disposition/context");
     await nativeDispositionReceiptAuthority(c, p, id, operation);
+    const { nativeFollowupReceiptAuthority } =
+      await import("../estimating/supply-followup/authority");
+    await nativeFollowupReceiptAuthority(c, p, id, operation);
   }
 }
 export const captureCapability = (kind: RecordKind): Capability =>

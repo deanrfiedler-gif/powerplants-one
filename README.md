@@ -1,5 +1,8 @@
 # Powerplants One
 
+Current ES-07 continuation: [owned native Supply follow-up](docs/contracts/quotation-supply-followup.md) and [execution handover](docs/delivery/quotation-supply-followup-handover.md). Completed disposition merged in #343; source, validation, owner acceptance and deployment are distinct.
+
+
 Personal prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance. The repository is public; the application, data and hosted demo remain private and synthetic.
 
 **Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P01–P12 code merged; PT-22 synthetic recovery passed; integrated acceptance incomplete · **Deployment:** separate manual Azure run 37094645952 completed for `6e8b898` on 3 October; fresh signed-in journey, actual worker execution and managed PostgreSQL minor unverified · **Current state:** [docs/STATUS.md](docs/STATUS.md)

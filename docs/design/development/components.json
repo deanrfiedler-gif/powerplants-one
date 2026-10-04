@@ -87,7 +87,7 @@
         {
           "id": "es07-host",
           "label": "ES-07 receiving host",
-          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects."
+          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery."
         }
       ],
       "implementation": [
@@ -199,7 +199,8 @@
         "scope:ES-05",
         "route:/estimating/quotes/[id]/response",
         "route:/estimating/quotes/[id]/conversion",
-        "scope:ES-07"
+        "scope:ES-07",
+        "route:/supply/changes"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -267,6 +268,14 @@
           "expected": "Native receiving host at desktop/phone with exact recovery.",
           "actual": "Shared control consumer added; independent visual/device acceptance pending.",
           "action": "Review real host fixtures and retained reference; do not infer approval from passing tests.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-supply-followup",
+          "expected": "Paired native ES-07/SC-09 receiving, allocation and original recovery review.",
+          "actual": "Synthetic host fixtures added; owner, physical device and screen-reader review pending.",
+          "action": "Inspect compiled host states and retained references; do not infer authority or acceptance from tests.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -836,7 +845,7 @@
         {
           "id": "es07-host",
           "label": "ES-07 receiving host",
-          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects."
+          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery."
         }
       ],
       "implementation": [
@@ -919,7 +928,9 @@
         "scope:ES-05",
         "route:/estimating/quotes/[id]/response",
         "route:/estimating/quotes/[id]/conversion",
-        "scope:ES-07"
+        "scope:ES-07",
+        "scope:SC-09",
+        "route:/supply/changes"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -979,6 +990,14 @@
           "expected": "Native receiving host at desktop/phone with exact recovery.",
           "actual": "Shared control consumer added; independent visual/device acceptance pending.",
           "action": "Review real host fixtures and retained reference; do not infer approval from passing tests.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fields-supply-followup",
+          "expected": "Paired native ES-07/SC-09 receiving, allocation and original recovery review.",
+          "actual": "Synthetic host fixtures added; owner, physical device and screen-reader review pending.",
+          "action": "Inspect compiled host states and retained references; do not infer authority or acceptance from tests.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1086,7 +1105,7 @@
         {
           "id": "es07-host",
           "label": "ES-07 receiving host",
-          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects."
+          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery."
         }
       ],
       "implementation": [
@@ -1155,7 +1174,9 @@
         "scope:ES-05",
         "route:/estimating/quotes/[id]/response",
         "route:/estimating/quotes/[id]/conversion",
-        "scope:ES-07"
+        "scope:ES-07",
+        "scope:SC-09",
+        "route:/supply/changes"
       ],
       "desktop": "Submit an empty title to focus the summary, then follow its link to the field. Correct the title and save to clear the example error.",
       "mobile": "Summary and inline errors must remain visible at 320 px and 200% zoom.",
@@ -1207,6 +1228,14 @@
           "expected": "Native receiving host at desktop/phone with exact recovery.",
           "actual": "Shared control consumer added; independent visual/device acceptance pending.",
           "action": "Review real host fixtures and retained reference; do not infer approval from passing tests.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "validation-supply-followup",
+          "expected": "Paired native ES-07/SC-09 receiving, allocation and original recovery review.",
+          "actual": "Synthetic host fixtures added; owner, physical device and screen-reader review pending.",
+          "action": "Inspect compiled host states and retained references; do not infer authority or acceptance from tests.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1567,7 +1596,7 @@
         {
           "id": "es07-host",
           "label": "ES-07 receiving host",
-          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects."
+          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery."
         }
       ],
       "implementation": [
@@ -1665,7 +1694,9 @@
         "scope:ES-05",
         "route:/estimating/quotes/[id]/response",
         "route:/estimating/quotes/[id]/conversion",
-        "scope:ES-07"
+        "scope:ES-07",
+        "scope:SC-09",
+        "route:/supply/changes"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -1751,6 +1782,14 @@
           "action": "Review real host fixtures and retained reference; do not infer approval from passing tests.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "read-state-supply-followup",
+          "expected": "Paired native ES-07/SC-09 receiving, allocation and original recovery review.",
+          "actual": "Synthetic host fixtures added; owner, physical device and screen-reader review pending.",
+          "action": "Inspect compiled host states and retained references; do not infer authority or acceptance from tests.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "review": null
@@ -1773,7 +1812,7 @@
         {
           "id": "es07-host",
           "label": "ES-07 receiving host",
-          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects."
+          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery."
         }
       ],
       "implementation": [
@@ -1824,7 +1863,9 @@
         "scope:ES-05",
         "route:/estimating/quotes/[id]/response",
         "route:/estimating/quotes/[id]/conversion",
-        "scope:ES-07"
+        "scope:ES-07",
+        "scope:SC-09",
+        "route:/supply/changes"
       ],
       "desktop": "Keep a readable label with each tone; business state and tone are not equivalent.",
       "mobile": "Chips wrap without truncating operational meaning.",
@@ -1860,6 +1901,14 @@
           "expected": "Native receiving host at desktop/phone with exact recovery.",
           "actual": "Shared control consumer added; independent visual/device acceptance pending.",
           "action": "Review real host fixtures and retained reference; do not infer approval from passing tests.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "status-supply-followup",
+          "expected": "Paired native ES-07/SC-09 receiving, allocation and original recovery review.",
+          "actual": "Synthetic host fixtures added; owner, physical device and screen-reader review pending.",
+          "action": "Inspect compiled host states and retained references; do not infer authority or acceptance from tests.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -3384,7 +3433,7 @@
       "title": "Exact receiving and controlled conversion",
       "category": "Forms",
       "module": "ES",
-      "purpose": "Attributable receiving, explicit item resolution, frozen plan and atomic native Forecast demand with original recovery. Completed targets receive immutable Retain/Hold/ReviseQuantity decisions and separately applied native effects.",
+      "purpose": "Attributable receiving, explicit item resolution, frozen plan and atomic native Forecast demand with original recovery. Completed targets receive immutable Retain/Hold/ReviseQuantity decisions and separately applied native effects. Held targets enter owned Supply receiving, immutable allocation review, separate native application and returned evidence.",
       "owner": "Dean Fiedler",
       "example": null,
       "coverage": "Host example",
@@ -3448,6 +3497,21 @@
           "id": "disposition-held",
           "label": "Continuing hold",
           "description": "Approved/dependent targets need owned Supply follow-up; original effects remain."
+        },
+        {
+          "id": "supply-receiving",
+          "label": "Supply receiving",
+          "description": "Assigned owner accepts review, returns or continues hold."
+        },
+        {
+          "id": "supply-review",
+          "label": "Allocation review",
+          "description": "Exact shared Supply graph and six-decimal existing allocation proposal."
+        },
+        {
+          "id": "supply-outcome",
+          "label": "Returned evidence",
+          "description": "Original native receipt and resulting versions; explicit ES-07 reassessment remains separate."
         }
       ],
       "implementation": [
@@ -3458,6 +3522,14 @@
         {
           "path": "src/components/quotation-disposition.tsx",
           "symbol": "QuotationDispositions"
+        },
+        {
+          "path": "src/components/quotation-supply-followup.tsx",
+          "symbol": "QuotationSupplyFollowups"
+        },
+        {
+          "path": "src/components/quotation-supply-followup.tsx",
+          "symbol": "SupplyFollowupQueue"
         }
       ],
       "dependencies": [
@@ -3468,7 +3540,11 @@
         "docs/contracts/quotation-conversion.md",
         "src/shared/ui/use-recoverable-command.ts",
         "src/estimating/disposition/context.ts",
-        "src/estimating/disposition/service.ts"
+        "src/estimating/disposition/service.ts",
+        "src/estimating/supply-followup/context.ts",
+        "src/estimating/supply-followup/service.ts",
+        "docs/contracts/quotation-supply-followup.md",
+        "docs/decisions/quotation-supply-followup-native.md"
       ],
       "reference": {
         "path": "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",
@@ -3478,12 +3554,14 @@
       "specification": "docs/design/development/components/quotation-conversion.md",
       "used_on": [
         "route:/estimating/quotes/[id]/conversion",
-        "scope:ES-07"
+        "scope:ES-07",
+        "scope:SC-09",
+        "route:/supply/changes"
       ],
-      "desktop": "One shell scroll owner; exact binding, recovery, five decision regions, source/target review and immutable history.",
+      "desktop": "One shell scroll owner; exact binding, recovery, six decision regions, source/target review and immutable history.",
       "mobile": "Stacked panels at 390/320 px; wrap identities and preserve labelled fields and original recovery above forms.",
       "keyboard": "Native labelled inputs, shared buttons, visible focus and error focus; no drag-only decision.",
-      "limitations": "Actual fixtures in tests/browser/quotation-conversion.spec.ts. Supply Demand Forecast only; no operational master, ERP order, customer signature or work authority. Positive Forecast quantity revision only; dependent/Approved target changes held. Disposition host examples use actual compiled synthetic fixtures.",
+      "limitations": "Actual fixtures in tests/browser/quotation-conversion.spec.ts. Supply Demand Forecast only; no operational master, ERP order, customer signature or work authority. Positive Forecast quantity revision only; dependent/Approved target changes held. Disposition host examples use actual compiled synthetic fixtures. Existing allocation quantity adjustment requires an already Approved demand; zero retains native identity and class. No ERP reservation release or cancellation. See tests/browser/quotation-supply-followup.spec.ts.",
       "gaps": [
         {
           "id": "es07-native-acceptance",
@@ -3498,6 +3576,14 @@
           "expected": "Paired owner/device review of source-to-disposition native flow.",
           "actual": "Bounded native Forecast Retain/ReviseQuantity/Hold extension; accepted native images unavailable.",
           "action": "Review original/current evidence, recovery and hold explanations against the adopted contract.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "quotation-conversion-supply-followup",
+          "expected": "Paired native ES-07/SC-09 receiving, allocation and original recovery review.",
+          "actual": "Synthetic host fixtures added; owner, physical device and screen-reader review pending.",
+          "action": "Inspect compiled host states and retained references; do not infer authority or acceptance from tests.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

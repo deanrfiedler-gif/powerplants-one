@@ -1,0 +1,15 @@
+# ES-07 owned Supply follow-up handover
+
+<!-- versioning: git; committed history is authoritative -->
+
+Owner: Dean Fiedler. 4 October 2026. Source presence, completed runtime proof, final PR-head CI, visual review, owner acceptance and deployment are separate.
+
+Main was refreshed to #343 merge `4efce794bd688cad854388d44305123c828a4c23`. GitHub confirms its final checked head `b88147451a493ce1cef148215e8028a97a0f7ccf` and 26 successful checks. Earlier conversion/disposition ledgers remain unchanged historical evidence. This isolated contribution preserves existing worktrees, unfinished Excel import and retained restart databases.
+
+The [adopted bounded contract](../contracts/quotation-supply-followup.md) adds attributable referral from an exact held completed conversion, assigned Supply receiving at `/supply/changes`, explicit acceptance/return/hold, immutable actual allocation-position review and separately applied outcomes. Supported native action is quantity-only revision of one existing allocation on already Approved demand using the original Supply command, exact versions/units and conservation. Zero retains allocation identity and has no ERP release/cancellation meaning. Consequential targets retain useful continuing-hold decisions.
+
+Every outcome returns to the exact quotation exception. A fresh explicit #343 review/application is required to resolve current evidence. Original conversion, issued/Draft bytes, original allocations/histories, receipts and other demands remain. Supply impacts and operational holds remain separately owned. Owner reassignment and corrections preserve their complete predecessor chains. Missing receipts are inconclusive and recoverable originals take precedence over replacement work.
+
+Local actual restart recovers 26 exact original receipts and four unchanged output files. Four compiled HTTP cases pass. Local documentation/studio/lint/type/build checks pass; three Windows unit failures reproduce on unchanged main. The final dedicated workflow proves 16 PostgreSQL and 17 browser/shared-control cases in addition to HTTP/restart; its final-head outcome remains separate. Actual local and CI results, failures and repairs are recorded in the [execution ledger](../testing/evidence/quotation-supply-followup/README.md); queued/running checks are not passing results. No merge, deployment, operational transaction or external message is included. Accepted native imagery, independent visual/device/screen-reader and owner acceptance remain outstanding.
+
+Next concrete programme increment: owner-led acceptance of this receiving-to-return journey, followed by the next separately adopted Supply dependency workflow for consequential purchasing/fulfilment/child evidence. Keep class-change, reversal, cancellation and additional target semantics under their owning contracts; Excel import and ES-09/10 remain separate programme work. Operational authority, signing, expiry/withdrawal, pricing/tax/FX, item governance and live integrations remain unresolved.

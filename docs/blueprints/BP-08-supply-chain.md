@@ -56,3 +56,7 @@ Use the current shell and r20 register/detail/review patterns, semantic navy/gre
 The SC-08 r01 uploaded source report records missing authoring files and different HTML hashes. Those historical bytes and warnings are unchanged. Native tests are new implementation evidence and never retroactively verify the standalone design.
 
 See [implementation handover](../delivery/supply-chain-native-handover.md) for actual unit/database/HTTP/browser checks, captures, commit IDs and limits. Passing tests do not grant owner acceptance, operational policy approval, deployment or production readiness. AT-16/AT-29/AT-31 business acceptance remains separate.
+
+## Owned completed-conversion Supply follow-up — 4 October 2026
+
+The [SYN-ES07-03 contract](../contracts/quotation-supply-followup.md) implements attributable referral, named-owner acceptance/return/hold, immutable shared-allocation review and separately applied native outcomes. It reuses quantity-only `Supply:Allocate` on already Approved demand, retaining allocation identity and Incoming/Usable basis, including native zero. No demand class, ERP reservation, supplier commitment or stock movement changes. Returned evidence requires explicit new ES-07 disposition; Activities and Supply outcomes do not automatically clear quotation exceptions. Prior evidence and operational holds remain. The contract and execution ledger distinguish implementation from acceptance and deployment.

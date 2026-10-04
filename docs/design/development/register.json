@@ -1395,7 +1395,9 @@
       "guide_key": "guide.es.07",
       "design_path": "docs/design/development/pages/scope-es-07.md",
       "html_path": "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/quotation-supply-followup/supply-followup-desktop.png"
+      ],
       "dependencies": [
         "src/components/quotation-conversion.tsx",
         "src/components/quotation-release.css",
@@ -1406,11 +1408,16 @@
         "src/components/quotation-disposition.tsx",
         "src/estimating/disposition/context.ts",
         "src/estimating/disposition/service.ts",
-        "docs/decisions/quotation-disposition-native.md"
+        "docs/decisions/quotation-disposition-native.md",
+        "src/components/quotation-supply-followup.tsx",
+        "src/estimating/supply-followup/context.ts",
+        "src/estimating/supply-followup/service.ts",
+        "docs/contracts/quotation-supply-followup.md",
+        "docs/decisions/quotation-supply-followup-native.md"
       ],
-      "scope_status": "Bounded native conversion and completed-target disposition; operational policy not configured",
+      "scope_status": "Native synthetic owned Supply referral, reviewed allocation adjustment and explicit ES-07 reassessment; operational policy not configured",
       "visual_status": "Needs review",
-      "functional_status": "See quotation-disposition execution ledger; owner acceptance separate",
+      "functional_status": "See quotation-supply-followup execution ledger; source, functional proof and owner acceptance separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -1419,7 +1426,9 @@
       "related_keys": [
         "scope:ES-06",
         "scope:SC-01",
-        "route:/estimating/quotes/[id]/conversion"
+        "route:/estimating/quotes/[id]/conversion",
+        "scope:SC-09",
+        "route:/supply/changes"
       ],
       "reviewer": null
     },
@@ -3500,11 +3509,16 @@
         "src/supply/components/forms.tsx",
         "src/supply/components/recovery.tsx",
         "src/supply/guide.ts",
-        "src/app/styles/supply.css"
+        "src/app/styles/supply.css",
+        "src/components/quotation-supply-followup.tsx",
+        "src/estimating/supply-followup/context.ts",
+        "src/estimating/supply-followup/service.ts",
+        "docs/contracts/quotation-supply-followup.md",
+        "docs/decisions/quotation-supply-followup-native.md"
       ],
-      "scope_status": "native synthetic implementation; review pending",
+      "scope_status": "Native synthetic owned Supply referral, reviewed allocation adjustment and explicit ES-07 reassessment; operational policy not configured",
       "visual_status": "Needs review",
-      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "functional_status": "See quotation-supply-followup execution ledger; source, functional proof and owner acceptance separate",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -3513,7 +3527,9 @@
       "related_keys": [
         "scope:SC-01",
         "scope:SC-04",
-        "route:/supply/changes"
+        "route:/supply/changes",
+        "scope:ES-07",
+        "route:/estimating/quotes/[id]/conversion"
       ],
       "reviewer": null
     },
@@ -10549,11 +10565,16 @@
         "src/supply/components/forms.tsx",
         "src/supply/components/recovery.tsx",
         "src/supply/guide.ts",
-        "src/app/styles/supply.css"
+        "src/app/styles/supply.css",
+        "src/components/quotation-supply-followup.tsx",
+        "src/estimating/supply-followup/context.ts",
+        "src/estimating/supply-followup/service.ts",
+        "docs/contracts/quotation-supply-followup.md",
+        "docs/decisions/quotation-supply-followup-native.md"
       ],
-      "scope_status": "native synthetic implementation; review pending",
+      "scope_status": "Native synthetic owned Supply referral, reviewed allocation adjustment and explicit ES-07 reassessment; operational policy not configured",
       "visual_status": "Needs review",
-      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "functional_status": "See quotation-supply-followup execution ledger; source, functional proof and owner acceptance separate",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -10561,7 +10582,9 @@
       "owner": "Dean Fiedler",
       "build_rank": null,
       "related_keys": [
-        "scope:SC-09"
+        "scope:SC-09",
+        "scope:ES-07",
+        "route:/estimating/quotes/[id]/conversion"
       ]
     },
     {
@@ -11364,7 +11387,9 @@
       "guide_key": "guide.route-estimating-quotes-id-conversion",
       "design_path": "docs/design/development/pages/route-estimating-quotes-id-conversion.md",
       "html_path": "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/testing/evidence/quotation-supply-followup/supply-followup-desktop.png"
+      ],
       "dependencies": [
         "src/components/quotation-conversion.tsx",
         "src/components/quotation-release.css",
@@ -11375,11 +11400,16 @@
         "src/components/quotation-disposition.tsx",
         "src/estimating/disposition/context.ts",
         "src/estimating/disposition/service.ts",
-        "docs/decisions/quotation-disposition-native.md"
+        "docs/decisions/quotation-disposition-native.md",
+        "src/components/quotation-supply-followup.tsx",
+        "src/estimating/supply-followup/context.ts",
+        "src/estimating/supply-followup/service.ts",
+        "docs/contracts/quotation-supply-followup.md",
+        "docs/decisions/quotation-supply-followup-native.md"
       ],
-      "scope_status": "Bounded native conversion and completed-target disposition; operational policy not configured",
+      "scope_status": "Native synthetic owned Supply referral, reviewed allocation adjustment and explicit ES-07 reassessment; operational policy not configured",
       "visual_status": "Needs review",
-      "functional_status": "See quotation-disposition execution ledger; owner acceptance separate",
+      "functional_status": "See quotation-supply-followup execution ledger; source, functional proof and owner acceptance separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -11389,7 +11419,9 @@
       "related_keys": [
         "scope:ES-06",
         "scope:ES-07",
-        "scope:SC-01"
+        "scope:SC-01",
+        "scope:SC-09",
+        "route:/supply/changes"
       ]
     }
   ]

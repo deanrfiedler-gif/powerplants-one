@@ -60,3 +60,7 @@ The contract and cases are prepared; none is an executed SCM/AT acceptance resul
 ## Native implementation follow-through — 25 September 2026
 
 The earlier candidate/design status above is historical. [BP-08](../blueprints/BP-08-supply-chain.md) and [ADR-0049](../decisions/ADR-0049-native-supply-chain.md) define the authorised native synthetic receiving implementation. [Handover](../delivery/supply-chain-native-handover.md) records actual verification. ERP mappings, source freshness policy and operational authority remain unresolved; no age threshold or live command is inferred.
+
+## Owned completed-conversion Supply follow-up — 4 October 2026
+
+The [SYN-ES07-03 contract](quotation-supply-followup.md) implements attributable referral, named-owner acceptance/return/hold, immutable shared-allocation review and separately applied native outcomes. It reuses the existing quantity-only `Supply:Allocate` transition on already Approved demand, retaining allocation identity and Incoming/Usable basis, including native zero. No demand class, ERP reservation, supplier commitment or stock movement changes. Returned evidence requires explicit new ES-07 disposition; Activities and Supply outcomes do not automatically clear quotation exceptions. Prior evidence and operational holds remain. The contract and execution ledger distinguish implementation from acceptance and deployment.

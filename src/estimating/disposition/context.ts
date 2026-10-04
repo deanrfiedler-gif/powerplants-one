@@ -1,3 +1,4 @@
+import { returnedSupplyBasis } from "../supply-followup/context";
 import type { Principal } from "../../platform/identity";
 import type { QueryClient } from "../../platform/permissions";
 import { AppError, unavailable } from "../../platform/errors";
@@ -26,7 +27,9 @@ export type DispositionEvent = {
   predecessor_id: string | null;
   review_id: string | null;
   decision: "Retain" | "ReviseQuantity" | "Hold";
-  basis: DispositionBasis;
+  basis: DispositionBasis & {
+    supply_followup?: Awaited<ReturnType<typeof returnedSupplyBasis>>;
+  };
   basis_hash: string;
   command: ReturnType<typeof recordCommand> | null;
   review_hash: string;
@@ -47,7 +50,7 @@ export const dispositionHash = (v: unknown) =>
 export function dispositionConflict(message: string): never {
   throw new AppError(409, "DispositionConflict", message);
 }
-async function targetBasis(
+export async function targetBasis(
   c: QueryClient,
   p: Principal,
   d: Awaited<ReturnType<typeof conversionContext>>,
@@ -171,8 +174,12 @@ export async function dispositionTarget(
   d: Awaited<ReturnType<typeof conversionContext>>,
   target: string,
 ) {
-  const basis = await targetBasis(c, p, d, target),
-    hash = dispositionHash(basis);
+  const originalBasis = await targetBasis(c, p, d, target);
+  const returned = await returnedSupplyBasis(c, p, target);
+  const basis = returned
+    ? { ...originalBasis, supply_followup: returned }
+    : originalBasis;
+  const hash = dispositionHash(basis);
   const events = (
     await c.query<DispositionEvent>(
       "SELECT * FROM ppo.quote_disposition_events WHERE workspace_id=$1 AND target_id=$2 ORDER BY sequence",
@@ -220,6 +227,16 @@ export async function dispositionTarget(
       "Purchasing, reservation, fulfilment or other consequential evidence requires Supply follow-up; quantity revision is held.",
     );
   const reviewHolds: string[] = [];
+  if (
+    returned &&
+    ["Requested", "Accepted", "AdjustAllocation", "Retain", "Hold"].includes(
+      returned.decision,
+    ) &&
+    returned.event_id !== returned.outcome_id
+  )
+    reviewHolds.push(
+      "Supply follow-up remains pending. Recover or return its actual outcome before applying quotation disposition.",
+    );
   if (review && !resolved) {
     if (review.basis_hash !== hash)
       reviewHolds.push(
@@ -309,8 +326,12 @@ export async function dispositionReceiptAuthority(
 export async function dispositionEvidenceAuthority(
   c: QueryClient,
   p: Principal,
-  e: DispositionEvent,
+  e: Pick<DispositionEvent, "basis">,
 ) {
+  if ("supply_followup" in e.basis && e.basis.supply_followup) {
+    const { followupHistory } = await import("../supply-followup/authority");
+    await followupHistory(c, p, e.basis.target.id);
+  }
   for (const x of [
     ...e.basis.dependencies.supplies,
     ...e.basis.dependencies.children,
