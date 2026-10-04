@@ -632,7 +632,8 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Loading, empty, partial/unavailable, denied, stale and save-error states are distinct. An unavailable source is not a zero workload. A conflicting save requires refresh/review rather than silent overwrite."
+            "Loading, empty, partial/unavailable, denied, stale and save-error states are distinct. An unavailable source is not a zero workload. A conflicting save requires refresh/review rather than silent overwrite.",
+            "Events remain separate even when they refer to the same Activity. Each inbox refresh checks current details and access again; opening an event checks its current source. Loading remains visible until permitted results arrive, and reading a notice never completes the source work."
           ],
           "steps": [],
           "headers": [],
@@ -49077,7 +49078,8 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Loading, empty, partial/unavailable, denied, stale and save-error states are distinct. An unavailable source is not a zero workload. A conflicting save requires refresh/review rather than silent overwrite."
+            "Loading, empty, partial/unavailable, denied, stale and save-error states are distinct. An unavailable source is not a zero workload. A conflicting save requires refresh/review rather than silent overwrite.",
+            "Events remain separate even when they refer to the same Activity. Each inbox refresh checks current details and access again; opening an event checks its current source. Loading remains visible until permitted results arrive, and reading a notice never completes the source work."
           ],
           "steps": [],
           "headers": [],

@@ -8,6 +8,8 @@
 
 PR #344 head `116194e` passed 25/27 checks; its development-browser EN-02 guide assertion and dependent aggregate gate failed. A delayed post-save read reproduced the focus race on unchanged main. The same PR repairs inspector focus ownership and adds deterministic desktop/mobile coverage; fresh final-head results belong to the PR and linked execution ledger. No passing prior-head result is promoted to the repair.
 
+The next head, `9519f1c`, passed both Engineering regressions, 584 units, 756 PostgreSQL tests, the compiled broad browser suite and complete Supply restart proof. Its development-browser run failed two existing SH cases: a still-loading bell and the total responsive-tour deadline. [Bounded notification reads and retained reflow coverage](decisions/shared-notification-read-efficiency.md) address those failures in the same PR; all historical results and the separate final-head obligation remain in the execution ledger.
+
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
 ## Current work

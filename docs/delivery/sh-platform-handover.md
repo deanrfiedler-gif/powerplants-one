@@ -9,6 +9,8 @@ source_commit: ccc2251bbba9df266cac9027ddaa9418ab9abc1d
 
 # My Work and platform SH-01–SH-06 handover
 
+4 October continuation: PR #344 preserves notification events while resolving each current Activity once per request in bounded batches, and tests each mounted SH interior at all seven retained widths. [Decision](../decisions/shared-notification-read-efficiency.md) and [execution evidence](../testing/evidence/quotation-supply-followup/README.md) separate the failing CI checkpoint, unchanged-main source-read comparison, candidate proof and final-head CI. Historical results below remain unchanged; no owner acceptance or deployment is implied.
+
 Dean authorised execution of the supplied implementation prompt on 23 September 2026, with concurrent PR handling taking precedence. The clean existing worktree at `tmp/en07-change-impact` was detached at fresh main `ccc2251b`; dedicated branch `feature/sh-my-work-platform-completion` was created there after inspecting all open PRs. No unrelated working changes existed. This increment is a synthetic modular-monolith implementation, not owner acceptance, a deployed release or production integration.
 
 ## Current acceptance checkpoint — 3 October 2026
