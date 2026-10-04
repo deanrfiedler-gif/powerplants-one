@@ -6,6 +6,8 @@ Isolated `codex/quotation-disposition` extends completed native Forecast convers
 
 **Updated:** 4 October 2026. **Owner:** Dean Fiedler. Public repository; private synthetic prototype and demo. Code delivery, functional proof, visual review, owner acceptance and deployment are separate facts.
 
+The current follow-up is [PR #343](https://github.com/deanrfiedler-gif/powerplants-one/pull/343), open for review. Its final-head CI outcome is recorded in the PR validation comment/body; the execution ledger retains the first-head CR05 saved-refresh failure, its reproduction on unchanged main and the test-only repair without altered deadlines or retries.
+
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
 ## Current work

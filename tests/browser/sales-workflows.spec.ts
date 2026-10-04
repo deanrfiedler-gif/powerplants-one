@@ -402,9 +402,48 @@ test("CR05 issued source review saves attributed feedback, commercial preparatio
   await page
     .getByRole("button", { name: "Refresh review preparation", exact: true })
     .click();
+  const aftercarePath = `/api/v1/sales/aftercare/${id}`;
+  const completedPattern = `**${aftercarePath}`;
+  // CompleteReview acknowledges the command before its separate saved-record
+  // refresh. Exercise that ordering with the real response beyond the unchanged
+  // render assertion window; no receipt or record content is substituted.
+  await page.route(completedPattern, async (route) => {
+    if (route.request().method() !== "GET") return route.continue();
+    const response = await route.fetch();
+    if (response.ok() && (await response.json()).record?.state === "ReviewCompleted")
+      await new Promise((resolve) => setTimeout(resolve, 6000));
+    await route.fulfill({ response });
+  });
+  const completionResponse = page.waitForResponse(
+    (response) =>
+      new URL(response.url()).pathname === aftercarePath &&
+      response.request().method() === "POST" &&
+      response.request().postDataJSON()?.action === "CompleteReview",
+  );
+  const completedRead = page.waitForResponse(async (response) => {
+    if (
+      new URL(response.url()).pathname !== aftercarePath ||
+      response.request().method() !== "GET"
+    )
+      return false;
+    if (!response.ok()) return true;
+    return (await response.json()).record?.state === "ReviewCompleted";
+  });
   await page
     .getByRole("button", { name: "Complete customer review", exact: true })
     .click();
+  const completion = await completionResponse;
+  expect(completion.ok()).toBe(true);
+  const completionReceipt = await completion.json();
+  expect(completionReceipt).toMatchObject({ record_id: id, state: "ReviewCompleted" });
+  const completed = await completedRead;
+  expect(completed.ok()).toBe(true);
+  expect((await completed.json()).record).toMatchObject({
+    id,
+    state: "ReviewCompleted",
+    version: completionReceipt.record_version,
+  });
+  await page.unroute(completedPattern);
   await expect(
     page.getByRole("button", { name: "Open correction", exact: true }),
   ).toBeVisible();
@@ -437,7 +476,6 @@ test("CR05 issued source review saves attributed feedback, commercial preparatio
     .getByRole("button", { name: "Prepare commercial discussion", exact: true })
     .click();
   await page.getByRole("tab", { name: "Customer review", exact: true }).click();
-  const aftercarePath = `/api/v1/sales/aftercare/${id}`;
   const closureResponse = page.waitForResponse(
     (response) =>
       new URL(response.url()).pathname === aftercarePath &&
