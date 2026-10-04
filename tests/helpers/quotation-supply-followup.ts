@@ -141,3 +141,10 @@ export async function reviewedFixture(quantity = "1.375001") {
   );
   return { ...f, t: await currentFollowup(f) };
 }
+
+export const reservationReview = (t: FollowupDetail, state = "Confirmed") => ({
+  ...supplyReview(t, "ReconcileReservationOutcome"),
+  dependency_id: t.reservation_dependencies.find(x => !x.holds.length)?.fact.id,
+  outcome_state: state, observed_at: "2026-10-04T00:00:00.000Z",
+  lookup_evidence: "SYN complete lookup of exact original reservation operation",
+});

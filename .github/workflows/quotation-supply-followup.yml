@@ -49,7 +49,7 @@ jobs:
           p.write_text(p.read_text().replace('<local-password>','ppo_disposable_ci_only').replace('/ppo_synthetic','/ppo_synthetic_test'))
           PY
       - name: Owned Supply follow-up and populated upgrade PostgreSQL proof
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/quotation-supply-followup.test.ts
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/quotation-supply-followup.test.ts tests/database/quotation-reservation-reconciliation.test.ts
       - name: Compile the exact contribution
         run: npm run build
       - name: Compiled HTTP and write the restart checkpoint

@@ -41,8 +41,9 @@ import {
   acknowledgement,
   supplyReview,
   supplyApply,
+  reservationReview,
 } from "../tests/helpers/quotation-supply-followup";
-import { supplyInput } from "../tests/helpers/supply";
+import { supplyInput, supplyFact } from "../tests/helpers/supply";
 import { crmBase } from "../tests/helpers/crm";
 const dispositionProof = false;
 if (localConfig().database_name !== "ppo_synthetic_test")
@@ -303,6 +304,40 @@ try {
       command: native,
       receipt: await json(f.owner, `operations/${native.operation_id}`),
     });
+    await save(
+      `supply/records/${r.id}/facts`,
+      supplyFact(
+        "ExternalOutcome",
+        (await current()).basis.conversion.target.version,
+        {
+          source_operation: "SYN-restart-reservation-" + randomUUID(),
+          effect: "Reservation",
+          state: "Unknown",
+          lookup_evidence: "SYN original unknown response",
+        },
+      ),
+    );
+    await save(
+      conversionPath(p.id) + "/supply-review",
+      reservationReview(await current()),
+    );
+    const reservationNative = (await current()).review!.command!;
+    assert.ok("record_id" in reservationNative);
+    await save(
+      conversionPath(p.id) + "/supply-apply",
+      supplyApply(await current()),
+    );
+    const { record_id: reservationTarget, ...reservationCommand } =
+      reservationNative;
+    receipts.push({
+      actor: "coordinator",
+      path: `supply/records/${reservationTarget}/facts`,
+      command: reservationCommand,
+      receipt: await json(
+        f.owner,
+        `operations/${reservationNative.operation_id}`,
+      ),
+    });
     cd = await conversionDetail(f.owner, p.id);
     await save(
       conversionPath(p.id) + "/disposition-review",
@@ -415,12 +450,22 @@ try {
       cd.targets[0].current.quantity,
       dispositionProof ? "1.375001" : "2",
     );
-    assert.equal(cd.targets[0].current.version, 4);
+    assert.equal(cd.targets[0].current.version, 6);
     assert.equal(cd.targets[0].current.data.demand_class, "Approved");
     assert.equal(cd.dispositions[0].status, "Review required");
-    assert.equal(cd.followups[0].events.length, 5);
+    assert.equal(cd.followups[0].events.length, 7);
     assert.equal(cd.followups[0].can_apply, false);
-    assert.equal(cd.followups[0].outcome!.decision, "AdjustAllocation");
+    assert.equal(
+      cd.followups[0].reservation_dependencies[0].fact.data.state,
+      "Confirmed",
+    );
+    assert.ok(
+      cd.followups[0].adjustment_holds.some((h) => h.includes("Consequential")),
+    );
+    assert.equal(
+      cd.followups[0].outcome!.decision,
+      "ReconcileReservationOutcome",
+    );
     assert.equal(
       cd.followups[0].basis.position[0].usable_allocated,
       "9.375001",

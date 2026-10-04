@@ -145,3 +145,11 @@ Steps 1–4 require no verified ERP contract. Steps 5 and 6 cannot begin without
 ## 7. What this record does not do
 
 It does not authorise a connection, a credential, a tenant, a licence, a migration, a deployment, a customer communication or any transaction. It creates no adopted mapping and changes no existing register row. It is a list of what would have to be true, written down so that the design can be reviewed without anyone inferring that the integration exists.
+
+## Owned reservation outcome reconciliation — SYN-ES07-04
+
+The [bounded decision](../decisions/quotation-reservation-reconciliation.md) extends the existing accepted referral with ReconcileReservationOutcome. Review names a current ExternalOutcome/Reservation fact on the converted Demand in Unknown state. It freezes the same original source operation, Complete Confirmed/Failed/Absent observation, explicit UTC observation time, lookup evidence and demand version. Separate Apply uses native `Supply:Fact:ExternalOutcome`, committing the successor fact/history, original native receipt and returned outcome atomically. Original facts, referrals, decisions, receipts and output bytes remain.
+
+The review API adds `dependency_id`, `outcome_state`, `observed_at` and `lookup_evidence` only for this decision; allocation fields are null. Earlier command hashes stay unchanged. Other unknown outcomes, changed predecessors/versions/source evidence or revoked authority hold application. Unknown or partial lookup is never evidence of Absent. Retain, Return and Hold remain supported; corrections and reassignment retain predecessor lineage.
+
+This reconciles native evidence only. Demand quantity/class, shared allocations, other demands and external reservations are unchanged. Consequential allocation and Approved demand-quantity holds continue. Returned evidence requires fresh explicit ES-07 review/application; a note, Activity completion or Supply outcome cannot clear the exception. Migration 0064 adds no grants, seeds, identities or technologies. [Execution evidence](../testing/evidence/quotation-reservation-reconciliation/README.md) separates actual proof from acceptance and deployment.

@@ -1,5 +1,8 @@
 # ES-07 owned Supply follow-up handover
 
+**Current reconciliation, 4 October 2026:** #344 is merged as `3b1daba3a3738afe8b53700de2efb9e14a28d30a`; final head `16d3767bc7f6f446169b9cd74f9f0bbb9a4e6721` passed all 29 checks. Final-head evidence: 584 units, 58 HTTP, 757 PostgreSQL cases (390 + 367), both broad browser runs 580 passed / 79 retained skips each, both compiled proof groups and restart retaining 26 original receipts / four unchanged files. Post-merge checks and deployment are separate. The current [reservation reconciliation decision](../decisions/quotation-reservation-reconciliation.md) extends the owned workflow; earlier checkpoints below retain their historical meaning.
+
+
 <!-- versioning: git; committed history is authoritative -->
 
 Owner: Dean Fiedler. 4 October 2026. Source presence, completed runtime proof, final PR-head CI, visual review, owner acceptance and deployment are separate.

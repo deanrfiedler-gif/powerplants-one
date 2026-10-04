@@ -9,9 +9,35 @@ import {
   session,
   referral,
   acknowledgement,
+  reservationHttpFixture,
   supplyReview,
   supplyApply,
 } from "../helpers/quotation-supply-followup-http";
+import { reservationReview } from "../helpers/quotation-supply-followup";
+test("ES07 reservation HTTP executes only exact native evidence, preserves holds and current receipt authority",async()=>{
+  const f=await reservationHttpFixture(); const cmd=reservationReview(f.d.followups[0]);
+  const denied=await session("second-company");
+  assert.equal((await request(denied,f.path+"/supply-review",cmd)).status,404);
+  assert.equal((await request(f.owner,f.path+"/supply-review",{...cmd,quantity:"0"})).status,422);
+  const review=await json(f.owner,f.path+"/supply-review",cmd);
+  assert.deepEqual(await json(f.owner,f.path+"/supply-review",cmd),review);
+  let t=(await conversionDetail(f.owner,f.id)).followups[0];
+  const native=t.review!.command!; assert.ok("record_id" in native);
+  const {record_id,...fact}=native;
+  assert.equal((await request(f.owner,`supply/records/${record_id}/facts`,fact)).status,409);
+  const apply=supplyApply(t); const receipt=await json(f.owner,f.path+"/supply-apply",apply);
+  assert.deepEqual(await json(f.owner,`operations/${apply.operation_id}`),receipt);
+  assert.deepEqual(await json(f.owner,f.path+"/supply-apply",apply),receipt);
+  assert.equal((await request(f.owner,f.path+"/supply-apply",{...apply,reason:"changed"})).status,409);
+  t=(await conversionDetail(f.owner,f.id)).followups[0];
+  assert.equal(t.reservation_dependencies[0].fact.predecessor_id,f.unknown.id);
+  assert.equal(t.reservation_dependencies[0].fact.data.state,"Confirmed");
+  assert.equal(t.basis.position[0].usable_allocated,"10");
+  assert.ok(t.adjustment_holds.length);
+  assert.deepEqual(await json(f.owner,`supply/records/${record_id}/facts`,fact),t.outcome!.native_receipt);
+  assert.equal((await request(denied,`operations/${native.operation_id}`)).status,404);
+  assert.equal((await conversionDetail(f.owner,f.id)).dispositions[0].status,"Review required");
+});
 test("ES07 Supply HTTP exact receiving, real native allocation, scoped worklist and original recovery", async () => {
   const f = await allocatedHttpFixture(),
     other = await session("second-company"),

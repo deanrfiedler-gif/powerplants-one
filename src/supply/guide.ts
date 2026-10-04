@@ -119,7 +119,7 @@ export const supplyTasks: Record<
   "SC-09": [
     [
       "Receive quotation follow-up",
-      "Open your assigned completed-conversion referral. Accept for review, return with reasons or continue the hold. Review exact shared allocations and dependencies before retaining the position or reviewing an existing allocation quantity adjustment. Apply separately, recover the original receipt, then explicitly reassess ES-07. Acceptance grants no procurement or work authority.",
+      "Open your assigned completed-conversion referral. Accept for review, return with reasons or continue the hold. Review exact shared allocations and dependencies before retaining the position or reviewing an existing allocation quantity adjustment. Review an existing Unknown reservation outcome using complete original-operation lookup evidence and UTC observation time. Apply separately, recover the original receipt, then explicitly reassess ES-07. This records evidence only; other holds remain. Acceptance grants no procurement or work authority.",
     ],
     [
       "Compare the evidence",

@@ -766,83 +766,101 @@ export async function recordFact(p: Principal, id: string, input: unknown) {
       const r = await supplyRecord(c, p, id, factCapability(cmd.kind));
       if (cmd.kind === "Credit" && !(await financeAllowed(c, p, r)))
         throw unavailable();
+      const { nativeFollowupReceiptAuthority } =
+        await import("../estimating/supply-followup/authority");
+      await nativeFollowupReceiptAuthority(c, p, id, cmd.operation_id);
       return r;
     },
-    async (c, r) => {
-      currentVersion(r.version, cmd.expected_version);
-      const facts = await factsFor(c, p, r);
-      await validateFact(c, p, r, cmd, facts);
-      let data = cmd.data;
-      if (cmd.kind === "Assessment") {
-        const basis = await materialBasis(c, p, r, facts);
-        data = {
-          ...data,
-          state: basis.readiness.state,
-          shortage: basis.readiness.shortage,
-          basis: JSON.stringify({
-            ...basis,
-            fact_versions: currentFacts(facts).map((f) => ({
-              id: f.id,
-              version: f.version,
-            })),
-          }),
-        };
-      }
-      // Public record revisions must never copy a restricted Finance explanation.
-      const saved = await touch(
-        c,
-        p,
-        r,
-        cmd.kind === "Credit"
-          ? "Restricted Finance observation recorded"
-          : cmd.reason,
-      );
-      let activity_id: string | null = null;
-      if (cmd.kind === "Impact") {
-        activity_id =
-          facts.find((f) => f.id === cmd.predecessor_id)?.activity_id ?? null;
-        if (!activity_id) {
-          const activity: ActivityInput = {
-            id: randomUUID(),
-            company_id: r.company_id,
-            site_id: r.site_id,
-            kind: "MaterialAction",
-            owner_id: r.owner_id,
-            summary: `${r.reference}: ${data.change}. ${cmd.reason}`.slice(
-              0,
-              1900,
-            ),
-            due_at: null,
-            due_needed: true,
-            access_class: "RestrictedService",
-            links:
-              r.data.origin_kind === "Project"
-                ? [{ object_type: "Project", object_id: r.data.origin_id! }]
-                : [{ object_type: "Site", object_id: r.site_id! }],
-          };
-          await authoriseActivityInput(c, p, activity);
-          await insertActivity(c, p, activity);
-          activity_id = activity.id;
-        }
-      }
-      await addFact(c, p, saved, cmd.kind, data, { ...cmd, activity_id });
-      if (
-        ["Promise", "Receipt", "Reservation", "Substitution"].includes(cmd.kind)
-      )
-        await impacts(
-          c,
-          p,
-          saved,
-          cmd.reason,
-          String(r.version),
-          String(saved.version),
-          cmd.kind,
-        );
-      return result(saved, { fact_id: cmd.id });
-    },
+    async (c, r) => applyFact(c, p, r, cmd),
     "SupplyRecord",
     "SupplyRecorded",
   );
+}
+// Same native validation, histories and impacts inside an already locked transaction.
+// The caller must atomically record the original Supply:Fact receipt.
+export async function recordFactInTransaction(
+  c: PoolClient,
+  p: Principal,
+  id: string,
+  input: unknown,
+) {
+  const cmd = factCommand(input);
+  const r = await supplyRecord(c, p, id, factCapability(cmd.kind));
+  if (cmd.kind === "Credit" && !(await financeAllowed(c, p, r)))
+    throw unavailable();
+  return applyFact(c, p, r, cmd);
+}
+async function applyFact(
+  c: PoolClient,
+  p: Principal,
+  r: SupplyRecord,
+  cmd: ReturnType<typeof factCommand>,
+) {
+  currentVersion(r.version, cmd.expected_version);
+  const facts = await factsFor(c, p, r);
+  await validateFact(c, p, r, cmd, facts);
+  let data = cmd.data;
+  if (cmd.kind === "Assessment") {
+    const basis = await materialBasis(c, p, r, facts);
+    data = {
+      ...data,
+      state: basis.readiness.state,
+      shortage: basis.readiness.shortage,
+      basis: JSON.stringify({
+        ...basis,
+        fact_versions: currentFacts(facts).map((f) => ({
+          id: f.id,
+          version: f.version,
+        })),
+      }),
+    };
+  }
+  // Public record revisions must never copy a restricted Finance explanation.
+  const saved = await touch(
+    c,
+    p,
+    r,
+    cmd.kind === "Credit"
+      ? "Restricted Finance observation recorded"
+      : cmd.reason,
+  );
+  let activity_id: string | null = null;
+  if (cmd.kind === "Impact") {
+    activity_id =
+      facts.find((f) => f.id === cmd.predecessor_id)?.activity_id ?? null;
+    if (!activity_id) {
+      const activity: ActivityInput = {
+        id: randomUUID(),
+        company_id: r.company_id,
+        site_id: r.site_id,
+        kind: "MaterialAction",
+        owner_id: r.owner_id,
+        summary: `${r.reference}: ${data.change}. ${cmd.reason}`.slice(0, 1900),
+        due_at: null,
+        due_needed: true,
+        access_class: "RestrictedService",
+        links:
+          r.data.origin_kind === "Project"
+            ? [{ object_type: "Project", object_id: r.data.origin_id! }]
+            : [{ object_type: "Site", object_id: r.site_id! }],
+      };
+      await authoriseActivityInput(c, p, activity);
+      await insertActivity(c, p, activity);
+      activity_id = activity.id;
+    }
+  }
+  await addFact(c, p, saved, cmd.kind, data, { ...cmd, activity_id });
+  if (["Promise", "Receipt", "Reservation", "Substitution"].includes(cmd.kind))
+    await impacts(
+      c,
+      p,
+      saved,
+      cmd.reason,
+      String(r.version),
+      String(saved.version),
+      cmd.kind,
+    );
+  return result(saved, { fact_id: cmd.id });
 }
 export async function sourceReservation(
   p: Principal,

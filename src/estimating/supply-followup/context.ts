@@ -12,6 +12,7 @@ import {
 import { allocationPosition } from "./position";
 import { followupHistory, followupEvidenceAuthority } from "./authority";
 import type { FollowupBasis } from "./model";
+import { reservationDependencies } from "./dependency";
 
 export async function followupOwner(
   c: QueryClient,
@@ -119,7 +120,7 @@ export async function followupContext(
     try {
       const owner = await followupOwner(c, p, referral!.owner_id, basis);
       await followupEvidenceAuthority(c, owner, review);
-      if (review.command)
+      if (review.command && "supply_id" in review.command)
         await supplyRecord(
           c,
           owner,
@@ -190,11 +191,14 @@ export async function followupContext(
               ? "Continuing hold"
               : review.decision === "Retain"
                 ? "Position retained"
-                : "Allocation adjusted"
+                : review.decision === "ReconcileReservationOutcome"
+                  ? "Reservation outcome reconciled"
+                  : "Allocation adjusted"
             : receiving?.decision === "Accepted"
               ? "Accepted for review"
               : "Awaiting owner",
     adjustment_holds: holds,
+    reservation_dependencies: reservationDependencies(basis),
     review_holds: reviewHolds,
     can_refer: exception && !known?.resolved && heldTarget && canReplace,
     can_apply: !!review && !completed && !reviewHolds.length,

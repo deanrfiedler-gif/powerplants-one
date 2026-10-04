@@ -1,6 +1,6 @@
 import type { DispositionBasis } from "../disposition/context";
 import type { AllocationPosition } from "./position";
-import type { allocationCommand } from "../../supply/validation";
+import type { allocationCommand, factCommand } from "../../supply/validation";
 import type { OperationReceipt } from "../../platform/operations";
 export type FollowupBasis = {
   policy: "SYN-ES07-03";
@@ -27,11 +27,15 @@ export type FollowupEvent = {
     | "Held"
     | "Retain"
     | "Hold"
-    | "AdjustAllocation";
+    | "AdjustAllocation"
+    | "ReconcileReservationOutcome";
   basis: FollowupBasis;
   basis_hash: string;
   review_hash: string | null;
-  command: ReturnType<typeof allocationCommand> | null;
+  command:
+    | ReturnType<typeof allocationCommand>
+    | (ReturnType<typeof factCommand> & { record_id: string })
+    | null;
   owner_id: string;
   due_date: string | null;
   date_needed: boolean;
