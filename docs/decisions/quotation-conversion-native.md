@@ -4,6 +4,10 @@
 
 Owner: Dean Fiedler. 4 October 2026. Implementation authorised by the ES-07 instruction; operational policy and owner acceptance remain separate. ES-07 / EST-08/09 / IF-01/02/03 / EA-13/14 / AT-05/26. All parent IDs and issued references remain unchanged.
 
+## Follow-up adoption — 4 October 2026
+
+The original ES-07 contribution is merged through #342; refreshed main is `a32b3b5`. [Completed-conversion disposition](quotation-disposition-native.md) now adopts Retain, continuing Hold and eligible positive Forecast quantity revision via the native Supply command. It preserves the original completed execution and replacement-conversion prohibition. The original decision below retains its implementation checkpoint; broader aggregate and operational policies remain unresolved.
+
 ## Reconciliation and architecture
 
 Refreshed main is `e3bbb76fb97bd4271bc657b0e6c2e6231ec24707`, merging ES-06 #341 after all 24 final-head checks succeeded. ES-04 #338 and ES-05 #340 are integrated. Older pre-merge handover text is superseded by that evidence. No competing ES-07 branch or open PR was found. The isolated `codex/quotation-conversion` contribution preserves Excel import, every other worktree and retained proof database. A new task-owned synthetic PostgreSQL instance supplies live-schema inspection; migration 0061 follows 0060 and preserves reservations 0051/0052.

@@ -87,7 +87,7 @@
         {
           "id": "es07-host",
           "label": "ES-07 receiving host",
-          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page."
+          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects."
         }
       ],
       "implementation": [
@@ -836,7 +836,7 @@
         {
           "id": "es07-host",
           "label": "ES-07 receiving host",
-          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page."
+          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects."
         }
       ],
       "implementation": [
@@ -1086,7 +1086,7 @@
         {
           "id": "es07-host",
           "label": "ES-07 receiving host",
-          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page."
+          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects."
         }
       ],
       "implementation": [
@@ -1567,7 +1567,7 @@
         {
           "id": "es07-host",
           "label": "ES-07 receiving host",
-          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page."
+          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects."
         }
       ],
       "implementation": [
@@ -1773,7 +1773,7 @@
         {
           "id": "es07-host",
           "label": "ES-07 receiving host",
-          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page."
+          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects."
         }
       ],
       "implementation": [
@@ -3384,7 +3384,7 @@
       "title": "Exact receiving and controlled conversion",
       "category": "Forms",
       "module": "ES",
-      "purpose": "Attributable receiving, explicit item resolution, frozen plan and atomic native Forecast demand with original recovery.",
+      "purpose": "Attributable receiving, explicit item resolution, frozen plan and atomic native Forecast demand with original recovery. Completed targets receive immutable Retain/Hold/ReviseQuantity decisions and separately applied native effects.",
       "owner": "Dean Fiedler",
       "example": null,
       "coverage": "Host example",
@@ -3433,12 +3433,31 @@
           "id": "denied",
           "label": "Unavailable",
           "description": "Current authority removes protected content."
+        },
+        {
+          "id": "disposition-review",
+          "label": "Disposition reviewed",
+          "description": "Immutable owned decision; exception still open until applicable application."
+        },
+        {
+          "id": "disposition-resolved",
+          "label": "Exact exception resolved",
+          "description": "Explicit retention or real native quantity revision; later changes reopen review."
+        },
+        {
+          "id": "disposition-held",
+          "label": "Continuing hold",
+          "description": "Approved/dependent targets need owned Supply follow-up; original effects remain."
         }
       ],
       "implementation": [
         {
           "path": "src/components/quotation-conversion.tsx",
           "symbol": "QuotationConversion"
+        },
+        {
+          "path": "src/components/quotation-disposition.tsx",
+          "symbol": "QuotationDispositions"
         }
       ],
       "dependencies": [
@@ -3447,7 +3466,9 @@
         "src/estimating/conversion/service.ts",
         "src/estimating/conversion/context.ts",
         "docs/contracts/quotation-conversion.md",
-        "src/shared/ui/use-recoverable-command.ts"
+        "src/shared/ui/use-recoverable-command.ts",
+        "src/estimating/disposition/context.ts",
+        "src/estimating/disposition/service.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",
@@ -3459,16 +3480,24 @@
         "route:/estimating/quotes/[id]/conversion",
         "scope:ES-07"
       ],
-      "desktop": "One shell scroll owner; exact binding, recovery, four decision regions, source/target review and immutable history.",
+      "desktop": "One shell scroll owner; exact binding, recovery, five decision regions, source/target review and immutable history.",
       "mobile": "Stacked panels at 390/320 px; wrap identities and preserve labelled fields and original recovery above forms.",
       "keyboard": "Native labelled inputs, shared buttons, visible focus and error focus; no drag-only decision.",
-      "limitations": "Actual fixtures in tests/browser/quotation-conversion.spec.ts. Supply Demand Forecast only; no operational master, ERP order, customer signature or work authority.",
+      "limitations": "Actual fixtures in tests/browser/quotation-conversion.spec.ts. Supply Demand Forecast only; no operational master, ERP order, customer signature or work authority. Positive Forecast quantity revision only; dependent/Approved target changes held. Disposition host examples use actual compiled synthetic fixtures.",
       "gaps": [
         {
           "id": "es07-native-acceptance",
           "expected": "Owner-reviewed native receiving adaptation with device and screen-reader evidence.",
           "actual": "Bounded Product-to-Forecast conversion; broader ERP and multi-target reference flows not adopted. Accepted native images unavailable.",
           "action": "Review native/reference task differences and captured execution states separately from business acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "es07-disposition-review",
+          "expected": "Paired owner/device review of source-to-disposition native flow.",
+          "actual": "Bounded native Forecast Retain/ReviseQuantity/Hold extension; accepted native images unavailable.",
+          "action": "Review original/current evidence, recovery and hold explanations against the adopted contract.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

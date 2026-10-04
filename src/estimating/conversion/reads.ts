@@ -4,6 +4,10 @@ import { AppError } from "../../platform/errors";
 import { object } from "../../shared/validation";
 import { conversionAuthority, conversionContext } from "./context";
 import { conversionPolicy } from "./model";
+import {
+  dispositionTarget,
+  dispositionHistoryAuthority,
+} from "../disposition/context";
 export async function readConversion(
   p: Principal,
   id: string,
@@ -15,6 +19,23 @@ export async function readConversion(
       p.workspace_id,
     ]);
     const d = await conversionContext(c, p, id);
+    const originalRevision = d.executions[0]?.revision_id ?? id;
+    const original =
+      originalRevision === id
+        ? d
+        : await conversionContext(c, p, originalRevision);
+    const dispositions = [];
+    const dispositionSchema = (
+      await c.query(
+        "SELECT to_regclass('ppo.quote_disposition_events') present",
+      )
+    ).rows[0].present;
+    for (const target of dispositionSchema ? original.targets : []) {
+      await dispositionHistoryAuthority(c, p, target.target_id);
+      dispositions.push(
+        await dispositionTarget(c, p, original, target.target_id),
+      );
+    }
     let canWrite = false;
     try {
       await conversionAuthority(c, p, id, true);
@@ -47,6 +68,8 @@ export async function readConversion(
       plan_applicable: d.plan_applicable,
       executions: d.executions,
       targets: d.targets,
+      dispositions,
+      original_conversion_revision: originalRevision,
       policy: conversionPolicy,
       can_write: canWrite,
       synthetic: true,

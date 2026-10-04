@@ -18,9 +18,10 @@ import type { JournalEntry } from "../shared/lib/command-journal";
 import type { readConversion } from "../estimating/conversion/reads";
 import { resolutionStates } from "../estimating/conversion/validation";
 import "./quotation-release.css";
+import { QuotationDispositions } from "./quotation-disposition";
 type Detail = Awaited<ReturnType<typeof readConversion>>;
 const accepts = (e: JournalEntry) =>
-  /^estimating\/quotes\/[a-f0-9-]{36}\/conversion\/(receive|resolve|plan|execute)$/.test(
+  /^estimating\/quotes\/[a-f0-9-]{36}\/conversion\/(receive|resolve|plan|execute|disposition-review|disposition-apply)$/.test(
     e.path,
   ) && /^\/estimating\/quotes\/[a-f0-9-]{36}\/conversion$/.test(e.target);
 const capture = (d: Detail) => ({
@@ -284,7 +285,7 @@ function ConversionBody({
           </ul>
         )}
         {d.executions.length > 0 &&
-          (!d.plan_applicable || d.targets.some((t) => t.changed)) && (
+          d.dispositions.some((t) => t.status === "Review required") && (
             <p role="status">
               Completed target facts remain. Changed applicability or downstream
               content needs deliberate resolution; no replacement will be
@@ -590,6 +591,26 @@ function ConversionBody({
           ))}
         </section>
       </ValidationFields>
+      <QuotationDispositions
+        detail={d}
+        actor={identity.actor_id ?? ""}
+        blocked={
+          !command.ready ||
+          command.busy ||
+          !!command.pending ||
+          !!command.accepted ||
+          !d.can_write
+        }
+        send={async (kind, body) => {
+          await command.send(
+            `${path}/${kind}`,
+            body,
+            `/${path}`,
+            "Synthetic completed-conversion disposition",
+            d.revision.id,
+          );
+        }}
+      />
       <section className="release-panel">
         <h2>Immutable receiving and conversion history</h2>
         {d.events.map((e) => (

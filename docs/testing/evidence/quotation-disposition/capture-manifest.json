@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "captured_on": "2026-10-04",
+  "application_source_commit": "b49817a2b0c4dc83015e2488733b3e9e6e03e924",
+  "capture_script_note": "Viewport-only capture refinement is separately identified by the test source hash; it changes no functional assertion.",
+  "environment": {
+    "node": "24.21.0",
+    "playwright": "1.63.0",
+    "chrome": "154.0.8037.97",
+    "application": "compiled loopback synthetic",
+    "postgresql": "16 task-owned port 5590"
+  },
+  "source_files": {
+    "src/components/quotation-disposition.tsx": "74dea0f40977f260f7770b8407ebd1badac77506a83367fa530d8d35e0a1c044",
+    "src/components/quotation-conversion.tsx": "41d0a42f2ba7364ba8c7e3e354f5cfc2502ddce59d3fc330323375995a0bb5c0",
+    "src/components/quotation-release.css": "52d249b4dfe9e546810e9a9fbfe50ce2bd55afe49efb6536d52f090974d0216c",
+    "src/estimating/disposition/context.ts": "ba8d7076c49bf5963b6a75d69b6369d6a9609c462229708c09b715dce14a498e",
+    "src/estimating/disposition/service.ts": "08aab399578cf7768422085a44bbde658d42949fe8545e133d46a8112a74d8bc",
+    "src/supply/commands.ts": "1b9188beb77dadbd34fbbadb2e041467f35a691b37fd6b00d233c12597cf1d7b",
+    "db/migrations/0062-quotation-disposition.sql": "0049933da5b5a682b1603d7a4fb27d33618b76a940230cc0c54873079a49e877",
+    "tests/browser/quotation-disposition.spec.ts": "9443bc9421ffa2593effc7489a5c5377172e1647a03b6b1519ffc7a6f07e8ffc"
+  },
+  "images": [
+    {
+      "file": "desktop.png",
+      "sha256": "507faeed82be7d6981582551c61980d412b2d1cd928b9e7102e530e18b8711bf",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "file": "mobile-320.png",
+      "sha256": "e39ccc3c1694da7147e540bb6cd4b62af7831ab518b2c9931c59e36c81497be6",
+      "width": 320,
+      "height": 740
+    }
+  ],
+  "inspection": {
+    "reviewer": "Codex",
+    "scope": "Readability and wrapping inspection of the captured exact native source/target comparison; not paired visual or owner acceptance.",
+    "result": "Desktop 1440x1000 and emulated mobile 320x740 show retained source lineage and wrapping company/entity keys. Browser width assertion passed."
+  },
+  "owner_acceptance": "Pending",
+  "deployment": "Not performed"
+}

@@ -6582,15 +6582,16 @@
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-10-04",
-      "source_commit": "e3bbb76fb97bd4271bc657b0e6c2e6231ec24707",
+      "source_commit": "a32b3b53c45bdc74061f3612c15d71c0544504d8",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/delivery/quotation-conversion-handover.md; acceptance remains separate",
+      "runtime_evidence": "See docs/testing/evidence/quotation-disposition/README.md; functional and owner/visual acceptance separate",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Receive one exact ES-06 preparation, resolve its included Product lines, review quantities and freeze a plan before creating synthetic Forecast demand. Preparation, sending, receipt, review and conversion remain separate."
+            "Receive one exact ES-06 preparation, resolve its included Product lines, review quantities and freeze a plan before creating synthetic Forecast demand. Preparation, sending, receipt, review and conversion remain separate.",
+            "Completed conversions also expose exact per-target exceptions after corrections, successor issues or downstream changes. Retain the original conversion as a completed fact."
           ],
           "steps": [],
           "rows": [],
@@ -6600,7 +6601,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Use an issued ES-05 revision with a current unconditioned recorded Accepted response and applicable ES-06 preparation. Current source/quotation reads and company/site Supply coordination duty are required. Respondent authority, signing, validity/expiry and withdrawal remain Not configured."
+            "Use an issued ES-05 revision with a current unconditioned recorded Accepted response and applicable ES-06 preparation. Current source/quotation reads and company/site Supply coordination duty are required. Respondent authority, signing, validity/expiry and withdrawal remain Not configured.",
+            "For completed-target disposition, use the original conversion page even when the offer is superseded or its response changed. Current source/target reads and Supply coordination permission are required. A current acceptance is not required to review an existing exception."
           ],
           "steps": [],
           "rows": [],
@@ -6610,7 +6612,8 @@
           "section_id": "quick-start",
           "title": "Quick start",
           "paragraphs": [
-            "Open ES-07 receiving from the exact response. Inspect the original output and preparation. Enter reason, evidence and synthetic acknowledgement. Choose Received, Held or Returned with an active scoped owner, due date and owned follow-up. Open saved receiving after the server receipt."
+            "Open ES-07 receiving from the exact response. Inspect the original output and preparation. Enter reason, evidence and synthetic acknowledgement. Choose Received, Held or Returned with an active scoped owner, due date and owned follow-up. Open saved receiving after the server receipt.",
+            "In Disposition of completed targets, choose the affected record and compare original/current source, quantity, unit, company/entity, version and downstream dependencies. Enter disposition reason/evidence, explicit synthetic acknowledgement and an active follow-up owner, due date and next action."
           ],
           "steps": [],
           "rows": [],
@@ -6620,7 +6623,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Exact binding and policy gaps precede recovery, readiness, receiving, resolution, target review, execution and history. Each decision saves independently. No sending event is inferred."
+            "Exact binding and policy gaps precede recovery, readiness, receiving, resolution, target review, execution and history. Each decision saves independently. No sending event is inferred.",
+            "The fifth panel lists target exception statuses and separates source changes from downstream edits. Its disclosures retain exact source identities and original/current evidence. The review and application controls are separate."
           ],
           "steps": [],
           "rows": [],
@@ -6630,7 +6634,8 @@
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Product lines retain source UUID, quantity and exact unit. One-off item UUID, display label and external mapping are distinct. External mapping is Not configured; no item master is created. All accepted lines and authoritative commercial values remain in the frozen basis without new tax, FX, pricing or rounding."
+            "Product lines retain source UUID, quantity and exact unit. One-off item UUID, display label and external mapping are distinct. External mapping is Not configured; no item master is created. All accepted lines and authoritative commercial values remain in the frozen basis without new tax, FX, pricing or rounding.",
+            "A review binds the exact completed execution and lineage, exception evidence, selected target version/dependencies and any proposed positive quantity. Other target or mapping edits do not invalidate this target indiscriminately."
           ],
           "steps": [],
           "rows": [],
@@ -6640,7 +6645,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Resolve each Product line explicitly as OneOff, or record Missing/Ambiguous/Obsolete/Incompatible. Review company, SupplyDemand entity, customer/site and all target quantities. Review and freeze plan records an attributable Reviewed decision; it creates nothing. Create synthetic demand records executes every frozen target atomically."
+            "Resolve each Product line explicitly as OneOff, or record Missing/Ambiguous/Obsolete/Incompatible. Review company, SupplyDemand entity, customer/site and all target quantities. Review and freeze plan records an attributable Reviewed decision; it creates nothing. Create synthetic demand records executes every frozen target atomically.",
+            "Choose Retain, Revise eligible Forecast quantity, or Continue hold. Record disposition review freezes the decision but leaves the exception open. Open saved receiving, inspect the exact reviewed action, then enter application evidence and Apply reviewed disposition. A Hold requires a replacement review; it cannot be applied."
           ],
           "steps": [],
           "rows": [],
@@ -6650,7 +6656,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Open native demand to inspect each actual linked Forecast record. Source line, plan and original receipt remain linked. Demand does not approve procurement or start work. Labour, Freight, Engineering and Subcontract lines retain commercial evidence without material-demand effects; this is not partial commercial acceptance."
+            "Open native demand to inspect each actual linked Forecast record. Source line, plan and original receipt remain linked. Demand does not approve procurement or start work. Labour, Freight, Engineering and Subcontract lines retain commercial evidence without material-demand effects; this is not partial commercial acceptance.",
+            "Applied retention resolves only the reviewed exception. Applied quantity revision changes the real native Forecast through Supply:Revise, preserving histories and producing an owned Supply impact. Later relevant changes reopen review. No replacement conversion, deletion, zero quantity, cancellation, procurement or work release is supported."
           ],
           "steps": [],
           "rows": [],
@@ -6660,7 +6667,8 @@
           "section_id": "states",
           "title": "States and exceptions",
           "paragraphs": [
-            "Missing mappings, incompatible quantities/units, current conditions, unresolved clarification, material negotiation, changed response, successor issue, receiving correction, mapping change or changed target basis hold affected plans. Unrelated unissued estimate changes do not invalidate the exact offer. Completed targets remain after later corrections; replacement creation is refused."
+            "Missing mappings, incompatible quantities/units, current conditions, unresolved clarification, material negotiation, changed response, successor issue, receiving correction, mapping change or changed target basis hold affected plans. Unrelated unissued estimate changes do not invalidate the exact offer. Completed targets remain after later corrections; replacement creation is refused.",
+            "Unchanged, Review required and Resolved are per-target evidence states. Approved demand, allocations, return/custody or consequential Supply facts hold quantity revision with an explicit owning-workflow follow-up. Retaining those records grants no new authority."
           ],
           "steps": [],
           "rows": [],
@@ -6670,7 +6678,8 @@
           "section_id": "examples",
           "title": "Worked example",
           "paragraphs": [
-            "A fictional buyer reports acceptance of one manual option. Staff receive that exact pack with an owned review, resolve a Product line as an internal one-off and review quantity 2 each. Execution creates one native Forecast demand. A later response correction retains that original target and shows changed applicability."
+            "A fictional buyer reports acceptance of one manual option. Staff receive that exact pack with an owned review, resolve a Product line as an internal one-off and review quantity 2 each. Execution creates one native Forecast demand. A later response correction retains that original target and shows changed applicability.",
+            "Synthetic example: original conversion created 2 each; corrected receiving creates an exception. Review 1.125 each on an eligible Forecast, then apply once. The target advances from version 1 to 2; version 1 and original receipt remain. Replaying either original returns the same result."
           ],
           "steps": [],
           "rows": [],
@@ -6680,7 +6689,8 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "After a lost response or inconclusive receipt, use Recover original conversion receipt or Retry exact original. Replacement actions stay blocked; a missing receipt is not proof of failure. Reload under the same authorised identity to recover the original operation. Stale edits remain visible; compare current evidence before Use current receiving basis. Revoked authority denies history and original recovery."
+            "After a lost response or inconclusive receipt, use Recover original conversion receipt or Retry exact original. Replacement actions stay blocked; a missing receipt is not proof of failure. Reload under the same authorised identity to recover the original operation. Stale edits remain visible; compare current evidence before Use current receiving basis. Revoked authority denies history and original recovery.",
+            "The shared ES-07 journal covers review and application. Unknown outcomes block replacement; a missing receipt is inconclusive. Reload recovers the original result or permits exact-original retry. After stale evidence, compare this selected target and use Use compared disposition evidence; your text remains."
           ],
           "steps": [],
           "rows": [],
@@ -6690,7 +6700,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Use labelled shared controls and keyboard focus. Panels stack at 390/320 px; long identities wrap. Original recovery stays above decisions. These commands require online access; no offline conversion authority exists. Physical-device and screen-reader acceptance remains pending."
+            "Use labelled shared controls and keyboard focus. Panels stack at 390/320 px; long identities wrap. Original recovery stays above decisions. These commands require online access; no offline conversion authority exists. Physical-device and screen-reader acceptance remains pending.",
+            "At 390/320 px the fifth panel stacks fields and wraps exact identities. Select the target using the labelled control. Use native disclosures, keyboard focus and the original-recovery controls; there is no offline disposition queue."
           ],
           "steps": [],
           "rows": [],
@@ -6700,7 +6711,8 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "See quotation-conversion contract, native decision and handover; quotation-response owns reports and preparation; Supply owns actual target records. The retained r01 HTML and companion report are design evidence, not a native implementation or authority."
+            "See quotation-conversion contract, native decision and handover; quotation-response owns reports and preparation; Supply owns actual target records. The retained r01 HTML and companion report are design evidence, not a native implementation or authority.",
+            "Adopted completed-target direction: docs/decisions/quotation-disposition-native.md. Native command boundary: docs/contracts/quotation-conversion.md. Actual verification: docs/testing/evidence/quotation-disposition/README.md."
           ],
           "steps": [],
           "rows": [],
@@ -6710,7 +6722,8 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Owner Dean Fiedler. Draft guide and proposed native adaptation. Functional proof, visual comparison, owner acceptance and deployment remain separate. No review fingerprint is promoted."
+            "Owner Dean Fiedler. Draft guide and proposed native adaptation. Functional proof, visual comparison, owner acceptance and deployment remain separate. No review fingerprint is promoted.",
+            "Disposition source and automated evidence do not grant visual, owner, device or screen-reader acceptance. Operational authority/signing/validity/withdrawal remain Not configured."
           ],
           "steps": [],
           "rows": [],
@@ -70250,7 +70263,7 @@
       "reviewed_at": null,
       "reviewed_content_hash": null,
       "content_mode": "Bounded native synthetic workflow",
-      "source_commit": "e3bbb76fb97bd4271bc657b0e6c2e6231ec24707",
+      "source_commit": "a32b3b53c45bdc74061f3612c15d71c0544504d8",
       "related_entry_keys": [
         "scope:ES-06",
         "scope:SC-01"
@@ -70260,7 +70273,8 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Receive one exact ES-06 preparation, resolve its included Product lines, review quantities and freeze a plan before creating synthetic Forecast demand. Preparation, sending, receipt, review and conversion remain separate."
+            "Receive one exact ES-06 preparation, resolve its included Product lines, review quantities and freeze a plan before creating synthetic Forecast demand. Preparation, sending, receipt, review and conversion remain separate.",
+            "Completed conversions also expose exact per-target exceptions after corrections, successor issues or downstream changes. Retain the original conversion as a completed fact."
           ],
           "steps": [],
           "rows": [],
@@ -70270,7 +70284,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Use an issued ES-05 revision with a current unconditioned recorded Accepted response and applicable ES-06 preparation. Current source/quotation reads and company/site Supply coordination duty are required. Respondent authority, signing, validity/expiry and withdrawal remain Not configured."
+            "Use an issued ES-05 revision with a current unconditioned recorded Accepted response and applicable ES-06 preparation. Current source/quotation reads and company/site Supply coordination duty are required. Respondent authority, signing, validity/expiry and withdrawal remain Not configured.",
+            "For completed-target disposition, use the original conversion page even when the offer is superseded or its response changed. Current source/target reads and Supply coordination permission are required. A current acceptance is not required to review an existing exception."
           ],
           "steps": [],
           "rows": [],
@@ -70280,7 +70295,8 @@
           "section_id": "quick-start",
           "title": "Quick start",
           "paragraphs": [
-            "Open ES-07 receiving from the exact response. Inspect the original output and preparation. Enter reason, evidence and synthetic acknowledgement. Choose Received, Held or Returned with an active scoped owner, due date and owned follow-up. Open saved receiving after the server receipt."
+            "Open ES-07 receiving from the exact response. Inspect the original output and preparation. Enter reason, evidence and synthetic acknowledgement. Choose Received, Held or Returned with an active scoped owner, due date and owned follow-up. Open saved receiving after the server receipt.",
+            "In Disposition of completed targets, choose the affected record and compare original/current source, quantity, unit, company/entity, version and downstream dependencies. Enter disposition reason/evidence, explicit synthetic acknowledgement and an active follow-up owner, due date and next action."
           ],
           "steps": [],
           "rows": [],
@@ -70290,7 +70306,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Exact binding and policy gaps precede recovery, readiness, receiving, resolution, target review, execution and history. Each decision saves independently. No sending event is inferred."
+            "Exact binding and policy gaps precede recovery, readiness, receiving, resolution, target review, execution and history. Each decision saves independently. No sending event is inferred.",
+            "The fifth panel lists target exception statuses and separates source changes from downstream edits. Its disclosures retain exact source identities and original/current evidence. The review and application controls are separate."
           ],
           "steps": [],
           "rows": [],
@@ -70300,7 +70317,8 @@
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Product lines retain source UUID, quantity and exact unit. One-off item UUID, display label and external mapping are distinct. External mapping is Not configured; no item master is created. All accepted lines and authoritative commercial values remain in the frozen basis without new tax, FX, pricing or rounding."
+            "Product lines retain source UUID, quantity and exact unit. One-off item UUID, display label and external mapping are distinct. External mapping is Not configured; no item master is created. All accepted lines and authoritative commercial values remain in the frozen basis without new tax, FX, pricing or rounding.",
+            "A review binds the exact completed execution and lineage, exception evidence, selected target version/dependencies and any proposed positive quantity. Other target or mapping edits do not invalidate this target indiscriminately."
           ],
           "steps": [],
           "rows": [],
@@ -70310,7 +70328,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Resolve each Product line explicitly as OneOff, or record Missing/Ambiguous/Obsolete/Incompatible. Review company, SupplyDemand entity, customer/site and all target quantities. Review and freeze plan records an attributable Reviewed decision; it creates nothing. Create synthetic demand records executes every frozen target atomically."
+            "Resolve each Product line explicitly as OneOff, or record Missing/Ambiguous/Obsolete/Incompatible. Review company, SupplyDemand entity, customer/site and all target quantities. Review and freeze plan records an attributable Reviewed decision; it creates nothing. Create synthetic demand records executes every frozen target atomically.",
+            "Choose Retain, Revise eligible Forecast quantity, or Continue hold. Record disposition review freezes the decision but leaves the exception open. Open saved receiving, inspect the exact reviewed action, then enter application evidence and Apply reviewed disposition. A Hold requires a replacement review; it cannot be applied."
           ],
           "steps": [],
           "rows": [],
@@ -70320,7 +70339,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Open native demand to inspect each actual linked Forecast record. Source line, plan and original receipt remain linked. Demand does not approve procurement or start work. Labour, Freight, Engineering and Subcontract lines retain commercial evidence without material-demand effects; this is not partial commercial acceptance."
+            "Open native demand to inspect each actual linked Forecast record. Source line, plan and original receipt remain linked. Demand does not approve procurement or start work. Labour, Freight, Engineering and Subcontract lines retain commercial evidence without material-demand effects; this is not partial commercial acceptance.",
+            "Applied retention resolves only the reviewed exception. Applied quantity revision changes the real native Forecast through Supply:Revise, preserving histories and producing an owned Supply impact. Later relevant changes reopen review. No replacement conversion, deletion, zero quantity, cancellation, procurement or work release is supported."
           ],
           "steps": [],
           "rows": [],
@@ -70330,7 +70350,8 @@
           "section_id": "states",
           "title": "States and exceptions",
           "paragraphs": [
-            "Missing mappings, incompatible quantities/units, current conditions, unresolved clarification, material negotiation, changed response, successor issue, receiving correction, mapping change or changed target basis hold affected plans. Unrelated unissued estimate changes do not invalidate the exact offer. Completed targets remain after later corrections; replacement creation is refused."
+            "Missing mappings, incompatible quantities/units, current conditions, unresolved clarification, material negotiation, changed response, successor issue, receiving correction, mapping change or changed target basis hold affected plans. Unrelated unissued estimate changes do not invalidate the exact offer. Completed targets remain after later corrections; replacement creation is refused.",
+            "Unchanged, Review required and Resolved are per-target evidence states. Approved demand, allocations, return/custody or consequential Supply facts hold quantity revision with an explicit owning-workflow follow-up. Retaining those records grants no new authority."
           ],
           "steps": [],
           "rows": [],
@@ -70340,7 +70361,8 @@
           "section_id": "examples",
           "title": "Worked example",
           "paragraphs": [
-            "A fictional buyer reports acceptance of one manual option. Staff receive that exact pack with an owned review, resolve a Product line as an internal one-off and review quantity 2 each. Execution creates one native Forecast demand. A later response correction retains that original target and shows changed applicability."
+            "A fictional buyer reports acceptance of one manual option. Staff receive that exact pack with an owned review, resolve a Product line as an internal one-off and review quantity 2 each. Execution creates one native Forecast demand. A later response correction retains that original target and shows changed applicability.",
+            "Synthetic example: original conversion created 2 each; corrected receiving creates an exception. Review 1.125 each on an eligible Forecast, then apply once. The target advances from version 1 to 2; version 1 and original receipt remain. Replaying either original returns the same result."
           ],
           "steps": [],
           "rows": [],
@@ -70350,7 +70372,8 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "After a lost response or inconclusive receipt, use Recover original conversion receipt or Retry exact original. Replacement actions stay blocked; a missing receipt is not proof of failure. Reload under the same authorised identity to recover the original operation. Stale edits remain visible; compare current evidence before Use current receiving basis. Revoked authority denies history and original recovery."
+            "After a lost response or inconclusive receipt, use Recover original conversion receipt or Retry exact original. Replacement actions stay blocked; a missing receipt is not proof of failure. Reload under the same authorised identity to recover the original operation. Stale edits remain visible; compare current evidence before Use current receiving basis. Revoked authority denies history and original recovery.",
+            "The shared ES-07 journal covers review and application. Unknown outcomes block replacement; a missing receipt is inconclusive. Reload recovers the original result or permits exact-original retry. After stale evidence, compare this selected target and use Use compared disposition evidence; your text remains."
           ],
           "steps": [],
           "rows": [],
@@ -70360,7 +70383,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Use labelled shared controls and keyboard focus. Panels stack at 390/320 px; long identities wrap. Original recovery stays above decisions. These commands require online access; no offline conversion authority exists. Physical-device and screen-reader acceptance remains pending."
+            "Use labelled shared controls and keyboard focus. Panels stack at 390/320 px; long identities wrap. Original recovery stays above decisions. These commands require online access; no offline conversion authority exists. Physical-device and screen-reader acceptance remains pending.",
+            "At 390/320 px the fifth panel stacks fields and wraps exact identities. Select the target using the labelled control. Use native disclosures, keyboard focus and the original-recovery controls; there is no offline disposition queue."
           ],
           "steps": [],
           "rows": [],
@@ -70370,7 +70394,8 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "See quotation-conversion contract, native decision and handover; quotation-response owns reports and preparation; Supply owns actual target records. The retained r01 HTML and companion report are design evidence, not a native implementation or authority."
+            "See quotation-conversion contract, native decision and handover; quotation-response owns reports and preparation; Supply owns actual target records. The retained r01 HTML and companion report are design evidence, not a native implementation or authority.",
+            "Adopted completed-target direction: docs/decisions/quotation-disposition-native.md. Native command boundary: docs/contracts/quotation-conversion.md. Actual verification: docs/testing/evidence/quotation-disposition/README.md."
           ],
           "steps": [],
           "rows": [],
@@ -70380,7 +70405,8 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Owner Dean Fiedler. Draft guide and proposed native adaptation. Functional proof, visual comparison, owner acceptance and deployment remain separate. No review fingerprint is promoted."
+            "Owner Dean Fiedler. Draft guide and proposed native adaptation. Functional proof, visual comparison, owner acceptance and deployment remain separate. No review fingerprint is promoted.",
+            "Disposition source and automated evidence do not grant visual, owner, device or screen-reader acceptance. Operational authority/signing/validity/withdrawal remain Not configured."
           ],
           "steps": [],
           "rows": [],
@@ -70388,7 +70414,7 @@
         }
       ],
       "prepared_at": "2026-10-04",
-      "runtime_evidence": "See docs/delivery/quotation-conversion-handover.md; acceptance remains separate",
+      "runtime_evidence": "See docs/testing/evidence/quotation-disposition/README.md; functional and owner/visual acceptance separate",
       "source_paths": [
         "src/app/(business)/estimating/quotes/[id]/conversion/page.tsx",
         "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",

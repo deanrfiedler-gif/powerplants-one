@@ -6,7 +6,7 @@ Build PPO for Powerplants Australia.
 
 Public repo, private demo; other projects’ naming, IDs and gates do not govern PPO.
 
-## 2. Scope and delivery
+## 2. Delivery
 
 Preserve BP-01’s seven domains and shared customers, contacts, sites, equipment, documents, identity, activity, audit and reporting.
 
@@ -68,13 +68,13 @@ Complete authorised work; ask only for consequential blockers.
 
 Preserve unrelated work. Use branch/PR; merge needs authority and required checks/review. Respect permissions; update affected specs/registers.
 
-Repo work grants no paid-service, deployment, access, live-transaction, migration or messaging authority. Keep secrets/operational data outside Git; use synthetic/approved-redacted fixtures.
+Repo work grants no paid-service, deployment, access, live-transaction, migration or messaging authority. Keep secrets/operational data outside Git; use synthetic/redacted fixtures.
 
-## 9. Verification and communication
+## 9. Verification
 
-Run foundation/prototype/naming checks; test authority, conflicts, replay, integrity and reconciliation. Inspect screens; retain source/environment.
+Run foundation/prototype/naming checks; test authority, conflicts, replay, integrity and reconciliation. Inspect screens; retain environment.
 
-ES-01–10/Excel: estimating-native-programme.md; estimating-programme-handover.md. Preserve exact costs/bindings (estimating-cost-sources.md) and PJ-09 close/reopen. Boards: es02-design-board.md; es01-design-board.md. ES-08: WP-G00 before D1–D15/DEC-R1/R2. ES-04: estimating-review.md. ES-05–07: quotation-release-native.md; quotation-response-native.md; quotation-conversion-native.md. Synthetic; policy unconfigured. CI: ci-retained-suite-isolation.md.
+ES-01–10/Excel: estimating-native-programme.md; estimating-programme-handover.md. Preserve exact costs/bindings (estimating-cost-sources.md) and PJ-09 close/reopen. Boards: es02-design-board.md; es01-design-board.md. ES-08: WP-G00 before D1–D15/DEC-R1/R2. ES-04: estimating-review.md. ES-05–07: quotation-release-native.md; quotation-response-native.md; quotation-conversion-native.md; quotation-disposition-native.md. Synthetic; policy unconfigured. CI: ci-retained-suite-isolation.md.
 
 Mail: preserve private mailboxes and body separation (demo-email-crm-integration.md); CI is not Outlook acceptance. SH-01–06: docs/delivery/sh-platform-handover.md; teams/DK/delivery pending.
 

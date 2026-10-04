@@ -80,3 +80,7 @@ QuotationResponse reuses this control on the exact issued-response page. Host fi
 ## ES-07 receiving consumer
 
 `QuotationConversion` uses this control in exact receiving, resolution, plan and original recovery. Host fixture: `tests/browser/quotation-conversion.spec.ts`. Consumer bindings and states are maintained in components.json. No shared-control behaviour changes or new global tokens. Visual/device acceptance remains pending.
+
+## ES-07 disposition consumer
+
+ES-07 disposition validation associates strict positive-decimal/native eligibility and immutable-basis conflicts with the owning form. Current source, target, owner and dependency changes hold Apply. Permission refusal removes frozen evidence; it does not offer a replacement command. Desktop/mobile and recovery fixtures: `tests/browser/quotation-disposition.spec.ts`. Exact accepted mockup images and paired owner/device review remain unavailable/pending.

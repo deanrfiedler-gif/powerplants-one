@@ -64,3 +64,7 @@ QuotationResponse reuses this control on the exact issued-response page. Host fi
 ## ES-07 receiving consumer
 
 `QuotationConversion` uses this control in exact receiving, resolution, plan and original recovery. Host fixture: `tests/browser/quotation-conversion.spec.ts`. Consumer bindings and states are maintained in components.json. No shared-control behaviour changes or new global tokens. Visual/device acceptance remains pending.
+
+## ES-07 disposition consumer
+
+ES-07 disposition adds host statuses Unchanged, Review required and Resolved per native target. Saved Review/Hold stays Review required; an applied Retain or native revision resolves only its exact evidence. New relevant changes reopen it. These labels grant no operational authority. Desktop/mobile and recovery fixtures: `tests/browser/quotation-disposition.spec.ts`. Exact accepted mockup images and paired owner/device review remain unavailable/pending.

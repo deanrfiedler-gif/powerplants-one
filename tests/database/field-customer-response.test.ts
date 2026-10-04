@@ -747,7 +747,7 @@ test("FI07-07 populated 0056 upgrade preserves original response hashes, output 
     "SELECT * FROM public.ppo_migrations ORDER BY version",
   );
   assert.deepEqual(after.filter((row) => row.version <= 56), ledger);
-  assert.deepEqual(after.filter((row) => row.version > 56).map((row) => row.version), [57, 58, 59, 60, 61]);
+  assert.deepEqual(after.filter((row) => row.version > 56).map((row) => row.version), [57, 58, 59, 60, 61, 62]);
   const afterSeeds = await rows("SELECT * FROM ppo.seed_receipts ORDER BY version");
   assert.deepEqual(afterSeeds.filter((row) => row.version <= 56), seedLedger);
   assert.deepEqual(afterSeeds.filter((row) => row.version > 56).map((row) => row.version), [58, 59]);

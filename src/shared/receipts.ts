@@ -10,6 +10,7 @@ import { aftercareReceiptAuthority } from "../sales/aftercare-service";
 import { handoverReceiptAuthority } from "../sales/handover-service";
 import { personEditAuthority } from "./contacts/commands";
 import { conversionReceiptAuthority } from "../estimating/conversion/context";
+import { dispositionReceiptAuthority } from "../estimating/disposition/context";
 import { sourceReceiptAuthority } from "../estimating/sources/context";
 import { reviewReceiptAuthority } from "../estimating/review/context";
 import { readEquipmentChange } from "../equipment/changes";
@@ -77,6 +78,12 @@ export async function readOperation(
       await policyReceiptAuthority(c, p, r.object_type, r.record_id);
       return r.result as OperationReceipt;
     });
+  } else if (r.object_type === "DraftQuoteRevision" && r.command?.startsWith("QuoteDisposition:")) {
+    return transaction(async c => {
+      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [p.workspace_id]);
+      await dispositionReceiptAuthority(c,p,r.record_id,operation_id);
+      return r.result as OperationReceipt;
+    });
   } else if (r.object_type === "DraftQuoteRevision" && r.command?.startsWith("QuoteConversion:")) {
     return transaction(async c => {
       await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [p.workspace_id]);
@@ -102,7 +109,7 @@ export async function readOperation(
   } else if (r.object_type === "Appointment" && r.command?.startsWith("FieldTimer:")) {
     await timerReceiptAuthority(client, p, r.record_id, operation_id);
   } else if (r.object_type === "SupplyRecord") {
-    await supplyReceiptAuthority(client, p, r.record_id, r.command);
+    await supplyReceiptAuthority(client, p, r.record_id, r.command, operation_id);
   } else if (r.object_type === "CostSource") {
     await sourceReceiptAuthority(client, p, r.record_id, r.command);
   } else if (r.object_type === "AftercareRecord") {
