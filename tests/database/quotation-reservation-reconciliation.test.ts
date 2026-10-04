@@ -104,7 +104,59 @@ test("ES07 dependency executes exact native successor, conserves shared quantiti
     ).rowCount,
     0,
   );
+  const row = (
+    await database().query(
+      "SELECT to_jsonb(e) row FROM ppo.quote_supply_events e WHERE id=$1",
+      [t.review!.id],
+    )
+  ).rows[0].row;
+  for (const change of [
+    { data: { ...row.command.data, source_operation: "SYN-other-operation" } },
+    { data: { ...row.command.data, effect: "Purchase" } },
+    { data: { ...row.command.data, state: "Unknown" } },
+    { completeness: "Partial" },
+    { expected_version: row.command.expected_version + 1 },
+  ]) {
+    await assert.rejects(
+      database().query(
+        "INSERT INTO ppo.quote_supply_events SELECT (jsonb_populate_record(NULL::ppo.quote_supply_events,$1)).*",
+        [
+          {
+            ...row,
+            id: randomUUID(),
+            operation_id: randomUUID(),
+            sequence: row.sequence + 1,
+            predecessor_id: row.id,
+            command: { ...row.command, operation_id: randomUUID(), ...change },
+          },
+        ],
+      ),
+      /Exact original unknown reservation|Review exact current dependency/,
+    );
+  }
+  assert.equal((await currentFollowup(f)).events.length, t.events.length);
   const command = supplyApply(t);
+  await database().query(
+    "CREATE FUNCTION ppo.es07_reservation_injected() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN IF NEW.action='Apply' THEN RAISE EXCEPTION 'SYN late reservation failure'; END IF; RETURN NEW; END $$; CREATE TRIGGER es07_reservation_injected BEFORE INSERT ON ppo.quote_supply_events FOR EACH ROW EXECUTE FUNCTION ppo.es07_reservation_injected()",
+  );
+  try {
+    await assert.rejects(applySupply(f.owner, f.id, command));
+  } finally {
+    await database().query(
+      "DROP TRIGGER es07_reservation_injected ON ppo.quote_supply_events; DROP FUNCTION ppo.es07_reservation_injected()",
+    );
+  }
+  assert.deepEqual(await workspace(f.owner, t.target_id), before);
+  assert.equal((await currentFollowup(f)).events.length, t.events.length);
+  assert.equal(
+    (
+      await database().query(
+        "SELECT 1 FROM ppo.operation_receipts WHERE operation_id=ANY($1::uuid[])",
+        [[native.operation_id, command.operation_id]],
+      )
+    ).rowCount,
+    0,
+  );
   const [a, b] = await Promise.all([
     applySupply(f.owner, f.id, command),
     applySupply(f.owner, f.id, command),

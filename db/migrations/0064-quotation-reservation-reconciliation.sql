@@ -40,7 +40,7 @@ BEGIN
   THEN RAISE EXCEPTION 'Review exact current dependency and demand version' USING ERRCODE='23514'; END IF;
  ELSE
   SELECT * INTO STRICT saved FROM ppo.supply_facts WHERE workspace_id=NEW.workspace_id AND record_id=NEW.target_id AND id=(cmd->>'id')::uuid;
-  IF (cmd->>'expected_version')::integer IS DISTINCT FROM target.version-1 OR saved.version<>target.version OR saved.kind<>'ExternalOutcome' OR saved.predecessor_id<>original.id OR saved.data IS DISTINCT FROM cmd->'data' OR saved.completeness<>'Complete' OR saved.evidence IS DISTINCT FROM cmd->>'evidence' OR saved.observed_at IS DISTINCT FROM (cmd->>'observed_at')::timestamptz OR saved.created_by<>NEW.created_by
+  IF (cmd->>'expected_version')::integer IS DISTINCT FROM target.version-1 OR saved.version<>target.version OR saved.kind<>'ExternalOutcome' OR saved.predecessor_id IS DISTINCT FROM original.id OR saved.data IS DISTINCT FROM cmd->'data' OR saved.completeness<>'Complete' OR saved.evidence IS DISTINCT FROM cmd->>'evidence' OR saved.observed_at IS DISTINCT FROM (cmd->>'observed_at')::timestamptz OR saved.created_by<>NEW.created_by
   THEN RAISE EXCEPTION 'Apply exact native successor once' USING ERRCODE='23514'; END IF;
  END IF;
  RETURN NEW;
