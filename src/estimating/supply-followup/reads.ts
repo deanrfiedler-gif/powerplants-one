@@ -7,6 +7,7 @@ import { AppError } from "../../platform/errors";
 import { receivingSummary } from "./summary";
 import { shortfallAvailable } from "./shortfall-context";
 import { receiptAvailable } from "./receipt-context";
+import { materialAvailable } from "./material-context";
 export async function receivingWorklist(
   p: Principal,
   query: Record<string, string> = {},
@@ -17,7 +18,13 @@ export async function receivingWorklist(
       p.workspace_id,
     ]);
     const c = conversionReadClient(client, p);
-    await requireCapability(c, p, "supply.coordinate");
+    let coordinationError: AppError | null = null;
+    try {
+      await requireCapability(c, p, "supply.coordinate");
+    } catch (e) {
+      if (!(e instanceof AppError) || e.status !== 403) throw e;
+      coordinationError = e;
+    }
     const candidates = (
       await c.query<{
         revision_id: string;
@@ -53,6 +60,19 @@ export async function receivingWorklist(
         )
       ).rows)
         affected.add(row.target_id);
+    if (await materialAvailable(c))
+      for (const row of (
+        await c.query<{ target_id: string }>(
+          `SELECT DISTINCT e.target_id FROM ppo.quote_material_events e
+         JOIN ppo.supply_records d ON (d.workspace_id,d.id)=(e.workspace_id,e.demand_id)
+         JOIN ppo.project_tasks t ON (t.workspace_id,t.id)=(e.workspace_id,e.task_id)
+         JOIN ppo.projects p ON (p.workspace_id,p.id)=(t.workspace_id,t.project_id)
+         JOIN ppo.activities a ON a.workspace_id=e.workspace_id AND a.id=(e.dependencies->'activity'->>'id')::uuid
+         WHERE e.workspace_id=$1 AND e.action='MaterialPropose' AND $2::uuid IN (d.owner_id,t.owner_id,p.coordinator_id,a.owner_id)`,
+          [p.workspace_id, p.actor_id],
+        )
+      ).rows)
+        affected.add(row.target_id);
     for (const row of candidates.filter(
       (r) => r.owner_id === p.actor_id || affected.has(r.target_id),
     )) {
@@ -68,6 +88,7 @@ export async function receivingWorklist(
         if (!(e instanceof AppError && [403, 404].includes(e.status))) throw e;
       }
     }
+    if (coordinationError && !rows.length) throw coordinationError;
     return { rows };
   });
 }

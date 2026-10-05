@@ -820,7 +820,7 @@ test("ES07 populated 0065 upgrade preserves ES04–07 corrections histories gran
   );
   assert.deepEqual(
     after.filter((x) => x.version > 65).map((x) => x.version),
-    [66],
+    [66, 67],
   );
   assert.deepEqual(await draftBytes(f.owner, f.draft.id), draft);
   assert.deepEqual(await draftBytes(f.owner, f.id), issued);

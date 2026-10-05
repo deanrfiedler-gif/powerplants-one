@@ -122,6 +122,10 @@ export const supplyTasks: Record<
   ],
   "SC-09": [
     [
+      "Resolve an exact Project forecast consequence",
+      "After a received allocation reduction, open its owned ES-07 referral. Affected Project-origin Demand can withdraw both dates from one unstarted Planned task after separate Demand, Project, task and MaterialAction receiving. Freeze review and apply separately. Native receipts prove only that forecast action; unmet Demand, other impacts and Activity lifecycle remain separate. Fresh ES-07 disposition is required for current exceptions.",
+    ],
+    [
       "Receive affected-demand correction",
       "The assigned quotation queue includes independently owned Demand effects. Compare the exact Receipt proposal and current shared evidence; accept, return or hold with attributable reasons. Changed evidence requires fresh receiving. Activity completion and Supply completion never clear quotation exceptions.",
     ],

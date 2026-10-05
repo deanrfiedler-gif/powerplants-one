@@ -6585,7 +6585,7 @@
       "prepared_at": "2026-10-05",
       "source_commit": "a32b3b53c45bdc74061f3612c15d71c0544504d8",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/testing/evidence/quotation-allocation-shortfall/README.md; actual proof and acceptance separate",
+      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance.",
       "sections": [
         {
           "section_id": "purpose",
@@ -6762,6 +6762,19 @@
           "steps": [],
           "rows": [],
           "headers": []
+        },
+        {
+          "section_id": "material-resolution",
+          "title": "Owned material follow-up after allocation reduction",
+          "paragraphs": [
+            "A valid allocation position does not satisfy Demand or resolve its Impact. After a completed received reduction, open the accepted Supply referral and compare current readiness, the exact Requested Impact/MaterialAction and existing Project task. Only an unstarted internally owned Planned task with both dates and no consequential dependency qualifies.",
+            "The Demand owner, Project coordinator, task owner and MaterialAction owner must each record Accepted, Returned or Held for the complete proposed forecast withdrawal. Earlier Receipt/allocation acceptance supplies no authority. A person holding several roles still decides separately.",
+            "Freeze the exact review, then apply separately. Success withdraws both forecast dates and returns two original receipts plus the exact Impact successor. It does not complete the Activity, change quantities or restore readiness. Other impacts and unmet Demand remain. Retain/Hold returns continuing owning-workflow follow-up.",
+            "Recompute readiness and explicitly disposition any current ES-07 exception. Operational work remains available after quotation retention. Recover or retry an uncertain original; missing receipts are inconclusive and replacements stay blocked."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
         }
       ],
       "related_entry_keys": [
@@ -9934,7 +9947,7 @@
       "prepared_at": "2026-09-23",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance.",
       "sections": [
         {
           "section_id": "purpose",
@@ -10160,6 +10173,19 @@
           "steps": [],
           "rows": [],
           "headers": []
+        },
+        {
+          "section_id": "material-resolution",
+          "title": "Owned material follow-up after allocation reduction",
+          "paragraphs": [
+            "A valid allocation position does not satisfy Demand or resolve its Impact. After a completed received reduction, open the accepted Supply referral and compare current readiness, the exact Requested Impact/MaterialAction and existing Project task. Only an unstarted internally owned Planned task with both dates and no consequential dependency qualifies.",
+            "The Demand owner, Project coordinator, task owner and MaterialAction owner must each record Accepted, Returned or Held for the complete proposed forecast withdrawal. Earlier Receipt/allocation acceptance supplies no authority. A person holding several roles still decides separately.",
+            "Freeze the exact review, then apply separately. Success withdraws both forecast dates and returns two original receipts plus the exact Impact successor. It does not complete the Activity, change quantities or restore readiness. Other impacts and unmet Demand remain. Retain/Hold returns continuing owning-workflow follow-up.",
+            "Recompute readiness and explicitly disposition any current ES-07 exception. Operational work remains available after quotation retention. Recover or retry an uncertain original; missing receipts are inconclusive and replacements stay blocked."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
         }
       ],
       "related_entry_keys": [
@@ -19513,7 +19539,7 @@
       "prepared_at": "2026-10-05",
       "source_commit": "0f10b7fb46a8ab512e9b019573ece272cf5920b9",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/testing/evidence/quotation-allocation-shortfall/README.md; actual proof and acceptance separate",
+      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance.",
       "sections": [
         {
           "section_id": "purpose",
@@ -19685,6 +19711,19 @@
           "steps": [],
           "rows": [],
           "headers": []
+        },
+        {
+          "section_id": "material-resolution",
+          "title": "Owned material follow-up after allocation reduction",
+          "paragraphs": [
+            "A valid allocation position does not satisfy Demand or resolve its Impact. After a completed received reduction, open the accepted Supply referral and compare current readiness, the exact Requested Impact/MaterialAction and existing Project task. Only an unstarted internally owned Planned task with both dates and no consequential dependency qualifies.",
+            "The Demand owner, Project coordinator, task owner and MaterialAction owner must each record Accepted, Returned or Held for the complete proposed forecast withdrawal. Earlier Receipt/allocation acceptance supplies no authority. A person holding several roles still decides separately.",
+            "Freeze the exact review, then apply separately. Success withdraws both forecast dates and returns two original receipts plus the exact Impact successor. It does not complete the Activity, change quantities or restore readiness. Other impacts and unmet Demand remain. Retain/Hold returns continuing owning-workflow follow-up.",
+            "Recompute readiness and explicitly disposition any current ES-07 exception. Operational work remains available after quotation retention. Recover or retry an uncertain original; missing receipts are inconclusive and replacements stay blocked."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
         }
       ],
       "related_entry_keys": [
@@ -42185,7 +42224,7 @@
       "prepared_at": "2026-09-23",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance.",
       "sections": [
         {
           "section_id": "purpose",
@@ -42412,6 +42451,19 @@
           "steps": [],
           "rows": [],
           "headers": []
+        },
+        {
+          "section_id": "material-resolution",
+          "title": "Owned material follow-up after allocation reduction",
+          "paragraphs": [
+            "A valid allocation position does not satisfy Demand or resolve its Impact. After a completed received reduction, open the accepted Supply referral and compare current readiness, the exact Requested Impact/MaterialAction and existing Project task. Only an unstarted internally owned Planned task with both dates and no consequential dependency qualifies.",
+            "The Demand owner, Project coordinator, task owner and MaterialAction owner must each record Accepted, Returned or Held for the complete proposed forecast withdrawal. Earlier Receipt/allocation acceptance supplies no authority. A person holding several roles still decides separately.",
+            "Freeze the exact review, then apply separately. Success withdraws both forecast dates and returns two original receipts plus the exact Impact successor. It does not complete the Activity, change quantities or restore readiness. Other impacts and unmet Demand remain. Retain/Hold returns continuing owning-workflow follow-up.",
+            "Recompute readiness and explicitly disposition any current ES-07 exception. Operational work remains available after quotation retention. Recover or retry an uncertain original; missing receipts are inconclusive and replacements stay blocked."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
         }
       ],
       "related_entry_keys": [
@@ -68617,10 +68669,23 @@
           "steps": [],
           "rows": [],
           "headers": []
+        },
+        {
+          "section_id": "material-resolution",
+          "title": "Owned material follow-up after allocation reduction",
+          "paragraphs": [
+            "A valid allocation position does not satisfy Demand or resolve its Impact. After a completed received reduction, open the accepted Supply referral and compare current readiness, the exact Requested Impact/MaterialAction and existing Project task. Only an unstarted internally owned Planned task with both dates and no consequential dependency qualifies.",
+            "The Demand owner, Project coordinator, task owner and MaterialAction owner must each record Accepted, Returned or Held for the complete proposed forecast withdrawal. Earlier Receipt/allocation acceptance supplies no authority. A person holding several roles still decides separately.",
+            "Freeze the exact review, then apply separately. Success withdraws both forecast dates and returns two original receipts plus the exact Impact successor. It does not complete the Activity, change quantities or restore readiness. Other impacts and unmet Demand remain. Retain/Hold returns continuing owning-workflow follow-up.",
+            "Recompute readiness and explicitly disposition any current ES-07 exception. Operational work remains available after quotation retention. Recover or retry an uncertain original; missing receipts are inconclusive and replacements stay blocked."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
         }
       ],
       "prepared_at": "2026-10-05",
-      "runtime_evidence": "See docs/testing/evidence/quotation-allocation-shortfall/README.md; actual proof and acceptance separate",
+      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance.",
       "change_summary": "Adopted SYN-ES07-05 existing Receipt correction and independent affected-demand receiving.",
       "source_paths": [
         "docs/decisions/quotation-receipt-correction.md",
@@ -70620,10 +70685,23 @@
           "steps": [],
           "rows": [],
           "headers": []
+        },
+        {
+          "section_id": "material-resolution",
+          "title": "Owned material follow-up after allocation reduction",
+          "paragraphs": [
+            "A valid allocation position does not satisfy Demand or resolve its Impact. After a completed received reduction, open the accepted Supply referral and compare current readiness, the exact Requested Impact/MaterialAction and existing Project task. Only an unstarted internally owned Planned task with both dates and no consequential dependency qualifies.",
+            "The Demand owner, Project coordinator, task owner and MaterialAction owner must each record Accepted, Returned or Held for the complete proposed forecast withdrawal. Earlier Receipt/allocation acceptance supplies no authority. A person holding several roles still decides separately.",
+            "Freeze the exact review, then apply separately. Success withdraws both forecast dates and returns two original receipts plus the exact Impact successor. It does not complete the Activity, change quantities or restore readiness. Other impacts and unmet Demand remain. Retain/Hold returns continuing owning-workflow follow-up.",
+            "Recompute readiness and explicitly disposition any current ES-07 exception. Operational work remains available after quotation retention. Recover or retry an uncertain original; missing receipts are inconclusive and replacements stay blocked."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
         }
       ],
       "prepared_at": "2026-10-05",
-      "runtime_evidence": "See docs/testing/evidence/quotation-allocation-shortfall/README.md; actual proof and acceptance separate",
+      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance.",
       "source_paths": [
         "src/app/(business)/estimating/quotes/[id]/conversion/page.tsx",
         "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",

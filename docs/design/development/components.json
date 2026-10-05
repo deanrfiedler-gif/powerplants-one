@@ -87,7 +87,7 @@
         {
           "id": "es07-host",
           "label": "ES-07 receiving host",
-          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery."
+          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery. Material receiving/recovery host: tests/browser/quotation-material-resolution.spec.ts."
         }
       ],
       "implementation": [
@@ -845,7 +845,7 @@
         {
           "id": "es07-host",
           "label": "ES-07 receiving host",
-          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery."
+          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery. Material receiving/recovery host: tests/browser/quotation-material-resolution.spec.ts."
         }
       ],
       "implementation": [
@@ -1105,7 +1105,7 @@
         {
           "id": "es07-host",
           "label": "ES-07 receiving host",
-          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery."
+          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery. Material receiving/recovery host: tests/browser/quotation-material-resolution.spec.ts."
         }
       ],
       "implementation": [
@@ -1596,7 +1596,7 @@
         {
           "id": "es07-host",
           "label": "ES-07 receiving host",
-          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery."
+          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery. Material receiving/recovery host: tests/browser/quotation-material-resolution.spec.ts."
         }
       ],
       "implementation": [
@@ -1812,7 +1812,7 @@
         {
           "id": "es07-host",
           "label": "ES-07 receiving host",
-          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery."
+          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery. Material receiving/recovery host: tests/browser/quotation-material-resolution.spec.ts."
         }
       ],
       "implementation": [
@@ -3495,7 +3495,7 @@
       "title": "Exact receiving and controlled conversion",
       "category": "Forms",
       "module": "ES",
-      "purpose": "Attributable receiving, explicit item resolution, frozen plan and atomic native Forecast demand with original recovery. Completed targets receive immutable Retain/Hold/ReviseQuantity decisions and separately applied native effects. Held targets enter owned Supply receiving, immutable allocation review, separate native application and returned evidence. Existing Receipt correction freezes independently received shared-demand effects before native application. Receipt-derived Shipment shortfall separately receives each changed Demand before exact atomic allocation reduction.",
+      "purpose": "Attributable receiving, explicit item resolution, frozen plan and atomic native Forecast demand with original recovery. Completed targets receive immutable Retain/Hold/ReviseQuantity decisions and separately applied native effects. Held targets enter owned Supply receiving, immutable allocation review, separate native application and returned evidence. Existing Receipt correction freezes independently received shared-demand effects before native application. Receipt-derived Shipment shortfall separately receives each changed Demand before exact atomic allocation reduction. Four independently received material effects permit native Project forecast withdrawal with exact Impact succession and remaining holds.",
       "owner": "Dean Fiedler",
       "example": null,
       "coverage": "Host example",
@@ -3599,6 +3599,16 @@
           "id": "allocation-outcome",
           "label": "Valid capacity, continuing unmet Demand",
           "description": "Completed exact atomic native effects and original receipts; retained operational impacts and fresh ES-07 review. No renewed receiving on completed proposals."
+        },
+        {
+          "id": "material-receiving",
+          "label": "Four downstream decisions",
+          "description": "Separate Demand, Project, task and MaterialAction acceptance, return, hold and correction. Real host: tests/browser/quotation-material-resolution.spec.ts."
+        },
+        {
+          "id": "material-outcome",
+          "label": "Forecast withdrawn; unmet Demand retained",
+          "description": "Separate immutable review/application, two native receipts, exact Impact successor and fresh ES-07 disposition. Activities and independent holds remain."
         }
       ],
       "implementation": [
@@ -3625,6 +3635,10 @@
         {
           "path": "src/components/quotation-allocation-shortfall.tsx",
           "symbol": "AllocationShortfall"
+        },
+        {
+          "path": "src/components/quotation-material-resolution.tsx",
+          "symbol": "MaterialResolution"
         }
       ],
       "dependencies": [
@@ -3648,7 +3662,12 @@
         "src/estimating/supply-followup/shortfall-context.ts",
         "src/estimating/supply-followup/shortfall-service.ts",
         "src/supply/reductions.ts",
-        "docs/decisions/quotation-allocation-shortfall.md"
+        "docs/decisions/quotation-allocation-shortfall.md",
+        "src/estimating/supply-followup/material-context.ts",
+        "src/estimating/supply-followup/material-service.ts",
+        "src/projects/material-resolution.ts",
+        "docs/contracts/quotation-material-resolution.md",
+        "docs/decisions/quotation-material-resolution.md"
       ],
       "reference": {
         "path": "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",
@@ -3665,7 +3684,7 @@
       "desktop": "One shell scroll owner; exact binding, recovery, six decision regions, source/target review and immutable history.",
       "mobile": "Stacked panels at 390/320 px; wrap identities and preserve labelled fields and original recovery above forms.",
       "keyboard": "Native labelled inputs, shared buttons, visible focus and error focus; no drag-only decision.",
-      "limitations": "Actual fixtures in tests/browser/quotation-conversion.spec.ts. Supply Demand Forecast only; no operational master, ERP order, customer signature or work authority. Positive Forecast quantity revision only; dependent/Approved target changes held. Disposition host examples use actual compiled synthetic fixtures. Existing allocation quantity adjustment requires an already Approved demand; zero retains native identity and class. No ERP reservation release or cancellation. See tests/browser/quotation-supply-followup.spec.ts. Original reservation evidence only; no external action or removal of other holds. Shortfall reductions preserve Demand/Receipt content; no priority, replenishment or external release. AllocationShortfall reuses existing controls and journal.",
+      "limitations": "Actual fixtures in tests/browser/quotation-conversion.spec.ts. Supply Demand Forecast only; no operational master, ERP order, customer signature or work authority. Positive Forecast quantity revision only; dependent/Approved target changes held. Disposition host examples use actual compiled synthetic fixtures. Existing allocation quantity adjustment requires an already Approved demand; zero retains native identity and class. No ERP reservation release or cancellation. See tests/browser/quotation-supply-followup.spec.ts. Original reservation evidence only; no external action or removal of other holds. Shortfall reductions preserve Demand/Receipt content; no priority, replenishment or external release. AllocationShortfall reuses existing controls and journal. Project forecast withdrawal only; no replenishment, priority, rescheduling or automatic Activity completion.",
       "gaps": [
         {
           "id": "es07-native-acceptance",
@@ -3712,6 +3731,14 @@
           "expected": "Paired native review of shortfall receiving, atomic effects and remaining work.",
           "actual": "Synthetic executable extension; accepted native images and owner/device/screen-reader review pending.",
           "action": "Review compiled host captures against the bounded decision; preserve separate functional evidence.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "material-resolution-review",
+          "expected": "Paired desktop/mobile owner review of exact forecast effects and remaining operational holds.",
+          "actual": "New native host; accepted mockup images and owner/device/screen-reader review pending.",
+          "action": "Review execution captures and contract differences separately from functional proof.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

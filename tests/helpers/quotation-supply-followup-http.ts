@@ -26,6 +26,7 @@ export {
 } from "./quotation-supply-followup";
 export async function allocatedHttpFixture(
   supplyKind: "Stock" | "Shipment" = "Stock",
+  prepareOther?: (f:Awaited<ReturnType<typeof completedHttpFixture>>, other:ReturnType<typeof supplyInput>)=>Promise<void>,
 ) {
   const f = await completedHttpFixture(),
     t = f.d.dispositions[0],
@@ -68,6 +69,7 @@ export async function allocatedHttpFixture(
     owner_id: r.owner_id,
     quantity: "8",
   });
+  await prepareOther?.(f,other);
   await json(f.owner, "supply/records", other);
   for (const [id, amount] of [
     [r.id, "2"],

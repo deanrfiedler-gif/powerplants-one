@@ -504,7 +504,7 @@ test("ES07 populated 0060 upgrade preserves every review release response grant 
     )
   ).rows;
   assert.deepEqual(after.filter(r => r.version <= 60), ledger);
-  assert.deepEqual(after.filter(r => r.version > 60).map(r => r.version), [61, 62, 63, 64, 65, 66]);
+  assert.deepEqual(after.filter(r => r.version > 60).map(r => r.version), [61, 62, 63, 64, 65, 66, 67]);
   assert.deepEqual(
     (await database().query("SELECT * FROM ppo.seed_receipts ORDER BY version"))
       .rows,

@@ -1,3 +1,4 @@
+import { materialState, materialHistory, materialFollowupStatus } from "./material-context";
 import {
   shortfallState,
   shortfallHistory,
@@ -167,6 +168,15 @@ export async function followupContext(
     events,
     checked,
   );
+  const material = await materialState(
+    c,
+    p,
+    basis,
+    referral,
+    receiving,
+    events,
+    checked,
+  );
   const r = conversion.target;
   const holds: string[] = [];
   if (r.kind !== "Demand" || r.data.demand_class !== "Approved")
@@ -286,7 +296,10 @@ export async function followupContext(
     !referral ||
     receiving?.decision === "Returned" ||
     receiving?.decision === "Held" ||
-    completed;
+    (completed &&
+      (!material.proposal ||
+        !!material.applied ||
+        material.proposal.referral_id !== referral?.id));
   const outcome =
     current
       .filter(
@@ -315,15 +328,17 @@ export async function followupContext(
     review,
     applied,
     outcome,
-    status: followupStatus(referral, receiving, review, applied),
+    status: materialFollowupStatus(material.events,referral,receiving) ?? followupStatus(referral, receiving, review, applied),
     adjustment_holds: holds,
     reservation_dependencies: reservationDependencies(basis),
     receipt_correction: receiptCorrection,
     allocation_shortfall: shortfall,
+    material_resolution: material,
     review_holds: reviewHolds,
     can_refer:
       ((exception && !known?.resolved && heldTarget) ||
-        shortfall.candidates.length > 0) &&
+        shortfall.candidates.length > 0 ||
+        material.candidates.length > 0) &&
       canReplace,
     can_apply: !!review && !completed && !reviewHolds.length,
     can_write: canWrite,
@@ -355,6 +370,7 @@ export async function returnedSupplyBasis(
   const last = events.at(-1)!;
   const receiptEvents = await receiptHistory(c, p, target, checked);
   const shortfallEvents = await shortfallHistory(c, p, target, checked);
+  const materialEvents = await materialHistory(c, p, target, checked);
   const outcome = events
     .filter(
       (e) =>
@@ -363,6 +379,14 @@ export async function returnedSupplyBasis(
     )
     .at(-1);
   return {
+    ...(materialEvents.length
+      ? {
+          material_event_id: materialEvents.at(-1)!.id,
+          material_outcome_id:
+            materialEvents.filter((e) => e.action === "MaterialApply").at(-1)
+              ?.id ?? null,
+        }
+      : {}),
     event_id: last.id,
     referral_id: last.referral_id,
     decision: last.decision,

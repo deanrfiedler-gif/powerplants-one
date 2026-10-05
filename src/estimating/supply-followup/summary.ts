@@ -1,5 +1,5 @@
 import type { Principal } from "../../platform/identity";
-import type { QueryClient } from "../../platform/permissions";
+import { hasPermission, type QueryClient } from "../../platform/permissions";
 import { AppError } from "../../platform/errors";
 import { supplyRecord } from "../../supply/context";
 import { conversionAuthority, conversionScope } from "../conversion/context";
@@ -10,6 +10,12 @@ import { followupHistory } from "./authority";
 import { receiptHistory, effectOwner } from "./receipt-context";
 import { shortfallHistory } from "./shortfall-context";
 import { followupStatus } from "./model";
+import {
+  materialHistory,
+  materialEffects,
+  materialOwner,
+  materialFollowupStatus,
+} from "./material-context";
 
 // The worklist exposes lifecycle and assignment, never a reviewed basis or
 // action eligibility. Authorise all current and historical links without
@@ -40,6 +46,7 @@ export async function receivingSummary(
   const events = await followupHistory(c, p, target, checked);
   const receipts = await receiptHistory(c, p, target, checked);
   const shortfalls = await shortfallHistory(c, p, target, checked);
+  const materials = await materialHistory(c, p, target, checked);
   const referral = events.filter((e) => e.action === "Refer").at(-1) ?? null;
   if (!referral) return null;
   const current = events.filter((e) => e.referral_id === referral.id);
@@ -81,11 +88,34 @@ export async function receivingSummary(
   let canWrite = false;
   try {
     await conversionScope(c, p, source, true);
-    canWrite = true;
+    canWrite = await hasPermission(
+      c,
+      p,
+      "supply.coordinate",
+      record.company_id,
+      record.site_id ?? undefined,
+    );
   } catch (e) {
     if (!(e instanceof AppError)) throw e;
   }
   let canReceive = false;
+  const material = materials
+    .filter(
+      (e) => e.action === "MaterialPropose" && e.referral_id === referral.id,
+    )
+    .at(-1);
+  if (material)
+    for (const effect of materialEffects(material.dependencies).filter(
+      (e) => e.owner_id === p.actor_id,
+    )) {
+      try {
+        canReceive ||=
+          (await materialOwner(c, p, material, effect.role, checked))
+            .actor_id === p.actor_id;
+      } catch (e) {
+        if (!(e instanceof AppError)) throw e;
+      }
+    }
   if (!canWrite || referral.owner_id !== p.actor_id) {
     for (const proposal of proposals) {
       for (const demand of proposal.dependencies.group.demands.filter(
@@ -120,8 +150,10 @@ export async function receivingSummary(
     title: record.title,
     status:
       referral.owner_id === p.actor_id
-        ? followupStatus(referral, receiving, review, applied)
-        : "Affected-demand receiving",
+        ? materialFollowupStatus(materials,referral,receiving) ?? followupStatus(referral, receiving, review, applied)
+        : material
+          ? "Downstream material receiving"
+          : "Affected-demand receiving",
     due_date: referral.due_date,
     date_needed: referral.date_needed,
     next_action: referral.next_action,

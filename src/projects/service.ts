@@ -116,7 +116,7 @@ export async function listProjects(p: Principal, input: unknown) {
     completeness: "Page",
   };
 }
-async function tasksFor(
+export async function tasksFor(
   c: QueryClient,
   p: Principal,
   id: string,
@@ -294,8 +294,24 @@ export async function saveTask(p: Principal, id: string, value: unknown) {
     p,
     command,
     "SaveProjectTask",
-    (c) => projectRow(c, p, id, true),
-    async (c, project) => {
+    async (c) => {
+      const project=await projectRow(c,p,id,true);
+      const {materialNativeAuthority}=await import("../estimating/supply-followup/material-context");
+      await materialNativeAuthority(c,p,id,command.operation_id);
+      return project;
+    },
+    (c, project) => applyTask(c,p,id,command,project),
+    "Project",
+    "ProjectTaskSaved",
+  );
+}
+// Owning Projects body shared with bounded received material application.
+// The caller records the exact original native receipt in its transaction.
+export async function saveTaskInTransaction(c: PoolClient,p: Principal,id: string,input: unknown) {
+  const command=parseTask(id,input);
+  return applyTask(c,p,id,command,await projectRow(c,p,id,true));
+}
+async function applyTask(c: PoolClient,p: Principal,id: string,command: ReturnType<typeof parseTask>,project: ProjectRow) {
       if (project.lifecycle === "Closed") throw new AppError(409,"ClosedProject","Reopen the project through Acceptance & closeout before changing its schedule.");
       if (project.version !== command.expected_version)
         throw new AppError(
@@ -401,10 +417,6 @@ export async function saveTask(p: Principal, id: string, value: unknown) {
         );
       await event(c, p, id, command, command.id);
       return { ...result, audit_details: { task_id: command.id } };
-    },
-    "Project",
-    "ProjectTaskSaved",
-  );
 }
 export async function projectHistory(p: Principal, id: string, input: unknown) {
   const q = object(input, ["cursor"]),

@@ -313,7 +313,13 @@ export async function readOperation(
       r.command,
     );
   } else if (r.object_type === "Project") {
-    await authoriseProjectReceipt(client, p, r.record_id, r.command);
+    return transaction(async (c) => {
+      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [p.workspace_id]);
+      await authoriseProjectReceipt(c, p, r.record_id, r.command);
+      const {materialNativeAuthority}=await import("../estimating/supply-followup/material-context");
+      await materialNativeAuthority(c,p,r.record_id,operation_id);
+      return r.result as OperationReceipt;
+    });
   } else if (r.object_type === "Opportunity") {
     return transaction(async (c) => {
       await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [

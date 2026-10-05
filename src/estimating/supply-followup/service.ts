@@ -144,7 +144,8 @@ async function execute(p: Principal, id: string, input: Input) {
         );
         if (
           disposition.status !== "Review required" &&
-          !t.allocation_shortfall.candidates.length
+          !t.allocation_shortfall.candidates.length &&
+          !t.material_resolution.candidates.length
         )
           followupConflict(
             "This exact quotation exception is already resolved or unchanged. Reassess current evidence before referral.",

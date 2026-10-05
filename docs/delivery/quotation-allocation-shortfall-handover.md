@@ -1,5 +1,7 @@
 # Owned shared Shipment shortfall handover
 
+**Integration reconciliation, 6 October 2026:** #347 merged as `be2cf5cc7f1b950296785ff64dc4de2d00ec5680`. Its 34 final-head checks passed. Post-merge proof jobs passed, but two aggregate jobs were cancelled without a runner; the separately observed workflows therefore failed. The [material-resolution ledger](../testing/evidence/quotation-material-resolution/README.md) retains exact check metadata and the next bounded native action. Earlier pre-merge wording and execution evidence below retain their historical meaning. Deployment remains separate.
+
 <!-- versioning: git; committed history is authoritative -->
 
 Owner: Dean Fiedler. Status: implemented for review; final-head validation is recorded in the [execution ledger](../testing/evidence/quotation-allocation-shortfall/README.md). No owner, visual or deployment acceptance is inferred.

@@ -1,0 +1,17 @@
+# Owned downstream material resolution handover
+
+<!-- versioning: git; committed history is authoritative -->
+
+Owner: Dean Fiedler. SYN-ES07-07; implemented contribution on `codex/quotation-material-resolution`, from #347 merge `be2cf5cc7f1b950296785ff64dc4de2d00ec5680`. [Contract](../contracts/quotation-material-resolution.md), [decision](../decisions/quotation-material-resolution.md), [execution ledger](../testing/evidence/quotation-material-resolution/README.md). No merge or deployment.
+
+The previously held case is an affected, independently allocated Project-origin Demand with an exact current Requested Impact after a completed received allocation reduction. Its accepted referral can now propose withdrawal of both dates from one unstarted Planned Project task. The Demand owner, Project coordinator, task owner and MaterialAction owner each independently receive the complete proposal. Freeze a review, inspect its evidence, then apply separately.
+
+Application uses existing Projects and Supply commands atomically. Task/Project/Demand versions each advance once; the selected Impact gets its exact predecessor-linked Reviewed successor backed by both receipts and native history. Activities, allocations, Receipt facts, Demand quantity/classification, independent Impacts, unrelated tasks, Project context and issued bytes remain unchanged. MaterialAction remains separately owned and actionable; its completion never clears an operational hold.
+
+The returned outcome states only the scoped forecast resolution. Current readiness, unmet quantity and other Requested Impacts remain visible. Retain and Hold preserve evidence and continuing ownership without fabricated native effects. Quotation retention does not prevent later operational work. New returned evidence requires explicit fresh ES-07 disposition wherever an exception exists.
+
+Original issue/source, conversion, referral, correction, allocation consent/review/outcome, Impact chain and every receipt remain linked. The existing actor-bound journal blocks replacement during uncertainty. Exact retry and original lookup use current authority; changed payload conflicts and missing receipts remain inconclusive. Migration 0067 has no grants, seeds or identity changes and must be proven across populated earlier upgrades.
+
+The ledger records completed local development checks. The contribution PR and its retained workflow artifacts identify the exact final head and completed assurance; local proof does not substitute for those results. Existing isolated PostgreSQL shards, both complete broad browsers, retained compiled groups and mandatory aggregates remain. Owner, paired visual, physical device and screen-reader acceptance remain pending. External integrations, commercial/operational policy and deployment are separate.
+
+Next concrete programme increment: independently received resolution of a selected Project task with a real predecessor/successor dependency, explicitly contracting every consequential Project task/version effect. Such cases remain held here; no automatic rescheduling or dispatch to another domain is implied.

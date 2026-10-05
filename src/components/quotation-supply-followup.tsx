@@ -9,6 +9,7 @@ import type { FollowupDetail } from "../estimating/supply-followup/context";
 import type { receivingWorklist } from "../estimating/supply-followup/reads";
 import { AllocationShortfall } from "./quotation-allocation-shortfall";
 import { ReceiptCorrection } from "./quotation-receipt-correction";
+import { MaterialResolution } from "./quotation-material-resolution";
 export type SupplyFollowupAction =
   | "supply-refer"
   | "supply-receive"
@@ -17,7 +18,11 @@ export type SupplyFollowupAction =
   | "receipt-propose"
   | "receipt-receive"
   | "shortfall-propose"
-  | "shortfall-receive";
+  | "shortfall-receive"
+  | "material-propose"
+  | "material-receive"
+  | "material-review"
+  | "material-apply";
 const capture = (t: FollowupDetail) => ({
   hash: t.basis_hash,
   sequence: t.sequence,
@@ -26,6 +31,7 @@ const capture = (t: FollowupDetail) => ({
   review: t.review?.id ?? null,
   receipt_sequence: t.receipt_correction.sequence,
   allocation_sequence: t.allocation_shortfall.sequence,
+  material_sequence: t.material_resolution.sequence,
 });
 export function SupplyFollowupQueue() {
   const resource = useCrmResource<
@@ -162,10 +168,12 @@ function FollowupTarget({
     [observedAt, setObservedAt] = useState(""),
     [lookup, setLookup] = useState(""),
     [receiptDirty, setReceiptDirty] = useState(false),
-    [shortfallDirty, setShortfallDirty] = useState(false);
+    [shortfallDirty, setShortfallDirty] = useState(false),
+    [materialDirty, setMaterialDirty] = useState(false);
   const dirty = !!(
     receiptDirty ||
     shortfallDirty ||
+    materialDirty ||
     reason ||
     evidence ||
     next ||
@@ -400,6 +408,15 @@ function FollowupTarget({
           ]}
         />
       </div>
+      <MaterialResolution
+        t={t}
+        actor={actor}
+        disabled={commonDisabled}
+        blocked={blocked}
+        common={common}
+        send={send}
+        onDirty={setMaterialDirty}
+      />
       <AllocationShortfall
         t={t}
         actor={actor}
