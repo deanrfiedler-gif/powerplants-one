@@ -19,6 +19,7 @@ import {
 import type { FollowupBasis, FollowupEvent } from "./model";
 import {
   receiptDependencies,
+  currentEvidenceChecked,
   receiptEvidenceAuthority,
   effectOwner,
   type ReceiptEvent,
@@ -55,13 +56,21 @@ export async function shortfallEvidenceAuthority(
   c: QueryClient,
   p: Principal,
   e: ShortfallEvent,
-  checked?: Checked,
+  checked: Checked = {
+    revisions: new Set(),
+    records: new Set(),
+    credits: new Set(),
+  },
 ) {
   await receiptEvidenceAuthority(c, p, e, checked);
   for (const supply of new Set(
     e.dependencies.demand_allocations.map((a) => a.supply_id),
-  ))
-    await supplyRecord(c, p, supply, "supply.read");
+  )) {
+    if (!checked.records.has(supply)) {
+      await supplyRecord(c, p, supply, "supply.read");
+      checked.records.add(supply);
+    }
+  }
   await followupEvidenceAuthority(c, p, e.dependencies.correction, checked);
 }
 export async function shortfallHistory(
@@ -283,7 +292,13 @@ export async function shortfallState(
   receiving: FollowupEvent | null,
   followups: FollowupEvent[],
 ) {
-  const events = await shortfallHistory(c, p, basis.conversion.target.id);
+  const checked = currentEvidenceChecked(basis);
+  const events = await shortfallHistory(
+    c,
+    p,
+    basis.conversion.target.id,
+    checked,
+  );
   const proposal =
     events
       .filter(
@@ -342,7 +357,7 @@ export async function shortfallState(
       );
     let canReceive = false;
     try {
-      const owner = await effectOwner(c, p, proposal!, d.record.id);
+      const owner = await effectOwner(c, p, proposal!, d.record.id, checked);
       canReceive = owner.actor_id === p.actor_id;
     } catch (e) {
       if (!(e instanceof AppError)) throw e;

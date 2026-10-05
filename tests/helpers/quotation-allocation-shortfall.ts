@@ -56,10 +56,19 @@ export const shortfallReview = (t: FollowupDetail) => ({
   ...supplyReview(t, "ReduceAllocations"),
   allocation_proposal_id: t.allocation_shortfall.proposal!.id,
 });
-export async function shortfallFixture(usable = "4.375001", beforeCorrection?: (f: Awaited<ReturnType<typeof receiptFixture>>) => Promise<void>) {
+export async function shortfallFixture(
+  usable = "4.375001",
+  beforeCorrection?: (
+    f: Awaited<ReturnType<typeof receiptFixture>>,
+  ) => Promise<void>,
+) {
   const f = await receiptFixture();
   await beforeCorrection?.(f);
-  await proposeReceipt(f.owner, f.id, receiptProposal(await currentFollowup(f), usable));
+  await proposeReceipt(
+    f.owner,
+    f.id,
+    receiptProposal(await currentFollowup(f), usable),
+  );
   await receiveAll(f);
   await reviewSupply(f.owner, f.id, receiptReview(await currentFollowup(f)));
   await applySupply(f.owner, f.id, supplyApply(await currentFollowup(f)));

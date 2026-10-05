@@ -36,6 +36,17 @@ export async function conversionAuthority(
   write = false,
 ) {
   const d = await responseContext(c, p, id);
+  await conversionScope(c, p, d, write);
+  return d;
+}
+// Reuse an already authorised response only inside the same serialized read.
+// Source evidence is never cached across requests, actors or native mutations.
+export async function conversionScope(
+  c: QueryClient,
+  p: Principal,
+  d: Pick<Awaited<ReturnType<typeof responseContext>>, "base" | "e" | "q">,
+  write = false,
+) {
   const site = d.base.basis.recipient.site_id;
   await companyContext(c, p, d.e.company_id, site, "supply.read");
   if (write)
@@ -53,7 +64,6 @@ export async function conversionAuthority(
       t.target_id,
       write ? "supply.coordinate" : "supply.read",
     );
-  return d;
 }
 export async function conversionReceiptAuthority(
   c: QueryClient,

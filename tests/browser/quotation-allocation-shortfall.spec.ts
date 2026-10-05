@@ -28,10 +28,17 @@ async function saved(page: Page) {
   await expect(
     page.getByRole("heading", { name: "Saved to the server" }),
   ).toBeVisible();
-  await Promise.all([
+  const [detail] = await Promise.all([
+    page.waitForResponse(
+      (r) =>
+        new URL(r.url()).pathname ===
+          "/api/v1" + new URL(page.url()).pathname &&
+        r.request().method() === "GET",
+    ),
     page.waitForEvent("load"),
     page.getByRole("button", { name: "Open saved receiving" }).click(),
   ]);
+  expect(detail.status()).toBe(200);
   await expect(
     page.getByRole("heading", { name: "6. Owned Supply follow-up" }),
   ).toBeVisible();
@@ -134,12 +141,14 @@ test("ES07 allocation committed lost response recovers the original through relo
   await page.goto("/" + f.path);
   await evidence(page);
   let sends = 0;
+  let operation = "";
   let lost!: () => void;
   const committedLostResponse = new Promise<void>((resolve) => {
     lost = resolve;
   });
   await page.route(`**/api/v1/${f.path}/supply-apply`, async (route) => {
     sends++;
+    operation = route.request().postDataJSON().operation_id;
     expect((await route.fetch()).ok()).toBe(true);
     await route.abort("failed");
     lost();
@@ -156,7 +165,19 @@ test("ES07 allocation committed lost response recovers the original through relo
     page.getByRole("button", { name: "Refer to Supply owner" }),
   ).toBeDisabled();
   page.once("dialog", (d) => d.accept());
-  await page.reload();
+  const [detail, receipt] = await Promise.all([
+    page.waitForResponse(
+      (r) =>
+        r.url().endsWith(`/api/v1/${f.path}`) && r.request().method() === "GET",
+    ),
+    page.waitForResponse((r) =>
+      r.url().endsWith(`/api/v1/operations/${operation}`),
+    ),
+    page.reload(),
+  ]);
+  expect(detail.status()).toBe(200);
+  expect(receipt.status()).toBe(200);
+  expect((await receipt.json()).operation_id).toBe(operation);
   await saved(page);
   await page.unrouteAll({ behavior: "wait" });
   expect(sends).toBe(1);
@@ -192,7 +213,20 @@ test("ES07 allocation inconclusive unsent original blocks replacement and exact 
     page.getByRole("heading", { name: "Resolve the original action" }),
   ).toBeVisible();
   page.once("dialog", (d) => d.accept());
-  await page.reload();
+  const [detail, receipt] = await Promise.all([
+    page.waitForResponse(
+      (r) =>
+        r.url().endsWith(`/api/v1/${f.path}`) && r.request().method() === "GET",
+    ),
+    page.waitForResponse((r) =>
+      r
+        .url()
+        .endsWith(`/api/v1/operations/${JSON.parse(original).operation_id}`),
+    ),
+    page.reload(),
+  ]);
+  expect(detail.status()).toBe(200);
+  expect(receipt.status()).toBe(503);
   await expect(
     page.getByRole("heading", { name: "Resolve the original action" }),
   ).toBeVisible();

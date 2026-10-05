@@ -86,6 +86,11 @@ export async function followupHistory(
   c: QueryClient,
   p: Principal,
   target: string,
+  checked: Checked = {
+    revisions: new Set(),
+    records: new Set(),
+    credits: new Set(),
+  },
 ) {
   if (!(await followupAvailable(c))) return [];
   const events = (
@@ -94,11 +99,6 @@ export async function followupHistory(
       [p.workspace_id, target],
     )
   ).rows;
-  const checked: Checked = {
-    revisions: new Set(),
-    records: new Set(),
-    credits: new Set(),
-  };
   for (const e of events) await followupEvidenceAuthority(c, p, e, checked);
   return events;
 }

@@ -6669,7 +6669,8 @@
           "paragraphs": [
             "Open native demand to inspect each actual linked Forecast record. Source line, plan and original receipt remain linked. Demand does not approve procurement or start work. Labour, Freight, Engineering and Subcontract lines retain commercial evidence without material-demand effects; this is not partial commercial acceptance.",
             "Applied retention resolves only the reviewed exception. Applied quantity revision changes the real native Forecast through Supply:Revise, preserving histories and producing an owned Supply impact. Later relevant changes reopen review. No replacement conversion, deletion, zero quantity, cancellation, procurement or work release is supported.",
-            "Returned evidence references actual native effects and original receipts. Explicitly review and apply a fresh ES-07 disposition; notes and Activity completion do not clear exceptions. Approved demand stays Approved and quantity remains held. A separately eligible Forecast uses the existing positive quantity review/application. Supply impacts remain visible."
+            "Returned evidence references actual native effects and original receipts. Explicitly review and apply a fresh ES-07 disposition; notes and Activity completion do not clear exceptions. Approved demand stays Approved and quantity remains held. A separately eligible Forecast uses the existing positive quantity review/application. Supply impacts remain visible.",
+            "Inspect the actual original native receipt, before/after versions, capacity and remaining unmet Demand. Obtain fresh readiness and a new explicit ES-07 disposition if a current exception exists. Owning workflows retain operational impacts; notes, Activity completion and completed Supply work do not clear them."
           ],
           "steps": [],
           "rows": [],
@@ -18134,7 +18135,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Synthetic/manual coordination only. No live purchase, reservation, ERP receipt/shipment/return/credit, customer message, automatic reschedule or stock/Finance ledger is provided. Visual review, owner acceptance and deployment are separate."
+            "Synthetic/manual coordination only. No live purchase, reservation, ERP receipt/shipment/return/credit, customer message, automatic reschedule or stock/Finance ledger is provided. Visual review, owner acceptance and deployment are separate.",
+            "Inspect the actual original native receipt, before/after versions, capacity and remaining unmet Demand. Obtain fresh readiness and a new explicit ES-07 disposition if a current exception exists. Owning workflows retain operational impacts; notes, Activity completion and completed Supply work do not clear them."
           ],
           "steps": [],
           "rows": [],
@@ -18496,7 +18498,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Synthetic/manual coordination only. No live purchase, reservation, ERP receipt/shipment/return/credit, customer message, automatic reschedule or stock/Finance ledger is provided. Visual review, owner acceptance and deployment are separate."
+            "Synthetic/manual coordination only. No live purchase, reservation, ERP receipt/shipment/return/credit, customer message, automatic reschedule or stock/Finance ledger is provided. Visual review, owner acceptance and deployment are separate.",
+            "Inspect the actual original native receipt, before/after versions, capacity and remaining unmet Demand. Obtain fresh readiness and a new explicit ES-07 disposition if a current exception exists. Owning workflows retain operational impacts; notes, Activity completion and completed Supply work do not clear them."
           ],
           "steps": [],
           "rows": [],
@@ -18678,7 +18681,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Synthetic/manual coordination only. No live purchase, reservation, ERP receipt/shipment/return/credit, customer message, automatic reschedule or stock/Finance ledger is provided. Visual review, owner acceptance and deployment are separate."
+            "Synthetic/manual coordination only. No live purchase, reservation, ERP receipt/shipment/return/credit, customer message, automatic reschedule or stock/Finance ledger is provided. Visual review, owner acceptance and deployment are separate.",
+            "Inspect the actual original native receipt, before/after versions, capacity and remaining unmet Demand. Obtain fresh readiness and a new explicit ES-07 disposition if a current exception exists. Owning workflows retain operational impacts; notes, Activity completion and completed Supply work do not clear them."
           ],
           "steps": [],
           "rows": [],
@@ -19594,7 +19598,8 @@
           "title": "Completion and handover",
           "paragraphs": [
             "Synthetic/manual coordination only. No live purchase, reservation, ERP receipt/shipment/return/credit, customer message, automatic reschedule or stock/Finance ledger is provided. Visual review, owner acceptance and deployment are separate.",
-            "Returned evidence references actual native effects and original receipts. Explicitly review and apply a fresh ES-07 disposition; notes and Activity completion do not clear exceptions. Approved demand stays Approved and quantity remains held. A separately eligible Forecast uses the existing positive quantity review/application. Supply impacts remain visible."
+            "Returned evidence references actual native effects and original receipts. Explicitly review and apply a fresh ES-07 disposition; notes and Activity completion do not clear exceptions. Approved demand stays Approved and quantity remains held. A separately eligible Forecast uses the existing positive quantity review/application. Supply impacts remain visible.",
+            "Inspect the actual original native receipt, before/after versions, capacity and remaining unmet Demand. Obtain fresh readiness and a new explicit ES-07 disposition if a current exception exists. Owning workflows retain operational impacts; notes, Activity completion and completed Supply work do not clear them."
           ],
           "steps": [],
           "rows": [],
@@ -70522,7 +70527,8 @@
           "paragraphs": [
             "Open native demand to inspect each actual linked Forecast record. Source line, plan and original receipt remain linked. Demand does not approve procurement or start work. Labour, Freight, Engineering and Subcontract lines retain commercial evidence without material-demand effects; this is not partial commercial acceptance.",
             "Applied retention resolves only the reviewed exception. Applied quantity revision changes the real native Forecast through Supply:Revise, preserving histories and producing an owned Supply impact. Later relevant changes reopen review. No replacement conversion, deletion, zero quantity, cancellation, procurement or work release is supported.",
-            "Returned evidence references actual native effects and original receipts. Explicitly review and apply a fresh ES-07 disposition; notes and Activity completion do not clear exceptions. Approved demand stays Approved and quantity remains held. A separately eligible Forecast uses the existing positive quantity review/application. Supply impacts remain visible."
+            "Returned evidence references actual native effects and original receipts. Explicitly review and apply a fresh ES-07 disposition; notes and Activity completion do not clear exceptions. Approved demand stays Approved and quantity remains held. A separately eligible Forecast uses the existing positive quantity review/application. Supply impacts remain visible.",
+            "Inspect the actual original native receipt, before/after versions, capacity and remaining unmet Demand. Obtain fresh readiness and a new explicit ES-07 disposition if a current exception exists. Owning workflows retain operational impacts; notes, Activity completion and completed Supply work do not clear them."
           ],
           "steps": [],
           "rows": [],

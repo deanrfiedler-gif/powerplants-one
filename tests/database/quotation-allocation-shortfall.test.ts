@@ -489,10 +489,15 @@ test("ES07 shortfall refuses incomplete or increasing proposals and selectively 
 });
 
 test("ES07 shortfall enforces actual picked lower bounds, retains Pick evidence and never clears owned impacts", async () => {
-  const f = await shortfallFixture("5", async f => {
-    const r = (await workspace(f.owner, f.other.id)).record;
-    await recordFact(f.owner, r.id, supplyFact("Pick", r.version, { quantity: "4.5" }));
-  }), r = (await workspace(f.owner, f.other.id)).record;
+  const f = await shortfallFixture("5", async (f) => {
+      const r = (await workspace(f.owner, f.other.id)).record;
+      await recordFact(
+        f.owner,
+        r.id,
+        supplyFact("Pick", r.version, { quantity: "4.5" }),
+      );
+    }),
+    r = (await workspace(f.owner, f.other.id)).record;
   let t = await currentFollowup(f),
     cmd = shortfallProposal(t);
   await assert.rejects(
@@ -643,6 +648,49 @@ test("ES07 allocation received review is held by corrected quotation response an
     code("SupplyFollowupConflict"),
   );
   assert.deepEqual(await snapshot("supply_allocations"), before);
+});
+
+test("ES07 Receipt successor holds received allocation work while preserving accurate evidence and its original correction receipt", async () => {
+  const f = await shortfallFixture();
+  await proposeShortfall(f.owner, f.id, shortfallProposal(f.t));
+  await receiveAllAllocations(f);
+  await reviewSupply(f.owner, f.id, shortfallReview(await currentFollowup(f)));
+  const t = await currentFollowup(f),
+    old = supplyApply(t);
+  const correction = t.allocation_shortfall.proposal!.dependencies.correction;
+  const command = correction.command;
+  assert.ok(command && "record_id" in command);
+  const source = await workspace(f.owner, f.supply.id);
+  const prior = source.facts.find((x) => x.id === command.id)!;
+  const successor = {
+    ...supplyFact("Receipt", source.record.version, {
+      ...prior.data,
+      usable: "4",
+    }),
+    predecessor_id: prior.id,
+  };
+  await recordFact(f.owner, source.record.id, successor);
+  const current = await currentFollowup(f);
+  assert.equal(current.can_apply, false);
+  assert.equal(current.allocation_shortfall.candidates.length, 0);
+  assert.ok(
+    current.allocation_shortfall.holds.some((h) => h.includes("changed")),
+  );
+  assert.equal(current.basis.position[0].usable, "4");
+  assert.equal(current.basis.position[0].usable_allocated, "10");
+  await assert.rejects(
+    applySupply(f.owner, f.id, old),
+    code("SupplyFollowupConflict"),
+  );
+  assert.deepEqual(
+    await readOperation(f.owner, correction.native_receipt!.operation_id),
+    correction.native_receipt,
+  );
+  assert.ok(
+    (await workspace(f.owner, source.record.id)).facts.some(
+      (x) => x.id === prior.id,
+    ),
+  );
 });
 
 test("ES07 populated 0065 upgrade preserves ES04–07 corrections histories grants allocations exact outputs and original operations", async () => {

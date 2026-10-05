@@ -9,7 +9,11 @@ import type { QueryClient } from "../../platform/permissions";
 import { AppError } from "../../platform/errors";
 import { scopedOwner } from "../../shared/authority";
 import { supplyRecord } from "../../supply/context";
-import { conversionContext, conversionAuthority } from "../conversion/context";
+import {
+  conversionContext,
+  conversionAuthority,
+  conversionScope,
+} from "../conversion/context";
 import {
   targetBasis,
   dispositionHash,
@@ -24,6 +28,7 @@ import {
   acceptedReceipt,
   receiptCommandAuthority,
   receiptHistory,
+  currentEvidenceChecked,
 } from "./receipt-context";
 
 export async function followupOwner(
@@ -58,7 +63,7 @@ export async function followupOwner(
   await allocationPosition(c, owner, target.id);
   return owner;
 }
-export async function followupContext(
+export async function followupBasis(
   c: QueryClient,
   p: Principal,
   id: string,
@@ -70,7 +75,6 @@ export async function followupContext(
   },
 ) {
   const d = known?.context ?? (await conversionContext(c, p, id));
-  if (!known) await dispositionHistoryAuthority(c, p, target);
   const conversion = known?.basis ?? (await targetBasis(c, p, d, target));
   const disposition =
     (
@@ -85,8 +89,25 @@ export async function followupContext(
     position: await allocationPosition(c, p, target),
     disposition,
   };
+  return basis;
+}
+export async function followupContext(
+  c: QueryClient,
+  p: Principal,
+  id: string,
+  target: string,
+  known?: {
+    context: Awaited<ReturnType<typeof conversionContext>>;
+    basis: FollowupBasis["conversion"];
+    resolved: boolean;
+  },
+) {
+  if (!known) await dispositionHistoryAuthority(c, p, target);
+  const basis = await followupBasis(c, p, id, target, known);
+  const { conversion, disposition } = basis;
+  const checked = currentEvidenceChecked(basis);
   const basisHash = dispositionHash(basis),
-    events = await followupHistory(c, p, target);
+    events = await followupHistory(c, p, target, checked);
   const referral = events.filter((e) => e.action === "Refer").at(-1) ?? null;
   const current = events.filter((e) => e.referral_id === referral?.id);
   const receiving =
@@ -229,7 +250,8 @@ export async function followupContext(
       .at(-1) ?? null;
   let canWrite = false;
   try {
-    await conversionAuthority(c, p, id, true);
+    if (known) await conversionScope(c, p, known.context, true);
+    else await conversionAuthority(c, p, id, true);
     canWrite = true;
   } catch (e) {
     if (!(e instanceof AppError)) throw e;
@@ -293,11 +315,18 @@ export async function returnedSupplyBasis(
   p: Principal,
   target: string,
 ) {
-  const events = await followupHistory(c, p, target);
+  // Share current authority only within this actor's single serialized read.
+  // Each previously unseen revision/record is still checked before disclosure.
+  const checked = {
+    revisions: new Set<string>(),
+    records: new Set<string>(),
+    credits: new Set<string>(),
+  };
+  const events = await followupHistory(c, p, target, checked);
   if (!events.length) return null;
   const last = events.at(-1)!;
-  const receiptEvents = await receiptHistory(c, p, target);
-  const shortfallEvents = await shortfallHistory(c, p, target);
+  const receiptEvents = await receiptHistory(c, p, target, checked);
+  const shortfallEvents = await shortfallHistory(c, p, target, checked);
   const outcome = events
     .filter(
       (e) =>

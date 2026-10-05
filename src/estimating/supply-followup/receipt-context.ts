@@ -264,17 +264,11 @@ export async function effectOwner(
   );
   return owner;
 }
-export async function receiptState(
-  c: QueryClient,
-  p: Principal,
-  basis: FollowupBasis,
-  referral: FollowupEvent | null,
-  receiving: FollowupEvent | null,
-) {
+export function currentEvidenceChecked(basis: FollowupBasis): Checked {
   // The caller just authorised this exact current basis through targetBasis and
   // allocationPosition. Cache only within this read; historical removed links
   // and other actors still require independent current authority.
-  const checked: Checked = {
+  return {
     revisions: new Set([
       basis.conversion.original_evidence.receiving.revision_id,
     ]),
@@ -289,7 +283,16 @@ export async function receiptState(
       ]),
     ]),
     credits: new Set(),
-  };
+  } satisfies Checked;
+}
+export async function receiptState(
+  c: QueryClient,
+  p: Principal,
+  basis: FollowupBasis,
+  referral: FollowupEvent | null,
+  receiving: FollowupEvent | null,
+) {
+  const checked = currentEvidenceChecked(basis);
   const events = await receiptHistory(
     c,
     p,

@@ -32,7 +32,7 @@ import { draftBytes } from "../worker";
 import { releaseHash } from "../release/context";
 import { dispositionHash, dispositionTarget } from "../disposition/context";
 import { conversionAuthority, conversionContext } from "../conversion/context";
-import { followupContext, followupOwner } from "./context";
+import { followupBasis, followupContext, followupOwner } from "./context";
 import {
   followupConflict,
   followupHistory,
@@ -64,8 +64,13 @@ async function execute(p: Principal, id: string, input: Input) {
     async (c) => {
       await conversionAuthority(c, p, id, true);
       await supplyRecord(c, p, input.target_id, "supply.coordinate");
-      await followupHistory(c, p, input.target_id);
-      const originals = await receiptHistory(c, p, input.target_id);
+      const checked = {
+        revisions: new Set([id]),
+        records: new Set([input.target_id]),
+        credits: new Set<string>(),
+      };
+      await followupHistory(c, p, input.target_id, checked);
+      const originals = await receiptHistory(c, p, input.target_id, checked);
       const original = (
         await c.query<FollowupEvent>(
           "SELECT * FROM ppo.quote_supply_events WHERE workspace_id=$1 AND created_by=$2 AND operation_id=$3",
@@ -73,9 +78,9 @@ async function execute(p: Principal, id: string, input: Input) {
         )
       ).rows[0];
       if (original?.allocation_proposal_id) {
-        const proposal = (await shortfallHistory(c, p, input.target_id)).find(
-          (e) => e.id === original.allocation_proposal_id,
-        );
+        const proposal = (
+          await shortfallHistory(c, p, input.target_id, checked)
+        ).find((e) => e.id === original.allocation_proposal_id);
         if (!proposal) throw unavailable();
         await shortfallCommandAuthority(c, p, proposal);
       }
@@ -405,7 +410,7 @@ async function execute(p: Principal, id: string, input: Input) {
               },
             );
           }
-          basis = (await followupContext(c, p, id, input.target_id)).basis;
+          basis = await followupBasis(c, p, id, input.target_id);
         }
       }
       const basisHash = dispositionHash(basis);

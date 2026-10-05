@@ -1,5 +1,7 @@
 # ES-07 owned Supply follow-up handover
 
+Current continuation: #344–346 are merged; [SYN-ES07-06](quotation-allocation-shortfall-handover.md) separately receives exact reductions to existing Usable allocations after a corrected Shipment Receipt creates a shortfall. Single adjustment reuses the original command; multiple reductions are atomic. Demand and Receipt content, unmet Demand and independent operational holds remain. Earlier checkpoints below retain their historical meaning.
+
 **Current reconciliation, 4 October 2026:** #344 is merged as `3b1daba3a3738afe8b53700de2efb9e14a28d30a`; final head `16d3767bc7f6f446169b9cd74f9f0bbb9a4e6721` passed all 29 checks. Final-head evidence: 584 units, 58 HTTP, 757 PostgreSQL cases (390 + 367), both broad browser runs 580 passed / 79 retained skips each, both compiled proof groups and restart retaining 26 original receipts / four unchanged files. Post-merge main has now passed all 25 assurance checks, including both aggregate gates. Its separate Azure update check also reported success; this task did not deploy or verify hosted behaviour. The current [reservation reconciliation decision](../decisions/quotation-reservation-reconciliation.md) extends the owned workflow; earlier checkpoints below retain their historical meaning.
 
 

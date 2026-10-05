@@ -4,7 +4,7 @@ import type { Principal } from "../../platform/identity";
 import { transaction } from "../../platform/database";
 import { AppError } from "../../platform/errors";
 import { object } from "../../shared/validation";
-import { conversionAuthority, conversionContext } from "./context";
+import { conversionScope, conversionContext } from "./context";
 import { conversionPolicy } from "./model";
 import {
   dispositionTarget,
@@ -60,12 +60,12 @@ export async function readConversion(
     }
     let canWrite = false;
     try {
-      await conversionAuthority(c, p, id, true);
+      await conversionScope(c, p, d, true);
       canWrite = true;
     } catch (e) {
       if (!(e instanceof AppError && [403, 404].includes(e.status))) throw e;
     }
-    await conversionAuthority(c, p, id);
+    await conversionScope(c, p, d);
     return {
       revision: {
         id: d.q.id,
