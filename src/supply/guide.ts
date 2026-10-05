@@ -48,6 +48,10 @@ export const supplyTasks: Record<
   ],
   "SC-04": [
     [
+      "Receive exact correction effects",
+      "For a linked ES-07 exception, use its accepted Supply referral to propose correction of one existing Receipt. Every allocated Demand owner must accept the exact proposal before immutable review and separate native application. The original fact and allocations remain. Reduced usable evidence exposes shortfall and owned impacts; reassess ES-07 explicitly.",
+    ],
+    [
       "Record physical receipt",
       "Select the incoming line and open Receipt and inspection. Carrier arrival and ERP receipt reference are separate observations. Record actual quantities and explicit identity evidence.",
     ],
@@ -117,6 +121,10 @@ export const supplyTasks: Record<
     ],
   ],
   "SC-09": [
+    [
+      "Receive affected-demand correction",
+      "The assigned quotation queue includes independently owned Demand effects. Compare the exact Receipt proposal and current shared evidence; accept, return or hold with attributable reasons. Changed evidence requires fresh receiving. Activity completion and Supply completion never clear quotation exceptions.",
+    ],
     [
       "Receive quotation follow-up",
       "Open your assigned completed-conversion referral. Accept for review, return with reasons or continue the hold. Review exact shared allocations and dependencies before retaining the position or reviewing an existing allocation quantity adjustment. Review an existing Unknown reservation outcome using complete original-operation lookup evidence and UTC observation time. Apply separately, recover the original receipt, then explicitly reassess ES-07. This records evidence only; other holds remain. Acceptance grants no procurement or work authority.",

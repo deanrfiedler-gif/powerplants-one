@@ -6582,10 +6582,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-10-04",
+      "prepared_at": "2026-10-05",
       "source_commit": "a32b3b53c45bdc74061f3612c15d71c0544504d8",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/testing/evidence/quotation-reservation-reconciliation/README.md; proof and acceptance separate",
+      "runtime_evidence": "See docs/testing/evidence/quotation-receipt-correction/README.md; proof and acceptance remain separate",
       "sections": [
         {
           "section_id": "purpose",
@@ -6743,6 +6743,19 @@
           "steps": [],
           "rows": [],
           "headers": []
+        },
+        {
+          "section_id": "receipt-correction",
+          "title": "Correct existing Receipt evidence",
+          "paragraphs": [
+            "Accept the assigned Supply referral for synthetic review. Compare the original Receipt, shared allocations, every affected Demand and its other sources of readiness before proposing corrected evidence.",
+            "Save one versioned Receipt proposal. Every current allocated Demand owner must explicitly accept its exact effects, return it with reasons or continue the hold. Changed source evidence, dependencies, proposal or receiving decisions requires fresh decisions.",
+            "Record an immutable correction review after all required acceptance, then Apply separately. Inspect the native successor, original receipt, Demand impacts and capacity shortfall. Allocations and physical events are not reversed.",
+            "Return to ES-07 for fresh disposition review/application. Supply completion does not resolve quotation exceptions. Approved demand and downstream operational holds remain. Recover unknown originals before replacement; missing receipts are inconclusive."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
         }
       ],
       "related_entry_keys": [
@@ -6760,9 +6773,11 @@
         "src/estimating/supply-followup/context.ts",
         "src/estimating/supply-followup/service.ts",
         "docs/contracts/quotation-supply-followup.md",
-        "docs/decisions/quotation-supply-followup-native.md"
+        "docs/decisions/quotation-supply-followup-native.md",
+        "docs/decisions/quotation-receipt-correction.md",
+        "docs/delivery/quotation-receipt-correction-handover.md"
       ],
-      "change_summary": "Owned Supply receiving, exact native allocation adjustment and explicit ES-07 reassessment.",
+      "change_summary": "Adopted SYN-ES07-05 existing Receipt correction and independent affected-demand receiving.",
       "document_id": "PPO-GUIDE-ES-07",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -18568,10 +18583,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-25",
+      "prepared_at": "2026-10-05",
       "source_commit": "0f10b7fb46a8ab512e9b019573ece272cf5920b9",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See native handover; visual and owner acceptance separate",
+      "runtime_evidence": "See docs/testing/evidence/quotation-receipt-correction/README.md; proof and acceptance remain separate",
       "sections": [
         {
           "section_id": "purpose",
@@ -18710,6 +18725,19 @@
           "steps": [],
           "rows": [],
           "headers": []
+        },
+        {
+          "section_id": "receipt-correction",
+          "title": "Correct existing Receipt evidence",
+          "paragraphs": [
+            "Accept the assigned Supply referral for synthetic review. Compare the original Receipt, shared allocations, every affected Demand and its other sources of readiness before proposing corrected evidence.",
+            "Save one versioned Receipt proposal. Every current allocated Demand owner must explicitly accept its exact effects, return it with reasons or continue the hold. Changed source evidence, dependencies, proposal or receiving decisions requires fresh decisions.",
+            "Record an immutable correction review after all required acceptance, then Apply separately. Inspect the native successor, original receipt, Demand impacts and capacity shortfall. Allocations and physical events are not reversed.",
+            "Return to ES-07 for fresh disposition review/application. Supply completion does not resolve quotation exceptions. Approved demand and downstream operational holds remain. Recover unknown originals before replacement; missing receipts are inconclusive."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
         }
       ],
       "related_entry_keys": [
@@ -18718,9 +18746,11 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/quotation-receipt-correction.md",
+        "docs/delivery/quotation-receipt-correction-handover.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Adopted SYN-ES07-05 existing Receipt correction and independent affected-demand receiving.",
       "document_id": "PPO-GUIDE-SC-04",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -19456,10 +19486,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-25",
+      "prepared_at": "2026-10-05",
       "source_commit": "0f10b7fb46a8ab512e9b019573ece272cf5920b9",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/testing/evidence/quotation-reservation-reconciliation/README.md; proof and acceptance separate",
+      "runtime_evidence": "See docs/testing/evidence/quotation-receipt-correction/README.md; proof and acceptance remain separate",
       "sections": [
         {
           "section_id": "purpose",
@@ -19612,6 +19642,19 @@
           "steps": [],
           "rows": [],
           "headers": []
+        },
+        {
+          "section_id": "receipt-correction",
+          "title": "Correct existing Receipt evidence",
+          "paragraphs": [
+            "Accept the assigned Supply referral for synthetic review. Compare the original Receipt, shared allocations, every affected Demand and its other sources of readiness before proposing corrected evidence.",
+            "Save one versioned Receipt proposal. Every current allocated Demand owner must explicitly accept its exact effects, return it with reasons or continue the hold. Changed source evidence, dependencies, proposal or receiving decisions requires fresh decisions.",
+            "Record an immutable correction review after all required acceptance, then Apply separately. Inspect the native successor, original receipt, Demand impacts and capacity shortfall. Allocations and physical events are not reversed.",
+            "Return to ES-07 for fresh disposition review/application. Supply completion does not resolve quotation exceptions. Approved demand and downstream operational holds remain. Recover unknown originals before replacement; missing receipts are inconclusive."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
         }
       ],
       "related_entry_keys": [
@@ -19629,9 +19672,11 @@
         "src/estimating/supply-followup/context.ts",
         "src/estimating/supply-followup/service.ts",
         "docs/contracts/quotation-supply-followup.md",
-        "docs/decisions/quotation-supply-followup-native.md"
+        "docs/decisions/quotation-supply-followup-native.md",
+        "docs/decisions/quotation-receipt-correction.md",
+        "docs/delivery/quotation-receipt-correction-handover.md"
       ],
-      "change_summary": "Owned Supply receiving, exact native allocation adjustment and explicit ES-07 reassessment.",
+      "change_summary": "Adopted SYN-ES07-05 existing Receipt correction and independent affected-demand receiving.",
       "document_id": "PPO-GUIDE-SC-09",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -68527,11 +68572,28 @@
           "steps": [],
           "headers": [],
           "rows": []
+        },
+        {
+          "section_id": "receipt-correction",
+          "title": "Correct existing Receipt evidence",
+          "paragraphs": [
+            "Accept the assigned Supply referral for synthetic review. Compare the original Receipt, shared allocations, every affected Demand and its other sources of readiness before proposing corrected evidence.",
+            "Save one versioned Receipt proposal. Every current allocated Demand owner must explicitly accept its exact effects, return it with reasons or continue the hold. Changed source evidence, dependencies, proposal or receiving decisions requires fresh decisions.",
+            "Record an immutable correction review after all required acceptance, then Apply separately. Inspect the native successor, original receipt, Demand impacts and capacity shortfall. Allocations and physical events are not reversed.",
+            "Return to ES-07 for fresh disposition review/application. Supply completion does not resolve quotation exceptions. Approved demand and downstream operational holds remain. Recover unknown originals before replacement; missing receipts are inconclusive."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
         }
       ],
-      "prepared_at": "2026-09-25",
-      "runtime_evidence": "See docs/testing/evidence/quotation-reservation-reconciliation/README.md; proof and acceptance separate",
-      "change_summary": "Owned Supply receiving, exact native allocation adjustment and explicit ES-07 reassessment."
+      "prepared_at": "2026-10-05",
+      "runtime_evidence": "See docs/testing/evidence/quotation-receipt-correction/README.md; proof and acceptance remain separate",
+      "change_summary": "Adopted SYN-ES07-05 existing Receipt correction and independent affected-demand receiving.",
+      "source_paths": [
+        "docs/decisions/quotation-receipt-correction.md",
+        "docs/delivery/quotation-receipt-correction-handover.md"
+      ]
     },
     {
       "guide_key": "guide.route-supply-deliveries",
@@ -68783,10 +68845,28 @@
           "steps": [],
           "headers": [],
           "rows": []
+        },
+        {
+          "section_id": "receipt-correction",
+          "title": "Correct existing Receipt evidence",
+          "paragraphs": [
+            "Accept the assigned Supply referral for synthetic review. Compare the original Receipt, shared allocations, every affected Demand and its other sources of readiness before proposing corrected evidence.",
+            "Save one versioned Receipt proposal. Every current allocated Demand owner must explicitly accept its exact effects, return it with reasons or continue the hold. Changed source evidence, dependencies, proposal or receiving decisions requires fresh decisions.",
+            "Record an immutable correction review after all required acceptance, then Apply separately. Inspect the native successor, original receipt, Demand impacts and capacity shortfall. Allocations and physical events are not reversed.",
+            "Return to ES-07 for fresh disposition review/application. Supply completion does not resolve quotation exceptions. Approved demand and downstream operational holds remain. Recover unknown originals before replacement; missing receipts are inconclusive."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
         }
       ],
-      "prepared_at": "2026-09-25",
-      "runtime_evidence": "See native handover; visual and owner acceptance separate"
+      "prepared_at": "2026-10-05",
+      "runtime_evidence": "See docs/testing/evidence/quotation-receipt-correction/README.md; proof and acceptance remain separate",
+      "change_summary": "Adopted SYN-ES07-05 existing Receipt correction and independent affected-demand receiving.",
+      "source_paths": [
+        "docs/decisions/quotation-receipt-correction.md",
+        "docs/delivery/quotation-receipt-correction-handover.md"
+      ]
     },
     {
       "guide_key": "guide.route-supply-returns",
@@ -70483,10 +70563,23 @@
           "steps": [],
           "rows": [],
           "headers": []
+        },
+        {
+          "section_id": "receipt-correction",
+          "title": "Correct existing Receipt evidence",
+          "paragraphs": [
+            "Accept the assigned Supply referral for synthetic review. Compare the original Receipt, shared allocations, every affected Demand and its other sources of readiness before proposing corrected evidence.",
+            "Save one versioned Receipt proposal. Every current allocated Demand owner must explicitly accept its exact effects, return it with reasons or continue the hold. Changed source evidence, dependencies, proposal or receiving decisions requires fresh decisions.",
+            "Record an immutable correction review after all required acceptance, then Apply separately. Inspect the native successor, original receipt, Demand impacts and capacity shortfall. Allocations and physical events are not reversed.",
+            "Return to ES-07 for fresh disposition review/application. Supply completion does not resolve quotation exceptions. Approved demand and downstream operational holds remain. Recover unknown originals before replacement; missing receipts are inconclusive."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
         }
       ],
-      "prepared_at": "2026-10-04",
-      "runtime_evidence": "See docs/testing/evidence/quotation-reservation-reconciliation/README.md; proof and acceptance separate",
+      "prepared_at": "2026-10-05",
+      "runtime_evidence": "See docs/testing/evidence/quotation-receipt-correction/README.md; proof and acceptance remain separate",
       "source_paths": [
         "src/app/(business)/estimating/quotes/[id]/conversion/page.tsx",
         "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",
@@ -70495,14 +70588,16 @@
         "src/estimating/supply-followup/context.ts",
         "src/estimating/supply-followup/service.ts",
         "docs/contracts/quotation-supply-followup.md",
-        "docs/decisions/quotation-supply-followup-native.md"
+        "docs/decisions/quotation-supply-followup-native.md",
+        "docs/decisions/quotation-receipt-correction.md",
+        "docs/delivery/quotation-receipt-correction-handover.md"
       ],
       "workflow_basis": [
         "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",
         "docs/blueprints/BP-04-estimating-quotation.md",
         "docs/decisions/quotation-conversion-native.md"
       ],
-      "change_summary": "Owned Supply receiving, exact native allocation adjustment and explicit ES-07 reassessment."
+      "change_summary": "Adopted SYN-ES07-05 existing Receipt correction and independent affected-demand receiving."
     }
   ]
 }

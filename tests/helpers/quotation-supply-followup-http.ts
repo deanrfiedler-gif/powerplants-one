@@ -24,7 +24,9 @@ export {
   supplyReview,
   supplyApply,
 } from "./quotation-supply-followup";
-export async function allocatedHttpFixture() {
+export async function allocatedHttpFixture(
+  supplyKind: "Stock" | "Shipment" = "Stock",
+) {
   const f = await completedHttpFixture(),
     t = f.d.dispositions[0],
     r = t.basis.target;
@@ -44,7 +46,22 @@ export async function allocatedHttpFixture() {
     unit: r.unit,
     owner_id: r.owner_id,
   });
+  if (supplyKind === "Shipment")
+    Object.assign(supply.data, {
+      supply_kind: "Shipment",
+      shipment_id: randomUUID(),
+    });
   await json(f.owner, "supply/records", supply);
+  if (supplyKind === "Shipment")
+    await json(
+      f.owner,
+      `supply/records/${supply.id}/facts`,
+      supplyFact("Receipt", 1, {
+        received: "10",
+        inspected: "10",
+        usable: "10",
+      }),
+    );
   const other = supplyInput("Demand", {
     item: r.item,
     unit: r.unit,

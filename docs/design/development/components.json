@@ -3477,7 +3477,7 @@
       "title": "Exact receiving and controlled conversion",
       "category": "Forms",
       "module": "ES",
-      "purpose": "Attributable receiving, explicit item resolution, frozen plan and atomic native Forecast demand with original recovery. Completed targets receive immutable Retain/Hold/ReviseQuantity decisions and separately applied native effects. Held targets enter owned Supply receiving, immutable allocation review, separate native application and returned evidence.",
+      "purpose": "Attributable receiving, explicit item resolution, frozen plan and atomic native Forecast demand with original recovery. Completed targets receive immutable Retain/Hold/ReviseQuantity decisions and separately applied native effects. Held targets enter owned Supply receiving, immutable allocation review, separate native application and returned evidence. Existing Receipt correction freezes independently received shared-demand effects before native application.",
       "owner": "Dean Fiedler",
       "example": null,
       "coverage": "Host example",
@@ -3561,6 +3561,16 @@
           "id": "reservation-reconciliation",
           "label": "Original reservation outcome",
           "description": "Unknown dependency, immutable outcome review, native successor, remaining holds and recovery. Real host: tests/browser/quotation-supply-followup.spec.ts."
+        },
+        {
+          "id": "receipt-receiving",
+          "label": "Affected-demand receiving",
+          "description": "Exact Receipt proposal awaits each current owner; Accepted, Returned, Held and stale decisions. Real host fixtures: tests/browser/quotation-receipt-correction.spec.ts."
+        },
+        {
+          "id": "receipt-shortfall",
+          "label": "Corrected evidence, retained shortfall",
+          "description": "Native Receipt successor and immutable original receipt; completed acceptances remain retained evidence without renewed-receiving controls. Allocations unchanged, readiness held and fresh ES-07 disposition required."
         }
       ],
       "implementation": [
@@ -3579,6 +3589,10 @@
         {
           "path": "src/components/quotation-supply-followup.tsx",
           "symbol": "SupplyFollowupQueue"
+        },
+        {
+          "path": "src/components/quotation-receipt-correction.tsx",
+          "symbol": "ReceiptCorrection"
         }
       ],
       "dependencies": [
@@ -3595,7 +3609,10 @@
         "docs/contracts/quotation-supply-followup.md",
         "docs/decisions/quotation-supply-followup-native.md",
         "src/estimating/supply-followup/dependency.ts",
-        "docs/decisions/quotation-reservation-reconciliation.md"
+        "docs/decisions/quotation-reservation-reconciliation.md",
+        "src/estimating/supply-followup/receipt-context.ts",
+        "src/estimating/supply-followup/receipt-service.ts",
+        "docs/decisions/quotation-receipt-correction.md"
       ],
       "reference": {
         "path": "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",
@@ -3643,6 +3660,14 @@
           "expected": "Owner/device review of observation and remaining holds.",
           "actual": "Native host extended; accepted imagery and review pending.",
           "action": "Review compiled evidence separately from source presence.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "receipt-correction-review",
+          "expected": "Paired owner/device review of shared Supply effects and separately owned receiving.",
+          "actual": "Synthetic native extension; accepted images and owner/device/screen-reader review pending.",
+          "action": "Review actual execution captures and source/reference differences without promoting business acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

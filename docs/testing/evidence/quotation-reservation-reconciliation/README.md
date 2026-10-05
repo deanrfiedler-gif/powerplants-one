@@ -71,3 +71,7 @@ The dedicated workflow now separates the complete PostgreSQL/upgrade and compile
 
 
 The failed browser capture shows the new Activity in the main inbox and the bell still displaying Loading updates. The notification service, shared resource hook, bell and original test are byte-for-byte unchanged from refreshed main; main's completed browser proof passed, so a reproducible main defect is not claimed. The test now completes its existing main-inbox heading/filter/title assertions before opening the second current-authority inbox reader. Every original assertion remains, with the same five-second visibility and 45-second case deadlines; no mock, retry, omitted evidence or application change is introduced. Final-head broad runs must demonstrate the corrected ordering under their full retained workload.
+
+## Post-merge reconciliation — 5 October 2026
+
+Merged #345 is `24f3f461da8d2046e53c34eddd1a685e05c1b316`. All 27 observed post-merge assurance checks completed successfully, separately from the 31 checks on final PR head `bd9be0fe8cdeb82724144c36de01f4871be5550b`. Exact check URLs/times are retained in `docs/testing/evidence/quotation-receipt-correction/main-postmerge-verification.json`. Earlier failures and repaired-head evidence remain unchanged. No hosted behaviour or deployment is verified here. The next candidate is now the separately adopted SYN-ES07-05 Receipt correction contribution; its validation and acceptance remain separate.

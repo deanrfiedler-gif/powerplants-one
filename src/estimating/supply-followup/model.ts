@@ -28,7 +28,8 @@ export type FollowupEvent = {
     | "Retain"
     | "Hold"
     | "AdjustAllocation"
-    | "ReconcileReservationOutcome";
+    | "ReconcileReservationOutcome"
+    | "CorrectReceipt";
   basis: FollowupBasis;
   basis_hash: string;
   review_hash: string | null;
@@ -47,4 +48,6 @@ export type FollowupEvent = {
   created_at: Date;
   operation_id: string;
   native_receipt: OperationReceipt | null;
+  receipt_proposal_id: string | null;
+  effect_receiving_ids: string[];
 };

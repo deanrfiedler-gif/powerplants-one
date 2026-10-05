@@ -38,6 +38,12 @@ import {
   applyInput,
 } from "./validation";
 import type { FollowupEvent } from "./model";
+import {
+  acceptedReceipt,
+  receiptCommandAuthority,
+  receiptHistory,
+  receiptAvailable,
+} from "./receipt-context";
 type Input =
   | ReturnType<typeof referralInput>
   | ReturnType<typeof receivingInput>
@@ -52,6 +58,20 @@ async function execute(p: Principal, id: string, input: Input) {
       await conversionAuthority(c, p, id, true);
       await supplyRecord(c, p, input.target_id, "supply.coordinate");
       await followupHistory(c, p, input.target_id);
+      const originals = await receiptHistory(c, p, input.target_id);
+      const original = (
+        await c.query<FollowupEvent>(
+          "SELECT * FROM ppo.quote_supply_events WHERE workspace_id=$1 AND created_by=$2 AND operation_id=$3",
+          [p.workspace_id, p.actor_id, input.operation_id],
+        )
+      ).rows[0];
+      if (original?.receipt_proposal_id) {
+        const proposal = originals.find(
+          (e) => e.id === original.receipt_proposal_id,
+        );
+        if (!proposal) throw unavailable();
+        await receiptCommandAuthority(c, p, proposal);
+      }
     },
     async (c) => {
       const t = await followupContext(c, p, id, input.target_id);
@@ -83,6 +103,8 @@ async function execute(p: Principal, id: string, input: Input) {
         reviewHash: string | null = null,
         nativeReceipt: OperationReceipt | null = null;
       let basis = t.basis;
+      let receiptProposalId: string | null = null;
+      let effectReceivingIds: string[] = [];
       if (input.action === "Refer") {
         const disposition = await dispositionTarget(
           c,
@@ -256,6 +278,16 @@ async function execute(p: Principal, id: string, input: Input) {
               record_id: input.target_id,
             };
           }
+          if (decision === "CorrectReceipt") {
+            const received = acceptedReceipt(
+              t.receipt_correction,
+              input.receipt_proposal_id!,
+            );
+            await receiptCommandAuthority(c, p, received.proposal);
+            receiptProposalId = received.proposal.id;
+            effectReceivingIds = received.receiving_ids;
+            cmd = received.proposal.command;
+          }
           reviewHash = dispositionHash({
             basis,
             referral_id: referralId,
@@ -264,6 +296,12 @@ async function execute(p: Principal, id: string, input: Input) {
             command: cmd,
             reason: input.reason,
             evidence: input.evidence,
+            ...(receiptProposalId
+              ? {
+                  receipt_proposal_id: receiptProposalId,
+                  effect_receiving_ids: effectReceivingIds,
+                }
+              : {}),
           });
         } else {
           const review = t.review;
@@ -282,11 +320,13 @@ async function execute(p: Principal, id: string, input: Input) {
           decision = review.decision;
           cmd = review.command;
           reviewHash = review.review_hash;
+          receiptProposalId = review.receipt_proposal_id ?? null;
+          effectReceivingIds = review.effect_receiving_ids ?? [];
           if (cmd) {
             // Reserved operation is committed only here with its owning review.
             const nativeCommand =
               "record_id" in cmd
-                ? "Supply:Fact:ExternalOutcome"
+                ? `Supply:Fact:${cmd.kind}`
                 : "Supply:Allocate";
             let saved;
             if ("record_id" in cmd) {
@@ -324,11 +364,12 @@ async function execute(p: Principal, id: string, input: Input) {
         }
       }
       const basisHash = dispositionHash(basis);
+      const receiptSchema = await receiptAvailable(c);
       const row = (
         await c.query<{ created_at: Date }>(
           `INSERT INTO ppo.quote_supply_events
-      (id,workspace_id,revision_id,execution_id,target_id,sequence,action,referral_id,predecessor_id,receiving_id,review_id,decision,basis,basis_hash,review_hash,command,owner_id,due_date,date_needed,next_action,activity_id,reason,evidence,created_by,operation_id,native_receipt)
-      VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26) RETURNING created_at`,
+      (id,workspace_id,revision_id,execution_id,target_id,sequence,action,referral_id,predecessor_id,receiving_id,review_id,decision,basis,basis_hash,review_hash,command,owner_id,due_date,date_needed,next_action,activity_id,reason,evidence,created_by,operation_id,native_receipt${receiptSchema ? ",receipt_proposal_id,effect_receiving_ids" : ""})
+      VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26${receiptSchema ? ",$27,$28" : ""}) RETURNING created_at`,
           [
             eventId,
             p.workspace_id,
@@ -356,6 +397,9 @@ async function execute(p: Principal, id: string, input: Input) {
             p.actor_id,
             input.operation_id,
             nativeReceipt,
+            ...(receiptSchema
+              ? [receiptProposalId, JSON.stringify(effectReceivingIds)]
+              : []),
           ],
         )
       ).rows[0];
@@ -372,9 +416,11 @@ async function execute(p: Principal, id: string, input: Input) {
                 ? "AllocationAdjusted"
                 : decision === "ReconcileReservationOutcome"
                   ? "ReservationOutcomeReconciled"
-                  : decision === "Hold"
-                    ? "SupplyHeld"
-                    : "SupplyRetained"
+                  : decision === "CorrectReceipt"
+                    ? "ReceiptEvidenceCorrected"
+                    : decision === "Hold"
+                      ? "SupplyHeld"
+                      : "SupplyRetained"
               : decision,
         updated_at: row.created_at,
         audit_details: {

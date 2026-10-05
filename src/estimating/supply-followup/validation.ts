@@ -13,7 +13,7 @@ import {
 } from "../../shared/validation";
 import { hashInput } from "../release/validation";
 import { exactQuantity } from "../../supply/validation";
-const keys = [
+export const followupKeys = [
   ...commonKeys,
   "synthetic_only",
   "target_id",
@@ -22,7 +22,8 @@ const keys = [
   "evidence",
   "basis_hash",
 ];
-function envelope(id: string, r: Record<string, unknown>) {
+const keys = followupKeys;
+export function envelope(id: string, r: Record<string, unknown>) {
   if (r.synthetic_only !== true)
     invalid("synthetic_only", "Acknowledge synthetic Supply follow-up only.");
   if (
@@ -93,13 +94,20 @@ export function reviewInput(id: string, value: unknown) {
     "outcome_state",
     "observed_at",
     "lookup_evidence",
+    "receipt_proposal_id",
   ]);
   const decision = choice(r.decision, "decision", [
     "Retain",
     "Hold",
     "AdjustAllocation",
     "ReconcileReservationOutcome",
+    "CorrectReceipt",
   ]);
+  if (decision !== "CorrectReceipt" && r.receipt_proposal_id != null)
+    invalid(
+      "receipt_proposal_id",
+      "Only Receipt correction uses an affected-demand proposal.",
+    );
   if (
     decision !== "ReconcileReservationOutcome" &&
     [r.dependency_id, r.outcome_state, r.observed_at, r.lookup_evidence].some(
@@ -125,6 +133,14 @@ export function reviewInput(id: string, value: unknown) {
     receiving_id: uuid(r.receiving_id, "receiving_id"),
     predecessor_id: optionalId(r.predecessor_id, "predecessor_id"),
     decision,
+    ...(decision === "CorrectReceipt"
+      ? {
+          receipt_proposal_id: uuid(
+            r.receipt_proposal_id,
+            "receipt_proposal_id",
+          ),
+        }
+      : {}),
     ...(decision === "ReconcileReservationOutcome"
       ? {
           dependency_id: uuid(r.dependency_id, "dependency_id"),

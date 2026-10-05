@@ -43,6 +43,11 @@ import {
   supplyApply,
   reservationReview,
 } from "../tests/helpers/quotation-supply-followup";
+import {
+  receiptProposal,
+  receiptReceiving,
+  receiptReview,
+} from "../tests/helpers/quotation-receipt-correction";
 import { supplyInput, supplyFact } from "../tests/helpers/supply";
 import { crmBase } from "../tests/helpers/crm";
 const dispositionProof = false;
@@ -70,6 +75,7 @@ async function snapshot(id: string, sessionCutoff: string) {
     UNION ALL SELECT 'conversion',to_jsonb(e) FROM ppo.quote_conversion_events e WHERE revision_id IN(SELECT id FROM ppo.draft_quote_revisions WHERE estimate_id=$1)
     UNION ALL SELECT 'disposition',to_jsonb(e) FROM ppo.quote_disposition_events e WHERE revision_id IN(SELECT id FROM ppo.draft_quote_revisions WHERE estimate_id=$1)
     UNION ALL SELECT 'supply-event',to_jsonb(e) FROM ppo.quote_supply_events e
+    UNION ALL SELECT 'receipt-correction',to_jsonb(e) FROM ppo.quote_supply_receipt_events e
     UNION ALL SELECT 'all-native-record',to_jsonb(e) FROM ppo.supply_records e
     UNION ALL SELECT 'all-native-revision',to_jsonb(e) FROM ppo.supply_revisions e
     UNION ALL SELECT 'allocation',to_jsonb(e) FROM ppo.supply_allocations e
@@ -338,6 +344,47 @@ try {
         `operations/${reservationNative.operation_id}`,
       ),
     });
+    // Existing native Stock Receipt: its separate Stock capacity is unchanged.
+    const supplyNow = (await json(f.owner, `supply/records/${supply.id}`))
+      .record;
+    await save(
+      `supply/records/${supply.id}/facts`,
+      supplyFact("Receipt", supplyNow.version, {
+        received: "10",
+        inspected: "10",
+        usable: "10",
+      }),
+    );
+    await save(
+      conversionPath(p.id) + "/receipt-propose",
+      receiptProposal(await current()),
+    );
+    for (const affected of (await current()).receipt_correction.required)
+      await save(
+        conversionPath(p.id) + "/receipt-receive",
+        receiptReceiving(await current(), affected.demand.id),
+      );
+    await save(
+      conversionPath(p.id) + "/supply-review",
+      receiptReview(await current()),
+    );
+    const receiptNative = (await current()).receipt_correction.proposal!
+      .command;
+    await save(
+      conversionPath(p.id) + "/supply-apply",
+      supplyApply(await current()),
+    );
+    const { record_id: receiptTarget, ...receiptCommand } = receiptNative;
+    receipts.push({
+      actor: "coordinator",
+      path: `supply/records/${receiptTarget}/facts`,
+      command: receiptCommand,
+      receipt: await json(f.owner, `operations/${receiptNative.operation_id}`),
+    });
+    assert.equal(
+      (await current()).receipt_correction.effects!.capacity_basis,
+      "Separate Stock observation unchanged",
+    );
     cd = await conversionDetail(f.owner, p.id);
     await save(
       conversionPath(p.id) + "/disposition-review",
@@ -450,10 +497,10 @@ try {
       cd.targets[0].current.quantity,
       dispositionProof ? "1.375001" : "2",
     );
-    assert.equal(cd.targets[0].current.version, 6);
+    assert.equal(cd.targets[0].current.version, 8);
     assert.equal(cd.targets[0].current.data.demand_class, "Approved");
     assert.equal(cd.dispositions[0].status, "Review required");
-    assert.equal(cd.followups[0].events.length, 7);
+    assert.equal(cd.followups[0].events.length, 9);
     assert.equal(cd.followups[0].can_apply, false);
     assert.equal(
       cd.followups[0].reservation_dependencies[0].fact.data.state,
@@ -462,10 +509,65 @@ try {
     assert.ok(
       cd.followups[0].adjustment_holds.some((h) => h.includes("Consequential")),
     );
-    assert.equal(
-      cd.followups[0].outcome!.decision,
-      "ReconcileReservationOutcome",
+    const followup = cd.followups[0];
+    const reservationOutcome = followup.events.find(
+      (e) =>
+        e.action === "Apply" && e.decision === "ReconcileReservationOutcome",
+    )!;
+    assert.ok(reservationOutcome.native_receipt);
+    assert.deepEqual(
+      await json(
+        owner,
+        `operations/${reservationOutcome.native_receipt.operation_id}`,
+      ),
+      reservationOutcome.native_receipt,
     );
+    assert.equal(followup.outcome!.decision, "CorrectReceipt");
+    const correction = followup.receipt_correction;
+    assert.equal(correction.events.length, 3);
+    assert.equal(correction.required.length, 2);
+    assert.equal(
+      followup.outcome!.receipt_proposal_id,
+      correction.proposal!.id,
+    );
+    assert.deepEqual(
+      followup.outcome!.effect_receiving_ids,
+      correction.required.map((x) => x.decision!.id),
+    );
+    assert.ok(
+      correction.required.every((x) => x.decision!.decision === "Accepted"),
+    );
+    assert.equal(
+      correction.effects!.capacity_basis,
+      "Separate Stock observation unchanged",
+    );
+    assert.equal(correction.effects!.usable, "10");
+    const native = correction.proposal!.command;
+    assert.equal(
+      followup.outcome!.native_receipt!.operation_id,
+      native.operation_id,
+    );
+    const supply = await json(owner, `supply/records/${data.supply}`);
+    const successor = supply.facts.find(
+      (f: { id: string }) => f.id === native.id,
+    )!;
+    assert.equal(successor.predecessor_id, native.predecessor_id);
+    assert.deepEqual(successor.data, native.data);
+    assert.ok(
+      supply.facts.some((f: { id: string }) => f.id === native.predecessor_id),
+    );
+    assert.equal(supply.record.version, native.expected_version! + 1);
+    for (const affected of correction.proposal!.dependencies.group.demands) {
+      const current = await json(owner, `supply/records/${affected.record.id}`);
+      assert.equal(current.record.version, affected.record.version + 1);
+      assert.equal(current.record.quantity, affected.record.quantity);
+      assert.deepEqual(current.record.data, affected.record.data);
+      assert.equal(
+        current.facts.filter((f: { kind: string }) => f.kind === "Impact")
+          .length,
+        affected.facts.filter((f) => f.kind === "Impact").length + 1,
+      );
+    }
     assert.equal(
       cd.followups[0].basis.position[0].usable_allocated,
       "9.375001",
@@ -499,8 +601,30 @@ try {
       await snapshot(data.estimate, data.sessionCutoff),
       data.rows,
     );
+    await writeFile(
+      path.join(directory, "verification.json"),
+      JSON.stringify(
+        {
+          source_head: process.env.PPO_SOURCE_HEAD ?? null,
+          verified_at: new Date().toISOString(),
+          original_postmaster: data.postmaster,
+          restarted_postmaster: await startTime(),
+          exact_receipts: data.receipts.length,
+          unchanged_snapshot_rows: data.rows.length,
+          unchanged_output_files: data.files,
+          receipt_proposal_id: correction.proposal!.id,
+          affected_receiving_ids: followup.outcome!.effect_receiving_ids,
+          native_receipt: followup.outcome!.native_receipt,
+          predecessor_fact_id: native.predecessor_id,
+          successor_fact_id: native.id,
+          retained_reservation_receipt: reservationOutcome.native_receipt,
+        },
+        null,
+        2,
+      ),
+    );
     console.log(
-      `ES07 application/PostgreSQL restart verified unchanged source and target rows, ${data.receipts.length} exact original replays and original Draft/release HTML/PDF bytes.`,
+      `ES07 application/PostgreSQL restart verified unchanged source and target rows, ${data.receipts.length} exact original replays, ${data.rows.length} snapshot rows and ${data.files.length} original Draft/release output files.`,
     );
   } else throw Error("Use write or verify");
 } finally {

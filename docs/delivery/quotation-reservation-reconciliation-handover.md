@@ -16,3 +16,7 @@ Operational authority, signing, observation-age thresholds, item governance, liv
 
 
 The successful implementation checkpoint `126e21f` proves 22 dedicated PostgreSQL, five HTTP and 19 compiled browser/shared-control cases, plus an actual application/PostgreSQL restart recovering 30 exact original receipts and four unchanged output files. All 585 units and 59 full HTTP cases also pass at that source head. The execution ledger retains hashes and earlier failures. Final-head aggregate results remain an exact separate PR record; no pending check is labelled passing.
+
+## Post-merge reconciliation — 5 October 2026
+
+Merged #345 is `24f3f461da8d2046e53c34eddd1a685e05c1b316`. All 27 observed post-merge assurance checks completed successfully, separately from the 31 checks on final PR head `bd9be0fe8cdeb82724144c36de01f4871be5550b`. Exact check URLs/times are retained in `docs/testing/evidence/quotation-receipt-correction/main-postmerge-verification.json`. Earlier failures and repaired-head evidence remain unchanged. No hosted behaviour or deployment is verified here. The next candidate is now the separately adopted SYN-ES07-05 Receipt correction contribution; its validation and acceptance remain separate.

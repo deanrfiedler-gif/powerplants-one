@@ -176,7 +176,9 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // 0064 extends immutable Supply evidence guards, with no seeds, grants or identity changes.
   // 0063 adds subordinate Supply referral/outcome evidence; no seed, grant or identity changes.
   // Generic runtime privileges apply; populated native and hosted upgrades prove preservation.
-  if (latestMigrationVersion !== 64) throw Error("Review the existing-demo upgrade for this release.");
+  // 0065 adds subordinate Receipt correction receiving; no seeds, grants, users or identities.
+  // Native receipts and earlier evidence remain intact on populated upgrades.
+  if (latestMigrationVersion !== 65) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({
