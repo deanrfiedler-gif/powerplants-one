@@ -31,3 +31,9 @@ Unchanged main at `24f3f46` reproduced all three Windows private-path unit failu
 Authority inspection also narrowed the receiving action to source/linked reads plus coordination on the independently owned Demand. Native application still requires authority over all actual effects. A site-scoped second owner fixture checks that receiving grants no ability to modify the converted Demand.
 
 The contribution operator-CLI probe passed both operations in a focused diagnostic after the permission-read change (nine cases passed); the earlier full-run timeout remains recorded. The long Windows affected-owner scenario also exceeded the unchanged 120-second test limit after reaching independently owned receiving; it is not a full passing proof. Linux CI remains mandatory.
+
+## Second published head 1c0160b
+
+The first head's dedicated PostgreSQL group completed 27 passed / two failed without a timeout. Both failures were attributable: the new scoped-owner fixture omitted the native update flag, and the Stock case encountered the audit-metadata guard above. Both were repaired at this head; earlier results remain failures.
+
+All six compiled HTTP cases passed again. Restart write recorded 37 receipts, actual PostgreSQL restarted, and a new application process recovered all original receipts and compared the exact retained snapshot and four output files. Verification then failed on a stale expected Demand version (6, now 8 after the initial Receipt and its correction). This is not a completed restart proof. The repaired proof explicitly checks nine main events, all three Receipt events, both receiving decisions, predecessor/successor data and each affected Demand's exact version increase, while preserving original reservation receipt checks.

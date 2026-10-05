@@ -497,10 +497,10 @@ try {
       cd.targets[0].current.quantity,
       dispositionProof ? "1.375001" : "2",
     );
-    assert.equal(cd.targets[0].current.version, 6);
+    assert.equal(cd.targets[0].current.version, 8);
     assert.equal(cd.targets[0].current.data.demand_class, "Approved");
     assert.equal(cd.dispositions[0].status, "Review required");
-    assert.equal(cd.followups[0].events.length, 7);
+    assert.equal(cd.followups[0].events.length, 9);
     assert.equal(cd.followups[0].can_apply, false);
     assert.equal(
       cd.followups[0].reservation_dependencies[0].fact.data.state,
@@ -509,10 +509,65 @@ try {
     assert.ok(
       cd.followups[0].adjustment_holds.some((h) => h.includes("Consequential")),
     );
-    assert.equal(
-      cd.followups[0].outcome!.decision,
-      "ReconcileReservationOutcome",
+    const followup = cd.followups[0];
+    const reservationOutcome = followup.events.find(
+      (e) =>
+        e.action === "Apply" && e.decision === "ReconcileReservationOutcome",
+    )!;
+    assert.ok(reservationOutcome.native_receipt);
+    assert.deepEqual(
+      await json(
+        owner,
+        `operations/${reservationOutcome.native_receipt.operation_id}`,
+      ),
+      reservationOutcome.native_receipt,
     );
+    assert.equal(followup.outcome!.decision, "CorrectReceipt");
+    const correction = followup.receipt_correction;
+    assert.equal(correction.events.length, 3);
+    assert.equal(correction.required.length, 2);
+    assert.equal(
+      followup.outcome!.receipt_proposal_id,
+      correction.proposal!.id,
+    );
+    assert.deepEqual(
+      followup.outcome!.effect_receiving_ids,
+      correction.required.map((x) => x.decision!.id),
+    );
+    assert.ok(
+      correction.required.every((x) => x.decision!.decision === "Accepted"),
+    );
+    assert.equal(
+      correction.effects!.capacity_basis,
+      "Separate Stock observation unchanged",
+    );
+    assert.equal(correction.effects!.usable, "10");
+    const native = correction.proposal!.command;
+    assert.equal(
+      followup.outcome!.native_receipt!.operation_id,
+      native.operation_id,
+    );
+    const supply = await json(owner, `supply/records/${data.supply}`);
+    const successor = supply.facts.find(
+      (f: { id: string }) => f.id === native.id,
+    )!;
+    assert.equal(successor.predecessor_id, native.predecessor_id);
+    assert.deepEqual(successor.data, native.data);
+    assert.ok(
+      supply.facts.some((f: { id: string }) => f.id === native.predecessor_id),
+    );
+    assert.equal(supply.record.version, native.expected_version! + 1);
+    for (const affected of correction.proposal!.dependencies.group.demands) {
+      const current = await json(owner, `supply/records/${affected.record.id}`);
+      assert.equal(current.record.version, affected.record.version + 1);
+      assert.equal(current.record.quantity, affected.record.quantity);
+      assert.deepEqual(current.record.data, affected.record.data);
+      assert.equal(
+        current.facts.filter((f: { kind: string }) => f.kind === "Impact")
+          .length,
+        affected.facts.filter((f) => f.kind === "Impact").length + 1,
+      );
+    }
     assert.equal(
       cd.followups[0].basis.position[0].usable_allocated,
       "9.375001",
@@ -546,8 +601,30 @@ try {
       await snapshot(data.estimate, data.sessionCutoff),
       data.rows,
     );
+    await writeFile(
+      path.join(directory, "verification.json"),
+      JSON.stringify(
+        {
+          source_head: process.env.PPO_SOURCE_HEAD ?? null,
+          verified_at: new Date().toISOString(),
+          original_postmaster: data.postmaster,
+          restarted_postmaster: await startTime(),
+          exact_receipts: data.receipts.length,
+          unchanged_snapshot_rows: data.rows.length,
+          unchanged_output_files: data.files,
+          receipt_proposal_id: correction.proposal!.id,
+          affected_receiving_ids: followup.outcome!.effect_receiving_ids,
+          native_receipt: followup.outcome!.native_receipt,
+          predecessor_fact_id: native.predecessor_id,
+          successor_fact_id: native.id,
+          retained_reservation_receipt: reservationOutcome.native_receipt,
+        },
+        null,
+        2,
+      ),
+    );
     console.log(
-      `ES07 application/PostgreSQL restart verified unchanged source and target rows, ${data.receipts.length} exact original replays and original Draft/release HTML/PDF bytes.`,
+      `ES07 application/PostgreSQL restart verified unchanged source and target rows, ${data.receipts.length} exact original replays, ${data.rows.length} snapshot rows and ${data.files.length} original Draft/release output files.`,
     );
   } else throw Error("Use write or verify");
 } finally {
