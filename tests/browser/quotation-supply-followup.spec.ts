@@ -15,7 +15,9 @@ async function identity(page: Page, profile = "coordinator") {
   expect(
     (
       await page.request.post("/api/v1/local-session", {
-        headers: { Origin: new URL(page.url()).origin },
+        // This fixture may switch again at the server's idle socket boundary.
+        // Own each connection; preserve exactly one request, without replay.
+        headers: { Origin: new URL(page.url()).origin, Connection: "close" },
         data: { profile },
       })
     ).ok(),
