@@ -3556,6 +3556,11 @@
           "id": "supply-outcome",
           "label": "Returned evidence",
           "description": "Original native receipt and resulting versions; explicit ES-07 reassessment remains separate."
+        },
+        {
+          "id": "reservation-reconciliation",
+          "label": "Original reservation outcome",
+          "description": "Unknown dependency, immutable outcome review, native successor, remaining holds and recovery. Real host: tests/browser/quotation-supply-followup.spec.ts."
         }
       ],
       "implementation": [
@@ -3588,7 +3593,9 @@
         "src/estimating/supply-followup/context.ts",
         "src/estimating/supply-followup/service.ts",
         "docs/contracts/quotation-supply-followup.md",
-        "docs/decisions/quotation-supply-followup-native.md"
+        "docs/decisions/quotation-supply-followup-native.md",
+        "src/estimating/supply-followup/dependency.ts",
+        "docs/decisions/quotation-reservation-reconciliation.md"
       ],
       "reference": {
         "path": "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",
@@ -3605,7 +3612,7 @@
       "desktop": "One shell scroll owner; exact binding, recovery, six decision regions, source/target review and immutable history.",
       "mobile": "Stacked panels at 390/320 px; wrap identities and preserve labelled fields and original recovery above forms.",
       "keyboard": "Native labelled inputs, shared buttons, visible focus and error focus; no drag-only decision.",
-      "limitations": "Actual fixtures in tests/browser/quotation-conversion.spec.ts. Supply Demand Forecast only; no operational master, ERP order, customer signature or work authority. Positive Forecast quantity revision only; dependent/Approved target changes held. Disposition host examples use actual compiled synthetic fixtures. Existing allocation quantity adjustment requires an already Approved demand; zero retains native identity and class. No ERP reservation release or cancellation. See tests/browser/quotation-supply-followup.spec.ts.",
+      "limitations": "Actual fixtures in tests/browser/quotation-conversion.spec.ts. Supply Demand Forecast only; no operational master, ERP order, customer signature or work authority. Positive Forecast quantity revision only; dependent/Approved target changes held. Disposition host examples use actual compiled synthetic fixtures. Existing allocation quantity adjustment requires an already Approved demand; zero retains native identity and class. No ERP reservation release or cancellation. See tests/browser/quotation-supply-followup.spec.ts. Original reservation evidence only; no external action or removal of other holds.",
       "gaps": [
         {
           "id": "es07-native-acceptance",
@@ -3628,6 +3635,14 @@
           "expected": "Paired native ES-07/SC-09 receiving, allocation and original recovery review.",
           "actual": "Synthetic host fixtures added; owner, physical device and screen-reader review pending.",
           "action": "Inspect compiled host states and retained references; do not infer authority or acceptance from tests.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "reservation-outcome-review",
+          "expected": "Owner/device review of observation and remaining holds.",
+          "actual": "Native host extended; accepted imagery and review pending.",
+          "action": "Review compiled evidence separately from source presence.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

@@ -9,6 +9,7 @@ import {
   label,
   dateOnly,
   invalid,
+  instant,
 } from "../../shared/validation";
 import { hashInput } from "../release/validation";
 import { exactQuantity } from "../../supply/validation";
@@ -88,12 +89,27 @@ export function reviewInput(id: string, value: unknown) {
     "decision",
     "allocation_id",
     "quantity",
+    "dependency_id",
+    "outcome_state",
+    "observed_at",
+    "lookup_evidence",
   ]);
   const decision = choice(r.decision, "decision", [
     "Retain",
     "Hold",
     "AdjustAllocation",
+    "ReconcileReservationOutcome",
   ]);
+  if (
+    decision !== "ReconcileReservationOutcome" &&
+    [r.dependency_id, r.outcome_state, r.observed_at, r.lookup_evidence].some(
+      (v) => v !== undefined && v !== null,
+    )
+  )
+    invalid(
+      "dependency_id",
+      "Only reservation outcome reconciliation proposes dependency evidence.",
+    );
   if (
     decision !== "AdjustAllocation" &&
     (r.allocation_id !== null || r.quantity !== null)
@@ -109,6 +125,18 @@ export function reviewInput(id: string, value: unknown) {
     receiving_id: uuid(r.receiving_id, "receiving_id"),
     predecessor_id: optionalId(r.predecessor_id, "predecessor_id"),
     decision,
+    ...(decision === "ReconcileReservationOutcome"
+      ? {
+          dependency_id: uuid(r.dependency_id, "dependency_id"),
+          outcome_state: choice(r.outcome_state, "outcome_state", [
+            "Confirmed",
+            "Failed",
+            "Absent",
+          ]),
+          observed_at: instant(r.observed_at, "observed_at"),
+          lookup_evidence: label(r.lookup_evidence, "lookup_evidence", 1000),
+        }
+      : {}),
     allocation_id:
       decision === "AdjustAllocation"
         ? uuid(r.allocation_id, "allocation_id")

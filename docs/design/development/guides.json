@@ -6585,7 +6585,7 @@
       "prepared_at": "2026-10-04",
       "source_commit": "a32b3b53c45bdc74061f3612c15d71c0544504d8",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/testing/evidence/quotation-supply-followup/README.md; owner and visual acceptance separate",
+      "runtime_evidence": "See docs/testing/evidence/quotation-reservation-reconciliation/README.md; proof and acceptance separate",
       "sections": [
         {
           "section_id": "purpose",
@@ -6653,7 +6653,8 @@
           "paragraphs": [
             "Resolve each Product line explicitly as OneOff, or record Missing/Ambiguous/Obsolete/Incompatible. Review company, SupplyDemand entity, customer/site and all target quantities. Review and freeze plan records an attributable Reviewed decision; it creates nothing. Create synthetic demand records executes every frozen target atomically.",
             "Choose Retain, Revise eligible Forecast quantity, or Continue hold. Record disposition review freezes the decision but leaves the exception open. Open saved receiving, inspect the exact reviewed action, then enter application evidence and Apply reviewed disposition. A Hold requires a replacement review; it cannot be applied.",
-            "The assigned owner accepts review, returns or holds. After acceptance record Retain, Hold or Adjust existing allocation, then apply that exact current review separately. Adjustment reuses Supply:Allocate on already Approved demand, preserves allocation identity/basis and enforces units, exact decimals and conservation. Consequential dependencies remain held."
+            "The assigned owner accepts review, returns or holds. After acceptance record Retain, Hold or Adjust existing allocation, then apply that exact current review separately. Adjustment reuses Supply:Allocate on already Approved demand, preserves allocation identity/basis and enforces units, exact decimals and conservation. Consequential dependencies remain held.",
+            "Select Reconcile unknown reservation outcome for an existing Unknown ExternalOutcome/Reservation fact. Retain its source operation, enter the evidenced result, UTC observation time and complete lookup evidence. Save review and Apply separately. Recover the native receipt, inspect remaining holds and explicitly reassess ES-07. This records evidence only. Unavailable lookup is inconclusive."
           ],
           "steps": [],
           "rows": [],
@@ -19458,7 +19459,7 @@
       "prepared_at": "2026-09-25",
       "source_commit": "0f10b7fb46a8ab512e9b019573ece272cf5920b9",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/testing/evidence/quotation-supply-followup/README.md; owner and visual acceptance separate",
+      "runtime_evidence": "See docs/testing/evidence/quotation-reservation-reconciliation/README.md; proof and acceptance separate",
       "sections": [
         {
           "section_id": "purpose",
@@ -19528,7 +19529,8 @@
             "Open a demand and its impact reviews. Review before/after versions, reason, exact source references and affected Project/Service/customer context. Original facts and record revisions remain available.",
             "Open the linked Material Action and canonical Project or appointment workspace. Scheduling owns any proposed new date and crew; Supply Chain does not guess them or alter a confirmed booking. Job-pack owners own reissue decisions.",
             "Review the requested capture, record Reviewed and the owning module's exact outcome reference. This records coordination evidence; it never applies the downstream decision automatically.",
-            "The assigned owner accepts review, returns or holds. After acceptance record Retain, Hold or Adjust existing allocation, then apply that exact current review separately. Adjustment reuses Supply:Allocate on already Approved demand, preserves allocation identity/basis and enforces units, exact decimals and conservation. Consequential dependencies remain held."
+            "The assigned owner accepts review, returns or holds. After acceptance record Retain, Hold or Adjust existing allocation, then apply that exact current review separately. Adjustment reuses Supply:Allocate on already Approved demand, preserves allocation identity/basis and enforces units, exact decimals and conservation. Consequential dependencies remain held.",
+            "Select Reconcile unknown reservation outcome for an existing Unknown ExternalOutcome/Reservation fact. Retain its source operation, enter the evidenced result, UTC observation time and complete lookup evidence. Save review and Apply separately. Recover the native receipt, inspect remaining holds and explicitly reassess ES-07. This records evidence only. Unavailable lookup is inconclusive."
           ],
           "steps": [],
           "rows": [],
@@ -68528,7 +68530,7 @@
         }
       ],
       "prepared_at": "2026-09-25",
-      "runtime_evidence": "See docs/testing/evidence/quotation-supply-followup/README.md; owner and visual acceptance separate",
+      "runtime_evidence": "See docs/testing/evidence/quotation-reservation-reconciliation/README.md; proof and acceptance separate",
       "change_summary": "Owned Supply receiving, exact native allocation adjustment and explicit ES-07 reassessment."
     },
     {
@@ -70391,7 +70393,8 @@
           "paragraphs": [
             "Resolve each Product line explicitly as OneOff, or record Missing/Ambiguous/Obsolete/Incompatible. Review company, SupplyDemand entity, customer/site and all target quantities. Review and freeze plan records an attributable Reviewed decision; it creates nothing. Create synthetic demand records executes every frozen target atomically.",
             "Choose Retain, Revise eligible Forecast quantity, or Continue hold. Record disposition review freezes the decision but leaves the exception open. Open saved receiving, inspect the exact reviewed action, then enter application evidence and Apply reviewed disposition. A Hold requires a replacement review; it cannot be applied.",
-            "The assigned owner accepts review, returns or holds. After acceptance record Retain, Hold or Adjust existing allocation, then apply that exact current review separately. Adjustment reuses Supply:Allocate on already Approved demand, preserves allocation identity/basis and enforces units, exact decimals and conservation. Consequential dependencies remain held."
+            "The assigned owner accepts review, returns or holds. After acceptance record Retain, Hold or Adjust existing allocation, then apply that exact current review separately. Adjustment reuses Supply:Allocate on already Approved demand, preserves allocation identity/basis and enforces units, exact decimals and conservation. Consequential dependencies remain held.",
+            "Select Reconcile unknown reservation outcome for an existing Unknown ExternalOutcome/Reservation fact. Retain its source operation, enter the evidenced result, UTC observation time and complete lookup evidence. Save review and Apply separately. Recover the native receipt, inspect remaining holds and explicitly reassess ES-07. This records evidence only. Unavailable lookup is inconclusive."
           ],
           "steps": [],
           "rows": [],
@@ -70483,7 +70486,7 @@
         }
       ],
       "prepared_at": "2026-10-04",
-      "runtime_evidence": "See docs/testing/evidence/quotation-supply-followup/README.md; owner and visual acceptance separate",
+      "runtime_evidence": "See docs/testing/evidence/quotation-reservation-reconciliation/README.md; proof and acceptance separate",
       "source_paths": [
         "src/app/(business)/estimating/quotes/[id]/conversion/page.tsx",
         "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",

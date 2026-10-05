@@ -143,7 +143,13 @@ function FollowupTarget({
     [allocation, setAllocation] = useState(
       t.basis.conversion.dependencies.allocations[0]?.id ?? "",
     ),
-    [amount, setAmount] = useState("");
+    [amount, setAmount] = useState(""),
+    [dependency, setDependency] = useState(
+      t.reservation_dependencies.find((x) => !x.holds.length)?.fact.id ?? "",
+    ),
+    [outcome, setOutcome] = useState(""),
+    [observedAt, setObservedAt] = useState(""),
+    [lookup, setLookup] = useState("");
   const dirty = !!(
     reason ||
     evidence ||
@@ -151,6 +157,9 @@ function FollowupTarget({
     due ||
     ack ||
     amount ||
+    outcome ||
+    observedAt ||
+    lookup ||
     owner !== actor ||
     decision !== "Retain" ||
     receiving !== "Accepted"
@@ -251,6 +260,45 @@ function FollowupTarget({
             </ul>
           </section>
         ))}
+      </details>
+      <details open={t.reservation_dependencies.length > 0}>
+        <summary>Native reservation outcome dependencies</summary>
+        <p>
+          Reconcile an original Unknown reservation outcome from complete lookup
+          evidence. This records an observation; it does not execute, release or
+          reverse a reservation. Missing receipts are inconclusive.
+        </p>
+        {!t.reservation_dependencies.length && (
+          <p>
+            No supported reservation outcome dependency. Other purchasing,
+            receipt, fulfilment, custody and return evidence stays with its
+            owning workflow.
+          </p>
+        )}
+        {t.reservation_dependencies.map(({ fact, holds }) => (
+          <div key={fact.id}>
+            <p>
+              Fact {fact.id} · version {fact.version} · predecessor{" "}
+              {fact.predecessor_id ?? "None"} · original source operation{" "}
+              {fact.data.source_operation} · {fact.data.effect}:{" "}
+              {fact.data.state} · {fact.completeness} · observed{" "}
+              {fact.observed_at}.
+            </p>
+            <p>
+              {fact.evidence} · lookup: {fact.data.lookup_evidence}
+            </p>
+            <ul>
+              {holds.map((h) => (
+                <li key={h}>{h}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+        <p>
+          Native action preserves demand quantity/class, all allocations and
+          other demands. Remaining operational holds require separate owning
+          decisions.
+        </p>
       </details>
       {!!t.adjustment_holds.length && (
         <div role="note">
@@ -428,7 +476,7 @@ function FollowupTarget({
           >
             Record Supply receiving decision
           </Button>
-          <h3>Review the native allocation position</h3>
+          <h3>Review the native Supply position</h3>
           <SelectField
             name="supply-decision"
             label="Supply position decision"
@@ -440,6 +488,10 @@ function FollowupTarget({
               {
                 id: "AdjustAllocation",
                 display_name: "Adjust existing allocation quantity",
+              },
+              {
+                id: "ReconcileReservationOutcome",
+                display_name: "Reconcile unknown reservation outcome",
               },
             ]}
           />
@@ -470,10 +522,71 @@ function FollowupTarget({
               </p>
             </>
           )}
+          {decision === "ReconcileReservationOutcome" && (
+            <>
+              <SelectField
+                name="supply-dependency"
+                label="Original reservation outcome"
+                value={dependency}
+                onChange={setDependency}
+                options={t.reservation_dependencies.map((x) => ({
+                  id: x.fact.id,
+                  display_name: `${x.fact.data.source_operation} · ${x.fact.data.state} · ${x.fact.id}`,
+                }))}
+              />
+              <SelectField
+                name="supply-outcome-state"
+                label="Evidenced reservation outcome"
+                value={outcome}
+                onChange={setOutcome}
+                options={[
+                  {
+                    id: "Confirmed",
+                    display_name: "Confirmed by original-operation evidence",
+                  },
+                  {
+                    id: "Failed",
+                    display_name:
+                      "Failed according to original-operation evidence",
+                  },
+                  {
+                    id: "Absent",
+                    display_name: "Absent according to complete source lookup",
+                  },
+                ]}
+              />
+              <Field
+                name="supply-observed-at"
+                label="Outcome observation time (UTC ISO ending Z)"
+                value={observedAt}
+                onChange={setObservedAt}
+                required
+              />
+              <Field
+                name="supply-lookup"
+                label="Complete original-operation lookup evidence"
+                value={lookup}
+                onChange={setLookup}
+                required
+              />
+              <p>
+                The source operation and Reservation effect remain exact. Do not
+                infer Absent from an unavailable PPO receipt. Other dependencies
+                continue to hold allocation adjustment.
+              </p>
+            </>
+          )}
           <Button
             disabled={
               disabled ||
               !own ||
+              (decision === "ReconcileReservationOutcome" &&
+                (!outcome ||
+                  !observedAt.trim() ||
+                  !lookup.trim() ||
+                  !t.reservation_dependencies.some(
+                    (x) => x.fact.id === dependency && !x.holds.length,
+                  ))) ||
               t.receiving?.decision !== "Accepted" ||
               (decision === "AdjustAllocation" && !!t.adjustment_holds.length)
             }
@@ -487,6 +600,14 @@ function FollowupTarget({
                 allocation_id:
                   decision === "AdjustAllocation" ? allocation : null,
                 quantity: decision === "AdjustAllocation" ? amount : null,
+                ...(decision === "ReconcileReservationOutcome"
+                  ? {
+                      dependency_id: dependency,
+                      outcome_state: outcome,
+                      observed_at: observedAt,
+                      lookup_evidence: lookup,
+                    }
+                  : {}),
               })
             }
           >
@@ -497,6 +618,10 @@ function FollowupTarget({
               <p>
                 Exact review {t.review.id}: {t.review.decision}
                 {t.review.command &&
+                  "record_id" in t.review.command &&
+                  `: original ${t.review.command.predecessor_id}; source operation ${t.review.command.data.source_operation}; ${t.review.command.data.state}; observed ${t.review.command.observed_at}; lookup ${t.review.command.data.lookup_evidence}; demand version ${t.review.command.expected_version}`}
+                {t.review.command &&
+                  "supply_id" in t.review.command &&
                   ` to ${t.review.command.quantity} ${t.review.command.unit}, allocation version ${t.review.command.expected_version}, demand version ${t.review.command.demand_version}, supply version ${t.review.command.supply_version}`}
                 .
               </p>
@@ -543,7 +668,17 @@ function FollowupTarget({
               execution {e.execution_id} · source line{" "}
               {e.basis.conversion.line_id}.
             </p>
-            {e.command && (
+            {e.command && "record_id" in e.command && (
+              <p>
+                Native Supply:Fact:ExternalOutcome {e.command.operation_id},
+                successor fact {e.command.id}, original fact{" "}
+                {e.command.predecessor_id}, original source operation{" "}
+                {e.command.data.source_operation}: {e.command.data.state};
+                complete lookup {e.command.data.lookup_evidence}; original
+                native receipt {e.native_receipt?.receipt_id ?? "Not executed"}.
+              </p>
+            )}
+            {e.command && "supply_id" in e.command && (
               <p>
                 Native Supply:Allocate {e.command.operation_id}, allocation{" "}
                 {e.command.id}, {e.command.quantity} {e.command.unit}; original

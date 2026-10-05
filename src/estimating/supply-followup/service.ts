@@ -13,8 +13,12 @@ import {
 } from "../../activities/activities";
 import { endOfLocalDay } from "../../activities/work-view";
 import { supplyRecord } from "../../supply/context";
-import { allocationCommand } from "../../supply/validation";
-import { allocateInTransaction } from "../../supply/commands";
+import { allocationCommand, factCommand } from "../../supply/validation";
+import {
+  allocateInTransaction,
+  recordFactInTransaction,
+} from "../../supply/commands";
+import { reservationDependencies } from "./dependency";
 import { decimal } from "../../supply/model";
 import { expected } from "../service";
 import { draftBytes } from "../worker";
@@ -219,6 +223,39 @@ async function execute(p: Principal, id: string, input: Input) {
                 "Proposed allocation exceeds the exact evidenced shared supply or demand capacity.",
               );
           }
+          if (decision === "ReconcileReservationOutcome") {
+            const dependency = reservationDependencies(basis).find(
+              (x) => x.fact.id === input.dependency_id,
+            );
+            if (!dependency)
+              followupConflict(
+                "Select the exact current external reservation outcome.",
+              );
+            if (dependency.holds.length)
+              followupConflict(dependency.holds.join(" "));
+            cmd = {
+              ...factCommand({
+                operation_id: randomUUID(),
+                schema_version: 1,
+                reason: input.reason,
+                id: randomUUID(),
+                expected_version: basis.conversion.target.version,
+                kind: "ExternalOutcome",
+                predecessor_id: dependency.fact.id,
+                data: {
+                  source_operation: dependency.fact.data.source_operation,
+                  effect: "Reservation",
+                  state: input.outcome_state,
+                  lookup_evidence: input.lookup_evidence,
+                },
+                completeness: "Complete",
+                observed_at: input.observed_at,
+                evidence: input.reason,
+                attachment_id: null,
+              }),
+              record_id: input.target_id,
+            };
+          }
           reviewHash = dispositionHash({
             basis,
             referral_id: referralId,
@@ -247,7 +284,15 @@ async function execute(p: Principal, id: string, input: Input) {
           reviewHash = review.review_hash;
           if (cmd) {
             // Reserved operation is committed only here with its owning review.
-            const saved = await allocateInTransaction(c, p, cmd);
+            const nativeCommand =
+              "record_id" in cmd
+                ? "Supply:Fact:ExternalOutcome"
+                : "Supply:Allocate";
+            let saved;
+            if ("record_id" in cmd) {
+              const { record_id, ...fact } = cmd;
+              saved = await recordFactInTransaction(c, p, record_id, fact);
+            } else saved = await allocateInTransaction(c, p, cmd);
             nativeReceipt = await recordOperation(
               c,
               p,
@@ -260,11 +305,13 @@ async function execute(p: Principal, id: string, input: Input) {
               },
               "SupplyRecord",
               "SupplyRecorded",
-              releaseHash({ command: "Supply:Allocate", ...cmd }),
+              releaseHash({ command: nativeCommand, ...cmd }),
               {
-                command: "Supply:Allocate",
+                command: nativeCommand,
                 record_version: saved.version,
-                allocation_id: cmd.id,
+                ...("record_id" in cmd
+                  ? { fact_id: cmd.id, predecessor_id: cmd.predecessor_id }
+                  : { allocation_id: cmd.id }),
                 supply_review_id: review.id,
                 supply_outcome_id: eventId,
                 referral_id: referralId,
@@ -323,9 +370,11 @@ async function execute(p: Principal, id: string, input: Input) {
             : input.action === "Apply"
               ? decision === "AdjustAllocation"
                 ? "AllocationAdjusted"
-                : decision === "Hold"
-                  ? "SupplyHeld"
-                  : "SupplyRetained"
+                : decision === "ReconcileReservationOutcome"
+                  ? "ReservationOutcomeReconciled"
+                  : decision === "Hold"
+                    ? "SupplyHeld"
+                    : "SupplyRetained"
               : decision,
         updated_at: row.created_at,
         audit_details: {

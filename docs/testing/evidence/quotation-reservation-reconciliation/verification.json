@@ -1,0 +1,55 @@
+{
+  "scope": "Synthetic implementation checkpoint; final PR-head aggregate CI and owner acceptance remain separate",
+  "recorded_at": "2026-10-04T13:04:37.743044+00:00",
+  "source_head": "126e21f468b5ff9a25dbee56b36e0744dc90c074",
+  "workflow_run": 37202839882,
+  "workflow_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37202839882",
+  "workflow_conclusion": "success",
+  "artifact_id": 11304331041,
+  "artifact_digest": "sha256:df32a23ac362d5a249b33fe10924ac1268a2851d065d8bd0ab0aeb07a2ab83f7",
+  "units_passed": 585,
+  "full_http_passed": 59,
+  "dedicated_postgresql_passed": 22,
+  "dedicated_http_passed": 5,
+  "compiled_browser_shared_control_passed": 19,
+  "restart": {
+    "original_receipts": 30,
+    "original_files": [
+      {
+        "id": "5b370041-0d85-47b2-90fd-00562a71c009",
+        "kind": "html",
+        "name": "5b370041-0d85-47b2-90fd-00562a71c009.html",
+        "hash": "2ff2c99ba7946a3a110d65a54913037efe8730f170a2241fda1f6995a69c136c"
+      },
+      {
+        "id": "5b370041-0d85-47b2-90fd-00562a71c009",
+        "kind": "pdf",
+        "name": "5b370041-0d85-47b2-90fd-00562a71c009.pdf",
+        "hash": "a4bc3c1c61c5606d273bf689565f8ea9d1ce9d1cd1c7ae112bc41414c5e4b778"
+      },
+      {
+        "id": "aefdfa65-f862-447e-b57c-503270b7837e",
+        "kind": "html",
+        "name": "aefdfa65-f862-447e-b57c-503270b7837e.html",
+        "hash": "878b32d49fc4526c3920d129f55852fe3ccf9436254b89f45af2f227df16a73c"
+      },
+      {
+        "id": "aefdfa65-f862-447e-b57c-503270b7837e",
+        "kind": "pdf",
+        "name": "aefdfa65-f862-447e-b57c-503270b7837e.pdf",
+        "hash": "7b9aa832df3d33c35fa3646e3a34b72e7e50f6b535610572345de1b142ea5e90"
+      }
+    ],
+    "snapshot_rows": 1274,
+    "checkpoint_sha256": "fea27c140c63b448c7d198e1a5e2d404b24bccdd0828e0ba939ebbaf73a5758d",
+    "pending_review_held": true
+  },
+  "captures": {
+    "quotation-supply-followup-browser/quotation-supply-followup--c72c7-inal-lost-response-recovery-desktop-chromium/reservation-return-320.png": "856bfb9d1155e1fe9d3c6b360e49d3ac392f0c8e5f81683a9866454ed6be27af",
+    "quotation-supply-followup-browser/quotation-supply-followup--c72c7-inal-lost-response-recovery-desktop-chromium/reservation-review.png": "76bfca08d404947eef1e26bf827fdb243e0249de42310ae15133340b77b40b03",
+    "quotation-supply-followup-browser/quotation-supply-followup--c72c7-inal-lost-response-recovery-mobile-chromium/reservation-return-320.png": "d37ab6d57ae6c42ee9b47429cb520c24ff45bf458cf4fc3cfbd78ac21145e259",
+    "quotation-supply-followup-browser/quotation-supply-followup--c72c7-inal-lost-response-recovery-mobile-chromium/reservation-review.png": "3a8e0fc724c7cd2c83c1f1c7c71c641f887fd6c36a446ac1613db13f3d946b46"
+  },
+  "human_acceptance": "Pending",
+  "deployment": "Not performed by this task"
+}

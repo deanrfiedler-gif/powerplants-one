@@ -17,6 +17,55 @@ const base = () => ({
   expected_sequence: 0,
   basis_hash: "a".repeat(64),
 });
+test("Reservation reconciliation has closed evidence fields while original review canonical payload stays unchanged", () => {
+  const id = randomUUID(),
+    r = {
+      ...base(),
+      referral_id: randomUUID(),
+      receiving_id: randomUUID(),
+      predecessor_id: null,
+      decision: "Retain",
+      allocation_id: null,
+      quantity: null,
+    };
+  assert.deepEqual(reviewInput(id, r), {
+    ...r,
+    revision_id: id,
+    action: "Review",
+  });
+  const dependency = {
+    ...r,
+    decision: "ReconcileReservationOutcome",
+    dependency_id: randomUUID(),
+    outcome_state: "Confirmed",
+    observed_at: "2026-10-04T00:00:00.000Z",
+    lookup_evidence: "SYN exact complete original-operation lookup",
+  };
+  assert.equal(
+    reviewInput(id, dependency).dependency_id,
+    dependency.dependency_id,
+  );
+  assert.equal(
+    reviewInput(id, { ...dependency, lookup_evidence: "x".repeat(1000) })
+      .lookup_evidence?.length,
+    1000,
+  );
+  assert.throws(() =>
+    reviewInput(id, { ...dependency, lookup_evidence: "x".repeat(1001) }),
+  );
+  for (const extra of [
+    { outcome_state: "Unknown" },
+    { dependency_id: null },
+    { source_operation: "new" },
+    { observed_at: "today" },
+    { lookup_evidence: "" },
+    { lookup_evidence: "First line\nSecond line" },
+    { quantity: "0" },
+    { completeness: "Partial" },
+    { decision: "Retain" },
+  ])
+    assert.throws(() => reviewInput(id, { ...dependency, ...extra }));
+});
 test("Supply referral has exact scope, explicit due state and closed fields", () => {
   const id = randomUUID(),
     r = {

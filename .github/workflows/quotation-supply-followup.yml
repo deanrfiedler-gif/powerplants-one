@@ -9,6 +9,20 @@ permissions:
 jobs:
   conversion:
     name: ES-07 owned Supply follow-up and original recovery
+    needs: proof
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Require both isolated Supply proof groups
+        env:
+          PPO_SUPPLY_RESULT: ${{ needs.proof.result }}
+        run: test "$PPO_SUPPLY_RESULT" = success
+  proof:
+    name: ES-07 Supply ${{ matrix.suite }} proof
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: [database, runtime]
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     services:
@@ -49,10 +63,18 @@ jobs:
           p.write_text(p.read_text().replace('<local-password>','ppo_disposable_ci_only').replace('/ppo_synthetic','/ppo_synthetic_test'))
           PY
       - name: Owned Supply follow-up and populated upgrade PostgreSQL proof
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/quotation-supply-followup.test.ts
+        if: matrix.suite == 'database'
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/quotation-supply-followup.test.ts tests/database/quotation-reservation-reconciliation.test.ts
+      - name: Initialise the isolated runtime database
+        if: matrix.suite == 'runtime'
+        run: |
+          npm run db:migrate
+          npm run db:seed
       - name: Compile the exact contribution
+        if: matrix.suite == 'runtime'
         run: npm run build
       - name: Compiled HTTP and write the restart checkpoint
+        if: matrix.suite == 'runtime'
         run: |
           node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > "$RUNNER_TEMP/ppo-supply-followup-http.log" 2>&1 &
           ppo_supply_pid=$!
@@ -64,6 +86,7 @@ jobs:
           node --env-file=.env.local --import tsx --test tests/http/quotation-supply-followup.test.ts tests/http/quotation-disposition.test.ts tests/http/quotation-conversion.test.ts tests/http/quotation-response.test.ts
           PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/quotation-supply-followup-restart.ts write
       - name: Restart actual PostgreSQL and verify original evidence in a new application process
+        if: matrix.suite == 'runtime'
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
         run: |
@@ -81,9 +104,10 @@ jobs:
           done
           PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/quotation-supply-followup-restart.ts verify
       - name: Compiled desktop and mobile Supply follow-up and shared-control proof
+        if: matrix.suite == 'runtime'
         run: npx playwright test --config=playwright.compiled.config.ts tests/browser/quotation-supply-followup.spec.ts tests/browser/component-catalogue.spec.ts --output verification-evidence/quotation-supply-followup-browser --reporter=list
       - name: Retain synthetic execution evidence
-        if: always()
+        if: always() && matrix.suite == 'runtime'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: Quotation-Supply-followup-evidence

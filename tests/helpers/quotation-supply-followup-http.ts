@@ -5,7 +5,7 @@ import {
   json,
 } from "./quotation-disposition-http";
 import { nativeRevision } from "./quotation-disposition";
-import { supplyInput } from "./supply";
+import { supplyInput, supplyFact } from "./supply";
 import { crmBase } from "./crm";
 import {
   referral,
@@ -89,4 +89,31 @@ export async function reviewedHttpFixture() {
     supplyReview(d.followups[0], "AdjustAllocation", "1.375001"),
   );
   return { ...f, d: await conversionDetail(f.owner, f.id) };
+}
+export async function reservationHttpFixture() {
+  const f = await allocatedHttpFixture();
+  const t = f.d.followups[0];
+  const unknown = supplyFact(
+    "ExternalOutcome",
+    t.basis.conversion.target.version,
+    {
+      source_operation: "SYN-reservation-" + randomUUID(),
+      effect: "Reservation",
+      state: "Unknown",
+      lookup_evidence:
+        "SYN original response unavailable; missing receipt is inconclusive",
+    },
+  );
+  await json(f.owner, `supply/records/${t.target_id}/facts`, unknown);
+  await json(
+    f.owner,
+    f.path + "/supply-refer",
+    referral((await conversionDetail(f.owner, f.id)).followups[0]),
+  );
+  await json(
+    f.owner,
+    f.path + "/supply-receive",
+    acknowledgement((await conversionDetail(f.owner, f.id)).followups[0]),
+  );
+  return { ...f, unknown, d: await conversionDetail(f.owner, f.id) };
 }

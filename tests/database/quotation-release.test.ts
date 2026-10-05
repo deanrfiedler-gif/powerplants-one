@@ -516,7 +516,7 @@ test("ES05 populated migration 58 upgrade preserves reviewed estimates, receipts
   );
   assert.deepEqual(
     (await rows("SELECT version FROM public.ppo_migrations WHERE version>58 ORDER BY version")).map(r => r.version),
-    [59, 60, 61, 62, 63],
+    [59, 60, 61, 62, 63, 64],
   );
   const after = await rows("SELECT * FROM ppo.permission_grants ORDER BY id"),
     ids = new Set(grants.map((g) => g.id));

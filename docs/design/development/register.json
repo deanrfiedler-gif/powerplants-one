@@ -1386,7 +1386,7 @@
       "title": "Receiving, one-off resolution and controlled conversion",
       "kind": "scope",
       "module": "ES",
-      "summary": "Exact receiving and completed-target exception disposition with immutable per-target decisions and real native Forecast quantity revision.",
+      "summary": "Exact receiving and completed-target exception disposition with immutable per-target decisions and real native Forecast quantity revision. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds.",
       "path": "/estimating/quotes/[id]/conversion",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -3488,7 +3488,7 @@
       "title": "Material change-impact review",
       "kind": "scope",
       "module": "SC",
-      "summary": "Review before and after evidence through the owning module. Bookings and issued packs remain unchanged.",
+      "summary": "Review before and after evidence through the owning module. Bookings and issued packs remain unchanged. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds.",
       "path": "/supply/changes",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -10545,7 +10545,7 @@
       "title": "supply / changes",
       "kind": "route",
       "module": "Unassigned",
-      "summary": "Review before and after evidence through the owning module. Bookings and issued packs remain unchanged.",
+      "summary": "Review before and after evidence through the owning module. Bookings and issued packs remain unchanged. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds.",
       "path": "/supply/changes",
       "source_paths": [
         "src/app/(business)/supply/changes/page.tsx",
@@ -11381,7 +11381,7 @@
       "title": "Receiving, one-off resolution and controlled conversion",
       "kind": "route",
       "module": "ES",
-      "summary": "Exact receiving and completed-target exception disposition with immutable per-target decisions and real native Forecast quantity revision.",
+      "summary": "Exact receiving and completed-target exception disposition with immutable per-target decisions and real native Forecast quantity revision. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds.",
       "path": "/estimating/quotes/[id]/conversion",
       "source_paths": [
         "src/app/(business)/estimating/quotes/[id]/conversion/page.tsx"

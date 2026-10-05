@@ -2,6 +2,7 @@ import { test, expect, type Page } from "@playwright/test";
 import {
   allocatedHttpFixture,
   reviewedHttpFixture,
+  reservationHttpFixture,
   conversionDetail,
   json,
   referral,
@@ -254,4 +255,84 @@ test("ES07 Supply receiving worklist, stale proposal, explicit return and denied
   await expect(
     page.getByLabel("Supply follow-up evidence", { exact: true }),
   ).toHaveCount(0);
+});
+
+test("ES07 dependency native reservation reconciliation has separate review, retained holds and original lost-response recovery", async ({
+  page,
+}, info) => {
+  const f = await reservationHttpFixture();
+  await identity(page);
+  await page.goto("/" + f.path);
+  await evidence(page);
+  await page
+    .getByLabel("Supply position decision")
+    .selectOption("ReconcileReservationOutcome");
+  await page
+    .getByLabel("Evidenced reservation outcome")
+    .selectOption("Confirmed");
+  await page
+    .getByLabel("Outcome observation time (UTC ISO ending Z)")
+    .fill("2026-10-04T00:00:00.000Z");
+  await page
+    .getByLabel("Complete original-operation lookup evidence")
+    .fill(
+      "SYN complete original reservation lookup; reservation exists at source",
+    );
+  await submit(page, "Record Supply position review", "supply-review");
+  let t = (await conversionDetail(f.owner, f.id)).followups[0];
+  expect(t.reservation_dependencies[0].fact.id).toBe(f.unknown.id);
+  await evidence(page);
+  await page
+    .getByText(new RegExp(`^Exact review ${t.review!.id}:`))
+    .evaluate((n) => n.scrollIntoView({ block: "center" }));
+  await page.screenshot({ path: info.outputPath("reservation-review.png") });
+  let sends = 0;
+  let lost!: () => void;
+  const committed = new Promise<void>((resolve) => {
+    lost = resolve;
+  });
+  await page.route(`**/api/v1/${f.path}/supply-apply`, async (route) => {
+    sends++;
+    expect((await route.fetch()).ok()).toBe(true);
+    await route.abort("failed");
+    lost();
+  });
+  await page.getByRole("button", { name: "Apply exact Supply review" }).click();
+  await committed;
+  await expect(
+    page.getByRole("heading", { name: "Resolve the original action" }),
+  ).toBeVisible();
+  page.once("dialog", (d) => d.accept());
+  await page.reload();
+  await saved(page);
+  await page.unrouteAll({ behavior: "wait" });
+  t = (await conversionDetail(f.owner, f.id)).followups[0];
+  expect(sends).toBe(1);
+  expect(t.events.filter((e) => e.action === "Apply")).toHaveLength(1);
+  expect(t.reservation_dependencies[0].fact.predecessor_id).toBe(f.unknown.id);
+  expect(t.reservation_dependencies[0].fact.data.state).toBe("Confirmed");
+  expect(t.basis.position[0].usable_allocated).toBe("10");
+  expect((await conversionDetail(f.owner, f.id)).dispositions[0].status).toBe(
+    "Review required",
+  );
+  await expect(
+    page.getByText("Allocation action holds", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", {
+      name: "Reassess completed-conversion disposition",
+    }),
+  ).toBeVisible();
+  await page.setViewportSize({ width: 320, height: 740 });
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth + 1,
+    ),
+  ).toBe(true);
+  await page
+    .getByText("Native reservation outcome dependencies", { exact: true })
+    .evaluate((n) => n.scrollIntoView({ block: "start" }));
+  await page.screenshot({
+    path: info.outputPath("reservation-return-320.png"),
+  });
 });
