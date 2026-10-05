@@ -121,7 +121,9 @@ export async function releaseAuthority(
         : "estimating.quote.read",
     ),
     q = raw as ReleaseQuote;
-  await quoteContext(c, p, id);
+  // A read already obtained this exact context above. Preparation separately
+  // requires both prepare and read authority, so it retains the second check.
+  if (action === "Prepare") await quoteContext(c, p, id);
   if (
     digest(q.input_html) !== q.input_hash ||
     digest(q.template_definition) !== q.template_hash

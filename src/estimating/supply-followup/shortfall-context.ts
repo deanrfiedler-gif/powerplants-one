@@ -278,11 +278,12 @@ export async function shortfallCommandAuthority(
   c: QueryClient,
   p: Principal,
   e: ShortfallEvent,
+  checked?: Checked,
 ) {
   await supplyRecord(c, p, e.command.supply_id, "supply.coordinate");
   for (const change of allocationChanges(e.command))
     await supplyRecord(c, p, change.demand_id, "supply.coordinate");
-  await shortfallEvidenceAuthority(c, p, e);
+  await shortfallEvidenceAuthority(c, p, e, checked);
 }
 export async function shortfallState(
   c: QueryClient,
@@ -291,8 +292,8 @@ export async function shortfallState(
   referral: FollowupEvent | null,
   receiving: FollowupEvent | null,
   followups: FollowupEvent[],
+  checked: Checked = currentEvidenceChecked(basis),
 ) {
-  const checked = currentEvidenceChecked(basis);
   const events = await shortfallHistory(
     c,
     p,

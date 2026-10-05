@@ -291,8 +291,8 @@ export async function receiptState(
   basis: FollowupBasis,
   referral: FollowupEvent | null,
   receiving: FollowupEvent | null,
+  checked: Checked = currentEvidenceChecked(basis),
 ) {
-  const checked = currentEvidenceChecked(basis);
   const events = await receiptHistory(
     c,
     p,
@@ -415,11 +415,12 @@ export async function receiptCommandAuthority(
   c: QueryClient,
   p: Principal,
   proposal: ReceiptEvent,
+  checked?: Checked,
 ) {
   await supplyRecord(c, p, proposal.command.record_id, "supply.inspect");
   for (const d of proposal.dependencies.group.demands)
     await supplyRecord(c, p, d.record.id, "supply.coordinate");
-  await receiptEvidenceAuthority(c, p, proposal);
+  await receiptEvidenceAuthority(c, p, proposal, checked);
 }
 export async function receiptOriginalAuthority(
   c: QueryClient,

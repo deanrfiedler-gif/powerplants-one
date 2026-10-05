@@ -26,6 +26,13 @@ export async function readConversion(
       originalRevision === id
         ? d
         : await conversionContext(c, p, originalRevision);
+    // This actor has just read both source revisions in this locked read.
+    // Historical links are checked once each; the set never survives the request.
+    const checked = {
+      revisions: new Set([id, originalRevision]),
+      records: new Set<string>(),
+      credits: new Set<string>(),
+    };
     const dispositions = [];
     const followups = [];
     const supplySchema = await followupAvailable(c);
@@ -35,12 +42,13 @@ export async function readConversion(
       )
     ).rows[0].present;
     for (const target of dispositionSchema ? original.targets : []) {
-      await dispositionHistoryAuthority(c, p, target.target_id);
+      await dispositionHistoryAuthority(c, p, target.target_id, checked);
       const disposition = await dispositionTarget(
         c,
         p,
         original,
         target.target_id,
+        checked,
       );
       dispositions.push(disposition);
       if (supplySchema) {
@@ -54,6 +62,7 @@ export async function readConversion(
             context: original,
             basis,
             resolved: disposition.status === "Resolved",
+            checked,
           }),
         );
       }
