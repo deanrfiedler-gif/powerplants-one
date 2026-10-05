@@ -1,0 +1,70 @@
+{
+  "source_head": "9a0022ee5adf16a4688a1a61f86cc44e6ab8c0f0",
+  "verified_at": "2026-10-05T20:48:20.677Z",
+  "original_postmaster": "2026-10-06 05:40:56.692818+10",
+  "restarted_postmaster": "2026-10-06 06:47:22.333419+10",
+  "exact_replays": 9,
+  "original_operation_receipts": 21,
+  "unchanged_snapshot_rows": 4881,
+  "unchanged_output_files": [
+    {
+      "id": "e2cef792-0d2a-4021-8af6-1cefb59b53cc",
+      "kind": "html",
+      "name": "e2cef792-0d2a-4021-8af6-1cefb59b53cc.html",
+      "hash": "cae23ac5bf1dfb5e8b7451a9b428c345851117be70c188b987c57a0f521a09c7"
+    },
+    {
+      "id": "e2cef792-0d2a-4021-8af6-1cefb59b53cc",
+      "kind": "pdf",
+      "name": "e2cef792-0d2a-4021-8af6-1cefb59b53cc.pdf",
+      "hash": "b5adbada2f3fe62ae55d03fbc35e725429d1ddf721108e5b3f3f49cae79bd5ce"
+    },
+    {
+      "id": "25a5543b-8471-4297-882a-c2325f3af092",
+      "kind": "html",
+      "name": "25a5543b-8471-4297-882a-c2325f3af092.html",
+      "hash": "b35242a69b207640e7e68d8130165245b3d4e64127bd6869a3cbabe47937512a"
+    },
+    {
+      "id": "25a5543b-8471-4297-882a-c2325f3af092",
+      "kind": "pdf",
+      "name": "25a5543b-8471-4297-882a-c2325f3af092.pdf",
+      "hash": "0193109964d3f44e5444bc05a9da052778aeef8ef1f05390ffef640c10a26cdc"
+    }
+  ],
+  "allocation_outcome_id": "0f97d4ac-5191-463c-83d2-df4db4941ce9",
+  "impact_predecessor": "4855c4ef-e007-4d88-83c1-91ec2a557ca0",
+  "receiving_ids": [
+    "225bb94f-2b82-445d-b2c8-d48e36790de3",
+    "a23a2b38-ff3f-4142-80cc-89fca08a4927",
+    "1d1247fc-ee63-40fd-be41-250d9e13c9f9",
+    "2c410d0f-e8dc-4bc6-86d2-aadbdfa8bc9f"
+  ],
+  "native_receipts": [
+    {
+      "state": "Active",
+      "task_ids": [
+        "6408caa3-f1ed-4c14-9745-c1c19c7a07d5"
+      ],
+      "warnings": [],
+      "record_id": "a8b44eaf-0cfb-4439-b8e5-cb1ef4b63098",
+      "receipt_id": "37e4b985-51b4-485d-8541-89e31e3f35dc",
+      "accepted_at": "2026-10-05T20:46:46.101Z",
+      "operation_id": "ae70ec0f-6445-47e6-bc2f-8b417c8c3b02",
+      "record_version": 3
+    },
+    {
+      "state": "Recorded",
+      "task_ids": [
+        "9f0f911f-6a03-437d-aac7-f47e6a9d588b"
+      ],
+      "warnings": [],
+      "record_id": "d0e9e19e-4e02-4249-9ef2-a978f992bb8c",
+      "receipt_id": "873dd8eb-6fb2-45e1-bcd4-3a0bc001f165",
+      "accepted_at": "2026-10-05T20:46:46.113Z",
+      "operation_id": "c24196e5-1982-4285-be2a-df3a2d275bd3",
+      "record_version": 5
+    }
+  ],
+  "unmet": "3.624999"
+}
