@@ -224,9 +224,17 @@ export function AllocationShortfall({
                 , resulting Usable allocation {d.allocated}, unmet {d.unmet},
                 picked lower bound {d.picked}; owner {d.record.owner_id};{" "}
                 {d.changed
-                  ? "independent decision required; version and Requested Impact will change"
+                  ? applied
+                    ? "independently received allocation effect applied; owned impacts remain"
+                    : "independent decision required; version and Requested Impact will change"
                   : "record and allocation preserved"}
-                . Readiness evidence: {JSON.stringify(d.readiness)}.
+                . Reviewed readiness: {d.readiness.readiness.state}.
+                <details>
+                  <summary>
+                    Exact reviewed readiness evidence for {d.record.reference}
+                  </summary>
+                  <p>{JSON.stringify(d.readiness)}</p>
+                </details>
               </li>
             ))}
           </ul>

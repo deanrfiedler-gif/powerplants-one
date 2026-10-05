@@ -3575,7 +3575,7 @@
         {
           "id": "allocation-receiving",
           "label": "Independent allocation receiving",
-          "description": "Complete reductions on the corrected Shipment; each changed Demand independently Accepted, Returned or Held. Real host: tests/browser/quotation-allocation-shortfall.spec.ts."
+          "description": "Complete reductions on the corrected Shipment; each changed Demand independently Accepted, Returned or Held. Quantity, unmet Demand and readiness summary stay visible; exact reviewed readiness expands per Demand and completed effects retain owned impacts. Real host: tests/browser/quotation-allocation-shortfall.spec.ts."
         },
         {
           "id": "allocation-outcome",
