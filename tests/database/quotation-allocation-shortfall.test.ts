@@ -177,6 +177,22 @@ test("ES07 shortfall independently receives exact atomic reductions, preserves i
     t.allocation_shortfall.proposal!.id,
   );
   assert.equal(t.outcome!.effect_receiving_ids.length, 2);
+  assert.deepEqual(
+    (await receivingWorklist(f.owner)).rows.find(
+      (row) => row.target_id === t.target_id,
+    ),
+    {
+      revision_id: f.id,
+      target_id: t.target_id,
+      referral_id: t.referral!.id,
+      title: t.basis.conversion.target.title,
+      status: t.status,
+      due_date: t.referral!.due_date,
+      date_needed: t.referral!.date_needed,
+      next_action: t.referral!.next_action,
+      owner_id: t.referral!.owner_id,
+    },
+  );
   assert.equal(
     (await readConversion(f.owner, f.id)).dispositions[0].status,
     "Review required",
@@ -386,6 +402,7 @@ test("ES07 allocation receiving is independently owned, site scoped, revocable a
     assert.equal((await currentFollowup(f)).can_apply, false);
     await assert.rejects(applySupply(f.owner, f.id, supplyApply(t)));
     await assert.rejects(readOperation(owner, cmd.operation_id));
+    await assert.rejects(receivingWorklist(owner), code("Forbidden"));
   } finally {
     for (const g of grants)
       await database().query(
@@ -412,6 +429,12 @@ test("ES07 allocation receiving is independently owned, site scoped, revocable a
     ])
       await assert.rejects(readOperation(f.owner, op));
     await assert.rejects(readConversion(f.owner, f.id));
+    assert.equal(
+      (await receivingWorklist(f.owner)).rows.some(
+        (row) => row.target_id === t.target_id,
+      ),
+      false,
+    );
   } finally {
     for (const g of reads)
       await database().query(

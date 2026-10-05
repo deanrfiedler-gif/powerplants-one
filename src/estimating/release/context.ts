@@ -131,7 +131,7 @@ export async function releaseAuthority(
     releaseConflict(
       "The exact quotation input does not match its original evidence.",
     );
-  await exactBasis(c, p, e.id, q.estimate_version_id);
+  const exact = await exactBasis(c, p, e.id, q.estimate_version_id);
   if (
     action &&
     !(await hasPermission(
@@ -163,7 +163,7 @@ export async function releaseAuthority(
       "estimating.quote.read",
     );
   }
-  return { q, e, base };
+  return { q, e, base, source_version: exact.v };
 }
 
 // This source is read under the caller's workspace lock. It contains no costs in the customer document.
@@ -264,8 +264,13 @@ export async function releaseSource(
     problems,
   };
 }
-export async function releasePreview(c: QueryClient, p: Principal, id: string) {
-  const { q } = await releaseAuthority(c, p, id),
+export async function releasePreview(
+  c: QueryClient,
+  p: Principal,
+  id: string,
+  known?: Awaited<ReturnType<typeof releaseAuthority>>,
+) {
+  const { q } = known ?? (await releaseAuthority(c, p, id)),
     source = await releaseSource(c, p, q),
     template = await releaseTemplate(source.snapshot);
   if (source.header.current_revision_id !== id)
@@ -289,11 +294,19 @@ export async function requireCurrentRelease(
   p: Principal,
   id: string,
   action?: ReleaseAction,
+  known?: {
+    context: Awaited<ReturnType<typeof releaseAuthority>>;
+    source: Awaited<ReturnType<typeof releaseSource>>;
+  },
 ) {
-  const context = await releaseAuthority(c, p, id, action);
+  // Only an already-authorised locked read reuses this source. Consequential
+  // action callers always perform the full current authority/source checks.
+  const context =
+    !action && known ? known.context : await releaseAuthority(c, p, id, action);
   if (!context.base)
     releaseConflict("Prepare the synthetic release document first.");
-  const source = await releaseSource(c, p, context.q);
+  const source =
+    !action && known ? known.source : await releaseSource(c, p, context.q);
   if (
     source.header.current_revision_id !== id ||
     source.problems.length ||

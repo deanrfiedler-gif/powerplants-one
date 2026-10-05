@@ -50,6 +50,7 @@ import {
   receiptCommandAuthority,
   receiptHistory,
   receiptAvailable,
+  currentEvidenceChecked,
 } from "./receipt-context";
 type Input =
   | ReturnType<typeof referralInput>
@@ -62,7 +63,7 @@ async function execute(p: Principal, id: string, input: Input) {
     input,
     `QuoteSupply:${input.action}`,
     async (c) => {
-      await conversionAuthority(c, p, id, true);
+      const source = await conversionAuthority(c, p, id, true);
       await supplyRecord(c, p, input.target_id, "supply.coordinate");
       const checked = {
         revisions: new Set([id]),
@@ -82,18 +83,24 @@ async function execute(p: Principal, id: string, input: Input) {
           await shortfallHistory(c, p, input.target_id, checked)
         ).find((e) => e.id === original.allocation_proposal_id);
         if (!proposal) throw unavailable();
-        await shortfallCommandAuthority(c, p, proposal);
+        await shortfallCommandAuthority(c, p, proposal, checked);
       }
       if (original?.receipt_proposal_id) {
         const proposal = originals.find(
           (e) => e.id === original.receipt_proposal_id,
         );
         if (!proposal) throw unavailable();
-        await receiptCommandAuthority(c, p, proposal);
+        await receiptCommandAuthority(c, p, proposal, checked);
       }
+      return { source, checked };
     },
-    async (c) => {
-      const t = await followupContext(c, p, id, input.target_id);
+    async (c, authorised) => {
+      const context = await conversionContext(c, p, id, authorised.source);
+      const t = await followupContext(c, p, id, input.target_id, {
+        context,
+        checked: authorised.checked,
+      });
+      const checked = currentEvidenceChecked(t.basis);
       expected(t.sequence, input.expected_sequence);
       if (
         input.execution_id !== t.execution_id ||
@@ -129,8 +136,9 @@ async function execute(p: Principal, id: string, input: Input) {
         const disposition = await dispositionTarget(
           c,
           p,
-          await conversionContext(c, p, id),
+          context,
           input.target_id,
+          checked,
         );
         if (
           disposition.status !== "Review required" &&
@@ -147,7 +155,7 @@ async function execute(p: Principal, id: string, input: Input) {
         due = input.due_date;
         dateNeeded = input.date_needed;
         next = input.next_action;
-        await followupOwner(c, p, owner, basis);
+        await followupOwner(c, p, owner, basis, { context, checked });
         predecessor = input.predecessor_id;
         decision = "Requested";
         activityId = randomUUID();
@@ -179,8 +187,9 @@ async function execute(p: Principal, id: string, input: Input) {
           p,
           referral.owner_id,
           basis,
+          { context, checked },
         );
-        await followupEvidenceAuthority(c, ownerPrincipal, referral);
+        await followupEvidenceAuthority(c, ownerPrincipal, referral, checked);
         referralId = referral.id;
         owner = referral.owner_id;
         due = referral.due_date;
@@ -310,7 +319,7 @@ async function execute(p: Principal, id: string, input: Input) {
               t.allocation_shortfall,
               input.allocation_proposal_id!,
             );
-            await shortfallCommandAuthority(c, p, received.proposal);
+            await shortfallCommandAuthority(c, p, received.proposal, checked);
             allocationProposalId = received.proposal.id;
             effectReceivingIds = received.receiving_ids;
             cmd = received.proposal.command;
@@ -320,7 +329,7 @@ async function execute(p: Principal, id: string, input: Input) {
               t.receipt_correction,
               input.receipt_proposal_id!,
             );
-            await receiptCommandAuthority(c, p, received.proposal);
+            await receiptCommandAuthority(c, p, received.proposal, checked);
             receiptProposalId = received.proposal.id;
             effectReceivingIds = received.receiving_ids;
             cmd = received.proposal.command;

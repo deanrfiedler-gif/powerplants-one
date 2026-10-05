@@ -26,12 +26,24 @@ async function execute(p: Principal, id: string, input: Input) {
     input,
     `QuoteDisposition:${input.action}`,
     async (c) => {
-      await conversionAuthority(c, p, id, true);
-      await dispositionHistoryAuthority(c, p, input.target_id);
+      const source = await conversionAuthority(c, p, id, true);
+      const checked = {
+        revisions: new Set([id]),
+        records: new Set<string>(),
+        credits: new Set<string>(),
+      };
+      await dispositionHistoryAuthority(c, p, input.target_id, checked);
+      return { source, checked };
     },
-    async (c) => {
-      const d = await conversionContext(c, p, id),
-        t = await dispositionTarget(c, p, d, input.target_id);
+    async (c, authorised) => {
+      const d = await conversionContext(c, p, id, authorised.source),
+        t = await dispositionTarget(
+          c,
+          p,
+          d,
+          input.target_id,
+          authorised.checked,
+        );
       expected(t.sequence, input.expected_sequence);
       if (t.basis.execution_id !== input.execution_id)
         dispositionConflict(

@@ -427,7 +427,13 @@ export async function shortfallOriginalAuthority(
   ).rows[0];
   if (!e) throw unavailable();
   await conversionAuthority(c, p, id, e.action === "ShortfallPropose");
-  await shortfallEvidenceAuthority(c, p, e);
-  if (e.action === "ShortfallPropose") await shortfallCommandAuthority(c, p, e);
+  const checked = {
+    revisions: new Set([id]),
+    records: new Set<string>(),
+    credits: new Set<string>(),
+  };
+  await shortfallEvidenceAuthority(c, p, e, checked);
+  if (e.action === "ShortfallPropose")
+    await shortfallCommandAuthority(c, p, e, checked);
   else await supplyRecord(c, p, e.demand_id!, "supply.coordinate");
 }

@@ -25,7 +25,7 @@ import {
   followupEvidenceAuthority,
   type Checked,
 } from "./authority";
-import type { FollowupBasis } from "./model";
+import { followupStatus, type FollowupBasis } from "./model";
 import { reservationDependencies } from "./dependency";
 import {
   receiptState,
@@ -122,9 +122,10 @@ export async function followupContext(
   target: string,
   known?: {
     context: Awaited<ReturnType<typeof conversionContext>>;
-    basis: FollowupBasis["conversion"];
-    resolved: boolean;
+    basis?: FollowupBasis["conversion"];
+    resolved?: boolean;
     checked?: Checked;
+    history_checked?: boolean;
   },
 ) {
   const context = known?.context ?? (await conversionContext(c, p, id));
@@ -133,7 +134,8 @@ export async function followupContext(
     records: new Set<string>(),
     credits: new Set<string>(),
   };
-  if (!known) await dispositionHistoryAuthority(c, p, target, checked);
+  if (!known?.history_checked)
+    await dispositionHistoryAuthority(c, p, target, checked);
   const basis = await followupBasis(c, p, id, target, known ?? { context });
   const { conversion, disposition } = basis;
   const currentChecked = currentEvidenceChecked(basis);
@@ -313,25 +315,7 @@ export async function followupContext(
     review,
     applied,
     outcome,
-    status: !referral
-      ? "Not referred"
-      : receiving?.decision === "Returned"
-        ? "Returned"
-        : receiving?.decision === "Held"
-          ? "Continuing hold"
-          : completed
-            ? review.decision === "Hold"
-              ? "Continuing hold"
-              : review.decision === "Retain"
-                ? "Position retained"
-                : review.decision === "ReconcileReservationOutcome"
-                  ? "Reservation outcome reconciled"
-                  : review.decision === "CorrectReceipt"
-                    ? "Receipt evidence corrected"
-                    : "Allocation adjusted"
-            : receiving?.decision === "Accepted"
-              ? "Accepted for review"
-              : "Awaiting owner",
+    status: followupStatus(referral, receiving, review, applied),
     adjustment_holds: holds,
     reservation_dependencies: reservationDependencies(basis),
     receipt_correction: receiptCorrection,

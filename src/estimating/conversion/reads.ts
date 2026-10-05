@@ -63,6 +63,7 @@ export async function readConversion(
             basis,
             resolved: disposition.status === "Resolved",
             checked,
+            history_checked: true,
           }),
         );
       }

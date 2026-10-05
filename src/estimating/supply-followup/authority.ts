@@ -130,7 +130,12 @@ export async function followupReceiptAuthority(
     return shortfallOriginalAuthority(c, p, id, operation);
   }
   await conversionAuthority(c, p, id, true);
-  await followupEvidenceAuthority(c, p, e);
+  const checked = {
+    revisions: new Set([id]),
+    records: new Set<string>(),
+    credits: new Set<string>(),
+  };
+  await followupEvidenceAuthority(c, p, e, checked);
   if (e.allocation_proposal_id) {
     const { shortfallCommandAuthority } = await import("./shortfall-context");
     const proposal = (
@@ -140,7 +145,7 @@ export async function followupReceiptAuthority(
       )
     ).rows[0];
     if (!proposal) throw unavailable();
-    await shortfallCommandAuthority(c, p, proposal);
+    await shortfallCommandAuthority(c, p, proposal, checked);
   }
   if (e.decision === "CorrectReceipt" && e.command && "record_id" in e.command)
     await supplyRecord(c, p, e.command.record_id, "supply.inspect");
@@ -204,7 +209,12 @@ export async function nativeFollowupReceiptAuthority(
       "This native operation is reserved to its exact Supply review. Apply that review before recovering the original native receipt.",
     );
   await conversionAuthority(c, p, e.revision_id, true);
-  await followupEvidenceAuthority(c, p, e);
+  const checked = {
+    revisions: new Set([e.revision_id]),
+    records: new Set<string>(),
+    credits: new Set<string>(),
+  };
+  await followupEvidenceAuthority(c, p, e, checked);
   if (e.allocation_proposal_id) {
     const { shortfallCommandAuthority } = await import("./shortfall-context");
     const proposal = (
@@ -214,7 +224,7 @@ export async function nativeFollowupReceiptAuthority(
       )
     ).rows[0];
     if (!proposal) throw unavailable();
-    await shortfallCommandAuthority(c, p, proposal);
+    await shortfallCommandAuthority(c, p, proposal, checked);
   }
   if (e.decision === "CorrectReceipt")
     await supplyRecord(c, p, target, "supply.inspect");

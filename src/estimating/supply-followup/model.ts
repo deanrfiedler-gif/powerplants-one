@@ -54,3 +54,27 @@ export type FollowupEvent = {
   allocation_proposal_id: string | null;
   effect_receiving_ids: string[];
 };
+
+// Lifecycle only: this never implies current applicability or readiness.
+export function followupStatus(
+  referral: FollowupEvent | null,
+  receiving: FollowupEvent | null,
+  review: FollowupEvent | null,
+  applied: FollowupEvent | null,
+) {
+  if (!referral) return "Not referred";
+  if (receiving?.decision === "Returned") return "Returned";
+  if (receiving?.decision === "Held") return "Continuing hold";
+  if (review && applied?.review_id === review.id) {
+    if (review.decision === "Hold") return "Continuing hold";
+    if (review.decision === "Retain") return "Position retained";
+    if (review.decision === "ReconcileReservationOutcome")
+      return "Reservation outcome reconciled";
+    if (review.decision === "CorrectReceipt")
+      return "Receipt evidence corrected";
+    return "Allocation adjusted";
+  }
+  return receiving?.decision === "Accepted"
+    ? "Accepted for review"
+    : "Awaiting owner";
+}

@@ -3,7 +3,7 @@ import { transaction } from "../../platform/database";
 import { requireCapability } from "../../platform/permissions";
 import { object } from "../../shared/validation";
 import { AppError } from "../../platform/errors";
-import { followupContext } from "./context";
+import { receivingSummary } from "./summary";
 import { shortfallAvailable } from "./shortfall-context";
 import { receiptAvailable } from "./receipt-context";
 export async function receivingWorklist(
@@ -55,30 +55,13 @@ export async function receivingWorklist(
       (r) => r.owner_id === p.actor_id || affected.has(r.target_id),
     )) {
       try {
-        const d = await followupContext(c, p, row.revision_id, row.target_id);
-        const effects = [
-          ...d.receipt_correction.required,
-          ...d.allocation_shortfall.required,
-        ].filter((x) => x.demand.owner_id === p.actor_id);
-        if (
-          (!d.can_write || row.owner_id !== p.actor_id) &&
-          !effects.some((x) => x.can_receive)
-        )
-          continue;
-        rows.push({
-          revision_id: d.revision_id,
-          target_id: d.target_id,
-          referral_id: d.referral!.id,
-          title: d.basis.conversion.target.title,
-          status:
-            row.owner_id === p.actor_id
-              ? d.status
-              : "Affected-demand receiving",
-          due_date: d.referral!.due_date,
-          date_needed: d.referral!.date_needed,
-          next_action: d.referral!.next_action,
-          owner_id: d.referral!.owner_id,
-        });
+        const rowSummary = await receivingSummary(
+          c,
+          p,
+          row.revision_id,
+          row.target_id,
+        );
+        if (rowSummary) rows.push(rowSummary);
       } catch (e) {
         if (!(e instanceof AppError && [403, 404].includes(e.status))) throw e;
       }

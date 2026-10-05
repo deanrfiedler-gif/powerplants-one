@@ -9,7 +9,7 @@ import {
   allocationChanges,
   type AllocationEffectCommand,
 } from "../../supply/reductions";
-import { conversionAuthority } from "../conversion/context";
+import { conversionAuthority, conversionContext } from "../conversion/context";
 import { expected } from "../service";
 import { draftBytes } from "../worker";
 import { releaseHash } from "../release/context";
@@ -28,7 +28,7 @@ import {
   shortfallOriginalAuthority,
   type ShortfallEvent,
 } from "./shortfall-context";
-import { effectOwner } from "./receipt-context";
+import { effectOwner, currentEvidenceChecked } from "./receipt-context";
 
 type Input =
   | ReturnType<typeof shortfallProposalInput>
@@ -39,7 +39,12 @@ async function execute(p: Principal, id: string, input: Input) {
     input,
     `QuoteSupply:${input.action}`,
     async (c) => {
-      await conversionAuthority(c, p, id, input.action === "ShortfallPropose");
+      const source = await conversionAuthority(
+        c,
+        p,
+        id,
+        input.action === "ShortfallPropose",
+      );
       await supplyRecord(
         c,
         p,
@@ -59,9 +64,12 @@ async function execute(p: Principal, id: string, input: Input) {
         ).rowCount
       )
         await shortfallOriginalAuthority(c, p, id, input.operation_id);
+      return source;
     },
-    async (c) => {
-      const t = await followupContext(c, p, id, input.target_id);
+    async (c, authorised) => {
+      const context = await conversionContext(c, p, id, authorised);
+      const t = await followupContext(c, p, id, input.target_id, { context });
+      const checked = currentEvidenceChecked(t.basis);
       expected(t.sequence, input.expected_sequence);
       if (
         input.execution_id !== t.execution_id ||
@@ -94,7 +102,7 @@ async function execute(p: Principal, id: string, input: Input) {
         decision: ShortfallEvent["decision"];
       if (input.action === "ShortfallPropose") {
         if (t.referral.owner_id !== p.actor_id) throw unavailable();
-        await followupOwner(c, p, p.actor_id, t.basis);
+        await followupOwner(c, p, p.actor_id, t.basis, { context, checked });
         if (
           input.receiving_id !== t.receiving.id ||
           input.predecessor_id !== (state.proposal?.id ?? null)
@@ -199,7 +207,13 @@ async function execute(p: Principal, id: string, input: Input) {
           followupConflict(
             "Only a changed Demand receives this allocation proposal.",
           );
-        const owner = await effectOwner(c, p, proposal, input.demand_id);
+        const owner = await effectOwner(
+          c,
+          p,
+          proposal,
+          input.demand_id,
+          checked,
+        );
         if (owner.actor_id !== p.actor_id) throw unavailable();
         if (
           t.events.some(
@@ -244,9 +258,9 @@ async function execute(p: Principal, id: string, input: Input) {
         created_by: p.actor_id,
         operation_id: input.operation_id,
       };
-      await shortfallEvidenceAuthority(c, p, e as ShortfallEvent);
+      await shortfallEvidenceAuthority(c, p, e as ShortfallEvent, checked);
       if (input.action === "ShortfallPropose")
-        await shortfallCommandAuthority(c, p, e as ShortfallEvent);
+        await shortfallCommandAuthority(c, p, e as ShortfallEvent, checked);
       const columns = Object.keys(e),
         values = Object.values(e);
       const saved = (

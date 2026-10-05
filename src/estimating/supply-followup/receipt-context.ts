@@ -436,7 +436,13 @@ export async function receiptOriginalAuthority(
   ).rows[0];
   if (!e) throw unavailable();
   await conversionAuthority(c, p, id, e.action === "ReceiptPropose");
-  await receiptEvidenceAuthority(c, p, e);
-  if (e.action === "ReceiptPropose") await receiptCommandAuthority(c, p, e);
+  const checked = {
+    revisions: new Set([id]),
+    records: new Set<string>(),
+    credits: new Set<string>(),
+  };
+  await receiptEvidenceAuthority(c, p, e, checked);
+  if (e.action === "ReceiptPropose")
+    await receiptCommandAuthority(c, p, e, checked);
   else await supplyRecord(c, p, e.demand_id!, "supply.coordinate");
 }
