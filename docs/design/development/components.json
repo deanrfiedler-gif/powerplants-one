@@ -2044,6 +2044,11 @@
           "id": "my-work-breakpoint-read",
           "label": "My Work breakpoint read",
           "description": "Cross the 780px phone boundary in both directions. The newly mounted overview reads current data; observe its exact response before checking the rendered layout. Same-layout resizing requires no invented read; refused responses remain failures."
+        },
+        {
+          "id": "current-development-guide",
+          "label": "Current development guide",
+          "description": "Existing desktop/mobile guide reads fresh register binding, current content and Git provenance; exact routes precede patterns, changed content loses old review applicability and removed bindings stay unavailable. Full catalogue assurance remains separate. Fixture: tests/unit/development-workspace.test.ts; ES-07 and shared-shell host browser journeys."
         }
       ],
       "implementation": [
@@ -2076,7 +2081,11 @@
         "src/components/business-session.tsx",
         "src/components/session-signal.ts",
         "src/engineering/control/components/workspace.tsx",
-        "src/notifications/service.ts"
+        "src/notifications/service.ts",
+        "src/development/catalog.ts",
+        "src/development/runtime.ts",
+        "src/development/page-guide.tsx",
+        "src/app/api/development/catalog/route.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -2091,7 +2100,8 @@
         "scope:FI-06",
         "scope:EN-02",
         "scope:SH-03",
-        "scope:SH-01"
+        "scope:SH-01",
+        "scope:ES-07"
       ],
       "desktop": "Review the real global search, workspace switcher, rail, More and utility controls around this catalogue. Shell access can be unavailable without a running identity/database service.",
       "mobile": "Resize the actual browser window to review the mobile shell; component-frame presets do not resize the surrounding application. Native shell controls must remain inside the 64px header, including local identity at 390px and 320px; the legacy CRM grid must not overlay the first page action.",
@@ -2193,6 +2203,14 @@
           "action": "Review the two-direction responsive-readiness and real overview evidence. Keep visual and owner acceptance pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "bounded-development-guide-read",
+          "priority": "Medium",
+          "owner": "Dean Fiedler",
+          "expected": "Same permitted guide, current source provenance and explicit review/unavailable states at desktop and mobile widths.",
+          "actual": "Direct current-register lookup replaces full catalogue reconstruction for page help; the full catalogue and source/reference validation remain intact.",
+          "action": "Review existing ES-07/shared-shell host captures and current-guide fixture; no visual or owner acceptance is inferred."
         }
       ],
       "review": null

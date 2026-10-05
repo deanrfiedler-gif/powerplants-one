@@ -8775,7 +8775,11 @@
       "summary": "Navigation, global search, context, page guide and the local design-workspace entry.",
       "path": null,
       "source_paths": [
-        "src/components/product-navigation.tsx"
+        "src/components/product-navigation.tsx",
+        "src/development/catalog.ts",
+        "src/development/runtime.ts",
+        "src/development/page-guide.tsx",
+        "src/app/api/development/catalog/route.ts"
       ],
       "guide_key": null,
       "design_path": "docs/design/development/systems/shell.md",
@@ -8924,7 +8928,11 @@
       "summary": "Find every registered page, planned scope, shared system and journey reference; inspect its guidance, links and current review needs.",
       "path": "/development/page-register",
       "source_paths": [
-        "src/app/development/page-register/page.tsx"
+        "src/app/development/page-register/page.tsx",
+        "src/development/catalog.ts",
+        "src/development/runtime.ts",
+        "src/development/page-guide.tsx",
+        "src/app/api/development/catalog/route.ts"
       ],
       "guide_key": "guide.route-development-page-register",
       "design_path": "docs/design/development/pages/route-development-page-register.md",
