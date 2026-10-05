@@ -594,7 +594,29 @@ test("ES07 shortfall new other-source allocation and changed owner hold the exac
   t = await currentFollowup(f);
   const r = (await workspace(f.owner, other.id)).record;
   const { createSession } = await import("../../src/platform/identity");
-  const nextOwner = (await createSession("materials-supply")).principal;
+  const restricted = (await createSession("materials-supply")).principal;
+  // This profile cannot own the native Activity. Prove that refusal first,
+  // then change to an explicitly permitted synthetic owner to isolate staleness.
+  await assert.rejects(
+    saveRecord(
+      f.owner,
+      nativeRevision(
+        { basis: { target: r } } as Parameters<typeof nativeRevision>[0],
+        { owner_id: restricted.actor_id },
+      ),
+      true,
+    ),
+    code("RecordUnavailable"),
+  );
+  const nextOwner = { ...f.owner, actor_id: randomUUID() };
+  await database().query(
+    "INSERT INTO ppo.users(id,workspace_id,issuer,subject_id,display_name,active,synthetic) VALUES($1::uuid,$2,'PPO-LocalSynthetic',$1::text,'SYN replacement allocation owner',true,true)",
+    [nextOwner.actor_id, f.owner.workspace_id],
+  );
+  await database().query(
+    "INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,valid_from,valid_to,id,scope_type,scope_id,site_id) SELECT workspace_id,$1,company_id,capability,valid_from,valid_to,gen_random_uuid(),scope_type,scope_id,site_id FROM ppo.permission_grants WHERE user_id=$2",
+    [nextOwner.actor_id, f.owner.actor_id],
+  );
   await saveRecord(
     f.owner,
     nativeRevision(
