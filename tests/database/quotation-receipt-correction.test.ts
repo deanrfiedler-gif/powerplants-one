@@ -631,31 +631,36 @@ test("ES07 Receipt partial unresolved correction retains separate Stock observat
   );
 });
 
-test("ES07 Receipt new shared Demand invalidates receiving and competing exceptions cannot reserve the same fact", async () => {
+test("ES07 Receipt new shared Demand invalidates receiving and competing referrals preserve immutable item identity", async () => {
   const f = await proposedReceiptFixture();
   const original = f.t.receipt_correction.proposal!;
   const { completedFixture } = await import("../helpers/quotation-disposition");
   const { allocate } = await import("../../src/supply/commands");
   const { crmBase } = await import("../helpers/crm");
+  // Distinct converted OneOff items cannot be relabelled to manufacture a shared
+  // source. Keep this native refusal while exercising valid shared native Demand.
   const g = await completedFixture();
-  let d = await readConversion(g.owner, g.id);
-  const target = d.dispositions[0].basis.target;
-  await saveRecord(
-    g.owner,
-    nativeRevision(d.dispositions[0], {
-      item: f.supply.item,
-      unit: f.supply.unit,
-      data: {
-        ...target.data,
-        demand_class: "Approved",
-        authority: "SYN native Supply fixture material coordination",
-      },
-    }),
-    true,
+  const otherQuote = (await readConversion(g.owner, g.id)).dispositions[0];
+  await assert.rejects(
+    saveRecord(
+      g.owner,
+      nativeRevision(otherQuote, { item: f.supply.item }),
+      true,
+    ),
+    code("InvalidRelationship"),
   );
-  const r = (await workspace(g.owner, target.id)).record,
-    source = (await workspace(g.owner, f.supply.id)).record;
-  await allocate(g.owner, {
+  assert.equal(
+    (await workspace(g.owner, otherQuote.target_id)).record.item,
+    otherQuote.basis.target.item,
+  );
+  const extra = supplyInput("Demand", {
+    item: f.supply.item,
+    unit: f.supply.unit,
+  });
+  await saveRecord(f.owner, extra);
+  const r = (await workspace(f.owner, extra.id)).record,
+    source = (await workspace(f.owner, f.supply.id)).record;
+  await allocate(f.owner, {
     ...crmBase(),
     id: randomUUID(),
     expected_version: null,
@@ -677,24 +682,36 @@ test("ES07 Receipt new shared Demand invalidates receiving and competing excepti
   t = await currentFollowup(f);
   assert.equal(t.receipt_correction.required.length, 3);
   assert.equal(t.receipt_correction.proposal!.predecessor_id, original.id);
-  d = await readConversion(g.owner, g.id);
-  await referSupply(g.owner, g.id, referral(d.followups[0]));
-  d = await readConversion(g.owner, g.id);
-  await receiveSupply(g.owner, g.id, acknowledgement(d.followups[0]));
-  d = await readConversion(g.owner, g.id);
+  // Existing active receiving cannot be replaced by a competing referral.
+  const previousReferral = t.referral!.id;
   await assert.rejects(
-    proposeReceipt(g.owner, g.id, receiptProposal(d.followups[0])),
+    referSupply(f.owner, f.id, referral(t)),
     code("SupplyFollowupConflict"),
   );
   await receiveSupply(f.owner, f.id, acknowledgement(t, "Returned"));
-  d = await readConversion(g.owner, g.id);
-  await proposeReceipt(g.owner, g.id, receiptProposal(d.followups[0]));
+  t = await currentFollowup(f);
+  assert.equal(t.status, "Returned");
+  await referSupply(f.owner, f.id, referral(t));
+  t = await currentFollowup(f);
+  assert.equal(t.referral!.predecessor_id, previousReferral);
+  await receiveSupply(f.owner, f.id, acknowledgement(t));
+  await proposeReceipt(
+    f.owner,
+    f.id,
+    receiptProposal(await currentFollowup(f)),
+  );
+  t = await currentFollowup(f);
   assert.equal(
-    (await readConversion(g.owner, g.id)).followups[0].receipt_correction
-      .proposal!.command.predecessor_id,
+    t.receipt_correction.proposal!.command.predecessor_id,
     original.command.predecessor_id,
   );
-  assert.equal((await currentFollowup(f)).status, "Returned");
+  assert.ok(t.receipt_correction.events.some((e) => e.id === original.id));
+  assert.ok(t.receipt_correction.required.every((x) => !x.decision));
+  const { record_id, ...reservedOriginal } = original.command;
+  await assert.rejects(
+    recordFact(f.owner, record_id, reservedOriginal),
+    code("SupplyFollowupConflict"),
+  );
 });
 
 test("ES07 Receipt corrected response and successor issue invalidate pending received review without changing originals", async () => {

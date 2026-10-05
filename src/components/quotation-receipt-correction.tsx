@@ -27,6 +27,12 @@ export function ReceiptCorrection({
   onDirty: (dirty: boolean) => void;
 }) {
   const state = t.receipt_correction;
+  const applied = t.events.find(
+    (e) =>
+      e.action === "Apply" &&
+      e.decision === "CorrectReceipt" &&
+      e.receipt_proposal_id === state.proposal?.id,
+  );
   const [selected, setSelected] = useState(state.candidates[0]?.fact.id ?? "");
   const candidate = state.candidates.find((x) => x.fact.id === selected);
   const [data, setData] = useState<Fields>(candidate?.fact.data ?? {});
@@ -209,7 +215,21 @@ export function ReceiptCorrection({
         )}
       {state.proposal && (
         <>
-          <h4>Receipt proposal and affected-demand decisions</h4>
+          <h4>
+            {applied
+              ? "Completed Receipt correction and retained decisions"
+              : "Receipt proposal and affected-demand decisions"}
+          </h4>
+          {applied && (
+            <p>
+              This correction completed with native receipt{" "}
+              {applied.native_receipt!.receipt_id}. Its original receiving
+              decisions remain evidence for that completed action. Current
+              operational holds remain visible; another correction needs a new
+              proposal and receiving. Return to ES-07 for fresh disposition
+              review and separate application.
+            </p>
+          )}
           <p>
             Proposal {state.proposal.id}; original fact{" "}
             {state.proposal.command.predecessor_id}; Supply v
@@ -240,11 +260,12 @@ export function ReceiptCorrection({
               ))}
             </dl>
           </details>
-          {state.holds.map((h) => (
-            <p role="note" key={h}>
-              {h}
-            </p>
-          ))}
+          {!applied &&
+            state.holds.map((h) => (
+              <p role="note" key={h}>
+                {h}
+              </p>
+            ))}
           {state.required.map((x) => (
             <section
               key={x.demand.id}
@@ -274,10 +295,8 @@ export function ReceiptCorrection({
                   {x.decision.evidence}
                 </p>
               )}
-              {x.holds.map((h) => (
-                <p key={h}>{h}</p>
-              ))}
-              {x.demand.owner_id === actor && (
+              {!applied && x.holds.map((h) => <p key={h}>{h}</p>)}
+              {!applied && x.demand.owner_id === actor && (
                 <>
                   <SelectField
                     name={`effect-${x.demand.id}`}

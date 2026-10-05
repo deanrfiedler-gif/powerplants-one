@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. Status: implementation in progress; validation, owner acceptance and deployment are separate.
+Owner: Dean Fiedler. Status: implemented for review in [PR #346](https://github.com/deanrfiedler-gif/powerplants-one/pull/346); exact final-head checks are recorded there. Validation, owner acceptance and deployment are separate.
 
 The [adopted decision](../decisions/quotation-receipt-correction.md) enables one previously held dependency: an existing current Receipt fact on Supply allocated to the exact converted Demand. It adds explicit proposal and independently owned Accepted/Returned/Held receiving decisions, immutable CorrectReceipt review and separate native application. It does not create receipts, cancel purchases, reverse fulfilment or adjust stock.
 
@@ -13,5 +13,7 @@ Original issue/output/lineage, completed execution, referral acceptance, proposa
 Returned evidence requires fresh ES-07 disposition review/application. An explicit retention may resolve the quotation exception while Approved demand and other operational holds remain. No Activity, note, referral completion or Supply status clears it. Existing allocation adjustment and reservation reconciliation retain their contracts.
 
 Verification and failed/repaired head distinctions belong in the [execution ledger](../testing/evidence/quotation-receipt-correction/README.md). No merge, deployment or live integration is authorised. MYOB, SharePoint and native CAD retain their authorities. Operational approval thresholds, signing, observation-age policy, unit conversions and wider consequential reversal remain Not configured. Paired visual/device/screen-reader review and owner acceptance remain pending.
+
+The real shared position uses matching native material identities. Current independently converted OneOff items cannot be relabelled into a common catalogue item; that broader mapping journey remains outside scope.
 
 Next concrete increment: separately owned follow-up for the retained shared-supply capacity shortfall, using the existing allocation review/action where eligible and explicitly deciding authority for independently owned allocation changes. Receipt correction does not adopt that wider contract.

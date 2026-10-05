@@ -3570,7 +3570,7 @@
         {
           "id": "receipt-shortfall",
           "label": "Corrected evidence, retained shortfall",
-          "description": "Native Receipt successor and immutable original receipt; allocations unchanged, readiness held and fresh ES-07 disposition required."
+          "description": "Native Receipt successor and immutable original receipt; completed acceptances remain retained evidence without renewed-receiving controls. Allocations unchanged, readiness held and fresh ES-07 disposition required."
         }
       ],
       "implementation": [

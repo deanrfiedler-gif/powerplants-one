@@ -134,6 +134,14 @@ test("ES07 Receipt desktop/mobile exact proposal affected-demand receiving and s
   await submit(page, "Record Supply position review", "supply-review");
   await evidence(page);
   await submit(page, "Apply exact Supply review", "supply-apply");
+  await expect(
+    page.getByRole("heading", {
+      name: "Completed Receipt correction and retained decisions",
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: /^Record receiving for / }),
+  ).toHaveCount(0);
   const t = await f.current();
   expect(t.status).toBe("Receipt evidence corrected");
   expect(t.outcome!.receipt_proposal_id).toBe(proposal.id);

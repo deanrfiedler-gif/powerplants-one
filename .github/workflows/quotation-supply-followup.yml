@@ -13,7 +13,7 @@ jobs:
     if: always()
     runs-on: ubuntu-24.04
     steps:
-      - name: Require both isolated Supply proof groups
+      - name: Require every isolated Supply proof group
         env:
           PPO_SUPPLY_RESULT: ${{ needs.proof.result }}
         run: test "$PPO_SUPPLY_RESULT" = success
@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        suite: [database, runtime]
+        suite: [database, receipt-database, runtime]
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     services:
@@ -64,7 +64,10 @@ jobs:
           PY
       - name: Owned Supply follow-up and populated upgrade PostgreSQL proof
         if: matrix.suite == 'database'
-        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/quotation-supply-followup.test.ts tests/database/quotation-reservation-reconciliation.test.ts tests/database/quotation-receipt-correction.test.ts
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/quotation-supply-followup.test.ts tests/database/quotation-reservation-reconciliation.test.ts
+      - name: Receipt correction receiving and populated upgrade PostgreSQL proof
+        if: matrix.suite == 'receipt-database'
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/quotation-receipt-correction.test.ts
       - name: Initialise the isolated runtime database
         if: matrix.suite == 'runtime'
         run: |
