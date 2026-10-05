@@ -13,6 +13,12 @@ import { allocationPosition } from "./position";
 import { followupHistory, followupEvidenceAuthority } from "./authority";
 import type { FollowupBasis } from "./model";
 import { reservationDependencies } from "./dependency";
+import {
+  receiptState,
+  acceptedReceipt,
+  receiptCommandAuthority,
+  receiptHistory,
+} from "./receipt-context";
 
 export async function followupOwner(
   c: QueryClient,
@@ -81,6 +87,13 @@ export async function followupContext(
     current.filter((e) => e.action === "Receive").at(-1) ?? null;
   const review = current.filter((e) => e.action === "Review").at(-1) ?? null;
   const applied = current.filter((e) => e.action === "Apply").at(-1) ?? null;
+  const receiptCorrection = await receiptState(
+    c,
+    p,
+    basis,
+    referral,
+    receiving,
+  );
   const r = conversion.target;
   const holds: string[] = [];
   if (r.kind !== "Demand" || r.data.demand_class !== "Approved")
@@ -117,9 +130,30 @@ export async function followupContext(
         "Relevant quotation, disposition, demand, allocation, shared supply or dependency evidence changed. Compare and replace the review.",
       );
     if (review.decision === "AdjustAllocation") reviewHolds.push(...holds);
+    if (review.decision === "CorrectReceipt") {
+      try {
+        const received = acceptedReceipt(
+          receiptCorrection,
+          review.receipt_proposal_id!,
+        );
+        if (
+          dispositionHash(received.receiving_ids) !==
+          dispositionHash(review.effect_receiving_ids)
+        )
+          reviewHolds.push(
+            "Affected-demand receiving changed after review. Record a fresh immutable review.",
+          );
+        await receiptCommandAuthority(c, p, received.proposal);
+      } catch (e) {
+        if (!(e instanceof AppError)) throw e;
+        reviewHolds.push(e.message);
+      }
+    }
     try {
       const owner = await followupOwner(c, p, referral!.owner_id, basis);
       await followupEvidenceAuthority(c, owner, review);
+      if (review.decision === "CorrectReceipt" && receiptCorrection.proposal)
+        await receiptCommandAuthority(c, owner, receiptCorrection.proposal);
       if (review.command && "supply_id" in review.command)
         await supplyRecord(
           c,
@@ -193,12 +227,15 @@ export async function followupContext(
                 ? "Position retained"
                 : review.decision === "ReconcileReservationOutcome"
                   ? "Reservation outcome reconciled"
-                  : "Allocation adjusted"
+                  : review.decision === "CorrectReceipt"
+                    ? "Receipt evidence corrected"
+                    : "Allocation adjusted"
             : receiving?.decision === "Accepted"
               ? "Accepted for review"
               : "Awaiting owner",
     adjustment_holds: holds,
     reservation_dependencies: reservationDependencies(basis),
+    receipt_correction: receiptCorrection,
     review_holds: reviewHolds,
     can_refer: exception && !known?.resolved && heldTarget && canReplace,
     can_apply: !!review && !completed && !reviewHolds.length,
@@ -222,6 +259,7 @@ export async function returnedSupplyBasis(
   const events = await followupHistory(c, p, target);
   if (!events.length) return null;
   const last = events.at(-1)!;
+  const receiptEvents = await receiptHistory(c, p, target);
   const outcome = events
     .filter(
       (e) =>
@@ -236,5 +274,8 @@ export async function returnedSupplyBasis(
     outcome_id: outcome?.id ?? null,
     outcome_hash: outcome?.basis_hash ?? null,
     position: await allocationPosition(c, p, target),
+    ...(receiptEvents.length
+      ? { receipt_event_id: receiptEvents.at(-1)!.id }
+      : {}),
   };
 }

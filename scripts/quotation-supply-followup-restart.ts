@@ -43,6 +43,11 @@ import {
   supplyApply,
   reservationReview,
 } from "../tests/helpers/quotation-supply-followup";
+import {
+  receiptProposal,
+  receiptReceiving,
+  receiptReview,
+} from "../tests/helpers/quotation-receipt-correction";
 import { supplyInput, supplyFact } from "../tests/helpers/supply";
 import { crmBase } from "../tests/helpers/crm";
 const dispositionProof = false;
@@ -70,6 +75,7 @@ async function snapshot(id: string, sessionCutoff: string) {
     UNION ALL SELECT 'conversion',to_jsonb(e) FROM ppo.quote_conversion_events e WHERE revision_id IN(SELECT id FROM ppo.draft_quote_revisions WHERE estimate_id=$1)
     UNION ALL SELECT 'disposition',to_jsonb(e) FROM ppo.quote_disposition_events e WHERE revision_id IN(SELECT id FROM ppo.draft_quote_revisions WHERE estimate_id=$1)
     UNION ALL SELECT 'supply-event',to_jsonb(e) FROM ppo.quote_supply_events e
+    UNION ALL SELECT 'receipt-correction',to_jsonb(e) FROM ppo.quote_supply_receipt_events e
     UNION ALL SELECT 'all-native-record',to_jsonb(e) FROM ppo.supply_records e
     UNION ALL SELECT 'all-native-revision',to_jsonb(e) FROM ppo.supply_revisions e
     UNION ALL SELECT 'allocation',to_jsonb(e) FROM ppo.supply_allocations e
@@ -338,6 +344,47 @@ try {
         `operations/${reservationNative.operation_id}`,
       ),
     });
+    // Existing native Stock Receipt: its separate Stock capacity is unchanged.
+    const supplyNow = (await json(f.owner, `supply/records/${supply.id}`))
+      .record;
+    await save(
+      `supply/records/${supply.id}/facts`,
+      supplyFact("Receipt", supplyNow.version, {
+        received: "10",
+        inspected: "10",
+        usable: "10",
+      }),
+    );
+    await save(
+      conversionPath(p.id) + "/receipt-propose",
+      receiptProposal(await current()),
+    );
+    for (const affected of (await current()).receipt_correction.required)
+      await save(
+        conversionPath(p.id) + "/receipt-receive",
+        receiptReceiving(await current(), affected.demand.id),
+      );
+    await save(
+      conversionPath(p.id) + "/supply-review",
+      receiptReview(await current()),
+    );
+    const receiptNative = (await current()).receipt_correction.proposal!
+      .command;
+    await save(
+      conversionPath(p.id) + "/supply-apply",
+      supplyApply(await current()),
+    );
+    const { record_id: receiptTarget, ...receiptCommand } = receiptNative;
+    receipts.push({
+      actor: "coordinator",
+      path: `supply/records/${receiptTarget}/facts`,
+      command: receiptCommand,
+      receipt: await json(f.owner, `operations/${receiptNative.operation_id}`),
+    });
+    assert.equal(
+      (await current()).receipt_correction.effects!.capacity_basis,
+      "Separate Stock observation unchanged",
+    );
     cd = await conversionDetail(f.owner, p.id);
     await save(
       conversionPath(p.id) + "/disposition-review",

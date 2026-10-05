@@ -7,14 +7,21 @@ import { useUnsavedChanges } from "./record-ui";
 import { useCrmResource } from "./crm-state";
 import type { FollowupDetail } from "../estimating/supply-followup/context";
 import type { receivingWorklist } from "../estimating/supply-followup/reads";
+import { ReceiptCorrection } from "./quotation-receipt-correction";
 export type SupplyFollowupAction =
-  "supply-refer" | "supply-receive" | "supply-review" | "supply-apply";
+  | "supply-refer"
+  | "supply-receive"
+  | "supply-review"
+  | "supply-apply"
+  | "receipt-propose"
+  | "receipt-receive";
 const capture = (t: FollowupDetail) => ({
   hash: t.basis_hash,
   sequence: t.sequence,
   referral: t.referral?.id ?? null,
   receiving: t.receiving?.id ?? null,
   review: t.review?.id ?? null,
+  receipt_sequence: t.receipt_correction.sequence,
 });
 export function SupplyFollowupQueue() {
   const resource = useCrmResource<
@@ -149,8 +156,10 @@ function FollowupTarget({
     ),
     [outcome, setOutcome] = useState(""),
     [observedAt, setObservedAt] = useState(""),
-    [lookup, setLookup] = useState("");
+    [lookup, setLookup] = useState(""),
+    [receiptDirty, setReceiptDirty] = useState(false);
   const dirty = !!(
+    receiptDirty ||
     reason ||
     evidence ||
     next ||
@@ -338,7 +347,7 @@ function FollowupTarget({
             <p>
               Actual native Supply receipt {t.outcome.native_receipt.receipt_id}{" "}
               · operation {t.outcome.native_receipt.operation_id} · resulting
-              demand version {t.outcome.native_receipt.record_version}.
+              native record version {t.outcome.native_receipt.record_version}.
             </p>
           )}
           <p>
@@ -389,6 +398,15 @@ function FollowupTarget({
           ]}
         />
       </div>
+      <ReceiptCorrection
+        t={t}
+        actor={actor}
+        disabled={disabled}
+        blocked={blocked}
+        common={common}
+        send={send}
+        onDirty={setReceiptDirty}
+      />
       <details open={!t.referral}>
         <summary>Refer, correct or reassign owned follow-up</summary>
         <p>
@@ -485,6 +503,10 @@ function FollowupTarget({
             options={[
               { id: "Retain", display_name: "Retain current position" },
               { id: "Hold", display_name: "Continue hold" },
+              {
+                id: "CorrectReceipt",
+                display_name: "Correct received Receipt evidence",
+              },
               {
                 id: "AdjustAllocation",
                 display_name: "Adjust existing allocation quantity",
@@ -587,6 +609,10 @@ function FollowupTarget({
                   !t.reservation_dependencies.some(
                     (x) => x.fact.id === dependency && !x.holds.length,
                   ))) ||
+              (decision === "CorrectReceipt" &&
+                (!t.receipt_correction.proposal ||
+                  !!t.receipt_correction.holds.length ||
+                  t.receipt_correction.required.some((x) => x.holds.length))) ||
               t.receiving?.decision !== "Accepted" ||
               (decision === "AdjustAllocation" && !!t.adjustment_holds.length)
             }
@@ -600,6 +626,9 @@ function FollowupTarget({
                 allocation_id:
                   decision === "AdjustAllocation" ? allocation : null,
                 quantity: decision === "AdjustAllocation" ? amount : null,
+                ...(decision === "CorrectReceipt"
+                  ? { receipt_proposal_id: t.receipt_correction.proposal?.id }
+                  : {}),
                 ...(decision === "ReconcileReservationOutcome"
                   ? {
                       dependency_id: dependency,
@@ -619,11 +648,21 @@ function FollowupTarget({
                 Exact review {t.review.id}: {t.review.decision}
                 {t.review.command &&
                   "record_id" in t.review.command &&
+                  t.review.command.kind === "ExternalOutcome" &&
                   `: original ${t.review.command.predecessor_id}; source operation ${t.review.command.data.source_operation}; ${t.review.command.data.state}; observed ${t.review.command.observed_at}; lookup ${t.review.command.data.lookup_evidence}; demand version ${t.review.command.expected_version}`}
                 {t.review.command &&
                   "supply_id" in t.review.command &&
                   ` to ${t.review.command.quantity} ${t.review.command.unit}, allocation version ${t.review.command.expected_version}, demand version ${t.review.command.demand_version}, supply version ${t.review.command.supply_version}`}
                 .
+                {t.review.receipt_proposal_id && (
+                  <>
+                    Receipt proposal {t.review.receipt_proposal_id}; exact
+                    affected-demand decisions{" "}
+                    {t.review.effect_receiving_ids.join(", ")}. The immutable
+                    proposal above retains every proposed field and original
+                    fact.
+                  </>
+                )}
               </p>
               <ul>
                 {t.review_holds.map((h) => (
@@ -668,16 +707,31 @@ function FollowupTarget({
               execution {e.execution_id} · source line{" "}
               {e.basis.conversion.line_id}.
             </p>
-            {e.command && "record_id" in e.command && (
-              <p>
-                Native Supply:Fact:ExternalOutcome {e.command.operation_id},
-                successor fact {e.command.id}, original fact{" "}
-                {e.command.predecessor_id}, original source operation{" "}
-                {e.command.data.source_operation}: {e.command.data.state};
-                complete lookup {e.command.data.lookup_evidence}; original
-                native receipt {e.native_receipt?.receipt_id ?? "Not executed"}.
-              </p>
-            )}
+            {e.command &&
+              "record_id" in e.command &&
+              e.command.kind === "ExternalOutcome" && (
+                <p>
+                  Native Supply:Fact:ExternalOutcome {e.command.operation_id},
+                  successor fact {e.command.id}, original fact{" "}
+                  {e.command.predecessor_id}, original source operation{" "}
+                  {e.command.data.source_operation}: {e.command.data.state};
+                  complete lookup {e.command.data.lookup_evidence}; original
+                  native receipt{" "}
+                  {e.native_receipt?.receipt_id ?? "Not executed"}.
+                </p>
+              )}
+            {e.command &&
+              "record_id" in e.command &&
+              e.command.kind === "Receipt" && (
+                <p>
+                  Native Supply:Fact:Receipt {e.command.operation_id}; Supply{" "}
+                  {e.command.record_id}; original fact{" "}
+                  {e.command.predecessor_id}; successor {e.command.id}; received
+                  proposal {e.receipt_proposal_id}; decisions{" "}
+                  {e.effect_receiving_ids.join(", ")}; original receipt{" "}
+                  {e.native_receipt?.receipt_id ?? "Not executed"}.
+                </p>
+              )}
             {e.command && "supply_id" in e.command && (
               <p>
                 Native Supply:Allocate {e.command.operation_id}, allocation{" "}

@@ -598,7 +598,7 @@ test("ES07 Supply populated 0062 upgrade preserves all earlier commercial eviden
   );
   assert.deepEqual(
     after.filter((r) => r.version > 62).map((r) => r.version),
-    [63, 64],
+    [63, 64, 65],
   );
   await migrate();
   await seed();

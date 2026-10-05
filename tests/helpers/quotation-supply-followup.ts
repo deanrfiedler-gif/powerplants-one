@@ -1,8 +1,8 @@
 import { randomUUID } from "node:crypto";
 import { crmBase } from "./crm";
 import { completedFixture, nativeRevision } from "./quotation-disposition";
-import { supplyInput } from "./supply";
-import { saveRecord, allocate } from "../../src/supply/commands";
+import { supplyInput, supplyFact } from "./supply";
+import { saveRecord, allocate, recordFact } from "../../src/supply/commands";
 import { workspace } from "../../src/supply/reads";
 import { readConversion } from "../../src/estimating/conversion/reads";
 import {
@@ -66,7 +66,10 @@ export const currentFollowup = async (f: {
   owner: Parameters<typeof readConversion>[0];
   id: string;
 }) => (await readConversion(f.owner, f.id)).followups[0];
-export async function allocatedFixture(shared = true) {
+export async function allocatedFixture(
+  shared = true,
+  supplyKind: "Stock" | "Shipment" = "Stock",
+) {
   const f = await completedFixture(),
     t = f.d.dispositions[0],
     r = t.basis.target;
@@ -87,7 +90,22 @@ export async function allocatedFixture(shared = true) {
     unit: r.unit,
     owner_id: f.owner.actor_id,
   });
+  if (supplyKind === "Shipment")
+    Object.assign(supply.data, {
+      supply_kind: "Shipment",
+      shipment_id: randomUUID(),
+    });
   await saveRecord(f.owner, supply);
+  if (supplyKind === "Shipment")
+    await recordFact(
+      f.owner,
+      supply.id,
+      supplyFact("Receipt", 1, {
+        received: "10",
+        inspected: "10",
+        usable: "10",
+      }),
+    );
   const other = supplyInput("Demand", {
     item: r.item,
     unit: r.unit,

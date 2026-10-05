@@ -22,7 +22,7 @@ import { QuotationSupplyFollowups } from "./quotation-supply-followup";
 import { QuotationDispositions } from "./quotation-disposition";
 type Detail = Awaited<ReturnType<typeof readConversion>>;
 const accepts = (e: JournalEntry) =>
-  /^estimating\/quotes\/[a-f0-9-]{36}\/conversion\/(receive|resolve|plan|execute|disposition-review|disposition-apply|supply-refer|supply-receive|supply-review|supply-apply)$/.test(
+  /^estimating\/quotes\/[a-f0-9-]{36}\/conversion\/(receive|resolve|plan|execute|disposition-review|disposition-apply|supply-refer|supply-receive|supply-review|supply-apply|receipt-propose|receipt-receive)$/.test(
     e.path,
   ) && /^\/estimating\/quotes\/[a-f0-9-]{36}\/conversion$/.test(e.target);
 const capture = (d: Detail) => ({

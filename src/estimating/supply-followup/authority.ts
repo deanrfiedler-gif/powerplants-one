@@ -12,7 +12,7 @@ export async function followupAvailable(c: QueryClient) {
     await c.query("SELECT to_regclass('ppo.quote_supply_events') present")
   ).rows[0].present;
 }
-type Checked = {
+export type Checked = {
   revisions: Set<string>;
   records: Set<string>;
   credits: Set<string>;
@@ -20,7 +20,9 @@ type Checked = {
 export async function followupEvidenceAuthority(
   c: QueryClient,
   p: Principal,
-  e: FollowupEvent,
+  e: Pick<FollowupEvent, "revision_id" | "target_id" | "basis"> & {
+    receipt_proposal_id?: string | null;
+  },
   checked: Checked = {
     revisions: new Set(),
     records: new Set(),
@@ -56,6 +58,17 @@ export async function followupEvidenceAuthority(
       checked.credits.add(x.record.id);
     }
   }
+  if (e.receipt_proposal_id) {
+    const { receiptEvidenceAuthority } = await import("./receipt-context");
+    const proposal = (
+      await c.query(
+        "SELECT * FROM ppo.quote_supply_receipt_events WHERE workspace_id=$1 AND id=$2",
+        [p.workspace_id, e.receipt_proposal_id],
+      )
+    ).rows[0];
+    if (!proposal) throw unavailable();
+    await receiptEvidenceAuthority(c, p, proposal, checked);
+  }
 }
 export async function followupHistory(
   c: QueryClient,
@@ -89,9 +102,17 @@ export async function followupReceiptAuthority(
       [p.workspace_id, id, p.actor_id, operation],
     )
   ).rows[0];
-  if (!e) throw unavailable();
+  if (!e) {
+    const { receiptOriginalAuthority, receiptAvailable } =
+      await import("./receipt-context");
+    if (!(await receiptAvailable(c))) throw unavailable();
+    await conversionAuthority(c, p, id, true);
+    return receiptOriginalAuthority(c, p, id, operation);
+  }
   await conversionAuthority(c, p, id, true);
   await followupEvidenceAuthority(c, p, e);
+  if (e.decision === "CorrectReceipt" && e.command && "record_id" in e.command)
+    await supplyRecord(c, p, e.command.record_id, "supply.inspect");
   // Recovery never depends on current assignment; it does require the original
   // actor's current source/coordination/dependency authority.
 }
@@ -108,9 +129,26 @@ export async function nativeFollowupReceiptAuthority(
       [p.workspace_id, operation],
     )
   ).rows[0];
-  if (!e) return;
+  if (!e) {
+    const { receiptAvailable } = await import("./receipt-context");
+    if (
+      (await receiptAvailable(c)) &&
+      (
+        await c.query(
+          "SELECT 1 FROM ppo.quote_supply_receipt_events WHERE workspace_id=$1 AND command->>'operation_id'=$2",
+          [p.workspace_id, operation],
+        )
+      ).rowCount
+    )
+      followupConflict(
+        "This native operation is reserved to its original Receipt proposal. Recover the original and apply its exact reviewed action.",
+      );
+    return;
+  }
   if (
-    e.target_id !== target ||
+    (e.command && "record_id" in e.command
+      ? e.command.record_id
+      : e.target_id) !== target ||
     e.action !== "Apply" ||
     e.created_by !== p.actor_id
   )
@@ -119,4 +157,6 @@ export async function nativeFollowupReceiptAuthority(
     );
   await conversionAuthority(c, p, e.revision_id, true);
   await followupEvidenceAuthority(c, p, e);
+  if (e.decision === "CorrectReceipt")
+    await supplyRecord(c, p, target, "supply.inspect");
 }
