@@ -177,8 +177,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // 0063 adds subordinate Supply referral/outcome evidence; no seed, grant or identity changes.
   // Generic runtime privileges apply; populated native and hosted upgrades prove preservation.
   // 0065 adds subordinate Receipt correction receiving; no seeds, grants, users or identities.
+  // 0066 adds independently received allocation reductions and immediate statement conservation.
+  // Reviewed hosted upgrade: no new seed/grant/user; generic runtime privileges include the new table.
   // Native receipts and earlier evidence remain intact on populated upgrades.
-  if (latestMigrationVersion !== 65) throw Error("Review the existing-demo upgrade for this release.");
+  if (latestMigrationVersion !== 66) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

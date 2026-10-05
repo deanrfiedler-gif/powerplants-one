@@ -116,7 +116,7 @@ export type ReceiptDependencies = Awaited<
 export async function receiptEvidenceAuthority(
   c: QueryClient,
   p: Principal,
-  e: ReceiptEvent,
+  e: Pick<ReceiptEvent, "revision_id" | "target_id" | "basis" | "dependencies">,
   checked: Checked = {
     revisions: new Set(),
     records: new Set(),
@@ -233,7 +233,10 @@ export function receiptEffects(deps: ReceiptDependencies, cmd: ReceiptCommand) {
 export async function effectOwner(
   c: QueryClient,
   p: Principal,
-  proposal: ReceiptEvent,
+  proposal: Pick<
+    ReceiptEvent,
+    "revision_id" | "target_id" | "basis" | "dependencies"
+  >,
   demandId: string,
   checked?: Checked,
 ) {

@@ -22,6 +22,7 @@ export async function followupEvidenceAuthority(
   p: Principal,
   e: Pick<FollowupEvent, "revision_id" | "target_id" | "basis"> & {
     receipt_proposal_id?: string | null;
+    allocation_proposal_id?: string | null;
   },
   checked: Checked = {
     revisions: new Set(),
@@ -57,6 +58,17 @@ export async function followupEvidenceAuthority(
       if (!(await financeAllowed(c, p, current))) throw unavailable();
       checked.credits.add(x.record.id);
     }
+  }
+  if (e.allocation_proposal_id) {
+    const { shortfallEvidenceAuthority } = await import("./shortfall-context");
+    const proposal = (
+      await c.query(
+        "SELECT * FROM ppo.quote_supply_shortfall_events WHERE workspace_id=$1 AND id=$2",
+        [p.workspace_id, e.allocation_proposal_id],
+      )
+    ).rows[0];
+    if (!proposal) throw unavailable();
+    await shortfallEvidenceAuthority(c, p, proposal, checked);
   }
   if (e.receipt_proposal_id) {
     const { receiptEvidenceAuthority } = await import("./receipt-context");
@@ -105,11 +117,31 @@ export async function followupReceiptAuthority(
   if (!e) {
     const { receiptOriginalAuthority, receiptAvailable } =
       await import("./receipt-context");
-    if (!(await receiptAvailable(c))) throw unavailable();
-    return receiptOriginalAuthority(c, p, id, operation);
+    if (await receiptAvailable(c)) {
+      const original = (
+        await c.query(
+          "SELECT 1 FROM ppo.quote_supply_receipt_events WHERE workspace_id=$1 AND revision_id=$2 AND created_by=$3 AND operation_id=$4",
+          [p.workspace_id, id, p.actor_id, operation],
+        )
+      ).rowCount;
+      if (original) return receiptOriginalAuthority(c, p, id, operation);
+    }
+    const { shortfallOriginalAuthority } = await import("./shortfall-context");
+    return shortfallOriginalAuthority(c, p, id, operation);
   }
   await conversionAuthority(c, p, id, true);
   await followupEvidenceAuthority(c, p, e);
+  if (e.allocation_proposal_id) {
+    const { shortfallCommandAuthority } = await import("./shortfall-context");
+    const proposal = (
+      await c.query(
+        "SELECT * FROM ppo.quote_supply_shortfall_events WHERE workspace_id=$1 AND id=$2",
+        [p.workspace_id, e.allocation_proposal_id],
+      )
+    ).rows[0];
+    if (!proposal) throw unavailable();
+    await shortfallCommandAuthority(c, p, proposal);
+  }
   if (e.decision === "CorrectReceipt" && e.command && "record_id" in e.command)
     await supplyRecord(c, p, e.command.record_id, "supply.inspect");
   // Recovery never depends on current assignment; it does require the original
@@ -129,6 +161,19 @@ export async function nativeFollowupReceiptAuthority(
     )
   ).rows[0];
   if (!e) {
+    const { shortfallAvailable } = await import("./shortfall-context");
+    if (
+      (await shortfallAvailable(c)) &&
+      (
+        await c.query(
+          "SELECT 1 FROM ppo.quote_supply_shortfall_events WHERE workspace_id=$1 AND command->>'operation_id'=$2",
+          [p.workspace_id, operation],
+        )
+      ).rowCount
+    )
+      followupConflict(
+        "This native operation is reserved to its exact allocation proposal. Recover and apply its original review.",
+      );
     const { receiptAvailable } = await import("./receipt-context");
     if (
       (await receiptAvailable(c)) &&
@@ -147,7 +192,11 @@ export async function nativeFollowupReceiptAuthority(
   if (
     (e.command && "record_id" in e.command
       ? e.command.record_id
-      : e.target_id) !== target ||
+      : e.command && "changes" in e.command
+        ? e.command.supply_id
+        : e.command && "demand_id" in e.command
+          ? e.command.demand_id
+          : e.target_id) !== target ||
     e.action !== "Apply" ||
     e.created_by !== p.actor_id
   )
@@ -156,6 +205,17 @@ export async function nativeFollowupReceiptAuthority(
     );
   await conversionAuthority(c, p, e.revision_id, true);
   await followupEvidenceAuthority(c, p, e);
+  if (e.allocation_proposal_id) {
+    const { shortfallCommandAuthority } = await import("./shortfall-context");
+    const proposal = (
+      await c.query(
+        "SELECT * FROM ppo.quote_supply_shortfall_events WHERE workspace_id=$1 AND id=$2",
+        [p.workspace_id, e.allocation_proposal_id],
+      )
+    ).rows[0];
+    if (!proposal) throw unavailable();
+    await shortfallCommandAuthority(c, p, proposal);
+  }
   if (e.decision === "CorrectReceipt")
     await supplyRecord(c, p, target, "supply.inspect");
 }

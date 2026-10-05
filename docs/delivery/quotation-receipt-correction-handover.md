@@ -17,3 +17,7 @@ Verification and failed/repaired head distinctions belong in the [execution ledg
 The real shared position uses matching native material identities. Current independently converted OneOff items cannot be relabelled into a common catalogue item; that broader mapping journey remains outside scope.
 
 Next concrete increment: separately owned follow-up for the retained shared-supply capacity shortfall, using the existing allocation review/action where eligible and explicitly deciding authority for independently owned allocation changes. Receipt correction does not adopt that wider contract.
+
+## Current reconciliation and successor increment
+
+#346 is merged as `451f2e6734df9fa6ea04f58e6b3eef6d1ee797eb`; its exact checked head is `1acc567c93e9c62fef4f5bd621501b55545d212b`, with 32 successful checks across 16 workflows. The pre-merge statements above retain their checkpoint meaning. Post-merge proof is recorded separately in the [successor execution ledger](../testing/evidence/quotation-allocation-shortfall/README.md); no deployment is inferred. The selected [shortfall increment](quotation-allocation-shortfall-handover.md) now provides the bounded allocation action identified above. Receipt acceptance remains confined to its original correction.

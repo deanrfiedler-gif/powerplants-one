@@ -1,3 +1,9 @@
+import {
+  shortfallState,
+  shortfallHistory,
+  acceptedShortfall,
+  shortfallCommandAuthority,
+} from "./shortfall-context";
 import type { Principal } from "../../platform/identity";
 import type { QueryClient } from "../../platform/permissions";
 import { AppError } from "../../platform/errors";
@@ -94,6 +100,14 @@ export async function followupContext(
     referral,
     receiving,
   );
+  const shortfall = await shortfallState(
+    c,
+    p,
+    basis,
+    referral,
+    receiving,
+    events,
+  );
   const r = conversion.target;
   const holds: string[] = [];
   if (r.kind !== "Demand" || r.data.demand_class !== "Approved")
@@ -130,6 +144,25 @@ export async function followupContext(
         "Relevant quotation, disposition, demand, allocation, shared supply or dependency evidence changed. Compare and replace the review.",
       );
     if (review.decision === "AdjustAllocation") reviewHolds.push(...holds);
+    if (review.decision === "ReduceAllocations") {
+      try {
+        const received = acceptedShortfall(
+          shortfall,
+          review.allocation_proposal_id!,
+        );
+        if (
+          dispositionHash(received.receiving_ids) !==
+          dispositionHash(review.effect_receiving_ids)
+        )
+          reviewHolds.push(
+            "Allocation receiving changed after review. Record a fresh immutable review.",
+          );
+        await shortfallCommandAuthority(c, p, received.proposal);
+      } catch (e) {
+        if (!(e instanceof AppError)) throw e;
+        reviewHolds.push(e.message);
+      }
+    }
     if (review.decision === "CorrectReceipt") {
       try {
         const received = acceptedReceipt(
@@ -236,8 +269,12 @@ export async function followupContext(
     adjustment_holds: holds,
     reservation_dependencies: reservationDependencies(basis),
     receipt_correction: receiptCorrection,
+    allocation_shortfall: shortfall,
     review_holds: reviewHolds,
-    can_refer: exception && !known?.resolved && heldTarget && canReplace,
+    can_refer:
+      ((exception && !known?.resolved && heldTarget) ||
+        shortfall.candidates.length > 0) &&
+      canReplace,
     can_apply: !!review && !completed && !reviewHolds.length,
     can_write: canWrite,
     outcome_current:
@@ -260,6 +297,7 @@ export async function returnedSupplyBasis(
   if (!events.length) return null;
   const last = events.at(-1)!;
   const receiptEvents = await receiptHistory(c, p, target);
+  const shortfallEvents = await shortfallHistory(c, p, target);
   const outcome = events
     .filter(
       (e) =>
@@ -274,6 +312,9 @@ export async function returnedSupplyBasis(
     outcome_id: outcome?.id ?? null,
     outcome_hash: outcome?.basis_hash ?? null,
     position: await allocationPosition(c, p, target),
+    ...(shortfallEvents.length
+      ? { allocation_event_id: shortfallEvents.at(-1)!.id }
+      : {}),
     ...(receiptEvents.length
       ? { receipt_event_id: receiptEvents.at(-1)!.id }
       : {}),

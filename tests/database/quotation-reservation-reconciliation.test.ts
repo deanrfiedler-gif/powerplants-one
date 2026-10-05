@@ -399,6 +399,7 @@ test("ES07 dependency populated 0063 upgrade preserves all rows, accepted review
     tables.findIndex((t) => t.tablename === "quote_supply_events")
   ])
     Object.assign(row.row, {
+      allocation_proposal_id: null,
       receipt_proposal_id: null,
       effect_receiving_ids: [],
     });
@@ -416,7 +417,7 @@ test("ES07 dependency populated 0063 upgrade preserves all rows, accepted review
   );
   assert.deepEqual(
     after.filter((r) => r.version > 63).map((r) => r.version),
-    [64, 65],
+    [64, 65, 66],
   );
   assert.deepEqual(await draftBytes(f.owner, f.draft.id), draft);
   assert.deepEqual(await draftBytes(f.owner, f.id), issued);

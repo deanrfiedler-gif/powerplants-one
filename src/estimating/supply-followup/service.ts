@@ -1,3 +1,9 @@
+import {
+  shortfallHistory,
+  shortfallAvailable,
+  acceptedShortfall,
+  shortfallCommandAuthority,
+} from "./shortfall-context";
 import { randomUUID } from "node:crypto";
 import type { Principal } from "../../platform/identity";
 import { unavailable } from "../../platform/errors";
@@ -16,6 +22,7 @@ import { supplyRecord } from "../../supply/context";
 import { allocationCommand, factCommand } from "../../supply/validation";
 import {
   allocateInTransaction,
+  reduceAllocationsInTransaction,
   recordFactInTransaction,
 } from "../../supply/commands";
 import { reservationDependencies } from "./dependency";
@@ -65,6 +72,13 @@ async function execute(p: Principal, id: string, input: Input) {
           [p.workspace_id, p.actor_id, input.operation_id],
         )
       ).rows[0];
+      if (original?.allocation_proposal_id) {
+        const proposal = (await shortfallHistory(c, p, input.target_id)).find(
+          (e) => e.id === original.allocation_proposal_id,
+        );
+        if (!proposal) throw unavailable();
+        await shortfallCommandAuthority(c, p, proposal);
+      }
       if (original?.receipt_proposal_id) {
         const proposal = originals.find(
           (e) => e.id === original.receipt_proposal_id,
@@ -103,6 +117,7 @@ async function execute(p: Principal, id: string, input: Input) {
         reviewHash: string | null = null,
         nativeReceipt: OperationReceipt | null = null;
       let basis = t.basis;
+      let allocationProposalId: string | null = null;
       let receiptProposalId: string | null = null;
       let effectReceivingIds: string[] = [];
       if (input.action === "Refer") {
@@ -112,7 +127,10 @@ async function execute(p: Principal, id: string, input: Input) {
           await conversionContext(c, p, id),
           input.target_id,
         );
-        if (disposition.status !== "Review required")
+        if (
+          disposition.status !== "Review required" &&
+          !t.allocation_shortfall.candidates.length
+        )
           followupConflict(
             "This exact quotation exception is already resolved or unchanged. Reassess current evidence before referral.",
           );
@@ -187,6 +205,10 @@ async function execute(p: Principal, id: string, input: Input) {
           predecessor = input.predecessor_id;
           receivingId = input.receiving_id;
           if (decision === "AdjustAllocation") {
+            if (t.allocation_shortfall.candidates.length)
+              followupConflict(
+                "This Receipt-derived shared shortfall requires a complete independently received allocation proposal.",
+              );
             if (t.adjustment_holds.length)
               followupConflict(t.adjustment_holds.join(" "));
             const a = basis.conversion.dependencies.allocations.find(
@@ -278,6 +300,16 @@ async function execute(p: Principal, id: string, input: Input) {
               record_id: input.target_id,
             };
           }
+          if (decision === "ReduceAllocations") {
+            const received = acceptedShortfall(
+              t.allocation_shortfall,
+              input.allocation_proposal_id!,
+            );
+            await shortfallCommandAuthority(c, p, received.proposal);
+            allocationProposalId = received.proposal.id;
+            effectReceivingIds = received.receiving_ids;
+            cmd = received.proposal.command;
+          }
           if (decision === "CorrectReceipt") {
             const received = acceptedReceipt(
               t.receipt_correction,
@@ -296,6 +328,12 @@ async function execute(p: Principal, id: string, input: Input) {
             command: cmd,
             reason: input.reason,
             evidence: input.evidence,
+            ...(allocationProposalId
+              ? {
+                  allocation_proposal_id: allocationProposalId,
+                  effect_receiving_ids: effectReceivingIds,
+                }
+              : {}),
             ...(receiptProposalId
               ? {
                   receipt_proposal_id: receiptProposalId,
@@ -320,6 +358,7 @@ async function execute(p: Principal, id: string, input: Input) {
           decision = review.decision;
           cmd = review.command;
           reviewHash = review.review_hash;
+          allocationProposalId = review.allocation_proposal_id ?? null;
           receiptProposalId = review.receipt_proposal_id ?? null;
           effectReceivingIds = review.effect_receiving_ids ?? [];
           if (cmd) {
@@ -327,12 +366,16 @@ async function execute(p: Principal, id: string, input: Input) {
             const nativeCommand =
               "record_id" in cmd
                 ? `Supply:Fact:${cmd.kind}`
-                : "Supply:Allocate";
+                : "changes" in cmd
+                  ? "Supply:ReduceAllocations"
+                  : "Supply:Allocate";
             let saved;
             if ("record_id" in cmd) {
               const { record_id, ...fact } = cmd;
               saved = await recordFactInTransaction(c, p, record_id, fact);
-            } else saved = await allocateInTransaction(c, p, cmd);
+            } else if ("changes" in cmd)
+              saved = await reduceAllocationsInTransaction(c, p, cmd);
+            else saved = await allocateInTransaction(c, p, cmd);
             nativeReceipt = await recordOperation(
               c,
               p,
@@ -351,7 +394,9 @@ async function execute(p: Principal, id: string, input: Input) {
                 record_version: saved.version,
                 ...("record_id" in cmd
                   ? { fact_id: cmd.id, predecessor_id: cmd.predecessor_id }
-                  : { allocation_id: cmd.id }),
+                  : "changes" in cmd
+                    ? { allocation_ids: cmd.changes.map((x) => x.id) }
+                    : { allocation_id: cmd.id }),
                 supply_review_id: review.id,
                 supply_outcome_id: eventId,
                 referral_id: referralId,
@@ -365,11 +410,12 @@ async function execute(p: Principal, id: string, input: Input) {
       }
       const basisHash = dispositionHash(basis);
       const receiptSchema = await receiptAvailable(c);
+      const shortfallSchema = await shortfallAvailable(c);
       const row = (
         await c.query<{ created_at: Date }>(
           `INSERT INTO ppo.quote_supply_events
-      (id,workspace_id,revision_id,execution_id,target_id,sequence,action,referral_id,predecessor_id,receiving_id,review_id,decision,basis,basis_hash,review_hash,command,owner_id,due_date,date_needed,next_action,activity_id,reason,evidence,created_by,operation_id,native_receipt${receiptSchema ? ",receipt_proposal_id,effect_receiving_ids" : ""})
-      VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26${receiptSchema ? ",$27,$28" : ""}) RETURNING created_at`,
+      (id,workspace_id,revision_id,execution_id,target_id,sequence,action,referral_id,predecessor_id,receiving_id,review_id,decision,basis,basis_hash,review_hash,command,owner_id,due_date,date_needed,next_action,activity_id,reason,evidence,created_by,operation_id,native_receipt${receiptSchema ? ",receipt_proposal_id,effect_receiving_ids" : ""}${shortfallSchema ? ",allocation_proposal_id" : ""})
+      VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26${receiptSchema ? ",$27,$28" : ""}${shortfallSchema ? ",$29" : ""}) RETURNING created_at`,
           [
             eventId,
             p.workspace_id,
@@ -400,6 +446,7 @@ async function execute(p: Principal, id: string, input: Input) {
             ...(receiptSchema
               ? [receiptProposalId, JSON.stringify(effectReceivingIds)]
               : []),
+            ...(shortfallSchema ? [allocationProposalId] : []),
           ],
         )
       ).rows[0];
@@ -412,15 +459,17 @@ async function execute(p: Principal, id: string, input: Input) {
           input.action === "Refer"
             ? "SupplyReferred"
             : input.action === "Apply"
-              ? decision === "AdjustAllocation"
-                ? "AllocationAdjusted"
-                : decision === "ReconcileReservationOutcome"
-                  ? "ReservationOutcomeReconciled"
-                  : decision === "CorrectReceipt"
-                    ? "ReceiptEvidenceCorrected"
-                    : decision === "Hold"
-                      ? "SupplyHeld"
-                      : "SupplyRetained"
+              ? decision === "ReduceAllocations"
+                ? "AllocationsReduced"
+                : decision === "AdjustAllocation"
+                  ? "AllocationAdjusted"
+                  : decision === "ReconcileReservationOutcome"
+                    ? "ReservationOutcomeReconciled"
+                    : decision === "CorrectReceipt"
+                      ? "ReceiptEvidenceCorrected"
+                      : decision === "Hold"
+                        ? "SupplyHeld"
+                        : "SupplyRetained"
               : decision,
         updated_at: row.created_at,
         audit_details: {

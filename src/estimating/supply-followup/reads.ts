@@ -4,6 +4,7 @@ import { requireCapability } from "../../platform/permissions";
 import { object } from "../../shared/validation";
 import { AppError } from "../../platform/errors";
 import { followupContext } from "./context";
+import { shortfallAvailable } from "./shortfall-context";
 import { receiptAvailable } from "./receipt-context";
 export async function receivingWorklist(
   p: Principal,
@@ -39,14 +40,26 @@ export async function receivingWorklist(
       ).rows)
         affected.add(row.target_id);
     }
+    if (await shortfallAvailable(c))
+      for (const row of (
+        await c.query<{ target_id: string }>(
+          `SELECT DISTINCT p.target_id FROM ppo.quote_supply_shortfall_events p
+      JOIN ppo.supply_records d ON d.workspace_id=p.workspace_id
+      WHERE p.workspace_id=$1 AND p.action='ShortfallPropose' AND d.owner_id=$2
+      AND (p.command->>'demand_id'=d.id::text OR EXISTS(SELECT 1 FROM jsonb_array_elements(coalesce(p.command->'changes','[]')) x WHERE x->>'demand_id'=d.id::text))`,
+          [p.workspace_id, p.actor_id],
+        )
+      ).rows)
+        affected.add(row.target_id);
     for (const row of candidates.filter(
       (r) => r.owner_id === p.actor_id || affected.has(r.target_id),
     )) {
       try {
         const d = await followupContext(c, p, row.revision_id, row.target_id);
-        const effects = d.receipt_correction.required.filter(
-          (x) => x.demand.owner_id === p.actor_id,
-        );
+        const effects = [
+          ...d.receipt_correction.required,
+          ...d.allocation_shortfall.required,
+        ].filter((x) => x.demand.owner_id === p.actor_id);
         if (
           (!d.can_write || row.owner_id !== p.actor_id) &&
           !effects.some((x) => x.can_receive)
@@ -60,7 +73,7 @@ export async function receivingWorklist(
           status:
             row.owner_id === p.actor_id
               ? d.status
-              : "Affected-demand Receipt receiving",
+              : "Affected-demand receiving",
           due_date: d.referral!.due_date,
           date_needed: d.referral!.date_needed,
           next_action: d.referral!.next_action,

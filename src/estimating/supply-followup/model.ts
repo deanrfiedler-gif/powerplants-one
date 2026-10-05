@@ -29,13 +29,15 @@ export type FollowupEvent = {
     | "Hold"
     | "AdjustAllocation"
     | "ReconcileReservationOutcome"
-    | "CorrectReceipt";
+    | "CorrectReceipt"
+    | "ReduceAllocations";
   basis: FollowupBasis;
   basis_hash: string;
   review_hash: string | null;
   command:
     | ReturnType<typeof allocationCommand>
     | (ReturnType<typeof factCommand> & { record_id: string })
+    | import("../../supply/reductions").ReductionCommand
     | null;
   owner_id: string;
   due_date: string | null;
@@ -49,5 +51,6 @@ export type FollowupEvent = {
   operation_id: string;
   native_receipt: OperationReceipt | null;
   receipt_proposal_id: string | null;
+  allocation_proposal_id: string | null;
   effect_receiving_ids: string[];
 };
