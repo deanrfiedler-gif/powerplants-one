@@ -29,13 +29,15 @@ export type FollowupEvent = {
     | "Hold"
     | "AdjustAllocation"
     | "ReconcileReservationOutcome"
-    | "CorrectReceipt";
+    | "CorrectReceipt"
+    | "ReduceAllocations";
   basis: FollowupBasis;
   basis_hash: string;
   review_hash: string | null;
   command:
     | ReturnType<typeof allocationCommand>
     | (ReturnType<typeof factCommand> & { record_id: string })
+    | import("../../supply/reductions").ReductionCommand
     | null;
   owner_id: string;
   due_date: string | null;
@@ -49,5 +51,30 @@ export type FollowupEvent = {
   operation_id: string;
   native_receipt: OperationReceipt | null;
   receipt_proposal_id: string | null;
+  allocation_proposal_id: string | null;
   effect_receiving_ids: string[];
 };
+
+// Lifecycle only: this never implies current applicability or readiness.
+export function followupStatus(
+  referral: FollowupEvent | null,
+  receiving: FollowupEvent | null,
+  review: FollowupEvent | null,
+  applied: FollowupEvent | null,
+) {
+  if (!referral) return "Not referred";
+  if (receiving?.decision === "Returned") return "Returned";
+  if (receiving?.decision === "Held") return "Continuing hold";
+  if (review && applied?.review_id === review.id) {
+    if (review.decision === "Hold") return "Continuing hold";
+    if (review.decision === "Retain") return "Position retained";
+    if (review.decision === "ReconcileReservationOutcome")
+      return "Reservation outcome reconciled";
+    if (review.decision === "CorrectReceipt")
+      return "Receipt evidence corrected";
+    return "Allocation adjusted";
+  }
+  return receiving?.decision === "Accepted"
+    ? "Accepted for review"
+    : "Awaiting owner";
+}

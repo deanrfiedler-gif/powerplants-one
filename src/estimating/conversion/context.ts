@@ -4,7 +4,6 @@ import { AppError, unavailable } from "../../platform/errors";
 import { companyContext, scopedOwner } from "../../shared/authority";
 import { visible } from "../../shared/reads";
 import { responseContext } from "../response/context";
-import { versionContext } from "../context";
 import { releaseHash } from "../release/context";
 import { supplyRecord } from "../../supply/context";
 import { exactQuantity } from "../../supply/validation";
@@ -36,6 +35,17 @@ export async function conversionAuthority(
   write = false,
 ) {
   const d = await responseContext(c, p, id);
+  await conversionScope(c, p, d, write);
+  return d;
+}
+// Reuse an already authorised response only inside the same serialized read.
+// Source evidence is never cached across requests, actors or native mutations.
+export async function conversionScope(
+  c: QueryClient,
+  p: Principal,
+  d: Pick<Awaited<ReturnType<typeof responseContext>>, "base" | "e" | "q">,
+  write = false,
+) {
   const site = d.base.basis.recipient.site_id;
   await companyContext(c, p, d.e.company_id, site, "supply.read");
   if (write)
@@ -53,7 +63,6 @@ export async function conversionAuthority(
       t.target_id,
       write ? "supply.coordinate" : "supply.read",
     );
-  return d;
 }
 export async function conversionReceiptAuthority(
   c: QueryClient,
@@ -76,10 +85,15 @@ export async function conversionContext(
   c: QueryClient,
   p: Principal,
   id: string,
+  authorised?: Awaited<ReturnType<typeof conversionAuthority>>,
 ) {
-  const d = await conversionAuthority(c, p, id),
+  // sharedOperation passes its current authority result to its mutation callback
+  // under the same workspace lock, before any domain mutation.
+  const d = authorised ?? (await conversionAuthority(c, p, id)),
     events = await conversionHistory(c, p, id);
-  const v = await versionContext(c, p, d.e, d.q.estimate_version_id);
+  // releaseAuthority already validated this exact saved source and all of its
+  // read permissions in the same locked operation.
+  const v = d.source_version;
   const sourceLines = v.lines.filter((l) =>
     d.q.choices.some((x) => x.line_id === l.id && x.included),
   );

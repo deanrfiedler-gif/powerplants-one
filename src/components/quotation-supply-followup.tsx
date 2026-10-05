@@ -7,6 +7,7 @@ import { useUnsavedChanges } from "./record-ui";
 import { useCrmResource } from "./crm-state";
 import type { FollowupDetail } from "../estimating/supply-followup/context";
 import type { receivingWorklist } from "../estimating/supply-followup/reads";
+import { AllocationShortfall } from "./quotation-allocation-shortfall";
 import { ReceiptCorrection } from "./quotation-receipt-correction";
 export type SupplyFollowupAction =
   | "supply-refer"
@@ -14,7 +15,9 @@ export type SupplyFollowupAction =
   | "supply-review"
   | "supply-apply"
   | "receipt-propose"
-  | "receipt-receive";
+  | "receipt-receive"
+  | "shortfall-propose"
+  | "shortfall-receive";
 const capture = (t: FollowupDetail) => ({
   hash: t.basis_hash,
   sequence: t.sequence,
@@ -22,6 +25,7 @@ const capture = (t: FollowupDetail) => ({
   receiving: t.receiving?.id ?? null,
   review: t.review?.id ?? null,
   receipt_sequence: t.receipt_correction.sequence,
+  allocation_sequence: t.allocation_shortfall.sequence,
 });
 export function SupplyFollowupQueue() {
   const resource = useCrmResource<
@@ -157,9 +161,11 @@ function FollowupTarget({
     [outcome, setOutcome] = useState(""),
     [observedAt, setObservedAt] = useState(""),
     [lookup, setLookup] = useState(""),
-    [receiptDirty, setReceiptDirty] = useState(false);
+    [receiptDirty, setReceiptDirty] = useState(false),
+    [shortfallDirty, setShortfallDirty] = useState(false);
   const dirty = !!(
     receiptDirty ||
+    shortfallDirty ||
     reason ||
     evidence ||
     next ||
@@ -394,6 +400,15 @@ function FollowupTarget({
           ]}
         />
       </div>
+      <AllocationShortfall
+        t={t}
+        actor={actor}
+        disabled={commonDisabled}
+        blocked={blocked}
+        common={common}
+        send={send}
+        onDirty={setShortfallDirty}
+      />
       <ReceiptCorrection
         t={t}
         actor={actor}
@@ -642,12 +657,14 @@ function FollowupTarget({
             <>
               <p>
                 Exact review {t.review.id}: {t.review.decision}
+                {t.review.allocation_proposal_id &&
+                  `; allocation proposal ${t.review.allocation_proposal_id}; exact receiving ${t.review.effect_receiving_ids.join(", ")}`}
                 {t.review.command &&
                   "record_id" in t.review.command &&
                   t.review.command.kind === "ExternalOutcome" &&
                   `: original ${t.review.command.predecessor_id}; source operation ${t.review.command.data.source_operation}; ${t.review.command.data.state}; observed ${t.review.command.observed_at}; lookup ${t.review.command.data.lookup_evidence}; demand version ${t.review.command.expected_version}`}
                 {t.review.command &&
-                  "supply_id" in t.review.command &&
+                  "quantity" in t.review.command &&
                   ` to ${t.review.command.quantity} ${t.review.command.unit}, allocation version ${t.review.command.expected_version}, demand version ${t.review.command.demand_version}, supply version ${t.review.command.supply_version}`}
                 .
                 {t.review.receipt_proposal_id && (
@@ -728,7 +745,19 @@ function FollowupTarget({
                   {e.native_receipt?.receipt_id ?? "Not executed"}.
                 </p>
               )}
-            {e.command && "supply_id" in e.command && (
+            {e.command && "changes" in e.command && (
+              <p>
+                Native Supply:ReduceAllocations {e.command.operation_id};{" "}
+                {e.command.changes
+                  .map((x) => `${x.id}: ${x.quantity} ${x.unit}`)
+                  .join("; ")}
+                ; original receipt{" "}
+                {e.native_receipt?.receipt_id ?? "Not executed"}. Allocation
+                proposal {e.allocation_proposal_id}; decisions{" "}
+                {e.effect_receiving_ids.join(", ")}.
+              </p>
+            )}
+            {e.command && "quantity" in e.command && (
               <p>
                 Native Supply:Allocate {e.command.operation_id}, allocation{" "}
                 {e.command.id}, {e.command.quantity} {e.command.unit}; original

@@ -6585,7 +6585,7 @@
       "prepared_at": "2026-10-05",
       "source_commit": "a32b3b53c45bdc74061f3612c15d71c0544504d8",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/testing/evidence/quotation-receipt-correction/README.md; proof and acceptance remain separate",
+      "runtime_evidence": "See docs/testing/evidence/quotation-allocation-shortfall/README.md; actual proof and acceptance separate",
       "sections": [
         {
           "section_id": "purpose",
@@ -6593,7 +6593,8 @@
           "paragraphs": [
             "Receive one exact ES-06 preparation, resolve its included Product lines, review quantities and freeze a plan before creating synthetic Forecast demand. Preparation, sending, receipt, review and conversion remain separate.",
             "Completed conversions also expose exact per-target exceptions after corrections, successor issues or downstream changes. Retain the original conversion as a completed fact.",
-            "Held completed-conversion exceptions enter owned Supply follow-up from the sixth ES-07 panel or the SC-09 assigned queue."
+            "Held completed-conversion exceptions enter owned Supply follow-up from the sixth ES-07 panel or the SC-09 assigned queue.",
+            "An applied Receipt correction may leave a shared Shipment overallocated. Continue owned Supply follow-up even after quotation retention. Valid capacity does not satisfy all Demand or clear operational holds."
           ],
           "steps": [],
           "rows": [],
@@ -6605,7 +6606,8 @@
           "paragraphs": [
             "Use an issued ES-05 revision with a current unconditioned recorded Accepted response and applicable ES-06 preparation. Current source/quotation reads and company/site Supply coordination duty are required. Respondent authority, signing, validity/expiry and withdrawal remain Not configured.",
             "For completed-target disposition, use the original conversion page even when the offer is superseded or its response changed. Current source/target reads and Supply coordination permission are required. A current acceptance is not required to review an existing exception.",
-            "Current quotation, Supply and dependency access is required. Accepting review grants no procurement, customer, supplier or work authority."
+            "Current quotation, Supply and dependency access is required. Accepting review grants no procurement, customer, supplier or work authority.",
+            "Use the exact applied Receipt correction and current accepted Supply referral. Every changed Demand needs its current owner and current scoped access. Receipt acceptance does not authorise allocation reductions. Priority and external release remain Not configured."
           ],
           "steps": [],
           "rows": [],
@@ -6654,7 +6656,8 @@
             "Resolve each Product line explicitly as OneOff, or record Missing/Ambiguous/Obsolete/Incompatible. Review company, SupplyDemand entity, customer/site and all target quantities. Review and freeze plan records an attributable Reviewed decision; it creates nothing. Create synthetic demand records executes every frozen target atomically.",
             "Choose Retain, Revise eligible Forecast quantity, or Continue hold. Record disposition review freezes the decision but leaves the exception open. Open saved receiving, inspect the exact reviewed action, then enter application evidence and Apply reviewed disposition. A Hold requires a replacement review; it cannot be applied.",
             "The assigned owner accepts review, returns or holds. After acceptance record Retain, Hold or Adjust existing allocation, then apply that exact current review separately. Adjustment reuses Supply:Allocate on already Approved demand, preserves allocation identity/basis and enforces units, exact decimals and conservation. Consequential dependencies remain held.",
-            "Select Reconcile unknown reservation outcome for an existing Unknown ExternalOutcome/Reservation fact. Retain its source operation, enter the evidenced result, UTC observation time and complete lookup evidence. Save review and Apply separately. Recover the native receipt, inspect remaining holds and explicitly reassess ES-07. This records evidence only. Unavailable lookup is inconclusive."
+            "Select Reconcile unknown reservation outcome for an existing Unknown ExternalOutcome/Reservation fact. Retain its source operation, enter the evidenced result, UTC observation time and complete lookup evidence. Save review and Apply separately. Recover the native receipt, inspect remaining holds and explicitly reassess ES-07. This records evidence only. Unavailable lookup is inconclusive.",
+            "In Resolve shared Shipment allocation shortfall, inspect original/corrected evidence and all Demands. Enter exact reduced quantities; blank means unchanged and zero preserves identity. Propose exact allocation reductions. Each changed Demand owner separately records Accepted, Returned or Held for the complete proposal. Review independently received reductions freezes consent and original command. Apply exact Supply review separately; native application is atomic for several allocations."
           ],
           "steps": [],
           "rows": [],
@@ -6666,7 +6669,8 @@
           "paragraphs": [
             "Open native demand to inspect each actual linked Forecast record. Source line, plan and original receipt remain linked. Demand does not approve procurement or start work. Labour, Freight, Engineering and Subcontract lines retain commercial evidence without material-demand effects; this is not partial commercial acceptance.",
             "Applied retention resolves only the reviewed exception. Applied quantity revision changes the real native Forecast through Supply:Revise, preserving histories and producing an owned Supply impact. Later relevant changes reopen review. No replacement conversion, deletion, zero quantity, cancellation, procurement or work release is supported.",
-            "Returned evidence references actual native effects and original receipts. Explicitly review and apply a fresh ES-07 disposition; notes and Activity completion do not clear exceptions. Approved demand stays Approved and quantity remains held. A separately eligible Forecast uses the existing positive quantity review/application. Supply impacts remain visible."
+            "Returned evidence references actual native effects and original receipts. Explicitly review and apply a fresh ES-07 disposition; notes and Activity completion do not clear exceptions. Approved demand stays Approved and quantity remains held. A separately eligible Forecast uses the existing positive quantity review/application. Supply impacts remain visible.",
+            "Inspect the actual original native receipt, before/after versions, capacity and remaining unmet Demand. Obtain fresh readiness and a new explicit ES-07 disposition if a current exception exists. Owning workflows retain operational impacts; notes, Activity completion and completed Supply work do not clear them."
           ],
           "steps": [],
           "rows": [],
@@ -6678,7 +6682,8 @@
           "paragraphs": [
             "Missing mappings, incompatible quantities/units, current conditions, unresolved clarification, material negotiation, changed response, successor issue, receiving correction, mapping change or changed target basis hold affected plans. Unrelated unissued estimate changes do not invalidate the exact offer. Completed targets remain after later corrections; replacement creation is refused.",
             "Unchanged, Review required and Resolved are per-target evidence states. Approved demand, allocations, return/custody or consequential Supply facts hold quantity revision with an explicit owning-workflow follow-up. Retaining those records grants no new authority.",
-            "Returned/Held receiving permits explicit replacement or reassignment with retained predecessor. Relevant source/shared-supply/dependency changes hold pending reviews; unrelated changes do not. Zero allocation means only its native quantity, not ERP release or supplier cancellation."
+            "Returned/Held receiving permits explicit replacement or reassignment with retained predecessor. Relevant source/shared-supply/dependency changes hold pending reviews; unrelated changes do not. Zero allocation means only its native quantity, not ERP release or supplier cancellation.",
+            "A changed source, Receipt, owner, allocation, dependency, receiving decision or permission holds pending work. Preserve old reviews and use predecessor-linked correction/reassignment. Picked lower bounds and consequential dependencies can refuse a proposal. Retain or continue hold rather than inventing eligibility."
           ],
           "steps": [],
           "rows": [],
@@ -6702,7 +6707,8 @@
           "paragraphs": [
             "After a lost response or inconclusive receipt, use Recover original conversion receipt or Retry exact original. Replacement actions stay blocked; a missing receipt is not proof of failure. Reload under the same authorised identity to recover the original operation. Stale edits remain visible; compare current evidence before Use current receiving basis. Revoked authority denies history and original recovery.",
             "The shared ES-07 journal covers review and application. Unknown outcomes block replacement; a missing receipt is inconclusive. Reload recovers the original result or permits exact-original retry. After stale evidence, compare this selected target and use Use compared disposition evidence; your text remains.",
-            "Recover the original before replacement. Lost responses/inconclusive lookups retain exact operation/content across reload; current permissions precede recovery. Compare refreshed evidence without losing entered proposals."
+            "Recover the original before replacement. Lost responses/inconclusive lookups retain exact operation/content across reload; current permissions precede recovery. Compare refreshed evidence without losing entered proposals.",
+            "After an uncertain result, recover the original action before replacement. Missing receipt is inconclusive. Exact retry keeps original quantities and operation; changed payload fails. All allocations roll back together on native refusal."
           ],
           "steps": [],
           "rows": [],
@@ -18052,14 +18058,15 @@
       "prepared_at": "2026-09-25",
       "source_commit": "0f10b7fb46a8ab512e9b019573ece272cf5920b9",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See native handover; visual and owner acceptance separate",
+      "runtime_evidence": "See docs/testing/evidence/quotation-allocation-shortfall/README.md; actual proof and acceptance separate",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
             "Use your permitted synthetic profile and the exact company, Site and existing source identities. Keep the source time, completeness, units, owner and next action explicit. These pages coordinate evidence; MYOB remains the intended inventory and Finance authority.",
-            "Review the exact material scope, usable supply and owned blockers."
+            "Review the exact material scope, usable supply and owned blockers.",
+            "An applied Receipt correction may leave a shared Shipment overallocated. Continue owned Supply follow-up even after quotation retention. Valid capacity does not satisfy all Demand or clear operational holds."
           ],
           "steps": [],
           "rows": [],
@@ -18069,7 +18076,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm current capability and exact company/Site context. Prepare existing origin identity, exact item/unit, source evidence and an accountable owner."
+            "Confirm current capability and exact company/Site context. Prepare existing origin identity, exact item/unit, source evidence and an accountable owner.",
+            "Use the exact applied Receipt correction and current accepted Supply referral. Every changed Demand needs its current owner and current scoped access. Receipt acceptance does not authorise allocation reductions. Priority and external release remain Not configured."
           ],
           "steps": [],
           "rows": [],
@@ -18116,7 +18124,8 @@
           "paragraphs": [
             "Create a demand against the exact Project, Work Order or separately named approved origin. Forecast and Approved are distinct; Approved needs authority evidence. Enter quantity, explicit unit, local required date and timezone, or explain the missing date.",
             "Allocate incoming and usable supply separately. Only complete evidenced usable allocations can support readiness. A saved assessment retains the exact demand, source and fact versions; Ready applies only to the stated material scope and evidence point.",
-            "Keep the owner and next action current. Promise, receipt, reservation, substitution and allocation changes create an impact review and shared Material Action; follow it through My Work."
+            "Keep the owner and next action current. Promise, receipt, reservation, substitution and allocation changes create an impact review and shared Material Action; follow it through My Work.",
+            "In Resolve shared Shipment allocation shortfall, inspect original/corrected evidence and all Demands. Enter exact reduced quantities; blank means unchanged and zero preserves identity. Propose exact allocation reductions. Each changed Demand owner separately records Accepted, Returned or Held for the complete proposal. Review independently received reductions freezes consent and original command. Apply exact Supply review separately; native application is atomic for several allocations."
           ],
           "steps": [],
           "rows": [],
@@ -18126,7 +18135,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Synthetic/manual coordination only. No live purchase, reservation, ERP receipt/shipment/return/credit, customer message, automatic reschedule or stock/Finance ledger is provided. Visual review, owner acceptance and deployment are separate."
+            "Synthetic/manual coordination only. No live purchase, reservation, ERP receipt/shipment/return/credit, customer message, automatic reschedule or stock/Finance ledger is provided. Visual review, owner acceptance and deployment are separate.",
+            "Inspect the actual original native receipt, before/after versions, capacity and remaining unmet Demand. Obtain fresh readiness and a new explicit ES-07 disposition if a current exception exists. Owning workflows retain operational impacts; notes, Activity completion and completed Supply work do not clear them."
           ],
           "steps": [],
           "rows": [],
@@ -18136,7 +18146,8 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Unknown/Partial is not zero. Read-only and denied are server-enforced. Saved requires a durable receipt. A stale revision needs comparison; uncertain saves retain their original content."
+            "Unknown/Partial is not zero. Read-only and denied are server-enforced. Saved requires a durable receipt. A stale revision needs comparison; uncertain saves retain their original content.",
+            "A changed source, Receipt, owner, allocation, dependency, receiving decision or permission holds pending work. Preserve old reviews and use predecessor-linked correction/reassignment. Picked lower bounds and consequential dependencies can refuse a proposal. Retain or continue hold rather than inventing eligibility."
           ],
           "steps": [],
           "rows": [],
@@ -18156,7 +18167,8 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "For validation errors, correct the named fields. For a stale revision, refresh and compare the retained proposal against current evidence. An uncertain save retains its original operation and content in this browser session: check the original receipt or retry that exact PPO save. Restored access is checked before any receipt is disclosed. Unknown external outcomes require evidence against the original reference; absence is not proof of failure."
+            "For validation errors, correct the named fields. For a stale revision, refresh and compare the retained proposal against current evidence. An uncertain save retains its original operation and content in this browser session: check the original receipt or retry that exact PPO save. Restored access is checked before any receipt is disclosed. Unknown external outcomes require evidence against the original reference; absence is not proof of failure.",
+            "After an uncertain result, recover the original action before replacement. Missing receipt is inconclusive. Exact retry keeps original quantities and operation; changed payload fails. All allocations roll back together on native refusal."
           ],
           "steps": [],
           "rows": [],
@@ -18409,14 +18421,15 @@
       "prepared_at": "2026-09-25",
       "source_commit": "0f10b7fb46a8ab512e9b019573ece272cf5920b9",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See native handover; visual and owner acceptance separate",
+      "runtime_evidence": "See docs/testing/evidence/quotation-allocation-shortfall/README.md; actual proof and acceptance separate",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
             "Use your permitted synthetic profile and the exact company, Site and existing source identities. Keep the source time, completeness, units, owner and next action explicit. These pages coordinate evidence; MYOB remains the intended inventory and Finance authority.",
-            "Coordinate shipment lines, split allocations and dated ETA evidence."
+            "Coordinate shipment lines, split allocations and dated ETA evidence.",
+            "An applied Receipt correction may leave a shared Shipment overallocated. Continue owned Supply follow-up even after quotation retention. Valid capacity does not satisfy all Demand or clear operational holds."
           ],
           "steps": [],
           "rows": [],
@@ -18426,7 +18439,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm current capability and exact company/Site context. Prepare existing origin identity, exact item/unit, source evidence and an accountable owner."
+            "Confirm current capability and exact company/Site context. Prepare existing origin identity, exact item/unit, source evidence and an accountable owner.",
+            "Use the exact applied Receipt correction and current accepted Supply referral. Every changed Demand needs its current owner and current scoped access. Receipt acceptance does not authorise allocation reductions. Priority and external release remain Not configured."
           ],
           "steps": [],
           "rows": [],
@@ -18473,7 +18487,8 @@
           "paragraphs": [
             "Create a Supply line with Shipment basis, shared shipment identity, unique line reference, supplier, warehouse, item and unit. Several lines can use one shipment identity; several shipments can serve one demand.",
             "Use Allocate to a line for like-unit, same-company and same-item demand. The server conserves both line capacities even when two users save together.",
-            "Revise the source record with a reason. Retain estimated versus confirmed ETA, a confidence basis only if the source provides one, dispatch evidence, manufacturing, customs, broker and freight references."
+            "Revise the source record with a reason. Retain estimated versus confirmed ETA, a confidence basis only if the source provides one, dispatch evidence, manufacturing, customs, broker and freight references.",
+            "In Resolve shared Shipment allocation shortfall, inspect original/corrected evidence and all Demands. Enter exact reduced quantities; blank means unchanged and zero preserves identity. Propose exact allocation reductions. Each changed Demand owner separately records Accepted, Returned or Held for the complete proposal. Review independently received reductions freezes consent and original command. Apply exact Supply review separately; native application is atomic for several allocations."
           ],
           "steps": [],
           "rows": [],
@@ -18483,7 +18498,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Synthetic/manual coordination only. No live purchase, reservation, ERP receipt/shipment/return/credit, customer message, automatic reschedule or stock/Finance ledger is provided. Visual review, owner acceptance and deployment are separate."
+            "Synthetic/manual coordination only. No live purchase, reservation, ERP receipt/shipment/return/credit, customer message, automatic reschedule or stock/Finance ledger is provided. Visual review, owner acceptance and deployment are separate.",
+            "Inspect the actual original native receipt, before/after versions, capacity and remaining unmet Demand. Obtain fresh readiness and a new explicit ES-07 disposition if a current exception exists. Owning workflows retain operational impacts; notes, Activity completion and completed Supply work do not clear them."
           ],
           "steps": [],
           "rows": [],
@@ -18493,7 +18509,8 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Unknown/Partial is not zero. Read-only and denied are server-enforced. Saved requires a durable receipt. A stale revision needs comparison; uncertain saves retain their original content."
+            "Unknown/Partial is not zero. Read-only and denied are server-enforced. Saved requires a durable receipt. A stale revision needs comparison; uncertain saves retain their original content.",
+            "A changed source, Receipt, owner, allocation, dependency, receiving decision or permission holds pending work. Preserve old reviews and use predecessor-linked correction/reassignment. Picked lower bounds and consequential dependencies can refuse a proposal. Retain or continue hold rather than inventing eligibility."
           ],
           "steps": [],
           "rows": [],
@@ -18513,7 +18530,8 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "For validation errors, correct the named fields. For a stale revision, refresh and compare the retained proposal against current evidence. An uncertain save retains its original operation and content in this browser session: check the original receipt or retry that exact PPO save. Restored access is checked before any receipt is disclosed. Unknown external outcomes require evidence against the original reference; absence is not proof of failure."
+            "For validation errors, correct the named fields. For a stale revision, refresh and compare the retained proposal against current evidence. An uncertain save retains its original operation and content in this browser session: check the original receipt or retry that exact PPO save. Restored access is checked before any receipt is disclosed. Unknown external outcomes require evidence against the original reference; absence is not proof of failure.",
+            "After an uncertain result, recover the original action before replacement. Missing receipt is inconclusive. Exact retry keeps original quantities and operation; changed payload fails. All allocations roll back together on native refusal."
           ],
           "steps": [],
           "rows": [],
@@ -18586,14 +18604,15 @@
       "prepared_at": "2026-10-05",
       "source_commit": "0f10b7fb46a8ab512e9b019573ece272cf5920b9",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/testing/evidence/quotation-receipt-correction/README.md; proof and acceptance remain separate",
+      "runtime_evidence": "See docs/testing/evidence/quotation-allocation-shortfall/README.md; actual proof and acceptance separate",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
             "Use your permitted synthetic profile and the exact company, Site and existing source identities. Keep the source time, completeness, units, owner and next action explicit. These pages coordinate evidence; MYOB remains the intended inventory and Finance authority.",
-            "Capture physical receipt and inspection. Arrival and quarantine do not establish usable stock."
+            "Capture physical receipt and inspection. Arrival and quarantine do not establish usable stock.",
+            "An applied Receipt correction may leave a shared Shipment overallocated. Continue owned Supply follow-up even after quotation retention. Valid capacity does not satisfy all Demand or clear operational holds."
           ],
           "steps": [],
           "rows": [],
@@ -18603,7 +18622,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm current capability and exact company/Site context. Prepare existing origin identity, exact item/unit, source evidence and an accountable owner."
+            "Confirm current capability and exact company/Site context. Prepare existing origin identity, exact item/unit, source evidence and an accountable owner.",
+            "Use the exact applied Receipt correction and current accepted Supply referral. Every changed Demand needs its current owner and current scoped access. Receipt acceptance does not authorise allocation reductions. Priority and external release remain Not configured."
           ],
           "steps": [],
           "rows": [],
@@ -18650,7 +18670,8 @@
           "paragraphs": [
             "Select the incoming line and open Receipt and inspection. Carrier arrival and ERP receipt reference are separate observations. Record actual quantities and explicit identity evidence.",
             "Inspected cannot exceed received. Usable plus quarantined cannot exceed inspected. Damage is included within quarantined quantity. Short quantity records the shortage for this receipt; neither arrival nor quarantine makes goods usable.",
-            "On a phone, complete the stacked capture form and optionally upload a supported PNG. A verified stored photo is linked to the exact capture. Review / correct capture adds a successor; originals remain available."
+            "On a phone, complete the stacked capture form and optionally upload a supported PNG. A verified stored photo is linked to the exact capture. Review / correct capture adds a successor; originals remain available.",
+            "In Resolve shared Shipment allocation shortfall, inspect original/corrected evidence and all Demands. Enter exact reduced quantities; blank means unchanged and zero preserves identity. Propose exact allocation reductions. Each changed Demand owner separately records Accepted, Returned or Held for the complete proposal. Review independently received reductions freezes consent and original command. Apply exact Supply review separately; native application is atomic for several allocations."
           ],
           "steps": [],
           "rows": [],
@@ -18660,7 +18681,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Synthetic/manual coordination only. No live purchase, reservation, ERP receipt/shipment/return/credit, customer message, automatic reschedule or stock/Finance ledger is provided. Visual review, owner acceptance and deployment are separate."
+            "Synthetic/manual coordination only. No live purchase, reservation, ERP receipt/shipment/return/credit, customer message, automatic reschedule or stock/Finance ledger is provided. Visual review, owner acceptance and deployment are separate.",
+            "Inspect the actual original native receipt, before/after versions, capacity and remaining unmet Demand. Obtain fresh readiness and a new explicit ES-07 disposition if a current exception exists. Owning workflows retain operational impacts; notes, Activity completion and completed Supply work do not clear them."
           ],
           "steps": [],
           "rows": [],
@@ -18670,7 +18692,8 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Unknown/Partial is not zero. Read-only and denied are server-enforced. Saved requires a durable receipt. A stale revision needs comparison; uncertain saves retain their original content."
+            "Unknown/Partial is not zero. Read-only and denied are server-enforced. Saved requires a durable receipt. A stale revision needs comparison; uncertain saves retain their original content.",
+            "A changed source, Receipt, owner, allocation, dependency, receiving decision or permission holds pending work. Preserve old reviews and use predecessor-linked correction/reassignment. Picked lower bounds and consequential dependencies can refuse a proposal. Retain or continue hold rather than inventing eligibility."
           ],
           "steps": [],
           "rows": [],
@@ -18690,7 +18713,8 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "For validation errors, correct the named fields. For a stale revision, refresh and compare the retained proposal against current evidence. An uncertain save retains its original operation and content in this browser session: check the original receipt or retry that exact PPO save. Restored access is checked before any receipt is disclosed. Unknown external outcomes require evidence against the original reference; absence is not proof of failure."
+            "For validation errors, correct the named fields. For a stale revision, refresh and compare the retained proposal against current evidence. An uncertain save retains its original operation and content in this browser session: check the original receipt or retry that exact PPO save. Restored access is checked before any receipt is disclosed. Unknown external outcomes require evidence against the original reference; absence is not proof of failure.",
+            "After an uncertain result, recover the original action before replacement. Missing receipt is inconclusive. Exact retry keeps original quantities and operation; changed payload fails. All allocations roll back together on native refusal."
           ],
           "steps": [],
           "rows": [],
@@ -19489,7 +19513,7 @@
       "prepared_at": "2026-10-05",
       "source_commit": "0f10b7fb46a8ab512e9b019573ece272cf5920b9",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/testing/evidence/quotation-receipt-correction/README.md; proof and acceptance remain separate",
+      "runtime_evidence": "See docs/testing/evidence/quotation-allocation-shortfall/README.md; actual proof and acceptance separate",
       "sections": [
         {
           "section_id": "purpose",
@@ -19497,7 +19521,8 @@
           "paragraphs": [
             "Use your permitted synthetic profile and the exact company, Site and existing source identities. Keep the source time, completeness, units, owner and next action explicit. These pages coordinate evidence; MYOB remains the intended inventory and Finance authority.",
             "Review before and after evidence through the owning module. Bookings and issued packs remain unchanged.",
-            "Held completed-conversion exceptions enter owned Supply follow-up from the sixth ES-07 panel or the SC-09 assigned queue."
+            "Held completed-conversion exceptions enter owned Supply follow-up from the sixth ES-07 panel or the SC-09 assigned queue.",
+            "An applied Receipt correction may leave a shared Shipment overallocated. Continue owned Supply follow-up even after quotation retention. Valid capacity does not satisfy all Demand or clear operational holds."
           ],
           "steps": [],
           "rows": [],
@@ -19508,7 +19533,8 @@
           "title": "Before you start",
           "paragraphs": [
             "Confirm current capability and exact company/Site context. Prepare existing origin identity, exact item/unit, source evidence and an accountable owner.",
-            "Current quotation, Supply and dependency access is required. Accepting review grants no procurement, customer, supplier or work authority."
+            "Current quotation, Supply and dependency access is required. Accepting review grants no procurement, customer, supplier or work authority.",
+            "Use the exact applied Receipt correction and current accepted Supply referral. Every changed Demand needs its current owner and current scoped access. Receipt acceptance does not authorise allocation reductions. Priority and external release remain Not configured."
           ],
           "steps": [],
           "rows": [],
@@ -19560,7 +19586,8 @@
             "Open the linked Material Action and canonical Project or appointment workspace. Scheduling owns any proposed new date and crew; Supply Chain does not guess them or alter a confirmed booking. Job-pack owners own reissue decisions.",
             "Review the requested capture, record Reviewed and the owning module's exact outcome reference. This records coordination evidence; it never applies the downstream decision automatically.",
             "The assigned owner accepts review, returns or holds. After acceptance record Retain, Hold or Adjust existing allocation, then apply that exact current review separately. Adjustment reuses Supply:Allocate on already Approved demand, preserves allocation identity/basis and enforces units, exact decimals and conservation. Consequential dependencies remain held.",
-            "Select Reconcile unknown reservation outcome for an existing Unknown ExternalOutcome/Reservation fact. Retain its source operation, enter the evidenced result, UTC observation time and complete lookup evidence. Save review and Apply separately. Recover the native receipt, inspect remaining holds and explicitly reassess ES-07. This records evidence only. Unavailable lookup is inconclusive."
+            "Select Reconcile unknown reservation outcome for an existing Unknown ExternalOutcome/Reservation fact. Retain its source operation, enter the evidenced result, UTC observation time and complete lookup evidence. Save review and Apply separately. Recover the native receipt, inspect remaining holds and explicitly reassess ES-07. This records evidence only. Unavailable lookup is inconclusive.",
+            "In Resolve shared Shipment allocation shortfall, inspect original/corrected evidence and all Demands. Enter exact reduced quantities; blank means unchanged and zero preserves identity. Propose exact allocation reductions. Each changed Demand owner separately records Accepted, Returned or Held for the complete proposal. Review independently received reductions freezes consent and original command. Apply exact Supply review separately; native application is atomic for several allocations."
           ],
           "steps": [],
           "rows": [],
@@ -19571,7 +19598,8 @@
           "title": "Completion and handover",
           "paragraphs": [
             "Synthetic/manual coordination only. No live purchase, reservation, ERP receipt/shipment/return/credit, customer message, automatic reschedule or stock/Finance ledger is provided. Visual review, owner acceptance and deployment are separate.",
-            "Returned evidence references actual native effects and original receipts. Explicitly review and apply a fresh ES-07 disposition; notes and Activity completion do not clear exceptions. Approved demand stays Approved and quantity remains held. A separately eligible Forecast uses the existing positive quantity review/application. Supply impacts remain visible."
+            "Returned evidence references actual native effects and original receipts. Explicitly review and apply a fresh ES-07 disposition; notes and Activity completion do not clear exceptions. Approved demand stays Approved and quantity remains held. A separately eligible Forecast uses the existing positive quantity review/application. Supply impacts remain visible.",
+            "Inspect the actual original native receipt, before/after versions, capacity and remaining unmet Demand. Obtain fresh readiness and a new explicit ES-07 disposition if a current exception exists. Owning workflows retain operational impacts; notes, Activity completion and completed Supply work do not clear them."
           ],
           "steps": [],
           "rows": [],
@@ -19582,7 +19610,8 @@
           "title": "Statuses, warnings and save state",
           "paragraphs": [
             "Unknown/Partial is not zero. Read-only and denied are server-enforced. Saved requires a durable receipt. A stale revision needs comparison; uncertain saves retain their original content.",
-            "Returned/Held receiving permits explicit replacement or reassignment with retained predecessor. Relevant source/shared-supply/dependency changes hold pending reviews; unrelated changes do not. Zero allocation means only its native quantity, not ERP release or supplier cancellation."
+            "Returned/Held receiving permits explicit replacement or reassignment with retained predecessor. Relevant source/shared-supply/dependency changes hold pending reviews; unrelated changes do not. Zero allocation means only its native quantity, not ERP release or supplier cancellation.",
+            "A changed source, Receipt, owner, allocation, dependency, receiving decision or permission holds pending work. Preserve old reviews and use predecessor-linked correction/reassignment. Picked lower bounds and consequential dependencies can refuse a proposal. Retain or continue hold rather than inventing eligibility."
           ],
           "steps": [],
           "rows": [],
@@ -19604,7 +19633,8 @@
           "title": "Troubleshooting",
           "paragraphs": [
             "For validation errors, correct the named fields. For a stale revision, refresh and compare the retained proposal against current evidence. An uncertain save retains its original operation and content in this browser session: check the original receipt or retry that exact PPO save. Restored access is checked before any receipt is disclosed. Unknown external outcomes require evidence against the original reference; absence is not proof of failure.",
-            "Recover the original before replacement. Lost responses/inconclusive lookups retain exact operation/content across reload; current permissions precede recovery. Compare refreshed evidence without losing entered proposals."
+            "Recover the original before replacement. Lost responses/inconclusive lookups retain exact operation/content across reload; current permissions precede recovery. Compare refreshed evidence without losing entered proposals.",
+            "After an uncertain result, recover the original action before replacement. Missing receipt is inconclusive. Exact retry keeps original quantities and operation; changed payload fails. All allocations roll back together on native refusal."
           ],
           "steps": [],
           "rows": [],
@@ -68542,7 +68572,8 @@
           "paragraphs": [
             "Use your permitted synthetic profile and the exact company, Site and existing source identities. Keep the source time, completeness, units, owner and next action explicit. These pages coordinate evidence; MYOB remains the intended inventory and Finance authority.",
             "Review before and after evidence through the owning module. Bookings and issued packs remain unchanged.",
-            "Held completed-conversion exceptions enter owned Supply follow-up from the sixth ES-07 panel or the SC-09 assigned queue."
+            "Held completed-conversion exceptions enter owned Supply follow-up from the sixth ES-07 panel or the SC-09 assigned queue.",
+            "An applied Receipt correction may leave a shared Shipment overallocated. Continue owned Supply follow-up even after quotation retention. Valid capacity does not satisfy all Demand or clear operational holds."
           ],
           "steps": [],
           "headers": [],
@@ -68567,7 +68598,8 @@
           "title": "If something is unavailable",
           "paragraphs": [
             "For validation errors, correct the named fields. For a stale revision, refresh and compare the retained proposal against current evidence. An uncertain save retains its original operation and content in this browser session: check the original receipt or retry that exact PPO save. Restored access is checked before any receipt is disclosed. Unknown external outcomes require evidence against the original reference; absence is not proof of failure.",
-            "Recover the original before replacement. Lost responses/inconclusive lookups retain exact operation/content across reload; current permissions precede recovery. Compare refreshed evidence without losing entered proposals."
+            "Recover the original before replacement. Lost responses/inconclusive lookups retain exact operation/content across reload; current permissions precede recovery. Compare refreshed evidence without losing entered proposals.",
+            "After an uncertain result, recover the original action before replacement. Missing receipt is inconclusive. Exact retry keeps original quantities and operation; changed payload fails. All allocations roll back together on native refusal."
           ],
           "steps": [],
           "headers": [],
@@ -68588,7 +68620,7 @@
         }
       ],
       "prepared_at": "2026-10-05",
-      "runtime_evidence": "See docs/testing/evidence/quotation-receipt-correction/README.md; proof and acceptance remain separate",
+      "runtime_evidence": "See docs/testing/evidence/quotation-allocation-shortfall/README.md; actual proof and acceptance separate",
       "change_summary": "Adopted SYN-ES07-05 existing Receipt correction and independent affected-demand receiving.",
       "source_paths": [
         "docs/decisions/quotation-receipt-correction.md",
@@ -68715,7 +68747,8 @@
           "title": "Purpose and applicability",
           "paragraphs": [
             "Use your permitted synthetic profile and the exact company, Site and existing source identities. Keep the source time, completeness, units, owner and next action explicit. These pages coordinate evidence; MYOB remains the intended inventory and Finance authority.",
-            "Review the exact material scope, usable supply and owned blockers."
+            "Review the exact material scope, usable supply and owned blockers.",
+            "An applied Receipt correction may leave a shared Shipment overallocated. Continue owned Supply follow-up even after quotation retention. Valid capacity does not satisfy all Demand or clear operational holds."
           ],
           "steps": [],
           "headers": [],
@@ -68738,7 +68771,8 @@
           "section_id": "recovery",
           "title": "If something is unavailable",
           "paragraphs": [
-            "For validation errors, correct the named fields. For a stale revision, refresh and compare the retained proposal against current evidence. An uncertain save retains its original operation and content in this browser session: check the original receipt or retry that exact PPO save. Restored access is checked before any receipt is disclosed. Unknown external outcomes require evidence against the original reference; absence is not proof of failure."
+            "For validation errors, correct the named fields. For a stale revision, refresh and compare the retained proposal against current evidence. An uncertain save retains its original operation and content in this browser session: check the original receipt or retry that exact PPO save. Restored access is checked before any receipt is disclosed. Unknown external outcomes require evidence against the original reference; absence is not proof of failure.",
+            "After an uncertain result, recover the original action before replacement. Missing receipt is inconclusive. Exact retry keeps original quantities and operation; changed payload fails. All allocations roll back together on native refusal."
           ],
           "steps": [],
           "headers": [],
@@ -68746,7 +68780,7 @@
         }
       ],
       "prepared_at": "2026-09-25",
-      "runtime_evidence": "See native handover; visual and owner acceptance separate"
+      "runtime_evidence": "See docs/testing/evidence/quotation-allocation-shortfall/README.md; actual proof and acceptance separate"
     },
     {
       "guide_key": "guide.route-supply-purchasing",
@@ -68817,7 +68851,8 @@
           "title": "Purpose and applicability",
           "paragraphs": [
             "Use your permitted synthetic profile and the exact company, Site and existing source identities. Keep the source time, completeness, units, owner and next action explicit. These pages coordinate evidence; MYOB remains the intended inventory and Finance authority.",
-            "Capture physical receipt and inspection. Arrival and quarantine do not establish usable stock."
+            "Capture physical receipt and inspection. Arrival and quarantine do not establish usable stock.",
+            "An applied Receipt correction may leave a shared Shipment overallocated. Continue owned Supply follow-up even after quotation retention. Valid capacity does not satisfy all Demand or clear operational holds."
           ],
           "steps": [],
           "headers": [],
@@ -68840,7 +68875,8 @@
           "section_id": "recovery",
           "title": "If something is unavailable",
           "paragraphs": [
-            "For validation errors, correct the named fields. For a stale revision, refresh and compare the retained proposal against current evidence. An uncertain save retains its original operation and content in this browser session: check the original receipt or retry that exact PPO save. Restored access is checked before any receipt is disclosed. Unknown external outcomes require evidence against the original reference; absence is not proof of failure."
+            "For validation errors, correct the named fields. For a stale revision, refresh and compare the retained proposal against current evidence. An uncertain save retains its original operation and content in this browser session: check the original receipt or retry that exact PPO save. Restored access is checked before any receipt is disclosed. Unknown external outcomes require evidence against the original reference; absence is not proof of failure.",
+            "After an uncertain result, recover the original action before replacement. Missing receipt is inconclusive. Exact retry keeps original quantities and operation; changed payload fails. All allocations roll back together on native refusal."
           ],
           "steps": [],
           "headers": [],
@@ -68861,7 +68897,7 @@
         }
       ],
       "prepared_at": "2026-10-05",
-      "runtime_evidence": "See docs/testing/evidence/quotation-receipt-correction/README.md; proof and acceptance remain separate",
+      "runtime_evidence": "See docs/testing/evidence/quotation-allocation-shortfall/README.md; actual proof and acceptance separate",
       "change_summary": "Adopted SYN-ES07-05 existing Receipt correction and independent affected-demand receiving.",
       "source_paths": [
         "docs/decisions/quotation-receipt-correction.md",
@@ -68988,7 +69024,8 @@
           "title": "Purpose and applicability",
           "paragraphs": [
             "Use your permitted synthetic profile and the exact company, Site and existing source identities. Keep the source time, completeness, units, owner and next action explicit. These pages coordinate evidence; MYOB remains the intended inventory and Finance authority.",
-            "Coordinate shipment lines, split allocations and dated ETA evidence."
+            "Coordinate shipment lines, split allocations and dated ETA evidence.",
+            "An applied Receipt correction may leave a shared Shipment overallocated. Continue owned Supply follow-up even after quotation retention. Valid capacity does not satisfy all Demand or clear operational holds."
           ],
           "steps": [],
           "headers": [],
@@ -69011,7 +69048,8 @@
           "section_id": "recovery",
           "title": "If something is unavailable",
           "paragraphs": [
-            "For validation errors, correct the named fields. For a stale revision, refresh and compare the retained proposal against current evidence. An uncertain save retains its original operation and content in this browser session: check the original receipt or retry that exact PPO save. Restored access is checked before any receipt is disclosed. Unknown external outcomes require evidence against the original reference; absence is not proof of failure."
+            "For validation errors, correct the named fields. For a stale revision, refresh and compare the retained proposal against current evidence. An uncertain save retains its original operation and content in this browser session: check the original receipt or retry that exact PPO save. Restored access is checked before any receipt is disclosed. Unknown external outcomes require evidence against the original reference; absence is not proof of failure.",
+            "After an uncertain result, recover the original action before replacement. Missing receipt is inconclusive. Exact retry keeps original quantities and operation; changed payload fails. All allocations roll back together on native refusal."
           ],
           "steps": [],
           "headers": [],
@@ -69019,7 +69057,7 @@
         }
       ],
       "prepared_at": "2026-09-25",
-      "runtime_evidence": "See native handover; visual and owner acceptance separate"
+      "runtime_evidence": "See docs/testing/evidence/quotation-allocation-shortfall/README.md; actual proof and acceptance separate"
     },
     {
       "guide_key": "guide.route-supply-stock",
@@ -70413,7 +70451,8 @@
           "paragraphs": [
             "Receive one exact ES-06 preparation, resolve its included Product lines, review quantities and freeze a plan before creating synthetic Forecast demand. Preparation, sending, receipt, review and conversion remain separate.",
             "Completed conversions also expose exact per-target exceptions after corrections, successor issues or downstream changes. Retain the original conversion as a completed fact.",
-            "Held completed-conversion exceptions enter owned Supply follow-up from the sixth ES-07 panel or the SC-09 assigned queue."
+            "Held completed-conversion exceptions enter owned Supply follow-up from the sixth ES-07 panel or the SC-09 assigned queue.",
+            "An applied Receipt correction may leave a shared Shipment overallocated. Continue owned Supply follow-up even after quotation retention. Valid capacity does not satisfy all Demand or clear operational holds."
           ],
           "steps": [],
           "rows": [],
@@ -70425,7 +70464,8 @@
           "paragraphs": [
             "Use an issued ES-05 revision with a current unconditioned recorded Accepted response and applicable ES-06 preparation. Current source/quotation reads and company/site Supply coordination duty are required. Respondent authority, signing, validity/expiry and withdrawal remain Not configured.",
             "For completed-target disposition, use the original conversion page even when the offer is superseded or its response changed. Current source/target reads and Supply coordination permission are required. A current acceptance is not required to review an existing exception.",
-            "Current quotation, Supply and dependency access is required. Accepting review grants no procurement, customer, supplier or work authority."
+            "Current quotation, Supply and dependency access is required. Accepting review grants no procurement, customer, supplier or work authority.",
+            "Use the exact applied Receipt correction and current accepted Supply referral. Every changed Demand needs its current owner and current scoped access. Receipt acceptance does not authorise allocation reductions. Priority and external release remain Not configured."
           ],
           "steps": [],
           "rows": [],
@@ -70474,7 +70514,8 @@
             "Resolve each Product line explicitly as OneOff, or record Missing/Ambiguous/Obsolete/Incompatible. Review company, SupplyDemand entity, customer/site and all target quantities. Review and freeze plan records an attributable Reviewed decision; it creates nothing. Create synthetic demand records executes every frozen target atomically.",
             "Choose Retain, Revise eligible Forecast quantity, or Continue hold. Record disposition review freezes the decision but leaves the exception open. Open saved receiving, inspect the exact reviewed action, then enter application evidence and Apply reviewed disposition. A Hold requires a replacement review; it cannot be applied.",
             "The assigned owner accepts review, returns or holds. After acceptance record Retain, Hold or Adjust existing allocation, then apply that exact current review separately. Adjustment reuses Supply:Allocate on already Approved demand, preserves allocation identity/basis and enforces units, exact decimals and conservation. Consequential dependencies remain held.",
-            "Select Reconcile unknown reservation outcome for an existing Unknown ExternalOutcome/Reservation fact. Retain its source operation, enter the evidenced result, UTC observation time and complete lookup evidence. Save review and Apply separately. Recover the native receipt, inspect remaining holds and explicitly reassess ES-07. This records evidence only. Unavailable lookup is inconclusive."
+            "Select Reconcile unknown reservation outcome for an existing Unknown ExternalOutcome/Reservation fact. Retain its source operation, enter the evidenced result, UTC observation time and complete lookup evidence. Save review and Apply separately. Recover the native receipt, inspect remaining holds and explicitly reassess ES-07. This records evidence only. Unavailable lookup is inconclusive.",
+            "In Resolve shared Shipment allocation shortfall, inspect original/corrected evidence and all Demands. Enter exact reduced quantities; blank means unchanged and zero preserves identity. Propose exact allocation reductions. Each changed Demand owner separately records Accepted, Returned or Held for the complete proposal. Review independently received reductions freezes consent and original command. Apply exact Supply review separately; native application is atomic for several allocations."
           ],
           "steps": [],
           "rows": [],
@@ -70486,7 +70527,8 @@
           "paragraphs": [
             "Open native demand to inspect each actual linked Forecast record. Source line, plan and original receipt remain linked. Demand does not approve procurement or start work. Labour, Freight, Engineering and Subcontract lines retain commercial evidence without material-demand effects; this is not partial commercial acceptance.",
             "Applied retention resolves only the reviewed exception. Applied quantity revision changes the real native Forecast through Supply:Revise, preserving histories and producing an owned Supply impact. Later relevant changes reopen review. No replacement conversion, deletion, zero quantity, cancellation, procurement or work release is supported.",
-            "Returned evidence references actual native effects and original receipts. Explicitly review and apply a fresh ES-07 disposition; notes and Activity completion do not clear exceptions. Approved demand stays Approved and quantity remains held. A separately eligible Forecast uses the existing positive quantity review/application. Supply impacts remain visible."
+            "Returned evidence references actual native effects and original receipts. Explicitly review and apply a fresh ES-07 disposition; notes and Activity completion do not clear exceptions. Approved demand stays Approved and quantity remains held. A separately eligible Forecast uses the existing positive quantity review/application. Supply impacts remain visible.",
+            "Inspect the actual original native receipt, before/after versions, capacity and remaining unmet Demand. Obtain fresh readiness and a new explicit ES-07 disposition if a current exception exists. Owning workflows retain operational impacts; notes, Activity completion and completed Supply work do not clear them."
           ],
           "steps": [],
           "rows": [],
@@ -70498,7 +70540,8 @@
           "paragraphs": [
             "Missing mappings, incompatible quantities/units, current conditions, unresolved clarification, material negotiation, changed response, successor issue, receiving correction, mapping change or changed target basis hold affected plans. Unrelated unissued estimate changes do not invalidate the exact offer. Completed targets remain after later corrections; replacement creation is refused.",
             "Unchanged, Review required and Resolved are per-target evidence states. Approved demand, allocations, return/custody or consequential Supply facts hold quantity revision with an explicit owning-workflow follow-up. Retaining those records grants no new authority.",
-            "Returned/Held receiving permits explicit replacement or reassignment with retained predecessor. Relevant source/shared-supply/dependency changes hold pending reviews; unrelated changes do not. Zero allocation means only its native quantity, not ERP release or supplier cancellation."
+            "Returned/Held receiving permits explicit replacement or reassignment with retained predecessor. Relevant source/shared-supply/dependency changes hold pending reviews; unrelated changes do not. Zero allocation means only its native quantity, not ERP release or supplier cancellation.",
+            "A changed source, Receipt, owner, allocation, dependency, receiving decision or permission holds pending work. Preserve old reviews and use predecessor-linked correction/reassignment. Picked lower bounds and consequential dependencies can refuse a proposal. Retain or continue hold rather than inventing eligibility."
           ],
           "steps": [],
           "rows": [],
@@ -70522,7 +70565,8 @@
           "paragraphs": [
             "After a lost response or inconclusive receipt, use Recover original conversion receipt or Retry exact original. Replacement actions stay blocked; a missing receipt is not proof of failure. Reload under the same authorised identity to recover the original operation. Stale edits remain visible; compare current evidence before Use current receiving basis. Revoked authority denies history and original recovery.",
             "The shared ES-07 journal covers review and application. Unknown outcomes block replacement; a missing receipt is inconclusive. Reload recovers the original result or permits exact-original retry. After stale evidence, compare this selected target and use Use compared disposition evidence; your text remains.",
-            "Recover the original before replacement. Lost responses/inconclusive lookups retain exact operation/content across reload; current permissions precede recovery. Compare refreshed evidence without losing entered proposals."
+            "Recover the original before replacement. Lost responses/inconclusive lookups retain exact operation/content across reload; current permissions precede recovery. Compare refreshed evidence without losing entered proposals.",
+            "After an uncertain result, recover the original action before replacement. Missing receipt is inconclusive. Exact retry keeps original quantities and operation; changed payload fails. All allocations roll back together on native refusal."
           ],
           "steps": [],
           "rows": [],
@@ -70579,7 +70623,7 @@
         }
       ],
       "prepared_at": "2026-10-05",
-      "runtime_evidence": "See docs/testing/evidence/quotation-receipt-correction/README.md; proof and acceptance remain separate",
+      "runtime_evidence": "See docs/testing/evidence/quotation-allocation-shortfall/README.md; actual proof and acceptance separate",
       "source_paths": [
         "src/app/(business)/estimating/quotes/[id]/conversion/page.tsx",
         "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",

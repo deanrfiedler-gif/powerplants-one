@@ -11,6 +11,7 @@ import type {
   Resource,
 } from "./model";
 import { fileHistories } from "./history";
+import { matchEntry } from "./model";
 
 export const registerPath = "docs/design/development/register.json";
 export const guidePath = "docs/design/development/guides.json";
@@ -127,6 +128,14 @@ export async function guideDocument(
     review_state: guideReviewState(guide),
   };
 }
+// Page help needs its binding and current guide, not every source fingerprint.
+// Read both living masters each time; full catalogue assurance remains separate.
+export async function readPageGuide(root: string, pathname: string) {
+  const key = matchEntry((await readMaster(root)).entries, pathname)?.guide_key;
+  if (!key) return undefined;
+  const guide = (await readGuides(root)).find((g) => g.guide_key === key);
+  return guide ? guideDocument(root, guide) : undefined;
+}
 export async function buildCatalog(root: string): Promise<Catalog> {
   const [master, guides, routes, journeyFiles, css] = await Promise.all([
     readMaster(root),
@@ -135,8 +144,19 @@ export async function buildCatalog(root: string): Promise<Catalog> {
     files(root, "docs/reference/ui/module-workflow-maps"),
     readReference(root, "src/app/globals.css"),
   ]);
-  const componentEntries = JSON.parse((await readReference(root, "docs/design/development/components.json").catch(() => Buffer.from('{"entries":[]}'))).toString()).entries as import("./component-model").ComponentRecord[];
-  const componentPaths = [...new Set(componentEntries.flatMap(e => [e.specification, e.reference.path]))];
+  const componentEntries = JSON.parse(
+    (
+      await readReference(
+        root,
+        "docs/design/development/components.json",
+      ).catch(() => Buffer.from('{"entries":[]}'))
+    ).toString(),
+  ).entries as import("./component-model").ComponentRecord[];
+  const componentPaths = [
+    ...new Set(
+      componentEntries.flatMap((e) => [e.specification, e.reference.path]),
+    ),
+  ];
   const histories = await fileHistories(root, [
     guidePath,
     ...componentPaths,
@@ -400,14 +420,24 @@ export async function buildCatalog(root: string): Promise<Catalog> {
     entries,
     journeys,
     tokens,
-    component_links: componentEntries.map(e => ({id:e.id,title:e.title,used_on:e.used_on})),
-    component_resources: await Promise.all(componentPaths.map(p => resource(p, "Component reference", null))),
+    component_links: componentEntries.map((e) => ({
+      id: e.id,
+      title: e.title,
+      used_on: e.used_on,
+    })),
+    component_resources: await Promise.all(
+      componentPaths.map((p) => resource(p, "Component reference", null)),
+    ),
     unregistered_routes: unregistered,
     errors,
   };
 }
 export function resourcesFor(catalog: Catalog): Resource[] {
-  return [...catalog.entries.flatMap((e) => e.resources), ...catalog.journeys, ...(catalog.component_resources ?? [])];
+  return [
+    ...catalog.entries.flatMap((e) => e.resources),
+    ...catalog.journeys,
+    ...(catalog.component_resources ?? []),
+  ];
 }
 export function documentationSlug(entry: Pick<Entry, "key">): string {
   return entry.key

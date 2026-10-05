@@ -1,3 +1,4 @@
+import { conversionReadClient } from "./source-authority";
 import { randomUUID } from "node:crypto";
 import type { Principal } from "../../platform/identity";
 import { sharedOperation, recordOperation } from "../../platform/operations";
@@ -78,8 +79,9 @@ async function execute(p: Principal, id: string, input: ConversionInput) {
     input,
     `QuoteConversion:${input.action}`,
     (c) => conversionAuthority(c, p, id, true),
-    async (c) => {
-      const d = await conversionContext(c, p, id);
+    async (c, authorised) => {
+      const read = conversionReadClient(c, p);
+      const d = await conversionContext(read, p, id, authorised);
       expected(d.conversion_sequence, input.expected_sequence);
       const original = (
         await c.query(

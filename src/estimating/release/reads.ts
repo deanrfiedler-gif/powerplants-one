@@ -1,6 +1,8 @@
 import type { Principal } from "../../platform/identity";
 import { transaction } from "../../platform/database";
-import { AppError } from "../../platform/errors";
+import { AppError, unavailable } from "../../platform/errors";
+import { hasPermission } from "../../platform/permissions";
+import { estimateSite } from "../cost-basis-context";
 import { object } from "../../shared/validation";
 import {
   releaseAuthority,
@@ -10,7 +12,7 @@ import {
   requireCurrentRelease,
   type ReleaseEvent,
 } from "./context";
-import { releasePolicy } from "./policy";
+import { releasePolicy, releaseCapabilities } from "./policy";
 
 export async function readRelease(
   p: Principal,
@@ -22,14 +24,18 @@ export async function readRelease(
     await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [
       p.workspace_id,
     ]);
-    const { q, e, base } = await releaseAuthority(c, p, id),
-      preview = await releasePreview(c, p, id),
+    const authority = await releaseAuthority(c, p, id);
+    const { q, e, base } = authority,
+      preview = await releasePreview(c, p, id, authority),
       history = await releaseHistory(c, p, q.quote_id);
     const revisions = [];
     for (const revisionId of [
       ...new Set(history.events.map((e) => e.revision_id)),
     ]) {
-      const old = await releaseAuthority(c, p, revisionId);
+      const old =
+        revisionId === id
+          ? authority
+          : await releaseAuthority(c, p, revisionId);
       revisions.push({
         id: old.q.id,
         version: old.q.version,
@@ -53,7 +59,10 @@ export async function readRelease(
       hold: string | null = null;
     if (base)
       try {
-        await requireCurrentRelease(c, p, id);
+        await requireCurrentRelease(c, p, id, undefined, {
+          context: authority,
+          source: preview,
+        });
       } catch (error) {
         if (error instanceof AppError && error.status === 409) {
           current = false;
@@ -99,7 +108,19 @@ export async function readRelease(
       ["distribute", "Distribution"],
     ] as const)
       try {
-        await releaseAuthority(c, p, id, action);
+        // Read/source/recipient authority has just been checked. Prepare also
+        // requires its owning edit scope; other actions add their named duty.
+        if (action === "Prepare") await releaseAuthority(c, p, id, action);
+        else if (
+          !(await hasPermission(
+            c,
+            p,
+            releaseCapabilities[action],
+            e.company_id,
+            estimateSite(e) ?? undefined,
+          ))
+        )
+          throw unavailable();
         can[key] = true;
       } catch (error) {
         if (!(error instanceof AppError && [403, 404].includes(error.status)))
@@ -125,8 +146,8 @@ export async function readRelease(
       !issue &&
       ![base.created_by, e.owner_id, approval.created_by].includes(p.actor_id);
     can.distribute = can.distribute && !!issue;
-    await releaseAuthority(c, p, id);
-    for (const v of revisions) await releaseAuthority(c, p, v.id);
+    // Every source and historical revision was authorised above in this
+    // serialized read. A subsequent request or command starts fresh.
     const safeEvent = (event: ReleaseEvent) => {
       const { manifest, ...rest } = event;
       return {

@@ -116,7 +116,7 @@ export type ReceiptDependencies = Awaited<
 export async function receiptEvidenceAuthority(
   c: QueryClient,
   p: Principal,
-  e: ReceiptEvent,
+  e: Pick<ReceiptEvent, "revision_id" | "target_id" | "basis" | "dependencies">,
   checked: Checked = {
     revisions: new Set(),
     records: new Set(),
@@ -233,7 +233,10 @@ export function receiptEffects(deps: ReceiptDependencies, cmd: ReceiptCommand) {
 export async function effectOwner(
   c: QueryClient,
   p: Principal,
-  proposal: ReceiptEvent,
+  proposal: Pick<
+    ReceiptEvent,
+    "revision_id" | "target_id" | "basis" | "dependencies"
+  >,
   demandId: string,
   checked?: Checked,
 ) {
@@ -261,17 +264,11 @@ export async function effectOwner(
   );
   return owner;
 }
-export async function receiptState(
-  c: QueryClient,
-  p: Principal,
-  basis: FollowupBasis,
-  referral: FollowupEvent | null,
-  receiving: FollowupEvent | null,
-) {
+export function currentEvidenceChecked(basis: FollowupBasis): Checked {
   // The caller just authorised this exact current basis through targetBasis and
   // allocationPosition. Cache only within this read; historical removed links
   // and other actors still require independent current authority.
-  const checked: Checked = {
+  return {
     revisions: new Set([
       basis.conversion.original_evidence.receiving.revision_id,
     ]),
@@ -286,7 +283,16 @@ export async function receiptState(
       ]),
     ]),
     credits: new Set(),
-  };
+  } satisfies Checked;
+}
+export async function receiptState(
+  c: QueryClient,
+  p: Principal,
+  basis: FollowupBasis,
+  referral: FollowupEvent | null,
+  receiving: FollowupEvent | null,
+  checked: Checked = currentEvidenceChecked(basis),
+) {
   const events = await receiptHistory(
     c,
     p,
@@ -409,11 +415,12 @@ export async function receiptCommandAuthority(
   c: QueryClient,
   p: Principal,
   proposal: ReceiptEvent,
+  checked?: Checked,
 ) {
   await supplyRecord(c, p, proposal.command.record_id, "supply.inspect");
   for (const d of proposal.dependencies.group.demands)
     await supplyRecord(c, p, d.record.id, "supply.coordinate");
-  await receiptEvidenceAuthority(c, p, proposal);
+  await receiptEvidenceAuthority(c, p, proposal, checked);
 }
 export async function receiptOriginalAuthority(
   c: QueryClient,
@@ -429,7 +436,13 @@ export async function receiptOriginalAuthority(
   ).rows[0];
   if (!e) throw unavailable();
   await conversionAuthority(c, p, id, e.action === "ReceiptPropose");
-  await receiptEvidenceAuthority(c, p, e);
-  if (e.action === "ReceiptPropose") await receiptCommandAuthority(c, p, e);
+  const checked = {
+    revisions: new Set([id]),
+    records: new Set<string>(),
+    credits: new Set<string>(),
+  };
+  await receiptEvidenceAuthority(c, p, e, checked);
+  if (e.action === "ReceiptPropose")
+    await receiptCommandAuthority(c, p, e, checked);
   else await supplyRecord(c, p, e.demand_id!, "supply.coordinate");
 }

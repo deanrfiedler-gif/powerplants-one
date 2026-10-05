@@ -1,4 +1,5 @@
 import { returnedSupplyBasis } from "../supply-followup/context";
+import type { Checked } from "../supply-followup/authority";
 import type { Principal } from "../../platform/identity";
 import type { QueryClient } from "../../platform/permissions";
 import { AppError, unavailable } from "../../platform/errors";
@@ -173,9 +174,10 @@ export async function dispositionTarget(
   p: Principal,
   d: Awaited<ReturnType<typeof conversionContext>>,
   target: string,
+  checked?: Checked,
 ) {
   const originalBasis = await targetBasis(c, p, d, target);
-  const returned = await returnedSupplyBasis(c, p, target);
+  const returned = await returnedSupplyBasis(c, p, target, checked);
   const basis = returned
     ? { ...originalBasis, supply_followup: returned }
     : originalBasis;
@@ -327,21 +329,35 @@ export async function dispositionEvidenceAuthority(
   c: QueryClient,
   p: Principal,
   e: Pick<DispositionEvent, "basis">,
+  checked: Checked = {
+    revisions: new Set(),
+    records: new Set(),
+    credits: new Set(),
+  },
 ) {
   if ("supply_followup" in e.basis && e.basis.supply_followup) {
     const { followupHistory } = await import("../supply-followup/authority");
-    await followupHistory(c, p, e.basis.target.id);
+    await followupHistory(c, p, e.basis.target.id, checked);
   }
   for (const x of [
     ...e.basis.dependencies.supplies,
     ...e.basis.dependencies.children,
-  ])
-    await supplyRecord(c, p, x.id);
+  ]) {
+    if (!checked.records.has(x.id)) {
+      await supplyRecord(c, p, x.id);
+      checked.records.add(x.id);
+    }
+  }
 }
 export async function dispositionHistoryAuthority(
   c: QueryClient,
   p: Principal,
   target: string,
+  checked: Checked = {
+    revisions: new Set(),
+    records: new Set(),
+    credits: new Set(),
+  },
 ) {
   for (const e of (
     await c.query<DispositionEvent>(
@@ -349,7 +365,7 @@ export async function dispositionHistoryAuthority(
       [p.workspace_id, target],
     )
   ).rows)
-    await dispositionEvidenceAuthority(c, p, e);
+    await dispositionEvidenceAuthority(c, p, e, checked);
 }
 export async function nativeDispositionReceiptAuthority(
   c: QueryClient,

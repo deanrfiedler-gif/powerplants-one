@@ -82,3 +82,9 @@ The repository-wide naming policy and retained-record boundary are documented in
 ## Hosted release model
 
 The image build packages the validated catalogue, component library and guides against its exact source commit. References stay in the immutable image outside public assets and are served only by the protected allowlisted reader. The hosted label links to that commit; file-level history is labelled unavailable when the image has no Git history, with links to the pinned GitHub history. Refresh rereads the deployed snapshot, not unmerged work. Local mode still discovers and fingerprints working files. No browser edit is saved to the repository or business records.
+
+## Shared Shipment allocation shortfall
+
+SYN-ES07-06 retains all existing page keys and schema versions. The ES-07 host adds AllocationShortfall with independently received exact reductions, atomic native effects and visible unmet Demand. SC-09 retains its receiving queue and ES-07 handover. Components, state fixtures, consumer dependencies, page requirements and Draft guides are updated together. All existing review records remain unchanged; accepted shortfall images and owner/device/screen-reader review remain pending. See the shortfall execution ledger for actual functional proof.
+
+Local page-guide requests match the pathname against the current register and read the current guide library directly. They retain exact-route precedence, Git provenance and explicit review status without rebuilding unrelated catalogue fingerprints during navigation. The full development catalogue and `studio:check` still validate all sources, references and consumer bindings. The same access gate and private no-store response apply; hosted guides remain tied to the existing immutable snapshot. Guide edits and removed bindings are visible on the next request; no request-external cache or accepted review is introduced.

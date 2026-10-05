@@ -562,6 +562,7 @@ test("ES07 Receipt populated 0064 upgrade preserves prior generations grants his
     ).rows;
   for (const x of original[tables.indexOf("quote_supply_events")])
     Object.assign(x.row, {
+      allocation_proposal_id: null,
       receipt_proposal_id: null,
       effect_receiving_ids: [],
     });
@@ -579,7 +580,7 @@ test("ES07 Receipt populated 0064 upgrade preserves prior generations grants his
   );
   assert.deepEqual(
     after.filter((x) => x.version > 64).map((x) => x.version),
-    [65],
+    [65, 66],
   );
   assert.deepEqual(await draftBytes(f.owner, f.draft.id), draft);
   assert.deepEqual(await draftBytes(f.owner, f.id), issued);

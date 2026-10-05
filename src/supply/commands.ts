@@ -20,6 +20,7 @@ import {
   financeAllowed,
 } from "./context";
 import { recordCommand, factCommand, allocationCommand } from "./validation";
+import { reductionCommand, reductionHolds } from "./reductions";
 import { factsFor, materialBasis } from "./reads";
 import {
   factSpecs,
@@ -402,6 +403,126 @@ export async function allocateInTransaction(
     "allocation",
   );
   return saved;
+}
+
+// Native bounded atomic contract. A single reduction continues through Allocate.
+// The non-deferred statement trigger checks the complete final conservation position.
+export async function reduceAllocationsInTransaction(
+  c: PoolClient,
+  p: Principal,
+  input: unknown,
+) {
+  const cmd = reductionCommand(input);
+  const s = await supplyRecord(c, p, cmd.supply_id, "supply.coordinate");
+  currentVersion(s.version, cmd.supply_version);
+  check(
+    s.kind === "Supply" && s.data.supply_kind === "Shipment",
+    "Atomic reduction requires one Shipment Supply.",
+  );
+  const sf = currentFacts(await factsFor(c, p, s));
+  check(
+    !sf.some((f) => f.kind === "ExternalOutcome" && f.data.state === "Unknown"),
+    "Reconcile the original unknown Supply outcome first.",
+  );
+  const demands = [];
+  for (const change of cmd.changes) {
+    const d = await supplyRecord(c, p, change.demand_id, "supply.coordinate");
+    currentVersion(d.version, change.demand_version);
+    const old = (
+      await c.query(
+        "SELECT * FROM ppo.supply_allocations WHERE workspace_id=$1 AND id=$2",
+        [p.workspace_id, change.id],
+      )
+    ).rows[0];
+    check(
+      !!old &&
+        old.version === change.expected_version &&
+        old.supply_id === s.id &&
+        old.demand_id === d.id &&
+        old.basis === "Usable" &&
+        old.unit === change.unit &&
+        decimal(change.quantity) < decimal(old.quantity),
+      "Reduce exact existing Usable allocations only; identities and units remain fixed.",
+    );
+    const children = (
+      await c.query(
+        "SELECT id FROM ppo.supply_records WHERE workspace_id=$1 AND parent_id=$2",
+        [p.workspace_id, d.id],
+      )
+    ).rows;
+    const holds = reductionHolds({
+      record: d,
+      facts: currentFacts(await factsFor(c, p, d)),
+      children,
+    });
+    check(!holds.length, holds.join(" "));
+    demands.push(d);
+  }
+  const updated = await c.query(
+    `UPDATE ppo.supply_allocations a SET quantity=x.quantity::numeric,version=a.version+1,reason=$3,updated_by=$4,updated_at=clock_timestamp()
+    FROM jsonb_to_recordset($2::jsonb) AS x(id uuid,quantity text) WHERE a.workspace_id=$1 AND a.id=x.id RETURNING a.id`,
+    [p.workspace_id, JSON.stringify(cmd.changes), cmd.reason, p.actor_id],
+  );
+  check(
+    updated.rowCount === cmd.changes.length,
+    "Every exact allocation must change atomically.",
+  );
+  const saved = await touch(c, p, s, cmd.reason);
+  for (const d of demands) {
+    const changed = await touch(c, p, d, cmd.reason);
+    await impacts(
+      c,
+      p,
+      changed,
+      cmd.reason,
+      String(d.version),
+      String(changed.version),
+      "allocation",
+    );
+  }
+  return saved;
+}
+export async function reduceAllocations(p: Principal, input: unknown) {
+  const cmd = reductionCommand(input);
+  return sharedOperation(
+    p,
+    cmd,
+    "Supply:ReduceAllocations",
+    async (c) => {
+      await supplyRecord(c, p, cmd.supply_id, "supply.coordinate");
+      for (const change of cmd.changes)
+        await supplyRecord(c, p, change.demand_id, "supply.coordinate");
+      // This first atomic contract is available through an independently received
+      // shortfall review only. The native endpoint recovers that original effect.
+      if (
+        !(
+          await c.query(
+            "SELECT 1 FROM ppo.quote_supply_shortfall_events WHERE workspace_id=$1 AND action='ShortfallPropose' AND command->>'operation_id'=$2",
+            [p.workspace_id, cmd.operation_id],
+          )
+        ).rowCount
+      )
+        throw new AppError(
+          409,
+          "SupplyFollowupConflict",
+          "Propose and independently receive the exact shortfall allocation effects before native application.",
+        );
+      const { nativeFollowupReceiptAuthority } =
+        await import("../estimating/supply-followup/authority");
+      await nativeFollowupReceiptAuthority(
+        c,
+        p,
+        cmd.supply_id,
+        cmd.operation_id,
+      );
+    },
+    async (c) =>
+      result(await reduceAllocationsInTransaction(c, p, cmd), {
+        allocation_ids: cmd.changes.map((x) => x.id),
+      }),
+    "SupplyRecord",
+    "SupplyRecorded",
+  );
 }
 
 function check(condition: boolean, message: string): asserts condition {

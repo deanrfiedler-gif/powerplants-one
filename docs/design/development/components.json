@@ -2044,6 +2044,11 @@
           "id": "my-work-breakpoint-read",
           "label": "My Work breakpoint read",
           "description": "Cross the 780px phone boundary in both directions. The newly mounted overview reads current data; observe its exact response before checking the rendered layout. Same-layout resizing requires no invented read; refused responses remain failures."
+        },
+        {
+          "id": "current-development-guide",
+          "label": "Current development guide",
+          "description": "Existing desktop/mobile guide reads fresh register binding, current content and Git provenance; exact routes precede patterns, changed content loses old review applicability and removed bindings stay unavailable. Full catalogue assurance remains separate. Fixture: tests/unit/development-workspace.test.ts; ES-07 and shared-shell host browser journeys."
         }
       ],
       "implementation": [
@@ -2076,7 +2081,11 @@
         "src/components/business-session.tsx",
         "src/components/session-signal.ts",
         "src/engineering/control/components/workspace.tsx",
-        "src/notifications/service.ts"
+        "src/notifications/service.ts",
+        "src/development/catalog.ts",
+        "src/development/runtime.ts",
+        "src/development/page-guide.tsx",
+        "src/app/api/development/catalog/route.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -2091,7 +2100,8 @@
         "scope:FI-06",
         "scope:EN-02",
         "scope:SH-03",
-        "scope:SH-01"
+        "scope:SH-01",
+        "scope:ES-07"
       ],
       "desktop": "Review the real global search, workspace switcher, rail, More and utility controls around this catalogue. Shell access can be unavailable without a running identity/database service.",
       "mobile": "Resize the actual browser window to review the mobile shell; component-frame presets do not resize the surrounding application. Native shell controls must remain inside the 64px header, including local identity at 390px and 320px; the legacy CRM grid must not overlay the first page action.",
@@ -2193,6 +2203,14 @@
           "action": "Review the two-direction responsive-readiness and real overview evidence. Keep visual and owner acceptance pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "bounded-development-guide-read",
+          "priority": "Medium",
+          "owner": "Dean Fiedler",
+          "expected": "Same permitted guide, current source provenance and explicit review/unavailable states at desktop and mobile widths.",
+          "actual": "Direct current-register lookup replaces full catalogue reconstruction for page help; the full catalogue and source/reference validation remain intact.",
+          "action": "Review existing ES-07/shared-shell host captures and current-guide fixture; no visual or owner acceptance is inferred."
         }
       ],
       "review": null
@@ -3477,7 +3495,7 @@
       "title": "Exact receiving and controlled conversion",
       "category": "Forms",
       "module": "ES",
-      "purpose": "Attributable receiving, explicit item resolution, frozen plan and atomic native Forecast demand with original recovery. Completed targets receive immutable Retain/Hold/ReviseQuantity decisions and separately applied native effects. Held targets enter owned Supply receiving, immutable allocation review, separate native application and returned evidence. Existing Receipt correction freezes independently received shared-demand effects before native application.",
+      "purpose": "Attributable receiving, explicit item resolution, frozen plan and atomic native Forecast demand with original recovery. Completed targets receive immutable Retain/Hold/ReviseQuantity decisions and separately applied native effects. Held targets enter owned Supply receiving, immutable allocation review, separate native application and returned evidence. Existing Receipt correction freezes independently received shared-demand effects before native application. Receipt-derived Shipment shortfall separately receives each changed Demand before exact atomic allocation reduction.",
       "owner": "Dean Fiedler",
       "example": null,
       "coverage": "Host example",
@@ -3571,6 +3589,16 @@
           "id": "receipt-shortfall",
           "label": "Corrected evidence, retained shortfall",
           "description": "Native Receipt successor and immutable original receipt; completed acceptances remain retained evidence without renewed-receiving controls. Allocations unchanged, readiness held and fresh ES-07 disposition required."
+        },
+        {
+          "id": "allocation-receiving",
+          "label": "Independent allocation receiving",
+          "description": "Complete reductions on the corrected Shipment; each changed Demand independently Accepted, Returned or Held. Quantity, unmet Demand and readiness summary stay visible; exact reviewed readiness expands per Demand and completed effects retain owned impacts. Real host: tests/browser/quotation-allocation-shortfall.spec.ts."
+        },
+        {
+          "id": "allocation-outcome",
+          "label": "Valid capacity, continuing unmet Demand",
+          "description": "Completed exact atomic native effects and original receipts; retained operational impacts and fresh ES-07 review. No renewed receiving on completed proposals."
         }
       ],
       "implementation": [
@@ -3593,6 +3621,10 @@
         {
           "path": "src/components/quotation-receipt-correction.tsx",
           "symbol": "ReceiptCorrection"
+        },
+        {
+          "path": "src/components/quotation-allocation-shortfall.tsx",
+          "symbol": "AllocationShortfall"
         }
       ],
       "dependencies": [
@@ -3612,7 +3644,11 @@
         "docs/decisions/quotation-reservation-reconciliation.md",
         "src/estimating/supply-followup/receipt-context.ts",
         "src/estimating/supply-followup/receipt-service.ts",
-        "docs/decisions/quotation-receipt-correction.md"
+        "docs/decisions/quotation-receipt-correction.md",
+        "src/estimating/supply-followup/shortfall-context.ts",
+        "src/estimating/supply-followup/shortfall-service.ts",
+        "src/supply/reductions.ts",
+        "docs/decisions/quotation-allocation-shortfall.md"
       ],
       "reference": {
         "path": "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",
@@ -3629,7 +3665,7 @@
       "desktop": "One shell scroll owner; exact binding, recovery, six decision regions, source/target review and immutable history.",
       "mobile": "Stacked panels at 390/320 px; wrap identities and preserve labelled fields and original recovery above forms.",
       "keyboard": "Native labelled inputs, shared buttons, visible focus and error focus; no drag-only decision.",
-      "limitations": "Actual fixtures in tests/browser/quotation-conversion.spec.ts. Supply Demand Forecast only; no operational master, ERP order, customer signature or work authority. Positive Forecast quantity revision only; dependent/Approved target changes held. Disposition host examples use actual compiled synthetic fixtures. Existing allocation quantity adjustment requires an already Approved demand; zero retains native identity and class. No ERP reservation release or cancellation. See tests/browser/quotation-supply-followup.spec.ts. Original reservation evidence only; no external action or removal of other holds.",
+      "limitations": "Actual fixtures in tests/browser/quotation-conversion.spec.ts. Supply Demand Forecast only; no operational master, ERP order, customer signature or work authority. Positive Forecast quantity revision only; dependent/Approved target changes held. Disposition host examples use actual compiled synthetic fixtures. Existing allocation quantity adjustment requires an already Approved demand; zero retains native identity and class. No ERP reservation release or cancellation. See tests/browser/quotation-supply-followup.spec.ts. Original reservation evidence only; no external action or removal of other holds. Shortfall reductions preserve Demand/Receipt content; no priority, replenishment or external release. AllocationShortfall reuses existing controls and journal.",
       "gaps": [
         {
           "id": "es07-native-acceptance",
@@ -3668,6 +3704,14 @@
           "expected": "Paired owner/device review of shared Supply effects and separately owned receiving.",
           "actual": "Synthetic native extension; accepted images and owner/device/screen-reader review pending.",
           "action": "Review actual execution captures and source/reference differences without promoting business acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "allocation-shortfall-review",
+          "expected": "Paired native review of shortfall receiving, atomic effects and remaining work.",
+          "actual": "Synthetic executable extension; accepted native images and owner/device/screen-reader review pending.",
+          "action": "Review compiled host captures against the bounded decision; preserve separate functional evidence.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

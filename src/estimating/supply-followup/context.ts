@@ -1,23 +1,38 @@
+import {
+  shortfallState,
+  shortfallHistory,
+  acceptedShortfall,
+  shortfallCommandAuthority,
+} from "./shortfall-context";
 import type { Principal } from "../../platform/identity";
 import type { QueryClient } from "../../platform/permissions";
 import { AppError } from "../../platform/errors";
 import { scopedOwner } from "../../shared/authority";
 import { supplyRecord } from "../../supply/context";
-import { conversionContext, conversionAuthority } from "../conversion/context";
+import {
+  conversionContext,
+  conversionAuthority,
+  conversionScope,
+} from "../conversion/context";
 import {
   targetBasis,
   dispositionHash,
   dispositionHistoryAuthority,
 } from "../disposition/context";
 import { allocationPosition } from "./position";
-import { followupHistory, followupEvidenceAuthority } from "./authority";
-import type { FollowupBasis } from "./model";
+import {
+  followupHistory,
+  followupEvidenceAuthority,
+  type Checked,
+} from "./authority";
+import { followupStatus, type FollowupBasis } from "./model";
 import { reservationDependencies } from "./dependency";
 import {
   receiptState,
   acceptedReceipt,
   receiptCommandAuthority,
   receiptHistory,
+  currentEvidenceChecked,
 } from "./receipt-context";
 
 export async function followupOwner(
@@ -25,6 +40,10 @@ export async function followupOwner(
   p: Principal,
   ownerId: string,
   basis: FollowupBasis,
+  known?: {
+    context: Awaited<ReturnType<typeof conversionContext>>;
+    checked: Checked;
+  },
 ) {
   const target = basis.conversion.target;
   const owner = await scopedOwner(
@@ -43,28 +62,43 @@ export async function followupOwner(
     target.site_id ?? undefined,
     "activity.edit",
   );
-  await conversionAuthority(
-    c,
-    owner,
-    basis.conversion.original_evidence.receiving.revision_id,
-    true,
-  );
-  await allocationPosition(c, owner, target.id);
+  if (known && owner.actor_id === p.actor_id) {
+    // The same actor just read this current source and shared position under
+    // the workspace lock. Recheck write scope; other owners take the full path.
+    await conversionScope(c, owner, known.context, true);
+    await followupEvidenceAuthority(
+      c,
+      owner,
+      {
+        revision_id: known.context.q.id,
+        target_id: target.id,
+        basis,
+      },
+      known.checked,
+    );
+  } else {
+    await conversionAuthority(
+      c,
+      owner,
+      basis.conversion.original_evidence.receiving.revision_id,
+      true,
+    );
+    await allocationPosition(c, owner, target.id);
+  }
   return owner;
 }
-export async function followupContext(
+export async function followupBasis(
   c: QueryClient,
   p: Principal,
   id: string,
   target: string,
   known?: {
     context: Awaited<ReturnType<typeof conversionContext>>;
-    basis: FollowupBasis["conversion"];
-    resolved: boolean;
+    basis?: FollowupBasis["conversion"];
+    resolved?: boolean;
   },
 ) {
   const d = known?.context ?? (await conversionContext(c, p, id));
-  if (!known) await dispositionHistoryAuthority(c, p, target);
   const conversion = known?.basis ?? (await targetBasis(c, p, d, target));
   const disposition =
     (
@@ -79,8 +113,37 @@ export async function followupContext(
     position: await allocationPosition(c, p, target),
     disposition,
   };
+  return basis;
+}
+export async function followupContext(
+  c: QueryClient,
+  p: Principal,
+  id: string,
+  target: string,
+  known?: {
+    context: Awaited<ReturnType<typeof conversionContext>>;
+    basis?: FollowupBasis["conversion"];
+    resolved?: boolean;
+    checked?: Checked;
+    history_checked?: boolean;
+  },
+) {
+  const context = known?.context ?? (await conversionContext(c, p, id));
+  const checked = known?.checked ?? {
+    revisions: new Set([context.q.id]),
+    records: new Set<string>(),
+    credits: new Set<string>(),
+  };
+  if (!known?.history_checked)
+    await dispositionHistoryAuthority(c, p, target, checked);
+  const basis = await followupBasis(c, p, id, target, known ?? { context });
+  const { conversion, disposition } = basis;
+  const currentChecked = currentEvidenceChecked(basis);
+  for (const revision of currentChecked.revisions)
+    checked.revisions.add(revision);
+  for (const record of currentChecked.records) checked.records.add(record);
   const basisHash = dispositionHash(basis),
-    events = await followupHistory(c, p, target);
+    events = await followupHistory(c, p, target, checked);
   const referral = events.filter((e) => e.action === "Refer").at(-1) ?? null;
   const current = events.filter((e) => e.referral_id === referral?.id);
   const receiving =
@@ -93,6 +156,16 @@ export async function followupContext(
     basis,
     referral,
     receiving,
+    checked,
+  );
+  const shortfall = await shortfallState(
+    c,
+    p,
+    basis,
+    referral,
+    receiving,
+    events,
+    checked,
   );
   const r = conversion.target;
   const holds: string[] = [];
@@ -130,6 +203,25 @@ export async function followupContext(
         "Relevant quotation, disposition, demand, allocation, shared supply or dependency evidence changed. Compare and replace the review.",
       );
     if (review.decision === "AdjustAllocation") reviewHolds.push(...holds);
+    if (review.decision === "ReduceAllocations") {
+      try {
+        const received = acceptedShortfall(
+          shortfall,
+          review.allocation_proposal_id!,
+        );
+        if (
+          dispositionHash(received.receiving_ids) !==
+          dispositionHash(review.effect_receiving_ids)
+        )
+          reviewHolds.push(
+            "Allocation receiving changed after review. Record a fresh immutable review.",
+          );
+        await shortfallCommandAuthority(c, p, received.proposal, checked);
+      } catch (e) {
+        if (!(e instanceof AppError)) throw e;
+        reviewHolds.push(e.message);
+      }
+    }
     if (review.decision === "CorrectReceipt") {
       try {
         const received = acceptedReceipt(
@@ -143,17 +235,26 @@ export async function followupContext(
           reviewHolds.push(
             "Affected-demand receiving changed after review. Record a fresh immutable review.",
           );
-        await receiptCommandAuthority(c, p, received.proposal);
+        await receiptCommandAuthority(c, p, received.proposal, checked);
       } catch (e) {
         if (!(e instanceof AppError)) throw e;
         reviewHolds.push(e.message);
       }
     }
     try {
-      const owner = await followupOwner(c, p, referral!.owner_id, basis);
-      await followupEvidenceAuthority(c, owner, review);
+      const owner = await followupOwner(c, p, referral!.owner_id, basis, {
+        context,
+        checked,
+      });
+      const ownerChecked = owner.actor_id === p.actor_id ? checked : undefined;
+      await followupEvidenceAuthority(c, owner, review, ownerChecked);
       if (review.decision === "CorrectReceipt" && receiptCorrection.proposal)
-        await receiptCommandAuthority(c, owner, receiptCorrection.proposal);
+        await receiptCommandAuthority(
+          c,
+          owner,
+          receiptCorrection.proposal,
+          ownerChecked,
+        );
       if (review.command && "supply_id" in review.command)
         await supplyRecord(
           c,
@@ -196,7 +297,7 @@ export async function followupContext(
       .at(-1) ?? null;
   let canWrite = false;
   try {
-    await conversionAuthority(c, p, id, true);
+    await conversionScope(c, p, context, true);
     canWrite = true;
   } catch (e) {
     if (!(e instanceof AppError)) throw e;
@@ -214,30 +315,16 @@ export async function followupContext(
     review,
     applied,
     outcome,
-    status: !referral
-      ? "Not referred"
-      : receiving?.decision === "Returned"
-        ? "Returned"
-        : receiving?.decision === "Held"
-          ? "Continuing hold"
-          : completed
-            ? review.decision === "Hold"
-              ? "Continuing hold"
-              : review.decision === "Retain"
-                ? "Position retained"
-                : review.decision === "ReconcileReservationOutcome"
-                  ? "Reservation outcome reconciled"
-                  : review.decision === "CorrectReceipt"
-                    ? "Receipt evidence corrected"
-                    : "Allocation adjusted"
-            : receiving?.decision === "Accepted"
-              ? "Accepted for review"
-              : "Awaiting owner",
+    status: followupStatus(referral, receiving, review, applied),
     adjustment_holds: holds,
     reservation_dependencies: reservationDependencies(basis),
     receipt_correction: receiptCorrection,
+    allocation_shortfall: shortfall,
     review_holds: reviewHolds,
-    can_refer: exception && !known?.resolved && heldTarget && canReplace,
+    can_refer:
+      ((exception && !known?.resolved && heldTarget) ||
+        shortfall.candidates.length > 0) &&
+      canReplace,
     can_apply: !!review && !completed && !reviewHolds.length,
     can_write: canWrite,
     outcome_current:
@@ -255,11 +342,19 @@ export async function returnedSupplyBasis(
   c: QueryClient,
   p: Principal,
   target: string,
+  checked: Checked = {
+    revisions: new Set(),
+    records: new Set(),
+    credits: new Set(),
+  },
 ) {
-  const events = await followupHistory(c, p, target);
+  // Share current authority only within this actor's single serialized read.
+  // Each previously unseen revision/record is still checked before disclosure.
+  const events = await followupHistory(c, p, target, checked);
   if (!events.length) return null;
   const last = events.at(-1)!;
-  const receiptEvents = await receiptHistory(c, p, target);
+  const receiptEvents = await receiptHistory(c, p, target, checked);
+  const shortfallEvents = await shortfallHistory(c, p, target, checked);
   const outcome = events
     .filter(
       (e) =>
@@ -274,6 +369,9 @@ export async function returnedSupplyBasis(
     outcome_id: outcome?.id ?? null,
     outcome_hash: outcome?.basis_hash ?? null,
     position: await allocationPosition(c, p, target),
+    ...(shortfallEvents.length
+      ? { allocation_event_id: shortfallEvents.at(-1)!.id }
+      : {}),
     ...(receiptEvents.length
       ? { receipt_event_id: receiptEvents.at(-1)!.id }
       : {}),

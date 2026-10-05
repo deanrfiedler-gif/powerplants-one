@@ -1,10 +1,11 @@
+import { conversionReadClient } from "../conversion/source-authority";
 import { randomUUID } from "node:crypto";
 import type { Principal } from "../../platform/identity";
 import { unavailable } from "../../platform/errors";
 import { sharedOperation } from "../../platform/operations";
 import { supplyRecord } from "../../supply/context";
 import { factCommand } from "../../supply/validation";
-import { conversionAuthority } from "../conversion/context";
+import { conversionAuthority, conversionContext } from "../conversion/context";
 import { expected } from "../service";
 import { draftBytes } from "../worker";
 import { releaseHash } from "../release/context";
@@ -20,6 +21,7 @@ import {
   receiptCommandAuthority,
   receiptOriginalAuthority,
   effectOwner,
+  currentEvidenceChecked,
   type ReceiptEvent,
   type ReceiptCommand,
 } from "./receipt-context";
@@ -33,7 +35,12 @@ async function execute(p: Principal, id: string, input: Input) {
     input,
     `QuoteSupply:${input.action}`,
     async (c) => {
-      await conversionAuthority(c, p, id, input.action === "ReceiptPropose");
+      const source = await conversionAuthority(
+        c,
+        p,
+        id,
+        input.action === "ReceiptPropose",
+      );
       await supplyRecord(
         c,
         p,
@@ -51,9 +58,15 @@ async function execute(p: Principal, id: string, input: Input) {
         ).rowCount
       )
         await receiptOriginalAuthority(c, p, id, input.operation_id);
+      return source;
     },
-    async (c) => {
-      const t = await followupContext(c, p, id, input.target_id);
+    async (c, authorised) => {
+      const read = conversionReadClient(c, p);
+      const context = await conversionContext(read, p, id, authorised);
+      const t = await followupContext(read, p, id, input.target_id, {
+        context,
+      });
+      const checked = currentEvidenceChecked(t.basis);
       expected(t.sequence, input.expected_sequence);
       if (
         input.execution_id !== t.execution_id ||
@@ -86,7 +99,7 @@ async function execute(p: Principal, id: string, input: Input) {
         decision: ReceiptEvent["decision"];
       if (input.action === "ReceiptPropose") {
         if (t.referral.owner_id !== p.actor_id) throw unavailable();
-        await followupOwner(c, p, p.actor_id, t.basis);
+        await followupOwner(c, p, p.actor_id, t.basis, { context, checked });
         if (
           input.receiving_id !== t.receiving.id ||
           input.predecessor_id !== (state.proposal?.id ?? null)
@@ -184,7 +197,13 @@ async function execute(p: Principal, id: string, input: Input) {
           followupConflict(
             "Retain the latest affected-demand decision as predecessor.",
           );
-        const owner = await effectOwner(c, p, proposal, input.demand_id);
+        const owner = await effectOwner(
+          c,
+          p,
+          proposal,
+          input.demand_id,
+          checked,
+        );
         if (owner.actor_id !== p.actor_id) throw unavailable();
         if (
           t.events.some(
@@ -229,9 +248,9 @@ async function execute(p: Principal, id: string, input: Input) {
         created_by: p.actor_id,
         operation_id: input.operation_id,
       };
-      await receiptEvidenceAuthority(c, p, e as ReceiptEvent);
+      await receiptEvidenceAuthority(c, p, e as ReceiptEvent, checked);
       if (input.action === "ReceiptPropose")
-        await receiptCommandAuthority(c, p, e as ReceiptEvent);
+        await receiptCommandAuthority(c, p, e as ReceiptEvent, checked);
       const columns = Object.keys(e),
         values = Object.values(e);
       const saved = (

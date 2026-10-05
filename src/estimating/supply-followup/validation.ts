@@ -95,6 +95,7 @@ export function reviewInput(id: string, value: unknown) {
     "observed_at",
     "lookup_evidence",
     "receipt_proposal_id",
+    "allocation_proposal_id",
   ]);
   const decision = choice(r.decision, "decision", [
     "Retain",
@@ -102,7 +103,13 @@ export function reviewInput(id: string, value: unknown) {
     "AdjustAllocation",
     "ReconcileReservationOutcome",
     "CorrectReceipt",
+    "ReduceAllocations",
   ]);
+  if (decision !== "ReduceAllocations" && r.allocation_proposal_id != null)
+    invalid(
+      "allocation_proposal_id",
+      "Only shortfall reduction uses allocation receiving.",
+    );
   if (decision !== "CorrectReceipt" && r.receipt_proposal_id != null)
     invalid(
       "receipt_proposal_id",
@@ -133,6 +140,14 @@ export function reviewInput(id: string, value: unknown) {
     receiving_id: uuid(r.receiving_id, "receiving_id"),
     predecessor_id: optionalId(r.predecessor_id, "predecessor_id"),
     decision,
+    ...(decision === "ReduceAllocations"
+      ? {
+          allocation_proposal_id: uuid(
+            r.allocation_proposal_id,
+            "allocation_proposal_id",
+          ),
+        }
+      : {}),
     ...(decision === "CorrectReceipt"
       ? {
           receipt_proposal_id: uuid(

@@ -1,10 +1,11 @@
+import { conversionReadClient } from "./source-authority";
 import { followupContext } from "../supply-followup/context";
 import { followupAvailable } from "../supply-followup/authority";
 import type { Principal } from "../../platform/identity";
 import { transaction } from "../../platform/database";
 import { AppError } from "../../platform/errors";
 import { object } from "../../shared/validation";
-import { conversionAuthority, conversionContext } from "./context";
+import { conversionScope, conversionContext } from "./context";
 import { conversionPolicy } from "./model";
 import {
   dispositionTarget,
@@ -16,16 +17,24 @@ export async function readConversion(
   query: Record<string, string> = {},
 ) {
   object(query, []);
-  return transaction(async (c) => {
-    await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [
+  return transaction(async (client) => {
+    await client.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [
       p.workspace_id,
     ]);
+    const c = conversionReadClient(client, p);
     const d = await conversionContext(c, p, id);
     const originalRevision = d.executions[0]?.revision_id ?? id;
     const original =
       originalRevision === id
         ? d
         : await conversionContext(c, p, originalRevision);
+    // This actor has just read both source revisions in this locked read.
+    // Historical links are checked once each; the set never survives the request.
+    const checked = {
+      revisions: new Set([id, originalRevision]),
+      records: new Set<string>(),
+      credits: new Set<string>(),
+    };
     const dispositions = [];
     const followups = [];
     const supplySchema = await followupAvailable(c);
@@ -35,12 +44,13 @@ export async function readConversion(
       )
     ).rows[0].present;
     for (const target of dispositionSchema ? original.targets : []) {
-      await dispositionHistoryAuthority(c, p, target.target_id);
+      await dispositionHistoryAuthority(c, p, target.target_id, checked);
       const disposition = await dispositionTarget(
         c,
         p,
         original,
         target.target_id,
+        checked,
       );
       dispositions.push(disposition);
       if (supplySchema) {
@@ -54,18 +64,20 @@ export async function readConversion(
             context: original,
             basis,
             resolved: disposition.status === "Resolved",
+            checked,
+            history_checked: true,
           }),
         );
       }
     }
     let canWrite = false;
     try {
-      await conversionAuthority(c, p, id, true);
+      await conversionScope(c, p, d, true);
       canWrite = true;
     } catch (e) {
       if (!(e instanceof AppError && [403, 404].includes(e.status))) throw e;
     }
-    await conversionAuthority(c, p, id);
+    await conversionScope(c, p, d);
     return {
       revision: {
         id: d.q.id,

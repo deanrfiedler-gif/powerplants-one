@@ -91,3 +91,7 @@ The existing local identity selector includes the distinct fictional scheduling 
 ## FI-06 consumer
 
 IncidentScreen uses this shared control on scope:FI-06 and its three /service/incidents routes. Host/state fixtures: tests/browser/field-incidents.spec.ts and tests/database/field-incidents.test.ts. Review dirty/conflict/uncertain, denied/restricted and reopened outcomes at 1440/1024/390/320 and actual 200% zoom; owner acceptance pending.
+
+## Current development guidance during ES-07 navigation
+
+The existing development guide retains desktop/mobile content, focus, loading and unavailable states. Its pathname lookup now reads the current register binding and guide without rebuilding the full design catalogue. Exact routes still precede record patterns; changed content loses old review applicability and removed bindings remain unavailable. The full catalogue, access gate, Git history and hosted snapshot are unchanged. The live-edit/unknown-binding fixture is `tests/unit/development-workspace.test.ts`; compiled ES-07 and shared-shell journeys remain host proof. Consumer bindings include ES-07; the development-register page records the corresponding lookup boundary. No new accepted image or owner/device/screen-reader review is claimed.
