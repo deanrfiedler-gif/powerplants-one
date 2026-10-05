@@ -46,7 +46,7 @@ Execution requires an Active Project, both existing dates, an internal task owne
 
 Relevant source, Receipt, allocation, Demand, Impact, Activity, Project/task, ownership, receiving or authority changes invalidate applicable unexecuted work. Selected Project changes are relevant because the native command versions that aggregate. Unrelated Projects and Supply records do not invalidate the proposal. New consequential dependencies are detected under workspace serialization immediately before mutation.
 
-Retain/Hold freeze reviewed evidence and return an explicit continuing follow-up without native receipts. An applied forecast withdrawal resolves only the evidenced forecast consequence. Unmet Demand and unrelated Requested Impacts remain visible. Fresh native material readiness is computed; current ES-07 exceptions require fresh explicit disposition. Quotation retention leaves operational follow-up available and supplies no operational approval.
+Retain/Hold freeze reviewed evidence and return an explicit continuing follow-up without native receipts. An applied forecast withdrawal resolves only the evidenced forecast consequence. Unmet Demand and unrelated Requested Impacts remain visible. Fresh native material readiness is computed; current ES-07 exceptions require fresh explicit disposition. Quotation retention leaves operational follow-up available and supplies no operational approval. Pending material proposals, receiving and frozen reviews do not themselves reopen retained quotation disposition. Only returned material outcomes enter its evidence basis; relevant native dependency changes still require fresh assessment. Current authority is checked before pending or historical evidence is disclosed.
 
 ## Recovery and storage
 

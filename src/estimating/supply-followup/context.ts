@@ -371,6 +371,12 @@ export async function returnedSupplyBasis(
   const receiptEvents = await receiptHistory(c, p, target, checked);
   const shortfallEvents = await shortfallHistory(c, p, target, checked);
   const materialEvents = await materialHistory(c, p, target, checked);
+  // Pending downstream receiving is actionable without reopening a retained
+  // quotation. Only returned reviewed evidence enters the ES-07 disposition.
+  // History above still checks current authority before exposing any evidence.
+  const materialOutcome = materialEvents
+    .filter((e) => e.action === "MaterialApply")
+    .at(-1);
   const outcome = events
     .filter(
       (e) =>
@@ -379,12 +385,10 @@ export async function returnedSupplyBasis(
     )
     .at(-1);
   return {
-    ...(materialEvents.length
+    ...(materialOutcome
       ? {
-          material_event_id: materialEvents.at(-1)!.id,
-          material_outcome_id:
-            materialEvents.filter((e) => e.action === "MaterialApply").at(-1)
-              ?.id ?? null,
+          material_event_id: materialOutcome.id,
+          material_outcome_id: materialOutcome.id,
         }
       : {}),
     event_id: last.id,

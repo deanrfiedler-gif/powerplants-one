@@ -500,12 +500,20 @@ test("ES07 material: quotation retention leaves owned work actionable and return
     "MaterialPropose",
     materialProposal(t, f.task.id),
   );
+  assert.equal(
+    (await readConversion(f.owner, f.id)).dispositions[0].status,
+    "Resolved",
+  );
   await receiveMaterial(f);
   await executeMaterial(
     f.owner,
     f.id,
     "MaterialReview",
     materialReview(await currentFollowup(f)),
+  );
+  assert.equal(
+    (await readConversion(f.owner, f.id)).dispositions[0].status,
+    "Resolved",
   );
   await executeMaterial(
     f.owner,
