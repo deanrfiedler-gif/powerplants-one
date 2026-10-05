@@ -409,7 +409,7 @@ test("ES07 allocation receiving is independently owned, site scoped, revocable a
       await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [
         f.owner.workspace_id,
       ]);
-      const read = conversionReadClient(c, f.owner);
+      const read = await conversionReadClient(c, f.owner);
       await supplyRecord(read, f.owner, t.target_id);
       // A successful source read by the first actor grants nothing to a second
       // actor using the same bounded read client and converted target.

@@ -66,7 +66,7 @@ export async function executeMaterial(
       return source;
     },
     async (c, source) => {
-      const read = conversionReadClient(c, p);
+      const read = await conversionReadClient(c, p);
       const context = await conversionContext(read, p, id, source);
       const t = await followupContext(read, p, id, input.target_id, {
         context,

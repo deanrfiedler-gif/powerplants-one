@@ -80,7 +80,7 @@ async function execute(p: Principal, id: string, input: ConversionInput) {
     `QuoteConversion:${input.action}`,
     (c) => conversionAuthority(c, p, id, true),
     async (c, authorised) => {
-      const read = conversionReadClient(c, p);
+      const read = await conversionReadClient(c, p);
       const d = await conversionContext(read, p, id, authorised);
       expected(d.conversion_sequence, input.expected_sequence);
       const original = (

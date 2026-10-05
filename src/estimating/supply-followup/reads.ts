@@ -17,7 +17,7 @@ export async function receivingWorklist(
     await client.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [
       p.workspace_id,
     ]);
-    const c = conversionReadClient(client, p);
+    const c = await conversionReadClient(client, p);
     let coordinationError: AppError | null = null;
     try {
       await requireCapability(c, p, "supply.coordinate");

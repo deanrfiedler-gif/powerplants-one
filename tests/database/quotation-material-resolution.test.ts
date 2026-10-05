@@ -1,6 +1,9 @@
 import assert from "node:assert/strict";
 import { before, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
+import { createSession } from "../../src/platform/identity";
+import { hasPermission } from "../../src/platform/permissions";
+import { conversionReadClient } from "../../src/estimating/conversion/source-authority";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { reset, migrate, seed } from "../../scripts/database";
@@ -53,6 +56,58 @@ process.env.PPO_RESET_DATABASE = "ppo_synthetic_test";
 before(reset);
 after(closeDatabase);
 const code = (v: string) => (e: unknown) => (e as { code: string }).code === v;
+
+test("prepared read plans retain current actors, record changes, revoked grants and server-clock expiry", async () => {
+  const owner = (await createSession("coordinator")).principal;
+  const other = await secondOwner(owner);
+  const c = await database().connect();
+  try {
+    await c.query("BEGIN");
+    await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [
+      owner.workspace_id,
+    ]);
+    const read = await conversionReadClient(c, owner);
+    for (let n = 0; n < 6; n++)
+      assert.equal(await hasPermission(read, other, "project.edit"), true);
+    await c.query(
+      "UPDATE ppo.users SET active=false WHERE workspace_id=$1 AND id=$2",
+      [other.workspace_id, other.actor_id],
+    );
+    assert.equal(await hasPermission(read, other, "project.edit"), false);
+    assert.equal(await hasPermission(read, owner, "project.edit"), true);
+    await c.query(
+      "UPDATE ppo.users SET active=true,display_name='SYN changed after preparation' WHERE workspace_id=$1 AND id=$2",
+      [other.workspace_id, other.actor_id],
+    );
+    const sql =
+      "SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2";
+    assert.equal(
+      (await read.query(sql, [other.workspace_id, other.actor_id])).rows[0]
+        .display_name,
+      "SYN changed after preparation",
+    );
+    await c.query(
+      "UPDATE ppo.users SET display_name='SYN fresh current record' WHERE workspace_id=$1 AND id=$2",
+      [other.workspace_id, other.actor_id],
+    );
+    assert.equal(
+      (await read.query(sql, [other.workspace_id, other.actor_id])).rows[0]
+        .display_name,
+      "SYN fresh current record",
+    );
+    await c.query(
+      "UPDATE ppo.permission_grants SET valid_to=clock_timestamp()+interval '1 second' WHERE workspace_id=$1 AND user_id=$2 AND capability='project.edit'",
+      [other.workspace_id, other.actor_id],
+    );
+    assert.equal(await hasPermission(read, other, "project.edit"), true);
+    await c.query("SELECT pg_sleep(1.05)");
+    assert.equal(await hasPermission(read, other, "project.edit"), false);
+    assert.equal(await hasPermission(read, owner, "project.edit"), true);
+  } finally {
+    await c.query("ROLLBACK");
+    c.release();
+  }
+});
 async function secondOwner(p: Parameters<typeof executeMaterial>[0]) {
   const id = randomUUID();
   await database().query(
