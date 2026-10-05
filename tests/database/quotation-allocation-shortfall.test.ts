@@ -1,8 +1,14 @@
+import { conversionReadClient } from "../../src/estimating/conversion/source-authority";
+import { supplyRecord } from "../../src/supply/context";
 import assert from "node:assert/strict";
 import { before, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
-import { database, closeDatabase } from "../../src/platform/database";
+import {
+  database,
+  closeDatabase,
+  transaction,
+} from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { reset, migrate, seed } from "../../scripts/database";
 import { readOperation } from "../../src/shared/receipts";
@@ -392,6 +398,44 @@ test("ES07 allocation receiving is independently owned, site scoped, revocable a
   await reviewSupply(f.owner, f.id, shortfallReview(await currentFollowup(f)));
   t = await currentFollowup(f);
   assert.ok(t.can_apply);
+  const sourceGrants = (
+    await database().query(
+      "DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='estimating.quote.read' RETURNING *",
+      [id],
+    )
+  ).rows;
+  try {
+    await transaction(async (c) => {
+      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [
+        f.owner.workspace_id,
+      ]);
+      const read = conversionReadClient(c, f.owner);
+      await supplyRecord(read, f.owner, t.target_id);
+      // A successful source read by the first actor grants nothing to a second
+      // actor using the same bounded read client and converted target.
+      await assert.rejects(
+        supplyRecord(read, owner, t.target_id),
+        code("RecordUnavailable"),
+      );
+    });
+    assert.equal((await currentFollowup(f)).can_apply, false);
+    await assert.rejects(readConversion(owner, f.id));
+    await assert.rejects(readOperation(owner, cmd.operation_id));
+    await assert.rejects(applySupply(f.owner, f.id, supplyApply(t)));
+    assert.equal(
+      (await receivingWorklist(owner)).rows.some(
+        (row) => row.target_id === t.target_id,
+      ),
+      false,
+    );
+  } finally {
+    for (const g of sourceGrants)
+      await database().query(
+        "INSERT INTO ppo.permission_grants SELECT * FROM jsonb_populate_record(NULL::ppo.permission_grants,$1)",
+        [g],
+      );
+  }
+  assert.equal((await currentFollowup(f)).can_apply, true);
   const grants = (
     await database().query(
       "DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='supply.coordinate' RETURNING *",

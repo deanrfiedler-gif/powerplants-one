@@ -1,3 +1,4 @@
+import { conversionReadClient } from "./source-authority";
 import { followupContext } from "../supply-followup/context";
 import { followupAvailable } from "../supply-followup/authority";
 import type { Principal } from "../../platform/identity";
@@ -16,10 +17,11 @@ export async function readConversion(
   query: Record<string, string> = {},
 ) {
   object(query, []);
-  return transaction(async (c) => {
-    await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [
+  return transaction(async (client) => {
+    await client.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [
       p.workspace_id,
     ]);
+    const c = conversionReadClient(client, p);
     const d = await conversionContext(c, p, id);
     const originalRevision = d.executions[0]?.revision_id ?? id;
     const original =

@@ -1,3 +1,4 @@
+import { conversionReadClient } from "../conversion/source-authority";
 import {
   shortfallHistory,
   shortfallAvailable,
@@ -95,8 +96,9 @@ async function execute(p: Principal, id: string, input: Input) {
       return { source, checked };
     },
     async (c, authorised) => {
-      const context = await conversionContext(c, p, id, authorised.source);
-      const t = await followupContext(c, p, id, input.target_id, {
+      const read = conversionReadClient(c, p);
+      const context = await conversionContext(read, p, id, authorised.source);
+      const t = await followupContext(read, p, id, input.target_id, {
         context,
         checked: authorised.checked,
       });

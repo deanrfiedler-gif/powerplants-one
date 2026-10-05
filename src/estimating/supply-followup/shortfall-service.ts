@@ -1,3 +1,4 @@
+import { conversionReadClient } from "../conversion/source-authority";
 import { randomUUID } from "node:crypto";
 import type { Principal } from "../../platform/identity";
 import { unavailable } from "../../platform/errors";
@@ -67,8 +68,11 @@ async function execute(p: Principal, id: string, input: Input) {
       return source;
     },
     async (c, authorised) => {
-      const context = await conversionContext(c, p, id, authorised);
-      const t = await followupContext(c, p, id, input.target_id, { context });
+      const read = conversionReadClient(c, p);
+      const context = await conversionContext(read, p, id, authorised);
+      const t = await followupContext(read, p, id, input.target_id, {
+        context,
+      });
       const checked = currentEvidenceChecked(t.basis);
       expected(t.sequence, input.expected_sequence);
       if (

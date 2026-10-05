@@ -1,3 +1,4 @@
+import { conversionReadClient } from "../conversion/source-authority";
 import type { Principal } from "../../platform/identity";
 import { transaction } from "../../platform/database";
 import { requireCapability } from "../../platform/permissions";
@@ -11,10 +12,11 @@ export async function receivingWorklist(
   query: Record<string, string> = {},
 ) {
   object(query, []);
-  return transaction(async (c) => {
-    await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [
+  return transaction(async (client) => {
+    await client.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [
       p.workspace_id,
     ]);
+    const c = conversionReadClient(client, p);
     await requireCapability(c, p, "supply.coordinate");
     const candidates = (
       await c.query<{

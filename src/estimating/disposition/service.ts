@@ -1,3 +1,4 @@
+import { conversionReadClient } from "../conversion/source-authority";
 import { randomUUID } from "node:crypto";
 import type { Principal } from "../../platform/identity";
 import { sharedOperation, recordOperation } from "../../platform/operations";
@@ -36,9 +37,10 @@ async function execute(p: Principal, id: string, input: Input) {
       return { source, checked };
     },
     async (c, authorised) => {
-      const d = await conversionContext(c, p, id, authorised.source),
+      const read = conversionReadClient(c, p);
+      const d = await conversionContext(read, p, id, authorised.source),
         t = await dispositionTarget(
-          c,
+          read,
           p,
           d,
           input.target_id,
