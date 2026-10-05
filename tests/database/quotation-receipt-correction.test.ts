@@ -77,7 +77,10 @@ test("ES07 Receipt correction requires every receiving decision, commits native 
   await saveRecord(f.owner, unrelatedInput);
   const unrelated = await workspace(f.owner, unrelatedInput.id);
   const allocations = await snapshot("supply_allocations");
-  const command = receiptProposal(await currentFollowup(f));
+  const command = {
+    ...receiptProposal(await currentFollowup(f)),
+    reason: "SYN newly attributed corrected Receipt finding",
+  };
   const proposed = await proposeReceipt(f.owner, f.id, command);
   assert.deepEqual(
     (await proposeReceipt(f.owner, f.id, command)).receipt,
@@ -356,13 +359,19 @@ test("ES07 Receipt independently owned demands require their own decisions, curr
     actor_id: id,
     display_name: "SYN affected Demand owner",
   };
+  const otherSite = "70000000-0000-4000-8000-000000000002";
+  await database().query(
+    "UPDATE ppo.permission_grants SET scope_type='Site',scope_id=$2,site_id=$2,company_id=$3 WHERE user_id=$1 AND capability='supply.coordinate'",
+    [id, otherSite, f.t.basis.conversion.target.company_id],
+  );
   const r = (await workspace(f.owner, f.other.id)).record;
   await saveRecord(
     f.owner,
     nativeRevision(
       { basis: { target: r } } as Parameters<typeof nativeRevision>[0],
-      { owner_id: id },
+      { owner_id: id, site_id: otherSite },
     ),
+    true,
   );
   await proposeReceipt(
     f.owner,
@@ -373,6 +382,21 @@ test("ES07 Receipt independently owned demands require their own decisions, curr
   assert.ok(
     (await receivingWorklist(owner)).rows.some(
       (x) => x.target_id === t.target_id,
+    ),
+  );
+  const ownedView = await readConversion(owner, f.id);
+  assert.equal(ownedView.can_write, false);
+  assert.equal(
+    ownedView.followups[0].receipt_correction.required.find(
+      (x) => x.demand.id === f.other.id,
+    )!.can_receive,
+    true,
+  );
+  await assert.rejects(
+    recordFact(
+      owner,
+      t.target_id,
+      supplyFact("Assessment", t.basis.conversion.target.version),
     ),
   );
   const receive = receiptReceiving(t, f.other.id);
@@ -414,6 +438,7 @@ test("ES07 Receipt independently owned demands require their own decisions, curr
       { basis: { target: current } } as Parameters<typeof nativeRevision>[0],
       { owner_id: f.owner.actor_id },
     ),
+    true,
   );
   await assert.rejects(applySupply(f.owner, f.id, supplyApply(t)));
   await proposeReceipt(
@@ -603,5 +628,111 @@ test("ES07 Receipt partial unresolved correction retains separate Stock observat
   await assert.rejects(
     proposeReceipt(f.owner, f.id, receiptProposal(held)),
     code("SupplyFollowupConflict"),
+  );
+});
+
+test("ES07 Receipt new shared Demand invalidates receiving and competing exceptions cannot reserve the same fact", async () => {
+  const f = await proposedReceiptFixture();
+  const original = f.t.receipt_correction.proposal!;
+  const { completedFixture } = await import("../helpers/quotation-disposition");
+  const { allocate } = await import("../../src/supply/commands");
+  const { crmBase } = await import("../helpers/crm");
+  const g = await completedFixture();
+  let d = await readConversion(g.owner, g.id);
+  const target = d.dispositions[0].basis.target;
+  await saveRecord(
+    g.owner,
+    nativeRevision(d.dispositions[0], {
+      item: f.supply.item,
+      unit: f.supply.unit,
+      data: {
+        ...target.data,
+        demand_class: "Approved",
+        authority: "SYN native Supply fixture material coordination",
+      },
+    }),
+    true,
+  );
+  const r = (await workspace(g.owner, target.id)).record,
+    source = (await workspace(g.owner, f.supply.id)).record;
+  await allocate(g.owner, {
+    ...crmBase(),
+    id: randomUUID(),
+    expected_version: null,
+    demand_id: r.id,
+    supply_id: source.id,
+    demand_version: r.version,
+    supply_version: source.version,
+    quantity: "0",
+    unit: r.unit,
+    basis: "Usable",
+  });
+  let t = await currentFollowup(f);
+  assert.ok(t.receipt_correction.holds.length);
+  await assert.rejects(
+    receiveReceiptEffect(f.owner, f.id, receiptReceiving(t, t.target_id)),
+    code("SupplyFollowupConflict"),
+  );
+  await proposeReceipt(f.owner, f.id, receiptProposal(t));
+  t = await currentFollowup(f);
+  assert.equal(t.receipt_correction.required.length, 3);
+  assert.equal(t.receipt_correction.proposal!.predecessor_id, original.id);
+  d = await readConversion(g.owner, g.id);
+  await referSupply(g.owner, g.id, referral(d.followups[0]));
+  d = await readConversion(g.owner, g.id);
+  await receiveSupply(g.owner, g.id, acknowledgement(d.followups[0]));
+  d = await readConversion(g.owner, g.id);
+  await assert.rejects(
+    proposeReceipt(g.owner, g.id, receiptProposal(d.followups[0])),
+    code("SupplyFollowupConflict"),
+  );
+  await receiveSupply(f.owner, f.id, acknowledgement(t, "Returned"));
+  d = await readConversion(g.owner, g.id);
+  await proposeReceipt(g.owner, g.id, receiptProposal(d.followups[0]));
+  assert.equal(
+    (await readConversion(g.owner, g.id)).followups[0].receipt_correction
+      .proposal!.command.predecessor_id,
+    original.command.predecessor_id,
+  );
+  assert.equal((await currentFollowup(f)).status, "Returned");
+});
+
+test("ES07 Receipt corrected response and successor issue invalidate pending received review without changing originals", async () => {
+  const f = await proposedReceiptFixture();
+  await receiveAll(f);
+  await reviewSupply(f.owner, f.id, receiptReview(await currentFollowup(f)));
+  const original = await currentFollowup(f),
+    cmd = supplyApply(original);
+  const { recordResponse } =
+      await import("../../src/estimating/response/service"),
+    { readResponse } = await import("../../src/estimating/response/reads"),
+    { response } = await import("../helpers/quotation-response");
+  await recordResponse(f.owner, f.id, {
+    ...response(await readResponse(f.owner, f.id), "Declined"),
+    action: "Correct",
+  });
+  await assert.rejects(
+    applySupply(f.owner, f.id, cmd),
+    code("SupplyFollowupConflict"),
+  );
+  assert.ok((await currentFollowup(f)).receipt_correction.holds.length);
+  const { readRelease } = await import("../../src/estimating/release/reads"),
+    { prepareRelease } = await import("../../src/estimating/release/service"),
+    { preparation, issued } = await import("../helpers/quotation-release");
+  const successor = preparation(await readRelease(f.owner, f.id));
+  await prepareRelease(f.owner, f.id, successor);
+  await retryQuote(f.owner, successor.id);
+  await issued(f, successor.id);
+  const current = (await readConversion(f.owner, successor.id)).followups[0];
+  assert.equal(current.target_id, original.target_id);
+  assert.equal(current.can_apply, false);
+  assert.equal(current.review!.id, original.review!.id);
+  await assert.rejects(
+    applySupply(f.owner, f.id, cmd),
+    code("SupplyFollowupConflict"),
+  );
+  assert.equal(
+    (await workspace(f.owner, f.supply.id)).record.version,
+    original.receipt_correction.proposal!.command.expected_version,
   );
 });

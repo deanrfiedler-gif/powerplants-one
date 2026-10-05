@@ -4,7 +4,7 @@
 
 Owner: Dean Fiedler. 4 October 2026. Implementation decision under the authorised ES-07 increment; independent review and operational acceptance pending. ES-07 / SC-05/09 / EST-03/08/09 / SCM-01/02/08 / IF-03 / AT-05/26.
 
-## Current-main reconciliation
+## Retained starting-main reconciliation (4 October 2026)
 
 Refreshed main is #344 merge `3b1daba3a3738afe8b53700de2efb9e14a28d30a`. GitHub confirms the final head `16d3767bc7f6f446169b9cd74f9f0bbb9a4e6721` and 29 successful checks. Post-merge checks were still running at initial inspection; their eventual result is recorded separately in this increment's execution evidence. No open PR or suitable unfinished dependency contribution was found. Isolated `codex/quotation-dependency-followup` preserves Excel import, other worktrees and retained proof databases. Earlier failed heads remain failed historical evidence. No deployment is inferred or performed.
 

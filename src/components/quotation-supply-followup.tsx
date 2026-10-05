@@ -178,13 +178,9 @@ function FollowupTarget({
   const stale = JSON.stringify(basis) !== JSON.stringify(capture(t)),
     r = t.basis.conversion.target,
     own = t.referral?.owner_id === actor;
-  const disabled =
-    blocked ||
-    stale ||
-    !t.can_write ||
-    ack !== "yes" ||
-    !reason.trim() ||
-    !evidence.trim();
+  const commonDisabled =
+    blocked || stale || ack !== "yes" || !reason.trim() || !evidence.trim();
+  const disabled = commonDisabled || !t.can_write;
   const common = {
     target_id: t.target_id,
     execution_id: t.execution_id,
@@ -401,7 +397,7 @@ function FollowupTarget({
       <ReceiptCorrection
         t={t}
         actor={actor}
-        disabled={disabled}
+        disabled={commonDisabled}
         blocked={blocked}
         common={common}
         send={send}

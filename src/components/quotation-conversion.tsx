@@ -619,8 +619,7 @@ function ConversionBody({
           !command.ready ||
           command.busy ||
           !!command.pending ||
-          !!command.accepted ||
-          !d.can_write
+          !!command.accepted
         }
         send={async (kind, body) => {
           await command.send(

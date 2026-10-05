@@ -106,7 +106,8 @@ BEGIN
   IF recv.decision<>'Accepted' OR recv.created_by<>d.owner_id OR recv.basis IS DISTINCT FROM prop.basis OR recv.dependencies IS DISTINCT FROM prop.dependencies THEN RAISE EXCEPTION 'Exact independently accepted affected Demand required' USING ERRCODE='23514'; END IF;
   ids=ids||jsonb_build_array(recv.id);
   IF NEW.action='Review' AND (x->'record' IS DISTINCT FROM (to_jsonb(d)||jsonb_build_object('quantity',d.quantity::text))) THEN RAISE EXCEPTION 'Affected Demand changed before review' USING ERRCODE='23514'; END IF;
-  IF NEW.action='Apply' AND ((x->'record'->>'version')::integer<>d.version-1 OR ((x->'record')-'version'-'updated_at') IS DISTINCT FROM ((to_jsonb(d)||jsonb_build_object('quantity',d.quantity::text))-'version'-'updated_at')
+  IF NEW.action='Apply' AND ((x->'record'->>'version')::integer<>d.version-1 OR ((x->'record')-'version'-'updated_at'-'updated_by'-'last_reason') IS DISTINCT FROM ((to_jsonb(d)||jsonb_build_object('quantity',d.quantity::text))-'version'-'updated_at'-'updated_by'-'last_reason')
+   OR d.updated_by<>NEW.created_by OR d.last_reason IS DISTINCT FROM NEW.command->>'reason'
    OR NOT EXISTS(SELECT 1 FROM ppo.supply_facts i WHERE i.workspace_id=NEW.workspace_id AND i.record_id=d.id AND i.kind='Impact' AND i.version=d.version AND i.data->>'state'='Requested' AND i.activity_id IS NOT NULL AND i.xmin::text::bigint=mod(pg_current_xact_id()::text::numeric,4294967296))) THEN RAISE EXCEPTION 'Native correction must retain affected Demand content and append owned Impact' USING ERRCODE='23514'; END IF;
  END LOOP;
  IF ids IS DISTINCT FROM NEW.effect_receiving_ids THEN RAISE EXCEPTION 'Freeze every exact affected-demand acceptance' USING ERRCODE='23514'; END IF;

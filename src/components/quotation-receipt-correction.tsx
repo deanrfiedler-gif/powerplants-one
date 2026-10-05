@@ -183,7 +183,12 @@ export function ReceiptCorrection({
               including when usable capacity falls below them.
             </p>
             <Button
-              disabled={disabled || !candidate || !!candidate.holds.length}
+              disabled={
+                disabled ||
+                !t.can_write ||
+                !candidate ||
+                !!candidate.holds.length
+              }
               onClick={() =>
                 void send("receipt-propose", {
                   ...common,
@@ -292,7 +297,9 @@ export function ReceiptCorrection({
                     ]}
                   />
                   <Button
-                    disabled={disabled || !!state.holds.length}
+                    disabled={
+                      disabled || !x.can_receive || !!state.holds.length
+                    }
                     onClick={() =>
                       void send("receipt-receive", {
                         ...common,

@@ -33,8 +33,13 @@ async function execute(p: Principal, id: string, input: Input) {
     input,
     `QuoteSupply:${input.action}`,
     async (c) => {
-      await conversionAuthority(c, p, id, true);
-      await supplyRecord(c, p, input.target_id, "supply.coordinate");
+      await conversionAuthority(c, p, id, input.action === "ReceiptPropose");
+      await supplyRecord(
+        c,
+        p,
+        input.target_id,
+        input.action === "ReceiptPropose" ? "supply.coordinate" : "supply.read",
+      );
       // New operations get complete current/historical authority in followupContext
       // before mutation. Replays authorise the exact retained original before its receipt.
       if (

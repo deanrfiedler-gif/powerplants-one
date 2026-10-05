@@ -106,7 +106,6 @@ export async function followupReceiptAuthority(
     const { receiptOriginalAuthority, receiptAvailable } =
       await import("./receipt-context");
     if (!(await receiptAvailable(c))) throw unavailable();
-    await conversionAuthority(c, p, id, true);
     return receiptOriginalAuthority(c, p, id, operation);
   }
   await conversionAuthority(c, p, id, true);

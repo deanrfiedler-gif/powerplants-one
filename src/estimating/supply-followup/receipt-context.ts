@@ -12,6 +12,7 @@ import {
   type Fact,
 } from "../../supply/model";
 import type { factCommand } from "../../supply/validation";
+import { conversionAuthority } from "../conversion/context";
 import { dispositionHash } from "../disposition/context";
 import {
   followupEvidenceAuthority,
@@ -243,7 +244,7 @@ export async function effectOwner(
     followupConflict(
       "This demand is not an affected record of the exact proposal.",
     );
-  const current = await supplyRecord(c, p, demandId, "supply.coordinate");
+  const current = await supplyRecord(c, p, demandId);
   const owner = await scopedOwner(
     c,
     p,
@@ -342,8 +343,10 @@ export async function receiptState(
       localHolds.push(
         `Affected Demand ${d.record.reference} requires its owner's explicit acceptance; ${decision?.decision ?? "not received"}.`,
       );
+    let canReceive = false;
     try {
-      await effectOwner(c, p, proposal!, d.record.id, checked);
+      const owner = await effectOwner(c, p, proposal!, d.record.id, checked);
+      canReceive = owner.actor_id === p.actor_id;
     } catch (e) {
       if (!(e instanceof AppError)) throw e;
       localHolds.push(
@@ -361,7 +364,12 @@ export async function receiptState(
       localHolds.push(
         "Affected-demand receiving is stale; its owner must decide on a current proposal.",
       );
-    required.push({ demand: d.record, decision, holds: localHolds });
+    required.push({
+      demand: d.record,
+      decision,
+      holds: localHolds,
+      can_receive: canReceive,
+    });
   }
   return {
     events,
@@ -420,6 +428,7 @@ export async function receiptOriginalAuthority(
     )
   ).rows[0];
   if (!e) throw unavailable();
+  await conversionAuthority(c, p, id, e.action === "ReceiptPropose");
   await receiptEvidenceAuthority(c, p, e);
   if (e.action === "ReceiptPropose") await receiptCommandAuthority(c, p, e);
   else await supplyRecord(c, p, e.demand_id!, "supply.coordinate");

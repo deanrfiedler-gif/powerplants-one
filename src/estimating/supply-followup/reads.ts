@@ -44,11 +44,14 @@ export async function receivingWorklist(
     )) {
       try {
         const d = await followupContext(c, p, row.revision_id, row.target_id);
-        if (!d.can_write) continue;
         const effects = d.receipt_correction.required.filter(
           (x) => x.demand.owner_id === p.actor_id,
         );
-        if (row.owner_id !== p.actor_id && !effects.length) continue;
+        if (
+          (!d.can_write || row.owner_id !== p.actor_id) &&
+          !effects.some((x) => x.can_receive)
+        )
+          continue;
         rows.push({
           revision_id: d.revision_id,
           target_id: d.target_id,
