@@ -129,7 +129,8 @@ export async function supplyRecord(
   ).rows[0] as SupplyRecord | undefined;
   if (!r) throw unavailable();
   await companyContext(c, p, r.company_id, r.site_id, "supply.read");
-  await companyContext(c, p, r.company_id, r.site_id, cap);
+  if (cap !== "supply.read")
+    await companyContext(c, p, r.company_id, r.site_id, cap);
   await linkedContext(c, p, r);
   await conversionSourceAuthority(c, p, r.id);
   return r;

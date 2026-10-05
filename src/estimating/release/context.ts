@@ -172,14 +172,13 @@ export async function releaseSource(
   p: Principal,
   q: ReleaseQuote,
 ) {
-  const { e, v, basis } = await exactBasis(
-      c,
-      p,
-      q.estimate_id,
-      q.estimate_version_id,
-    ),
+  const exact = await exactBasis(c, p, q.estimate_id, q.estimate_version_id),
+    { e, v, basis } = exact,
     history = await reviewHistory(c, p, e.id);
-  const current = await exactBasis(c, p, e.id),
+  const current =
+      e.current_version_id === q.estimate_version_id
+        ? exact
+        : await exactBasis(c, p, e.id),
     statuses = latestDecisions(
       history.submissions,
       history.decisions,
