@@ -59,3 +59,7 @@ Step 6 inspected implementation review captures: [1440×1000 desktop](../../../t
 ## Delayed-head successor focus
 
 The saved proposal and current publication head are separate permitted reads. Selecting Edit before the head finishes loading must focus the successor heading when its form mounts. Repeating Edit focuses an already mounted heading; typing must retain field focus. This applies to desktop and phone without changing page type, scope, incoming evidence or outgoing handovers. [Source-specific failure and regression evidence](../../../testing/evidence/scheduling-successor-focus/README.md) does not replace the missing accepted editor mockup or grant owner/device acceptance.
+
+## Saved-record disclosure during reread
+
+Reopen saved records retains explicit open intent when choosing another record type or refreshing the permitted list. Loading still removes protected evidence; current results return into the open native disclosure. Pointer and keyboard close/open remain available. The existing PolicyPublicationWorkspace host and SelectField consumer binding stay on PL-04 with the same incoming reads and outgoing exact saved-record links. Fixture: `tests/scheduling-browser/record-disclosure.spec.ts`; [unchanged-main comparison and execution evidence](../../../testing/evidence/scheduling-record-disclosure/README.md). No accepted editor image or review fingerprint is supplied by this repair.

@@ -112,6 +112,12 @@ test("FS pair requires five exact decisions and atomically preserves dependency 
     materialReview(await currentFollowup(f)),
   );
   const cmd = materialApply(await currentFollowup(f));
+  const identityIds = (
+    await database().query<{ id: string }>(
+      "SELECT id FROM ppo.business_identities WHERE workspace_id=$1",
+      [f.owner.workspace_id],
+    )
+  ).rows.map((r) => r.id);
   const results = await Promise.all([
     executeMaterial(f.owner, f.id, "MaterialApply", cmd),
     executeMaterial(f.owner, f.id, "MaterialApply", cmd),
@@ -170,17 +176,55 @@ test("FS pair requires five exact decisions and atomically preserves dependency 
       await readOperation(f.owner, receipt.operation_id),
       receipt,
     );
-  assert.equal(
+  const scheduleEvents = (
+    await database().query<{ id: string }>(
+      "SELECT id FROM ppo.project_schedule_events WHERE workspace_id=$1 AND operation_id=ANY($2::uuid[]) ORDER BY id",
+      [
+        f.owner.workspace_id,
+        e.native_receipts.slice(0, 2).map((r) => r.operation_id),
+      ],
+    )
+  ).rows;
+  assert.equal(scheduleEvents.length, 2);
+  assert.deepEqual(
     (
       await database().query(
-        "SELECT count(*)::integer n FROM ppo.project_schedule_events WHERE workspace_id=$1 AND operation_id=ANY($2::uuid[])",
-        [
-          f.owner.workspace_id,
-          e.native_receipts.slice(0, 2).map((r) => r.operation_id),
-        ],
+        "SELECT id,object_type FROM ppo.business_identities WHERE workspace_id=$1 AND NOT(id=ANY($2::uuid[])) ORDER BY id",
+        [f.owner.workspace_id, identityIds],
       )
-    ).rows[0].n,
-    2,
+    ).rows,
+    scheduleEvents.map((r) => ({
+      id: r.id,
+      object_type: "ProjectScheduleEvent",
+    })),
+  );
+  const operations = [
+    e.operation_id,
+    ...e.native_receipts.map((r) => r.operation_id),
+  ];
+  for (const table of ["operation_receipts", "audit_events", "outbox_jobs"])
+    assert.equal(
+      (
+        await database().query(
+          `SELECT count(*)::integer n FROM ppo.${table} WHERE workspace_id=$1 AND operation_id=ANY($2::uuid[])`,
+          [f.owner.workspace_id, operations],
+        )
+      ).rows[0].n,
+      4,
+    );
+  assert.deepEqual(
+    (
+      await database().query(
+        "SELECT kind FROM ppo.outbox_jobs WHERE workspace_id=$1 AND operation_id=ANY($2::uuid[]) ORDER BY kind",
+        [f.owner.workspace_id, operations],
+      )
+    ).rows.map((r) => r.kind),
+    [
+      "ProjectTaskSaved",
+      "ProjectTaskSaved",
+      "QuotationSupplyRecorded",
+      "SupplyRecorded",
+    ],
   );
 });
 const rows = async (table: string) =>
@@ -202,6 +246,8 @@ test("late refusal rolls back both task saves, dependency rows, histories and Im
     cmd = materialApply(t),
     prop = t.material_resolution.proposal!;
   const tables = [
+    "business_identities",
+    "reference_counters",
     "projects",
     "project_tasks",
     "project_dependencies",
@@ -211,6 +257,7 @@ test("late refusal rolls back both task saves, dependency rows, histories and Im
     "supply_facts",
     "supply_allocations",
     "activities",
+    "activity_links",
     "quote_material_events",
     "operation_receipts",
     "audit_events",

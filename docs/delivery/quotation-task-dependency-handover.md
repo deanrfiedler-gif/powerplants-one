@@ -14,7 +14,7 @@ The immutable outcome links original issue/source, completed conversion, referra
 
 Current material readiness and unmet quantity are recomputed. The retained link still warns when dates are missing. Resolve only this forecast consequence; explicit fresh ES-07 disposition is required wherever an exception exists. Quotation retention leaves the operational work actionable. Additional graph scheduling, new dates, external-owned or started tasks, Engineering/acceptance/attendance/commitment effects and unknown outcomes remain held for their owners.
 
-Migration 0068 adds no grants/seeds/identities. Existing runtime privileges and catalog-based prepared reads remain; old command payloads and isolated outcomes remain recoverable. All earlier proof databases, unfinished Excel import, mandatory shards, complete broad browser runs, retained groups and aggregates remain. No framework, service, integration or deployment infrastructure is added.
+Migration 0068 adds no grants/seeds/identity types. Existing runtime privileges and catalog-based prepared reads remain; old command payloads and isolated outcomes remain recoverable. All earlier proof databases, unfinished Excel import, mandatory shards, complete broad browser runs, retained groups and aggregates remain. No framework, service, integration or deployment infrastructure is added.
 
 Next concrete programme increment: independently received handling of a three-task chain with exact owning Projects effects, after review of this one-edge slice; no graph-wide action is implied. Operational policy, accepted native imagery, paired visual, physical-device, screen-reader and owner acceptance remain open.
 

@@ -2837,6 +2837,11 @@
           "id": "denied",
           "label": "Revoked or switched identity",
           "description": "Protected evidence and in-flight results clear; ordinary comparison remains permission-scoped."
+        },
+        {
+          "id": "records-reread",
+          "label": "Saved record list reread",
+          "description": "PolicyPublicationWorkspace on /schedule/policy-impact retains explicit disclosure intent while a new record-type or refresh read unmounts protected content. Current permitted results reopen in place; keyboard close/open and exact saved publication links remain available."
         }
       ],
       "implementation": [
@@ -2900,6 +2905,14 @@
           "expected": "The successor heading receives focus even if the separate current-head read completes after Edit.",
           "actual": "The frame-based focus request can run before the form exists; reproduced on unchanged main. The mount-bound repair passes all 18 compiled Scheduling cases, including delayed-head focus on desktop and phone; owner/device review remains pending.",
           "action": "Retain desktop/mobile delayed-read regression evidence in docs/testing/evidence/scheduling-successor-focus/README.md; owner/device acceptance remains pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "scheduling-record-disclosure-review",
+          "expected": "Saved-record type changes and refresh retain explicit disclosure intent on desktop and phone without retaining stale protected records.",
+          "actual": "Queued native toggle ordering reproduces a hidden saved publication list on unchanged main. Synchronous summary intent is the bounded repair; execution and owner/device review remain separate.",
+          "action": "Retain the source-specific regression and viewport evidence in docs/testing/evidence/scheduling-record-disclosure/README.md; do not promote an acceptance fingerprint.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

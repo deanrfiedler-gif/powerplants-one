@@ -69404,7 +69404,8 @@
           "section_id": "quick-start",
           "title": "Quick start",
           "paragraphs": [
-            "The reviewer enters maximum visit minutes, an explicit local effective time/timezone and a reason. Save immutable proposal, then request a complete server review. Copy its stable review link for the distinct publisher to inspect and explicitly publish. Reopen saved records remains available after reload."
+            "The reviewer enters maximum visit minutes, an explicit local effective time/timezone and a reason. Save immutable proposal, then request a complete server review. Copy its stable review link for the distinct publisher to inspect and explicitly publish. Reopen saved records remains available after reload.",
+            "Open Reopen saved records, then choose Proposals, Reviews or Publications. The list stays open after changing type or refreshing, once current access and records are loaded. Use the exact saved-record link. Keyboard activation also opens and closes the disclosure; unavailable access clears protected results."
           ],
           "steps": [],
           "headers": [],
