@@ -3632,6 +3632,11 @@
           "id": "chain-receiving",
           "label": "Six decisions for three tasks",
           "description": "A → B → C; both FS/SS relationships, distinct Third task receiving, current/withdrawn dates, extra-edge holds and four-receipt atomic outcome. Real host: tests/browser/quotation-task-chain.spec.ts."
+        },
+        {
+          "id": "branch-receiving",
+          "label": "Six decisions for a Project branch",
+          "description": "A → B and A → C; explicit topology, both FS/SS relationships, distinct Branch task C receiving, current/proposed dates, extra-edge holds and four-receipt atomic outcome. Real host: tests/browser/quotation-task-branch.spec.ts."
         }
       ],
       "implementation": [
@@ -3692,7 +3697,8 @@
         "docs/contracts/quotation-material-resolution.md",
         "docs/decisions/quotation-material-resolution.md",
         "docs/decisions/quotation-task-dependency.md",
-        "docs/decisions/quotation-task-chain.md"
+        "docs/decisions/quotation-task-chain.md",
+        "docs/decisions/quotation-task-branch.md"
       ],
       "reference": {
         "path": "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",
@@ -3780,6 +3786,14 @@
           "expected": "Paired owner/device review of three tasks and six independent responsibilities.",
           "actual": "Bounded native extension; accepted images and human review pending.",
           "action": "Compare compiled host evidence with the adopted chain contract; keep functional proof separate.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "branch-resolution-review",
+          "expected": "Paired review of explicit branch topology, six responsibilities and continuing material holds.",
+          "actual": "Native branch adaptation; accepted branch images and owner/device/screen-reader review pending.",
+          "action": "Compare compiled host evidence against the bounded branch contract; preserve chain and branch meaning.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

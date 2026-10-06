@@ -19,6 +19,7 @@ export function MaterialResolution({
   const [task, setTask] = useState(c?.tasks[0]?.id ?? "");
   const [successor, setSuccessor] = useState("");
   const [chainEnd, setChainEnd] = useState("");
+  const [branchSuccessor, setBranchSuccessor] = useState("");
   const [decisions, setDecisions] = useState<Record<string, string>>({});
   const [review, setReview] = useState("Hold");
   const [dirty, setDirty] = useState(false);
@@ -40,9 +41,10 @@ export function MaterialResolution({
       <p>
         Withdraw both forecast dates from an unstarted Planned task and, when
         explicitly selected, its directly dependent successor and a third task
-        dependent on that successor. Each affected owner receives the complete
-        exact proposal separately. Receipt and allocation acceptance do not
-        authorise this action.
+        dependent on that successor, or a branch with two direct successors of
+        the affected task (A → B and A → C). Each affected owner receives the
+        complete exact proposal separately. Receipt and allocation acceptance do
+        not authorise this action.
       </p>
       <p>
         Project dates and the selected Demand version change. The exact Impact
@@ -77,6 +79,7 @@ export function MaterialResolution({
               setSelected(v);
               setSuccessor("");
               setChainEnd("");
+              setBranchSuccessor("");
               setTask(
                 s.candidates.find((x) => x.impact.id === v)?.tasks[0]?.id ?? "",
               );
@@ -104,6 +107,7 @@ export function MaterialResolution({
                   setTask(v);
                   setSuccessor("");
                   setChainEnd("");
+                  setBranchSuccessor("");
                   setDirty(true);
                 }}
               />
@@ -122,6 +126,7 @@ export function MaterialResolution({
                 onChange={(v) => {
                   setSuccessor(v);
                   setChainEnd("");
+                  setBranchSuccessor("");
                   setDirty(true);
                 }}
               />
@@ -145,6 +150,32 @@ export function MaterialResolution({
                     }))}
                   onChange={(v) => {
                     setChainEnd(v);
+                    setBranchSuccessor("");
+                    setDirty(true);
+                  }}
+                />
+              )}
+              {successor && (
+                <SelectField
+                  name="material-branch-successor"
+                  label="Branch task C directly dependent on affected task A"
+                  value={branchSuccessor}
+                  disabled={blocked}
+                  empty="No branch task selected"
+                  options={c.tasks
+                    .filter(
+                      (x) =>
+                        x.id !== task &&
+                        x.id !== successor &&
+                        x.dependencies.some((d) => d.task_id === task),
+                    )
+                    .map((x) => ({
+                      id: x.id,
+                      display_name: `${x.title} · ${x.dependencies.find((d) => d.task_id === task)?.kind} from affected task A · ${x.start_date ?? "Unscheduled"} to ${x.finish_date ?? "Unscheduled"}`,
+                    }))}
+                  onChange={(v) => {
+                    setBranchSuccessor(v);
+                    setChainEnd("");
                     setDirty(true);
                   }}
                 />
@@ -160,6 +191,9 @@ export function MaterialResolution({
                     task_id: task,
                     ...(successor ? { successor_task_id: successor } : {}),
                     ...(chainEnd ? { chain_end_task_id: chainEnd } : {}),
+                    ...(branchSuccessor
+                      ? { branch_successor_task_id: branchSuccessor }
+                      : {}),
                     predecessor_id: proposal?.id ?? null,
                   })
                 }
@@ -243,8 +277,10 @@ export function MaterialResolution({
               }{" "}
               link from the affected task remains. Each selected task advances
               once; Project advances{" "}
-              {d.project.chainEnd ? "three times" : "twice"}. Missing dates
-              continue to prevent checking the dependency dates.
+              {d.project.chainEnd || d.project.branchSuccessor
+                ? "three times"
+                : "twice"}
+              . Missing dates continue to prevent checking the dependency dates.
             </p>
           )}
           {d.project.chainEnd && (
@@ -265,6 +301,27 @@ export function MaterialResolution({
               Impact successor apply together; no partial completion.
             </p>
           )}
+          {d.project.branchSuccessor && (
+            <p>
+              Branch task C {d.project.branchSuccessor.title} (
+              {d.project.branchSuccessor.id}), version{" "}
+              {d.project.branchSuccessor.version}, owner{" "}
+              {d.project.branchSuccessor.owner_id};{" "}
+              {d.project.branchSuccessor.status},{" "}
+              {d.project.branchSuccessor.progress}% complete. Current dates:{" "}
+              {d.project.branchSuccessor.start_date ?? "Unscheduled"} to{" "}
+              {d.project.branchSuccessor.finish_date ?? "Unscheduled"}. Proposed
+              dates: Unscheduled. The{" "}
+              {
+                d.project.branchSuccessor.dependencies.find(
+                  (x) => x.task_id === d.project.task.id,
+                )?.kind
+              }{" "}
+              link from A to C remains. The branch is A → B and A → C; B and C
+              both depend directly on A. All three saves and the exact Impact
+              successor apply together; no partial completion.
+            </p>
+          )}
           <details>
             <summary>
               Exact source, Receipt, allocation, Impact and downstream evidence
@@ -279,6 +336,7 @@ export function MaterialResolution({
                   project_command: proposal.project_command,
                   successor_command: proposal.successor_command,
                   chain_end_command: proposal.chain_end_command,
+                  branch_successor_command: proposal.branch_successor_command,
                   impact_command: proposal.impact_command,
                 },
                 null,
@@ -299,15 +357,19 @@ export function MaterialResolution({
           {s.required.map((r) => (
             <div key={r.role} className="release-panel">
               <p>
-                {r.role === "ChainEnd" ? "Third task" : r.role} · record{" "}
-                {r.record_id} · owner {r.owner_id ?? "Unavailable"}.{" "}
+                {r.role === "ChainEnd"
+                  ? "Third task"
+                  : r.role === "BranchSuccessor"
+                    ? "Branch task C"
+                    : r.role}{" "}
+                · record {r.record_id} · owner {r.owner_id ?? "Unavailable"}.{" "}
                 <Status value={r.decision?.decision ?? "Not received"} />
               </p>
               {!s.applied && (
                 <>
                   <SelectField
                     name={`material-${r.role}-decision`}
-                    label={`${r.role === "ChainEnd" ? "Third task" : r.role} receiving decision`}
+                    label={`${r.role === "ChainEnd" ? "Third task" : r.role === "BranchSuccessor" ? "Branch task C" : r.role} receiving decision`}
                     value={decisions[r.role] ?? "Held"}
                     disabled={blocked}
                     options={["Accepted", "Returned", "Held"].map((id) => ({
@@ -337,7 +399,12 @@ export function MaterialResolution({
                       })
                     }
                   >
-                    Record {r.role === "ChainEnd" ? "Third task" : r.role}{" "}
+                    Record{" "}
+                    {r.role === "ChainEnd"
+                      ? "Third task"
+                      : r.role === "BranchSuccessor"
+                        ? "Branch task C"
+                        : r.role}{" "}
                     decision
                   </Button>
                 </>

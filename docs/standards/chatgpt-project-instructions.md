@@ -91,4 +91,4 @@ FI-07: field-customer-response.md separates attendance acknowledgement, exact re
 
 PT sources, owner review and benefits: docs/testing/field-integrated-acceptance-ledger.md.
 
-ES-07 chain: quotation-task-chain.md. Six decisions, three native saves/four receipts; preserve links, unmet Demand, fresh disposition and originals.
+ES-07 branch: quotation-task-branch.md. Six decisions, three native saves/four receipts; preserve topology, unmet Demand, disposition and originals.

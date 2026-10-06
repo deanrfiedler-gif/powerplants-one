@@ -23,3 +23,7 @@ Next concrete increment: one explicitly selected branch consequence after a sepa
 [PR #352](https://github.com/deanrfiedler-gif/powerplants-one/pull/352) contains the contribution. Source b2f1eac passed all eleven Supply groups and their aggregate, including sixteen chain PostgreSQL cases, one chain HTTP case, fifteen compiled chain/shared-control cases and actual application/PostgreSQL restart preserving thirteen replays, twenty-three receipts, 1,095 rows and four output files. The execution ledger retains local and PR-head failures/repairs; final-head completion is recorded separately on the PR. No merge or deployment.
 
 Next concrete increment: one affected predecessor A with two direct successors B and C (A → B, A → C). The current exactly linear contract deliberately holds that shape; establish its native consequences and separate receiving before implementing it.
+
+## Current integration reconciliation
+
+#352 is merged as `1ffcf653cd94982ea3f58253d3dc9c4f9be7ebbc`, from final head `3a2e1c02bdbfd84af589e1618b33bc30d9d72e7a` with all 41 checks successful. Earlier contribution/pre-merge statements retain their checkpoint meaning. Post-merge results are separately refreshed in the [branch ledger](../testing/evidence/quotation-task-branch/README.md); no deployment/owner acceptance follows from them. The next branch is now the separate [SYN-ES07-10 contribution](quotation-task-branch-handover.md). This handover and every retained chain contract/original keep their linear meaning.

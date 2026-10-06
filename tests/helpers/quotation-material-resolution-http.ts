@@ -25,6 +25,7 @@ export async function materialHttpFixture(
   reviewed = false,
   dependency = false,
   chain = false,
+  branch = false,
 ) {
   const project = projectInput(),
     task = { ...taskInput(), status: "Planned", progress: 0 };
@@ -44,7 +45,9 @@ export async function materialHttpFixture(
     finish_date: "2027-12-17",
     status: "Planned",
     progress: 0,
-    dependencies: [{ task_id: successor.id, kind: "SS" as const }],
+    dependencies: [
+      { task_id: branch ? task.id : successor.id, kind: "SS" as const },
+    ],
   };
   const f = await shortfallHttpFixture(true, async (f, other) => {
     project.coordinator_id = other.owner_id;
@@ -55,7 +58,7 @@ export async function materialHttpFixture(
       successor.owner_id = other.owner_id;
       await json(f.owner, `projects/${project.id}/tasks`, successor);
     }
-    if (chain) {
+    if (chain || branch) {
       chainEnd.owner_id = other.owner_id;
       await json(f.owner, `projects/${project.id}/tasks`, chainEnd);
     }
@@ -71,6 +74,7 @@ export async function materialHttpFixture(
       ...materialProposal(await f.current(), task.id),
       ...(dependency ? { successor_task_id: successor.id } : {}),
       ...(chain ? { chain_end_task_id: chainEnd.id } : {}),
+      ...(branch ? { branch_successor_task_id: chainEnd.id } : {}),
     });
     for (const r of (await f.current()).material_resolution.required)
       await json(
@@ -90,5 +94,6 @@ export async function materialHttpFixture(
     task,
     ...(dependency ? { successor } : {}),
     ...(chain ? { chainEnd } : {}),
+    ...(branch ? { branchSuccessor: chainEnd } : {}),
   };
 }

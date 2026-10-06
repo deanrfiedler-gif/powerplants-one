@@ -1,6 +1,6 @@
 # Powerplants One
 
-Current ES-07 continuation: [owned Project dependency resolution](docs/delivery/quotation-task-dependency-handover.md). #348 and #349 are merged. The new bounded path receives both tasks before withdrawing their unsupported forecasts, preserving the dependency, unmet Demand and independent holds. Exact validation and remaining acceptance are recorded separately from deployment.
+Current ES-07 continuation: [owned three-task Project branch resolution](docs/delivery/quotation-task-branch-handover.md). #352 is merged. The bounded branch receives A, B and C before withdrawing forecasts while preserving A → B, A → C, unmet Demand and independent holds. Exact validation and acceptance remain separate from deployment.
 
 
 Personal prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance. The repository is public; the application, data and hosted demo remain private and synthetic.

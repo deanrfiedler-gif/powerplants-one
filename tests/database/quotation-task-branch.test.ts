@@ -27,7 +27,11 @@ import {
   acknowledgement,
   referral,
 } from "../helpers/quotation-supply-followup";
-import { database, closeDatabase } from "../../src/platform/database";
+import {
+  database,
+  closeDatabase,
+  transaction,
+} from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import {
   saveTask,
@@ -80,7 +84,7 @@ async function fixture(
     progress: 0,
     start_date: "2027-12-13",
     finish_date: "2027-12-17",
-    dependencies: [{ task_id: b.id, kind: kind2 }],
+    dependencies: [{ task_id: f.task.id, kind: kind2 }],
   };
   await saveTask(f.owner, f.project.id, c);
   if (unrelated)
@@ -92,7 +96,7 @@ async function fixture(
   await executeMaterial(f.owner, f.id, "MaterialPropose", {
     ...materialProposal(await currentFollowup(f), f.task.id),
     successor_task_id: b.id,
-    chain_end_task_id: c.id,
+    branch_successor_task_id: c.id,
   });
   return { ...f, b, c };
 }
@@ -102,13 +106,36 @@ for (const [kind, kind2] of [
   ["SS", "FS"],
   ["SS", "SS"],
 ] as const)
-  test(`${kind}/${kind2} chain requires six exact decisions and atomically preserves both dependencies with three native task saves and one Impact successor`, async () => {
+  test(`${kind}/${kind2} branch requires six exact decisions and atomically preserves both dependencies with three native task saves and one Impact successor`, async () => {
     const f = await fixture(kind, true, kind2);
     let t = await currentFollowup(f);
     const original = t.material_resolution.proposal!;
     assert.equal(t.material_resolution.required.length, 6);
     assert.equal(t.material_resolution.native_holds.length, 0);
     assert.equal(original.successor_command!.id, f.b.id);
+    assert.equal(original.dependencies.project.topology, "Branch");
+    assert.equal(original.branch_successor_command!.id, f.c.id);
+    assert.equal(original.chain_end_command, null);
+    assert.deepEqual(
+      t.material_resolution.required.map((r) => r.role),
+      [
+        "Demand",
+        "Project",
+        "Task",
+        "MaterialAction",
+        "Successor",
+        "BranchSuccessor",
+      ],
+    );
+    await assert.rejects(
+      executeMaterial(
+        f.owner,
+        f.id,
+        "MaterialReceive",
+        materialReceiving(t, "ChainEnd"),
+      ),
+      (e: unknown) => (e as { status: number }).status === 404,
+    );
     const before = await readSchedule(f.owner, f.project.id);
     for (const role of [
       "Demand",
@@ -132,7 +159,10 @@ for (const [kind, kind2] of [
       ),
       conflict,
     );
-    const receiving = materialReceiving(await currentFollowup(f), "ChainEnd");
+    const receiving = materialReceiving(
+      await currentFollowup(f),
+      "BranchSuccessor",
+    );
     const pair = await Promise.all([
       executeMaterial(f.owner, f.id, "MaterialReceive", receiving),
       executeMaterial(f.owner, f.id, "MaterialReceive", receiving),
@@ -152,6 +182,30 @@ for (const [kind, kind2] of [
         [f.owner.workspace_id],
       )
     ).rows.map((r) => r.id);
+    const unchangedTables = [
+      "supply_allocations",
+      "supply_allocation_history",
+      "activities",
+      "activity_links",
+      "reference_counters",
+      "draft_quote_revisions",
+      "quote_conversion_events",
+      "quote_supply_events",
+      "quote_supply_receipt_events",
+      "quote_supply_shortfall_events",
+    ];
+    const unchanged = await Promise.all(unchangedTables.map(rows));
+    const outputBytes = await draftBytes(f.owner, f.id);
+    const appendedTables = [
+      "project_schedule_events",
+      "supply_revisions",
+      "supply_facts",
+      "quote_material_events",
+      "operation_receipts",
+      "audit_events",
+      "outbox_jobs",
+    ];
+    const appendBefore = await Promise.all(appendedTables.map(rows));
     const results = await Promise.all([
       executeMaterial(f.owner, f.id, "MaterialApply", cmd),
       executeMaterial(f.owner, f.id, "MaterialApply", cmd),
@@ -169,6 +223,48 @@ for (const [kind, kind2] of [
     const e = t.material_resolution.applied!,
       after = await readSchedule(f.owner, f.project.id);
     assert.equal(after.project.version, before.project.version + 3);
+    assert.deepEqual(
+      {
+        ...after.project,
+        version: before.project.version,
+        updated_at: before.project.updated_at,
+      },
+      before.project,
+    );
+    assert.deepEqual(await Promise.all(unchangedTables.map(rows)), unchanged);
+    assert.deepEqual(await draftBytes(f.owner, f.id), outputBytes);
+    const appendAfter = await Promise.all(appendedTables.map(rows));
+    for (const [index, count] of [3, 1, 1, 1, 5, 5, 5].entries()) {
+      assert.equal(
+        appendAfter[index].length,
+        appendBefore[index].length + count,
+        appendedTables[index],
+      );
+      for (const old of appendBefore[index])
+        assert.ok(
+          appendAfter[index].some(
+            (r) => JSON.stringify(r) === JSON.stringify(old),
+          ),
+          appendedTables[index],
+        );
+    }
+    for (const [i, taskId] of [f.task.id, f.b.id, f.c.id].entries()) {
+      assert.equal(
+        (
+          await database().query(
+            "SELECT project_version FROM ppo.project_tasks WHERE id=$1",
+            [taskId],
+          )
+        ).rows[0].project_version,
+        before.project.version + i + 1,
+      );
+    }
+    assert.deepEqual(e.after!.demand.data, original.dependencies.demand.data);
+    assert.equal(
+      e.after!.demand.owner_id,
+      original.dependencies.demand.owner_id,
+    );
+    assert.equal(e.after!.project.topology, "Branch");
     assert.equal(e.native_receipts.length, 4);
     assert.equal(e.allocation_outcome_id, original.allocation_outcome_id);
     assert.deepEqual(
@@ -179,7 +275,7 @@ for (const [kind, kind2] of [
     for (const command of [
       e.project_command,
       e.successor_command!,
-      e.chain_end_command!,
+      e.branch_successor_command!,
     ])
       assert.ok(
         e.impact_command.data.review_reference!.includes(command.operation_id),
@@ -299,7 +395,7 @@ const rows = async (table: string) =>
       `SELECT to_jsonb(t) value FROM ppo.${table} t ORDER BY to_jsonb(t)::text`,
     )
   ).rows;
-for (const failure of ["ThirdTask", "Impact", "Outcome"] as const)
+for (const failure of ["SecondTask", "ThirdTask", "Impact", "Outcome"] as const)
   test(`late ${failure} refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds`, async () => {
     const f = await fixture();
     await receiveMaterial(f);
@@ -331,20 +427,21 @@ for (const failure of ["ThirdTask", "Impact", "Outcome"] as const)
       "outbox_jobs",
     ];
     const before = await Promise.all(tables.map(rows));
-    const failTable =
-      failure === "ThirdTask"
-        ? "project_tasks"
-        : failure === "Impact"
-          ? "supply_facts"
-          : "quote_material_events";
+    const failTable = ["SecondTask", "ThirdTask"].includes(failure)
+      ? "project_tasks"
+      : failure === "Impact"
+        ? "supply_facts"
+        : "quote_material_events";
     const condition =
-      failure === "ThirdTask"
-        ? `NEW.id='${f.c.id}'::uuid`
-        : failure === "Impact"
-          ? "NEW.kind='Impact'"
-          : "NEW.action='MaterialApply'";
+      failure === "SecondTask"
+        ? `NEW.id='${f.b.id}'::uuid`
+        : failure === "ThirdTask"
+          ? `NEW.id='${f.c.id}'::uuid`
+          : failure === "Impact"
+            ? "NEW.kind='Impact'"
+            : "NEW.action='MaterialApply'";
     await database().query(
-      `CREATE FUNCTION ppo.chain_injected() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN IF ${condition} THEN RAISE EXCEPTION 'SYN late native refusal'; END IF; RETURN NEW; END $$; CREATE TRIGGER chain_injected BEFORE ${failure === "ThirdTask" ? "UPDATE" : "INSERT"} ON ppo.${failTable} FOR EACH ROW EXECUTE FUNCTION ppo.chain_injected()`,
+      `CREATE FUNCTION ppo.branch_injected() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN IF ${condition} THEN RAISE EXCEPTION 'SYN late native refusal'; END IF; RETURN NEW; END $$; CREATE TRIGGER branch_injected BEFORE ${["SecondTask", "ThirdTask"].includes(failure) ? "UPDATE" : "INSERT"} ON ppo.${failTable} FOR EACH ROW EXECUTE FUNCTION ppo.branch_injected()`,
     );
     try {
       await assert.rejects(
@@ -352,7 +449,7 @@ for (const failure of ["ThirdTask", "Impact", "Outcome"] as const)
       );
     } finally {
       await database().query(
-        `DROP TRIGGER chain_injected ON ppo.${failTable}; DROP FUNCTION ppo.chain_injected()`,
+        `DROP TRIGGER branch_injected ON ppo.${failTable}; DROP FUNCTION ppo.branch_injected()`,
       );
     }
     assert.deepEqual(await Promise.all(tables.map(rows)), before);
@@ -360,11 +457,11 @@ for (const failure of ["ThirdTask", "Impact", "Outcome"] as const)
       cmd,
       prop.project_command,
       prop.successor_command!,
-      prop.chain_end_command!,
+      prop.branch_successor_command!,
       prop.impact_command,
     ])
       await assert.rejects(readOperation(f.owner, op.operation_id));
-    const { project_id, ...reserved } = prop.chain_end_command!;
+    const { project_id, ...reserved } = prop.branch_successor_command!;
     await assert.rejects(saveTask(f.owner, project_id, reserved), conflict);
     const result = await executeMaterial(f.owner, f.id, "MaterialApply", cmd);
     assert.deepEqual(
@@ -398,7 +495,7 @@ test("third task owner receives independently; corrected Held and Returned decis
   await executeMaterial(f.owner, f.id, "MaterialPropose", {
     ...materialProposal(t, f.task.id),
     successor_task_id: f.b.id,
-    chain_end_task_id: f.c.id,
+    branch_successor_task_id: f.c.id,
   });
   for (const role of [
     "Demand",
@@ -419,10 +516,10 @@ test("third task owner receives independently; corrected Held and Returned decis
       f.owner,
       f.id,
       "MaterialReceive",
-      materialReceiving(t, "ChainEnd"),
+      materialReceiving(t, "BranchSuccessor"),
     ),
   );
-  const decision = materialReceiving(t, "ChainEnd");
+  const decision = materialReceiving(t, "BranchSuccessor");
   assert.ok(
     (await receivingWorklist(owner)).rows.some(
       (r) => r.target_id === t.target_id,
@@ -439,7 +536,7 @@ test("third task owner receives independently; corrected Held and Returned decis
     owner,
     f.id,
     "MaterialReceive",
-    materialReceiving(await currentFollowup(f), "ChainEnd", "Held"),
+    materialReceiving(await currentFollowup(f), "BranchSuccessor", "Held"),
   );
   t = await currentFollowup(f);
   assert.equal(t.material_resolution.can_apply, false);
@@ -451,7 +548,7 @@ test("third task owner receives independently; corrected Held and Returned decis
     owner,
     f.id,
     "MaterialReceive",
-    materialReceiving(t, "ChainEnd", "Returned"),
+    materialReceiving(t, "BranchSuccessor", "Returned"),
   );
   await database().query(
     "UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='project.read'",
@@ -460,7 +557,7 @@ test("third task owner receives independently; corrected Held and Returned decis
   await assert.rejects(readOperation(owner, decision.operation_id));
   assert.ok((await currentFollowup(f)).material_resolution.holds.length);
 });
-test("quotation retention remains resolved through chain review; native result requires fresh explicit ES07 disposition", async () => {
+test("quotation retention remains resolved through branch review; native result requires fresh explicit ES07 disposition", async () => {
   const f = await fixture("SS");
   let q = await readConversion(f.owner, f.id);
   await reviewDisposition(
@@ -474,7 +571,7 @@ test("quotation retention remains resolved through chain review; native result r
   await executeMaterial(f.owner, f.id, "MaterialPropose", {
     ...materialProposal(await currentFollowup(f), f.task.id),
     successor_task_id: f.b.id,
-    chain_end_task_id: f.c.id,
+    branch_successor_task_id: f.c.id,
   });
   await receiveMaterial(f);
   await executeMaterial(
@@ -553,24 +650,20 @@ test("third task cannot be claimed by another accepted target; returned referral
 const legacyRows = async (table: string) =>
   (await rows(table)).map(({ value }) => {
     const old = { ...value };
-    if (Object.hasOwn(old, "chain_end_command")) {
-      assert.equal(old.chain_end_command, null);
-      delete old.chain_end_command;
-    }
     if (Object.hasOwn(old, "branch_successor_command")) {
       assert.equal(old.branch_successor_command, null);
       delete old.branch_successor_command;
     }
     return { value: old };
   });
-for (const paired of [false, true])
-  test(`populated 0068 upgrade preserves ${paired ? "two-task" : "isolated-task"} originals, every old row and output byte`, async () => {
+for (const topology of ["isolated-task", "two-task", "linear-chain"])
+  test(`populated 0069 upgrade preserves ${topology} originals, every old row and output byte`, async () => {
     await database().query(
       await readFile("db/migrations/0001-recover.sql", "utf8"),
     );
     await database().query("DROP TABLE public.ppo_migrations");
-    await migrate(68);
-    await seed(68);
+    await migrate(69);
+    await seed(69);
     const originals = [];
     {
       const f = await materialFixture();
@@ -581,10 +674,20 @@ for (const paired of [false, true])
         progress: 0,
         dependencies: [{ task_id: f.task.id, kind: "FS" as const }],
       };
-      if (paired) await saveTask(f.owner, f.project.id, b);
+      if (topology !== "isolated-task")
+        await saveTask(f.owner, f.project.id, b);
+      const c = {
+        ...taskInput(3),
+        owner_id: f.owner.actor_id,
+        status: "Planned",
+        progress: 0,
+        dependencies: [{ task_id: b.id, kind: "SS" as const }],
+      };
+      if (topology === "linear-chain") await saveTask(f.owner, f.project.id, c);
       const proposal = {
         ...materialProposal(await currentFollowup(f), f.task.id),
-        ...(paired ? { successor_task_id: b.id } : {}),
+        ...(topology !== "isolated-task" ? { successor_task_id: b.id } : {}),
+        ...(topology === "linear-chain" ? { chain_end_task_id: c.id } : {}),
       };
       const proposalOriginal = await executeMaterial(
         f.owner,
@@ -635,12 +738,12 @@ for (const paired of [false, true])
       )
     ).rows;
     assert.deepEqual(
-      now.filter((r) => r.version <= 68),
+      now.filter((r) => r.version <= 69),
       ledger,
     );
     assert.deepEqual(
-      now.filter((r) => r.version > 68).map((r) => r.version),
-      [69, 70],
+      now.filter((r) => r.version > 69).map((r) => r.version),
+      [70],
     );
     for (const {
       f,
@@ -665,7 +768,7 @@ for (const paired of [false, true])
     await seed();
     assert.deepEqual(await Promise.all(tables.map(legacyRows)), before);
   });
-test("Three-task chain accepts the native direction; reversed and newly added dependencies hold unexecuted receiving", async () => {
+test("Three-task branch accepts the native direction; reversed and newly added dependencies hold unexecuted receiving", async () => {
   const f = await fixture("SS");
   await executeMaterial(
     f.owner,
@@ -686,7 +789,7 @@ test("Three-task chain accepts the native direction; reversed and newly added de
   await executeMaterial(f.owner, f.id, "MaterialPropose", {
     ...materialProposal(await currentFollowup(f), f.task.id),
     successor_task_id: f.b.id,
-    chain_end_task_id: f.c.id,
+    branch_successor_task_id: f.c.id,
   });
   assert.ok(
     (await currentFollowup(f)).material_resolution.required.every(
@@ -729,61 +832,74 @@ test("Three-task chain accepts the native direction; reversed and newly added de
   );
 });
 
-test("two-task receiving never authorises newly selected third-task consequences", async () => {
-  const f = await materialFixture();
-  const b = {
-    ...taskInput(2),
-    owner_id: f.owner.actor_id,
-    status: "Planned",
-    progress: 0,
-    dependencies: [{ task_id: f.task.id, kind: "FS" as const }],
-  };
-  await saveTask(f.owner, f.project.id, b);
-  await executeMaterial(f.owner, f.id, "MaterialPropose", {
-    ...materialProposal(await currentFollowup(f), f.task.id),
-    successor_task_id: b.id,
-  });
-  await receiveMaterial(f);
-  await executeMaterial(
-    f.owner,
-    f.id,
-    "MaterialReview",
-    materialReview(await currentFollowup(f)),
-  );
-  const prior = (await currentFollowup(f)).material_resolution.review!;
-  const c = {
-    ...taskInput(3),
-    owner_id: f.owner.actor_id,
-    status: "Planned",
-    progress: 0,
-    dependencies: [{ task_id: b.id, kind: "SS" as const }],
-  };
-  await saveTask(f.owner, f.project.id, c);
-  await assert.rejects(
-    executeMaterial(
+for (const linear of [false, true])
+  test(`${linear ? "linear-chain" : "two-task"} receiving never authorises a branch`, async () => {
+    const f = await materialFixture();
+    const b = {
+      ...taskInput(2),
+      owner_id: f.owner.actor_id,
+      status: "Planned",
+      progress: 0,
+      dependencies: [{ task_id: f.task.id, kind: "FS" as const }],
+    };
+    await saveTask(f.owner, f.project.id, b);
+    const c = {
+      ...taskInput(3),
+      owner_id: f.owner.actor_id,
+      status: "Planned",
+      progress: 0,
+      dependencies: [
+        { task_id: linear ? b.id : f.task.id, kind: "SS" as const },
+      ],
+    };
+    if (linear) await saveTask(f.owner, f.project.id, c);
+    await executeMaterial(f.owner, f.id, "MaterialPropose", {
+      ...materialProposal(await currentFollowup(f), f.task.id),
+      successor_task_id: b.id,
+      ...(linear ? { chain_end_task_id: c.id } : {}),
+    });
+    await receiveMaterial(f);
+    await executeMaterial(
       f.owner,
       f.id,
-      "MaterialApply",
-      materialApply(await currentFollowup(f)),
-    ),
-    conflict,
-  );
-  await executeMaterial(f.owner, f.id, "MaterialPropose", {
-    ...materialProposal(await currentFollowup(f), f.task.id),
-    successor_task_id: b.id,
-    chain_end_task_id: c.id,
+      "MaterialReview",
+      materialReview(await currentFollowup(f)),
+    );
+    const prior = (await currentFollowup(f)).material_resolution.review!;
+    if (linear) {
+      await saveTask(f.owner, f.project.id, {
+        ...c,
+        operation_id: randomUUID(),
+        expected_version: 4,
+        dependencies: [{ task_id: f.task.id, kind: "SS" }],
+      });
+    } else await saveTask(f.owner, f.project.id, c);
+    await assert.rejects(
+      executeMaterial(
+        f.owner,
+        f.id,
+        "MaterialApply",
+        materialApply(await currentFollowup(f)),
+      ),
+      conflict,
+    );
+    await executeMaterial(f.owner, f.id, "MaterialPropose", {
+      ...materialProposal(await currentFollowup(f), f.task.id),
+      successor_task_id: b.id,
+      branch_successor_task_id: c.id,
+    });
+    const t = await currentFollowup(f);
+    assert.equal(t.material_resolution.required.length, 6);
+    assert.equal(t.material_resolution.native_holds.length, 0);
+    assert.ok(t.material_resolution.required.every((r) => r.decision === null));
+    assert.ok(t.material_resolution.events.some((e) => e.id === prior.id));
+    await assert.rejects(
+      executeMaterial(f.owner, f.id, "MaterialReview", materialReview(t)),
+      conflict,
+    );
   });
-  const t = await currentFollowup(f);
-  assert.equal(t.material_resolution.required.length, 6);
-  assert.ok(t.material_resolution.required.every((r) => r.decision === null));
-  assert.ok(t.material_resolution.events.some((e) => e.id === prior.id));
-  await assert.rejects(
-    executeMaterial(f.owner, f.id, "MaterialReview", materialReview(t)),
-    conflict,
-  );
-});
 
-test("new consequential Project Engineering after review holds the complete chain without partial task effects", async () => {
+test("new consequential Project Engineering after review holds the complete branch without partial task effects", async () => {
   const f = await fixture();
   await receiveMaterial(f);
   await executeMaterial(
@@ -810,13 +926,13 @@ test("new consequential Project Engineering after review holds the complete chai
   assert.deepEqual(after.project, before.project);
   assert.deepEqual(after.tasks, before.tasks);
 });
-test("ES07 chain: Activity completion and review notes cannot clear operational Impact or restore readiness", async () => {
+test("ES07 branch: Activity completion and review notes cannot clear operational Impact or restore readiness", async () => {
   const f = await fixture(),
     candidate = (await currentFollowup(f)).material_resolution.candidates[0];
   await executeMaterial(f.owner, f.id, "MaterialPropose", {
     ...materialProposal(await currentFollowup(f), f.task.id),
     successor_task_id: f.b.id,
-    chain_end_task_id: f.c.id,
+    branch_successor_task_id: f.c.id,
   });
   let t = await currentFollowup(f);
   const d = t.material_resolution.dependencies!;
@@ -841,7 +957,7 @@ test("ES07 chain: Activity completion and review notes cannot clear operational 
   await executeMaterial(f.owner, f.id, "MaterialPropose", {
     ...materialProposal(t, f.task.id),
     successor_task_id: f.b.id,
-    chain_end_task_id: f.c.id,
+    branch_successor_task_id: f.c.id,
   });
   t = await currentFollowup(f);
   assert.ok(
@@ -895,4 +1011,131 @@ test("ES07 chain: Activity completion and review notes cannot clear operational 
     ),
     false,
   );
+});
+
+for (const outgoing of [false, true])
+  test(`a new ${outgoing ? "outgoing" : "incoming"} edge at each branch task holds a frozen review even without a Project version change`, async () => {
+    const f = await fixture();
+    const other = {
+      ...taskInput(4),
+      owner_id: f.owner.actor_id,
+      status: "Planned",
+      progress: 0,
+    };
+    await saveTask(f.owner, f.project.id, other);
+    await executeMaterial(f.owner, f.id, "MaterialPropose", {
+      ...materialProposal(await currentFollowup(f), f.task.id),
+      successor_task_id: f.b.id,
+      branch_successor_task_id: f.c.id,
+    });
+    await receiveMaterial(f);
+    await executeMaterial(
+      f.owner,
+      f.id,
+      "MaterialReview",
+      materialReview(await currentFollowup(f)),
+    );
+    const original = await currentFollowup(f),
+      cmd = materialApply(original);
+    const project = (await readSchedule(f.owner, f.project.id)).project;
+    // Simulate a concurrent schema-level edge introduction without an aggregate version bump,
+    // so this proves complete edge reinspection rather than only optimistic version refusal.
+    for (const selected of [f.task.id, f.b.id, f.c.id]) {
+      const edge = [
+        f.owner.workspace_id,
+        f.project.id,
+        outgoing ? other.id : selected,
+        outgoing ? selected : other.id,
+      ];
+      await database().query(
+        "INSERT INTO ppo.project_dependencies(workspace_id,project_id,task_id,predecessor_id,kind) VALUES($1,$2,$3,$4,'FS')",
+        edge,
+      );
+      try {
+        const current = await currentFollowup(f);
+        assert.ok(current.material_resolution.holds.length);
+        assert.ok(
+          current.material_resolution.native_holds.some((h) =>
+            h.includes("additional"),
+          ),
+        );
+        assert.equal(current.material_resolution.can_apply, false);
+        await assert.rejects(
+          executeMaterial(f.owner, f.id, "MaterialApply", cmd),
+          conflict,
+        );
+        assert.deepEqual(
+          (await readSchedule(f.owner, f.project.id)).project,
+          project,
+        );
+      } finally {
+        await database().query(
+          "DELETE FROM ppo.project_dependencies WHERE workspace_id=$1 AND project_id=$2 AND task_id=$3 AND predecessor_id=$4",
+          edge,
+        );
+      }
+    }
+    assert.equal(
+      (await currentFollowup(f)).material_resolution.can_apply,
+      true,
+    );
+  });
+
+test("branch review refuses B-C cross-links, a merge, reversed and missing selected relationships", async () => {
+  const f = await fixture();
+  await receiveMaterial(f);
+  await executeMaterial(
+    f.owner,
+    f.id,
+    "MaterialReview",
+    materialReview(await currentFollowup(f)),
+  );
+  const original = await currentFollowup(f),
+    cmd = materialApply(original),
+    d = original.material_resolution.dependencies!.project.dependencies;
+  const edge = (task_id: string, predecessor_id: string) => ({
+    task_id,
+    predecessor_id,
+    kind: "FS",
+  });
+  const replace = async (edges: typeof d) =>
+    transaction(async (c) => {
+      await c.query(
+        "DELETE FROM ppo.project_dependencies WHERE workspace_id=$1 AND project_id=$2",
+        [f.owner.workspace_id, f.project.id],
+      );
+      for (const e of edges)
+        await c.query(
+          "INSERT INTO ppo.project_dependencies(workspace_id,project_id,task_id,predecessor_id,kind) VALUES($1,$2,$3,$4,$5)",
+          [
+            f.owner.workspace_id,
+            f.project.id,
+            e.task_id,
+            e.predecessor_id,
+            e.kind,
+          ],
+        );
+    });
+  for (const edges of [
+    [...d, edge(f.c.id, f.b.id)],
+    [...d, edge(f.b.id, f.c.id)],
+    [edge(f.c.id, f.task.id), edge(f.c.id, f.b.id)],
+    [edge(f.task.id, f.b.id), edge(f.c.id, f.task.id)],
+    d.slice(0, 1),
+    d.slice(1),
+  ]) {
+    await replace(edges);
+    try {
+      const t = await currentFollowup(f);
+      assert.ok(t.material_resolution.native_holds.length);
+      assert.equal(t.material_resolution.can_apply, false);
+      await assert.rejects(
+        executeMaterial(f.owner, f.id, "MaterialApply", cmd),
+        conflict,
+      );
+    } finally {
+      await replace(d);
+    }
+  }
+  assert.equal((await currentFollowup(f)).material_resolution.can_apply, true);
 });

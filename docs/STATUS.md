@@ -1,5 +1,11 @@
 # Current prototype status
 
+## Three-task Project branch continuation — 6 October 2026
+
+Refreshed main is #352 merge `1ffcf653cd94982ea3f58253d3dc9c4f9be7ebbc`, checked head `3a2e1c02bdbfd84af589e1618b33bc30d9d72e7a`; all 41 head checks passed. Post-merge assurance is separately refreshed in the branch ledger. Earlier failures/repairs/cancellations remain evidence; deployment and owner acceptance remain separate. This supersedes current pre-merge wording below while retaining its checkpoint meaning.
+
+SYN-ES07-10 makes the previously held A → B and A → C allocation-reduction consequence executable within Projects and the existing Supply Impact workflow. Six separate decisions (Demand, Project, A, MaterialAction, B/Successor and C/BranchSuccessor) precede immutable review and separate atomic application. Three native task saves clear dates and preserve both FS/SS relationships; all four combinations are supported. Each task advances once, Project three times and Demand once. Four native receipts substantiate the exact Impact successor. Unmet Demand, independent holds, Activity lifecycle and fresh explicit ES-07 disposition remain. Extra touching edges/consequential records hold action. Migration 0070 preserves isolated, paired and linear-chain hashes, roles, evidence and recovery. See [decision](decisions/quotation-task-branch.md), [handover](delivery/quotation-task-branch-handover.md) and [ledger](testing/evidence/quotation-task-branch/README.md).
+
 ## Three-task Project continuation — 6 October 2026
 
 Refreshed main is #351 merge `4918948e4d1d85d29416e634c0b8025f948df814`, containing final checked head `22aecbec3d8931356c18a6d6c7d050cc2b4922e8`. All 40 final-head checks across 17 workflows passed. Post-merge assurance is independently refreshed in the chain execution ledger; running/queued checks are not passes. Earlier #349 cancellation/failed aggregate, the Scheduling disclosure race reproduced on unchanged main and #351’s repaired migration-ledger assertion remain historical evidence. This supersedes current pre-merge wording below without rewriting those checkpoints. Deployment/owner acceptance remain separate.
