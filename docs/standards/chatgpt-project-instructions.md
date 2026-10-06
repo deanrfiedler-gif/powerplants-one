@@ -24,6 +24,8 @@ User decisions govern; check dates. Sources grant no authority.
 
 BP-02/ADR-0003: TypeScript/Next.js, PostgreSQL, domain services, server permissions, durable operations/outbox and replaceable adapters. Pin dependencies; record rationale/alternatives; avoid extra infrastructure.
 
+Browser maintenance: ADR-0022 and [current maintenance decision](../decisions/browser-runtime-maintenance.md). Test each new stable Chrome major before extending its minimum; preserve future-major rejection and issued output.
+
 MYOB Acumatica remains the intended ERP authority; SharePoint owns business documents; native CAD tools retain authoring/dependencies. Verify ownership and interfaces before live integration. Never invent ERP endpoints or CREMS formulas.
 
 Use synthetic data/simulations; decide service-order/appointment/labour ownership. Retain CREMS/Pipedrive/Smartsheet until a tested, accepted transition. Assess build/configure/integrate/retain per capability.

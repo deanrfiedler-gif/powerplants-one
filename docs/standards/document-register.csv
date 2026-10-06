@@ -1,4 +1,5 @@
 document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-BROWSER-RUNTIME-DEC,Browser runtime maintenance,docs/decisions/browser-runtime-maintenance.md,,Chrome 155 compatibility repair; final-head CI and hosted rollout separate,Dean Fiedler,58679be051d8dc8da4356a714fb0f37d09902092,,,git,
 PPO-DEVELOPMENT-WORKSPACE,Working design and build register,docs/design/development/register.json,,Schema 2; local implementation and draft review records,Dean Fiedler,ccc2251bbba9df266cac9027ddaa9418ab9abc1d,,,git,r01
 PPO-DEVELOPMENT-WORKFLOW,Working design register maintenance,docs/design/development/README.md,,Git master workflow and review boundaries,Dean Fiedler,ccc2251bbba9df266cac9027ddaa9418ab9abc1d,,,git,r01
 PPO-DEVELOPMENT-WORKSPACE-HANDOVER,Design and development workspace handover,docs/delivery/development-workspace-handover.md,r01,Local implementation for review; operational and visual acceptance separate,Dean Fiedler,ccc2251bbba9df266cac9027ddaa9418ab9abc1d,,,retained-record,
