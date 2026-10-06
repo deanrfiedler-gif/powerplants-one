@@ -1,6 +1,6 @@
 # Powerplants One
 
-Current ES-07 continuation: [owned three-task Project merge with retained B](docs/delivery/quotation-task-merge-handover.md). #353 is merged. The bounded merge receives A, B and C, withdraws A/C forecasts and preserves B, both relationships, unmet Demand and independent holds. Exact validation and acceptance remain separate from deployment.
+Current ES-07 continuation: [owned four-task Project diamond](docs/delivery/quotation-task-diamond-handover.md). #354 is merged; its final-head proof and failed post-merge assurance are separately recorded. The diamond withdraws A/B/C/D forecasts with D saved once, preserving all four relationships, unmet Demand and independent holds. Validation, visual review, owner acceptance and deployment remain separate.
 
 
 Personal prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance. The repository is public; the application, data and hosted demo remain private and synthetic.

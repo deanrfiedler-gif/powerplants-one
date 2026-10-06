@@ -22,6 +22,7 @@ export function MaterialResolution({
   const [branchSuccessor, setBranchSuccessor] = useState("");
   const [mergePredecessor, setMergePredecessor] = useState("");
   const [mergeSuccessor, setMergeSuccessor] = useState("");
+  const [diamond, setDiamond] = useState({ b: "", c: "", d: "" });
   const [decisions, setDecisions] = useState<Record<string, string>>({});
   const [review, setReview] = useState("Hold");
   const [dirty, setDirty] = useState(false);
@@ -38,15 +39,21 @@ export function MaterialResolution({
   const proposal = s.proposal;
   const d = s.dependencies;
   const roleLabel = (role: string) =>
-    role === "ChainEnd"
-      ? "Third task"
-      : role === "BranchSuccessor"
-        ? "Branch task C"
-        : role === "MergePredecessor"
-          ? "Retained predecessor B"
-          : role === "MergeSuccessor"
-            ? "Merge task C"
-            : role;
+    role === "DiamondB"
+      ? "Diamond task B"
+      : role === "DiamondC"
+        ? "Diamond task C"
+        : role === "DiamondD"
+          ? "Shared successor D"
+          : role === "ChainEnd"
+            ? "Third task"
+            : role === "BranchSuccessor"
+              ? "Branch task C"
+              : role === "MergePredecessor"
+                ? "Retained predecessor B"
+                : role === "MergeSuccessor"
+                  ? "Merge task C"
+                  : role;
   return (
     <section aria-label="Owned downstream material resolution">
       <h3>Resolve the affected Project forecast</h3>
@@ -55,15 +62,16 @@ export function MaterialResolution({
         explicitly selected, its directly dependent successor and a third task
         dependent on that successor, or a branch with two direct successors of
         the affected task (A → B and A → C), or a merge (A → C and B → C) that
-        withdraws A/C and retains B exactly. Each affected owner receives the
-        complete exact proposal separately. Receipt and allocation acceptance
-        do not authorise this action.
+        withdraws A/C and retains B exactly, or the four-task diamond A → B, A →
+        C, B → D and C → D. The diamond withdraws A/B/C/D once each. Each
+        affected owner receives the complete exact proposal separately. Receipt
+        and allocation acceptance do not authorise this action.
       </p>
       <p>
         Project dates and the selected Demand version change. The exact Impact
         receives a successor linked to verified Projects evidence.
-        MaterialAction remains an Activity with its own lifecycle. Unmet
-        Demand and independent holds remain.
+        MaterialAction remains an Activity with its own lifecycle. Unmet Demand
+        and independent holds remain.
       </p>
       {!c && !proposal && (
         <p>
@@ -90,14 +98,14 @@ export function MaterialResolution({
             }))}
             onChange={(v) => {
               setSelected(v);
+              setDiamond({ b: "", c: "", d: "" });
               setSuccessor("");
               setMergePredecessor("");
               setMergeSuccessor("");
               setChainEnd("");
               setBranchSuccessor("");
               setTask(
-                s.candidates.find((x) => x.impact.id === v)?.tasks[0]?.id ??
-                  "",
+                s.candidates.find((x) => x.impact.id === v)?.tasks[0]?.id ?? "",
               );
               setDirty(true);
             }}
@@ -121,6 +129,7 @@ export function MaterialResolution({
                 }))}
                 onChange={(v) => {
                   setTask(v);
+                  setDiamond({ b: "", c: "", d: "" });
                   setSuccessor("");
                   setMergePredecessor("");
                   setMergeSuccessor("");
@@ -136,15 +145,14 @@ export function MaterialResolution({
                 disabled={blocked}
                 empty="No successor selected; isolated task only"
                 options={c.tasks
-                  .filter((x) =>
-                    x.dependencies.some((d) => d.task_id === task),
-                  )
+                  .filter((x) => x.dependencies.some((d) => d.task_id === task))
                   .map((x) => ({
                     id: x.id,
                     display_name: `${x.title} · ${x.dependencies.find((d) => d.task_id === task)?.kind} from selected task · ${x.start_date ?? "Unscheduled"} to ${x.finish_date ?? "Unscheduled"}`,
                   }))}
                 onChange={(v) => {
                   setSuccessor(v);
+                  setDiamond({ b: "", c: "", d: "" });
                   setMergePredecessor("");
                   setMergeSuccessor("");
                   setChainEnd("");
@@ -172,6 +180,7 @@ export function MaterialResolution({
                     }))}
                   onChange={(v) => {
                     setChainEnd(v);
+                    setDiamond({ b: "", c: "", d: "" });
                     setMergePredecessor("");
                     setMergeSuccessor("");
                     setBranchSuccessor("");
@@ -199,6 +208,7 @@ export function MaterialResolution({
                     }))}
                   onChange={(v) => {
                     setBranchSuccessor(v);
+                    setDiamond({ b: "", c: "", d: "" });
                     setMergePredecessor("");
                     setMergeSuccessor("");
                     setChainEnd("");
@@ -221,6 +231,7 @@ export function MaterialResolution({
                   .map((x) => ({ id: x.id, display_name: x.title }))}
                 onChange={(v) => {
                   setMergeSuccessor(v);
+                  setDiamond({ b: "", c: "", d: "" });
                   setMergePredecessor("");
                   setSuccessor("");
                   setChainEnd("");
@@ -253,12 +264,61 @@ export function MaterialResolution({
                   }}
                 />
               )}
+              <fieldset disabled={blocked}>
+                <legend>Four-task diamond: both paths into D</legend>
+                {(["b", "c", "d"] as const).map((key) => (
+                  <SelectField
+                    key={key}
+                    name={`material-diamond-${key}`}
+                    label={
+                      key === "d"
+                        ? "Shared successor D dependent on B and C"
+                        : `Diamond task ${key.toUpperCase()} directly dependent on A`
+                    }
+                    value={diamond[key]}
+                    empty="No diamond task selected"
+                    options={c.tasks
+                      .filter(
+                        (x) =>
+                          x.id !== task &&
+                          (key === "d"
+                            ? x.dependencies.some(
+                                (d) => d.task_id === diamond.b,
+                              ) &&
+                              x.dependencies.some(
+                                (d) => d.task_id === diamond.c,
+                              )
+                            : x.dependencies.some((d) => d.task_id === task)) &&
+                          (key !== "c" || x.id !== diamond.b),
+                      )
+                      .map((x) => ({
+                        id: x.id,
+                        display_name: `${x.title} · ${x.status} · ${x.start_date ?? "Unscheduled"} to ${x.finish_date ?? "Unscheduled"}`,
+                      }))}
+                    onChange={(v) => {
+                      setDiamond({
+                        ...diamond,
+                        [key]: v,
+                        ...(key !== "d" ? { d: "" } : {}),
+                      });
+                      setSuccessor("");
+                      setChainEnd("");
+                      setBranchSuccessor("");
+                      setMergePredecessor("");
+                      setMergeSuccessor("");
+                      setDirty(true);
+                    }}
+                  />
+                ))}
+              </fieldset>
               <Button
                 disabled={
                   disabled ||
                   !owned ||
                   !task ||
-                  (!!mergeSuccessor && !mergePredecessor)
+                  (!!mergeSuccessor && !mergePredecessor) ||
+                  (Object.values(diamond).some(Boolean) &&
+                    !Object.values(diamond).every(Boolean))
                 }
                 onClick={() =>
                   send("material-propose", {
@@ -267,6 +327,13 @@ export function MaterialResolution({
                     demand_id: c.demand.id,
                     impact_id: c.impact.id,
                     task_id: task,
+                    ...(diamond.b
+                      ? {
+                          diamond_b_task_id: diamond.b,
+                          diamond_c_task_id: diamond.c,
+                          diamond_d_task_id: diamond.d,
+                        }
+                      : {}),
                     ...(mergeSuccessor
                       ? {
                           merge_predecessor_task_id: mergePredecessor,
@@ -302,8 +369,8 @@ export function MaterialResolution({
             <Status value={d.material.readiness.state} />
           </p>
           <p>
-            Impact {proposal.impact_id}; MaterialAction {d.activity.id},
-            version {d.activity.version}, {d.activity.state}. Referral{" "}
+            Impact {proposal.impact_id}; MaterialAction {d.activity.id}, version{" "}
+            {d.activity.version}, {d.activity.state}. Referral{" "}
             {t.referral?.date_needed ? "Date needed" : t.referral?.due_date}.
           </p>
           <p>
@@ -345,6 +412,46 @@ export function MaterialResolution({
           <ButtonLink href={`/projects/${d.project.project.id}`}>
             Open owning Project
           </ButtonLink>
+          {d.project.diamond && (
+            <section aria-label="Exact diamond paths and effects">
+              <h4>Diamond: A → B → D and A → C → D</h4>
+              <p>
+                Demand identifies this Project, not a task allocation. All seven
+                decisions explicitly receive A’s forecast consequence from the
+                applied allocation reduction. Proposed native ordering: A, B, C,
+                then D once; then only the selected Impact successor. Project
+                advances four times; Demand once. Five native receipts and the
+                returned outcome commit together.
+              </p>
+              {(["b", "c", "d"] as const).map((key) => {
+                const task = d.project.diamond![key];
+                return (
+                  <p key={key}>
+                    Task {key.toUpperCase()} {task.title} ({task.id}), owner{" "}
+                    {task.owner_id}, version {task.version}; {task.status},{" "}
+                    {task.progress}% complete. Current dates:{" "}
+                    {task.start_date ?? "Unscheduled"} to{" "}
+                    {task.finish_date ?? "Unscheduled"}. Proposed dates:
+                    Unscheduled. Retain status, progress, owner, notes and every
+                    other native business field.{" "}
+                    {task.dependencies.map((edge) => (
+                      <span key={edge.task_id}>
+                        Predecessor {edge.task_id}: {edge.kind}.{" "}
+                      </span>
+                    ))}
+                  </p>
+                );
+              })}
+              <p>
+                Both relationships into D remain. D has one save, one increment
+                and one schedule event. All four exact relationships,
+                allocations, Receipt facts, Demand quantity/classification,
+                unrelated tasks, MaterialAction lifecycle, Project context and
+                issued output bytes remain. Missing-date dependency warnings and
+                independent operational holds continue.
+              </p>
+            </section>
+          )}
           {d.project.mergePredecessor && d.project.mergeSuccessor && (
             <>
               <p>
@@ -388,8 +495,8 @@ export function MaterialResolution({
                   )?.kind
                 }
                 ) remain. C's dates cannot be supported through A while A is
-                Unscheduled. Unmet Demand remains; no replacement dates or
-                work authority are granted.
+                Unscheduled. Unmet Demand remains; no replacement dates or work
+                authority are granted.
               </p>
             </>
           )}
@@ -412,8 +519,7 @@ export function MaterialResolution({
               {d.project.chainEnd || d.project.branchSuccessor
                 ? "three times"
                 : "twice"}
-              . Missing dates continue to prevent checking the dependency
-              dates.
+              . Missing dates continue to prevent checking the dependency dates.
             </p>
           )}
           {d.project.chainEnd && (
@@ -423,8 +529,8 @@ export function MaterialResolution({
               {d.project.chainEnd.owner_id}; {d.project.chainEnd.status},{" "}
               {d.project.chainEnd.progress}% complete. Current dates:{" "}
               {d.project.chainEnd.start_date ?? "Unscheduled"} to{" "}
-              {d.project.chainEnd.finish_date ?? "Unscheduled"}. Proposed
-              dates: Unscheduled. The{" "}
+              {d.project.chainEnd.finish_date ?? "Unscheduled"}. Proposed dates:
+              Unscheduled. The{" "}
               {
                 d.project.chainEnd.dependencies.find(
                   (x) => x.task_id === d.project.successor?.id,
@@ -443,8 +549,8 @@ export function MaterialResolution({
               {d.project.branchSuccessor.status},{" "}
               {d.project.branchSuccessor.progress}% complete. Current dates:{" "}
               {d.project.branchSuccessor.start_date ?? "Unscheduled"} to{" "}
-              {d.project.branchSuccessor.finish_date ?? "Unscheduled"}.
-              Proposed dates: Unscheduled. The{" "}
+              {d.project.branchSuccessor.finish_date ?? "Unscheduled"}. Proposed
+              dates: Unscheduled. The{" "}
               {
                 d.project.branchSuccessor.dependencies.find(
                   (x) => x.task_id === d.project.task.id,
@@ -457,8 +563,7 @@ export function MaterialResolution({
           )}
           <details>
             <summary>
-              Exact source, Receipt, allocation, Impact and downstream
-              evidence
+              Exact source, Receipt, allocation, Impact and downstream evidence
             </summary>
             <pre>
               {JSON.stringify(
@@ -469,6 +574,7 @@ export function MaterialResolution({
                   current: d,
                   project_command: proposal.project_command,
                   merge_successor_command: proposal.merge_successor_command,
+                  diamond_commands: proposal.diamond_commands,
                   retained_predecessor:
                     proposal.dependencies.project.retainedPredecessor,
                   successor_command: proposal.successor_command,
@@ -652,8 +758,8 @@ export function MaterialResolution({
         </>
       )}
       <p>
-        Commercial and cross-workflow approval policy: Not configured. This
-        path does not authorise work, replenishment or external transactions.
+        Commercial and cross-workflow approval policy: Not configured. This path
+        does not authorise work, replenishment or external transactions.
       </p>
     </section>
   );

@@ -194,7 +194,12 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // 0071 adds exclusive merge evidence and two receiving roles on the existing table.
   // Earlier columns/payloads remain; no seed, grant, identity or table privilege change.
   // The generic runtime grants remain sufficient; the migration ledger stays restricted.
-  if (latestMigrationVersion !== 71) throw Error("Review the existing-demo upgrade for this release.");
+  // 0072 adds nullable explicit diamond commands and distinct receiving roles.
+  // Earlier rows acquire null only; old position overloads, payloads and original outcomes remain.
+  // No seed, grant, user, identity type or output change. Generic runtime grants cover the
+  // added functions; no migration-ledger read privilege is introduced. Populated upgrades
+  // must prove earlier topology recovery and complete preserved records.
+  if (latestMigrationVersion !== 72) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({
