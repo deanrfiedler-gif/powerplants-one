@@ -194,6 +194,11 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // 0071 adds exclusive merge evidence and two receiving roles on the existing table.
   // Earlier columns/payloads remain; no seed, grant, identity or table privilege change.
   // The generic runtime grants remain sufficient; the migration ledger stays restricted.
+  // Reviewed 0052: additive typed Products tables; extend live identity/audit/outbox/capability
+  // constraints without replacing later definitions. Deferred identity events are drained before ALTER.
+  // Seed 52 adds four local-only fictional duties and exact Company A grants. It adds no hosted
+  // profile, invitation or capability to additions. Existing hosted testers receive no Products access.
+  // Latest remains 71: this fills the reserved gap; both fresh and post-0071 installation are proved.
   if (latestMigrationVersion !== 71) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");

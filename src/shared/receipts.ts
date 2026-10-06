@@ -1,3 +1,4 @@
+import { productReceiptAuthority } from "../products/context";
 import { followupReceiptAuthority } from "../estimating/supply-followup/authority";
 import { releaseReceiptAuthority } from "../estimating/release/context";
 import { responseReceiptAuthority } from "../estimating/response/context";
@@ -73,7 +74,9 @@ export async function readOperation(
   );
   const r = result.rows[0];
   if (!r) throw unavailable();
-  if (["SchedulingPolicyProposal", "SchedulingPolicyReview", "SchedulingPolicyPublication", "SchedulingPolicyResolution"].includes(r.object_type)) {
+  if (["Product", "ProductRelationship", "ProductImport"].includes(r.object_type)) {
+    await productReceiptAuthority(client,p,r.record_id,r.command,r.object_type);
+  } else if (["SchedulingPolicyProposal", "SchedulingPolicyReview", "SchedulingPolicyPublication", "SchedulingPolicyResolution"].includes(r.object_type)) {
     return transaction(async c => {
       await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [p.workspace_id]);
       await policyReceiptAuthority(c, p, r.object_type, r.record_id);

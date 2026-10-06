@@ -52,7 +52,8 @@ export const migrationFiles = [
   "0048-estimating-cost-sources.sql",
   "0049-supply-chain.sql",
   "0050-field-work-timers.sql",
-  // 0051 Maintenance/Warranty and 0052 Products remain reserved.
+  // 0051 Maintenance/Warranty remains reserved. 0052 supports both installation orders.
+  "0052-products-catalogue.sql",
   "0053-scheduling-policy-publication.sql",
   "0054-scheduling-policy-commands.sql",
   "0055-service-inspections.sql",
@@ -102,6 +103,7 @@ export const seedFiles = [
   [47, "seed-engineering-native-control.sql"],
   [48, "seed-estimating-sources.sql"],
   [49, "seed-supply.sql"],
+  [52, "seed-products.sql"],
   [53, "seed-scheduling-policy-publication.sql"],
   [54, "seed-scheduling-policy-commands.sql"],
   [55, "seed-service-inspections.sql"],

@@ -73,7 +73,7 @@ export const destinations: ShellDestination[] = [
   {"id": "contacts", "label": "Contacts", "icon": "nav-contacts", "readiness": "ready", "href": "/contacts", "requires": ["shared.read"]},
   {"id": "people", "label": "People", "icon": "nav-people", "readiness": "ready", "href": "/people", "requires": ["shared.read"]},
   {"id": "customers", "label": "Organisations", "icon": "nav-organisations", "readiness": "ready", "href": "/customers", "requires": ["shared.read"]},
-  {"id": "products", "label": "Products", "icon": "nav-products", "readiness": "unavailable"},
+  {"id": "products", "label": "Products", "icon": "nav-products", "readiness": "ready", "href": "/products", "requires": ["products.read"]},
   {"id": "insights", "label": "Insights", "icon": "nav-insights", "readiness": "unavailable", "workspace": "sales"},
   {"id": "intake", "label": "Intake", "icon": "nav-inbox", "readiness": "ready", "workspace": "estimate", "href":"/estimating/intake", "requiresAll":["crm.opportunity.read","estimating.edit"]},
   {"id": "wizard", "label": "Estimation wizard", "icon": "nav-wizard", "readiness": "ready", "href": "/estimating/discovery", "workspace": "estimate", "requires": ["estimating.read"]},

@@ -1,0 +1,15 @@
+{
+  "browser": "154.0.8037.98",
+  "sources": [
+    {
+      "path": "docs/reference/ui/products/PPO-Products-Preview-r04.html",
+      "sha256": "bd2d8074d824932fc259406994d5fd5f359058949ddede9bda652d50ff69fdbd",
+      "capture": "Original local HTML; external network requests blocked; issued bytes unchanged."
+    },
+    {
+      "path": "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html",
+      "sha256": "a0a38d3f520b350a97886d5148865fe6caeb3ba1fe367a05cada6f926962a0e5",
+      "capture": "Original local HTML; external network requests blocked; issued bytes unchanged."
+    }
+  ]
+}

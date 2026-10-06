@@ -1,5 +1,9 @@
 # Current prototype status
 
+## Products completion — 7 October 2026
+
+Repository-writing session: `codex/products-completion`, based on refreshed main `58679be`. Dean authorised completion of PD-01–05, exact revision handoff repair, named synthetic access, integrated verification and a reviewable PR. The original unfinished checkout is preserved. Reserved migration 0052 is reconciled with the current registry through 0071; validation is in progress. Code delivery, visual observations, owner acceptance and deployment remain separate. See [Products handover](delivery/products-native-handover.md).
+
 ## Three-task Project merge continuation — 6 October 2026
 
 Refreshed main is #353 merge `7e61c742acbfd2bb894218bd6e78b08c25ef69df`, containing checked head `2beb040997ed9d4f056c2c60dcdcc6473689398c`. All 43 final-head checks across 16 workflows passed. Independently fetched #353 post-merge assurance is complete: all 39 checks across 12 workflows passed. The exact merge-SHA observation is retained in the merge ledger; deployment and owner acceptance remain separate. Earlier #349 cancellation/failed aggregate, #351 unchanged-main Scheduling race and repaired migration assertion, #352 development failures/naming repair/cancellations and #353 migration-constant/invalid-fixture/timestamp repairs, timeout/startup failure, baseline Windows failures and superseded cancellations remain unchanged in their historical ledgers. Deployment, source-specific proof and owner acceptance remain separate.

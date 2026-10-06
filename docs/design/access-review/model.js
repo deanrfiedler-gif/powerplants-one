@@ -29,6 +29,17 @@
     'supply.fulfil': 'Prepare fulfilment and delivery evidence',
     'supply.return': 'Coordinate returns and supplier claims',
     'supply.custody': 'Reconcile Service stock custody',
+    'products.read':'Read technical catalogue evidence',
+    'products.edit':'Create and revise catalogue drafts',
+    'products.review':'Independently review catalogue revisions',
+    'products.publish':'Publish or withdraw reviewed catalogue evidence',
+    'products.commercial.read':'Read permitted supplier-commercial evidence',
+    'products.sources.bind':'Bind exact Product and CostSource revisions',
+    'products.relationship.edit':'Record catalogue relationship evidence',
+    'products.relationship.review':'Review bounded catalogue relationships',
+    'products.import.stage':'Stage and map synthetic catalogue imports',
+    'products.import.review':'Independently review exact catalogue import plans',
+    'products.import.apply':'Apply reviewed import plans as drafts',
 
     'acceptance.scope':'Maintain acceptance scope',
     'acceptance.submit':'Submit and return acceptance revisions',
@@ -64,7 +75,7 @@
     'engineering.material.review':'Review released materials and substitutions','engineering.material.release':'Authorise and issue material releases','engineering.material.receive':'Receive material handovers','engineering.material.source':'Operate the synthetic source adapter',
     'engineering.change.review':'Review engineering change proposals','engineering.change.decide':'Record technical decisions on engineering changes','engineering.change.receive':'Receive engineering change requests','engineering.change.verify':'Record retest results for engineering changes','engineering.change.close':'Close engineering changes',
     'engineering.commissioning.capture':'Capture commissioning test evidence','engineering.commissioning.review':'Review commissioning evidence and approve as-built records','engineering.commissioning.issue':'Issue and withdraw commissioning releases','engineering.commissioning.receive':'Receive commissioning and as-built releases'};
-  const FAMILY_NAMES={incident:'Incidents',acceptance:'Acceptance & closeout',supply:'Supply Chain',shared:'Shared records',service:'Service',activity:'Activities',schedule:'Scheduling',pack:'Job packs',field:'Field work (own)',report:'Service reports',crm:'CRM',finance:'Finance',estimating:'Estimating',email:'Email & calendar',project:'Projects',engineering:'Engineering'};
+  const FAMILY_NAMES={products:'Products',incident:'Incidents',acceptance:'Acceptance & closeout',supply:'Supply Chain',shared:'Shared records',service:'Service',activity:'Activities',schedule:'Scheduling',pack:'Job packs',field:'Field work (own)',report:'Service reports',crm:'CRM',finance:'Finance',estimating:'Estimating',email:'Email & calendar',project:'Projects',engineering:'Engineering'};
   const capability=key=>({key,label:LABELS[key],family:key.split('.')[0],familyName:FAMILY_NAMES[key.split('.')[0]],
     reads:/\.read(\.own)?$/.test(key),own:key.endsWith('.own'),
     restricted:key.startsWith('finance.')||key==='shared.finance.read'||key==='shared.internal.read',

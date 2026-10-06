@@ -1,0 +1,234 @@
+.pd-workspace {
+  --pd-border: var(--line-strong);
+  max-width: 1500px;
+  margin: auto;
+  padding: 20px;
+  min-width: 0;
+  color: var(--ink);
+}
+.pd-workspace * {
+  box-sizing: border-box;
+}
+.pd-workspace h1 {
+  font-size: 1.6rem;
+  margin: 4px 0 8px;
+}
+.pd-workspace h2 {
+  font-size: 1.15rem;
+}
+.pd-workspace h3 {
+  font-size: 1rem;
+}
+.pd-workspace p,
+.pd-workspace dd,
+.pd-workspace a {
+  overflow-wrap: anywhere;
+}
+.pd-eyebrow {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.045em;
+  margin: 0;
+}
+.pd-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  border-bottom: 1px solid var(--pd-border);
+  padding: 12px 0;
+  margin-bottom: 18px;
+}
+.pd-tabs a {
+  padding: 10px 14px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: inherit;
+}
+.pd-tabs a[aria-current="page"] {
+  background: var(--navy);
+  color: white;
+}
+.pd-panel,
+.pd-cards > article {
+  border: 1px solid var(--pd-border);
+  background: var(--white);
+  border-radius: 7px;
+  padding: 18px;
+  margin: 12px 0;
+}
+.pd-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  gap: 14px;
+}
+.pd-cards > article {
+  margin: 0;
+}
+.pd-register {
+  margin: 16px 0;
+}
+.pd-register article {
+  border-top: 3px solid var(--green);
+}
+.pd-register h2 {
+  margin: 9px 0;
+}
+.pd-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 12px 0;
+}
+.pd-toolbar,
+.pd-form-grid,
+.pd-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.pd-toolbar {
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+}
+.pd-record-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  align-items: flex-start;
+}
+.pd-status {
+  display: inline-block;
+  border-radius: 5px;
+  padding: 6px 10px;
+  background: var(--surface-2);
+  font-size: 0.85rem;
+}
+.pd-facts dd,
+.pd-register dd {
+  margin: 4px 0 12px;
+}
+.pd-facts dt,
+.pd-register dt {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+.pd-muted {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+.pd-document {
+  padding: 10px 0;
+  border-top: 1px solid var(--pd-border);
+}
+.pd-boundary {
+  padding: 16px;
+  margin-top: 24px;
+  background: var(--surface-2);
+  font-size: 0.85rem;
+  border-radius: 6px;
+}
+.pd-boundary p {
+  margin-bottom: 0;
+}
+.pd-change {
+  border-top: 1px solid var(--pd-border);
+}
+.pd-change > div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+.pd-workspace pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: inherit;
+  font-size: 0.85rem;
+  max-width: 100%;
+}
+.pd-workspace fieldset {
+  min-width: 0;
+  border: 1px solid var(--pd-border);
+  border-radius: 6px;
+  padding: 14px;
+  margin: 14px 0;
+}
+.pd-workspace input,
+.pd-workspace textarea,
+.pd-workspace select {
+  max-width: 100%;
+  min-width: 0;
+  font-size: 16px;
+}
+.pd-workspace .field {
+  min-width: 0;
+}
+.pd-workspace details {
+  padding: 12px 0;
+}
+.pd-workspace summary {
+  cursor: pointer;
+  padding: 8px 0;
+  font-weight: 600;
+}
+.pd-workspace details[open] > summary {
+  margin-bottom: 8px;
+}
+.pd-issue {
+  border-inline-start: 3px solid var(--warning);
+  padding-left: 12px;
+}
+.pd-workspace :focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+.pd-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+.pd-workspace button {
+  min-height: 40px;
+}
+.pd-workspace .pd-code {
+  font-family: monospace;
+  min-height: 180px;
+  width: 100%;
+}
+@media (max-width: 1050px) {
+  .pd-toolbar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 620px) {
+  .pd-workspace {
+    padding: 12px 8px;
+  }
+  .pd-form-grid,
+  .pd-facts,
+  .pd-toolbar,
+  .pd-change > div {
+    grid-template-columns: 1fr;
+  }
+  .pd-panel,
+  .pd-cards > article {
+    padding: 13px;
+  }
+  .pd-record-heading {
+    display: block;
+  }
+  .pd-tabs a {
+    padding: 10px 8px;
+  }
+  .pd-workspace h1 {
+    font-size: 1.35rem;
+  }
+  .pd-workspace button {
+    min-height: 44px;
+  }
+  .pd-actions {
+    align-items: stretch;
+  }
+  .pd-actions > * {
+    max-width: 100%;
+  }
+}

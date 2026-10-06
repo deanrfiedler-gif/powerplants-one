@@ -200,7 +200,18 @@
         "route:/estimating/quotes/[id]/response",
         "route:/estimating/quotes/[id]/conversion",
         "scope:ES-07",
-        "route:/supply/changes"
+        "route:/supply/changes",
+        "scope:PD-01",
+        "scope:PD-02",
+        "scope:PD-03",
+        "scope:PD-04",
+        "scope:PD-05",
+        "route:/products/[id]",
+        "route:/products/compatibility",
+        "route:/products/import",
+        "route:/products",
+        "route:/products/pricing",
+        "route:/products/publication"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -930,7 +941,18 @@
         "route:/estimating/quotes/[id]/conversion",
         "scope:ES-07",
         "scope:SC-09",
-        "route:/supply/changes"
+        "route:/supply/changes",
+        "scope:PD-01",
+        "scope:PD-02",
+        "scope:PD-03",
+        "scope:PD-04",
+        "scope:PD-05",
+        "route:/products/[id]",
+        "route:/products/compatibility",
+        "route:/products/import",
+        "route:/products",
+        "route:/products/pricing",
+        "route:/products/publication"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -1176,7 +1198,18 @@
         "route:/estimating/quotes/[id]/conversion",
         "scope:ES-07",
         "scope:SC-09",
-        "route:/supply/changes"
+        "route:/supply/changes",
+        "scope:PD-01",
+        "scope:PD-02",
+        "scope:PD-03",
+        "scope:PD-04",
+        "scope:PD-05",
+        "route:/products/[id]",
+        "route:/products/compatibility",
+        "route:/products/import",
+        "route:/products",
+        "route:/products/pricing",
+        "route:/products/publication"
       ],
       "desktop": "Submit an empty title to focus the summary, then follow its link to the field. Correct the title and save to clear the example error.",
       "mobile": "Summary and inline errors must remain visible at 320 px and 200% zoom.",
@@ -1696,7 +1729,18 @@
         "route:/estimating/quotes/[id]/conversion",
         "scope:ES-07",
         "scope:SC-09",
-        "route:/supply/changes"
+        "route:/supply/changes",
+        "scope:PD-01",
+        "scope:PD-02",
+        "scope:PD-03",
+        "scope:PD-04",
+        "scope:PD-05",
+        "route:/products/[id]",
+        "route:/products/compatibility",
+        "route:/products/import",
+        "route:/products",
+        "route:/products/pricing",
+        "route:/products/publication"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -2256,14 +2300,48 @@
       "id": "product-patterns",
       "title": "Product catalogue patterns",
       "category": "Boards & cards",
-      "module": "Reference library",
-      "purpose": "Retained product patterns need a bounded application-component inventory and fixture before claiming runnable coverage.",
+      "module": "Products",
+      "purpose": "Exact technical attributes, document applicability, lifecycle and revision comparison without commercial-field leakage.",
       "owner": "Dean Fiedler",
-      "example": null,
-      "coverage": "Reference only",
-      "states": [],
-      "implementation": [],
-      "dependencies": [],
+      "example": "products",
+      "coverage": "Runnable",
+      "states": [
+        {
+          "id": "default",
+          "label": "Mixed evidence",
+          "description": "Reviewed voltage and owned unresolved interface."
+        },
+        {
+          "id": "empty",
+          "label": "No attributes/documents",
+          "description": "Absence remains unknown, not suitable."
+        },
+        {
+          "id": "retired",
+          "label": "Retired source evidence",
+          "description": "Original identity and lifecycle evidence retained."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/products/components/shared.tsx",
+          "symbol": "TechnicalContent"
+        },
+        {
+          "path": "src/products/components/shared.tsx",
+          "symbol": "ProductContext"
+        },
+        {
+          "path": "src/products/components/shared.tsx",
+          "symbol": "Comparison"
+        }
+      ],
+      "dependencies": [
+        "src/products/components/products.css",
+        "src/products/model.ts",
+        "src/development/component-examples.tsx",
+        "src/development/component-fixtures.ts"
+      ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
         "anchor": "products",
@@ -2271,19 +2349,30 @@
       },
       "specification": "docs/design/development/components/product-patterns.md",
       "used_on": [
-        "system:theme"
+        "system:theme",
+        "scope:PD-01",
+        "scope:PD-02",
+        "scope:PD-03",
+        "scope:PD-04",
+        "scope:PD-05",
+        "route:/products/[id]",
+        "route:/products/compatibility",
+        "route:/products/import",
+        "route:/products",
+        "route:/products/pricing",
+        "route:/products/publication"
       ],
-      "desktop": "Read the retained reference and resolve intended scope before implementing.",
-      "mobile": "No mobile implementation is asserted. Specify responsive transformation before adoption.",
-      "keyboard": "Keyboard and assistive-technology rules must be defined before adoption.",
-      "limitations": "Retained product patterns need a bounded application-component inventory and fixture before claiming runnable coverage.",
+      "desktop": "Wrapping exact context and cards; before/after comparison uses two labelled columns.",
+      "mobile": "At 390/320 px, stack facts, evidence and comparison in source order without outer overflow.",
+      "keyboard": "Native links, labelled controls and an identifier disclosure; Tab/Shift+Tab and visible focus with space before revealed text. No drag-only action.",
+      "limitations": "Fixture isolates technical presentation. Authorisation, immutable writes and operation recovery require the owning runtime. Visual and device acceptance pending.",
       "gaps": [
         {
-          "id": "product-patterns-implementation",
-          "expected": "An adopted implementation, owning page and representative fixture before runnable status.",
-          "actual": "Retained product patterns need a bounded application-component inventory and fixture before claiming runnable coverage.",
-          "action": "Resolve in the owning feature increment; retain this visible catalogue entry.",
-          "priority": "Low",
+          "id": "product-patterns-visual-acceptance",
+          "expected": "Owner acceptance of the native adaptation against retained r04/r22 and written scopes.",
+          "actual": "Runnable technical fixture and native Products routes; verification evidence tracked separately.",
+          "action": "Review paired captures and representative real-device behaviour before adopting a visual baseline.",
+          "priority": "Medium",
           "owner": "Dean Fiedler"
         }
       ],

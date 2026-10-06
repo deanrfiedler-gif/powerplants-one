@@ -1,10 +1,10 @@
 # Decision control
 
-[ADR-0047 — Native Engineering control](ADR-0047-engineering-native-control.md) records the authorised EN-01–EN-05 synthetic implementation and backwards-compatible EN-06–EN-08 source lineage. Narrow technical duties, exact revisions, immutable review/issue evidence and recipient stages are separate; operational authority and new visual compositions remain unaccepted.
+[ADR-0047 â€” Native Engineering control](ADR-0047-engineering-native-control.md) records the authorised EN-01â€“EN-05 synthetic implementation and backwards-compatible EN-06â€“EN-08 source lineage. Narrow technical duties, exact revisions, immutable review/issue evidence and recipient stages are separate; operational authority and new visual compositions remain unaccepted.
 
-[Priva fertigation workbench refinement](fertigation-workbench-refinement.md) raised seven presentation departures (D1–D7), audit findings A1–A9 and twelve features (F1–F12) on 23 September 2026. Dean directed the same day that the improvements be applied; D1, D7, F1 (placement and declarations), F2–F7 and F9 are built, and the rest remain proposed. No calculation changes; visual review and acceptance are not yet recorded.
+[Priva fertigation workbench refinement](fertigation-workbench-refinement.md) raised seven presentation departures (D1â€“D7), audit findings A1â€“A9 and twelve features (F1â€“F12) on 23 September 2026. Dean directed the same day that the improvements be applied; D1, D7, F1 (placement and declarations), F2â€“F7 and F9 are built, and the rest remain proposed. No calculation changes; visual review and acceptance are not yet recorded.
 
-[Service requests native refinement](service-requests-native-refinement.md) is a **proposed** SV-01/SV-02 design: the r02 Service Cases & Triage workspace refined as a module interior for the shared shell, with a separate register and record, less chrome, collapsible empty lanes and "Service request" as the label. Recorded 23 September 2026. Dean accepted all eight of its recommendations (D1–D8) the same day. His visual review is still to be recorded, so it is not an accepted baseline. [ADR-0043](ADR-0043-service-request-lifecycle.md) is its **proposed** lifecycle extension, drafted for his review; it authorises no migration.
+[Service requests native refinement](service-requests-native-refinement.md) is a **proposed** SV-01/SV-02 design: the r02 Service Cases & Triage workspace refined as a module interior for the shared shell, with a separate register and record, less chrome, collapsible empty lanes and "Service request" as the label. Recorded 23 September 2026. Dean accepted all eight of its recommendations (D1â€“D8) the same day. His visual review is still to be recorded, so it is not an accepted baseline. [ADR-0043](ADR-0043-service-request-lifecycle.md) is its **proposed** lifecycle extension, drafted for his review; it authorises no migration.
 
 [Notice accent rule departure](notice-accent-rule-departure.md) is a **proposed** design-system decision: whether notices keep the 3 px coloured left rule used by theme board r22 and Job Pack r03. Raised from the field work timer concept on 23 September 2026; not accepted.
 
@@ -14,11 +14,11 @@
 
 [ES-08 Screen Geometry Study architecture proposal](es08-screen-geometry-study.md) retains the quantity engine and proposes an owned versioned study with explicit mapping, source adoption and immutable drawings. Audit only at `0c95c5a`; no migration slot or native implementation is authorised by that session.
 
-[ES-08 design board owner decision](es08-design-board.md) records Dean's 23 September 2026 acceptance of the merged Screen Configurator Workbench board: departures D1–D15, rulings DEC-R1 (rounding) and DEC-R2 (roll fit) and a five-profile structure drawing standard. The board has [retained captures](../reference/ui/specialist/design-board-r01/README.md). It states the changes that WP-G00 must carry into the geometry build plan. It is design direction only: no implementation, migration, UI baseline entry or engineering acceptance.
+[ES-08 design board owner decision](es08-design-board.md) records Dean's 23 September 2026 acceptance of the merged Screen Configurator Workbench board: departures D1â€“D15, rulings DEC-R1 (rounding) and DEC-R2 (roll fit) and a five-profile structure drawing standard. The board has [retained captures](../reference/ui/specialist/design-board-r01/README.md). It states the changes that WP-G00 must carry into the geometry build plan. It is design direction only: no implementation, migration, UI baseline entry or engineering acceptance.
 
-[ES-02 Estimation Wizard design board](es02-design-board.md) records the user's 23 September 2026 decision that six equipment families with 108 categories replace build plan r04 §4.7's four presentation groups, and what implementing it needs (a successor to `PPO-ES02-CONFIG-r01`, a migration and an ADR amending ADR-0035). The board's proposals P2–P9 and open decision O1 (desktop control height) are **not accepted**; six findings against the running build (B1–B6) are recorded with evidence. The board has [retained captures](../reference/ui/estimating/design-board-r01/README.md). No implementation, migration or UI baseline entry.
+[ES-02 Estimation Wizard design board](es02-design-board.md) records the user's 23 September 2026 decision that six equipment families with 108 categories replace build plan r04 Â§4.7's four presentation groups, and what implementing it needs (a successor to `PPO-ES02-CONFIG-r01`, a migration and an ADR amending ADR-0035). The board's proposals P2â€“P9 and open decision O1 (desktop control height) are **not accepted**; six findings against the running build (B1â€“B6) are recorded with evidence. The board has [retained captures](../reference/ui/estimating/design-board-r01/README.md). No implementation, migration or UI baseline entry.
 
-[ES-01 Estimating intake and workload design board](es01-design-board.md) records the user's 24 September 2026 decision that ES-01 design uses the Powerplants One design system, not the separate PHYTO system. Its proposals P1–P9 (register with a persistent detail panel, readiness counts from a read-model addition, readiness tones, drawer below 1360 CSS px and others) and open questions O1–O2 were **decided under Dean's delegation on 25 September 2026** and implemented in the native page. Build findings B1–B5 are fixed and a shared finding B6 is recorded. The board has [retained captures](../reference/ui/estimating/workload-design-board-r01/README.md), and the running page has [adoption evidence](../testing/evidence/estimating-workload-design-adoption/README.md). No migration or UI baseline entry; owner visual review is pending.
+[ES-01 Estimating intake and workload design board](es01-design-board.md) records the user's 24 September 2026 decision that ES-01 design uses the Powerplants One design system, not the separate PHYTO system. Its proposals P1â€“P9 (register with a persistent detail panel, readiness counts from a read-model addition, readiness tones, drawer below 1360 CSS px and others) and open questions O1â€“O2 were **decided under Dean's delegation on 25 September 2026** and implemented in the native page. Build findings B1â€“B5 are fixed and a shared finding B6 is recorded. The board has [retained captures](../reference/ui/estimating/workload-design-board-r01/README.md), and the running page has [adoption evidence](../testing/evidence/estimating-workload-design-adoption/README.md). No migration or UI baseline entry; owner visual review is pending.
 
 [decision-register.csv](decision-register.csv) retains the 29 original questions and closure evidence. D-003 is resolved for the personal prototype under ADR-0005. D-004/D-022/D-029 remain partially resolved; 25 other decisions remain open. Proposed roles are not assigned staff.
 
@@ -48,7 +48,7 @@ The [shared UI and CRM layout direction](ui-brand-and-crm-layout.md) records the
 
 [ADR-0015](ADR-0015-crm-i1-owned-opportunities.md) records the separately authorised BP-03 I1 implementation, typed Opportunity Activity integration, fictional configuration and online recovery boundary. It does not close D-013/D-025 or adopt operational CRM parity. P09 retains ADR-0014.
 
-[BP-04 discovery and sequencing](bp04-estimating-discovery.md) records the authorised PPO-010 design contribution. D-009/D-010 remain open; synthetic arithmetic and future E1–E6 scope are proposals, not adopted operational policy.
+[BP-04 discovery and sequencing](bp04-estimating-discovery.md) records the authorised PPO-010 design contribution. D-009/D-010 remain open; synthetic arithmetic and future E1â€“E6 scope are proposals, not adopted operational policy.
 
 [ADR-0016](ADR-0016-p10-finance-handoff.md) records P10 exact Finance source/allocation, separate processing and reconciliation authority, bounded synthetic accounts and durable OUT-14 recovery. It does not close D-005/D-006/D-017 or authorise operational accounting treatment.
 [ADR-0017](ADR-0017-estimating-e1.md) records the separately authorised manual E1 slice, exact decimal policy, immutable estimate/quote versions and durable draft output. Finance retains ADR-0016.
@@ -58,60 +58,60 @@ The [shared UI and CRM layout direction](ui-brand-and-crm-layout.md) records the
 [Customer portal direction](customer-portal-direction.md) records Dean's authority to design now and implement bounded synthetic stages as their dependencies become ready. It resolves only the private portal-direction portion of D-027; the original wider decision remains open. No migration or technical ADR number is allocated by this design.
 
 [ADR-0018](ADR-0018-p11-travel-and-integrated-quality.md) records the approved P11 synthetic whole-minute Travel/no-posting treatment and immutable policy successor. D-017 operational policy remains open.
-The [controlled opportunity handover proposal](crm-opportunity-handover.md) records unresolved H-01–H-03 and fixed preservation constraints under #55. Design publication is authorised; policy acceptance and implementation are separate. No numbered ADR is reserved.
+The [controlled opportunity handover proposal](crm-opportunity-handover.md) records unresolved H-01â€“H-03 and fixed preservation constraints under #55. Design publication is authorised; policy acceptance and implementation are separate. No numbered ADR is reserved.
 
-- [Accepted r08 shared layout and CRM implementation](shared-ui-r08-implementation.md) — Dean-approved presentation mapped to existing persisted I1/I2 contracts.
+- [Accepted r08 shared layout and CRM implementation](shared-ui-r08-implementation.md) â€” Dean-approved presentation mapped to existing persisted I1/I2 contracts.
 
 The [PPO Assistant direction and architecture decision](ppo-assistant-direction.md) records Dean's 8 September 2026 instruction to prepare the bounded customer CRM assistant specification. It brings AI design forward under D-027; provider-funded evaluation, implementation and operational authority remain separate. No numbered ADR or migration is reserved.
 
 [Private Prototype Demo scope and hosting assessment](private-prototype-demo.md) records the authorised package definition and proposed hosted evaluation; no spend, account grant or remote deployment is activated.
 
-- [Email & Calendar design direction](email-calendar-design.md) — user-authorised synthetic design; selected-message sharing and a proposed read-only Microsoft pilot under CRM-03/PAR-06.
+- [Email & Calendar design direction](email-calendar-design.md) â€” user-authorised synthetic design; selected-message sharing and a proposed read-only Microsoft pilot under CRM-03/PAR-06.
 - [Mobile CRM implementation](mobile-crm-implementation.md): approved mobile mapping to current components, persisted commands and permissions.
 
 [Azure demo connection preparation](azure-demo-connection.md) records the dedicated Reader identity, GitHub OIDC environment/branch boundary and separate hosted application work.
 
-[Azure private demo runtime](azure-private-demo.md) — individual sign-in, cloud configuration, deployment and reset preparation; live acceptance pending.
+[Azure private demo runtime](azure-private-demo.md) â€” individual sign-in, cloud configuration, deployment and reset preparation; live acceptance pending.
 
-- [ADR-0020 — Persisted synthetic Email & Calendar journey](ADR-0020-email-calendar-synthetic-journey.md). ADR-0019 was never allocated; the sequence runs ADR-0018 → ADR-0020 and the gap is intentional-by-omission, not a missing file.
-- [ADR-0021 — Gmail as the first real mail provider, on the hosted-only schema track](ADR-0021-gmail-first-real-provider.md). Real correspondence gets its own `db/demo` tables; migration 0015's synthetic guards on `ppo.email_messages` are preserved, not relaxed. It authorises schema and operator scripts only: no Google project, client, secret, route, sync code, deployment or connection.
-- [Private demo Email and CRM integration](demo-email-crm-integration.md) — shared desktop/mobile journey, individual fictional mailboxes and retained access boundaries.
-- [Approved Job Pack r02](job-pack-design.md) — exact accepted full-page Service design and integration boundary.
-- [CI browser suite route warm-up](ci-browser-warm-up.md) — harness-only decision: compile every route before the first assertion window; no deadline, retry or product change.
-- [CI browser suite against the compiled application](ci-compiled-browser-suite.md) — additional workflow drives the unchanged suite against `npm run build` output under the unchanged synthetic-identity guard (`NODE_ENV=test`); production startup remains refused.
-[Field Technicians r04](field-technicians-design.md) records Dean’s approved Service presentation, frozen source and bounded application mapping. Design approval does not grant dispatch, merge or production acceptance.
+- [ADR-0020 â€” Persisted synthetic Email & Calendar journey](ADR-0020-email-calendar-synthetic-journey.md). ADR-0019 was never allocated; the sequence runs ADR-0018 â†’ ADR-0020 and the gap is intentional-by-omission, not a missing file.
+- [ADR-0021 â€” Gmail as the first real mail provider, on the hosted-only schema track](ADR-0021-gmail-first-real-provider.md). Real correspondence gets its own `db/demo` tables; migration 0015's synthetic guards on `ppo.email_messages` are preserved, not relaxed. It authorises schema and operator scripts only: no Google project, client, secret, route, sync code, deployment or connection.
+- [Private demo Email and CRM integration](demo-email-crm-integration.md) â€” shared desktop/mobile journey, individual fictional mailboxes and retained access boundaries.
+- [Approved Job Pack r02](job-pack-design.md) â€” exact accepted full-page Service design and integration boundary.
+- [CI browser suite route warm-up](ci-browser-warm-up.md) â€” harness-only decision: compile every route before the first assertion window; no deadline, retry or product change.
+- [CI browser suite against the compiled application](ci-compiled-browser-suite.md) â€” additional workflow drives the unchanged suite against `npm run build` output under the unchanged synthetic-identity guard (`NODE_ENV=test`); production startup remains refused.
+[Field Technicians r04](field-technicians-design.md) records Deanâ€™s approved Service presentation, frozen source and bounded application mapping. Design approval does not grant dispatch, merge or production acceptance.
 
-[Derived routing direction](estimating-derived-routing.md) records Dean’s 12 September 2026 adoption of "derive continuously, advise visibly, bind once, confirm always". The delivery route becomes a classification derived from accepted line composition, advisory during drafting and confirmed by the receiving owner at handover creation. It decides E2-D01 for the first time rather than superseding it; `SYN-E2-ROUTE-r01` was never adopted as policy and is retained as design history. A line category taxonomy extension is recorded as the blocking prerequisite. No threshold, rule version, migration or ADR number is allocated.
+[Derived routing direction](estimating-derived-routing.md) records Deanâ€™s 12 September 2026 adoption of "derive continuously, advise visibly, bind once, confirm always". The delivery route becomes a classification derived from accepted line composition, advisory during drafting and confirmed by the receiving owner at handover creation. It decides E2-D01 for the first time rather than superseding it; `SYN-E2-ROUTE-r01` was never adopted as policy and is retained as design history. A line category taxonomy extension is recorded as the blocking prerequisite. No threshold, rule version, migration or ADR number is allocated.
 
-- [Development and compiled performance profiles](ci-performance-profiles.md) — retain both original PT-27 measurements on the exact same load fixture, with bounded phase observations; original comparison and deferred scope editor measurements reviewed; integrated assurance remains.
+- [Development and compiled performance profiles](ci-performance-profiles.md) â€” retain both original PT-27 measurements on the exact same load fixture, with bounded phase observations; original comparison and deferred scope editor measurements reviewed; integrated assurance remains.
 
 [Excel estimate import design](excel-estimate-import-design.md) records the authorised r01 workbook/import package under PPO-010. The import runtime and operational workbook acceptance remain separate.
 
-[Product quality adoption](product-quality-adoption.md) records Dean’s 14 September instruction to incorporate all eight product refinements and five engineering/design standards. Existing portal, maintenance, warranty, knowledge, estimating feedback, AI, voice and search plans continue. The derived register and staged delivery plan implement scope adoption; no new technology dependency or operational approval is inferred.
+[Product quality adoption](product-quality-adoption.md) records Deanâ€™s 14 September instruction to incorporate all eight product refinements and five engineering/design standards. Existing portal, maintenance, warranty, knowledge, estimating feedback, AI, voice and search plans continue. The derived register and staged delivery plan implement scope adoption; no new technology dependency or operational approval is inferred.
 
 ## Naming, communications and SharePoint
 
 [Package decision](naming-communications-sharepoint.md) records Dean's authorisation of the shared design package, r04 naming extension, exact r18 theme source, architecture choices and operational boundaries. It continues ADR-0005 and existing D-012/D-024/D-025 evidence obligations without renumbering the master decisions.
 
-- [Application Shell r17 integration](application-shell-integration.md) — authorised shared-frame successor, runtime identity and permission mapping, fixed More frames, preview workspaces and contextual guide boundary.
+- [Application Shell r17 integration](application-shell-integration.md) â€” authorised shared-frame successor, runtime identity and permission mapping, fixed More frames, preview workspaces and contextual guide boundary.
 
 ## Documents, issue and distribution
 
 [Output, Issue & Distribution Centre design and receiving handover](output-issue-distribution-design.md) records the DK-03 standalone workspace built from the authorised [build plan](../delivery/output-issue-distribution-build-plan.md): exact output and bundle manifests, readiness and domain review, reserved preparation against actual issue time, original-operation recovery, per-recipient distribution evidence and explicit responses. It creates no new module, domain or requirement identity. Owner acceptance and application integration remain separate.
 
-- [ADR-0041 — SH platform coordination](ADR-0041-sh-platform-coordination.md): shared search, Activity notifications, personal views and source-owned review projections; canonical teams and providers remain dependent.
+- [ADR-0041 â€” SH platform coordination](ADR-0041-sh-platform-coordination.md): shared search, Activity notifications, personal views and source-owned review projections; canonical teams and providers remain dependent.
 
-- [ADR-0042 — Customer location readiness, survey and account development](ADR-0042-customer-location-workflows.md): additive exact-scope aggregates, immutable evidence and shared SH coordination adapters; existing CS-05 retained.
+- [ADR-0042 â€” Customer location readiness, survey and account development](ADR-0042-customer-location-workflows.md): additive exact-scope aggregates, immutable evidence and shared SH coordination adapters; existing CS-05 retained.
 
-- [ADR-0043 — Service request lifecycle](ADR-0043-service-request-lifecycle.md): **proposed**, not accepted. Intent-specific TR-15 commands for work, waiting, resolution review, closure, reopening and cancellation on the existing Ticket. It reuses Activity for owned actions and the customer-update commitment, and adds typed evidence, contact, waiting and resolution records. No new state values; one future migration.
+- [ADR-0043 â€” Service request lifecycle](ADR-0043-service-request-lifecycle.md): **proposed**, not accepted. Intent-specific TR-15 commands for work, waiting, resolution review, closure, reopening and cancellation on the existing Ticket. It reuses Activity for owned actions and the customer-update commitment, and adds typed evidence, contact, waiting and resolution records. No new state values; one future migration.
 
 - [ADR-0045 - Native Equipment workflows](ADR-0045-equipment-native-workflows.md): authorised synthetic EQ-01-EQ-09 implementation using canonical Assets, CS locations, Inspection instruments and SH coordination; retained configuration lineage and explicit reviewed physical changes. Operational and visual acceptance remain separate.
 
-- [ADR-0044 — Explicit placement of held legacy fields on fertigation import](ADR-0044-fertigation-held-import-placement.md): a held standalone r02 import confirms only when every held field is placed as an unverified source note or, for project identity only, left to the Discovery binding; placements are stored with the import. Amends ADR-0038's held-import behaviour only.
+- [ADR-0044 â€” Explicit placement of held legacy fields on fertigation import](ADR-0044-fertigation-held-import-placement.md): a held standalone r02 import confirms only when every held field is placed as an unverified source note or, for project identity only, left to the Discovery binding; placements are stored with the import. Amends ADR-0038's held-import behaviour only.
 
-- [ADR-0046 — Native Sales handovers and aftercare](ADR-0046-sales-native-workflows.md): frozen Sales submissions, exact receiving decisions, shared Activity obligations and bounded aftercare; owner acceptance and deployment remain separate.
+- [ADR-0046 â€” Native Sales handovers and aftercare](ADR-0046-sales-native-workflows.md): frozen Sales submissions, exact receiving decisions, shared Activity obligations and bounded aftercare; owner acceptance and deployment remain separate.
 
-- [ADR-0049 — Native Supply Chain coordination](ADR-0049-native-supply-chain.md): SC-01–SC-10 synthetic/manual domain; current-authority recovery, conserved quantities and external-command boundaries.
+- [ADR-0049 â€” Native Supply Chain coordination](ADR-0049-native-supply-chain.md): SC-01â€“SC-10 synthetic/manual domain; current-authority recovery, conserved quantities and external-command boundaries.
 - [Field readiness over CS-06](field-readiness-native.md): FI-05 assigned-visit review reuses CS snapshots/events with current assignment and receipt authority; induction remains unverified without a Person binding.
 
 The [27 September consolidation decision](repository-consolidation.md) authorises current-source reconciliation, ordered migration integration and the synthetic service-verification milestone. It preserves operational and owner-acceptance boundaries.
@@ -119,3 +119,4 @@ The [27 September consolidation decision](repository-consolidation.md) authorise
 The [scheduling policy impact decision](scheduling-policy-impact-review.md) defines the read-only PL-04 duration/effective-date comparison and the separate transactional publication continuation under PT-28.
 
 The [controlled scheduling-policy publication plan](scheduling-policy-publication.md) records the next API-C26/EVT-12 synthetic contract and reconciled 0053 allocation; no publication implementation or schema is added.
+- [ADR-0048 â€” Native Products catalogue](ADR-0048-products-native-catalogue.md): immutable technical revisions, bounded review/publication/import, existing ES-03 source reuse and separate Engineering/Equipment authority. Operational capability grants remain unallocated.

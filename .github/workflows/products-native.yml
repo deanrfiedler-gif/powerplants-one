@@ -1,0 +1,87 @@
+name: Native Products assurance
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  products:
+    name: PD catalogue, publication, source context, compatibility and import
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    services:
+      postgres:
+        image: postgres:16.15
+        env:
+          POSTGRES_USER: ppo_local
+          POSTGRES_PASSWORD: ppo_disposable_ci_only
+          POSTGRES_DB: ppo_synthetic_test
+        ports:
+          - 127.0.0.1:5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ppo_local -d ppo_synthetic_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+      PPO_TEST_ORIGIN: http://127.0.0.1:3000
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .nvmrc
+      - name: Pinned dependencies and synthetic configuration
+        run: |
+          npm install --global npm@11.19.0
+          npm ci
+          npm run browser:install
+          cp .env.example .env.local
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('.env.local')
+          p.write_text(p.read_text().replace('<local-password>','ppo_disposable_ci_only').replace('/ppo_synthetic','/ppo_synthetic_test'))
+          PY
+      - name: Configure disposable PostgreSQL lock capacity
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: bash scripts/configure-test-postgres.sh
+      - name: Product validation, fresh schema, concurrent history and existing-estimate upgrades
+        run: |
+          node --import tsx --test tests/unit/products.test.ts
+          node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/products.test.ts tests/database/products-access.test.ts tests/database/products-integration.test.ts tests/database/products-upgrade.test.ts
+          npm run studio:check
+          npm run build
+      - name: Three application processes and two actual PostgreSQL restarts
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: |
+          node --env-file=.env.local --import tsx scripts/products-restart-proof.ts write
+          for phase in recover verify; do
+            docker restart "$PPO_POSTGRES_CONTAINER"
+            for attempt in $(seq 1 30); do
+              docker exec "$PPO_POSTGRES_CONTAINER" pg_isready -U ppo_local -d ppo_synthetic_test && break
+              sleep 1
+            done
+            node --env-file=.env.local --import tsx scripts/products-restart-proof.ts "$phase"
+          done
+      - name: Compiled HTTP and desktop/phone browser journeys
+        run: |
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > "$RUNNER_TEMP/ppo-products-http.log" 2>&1 &
+          ppo_products_pid=$!
+          trap 'kill "$ppo_products_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            curl --fail --silent http://127.0.0.1:3000/login > /dev/null && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx --test tests/http/products.test.ts
+          node --env-file=.env.local node_modules/@playwright/test/cli.js test --config tests/products.playwright.config.ts
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: products-native-proof
+          path: |
+            docs/testing/evidence/products-native/
+            test-results/

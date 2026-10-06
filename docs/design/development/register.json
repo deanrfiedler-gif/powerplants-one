@@ -3658,66 +3658,96 @@
       "title": "Catalogue and product technical workspace",
       "kind": "scope",
       "module": "PD",
-      "summary": "Implement product catalogue and technical detail with model/variant, attributes, parts and controlled source information.",
+      "summary": "Find the exact Family, Model or Variant by UUID, synthetic alias, provider key or model; inspect retained technical and source evidence.",
       "path": "/products",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/products/page.tsx"
       ],
       "guide_key": "guide.pd.01",
       "design_path": "docs/design/development/pages/scope-pd-01.md",
       "html_path": "docs/reference/ui/products/PPO-Products-Preview-r04.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/products/components/catalogue.tsx",
+        "src/products/components/shared.tsx",
+        "src/products/components/products.css",
+        "docs/contracts/products-catalogue.md",
+        "docs/delivery/products-native-handover.md",
+        "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html"
+      ],
+      "scope_status": "Native synthetic implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Verification in progress; see Products handover",
+      "deployment_status": "Not deployed by this contribution",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 28,
       "related_keys": [
-        "scope:AD-05"
+        "scope:AD-05",
+        "route:/products",
+        "route:/products/[id]",
+        "scope:ES-03",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EQ-07",
+        "scope:EQ-06"
       ],
       "reviewer": null
     },
     {
       "key": "scope:PD-02",
-      "title": "Catalogue authoring and publication review",
+      "title": "Catalogue authoring and publication",
       "kind": "scope",
       "module": "PD",
-      "summary": "Implement catalogue authoring, review, revision publication and withdrawal.",
+      "summary": "Prepare immutable catalogue successors, compare exact predecessor content and independently review before publication.",
       "path": "/products/publication",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/products/publication/page.tsx"
       ],
       "guide_key": "guide.pd.02",
       "design_path": "docs/design/development/pages/scope-pd-02.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/products/components/publication.tsx",
+        "src/products/components/shared.tsx",
+        "src/products/components/products.css",
+        "docs/contracts/products-catalogue.md",
+        "docs/delivery/products-native-handover.md",
+        "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html"
+      ],
+      "scope_status": "Native synthetic implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Verification in progress; see Products handover",
+      "deployment_status": "Not deployed by this contribution",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 29,
       "related_keys": [
-        "scope:PD-01"
+        "scope:PD-01",
+        "route:/products/publication",
+        "scope:ES-03",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EQ-07",
+        "scope:EQ-06"
       ],
       "reviewer": null
     },
     {
       "key": "scope:PD-03",
-      "title": "Price books and supplier-source maintenance",
+      "title": "Product supplier-source context",
       "kind": "scope",
       "module": "PD",
-      "summary": "Implement price books and supplier-source maintenance; share the cost-source foundation with ES-03.",
+      "summary": "Connect exact Product and existing ES-03 CostSource revisions without duplicating commercial content or repricing saved work.",
       "path": "/products/pricing",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/products/pricing/page.tsx"
       ],
       "guide_key": "guide.pd.03",
       "design_path": "docs/design/development/pages/scope-pd-03.md",
@@ -3725,46 +3755,73 @@
       "image_paths": [
         "docs/testing/evidence/supplier-pricing-r01/desktop-price-comparison.png"
       ],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/products/components/pricing.tsx",
+        "src/products/components/shared.tsx",
+        "src/products/components/products.css",
+        "docs/contracts/products-catalogue.md",
+        "docs/delivery/products-native-handover.md",
+        "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html"
+      ],
+      "scope_status": "Native synthetic implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Verification in progress; see Products handover",
+      "deployment_status": "Not deployed by this contribution",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 30,
       "related_keys": [
         "scope:PD-01",
-        "scope:AD-05"
+        "scope:AD-05",
+        "route:/products/pricing",
+        "scope:ES-03",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EQ-07",
+        "scope:EQ-06"
       ],
       "reviewer": null
     },
     {
       "key": "scope:PD-04",
-      "title": "Compatibility, replacements and product lifecycle",
+      "title": "Compatibility, replacements and lifecycle",
       "kind": "scope",
       "module": "PD",
-      "summary": "Implement compatibility, replacements, lifecycle and support evidence.",
+      "summary": "Record bounded product-level candidate relationships, unresolved interface criteria and separate receiving-domain uses.",
       "path": "/products/compatibility",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/products/compatibility/page.tsx"
       ],
       "guide_key": "guide.pd.04",
       "design_path": "docs/design/development/pages/scope-pd-04.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/products/components/compatibility.tsx",
+        "src/products/components/shared.tsx",
+        "src/products/components/products.css",
+        "docs/contracts/products-catalogue.md",
+        "docs/delivery/products-native-handover.md",
+        "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html"
+      ],
+      "scope_status": "Native synthetic implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Verification in progress; see Products handover",
+      "deployment_status": "Not deployed by this contribution",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 31,
       "related_keys": [
-        "scope:PD-01"
+        "scope:PD-01",
+        "route:/products/compatibility",
+        "scope:ES-03",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EQ-07",
+        "scope:EQ-06"
       ],
       "reviewer": null
     },
@@ -3773,20 +3830,28 @@
       "title": "Catalogue import and exception review",
       "kind": "scope",
       "module": "PD",
-      "summary": "Implement staged catalogue import, mapping, validation and exception review.",
+      "summary": "Stage bounded synthetic JSON, resolve exact mappings, independently review the change set and apply draft records atomically.",
       "path": "/products/import",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/products/import/page.tsx"
       ],
       "guide_key": "guide.pd.05",
       "design_path": "docs/design/development/pages/scope-pd-05.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/products/components/import.tsx",
+        "src/products/components/shared.tsx",
+        "src/products/components/products.css",
+        "docs/contracts/products-catalogue.md",
+        "docs/delivery/products-native-handover.md",
+        "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html"
+      ],
+      "scope_status": "Native synthetic implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Verification in progress; see Products handover",
+      "deployment_status": "Not deployed by this contribution",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -3794,7 +3859,13 @@
       "related_keys": [
         "scope:AD-03",
         "scope:AD-05",
-        "scope:PD-02"
+        "scope:PD-02",
+        "route:/products/import",
+        "scope:ES-03",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EQ-07",
+        "scope:EQ-06"
       ],
       "reviewer": null
     },
@@ -11578,6 +11649,249 @@
         "scope:SC-01",
         "scope:SC-09",
         "route:/supply/changes"
+      ]
+    },
+    {
+      "key": "route:/products/[id]",
+      "title": "Exact product technical record",
+      "kind": "route",
+      "module": "PD",
+      "summary": "Find the exact Family, Model or Variant by UUID, synthetic alias, provider key or model; inspect retained technical and source evidence.",
+      "path": "/products/[id]",
+      "source_paths": [
+        "src/app/(business)/products/[id]/page.tsx",
+        "src/app/(business)/products/page.tsx"
+      ],
+      "guide_key": "guide.route-products-id",
+      "design_path": "docs/design/development/pages/route-products-id.md",
+      "html_path": "docs/reference/ui/products/PPO-Products-Preview-r04.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/products/components/catalogue.tsx",
+        "src/products/components/shared.tsx",
+        "src/products/components/products.css",
+        "docs/contracts/products-catalogue.md",
+        "docs/delivery/products-native-handover.md",
+        "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html"
+      ],
+      "scope_status": "Native synthetic implementation; acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "Verification in progress; see Products handover",
+      "deployment_status": "Not deployed by this contribution",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:PD-01",
+        "route:/products",
+        "scope:ES-03",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EQ-07",
+        "scope:EQ-06"
+      ]
+    },
+    {
+      "key": "route:/products/compatibility",
+      "title": "Compatibility, replacements and lifecycle",
+      "kind": "route",
+      "module": "PD",
+      "summary": "Record bounded product-level candidate relationships, unresolved interface criteria and separate receiving-domain uses.",
+      "path": "/products/compatibility",
+      "source_paths": [
+        "src/app/(business)/products/compatibility/page.tsx"
+      ],
+      "guide_key": "guide.route-products-compatibility",
+      "design_path": "docs/design/development/pages/route-products-compatibility.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [
+        "src/products/components/compatibility.tsx",
+        "src/products/components/shared.tsx",
+        "src/products/components/products.css",
+        "docs/contracts/products-catalogue.md",
+        "docs/delivery/products-native-handover.md",
+        "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html"
+      ],
+      "scope_status": "Native synthetic implementation; acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "Verification in progress; see Products handover",
+      "deployment_status": "Not deployed by this contribution",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:PD-04",
+        "scope:ES-03",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EQ-07",
+        "scope:EQ-06"
+      ]
+    },
+    {
+      "key": "route:/products/import",
+      "title": "Catalogue import and exception review",
+      "kind": "route",
+      "module": "PD",
+      "summary": "Stage bounded synthetic JSON, resolve exact mappings, independently review the change set and apply draft records atomically.",
+      "path": "/products/import",
+      "source_paths": [
+        "src/app/(business)/products/import/page.tsx"
+      ],
+      "guide_key": "guide.route-products-import",
+      "design_path": "docs/design/development/pages/route-products-import.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [
+        "src/products/components/import.tsx",
+        "src/products/components/shared.tsx",
+        "src/products/components/products.css",
+        "docs/contracts/products-catalogue.md",
+        "docs/delivery/products-native-handover.md",
+        "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html"
+      ],
+      "scope_status": "Native synthetic implementation; acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "Verification in progress; see Products handover",
+      "deployment_status": "Not deployed by this contribution",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:PD-05",
+        "scope:ES-03",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EQ-07",
+        "scope:EQ-06"
+      ]
+    },
+    {
+      "key": "route:/products",
+      "title": "Catalogue and product technical workspace",
+      "kind": "route",
+      "module": "PD",
+      "summary": "Find the exact Family, Model or Variant by UUID, synthetic alias, provider key or model; inspect retained technical and source evidence.",
+      "path": "/products",
+      "source_paths": [
+        "src/app/(business)/products/page.tsx"
+      ],
+      "guide_key": "guide.route-products",
+      "design_path": "docs/design/development/pages/route-products.md",
+      "html_path": "docs/reference/ui/products/PPO-Products-Preview-r04.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/products/components/catalogue.tsx",
+        "src/products/components/shared.tsx",
+        "src/products/components/products.css",
+        "docs/contracts/products-catalogue.md",
+        "docs/delivery/products-native-handover.md",
+        "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html"
+      ],
+      "scope_status": "Native synthetic implementation; acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "Verification in progress; see Products handover",
+      "deployment_status": "Not deployed by this contribution",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:PD-01",
+        "route:/products/[id]",
+        "scope:ES-03",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EQ-07",
+        "scope:EQ-06"
+      ]
+    },
+    {
+      "key": "route:/products/pricing",
+      "title": "Product supplier-source context",
+      "kind": "route",
+      "module": "PD",
+      "summary": "Connect exact Product and existing ES-03 CostSource revisions without duplicating commercial content or repricing saved work.",
+      "path": "/products/pricing",
+      "source_paths": [
+        "src/app/(business)/products/pricing/page.tsx"
+      ],
+      "guide_key": "guide.route-products-pricing",
+      "design_path": "docs/design/development/pages/route-products-pricing.md",
+      "html_path": "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/products/components/pricing.tsx",
+        "src/products/components/shared.tsx",
+        "src/products/components/products.css",
+        "docs/contracts/products-catalogue.md",
+        "docs/delivery/products-native-handover.md",
+        "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html"
+      ],
+      "scope_status": "Native synthetic implementation; acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "Verification in progress; see Products handover",
+      "deployment_status": "Not deployed by this contribution",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:PD-03",
+        "scope:ES-03",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EQ-07",
+        "scope:EQ-06"
+      ]
+    },
+    {
+      "key": "route:/products/publication",
+      "title": "Catalogue authoring and publication",
+      "kind": "route",
+      "module": "PD",
+      "summary": "Prepare immutable catalogue successors, compare exact predecessor content and independently review before publication.",
+      "path": "/products/publication",
+      "source_paths": [
+        "src/app/(business)/products/publication/page.tsx"
+      ],
+      "guide_key": "guide.route-products-publication",
+      "design_path": "docs/design/development/pages/route-products-publication.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [
+        "src/products/components/publication.tsx",
+        "src/products/components/shared.tsx",
+        "src/products/components/products.css",
+        "docs/contracts/products-catalogue.md",
+        "docs/delivery/products-native-handover.md",
+        "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html"
+      ],
+      "scope_status": "Native synthetic implementation; acceptance pending",
+      "visual_status": "Needs review",
+      "functional_status": "Verification in progress; see Products handover",
+      "deployment_status": "Not deployed by this contribution",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:PD-02",
+        "scope:ES-03",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EQ-07",
+        "scope:EQ-06"
       ]
     }
   ]
