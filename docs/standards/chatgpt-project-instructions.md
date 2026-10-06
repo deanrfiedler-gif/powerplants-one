@@ -74,7 +74,7 @@ Repo work grants no paid-service, deployment, access, live-transaction, migratio
 
 Run foundation/prototype/naming checks; test authority, conflicts, replay, integrity and reconciliation. Inspect screens; retain environment.
 
-ES-01–10/Excel: estimating-native-programme.md / estimating-programme-handover.md; retain estimating-cost-sources.md, PJ-09 close/reopen and es0{1,2}-design-board.md. ES-08: WP-G00 before D1–D15/DEC-R1/R2. ES-04: estimating-review.md. ES-05–07: quotation-{release,response,conversion,disposition,supply-followup}-native.md. ES-07: quotation-{reservation-reconciliation,receipt-correction,allocation-shortfall,material-resolution}.md. Separate Receipt/allocation and Demand/Project/task/Activity consent. Retain receipts, unmet Demand, holds, fresh disposition.
+ES-01–10/Excel: estimating-native-programme.md / estimating-programme-handover.md; retain estimating-cost-sources.md, PJ-09 close/reopen and es0{1,2}-design-board.md. ES-08: WP-G00 before D1–D15/DEC-R1/R2. ES-04: estimating-review.md. ES-05–07: quotation-{release,response,conversion,disposition,supply-followup}-native.md. ES-07: quotation-{reservation-reconciliation,receipt-correction,allocation-shortfall,material-resolution,task-dependency}.md. Separate each affected owner’s consent; preserve receipts, unmet Demand, holds and fresh disposition.
 
 Mail: preserve private mailboxes and body separation (demo-email-crm-integration.md); CI is not Outlook acceptance. SH-01–06: docs/delivery/sh-platform-handover.md; teams/DK/delivery pending.
 

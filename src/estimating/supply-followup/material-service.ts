@@ -103,6 +103,7 @@ export async function executeMaterial(
         reviewHash: string | null = null;
       let deps: MaterialEvent["dependencies"],
         projectCommand: MaterialEvent["project_command"],
+        successorCommand: MaterialEvent["successor_command"] = null,
         impactCommand: MaterialEvent["impact_command"],
         proposalHash: string;
       let receivingIds: string[] = [];
@@ -128,12 +129,20 @@ export async function executeMaterial(
         const competing = (
           await c.query(
             `SELECT 1 FROM ppo.quote_material_events p WHERE p.workspace_id=$1 AND p.target_id<>$2 AND p.action='MaterialPropose'
-         AND (p.impact_id=$3 OR p.task_id=$4)
+         AND (p.impact_id=$3 OR p.task_id=ANY($4::uuid[]) OR (p.dependencies->'project'->'successor'->>'id')::uuid=ANY($4::uuid[]))
          AND p.id=(SELECT id FROM ppo.quote_material_events WHERE workspace_id=p.workspace_id AND target_id=p.target_id AND action='MaterialPropose' ORDER BY sequence DESC LIMIT 1)
          AND p.referral_id=(SELECT id FROM ppo.quote_supply_events WHERE workspace_id=p.workspace_id AND target_id=p.target_id AND action='Refer' ORDER BY sequence DESC LIMIT 1)
          AND 'Accepted'=(SELECT decision FROM ppo.quote_supply_events WHERE workspace_id=p.workspace_id AND referral_id=p.referral_id AND action='Receive' ORDER BY sequence DESC LIMIT 1)
          AND NOT EXISTS(SELECT 1 FROM ppo.quote_material_events WHERE workspace_id=p.workspace_id AND proposal_id=p.id AND action='MaterialApply')`,
-            [p.workspace_id, input.target_id, input.impact_id, input.task_id],
+            [
+              p.workspace_id,
+              input.target_id,
+              input.impact_id,
+              [
+                input.task_id,
+                ...(input.successor_task_id ? [input.successor_task_id] : []),
+              ],
+            ],
           )
         ).rowCount;
         if (competing)
@@ -148,6 +157,8 @@ export async function executeMaterial(
           candidate.demand.id,
           candidate.impact.id,
           input.task_id!,
+          p.actor_id,
+          input.successor_task_id,
         );
         const task = deps.project.task;
         projectCommand = parseTask(deps.project.project.id, {
@@ -168,6 +179,25 @@ export async function executeMaterial(
           external_owner_id: task.external_owner_id,
           dependencies: task.dependencies,
         });
+        if (deps.project.successor) {
+          const next = deps.project.successor;
+          const { project_id: nativeProject, ...firstTask } = projectCommand;
+          successorCommand = parseTask(nativeProject, {
+            ...firstTask,
+            operation_id: randomUUID(),
+            expected_version: deps.project.project.version + 1,
+            id: next.id,
+            title: next.title,
+            phase: next.phase,
+            status: next.status,
+            milestone: next.milestone,
+            progress: next.progress,
+            note: next.note,
+            owner_id: next.owner_id,
+            external_owner_id: next.external_owner_id,
+            dependencies: next.dependencies,
+          });
+        }
         impactCommand = {
           ...factCommand({
             operation_id: randomUUID(),
@@ -181,8 +211,14 @@ export async function executeMaterial(
               ...deps.impact.data,
               state: "Reviewed",
               review_reference:
-                "SYN-ES07-07 forecast withdrawal; SaveProjectTask original operation " +
+                (successorCommand
+                  ? "SYN-ES07-08 dependency forecast withdrawal; SaveProjectTask original operation "
+                  : "SYN-ES07-07 forecast withdrawal; SaveProjectTask original operation ") +
                 projectCommand.operation_id +
+                (successorCommand
+                  ? "; successor SaveProjectTask original operation " +
+                    successorCommand.operation_id
+                  : "") +
                 ". Material readiness and independent impacts remain separate.",
             },
             evidence: input.evidence,
@@ -196,6 +232,7 @@ export async function executeMaterial(
           basis: t.basis,
           dependencies: deps,
           project_command: projectCommand,
+          ...(successorCommand ? { successor_command: successorCommand } : {}),
           impact_command: impactCommand,
           referral_id: t.referral.id,
           receiving_id: t.receiving.id,
@@ -212,6 +249,7 @@ export async function executeMaterial(
         deps = s.dependencies!;
         proposalId = prop.id;
         projectCommand = prop.project_command;
+        successorCommand = prop.successor_command;
         impactCommand = prop.impact_command;
         proposalHash = prop.proposal_hash;
         if (
@@ -275,29 +313,39 @@ export async function executeMaterial(
             decision = review.decision;
             receivingIds = review.effect_receiving_ids;
             if (decision === "WithdrawForecast") {
-              const { project_id, ...task } = projectCommand;
-              const saved = await saveTaskInTransaction(c, p, project_id, task);
-              nativeReceipts.push(
-                await recordOperation(
+              for (const native of [
+                projectCommand,
+                ...(successorCommand ? [successorCommand] : []),
+              ]) {
+                const { project_id, ...task } = native;
+                const saved = await saveTaskInTransaction(
                   c,
                   p,
-                  projectCommand,
-                  saved,
-                  "Project",
-                  "ProjectTaskSaved",
-                  releaseHash({
-                    command: "SaveProjectTask",
-                    ...projectCommand,
-                  }),
-                  {
-                    command: "SaveProjectTask",
-                    record_version: saved.version,
-                    task_id: task.id,
-                    material_outcome_id: eventId,
-                    material_review_id: review.id,
-                  },
-                ),
-              );
+                  project_id,
+                  task,
+                );
+                nativeReceipts.push(
+                  await recordOperation(
+                    c,
+                    p,
+                    native,
+                    saved,
+                    "Project",
+                    "ProjectTaskSaved",
+                    releaseHash({
+                      command: "SaveProjectTask",
+                      ...native,
+                    }),
+                    {
+                      command: "SaveProjectTask",
+                      record_version: saved.version,
+                      task_id: task.id,
+                      material_outcome_id: eventId,
+                      material_review_id: review.id,
+                    },
+                  ),
+                );
+              }
               const { record_id, ...fact } = impactCommand;
               const reviewed = await recordFactInTransaction(
                 c,
@@ -341,6 +389,8 @@ export async function executeMaterial(
               deps.demand.id,
               deps.impact.id,
               deps.project.task.id,
+              p.actor_id,
+              deps.project.successor?.id,
             );
           }
         }
@@ -372,6 +422,7 @@ export async function executeMaterial(
         review_hash: reviewHash,
         effect_receiving_ids: receivingIds,
         project_command: projectCommand,
+        ...(successorCommand ? { successor_command: successorCommand } : {}),
         impact_command: impactCommand,
         reason: input.reason,
         evidence: input.evidence,

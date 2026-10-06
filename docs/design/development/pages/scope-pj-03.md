@@ -40,3 +40,11 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 The draft User Guide `guide.pj.03` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## One selected Project dependency — SYN-ES07-08
+
+Retain existing ES-07 / SC-09 / PJ-03 scope and r20 evidence/review, receiving-register and native detail patterns. MaterialResolution reuses SelectField, Button, ButtonLink, Status, source disclosure and the original actor-bound journal. Incoming: exact received allocation outcome, Demand/Impact/Activity, Task A and explicitly selected native successor B. Outgoing: five distinct receiving decisions, immutable review, separately applied two-task withdrawal and exact Impact successor, three original receipts and fresh readiness/ES-07 disposition.
+
+Desktop shows both current task positions, versions/owners, direction/kind and exact proposed dates; preserve dependency meaning and distinguish native missing-date warnings from completed scoped action. Mobile 390/320 px stacks labelled successor/receiving fields with 44px controls, 16px inputs, wrapping identifiers and visible focus. Recovery precedes replacement controls. Returned/Held/corrected/reassigned consent and extra/new dependencies remain visible holds. Completed evidence has no renewed acceptance controls.
+
+Host/state fixtures: `tests/browser/quotation-task-dependency.spec.ts`, database/HTTP siblings and `tests/unit/quotation-task-dependency.test.ts`. Existing quoting r01, Supply readiness r03 and Projects r10 references remain exact. Accepted native pair mockup images are missing. This two-task panel is a proposed native adaptation; paired visual, owner, device and screen-reader review remain pending. No fingerprint is promoted.
