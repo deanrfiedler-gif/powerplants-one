@@ -1,0 +1,419 @@
+{
+  "implementation": "60e2da3ea56f599faf24ca9b6a54dd5792c37715",
+  "base": "2173cc64eed54b1e3fb8334495f7cd924206d13f",
+  "browser": "Chrome 154.0.8037.58",
+  "playwright": "1.63.0",
+  "owner_review": "pending",
+  "source_references": [
+    {
+      "path": "docs/reference/ui/maintenance/PPO-Service-Agreements-and-Maintenance-Workspace-r01.html",
+      "sha256": "66644e809bab58106037f4226f68f025fd2d8d462fdcce1693710bd310be14db"
+    },
+    {
+      "path": "docs/reference/ui/warranty/PPO-Warranty-and-Customer-Resolution-Workspace-r01.html",
+      "sha256": "81abea8363d638dd220915af27bac5a12a52ac595f4799510145ad9f39252dde"
+    },
+    {
+      "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0"
+    }
+  ],
+  "captures": [
+    {
+      "path": "desktop/maintenance-agreements-1440.png",
+      "sha256": "e5376ee451b555a4091c315a609091b6bac753f818126c4d325907e95a2dea19",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "desktop/maintenance-agreements-register-1440.png",
+      "sha256": "9c3fda0c713d06bd463aba483791ed52e7d7ba835084c1f4e0441d8f90f6a5f4",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "desktop/maintenance-coverage-1440.png",
+      "sha256": "1a1a10e1f94428593790dfbb14c04201a46cdff16fbf092c027e437cbefd5f49",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "desktop/maintenance-coverage-register-1440.png",
+      "sha256": "66b7f70b6f8196b90ff50f1cf2d7376cd661b8c30838410dd6ebd6d6e0283b95",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "desktop/maintenance-due-1440.png",
+      "sha256": "83545ef03b64dd86aef8f7a083c666b2df01896b94fdcf93642fb954d64a65a2",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "desktop/maintenance-due-register-1440.png",
+      "sha256": "ea9aaf1afb63ad197f8e2efea26fccf3c7ee629b4ead3616487a52178efeb68e",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "desktop/maintenance-plans-1440.png",
+      "sha256": "f120074c87bca63ef40c22773f72c37522b14946f6067cbe14e283edd6e89fba",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "desktop/maintenance-plans-register-1440.png",
+      "sha256": "0450809085a992553d520d5f1807453b74256052558b2ecc4e19990c0e96a721",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "desktop/maintenance-reference-1440.png",
+      "sha256": "08d9f60a20d1fb757de9706b02cf01c6612f67aa28a12813c5a7a4250ef27ce0",
+      "kind": "source-reference",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "desktop/maintenance-renewals-1440.png",
+      "sha256": "9939ad6dff721ef89e8815832828b2fb433c20d5d03fe771e2e3ed8ba56688ad",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "desktop/maintenance-renewals-register-1440.png",
+      "sha256": "7150464aa13735e6170aabfcfd2e0afb25d237e94d6461bf5e7b632953101d1f",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "desktop/theme-style-board-reference-1440.png",
+      "sha256": "5d423c966cf0a87135578dbbb59fcaac7b90059546388ba7ef81dc75d6962085",
+      "kind": "source-reference",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "desktop/warranty-cases-1440.png",
+      "sha256": "f92045b84cfc87a5c3d663acff998a98a7e7033268079a6591a214242cd78339",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "desktop/warranty-cases-register-1440.png",
+      "sha256": "805cb3ae397bf0b0f36b9bbdb79b8c7a9dd0592b7186744d7e330684cb07a512",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "desktop/warranty-reference-1440.png",
+      "sha256": "a6eb9d82cb5b4d1065376a5260924a90c0743e22b85c57f1282c55e4cb4b6b56",
+      "kind": "source-reference",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "desktop/warranty-reflow-1024.png",
+      "sha256": "18f10fffcd685fc67208df2dfca5e16396adff22f901f98c49b3bb49a3e2f893",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "desktop/warranty-reflow-320.png",
+      "sha256": "091381aa3ecb9a1fe92e0c27db0a0545594031425f729d4d858ba11763df0d81",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "desktop/warranty-reflow-390.png",
+      "sha256": "07a32fdf67a86b6aa5f3328fbfdfc82ab0a23ddd6205557c2c9cb5911dfd6723",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "desktop/warranty-reflow-720.png",
+      "sha256": "251ec1353d2b589935e07daa8b500cc6d17e22579049c2a173f499256527369a",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "desktop/warranty-supplier-recovery-1440.png",
+      "sha256": "cbe59c87470d63648c1acc009574dad571489573653506d6585eb20be25e3314",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "desktop/warranty-supplier-recovery-register-1440.png",
+      "sha256": "e272c4f36a61ec7f62ed7fca276dc9146472ea37c987929263b878997928f83d",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "desktop/warranty-view-coverage-1440.png",
+      "sha256": "d8384e4638177b115e2a0b9c4c81253f441bd0392b36e7022cdf12239d882566",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "desktop/warranty-view-customer-1440.png",
+      "sha256": "0d35fc7a24364816cce3f1c89c86dc491df551f508f80e400dcc9baf71ef59f1",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "desktop/warranty-view-evidence-1440.png",
+      "sha256": "f92045b84cfc87a5c3d663acff998a98a7e7033268079a6591a214242cd78339",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "desktop/warranty-view-history-1440.png",
+      "sha256": "deda8bb0d778d5b670489f4d74971a570793f33a95f7ae7385e390b46372ce4a",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "desktop/warranty-view-resolution-1440.png",
+      "sha256": "5fb34b676cee94f2908fc6309a41af9adb6980b3a8d6c54cf5addeb44d3f02f9",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "desktop/warranty-view-supplier-1440.png",
+      "sha256": "57d1ba349dd4cda16297be7b94222c4818ae79358cb43283e10a633e3d8056c1",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "mobile/maintenance-agreements-390.png",
+      "sha256": "86b5ef08545be460b462328d7946a5e85b0651c91e1a49e59a6c994ea8c49789",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "mobile/maintenance-agreements-register-390.png",
+      "sha256": "04af440aba0af9cd048312453cea1724d927c37c85898ccc73b980261bb701c3",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "mobile/maintenance-coverage-390.png",
+      "sha256": "02f55adb0dc5e0e3b997c1f1158cb26c30c706d0d7bf4f4e79e5e605a3047ef7",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "mobile/maintenance-coverage-register-390.png",
+      "sha256": "6dd4ed0e49651d742265c1a400a1fa7e03d74f6508f245db45780c6fa3cc86da",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "mobile/maintenance-due-390.png",
+      "sha256": "6f252de470946ac8e5eec5ea1154f56f08b02cba195a3bbb71d79550936c18b5",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "mobile/maintenance-due-register-390.png",
+      "sha256": "8367d68ef686c9f1971a58a111e9b0f23893c2661dead64dd10ac98940e8d3ea",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "mobile/maintenance-plans-390.png",
+      "sha256": "687e02056713430829ef17bc9e5cffefb6b229bd9369bd1c84c9d50ee004e6de",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "mobile/maintenance-plans-register-390.png",
+      "sha256": "8218f2c65b319bb3d695f0037b25e08fe689c7f8a2bd99d3b214e1a421221067",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "mobile/maintenance-reference-390.png",
+      "sha256": "41f81f617f3be08954c9d9252e974159c7ccace1e48e12417cb0f95b472bea35",
+      "kind": "source-reference",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "mobile/maintenance-renewals-390.png",
+      "sha256": "ce855cdb0464fb8ec3f8ca5f9b40a5270c5d499f1a0e31628473dc9424edaeb8",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "mobile/maintenance-renewals-register-390.png",
+      "sha256": "96d258eab8cb174926ca664e26792fecb4f4698c58f87395cbec07ba906f61ed",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "mobile/theme-style-board-reference-390.png",
+      "sha256": "c08318fd2160311a85914315047b145d430ea077bb1b83db905e171bbfb4d629",
+      "kind": "source-reference",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "mobile/warranty-cases-390.png",
+      "sha256": "9a07d6b3011fedf344d89fac52ac8dd2d8a85affa860d0588d8c7483dde30789",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "mobile/warranty-cases-register-390.png",
+      "sha256": "e40b14d51a5e959b962297a25758b90bb94dbf2aa7f3b10257af8bb44e6e3bcf",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "mobile/warranty-reference-390.png",
+      "sha256": "fbfd56a3e404c5e984000cd057c306f57d9a3e633c77a2f2ec110cdae579c638",
+      "kind": "source-reference",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "mobile/warranty-reflow-1024.png",
+      "sha256": "d7ec5c4049c5b6977fe44136e27852f9235fa23d91c225f26637782c7a6c33f6",
+      "kind": "native",
+      "inspection": "automated capture and overflow assertions only; individual visual inspection not claimed"
+    },
+    {
+      "path": "mobile/warranty-reflow-320.png",
+      "sha256": "204f1022b05747735f8183c25fd5ab78449e956967cf81b9e6b48eb6d54108f9",
+      "kind": "native",
+      "inspection": "automated capture and overflow assertions only; individual visual inspection not claimed"
+    },
+    {
+      "path": "mobile/warranty-reflow-390.png",
+      "sha256": "9a07d6b3011fedf344d89fac52ac8dd2d8a85affa860d0588d8c7483dde30789",
+      "kind": "native",
+      "inspection": "automated capture and overflow assertions only; individual visual inspection not claimed"
+    },
+    {
+      "path": "mobile/warranty-reflow-720.png",
+      "sha256": "03a9623419dacb45bf840273934dbe7d28379eedc1549d88b726b3db78470332",
+      "kind": "native",
+      "inspection": "automated capture and overflow assertions only; individual visual inspection not claimed"
+    },
+    {
+      "path": "mobile/warranty-supplier-recovery-390.png",
+      "sha256": "83db8b76c9b7e2bdd9672379b8f5fd9fcff9a55dea4fea9e1301af8c34dc122e",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "mobile/warranty-supplier-recovery-register-390.png",
+      "sha256": "c878015843182b1698989b82283621e8b50f326527777436d7c51f8a20b93d93",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "mobile/warranty-view-coverage-390.png",
+      "sha256": "34edf474426fb0fe4766e49be09ac026f220e9bae315ad598777ef795a3669ac",
+      "kind": "native",
+      "inspection": "automated capture and overflow assertions only; individual visual inspection not claimed"
+    },
+    {
+      "path": "mobile/warranty-view-customer-390.png",
+      "sha256": "85521b33ccb4539e204e271614929bad6f2fa34ef29bf5f0cdda091b39d09508",
+      "kind": "native",
+      "inspection": "automated capture and overflow assertions only; individual visual inspection not claimed"
+    },
+    {
+      "path": "mobile/warranty-view-evidence-390.png",
+      "sha256": "9a07d6b3011fedf344d89fac52ac8dd2d8a85affa860d0588d8c7483dde30789",
+      "kind": "native",
+      "inspection": "automated capture and overflow assertions only; individual visual inspection not claimed"
+    },
+    {
+      "path": "mobile/warranty-view-history-390.png",
+      "sha256": "faa2da779ca9aab8009c98b36304db71e54edc9cf4109349404180375caf0b7c",
+      "kind": "native",
+      "inspection": "automated capture and overflow assertions only; individual visual inspection not claimed"
+    },
+    {
+      "path": "mobile/warranty-view-resolution-390.png",
+      "sha256": "02971411054c6627cfea99c200db16884cb8a0e66a3c4918db0fb87d7456cef6",
+      "kind": "native",
+      "inspection": "automated capture and overflow assertions only; individual visual inspection not claimed"
+    },
+    {
+      "path": "mobile/warranty-view-supplier-390.png",
+      "sha256": "9b15e36e9ce13997617939eff0c61d8d66f5fcaaccc690ebbdc7fe210248de50",
+      "kind": "native",
+      "inspection": "automated capture and overflow assertions only; individual visual inspection not claimed"
+    },
+    {
+      "path": "layout/maintenance-agreements-cards-390.png",
+      "sha256": "f5e89c01b7d9cd5655da8abd4f8d0a272f219d0d065018e989d7b413d3885d2a",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "layout/maintenance-coverage-cards-390.png",
+      "sha256": "061e4dc54c79d2139fd21e4304bb226459894d73e8fc153b575311439885052a",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "layout/maintenance-due-cards-390.png",
+      "sha256": "b00bb94598bbb758f5cb2cee0eb0a6b9053a0e5632d69c3d1d2844ee3dca1a65",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "layout/maintenance-plans-cards-390.png",
+      "sha256": "f2a151e3c8931b67b4c4d0db0f0a7e4d9438964ca311b855b4783371c3a6bd88",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "layout/maintenance-renewals-cards-390.png",
+      "sha256": "731b9d71607f453c7e27634188ca37a341d7bad01efbbfd7e3aa9549db46247b",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "layout/warranty-cases-cards-390.png",
+      "sha256": "f4069acf1463845d313e73f6aade38c1218d5dff8b654764253f9c71a5351791",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "layout/warranty-form-1024.png",
+      "sha256": "6981da40a473225ed6ad623f9b1ba44ece046ccfcb0f9a46ff8ee3beff10558b",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "layout/warranty-form-1440.png",
+      "sha256": "ce8117b8d3dd98ea8a0d5cc371050bd81c848362f14afbbb9b5d7e5ffa6e8078",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "layout/warranty-form-320.png",
+      "sha256": "02200ef3da617a82f24f121eaea869e7f69fac04f2e45be8442d876522c061ba",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "layout/warranty-form-390.png",
+      "sha256": "ecb6a5794cd6bc4ab08f7863b0e861794ede917020ee7275c917e2610ecbbe03",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "layout/warranty-form-720.png",
+      "sha256": "1d5aa4fba72e96efac3ec1062a5a6ecf55d8db367c83a51673bc06ae5b3ad35d",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    },
+    {
+      "path": "layout/warranty-supplier-recovery-cards-390.png",
+      "sha256": "36fb51f93b8f845164bdc34ceb4d7f88d59ac306b296cabfea0a77ecd17c3f99",
+      "kind": "native",
+      "inspection": "visually inspected by implementation agent; owner review pending"
+    }
+  ]
+}

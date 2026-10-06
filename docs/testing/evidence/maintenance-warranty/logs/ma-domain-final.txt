@@ -1,0 +1,21 @@
+✔ partial reviewed Service results retain an open remedy and refuse customer resolution (17637.1428ms)
+✔ canonical replacement receives exact completed work, preserves identities and owns future maintenance (19121.9908ms)
+✔ completed exact Service remedy needs current customer update and response; recovery stays outstanding (24838.6151ms)
+✔ MA01 typed identity, exact receipt, commercial duty, scope and immutable source (25862.0288ms)
+✔ MA02 a later decision or source revision makes old entitlement historical (616.0823ms)
+✔ MA02 omitted area cannot bypass the equipment's physical facility exclusion (578.9766ms)
+✔ MA03/04 overlapping and concurrent generation, deferral and exact request retries (1919.354ms)
+✔ MA05 separate CRM and Service owners, proposals do not extend source terms (1141.1568ms)
+✔ MA06 exact evidence, stale assessment, separate goodwill and exact plan authority (875.439ms)
+✔ MA07 supplier evidence chronology, partial approval, credit reference and independent disposition (1431.0426ms)
+✔ current action revocation blocks original operation receipt replay (228.9406ms)
+✔ AT-33 relocation and retirement retain original obligations and require future-plan review (2215.4252ms)
+✔ MA06 goodwill is separate from entitlement and Service authority; withdrawal blocks receiving (1578.5077ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 110545.4434
