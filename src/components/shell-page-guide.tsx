@@ -8,11 +8,12 @@ import { ShellIcon } from "./shell-icon";
 import { usePathname } from "next/navigation";
 import { estimatingWorkloadGuide } from "./estimating-workload-guide";
 import { costSourcesGuide } from "./cost-sources-guide";
+import { supplyGuide } from "../supply/guide";
 
 const pageGuides: Record<string, PageGuide> = { Leads: leadsGuide };
 export function ShellPageGuide({ page }: { page: string }) {
   const pathname = usePathname();
-  const pageGuide = engineeringControlGuide(pathname) ?? (pathname.startsWith("/estimating/cost-sources") || /^\/estimating\/estimates\/[^/]+\/sources$/.test(pathname) ? costSourcesGuide : pathname === "/estimating" ? estimatingWorkloadGuide : pageGuides[page]);
+  const pageGuide = supplyGuide(pathname) ?? engineeringControlGuide(pathname) ?? (pathname.startsWith("/estimating/cost-sources") || /^\/estimating\/estimates\/[^/]+\/sources$/.test(pathname) ? costSourcesGuide : pathname === "/estimating" ? estimatingWorkloadGuide : pageGuides[page]);
   // A register that gave up its visible description publishes it here, so the information icon keeps it.
   const published = usePageDescription();
   const [showShell, setShowShell] = useState(page === "Application shell");

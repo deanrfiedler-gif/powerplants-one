@@ -68,6 +68,26 @@
           "id": "default",
           "label": "Default",
           "description": "Representative synthetic content and normal interaction."
+        },
+        {
+          "id": "field-timer-host",
+          "label": "Field timer host",
+          "description": "Real assigned-visit fixture in tests/browser/field-timer.spec.ts: running, paused, stopped and original-action recovery at desktop/phone widths. Not an isolated catalogue fixture."
+        },
+        {
+          "id": "fi06-host",
+          "label": "FI-06 host",
+          "description": "Saved, dirty, conflict, uncertain, restricted and reopened fixtures in tests/browser/field-incidents.spec.ts; no isolated incident renderer."
+        },
+        {
+          "id": "fi07-host",
+          "label": "FI-07 response host",
+          "description": "tests/browser/reports.spec.ts: explicit empty response, correctable validation, exact presentation focus return, uncertain original receipt, saved history and owned clarification. Host fixture, not isolated catalogue state."
+        },
+        {
+          "id": "es07-host",
+          "label": "ES-07 receiving host",
+          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery. Material receiving/recovery host: tests/browser/quotation-material-resolution.spec.ts."
         }
       ],
       "implementation": [
@@ -81,6 +101,11 @@
         "src/app/globals.css",
         "src/development/component-examples.tsx",
         "src/development/component-fixtures.ts",
+        "src/components/work-timer.tsx",
+        "src/app/styles/work-timer.css",
+        "src/field/visit-guidance.ts",
+        "src/components/field-visit-entry.tsx",
+        "docs/decisions/field-closed-visit-guidance.md",
         "docs/design/development/maintenance-fixtures.json"
       ],
       "reference": {
@@ -139,6 +164,44 @@
         "scope:EQ-07",
         "scope:EQ-08",
         "scope:EQ-09",
+        "scope:SC-01",
+        "scope:SC-02",
+        "scope:SC-03",
+        "scope:SC-04",
+        "scope:SC-05",
+        "scope:SC-06",
+        "scope:SC-07",
+        "scope:SC-08",
+        "scope:SC-09",
+        "scope:SC-10",
+        "scope:FI-05",
+        "route:/my-jobs/site-readiness",
+        "scope:FI-01",
+        "route:/my-jobs",
+        "route:/my-jobs/[id]",
+        "route:/schedule/policy-impact",
+        "route:/service/appointments/[id]",
+        "route:/work/[id]",
+        "scope:FI-03",
+        "scope:FI-04",
+        "route:/my-jobs/inspections",
+        "route:/service/inspections",
+        "scope:FI-06",
+        "route:/service/incidents/[id]",
+        "route:/service/incidents/new",
+        "route:/service/incidents",
+        "scope:FI-07",
+        "route:/service/reports",
+        "route:/service/reports/[id]",
+        "scope:FI-02",
+        "route:/service/work-orders/[id]",
+        "route:/estimating/estimates/[id]/review",
+        "route:/estimating/quotes/[id]/release",
+        "scope:ES-05",
+        "route:/estimating/quotes/[id]/response",
+        "route:/estimating/quotes/[id]/conversion",
+        "scope:ES-07",
+        "route:/supply/changes",
         "scope:MA-01",
         "route:/maintenance/agreements",
         "route:/maintenance/agreements/[id]",
@@ -187,6 +250,54 @@
           "expected": "Paired native ES-03 source/form/comparison states against retained supplier-pricing design.",
           "actual": "New native consumers; functional evidence and paired owner acceptance remain separately recorded.",
           "action": "Inspect normal, stale, denied and original-operation recovery at desktop, phone and enlarged widths; preserve reference bytes.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fi01-host-review",
+          "expected": "Accepted r05 timer in its real shell with shared controls.",
+          "actual": "Native timer and browser comparison added; owner/device and assistive-technology review pending.",
+          "action": "Inspect paired captures and real fixture states; retain source bytes and do not infer review from test passes.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fi06-host-review",
+          "expected": "Independent desktop/phone acceptance of native incident consumers.",
+          "actual": "Proposed reference adapted to current shell; owner acceptance pending.",
+          "action": "Inspect source/native captures, keyboard and actual zoom evidence.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-fi07",
+          "expected": "Review exact response host at desktop/phone and actual 200% zoom.",
+          "actual": "Shared controls adopted for new response/recovery controls. Legacy Service review/issue controls remain a scoped exception.",
+          "action": "Review recorded FI-07 evidence with owner, physical device and screen reader.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-closed-visit-host",
+          "expected": "Truthful personal history and permission-aware separate-visit navigation with recoverable original commands.",
+          "actual": "Native host adaptation; no accepted closed-visit mockup or independent visual acceptance.",
+          "action": "Review the closed-visit acceptance matrix and actual host fixtures at four widths and 200% zoom.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-es07",
+          "expected": "Native receiving host at desktop/phone with exact recovery.",
+          "actual": "Shared control consumer added; independent visual/device acceptance pending.",
+          "action": "Review real host fixtures and retained reference; do not infer approval from passing tests.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-supply-followup",
+          "expected": "Paired native ES-07/SC-09 receiving, allocation and original recovery review.",
+          "actual": "Synthetic host fixtures added; owner, physical device and screen-reader review pending.",
+          "action": "Inspect compiled host states and retained references; do not infer authority or acceptance from tests.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         },
@@ -568,7 +679,7 @@
         {
           "id": "week",
           "label": "Week",
-          "description": "Seven-day resource lane view."
+          "description": "Seven-day resource lanes with a continuing calendar closure across three days; the exclusive end boundary is not closed."
         },
         {
           "id": "empty",
@@ -584,6 +695,11 @@
           "id": "long-label",
           "label": "Long resource label",
           "description": "Wrapping resource identity with a controlled availability and competence link."
+        },
+        {
+          "id": "policy-hold",
+          "label": "Published policy hold",
+          "description": "Unresolved durable publication impact remains visible while the original reservation and policy pin are retained."
         }
       ],
       "implementation": [
@@ -624,8 +740,16 @@
         {
           "id": "scheduling-native-review",
           "expected": "Shared controls remain readable in scheduling comparisons at desktop, 320 px and 200% zoom.",
-          "actual": "New scheduling consumers added; owner visual acceptance pending.",
+          "actual": "Multi-day closure rendering corrected and exercised in the Week fixture; owner visual acceptance remains pending.",
           "action": "Inspect captured runtime evidence and retain legacy booking-control exceptions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "scheduling-step4-review",
+          "expected": "Review policy preparation, durable hold reasons and exact resolution recovery on desktop and phone.",
+          "actual": "Step 4 source and synthetic functional proof are being verified; owner visual/device review remains pending.",
+          "action": "Review the exact Step 4 captures and affected shared controls without copying an acceptance fingerprint.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -661,6 +785,11 @@
           "id": "read-only",
           "label": "Read only",
           "description": "Management actions unavailable in this example."
+        },
+        {
+          "id": "policy-hold",
+          "label": "Published policy hold",
+          "description": "Unresolved durable publication impact remains visible while the original reservation and policy pin are retained."
         }
       ],
       "implementation": [
@@ -696,6 +825,14 @@
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "scheduling-step4-review",
+          "expected": "Review policy preparation, durable hold reasons and exact resolution recovery on desktop and phone.",
+          "actual": "Step 4 source and synthetic functional proof are being verified; owner visual/device review remains pending.",
+          "action": "Review the exact Step 4 captures and affected shared controls without copying an acceptance fingerprint.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "review": null
@@ -729,6 +866,16 @@
           "id": "sales-evidence",
           "label": "Sales evidence",
           "description": "Long synthetic source statement with a 4000-character field limit; preview-only, no saved business record."
+        },
+        {
+          "id": "fi06-host",
+          "label": "FI-06 host",
+          "description": "Saved, dirty, conflict, uncertain, restricted and reopened fixtures in tests/browser/field-incidents.spec.ts; no isolated incident renderer."
+        },
+        {
+          "id": "es07-host",
+          "label": "ES-07 receiving host",
+          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery. Material receiving/recovery host: tests/browser/quotation-material-resolution.spec.ts."
         }
       ],
       "implementation": [
@@ -794,6 +941,27 @@
         "scope:EQ-07",
         "scope:EQ-08",
         "scope:EQ-09",
+        "scope:FI-05",
+        "route:/my-jobs/site-readiness",
+        "route:/schedule/policy-impact",
+        "route:/service/appointments/[id]",
+        "route:/work/[id]",
+        "scope:FI-03",
+        "scope:FI-04",
+        "route:/my-jobs/inspections",
+        "route:/service/inspections",
+        "scope:FI-06",
+        "route:/service/incidents/[id]",
+        "route:/service/incidents/new",
+        "route:/service/incidents",
+        "route:/estimating/estimates/[id]/review",
+        "route:/estimating/quotes/[id]/release",
+        "scope:ES-05",
+        "route:/estimating/quotes/[id]/response",
+        "route:/estimating/quotes/[id]/conversion",
+        "scope:ES-07",
+        "scope:SC-09",
+        "route:/supply/changes",
         "scope:MA-01",
         "route:/maintenance/agreements",
         "route:/maintenance/agreements/[id]",
@@ -858,6 +1026,30 @@
           "expected": "Review native Sales fields and tabs with long statements and the actual saved workflow states.",
           "actual": "Synthetic catalogue fixtures and native browser journeys are present; owner and assistive-technology acceptance are pending.",
           "action": "Compare the Sales native captures with issued references; retain original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fi06-host-review",
+          "expected": "Independent desktop/phone acceptance of native incident consumers.",
+          "actual": "Proposed reference adapted to current shell; owner acceptance pending.",
+          "action": "Inspect source/native captures, keyboard and actual zoom evidence.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fields-es07",
+          "expected": "Native receiving host at desktop/phone with exact recovery.",
+          "actual": "Shared control consumer added; independent visual/device acceptance pending.",
+          "action": "Review real host fixtures and retained reference; do not infer approval from passing tests.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fields-supply-followup",
+          "expected": "Paired native ES-07/SC-09 receiving, allocation and original recovery review.",
+          "actual": "Synthetic host fixtures added; owner, physical device and screen-reader review pending.",
+          "action": "Inspect compiled host states and retained references; do not infer authority or acceptance from tests.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         },
@@ -959,6 +1151,21 @@
           "id": "default",
           "label": "Default",
           "description": "Representative synthetic content and normal interaction."
+        },
+        {
+          "id": "fi06-host",
+          "label": "FI-06 host",
+          "description": "Saved, dirty, conflict, uncertain, restricted and reopened fixtures in tests/browser/field-incidents.spec.ts; no isolated incident renderer."
+        },
+        {
+          "id": "fi07-host",
+          "label": "FI-07 response host",
+          "description": "tests/browser/reports.spec.ts: explicit empty response, correctable validation, exact presentation focus return, uncertain original receipt, saved history and owned clarification. Host fixture, not isolated catalogue state."
+        },
+        {
+          "id": "es07-host",
+          "label": "ES-07 receiving host",
+          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery. Material receiving/recovery host: tests/browser/quotation-material-resolution.spec.ts."
         }
       ],
       "implementation": [
@@ -1010,6 +1217,27 @@
         "scope:EQ-07",
         "scope:EQ-08",
         "scope:EQ-09",
+        "scope:FI-05",
+        "route:/my-jobs/site-readiness",
+        "scope:FI-03",
+        "scope:FI-04",
+        "route:/my-jobs/inspections",
+        "route:/service/inspections",
+        "scope:FI-06",
+        "route:/service/incidents/[id]",
+        "route:/service/incidents/new",
+        "route:/service/incidents",
+        "scope:FI-07",
+        "route:/service/reports",
+        "route:/service/reports/[id]",
+        "route:/estimating/estimates/[id]/review",
+        "route:/estimating/quotes/[id]/release",
+        "scope:ES-05",
+        "route:/estimating/quotes/[id]/response",
+        "route:/estimating/quotes/[id]/conversion",
+        "scope:ES-07",
+        "scope:SC-09",
+        "route:/supply/changes",
         "scope:MA-01",
         "route:/maintenance/agreements",
         "route:/maintenance/agreements/[id]",
@@ -1058,6 +1286,38 @@
           "expected": "Paired native ES-03 source/form/comparison states against retained supplier-pricing design.",
           "actual": "New native consumers; functional evidence and paired owner acceptance remain separately recorded.",
           "action": "Inspect normal, stale, denied and original-operation recovery at desktop, phone and enlarged widths; preserve reference bytes.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fi06-host-review",
+          "expected": "Independent desktop/phone acceptance of native incident consumers.",
+          "actual": "Proposed reference adapted to current shell; owner acceptance pending.",
+          "action": "Inspect source/native captures, keyboard and actual zoom evidence.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "validation-fi07",
+          "expected": "Review exact response host at desktop/phone and actual 200% zoom.",
+          "actual": "Shared controls adopted for new response/recovery controls. Legacy Service review/issue controls remain a scoped exception.",
+          "action": "Review recorded FI-07 evidence with owner, physical device and screen reader.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "validation-es07",
+          "expected": "Native receiving host at desktop/phone with exact recovery.",
+          "actual": "Shared control consumer added; independent visual/device acceptance pending.",
+          "action": "Review real host fixtures and retained reference; do not infer approval from passing tests.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "validation-supply-followup",
+          "expected": "Paired native ES-07/SC-09 receiving, allocation and original recovery review.",
+          "actual": "Synthetic host fixtures added; owner, physical device and screen-reader review pending.",
+          "action": "Inspect compiled host states and retained references; do not infer authority or acceptance from tests.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         },
@@ -1287,7 +1547,17 @@
       },
       "specification": "docs/design/development/components/dialog.md",
       "used_on": [
-        "route:/sales/opportunities"
+        "route:/sales/opportunities",
+        "scope:SC-01",
+        "scope:SC-02",
+        "scope:SC-03",
+        "scope:SC-04",
+        "scope:SC-05",
+        "scope:SC-06",
+        "scope:SC-07",
+        "scope:SC-08",
+        "scope:SC-09",
+        "scope:SC-10"
       ],
       "desktop": "Opening creates a modal focus boundary. Confirm is local to the example; close and Escape return to the opener.",
       "mobile": "Inspect the dialog at phone width with long content and browser zoom; keep Close and Done reachable.",
@@ -1340,7 +1610,19 @@
       },
       "specification": "docs/design/development/components/drawer.md",
       "used_on": [
-        "route:/sales/opportunities"
+        "route:/sales/opportunities",
+        "scope:SC-01",
+        "scope:SC-02",
+        "scope:SC-03",
+        "scope:SC-04",
+        "scope:SC-05",
+        "scope:SC-06",
+        "scope:SC-07",
+        "scope:SC-08",
+        "scope:SC-09",
+        "scope:SC-10",
+        "scope:ES-01",
+        "route:/estimating"
       ],
       "desktop": "Use drawers for supplementary record context; preserve the parent task and focus return.",
       "mobile": "The actual drawer should fit the phone viewport and scroll content internally.",
@@ -1352,6 +1634,14 @@
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "Drawer geometry must be compared with its CRM reference; shell utility panels have separate behaviour.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "es01-right-drawer",
+          "expected": "Drawer geometry matches its reference or records an accepted page-specific variant.",
+          "actual": "ES-01 reuses WorklistPanel behaviour (modal dialog, Escape, focus return) with page-scoped right-hand geometry, 448 px and full height, below the 1360 px panel width. The CRM drawer is a top sheet.",
+          "action": "Compare the ES-01 drawer with the CRM drawer and the ES-01 board R1; accept the page variant or migrate to a shared right-hand drawer.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1402,6 +1692,31 @@
           "id": "offline",
           "label": "Offline",
           "description": "Inspect the offline variant and its explanatory messages."
+        },
+        {
+          "id": "field-timer-host",
+          "label": "Field timer host",
+          "description": "Real assigned-visit fixture in tests/browser/field-timer.spec.ts: running, paused, stopped and original-action recovery at desktop/phone widths. Not an isolated catalogue fixture."
+        },
+        {
+          "id": "background-error",
+          "label": "Background validation error",
+          "description": "Visible alert and retry preserve focus while automatic booking-policy preparation checks edited fields. Explicit command failures still focus their error notice."
+        },
+        {
+          "id": "fi06-host",
+          "label": "FI-06 host",
+          "description": "Saved, dirty, conflict, uncertain, restricted and reopened fixtures in tests/browser/field-incidents.spec.ts; no isolated incident renderer."
+        },
+        {
+          "id": "fi07-host",
+          "label": "FI-07 response host",
+          "description": "tests/browser/reports.spec.ts: explicit empty response, correctable validation, exact presentation focus return, uncertain original receipt, saved history and owned clarification. Host fixture, not isolated catalogue state."
+        },
+        {
+          "id": "es07-host",
+          "label": "ES-07 receiving host",
+          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery. Material receiving/recovery host: tests/browser/quotation-material-resolution.spec.ts."
         }
       ],
       "implementation": [
@@ -1416,6 +1731,13 @@
         "src/development/component-examples.tsx",
         "src/development/component-fixtures.ts",
         "src/app/styles/customers.css",
+        "src/components/work-timer.tsx",
+        "src/app/styles/work-timer.css",
+        "src/shared/lib/command-journal.ts",
+        "src/shared/ui/use-recoverable-command.ts",
+        "src/field/visit-guidance.ts",
+        "src/components/field-visit-entry.tsx",
+        "docs/decisions/field-closed-visit-guidance.md",
         "docs/design/development/maintenance-fixtures.json"
       ],
       "reference": {
@@ -1465,6 +1787,37 @@
         "scope:EQ-07",
         "scope:EQ-08",
         "scope:EQ-09",
+        "scope:FI-05",
+        "route:/my-jobs/site-readiness",
+        "scope:ES-01",
+        "route:/estimating",
+        "scope:FI-01",
+        "route:/my-jobs",
+        "route:/my-jobs/[id]",
+        "route:/schedule/policy-impact",
+        "route:/service/appointments/[id]",
+        "route:/work/[id]",
+        "scope:FI-03",
+        "scope:FI-04",
+        "route:/my-jobs/inspections",
+        "route:/service/inspections",
+        "scope:FI-06",
+        "route:/service/incidents/[id]",
+        "route:/service/incidents/new",
+        "route:/service/incidents",
+        "scope:FI-07",
+        "route:/service/reports",
+        "route:/service/reports/[id]",
+        "scope:FI-02",
+        "route:/service/work-orders/[id]",
+        "route:/estimating/estimates/[id]/review",
+        "route:/estimating/quotes/[id]/release",
+        "scope:ES-05",
+        "route:/estimating/quotes/[id]/response",
+        "route:/estimating/quotes/[id]/conversion",
+        "scope:ES-07",
+        "scope:SC-09",
+        "route:/supply/changes",
         "scope:MA-01",
         "route:/maintenance/agreements",
         "route:/maintenance/agreements/[id]",
@@ -1525,6 +1878,62 @@
           "owner": "Dean Fiedler"
         },
         {
+          "id": "fi01-host-review",
+          "expected": "Accepted r05 timer in its real shell with shared controls.",
+          "actual": "Native timer and browser comparison added; owner/device and assistive-technology review pending.",
+          "action": "Inspect paired captures and real fixture states; retain source bytes and do not infer review from test passes.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "service-inspection-recovery",
+          "expected": "Retain bounded exact originals before transport.",
+          "actual": "Service evidence journal uses an explicit size limit; other consumers retain 32 KiB.",
+          "action": "Verify same-tab recovery, quota refusal and identity changes in the host fixture.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fi06-host-review",
+          "expected": "Independent desktop/phone acceptance of native incident consumers.",
+          "actual": "Proposed reference adapted to current shell; owner acceptance pending.",
+          "action": "Inspect source/native captures, keyboard and actual zoom evidence.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "read-state-fi07",
+          "expected": "Review exact response host at desktop/phone and actual 200% zoom.",
+          "actual": "Shared controls adopted for new response/recovery controls. Legacy Service review/issue controls remain a scoped exception.",
+          "action": "Review recorded FI-07 evidence with owner, physical device and screen reader.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "read-state-closed-visit-host",
+          "expected": "Truthful personal history and permission-aware separate-visit navigation with recoverable original commands.",
+          "actual": "Native host adaptation; no accepted closed-visit mockup or independent visual acceptance.",
+          "action": "Review the closed-visit acceptance matrix and actual host fixtures at four widths and 200% zoom.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "read-state-es07",
+          "expected": "Native receiving host at desktop/phone with exact recovery.",
+          "actual": "Shared control consumer added; independent visual/device acceptance pending.",
+          "action": "Review real host fixtures and retained reference; do not infer approval from passing tests.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "read-state-supply-followup",
+          "expected": "Paired native ES-07/SC-09 receiving, allocation and original recovery review.",
+          "actual": "Synthetic host fixtures added; owner, physical device and screen-reader review pending.",
+          "action": "Inspect compiled host states and retained references; do not infer authority or acceptance from tests.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
           "id": "read-state-maintenance-adaptation",
           "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
           "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
@@ -1549,6 +1958,11 @@
           "id": "default",
           "label": "Default",
           "description": "Representative synthetic content and normal interaction."
+        },
+        {
+          "id": "es07-host",
+          "label": "ES-07 receiving host",
+          "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery. Material receiving/recovery host: tests/browser/quotation-material-resolution.spec.ts."
         }
       ],
       "implementation": [
@@ -1595,6 +2009,14 @@
         "scope:EQ-09",
         "scope:ES-01",
         "route:/estimating",
+        "route:/estimating/estimates/[id]/review",
+        "route:/estimating/quotes/[id]/release",
+        "scope:ES-05",
+        "route:/estimating/quotes/[id]/response",
+        "route:/estimating/quotes/[id]/conversion",
+        "scope:ES-07",
+        "scope:SC-09",
+        "route:/supply/changes",
         "scope:MA-01",
         "route:/maintenance/agreements",
         "route:/maintenance/agreements/[id]",
@@ -1635,6 +2057,30 @@
           "expected": "Review the actual CS consumer states at desktop and phone widths against their retained sources.",
           "actual": "Native CS integration has synthetic functional and responsive evidence; catalogue presentation does not establish owner or device acceptance.",
           "action": "Use the CS native evidence and owning page guides for paired workflow review. Preserve restricted, unknown, original-operation recovery and source-authority distinctions.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "es01-readiness-tone",
+          "expected": "ES-01 readiness chips use the design system's attention and success tones without changing other callers' value mapping.",
+          "actual": "Status accepts an optional tone override; ES-01 maps Scope clarification to attention, Discovery complete to success and the other two states to neutral. Catalogue examples are unchanged because the rendered tones are the existing set.",
+          "action": "Review the ES-01 readiness chips on the running page at desktop and phone widths; record owner acceptance or a correction.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "status-es07",
+          "expected": "Native receiving host at desktop/phone with exact recovery.",
+          "actual": "Shared control consumer added; independent visual/device acceptance pending.",
+          "action": "Review real host fixtures and retained reference; do not infer approval from passing tests.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "status-supply-followup",
+          "expected": "Paired native ES-07/SC-09 receiving, allocation and original recovery review.",
+          "actual": "Synthetic host fixtures added; owner, physical device and screen-reader review pending.",
+          "action": "Inspect compiled host states and retained references; do not infer authority or acceptance from tests.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         },
@@ -1783,6 +2229,36 @@
           "id": "service-phone-identity",
           "label": "Service phone identity",
           "description": "Utilities remain inside the header with local identity mounted; CRM filter row remains intentional."
+        },
+        {
+          "id": "scheduling-policy-duties",
+          "label": "Scheduling dedicated duties",
+          "description": "Real local identity selector exposes existing distinct reviewer/publisher profiles. PL-04 browser host fixtures verify Scheduling navigation, direct links and identity-lock clearing; no new grants or hosted identities."
+        },
+        {
+          "id": "fi06-host",
+          "label": "FI-06 host",
+          "description": "Saved, dirty, conflict, uncertain, restricted and reopened fixtures in tests/browser/field-incidents.spec.ts; no isolated incident renderer."
+        },
+        {
+          "id": "engineering-guide-during-refresh",
+          "label": "Engineering guide during refresh",
+          "description": "The real EN-02 browser fixture holds the post-save GET, opens Page guide, then releases the unchanged read. The guide retains focus; Escape returns to its opener, closing the inspector returns to the row, and reselecting the row focuses its heading."
+        },
+        {
+          "id": "notification-history-window",
+          "label": "Notification history window",
+          "description": "Use the real SH notification bell and inbox with repeated Activity events. Each event keeps its identity and source revision while current details and permissions are read afresh. Loading, denied and partial sources remain explicit."
+        },
+        {
+          "id": "my-work-breakpoint-read",
+          "label": "My Work breakpoint read",
+          "description": "Cross the 780px phone boundary in both directions. The newly mounted overview reads current data; observe its exact response before checking the rendered layout. Same-layout resizing requires no invented read; refused responses remain failures."
+        },
+        {
+          "id": "current-development-guide",
+          "label": "Current development guide",
+          "description": "Existing desktop/mobile guide reads fresh register binding, current content and Git provenance; exact routes precede patterns, changed content loses old review applicability and removed bindings stay unavailable. Full catalogue assurance remains separate. Fixture: tests/unit/development-workspace.test.ts; ES-07 and shared-shell host browser journeys."
         }
       ],
       "implementation": [
@@ -1812,6 +2288,14 @@
         "src/shell/secondary-menu.tsx",
         "src/app/styles/equipment.css",
         "docs/testing/evidence/job-pack-i5/README.md",
+        "src/components/business-session.tsx",
+        "src/components/session-signal.ts",
+        "src/engineering/control/components/workspace.tsx",
+        "src/notifications/service.ts",
+        "src/development/catalog.ts",
+        "src/development/runtime.ts",
+        "src/development/page-guide.tsx",
+        "src/app/api/development/catalog/route.ts",
         "docs/design/development/maintenance-fixtures.json"
       ],
       "reference": {
@@ -1824,6 +2308,11 @@
         "system:shell",
         "scope:ES-01",
         "scope:ES-03",
+        "scope:FI-06",
+        "scope:EN-02",
+        "scope:SH-03",
+        "scope:SH-01",
+        "scope:ES-07",
         "scope:MA-01",
         "route:/maintenance/agreements",
         "route:/maintenance/agreements/[id]",
@@ -1906,6 +2395,54 @@
           "action": "Review retained phone captures and shared-shell results.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "pl04-shell-duty-review",
+          "expected": "Independent desktop/phone review of dedicated-duty navigation and identity transitions.",
+          "actual": "Synthetic host proof covers navigation and in-flight protected evidence clearing; owner/device acceptance remains open.",
+          "action": "Use the Step 5 host captures and browser fixture during paired shell review.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fi06-host-review",
+          "expected": "Independent desktop/phone acceptance of native incident consumers.",
+          "actual": "Proposed reference adapted to current shell; owner acceptance pending.",
+          "action": "Inspect source/native captures, keyboard and actual zoom evidence.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "engineering-refresh-focus-review",
+          "expected": "Background refresh preserves focus in the open guide while explicit record selection and inspector closure retain their focus destinations.",
+          "actual": "A focus race was reproduced on unchanged main after the PR #344 development-browser failure. The bounded inspector fix and deterministic desktop/mobile regression are part of the same PR; final results belong to its execution ledger.",
+          "action": "Review the exact-head functional evidence in docs/testing/evidence/quotation-supply-followup/README.md. Paired visual, owner and device acceptance remain pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "notification-history-read-review",
+          "expected": "Populated event history remains responsive without stale authority, lost events or hidden owned work.",
+          "actual": "PR #344 adds request-scoped distinct-source reads in bounded batches. Original five-second browser assertions and the seven-width/five-page reflow matrix remain; final results belong to its execution ledger.",
+          "action": "Review the populated notification and reflow evidence; no visual or owner acceptance is granted by source or test completion.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "my-work-breakpoint-read-review",
+          "expected": "Responsive proof distinguishes a fresh overview read from completed rendering while retaining current access and existing deadlines.",
+          "actual": "PR #344 observes the native breakpoint remount through the existing My Work transport helper. A held real GET reproduces the earlier busy-state assertion; exact-head results remain in the execution ledger.",
+          "action": "Review the two-direction responsive-readiness and real overview evidence. Keep visual and owner acceptance pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "bounded-development-guide-read",
+          "priority": "Medium",
+          "owner": "Dean Fiedler",
+          "expected": "Same permitted guide, current source provenance and explicit review/unavailable states at desktop and mobile widths.",
+          "actual": "Direct current-register lookup replaces full catalogue reconstruction for page help; the full catalogue and source/reference validation remain intact.",
+          "action": "Review existing ES-07/shared-shell host captures and current-guide fixture; no visual or owner acceptance is inferred."
         },
         {
           "id": "application-shell-maintenance-adaptation",
@@ -2361,6 +2898,1156 @@
           "expected": "Owner review of access-unavailable and failed-read presentation in both consumers",
           "actual": "Distinct states implemented; automated fixtures cover 403, 404 and 500; owner review pending",
           "action": "Compare appointment and Field Technicians states on desktop and phone without granting pack authority.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "field-work-timer",
+      "title": "Personal field work timer",
+      "category": "Mobile",
+      "module": "FI",
+      "purpose": "Open a permitted assigned job to inspect the durable timer and the My Jobs running-timer link. The host supplies actual arrival, authoritative source context and original-action recovery.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "idle",
+          "label": "Ready to start",
+          "description": "Current acknowledged pack and personal actual arrival precede timer Start. Saving arrival immediately refreshes timer authority; no manual reload or 15-second polling wait is required."
+        },
+        {
+          "id": "running",
+          "label": "Running",
+          "description": "Original task/equipment, whole-second elapsed display and saved event; the independent 15-second server refresh survives display renders and observes current dialog/command guards."
+        },
+        {
+          "id": "paused",
+          "label": "Paused",
+          "description": "Break/Travel or required waiting/safety/other note; paused time remains open."
+        },
+        {
+          "id": "stopped",
+          "label": "Stopped",
+          "description": "Closed P07 intervals and retained events; Resume requires current authority."
+        },
+        {
+          "id": "unknown",
+          "label": "Unknown outcome",
+          "description": "Confirm the same original action before another transition."
+        },
+        {
+          "id": "offline",
+          "label": "Offline host",
+          "description": "Owned downloaded context and ordered pending originals in the dedicated offline workspace; no isolated React fixture claim."
+        },
+        {
+          "id": "closed-own",
+          "label": "Closed with my attendance",
+          "description": "Retained personal identity/times and frozen history; no reopening or new arrival."
+        },
+        {
+          "id": "closed-other",
+          "label": "Closed without my attendance",
+          "description": "Another crew member is not the viewer; no new arrival and only scoped current receiving links."
+        },
+        {
+          "id": "return-preparation",
+          "label": "Separate visit preparation",
+          "description": "Existing incomplete/prepared/history states from current receiving projections, with no inferred return lineage."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/work-timer.tsx",
+          "symbol": "WorkTimer"
+        },
+        {
+          "path": "src/components/work-timer.tsx",
+          "symbol": "RunningTimerBanner"
+        },
+        {
+          "path": "src/components/field-visit-entry.tsx",
+          "symbol": "FieldVisitEntry"
+        }
+      ],
+      "dependencies": [
+        "src/app/styles/work-timer.css",
+        "src/field/timer-model.ts",
+        "src/offline/timer.ts",
+        "docs/decisions/field-timer-native.md",
+        "src/field/visit-guidance.ts",
+        "src/components/field-visit-entry.tsx",
+        "docs/decisions/field-closed-visit-guidance.md"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/field-work-timer/powerplants-one-field-work-timer-r05.html",
+        "anchor": "ppo-work-timer",
+        "status": "Accepted r05 presentation; native host adaptations and owner review remain separate."
+      },
+      "specification": "docs/design/development/components/field-work-timer.md",
+      "used_on": [
+        "scope:FI-01",
+        "route:/my-jobs",
+        "route:/my-jobs/[id]"
+      ],
+      "desktop": "Padded host Record detail; one document scroll. Retain r05 record header, 96 px clock, readouts, visit track and time/activity lists.",
+      "mobile": "64 px clock; labelled job menu; fixed timer dock above the existing 64 px navigation with 44 px minimum controls. Inspect 390/320 px and actual 200% browser zoom.",
+      "keyboard": "Native labelled dialog focuses inside on open. Tab/Shift+Tab remain contained; Escape closes when no unresolved command prevents it and returns focus.",
+      "limitations": "Host fixture requires real permitted synthetic appointment/arrival and database. tests/browser/field-timer.spec.ts and tests/helpers/quality-return.ts provide reproducible states; this is not an isolated runnable catalogue example. Owner, physical-device and assistive-technology acceptance remain pending.",
+      "gaps": [
+        {
+          "id": "field-timer-native-adaptations",
+          "expected": "Paired owner review against accepted timer r05 in the native shell.",
+          "actual": "Native implementation and synthetic paired evidence; unavailable allowance, retained Undo evidence and explicit arrival differ from the preview.",
+          "action": "Review the native decision and field programme evidence; retain source bytes and record owner acceptance separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "field-work-timer-closed-visit-host",
+          "expected": "Truthful personal history and permission-aware separate-visit navigation with recoverable original commands.",
+          "actual": "Native host adaptation; no accepted closed-visit mockup or independent visual acceptance. Header compaction now distinguishes a clock below the viewport from one scrolled above it; 320 px stability requires fresh proof.",
+          "action": "Review the closed-visit acceptance matrix and actual host fixtures at four widths and 200% zoom.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "scheduling-policy-impacts",
+      "title": "Scheduling policy evidence, publication and owned impacts",
+      "category": "Scheduling",
+      "module": "Service",
+      "purpose": "Keep immutable proposal/review/publication evidence distinct from temporary comparison and resolve holds only through the existing appointment workflow.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "unresolved",
+          "label": "Unresolved hold",
+          "description": "Immediate owned hold from publication, including a future policy."
+        },
+        {
+          "id": "stale",
+          "label": "Stale resolution",
+          "description": "Later relevant source changes restore start hold."
+        },
+        {
+          "id": "current",
+          "label": "Current resolution",
+          "description": "Independent customer, pack and readiness requirements remain."
+        },
+        {
+          "id": "uncertain",
+          "label": "Uncertain response",
+          "description": "Retry the unchanged resolution; retained original receipt is authoritative."
+        },
+        {
+          "id": "proposal",
+          "label": "Immutable proposal",
+          "description": "Synthetic saved proposal and linked successor; exact source/head and fixed terms."
+        },
+        {
+          "id": "successor-loading",
+          "label": "Successor requested while head loads",
+          "description": "The saved proposal arrives first. Edit retains its focus request until the permitted form mounts; typing keeps focus and another explicit Edit focuses the existing heading."
+        },
+        {
+          "id": "review",
+          "label": "Complete saved review",
+          "description": "Server complete empty/compliant/affected population, exclusions and 200-candidate refusal."
+        },
+        {
+          "id": "publication",
+          "label": "Exact publication",
+          "description": "Explicit reviewed action and accepted receipt; no Start approval."
+        },
+        {
+          "id": "recovery",
+          "label": "Publication recovery",
+          "description": "Lost response and reload retain unchanged original; altered retry refuses."
+        },
+        {
+          "id": "denied",
+          "label": "Revoked or switched identity",
+          "description": "Protected evidence and in-flight results clear; ordinary comparison remains permission-scoped."
+        },
+        {
+          "id": "records-reread",
+          "label": "Saved record list reread",
+          "description": "PolicyPublicationWorkspace on /schedule/policy-impact retains explicit disclosure intent while a new record-type or refresh read unmounts protected content. Current permitted results reopen in place; keyboard close/open and exact saved publication links remain available."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/scheduling/components/client/policy-holds.client.tsx",
+          "symbol": "PolicyHolds"
+        },
+        {
+          "path": "src/scheduling/components/client/policy-resolution.client.tsx",
+          "symbol": "PolicyResolution"
+        },
+        {
+          "path": "src/scheduling/components/client/policy-publication.client.tsx",
+          "symbol": "PolicyPublicationWorkspace"
+        }
+      ],
+      "dependencies": [
+        "src/components/business-ui.tsx",
+        "src/components/ui/button.tsx",
+        "src/scheduling/policy-holds.ts",
+        "src/scheduling/policy-resolution.ts",
+        "src/scheduling/policy-journal.ts",
+        "src/shared/ui/use-recoverable-command.ts",
+        "src/scheduling/policy-evidence-model.ts"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+        "anchor": "states",
+        "status": "Retained shared states reference; no issued Step 4 mockup; owner visual review pending"
+      },
+      "specification": "docs/design/development/components/scheduling-policy-impacts.md",
+      "used_on": [
+        "route:/service/appointments/[id]",
+        "route:/schedule/policy-impact",
+        "route:/work",
+        "route:/work/[id]"
+      ],
+      "desktop": "Keep reason, responsible owner, source publication and next action together. Existing record detail owns the resolution controls.",
+      "mobile": "Stack labels and actions; wrap exact identifiers without horizontal overflow at 390/320 px.",
+      "keyboard": "Native details, labelled fields and shared buttons; all actions available without dragging. On /schedule/policy-impact, explicit successor editing focuses its form when mounted, including a delayed current-head read; ordinary field updates do not move focus.",
+      "limitations": "Online host only; no accepted policy-editor mockup, no offline publication/resolution, no owner/device acceptance. Shared journal opt-in permits server-allocated publication result IDs; booking receipt binding remains unchanged. An unavailable original receipt retains explicit unchanged recovery; actual authority refusals hide protected evidence.",
+      "gaps": [
+        {
+          "id": "scheduling-step4-review",
+          "expected": "Review policy preparation, durable hold reasons and exact resolution recovery on desktop and phone.",
+          "actual": "Step 4 source and synthetic functional proof are being verified; owner visual/device review remains pending.",
+          "action": "Review the exact Step 4 captures and affected shared controls without copying an acceptance fingerprint.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "scheduling-step5-review",
+          "expected": "Review native immutable proposal, complete evaluation, publication, recovery and owned handovers at 1440/1024/390/320 CSS px.",
+          "actual": "New composition is implementation/proposed evidence with no accepted editor mockup.",
+          "action": "Inspect retained Step 5 captures separately from owner, physical-device and accessibility acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "scheduling-successor-focus-review",
+          "expected": "The successor heading receives focus even if the separate current-head read completes after Edit.",
+          "actual": "The frame-based focus request can run before the form exists; reproduced on unchanged main. The mount-bound repair passes all 18 compiled Scheduling cases, including delayed-head focus on desktop and phone; owner/device review remains pending.",
+          "action": "Retain desktop/mobile delayed-read regression evidence in docs/testing/evidence/scheduling-successor-focus/README.md; owner/device acceptance remains pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "scheduling-record-disclosure-review",
+          "expected": "Saved-record type changes and refresh retain explicit disclosure intent on desktop and phone without retaining stale protected records.",
+          "actual": "Queued native toggle ordering reproduces a hidden saved publication list on unchanged main. Synchronous summary intent is the bounded repair; execution and owner/device review remain separate.",
+          "action": "Retain the source-specific regression and viewport evidence in docs/testing/evidence/scheduling-record-disclosure/README.md; do not promote an acceptance fingerprint.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "service-inspections",
+      "title": "Service inspection journey",
+      "category": "Forms",
+      "module": "FI",
+      "purpose": "Exact appointment inspection drafts, independent review and retained retests.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "draft",
+          "label": "Draft",
+          "description": "Saved and unsaved raw readings with exact basis."
+        },
+        {
+          "id": "conflict",
+          "label": "Conflict",
+          "description": "Explicit current-version adoption retains local entries."
+        },
+        {
+          "id": "uncertain",
+          "label": "Uncertain result",
+          "description": "Recover original ID and payload."
+        },
+        {
+          "id": "returned",
+          "label": "Returned",
+          "description": "Original submission and owned correction retained."
+        },
+        {
+          "id": "retest",
+          "label": "Fresh retest",
+          "description": "Independent acceptance of correctly linked evidence."
+        },
+        {
+          "id": "issued",
+          "label": "Retained outcome",
+          "description": "Exact internal bytes and separate current applicability."
+        },
+        {
+          "id": "disconnected",
+          "label": "Disconnected",
+          "description": "No offline inspection protocol; unsent input is not saved."
+        },
+        {
+          "id": "recovering",
+          "label": "Recovering original",
+          "description": "Attempt selection is disabled while the existing original-command guard is busy or unresolved; a recovered original restores the permitted controls."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/inspections/service-screen.tsx",
+          "symbol": "ServiceInspectionScreen"
+        }
+      ],
+      "dependencies": [
+        "src/inspections/service-screen.tsx",
+        "src/app/service-inspections.css",
+        "src/inspections/service-context.ts",
+        "src/inspections/service-commands.ts",
+        "docs/decisions/service-inspections.md",
+        "docs/testing/evidence/service-inspections/README.md",
+        "docs/testing/evidence/field-integrated-acceptance/README.md"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
+        "anchor": "inspection-form",
+        "status": "Proposed Quality reference; native Service adaptation pending independent review"
+      },
+      "specification": "docs/design/development/components/service-inspections.md",
+      "used_on": [
+        "scope:FI-03",
+        "scope:FI-04",
+        "route:/my-jobs/inspections",
+        "route:/service/inspections"
+      ],
+      "desktop": "Padded shell, wrapped cards and two-column fields at 1440/1024; one shell content scroll owner.",
+      "mobile": "Stack 390/320; 16 px inputs, 44 px controls; verify actual 200% zoom.",
+      "keyboard": "Native labels, fieldsets, details and buttons; validation retains input; guide focus returns. Attempt selection visibly follows the existing recovery guard; it cannot accept a click that the guard silently ignores.",
+      "limitations": "Real permitted synthetic appointment/database/issued pack required. No isolated renderer or offline queue. Owner/device/screen-reader acceptance pending.",
+      "gaps": [
+        {
+          "id": "service-inspection-native-adaptation",
+          "expected": "Accepted native desktop/phone compositions.",
+          "actual": "Proposed Quality r01 adapted to existing shell; accepted images missing.",
+          "action": "Review compiled captures and states independently before adopting a baseline.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "inspection-recovery-availability",
+          "expected": "Attempt buttons reflect the existing recovery guard during original receipt lookup.",
+          "actual": "Bounded native disabled state and held-lookup regression; independent visual/keyboard review pending.",
+          "action": "Review recovering and recovered attempt selection in the current owner session; retain existing FI-03/FI-04 bindings and proposed-reference status.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "field-incidents",
+      "title": "Incident and corrective-action journey",
+      "category": "Forms",
+      "module": "FI",
+      "purpose": "Permitted factual reporting, exact scope holds, corrective Activities and independent closure.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "draft",
+          "label": "Draft",
+          "description": "Saved factual report and unsaved correction."
+        },
+        {
+          "id": "conflict",
+          "label": "Conflict",
+          "description": "Original expected version, explicit reconciliation."
+        },
+        {
+          "id": "uncertain",
+          "label": "Uncertain",
+          "description": "Same-tab unchanged original request and recovered create."
+        },
+        {
+          "id": "restricted",
+          "label": "Restricted",
+          "description": "Ordinary affected user sees no restricted facts/files."
+        },
+        {
+          "id": "held",
+          "label": "Held",
+          "description": "Scope hold independent of passing inspection and completed Activity."
+        },
+        {
+          "id": "overdue",
+          "label": "Overdue",
+          "description": "Due time retained; incomplete action prevents closure."
+        },
+        {
+          "id": "returned",
+          "label": "Returned",
+          "description": "Original observation and correction history retained."
+        },
+        {
+          "id": "reopened",
+          "label": "Reopened",
+          "description": "Old issued bytes unchanged, current applicability withdrawn."
+        },
+        {
+          "id": "disconnected",
+          "label": "Disconnected",
+          "description": "Last-known context and no offline incident queue."
+        },
+        {
+          "id": "activity-return",
+          "label": "Activity return",
+          "description": "Stable server-permitted incident destination; Activity completion leaves incident authority separate."
+        },
+        {
+          "id": "saved",
+          "label": "Saved",
+          "description": "Accepted server receipt and current saved record."
+        },
+        {
+          "id": "unsaved",
+          "label": "Unsaved",
+          "description": "Correctable local input with navigation protection."
+        },
+        {
+          "id": "saving",
+          "label": "Saving",
+          "description": "Original operation pending; duplicate controls disabled."
+        },
+        {
+          "id": "failed",
+          "label": "Failed",
+          "description": "Validation or authority refusal preserves correctable input."
+        },
+        {
+          "id": "closed",
+          "label": "Closed",
+          "description": "Exact reviewed outcome with separate current applicability."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/incidents/screen.tsx",
+          "symbol": "IncidentScreen"
+        },
+        {
+          "path": "src/incidents/activity-handover.tsx",
+          "symbol": "IncidentActivityHandover"
+        }
+      ],
+      "dependencies": [
+        "src/incidents/screen.tsx",
+        "src/app/incidents.css",
+        "src/incidents/service.ts",
+        "src/incidents/context.ts",
+        "src/incidents/holds.ts",
+        "docs/decisions/field-incidents.md",
+        "docs/testing/evidence/field-incidents/README.md",
+        "src/incidents/activity-handover.tsx",
+        "src/activities/activities.ts",
+        "src/components/activity-screens.tsx"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
+        "anchor": "content",
+        "status": "Proposed Quality reference; native Service adaptation pending independent review"
+      },
+      "specification": "docs/design/development/components/field-incidents.md",
+      "used_on": [
+        "scope:FI-06",
+        "route:/service/incidents/[id]",
+        "route:/service/incidents/new",
+        "route:/service/incidents",
+        "route:/work/[id]"
+      ],
+      "desktop": "Padded shell, wrapped cards and responsive field columns at 1440/1024; one shell content scroll owner.",
+      "mobile": "Stack 390/320; 16 px inputs, 44 px controls; verify actual 200% zoom.",
+      "keyboard": "Native labels, fieldsets, details and buttons; validation retains input; guide focus returns.",
+      "limitations": "Real synthetic appointment and persisted incidents required; host fixtures in tests/browser/field-incidents.spec.ts and tests/database/field-incidents.test.ts. No isolated renderer or offline incident queue.",
+      "gaps": [
+        {
+          "id": "fi06-native-adaptation",
+          "expected": "Accepted native desktop/phone compositions.",
+          "actual": "Native FI-06 host uses proposed Quality reference; accepted images missing.",
+          "action": "Review compiled captures and states independently before adopting a baseline.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "field-customer-response",
+      "title": "Exact attendance acknowledgement and report response",
+      "category": "Forms",
+      "module": "FI",
+      "purpose": "Separate actual attendance/internal acceptance, customer acknowledgement, exact report response and owned work.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "no-response",
+          "label": "No response",
+          "description": "No inferred acceptance."
+        },
+        {
+          "id": "presentation",
+          "label": "Exact presentation",
+          "description": "Immutable customer-safe HTML, independently sized without changing bytes."
+        },
+        {
+          "id": "correction",
+          "label": "Explicit correction",
+          "description": "Same subject/content predecessor retained."
+        },
+        {
+          "id": "recovery",
+          "label": "Original recovery",
+          "description": "Same-tab journal and existing owner-bound offline queue are separate."
+        },
+        {
+          "id": "restricted",
+          "label": "Current restrictions",
+          "description": "No incident details or clearance implied."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/report-screens.tsx",
+          "symbol": "ExactReportPresentation"
+        }
+      ],
+      "dependencies": [
+        "src/components/report-screens.tsx",
+        "src/reports/service.ts",
+        "src/reports/response-context.ts",
+        "src/reports/validation.ts",
+        "src/shared/ui/use-recoverable-command.ts",
+        "src/offline/app.ts",
+        "docs/decisions/field-customer-response.md",
+        "docs/testing/evidence/field-customer-response/README.md"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html",
+        "anchor": "",
+        "status": "Proposed retained reference; native acceptance pending"
+      },
+      "specification": "docs/design/development/components/field-customer-response.md",
+      "used_on": [
+        "scope:FI-07",
+        "route:/service/reports",
+        "route:/service/reports/[id]"
+      ],
+      "desktop": "One shell #main scroll owner, long exact HTML and wrapped identities.",
+      "mobile": "390/320 CSS px and 200% actual zoom; labelled explicit response fields; original bytes unchanged.",
+      "keyboard": "Heading focus on presentation, Return focus to opener, validation focus and shared buttons.",
+      "limitations": "Native host requires permitted reviewed synthetic attendance. No isolated fixture, authenticated customer portal or signature assurance. Legacy review/issue controls remain scoped exceptions.",
+      "gaps": [
+        {
+          "id": "fi07-native-acceptance",
+          "expected": "Accepted native report-response composition and physical/device evidence.",
+          "actual": "Retained r02 is proposed and issued-only; native supports both existing presentation modes with explicit attendance subject.",
+          "action": "Owner review of adaptations; physical-device, screen-reader and independent visual acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "estimate-review",
+      "title": "Exact estimate review and correction",
+      "category": "Forms",
+      "module": "ES",
+      "purpose": "Separate scoped completeness, source-price and technical evidence from commercial approval.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "unsubmitted",
+          "label": "Not submitted",
+          "description": "No review inferred from saved cost data."
+        },
+        {
+          "id": "submitted",
+          "label": "Exact submission",
+          "description": "Saved revision and three fingerprints retained."
+        },
+        {
+          "id": "returned",
+          "label": "Returned findings",
+          "description": "Attributable originals and correction responses."
+        },
+        {
+          "id": "changed",
+          "label": "Changed basis",
+          "description": "Only affected review applicability changes."
+        },
+        {
+          "id": "reviewed",
+          "label": "Reviewed",
+          "description": "Commercial approval remains separate."
+        },
+        {
+          "id": "recovery",
+          "label": "Outcome unknown",
+          "description": "Same-tab original receipt and retry."
+        },
+        {
+          "id": "denied",
+          "label": "Unavailable",
+          "description": "Protected forms and evidence removed."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/estimate-review.tsx",
+          "symbol": "EstimateReview"
+        }
+      ],
+      "dependencies": [
+        "src/components/estimate-review.css",
+        "src/estimating/review/reads.ts",
+        "src/estimating/review/service.ts",
+        "src/shared/ui/use-recoverable-command.ts",
+        "docs/contracts/estimating-review.md"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/estimate-review/PPO-Estimate-Review-and-Pricing-Exceptions-r01.html",
+        "anchor": "",
+        "status": "Proposed retained reference; native owner acceptance pending"
+      },
+      "specification": "docs/design/development/components/estimate-review.md",
+      "used_on": [
+        "route:/estimating/estimates/[id]/review",
+        "scope:ES-04"
+      ],
+      "desktop": "One shell scroll owner, three review cards, exact-source disclosure, bounded forms and history.",
+      "mobile": "Stacked labelled cards below 900 CSS px; wrap long identifiers at 390/320 px; preserve recovery actions.",
+      "keyboard": "Native labelled inputs, shared buttons, visible focus and error focus; no drag-only decision.",
+      "limitations": "Host fixture only. tests/browser/estimating-review.spec.ts supplies real scoped synthetic records. Commercial approval, thresholds, technical release and ES-05 issue are unavailable.",
+      "gaps": [
+        {
+          "id": "es04-review-acceptance",
+          "expected": "Owner-reviewed native adaptation of retained ES-04 r01 with independent physical-device and screen-reader proof.",
+          "actual": "One exact estimate review page implements the bounded evidence task; no queue, six-view shell or demonstration threshold is adopted. No exact reference image available.",
+          "action": "Review the native page and retained reference side by side; retain functional proof separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "quotation-release",
+      "title": "Exact synthetic quotation release",
+      "category": "Forms",
+      "module": "ES",
+      "purpose": "Separate exact preparation, independent approval, issue and simulated distribution on the existing quotation.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "draft",
+          "label": "Draft source",
+          "description": "No release approval inferred."
+        },
+        {
+          "id": "prepared",
+          "label": "Prepared",
+          "description": "Exact recipient, source and non-operative conditions retained."
+        },
+        {
+          "id": "approved",
+          "label": "Approved",
+          "description": "Independent exact-output decision only."
+        },
+        {
+          "id": "issued",
+          "label": "Issued",
+          "description": "Immutable approved output and explicit preceding issue."
+        },
+        {
+          "id": "unknown",
+          "label": "Outcome unknown",
+          "description": "Retain original operation or simulation attempt."
+        },
+        {
+          "id": "changed",
+          "label": "Changed basis",
+          "description": "New decision held until deliberate successor."
+        },
+        {
+          "id": "denied",
+          "label": "Unavailable",
+          "description": "Protected evidence removed."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/quotation-release.tsx",
+          "symbol": "QuotationRelease"
+        }
+      ],
+      "dependencies": [
+        "src/components/quotation-release.css",
+        "src/estimating/release/reads.ts",
+        "src/estimating/release/service.ts",
+        "src/shared/ui/use-recoverable-command.ts",
+        "docs/contracts/quotation-release.md"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/quoting/PPO-Quotation-Approval-Issue-and-Distribution-r02.html",
+        "anchor": "",
+        "status": "Retained proposed reference; native acceptance pending"
+      },
+      "specification": "docs/design/development/components/quotation-release.md",
+      "used_on": [
+        "route:/estimating/quotes/[id]/release",
+        "route:/estimating/quotes/[id]",
+        "scope:ES-05"
+      ],
+      "desktop": "Four separate stage cards, exact source/output disclosures, shared decision fields and immutable history within one shell scroll owner.",
+      "mobile": "Stacked cards below 900 CSS px; 390/320 px wrapping and preserved original recovery controls.",
+      "keyboard": "Native labelled inputs, shared buttons, visible focus and error focus; no drag-only decision.",
+      "limitations": "Host example with actual synthetic records. Exact issued revision links to ES-06; release creates no customer response or conversion. Operative policy and visual/owner acceptance remain pending.",
+      "gaps": [
+        {
+          "id": "es05-native-acceptance",
+          "expected": "Reviewed native adaptation of the retained ES-05 r02 and customer presentation, with independent device and screen-reader evidence.",
+          "actual": "Bounded E1-based synthetic document and one release record page; the six-view reference and r03 commercial content remain reference-only. Exact accepted native reference images are unavailable.",
+          "action": "Review native evidence against retained references; keep functional and owner acceptance separate.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "quotation-response",
+      "title": "Exact quotation response and negotiation",
+      "category": "Forms",
+      "module": "ES",
+      "purpose": "Retain attributable reports and corrections against one immutable issue, with clarification and separate receiving preparation.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "empty",
+          "label": "No response",
+          "description": "One exact issued offer."
+        },
+        {
+          "id": "reported",
+          "label": "Accepted / Declined",
+          "description": "Attributed reports without verified authority."
+        },
+        {
+          "id": "clarification",
+          "label": "Information clarification",
+          "description": "Answer and reported confirmation needed."
+        },
+        {
+          "id": "negotiation",
+          "label": "Material negotiation",
+          "description": "ES-05 successor required."
+        },
+        {
+          "id": "corrected",
+          "label": "Corrected",
+          "description": "Original retained with explicit relation."
+        },
+        {
+          "id": "prepared",
+          "label": "Prepared review",
+          "description": "Not sent, received or converted."
+        },
+        {
+          "id": "held",
+          "label": "Superseded or conditional",
+          "description": "Prepared history retained but held."
+        },
+        {
+          "id": "unknown",
+          "label": "Original outcome unknown",
+          "description": "Recover before replacement."
+        },
+        {
+          "id": "denied",
+          "label": "Unavailable",
+          "description": "Protected evidence removed."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/quotation-response.tsx",
+          "symbol": "QuotationResponse"
+        }
+      ],
+      "dependencies": [
+        "src/components/quotation-release.css",
+        "src/estimating/response/reads.ts",
+        "src/estimating/response/service.ts",
+        "docs/contracts/quotation-response.md",
+        "src/shared/ui/use-recoverable-command.ts"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/quoting/PPO-Quotation-Response-and-Negotiation-r01.html",
+        "anchor": "",
+        "status": "Retained proposed reference; native acceptance pending"
+      },
+      "specification": "docs/design/development/components/quotation-response.md",
+      "used_on": [
+        "route:/estimating/quotes/[id]/response",
+        "scope:ES-06"
+      ],
+      "desktop": "One shell scroll owner; exact issue disclosure, attribution fields, separate clarification/receiving panels and immutable history.",
+      "mobile": "Stacked panels at 390/320 px; wrap identities and preserve labelled fields and original recovery above forms.",
+      "keyboard": "Native labelled inputs, shared buttons, visible focus and error focus; no drag-only decision.",
+      "limitations": "Actual host fixtures in tests/browser/quotation-response.spec.ts. No customer authentication, signature, operative validity/withdrawal, external send or conversion. Acceptance pending.",
+      "gaps": [
+        {
+          "id": "es06-native-acceptance",
+          "expected": "Owner-reviewed native adaptation with device and screen-reader evidence.",
+          "actual": "Staff evidence page; customer signing/reference iframe not adopted. Exact accepted native images unavailable.",
+          "action": "Compare retained reference and bounded native task; keep functional proof separate.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "quotation-conversion",
+      "title": "Exact receiving and controlled conversion",
+      "category": "Forms",
+      "module": "ES",
+      "purpose": "Attributable receiving, explicit item resolution, frozen plan and atomic native Forecast demand with original recovery. Completed targets receive immutable Retain/Hold/ReviseQuantity decisions and separately applied native effects. Held targets enter owned Supply receiving, immutable allocation review, separate native application and returned evidence. Existing Receipt correction freezes independently received shared-demand effects before native application. Receipt-derived Shipment shortfall separately receives each changed Demand before exact atomic allocation reduction. Four independently received material effects permit native Project forecast withdrawal with exact Impact succession and remaining holds. One explicit FS/SS successor adds a fifth independent decision and third native receipt. Explicit third task adds its own receiving decision, native save and fourth receipt.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "ready",
+          "label": "Received",
+          "description": "Exact unconditioned preparation received."
+        },
+        {
+          "id": "returned",
+          "label": "Held / Returned",
+          "description": "Owned incomplete pack with retained correction."
+        },
+        {
+          "id": "mapping",
+          "label": "Unresolved items",
+          "description": "Missing, ambiguous, obsolete or incompatible mappings hold review."
+        },
+        {
+          "id": "plan",
+          "label": "Reviewed plan",
+          "description": "Immutable source and target commands; no target yet."
+        },
+        {
+          "id": "stale",
+          "label": "Changed basis",
+          "description": "Compare proposal; affected plan held."
+        },
+        {
+          "id": "converted",
+          "label": "Converted",
+          "description": "Actual linked native demand and original receipts."
+        },
+        {
+          "id": "exception",
+          "label": "Retained effects",
+          "description": "Later corrections retain original targets."
+        },
+        {
+          "id": "unknown",
+          "label": "Original outcome unknown",
+          "description": "Recover original before replacement; reload and exact retry."
+        },
+        {
+          "id": "denied",
+          "label": "Unavailable",
+          "description": "Current authority removes protected content."
+        },
+        {
+          "id": "disposition-review",
+          "label": "Disposition reviewed",
+          "description": "Immutable owned decision; exception still open until applicable application."
+        },
+        {
+          "id": "disposition-resolved",
+          "label": "Exact exception resolved",
+          "description": "Explicit retention or real native quantity revision; later changes reopen review."
+        },
+        {
+          "id": "disposition-held",
+          "label": "Continuing hold",
+          "description": "Approved/dependent targets need owned Supply follow-up; original effects remain."
+        },
+        {
+          "id": "supply-receiving",
+          "label": "Supply receiving",
+          "description": "Assigned owner accepts review, returns or continues hold."
+        },
+        {
+          "id": "supply-review",
+          "label": "Allocation review",
+          "description": "Exact shared Supply graph and six-decimal existing allocation proposal."
+        },
+        {
+          "id": "supply-outcome",
+          "label": "Returned evidence",
+          "description": "Original native receipt and resulting versions; explicit ES-07 reassessment remains separate."
+        },
+        {
+          "id": "reservation-reconciliation",
+          "label": "Original reservation outcome",
+          "description": "Unknown dependency, immutable outcome review, native successor, remaining holds and recovery. Real host: tests/browser/quotation-supply-followup.spec.ts."
+        },
+        {
+          "id": "receipt-receiving",
+          "label": "Affected-demand receiving",
+          "description": "Exact Receipt proposal awaits each current owner; Accepted, Returned, Held and stale decisions. Real host fixtures: tests/browser/quotation-receipt-correction.spec.ts."
+        },
+        {
+          "id": "receipt-shortfall",
+          "label": "Corrected evidence, retained shortfall",
+          "description": "Native Receipt successor and immutable original receipt; completed acceptances remain retained evidence without renewed-receiving controls. Allocations unchanged, readiness held and fresh ES-07 disposition required."
+        },
+        {
+          "id": "allocation-receiving",
+          "label": "Independent allocation receiving",
+          "description": "Complete reductions on the corrected Shipment; each changed Demand independently Accepted, Returned or Held. Quantity, unmet Demand and readiness summary stay visible; exact reviewed readiness expands per Demand and completed effects retain owned impacts. Real host: tests/browser/quotation-allocation-shortfall.spec.ts."
+        },
+        {
+          "id": "allocation-outcome",
+          "label": "Valid capacity, continuing unmet Demand",
+          "description": "Completed exact atomic native effects and original receipts; retained operational impacts and fresh ES-07 review. No renewed receiving on completed proposals."
+        },
+        {
+          "id": "material-receiving",
+          "label": "Four downstream decisions",
+          "description": "Separate Demand, Project, task and MaterialAction acceptance, return, hold and correction. Real host: tests/browser/quotation-material-resolution.spec.ts."
+        },
+        {
+          "id": "material-outcome",
+          "label": "Forecast withdrawn; unmet Demand retained",
+          "description": "Separate immutable review/application, two native receipts, exact Impact successor and fresh ES-07 disposition. Activities and independent holds remain."
+        },
+        {
+          "id": "dependency-receiving",
+          "label": "Five decisions for one dependency",
+          "description": "Both task positions, exact retained FS/SS link, corrected/held receiving, native paired outcome and uncertain originals. Real fixtures: tests/browser/quotation-task-dependency.spec.ts."
+        },
+        {
+          "id": "chain-receiving",
+          "label": "Six decisions for three tasks",
+          "description": "A → B → C; both FS/SS relationships, distinct Third task receiving, current/withdrawn dates, extra-edge holds and four-receipt atomic outcome. Real host: tests/browser/quotation-task-chain.spec.ts."
+        },
+        {
+          "id": "branch-receiving",
+          "label": "Six decisions for a Project branch",
+          "description": "A → B and A → C; explicit topology, both FS/SS relationships, distinct Branch task C receiving, current/proposed dates, extra-edge holds and four-receipt atomic outcome. Real host: tests/browser/quotation-task-branch.spec.ts."
+        },
+        {
+          "id": "merge-receiving",
+          "label": "Six decisions for a Project merge with retained B",
+          "description": "A → C and B → C; current native B position, two exact FS/SS links, independent B retention decision, A/C effects, extra-edge holds and three-receipt atomic outcome. Real host: tests/browser/quotation-task-merge.spec.ts."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/quotation-conversion.tsx",
+          "symbol": "QuotationConversion"
+        },
+        {
+          "path": "src/components/quotation-disposition.tsx",
+          "symbol": "QuotationDispositions"
+        },
+        {
+          "path": "src/components/quotation-supply-followup.tsx",
+          "symbol": "QuotationSupplyFollowups"
+        },
+        {
+          "path": "src/components/quotation-supply-followup.tsx",
+          "symbol": "SupplyFollowupQueue"
+        },
+        {
+          "path": "src/components/quotation-receipt-correction.tsx",
+          "symbol": "ReceiptCorrection"
+        },
+        {
+          "path": "src/components/quotation-allocation-shortfall.tsx",
+          "symbol": "AllocationShortfall"
+        },
+        {
+          "path": "src/components/quotation-material-resolution.tsx",
+          "symbol": "MaterialResolution"
+        }
+      ],
+      "dependencies": [
+        "src/components/quotation-release.css",
+        "src/estimating/conversion/reads.ts",
+        "src/estimating/conversion/service.ts",
+        "src/estimating/conversion/context.ts",
+        "docs/contracts/quotation-conversion.md",
+        "src/shared/ui/use-recoverable-command.ts",
+        "src/estimating/disposition/context.ts",
+        "src/estimating/disposition/service.ts",
+        "src/estimating/supply-followup/context.ts",
+        "src/estimating/supply-followup/service.ts",
+        "docs/contracts/quotation-supply-followup.md",
+        "docs/decisions/quotation-supply-followup-native.md",
+        "src/estimating/supply-followup/dependency.ts",
+        "docs/decisions/quotation-reservation-reconciliation.md",
+        "src/estimating/supply-followup/receipt-context.ts",
+        "src/estimating/supply-followup/receipt-service.ts",
+        "docs/decisions/quotation-receipt-correction.md",
+        "src/estimating/supply-followup/shortfall-context.ts",
+        "src/estimating/supply-followup/shortfall-service.ts",
+        "src/supply/reductions.ts",
+        "docs/decisions/quotation-allocation-shortfall.md",
+        "src/estimating/supply-followup/material-context.ts",
+        "src/estimating/supply-followup/material-service.ts",
+        "src/projects/material-resolution.ts",
+        "docs/contracts/quotation-material-resolution.md",
+        "docs/decisions/quotation-material-resolution.md",
+        "docs/decisions/quotation-task-dependency.md",
+        "docs/decisions/quotation-task-chain.md",
+        "docs/decisions/quotation-task-branch.md",
+        "docs/decisions/quotation-task-merge.md"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",
+        "anchor": "",
+        "status": "Retained proposed reference; native acceptance pending"
+      },
+      "specification": "docs/design/development/components/quotation-conversion.md",
+      "used_on": [
+        "route:/estimating/quotes/[id]/conversion",
+        "scope:ES-07",
+        "scope:SC-09",
+        "route:/supply/changes"
+      ],
+      "desktop": "One shell scroll owner; exact binding, recovery, six decision regions, source/target review and immutable history.",
+      "mobile": "Stacked panels at 390/320 px; wrap identities and preserve labelled fields and original recovery above forms.",
+      "keyboard": "Native labelled inputs, shared buttons, visible focus and error focus; no drag-only decision.",
+      "limitations": "Actual fixtures in tests/browser/quotation-conversion.spec.ts. Supply Demand Forecast only; no operational master, ERP order, customer signature or work authority. Positive Forecast quantity revision only; dependent/Approved target changes held. Disposition host examples use actual compiled synthetic fixtures. Existing allocation quantity adjustment requires an already Approved demand; zero retains native identity and class. No ERP reservation release or cancellation. See tests/browser/quotation-supply-followup.spec.ts. Original reservation evidence only; no external action or removal of other holds. Shortfall reductions preserve Demand/Receipt content; no priority, replenishment or external release. AllocationShortfall reuses existing controls and journal. Project forecast withdrawal only; no replenishment, priority, rescheduling or automatic Activity completion.",
+      "gaps": [
+        {
+          "id": "es07-native-acceptance",
+          "expected": "Owner-reviewed native receiving adaptation with device and screen-reader evidence.",
+          "actual": "Bounded Product-to-Forecast conversion; broader ERP and multi-target reference flows not adopted. Accepted native images unavailable.",
+          "action": "Review native/reference task differences and captured execution states separately from business acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "es07-disposition-review",
+          "expected": "Paired owner/device review of source-to-disposition native flow.",
+          "actual": "Bounded native Forecast Retain/ReviseQuantity/Hold extension; accepted native images unavailable.",
+          "action": "Review original/current evidence, recovery and hold explanations against the adopted contract.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "quotation-conversion-supply-followup",
+          "expected": "Paired native ES-07/SC-09 receiving, allocation and original recovery review.",
+          "actual": "Synthetic host fixtures added; owner, physical device and screen-reader review pending.",
+          "action": "Inspect compiled host states and retained references; do not infer authority or acceptance from tests.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "reservation-outcome-review",
+          "expected": "Owner/device review of observation and remaining holds.",
+          "actual": "Native host extended; accepted imagery and review pending.",
+          "action": "Review compiled evidence separately from source presence.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "receipt-correction-review",
+          "expected": "Paired owner/device review of shared Supply effects and separately owned receiving.",
+          "actual": "Synthetic native extension; accepted images and owner/device/screen-reader review pending.",
+          "action": "Review actual execution captures and source/reference differences without promoting business acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "allocation-shortfall-review",
+          "expected": "Paired native review of shortfall receiving, atomic effects and remaining work.",
+          "actual": "Synthetic executable extension; accepted native images and owner/device/screen-reader review pending.",
+          "action": "Review compiled host captures against the bounded decision; preserve separate functional evidence.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "material-resolution-review",
+          "expected": "Paired desktop/mobile owner review of exact forecast effects and remaining operational holds.",
+          "actual": "New native host; accepted mockup images and owner/device/screen-reader review pending.",
+          "action": "Review execution captures and contract differences separately from functional proof.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "dependency-resolution-review",
+          "expected": "Paired review of both task consequences and five distinct responsibilities.",
+          "actual": "Accepted native imagery and owner/device/screen-reader review pending.",
+          "action": "Compare compiled host evidence against the bounded contract.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "chain-resolution-review",
+          "expected": "Paired owner/device review of three tasks and six independent responsibilities.",
+          "actual": "Bounded native extension; accepted images and human review pending.",
+          "action": "Compare compiled host evidence with the adopted chain contract; keep functional proof separate.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "branch-resolution-review",
+          "expected": "Paired review of explicit branch topology, six responsibilities and continuing material holds.",
+          "actual": "Native branch adaptation; accepted branch images and owner/device/screen-reader review pending.",
+          "action": "Compare compiled host evidence against the bounded branch contract; preserve chain and branch meaning.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "merge-resolution-review",
+          "expected": "Paired review of merge topology, retained B, six responsibilities and continuing holds.",
+          "actual": "Native merge adaptation; accepted imagery and owner/device/screen-reader review pending.",
+          "action": "Compare compiled host evidence with the bounded merge contract; preserve all earlier topology meaning.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

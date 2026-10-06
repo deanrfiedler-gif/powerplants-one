@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-ES-01 uses textual scope-readiness statuses: Discovery not started, Scope clarification, Discovery complete and Legacy manual basis. These are not commercial approval states. The existing Status component is unchanged; native page states and phone wrapping are verified by the Estimating workload browser suite.
+ES-01 uses textual scope-readiness statuses: Discovery not started, Scope clarification, Discovery complete and Legacy manual basis. These are not commercial approval states. Under the ES-01 design decisions (P3, O2), the page passes Status's optional `tone`: attention for Scope clarification, success for Discovery complete, and neutral for the other two. Callers that omit `tone` keep the value mapping unchanged. The words remain the state; success means complete scope evidence only. Native page states and phone wrapping are verified by the Estimating workload browser suite; the alignment item `es01-readiness-tone` holds owner review.
 
 **Owner:** Dean Fiedler · **Catalogue key:** `status` · **Review:** Pending
 
@@ -55,4 +55,29 @@ EQ-01 through EQ-09 reuse the shared control in their applicable register, recor
 
 ## Maintenance and Warranty consumers
 
-MA-01–MA-07 now reuse this component through the native registers and record workspaces. Exact bindings are in components.json. Synthetic long labels, uncertain saves, stale versions and separate customer/recovery states are in tests/fixtures/maintenance-ui.json and the Maintenance browser journeys. Review 1440/1024/390/320 px and guide draft retention before owner acceptance.
+MA-01–MA-07 now reuse this component through the native registers and record workspaces. Exact bindings are in components.json. Synthetic long labels, uncertain saves, stale versions and separate customer/recovery states are in docs/design/development/maintenance-fixtures.json and the Maintenance browser journeys. Review 1440/1024/390/320 px and guide draft retention before owner acceptance.
+## ES-05 consumer
+
+The exact synthetic quotation release host reuses this control for separate preparation, approval, issue and distribution-simulation facts. Host fixtures in `tests/browser/quotation-release.spec.ts` cover explicit acknowledgement, stale entered rationale, denied evidence and original-command recovery. This consumer binding changes no shared control implementation or accepted visual baseline. See [release host specification](quotation-release.md).
+
+## ES-06 consumer
+
+QuotationResponse reuses this control on the exact issued-response page. Host fixtures cover pending/accepted/denied original recovery and 390/320px reflow in `tests/browser/quotation-response.spec.ts`. No shared implementation change or new visual acceptance is claimed.
+
+## ES-07 receiving consumer
+
+`QuotationConversion` uses this control in exact receiving, resolution, plan and original recovery. Host fixture: `tests/browser/quotation-conversion.spec.ts`. Consumer bindings and states are maintained in components.json. No shared-control behaviour changes or new global tokens. Visual/device acceptance remains pending.
+
+## ES-07 disposition consumer
+
+ES-07 disposition adds host statuses Unchanged, Review required and Resolved per native target. Saved Review/Hold stays Review required; an applied Retain or native revision resolves only its exact evidence. New relevant changes reopen it. These labels grant no operational authority. Desktop/mobile and recovery fixtures: `tests/browser/quotation-disposition.spec.ts`. Exact accepted mockup images and paired owner/device review remain unavailable/pending.
+
+## Owned Supply follow-up — SYN-ES07-03
+
+Retain ES-07 and SC-09 scope IDs and r20 Detail workspace / Review-comparison (ES-07) and Register-worklist (SC-09). The proposed native adaptation adds a sixth receiving panel and assigned queue using the current shell. Reuse `QuotationConversion`, `QuotationSupplyFollowups`, `SupplyFollowupQueue`, shared Button/Field/SelectField/Status, validation, read-state, unsaved-change and recoverable-command controls. No shared control implementation or second scroll owner is added.
+
+Incoming: exact completed conversion, disposition/continuing hold, triggering source evidence, demand and shared Supply graph. Outgoing: explicit owner acceptance/return/hold, immutable review, actual existing `Supply:Allocate` quantity update, native impact and receipt, and explicit fresh ES-07 disposition. Approved demand remains Approved; no cancellation, reservation release or commercial authority is implied.
+
+Desktop shows original/current evidence and dependency disclosures before forms. Mobile at 390/320 px stacks fields, wraps identifiers and keeps recovery above forms; use 16px input text, 44px targets, labels and visible keyboard focus. Dirty proposals remain after refresh for explicit comparison. Unknown outcomes block replacement and retain original content across reload.
+
+Host fixtures: `tests/browser/quotation-supply-followup.spec.ts` (receiving, real effects, stale comparison, denied identity, lost response, inconclusive lookup and exact retry). Shared catalogue examples remain reference-only for domain behavior. See `docs/testing/evidence/quotation-supply-followup/README.md` for actual executions/captures. Exact retained references remain `docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html` and `docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html`; neither proves native execution. Accepted follow-up mockup images are missing. Owner, physical-device, screen-reader review and deployment remain separate and pending; no fingerprint is promoted.

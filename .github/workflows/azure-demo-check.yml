@@ -41,8 +41,12 @@ jobs:
           tar -xzf "$RUNNER_TEMP/actionlint.tar.gz" -C "$RUNNER_TEMP" actionlint
           "$RUNNER_TEMP/actionlint" -shellcheck='' .github/workflows/azure-demo-deploy.yml .github/workflows/azure-demo-check.yml
       - run: npm run lint && npm run typecheck && npm run test:unit
+      - name: Configure disposable PostgreSQL lock capacity
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: bash scripts/configure-test-postgres.sh
       - name: Verify hosted identity mapping against disposable PostgreSQL
-        run: node --import tsx --test --test-concurrency=1 tests/demo/database.test.ts tests/demo/upgrade.test.ts
+        run: node --import tsx --test --test-concurrency=1 tests/demo/database.test.ts tests/demo/upgrade.test.ts tests/demo/scheduling-policy-upgrade.test.ts
       - name: Desktop and phone UI with individual invited actor fixtures
         run: |
           python3 - <<'PYENV'

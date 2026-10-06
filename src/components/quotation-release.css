@@ -1,0 +1,60 @@
+.quotation-release {
+  max-width: 1280px;
+  color: var(--ink);
+}
+.quotation-release .release-panel {
+  padding: 24px;
+  margin: 20px 0;
+  background: var(--white);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-card);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.quotation-release .release-stages {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+.quotation-release .release-stages > section {
+  padding: 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-card);
+  min-width: 0;
+}
+.quotation-release .release-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.quotation-release .release-evidence {
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.quotation-release .release-evidence dd {
+  margin: 0 0 12px;
+}
+.quotation-release .release-history {
+  border-top: 1px solid var(--line-strong);
+  padding: 16px 0;
+}
+.quotation-release fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+  display: grid;
+  gap: 18px;
+}
+.quotation-release .release-notice {
+  padding: 12px;
+  border-left: 4px solid var(--line-strong);
+}
+@media (max-width: 900px) {
+  .quotation-release .release-stages {
+    grid-template-columns: 1fr;
+  }
+  .quotation-release .release-panel {
+    padding: 16px;
+  }
+}

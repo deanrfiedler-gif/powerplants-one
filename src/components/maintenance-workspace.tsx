@@ -498,7 +498,7 @@ export function MaintenanceRegister({ family }: { family: Family }) {
       )}
       {family === "recovery" && (
         <p className="ma-notice">
-          Native SC-08 returns receiving is unavailable. Supplier approval,
+          Warranty returns are not yet connected to Supply receiving. Supplier approval,
           physical-return evidence, Finance credit links and cash recovery are
           separate.
         </p>

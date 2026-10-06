@@ -1,4 +1,6 @@
 "use client";
+import { IncidentActivityHandover } from "../incidents/activity-handover";
+import { PolicyHolds } from "../scheduling/components/client/policy-holds.client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -34,6 +36,7 @@ export function ActivityDetail({ id }: { id: string }) {
   const r = useResource<Envelope<Activity>>(`activities/${id}`);
   return (
     <>
+      <PolicyHolds activityId={id} />
       <Link href="/work">← My Work</Link>
       <ReadState loading={r.loading} error={r.error} retry={r.reload} />
       {!isDenied(r.error) && r.data?.items[0] && (
@@ -115,6 +118,8 @@ function ActivityEditor({
           </span>
         </SummaryPair>
       </dl>
+      {a.incident_source && <IncidentActivityHandover href={a.incident_source.href} />}
+      {a.report_source && <p><Link href={a.report_source.href}>Return to original service report and response</Link>. Completing this Activity does not change a customer response, internal attendance acceptance, incident or inspection defect.</p>}
       <div className="related-links">
         {a.links.map((l) => (
           <RecordLink key={l.object_id} type={l.object_type} id={l.object_id}>

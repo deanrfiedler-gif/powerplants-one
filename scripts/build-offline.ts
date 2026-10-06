@@ -3,6 +3,12 @@ import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 const modules = [
   "offline/protocol",
+  "offline/timer",
+  "offline/field-extensions",
+  "field/timer-model",
+  "field/visit-guidance",
+  "field/readiness-command",
+  "shared/cs/model",
   "offline/store",
   "offline/client",
   "offline/app",

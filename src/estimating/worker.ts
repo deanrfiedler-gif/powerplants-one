@@ -10,14 +10,15 @@ type Manifest={key:DocumentKey;html_hash:string;pdf_hash:string;html_bytes:numbe
 type Job={id:string;workspace_id:string;actor_id:string;revision_id:string;state:"Pending"|"Running"|"Ready"|"Failed";attempts:number;lease_token:string|null;lease_until:Date|null;error_code:string|null;manifest:Manifest|null};
 type Bundle={schema:1;job_id:string;workspace_id:string;revision_id:string;template_hash:string;html:string;html_hash:string;pdf_base64:string;pdf_hash:string;browser_version:string};
 const missing=()=>new AppError(503,"ExactDraftUnavailable","The exact draft output is unavailable. Its saved revision is retained for recovery.");
-export async function renderQuote(html:string) {
+export async function renderQuote(html:string,mode:"Draft"|"SyntheticRelease"="Draft") {
   const browser=await launchDocumentBrowser();
   try {
     const page=await browser.newPage();
     await page.route("**/*",route=>route.request().url().startsWith("data:")?route.continue():route.abort());
     await page.setContent(html,{waitUntil:"load"});
     await page.evaluate(async()=>{await document.fonts.ready;await Promise.all([...document.images].map(i=>i.decode()));});
-    const pdf=await page.pdf({format:"A4",printBackground:true,preferCSSPageSize:true,tagged:true,displayHeaderFooter:true,headerTemplate:"<span></span>",footerTemplate:'<div style="font:8px Verdana;width:100%;text-align:center;color:#505a66">DRAFT · SYNTHETIC · Page <span class="pageNumber"></span> of <span class="totalPages"></span></div>'});
+    const footer=mode==="SyntheticRelease"?"SYNTHETIC · NO COMMERCIAL VALIDITY":"DRAFT · SYNTHETIC";
+    const pdf=await page.pdf({format:"A4",printBackground:true,preferCSSPageSize:true,tagged:true,displayHeaderFooter:true,headerTemplate:"<span></span>",footerTemplate:`<div style="font:8px Verdana;width:100%;text-align:center;color:#505a66">${footer} · Page <span class="pageNumber"></span> of <span class="totalPages"></span></div>`});
     return {pdf,browser_version:browser.version()};
   } finally {await browser.close();}
 }
@@ -66,7 +67,7 @@ export async function runQuoteJob(id:string,hooks:{render?:typeof renderQuote;af
   try {
     let stored=await documentStore().locate(context);
     if(!stored) {
-      const output=await (hooks.render??renderQuote)(q.input_html);
+      const output=await (hooks.render??renderQuote)(q.input_html,q.template_version==="PPO-SYN-RELEASE-r01"?"SyntheticRelease":"Draft");
       const bundle:Bundle={schema:1,job_id:j.id,workspace_id:j.workspace_id,revision_id:q.id,template_hash:q.template_hash,html:q.input_html,html_hash:q.input_hash,pdf_base64:output.pdf.toString("base64"),pdf_hash:digest(output.pdf),browser_version:output.browser_version};
       const bytes=Buffer.from(JSON.stringify(bundle));
       await documentStore().store(context,bytes,digest(bytes));

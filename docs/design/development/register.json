@@ -37,7 +37,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Prior My Work proof retained. PR #344 distinguishes the native overview read on crossing the phone breakpoint from subsequent rendering, using existing transport and render limits. Exact-head proof is in the Supply follow-up execution ledger; owner and visual acceptance remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -116,7 +116,7 @@
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Bounded local and CI evidence: docs/testing/evidence/sh-platform/README.md",
+      "functional_status": "Prior SH evidence retained; PR #344 adds bounded current notification reads and preserves all seven-width/five-page browser assertions. Exact-head validation is recorded in the Supply follow-up execution ledger; acceptance remains separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -158,7 +158,7 @@
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Bounded local and CI evidence: docs/testing/evidence/sh-platform/README.md",
+      "functional_status": "Prior SH evidence retained; PR #344 adds bounded current notification reads and preserves all seven-width/five-page browser assertions. Exact-head validation is recorded in the Supply follow-up execution ledger; acceptance remains separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -1150,7 +1150,13 @@
       "guide_key": "guide.es.01",
       "design_path": "docs/design/development/pages/scope-es-01.md",
       "html_path": null,
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-D1-Workload-Desktop-1440-r01.png",
+        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-D2-Saved-Estimates-Desktop-1440-r01.png",
+        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R1-Tablet-1024-Drawer-r01.png",
+        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R2-Phone-390-Workload-r01.png",
+        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R4-Phone-320-Workload-r01.png"
+      ],
       "dependencies": [
         "src/estimating/workload.ts",
         "src/estimating/workload-query.ts",
@@ -1265,26 +1271,35 @@
       "title": "Estimate review and pricing exceptions",
       "kind": "scope",
       "module": "ES",
-      "summary": "Implement estimate review, pricing exceptions, findings, corrections and separately authorised approval.",
+      "summary": "Exact saved-estimate submission, independent completeness/source-price/technical review, retained findings and controlled correction; commercial approval remains separate.",
       "path": "/estimating/reviews",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/estimating/estimates/[id]/review/page.tsx"
       ],
       "guide_key": "guide.es.04",
       "design_path": "docs/design/development/pages/scope-es-04.md",
       "html_path": "docs/reference/ui/estimate-review/PPO-Estimate-Review-and-Pricing-Exceptions-r01.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/components/estimate-review.tsx",
+        "src/components/estimate-review.css",
+        "src/estimating/review/service.ts",
+        "src/estimating/review/reads.ts",
+        "docs/contracts/estimating-review.md"
+      ],
+      "scope_status": "Bounded native review; commercial approval not configured",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Automated component proof; see estimating-review-handover.md",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 50,
       "related_keys": [
-        "scope:ES-03"
+        "route:/estimating/estimates/[id]/review",
+        "scope:ES-03",
+        "scope:ES-05"
       ],
       "reviewer": null
     },
@@ -1293,19 +1308,26 @@
       "title": "Quotation approval, issue and distribution",
       "kind": "scope",
       "module": "ES",
-      "summary": "Extend the current Draft quotation foundation with approval, controlled issue, distribution and superseded-revision handling.",
+      "summary": "Exact synthetic quotation preparation, independent approval, controlled issue and recorded distribution simulation; no operative terms or live send.",
       "path": "/estimating/quotes",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/estimating/quotes/[id]/release/page.tsx"
       ],
       "guide_key": "guide.es.05",
       "design_path": "docs/design/development/pages/scope-es-05.md",
       "html_path": "docs/reference/ui/quoting/PPO-Quotation-Approval-Issue-and-Distribution-r02.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/components/quotation-release.tsx",
+        "src/components/quotation-release.css",
+        "src/estimating/release/service.ts",
+        "src/estimating/release/reads.ts",
+        "docs/contracts/quotation-release.md"
+      ],
+      "scope_status": "Bounded native synthetic release",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Verification in progress; see quotation-release-handover.md",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -1315,7 +1337,9 @@
         "route:/estimating/quotes",
         "scope:ES-04",
         "scope:DK-03",
-        "scope:DK-06"
+        "scope:DK-06",
+        "route:/estimating/quotes/[id]/release",
+        "route:/estimating/quotes/[id]/response"
       ],
       "reviewer": null
     },
@@ -1324,47 +1348,98 @@
       "title": "Quotation response and negotiation",
       "kind": "scope",
       "module": "ES",
-      "summary": "Implement quotation response, negotiation, selected options, acceptance/decline/expiry and revised-offer handling.",
+      "summary": "Exact staff-recorded synthetic response, immutable correction, controlled negotiation and separate ES-07 review preparation.",
       "path": "/estimating/quotes?tab=responses",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/estimating/quotes/[id]/response/page.tsx"
       ],
       "guide_key": "guide.es.06",
       "design_path": "docs/design/development/pages/scope-es-06.md",
       "html_path": "docs/reference/ui/quoting/PPO-Quotation-Response-and-Negotiation-r01.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/components/quotation-response.tsx",
+        "src/components/quotation-release.css",
+        "src/estimating/response/reads.ts",
+        "src/estimating/response/service.ts",
+        "docs/contracts/quotation-response.md"
+      ],
+      "scope_status": "Bounded native staff response; operational authority not configured",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Merged #341; final checked head a373016 passed 24 checks. See response handover.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 53,
       "related_keys": [
-        "scope:ES-05"
+        "scope:ES-05",
+        "scope:ES-07",
+        "route:/estimating/quotes/[id]/response",
+        "route:/estimating/quotes/[id]/conversion"
       ],
       "reviewer": null
     },
     {
       "key": "scope:ES-07",
-      "title": "One-off item resolution and conversion",
+      "title": "Receiving, one-off resolution and controlled conversion",
       "kind": "scope",
       "module": "ES",
-      "summary": "Implement one-off item resolution, external mapping, target-line review, conversion and uncertain-outcome reconciliation.",
-      "path": "/estimating/conversion",
+      "summary": "Exact receiving and completed-target exception disposition with immutable per-target decisions and real native Forecast quantity revision. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold.",
+      "path": "/estimating/quotes/[id]/conversion",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/estimating/quotes/[id]/conversion/page.tsx"
       ],
       "guide_key": "guide.es.07",
       "design_path": "docs/design/development/pages/scope-es-07.md",
       "html_path": "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/quotation-supply-followup/supply-followup-desktop.png",
+        "docs/testing/evidence/quotation-supply-followup/supply-followup-mobile.png",
+        "docs/testing/evidence/quotation-supply-followup/supply-followup-320.png"
+      ],
+      "dependencies": [
+        "src/components/quotation-conversion.tsx",
+        "src/components/quotation-release.css",
+        "src/estimating/conversion/reads.ts",
+        "src/estimating/conversion/service.ts",
+        "src/estimating/conversion/context.ts",
+        "docs/contracts/quotation-conversion.md",
+        "src/components/quotation-disposition.tsx",
+        "src/estimating/disposition/context.ts",
+        "src/estimating/disposition/service.ts",
+        "docs/decisions/quotation-disposition-native.md",
+        "src/components/quotation-supply-followup.tsx",
+        "src/estimating/supply-followup/context.ts",
+        "src/estimating/supply-followup/service.ts",
+        "docs/contracts/quotation-supply-followup.md",
+        "docs/decisions/quotation-supply-followup-native.md",
+        "src/components/quotation-receipt-correction.tsx",
+        "src/estimating/supply-followup/receipt-context.ts",
+        "src/estimating/supply-followup/receipt-service.ts",
+        "docs/decisions/quotation-receipt-correction.md",
+        "src/estimating/supply-followup/shortfall-context.ts",
+        "src/estimating/supply-followup/shortfall-service.ts",
+        "src/supply/reductions.ts",
+        "docs/decisions/quotation-allocation-shortfall.md",
+        "src/components/quotation-allocation-shortfall.tsx",
+        "src/components/quotation-material-resolution.tsx",
+        "src/estimating/supply-followup/material-context.ts",
+        "src/estimating/supply-followup/material-service.ts",
+        "src/projects/material-resolution.ts",
+        "docs/contracts/quotation-material-resolution.md",
+        "docs/decisions/quotation-material-resolution.md",
+        "docs/decisions/quotation-task-dependency.md",
+        "docs/decisions/quotation-task-chain.md",
+        "src/estimating/supply-followup/reads.ts",
+        "docs/decisions/quotation-task-branch.md",
+        "docs/decisions/quotation-task-merge.md"
+      ],
+      "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Prior evidence retained. SYN-ES07-07 local database, HTTP, compiled and actual restart checkpoints are recorded in docs/testing/evidence/quotation-material-resolution/README.md; final-head assurance is separate in the contribution PR. Visual/owner acceptance remains pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -1372,8 +1447,10 @@
       "build_rank": 54,
       "related_keys": [
         "scope:ES-06",
-        "scope:AD-05",
-        "scope:PD-02"
+        "scope:SC-01",
+        "route:/estimating/quotes/[id]/conversion",
+        "scope:SC-09",
+        "route:/supply/changes"
       ],
       "reviewer": null
     },
@@ -1529,7 +1606,7 @@
       ],
       "scope_status": "Native implementation present; review separate",
       "visual_status": "Needs review",
-      "functional_status": "Native command, database and browser evidence retained in programme handover; acceptance separate",
+      "functional_status": "Native command, database and browser evidence retained in programme handover; PR #344 adds deterministic post-save guide-focus regression; exact-head results in Supply follow-up execution ledger; acceptance separate",
       "deployment_status": "Not deployed by this programme",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -1841,7 +1918,7 @@
       "title": "Baseline, forecast and dependency review",
       "kind": "scope",
       "module": "PJ",
-      "summary": "Extend the existing Gantt with controlled baselines, dependencies, calendars, actuals and forecast review.",
+      "summary": "Extend the existing Gantt with controlled baselines, dependencies, calendars, actuals and forecast review. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor requires independent receiving before both native forecasts are withdrawn. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold.",
       "path": "/projects/programme",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -1852,10 +1929,22 @@
       "image_paths": [
         "docs/blueprints/projects-visuals/project-detail-desktop.png"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "src/components/quotation-material-resolution.tsx",
+        "src/estimating/supply-followup/material-context.ts",
+        "src/estimating/supply-followup/material-service.ts",
+        "src/projects/material-resolution.ts",
+        "docs/contracts/quotation-material-resolution.md",
+        "docs/decisions/quotation-material-resolution.md",
+        "docs/decisions/quotation-task-dependency.md",
+        "docs/decisions/quotation-task-chain.md",
+        "src/estimating/supply-followup/reads.ts",
+        "docs/decisions/quotation-task-branch.md",
+        "docs/decisions/quotation-task-merge.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Prior evidence retained. SYN-ES07-07 local database, HTTP, compiled and actual restart checkpoints are recorded in docs/testing/evidence/quotation-material-resolution/README.md; final-head assurance is separate in the contribution PR. Visual/owner acceptance remains pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -2370,7 +2459,7 @@
       "title": "Service planner and unassigned demand",
       "kind": "scope",
       "module": "PL",
-      "summary": "Existing same-tab booking recovery and server commands are preserved. Request decisions now show current versus proposed time, named crew, travel and version differences.",
+      "summary": "Calendar closures span every intersecting day in the display timezone, including a continuing closure that starts before the visible day. The end boundary is exclusive. Published working intervals and busy reservations remain independent; this display correction changes no booking guard.",
       "path": "/schedule",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -2387,11 +2476,13 @@
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
         "src/scheduling/components/client/workspace-navigation.client.tsx",
-        "src/app/styles/scheduling-workspaces.css"
+        "src/app/styles/scheduling-workspaces.css",
+        "src/scheduling/policy-holds.ts",
+        "src/scheduling/components/client/policy-holds.client.tsx"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
+      "functional_status": "Scheduling Step 4: exact source and executed checks in docs/testing/evidence/scheduling-policy-enforcement/README.md; owner/device review pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -2407,7 +2498,7 @@
       "title": "Resource availability and competence",
       "kind": "scope",
       "module": "PL",
-      "summary": "Resource/calendar/competence mutation is unavailable. Synthetic skills are not statutory certificates; certificate/renewal evidence remains Unknown. No private HR fields are added.",
+      "summary": "Field Team now honours incoming day, site and display timezone and retains those controls on reload. Its default without a date remains today. Availability & competence and Back to Field Team retain day/site/timezone. Resource detail exposes a Review timezone selector for its seven-day window; published calendar timezone remains explicit and unchanged. No source editor is added.",
       "path": "/service/technicians",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -2447,7 +2538,7 @@
       "title": "Cross-domain resource demand and capacity",
       "kind": "scope",
       "module": "PL",
-      "summary": "Project programme dates and Engineering required dates never become labour effort. Service reservations include crew and explicit buffers; they are not labour estimates. No utilisation denominator or percentage is claimed.",
+      "summary": "Domain, commitment, resource, required skill and unknown-effort filters are retained in the page address and restored on reload. Analytical exclusions remain in memory and reset on refresh or a filter change. Unknown resource and skill mappings remain explicit. Criteria confer no permission and do not change source records.",
       "path": "/schedule/capacity",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -2487,7 +2578,7 @@
       "title": "Rescheduling and acknowledgement centre",
       "kind": "scope",
       "module": "PL",
-      "summary": "An exact appointment handover stays visible even outside the selected date/queue. Changed booking facts require fresh contact and preparation review. Contact is not delivery or pack acknowledgement.",
+      "summary": "Queue and selected appointment are retained in the page address and in the allowlisted return from appointment controls. Only Open and InProgress follow-up Activities enter Customer follow-up or contribute an outstanding task to Needs review; Completed and Cancelled remain history. An independent pending request, changed commitment or scope review can still require review.",
       "path": "/schedule/changes",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -2504,11 +2595,13 @@
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
         "src/scheduling/components/client/workspace-navigation.client.tsx",
-        "src/app/styles/scheduling-workspaces.css"
+        "src/app/styles/scheduling-workspaces.css",
+        "src/scheduling/policy-holds.ts",
+        "src/scheduling/components/client/policy-holds.client.tsx"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
+      "functional_status": "Step 6 integrated update/restart/compatible rollback and service-return evidence: docs/testing/evidence/scheduling-step6/README.md. Independent visual/owner/device acceptance remains pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -2527,7 +2620,7 @@
       "title": "Visit route and travel review",
       "kind": "scope",
       "module": "PL",
-      "summary": "No map, provider, inferred distance/speed, traffic or optimiser is configured. Planned travel allowance, unknown route estimate and actual field Travel are independent facts.",
+      "summary": "Resource selection survives reload. Travel review flags calendar closures as well as availability blocks against the complete buffered reservation, using exclusive end boundaries. Displayed gap figures are explicitly the original schedule when comparing a manual order. A site-filter warning explains omitted visits; the change handover retains exact site/resource/appointment/day/timezone. No routing estimate or booking mutation is introduced.",
       "path": "/schedule/travel",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -2567,7 +2660,7 @@
       "title": "Technician Today and job execution",
       "kind": "scope",
       "module": "FI",
-      "summary": "My Jobs and job execution already exist, including start, evidence capture and completion. Remaining field refinement and acceptance are not a new missing page.",
+      "summary": "Personal actual arrival and durable timer with truthful closed-visit history and scoped entry to existing separate-visit preparation.",
       "path": "/my-jobs",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -2575,11 +2668,26 @@
       "guide_key": "guide.fi.01",
       "design_path": "docs/design/development/pages/scope-fi-01.md",
       "html_path": "docs/reference/ui/field-work-timer/powerplants-one-field-work-timer-r05.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "built",
+      "image_paths": [
+        "docs/testing/evidence/field-timer-native/captures/desktop-timer-native-1440.png",
+        "docs/testing/evidence/field-timer-native/captures/phone-timer-native-390.png"
+      ],
+      "dependencies": [
+        "src/components/work-timer.tsx",
+        "src/app/styles/work-timer.css",
+        "src/field/timer.ts",
+        "src/field/timer-model.ts",
+        "docs/decisions/field-timer-native.md",
+        "docs/testing/evidence/field-timer-native/README.md",
+        "src/scheduling/policy-holds.ts",
+        "src/scheduling/components/client/policy-holds.client.tsx",
+        "src/field/visit-guidance.ts",
+        "src/components/field-visit-entry.tsx",
+        "docs/decisions/field-closed-visit-guidance.md"
+      ],
+      "scope_status": "Implemented; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Closed-visit guidance: execution and retained evidence in docs/testing/evidence/field-closed-visit/README.md; human review remains pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -2587,7 +2695,9 @@
       "build_rank": 5,
       "related_keys": [
         "route:/my-jobs/[id]",
-        "route:/my-jobs"
+        "route:/my-jobs",
+        "route:/service/appointments/[id]",
+        "route:/service/work-orders/[id]"
       ],
       "reviewer": null
     },
@@ -2596,7 +2706,7 @@
       "title": "Offline downloads, queue and conflict recovery",
       "kind": "scope",
       "module": "FI",
-      "summary": "The offline workspace and original-operation recovery already exist. Further usability/device acceptance does not make them unbuilt pages.",
+      "summary": "Explicit downloaded field context, owned original-operation queue, ordered timer capture and exact-source readiness acknowledgement; server acceptance remains separate.",
       "path": "/offline/index.html",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -2604,18 +2714,35 @@
       "guide_key": "guide.fi.02",
       "design_path": "docs/design/development/pages/scope-fi-02.md",
       "html_path": null,
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "built",
+      "image_paths": [
+        "docs/testing/evidence/field-timer-native/captures/desktop-timer-offline-retained.png",
+        "docs/testing/evidence/field-timer-native/captures/phone-timer-offline-retained.png"
+      ],
+      "dependencies": [
+        "src/offline/field-extensions.ts",
+        "src/offline/timer.ts",
+        "src/offline/protocol.ts",
+        "src/offline/store.ts",
+        "src/offline/server.ts",
+        "public/offline/style.css",
+        "docs/decisions/field-timer-native.md",
+        "docs/testing/evidence/field-timer-native/README.md",
+        "src/field/visit-guidance.ts",
+        "src/components/field-visit-entry.tsx",
+        "docs/decisions/field-closed-visit-guidance.md"
+      ],
+      "scope_status": "Implemented; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Closed-visit guidance: execution and retained evidence in docs/testing/evidence/field-closed-visit/README.md; human review remains pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 6,
       "related_keys": [
-        "route:/offline/index.html"
+        "route:/offline/index.html",
+        "route:/service/appointments/[id]",
+        "route:/service/work-orders/[id]"
       ],
       "reviewer": null
     },
@@ -2624,29 +2751,38 @@
       "title": "Inspection and commissioning form runner",
       "kind": "scope",
       "module": "FI",
-      "summary": "Implement reusable inspection/commissioning form execution with versioned templates, units, criteria, photographs and instrument evidence.",
+      "summary": "Persisted Service appointment procedure capture with exact versioned basis, raw readings and durable drafts.",
       "path": "/my-jobs/inspections",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/inspections/service-screen.tsx"
       ],
       "guide_key": "guide.fi.03",
       "design_path": "docs/design/development/pages/scope-fi-03.md",
       "html_path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/inspections/service-screen.tsx",
+        "src/app/service-inspections.css",
+        "src/inspections/service-context.ts",
+        "src/inspections/service-commands.ts",
+        "docs/decisions/service-inspections.md",
+        "docs/testing/evidence/service-inspections/README.md"
+      ],
+      "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "See docs/testing/evidence/service-inspections/README.md",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 63,
       "related_keys": [
-        "scope:SV-05",
-        "scope:EQ-09",
-        "scope:DK-06",
-        "scope:FI-05"
+        "scope:FI-04",
+        "route:/my-jobs/inspections",
+        "route:/service/inspections",
+        "scope:FI-05",
+        "scope:EQ-09"
       ],
       "reviewer": null
     },
@@ -2655,26 +2791,38 @@
       "title": "Inspection review, defects and retests",
       "kind": "scope",
       "module": "FI",
-      "summary": "Implement inspection review, defects, holds/releases, corrective action and retained retests.",
+      "summary": "Independent Service review, owned corrections, retained fresh retests and exact internal inspection output.",
       "path": "/service/inspections",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/inspections/service-screen.tsx"
       ],
       "guide_key": "guide.fi.04",
       "design_path": "docs/design/development/pages/scope-fi-04.md",
       "html_path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/inspections/service-screen.tsx",
+        "src/app/service-inspections.css",
+        "src/inspections/service-context.ts",
+        "src/inspections/service-commands.ts",
+        "docs/decisions/service-inspections.md",
+        "docs/testing/evidence/service-inspections/README.md"
+      ],
+      "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "See docs/testing/evidence/service-inspections/README.md",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 64,
       "related_keys": [
-        "scope:FI-03"
+        "scope:FI-03",
+        "route:/my-jobs/inspections",
+        "route:/service/inspections",
+        "scope:FI-05",
+        "scope:EQ-09"
       ],
       "reviewer": null
     },
@@ -2683,27 +2831,44 @@
       "title": "Site induction, risk and biosecurity review",
       "kind": "scope",
       "module": "FI",
-      "summary": "Implement structured induction, risk and biosecurity review with site/area-specific instructions and acknowledgement.",
+      "summary": "Assigned-visit review of exact CS-06 sources, with retained personal acknowledgements and unresolved conditions.",
       "path": "/my-jobs/site-readiness",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/my-jobs/site-readiness/page.tsx"
       ],
       "guide_key": "guide.fi.05",
       "design_path": "docs/design/development/pages/scope-fi-05.md",
       "html_path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/field-readiness-native/captures/quality-reference-1440.png",
+        "docs/testing/evidence/field-readiness-native/captures/quality-reference-390.png"
+      ],
+      "dependencies": [
+        "src/field/readiness.ts",
+        "src/shared/cs/readiness.ts",
+        "src/components/field-readiness-screen.tsx",
+        "src/app/field-readiness.css",
+        "docs/testing/evidence/field-readiness-native/README.md",
+        "docs/testing/evidence/field-readiness-native/capture-manifest.json",
+        "src/field/visit-guidance.ts",
+        "src/components/field-visit-entry.tsx",
+        "docs/decisions/field-closed-visit-guidance.md"
+      ],
+      "scope_status": "Implemented; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Closed-visit guidance: execution and retained evidence in docs/testing/evidence/field-closed-visit/README.md; human review remains pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 62,
       "related_keys": [
+        "scope:FI-01",
         "scope:CS-06",
-        "scope:SV-03"
+        "scope:FI-02",
+        "route:/service/appointments/[id]",
+        "route:/service/work-orders/[id]"
       ],
       "reviewer": null
     },
@@ -2712,26 +2877,41 @@
       "title": "Incident and corrective-action record",
       "kind": "scope",
       "module": "FI",
-      "summary": "Implement incidents and corrective actions with evidence, ownership, restricted details and reviewed closure.",
+      "summary": "Persisted synthetic factual reporting, scoped holds, owned Activities and independently reviewed incident closure.",
       "path": "/service/incidents",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/incidents/screen.tsx"
       ],
       "guide_key": "guide.fi.06",
       "design_path": "docs/design/development/pages/scope-fi-06.md",
       "html_path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "dependencies": [
+        "src/incidents/screen.tsx",
+        "src/app/incidents.css",
+        "src/incidents/service.ts",
+        "src/incidents/context.ts",
+        "src/incidents/holds.ts",
+        "docs/decisions/field-incidents.md",
+        "docs/testing/evidence/field-incidents/README.md"
+      ],
+      "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "See docs/testing/evidence/field-incidents/README.md",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 65,
       "related_keys": [
-        "scope:FI-04"
+        "route:/service/incidents/[id]",
+        "route:/service/incidents/new",
+        "route:/service/incidents",
+        "scope:FI-03",
+        "scope:FI-04",
+        "scope:FI-05",
+        "scope:EQ-01"
       ],
       "reviewer": null
     },
@@ -2740,25 +2920,38 @@
       "title": "Customer attendance and report response",
       "kind": "scope",
       "module": "FI",
-      "summary": "Attendance/report response capabilities have an existing P07/P09 foundation. Retain and verify their distinct meanings; no new standalone route is established by this inventory.",
+      "summary": "FI-07 uses the existing P07/P09 report destinations: customer attendance acknowledgement, exact report response, retained corrections and owned follow-up; internal Service acceptance remains separate.",
       "path": "/service/reports",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
       ],
       "guide_key": "guide.fi.07",
       "design_path": "docs/design/development/pages/scope-fi-07.md",
-      "html_path": null,
+      "html_path": "docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "src/components/report-screens.tsx",
+        "src/reports/service.ts",
+        "src/reports/response-context.ts",
+        "src/reports/validation.ts",
+        "src/shared/ui/use-recoverable-command.ts",
+        "src/offline/app.ts",
+        "docs/decisions/field-customer-response.md",
+        "docs/testing/evidence/field-customer-response/README.md"
+      ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "FI-07 persisted synthetic verification is recorded separately in docs/testing/evidence/field-customer-response/README.md. Human acceptance pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 7,
-      "related_keys": [],
+      "related_keys": [
+        "route:/service/reports",
+        "route:/service/reports/[id]",
+        "route:/work/[id]"
+      ],
       "reviewer": null
     },
     {
@@ -3025,20 +3218,40 @@
       "title": "Demand and material-readiness workspace",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement demand/material readiness with quantities, units, shortages, source completeness and owned blockers.",
+      "summary": "Review the exact material scope, usable supply and owned blockers. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds.",
       "path": "/supply/material-readiness",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/material-readiness/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.01",
       "design_path": "docs/design/development/pages/scope-sc-01.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-01-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-01-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-01-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-01-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css",
+        "src/estimating/supply-followup/shortfall-context.ts",
+        "src/estimating/supply-followup/shortfall-service.ts",
+        "src/supply/reductions.ts",
+        "docs/decisions/quotation-allocation-shortfall.md",
+        "src/components/quotation-allocation-shortfall.tsx"
+      ],
+      "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "See quotation-allocation-shortfall execution ledger; source, runtime proof and acceptance remain separate",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -3046,7 +3259,8 @@
       "related_keys": [
         "scope:CS-05",
         "scope:PD-01",
-        "scope:EN-06"
+        "scope:EN-06",
+        "route:/supply/material-readiness"
       ],
       "reviewer": null
     },
@@ -3055,27 +3269,43 @@
       "title": "Purchasing and supplier commitments",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement purchasing requests, supplier RFQs/commitments and procurement-reference coordination.",
+      "summary": "Keep authorised demand, purchasing requests and observed supplier outcomes distinct.",
       "path": "/supply/purchasing",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/purchasing/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.02",
       "design_path": "docs/design/development/pages/scope-sc-02.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-02-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-02-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-02-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-02-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 84,
       "related_keys": [
         "scope:SC-01",
-        "scope:AD-05"
+        "scope:AD-05",
+        "route:/supply/purchasing"
       ],
       "reviewer": null
     },
@@ -3084,26 +3314,47 @@
       "title": "Inbound shipments and line allocations",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement inbound shipments, split line allocations, dated ETA changes and import/logistics evidence.",
+      "summary": "Coordinate shipment lines, split allocations and dated ETA evidence. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds.",
       "path": "/supply/shipments",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/shipments/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.03",
       "design_path": "docs/design/development/pages/scope-sc-03.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-03-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-03-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-03-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-03-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css",
+        "src/estimating/supply-followup/shortfall-context.ts",
+        "src/estimating/supply-followup/shortfall-service.ts",
+        "src/supply/reductions.ts",
+        "docs/decisions/quotation-allocation-shortfall.md",
+        "src/components/quotation-allocation-shortfall.tsx"
+      ],
+      "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "See quotation-allocation-shortfall execution ledger; source, runtime proof and acceptance remain separate",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 85,
       "related_keys": [
-        "scope:SC-02"
+        "scope:SC-02",
+        "route:/supply/shipments"
       ],
       "reviewer": null
     },
@@ -3112,26 +3363,51 @@
       "title": "Receipt, inspection and quarantine",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement receipt, inspection, damage/shortage review, quarantine and disposition.",
+      "summary": "Capture physical receipt and inspection. Arrival and quarantine do not establish usable stock. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds.",
       "path": "/supply/receipts",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/receipts/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.04",
       "design_path": "docs/design/development/pages/scope-sc-04.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-04-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-04-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-04-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-04-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css",
+        "src/components/quotation-receipt-correction.tsx",
+        "src/estimating/supply-followup/receipt-context.ts",
+        "src/estimating/supply-followup/receipt-service.ts",
+        "docs/decisions/quotation-receipt-correction.md",
+        "src/estimating/supply-followup/shortfall-context.ts",
+        "src/estimating/supply-followup/shortfall-service.ts",
+        "src/supply/reductions.ts",
+        "docs/decisions/quotation-allocation-shortfall.md",
+        "src/components/quotation-allocation-shortfall.tsx"
+      ],
+      "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "See quotation-allocation-shortfall execution ledger; source, runtime proof and acceptance remain separate",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 86,
       "related_keys": [
-        "scope:SC-03"
+        "scope:SC-03",
+        "route:/supply/receipts"
       ],
       "reviewer": null
     },
@@ -3140,20 +3416,35 @@
       "title": "Stock availability and reservations",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement stock availability and reservations with warehouse/bin context and source timestamps.",
+      "summary": "Dated source observations, explicit units and completeness. Live reservations are not configured.",
       "path": "/supply/stock",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/stock/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.05",
       "design_path": "docs/design/development/pages/scope-sc-05.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-05-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-05-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-05-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-05-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -3161,7 +3452,8 @@
       "related_keys": [
         "scope:PD-01",
         "scope:AD-05",
-        "scope:SC-04"
+        "scope:SC-04",
+        "route:/supply/stock"
       ],
       "reviewer": null
     },
@@ -3170,26 +3462,42 @@
       "title": "Picking and dispatch preparation",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement picking, staging, approved substitutions, packing and dispatch preparation.",
+      "summary": "Pick, stage, prepare and record movement against evidenced usable allocation.",
       "path": "/supply/dispatch",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/dispatch/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.06",
       "design_path": "docs/design/development/pages/scope-sc-06.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-06-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-06-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-06-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-06-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 88,
       "related_keys": [
-        "scope:SC-05"
+        "scope:SC-05",
+        "route:/supply/dispatch"
       ],
       "reviewer": null
     },
@@ -3198,26 +3506,42 @@
       "title": "Customer delivery and proof of delivery",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement customer delivery, partial quantities, proof of delivery and outstanding exceptions.",
+      "summary": "Record physical delivery, exceptions and separate customer acknowledgement.",
       "path": "/supply/deliveries",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/deliveries/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.07",
       "design_path": "docs/design/development/pages/scope-sc-07.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-07-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-07-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-07-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-07-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 89,
       "related_keys": [
-        "scope:SC-06"
+        "scope:SC-06",
+        "route:/supply/deliveries"
       ],
       "reviewer": null
     },
@@ -3226,27 +3550,43 @@
       "title": "Returns, supplier claims and credit tracking",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement returns, supplier claims and credit tracking as distinct linked outcomes.",
+      "summary": "Follow the goods, customer remedy, supplier recovery and credits separately.",
       "path": "/supply/returns",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/returns/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.08",
       "design_path": "docs/design/development/pages/scope-sc-08.md",
       "html_path": "docs/reference/ui/returns-claims/PPO-Returns-Supplier-Claims-and-Credit-Tracking-Workspace-r01.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-08-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-08-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-08-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-08-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 90,
       "related_keys": [
         "scope:SC-04",
-        "scope:SC-07"
+        "scope:SC-07",
+        "route:/supply/returns"
       ],
       "reviewer": null
     },
@@ -3255,27 +3595,70 @@
       "title": "Material change-impact review",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement material-change impact review before requesting downstream booking/project changes.",
+      "summary": "Review before and after evidence through the owning module. Bookings and issued packs remain unchanged. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold.",
       "path": "/supply/changes",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/changes/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.09",
       "design_path": "docs/design/development/pages/scope-sc-09.md",
       "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-09-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-09-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-09-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-09-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css",
+        "src/components/quotation-supply-followup.tsx",
+        "src/estimating/supply-followup/context.ts",
+        "src/estimating/supply-followup/service.ts",
+        "docs/contracts/quotation-supply-followup.md",
+        "docs/decisions/quotation-supply-followup-native.md",
+        "src/components/quotation-receipt-correction.tsx",
+        "src/estimating/supply-followup/receipt-context.ts",
+        "src/estimating/supply-followup/receipt-service.ts",
+        "docs/decisions/quotation-receipt-correction.md",
+        "src/estimating/supply-followup/shortfall-context.ts",
+        "src/estimating/supply-followup/shortfall-service.ts",
+        "src/supply/reductions.ts",
+        "docs/decisions/quotation-allocation-shortfall.md",
+        "src/components/quotation-allocation-shortfall.tsx",
+        "src/components/quotation-material-resolution.tsx",
+        "src/estimating/supply-followup/material-context.ts",
+        "src/estimating/supply-followup/material-service.ts",
+        "src/projects/material-resolution.ts",
+        "docs/contracts/quotation-material-resolution.md",
+        "docs/decisions/quotation-material-resolution.md",
+        "docs/decisions/quotation-task-dependency.md",
+        "docs/decisions/quotation-task-chain.md",
+        "src/estimating/supply-followup/reads.ts",
+        "docs/decisions/quotation-task-branch.md",
+        "docs/decisions/quotation-task-merge.md"
+      ],
+      "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Prior evidence retained. SYN-ES07-07 local database, HTTP, compiled and actual restart checkpoints are recorded in docs/testing/evidence/quotation-material-resolution/README.md; final-head assurance is separate in the contribution PR. Visual/owner acceptance remains pending.",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 91,
       "related_keys": [
         "scope:SC-01",
-        "scope:SC-04"
+        "scope:SC-04",
+        "route:/supply/changes",
+        "scope:ES-07",
+        "route:/estimating/quotes/[id]/conversion"
       ],
       "reviewer": null
     },
@@ -3284,20 +3667,35 @@
       "title": "Service stock custody and job reconciliation",
       "kind": "scope",
       "module": "SC",
-      "summary": "Implement warehouse/van/job custody and used/returned/damaged/missing stock reconciliation.",
+      "summary": "Reconcile warehouse to technician / van to job to outcome against exact Field evidence.",
       "path": "/supply/service-stock",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/supply/service-stock/page.tsx",
+        "src/supply/components/workspace.tsx"
       ],
       "guide_key": "guide.sc.10",
       "design_path": "docs/design/development/pages/scope-sc-10.md",
       "html_path": null,
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "unbuilt",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-10-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-10-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-10-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-10-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -3306,7 +3704,8 @@
         "scope:SC-05",
         "scope:SC-06",
         "scope:FI-01",
-        "scope:SV-06"
+        "scope:SV-06",
+        "route:/supply/service-stock"
       ],
       "reviewer": null
     },
@@ -5666,7 +6065,13 @@
       "guide_key": "guide.page.estimating",
       "design_path": "docs/design/development/pages/route-estimating.md",
       "html_path": null,
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-D1-Workload-Desktop-1440-r01.png",
+        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-D2-Saved-Estimates-Desktop-1440-r01.png",
+        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R1-Tablet-1024-Drawer-r01.png",
+        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R2-Phone-390-Workload-r01.png",
+        "docs/reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R4-Phone-320-Workload-r01.png"
+      ],
       "dependencies": [
         "src/estimating/workload.ts",
         "src/estimating/workload-query.ts",
@@ -5802,7 +6207,7 @@
       "title": "Technician job detail",
       "kind": "route",
       "module": "FI",
-      "summary": "This page address exists in the inspected application source. Open it from a running app using an identity with the required access.",
+      "summary": "Personal actual arrival and durable timer with truthful closed-visit history and scoped entry to existing separate-visit preparation.",
       "path": "/my-jobs/[id]",
       "source_paths": [
         "src/app/(business)/my-jobs/[id]/page.tsx"
@@ -5810,18 +6215,37 @@
       "guide_key": "guide.page.my-jobs.id",
       "design_path": "docs/design/development/pages/route-my-jobs-id.md",
       "html_path": "docs/reference/ui/field-work-timer/powerplants-one-field-work-timer-r05.html",
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "built",
+      "image_paths": [
+        "docs/testing/evidence/field-timer-native/captures/desktop-timer-native-1440.png",
+        "docs/testing/evidence/field-timer-native/captures/phone-timer-native-390.png"
+      ],
+      "dependencies": [
+        "src/components/work-timer.tsx",
+        "src/app/styles/work-timer.css",
+        "src/field/timer.ts",
+        "src/field/timer-model.ts",
+        "docs/decisions/field-timer-native.md",
+        "docs/testing/evidence/field-timer-native/README.md",
+        "src/scheduling/policy-holds.ts",
+        "src/documents/packs.ts",
+        "src/field/reads.ts",
+        "src/field/start.ts",
+        "src/field/visit-guidance.ts",
+        "src/components/field-visit-entry.tsx",
+        "docs/decisions/field-closed-visit-guidance.md"
+      ],
+      "scope_status": "Implemented; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Closed-visit guidance: execution and retained evidence in docs/testing/evidence/field-closed-visit/README.md; human review remains pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 5,
       "related_keys": [
-        "scope:FI-01"
+        "scope:FI-01",
+        "route:/service/appointments/[id]",
+        "route:/service/work-orders/[id]"
       ],
       "reviewer": null
     },
@@ -5830,7 +6254,7 @@
       "title": "My Jobs",
       "kind": "route",
       "module": "FI",
-      "summary": "This page address exists in the inspected application source. Open it from a running app using an identity with the required access.",
+      "summary": "Personal actual arrival and durable timer with truthful closed-visit history and scoped entry to existing separate-visit preparation.",
       "path": "/my-jobs",
       "source_paths": [
         "src/app/(business)/my-jobs/page.tsx"
@@ -5839,17 +6263,33 @@
       "design_path": "docs/design/development/pages/route-my-jobs.md",
       "html_path": "docs/reference/ui/field-work-timer/powerplants-one-field-work-timer-r05.html",
       "image_paths": [],
-      "dependencies": [],
-      "scope_status": "built",
+      "dependencies": [
+        "src/components/work-timer.tsx",
+        "src/app/styles/work-timer.css",
+        "src/field/timer.ts",
+        "src/field/timer-model.ts",
+        "docs/decisions/field-timer-native.md",
+        "docs/testing/evidence/field-timer-native/README.md",
+        "src/scheduling/policy-holds.ts",
+        "src/documents/packs.ts",
+        "src/field/reads.ts",
+        "src/field/start.ts",
+        "src/field/visit-guidance.ts",
+        "src/components/field-visit-entry.tsx",
+        "docs/decisions/field-closed-visit-guidance.md"
+      ],
+      "scope_status": "Implemented; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Closed-visit guidance: execution and retained evidence in docs/testing/evidence/field-closed-visit/README.md; human review remains pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 5,
       "related_keys": [
-        "scope:FI-01"
+        "scope:FI-01",
+        "route:/service/appointments/[id]",
+        "route:/service/work-orders/[id]"
       ],
       "reviewer": null
     },
@@ -5924,7 +6364,7 @@
       "title": "Project detail & Gantt",
       "kind": "route",
       "module": "PJ",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold.",
       "path": "/projects/[id]",
       "source_paths": [
         "src/app/(business)/projects/[id]/page.tsx"
@@ -5935,10 +6375,22 @@
       "image_paths": [
         "docs/blueprints/projects-visuals/project-detail-desktop.png"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "src/components/quotation-material-resolution.tsx",
+        "src/estimating/supply-followup/material-context.ts",
+        "src/estimating/supply-followup/material-service.ts",
+        "src/projects/material-resolution.ts",
+        "docs/contracts/quotation-material-resolution.md",
+        "docs/decisions/quotation-material-resolution.md",
+        "docs/decisions/quotation-task-dependency.md",
+        "docs/decisions/quotation-task-chain.md",
+        "src/estimating/supply-followup/reads.ts",
+        "docs/decisions/quotation-task-branch.md",
+        "docs/decisions/quotation-task-merge.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Prior evidence retained. SYN-ES07-07 local database, HTTP, compiled and actual restart checkpoints are recorded in docs/testing/evidence/quotation-material-resolution/README.md; final-head assurance is separate in the contribution PR. Visual/owner acceptance remains pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6158,7 +6610,7 @@
       "title": "Service planner",
       "kind": "route",
       "module": "PL",
-      "summary": "Existing same-tab booking recovery and server commands are preserved. Request decisions now show current versus proposed time, named crew, travel and version differences.",
+      "summary": "Calendar closures span every intersecting day in the display timezone, including a continuing closure that starts before the visible day. The end boundary is exclusive. Published working intervals and busy reservations remain independent; this display correction changes no booking guard.",
       "path": "/schedule",
       "source_paths": [
         "src/app/(business)/schedule/page.tsx"
@@ -6174,11 +6626,13 @@
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
         "src/scheduling/components/client/workspace-navigation.client.tsx",
-        "src/app/styles/scheduling-workspaces.css"
+        "src/app/styles/scheduling-workspaces.css",
+        "src/scheduling/policy-holds.ts",
+        "src/scheduling/components/client/policy-holds.client.tsx"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
+      "functional_status": "Scheduling Step 4: exact source and executed checks in docs/testing/evidence/scheduling-policy-enforcement/README.md; owner/device review pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6204,18 +6658,24 @@
       "html_path": null,
       "image_paths": [],
       "dependencies": [
-        "src/documents/components/client/job-pack-entry.tsx"
+        "src/documents/components/client/job-pack-entry.tsx",
+        "src/scheduling/policy-holds.ts",
+        "src/scheduling/components/client/policy-holds.client.tsx",
+        "src/field/visit-guidance.ts",
+        "src/components/field-visit-entry.tsx",
+        "docs/decisions/field-closed-visit-guidance.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Closed-visit guidance: execution and retained evidence in docs/testing/evidence/field-closed-visit/README.md; human review remains pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 3,
       "related_keys": [
-        "scope:SV-04"
+        "scope:SV-04",
+        "route:/service/work-orders/[id]"
       ],
       "reviewer": null
     },
@@ -6331,7 +6791,7 @@
       "title": "Service report detail",
       "kind": "route",
       "module": "SV",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "FI-07 uses the existing P07/P09 report destinations: customer attendance acknowledgement, exact report response, retained corrections and owned follow-up; internal Service acceptance remains separate.",
       "path": "/service/reports/[id]",
       "source_paths": [
         "src/app/(business)/service/reports/[id]/page.tsx"
@@ -6340,10 +6800,19 @@
       "design_path": "docs/design/development/pages/route-service-reports-id.md",
       "html_path": "docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "src/components/report-screens.tsx",
+        "src/reports/service.ts",
+        "src/reports/response-context.ts",
+        "src/reports/validation.ts",
+        "src/shared/ui/use-recoverable-command.ts",
+        "src/offline/app.ts",
+        "docs/decisions/field-customer-response.md",
+        "docs/testing/evidence/field-customer-response/README.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "FI-07 persisted synthetic verification is recorded separately in docs/testing/evidence/field-customer-response/README.md. Human acceptance pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6351,7 +6820,10 @@
       "build_rank": 66,
       "related_keys": [
         "scope:SV-06",
-        "scope:SV-07"
+        "scope:SV-07",
+        "scope:FI-07",
+        "route:/service/reports",
+        "route:/work/[id]"
       ],
       "reviewer": null
     },
@@ -6360,7 +6832,7 @@
       "title": "Service review & reports",
       "kind": "route",
       "module": "SV",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "FI-07 uses the existing P07/P09 report destinations: customer attendance acknowledgement, exact report response, retained corrections and owned follow-up; internal Service acceptance remains separate.",
       "path": "/service/reports",
       "source_paths": [
         "src/app/(business)/service/reports/page.tsx"
@@ -6369,10 +6841,19 @@
       "design_path": "docs/design/development/pages/route-service-reports.md",
       "html_path": "docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "src/components/report-screens.tsx",
+        "src/reports/service.ts",
+        "src/reports/response-context.ts",
+        "src/reports/validation.ts",
+        "src/shared/ui/use-recoverable-command.ts",
+        "src/offline/app.ts",
+        "docs/decisions/field-customer-response.md",
+        "docs/testing/evidence/field-customer-response/README.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "FI-07 persisted synthetic verification is recorded separately in docs/testing/evidence/field-customer-response/README.md. Human acceptance pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6380,7 +6861,10 @@
       "build_rank": 66,
       "related_keys": [
         "scope:SV-06",
-        "scope:SV-07"
+        "scope:SV-07",
+        "scope:FI-07",
+        "route:/service/reports/[id]",
+        "route:/work/[id]"
       ],
       "reviewer": null
     },
@@ -6389,7 +6873,7 @@
       "title": "Field technicians",
       "kind": "route",
       "module": "PL",
-      "summary": "Resource/calendar/competence mutation is unavailable. Synthetic skills are not statutory certificates; certificate/renewal evidence remains Unknown. No private HR fields are added. The Job pack handover uses the current permitted canonical pack read and server preparation flag.",
+      "summary": "Field Team now honours incoming day, site and display timezone and retains those controls on reload. Its default without a date remains today. Availability & competence and Back to Field Team retain day/site/timezone. Resource detail exposes a Review timezone selector for its seven-day window; published calendar timezone remains explicit and unchanged. No source editor is added.",
       "path": "/service/technicians",
       "source_paths": [
         "src/app/(business)/service/technicians/page.tsx"
@@ -6557,17 +7041,24 @@
       "design_path": "docs/design/development/pages/route-service-work-orders-id.md",
       "html_path": "docs/reference/ui/service/PPO-Work-Orders-Workspace-r01.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "src/scheduling/policy-holds.ts",
+        "src/scheduling/components/client/policy-holds.client.tsx",
+        "src/field/visit-guidance.ts",
+        "src/components/field-visit-entry.tsx",
+        "docs/decisions/field-closed-visit-guidance.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Closed-visit guidance: execution and retained evidence in docs/testing/evidence/field-closed-visit/README.md; human review remains pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 58,
       "related_keys": [
-        "scope:SV-03"
+        "scope:SV-03",
+        "route:/service/appointments/[id]"
       ],
       "reviewer": null
     },
@@ -6737,11 +7228,13 @@
       "dependencies": [
         "docs/delivery/sh-platform-handover.md",
         "docs/testing/evidence/sh-platform/README.md",
-        "src/components/saved-view-controls.tsx"
+        "src/components/saved-view-controls.tsx",
+        "src/scheduling/policy-holds.ts",
+        "src/scheduling/components/client/policy-holds.client.tsx"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Scheduling Step 4 proof remains in docs/testing/evidence/scheduling-policy-enforcement/README.md. PR #344 distinguishes the native overview read on crossing the phone breakpoint from subsequent rendering, using existing transport and render limits. Exact-head proof is in the Supply follow-up execution ledger; owner and visual acceptance remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6848,7 +7341,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Bounded local and CI evidence: docs/testing/evidence/sh-platform/README.md",
+      "functional_status": "Prior SH evidence retained; PR #344 adds bounded current notification reads and preserves all seven-width/five-page browser assertions. Exact-head validation is recorded in the Supply follow-up execution ledger; acceptance remains separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6906,17 +7399,23 @@
       "design_path": "docs/design/development/pages/route-work-id.md",
       "html_path": "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "src/scheduling/policy-holds.ts",
+        "src/scheduling/components/client/policy-holds.client.tsx",
+        "src/reports/context.ts",
+        "src/components/activity-screens.tsx"
+      ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Scheduling Step 4: exact source and executed checks in docs/testing/evidence/scheduling-policy-enforcement/README.md; owner/device review pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 2,
       "related_keys": [
-        "scope:SH-02"
+        "scope:SH-02",
+        "scope:FI-07"
       ],
       "reviewer": null
     },
@@ -7033,7 +7532,7 @@
       "title": "Offline workspace",
       "kind": "route",
       "module": "FI",
-      "summary": "The dedicated local offline workspace exists. Its hosted availability and device acceptance remain separate.",
+      "summary": "Explicit downloaded field context, owned original-operation queue, ordered timer capture and exact-source readiness acknowledgement; server acceptance remains separate.",
       "path": "/offline/index.html",
       "source_paths": [
         "public/offline/index.html"
@@ -7041,11 +7540,27 @@
       "guide_key": "guide.page.offline.index.html",
       "design_path": "docs/design/development/pages/route-offline-index-html.md",
       "html_path": null,
-      "image_paths": [],
-      "dependencies": [],
-      "scope_status": "built",
+      "image_paths": [
+        "docs/testing/evidence/field-timer-native/captures/desktop-timer-offline-retained.png",
+        "docs/testing/evidence/field-timer-native/captures/phone-timer-offline-retained.png"
+      ],
+      "dependencies": [
+        "src/offline/field-extensions.ts",
+        "src/offline/timer.ts",
+        "src/offline/protocol.ts",
+        "src/offline/store.ts",
+        "src/offline/server.ts",
+        "public/offline/style.css",
+        "docs/decisions/field-timer-native.md",
+        "docs/testing/evidence/field-timer-native/README.md",
+        "src/offline/app.ts",
+        "src/offline/recovery.ts",
+        "src/field/visit-guidance.ts",
+        "docs/decisions/field-closed-visit-guidance.md"
+      ],
+      "scope_status": "Implemented; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Closed cached-visit and delayed replay proof: docs/testing/evidence/field-closed-visit/README.md. Human review remains pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -8362,7 +8877,11 @@
       "summary": "Navigation, global search, context, page guide and the local design-workspace entry.",
       "path": null,
       "source_paths": [
-        "src/components/product-navigation.tsx"
+        "src/components/product-navigation.tsx",
+        "src/development/catalog.ts",
+        "src/development/runtime.ts",
+        "src/development/page-guide.tsx",
+        "src/app/api/development/catalog/route.ts"
       ],
       "guide_key": null,
       "design_path": "docs/design/development/systems/shell.md",
@@ -8511,7 +9030,11 @@
       "summary": "Find every registered page, planned scope, shared system and journey reference; inspect its guidance, links and current review needs.",
       "path": "/development/page-register",
       "source_paths": [
-        "src/app/development/page-register/page.tsx"
+        "src/app/development/page-register/page.tsx",
+        "src/development/catalog.ts",
+        "src/development/runtime.ts",
+        "src/development/page-guide.tsx",
+        "src/app/api/development/catalog/route.ts"
       ],
       "guide_key": "guide.route-development-page-register",
       "design_path": "docs/design/development/pages/route-development-page-register.md",
@@ -8597,7 +9120,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Bounded local and CI evidence: docs/testing/evidence/sh-platform/README.md",
+      "functional_status": "Prior SH evidence retained; PR #344 adds bounded current notification reads and preserves all seven-width/five-page browser assertions. Exact-head validation is recorded in the Supply follow-up execution ledger; acceptance remains separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -8775,7 +9298,7 @@
       "title": "Cross-domain resource demand and capacity",
       "kind": "route",
       "module": "PL",
-      "summary": "Project programme dates and Engineering required dates never become labour effort. Service reservations include crew and explicit buffers; they are not labour estimates. No utilisation denominator or percentage is claimed.",
+      "summary": "Domain, commitment, resource, required skill and unknown-effort filters are retained in the page address and restored on reload. Analytical exclusions remain in memory and reset on refresh or a filter change. Unknown resource and skill mappings remain explicit. Criteria confer no permission and do not change source records.",
       "path": "/schedule/capacity",
       "source_paths": [
         "src/app/(business)/schedule/capacity/page.tsx"
@@ -8811,7 +9334,7 @@
       "title": "Rescheduling and acknowledgement centre",
       "kind": "route",
       "module": "PL",
-      "summary": "An exact appointment handover stays visible even outside the selected date/queue. Changed booking facts require fresh contact and preparation review. Contact is not delivery or pack acknowledgement.",
+      "summary": "Queue and selected appointment are retained in the page address and in the allowlisted return from appointment controls. Only Open and InProgress follow-up Activities enter Customer follow-up or contribute an outstanding task to Needs review; Completed and Cancelled remain history. An independent pending request, changed commitment or scope review can still require review.",
       "path": "/schedule/changes",
       "source_paths": [
         "src/app/(business)/schedule/changes/page.tsx"
@@ -8847,7 +9370,7 @@
       "title": "Visit route and travel review",
       "kind": "route",
       "module": "PL",
-      "summary": "No map, provider, inferred distance/speed, traffic or optimiser is configured. Planned travel allowance, unknown route estimate and actual field Travel are independent facts.",
+      "summary": "Resource selection survives reload. Travel review flags calendar closures as well as availability blocks against the complete buffered reservation, using exclusive end boundaries. Displayed gap figures are explicitly the original schedule when comparing a manual order. A site-filter warning explains omitted visits; the change handover retains exact site/resource/appointment/day/timezone. No routing estimate or booking mutation is introduced.",
       "path": "/schedule/travel",
       "source_paths": [
         "src/app/(business)/schedule/travel/page.tsx"
@@ -8883,7 +9406,7 @@
       "title": "Resource detail",
       "kind": "route",
       "module": "PL",
-      "summary": "Resource/calendar/competence mutation is unavailable. Synthetic skills are not statutory certificates; certificate/renewal evidence remains Unknown. No private HR fields are added.",
+      "summary": "Field Team now honours incoming day, site and display timezone and retains those controls on reload. Its default without a date remains today. Availability & competence and Back to Field Team retain day/site/timezone. Resource detail exposes a Review timezone selector for its seven-day window; published calendar timezone remains explicit and unchanged. No source editor is added.",
       "path": "/service/technicians/[id]",
       "source_paths": [
         "src/app/(business)/service/technicians/[id]/page.tsx"
@@ -10162,6 +10685,955 @@
         "scope:CS-05",
         "scope:CS-06",
         "scope:SH-06"
+      ]
+    },
+    {
+      "key": "route:/supply/changes",
+      "title": "supply / changes",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Review before and after evidence through the owning module. Bookings and issued packs remain unchanged. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold.",
+      "path": "/supply/changes",
+      "source_paths": [
+        "src/app/(business)/supply/changes/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-changes",
+      "design_path": "docs/design/development/pages/route-supply-changes.md",
+      "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-09-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-09-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-09-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-09-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css",
+        "src/components/quotation-supply-followup.tsx",
+        "src/estimating/supply-followup/context.ts",
+        "src/estimating/supply-followup/service.ts",
+        "docs/contracts/quotation-supply-followup.md",
+        "docs/decisions/quotation-supply-followup-native.md",
+        "src/components/quotation-receipt-correction.tsx",
+        "src/estimating/supply-followup/receipt-context.ts",
+        "src/estimating/supply-followup/receipt-service.ts",
+        "docs/decisions/quotation-receipt-correction.md",
+        "src/estimating/supply-followup/shortfall-context.ts",
+        "src/estimating/supply-followup/shortfall-service.ts",
+        "src/supply/reductions.ts",
+        "docs/decisions/quotation-allocation-shortfall.md",
+        "src/components/quotation-allocation-shortfall.tsx",
+        "src/components/quotation-material-resolution.tsx",
+        "src/estimating/supply-followup/material-context.ts",
+        "src/estimating/supply-followup/material-service.ts",
+        "src/projects/material-resolution.ts",
+        "docs/contracts/quotation-material-resolution.md",
+        "docs/decisions/quotation-material-resolution.md",
+        "docs/decisions/quotation-task-dependency.md",
+        "docs/decisions/quotation-task-chain.md",
+        "src/estimating/supply-followup/reads.ts",
+        "docs/decisions/quotation-task-branch.md",
+        "docs/decisions/quotation-task-merge.md"
+      ],
+      "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
+      "visual_status": "Needs review",
+      "functional_status": "Prior evidence retained. SYN-ES07-07 local database, HTTP, compiled and actual restart checkpoints are recorded in docs/testing/evidence/quotation-material-resolution/README.md; final-head assurance is separate in the contribution PR. Visual/owner acceptance remains pending.",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-09",
+        "scope:ES-07",
+        "route:/estimating/quotes/[id]/conversion"
+      ]
+    },
+    {
+      "key": "route:/supply/deliveries",
+      "title": "supply / deliveries",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Record physical delivery, exceptions and separate customer acknowledgement.",
+      "path": "/supply/deliveries",
+      "source_paths": [
+        "src/app/(business)/supply/deliveries/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-deliveries",
+      "design_path": "docs/design/development/pages/route-supply-deliveries.md",
+      "html_path": "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-07-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-07-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-07-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-07-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-07"
+      ]
+    },
+    {
+      "key": "route:/supply/dispatch",
+      "title": "supply / dispatch",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Pick, stage, prepare and record movement against evidenced usable allocation.",
+      "path": "/supply/dispatch",
+      "source_paths": [
+        "src/app/(business)/supply/dispatch/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-dispatch",
+      "design_path": "docs/design/development/pages/route-supply-dispatch.md",
+      "html_path": "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-06-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-06-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-06-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-06-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-06"
+      ]
+    },
+    {
+      "key": "route:/supply/material-readiness",
+      "title": "supply / material readiness",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Review the exact material scope, usable supply and owned blockers. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit.",
+      "path": "/supply/material-readiness",
+      "source_paths": [
+        "src/app/(business)/supply/material-readiness/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-material-readiness",
+      "design_path": "docs/design/development/pages/route-supply-material-readiness.md",
+      "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-01-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-01-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-01-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-01-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css",
+        "src/estimating/supply-followup/shortfall-context.ts",
+        "src/estimating/supply-followup/shortfall-service.ts",
+        "src/supply/reductions.ts",
+        "docs/decisions/quotation-allocation-shortfall.md",
+        "src/components/quotation-allocation-shortfall.tsx",
+        "docs/decisions/quotation-task-dependency.md",
+        "src/projects/material-resolution.ts"
+      ],
+      "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
+      "visual_status": "Needs review",
+      "functional_status": "See quotation-allocation-shortfall execution ledger; source, runtime proof and acceptance remain separate",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-01"
+      ]
+    },
+    {
+      "key": "route:/supply/purchasing",
+      "title": "supply / purchasing",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Keep authorised demand, purchasing requests and observed supplier outcomes distinct.",
+      "path": "/supply/purchasing",
+      "source_paths": [
+        "src/app/(business)/supply/purchasing/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-purchasing",
+      "design_path": "docs/design/development/pages/route-supply-purchasing.md",
+      "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-02-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-02-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-02-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-02-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-02"
+      ]
+    },
+    {
+      "key": "route:/supply/receipts",
+      "title": "supply / receipts",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Capture physical receipt and inspection. Arrival and quarantine do not establish usable stock. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds.",
+      "path": "/supply/receipts",
+      "source_paths": [
+        "src/app/(business)/supply/receipts/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-receipts",
+      "design_path": "docs/design/development/pages/route-supply-receipts.md",
+      "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-04-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-04-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-04-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-04-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css",
+        "src/components/quotation-receipt-correction.tsx",
+        "src/estimating/supply-followup/receipt-context.ts",
+        "src/estimating/supply-followup/receipt-service.ts",
+        "docs/decisions/quotation-receipt-correction.md",
+        "src/estimating/supply-followup/shortfall-context.ts",
+        "src/estimating/supply-followup/shortfall-service.ts",
+        "src/supply/reductions.ts",
+        "docs/decisions/quotation-allocation-shortfall.md",
+        "src/components/quotation-allocation-shortfall.tsx"
+      ],
+      "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
+      "visual_status": "Needs review",
+      "functional_status": "See quotation-allocation-shortfall execution ledger; source, runtime proof and acceptance remain separate",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-04"
+      ]
+    },
+    {
+      "key": "route:/supply/returns",
+      "title": "supply / returns",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Follow the goods, customer remedy, supplier recovery and credits separately.",
+      "path": "/supply/returns",
+      "source_paths": [
+        "src/app/(business)/supply/returns/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-returns",
+      "design_path": "docs/design/development/pages/route-supply-returns.md",
+      "html_path": "docs/reference/ui/returns-claims/PPO-Returns-Supplier-Claims-and-Credit-Tracking-Workspace-r01.html",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-08-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-08-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-08-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-08-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-08"
+      ]
+    },
+    {
+      "key": "route:/supply/service-stock",
+      "title": "supply / service stock",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Reconcile warehouse to technician / van to job to outcome against exact Field evidence.",
+      "path": "/supply/service-stock",
+      "source_paths": [
+        "src/app/(business)/supply/service-stock/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-service-stock",
+      "design_path": "docs/design/development/pages/route-supply-service-stock.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-10-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-10-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-10-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-10-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-10"
+      ]
+    },
+    {
+      "key": "route:/supply/shipments",
+      "title": "supply / shipments",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Coordinate shipment lines, split allocations and dated ETA evidence. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds.",
+      "path": "/supply/shipments",
+      "source_paths": [
+        "src/app/(business)/supply/shipments/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-shipments",
+      "design_path": "docs/design/development/pages/route-supply-shipments.md",
+      "html_path": "docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-03-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-03-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-03-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-03-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css",
+        "src/estimating/supply-followup/shortfall-context.ts",
+        "src/estimating/supply-followup/shortfall-service.ts",
+        "src/supply/reductions.ts",
+        "docs/decisions/quotation-allocation-shortfall.md",
+        "src/components/quotation-allocation-shortfall.tsx"
+      ],
+      "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
+      "visual_status": "Needs review",
+      "functional_status": "See quotation-allocation-shortfall execution ledger; source, runtime proof and acceptance remain separate",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-03"
+      ]
+    },
+    {
+      "key": "route:/supply/stock",
+      "title": "supply / stock",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Dated source observations, explicit units and completeness. Live reservations are not configured.",
+      "path": "/supply/stock",
+      "source_paths": [
+        "src/app/(business)/supply/stock/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "guide_key": "guide.route-supply-stock",
+      "design_path": "docs/design/development/pages/route-supply-stock.md",
+      "html_path": "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
+      "image_paths": [
+        "docs/testing/evidence/supply-chain-native/sc-05-supply-1440.png",
+        "docs/testing/evidence/supply-chain-native/sc-05-supply-1024.png",
+        "docs/testing/evidence/supply-chain-native/sc-05-supply-390.png",
+        "docs/testing/evidence/supply-chain-native/sc-05-supply-320.png"
+      ],
+      "dependencies": [
+        "src/supply/model.ts",
+        "src/supply/commands.ts",
+        "src/supply/reads.ts",
+        "src/supply/components/forms.tsx",
+        "src/supply/components/recovery.tsx",
+        "src/supply/guide.ts",
+        "src/app/styles/supply.css"
+      ],
+      "scope_status": "native synthetic implementation; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "deployment_status": "Not deployed",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SC-05"
+      ]
+    },
+    {
+      "key": "route:/my-jobs/site-readiness",
+      "title": "Site induction, risk and biosecurity review",
+      "kind": "route",
+      "module": "FI",
+      "summary": "Assigned-visit review of exact CS-06 sources, with retained personal acknowledgements and unresolved conditions.",
+      "path": "/my-jobs/site-readiness",
+      "source_paths": [
+        "src/app/(business)/my-jobs/site-readiness/page.tsx"
+      ],
+      "guide_key": "guide.route-my-jobs-site-readiness",
+      "design_path": "docs/design/development/pages/route-my-jobs-site-readiness.md",
+      "html_path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
+      "image_paths": [
+        "docs/testing/evidence/field-readiness-native/captures/quality-reference-1440.png",
+        "docs/testing/evidence/field-readiness-native/captures/quality-reference-390.png"
+      ],
+      "dependencies": [
+        "src/field/readiness.ts",
+        "src/shared/cs/readiness.ts",
+        "src/components/field-readiness-screen.tsx",
+        "src/app/field-readiness.css",
+        "docs/testing/evidence/field-readiness-native/README.md",
+        "docs/testing/evidence/field-readiness-native/capture-manifest.json"
+      ],
+      "scope_status": "Implemented; review pending",
+      "visual_status": "Needs review",
+      "functional_status": "FI05 database 2/2 and desktop/phone browser 2/2 passed; programme handover records regression limits",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:FI-01",
+        "scope:CS-06",
+        "scope:FI-02"
+      ]
+    },
+    {
+      "key": "route:/schedule/policy-impact",
+      "title": "Scheduling policy impact review",
+      "kind": "route",
+      "module": "PL",
+      "summary": "PL-04 temporary comparison, immutable proposals/successors, complete server reviews, explicit publication and current owned impacts.",
+      "path": "/schedule/policy-impact",
+      "source_paths": [
+        "src/app/(business)/schedule/policy-impact/page.tsx"
+      ],
+      "guide_key": "guide.route-schedule-policy-impact",
+      "design_path": "docs/design/development/pages/route-schedule-policy-impact.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/testing/evidence/scheduling-policy-impact/desktop-review.png",
+        "docs/testing/evidence/scheduling-policy-impact/phone-review.png"
+      ],
+      "dependencies": [
+        "src/scheduling/policy-impact.ts",
+        "src/scheduling/policy-impact-model.ts",
+        "src/scheduling/components/client/workspace-navigation.client.tsx",
+        "src/app/styles/scheduling-workspaces.css",
+        "docs/decisions/scheduling-policy-impact-review.md",
+        "src/scheduling/policy-holds.ts",
+        "src/scheduling/components/client/policy-holds.client.tsx",
+        "src/scheduling/components/client/policy-publication.client.tsx",
+        "src/scheduling/policy-records.ts",
+        "src/scheduling/policy-commands.ts",
+        "src/scheduling/policy-journal.ts",
+        "docs/decisions/scheduling-policy-publication.md"
+      ],
+      "scope_status": "Built synthetic comparison and native policy workflow; wider acceptance remains open",
+      "visual_status": "Needs review",
+      "functional_status": "Step 6 integrated update/restart/compatible rollback and service-return evidence: docs/testing/evidence/scheduling-step6/README.md. Independent visual/owner/device acceptance remains pending. Delayed-head successor focus repair and unchanged-main reproduction: docs/testing/evidence/scheduling-successor-focus/README.md. Saved-record disclosure ordering and unchanged-main comparison: docs/testing/evidence/scheduling-record-disclosure/README.md.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:PL-04",
+        "route:/schedule/changes",
+        "scope:PL-01",
+        "route:/service/appointments/[id]",
+        "route:/work/[id]"
+      ]
+    },
+    {
+      "key": "route:/my-jobs/inspections",
+      "title": "my jobs / inspections",
+      "kind": "route",
+      "module": "FI",
+      "summary": "Persisted Service appointment procedure capture with exact versioned basis, raw readings and durable drafts.",
+      "path": "/my-jobs/inspections",
+      "source_paths": [
+        "src/app/(business)/my-jobs/inspections/page.tsx",
+        "src/inspections/service-screen.tsx"
+      ],
+      "guide_key": "guide.route-my-jobs-inspections",
+      "design_path": "docs/design/development/pages/route-my-jobs-inspections.md",
+      "html_path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/inspections/service-screen.tsx",
+        "src/app/service-inspections.css",
+        "src/inspections/service-context.ts",
+        "src/inspections/service-commands.ts",
+        "docs/decisions/service-inspections.md",
+        "docs/testing/evidence/service-inspections/README.md"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "See docs/testing/evidence/service-inspections/README.md",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:FI-03",
+        "scope:FI-04",
+        "route:/service/inspections",
+        "scope:FI-05",
+        "scope:EQ-09"
+      ]
+    },
+    {
+      "key": "route:/service/inspections",
+      "title": "service / inspections",
+      "kind": "route",
+      "module": "FI",
+      "summary": "Independent Service review, owned corrections, retained fresh retests and exact internal inspection output.",
+      "path": "/service/inspections",
+      "source_paths": [
+        "src/app/(business)/service/inspections/page.tsx",
+        "src/inspections/service-screen.tsx"
+      ],
+      "guide_key": "guide.route-service-inspections",
+      "design_path": "docs/design/development/pages/route-service-inspections.md",
+      "html_path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/inspections/service-screen.tsx",
+        "src/app/service-inspections.css",
+        "src/inspections/service-context.ts",
+        "src/inspections/service-commands.ts",
+        "docs/decisions/service-inspections.md",
+        "docs/testing/evidence/service-inspections/README.md"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "See docs/testing/evidence/service-inspections/README.md",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:FI-03",
+        "scope:FI-04",
+        "route:/my-jobs/inspections",
+        "scope:FI-05",
+        "scope:EQ-09"
+      ]
+    },
+    {
+      "key": "route:/service/incidents/[id]",
+      "title": "service / incidents /  id ",
+      "kind": "route",
+      "module": "FI",
+      "summary": "Persisted synthetic factual reporting, scoped holds, owned Activities and independently reviewed incident closure.",
+      "path": "/service/incidents/[id]",
+      "source_paths": [
+        "src/app/(business)/service/incidents/[id]/page.tsx",
+        "src/incidents/screen.tsx"
+      ],
+      "guide_key": "guide.route-service-incidents-id",
+      "design_path": "docs/design/development/pages/route-service-incidents-id.md",
+      "html_path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/incidents/screen.tsx",
+        "src/app/incidents.css",
+        "src/incidents/service.ts",
+        "src/incidents/context.ts",
+        "src/incidents/holds.ts",
+        "docs/decisions/field-incidents.md",
+        "docs/testing/evidence/field-incidents/README.md"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "See docs/testing/evidence/field-incidents/README.md",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:FI-06",
+        "route:/service/incidents/new",
+        "route:/service/incidents",
+        "scope:FI-03",
+        "scope:FI-04",
+        "scope:FI-05",
+        "scope:EQ-01"
+      ]
+    },
+    {
+      "key": "route:/service/incidents/new",
+      "title": "service / incidents / new",
+      "kind": "route",
+      "module": "FI",
+      "summary": "Persisted synthetic factual reporting, scoped holds, owned Activities and independently reviewed incident closure.",
+      "path": "/service/incidents/new",
+      "source_paths": [
+        "src/app/(business)/service/incidents/new/page.tsx",
+        "src/incidents/screen.tsx"
+      ],
+      "guide_key": "guide.route-service-incidents-new",
+      "design_path": "docs/design/development/pages/route-service-incidents-new.md",
+      "html_path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/incidents/screen.tsx",
+        "src/app/incidents.css",
+        "src/incidents/service.ts",
+        "src/incidents/context.ts",
+        "src/incidents/holds.ts",
+        "docs/decisions/field-incidents.md",
+        "docs/testing/evidence/field-incidents/README.md"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "See docs/testing/evidence/field-incidents/README.md",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:FI-06",
+        "route:/service/incidents/[id]",
+        "route:/service/incidents",
+        "scope:FI-03",
+        "scope:FI-04",
+        "scope:FI-05",
+        "scope:EQ-01"
+      ]
+    },
+    {
+      "key": "route:/service/incidents",
+      "title": "service / incidents",
+      "kind": "route",
+      "module": "FI",
+      "summary": "Persisted synthetic factual reporting, scoped holds, owned Activities and independently reviewed incident closure.",
+      "path": "/service/incidents",
+      "source_paths": [
+        "src/app/(business)/service/incidents/page.tsx",
+        "src/incidents/screen.tsx"
+      ],
+      "guide_key": "guide.route-service-incidents",
+      "design_path": "docs/design/development/pages/route-service-incidents.md",
+      "html_path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/incidents/screen.tsx",
+        "src/app/incidents.css",
+        "src/incidents/service.ts",
+        "src/incidents/context.ts",
+        "src/incidents/holds.ts",
+        "docs/decisions/field-incidents.md",
+        "docs/testing/evidence/field-incidents/README.md"
+      ],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "See docs/testing/evidence/field-incidents/README.md",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:FI-06",
+        "route:/service/incidents/[id]",
+        "route:/service/incidents/new",
+        "scope:FI-03",
+        "scope:FI-04",
+        "scope:FI-05",
+        "scope:EQ-01"
+      ]
+    },
+    {
+      "key": "route:/estimating/estimates/[id]/review",
+      "title": "Saved estimate review",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Exact saved-estimate submission, independent completeness/source-price/technical review, retained findings and controlled correction; commercial approval remains separate.",
+      "path": "/estimating/estimates/[id]/review",
+      "source_paths": [
+        "src/app/(business)/estimating/estimates/[id]/review/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-estimates-id-review",
+      "design_path": "docs/design/development/pages/route-estimating-estimates-id-review.md",
+      "html_path": "docs/reference/ui/estimate-review/PPO-Estimate-Review-and-Pricing-Exceptions-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/estimate-review.tsx",
+        "src/components/estimate-review.css",
+        "src/estimating/review/service.ts",
+        "src/estimating/review/reads.ts",
+        "docs/contracts/estimating-review.md"
+      ],
+      "scope_status": "Bounded native review; commercial approval not configured",
+      "visual_status": "Needs review",
+      "functional_status": "Automated component proof; see estimating-review-handover.md",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 50,
+      "related_keys": [
+        "scope:ES-04",
+        "route:/estimating/estimates/[id]",
+        "scope:ES-03",
+        "scope:ES-05"
+      ]
+    },
+    {
+      "key": "route:/estimating/quotes/[id]/release",
+      "title": "Synthetic quotation release",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Exact synthetic quotation preparation, independent approval, controlled issue and recorded distribution simulation; no operative terms or live send.",
+      "path": "/estimating/quotes/[id]/release",
+      "source_paths": [
+        "src/app/(business)/estimating/quotes/[id]/release/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-quotes-id-release",
+      "design_path": "docs/design/development/pages/route-estimating-quotes-id-release.md",
+      "html_path": "docs/reference/ui/quoting/PPO-Quotation-Approval-Issue-and-Distribution-r02.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/quotation-release.tsx",
+        "src/components/quotation-release.css",
+        "src/estimating/release/service.ts",
+        "src/estimating/release/reads.ts",
+        "docs/contracts/quotation-release.md"
+      ],
+      "scope_status": "Bounded native synthetic release",
+      "visual_status": "Needs review",
+      "functional_status": "Verification in progress; see quotation-release-handover.md",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 52,
+      "related_keys": [
+        "scope:ES-05",
+        "route:/estimating/quotes/[id]",
+        "scope:ES-04",
+        "scope:ES-06",
+        "route:/estimating/quotes/[id]/response"
+      ]
+    },
+    {
+      "key": "route:/estimating/quotes/[id]/response",
+      "title": "Quotation response and negotiation",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Exact staff-recorded synthetic response, immutable correction, controlled negotiation and separate ES-07 review preparation.",
+      "path": "/estimating/quotes/[id]/response",
+      "source_paths": [
+        "src/app/(business)/estimating/quotes/[id]/response/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-quotes-id-response",
+      "design_path": "docs/design/development/pages/route-estimating-quotes-id-response.md",
+      "html_path": "docs/reference/ui/quoting/PPO-Quotation-Response-and-Negotiation-r01.html",
+      "image_paths": [],
+      "dependencies": [
+        "src/components/quotation-response.tsx",
+        "src/components/quotation-release.css",
+        "src/estimating/response/reads.ts",
+        "src/estimating/response/service.ts",
+        "docs/contracts/quotation-response.md"
+      ],
+      "scope_status": "Bounded native staff response; operational authority not configured",
+      "visual_status": "Needs review",
+      "functional_status": "Merged #341; final checked head a373016 passed 24 checks. See response handover.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 53,
+      "related_keys": [
+        "scope:ES-05",
+        "scope:ES-07",
+        "scope:ES-06",
+        "route:/estimating/quotes/[id]/conversion"
+      ]
+    },
+    {
+      "key": "route:/estimating/quotes/[id]/conversion",
+      "title": "Receiving, one-off resolution and controlled conversion",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Exact receiving and completed-target exception disposition with immutable per-target decisions and real native Forecast quantity revision. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold.",
+      "path": "/estimating/quotes/[id]/conversion",
+      "source_paths": [
+        "src/app/(business)/estimating/quotes/[id]/conversion/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-quotes-id-conversion",
+      "design_path": "docs/design/development/pages/route-estimating-quotes-id-conversion.md",
+      "html_path": "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",
+      "image_paths": [
+        "docs/testing/evidence/quotation-supply-followup/supply-followup-desktop.png",
+        "docs/testing/evidence/quotation-supply-followup/supply-followup-mobile.png",
+        "docs/testing/evidence/quotation-supply-followup/supply-followup-320.png"
+      ],
+      "dependencies": [
+        "src/components/quotation-conversion.tsx",
+        "src/components/quotation-release.css",
+        "src/estimating/conversion/reads.ts",
+        "src/estimating/conversion/service.ts",
+        "src/estimating/conversion/context.ts",
+        "docs/contracts/quotation-conversion.md",
+        "src/components/quotation-disposition.tsx",
+        "src/estimating/disposition/context.ts",
+        "src/estimating/disposition/service.ts",
+        "docs/decisions/quotation-disposition-native.md",
+        "src/components/quotation-supply-followup.tsx",
+        "src/estimating/supply-followup/context.ts",
+        "src/estimating/supply-followup/service.ts",
+        "docs/contracts/quotation-supply-followup.md",
+        "docs/decisions/quotation-supply-followup-native.md",
+        "src/components/quotation-receipt-correction.tsx",
+        "src/estimating/supply-followup/receipt-context.ts",
+        "src/estimating/supply-followup/receipt-service.ts",
+        "docs/decisions/quotation-receipt-correction.md",
+        "src/estimating/supply-followup/shortfall-context.ts",
+        "src/estimating/supply-followup/shortfall-service.ts",
+        "src/supply/reductions.ts",
+        "docs/decisions/quotation-allocation-shortfall.md",
+        "src/components/quotation-allocation-shortfall.tsx",
+        "src/components/quotation-material-resolution.tsx",
+        "src/estimating/supply-followup/material-context.ts",
+        "src/estimating/supply-followup/material-service.ts",
+        "src/projects/material-resolution.ts",
+        "docs/contracts/quotation-material-resolution.md",
+        "docs/decisions/quotation-material-resolution.md",
+        "docs/decisions/quotation-task-dependency.md",
+        "docs/decisions/quotation-task-chain.md",
+        "src/estimating/supply-followup/reads.ts",
+        "docs/decisions/quotation-task-branch.md",
+        "docs/decisions/quotation-task-merge.md"
+      ],
+      "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
+      "visual_status": "Needs review",
+      "functional_status": "Prior evidence retained. SYN-ES07-07 local database, HTTP, compiled and actual restart checkpoints are recorded in docs/testing/evidence/quotation-material-resolution/README.md; final-head assurance is separate in the contribution PR. Visual/owner acceptance remains pending.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 54,
+      "related_keys": [
+        "scope:ES-06",
+        "scope:ES-07",
+        "scope:SC-01",
+        "scope:SC-09",
+        "route:/supply/changes"
       ]
     },
     {

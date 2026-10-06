@@ -12,6 +12,7 @@ import {
   buildCatalog,
   containedPath,
   readMaster,
+  readPageGuide,
   sourceRoutes,
   resourceId,
   guideContentHash,
@@ -45,7 +46,10 @@ test("development gate requires local configuration and the trusted gateway", as
   );
   assert(!(await developmentRequest(new Headers(), env)));
   assert(
-    !(await developmentRequest(new Headers({ "x-ppo-local-gateway": "wrong" }), env)),
+    !(await developmentRequest(
+      new Headers({ "x-ppo-local-gateway": "wrong" }),
+      env,
+    )),
   );
   for (const override of [
     { NODE_ENV: "production" },
@@ -254,8 +258,96 @@ test("guide review is explicit and content changes cannot inherit review", () =>
   assert.equal(guideReviewState(guide), "Draft");
 });
 
+test("page guidance reads current bindings and content without unrelated catalogue sources", async () => {
+  const root = await mkdtemp(join(tmpdir(), "ppo-page-guide-"));
+  const directory = join(root, "docs/design/development");
+  const guide: Guide = {
+    guide_key: "guide.detail",
+    entry_key: "route:detail",
+    title: "Original guide",
+    status: "Reviewed",
+    owner_role: "Fixture owner",
+    reviewer: "Fixture reviewer",
+    reviewed_at: "2026-10-05",
+    reviewed_content_hash: null,
+    content_mode: "Fixture",
+    source_commit: "fixture",
+    sections: [],
+    related_entry_keys: [],
+  };
+  guide.reviewed_content_hash = guideContentHash(guide);
+  const entries = [
+    { kind: "route", path: "/sample/[id]", guide_key: guide.guide_key },
+    { kind: "route", path: "/sample/new", guide_key: "missing-guide" },
+  ];
+  const saveRegister = () =>
+    writeFile(
+      join(directory, "register.json"),
+      JSON.stringify({ schema_version: 2, shared_sources: [], entries }),
+    );
+  const saveGuide = () =>
+    writeFile(
+      join(directory, "guides.json"),
+      JSON.stringify({ schema_version: 2, guides: [guide] }),
+    );
+  try {
+    await mkdir(directory, { recursive: true });
+    await saveRegister();
+    await saveGuide();
+    const original = await readPageGuide(root, "/sample/123");
+    assert.equal(original?.title, "Original guide");
+    assert.equal(original?.review_state, "Reviewed");
+    assert.equal(original?.history.state, "History unavailable");
+    assert.equal(await readPageGuide(root, "/sample/new"), undefined);
+    assert.equal(await readPageGuide(root, "/unknown"), undefined);
+    guide.title = "Changed working guide";
+    await saveGuide();
+    assert.equal(
+      (await readPageGuide(root, "/sample/123"))?.title,
+      guide.title,
+    );
+    assert.equal(
+      (await readPageGuide(root, "/sample/123"))?.review_state,
+      "Changes awaiting review",
+    );
+    entries[0].guide_key = "removed-binding";
+    await saveRegister();
+    assert.equal(await readPageGuide(root, "/sample/123"), undefined);
+    await writeFile(join(directory, "register.json"), '{"schema_version":1}');
+    await assert.rejects(
+      () => readPageGuide(root, "/sample/123"),
+      /Unsupported/,
+    );
+  } finally {
+    // Only this test's freshly allocated temporary root is removed.
+    assert(root.startsWith(join(tmpdir(), "ppo-page-guide-")));
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
 test("only the gated component preview allows same-origin framing", () => {
-  assert.equal(developmentFramePolicy("/development/component-preview", env), "SAMEORIGIN");
-  for (const path of ["/projects", "/schedule", "/development/design-system", "/development/component-preview/extra", "/development/component-preview-other"]) assert.equal(developmentFramePolicy(path, env), "DENY");
-  for (const override of [{PPO_ENV:"azure-demo"},{NODE_ENV:"production"},{PPO_DEVELOPMENT_WORKSPACE:"off"}]) assert.equal(developmentFramePolicy("/development/component-preview", {...env,...override}), "DENY");
+  assert.equal(
+    developmentFramePolicy("/development/component-preview", env),
+    "SAMEORIGIN",
+  );
+  for (const path of [
+    "/projects",
+    "/schedule",
+    "/development/design-system",
+    "/development/component-preview/extra",
+    "/development/component-preview-other",
+  ])
+    assert.equal(developmentFramePolicy(path, env), "DENY");
+  for (const override of [
+    { PPO_ENV: "azure-demo" },
+    { NODE_ENV: "production" },
+    { PPO_DEVELOPMENT_WORKSPACE: "off" },
+  ])
+    assert.equal(
+      developmentFramePolicy("/development/component-preview", {
+        ...env,
+        ...override,
+      }),
+      "DENY",
+    );
 });

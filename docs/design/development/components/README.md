@@ -4,7 +4,7 @@
 
 **Owner:** Dean Fiedler · **Schema:** 1 · **Review:** Paired visual and device acceptance pending.
 
-The component catalogue extends the existing local development workspace at `/development/design-system`. It is backed by `../components.json`, these Markdown specifications and the actual runtime components. It contains 19 runnable examples, one real host-shell entry and ten reference-only patterns across ten categories. These are coverage counts, not approval or proof that every application-specific variant has been migrated.
+The component catalogue extends the existing local development workspace at `/development/design-system`. It is backed by `../components.json`, these Markdown specifications and the actual runtime components. It contains 19 runnable examples, ten host entries and ten reference-only patterns across ten categories, including the FI-07 exact-response, ES-04 estimate-review, ES-05 quotation-release, ES-06 response and ES-07 receiving/conversion hosts. These are coverage counts, not approval or proof that every application-specific variant has been migrated.
 
 ## Browsing and comparison
 
@@ -16,7 +16,7 @@ The page register links back to mapped components. Used on identifies maintained
 
 ## Coverage contract
 
-Runnable requires a code-owned renderer ID, declared states, a real application export, design reference, desktop/mobile contract and owning page/system. Host example means the actual shell around the catalogue; it is not an isolated fixture. Reference only means proposed or unbound work and is excluded from runnable counts. New categories and families must be inventoried before claiming expanded coverage. Never mark a placeholder as a completed component.
+Runnable requires a code-owned renderer ID, declared states, a real application export, design reference, desktop/mobile contract and owning page/system. Host example means an actual owning application page or the shell around the catalogue; it is not an isolated fixture. The personal field timer requires a permitted synthetic appointment and actual arrival; its browser fixture supplies that real context without inventing a catalogue session. Reference only means proposed or unbound work and is excluded from runnable counts. New categories and families must be inventoried before claiming expanded coverage. Never mark a placeholder as a completed component.
 
 | Family | Current real examples | Explicit limits |
 |---|---|---|
@@ -24,7 +24,7 @@ Runnable requires a code-owned renderer ID, declared states, a real application 
 | Tables and grids | CRM Grid; estimating AreasEditor selection/edit table | No universal bulk-select or spreadsheet-cell editor is adopted |
 | Boards and cards | CRM Board; ForecastWorklist | Host permissions, pagination and saved commands remain integration concerns |
 | Gantt | ProjectsGantt, including List, programme, undated and loading cases | Editing/history callbacks are presentation-only; fixed catalogue clock |
-| Scheduling | PlannerBoard and AppointmentCard | Readiness, concurrency and confirmation remain server/host checks |
+| Scheduling | PlannerBoard, AppointmentCard and the published-impact/resolution host | Readiness, concurrency and confirmation remain server/host checks |
 | Forms | Field, SelectField, LookupField, ValidationFields and ErrorNotice | Full saved estimation wizard remains a reference/integration scenario |
 | Navigation | RecordTabs/RecordPanel; WorklistChoice; real host shell | Host navigation depends on current permitted identity |
 | Dialogs/overlays | WorklistPanel modal/drawer; WorklistMenu popover | Other module-specific dialog families still require review |
@@ -72,5 +72,3 @@ Use semantic native tables for tabular data; do not add an ARIA grid without its
 ## Recovery and authority
 
 Reset restores the selected synthetic example. Refresh working copy rereads Git files. A stale reference hash returns an informative refusal rather than substituting different bytes. Persistent theme changes follow the existing proposal/source/PR workflow. The preview and catalogue remain local-gated; hiding the shell on a fixture route does not grant access. Hosted access, public deployment and operational integration are unchanged.
-
-Maintenance and Warranty add two reference-only compositions, MaForm and SourceCard, with exact route consumers and synthetic fixtures. Their browser proof is an application integration test; no isolated renderer or accepted visual fingerprint is claimed.

@@ -34,6 +34,39 @@ beforeEach(reset);
 after(closeDatabase);
 const refused = (e: unknown) =>
   (e as { code: string }).code === "SourceReviewRequired";
+test("agreement to due maintenance to reviewed Service outcome preserves the original obligation and exact retry", async () => {
+  const a = await plan();
+  await planCommand(a.p, a.id, {
+    ...base(), expected_version: 2, action: "Generate",
+    from: "2026-01-31", until: "2026-01-31",
+  });
+  const occurrence = (await rows("SELECT * FROM ppo.maintenance_occurrences WHERE plan_id=$1", [a.id]))[0];
+  const entitlement = await assessment(a.p, a.revision);
+  const prepare = { ...base(), expected_version: 1, assessment_id: entitlement, owner_id: CRM.owner };
+  const prepared = await prepareWork(a.p, "due", occurrence.id, prepare);
+  const request = (await rows("SELECT * FROM ppo.maintenance_work_requests WHERE occurrence_id=$1", [occurrence.id]))[0];
+  assert.equal((await rows("SELECT status FROM ppo.tickets WHERE id=$1", [request.ticket_id]))[0].status, "New");
+  assert.equal((await rows("SELECT * FROM ppo.work_order_tickets WHERE ticket_id=$1", [request.ticket_id])).length, 0);
+  const result = await serviceResult(a.p, request.id, 78);
+  assert.equal(result.report.status, "Reviewed");
+  const receive = {
+    ...base(), expected_version: prepared.receipt.record_version, request_id: request.id,
+    report_revision_id: result.report.revisions[0].id, task_mapping: result.mapping,
+  };
+  await assert.rejects(receiveResult(a.p, "due", occurrence.id, {
+    ...receive, operation_id: base().operation_id,
+    task_mapping: result.mapping.map((m: { task_id: string; scope_item_id: string; basis: string }) => ({ ...m, scope_item_id: randomUUID() })),
+  }), (error: unknown) => (error as { code: string }).code === "InvalidData");
+  const accepted = await receiveResult(a.p, "due", occurrence.id, receive);
+  assert.deepEqual((await receiveResult(a.p, "due", occurrence.id, receive)).receipt, accepted.receipt);
+  assert.deepEqual((await prepareWork(a.p, "due", occurrence.id, prepare)).receipt, prepared.receipt);
+  const saved = (await rows("SELECT *, original_due::text AS original_date FROM ppo.maintenance_occurrences WHERE id=$1", [occurrence.id]))[0];
+  assert.equal(saved.state, "Completed");
+  assert.equal(saved.original_date, "2026-01-31");
+  assert.equal(saved.plan_revision_id, occurrence.plan_revision_id);
+  assert.equal((await rows("SELECT * FROM ppo.maintenance_work_requests WHERE occurrence_id=$1", [occurrence.id])).length, 1);
+  assert.equal((await rows("SELECT * FROM ppo.maintenance_service_results WHERE request_id=$1", [request.id])).length, 1);
+});
 async function request(assetId = asset, remedy = "Investigate") {
   const w = await warranty(assetId);
   await warrantyCommand(w.p, w.id, {

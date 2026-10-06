@@ -1,7 +1,13 @@
 "use client";
 import Link from "next/link";
+import { visitPreparationGuidance } from "../field/visit-guidance";
 import { ScopeView } from "../service";
-import { BookingRecovery, useBookingCommand, safeBookingTarget } from "../scheduling";
+import {
+  BookingRecovery,
+  useBookingCommand,
+  safeBookingTarget,
+  appointmentHref,
+} from "../scheduling";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useIdentity } from "./business-session";
@@ -108,6 +114,7 @@ type Visit = {
   scope_version: number;
   scope_review_required: boolean;
   readiness: Assessment[];
+  policy_impacts?: import("../scheduling/policy-holds").PolicyHold[] | null;
 };
 export type Order = {
   id: string;
@@ -1203,10 +1210,12 @@ function AssessmentForm({
 function VisitForm({
   w,
   r,
+  usable,
   onSaved,
 }: {
   w: Order;
   r: Scope;
+  usable: boolean;
   onSaved: () => void;
 }) {
   const [start, setStart] = useState(""),
@@ -1216,95 +1225,146 @@ function VisitForm({
     [commitment, setCommitment] = useState("Unknown"),
     [preparation, setPreparation] = useState("Unknown"),
     [expected, setExpected] = useState<number | null>(null),
-    [id] = useState(() => crypto.randomUUID());
-  const cmd = useCommand();
+    [basis, setBasis] = useState<Scope | null>(null),
+    [id, setId] = useState(() => crypto.randomUUID());
+  const cmd = useBookingCommand();
+  const proposalScope = basis ?? r;
   return (
     <ValidationFields error={cmd.error}>
       <form
-        onChangeCapture={() => setExpected((current) => current ?? w.version)}
+        onChangeCapture={() => {
+          setExpected((current) => current ?? w.version);
+          setBasis((current) => current ?? r);
+        }}
         onSubmit={async (e) => {
           e.preventDefault();
-          const result = await cmd.send(`service/work-orders/${w.id}/visits`, {
+          const result = await cmd.send(
+            `service/work-orders/${w.id}/visits`,
+            {
+              id,
+              expected_version: expected ?? w.version,
+              scope_revision_id: proposalScope.id,
+              scope_version: proposalScope.version,
+              start_at: start ? new Date(start).toISOString() : null,
+              end_at: end ? new Date(end).toISOString() : null,
+              requested_window_start: windowStart
+                ? new Date(windowStart).toISOString()
+                : null,
+              requested_window_end: windowEnd
+                ? new Date(windowEnd).toISOString()
+                : null,
+              customer_commitment: commitment,
+              preparation_status: preparation,
+              reason: "Record synthetic proposed attendance only",
+            },
+            appointmentHref(id, "/schedule"),
+            "Proposed visit",
             id,
-            expected_version: expected ?? w.version,
-            scope_revision_id: r.id,
-            scope_version: r.version,
-            start_at: start ? new Date(start).toISOString() : null,
-            end_at: end ? new Date(end).toISOString() : null,
-            requested_window_start: windowStart
-              ? new Date(windowStart).toISOString()
-              : null,
-            requested_window_end: windowEnd
-              ? new Date(windowEnd).toISOString()
-              : null,
-            customer_commitment: commitment,
-            preparation_status: preparation,
-            reason: "Record synthetic proposed attendance only",
-          });
-          if (result) onSaved();
+          );
+          if (result) {
+            setStart("");
+            setEnd("");
+            setWindowStart("");
+            setWindowEnd("");
+            setCommitment("Unknown");
+            setPreparation("Unknown");
+            setExpected(null);
+            setBasis(null);
+            setId(crypto.randomUUID());
+            onSaved();
+          }
         }}
       >
-        <ErrorNotice error={cmd.error} />
-        <ConflictReview
-          version={expected ?? w.version}
-          latest={w.version}
-          onAdopt={() => {
-            cmd.clear();
-            setExpected(w.version);
-          }}
-        />
-        <p>
-          Enter instants in your device timezone. The saved proposal is shown in{" "}
-          {w.site_timezone}. No crew or time is reserved.
+        <BookingRecovery command={cmd} />
+        <fieldset
+          disabled={
+            !usable ||
+            !cmd.ready ||
+            cmd.busy ||
+            !!cmd.pending ||
+            cmd.accepted?.entry.record_id === id
+          }
+        >
+          <ConflictReview
+            version={expected ?? w.version}
+            latest={w.version}
+            onAdopt={() => {
+              cmd.clear();
+              setExpected(w.version);
+              setBasis(r);
+            }}
+          />
+          <p>
+            Proposal basis: work order v{expected ?? w.version}, scope r{proposalScope.revision} · v
+            {proposalScope.version}. Comparing saved changes retains your input; adopt
+            reviewed current context explicitly.
+          </p>
+          <p>
+            Enter instants in your device timezone. The saved proposal is shown
+            in {w.site_timezone}. No crew or time is reserved.
+          </p>
+          <div className="form-grid">
+            <Field
+              name="visit-start"
+              label="Proposed start (device timezone)"
+              value={start}
+              onChange={setStart}
+              type="datetime-local"
+              required
+            />
+            <Field
+              name="visit-end"
+              label="Proposed finish (device timezone)"
+              value={end}
+              onChange={setEnd}
+              type="datetime-local"
+              required
+            />
+            <Field
+              name="window-start"
+              label="Customer window start (optional)"
+              value={windowStart}
+              onChange={setWindowStart}
+              type="datetime-local"
+            />
+            <Field
+              name="window-end"
+              label="Customer window finish (optional)"
+              value={windowEnd}
+              onChange={setWindowEnd}
+              type="datetime-local"
+            />
+            <EnumField
+              name="customer-commitment"
+              label="Customer commitment"
+              value={commitment}
+              values={["Unknown", "Proposed"]}
+              onChange={setCommitment}
+            />
+            <EnumField
+              name="preparation"
+              label="Preparation state"
+              value={preparation}
+              values={["Unknown", "Preparing", "Blocked"]}
+              onChange={setPreparation}
+            />
+          </div>
+          <button disabled={cmd.busy}>Save proposed visit</button>
+        </fieldset>
+        <p role="status">
+          {cmd.busy
+            ? "Saving the original proposal…"
+            : cmd.pending
+              ? "Outcome uncertain — recover the original before another proposal."
+              : start ||
+                  end ||
+                  windowStart ||
+                  windowEnd ||
+                  commitment !== "Unknown" ||
+                  preparation !== "Unknown"
+                ? "Unsaved proposal — held in this page only."
+                : cmd.saved || "No unsaved proposal."}
         </p>
-        <div className="form-grid">
-          <Field
-            name="visit-start"
-            label="Proposed start (device timezone)"
-            value={start}
-            onChange={setStart}
-            type="datetime-local"
-            required
-          />
-          <Field
-            name="visit-end"
-            label="Proposed finish (device timezone)"
-            value={end}
-            onChange={setEnd}
-            type="datetime-local"
-            required
-          />
-          <Field
-            name="window-start"
-            label="Customer window start (optional)"
-            value={windowStart}
-            onChange={setWindowStart}
-            type="datetime-local"
-          />
-          <Field
-            name="window-end"
-            label="Customer window finish (optional)"
-            value={windowEnd}
-            onChange={setWindowEnd}
-            type="datetime-local"
-          />
-          <EnumField
-            name="customer-commitment"
-            label="Customer commitment"
-            value={commitment}
-            values={["Unknown", "Proposed"]}
-            onChange={setCommitment}
-          />
-          <EnumField
-            name="preparation"
-            label="Preparation state"
-            value={preparation}
-            values={["Unknown", "Preparing", "Blocked"]}
-            onChange={setPreparation}
-          />
-        </div>
-        <button disabled={cmd.busy}>Save proposed visit</button>
-        <p role="status">{cmd.saved}</p>
       </form>
     </ValidationFields>
   );
@@ -1312,12 +1372,36 @@ function VisitForm({
 // Opening a saved work order does not need the asset picker for its closed
 // scope editor. After first opening, keep it mounted so closing the disclosure
 // cannot discard an unsaved proposal or an uncertain original command.
-function ScopeEditor({ w, r, onSaved }: { w: Order; r: Scope | null; onSaved: () => void }) {
+function ScopeEditor({
+  w,
+  r,
+  onSaved,
+}: {
+  w: Order;
+  r: Scope | null;
+  onSaved: () => void;
+}) {
   const [opened, setOpened] = useState(!r);
   return (
-    <details className="wo-edit" open={!r} onToggle={event => { if (event.currentTarget.open) setOpened(true); }}>
-      <summary>{r?.approved_at ? "Create successor scope" : "Edit scope draft"}</summary>
-      {(opened || !r) && <ScopeForm key={r?.id ?? "first"} w={w} r={r} successor={!!r?.approved_at} onSaved={onSaved} />}
+    <details
+      className="wo-edit"
+      open={!r}
+      onToggle={(event) => {
+        if (event.currentTarget.open) setOpened(true);
+      }}
+    >
+      <summary>
+        {r?.approved_at ? "Create successor scope" : "Edit scope draft"}
+      </summary>
+      {(opened || !r) && (
+        <ScopeForm
+          key={r?.id ?? "first"}
+          w={w}
+          r={r}
+          successor={!!r?.approved_at}
+          onSaved={onSaved}
+        />
+      )}
     </details>
   );
 }
@@ -1347,7 +1431,14 @@ export function WorkOrderDetail({ id }: { id: string }) {
               </button>
             }
           />
-          {returnTarget && <p><Link className="button secondary" href={returnTarget}>Continue saved appointment</Link> · Readiness saves separately from contact and confirmation.</p>}
+          {returnTarget && (
+            <p>
+              <Link className="button secondary" href={returnTarget}>
+                Continue saved appointment
+              </Link>{" "}
+              · Readiness saves separately from contact and confirmation.
+            </p>
+          )}
           <div className="wo-state">
             <Status value={w.status} />
             <Status value={r?.coverage?.status ?? "Unknown"} />
@@ -1456,13 +1547,26 @@ export function WorkOrderDetail({ id }: { id: string }) {
               )}
             </section>
           )}
-          <section className="panel">
+          <section className="panel" id="planned-visits">
             <h2>Planned visits</h2>
             <p>
               Proposals reserve no crew. Open the appointment for confirmed
               booking, crew and contact details. Dispatch and acknowledgement
               remain separate.
             </p>
+            <p>
+              For further attendance, review existing visits before proposing
+              another. A shared work order does not establish return or
+              replacement lineage. Closed visits retain their original facts;
+              another visit needs its own assignment, exact pack, personal
+              acknowledgement and actual arrival.
+            </p>
+            {!w.actions.can_edit && (
+              <p>
+                Preparation is unavailable under your current access. Ask the
+                Service owner to review further attendance.
+              </p>
+            )}
             {!w.visits.length && <p>No visits proposed yet.</p>}
             {w.visits.map((v) => (
               <article className="wo-task" id={`visit-${v.id}`} key={v.id}>
@@ -1487,6 +1591,25 @@ export function WorkOrderDetail({ id }: { id: string }) {
                     proposal retains its original scope context.
                   </p>
                 )}
+                {v.policy_impacts?.filter(x => x.held).map(x => <p className="callout" key={x.impact_id}>
+                  Scheduling policy hold: {x.reason}. Owner: {x.owner_name}. Source publication: <span className="record-id">{x.publication_id}</span>. {x.next_action}
+                </p>)}
+                <p>
+                  {visitPreparationGuidance(
+                    v.status,
+                    v.preparation_status,
+                    v.scope_review_required,
+                  )}
+                </p>
+                {v.status === "Proposed" &&
+                  v.preparation_status !== "Preparing" && (
+                    <p>
+                      If this unprepared proposal must be replaced, use the
+                      appointment's controlled cancellation and explicitly
+                      propose the prepared visit. Retain the predecessor and the
+                      reason; no automatic replacement is performed.
+                    </p>
+                  )}
                 <ReadinessTable rows={v.readiness} />
                 {w.actions.can_assess &&
                   v.status !== "Cancelled" &&
@@ -1507,9 +1630,9 @@ export function WorkOrderDetail({ id }: { id: string }) {
               <details className="wo-edit">
                 <summary>Propose a visit</summary>
                 <VisitForm
-                  key={`${r.id}-${w.visits.length}`}
                   w={w}
                   r={r}
+                  usable={!resource.loading && !resource.error}
                   onSaved={resource.reload}
                 />
               </details>

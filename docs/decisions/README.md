@@ -8,7 +8,7 @@
 
 [Notice accent rule departure](notice-accent-rule-departure.md) is a **proposed** design-system decision: whether notices keep the 3 px coloured left rule used by theme board r22 and Job Pack r03. Raised from the field work timer concept on 23 September 2026; not accepted.
 
-[Field work timer design](field-work-timer-design.md) records Dean's acceptance on 23 September 2026 of the FI-01 work timer presentation baseline r05 (record header with the state and controls, job menu, one visit track, edge-to-edge time and activity lists, multi-day allowance). Presentation only; the timer is not implemented.
+[Field work timer design](field-work-timer-design.md) records Dean's acceptance on 23 September 2026 of the FI-01 work timer presentation baseline r05 (record header with the state and controls, job menu, one visit track, edge-to-edge time and activity lists, multi-day allowance). Presentation acceptance remains separate from the [native timer and offline implementation](field-timer-native.md), whose current evidence is in the field programme handover.
 
 [Department navigation icons](department-navigation-icons.md) implements seven ordered department rails, semantic SVG pairs and bounded existing-service landings. It amends r17's no-shortcuts choice; readiness and permissions control live links.
 
@@ -17,6 +17,8 @@
 [ES-08 design board owner decision](es08-design-board.md) records Dean's 23 September 2026 acceptance of the merged Screen Configurator Workbench board: departures D1–D15, rulings DEC-R1 (rounding) and DEC-R2 (roll fit) and a five-profile structure drawing standard. The board has [retained captures](../reference/ui/specialist/design-board-r01/README.md). It states the changes that WP-G00 must carry into the geometry build plan. It is design direction only: no implementation, migration, UI baseline entry or engineering acceptance.
 
 [ES-02 Estimation Wizard design board](es02-design-board.md) records the user's 23 September 2026 decision that six equipment families with 108 categories replace build plan r04 §4.7's four presentation groups, and what implementing it needs (a successor to `PPO-ES02-CONFIG-r01`, a migration and an ADR amending ADR-0035). The board's proposals P2–P9 and open decision O1 (desktop control height) are **not accepted**; six findings against the running build (B1–B6) are recorded with evidence. The board has [retained captures](../reference/ui/estimating/design-board-r01/README.md). No implementation, migration or UI baseline entry.
+
+[ES-01 Estimating intake and workload design board](es01-design-board.md) records the user's 24 September 2026 decision that ES-01 design uses the Powerplants One design system, not the separate PHYTO system. Its proposals P1–P9 (register with a persistent detail panel, readiness counts from a read-model addition, readiness tones, drawer below 1360 CSS px and others) and open questions O1–O2 were **decided under Dean's delegation on 25 September 2026** and implemented in the native page. Build findings B1–B5 are fixed and a shared finding B6 is recorded. The board has [retained captures](../reference/ui/estimating/workload-design-board-r01/README.md), and the running page has [adoption evidence](../testing/evidence/estimating-workload-design-adoption/README.md). No migration or UI baseline entry; owner visual review is pending.
 
 [decision-register.csv](decision-register.csv) retains the 29 original questions and closure evidence. D-003 is resolved for the personal prototype under ADR-0005. D-004/D-022/D-029 remain partially resolved; 25 other decisions remain open. Proposed roles are not assigned staff.
 
@@ -109,4 +111,12 @@ The [PPO Assistant direction and architecture decision](ppo-assistant-direction.
 
 - [ADR-0046 — Native Sales handovers and aftercare](ADR-0046-sales-native-workflows.md): frozen Sales submissions, exact receiving decisions, shared Activity obligations and bounded aftercare; owner acceptance and deployment remain separate.
 
-- [ADR-0049 — Native Maintenance and Warranty](ADR-0049-maintenance-warranty-native.md): MA-01–MA-07 typed sources, bounded recurrence, exact Service receiving, independent customer and supplier outcomes; acceptance and deployment remain separate.
+- [Native Maintenance and Warranty](maintenance-warranty-native.md): MA-01–MA-07 typed sources, bounded recurrence, exact Service receiving, independent customer and supplier outcomes; acceptance and deployment remain separate.
+- [ADR-0049 — Native Supply Chain coordination](ADR-0049-native-supply-chain.md): SC-01–SC-10 synthetic/manual domain; current-authority recovery, conserved quantities and external-command boundaries.
+- [Field readiness over CS-06](field-readiness-native.md): FI-05 assigned-visit review reuses CS snapshots/events with current assignment and receipt authority; induction remains unverified without a Person binding.
+
+The [27 September consolidation decision](repository-consolidation.md) authorises current-source reconciliation, ordered migration integration and the synthetic service-verification milestone. It preserves operational and owner-acceptance boundaries.
+
+The [scheduling policy impact decision](scheduling-policy-impact-review.md) defines the read-only PL-04 duration/effective-date comparison and the separate transactional publication continuation under PT-28.
+
+The [controlled scheduling-policy publication plan](scheduling-policy-publication.md) records the next API-C26/EVT-12 synthetic contract and reconciled 0053 allocation; no publication implementation or schema is added.

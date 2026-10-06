@@ -4,7 +4,9 @@
 
 [Package](../prototype/README.md) · [Implementation plan](../delivery/prototype-implementation-plan.md) · [Machine-readable cases](prototype-scenarios.json).
 
-Current execution sources: [P09 full PT-06/PT-15/PT-16](../delivery/p09-handover.md), [P10 full PT-17/PT-19/PT-20/PT-21](../delivery/p10-handover.md), [P11 integrated quality and explicit remaining limits](../delivery/p11-handover.md), and [P12 executed synthetic PT-22 with remaining PT-28/PT-30 obligations](../delivery/p12-handover.md). The authored definitions and all thirty identities below remain unchanged; a later component result does not erase an earlier verified full status or confer a new one.
+Current execution sources: [P09 full PT-06/PT-15/PT-16](../delivery/p09-handover.md), [P10 full PT-17/PT-19/PT-20/PT-21](../delivery/p10-handover.md), [P11 integrated quality and explicit remaining limits](../delivery/p11-handover.md), and [P12 executed synthetic PT-22 with remaining PT-28/PT-30 obligations](../delivery/p12-handover.md). Current Scheduling [Step 6 execution map](evidence/scheduling-step6/README.md) records PT-28 local synthetic Passed and the continuous PT-30 technical narrative with independent/prior-case acceptance still open. The authored definitions and all thirty identities below remain unchanged; a later component result does not erase an earlier verified full status or confer a new one.
+
+Current source-specific reconciliation: [integrated Field Work acceptance ledger](field-integrated-acceptance-ledger.md). This supersedes stale catalogue/default or dated component wording only through its cited execution sources; all procedure identities, definitions and exit criteria below remain unchanged.
 
 ## 1. Test environment and evidence
 

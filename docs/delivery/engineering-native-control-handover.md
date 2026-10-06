@@ -4,6 +4,8 @@
 
 Owner: Dean Fiedler. Native implementation delivered in two draft PRs; owner visual/business review and deployment remain separate. Verification results and limits are recorded below.
 
+4 October continuation: [PR #344](https://github.com/deanrfiedler-gif/powerplants-one/pull/344) repairs a shared EN-02–EN-05 inspector focus race exposed by the mandatory broad browser suite. A refresh of the same selected record preserves focus in an open guide; new selection and close/reselection retain their keyboard destinations. The deterministic real-read fixture and unchanged-main comparison are in the [Supply follow-up execution ledger](../testing/evidence/quotation-supply-followup/README.md). This is a bounded application repair; historical programme evidence below remains unchanged, and current final-head CI, owner acceptance and deployment remain separate.
+
 Starting commit: `ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc` (main and freshly fetched origin/main). Branch: `feat/engineering-en01-en05-native`. Worktree: `tmp/engineering-en01-en05-native`. [Architecture and scope](../decisions/ADR-0047-engineering-native-control.md).
 
 ## Audit

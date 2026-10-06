@@ -1,0 +1,19 @@
+# Integrated Field Work acceptance increment
+
+<!-- versioning: git; committed history is authoritative -->
+
+Owner: Dean Fiedler. Authorised repository increment: 3 October 2026. Independent review and owner acceptance are separate, pending recorded observations.
+
+The user requested executed current-build verification after merged #337, source-specific prior-case reconciliation, a usable human session and honest benefit measurement. Refreshed main is `6e8b898aeb150b0a4b42c3087605556a057986ad`; #337's final checked head is `41c6f2c909947e93608a2850198b374de671f1e4`, merged at `2026-10-03T03:45:54Z`. Its 18 final-head checks passed. Post-merge runs are a separate observation in the evidence manifest. No overlapping open PR existed at preflight; the original checkout's untracked `.worktrees/`, earlier worktrees, services, databases, profiles and evidence are preserved.
+
+Use the current modular monolith, compiled launcher, existing actor commands, deterministic fixtures, retained journey helpers and read-only preservation harness. A new application, schema, capability, grant, fixture seed, lineage model or offline protocol is unnecessary. The staged acceptance harness pauses the same records before continuing across actual app/PostgreSQL restart. Earlier Step 6 rollback demonstrates only its schema 50→54 releases and coordinated enforcement; no old writer runs against the current schema 57 database. A restart is not PT-22 restore.
+
+The compiled inspection regression exposed two separate boundaries. The original retry saved exact version 5, but the test began its five-second display assertion before the subsequent record read finished. The test now awaits that exact read. A held actor-bound receipt lookup also demonstrated an enabled attempt button whose existing guard silently ignored a click. The host now disables that button during busy/unresolved-original state. This is a bounded presentation correction, with no authority or workflow change. Original failures, controlled negatives and corrected proof remain separate.
+
+The original attendance additionally records one actually elapsed minute through existing timer commands. Finance independently dispositions that exact whole minute NonBillable/no-posting alongside the retained F-06 90 MIN split 60/30, separate 30 MIN Travel and 2 EA material. No elapsed seconds are rounded, economic policy changed or human productivity inferred. The separate visit requires its own preparation, contact, booking, crew acknowledgements, actual arrival, timer, evidence, review and issue. Other visits are contextual records; cancellation reasons document intent without inventing an authoritative return relationship.
+
+The [acceptance ledger](../testing/field-integrated-acceptance-ledger.md) preserves the thirty definitions and all 78 parent IDs. Historical full passes remain valid at their sources. Component proof never silently promotes a whole procedure. Current receiving-domain controls remain independent of customer response, closed attendance, completed Activities and Finance outcomes.
+
+Dean confirmed availability for desktop browser/keyboard review. This is participation availability, not a test result, Service approval or independent visual review. [Walkthrough](../delivery/field-integrated-owner-walkthrough.md) and [human record](../testing/evidence/field-integrated-acceptance/human-session.json) capture actual findings only. Physical-phone, screen-reader and other reviewers remain pending. D-004's comparable baseline, cohort, window and success criterion remain owner decisions in the [measurement instrument](../testing/field-benefit-measurement.md); automated timings are not business benefit.
+
+No merge, deployment, production integration, customer message, operational transaction, wider SV-06/SV-07 work or FI-08 is authorised. MYOB, SharePoint and native CAD retain their respective authority.

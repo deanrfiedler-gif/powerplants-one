@@ -1,0 +1,94 @@
+name: Quotation disposition assurance
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  conversion:
+    name: ES-07 completed conversion disposition and recovery
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    services:
+      postgres:
+        image: postgres:16.15
+        env:
+          POSTGRES_USER: ppo_local
+          POSTGRES_PASSWORD: ppo_disposable_ci_only
+          POSTGRES_DB: ppo_synthetic_test
+        ports:
+          - 127.0.0.1:5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ppo_local -d ppo_synthetic_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+      PPO_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+      - name: Configure disposable PostgreSQL lock capacity
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: bash scripts/configure-test-postgres.sh
+      - name: Install the existing pinned runtime and document renderer
+        run: |
+          npm install --global npm@11.19.0
+          npm ci
+          npm run browser:install
+          cp .env.example .env.local
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('.env.local')
+          p.write_text(p.read_text().replace('<local-password>','ppo_disposable_ci_only').replace('/ppo_synthetic','/ppo_synthetic_test'))
+          PY
+      - name: Completed conversion disposition and populated upgrade PostgreSQL proof
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/quotation-disposition.test.ts
+      - name: Compile the exact contribution
+        run: npm run build
+      - name: Compiled HTTP and write the restart checkpoint
+        run: |
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > "$RUNNER_TEMP/ppo-disposition-http.log" 2>&1 &
+          ppo_disposition_pid=$!
+          trap 'kill "$ppo_disposition_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            curl --fail --silent http://127.0.0.1:3000/ > /dev/null && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx --test tests/http/quotation-disposition.test.ts tests/http/quotation-conversion.test.ts tests/http/quotation-response.test.ts
+          PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/quotation-disposition-restart.ts write
+      - name: Restart actual PostgreSQL and verify original evidence in a new application process
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: |
+          docker restart "$PPO_POSTGRES_CONTAINER"
+          for attempt in $(seq 1 30); do
+            docker exec "$PPO_POSTGRES_CONTAINER" pg_isready -U ppo_local -d ppo_synthetic_test && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > "$RUNNER_TEMP/ppo-disposition-reopen.log" 2>&1 &
+          ppo_disposition_pid=$!
+          trap 'kill "$ppo_disposition_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            curl --fail --silent http://127.0.0.1:3000/ > /dev/null && break
+            sleep 1
+          done
+          PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/quotation-disposition-restart.ts verify
+      - name: Compiled desktop and mobile disposition and shared-control proof
+        run: npx playwright test --config=playwright.compiled.config.ts tests/browser/quotation-disposition.spec.ts tests/browser/component-catalogue.spec.ts --output verification-evidence/quotation-disposition-browser --reporter=list
+      - name: Retain synthetic execution evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: Quotation-disposition-evidence
+          path: |
+            verification-evidence/quotation-disposition-browser/
+            verification-evidence/quotation-disposition-restart/
+            !**/trace.zip
+          retention-days: 14

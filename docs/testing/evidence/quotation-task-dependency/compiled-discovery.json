@@ -1,0 +1,19 @@
+{
+  "source_head": "4ab5a48da749f9a8ad656e19ebdadadc00b95d0b",
+  "adopted_ci_source": "0cf705cbb3ec1b36ad55f84dfbaf9c4b63d17779",
+  "unfiltered": 685,
+  "desktop": 343,
+  "mobile": 343,
+  "union": 685,
+  "missing": [],
+  "extra": [],
+  "duplicate_setup": [
+    [
+      "warm-up",
+      "warm-up.setup.ts",
+      10,
+      1,
+      "warm every route once before the browser projects"
+    ]
+  ]
+}

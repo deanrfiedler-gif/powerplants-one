@@ -1,0 +1,65 @@
+{
+  "source_head": "ed0088ed441a186bdf0a6b75dcc5e7a4d8432478",
+  "verified_at": "2026-10-05T05:03:45.357Z",
+  "original_postmaster": "2026-10-05 04:57:43.061235+00",
+  "restarted_postmaster": "2026-10-05 05:03:14.787026+00",
+  "exact_replays": 6,
+  "original_operation_receipts": 14,
+  "unchanged_snapshot_rows": 526,
+  "unchanged_output_files": [
+    {
+      "id": "640b2fa8-2185-4e80-9ee5-84abfc59bd7b",
+      "kind": "html",
+      "name": "640b2fa8-2185-4e80-9ee5-84abfc59bd7b.html",
+      "hash": "4676096f16d7e5988dae577ff98f8e303bd3d05f3e94e40b0bdd1cb7510fb0ec"
+    },
+    {
+      "id": "640b2fa8-2185-4e80-9ee5-84abfc59bd7b",
+      "kind": "pdf",
+      "name": "640b2fa8-2185-4e80-9ee5-84abfc59bd7b.pdf",
+      "hash": "a7d62cc517344de55b171642b298095d309a4789ffa292f252eae4ae8cca078f"
+    },
+    {
+      "id": "d6046a9a-7620-4cc7-a89f-d1b42a8fb6d8",
+      "kind": "html",
+      "name": "d6046a9a-7620-4cc7-a89f-d1b42a8fb6d8.html",
+      "hash": "6df6a2516211abaeed9a900028b965a0789fd3d87318b0765409f6a2b1c174c9"
+    },
+    {
+      "id": "d6046a9a-7620-4cc7-a89f-d1b42a8fb6d8",
+      "kind": "pdf",
+      "name": "d6046a9a-7620-4cc7-a89f-d1b42a8fb6d8.pdf",
+      "hash": "ab3bb3ffc28ada9c1b08b1320fcfaf81e2756b61f7e9eb87d12d4b71e3e05aed"
+    }
+  ],
+  "receipt_correction_id": "203b6dac-a0b1-4294-98c9-e230287dc292",
+  "allocation_proposal_id": "437bb08b-68a3-439f-a49f-3b22de0c1e89",
+  "receiving_ids": [
+    "1eb88a05-ec25-46ff-96b9-802947837188",
+    "38016e7e-87d4-4c7f-99d4-037531be309d"
+  ],
+  "native_receipt": {
+    "state": "Recorded",
+    "task_ids": [
+      "4e1e48d2-b200-4d8a-ac32-f07b7ccde568"
+    ],
+    "warnings": [],
+    "record_id": "4e098b56-d665-4fb0-9ba8-6c2cc51379ad",
+    "receipt_id": "096e2482-9900-4763-b2d0-9e2f6172785a",
+    "accepted_at": "2026-10-05T05:02:53.872Z",
+    "operation_id": "46f07bfb-ff63-4169-ae88-e8b2b042f71f",
+    "record_version": 6
+  },
+  "capacity": "4.375001",
+  "allocated": "4.375001",
+  "unmet": [
+    {
+      "id": "37d20002-af18-4033-a378-906622f32057",
+      "quantity": "2"
+    },
+    {
+      "id": "afe7bc04-d357-43b6-b57a-aa0a3799fbb8",
+      "quantity": "3.624999"
+    }
+  ]
+}

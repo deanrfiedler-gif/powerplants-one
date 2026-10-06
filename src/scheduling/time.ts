@@ -48,3 +48,17 @@ export function addDays(day: string, n: number) {
   d.setUTCDate(d.getUTCDate() + n);
   return d.toISOString().slice(0, 10);
 }
+
+// Calendar closures, blocks and reservations use the same half-open boundary.
+// Compare instants, not ISO strings: equivalent offsets need not sort alike.
+export function intervalsOverlap(
+  start: string,
+  end: string,
+  otherStart: string,
+  otherEnd: string,
+) {
+  return (
+    Date.parse(start) < Date.parse(otherEnd) &&
+    Date.parse(end) > Date.parse(otherStart)
+  );
+}

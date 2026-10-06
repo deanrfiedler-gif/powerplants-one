@@ -1,3 +1,4 @@
+import { prepareBookingPolicy } from "../src/scheduling/booking-policy";
 import {
   base,
   entry,
@@ -91,6 +92,7 @@ try {
     });
     const a = (await readAppointment(p, "a8000000-0000-4000-8000-000000000008"))
       .items[0];
+    const prepared = await prepareBookingPolicy(p, a.id);
     await confirmAppointment(p, a.id, {
       operation_id: "b3000000-0000-4000-8000-000000000001",
       schema_version: 1,
@@ -102,7 +104,10 @@ try {
       scope_version: a.scope_version,
       policy_version_id: a.policy_version_id,
       scheduling_policy_id: SCHEDULING_POLICY_ID,
-      scheduling_policy_version: 1,
+      scheduling_policy_version: prepared.policy.version,
+      scheduling_policy_hash: prepared.policy.content_hash,
+      selected_policy: prepared.selected_policy,
+      publication_head_version: prepared.family_head_version,
       crew: [
         {
           resource_id: "a4000000-0000-4000-8000-000000000005",

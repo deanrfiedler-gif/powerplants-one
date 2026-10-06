@@ -61,7 +61,7 @@ async function manualEvidence(form: Locator, purpose: string) {
       `SYN ${purpose}: reviewed fictional external visual inspection only. Stop before intervention; no shutdown or isolation work is authorised. Coordinator owns access and identification follow-up.`,
     );
 }
-async function readiness(
+export async function readiness(
   page: Page,
   wo: string,
   form: Locator,
@@ -89,7 +89,7 @@ async function readiness(
       .click(),
   );
 }
-async function contact(page: Page, aid: string, outcome: string) {
+export async function contact(page: Page, aid: string, outcome: string) {
   await page
     .getByRole("button", { name: "Record contact", exact: true })
     .click();
@@ -127,7 +127,7 @@ async function packDecision(
   );
   await expect(dialog).toHaveCount(0);
 }
-async function issuePack(page: Page, pid: string) {
+export async function issuePack(page: Page, pid: string) {
   await packDecision(
     page,
     `packs/${pid}/check`,
@@ -190,7 +190,20 @@ export async function prepareJourney(page: Page, info: TestInfo) {
       exact: true,
     }),
   ).toBeVisible();
-  await page.goto(`/sites/${id("70")}`);
+  // Site notes also arrive after navigation. Wait for this exact scoped read,
+  // then keep the normal rendering assertion and verify the returned identity.
+  const site = await observedResponse(page, "initial-site-read",
+    (response) => new URL(response.url()).pathname === `/api/v1/sites/${id("70")}` &&
+      response.request().method() === "GET",
+    () => page.goto(`/sites/${id("70")}`),
+    {
+      request: (request) => new URL(request.url()).pathname === `/api/v1/sites/${id("70")}` && request.method() === "GET",
+      timeout: 60000,
+    },
+  );
+  expect(site.status(), await site.text()).toBe(200);
+  expect(site.headers()["cache-control"]).toBe("private, no-store");
+  expect((await site.json()).items[0].id).toBe(id("70"));
   await expect(
     page.getByText(
       "SYN OEM query remains unresolved; follow-up activity will be implemented in P03.",
@@ -566,21 +579,26 @@ export async function prepareJourney(page: Page, info: TestInfo) {
       page.getByText("Current applicable issue", { exact: true }),
     ).toBeVisible();
     await page.goto(`/my-jobs/${aid}`);
+    const acknowledge = page.getByRole("button", {
+      name: "I have read and acknowledge this exact pack",
+      exact: true,
+    });
+    // Scrolling compacts the timer header and moves this control. Observe the
+    // resulting layout before Playwright measures the pointer-click position.
+    await acknowledge.scrollIntoViewIfNeeded();
+    await expect(page.locator("#ppo-work-timer .head")).toHaveAttribute(
+      "data-compact",
+      "1",
+    );
     await committed(
       page,
       `pack-issues/${oldPack.current_issue_id}/acknowledge`,
-      () =>
-        page
-          .getByRole("button", {
-            name: "I have read and acknowledge this exact pack",
-            exact: true,
-          })
-          .click(),
+      () => acknowledge.click(),
     );
     await capture(page, info, `journey-first-issue-ack-${profile}`);
   }
   const offlineContext = await page.context().browser()!.newContext({
-    baseURL: "http://127.0.0.1:3000",
+    baseURL: `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`,
     locale: "en-AU",
     viewport: page.viewportSize(),
     isMobile: mobile,

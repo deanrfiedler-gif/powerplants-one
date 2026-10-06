@@ -39,3 +39,18 @@ No exact image or HTML reference is linked. Keep this gap visible.
 The draft User Guide `guide.page.offline.index.html` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## Current native field contract
+
+FI-02 is the dedicated offline workspace, using its existing standalone shell and IndexedDB owner boundary. It is a Work queue + persistent detail page. Download current permitted job context explicitly; the saved timer and selected site-readiness source remain labelled cached. Start, Pause, Resume and Stop retain original operation IDs, versions and dependency order. A failed or conflicting predecessor blocks later intent. Send queued originals and redownload the resulting Time entry manifest before completion. Undo and forgotten finish require the current online timer. Readiness acknowledgement records the exact downloaded source and selected context, including before actual arrival; changed authority is not silently accepted.
+
+Keep download, cached verification, locally saved, queued, server saved, failed, conflict and retained-for-review states distinct. On 390/320 px phones, preserve visible state, labelled controls, queue totals and retry access; do not imply that a network icon proves server acceptance. No exact standalone offline mockup is available; this remains an explicit visual-reference gap.
+
+Incoming and outgoing handovers, source hashes and exact limitations are in [the native decision](../../../decisions/field-timer-native.md). Current evidence is in [the field programme handover](../../../delivery/field-quality-native-handover.md). Retained r05 bytes and review fingerprints are unchanged.
+
+Current paired captures and actual 200% Chrome zoom/keyboard results are in [the timer evidence record](../../../testing/evidence/field-timer-native/README.md). Source/application evidence is separate from owner approval.
+
+
+## Closed cached visit
+
+FI-02 retains its r20 Document & evidence workspace adaptation and original owner-bound queue. Cached closed/non-startable visits show state-specific personal facts and hide new arrival/acknowledgement intent. Previously retained operations are never deleted or moved to a later visit. Current return preparation/scheduling stays online through My Jobs and existing Service destinations. No protocol/schema version, journal payload, background sender or new route. Inspect 1440/1024/390/320 and actual 200% zoom, keyboard labels and retained failure/recovery alongside the existing offline proof. Native closed-visit mockups and human acceptance remain unavailable. See the closed-visit decision and evidence ledger.

@@ -149,3 +149,13 @@ During pre-merge verification, the independent CRM design audit revision merged 
 D-024 branding/acknowledgement wording is not operationally accepted by synthetic rendering. Device security/retention, private adapter backup/restore ownership, independent review, owner acceptance and SharePoint/MYOB interfaces remain unverified. No hosting, production migration, live integrations, real customer communication or paid/access/rule changes are delivered.
 
 The [P10 starter](p10-starter-prompt.md) is preparation only. It requires completed P09 external publication, live main/contracts/newer decisions and separate P10 authority. P09 creates no Finance handoff, allocation, billable treatment, account balance, stock transaction, invoice, payment, ERP reference or downstream fixture. Stop at P09 publication and P10 preparation.
+
+## FI-07 bounded extension — 2 October 2026
+
+[Customer attendance and response contract](../contracts/field-customer-response.md) extends the existing response command with an explicit attendance/report subject and append-only correction relationship. Internal attendance_acceptances remains Service review. Both exact presentation modes and original offline payload/receipt compatibility remain. Migration 0057 is additive with no seed, grant, user or template change. [Decision](../decisions/field-customer-response.md) and [fresh evidence](../testing/evidence/field-customer-response/README.md) govern this increment; historical evidence above retains its original source.
+
+## Current acceptance checkpoint — 3 October 2026
+
+PR [#337](https://github.com/deanrfiedler-gif/powerplants-one/pull/337) is merged as `6e8b898aeb150b0a4b42c3087605556a057986ad` at `2026-10-03T03:45:54Z`; all 18 final-head checks passed on `41c6f2c909947e93608a2850198b374de671f1e4`. FI-03/04 #334, FI-06 #335, FI-07 #336 and Scheduling Step 6 #333 are also merged. Dated pending/next-increment statements elsewhere in this handover retain their original checkpoints and are superseded for current integration by this paragraph. Post-merge checks are recorded separately in the [current execution ledger](../testing/evidence/field-integrated-acceptance/README.md).
+
+The [acceptance/prerequisite ledger](../testing/field-integrated-acceptance-ledger.md) maps every written PT to its exact source, evidence scope, remaining obligation and owner. Step 6's bounded written PT-28 pass is retained; full PT-30/PP-01, PT-27 findings and actual independent/owner acceptance remain open. The [current-build owner session](field-integrated-owner-walkthrough.md) and [benefit instrument](../testing/field-benefit-measurement.md) are prepared separately from technical execution. No merge or deployment of this acceptance increment is authorised or performed.

@@ -1,0 +1,95 @@
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.58"}
+
+Running 6 tests using 1 worker
+
+(node:37156) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop-chromium] › tests\browser\field-timer.spec.ts:66:1 › FI01 accepted timer presentation, actual saved intervals and original-action recovery (28.6s)
+  ok 2 [desktop-chromium] › tests\browser\field-timer.spec.ts:252:1 › FI02 retained offline timer sequence survives reload and a lost server response (10.6s)
+  x  3 [desktop-chromium] › tests\browser\quality-journey.spec.ts:20:1 › P11 selected UI service-to-Finance journey preserves controlled booking, personal originals, exact response and reconciled Travel no-posting (3.0m)
+(node:38580) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 4 [mobile-chromium] › tests\browser\field-timer.spec.ts:66:1 › FI01 accepted timer presentation, actual saved intervals and original-action recovery (24.2s)
+  ok 5 [mobile-chromium] › tests\browser\field-timer.spec.ts:252:1 › FI02 retained offline timer sequence survives reload and a lost server response (13.3s)
+  x  6 [mobile-chromium] › tests\browser\quality-journey.spec.ts:20:1 › P11 selected UI service-to-Finance journey preserves controlled booking, personal originals, exact response and reconciled Travel no-posting (2.6m)
+
+
+  1) [desktop-chromium] › tests\browser\quality-journey.spec.ts:20:1 › P11 selected UI service-to-Finance journey preserves controlled booking, personal originals, exact response and reconciled Travel no-posting
+
+    TimeoutError: page.waitForResponse: Timeout 15000ms exceeded while waiting for event "response"
+
+       at ..\helpers\quality-prepare.ts:38
+
+      36 |   action: () => Promise<unknown>,
+      37 | ) {
+    > 38 |   const result = page.waitForResponse(
+         |                       ^
+      39 |     (r) =>
+      40 |       new URL(r.url()).pathname === `/api/v1/${path}` &&
+      41 |       r.request().method() === "POST",
+        at committed (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\fi05-field-site-readiness\tests\helpers\quality-prepare.ts:38:23)
+        at returnVisit (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\fi05-field-site-readiness\tests\helpers\quality-return.ts:222:11)
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\fi05-field-site-readiness\tests\browser\quality-journey.spec.ts:656:5
+
+    attachment #7: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\return-complete-results\quality-journey-P11-select-868e2-econciled-Travel-no-posting-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #8: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\return-complete-results\quality-journey-P11-select-868e2-econciled-Travel-no-posting-desktop-chromium\test-failed-3.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #9: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\return-complete-results\quality-journey-P11-select-868e2-econciled-Travel-no-posting-desktop-chromium\test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\return-complete-results\quality-journey-P11-select-868e2-econciled-Travel-no-posting-desktop-chromium\error-context.md
+
+    attachment #11: trace (application/zip) ────────────────────────────────────────────────────────
+    tmp\return-complete-results\quality-journey-P11-select-868e2-econciled-Travel-no-posting-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\return-complete-results\quality-journey-P11-select-868e2-econciled-Travel-no-posting-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-chromium] › tests\browser\quality-journey.spec.ts:20:1 › P11 selected UI service-to-Finance journey preserves controlled booking, personal originals, exact response and reconciled Travel no-posting
+
+    Error: page.evaluate: LocalStorageError: Cached workspace is locked or expired. Reconnect as its original owner. Unsent evidence has not been deleted.
+        at guard (http://127.0.0.1:3000/offline/modules/offline/store.js:100:15)
+        at async http://127.0.0.1:3000/offline/modules/offline/store.js:235:9
+        at async localTransaction (http://127.0.0.1:3000/offline/modules/offline/store.js:70:21)
+        at async <anonymous>:337:30
+        at guard (http://127.0.0.1:3000/offline/modules/offline/store.js:100:15)
+        at async http://127.0.0.1:3000/offline/modules/offline/store.js:235:9
+        at async localTransaction (http://127.0.0.1:3000/offline/modules/offline/store.js:70:21)
+        at async <anonymous>:337:30
+        at localRows (C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\fi05-field-site-readiness\tests\browser\quality-journey.spec.ts:334:17)
+        at C:\Users\Dean.Fiedler\Projects\powerplants-one\tmp\fi05-field-site-readiness\tests\browser\quality-journey.spec.ts:666:17
+
+    attachment #8: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\return-complete-results\quality-journey-P11-select-868e2-econciled-Travel-no-posting-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #9: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\return-complete-results\quality-journey-P11-select-868e2-econciled-Travel-no-posting-mobile-chromium\test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #10: screenshot (image/png) ─────────────────────────────────────────────────────────
+    tmp\return-complete-results\quality-journey-P11-select-868e2-econciled-Travel-no-posting-mobile-chromium\test-failed-3.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\return-complete-results\quality-journey-P11-select-868e2-econciled-Travel-no-posting-mobile-chromium\error-context.md
+
+    attachment #12: trace (application/zip) ────────────────────────────────────────────────────────
+    tmp\return-complete-results\quality-journey-P11-select-868e2-econciled-Travel-no-posting-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\return-complete-results\quality-journey-P11-select-868e2-econciled-Travel-no-posting-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop-chromium] › tests\browser\quality-journey.spec.ts:20:1 › P11 selected UI service-to-Finance journey preserves controlled booking, personal originals, exact response and reconciled Travel no-posting
+    [mobile-chromium] › tests\browser\quality-journey.spec.ts:20:1 › P11 selected UI service-to-Finance journey preserves controlled booking, personal originals, exact response and reconciled Travel no-posting
+  4 passed (7.3m)

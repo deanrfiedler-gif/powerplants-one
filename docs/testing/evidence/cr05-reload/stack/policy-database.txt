@@ -1,0 +1,15 @@
+✔ exact immutable source and changed duration identify permitted future bookings and owner (21071.349ms)
+✔ effective boundary crossing flags review while ending exactly at the boundary does not (31.1886ms)
+✔ current scope isolates company, site and workspace; systems has no publisher shortcut (74.9172ms)
+✔ stale policy, partial proposals, operational edits and out-of-range times are refused (19.083ms)
+✔ analysis leaves all persisted PPO records byte-identical, including source and receipt records (2735.1244ms)
+✔ a revoked grant is enforced on refresh, not cached by the preview (44.6035ms)
+✔ started work is excluded and an oversized result is refused without partial success (43501.821ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 75432.8664

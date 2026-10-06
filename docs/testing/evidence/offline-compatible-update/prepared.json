@@ -1,0 +1,25 @@
+{
+  "identity": {
+    "head": "80b2f418b90a69d267ac2e65682a5b560a8b4356",
+    "source_tree": "48a41c819dd3ef228c38ca87d8fdbb56c8a98ad0",
+    "database_tree": "86b8a41f3aeebfc67f3250a2c00f455f886bc701",
+    "public_tree": "7373dacab0a49b43c44723874cc4e830f61d15fe",
+    "package_lock_sha256": "5f7a88abb6cd16b001525d7f59ff8a7204cf40b9e1121567fdc949a65951051e",
+    "build": "L_m47dGe9yw5BVXtZuFM8",
+    "worker_sha256": "2f187bb4085f1492edf36eaf5766afb119d68121ff8c520779ab104e34d17745",
+    "offline_app_sha256": "0a1b1c00698488209c927ab7bf77a739ebefb8bdf695ed8bae653947c2793a21"
+  },
+  "browser": "154.0.8037.58",
+  "supported_originals": 7,
+  "accepted_response_lost": 6,
+  "queued_unsubmitted": 1,
+  "unsupported_fixture": 1,
+  "pack_outputs": {
+    "html": "3fb0692a70b62d09441c0bc9778e3f0cf54620ed50981ae40c60b3b37c640335",
+    "pdf": "4246ff9364ed856c148393330feb93dfc9a3d2254050ce34c6de298d8f6c1ecf",
+    "manifest": "0c31de2da8f00aab9c46aa75364fe1196bd03e23dd479a6ca2afe2c2210b439d"
+  },
+  "png_sha256": "8e0e39097d1e122a86d83ed2c236f3bc8de8b82c46a945fbe71b6bf0a059203e",
+  "migration_version": 49,
+  "originals_sha256": "6c0c898ec93d3140a1bf5eb29ffdc64899ac0175d4af4aaad76688c5a910ffb8"
+}

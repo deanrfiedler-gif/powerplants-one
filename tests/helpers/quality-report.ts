@@ -102,7 +102,7 @@ export async function submit(page: Page, recoverOwner = false) {
       "Identity verified",
     );
     await expect(savedWorkspace.locator("#queue .status")).toHaveText(
-      Array(5).fill("ServerSaved"),
+      Array(5).fill("Server accepted and saved"),
     );
     await savedWorkspace.close();
     await expect(

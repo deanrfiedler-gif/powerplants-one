@@ -50,7 +50,29 @@ export const migrationFiles = [
   "0046-sales-workflows.sql",
   "0047-engineering-native-control.sql",
   "0048-estimating-cost-sources.sql",
-  "0049-maintenance-warranty.sql",
+  "0049-supply-chain.sql",
+  "0050-field-work-timers.sql",
+  "0051-maintenance-warranty.sql",
+  // 0052 Products remains reserved; 0051 is the reconciled Maintenance/Warranty contribution.
+  "0053-scheduling-policy-publication.sql",
+  "0054-scheduling-policy-commands.sql",
+  "0055-service-inspections.sql",
+  "0056-field-incidents.sql",
+  "0057-field-customer-response.sql",
+  "0058-estimating-review.sql",
+  "0059-quotation-release.sql",
+  "0060-quotation-response.sql",
+  "0061-quotation-conversion.sql",
+  "0062-quotation-disposition.sql",
+  "0063-quotation-supply-followup.sql",
+  "0064-quotation-reservation-reconciliation.sql",
+  "0065-quotation-receipt-correction.sql",
+  "0066-quotation-allocation-shortfall.sql",
+  "0067-quotation-material-resolution.sql",
+  "0068-quotation-task-dependency.sql",
+  "0069-quotation-task-chain.sql",
+  "0070-quotation-task-branch.sql",
+  "0071-quotation-task-merge.sql",
 ] as const;
 export const seedFiles = [
   [2, "seed.sql"],
@@ -80,9 +102,16 @@ export const seedFiles = [
   [44, "seed-customer-location.sql"],
   [47, "seed-engineering-native-control.sql"],
   [48, "seed-estimating-sources.sql"],
-  [49, "seed-maintenance-warranty.sql"],
+  [49, "seed-supply.sql"],
+  [51, "seed-maintenance-warranty.sql"],
+  [53, "seed-scheduling-policy-publication.sql"],
+  [54, "seed-scheduling-policy-commands.sql"],
+  [55, "seed-service-inspections.sql"],
+  [56, "seed-field-incidents.sql"],
+  [58, "seed-estimating-review.sql"],
+  [59, "seed-quotation-release.sql"],
 ] as const;
-export const latestMigrationVersion = 49;
+export const latestMigrationVersion = 71;
 
 // Separate hosted-only track (ADR-0021): schema that only exists where real identity does.
 // Version 1 is the issued identity baseline and is never re-applied or rewritten.

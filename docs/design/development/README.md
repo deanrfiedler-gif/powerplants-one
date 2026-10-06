@@ -6,6 +6,8 @@
 
 This folder is the Git master for the local and protected hosted Design & Development workspace. Open `/development/page-register` through the local application or the **Design and build workspace** icon next to global search. `/development/design-system` is the component catalogue: real tables, cards, Gantt, scheduling, forms, navigation, overlays, feedback and mobile examples, linked references and alignment records. See the [component maintenance contract](components/README.md). Local mode retains its loopback gateway. The private hosted demo permits only the configured owner through an active Microsoft session; every page, preview and reference endpoint checks access. Set `PPO_DEVELOPMENT_WORKSPACE=off` to disable the workspace. See the [hosted access and release decision](../../decisions/hosted-design-workspace.md).
 
+Current ES-07 contribution: 330 entries, 176 source routes and 37 component records (19 runnable examples, ten hosts, eight reference-only patterns). All 330 page reviews and 37 component reviews remain pending. Native conversion, disposition and owned Supply follow-up retain the existing ES-07/SC-09 keys. PR #345 extends the same hosts with [reservation outcome reconciliation](../../decisions/quotation-reservation-reconciliation.md); the figures below describe retained baseline/import milestones.
+
 ## What is maintained
 
 | Source | Responsibility |
@@ -75,8 +77,14 @@ The repository-wide naming policy and retained-record boundary are documented in
 
 ## Component catalogue extension
 
-`components.json` is the stable component master; `components/*.md` supplies desktop/mobile rules. The catalogue includes 19 runnable examples, one host-shell entry and four reference-only entries. Its internal renderer adds one source route, taking the page register to 267 entries and 263 draft guides. `studio:check` also validates component categories, renderer/export bindings, reference anchors, consumer keys and review records. Automatic fingerprints mark reviews stale; no test pass grants design approval.
+`components.json` is the stable component master; `components/*.md` supplies desktop/mobile rules. The current catalogue includes 19 runnable examples, ten host entries and ten reference-only entries. Current integration registers 344 entries and 190 source routes; review status remains separate from coverage. `studio:check` also validates component categories, renderer/export bindings, reference anchors, consumer keys and review records. Automatic fingerprints mark reviews stale; no test pass grants design approval.
 
 ## Hosted release model
 
 The image build packages the validated catalogue, component library and guides against its exact source commit. References stay in the immutable image outside public assets and are served only by the protected allowlisted reader. The hosted label links to that commit; file-level history is labelled unavailable when the image has no Git history, with links to the pinned GitHub history. Refresh rereads the deployed snapshot, not unmerged work. Local mode still discovers and fingerprints working files. No browser edit is saved to the repository or business records.
+
+## Shared Shipment allocation shortfall
+
+SYN-ES07-06 retains all existing page keys and schema versions. The ES-07 host adds AllocationShortfall with independently received exact reductions, atomic native effects and visible unmet Demand. SC-09 retains its receiving queue and ES-07 handover. Components, state fixtures, consumer dependencies, page requirements and Draft guides are updated together. All existing review records remain unchanged; accepted shortfall images and owner/device/screen-reader review remain pending. See the shortfall execution ledger for actual functional proof.
+
+Local page-guide requests match the pathname against the current register and read the current guide library directly. They retain exact-route precedence, Git provenance and explicit review status without rebuilding unrelated catalogue fingerprints during navigation. The full development catalogue and `studio:check` still validate all sources, references and consumer bindings. The same access gate and private no-store response apply; hosted guides remain tied to the existing immutable snapshot. Guide edits and removed bindings are visible on the next request; no request-external cache or accepted review is introduced.

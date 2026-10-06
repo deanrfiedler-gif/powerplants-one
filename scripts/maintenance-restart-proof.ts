@@ -1,7 +1,8 @@
 // The caller restarts its dedicated application and PostgreSQL between phases.
 import assert from "node:assert/strict";
 import { createHash, randomUUID } from "node:crypto";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile, readdir } from "node:fs/promises";
+import { join } from "node:path";
 import { localConfig } from "../src/platform/config";
 import { database, closeDatabase } from "../src/platform/database";
 import {
@@ -14,6 +15,10 @@ import {
 import { planCommand } from "../src/maintenance/plans";
 import { createRenewal } from "../src/maintenance/renewals";
 import { createClaim } from "../src/maintenance/recovery";
+import { serviceResult } from "../tests/helpers/maintenance-service";
+import { snapshot as snapshotTables } from "../tests/helpers/policy-commands";
+import { requestReportIssue, processReportJob } from "../src/reports/worker";
+import { readReport } from "../src/reports/service";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
 const phase = process.argv[2],
@@ -21,7 +26,18 @@ const phase = process.argv[2],
 assert.ok(["write", "verify"].includes(phase));
 assert.ok(Number.isSafeInteger(serverPid) && serverPid > 0);
 const origin = `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`,
-  root = "tmp/maintenance-restart";
+  root = process.env.PPO_RESTART_PROOF_DIRECTORY ?? "tmp/maintenance-restart";
+const documentRoot = process.env.PPO_DOCUMENT_DIRECTORY;
+assert.ok(documentRoot, "Use a dedicated private document directory");
+async function files() {
+  return (await readdir(documentRoot!, { recursive: true, withFileTypes: true }))
+    .filter((f) => f.isFile()).map((f) => join(f.parentPath, f.name)).sort();
+}
+async function outputHashes(paths: string[]) {
+  return Promise.all(paths.map(async (path) => ({
+    path, sha256: createHash("sha256").update(await readFile(path)).digest("hex"),
+  })));
+}
 const digest = (value: unknown) =>
   createHash("sha256").update(JSON.stringify(value)).digest("hex");
 await mkdir(root, { recursive: true });
@@ -41,9 +57,8 @@ async function call(path: string, data?: unknown) {
   assert.ok(r.ok, await r.clone().text());
   return r.json();
 }
-async function snapshot(operation: string) {
-  const state: Record<string, unknown> = {};
-  for (const table of [
+async function snapshot() {
+  return snapshotTables([
     "service_agreements",
     "agreement_revisions",
     "agreement_scope",
@@ -55,27 +70,21 @@ async function snapshot(operation: string) {
     "renewal_reviews",
     "warranty_cases",
     "supplier_claims",
-    "maintenance_events",
-  ])
-    state[table] = (
-      await database().query(
-        `SELECT to_jsonb(t) AS row FROM ppo.${table} t ORDER BY to_jsonb(t)::text`,
-      )
-    ).rows;
-  for (const table of ["operation_receipts", "audit_events", "outbox_jobs"])
-    state[table] = (
-      await database().query(
-        `SELECT to_jsonb(t) AS row FROM ppo.${table} t WHERE operation_id=$1 ORDER BY to_jsonb(t)::text`,
-        [operation],
-      )
-    ).rows;
-  return state;
+    "maintenance_events", "maintenance_work_requests", "maintenance_service_results",
+    "warranty_resolution_plans", "tickets",
+    "work_orders", "work_order_tickets", "scope_revisions", "scope_items", "scope_assets",
+    "coverage_assessments", "appointments", "assignments", "pack_revisions", "pack_issues",
+    "field_attendances", "field_entries", "field_attachments", "service_reports", "report_revisions",
+    "report_reviews", "report_issues", "report_presentations",
+    "operation_receipts", "audit_events", "outbox_jobs",
+  ]);
 }
 try {
   const databaseStarted = (
     await database().query("SELECT pg_postmaster_start_time()::text AS at")
   ).rows[0].at;
   if (phase === "write") {
+    const priorFiles = new Set(await files());
     const a = await plan(),
       w = await warranty();
     await planCommand(a.p, a.id, {
@@ -85,7 +94,31 @@ try {
       from: "2026-01-01",
       until: "2026-03-31",
     });
-    await assessment(a.p, a.revision);
+    const entitlement = await assessment(a.p, a.revision);
+    const due = (await database().query(
+      "SELECT id FROM ppo.maintenance_occurrences WHERE plan_id=$1 ORDER BY original_due LIMIT 1", [a.id],
+    )).rows[0];
+    const prepare = { ...base(), expected_version: 1, assessment_id: entitlement, owner_id: CRM.owner };
+    const preparePath = `maintenance/due/${due.id}/prepare-work`;
+    const prepared = await call(preparePath, prepare);
+    const request = (await database().query("SELECT id FROM ppo.maintenance_work_requests WHERE occurrence_id=$1", [due.id])).rows[0];
+    const service = await serviceResult(a.p, request.id, 79);
+    const report = service.report;
+    await requestReportIssue(a.p, report.id, {
+      ...base(), expected_version: report.version, revision_id: report.revisions[0].id,
+      review_id: report.reviews[0].id, template_id: report.template.id,
+      template_version: report.template.version,
+    });
+    const queuedReport = (await readReport(a.p, report.id)).items[0];
+    const issued = await processReportJob(queuedReport.jobs[0].id);
+    assert.ok("issue_id" in issued, JSON.stringify(issued));
+    const receive = {
+      ...base(), expected_version: prepared.record_version, request_id: request.id,
+      report_revision_id: service.report.revisions[0].id, task_mapping: service.mapping,
+    };
+    const receivePath = `maintenance/due/${due.id}/receive-result`;
+    const received = await call(receivePath, receive);
+    assert.equal((await database().query("SELECT state FROM ppo.maintenance_occurrences WHERE id=$1", [due.id])).rows[0].state, "Completed");
     await createRenewal(a.p, {
       ...base(),
       id: randomUUID(),
@@ -121,8 +154,14 @@ try {
         },
       },
       path = `warranty/cases/${w.id}`;
-    const receipt = await call(path, command),
-      original = await snapshot(command.operation_id);
+    const receipt = await call(path, command), original = await snapshot();
+    const outputs = await outputHashes((await files()).filter((path) => !priorFiles.has(path)));
+    assert.ok(outputs.length >= 4, "Retain the pack, reviewed report outputs and PNG evidence");
+    const replays = [
+      { path: preparePath, command: prepare, receipt: prepared },
+      { path: receivePath, command: receive, receipt: received },
+      { path, command, receipt },
+    ];
     await writeFile(
       `${root}/original.json`,
       JSON.stringify({
@@ -132,6 +171,7 @@ try {
         path,
         receipt,
         original,
+        replays, outputs, filePaths: await files(),
       }),
     );
     console.log(
@@ -140,6 +180,7 @@ try {
         serverPid,
         databaseStarted,
         sha256: digest(original),
+        replays: replays.length, outputFiles: outputs.length,
         result: "Original retained; both process restarts still required",
       }),
     );
@@ -155,12 +196,13 @@ try {
       proof.databaseStarted,
       "PostgreSQL must restart",
     );
-    assert.deepEqual(
-      await call(`operations/${proof.command.operation_id}`),
-      proof.receipt,
-    );
-    assert.deepEqual(await call(proof.path, proof.command), proof.receipt);
-    const current = await snapshot(proof.command.operation_id);
+    for (const original of proof.replays) {
+      assert.deepEqual(await call(`operations/${original.command.operation_id}`), original.receipt);
+      assert.deepEqual(await call(original.path, original.command), original.receipt);
+    }
+    assert.deepEqual(await outputHashes(proof.outputs.map((o: { path: string }) => o.path)), proof.outputs);
+    assert.deepEqual(await files(), proof.filePaths);
+    const current = await snapshot();
     assert.deepEqual(current, proof.original);
     console.log(
       JSON.stringify({
@@ -168,6 +210,7 @@ try {
         serverPid,
         databaseStarted,
         sha256: digest(current),
+        replays: proof.replays.length, outputFiles: proof.outputs.length,
         result:
           "Exact typed originals, audit/outbox and receipt survive both restarts; retry adds no effects",
       }),

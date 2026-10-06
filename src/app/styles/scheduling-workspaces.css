@@ -163,3 +163,11 @@
     gap: 4px;
   }
 }
+.policy-publication { min-width: 0; overflow-wrap: anywhere; display: grid; gap: var(--space-4, 16px); }
+.policy-publication :is(article, section, details, form, fieldset) { min-width: 0; }
+.policy-publication pre { white-space: pre-wrap; overflow-wrap: anywhere; font-size: inherit; }
+.policy-publication summary { cursor: pointer; }
+.policy-publication .button-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.policy-publication .button-row > a { display: inline-flex; align-items: center; min-height: 44px; }
+.policy-publication .scheduling-card > a { display: inline-block; margin: 0 8px 8px 0; }
+.policy-publication fieldset { border: 1px solid var(--ppo-divider); border-radius: 6px; padding: 12px; }

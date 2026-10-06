@@ -21,6 +21,11 @@ import {
   completionCommand,
   authorityFields,
 } from "../field/validation";
+import { commandTimer } from "../field/timer";
+import { timerCommand } from "../field/timer-model";
+import { acknowledgeFieldReadiness } from "../field/readiness";
+import { fieldReadinessCommand } from "../field/readiness-command";
+import { fieldContext } from "../field/context";
 import { startAttendance } from "../field/start";
 import { captureEntry } from "../field/entries";
 import {
@@ -205,6 +210,18 @@ export function validatePayload(op: WireOperation) {
           );
       break;
     }
+    case "Timer":
+      timerCommand(op.appointment_id, b);
+      if (b.action === "Undo")
+        throw new AppError(
+          422,
+          "OfflineUndoUnsupported",
+          "Keep the original. Offline timer changes use Resume or an attributable time correction; the online Undo window cannot be assumed.",
+        );
+      break;
+    case "FieldReadiness":
+      fieldReadinessCommand(op.appointment_id, b);
+      break;
     case "Capture":
     case "Correct":
       entryCommand(b, op.command === "Correct" ? op.target_id! : undefined);
@@ -245,6 +262,8 @@ export function validatePayload(op: WireOperation) {
       break;
     case "CustomerResponse":
       responseCommand(op.target_id!, b);
+      if (b.supersedes_response_id !== undefined)
+        throw new AppError(422, "OfflineResponseCorrectionUnsupported", "Retain the original. Correct or clarify a saved response online from its exact retained history.");
       break;
     case "CompletionDraft":
       completionCommand(op.appointment_id, b);
@@ -355,6 +374,38 @@ async function validateAuthority(
   b: Record<string, unknown>,
 ) {
   if (["Start", "Acknowledge"].includes(op.command)) return;
+  if (op.command === "FieldReadiness") {
+    // Review can precede attendance; bind the exact downloaded current visit instead.
+    const { a, r, assignment } = await fieldContext(
+      c,
+      p,
+      op.appointment_id,
+      "field.capture.own",
+    );
+    const issue = (
+      await c.query(
+        "SELECT i.id,i.output_hash FROM ppo.packs k JOIN ppo.pack_issues i ON i.id=k.current_issue_id WHERE k.workspace_id=$1 AND k.appointment_id=$2",
+        [p.workspace_id, op.appointment_id],
+      )
+    ).rows[0];
+    const current = {
+      assignment_id: assignment.id,
+      assignment_version: a.assignment_version,
+      schedule_version: a.schedule_version,
+      scope_revision_id: a.scope_revision_id,
+      scope_version: a.scope_version,
+      scope_hash: r.content_hash,
+      issue_id: issue?.id,
+      issue_hash: issue?.output_hash,
+    };
+    if (canonical(current) !== canonical(op.authority))
+      throw new AppError(
+        409,
+        "AuthorityChanged",
+        "This readiness review belongs to a different downloaded visit or pack. Preserve the original and review current context.",
+      );
+    return;
+  }
   const attendanceId =
     b.attendance_id ??
     (op.command === "CustomerResponse"
@@ -484,6 +535,10 @@ export async function syncOne(
     },
     async () => {
       switch (op.command) {
+        case "Timer":
+          return commandTimer(p, op.appointment_id, b);
+        case "FieldReadiness":
+          return acknowledgeFieldReadiness(p, op.appointment_id, b);
         case "Start":
           return startAttendance(p, op.appointment_id, b);
         case "Acknowledge":
@@ -621,13 +676,20 @@ export async function syncBatch(
           transfers[op.operation_id] as string | undefined,
         );
         const authorityReview =
-          ["Capture", "Correct"].includes(op.command) &&
-          (
-            await database().query(
-              "SELECT authority_state FROM ppo.field_entries WHERE workspace_id=$1 AND actor_id=$2 AND id=$3",
-              [p.workspace_id, p.actor_id, receipt.record_id],
-            )
-          ).rows[0]?.authority_state === "ReviewRequired";
+          op.command === "Timer"
+            ? (
+                await database().query(
+                  "SELECT authority_state FROM ppo.field_timer_events WHERE workspace_id=$1 AND actor_id=$2 AND operation_id=$3",
+                  [p.workspace_id, p.actor_id, op.operation_id],
+                )
+              ).rows[0]?.authority_state === "ReviewRequired"
+            : ["Capture", "Correct"].includes(op.command) &&
+              (
+                await database().query(
+                  "SELECT authority_state FROM ppo.field_entries WHERE workspace_id=$1 AND actor_id=$2 AND id=$3",
+                  [p.workspace_id, p.actor_id, receipt.record_id],
+                )
+              ).rows[0]?.authority_state === "ReviewRequired";
         results.set(index, {
           operation_id: op.operation_id,
           state:

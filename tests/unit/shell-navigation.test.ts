@@ -21,7 +21,8 @@ test("read-only navigation does not imply creation or elevate an identity", () =
   assert.ok(!permitted.includes("settings"));
   assert.equal(canOpen(destination("projects"), permitted, true), false);
   assert.equal(canOpen(destination("settings"), ["settings"], true), false);
-  assert.equal(canOpen(destination("supply"), ["supply"], true), false);
+  assert.equal(canOpen(destination("supply"), permitted, true), false);
+  assert.equal(canOpen(destination("supply"), navigationForCapabilities(new Set(["supply.read"]),true), true), true);
   assert.deepEqual(navigationForCapabilities(new Set(), true), ["home"]);
 });
 test("nested pages resolve to their actual workspace instead of a remembered Sales selection", () => {

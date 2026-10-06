@@ -98,6 +98,7 @@ test("operator diagnostics allow only fixed labels and never expose exception co
   assert.equal(operatorFailureCode(Object.assign(new Error(secret), { code: "42501", detail: secret, query: secret })), "postgres-42501");
   assert.equal(operatorFailureCode(Object.assign(new Error(secret), { code: "ENOTFOUND" })), "connection-ENOTFOUND");
   assert.equal(operatorFailureCode(new Error("Existing hosted identity migration must match.")), "identity-history-mismatch");
+  assert.equal(operatorFailureCode(new Error("Unrecognised scheduling seed root; preserve and review this database.")), "scheduling-seed-root-mismatch");
 });
 
 for (const operation of ["upgrade", "verify"]) {

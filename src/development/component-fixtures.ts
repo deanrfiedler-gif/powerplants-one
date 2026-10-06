@@ -235,6 +235,12 @@ export const plannerFixture: Schedule = {
         })),
       },
       skills: [],
+      exceptions: [{
+        id: fixtureId(232),
+        kind: "Closed",
+        start_at: "2026-09-24T13:00:00Z",
+        end_at: "2026-09-26T14:00:00Z",
+      }],
       blocks: [
         {
           id: fixtureId(231),
@@ -268,3 +274,10 @@ export function areaFixture() {
   ];
   return value;
 }
+
+export const schedulingPolicyHoldFixture: import("../scheduling/policy-holds").PolicyHold = {
+  impact_id: fixtureId(220), publication_id: fixtureId(221), owner_id: fixtureId(222),
+  owner_name: "Synthetic scheduling owner", reason: "DurationLimitExceeded",
+  disposition: "Unresolved", held: true,
+  next_action: "Make a controlled change, then obtain a fresh policy-impact resolution.",
+};

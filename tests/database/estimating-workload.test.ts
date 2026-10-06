@@ -153,3 +153,71 @@ test("ES01 scope and capability revocation removes source rows and action text w
     (error: unknown) => (error as { status: number }).status === 403,
   );
 });
+
+test("ES01 readiness counts cover the permitted search and owner window before the readiness view", async () => {
+  const p = (await createSession("coordinator")).principal;
+  const prefix = `SYN ES01 counts ${randomUUID()}`;
+  const opportunity = async (suffix: string) => {
+    const value = { ...crmCreate(), title: `${prefix} ${suffix}` };
+    await createOpportunity(p, value);
+    return value;
+  };
+  const discover = async (id: string, incomplete: boolean) => {
+    const discovery = discoveryInput();
+    if (incomplete)
+      discovery.scope.unsupported_scope = {
+        owner_id: CRM.owner,
+        reason: "SYN confirm sensor wiring before costing",
+      };
+    const preview = await previewDiscoveryCreate(p, {
+      opportunity_id: id,
+      discovery,
+    });
+    await createDiscoveryWorkspace(p, {
+      ...crmBase(),
+      id: randomUUID(),
+      option_id: randomUUID(),
+      revision_id: randomUUID(),
+      opportunity_id: id,
+      discovery,
+      expected_opportunity_version: preview.expected_opportunity_version,
+      context_hash: preview.context_hash,
+      confirmed_question_ids: preview.required_confirmation_ids,
+    });
+  };
+  await opportunity("unstarted one");
+  await opportunity("unstarted two");
+  await discover((await opportunity("clarification")).id, true);
+  await discover((await opportunity("ready")).id, false);
+  await createEstimate(p, estimateInput((await opportunity("legacy")).id));
+  const expected = { unstarted: 2, clarification: 1, ready: 1, legacy: 1 };
+  const all = await readEstimatingWorkload(p, { q: prefix });
+  assert.deepEqual(all.counts, expected);
+  assert.equal(all.items.length, 5);
+  for (const view of [
+    "unstarted",
+    "clarification",
+    "ready",
+    "legacy",
+  ] as const) {
+    const result = await readEstimatingWorkload(p, { q: prefix, view });
+    assert.deepEqual(
+      result.counts,
+      expected,
+      "the view does not narrow counts",
+    );
+    assert.equal(result.items.length, expected[view]);
+    assert.ok(result.items.every((item) => item.state === view));
+  }
+  assert.deepEqual(
+    (await readEstimatingWorkload(p, { q: prefix, owner: "mine" })).counts,
+    { unstarted: 0, clarification: 1, ready: 1, legacy: 1 },
+    "counts follow the estimating-owner filter",
+  );
+  const second = (await createSession("second-company")).principal;
+  assert.deepEqual(
+    (await readEstimatingWorkload(second, { q: prefix })).counts,
+    { unstarted: 0, clarification: 0, ready: 0, legacy: 0 },
+    "hidden rows are never counted",
+  );
+});

@@ -38,3 +38,9 @@ SVC-04/05, ENG-01, PRJ-02/04, DAT-06, SC-07/08, TR-03/08/16, API-R04/C04–07 an
 ## Local setup finding
 
 Unchanged main reproduced seed timeout in PostgreSQL 16.15 on Windows while the site timezone trigger scanned `pg_timezone_names`. A seed bundle runs several statements under one call; its setup-only transaction now has a bounded 120-second statement timeout. The same setup bound covers explicit synthetic reset after schema disposal also exceeded the ordinary read limit under concurrent local validation. The application pool remains at 10 seconds, and constraints, transaction atomicity and durability are unchanged. Extending all application query limits or changing historical migrations was rejected.
+
+## Post-merge review continuity
+
+Inspection of main `0f10b7f` found the whole programme merged through #310. The follow-up uses the existing native History API convention to retain review criteria and selected appointment, extending the allowlisted Scheduling return URL. Date/site/timezone flow through Field Team and resource detail; the Field Team default remains today. Query values are presentation criteria, never command authority. Analytical sequences/exclusions are deliberately transient and reset on refresh or changed criteria.
+
+Calendar closures use half-open interval intersection for each displayed day and each buffered travel reservation. This corrects missing evidence without introducing a second booking validator. Open/InProgress Activities alone are outstanding follow-up; terminal Activities remain retained history. No new technology, data model, capability or operational policy is selected. [Verification](../testing/evidence/scheduling-refinement/README.md) remains separate from owner acceptance.

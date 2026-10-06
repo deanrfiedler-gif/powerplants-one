@@ -41,9 +41,9 @@ export async function readEstimate(p:Principal,id:string,query:Record<string,str
   const versionRows=(await c.query("SELECT id,version,predecessor_id,scope_revision_id,reason,created_at,created_by,content_hash FROM ppo.estimate_versions WHERE workspace_id=$1 AND estimate_id=$2 ORDER BY version DESC",[p.workspace_id,id])).rows;
   const versions=[];
   for(const row of versionRows)try { if(e.discovery_basis)await costBasisContext(c,p,e,row.id,"estimating.read");versions.push(row); }catch(error){if(!(error instanceof AppError)||error.status!==404)throw error;}
-  const quoteRows=(await hasPermission(c,p,"estimating.quote.read",e.company_id,estimateSite(e)??undefined))?(await c.query("SELECT q.id,q.version,q.estimate_version_id,q.created_at,j.state AS render_state,h.display_number FROM ppo.draft_quote_revisions q JOIN ppo.draft_quotes h ON (h.workspace_id,h.id)=(q.workspace_id,q.quote_id) JOIN ppo.estimate_quote_jobs j ON j.revision_id=q.id WHERE q.workspace_id=$1 AND q.estimate_id=$2 ORDER BY q.version DESC",[p.workspace_id,id])).rows:[];
+  const quoteRows=(await hasPermission(c,p,"estimating.quote.read",e.company_id,estimateSite(e)??undefined))?(await c.query("SELECT q.id,q.version,q.estimate_version_id,q.created_at,q.template_version,j.state AS render_state,h.display_number FROM ppo.draft_quote_revisions q JOIN ppo.draft_quotes h ON (h.workspace_id,h.id)=(q.workspace_id,q.quote_id) JOIN ppo.estimate_quote_jobs j ON j.revision_id=q.id WHERE q.workspace_id=$1 AND q.estimate_id=$2 ORDER BY q.version DESC",[p.workspace_id,id])).rows:[];
   const quotes=[];
-  for(const row of quoteRows)try {if(e.discovery_basis)await quoteContext(c,p,row.id);quotes.push(row);}catch(error){if(!(error instanceof AppError)||error.status!==404)throw error;}
+  for(const row of quoteRows)try {await quoteContext(c,p,row.id);const {template_version,...safe}=row;quotes.push({...safe,...(template_version==="PPO-SYN-RELEASE-r01"?{release:true}:{})});}catch(error){if(!(error instanceof AppError)||error.status!==404)throw error;}
   let latest=null;
   if(e.discovery_basis)try{latest=await latestCostingScope(c,p,e);}catch(error){if(!(error instanceof AppError)||error.status!==404)throw error;}
   const lineage=await readLineage(c,p,v), specialist_contributions=[];
@@ -69,7 +69,7 @@ export async function readQuote(p:Principal,id:string) {
   try {await quoteContext(c,p,id,"estimating.quote.prepare");can_prepare=true;} catch(error) {if(!(error instanceof AppError)||![403,404].includes(error.status))throw error;}
   let internal=await hasPermission(c,p,"estimating.read",e.company_id,estimateSite(e)??undefined);
   if(internal&&e.discovery_basis)try{await estimateContext(c,p,e.id,"estimating.read",q.estimate_version_id);}catch(error){if(!(error instanceof AppError)||error.status!==404)throw error;internal=false;}
-  return {id:q.id,quote_id:q.quote_id,snapshot:q.safe_snapshot,created_at:q.created_at,can_prepare,
+  return {id:q.id,quote_id:q.quote_id,...(q.template_version==="PPO-SYN-RELEASE-r01"?{release:true}:{}),snapshot:q.safe_snapshot,created_at:q.created_at,can_prepare,
     ...(internal?{estimate_id:e.id,estimate_version_id:q.estimate_version_id}:{}),
     job:{state:j.state,attempts:j.attempts,error_code:j.error_code,output_available:j.state==="Ready",hashes:j.manifest?{html:j.manifest.html_hash,pdf:j.manifest.pdf_hash}:null},
     attempt_history:(await c.query("SELECT attempt,outcome,code,happened_at FROM ppo.estimate_quote_attempts WHERE job_id=$1 ORDER BY id",[j.id])).rows};

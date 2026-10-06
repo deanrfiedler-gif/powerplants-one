@@ -244,7 +244,7 @@ try {
         .getByRole("button", { name: "Send next batch / retry originals" })
         .click();
       await expect(page.locator("#queue .status")).toHaveText(
-        Array(6).fill("ServerSaved"),
+        Array(6).fill("Server accepted and saved"),
       );
       const saved = await rows(page);
       for (const row of saved)

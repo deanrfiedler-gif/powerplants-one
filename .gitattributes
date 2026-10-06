@@ -23,3 +23,8 @@ docs/testing/evidence/es02-native-r01/*.txt text eol=lf
 docs/testing/evidence/es02-native-r01/failed/*.txt text eol=lf
 # ES-08 retained text evidence is fingerprinted in its artifact manifest.
 docs/testing/evidence/es08-native-r01/*.txt text eol=lf
+# Completed service-return evidence uses exact text hashes in its manifest.
+docs/testing/evidence/field-timer-native/service-return/*.txt text eol=lf
+docs/testing/evidence/offline-compatible-update/*.txt text eol=lf
+docs/testing/evidence/scheduling-policy-impact/*.txt text eol=lf
+docs/testing/evidence/cr05-reload/stack/*.txt text eol=lf

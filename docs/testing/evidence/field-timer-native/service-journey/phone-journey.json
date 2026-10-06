@@ -1,0 +1,83 @@
+{
+  "ticket": "04e58838-e8c5-46d1-a95a-dbede37d44ad",
+  "work_order_id": "2e931d52-a042-465d-bc4e-fcca2b47d52f",
+  "appointment_id": "74a7f03e-a35b-4920-9265-0de9c2182fe6",
+  "pack_id": "6be0befb-908e-4874-a31f-37fe669a4139",
+  "old_issue_id": "148ab865-7622-47aa-b8f1-93eae152e875",
+  "current_issue_id": "1bd36102-5b87-4ec8-bf32-a9b6bfe33abf",
+  "report_id": "4ed861d0-d087-4983-bc64-69984d78753d",
+  "presentation": {
+    "id": "eef40520-3201-47ef-9b58-f1e8dbfc6dff",
+    "revision_id": "64716456-4717-4af4-9f3a-5b4532c6c54e",
+    "issue_id": "e8cbe54f-c44e-44b1-a08b-393750d29920",
+    "kind": "IssuedReport",
+    "content_hash": "46b6bb857834ef61e141a5e99b8e66bbbfa4361264f401c0554e1c68238b2b31",
+    "html_hash": "46b6bb857834ef61e141a5e99b8e66bbbfa4361264f401c0554e1c68238b2b31",
+    "created_at": "2026-09-27T07:47:22.590Z"
+  },
+  "return_proposal": {
+    "operation_id": "ce145c54-ab1a-49ab-8a9e-fc3a3dd7ef57",
+    "record_id": "b5431339-c777-4e38-bf99-cdea87ee4eba",
+    "record_version": 1,
+    "state": "Proposed",
+    "accepted_at": "2026-09-27T07:47:17.979Z",
+    "receipt_id": "b924eca4-7701-40c7-ae2f-3755fc72b840",
+    "warnings": [],
+    "task_ids": [
+      "500c7d70-3558-4f1e-ae52-3abc233f5810"
+    ]
+  },
+  "finance": {
+    "handoff_id": "dcd89fe0-3e5d-4007-81d6-4dc322287786",
+    "issue": {
+      "id": "a2773e4b-eb04-4be0-a41f-09f5067bf556",
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "handoff_id": "dcd89fe0-3e5d-4007-81d6-4dc322287786",
+      "revision_id": "23d807ad-390e-4283-b086-6a00ace215d5",
+      "review_id": "2aff856c-7fbe-4101-b861-b600de576e40",
+      "render_job_id": "d159bff5-a21d-4ac4-9778-2f7f798adaaa",
+      "issued_by": "30000000-0000-4000-8000-000000000014",
+      "issued_at": "2026-09-27T07:47:44.210Z",
+      "manifest": {
+        "job_id": "d159bff5-a21d-4ac4-9778-2f7f798adaaa",
+        "audience": "CurrentScopedFinance",
+        "filename": "SYN-PPO-FH-000002-finance-evidence-r02.pdf",
+        "issue_id": "a2773e4b-eb04-4be0-a41f-09f5067bf556",
+        "pdf_hash": "c231eeba0286f65e657b80fdbb14014af3ad7149bb45ea04c399e3be3b36f8d3",
+        "template": {
+          "id": "f3000000-0000-4000-8000-000000000002",
+          "version": 2,
+          "content_hash": "1fd8d16fb46f884af894ed9de9b5e65aff9848f69df660e18fb25fa4dca00f51",
+          "policy_version": 2
+        },
+        "html_hash": "d0ec4000e92e42d1cf874518f5542522ff58cdeaa5f790743c11f79ae01ea09d",
+        "pdf_bytes": 585843,
+        "review_id": "2aff856c-7fbe-4101-b861-b600de576e40",
+        "store_key": {
+          "sha256": "3d79d8a23b295c08d3d668860ed52321213667ed6512e849a9dd1f0fff72827e",
+          "item_id": "d159bff5-a21d-4ac4-9778-2f7f798adaaa",
+          "site_id": null,
+          "drive_id": null,
+          "provider": "Synthetic",
+          "tenant_id": null,
+          "version_id": "3d79d8a23b295c08d3d668860ed52321213667ed6512e849a9dd1f0fff72827e"
+        },
+        "html_bytes": 816248,
+        "prepared_at": "2026-09-27T07:47:40.770Z",
+        "revision_id": "23d807ad-390e-4283-b086-6a00ace215d5",
+        "source_hash": "6cd4b2509c9c2cb720ab6b34959eacefa5b88540a78744628083c58c4fbc5326",
+        "bundle_bytes": 1597871,
+        "schema_version": 1,
+        "browser_version": "154.0.8037.58",
+        "renderer_version": "playwright-1.63.0",
+        "reconciliation_id": "fc29e9e6-313d-4bc5-91ae-b93fc565660a"
+      },
+      "output_hash": "c231eeba0286f65e657b80fdbb14014af3ad7149bb45ea04c399e3be3b36f8d3",
+      "audience": "CurrentScopedFinance"
+    }
+  },
+  "completed_boundary": "Service intake through exact reserved customer response and same-source Finance allocation, independent review, desktop SyntheticManual processing / phone original unknown-outcome lookup, reconciliation and OUT-14.",
+  "keyboard_scope": "Native Tab/typing/select arrows/Enter: complete intake, controlled booking move, exact field submission, exact reserved report response and Finance approval. Other journey steps use labelled UI controls. No screen-reader, real-device or whole-product conformance claim.",
+  "p12_limit": "This selected journey does not execute the full PT-28 update/policy procedure or a completed return attendance. Full PT-30 and owner/device handover remain open; no restore or acceptance is inferred.",
+  "page_errors": []
+}

@@ -4,6 +4,8 @@ import {
   competenceState,
   travelSequences,
   scenarioSummary,
+  travelAvailabilityConflicts,
+  hasOpenSchedulingFollowup,
   type DemandContribution,
   type ResourceEvidence,
 } from "../../src/scheduling/workspace-model";
@@ -11,8 +13,14 @@ import {
   safePlannerReturn,
   safeBookingTarget,
   appointmentHref,
+  reviewCriteria,
 } from "../../src/scheduling/navigation";
-import type { ScheduleAppointment } from "../../src/scheduling";
+import type { Appointment, ScheduleAppointment } from "../../src/scheduling";
+import {
+  intervalsOverlap,
+  utcFromLocal,
+  addDays,
+} from "../../src/scheduling/time";
 
 const skill = {
   id: "skill",
@@ -184,4 +192,104 @@ test("exact changes handover survives appointment recovery without arbitrary ret
     safePlannerReturn(target + "&appointment_id=" + id),
     /appointment_id/,
   );
+});
+
+test("review criteria survive safe round trips but duplicate or invalid criteria confer no authority", () => {
+  const selected = "a8000000-0000-4000-8000-000000000001";
+  const changes = new URLSearchParams(
+    safePlannerReturn(
+      `/schedule/changes?queue=history&selected_id=${selected}`,
+    ).split("?")[1],
+  );
+  assert.equal(reviewCriteria(changes).selected, selected);
+  assert.equal(reviewCriteria(changes).queue, "history");
+  const capacity = safePlannerReturn(
+    "/schedule/capacity?domain=Engineering&commitment=Source+plan&resource_id=unknown&skill=unknown&unknown_effort=1&apply=true",
+  );
+  assert.deepEqual(
+    reviewCriteria(new URLSearchParams(capacity.split("?")[1])),
+    {
+      queue: "review",
+      selected: "",
+      domain: "Engineering",
+      commitment: "Source plan",
+      resource: "unknown",
+      skill: "unknown",
+      unknownEffort: true,
+    },
+  );
+  assert.doesNotMatch(capacity, /apply/);
+  const invalid = reviewCriteria(
+    new URLSearchParams(
+      "queue=history&queue=contact&selected_id=bad&domain=Finance&skill=%0Ainvalid&unknown_effort=yes&resource_id=bad",
+    ),
+  );
+  assert.equal(invalid.queue, "review");
+  assert.equal(invalid.selected, "");
+  assert.equal(invalid.domain, "");
+  assert.equal(invalid.skill, "");
+  assert.equal(invalid.resource, "");
+  assert.equal(invalid.unknownEffort, false);
+});
+
+test("cancelled and completed contact activities do not become outstanding scheduling work", () => {
+  const appointment = (states: string[]) =>
+    ({ followups: states.map((status) => ({ status })) }) as Pick<
+      Appointment,
+      "followups"
+    >;
+  assert.equal(
+    hasOpenSchedulingFollowup(appointment(["Cancelled", "Completed"])),
+    false,
+  );
+  assert.equal(
+    hasOpenSchedulingFollowup(appointment(["Cancelled", "Open"])),
+    true,
+  );
+  assert.equal(hasOpenSchedulingFollowup(appointment(["InProgress"])), true);
+});
+
+test("multi-day closures cover every intersecting local day across DST without closing the end boundary", () => {
+  const start = "2031-10-03T23:00:00+10:00",
+    end = "2031-10-06T00:00:00+11:00";
+  const days = ["2031-10-03", "2031-10-04", "2031-10-05", "2031-10-06"];
+  assert.deepEqual(
+    days.map((day) =>
+      intervalsOverlap(
+        start,
+        end,
+        utcFromLocal(day + "T00:00", "Australia/Melbourne"),
+        utcFromLocal(addDays(day, 1) + "T00:00", "Australia/Melbourne"),
+      ),
+    ),
+    [true, true, true, false],
+  );
+});
+
+test("travel review includes calendar closures touching buffers and excludes adjacent intervals", () => {
+  const v = travelSequences([visit("buffered", "09:00", "10:00", 30, 30)])[0];
+  const resource = {
+    exceptions: [
+      {
+        id: "closure",
+        kind: "Closed",
+        start_at: "2031-09-22T08:15:00Z",
+        end_at: "2031-09-22T08:45:00Z",
+      },
+    ],
+    blocks: [
+      {
+        id: "adjacent",
+        kind: "OtherWork",
+        start_at: "2031-09-22T20:30:00+10:00",
+        end_at: "2031-09-22T21:00:00+10:00",
+      },
+    ],
+  } as ResourceEvidence;
+  const result = travelAvailabilityConflicts(v, resource);
+  assert.deepEqual(
+    result.closures.map((x) => x.id),
+    ["closure"],
+  );
+  assert.equal(result.blocks.length, 0);
 });

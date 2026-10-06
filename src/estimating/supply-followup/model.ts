@@ -1,0 +1,80 @@
+import type { DispositionBasis } from "../disposition/context";
+import type { AllocationPosition } from "./position";
+import type { allocationCommand, factCommand } from "../../supply/validation";
+import type { OperationReceipt } from "../../platform/operations";
+export type FollowupBasis = {
+  policy: "SYN-ES07-03";
+  conversion: DispositionBasis;
+  position: AllocationPosition;
+  disposition: { id: string; sequence: number; decision: string } | null;
+};
+export type FollowupEvent = {
+  id: string;
+  workspace_id: string;
+  revision_id: string;
+  execution_id: string;
+  target_id: string;
+  sequence: number;
+  action: "Refer" | "Receive" | "Review" | "Apply";
+  referral_id: string;
+  predecessor_id: string | null;
+  receiving_id: string | null;
+  review_id: string | null;
+  decision:
+    | "Requested"
+    | "Accepted"
+    | "Returned"
+    | "Held"
+    | "Retain"
+    | "Hold"
+    | "AdjustAllocation"
+    | "ReconcileReservationOutcome"
+    | "CorrectReceipt"
+    | "ReduceAllocations";
+  basis: FollowupBasis;
+  basis_hash: string;
+  review_hash: string | null;
+  command:
+    | ReturnType<typeof allocationCommand>
+    | (ReturnType<typeof factCommand> & { record_id: string })
+    | import("../../supply/reductions").ReductionCommand
+    | null;
+  owner_id: string;
+  due_date: string | null;
+  date_needed: boolean;
+  next_action: string;
+  activity_id: string;
+  reason: string;
+  evidence: string;
+  created_by: string;
+  created_at: Date;
+  operation_id: string;
+  native_receipt: OperationReceipt | null;
+  receipt_proposal_id: string | null;
+  allocation_proposal_id: string | null;
+  effect_receiving_ids: string[];
+};
+
+// Lifecycle only: this never implies current applicability or readiness.
+export function followupStatus(
+  referral: FollowupEvent | null,
+  receiving: FollowupEvent | null,
+  review: FollowupEvent | null,
+  applied: FollowupEvent | null,
+) {
+  if (!referral) return "Not referred";
+  if (receiving?.decision === "Returned") return "Returned";
+  if (receiving?.decision === "Held") return "Continuing hold";
+  if (review && applied?.review_id === review.id) {
+    if (review.decision === "Hold") return "Continuing hold";
+    if (review.decision === "Retain") return "Position retained";
+    if (review.decision === "ReconcileReservationOutcome")
+      return "Reservation outcome reconciled";
+    if (review.decision === "CorrectReceipt")
+      return "Receipt evidence corrected";
+    return "Allocation adjusted";
+  }
+  return receiving?.decision === "Accepted"
+    ? "Accepted for review"
+    : "Awaiting owner";
+}

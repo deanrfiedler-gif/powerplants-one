@@ -1,0 +1,79 @@
+{
+  "identity": {
+    "head": "80b2f418b90a69d267ac2e65682a5b560a8b4356",
+    "source_tree": "48a41c819dd3ef228c38ca87d8fdbb56c8a98ad0",
+    "database_tree": "86b8a41f3aeebfc67f3250a2c00f455f886bc701",
+    "public_tree": "7373dacab0a49b43c44723874cc4e830f61d15fe",
+    "package_lock_sha256": "5f7a88abb6cd16b001525d7f59ff8a7204cf40b9e1121567fdc949a65951051e",
+    "build": "L_m47dGe9yw5BVXtZuFM8",
+    "worker_sha256": "2f187bb4085f1492edf36eaf5766afb119d68121ff8c520779ab104e34d17745",
+    "offline_app_sha256": "0a1b1c00698488209c927ab7bf77a739ebefb8bdf695ed8bae653947c2793a21"
+  },
+  "previous_identity": {
+    "head": "2faa3bebab399a1fa9975fe4d604d07edc1c7fa1",
+    "source_tree": "72d62b258e5d26b4d9247dda9d7614851b5533cd",
+    "database_tree": "dc4ef29e3cbf32164443845a4cd6c8b2481c5f62",
+    "public_tree": "690cddf641ac9f32783d6be72f167a85ef099d8b",
+    "package_lock_sha256": "5f7a88abb6cd16b001525d7f59ff8a7204cf40b9e1121567fdc949a65951051e",
+    "build": "prLqj_WN7yBXfyQzCjMz2",
+    "worker_sha256": "e96e337e8e97edbcb133714f161aa5d90af7f2ef6f028d74b3db70d089a5675e",
+    "offline_app_sha256": "1e3de26aaa10218eecf963814e3b07edeff51494a76a1addac5fcd3ae970aea0"
+  },
+  "browser": "154.0.8037.58",
+  "node": "v24.21.0",
+  "platform": "win32",
+  "migration_version": 50,
+  "retained_migration_checksums": 48,
+  "same_database": true,
+  "app_pid": 29664,
+  "supported_originals": 7,
+  "prior_receipts_recovered": 6,
+  "newly_accepted": 0,
+  "unsupported_retained": 1,
+  "exact_png_sha256": "8e0e39097d1e122a86d83ed2c236f3bc8de8b82c46a945fbe71b6bf0a059203e",
+  "pack_outputs": {
+    "html": "3fb0692a70b62d09441c0bc9778e3f0cf54620ed50981ae40c60b3b37c640335",
+    "pdf": "4246ff9364ed856c148393330feb93dfc9a3d2254050ce34c6de298d8f6c1ecf",
+    "manifest": "0c31de2da8f00aab9c46aa75364fe1196bd03e23dd479a6ca2afe2c2210b439d"
+  },
+  "originals_sha256": "6c0c898ec93d3140a1bf5eb29ffdc64899ac0175d4af4aaad76688c5a910ffb8",
+  "acceptance_facts": [
+    {
+      "operation_id": "17a6c424-fadf-4b57-9597-e33b09560e8a",
+      "payload_hash": "1994717055a02c8434ae02fd166473b1f15b365fdb2e2ce5c34f3d2156f0dae4",
+      "receipt_id": "90105ca2-2c2d-40f3-bf9c-3138c5892b95"
+    },
+    {
+      "operation_id": "51929072-b727-4517-a18a-0453d7340fdc",
+      "payload_hash": "de786451f681e6bd5eafbd68c6dcedba71ae48e9652e8a2d84caca9c4818f5c2",
+      "receipt_id": "9a74abea-f369-4553-82bf-7cced72ceff2"
+    },
+    {
+      "operation_id": "7746b660-c1cd-4590-9678-ec80d8d288fb",
+      "payload_hash": "9d0d989bd664a1481ddf955dbfa2f6623eee9d08003774366bd7676b2da28662",
+      "receipt_id": "364691f9-1865-455e-989d-c38c821741ba"
+    },
+    {
+      "operation_id": "9f5769c5-9aea-44dd-a154-458db54a4e68",
+      "payload_hash": "8798f2c8ab823f85cf4806d173424c7d8ebd25188229f5450690f6d540cfc90b",
+      "receipt_id": "daece07c-71df-4383-8cea-7a3df2f997b8"
+    },
+    {
+      "operation_id": "ce9c5937-79c7-4ce5-a4b5-d042921221c5",
+      "payload_hash": "fcaa94972c6520aec41a30f3ac917a6088305dc272f3dcbccbfd03b8a0fbe590",
+      "receipt_id": "03d026f0-b73f-4f8f-a126-0937307ed794"
+    },
+    {
+      "operation_id": "d346f389-dbe2-4158-ad66-faac2e0e175e",
+      "payload_hash": "6d9e8516546aae6534a5048afac6ee960b91e017b82998954f3134e1b01375b5",
+      "receipt_id": "98d65eeb-4501-40dc-aa54-ff7dd59c8659"
+    },
+    {
+      "operation_id": "e072ebd3-b79b-41a0-a420-58a6529984fc",
+      "payload_hash": "25cde0e72b02ea1f5410b053f9b321e9ea6a5b9c7b454f1d4c090ccd28cf90c7",
+      "receipt_id": "ec654c12-d52c-4343-9c52-5b59c7b393e6"
+    }
+  ],
+  "page_errors": [],
+  "limits": "Local compiled update/rollback component. No schema downgrade, policy publication, Finance/external outcome, backup restore, hosted deployment, physical-device or complete PT-28 acceptance."
+}

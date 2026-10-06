@@ -43,6 +43,7 @@ export type CheckDefinition = {
   condition: { statement: string; outcome: ConditionOutcome } | null;
   evidence_min: number; instrument_required: boolean; witness: (typeof witnessKinds)[number];
   criterion_source_id: string | null;
+  instrument_basis?: { measurement_type: string; unit: string; range: string };
 };
 export const hasCriterion = (d: CheckDefinition) => (d.check_type === "Numeric" ? !!d.numeric && (d.numeric.lower !== null || d.numeric.upper !== null) : !!d.qualitative && d.qualitative.accepted.length > 0);
 export const isRequired = (d: CheckDefinition) => d.required && d.condition?.outcome !== "False";

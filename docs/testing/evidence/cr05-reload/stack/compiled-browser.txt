@@ -1,0 +1,18 @@
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.58"}
+
+Running 8 tests using 1 worker
+
+(node:40720) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop-chromium] › tests\browser\policy-impact.spec.ts:11:1 › policy analysis is read-only, clears edited results and hands over the exact booking (5.3s)
+  ok 2 [desktop-chromium] › tests\browser\policy-impact.spec.ts:79:1 › failed refresh and identity changes clear prior analysis, with no publish endpoint (2.0s)
+  ok 3 [desktop-chromium] › tests\browser\sales-workflows.spec.ts:297:1 › CR05 issued source review saves attributed feedback, commercial preparation and guarded closure with responsive controls (19.7s)
+  ok 4 [desktop-chromium] › tests\browser\scheduling-workspaces.spec.ts:25:1 › native scheduling pages retain context and reflow at coordination, phone and zoom widths (12.6s)
+(node:26200) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 5 [mobile-chromium] › tests\browser\policy-impact.spec.ts:11:1 › policy analysis is read-only, clears edited results and hands over the exact booking (4.6s)
+  ok 6 [mobile-chromium] › tests\browser\policy-impact.spec.ts:79:1 › failed refresh and identity changes clear prior analysis, with no publish endpoint (2.8s)
+  ok 7 [mobile-chromium] › tests\browser\sales-workflows.spec.ts:297:1 › CR05 issued source review saves attributed feedback, commercial preparation and guarded closure with responsive controls (14.0s)
+  ok 8 [mobile-chromium] › tests\browser\scheduling-workspaces.spec.ts:25:1 › native scheduling pages retain context and reflow at coordination, phone and zoom widths (8.9s)
+
+  8 passed (1.4m)

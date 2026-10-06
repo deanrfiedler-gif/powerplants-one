@@ -10,7 +10,7 @@ export async function maintenanceImpact(
   p: Principal,
   asset_id: string,
 ) {
-  // Older-version upgrade proofs legitimately invoke Equipment before 0049.
+  // Older-version upgrade proofs legitimately invoke Equipment before 0051.
   if (
     !(await c.query("SELECT to_regclass('ppo.maintenance_plans') AS relation"))
       .rows[0].relation

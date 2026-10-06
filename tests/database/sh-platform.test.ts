@@ -139,6 +139,112 @@ test("SH03 durable events deduplicate, explicit read is personal, and required a
   });
   assert.equal((await notificationTarget(p, archived.id)).archived, false);
 });
+test("SH03 repeated events share bounded current source reads only within one request", async () => {
+  const p = await principal();
+  const ids = new Set<string>();
+  for (let index = 0; index < 6; index++) {
+    const a = activity();
+    ids.add(a.id);
+    await createActivity(p, a);
+    for (let version = 1; version <= 2; version++)
+      await activityCommand(
+        p,
+        a.id,
+        {
+          ...crmBase(),
+          expected_version: version,
+          owner_id: CRM.owner,
+          due_at: null,
+          due_needed: true,
+          summary: `SYN current notice ${index}`,
+          reason:
+            "Retain repeated historical events against the current source",
+        },
+        "update",
+      );
+  }
+  const pool = database(),
+    original = pool.query;
+  const counts = new Map<string, number>();
+  let active = 0,
+    peak = 0,
+    measuring = false;
+  pool.query = function (this: typeof pool, ...args: unknown[]) {
+    const id = Array.isArray(args[1]) ? args[1][2] : undefined;
+    const tracked =
+      measuring &&
+      typeof args[0] === "string" &&
+      args[0].includes("SELECT a.* FROM ppo.activities a WHERE") &&
+      ids.has(id);
+    if (tracked) {
+      counts.set(id, (counts.get(id) ?? 0) + 1);
+      peak = Math.max(peak, ++active);
+    }
+    const result = Reflect.apply(original, this, args);
+    return tracked
+      ? Promise.resolve(result).finally(() => {
+          active--;
+        })
+      : result;
+  } as typeof pool.query;
+  const read = async () => {
+    counts.clear();
+    measuring = true;
+    try {
+      return await notificationInbox(p);
+    } finally {
+      measuring = false;
+    }
+  };
+  try {
+    const first = (await read()).items.filter((n) => ids.has(n.source_id));
+    assert.equal(first.length, 18);
+    assert.ok(first.every((n) => n.current_version === 3));
+    assert.deepEqual([...counts.values()], [1, 1, 1, 1, 1, 1]);
+    assert.ok(peak <= 4, `Unbounded source reads: ${peak}`);
+    const id = [...ids][0];
+    await activityCommand(
+      p,
+      id,
+      {
+        ...crmBase(),
+        expected_version: 3,
+        owner_id: CRM.owner,
+        due_at: null,
+        due_needed: true,
+        summary: "SYN freshly changed source",
+        reason: "A later request must not reuse the earlier source",
+      },
+      "update",
+    );
+    const second = (await read()).items.filter((n) => ids.has(n.source_id));
+    assert.equal(second.length, 19);
+    assert.deepEqual([...counts.values()], [1, 1, 1, 1, 1, 1]);
+    assert.ok(
+      second
+        .filter((n) => n.source_id === id)
+        .every(
+          (n) =>
+            n.current_version === 4 && n.title === "SYN freshly changed source",
+        ),
+    );
+    for (const prior of first) {
+      const retained = second.find((n) => n.id === prior.id)!;
+      assert.equal(retained.source_version, prior.source_version);
+      assert.equal(retained.event_at, prior.event_at);
+      assert.equal(retained.version, prior.version);
+    }
+    await pool.query(
+      "DELETE FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$2 AND capability='activity.read'",
+      [p.workspace_id, p.actor_id],
+    );
+    await assert.rejects(read(), code("Forbidden"));
+    await assert.rejects(notificationTarget(p, first[0].id), code("Forbidden"));
+  } finally {
+    pool.query = original;
+  }
+});
+
 test("SH03/04/05 current permissions protect events, totals, direct preview and saved criteria after revocation", async () => {
   const p = await principal(),
     a = activity();

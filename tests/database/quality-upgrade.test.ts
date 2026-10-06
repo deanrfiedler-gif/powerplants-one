@@ -1,3 +1,7 @@
+import { estimateReviewSeedGrants, quotationReleaseSeedGrants } from "../helpers/engineering-materials-grants";
+import { incidentSeedGrants } from "../helpers/engineering-materials-grants";
+import { supplySeedGrants } from "../helpers/engineering-materials-grants";
+import { schedulingPolicySeedGrants } from "../helpers/engineering-materials-grants";
 import { acceptanceSeedGrants } from "../helpers/engineering-materials-grants";
 import assert from "node:assert/strict";
 import { test, after } from "node:test";
@@ -181,7 +185,7 @@ for (const state of ["Approved", "OutcomeUnknown", "Reconciled"]) {
       ]),
       ...coordinatorGrants.filter(g => g.value.capability === "shared.edit").map(g => ({ ...g.value, capability: "engineering.material.source" })),
     );
-    // Seed 49 copies only declared fictional Maintenance/Warranty duties and original scope validity.
+    // Seed 51 copies only declared fictional Maintenance/Warranty duties and original scope validity.
     expected.push(...originalGrants.filter(g=>g.value.capability==="shared.read").flatMap(g=>{
       const id=String(g.value.user_id);
       const caps=["30000000-0000-4000-8000-000000000001","30000000-0000-4000-8000-000000000008"].includes(id)?["maintenance.read","maintenance.manage","maintenance.assess","warranty.read","warranty.manage","warranty.assess","warranty.recovery"]:
@@ -229,7 +233,12 @@ for (const state of ["Approved", "OutcomeUnknown", "Reconciled"]) {
     const grantShape = (g: Record<string, unknown>) => Object.fromEntries(Object.entries(g).filter(([k]) => k !== "id"));
     expected.push(...companyAGrants.filter(g=>["shared.read","estimating.read"].includes(String(g.value.capability))).map(g=>({...g.value,capability:String(g.value.capability),user_id:"e5030045-0000-4000-8000-000000000001"})),
       ...companyAGrants.filter(g=>g.value.capability==="estimating.read").map(g=>({...g.value,capability:"estimating.source.review",user_id:"e5030045-0000-4000-8000-000000000001"})));
-    const sorted = (gs: Record<string, unknown>[]) => gs.map(g => JSON.stringify(grantShape(g))).sort();
+      expected.push(...supplySeedGrants(originalGrants.map(g=>g.value)).map(g=>({...g,capability:String(g.capability)})));
+      expected.push(...schedulingPolicySeedGrants(originalGrants.map(g=>g.value)).map(g=>({...g,capability:String(g.capability)})));
+      expected.push(...incidentSeedGrants(originalGrants.map(g=>g.value)).map(g=>({...g,capability:String(g.capability)})));
+      expected.push(...estimateReviewSeedGrants(originalGrants.map(g=>g.value)).map(g=>({...g,capability:String(g.capability)})));
+      expected.push(...quotationReleaseSeedGrants(originalGrants.map(g=>g.value)).map(g=>({...g,capability:String(g.capability)})));
+      const sorted = (gs: Record<string, unknown>[]) => gs.map(g => JSON.stringify(grantShape(g))).sort();
     assert.deepEqual(sorted(added.map(g => g.value)), sorted(expected));
     assert.deepEqual({ ...afterUpgrade, permission_grants: originalGrants }, before);
     assert.deepEqual(

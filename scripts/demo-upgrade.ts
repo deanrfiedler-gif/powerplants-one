@@ -5,6 +5,7 @@ import { transaction } from "../src/platform/database";
 import { migrationFiles, seedFiles, latestMigrationVersion, demoMigrationFiles, latestDemoMigrationVersion, existingDemoChecksumMatches } from "./migration-registry";
 import { demoWorkspace, demoCompany, grantRuntimePrivileges } from "./demo-runtime";
 import { ensurePackReviewer } from "./demo-reviewer";
+import { bootstrapDemoSchedulingPolicy } from "./demo-policy-bootstrap";
 
 const additions = ["crm.lead.read", "crm.lead.create", "crm.lead.edit", "crm.lead.convert",
   "project.read", "project.create", "project.edit", "engineering.read", "engineering.create", "engineering.edit",
@@ -132,11 +133,73 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // copied from the coordinator's Company A scope/validity. Hosted identities
   // gain no source-review or commercial approval duty. Generic table grants
   // cover the additive records; upgrade/reseed proofs retain revoked grants.
-  // 0049: additive Maintenance/Warranty records and exact retained history.
-  // No source backfill or external transaction. Identity events flush before ALTER.
-  // Seed 49 grants explicit synthetic duties only; invited hosted identities gain none.
-  // Generic runtime table grants apply; revoked grants remain protected by seed receipts.
-  if (latestMigrationVersion !== 49) throw Error("Review the existing-demo upgrade for this release.");
+  // 0049 adds synthetic Supply Chain coordination and immutable history/evidence.
+  // Seed 49 grants only existing local synthetic users, preserves revoked rows on conflict,
+  // and adds no hosted user or authority. No inventory/ERP effects; generic table grants apply.
+  // 0050 adds personal timer projections/events, a report-freeze guard and narrow
+  // offline factual recovery commands. It rewrites no existing evidence, identity,
+  // seed or grant. Generic runtime privileges include the additive tables.
+  // Existing reports without timers retain their original submission contract.
+  // 0051 uses the reserved Maintenance/Warranty slot, including an already-current database.
+  // It appends typed records and existing checks after flushing deferred identity events.
+  // Seed 51 adds 22 scoped duties to existing fictional principals only; no user or hosted
+  // invitation changes. Generic runtime table grants apply. Original rows, ledger hashes,
+  // outputs and revoked grants must survive both the ascending and late-slot upgrade.
+  // 0053: additive scheduling family, immutable proposals/reviews/publications/impacts
+  // and typed Activity companions. Only publication has an identity because the existing
+  // receipt FK requires it; pending identity events are flushed before the additive CHECK.
+  // Seed 53 binds the exact trusted root and never resets a head or adds users/grants.
+  // Runtime grants cover the new tables; immutable triggers and deferred graph checks
+  // remain in force. No policy command, tester duty, audit/outbox enum or dispatch change.
+  // Reserved 0051/0052 stay absent: this loop applies actual missing registry entries.
+  // 0054 adds internal-only command evidence and two distinct local synthetic duties.
+  // Typed identities flush pending 0026 events; issued sources remain unchanged.
+  // Seed replay preserves revoked grants and adds no hosted tester authority.
+  // Commands stay unregistered until Step 4 enforcement is proved.
+  // 0055 adds immutable Service template/binding/event/output tables only. Seed
+  // 55 supplies fictional catalogue versions and an instrument, with no users or grants. Shared
+  // attempts and installed SQL/seed bytes remain intact; 0051 was reserved at that checkpoint; this contribution installs Maintenance there. 0052 stays reserved.
+  // 0056 adds isolated incident storage. Seed 56 grants only the three named
+  // local synthetic profiles, never hosted testers; existing rows and revoked
+  // grants remain unchanged. Populated upgrade/reseed proof is required.
+  // 0057 adds one immutable response-context companion and its exact-binding
+  // trigger. No existing row, identity, template, seed, grant or user changes.
+  // Generic runtime grants cover the companion; invited testers gain no duty.
+  // Populated P09 and hosted-upgrade proofs retain originals and ledger hashes.
+  // 0058 adds immutable subordinate estimate-review evidence and three explicit
+  // local-only grants to the existing source reviewer; no hosted roles, users or
+  // original estimate/quotation/output rows change. Generic runtime table grants
+  // cover the sidecar; populated upgrade and exact grant assertions cover the seed.
+  // 0059 adds subordinate synthetic release facts and two local-only fixtures; no hosted command duty.
+  // 0060 adds immutable subordinate staff response evidence and an internal outbox kind.
+  // No seed, identity, grant or hosted user changes; existing generic table privileges apply.
+  // Original release/Draft bytes and ledgers are covered by populated and hosted upgrade proof.
+  // 0061 adds immutable receiving/plans and native demand links; no seeds or grants.
+  // Existing runtime privileges and Supply duties apply; populated upgrades preserve originals.
+  // 0062 adds immutable completed-conversion disposition; generic privileges cover it.
+  // No seed/grant/user/identity rewrite; exact populated 0061 and hosted upgrades are required.
+  // 0064 extends immutable Supply evidence guards, with no seeds, grants or identity changes.
+  // 0063 adds subordinate Supply referral/outcome evidence; no seed, grant or identity changes.
+  // Generic runtime privileges apply; populated native and hosted upgrades prove preservation.
+  // 0065 adds subordinate Receipt correction receiving; no seeds, grants, users or identities.
+  // 0066 adds independently received allocation reductions and immediate statement conservation.
+  // Reviewed hosted upgrade: no new seed/grant/user; generic runtime privileges include the new table.
+  // Native receipts and earlier evidence remain intact on populated upgrades.
+  // 0067 adds material receiving/outcomes and guards two existing native commands.
+  // No seeds, grants, users, identities or adapters change; generic runtime privileges apply.
+  // Populated upgrades preserve earlier evidence, histories, receipts and issued bytes.
+  // 0068 adds an optional successor command/receiving role, no grants, seeds or identities.
+  // Existing generic PPO table privileges suffice; migration ledger stays unavailable.
+  // 0069 adds only optional third-task evidence and guards on the existing material table.
+  // Generic table privileges suffice; no grants, seeds, identity ALTER or ledger access.
+  // Both earlier payload families and populated native effects must survive this upgrade.
+  // 0070 adds optional branch-command evidence and a separate receiving role. No seeds,
+  // grants, identities or business-row rewrite. Existing runtime table grants apply;
+  // current catalog shape isolates prepared plans. Populated 0069 and hosted upgrades prove preservation.
+  // 0071 adds exclusive merge evidence and two receiving roles on the existing table.
+  // Earlier columns/payloads remain; no seed, grant, identity or table privilege change.
+  // The generic runtime grants remain sufficient; the migration ledger stays restricted.
+  if (latestMigrationVersion !== 71) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({
@@ -198,7 +261,11 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
       for (const [version, file] of seedFiles.filter(([v]) => v > 17)) {
         if (receipts.rows.some(row => row.version === version)) continue;
         console.log(`Demo upgrade stage: apply-seed-${version}`);
-        await db.query(await read(file));
+        // Seed 53's issued SQL describes the later fresh fixture. Older hosted
+        // P05 roots retain their original expiry; bind only the reviewed exact
+        // root variant, without changing installed SQL, policy rows or pins.
+        if (version === 53) await bootstrapDemoSchedulingPolicy(db, await read(file));
+        else await db.query(await read(file));
         await db.query("INSERT INTO ppo.seed_receipts(version) VALUES($1)", [version]);
       }
       // Hosted-only schema before the grants below, so new tables are covered by them.

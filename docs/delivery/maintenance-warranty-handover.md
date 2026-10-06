@@ -4,13 +4,23 @@
 
 Owner: Dean Fiedler. Review: implementation delivered with local synthetic verification; owner/business/device acceptance pending. No deployment or external transaction.
 
+## Current integration — 7 October 2026
+
+The contribution is reconciled with main `58679be` (#354) on `codex/maintenance-warranty-completion`. Migration and seed 0051 use the reserved Maintenance slot; Supply’s 0049 remains unchanged. The combined permission contract contains 120 capabilities. The decision uses stable ID PPO-MA-NATIVE-DEC, preserving Supply’s ADR-0049. Source and design-register integration are complete; current application, upgrade and restart verification is still in progress and will be recorded separately. No deployment or business acceptance is claimed.
+
+Native Supply now exists. Warranty’s return receiving bridge remains unimplemented; retained external evidence does not create Supply or ERP transactions. The earlier source-specific results below are historical and do not verify the combined tree.
+
+## Retained original-branch checkpoint
+
+All migration 0049, 101-capability and SC-08-unavailable references below describe the retained original branch. They are superseded for current integration by the checkpoint above.
+
 ## Baseline and scope
 
 The authorised programme implements MA-01–MA-07 / SVC-12.1–SVC-12.5, linked to PPO-015 (#15), AT-19/AT-33 and relevant AT-25. Fetched main was `0f10b7fb46a8ab512e9b019573ece272cf5920b9`. Open PR #314 was unrelated ES-02 documentation. Native Equipment/Sales/Engineering/cost-source work through migration 0048 was present; MA and SC-08 native returns were absent. The original `docs/field-quality-build-plan` checkout and its unrelated edits were preserved. Implementation uses `feat/maintenance-warranty-native` in a separate worktree.
 
 ## Delivered application
 
-Seven permission-scoped registers and seven detail workspaces use the current shell and source guides. Typed migration 0049 preserves agreements, entitlement decisions, task revisions, original-due occurrences, renewal reviews, warranty cases/customer outcomes and supplier recovery. Source revisions and decision events are immutable. The [contract](../contracts/maintenance-warranty-api.md) records exact commands, receiving rules and bounded reads; [ADR-0049](../decisions/ADR-0049-maintenance-warranty-native.md) records architecture and alternatives.
+Seven permission-scoped registers and seven detail workspaces use the current shell and source guides. Typed migration 0049 preserves agreements, entitlement decisions, task revisions, original-due occurrences, renewal reviews, warranty cases/customer outcomes and supplier recovery. Source revisions and decision events are immutable. The [contract](../contracts/maintenance-warranty-api.md) records exact commands, receiving rules and bounded reads; [PPO-MA-NATIVE-DEC](../decisions/maintenance-warranty-native.md) records architecture and alternatives.
 
 Existing Work Order coverage remains separate. Owned requests enter real Service intake; reviewed Service results are checked against exact authority, task and asset evidence. Equipment remains canonical and marks affected plans for review. Sales Aftercare reads native agreement/renewal sources. SC-08 and live ERP receiving remain explicitly unavailable; external evidence does not simulate their transactions.
 

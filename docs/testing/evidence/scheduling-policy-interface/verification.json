@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "baseline": "bfc4b78deb0f065838bf22488c6f41d0fce214d2",
+  "branch": "codex/scheduling-step5",
+  "source_status": "Checked working tree; LF-normalised hashes identify source independently of the later commit and CI head.",
+  "build_id": "YxBHW8Lg7lHBbBGD13gTh",
+  "environment": {
+    "node": "24.21.0",
+    "npm": "11.19.0",
+    "browser": "Chrome 154.0.8037.93",
+    "postgres_major": 16,
+    "database_name": "ppo_synthetic_test",
+    "task_database_ports": [
+      55771,
+      55772
+    ],
+    "task_app_ports": [
+      3105,
+      3000
+    ],
+    "postgres": "16.15"
+  },
+  "source_sha256_lf": {
+    ".github/workflows/application-compiled.yml": "6f5b7f130d407bb34be966be35f4032aedac07cffc195a4276bf30cee9999446",
+    "src/app/api/v1/schedule/policy-records/route.ts": "ba93792fcc9f2bf5a8996a228d2f23628d41e5bc32ac853ce6b4a97fcfc42275",
+    "src/app/styles/scheduling-workspaces.css": "5cc0df1ba330340d3d10f6ecd6946a694b3bfe395ba69d08e99dc5b48b7fe1ba",
+    "src/components/business-session.tsx": "a7f2d56133d6fb0437085a2557318358fbf43272d490b6a81735252f7166052d",
+    "src/components/session-signal.ts": "d7c756c4da659a06a83f29932579b5fb35f05dd0189ac89fc5c78fb82255b9ff",
+    "src/scheduling/components/client/policy-impact.client.tsx": "74d53225f8de6eb45552b888db5af4a977f6ab20fd458530e57d32e43ffacf42",
+    "src/scheduling/components/client/policy-publication.client.tsx": "ad1ddc017604b3581dbf4c9966669e50350c64a60950ddf670782b76eb2b7482",
+    "src/scheduling/policy-authority.ts": "36a4b492d28b52c8bc136fecfa21555e0c8165281fb3730f5009fe0095e59811",
+    "src/scheduling/policy-commands.ts": "683f202dc7ab1727e6a924524e8f981c615dfb52c39b29971e3d34d4520db917",
+    "src/scheduling/policy-evidence-model.ts": "9a9f10b26bdfea42caa16892a4d47e7f0d664e526c7e696bb5fc606cce8cb317",
+    "src/scheduling/policy-journal.ts": "7b8fb85ea13e15723bb5ecef2a958f9e0a02bac1d84fca35edaca38caf525593",
+    "src/scheduling/policy-records.ts": "ed60c01d559321c46ece3c0b11265562d7428c779dfcfd4ecc91c83125fc340b",
+    "src/shared/ui/use-recoverable-command.ts": "b2202668c6132c9da99c37907a2e062d101d24147d5ceddd1d3f64fce3784b2e",
+    "tests/database/policy-concurrency.test.ts": "78ab881d433cedc4d8114656669167039032d3bbdec8ee7a2aa6ae6a6b989634",
+    "tests/database/policy-records.test.ts": "dfc63f3e52ffa96968870be906a53819d4d95ffe3b72dfc8b1b8897d1ee39611",
+    "tests/helpers/policy-http-harness.ts": "d308dd656ead6b2945ab8cda0a548d8df13d871273bcc32dabae0da2f3703d4a",
+    "tests/scheduling-browser/publication.spec.ts": "6ea394ddefe9f94a04e364b5a96c34e6804c51529f59b3a22674e46395fed348",
+    "tests/unit/policy-journal.test.ts": "1a2821573ce1cfd590abfb158e97391b5bc3b2d1e6082e5db84733378bb45c6d"
+  },
+  "private_logs_sha256": {
+    "policy-db-final.txt": "5ee0c2ec9279e991698772ddaaadc336d946ba6b02c09dbdfeb8f9b3786b27ae",
+    "scheduling-db-regressions.txt": "8a6814c90ba141df075edf8c6ab3846d71d0c277ba8bd17c17e61b2465d0fbb5",
+    "browser-final-source.txt": "f7c67020d1fbe18f562ecdd5da6f6e910508c849650bf179a6b12b11968fa399",
+    "browser-successor.txt": "fb9f3950ae5daddd8f39621ea292604df375e955556f64af14ae6a3dc92897b5",
+    "browser-regressions.txt": "b35d22e81ed8daf8e409f50678c1f2908aea14c074e3002ace7749d6e3c44c77",
+    "policy-units-final.txt": "c639f675e84cef996a60f30154158463c959bdad2be34ad2d25f2db1586d198e",
+    "units-full.txt": "8caa6721280240cfc812e0ea10719ade7669f03cde6c2c8edbec2d8882879045",
+    "main-unit-control.txt": "91579a039af4d7cd43265b37a1a324fbc8023e00557e6e28989e43978b9339d7",
+    "build-final-source.txt": "af89e69e2de7a7389db84bfdc23c3382eb618f7d5a3e024788ff82a3f9416ce6",
+    "typecheck-final.txt": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28",
+    "lint-final-source.txt": "144b8ef738aebf80f098340cd52aae1ca2b3b236fc5859b5d6806e5ec9ac9f64",
+    "foundation-final.txt": "494f35b8a4d2820d8f9db9815c081738764eefa057bdde65c1b23d92efdfe23e",
+    "prototype-final.txt": "f7b48b580707ab4071e3dcda23d38936db1c757240cbc5996bf54ed4fceb2ff3",
+    "naming-final.txt": "4fe73b58365a22beec3f186e3e4607a8daa6ac3f1c9a8c80719c5af10bdd3611",
+    "studio-final.txt": "aa13bc1da483c5fb4d11282f1747de6ca79bef345c378e24c5f7bdfa904f4d4d",
+    "restart-write.txt": "49bd77308dcdad0bb319ef5d84e8dfe297c122abb2ff3a6da1a73ec2b8ccbf8a",
+    "restart-verify.txt": "cdf8ac1185851c34ebc5abc35d8e2314739f67525954abe3d148fded0b3c7ba8",
+    "typecheck-handover.txt": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28",
+    "studio-handover.txt": "aa13bc1da483c5fb4d11282f1747de6ca79bef345c378e24c5f7bdfa904f4d4d",
+    "foundation-handover.txt": "ef5d00bbf10e417201d235ce6aa25d76104578b78299262b65b05bbbd66f34db",
+    "prototype-handover.txt": "f7b48b580707ab4071e3dcda23d38936db1c757240cbc5996bf54ed4fceb2ff3",
+    "naming-handover.txt": "4fe73b58365a22beec3f186e3e4607a8daa6ac3f1c9a8c80719c5af10bdd3611",
+    "receipt-404-control.txt": "92b9e1674896bc4a00fa8d390f348848964070f96ba59da3124fbf78d121577c",
+    "build-recovery-fixed.txt": "818e6caeb03c16e7420327ad7cba3ad57b3172876fdd1c0318d065f6600c2f01",
+    "browser-recovery-fixed.txt": "c1ae2352e47cdd899e4c2ccd797a97d1f52a3d41a3739112f190a7d8108fd95d",
+    "recovery-fix-lint.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "recovery-fix-types.txt": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28",
+    "foundation-recovery.txt": "17059a563a762787afe11b06099848bd13ba4d579805cdc77bd53d91fb9e6b8a",
+    "prototype-recovery.txt": "f7b48b580707ab4071e3dcda23d38936db1c757240cbc5996bf54ed4fceb2ff3",
+    "naming-recovery.txt": "4fe73b58365a22beec3f186e3e4607a8daa6ac3f1c9a8c80719c5af10bdd3611",
+    "studio-recovery.txt": "aa13bc1da483c5fb4d11282f1747de6ca79bef345c378e24c5f7bdfa904f4d4d"
+  },
+  "captures": {
+    "desktop-empty-review-1440.png": {
+      "sha256": "baca40c49a29941a232c0e14efcda7c1f3e451d5bfcea5d01d47567ca3ebb287",
+      "width": 1440,
+      "height": 1000,
+      "review": "Inspected source self-review; implementation/proposed only"
+    },
+    "desktop-limit-refusal-1440.png": {
+      "sha256": "f93c675bd102edfb66b83316b1b0df960ebc64437c6f49aba6962abb4c9cb9c9",
+      "width": 1440,
+      "height": 1000,
+      "review": "Inspected source self-review; implementation/proposed only"
+    },
+    "desktop-publication-1024.png": {
+      "sha256": "8df77fee9a8fd8faa68e95e6081ca76c95eda1ea45d76ed36587b7621c0de25e",
+      "width": 1024,
+      "height": 960,
+      "review": "Inspected source self-review; implementation/proposed only"
+    },
+    "desktop-review-1024.png": {
+      "sha256": "008ce75ddf1c8326679670a8873c06747224c94b77296cb497db38397423d7aa",
+      "width": 1024,
+      "height": 960,
+      "review": "Inspected source self-review; implementation/proposed only"
+    },
+    "desktop-review-1440.png": {
+      "sha256": "491651d5858c6f12f96844dd17aafe186f440cea16a192d13f49d4c99003145f",
+      "width": 1440,
+      "height": 960,
+      "review": "Inspected source self-review; implementation/proposed only"
+    },
+    "desktop-unknown-receipt-retry-1440.png": {
+      "sha256": "3d1460f63586744169c193296f2ee8e90b2373e7c06ed86042cb0acbb2eed7ab",
+      "width": 1440,
+      "height": 1000,
+      "review": "Inspected source self-review; implementation/proposed only"
+    },
+    "phone-empty-review-390.png": {
+      "sha256": "987fe40485ed5b05bea5fa99606184036cde04f7ddb3374c9327dc0034d65e33",
+      "width": 390,
+      "height": 844,
+      "review": "Inspected source self-review; implementation/proposed only"
+    },
+    "phone-limit-refusal-390.png": {
+      "sha256": "746cf67a33a62681d0a4526d9a45e278abf10e2da8cd7f38a2d52fa842218853",
+      "width": 390,
+      "height": 844,
+      "review": "Inspected source self-review; implementation/proposed only"
+    },
+    "phone-publication-320.png": {
+      "sha256": "dd53c5b99b6e9e8f7bdb33192ced11068620a36eb25defe5908580d28a578f9a",
+      "width": 320,
+      "height": 960,
+      "review": "Inspected source self-review; implementation/proposed only"
+    },
+    "phone-review-320.png": {
+      "sha256": "7cd2a5d37ac554b529c6aba9f4751e85dd4ae4a42fd79c72915152de4213efee",
+      "width": 320,
+      "height": 960,
+      "review": "Inspected source self-review; implementation/proposed only"
+    },
+    "phone-review-390.png": {
+      "sha256": "20a160bd70668bce097aff2bef4c26dad23f1e554c92800ae11d7a18b537a230",
+      "width": 390,
+      "height": 960,
+      "review": "Inspected source self-review; implementation/proposed only"
+    },
+    "phone-unknown-receipt-retry-390.png": {
+      "sha256": "8ef5ac474a12b9e778e7496596aaadd6a21ce5e1da55ffa0c4fa4fd245ffa948",
+      "width": 390,
+      "height": 844,
+      "review": "Inspected source self-review; implementation/proposed only"
+    }
+  },
+  "limits": [
+    "No owner/physical-device/assistive-technology or accepted mockup review",
+    "No merge or deployment",
+    "No full PT-28/PT-30 or Step 6 programme completion",
+    "Four full Windows unit failures reproduced on unchanged current main"
+  ],
+  "preserved": [
+    "Issued source snapshots",
+    "Installed migration and seed bytes",
+    "Reserved 0051/0052 allocations",
+    "Retained-root repair",
+    "All existing capabilities and grants",
+    "78 parent IDs",
+    "Original root, unrelated worktrees and other sessions infrastructure"
+  ],
+  "inspection": {
+    "reviewer": "Codex source self-review",
+    "date": "2026-10-01",
+    "result": "All twelve listed captures inspected for readable wrapping, shell containment and distinct evidence/refusal/recovery states; no accepted visual baseline, physical-device or owner review."
+  },
+  "recovery_correction": {
+    "negative_control_head": "75aa11b95867de007c0169fd9262626c969d19e1",
+    "negative_control_result": "Compiled desktop case reproduced the missing unchanged-retry control after an original-receipt 404; expected failure, not counted as passing proof.",
+    "corrected_result": "16/16 compiled desktop/phone Step 4–5 cases pass after preserving an inconclusive original 404 and its explicit unchanged retry. Current 401/403 denial remains effective.",
+    "server_scope": "No follow-up server or command envelope changes; previous database/HTTP and restart proof retained."
+  }
+}

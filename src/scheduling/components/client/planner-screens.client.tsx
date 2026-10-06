@@ -1,4 +1,6 @@
 "use client";
+import { visitArrivalGuidance, visitPreparationGuidance } from "../../../field/visit-guidance";
+import { PolicyResolution } from "./policy-resolution.client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { JobPackEntry } from "../../../documents/components/client/job-pack-entry";
@@ -31,7 +33,7 @@ import {
   ValidationFields,
   type Envelope,
 } from "../../../components/business-ui";
-import { addDays, localDateTime, utcFromLocal } from "../../time";
+import { addDays, intervalsOverlap, localDateTime, utcFromLocal } from "../../time";
 import type { CrewInput } from "../../validation";
 export type Resource = {
   id: string;
@@ -75,6 +77,7 @@ export type Appointment = {
   assignment_version: number;
   schedule_version: number;
   status: string;
+  actual_start_at?: string | null;
   start_at: string;
   end_at: string;
   site_timezone: string;
@@ -89,6 +92,7 @@ export type Appointment = {
   scope_review_required: boolean;
   policy_version_id: string;
   policy: { id: string; version: number; name: string };
+  policy_impacts?: import("../../policy-holds").PolicyHold[];
   primary_contact_id: string | null;
   work_order_id: string;
   work_order_display_number: string;
@@ -148,7 +152,7 @@ export type Appointment = {
       customer_commitment: string;
     };
   }[];
-  actions: { can_manage: boolean; can_request: boolean; can_contact: boolean };
+  actions: { can_resolve_policy?: boolean; can_manage: boolean; can_request: boolean; can_contact: boolean };
 };
 export type ScheduleAppointment = Omit<
   Appointment,
@@ -208,7 +212,8 @@ function VersionLine({ a }: { a: BookingBasis }) {
     </p>
   );
 }
-function bookingVersions(a: BookingBasis) {
+type PolicyPreparation = Awaited<ReturnType<typeof import("../../booking-policy").prepareBookingPolicy>>;
+function bookingVersions(a: BookingBasis, prepared: PolicyPreparation) {
   return {
     expected_version: a.version,
     expected_work_order_version: a.work_order_version,
@@ -216,8 +221,11 @@ function bookingVersions(a: BookingBasis) {
     scope_revision_id: a.scope_revision_id,
     scope_version: a.scope_version,
     policy_version_id: a.policy_version_id,
-    scheduling_policy_id: a.policy.id,
-    scheduling_policy_version: a.policy.version,
+    scheduling_policy_id: prepared.policy.id,
+    scheduling_policy_version: prepared.policy.version,
+    scheduling_policy_hash: prepared.policy.content_hash,
+    publication_head_version: prepared.family_head_version,
+    selected_policy: prepared.selected_policy,
   };
 }
 function BookingForm({
@@ -290,6 +298,14 @@ function BookingForm({
     savedRecord = useResource<Envelope<Appointment>>(
       `appointments/${appointment.id}`,
     );
+  let policyPath: string | null = null;
+  try {
+    if (mode !== "request") policyPath = `appointments/${basis.id}/booking-policy?` + new URLSearchParams({
+      start_at: mode === "confirm" ? basis.start_at : utcFromLocal(start, basis.site_timezone),
+      end_at: mode === "confirm" ? basis.end_at : utcFromLocal(end, basis.site_timezone),
+    });
+  } catch { /* Incomplete local dates cannot prepare a booking. */ }
+  const policyPreparation = useResource<PolicyPreparation>(policyPath);
   const command = mode === "confirm" ? durableCommand : memoryCommand;
   const target = appointmentHref(
     appointment.id,
@@ -314,6 +330,7 @@ function BookingForm({
     e.preventDefault();
     setLocalError(null);
     try {
+      if (mode !== "request" && (!policyPreparation.data || policyPreparation.loading || policyPreparation.error)) throw Error("Review the published policy for this interval before saving.");
       const members = crew.map((x) => {
         const r = resources.data?.items.find((r) => r.id === x.resource_id);
         if (!r) throw Error("Choose a permitted resource for every crew role.");
@@ -345,7 +362,7 @@ function BookingForm({
               reason,
             }
           : {
-              ...bookingVersions(basis),
+              ...bookingVersions(basis, policyPreparation.data!),
               crew: members,
               reason,
               ...(mode === "move"
@@ -457,6 +474,14 @@ function BookingForm({
           </button>
         </div>
       )}
+      {mode !== "request" && <section aria-label="Booking policy preparation">
+        <ReadState {...policyPreparation} retry={policyPreparation.reload} focusOnError={false} />
+        {policyPreparation.data && !policyPreparation.loading && !policyPreparation.error && <p>
+          Booking policy: {policyPreparation.data.policy.name} · v{policyPreparation.data.policy.version} · Publication head {policyPreparation.data.family_head_version}.
+          {basis.status !== "Proposed" && " The saved policy pin is retained; the proposed interval is also checked against the applicable published policy."}
+        </p>}
+        <button type="button" className="secondary" disabled={command.busy || retryPending} onClick={policyPreparation.reload}>Review current booking policy</button>
+      </section>}
       <ValidationFields error={localError ?? command.error}>
         <form onSubmit={save}>
           <fieldset
@@ -644,7 +669,7 @@ function BookingForm({
                 : "Booking does not mean attendance, dispatch or pack acknowledgement."}
             </p>
             <div className="button-row">
-              <button type="submit">
+              <button type="submit" disabled={mode !== "request" && (!policyPath || policyPreparation.loading || !!policyPreparation.error || !policyPreparation.data)}>
                 {command.busy
                   ? "Checking and saving…"
                   : mode === "confirm"
@@ -830,12 +855,14 @@ export function RequestDecision({
     [reason, setReason] = useState(""),
     command = useCommand();
   const resources = useResource<Envelope<Resource>>(`selectors/resources?site_id=${a.site_id}`);
+  const policyPreparation = useResource<PolicyPreparation>(`appointments/${a.id}/booking-policy?` + new URLSearchParams({start_at: request.proposed_start, end_at: request.proposed_end}));
   const resourceName = (id: string) => resources.data?.items.find(r => r.id === id)?.name ?? "Resource identity unavailable";
   async function decide(action: string) {
+    if (action === "accept" && (!policyPreparation.data || policyPreparation.loading || policyPreparation.error)) return;
     const body =
       action === "accept"
         ? {
-            ...bookingVersions(a),
+            ...bookingVersions(a, policyPreparation.data!),
             expected_request_version: request.version,
             reason,
           }
@@ -864,7 +891,7 @@ export function RequestDecision({
       <div className="scheduling-comparison" aria-label="Current versus proposed booking">
         <section><h3>Current booking</h3><p><Stamp value={a.start_at} timezone={a.site_timezone}/> – <Stamp value={a.end_at} timezone={a.site_timezone}/></p>
           {a.assignments.filter(x=>x.active && x.assignment_version===a.assignment_version).map(x=><p key={x.id}>{x.name} · {x.crew_role} · Travel before {x.travel_before_minutes} min / after {x.travel_after_minutes} min. Basis: {x.travel_reason}</p>)}
-          <p>Customer: {a.customer_commitment} · Dispatch {a.dispatch_hold ? "held" : "not held"} · Pack: {a.pack_requirement}</p>
+          <p>Customer: {a.customer_commitment} · Dispatch {(a.dispatch_hold || a.policy_impacts?.some(x => x.held)) ? "held" : "not held"} · Pack: {a.pack_requirement}</p>
         </section>
         <section><h3>Requested booking</h3><p><Stamp value={request.proposed_start} timezone={a.site_timezone}/> – <Stamp value={request.proposed_end} timezone={a.site_timezone}/></p>
           {request.crew.map(x=><p key={x.resource_id}>{resourceName(x.resource_id)} · {x.crew_role} · Travel before {x.travel_before_minutes} min / after {x.travel_after_minutes} min. Basis: {x.travel_reason}</p>)}
@@ -887,6 +914,8 @@ export function RequestDecision({
         (a.actions.can_manage || request.created_by === p.actor_id) && (
           <>
             <ErrorNotice error={command.error} />
+            <ReadState {...policyPreparation} retry={policyPreparation.reload} focusOnError={false} />
+            <button type="button" className="secondary" onClick={policyPreparation.reload}>Review current booking policy</button>
             <Field
               name={`decision-${request.id}`}
               label="Decision reason"
@@ -898,7 +927,7 @@ export function RequestDecision({
               {a.actions.can_manage && (
                 <>
                   <button
-                    disabled={command.busy || !reason.trim()}
+                    disabled={command.busy || !reason.trim() || policyPreparation.loading || !!policyPreparation.error || !policyPreparation.data}
                     onClick={() => void decide("accept")}
                   >
                     Accept and check move
@@ -991,6 +1020,12 @@ export function AppointmentScreen({ id }: { id: string }) {
               Showing the last successful read. Current availability is unknown.
             </p>
           )}
+          <section className="panel" aria-label="Visit entry guidance">
+            <p>{visitPreparationGuidance(a.status, a.preparation_status, a.scope_review_required)}</p>
+            {visitArrivalGuidance(a.status, false).closed && <p>Further physical attendance needs a separate visit. Original personal evidence, internal Service acceptance and customer responses remain distinct.</p>}
+            {!resource.loading && !resource.error && <Link href={`/service/work-orders/${a.work_order_id}#planned-visits`}>Review existing work-order visits and preparation</Link>}
+            <p>Opening a record does not grant preparation, scheduling or work authority.</p>
+          </section>
           <p>
             <Link href={showAppointmentDates(a, returnTo)}>
               Show its dates / View in planner
@@ -998,7 +1033,7 @@ export function AppointmentScreen({ id }: { id: string }) {
           </p>
           <div className="planner-holds">
             <strong>
-              {a.dispatch_hold
+              {(a.dispatch_hold || a.policy_impacts?.some(x => x.held))
                 ? "Dispatch held"
                 : "Crew responses recorded — check current pack readiness"}
             </strong>
@@ -1027,7 +1062,7 @@ export function AppointmentScreen({ id }: { id: string }) {
             </p>
           )}
           <div className="button-row planner-actions">
-            {a.actions.can_manage && a.status !== "Cancelled" && (
+            {a.actions.can_manage && ["Proposed", "Confirmed"].includes(a.status) && !a.actual_start_at && (
               <>
                 <button
                   disabled={resource.loading || !!resource.error}
@@ -1136,6 +1171,13 @@ export function AppointmentScreen({ id }: { id: string }) {
                   corrected in place by this screen.
                 </p>
               )}
+              {a.policy_impacts?.map(impact => <article className="planner-warning" key={impact.impact_id}>
+                <strong>Scheduling policy {impact.held ? "hold" : "impact"} · {impact.disposition}</strong>
+                <p>{impact.reason} · Responsible owner: {impact.owner_name}</p>
+                <p className="record-id">Source publication: {impact.publication_id}</p>
+                <p>{impact.next_action}</p>
+                {a.actions.can_resolve_policy && <PolicyResolution impactId={impact.impact_id} onSaved={resource.reload} />}
+              </article>)}
               {a.authorisation_blockers.map((b, i) => (
                 <p className="planner-warning" key={i}>
                   {b.message}
@@ -1306,7 +1348,7 @@ export function AppointmentCard({
           .join(" · ") || "No crew reserved"}
       </small>
       <p className="card-hold">
-        {a.scope_review_required ? "Scope review required · " : ""}Dispatch held
+        {a.scope_review_required ? "Scope review required · " : ""}{a.policy_impacts?.some(x => x.held) ? "Scheduling policy hold" : "Dispatch held"}
         · Customer {a.customer_commitment}
       </p>
       <small>
@@ -1447,7 +1489,9 @@ export function PlannerBoard({
                     Date.parse(b.end_at) > dayBounds.get(d)!.start,
                 ),
                 closed = (r.exceptions ?? []).filter((b) =>
-                  onDay(b.start_at, d),
+                  intervalsOverlap(b.start_at, b.end_at,
+                    new Date(dayBounds.get(d)!.start).toISOString(),
+                    new Date(dayBounds.get(d)!.end).toISOString()),
                 );
               return (
                 <div

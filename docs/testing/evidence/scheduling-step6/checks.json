@@ -1,0 +1,195 @@
+{
+  "checks": [
+    {
+      "file": "focused-regressions.txt",
+      "result": "Passed",
+      "note": "55/55; zero skips; policy/offline/report/Finance/retained-root upgrade",
+      "bytes": 9840,
+      "sha256": "fd599b17a3ebc66b938015c61cf0d721ca09c94ffcbb7c9387af2b3162aa53e5"
+    },
+    {
+      "file": "baseline-build.txt",
+      "result": "Passed",
+      "note": "Compiled afce0d65",
+      "bytes": 21735,
+      "sha256": "ad4ed1371198e1f34aee3faa8f2cea3a5d2867baf1cc97bd970324ef42b20df3"
+    },
+    {
+      "file": "candidate-build.txt",
+      "result": "Passed",
+      "note": "Compiled 95c0887 runtime",
+      "bytes": 22344,
+      "sha256": "b4fda5949597024678bf7d097baeacc24c992cc76a12328ff9fae78c5aea21e2"
+    },
+    {
+      "file": "rollback-build.txt",
+      "result": "Passed",
+      "note": "Compiled bfc4b78",
+      "bytes": 22278,
+      "sha256": "1bae95eda9d552b1ac53d0aee01c6a2be60d0c06b47202f0db8b703428d98eef"
+    },
+    {
+      "file": "final-typecheck.txt",
+      "result": "Passed",
+      "note": "Full TypeScript check",
+      "bytes": 55,
+      "sha256": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28"
+    },
+    {
+      "file": "final-lint.txt",
+      "result": "Passed",
+      "note": "Full ESLint check",
+      "bytes": 46,
+      "sha256": "144b8ef738aebf80f098340cd52aae1ca2b3b236fc5859b5d6806e5ec9ac9f64"
+    },
+    {
+      "file": "final-foundation.txt",
+      "result": "Passed",
+      "note": "Documentation assurance, 78 parent IDs",
+      "bytes": 343,
+      "sha256": "1361ea02e23ea1f6165c95a40a51954cc65d0167e38255c2de87b333e2c15545"
+    },
+    {
+      "file": "final-prototype.txt",
+      "result": "Passed",
+      "note": "Written definitions remain separate from execution",
+      "bytes": 551,
+      "sha256": "f7b48b580707ab4071e3dcda23d38936db1c757240cbc5996bf54ed4fceb2ff3"
+    },
+    {
+      "file": "final-naming.txt",
+      "result": "Passed",
+      "note": "7977 project instruction characters",
+      "bytes": 306,
+      "sha256": "fa4f4611290b33070d9f77518e5d373146d6037b9ad32b89570023bbc5e00dd9"
+    },
+    {
+      "file": "final-studio.txt",
+      "result": "Passed",
+      "note": "321 entries; 30 components; all reviews pending",
+      "bytes": 446,
+      "sha256": "aa13bc1da483c5fb4d11282f1747de6ca79bef345c378e24c5f7bdfa904f4d4d"
+    },
+    {
+      "file": "units.txt",
+      "result": "Failed",
+      "note": "560/567; four reproduced Windows failures plus three launcher timeouts",
+      "bytes": 69523,
+      "sha256": "c30872869452b76598ac43bc3f64ae14457ea4098dc10a86bbe26dfbdd457308"
+    },
+    {
+      "file": "main-units.txt",
+      "result": "Failed baseline control",
+      "note": "Unchanged 95c0887: 563/567; same four Windows failures",
+      "bytes": 61747,
+      "sha256": "072dc0160fd17550988c3dcac20a41bb18a59c70ff5fd0aa056ce1446ad8bca3"
+    },
+    {
+      "file": "startup-unit-control.txt",
+      "result": "Passed control",
+      "note": "13/13; earlier three launcher timeouts remain observations",
+      "bytes": 1418,
+      "sha256": "261189165afb72e0d9bb6bd5c894c2c9b395a520afb1e6a3c19c6bfbea6d5b05"
+    }
+  ],
+  "original_attempts": [
+    {
+      "file": "desktop-prepare-1.txt",
+      "result": "Failed setup",
+      "note": "Listener not ready; no business change",
+      "bytes": 4556,
+      "sha256": "0c6c3a40327605a4b7176694389ee3a97ae8258653f24783af14a94810bd3cd1"
+    },
+    {
+      "file": "desktop-prepare-2.txt",
+      "result": "Failed harness",
+      "note": "Current-pack acknowledgement targeted pre-compaction coordinates; no second POST",
+      "bytes": 4764,
+      "sha256": "65badfeea14ffadf87d5f0bb8515e2c8c6a23faa14e417f47013232384142222"
+    },
+    {
+      "file": "desktop2-prepare.txt",
+      "result": "Failed setup",
+      "note": "Compiled HTTP readiness not yet established",
+      "bytes": 3329,
+      "sha256": "fc1f97e589e103c77cdb052185a847684293b8af0419f7ea6688e66d94386917"
+    },
+    {
+      "file": "desktop2-ready-prepare.txt",
+      "result": "Failed fixture",
+      "note": "Duplicate pack acknowledgements correctly returned ReviewRequired",
+      "bytes": 5761,
+      "sha256": "46cc4ae4faa673b8d2bc1703093bcf6b65000eb0ddc526c0e16739ef841417a2"
+    },
+    {
+      "file": "probe.txt",
+      "result": "Failed fixture probe",
+      "note": "Same-selection readiness original was already retained",
+      "bytes": 604,
+      "sha256": "4d1a120f46263b98b676346333467efe1435c7c3b25ed9633176c2a3bfa64cbe"
+    },
+    {
+      "file": "probe2.txt",
+      "result": "Failed fixture probe",
+      "note": "Same presented source hash retained; distinct real activities required",
+      "bytes": 14474,
+      "sha256": "b9981855a5c1d56882e18c7e8435794428c03e6584103d26c45810ba99902aeb"
+    },
+    {
+      "file": "probe3.txt",
+      "result": "Passed probe",
+      "note": "Four readiness originals and two accepted original receipts",
+      "bytes": 83,
+      "sha256": "808ff8415d7eb0faf4ba4df3f717027c53e49e8ddb95785584667e2cc1f5f124"
+    },
+    {
+      "file": "desktop3-publish-contract-failure.txt",
+      "result": "Failed harness",
+      "note": "Stale refusal is 422, not assumed 409",
+      "bytes": 3392,
+      "sha256": "7de8b3f3433f188aa666c6cd481cf340917e96c51af95f938ac6bb07c42ee9a9"
+    },
+    {
+      "file": "desktop3-publish-code-failure.txt",
+      "result": "Failed harness",
+      "note": "Already-loaded harness expected wrong code; actual InvalidData retained",
+      "bytes": 3455,
+      "sha256": "a9cbd30a441a368b181ec56be6eea451f6e49606dddd63eefb4331aaa8893f44"
+    },
+    {
+      "file": "desktop3-resolve.txt",
+      "result": "Failed harness",
+      "note": "Second receipt comparison preceded completed response handler; trace retains 201 and exact 200",
+      "bytes": 3725,
+      "sha256": "062489bb83865fc0a4f0cb53394413e5e3e87579abd7d6db191e933ea5568410"
+    },
+    {
+      "file": "desktop3-recover-resolution-missing-file.txt",
+      "result": "Failed recovery setup",
+      "note": "Trace extraction not yet completed; no replay",
+      "bytes": 3415,
+      "sha256": "80c7a2481bd59a46ae7d487068227ef5994b536811ba0a8853df6fa01668c4ef"
+    },
+    {
+      "file": "desktop3-recover-resolution-disclosure.txt",
+      "result": "Failed harness",
+      "note": "Current evaluation needed explicit disclosure/evaluate after reopening",
+      "bytes": 3526,
+      "sha256": "6535c89dadcdde984c3b72b3cbb36a9a3170c752ace5a7e4e8e0b1701a2bba20"
+    },
+    {
+      "file": "desktop3-recover-resolution.txt",
+      "result": "Passed recovery",
+      "note": "Exact retained original recovered; no repeated amendment/reissue; changed dependency restores hold",
+      "bytes": 469,
+      "sha256": "6a6c27361709b162bca1913d1b96e21e87b71fbfa94eb7ea60f2aa592567754f"
+    }
+  ],
+  "limits": [
+    "No aggregate full Windows unit pass claimed.",
+    "No Reports timeout cause inferred.",
+    "Desktop normal resolve command failed; explicit retained-original recovery completed its obligations.",
+    "Phone all six phase commands passed on first invocation.",
+    "Final PR CI must be read on its actual final head; this file does not assert future CI success."
+  ]
+}

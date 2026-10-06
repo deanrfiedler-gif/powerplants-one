@@ -1,5 +1,7 @@
 # Modal dialogs
 
+SC-01–SC-10 reuse WorklistPanel for native record, observation and allocation forms, including focused receipt/pick/POD capture. Existing catalogue fixtures and shared rendering are unchanged. The host retains dirty proposals on refused saves, confirms deliberate close, restores focus, and preserves unknown operations separately. Verify long labels and modal containment at 320 px in `tests/browser/supply.spec.ts`; executed evidence is recorded in the Supply Chain handover, separately from owner acceptance.
+
 <!-- versioning: git; committed history is authoritative -->
 
 **Owner:** Dean Fiedler · **Catalogue key:** `dialog` · **Review:** Pending

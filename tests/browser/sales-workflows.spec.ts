@@ -336,7 +336,23 @@ test("CR05 issued source review saves attributed feedback, commercial preparatio
   });
   const options = await call(page, `sales/aftercare/${id}/options`);
   expect(options.people.length).toBeGreaterThan(0);
+  // Navigation can finish before the exact saved review reaches the browser.
+  // Hold the real response beyond the unchanged UI assertion window so this
+  // ordering is exercised on both viewports without retrying or replacing data.
+  await page.route(`**/api/v1/sales/aftercare/${id}`, async (route) => {
+    const response = await route.fetch();
+    await new Promise((resolve) => setTimeout(resolve, 6000));
+    await route.fulfill({ response });
+  }, { times: 1 });
+  const reviewRead = page.waitForResponse((response) =>
+    new URL(response.url()).pathname === `/api/v1/sales/aftercare/${id}` &&
+    response.request().method() === "GET",
+  );
   await page.goto(`/sales/aftercare/${id}`);
+  const response = await reviewRead;
+  expect(response.status()).toBe(200);
+  expect(await response.finished()).toBeNull();
+  expect((await response.json()).record.id).toBe(id);
   await expect(
     page.getByRole("tab", { name: "Customer review", exact: true }),
   ).toBeVisible();
@@ -386,9 +402,48 @@ test("CR05 issued source review saves attributed feedback, commercial preparatio
   await page
     .getByRole("button", { name: "Refresh review preparation", exact: true })
     .click();
+  const aftercarePath = `/api/v1/sales/aftercare/${id}`;
+  const completedPattern = `**${aftercarePath}`;
+  // CompleteReview acknowledges the command before its separate saved-record
+  // refresh. Exercise that ordering with the real response beyond the unchanged
+  // render assertion window; no receipt or record content is substituted.
+  await page.route(completedPattern, async (route) => {
+    if (route.request().method() !== "GET") return route.continue();
+    const response = await route.fetch();
+    if (response.ok() && (await response.json()).record?.state === "ReviewCompleted")
+      await new Promise((resolve) => setTimeout(resolve, 6000));
+    await route.fulfill({ response });
+  });
+  const completionResponse = page.waitForResponse(
+    (response) =>
+      new URL(response.url()).pathname === aftercarePath &&
+      response.request().method() === "POST" &&
+      response.request().postDataJSON()?.action === "CompleteReview",
+  );
+  const completedRead = page.waitForResponse(async (response) => {
+    if (
+      new URL(response.url()).pathname !== aftercarePath ||
+      response.request().method() !== "GET"
+    )
+      return false;
+    if (!response.ok()) return true;
+    return (await response.json()).record?.state === "ReviewCompleted";
+  });
   await page
     .getByRole("button", { name: "Complete customer review", exact: true })
     .click();
+  const completion = await completionResponse;
+  expect(completion.ok()).toBe(true);
+  const completionReceipt = await completion.json();
+  expect(completionReceipt).toMatchObject({ record_id: id, state: "ReviewCompleted" });
+  const completed = await completedRead;
+  expect(completed.ok()).toBe(true);
+  expect((await completed.json()).record).toMatchObject({
+    id,
+    state: "ReviewCompleted",
+    version: completionReceipt.record_version,
+  });
+  await page.unroute(completedPattern);
   await expect(
     page.getByRole("button", { name: "Open correction", exact: true }),
   ).toBeVisible();
@@ -421,11 +476,56 @@ test("CR05 issued source review saves attributed feedback, commercial preparatio
     .getByRole("button", { name: "Prepare commercial discussion", exact: true })
     .click();
   await page.getByRole("tab", { name: "Customer review", exact: true }).click();
+  const closureResponse = page.waitForResponse(
+    (response) =>
+      new URL(response.url()).pathname === aftercarePath &&
+      response.request().method() === "POST" &&
+      response.request().postDataJSON()?.action === "Close",
+  );
+  // The Close receipt is followed by a separate resource refresh. A poll of
+  // the previous revision is not proof that the saved closure reached the UI.
+  const closedRead = page.waitForResponse(async (response) => {
+    if (
+      new URL(response.url()).pathname !== aftercarePath ||
+      response.request().method() !== "GET"
+    )
+      return false;
+    if (!response.ok()) return true;
+    return (await response.json()).record?.state === "Closed";
+  });
   await page
     .getByRole("button", { name: "Close aftercare record", exact: true })
     .click();
+  const closure = await closureResponse;
+  expect(closure.ok()).toBe(true);
+  const receipt = await closure.json();
+  expect(receipt).toMatchObject({ record_id: id, state: "Closed" });
+  const refreshed = await closedRead;
+  expect(refreshed.ok()).toBe(true);
+  expect((await refreshed.json()).record).toMatchObject({
+    id,
+    state: "Closed",
+    version: receipt.record_version,
+  });
   await expect(page.getByText("Closed", { exact: true }).first()).toBeVisible();
+  // Document load does not include the asynchronous record read. Observe the
+  // reload's exact GET and saved version before starting the UI assertion;
+  // neither the action timeout nor the five-second render budget is changed.
+  const reloadedRead = page.waitForResponse(
+    (response) =>
+      new URL(response.url()).pathname === aftercarePath &&
+      response.request().method() === "GET",
+  );
   await page.reload();
+  const reloaded = await reloadedRead;
+  expect(reloaded.ok()).toBe(true);
+  const persisted = await reloaded.json();
+  expect(persisted.record).toMatchObject({
+    id,
+    state: "Closed",
+    version: receipt.record_version,
+  });
+  expect(persisted.record.content.review.feedback[0].statement).toBe(statement);
   await expect(page.getByText("Closed", { exact: true }).first()).toBeVisible();
   await captureSizes(page, info.outputPath.bind(info), "cr05");
   await page.keyboard.press("Tab");

@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { facilitySeedCounters, facilitySeedIdentities } from "../helpers/facility-seed-identities";
+import { supplySeedIdentities } from "../helpers/supply-seed-identities";
 import { beforeEach, after, test } from "node:test";
 import { randomUUID, createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
@@ -665,7 +666,7 @@ test("CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and 
     ["f2000000-0000-4000-8000-000000000002", "FinanceAccount"],
   ].map(([id, object_type]) => ({ workspace_id: p.workspace_id, id, object_type, display_number: null, synthetic: true }));
   assert.deepEqual(await rows("SELECT * FROM ppo.business_identities ORDER BY id"),
-    [...identities, ...earlierSeedIdentities, ...facilitySeedIdentities(before[tables.indexOf("reference_counters")])].sort((a, b) => a.id.localeCompare(b.id)));
+    [...identities, ...earlierSeedIdentities, ...facilitySeedIdentities(before[tables.indexOf("reference_counters")]), ...supplySeedIdentities].sort((a, b) => a.id.localeCompare(b.id)));
   assert.deepEqual(
     await rows("SELECT * FROM ppo.activity_links ORDER BY activity_id,object_type,object_id"),
     // Later migrations add generated target columns, including Project in 0032.

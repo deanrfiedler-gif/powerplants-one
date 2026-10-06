@@ -98,7 +98,7 @@ test("identity lock clears results and rejects a late response even if transport
   await expect(page.locator("#shell-search-list").getByRole("option")).toHaveCount(0);
 });
 
-test("page guide is contextual and Supply selection requests its available My Work landing", async ({ page }) => {
+test("page guide is contextual and Supply selection requests its native readiness landing", async ({ page }) => {
   await page.getByRole("button", { name: "Page guide", exact: true }).click();
   const guide = page.getByRole("dialog", { name: "Page guide", exact: true });
   await expect(guide.getByRole("heading", { name: "Deals", exact: true })).toBeVisible();
@@ -112,7 +112,7 @@ test("page guide is contextual and Supply selection requests its available My Wo
   }));
   await page.getByRole("button", { name: "Change identity", exact: true }).click();
   await page.getByLabel("Preview workspace", { exact: true }).selectOption("supply");
-  await expect(page.locator("html")).toHaveAttribute("data-requested-route", "/work?department=supply");
+  await expect(page.locator("html")).toHaveAttribute("data-requested-route", "/supply/material-readiness");
   await expect(page.locator(".crm-card:visible")).toHaveCount(8);
   await page.reload();
   await page.getByRole("button", { name: "Change identity", exact: true }).click();
@@ -207,16 +207,16 @@ test("runtime shell matches the retained r17 reference typography, panel geometr
     }
     if (kind === "more") {
       // r17 geometry is retained; the navigation decision replaces planned links
-      // with ready, permitted destinations. Supply has no business landing yet.
-      await expect(actualPanel.locator(".ppo-menu-group").first().locator(".ppo-more-link")).toHaveText(["Sales", "Estimating & quotation", "Engineering", "Projects", "Service operations", "Finance"]);
+      // with ready, permitted destinations, including native Supply Chain.
+      await expect(actualPanel.locator(".ppo-menu-group").first().locator(".ppo-more-link")).toHaveText(["Sales", "Estimating & quotation", "Engineering", "Projects", "Service operations", "Supply chain", "Finance"]);
       // CS-08 and the three native Sales handover/aftercare destinations are included. Footer count includes Help;
       // installation actions are separate controls. Retained r17 bytes stay unchanged.
-      await expect(actualPanel.locator(".ppo-menu-group .ppo-more-link")).toHaveCount(26);
+      await expect(actualPanel.locator(".ppo-menu-group .ppo-more-link")).toHaveCount(27);
       await expect(actualPanel.locator(".ppo-help-link")).toBeVisible();
       for (const [name, href] of [["Sales-to-Estimating handovers", "/sales/handoffs/estimating"], ["Won-deal receiving", "/sales/handoffs/won"], ["Aftercare & renewal", "/sales/aftercare"]]) {
         await expect(actualPanel.getByRole("link", { name, exact: true })).toHaveAttribute("href", href);
       }
-      await expect(actualPanel.locator("footer")).toContainText("27 destinations");
+      await expect(actualPanel.locator("footer")).toContainText("28 destinations");
       await expect(actualPanel.getByRole("link", { name: "Facilities & growing areas", exact: true })).toHaveAttribute("href", "/facilities?department=sales");
       await expect(actualPanel.getByRole("link", { name: "Site surveys & as-found", exact: true })).toHaveAttribute("href", "/surveys?department=sales");
     }

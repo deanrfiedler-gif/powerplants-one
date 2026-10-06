@@ -21,6 +21,7 @@ import {
   choice,
 } from "../shared/validation";
 import { readReport, presentationBytes } from "../reports/service";
+import { readTimer } from "../field/timer";
 import { readFieldJob } from "../field/reads";
 import { fieldContext } from "../field/context";
 import { insertActivity } from "../activities/activities";
@@ -162,6 +163,11 @@ export async function downloadContext(
   return {
     owner: p,
     report_presentations,
+    timer: (
+      await database().query("SELECT to_regclass('ppo.field_timers') relation")
+    ).rows[0].relation
+      ? await readTimer(p, id)
+      : undefined,
     verified_at: new Date().toISOString(),
     expires_at: new Date(Date.now() + 86400000).toISOString(),
     authority,
@@ -172,6 +178,10 @@ export async function downloadContext(
     },
     job: {
       ...job,
+      // Receiving navigation/current permissions are online read projections,
+      // never downloaded authority or another visit's cached context.
+      visit_navigation: null,
+      arrival_actions: { can_start: false, can_acknowledge: false },
       entries: job.entries.filter((e) => e.actor_id === p.actor_id),
       attachments: job.attachments.filter((e) => e.actor_id === p.actor_id),
       follow_ups: [],

@@ -22,11 +22,11 @@ Reused components: PageHeader, Field, Button/ButtonLink, Status, ReadState, Reco
 
 1. Create one claim for the current case/assessment with supplier, scope, integer minor-unit amount, currency/tax basis, owner and due date.
 2. Record external submission evidence, then ordered supplier responses with approved amount and next owner/date.
-3. Retain external Authorised → Received → Disposed evidence, or Not required before movement. Native SC-08 receiving is Unavailable.
+3. Retain external Authorised → Received → Disposed evidence, or Not required before movement. Warranty is not yet connected to native Supply receiving.
 4. Finance links an existing external credit to the exact approval, with explicit ERP company key, unique credit reference, date, amount and reconciliation state.
 5. Record an independent unrecovered disposition where required; inspect claimed, approved, credited and unrecovered amounts separately.
 
-Supplier approval is not credit, cash or custody. PPO sends no claim and posts no ERP transaction. SC-08 stock/returns receiving remains absent.
+Supplier approval is not credit, cash or custody. PPO sends no claim and posts no ERP transaction. The Warranty-to-Supply receiving bridge remains unimplemented.
 
 ## Handovers and states
 

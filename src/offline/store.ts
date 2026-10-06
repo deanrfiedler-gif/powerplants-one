@@ -8,6 +8,8 @@ import {
   type Outcome,
   type Authority,
 } from "./protocol";
+import type { TimerView } from "../field/timer-model";
+import type { readFieldReadiness } from "../field/readiness";
 import type { Job } from "../components/field-screens";
 export const DB_NAME = "PPO-offline-field",
   DB_VERSION = 2;
@@ -20,6 +22,8 @@ export type CachedJob = {
   recovery: { id: string; token: string; expires_at: string };
   job: Job;
   pack_html?: string;
+  timer?: TimerView;
+  readiness_review?: Awaited<ReturnType<typeof readFieldReadiness>>;
   report_presentations?: {
     id: string;
     report_id: string;
@@ -306,6 +310,22 @@ export async function commitOperations(
               "OperationConflict: an original cannot be changed. Create a linked successor.",
             );
           continue;
+        }
+        if (op.command === "Timer") {
+          const retained = await request<StoredOperation[]>(s.getAll());
+          if (
+            retained.some(
+              (x) =>
+                x.owner === ownerKey(p) &&
+                x.original.command === "Timer" &&
+                x.original.appointment_id === op.appointment_id &&
+                x.original.payload.expected_version ===
+                  op.payload.expected_version,
+            )
+          )
+            throw new LocalStorageError(
+              "Another tab already saved a timer action for this version. Refresh the saved view; its original has been retained.",
+            );
         }
         s.add({
           key,

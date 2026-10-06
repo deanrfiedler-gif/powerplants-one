@@ -1,0 +1,400 @@
+name: Quotation Supply follow-up assurance
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  conversion:
+    name: ES-07 owned Supply follow-up and original recovery
+    needs: proof
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Require every isolated Supply proof group
+        env:
+          PPO_SUPPLY_RESULT: ${{ needs.proof.result }}
+        run: test "$PPO_SUPPLY_RESULT" = success
+  proof:
+    name: ES-07 Supply ${{ matrix.suite }} proof
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: [database, receipt-database, shortfall-database, material-database, dependency-database, chain-database, branch-database, merge-database, runtime, shortfall-runtime, material-runtime, dependency-runtime, chain-runtime, branch-runtime, merge-runtime]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    services:
+      postgres:
+        image: postgres:16.15
+        env:
+          POSTGRES_USER: ppo_local
+          POSTGRES_PASSWORD: ppo_disposable_ci_only
+          POSTGRES_DB: ppo_synthetic_test
+        ports:
+          - 127.0.0.1:5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ppo_local -d ppo_synthetic_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+      PPO_SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+      - name: Configure disposable PostgreSQL lock capacity
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: bash scripts/configure-test-postgres.sh
+      - name: Install the existing pinned runtime and document renderer
+        run: |
+          npm install --global npm@11.19.0
+          npm ci
+          npm run browser:install
+          cp .env.example .env.local
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('.env.local')
+          p.write_text(p.read_text().replace('<local-password>','ppo_disposable_ci_only').replace('/ppo_synthetic','/ppo_synthetic_test'))
+          PY
+      - name: Owned Supply follow-up and populated upgrade PostgreSQL proof
+        if: matrix.suite == 'database'
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/quotation-supply-followup.test.ts tests/database/quotation-reservation-reconciliation.test.ts
+      - name: Receipt correction receiving and populated upgrade PostgreSQL proof
+        if: matrix.suite == 'receipt-database'
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/quotation-receipt-correction.test.ts
+      - name: Shortfall receiving atomic allocation and populated upgrade PostgreSQL proof
+        if: matrix.suite == 'shortfall-database'
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/quotation-allocation-shortfall.test.ts
+      - name: Material downstream receiving native effects and populated upgrade PostgreSQL proof
+        if: matrix.suite == 'material-database'
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/quotation-material-resolution.test.ts
+      - name: Dependency downstream receiving native effects and populated upgrade PostgreSQL proof
+        if: matrix.suite == 'dependency-database'
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/quotation-task-dependency.test.ts
+      - name: Three-task chain receiving native effects and populated upgrade PostgreSQL proof
+        if: matrix.suite == 'chain-database'
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/quotation-task-chain.test.ts
+      - name: Three-task branch receiving native effects and populated upgrade PostgreSQL proof
+        if: matrix.suite == 'branch-database'
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/quotation-task-branch.test.ts
+      - name: Three-task merge receiving native effects and populated upgrade PostgreSQL proof
+        if: matrix.suite == 'merge-database'
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/quotation-task-merge.test.ts
+      - name: Initialise the isolated runtime database
+        if: matrix.suite == 'runtime' || matrix.suite == 'shortfall-runtime' || matrix.suite == 'material-runtime' || matrix.suite == 'dependency-runtime' || matrix.suite == 'chain-runtime' || matrix.suite == 'branch-runtime' || matrix.suite == 'merge-runtime'
+        run: |
+          npm run db:migrate
+          npm run db:seed
+      - name: Compile the exact contribution
+        if: matrix.suite == 'runtime' || matrix.suite == 'shortfall-runtime' || matrix.suite == 'material-runtime' || matrix.suite == 'dependency-runtime' || matrix.suite == 'chain-runtime' || matrix.suite == 'branch-runtime' || matrix.suite == 'merge-runtime'
+        run: npm run build
+      - name: Compiled HTTP and write the restart checkpoint
+        if: matrix.suite == 'runtime'
+        run: |
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > "$RUNNER_TEMP/ppo-supply-followup-http.log" 2>&1 &
+          ppo_supply_pid=$!
+          trap 'kill "$ppo_supply_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            curl --fail --silent http://127.0.0.1:3000/ > /dev/null && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx --test tests/http/quotation-supply-followup.test.ts tests/http/quotation-receipt-correction.test.ts tests/http/quotation-disposition.test.ts tests/http/quotation-conversion.test.ts tests/http/quotation-response.test.ts
+          PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/quotation-supply-followup-restart.ts write
+      - name: Restart actual PostgreSQL and verify original evidence in a new application process
+        if: matrix.suite == 'runtime'
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: |
+          docker restart "$PPO_POSTGRES_CONTAINER"
+          for attempt in $(seq 1 30); do
+            docker exec "$PPO_POSTGRES_CONTAINER" pg_isready -U ppo_local -d ppo_synthetic_test && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > "$RUNNER_TEMP/ppo-supply-followup-reopen.log" 2>&1 &
+          ppo_supply_pid=$!
+          trap 'kill "$ppo_supply_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            curl --fail --silent http://127.0.0.1:3000/ > /dev/null && break
+            sleep 1
+          done
+          PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/quotation-supply-followup-restart.ts verify
+      - name: Compiled desktop and mobile Supply follow-up and shared-control proof
+        if: matrix.suite == 'runtime'
+        run: npx playwright test --config=playwright.compiled.config.ts tests/browser/quotation-supply-followup.spec.ts tests/browser/quotation-receipt-correction.spec.ts tests/browser/component-catalogue.spec.ts --output verification-evidence/quotation-supply-followup-browser --reporter=list
+      - name: Shortfall compiled HTTP and write the restart checkpoint
+        if: matrix.suite == 'shortfall-runtime'
+        run: |
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > "$RUNNER_TEMP/ppo-supply-followup-http.log" 2>&1 &
+          ppo_supply_pid=$!
+          trap 'kill "$ppo_supply_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            curl --fail --silent http://127.0.0.1:3000/ > /dev/null && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx --test tests/http/quotation-allocation-shortfall.test.ts
+          PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/quotation-allocation-shortfall-restart.ts write
+      - name: Shortfall actual PostgreSQL restart and original evidence recovery
+        if: matrix.suite == 'shortfall-runtime'
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: |
+          docker restart "$PPO_POSTGRES_CONTAINER"
+          for attempt in $(seq 1 30); do
+            docker exec "$PPO_POSTGRES_CONTAINER" pg_isready -U ppo_local -d ppo_synthetic_test && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > "$RUNNER_TEMP/ppo-supply-followup-reopen.log" 2>&1 &
+          ppo_supply_pid=$!
+          trap 'kill "$ppo_supply_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            curl --fail --silent http://127.0.0.1:3000/ > /dev/null && break
+            sleep 1
+          done
+          PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/quotation-allocation-shortfall-restart.ts verify
+      - name: Shortfall compiled desktop mobile and shared-control proof
+        if: matrix.suite == 'shortfall-runtime'
+        run: npx playwright test --config=playwright.compiled.config.ts tests/browser/quotation-allocation-shortfall.spec.ts tests/browser/component-catalogue.spec.ts --output verification-evidence/quotation-allocation-shortfall-browser --reporter=list
+      - name: Material compiled HTTP and write the restart checkpoint
+        if: matrix.suite == 'material-runtime'
+        run: |
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > "$RUNNER_TEMP/ppo-supply-followup-http.log" 2>&1 &
+          ppo_supply_pid=$!
+          trap 'kill "$ppo_supply_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            curl --fail --silent http://127.0.0.1:3000/ > /dev/null && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx --test tests/http/quotation-material-resolution.test.ts
+          PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/quotation-material-resolution-restart.ts write
+      - name: Material actual PostgreSQL restart and original evidence recovery
+        if: matrix.suite == 'material-runtime'
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: |
+          docker restart "$PPO_POSTGRES_CONTAINER"
+          for attempt in $(seq 1 30); do
+            docker exec "$PPO_POSTGRES_CONTAINER" pg_isready -U ppo_local -d ppo_synthetic_test && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > "$RUNNER_TEMP/ppo-supply-followup-reopen.log" 2>&1 &
+          ppo_supply_pid=$!
+          trap 'kill "$ppo_supply_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            curl --fail --silent http://127.0.0.1:3000/ > /dev/null && break
+            sleep 1
+          done
+          PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/quotation-material-resolution-restart.ts verify
+      - name: Material compiled desktop mobile and shared-control proof
+        if: matrix.suite == 'material-runtime'
+        run: npx playwright test --config=playwright.compiled.config.ts tests/browser/quotation-material-resolution.spec.ts tests/browser/component-catalogue.spec.ts --output verification-evidence/quotation-material-resolution-browser --reporter=list
+      - name: Dependency compiled HTTP and write the restart checkpoint
+        if: matrix.suite == 'dependency-runtime'
+        run: |
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > "$RUNNER_TEMP/ppo-supply-followup-http.log" 2>&1 &
+          ppo_supply_pid=$!
+          trap 'kill "$ppo_supply_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            curl --fail --silent http://127.0.0.1:3000/ > /dev/null && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx --test tests/http/quotation-task-dependency.test.ts
+          PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/quotation-task-dependency-restart.ts write
+      - name: Dependency actual PostgreSQL restart and original evidence recovery
+        if: matrix.suite == 'dependency-runtime'
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: |
+          docker restart "$PPO_POSTGRES_CONTAINER"
+          for attempt in $(seq 1 30); do
+            docker exec "$PPO_POSTGRES_CONTAINER" pg_isready -U ppo_local -d ppo_synthetic_test && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > "$RUNNER_TEMP/ppo-supply-followup-reopen.log" 2>&1 &
+          ppo_supply_pid=$!
+          trap 'kill "$ppo_supply_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            curl --fail --silent http://127.0.0.1:3000/ > /dev/null && break
+            sleep 1
+          done
+          PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/quotation-task-dependency-restart.ts verify
+      - name: Dependency compiled desktop mobile and shared-control proof
+        if: matrix.suite == 'dependency-runtime'
+        run: npx playwright test --config=playwright.compiled.config.ts tests/browser/quotation-task-dependency.spec.ts tests/browser/component-catalogue.spec.ts --output verification-evidence/quotation-task-dependency-browser --reporter=list
+      - name: Three-task chain compiled HTTP and write the restart checkpoint
+        if: matrix.suite == 'chain-runtime'
+        run: |
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > "$RUNNER_TEMP/ppo-supply-followup-http.log" 2>&1 &
+          ppo_supply_pid=$!
+          trap 'kill "$ppo_supply_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            curl --fail --silent http://127.0.0.1:3000/ > /dev/null && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx --test tests/http/quotation-task-chain.test.ts
+          PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/quotation-task-chain-restart.ts write
+      - name: Three-task chain actual PostgreSQL restart and original evidence recovery
+        if: matrix.suite == 'chain-runtime'
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: |
+          docker restart "$PPO_POSTGRES_CONTAINER"
+          for attempt in $(seq 1 30); do
+            docker exec "$PPO_POSTGRES_CONTAINER" pg_isready -U ppo_local -d ppo_synthetic_test && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > "$RUNNER_TEMP/ppo-supply-followup-reopen.log" 2>&1 &
+          ppo_supply_pid=$!
+          trap 'kill "$ppo_supply_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            curl --fail --silent http://127.0.0.1:3000/ > /dev/null && break
+            sleep 1
+          done
+          PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/quotation-task-chain-restart.ts verify
+      - name: Three-task chain compiled desktop mobile and shared-control proof
+        if: matrix.suite == 'chain-runtime'
+        run: npx playwright test --config=playwright.compiled.config.ts tests/browser/quotation-task-chain.spec.ts tests/browser/component-catalogue.spec.ts --output verification-evidence/quotation-task-chain-browser --reporter=list
+      - name: Three-task branch compiled HTTP and write the restart checkpoint
+        if: matrix.suite == 'branch-runtime'
+        run: |
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > "$RUNNER_TEMP/ppo-supply-followup-http.log" 2>&1 &
+          ppo_supply_pid=$!
+          trap 'kill "$ppo_supply_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            curl --fail --silent http://127.0.0.1:3000/ > /dev/null && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx --test tests/http/quotation-task-branch.test.ts
+          PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/quotation-task-branch-restart.ts write
+      - name: Three-task branch actual PostgreSQL restart and original evidence recovery
+        if: matrix.suite == 'branch-runtime'
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: |
+          docker restart "$PPO_POSTGRES_CONTAINER"
+          for attempt in $(seq 1 30); do
+            docker exec "$PPO_POSTGRES_CONTAINER" pg_isready -U ppo_local -d ppo_synthetic_test && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > "$RUNNER_TEMP/ppo-supply-followup-reopen.log" 2>&1 &
+          ppo_supply_pid=$!
+          trap 'kill "$ppo_supply_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            curl --fail --silent http://127.0.0.1:3000/ > /dev/null && break
+            sleep 1
+          done
+          PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/quotation-task-branch-restart.ts verify
+      - name: Three-task branch compiled desktop mobile and shared-control proof
+        if: matrix.suite == 'branch-runtime'
+        run: npx playwright test --config=playwright.compiled.config.ts tests/browser/quotation-task-branch.spec.ts tests/browser/component-catalogue.spec.ts --output verification-evidence/quotation-task-branch-browser --reporter=list
+      - name: Three-task merge compiled HTTP and write the restart checkpoint
+        if: matrix.suite == 'merge-runtime'
+        run: |
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > "$RUNNER_TEMP/ppo-supply-followup-http.log" 2>&1 &
+          ppo_supply_pid=$!
+          trap 'kill "$ppo_supply_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            curl --fail --silent http://127.0.0.1:3000/ > /dev/null && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx --test tests/http/quotation-task-merge.test.ts
+          PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/quotation-task-merge-restart.ts write
+      - name: Three-task merge actual PostgreSQL restart and original evidence recovery
+        if: matrix.suite == 'merge-runtime'
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: |
+          docker restart "$PPO_POSTGRES_CONTAINER"
+          for attempt in $(seq 1 30); do
+            docker exec "$PPO_POSTGRES_CONTAINER" pg_isready -U ppo_local -d ppo_synthetic_test && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > "$RUNNER_TEMP/ppo-supply-followup-reopen.log" 2>&1 &
+          ppo_supply_pid=$!
+          trap 'kill "$ppo_supply_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            curl --fail --silent http://127.0.0.1:3000/ > /dev/null && break
+            sleep 1
+          done
+          PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/quotation-task-merge-restart.ts verify
+      - name: Three-task merge compiled desktop mobile and shared-control proof
+        if: matrix.suite == 'merge-runtime'
+        run: npx playwright test --config=playwright.compiled.config.ts tests/browser/quotation-task-merge.spec.ts tests/browser/component-catalogue.spec.ts --output verification-evidence/quotation-task-merge-browser --reporter=list
+      - name: Retain synthetic execution evidence
+        if: always() && matrix.suite == 'runtime'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: Quotation-Supply-followup-evidence
+          path: |
+            verification-evidence/quotation-supply-followup-browser/
+            verification-evidence/quotation-supply-followup-restart/
+            !**/trace.zip
+          retention-days: 14
+      - name: Retain synthetic shortfall execution evidence
+        if: always() && matrix.suite == 'shortfall-runtime'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: Quotation-allocation-shortfall-evidence
+          path: |
+            verification-evidence/quotation-allocation-shortfall-browser/
+            verification-evidence/quotation-allocation-shortfall-restart/
+            !**/trace.zip
+          retention-days: 14
+      - name: Retain synthetic material execution evidence
+        if: always() && matrix.suite == 'material-runtime'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: Quotation-material-resolution-evidence
+          path: |
+            verification-evidence/quotation-material-resolution-browser/
+            verification-evidence/quotation-material-resolution-restart/
+            !**/trace.zip
+          retention-days: 14
+      - name: Retain synthetic dependency execution evidence
+        if: always() && matrix.suite == 'dependency-runtime'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: Quotation-task-dependency-evidence
+          path: |
+            verification-evidence/quotation-task-dependency-browser/
+            verification-evidence/quotation-task-dependency-restart/
+            !**/trace.zip
+          retention-days: 14
+
+      - name: Retain synthetic chain execution evidence
+        if: always() && matrix.suite == 'chain-runtime'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: Quotation-task-chain-evidence
+          path: |
+            verification-evidence/quotation-task-chain-browser/
+            verification-evidence/quotation-task-chain-restart/
+            !**/trace.zip
+          retention-days: 14
+
+      - name: Retain synthetic branch execution evidence
+        if: always() && matrix.suite == 'branch-runtime'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: Quotation-task-branch-evidence
+          path: |
+            verification-evidence/quotation-task-branch-browser/
+            verification-evidence/quotation-task-branch-restart/
+            !**/trace.zip
+          retention-days: 14
+
+      - name: Retain synthetic merge execution evidence
+        if: always() && matrix.suite == 'merge-runtime'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: Quotation-task-merge-evidence
+          path: |
+            verification-evidence/quotation-task-merge-browser/
+            verification-evidence/quotation-task-merge-restart/
+            !**/trace.zip
+          retention-days: 14

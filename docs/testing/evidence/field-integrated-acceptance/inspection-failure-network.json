@@ -1,0 +1,219 @@
+[
+  {
+    "at": "2026-10-03T04:50:27.898Z",
+    "method": "GET",
+    "path": "my-jobs/3c666713-f9cd-4133-9ca7-eeea3d19bf2d/inspections",
+    "status": 200,
+    "command": null,
+    "receipt": {
+      "operation_id": null,
+      "record_id": null,
+      "record_version": null,
+      "code": null
+    },
+    "attempts": []
+  },
+  {
+    "at": "2026-10-03T04:50:29.127Z",
+    "method": "GET",
+    "path": "my-jobs/3c666713-f9cd-4133-9ca7-eeea3d19bf2d/inspections/preview?template_id=e9550000-0000-4000-8000-000000000001&scope_item_id=8b491fdc-a403-4db5-aff1-cf38a569af53&asset_id=80000000-0000-4000-8000-000000000001",
+    "status": 200,
+    "command": null,
+    "receipt": {
+      "operation_id": null,
+      "record_id": null,
+      "record_version": null,
+      "code": null
+    },
+    "attempts": []
+  },
+  {
+    "at": "2026-10-03T04:50:29.594Z",
+    "method": "POST",
+    "path": "my-jobs/3c666713-f9cd-4133-9ca7-eeea3d19bf2d/inspections",
+    "status": 201,
+    "command": {
+      "action": "open",
+      "operation_id": "9230c25c-b9f2-490a-931c-a8436183fafb",
+      "attempt_id": null,
+      "expected_version": null,
+      "findings": null
+    },
+    "receipt": {
+      "operation_id": "9230c25c-b9f2-490a-931c-a8436183fafb",
+      "record_id": "3c666713-f9cd-4133-9ca7-eeea3d19bf2d",
+      "record_version": 1,
+      "code": null
+    },
+    "attempts": []
+  },
+  {
+    "at": "2026-10-03T04:50:30.378Z",
+    "method": "GET",
+    "path": "my-jobs/3c666713-f9cd-4133-9ca7-eeea3d19bf2d/inspections",
+    "status": 200,
+    "command": null,
+    "receipt": {
+      "operation_id": null,
+      "record_id": null,
+      "record_version": null,
+      "code": null
+    },
+    "attempts": [
+      {
+        "id": "9e472770-b460-4cf1-b472-951240fe2537",
+        "version": 1,
+        "findings": null
+      }
+    ]
+  },
+  {
+    "at": "2026-10-03T04:50:31.582Z",
+    "method": "POST",
+    "path": "my-jobs/3c666713-f9cd-4133-9ca7-eeea3d19bf2d/inspections",
+    "status": 422,
+    "command": {
+      "action": "save",
+      "operation_id": "d86de0b4-07ea-49e5-8787-28f3f2d49aac",
+      "attempt_id": "9e472770-b460-4cf1-b472-951240fe2537",
+      "expected_version": 1,
+      "findings": null
+    },
+    "receipt": {
+      "operation_id": null,
+      "record_id": null,
+      "record_version": null,
+      "code": "InvalidUnit"
+    },
+    "attempts": []
+  },
+  {
+    "at": "2026-10-03T04:50:33.017Z",
+    "method": "POST",
+    "path": "my-jobs/3c666713-f9cd-4133-9ca7-eeea3d19bf2d/inspections",
+    "status": 201,
+    "command": {
+      "action": "save",
+      "operation_id": "de69166a-273a-46ac-b12b-918f1f098ed9",
+      "attempt_id": "9e472770-b460-4cf1-b472-951240fe2537",
+      "expected_version": 1,
+      "findings": null
+    },
+    "receipt": {
+      "operation_id": "de69166a-273a-46ac-b12b-918f1f098ed9",
+      "record_id": "3c666713-f9cd-4133-9ca7-eeea3d19bf2d",
+      "record_version": 3,
+      "code": null
+    },
+    "attempts": []
+  },
+  {
+    "at": "2026-10-03T04:50:34.473Z",
+    "method": "GET",
+    "path": "my-jobs/3c666713-f9cd-4133-9ca7-eeea3d19bf2d/inspections",
+    "status": 200,
+    "command": null,
+    "receipt": {
+      "operation_id": null,
+      "record_id": null,
+      "record_version": null,
+      "code": null
+    },
+    "attempts": [
+      {
+        "id": "9e472770-b460-4cf1-b472-951240fe2537",
+        "version": 3,
+        "findings": null
+      }
+    ]
+  },
+  {
+    "at": "2026-10-03T04:50:35.462Z",
+    "method": "POST",
+    "path": "my-jobs/3c666713-f9cd-4133-9ca7-eeea3d19bf2d/inspections",
+    "status": -1,
+    "command": {
+      "action": "save",
+      "operation_id": "b6e960a2-c93e-47e6-be0d-e361e7e95434",
+      "attempt_id": "9e472770-b460-4cf1-b472-951240fe2537",
+      "expected_version": 3,
+      "findings": "SYN retained through an actual disconnected request."
+    },
+    "receipt": null,
+    "attempts": null
+  },
+  {
+    "at": "2026-10-03T04:50:35.697Z",
+    "method": "GET",
+    "path": "my-jobs/3c666713-f9cd-4133-9ca7-eeea3d19bf2d/inspections",
+    "status": 200,
+    "command": null,
+    "receipt": {
+      "operation_id": null,
+      "record_id": null,
+      "record_version": null,
+      "code": null
+    },
+    "attempts": [
+      {
+        "id": "9e472770-b460-4cf1-b472-951240fe2537",
+        "version": 3,
+        "findings": null
+      }
+    ]
+  },
+  {
+    "at": "2026-10-03T04:50:35.798Z",
+    "method": "POST",
+    "path": "my-jobs/3c666713-f9cd-4133-9ca7-eeea3d19bf2d/inspections",
+    "status": 201,
+    "command": {
+      "action": "save",
+      "operation_id": "b6e960a2-c93e-47e6-be0d-e361e7e95434",
+      "attempt_id": "9e472770-b460-4cf1-b472-951240fe2537",
+      "expected_version": 3,
+      "findings": "SYN retained through an actual disconnected request."
+    },
+    "receipt": {
+      "operation_id": "b6e960a2-c93e-47e6-be0d-e361e7e95434",
+      "record_id": "3c666713-f9cd-4133-9ca7-eeea3d19bf2d",
+      "record_version": 5,
+      "code": null
+    },
+    "attempts": []
+  },
+  {
+    "at": "2026-10-03T04:50:40.250Z",
+    "method": "GET",
+    "path": "my-jobs/3c666713-f9cd-4133-9ca7-eeea3d19bf2d/inspections",
+    "status": 200,
+    "command": null,
+    "receipt": {
+      "operation_id": null,
+      "record_id": null,
+      "record_version": null,
+      "code": null
+    },
+    "attempts": [
+      {
+        "id": "9e472770-b460-4cf1-b472-951240fe2537",
+        "version": 5,
+        "findings": "SYN retained through an actual disconnected request."
+      }
+    ]
+  },
+  {
+    "at": "2026-10-03T04:50:28.967Z",
+    "method": "GET",
+    "path": "my-jobs/3c666713-f9cd-4133-9ca7-eeea3d19bf2d/inspections",
+    "status": 200,
+    "command": null,
+    "receipt": {
+      "operation_id": null,
+      "record_id": null,
+      "record_version": null,
+      "code": null
+    },
+    "attempts": []
+  }
+]

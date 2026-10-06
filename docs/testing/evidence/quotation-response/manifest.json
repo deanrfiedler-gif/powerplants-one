@@ -1,0 +1,162 @@
+{
+  "baseline": "ab4acd687f6a4911ebc5f3f1bd8f09d5ff1e1547",
+  "runtime_commit": "aa20dae",
+  "build_id": "dA8fXhAEji2q5qPRwBCYu",
+  "hash_basis": "exact local working-file bytes; captures unedited",
+  "captured_on": "2026-10-03/04 Australia/Sydney",
+  "review": "agent inspection only; independent owner/reference/device acceptance pending",
+  "files": [
+    {
+      "path": ".github/workflows/quotation-response.yml",
+      "sha256": "4ec56042e679ca8d7be98f44c2b41d20d6c11035a459c615b131489a8b8f19a4"
+    },
+    {
+      "path": "db/migrations/0060-quotation-response.sql",
+      "sha256": "375da07fb363f4889afcc358dd9e2a7a785547fc11a7adbb423c780add053050"
+    },
+    {
+      "path": "docs/testing/evidence/quotation-response/desktop.png",
+      "sha256": "ac26fd79341072cfa41760143b50ddeb1450842d5c6eee5d5b0cae6ba7c342cf"
+    },
+    {
+      "path": "docs/testing/evidence/quotation-response/mobile-320.png",
+      "sha256": "71ca2a747aa0ba924eaf8a1b731779588f2c4e745b48308331443eadb7c50842"
+    },
+    {
+      "path": "scripts/demo-upgrade.ts",
+      "sha256": "7674a77557cce267a40966dee0136d9352b2b11e38930a71ab6a8581f7f61ab1"
+    },
+    {
+      "path": "scripts/migration-registry.ts",
+      "sha256": "986e9047f994db99dbcb9d858ada2dd4e7335e89c8f3be884d9f006240542ecc"
+    },
+    {
+      "path": "scripts/quotation-response-restart.ts",
+      "sha256": "8d12b028e870bd60bf49193d35d912d94e918b810e7e21e1d5b8f931500e4b20"
+    },
+    {
+      "path": "src/app/(business)/estimating/quotes/[id]/response/page.tsx",
+      "sha256": "1c82512c14be18bc38d10e3611e77f3b6c2b86ff6231c96f8836898a6af5430e"
+    },
+    {
+      "path": "src/app/api/v1/estimating/quotes/[id]/response/clarification/route.ts",
+      "sha256": "ee3355dcb1ce34a06899032b2fdafc5749a9f05c935f13d79959f38117b2cc90"
+    },
+    {
+      "path": "src/app/api/v1/estimating/quotes/[id]/response/prepare/route.ts",
+      "sha256": "a2b72b30755511761250f353fd3e5fad4580dd0293509a0ffe1880f87346ee27"
+    },
+    {
+      "path": "src/app/api/v1/estimating/quotes/[id]/response/record/route.ts",
+      "sha256": "ebc1d709325f813f1cb75913c787f1b6eb7512f0999059846c91fe3a63290dc8"
+    },
+    {
+      "path": "src/app/api/v1/estimating/quotes/[id]/response/route.ts",
+      "sha256": "c4797606905832d02d96c3a6a93774e9df297e63ca364505fe15cf383ded5418"
+    },
+    {
+      "path": "src/components/quotation-release.tsx",
+      "sha256": "703a50300d724a1538caf1e0f19410aa2304744090bffb5e4b71053f1d5aec8f"
+    },
+    {
+      "path": "src/components/quotation-response.tsx",
+      "sha256": "51abef6f89c15bbcbea5b76600e00a9710670c6612c41c57c5db47ef44b6ff0b"
+    },
+    {
+      "path": "src/estimating/response/context.ts",
+      "sha256": "dc11b8c434745db3a62d3e9f366a4ef9735a27791d88c52c9fe27daf452d7d6b"
+    },
+    {
+      "path": "src/estimating/response/model.ts",
+      "sha256": "17e19c837c92d0d299f5f581ab70115ced2284e731c66661109d1dd4f3e5ef9d"
+    },
+    {
+      "path": "src/estimating/response/reads.ts",
+      "sha256": "32b6e20d3435700d5493b154911da15d51702b6a549304be4e2d7db60342e622"
+    },
+    {
+      "path": "src/estimating/response/service.ts",
+      "sha256": "b888663bd5d28eb4754d082c5c5461d594d7c0720c24590599e518c190f330d2"
+    },
+    {
+      "path": "src/estimating/response/validation.ts",
+      "sha256": "b362d6786e72027e1717ae93735c64788dc0617cf5d1755c0301310a818f6403"
+    },
+    {
+      "path": "src/shared/receipts.ts",
+      "sha256": "2d46f8f5e741b314eaa8abb9e6bcbaf645271fcce02c43ed3644bcdc8e4a932b"
+    },
+    {
+      "path": "tests/browser/quotation-response.spec.ts",
+      "sha256": "650b70d0d460f9f44fe5f258c95b4eda6ea902224b774f89da278243118cecde"
+    },
+    {
+      "path": "tests/database/field-customer-response.test.ts",
+      "sha256": "8a374e79ee51b4156b722214e8949948045b5cf6a0891cee2f896fe1055a698c"
+    },
+    {
+      "path": "tests/database/field-timer-boundaries.test.ts",
+      "sha256": "6502643bd26a367e1901d83da5acbaf96d2fff097c545a1d2fa929312ab233cd"
+    },
+    {
+      "path": "tests/database/field.test.ts",
+      "sha256": "254e470a76474e347bfb5c3784b2ec8563f5d640e4797f1166da335c2edf8fd9"
+    },
+    {
+      "path": "tests/database/finance-upgrade.test.ts",
+      "sha256": "672a543dc62fb8c1f4816dbd0f9f2d1ebb25e6eab218ad9d025d916a10815d7b"
+    },
+    {
+      "path": "tests/database/leads-projects-integration.test.ts",
+      "sha256": "ada1fac65c94e39cc09f957d04b2223dbaebefa227117e4977e1579a61e333cd"
+    },
+    {
+      "path": "tests/database/offline.test.ts",
+      "sha256": "c0dd8649c2221beb8f3e272a53cff049c8055290c10399855c3e2249fc819218"
+    },
+    {
+      "path": "tests/database/packs.test.ts",
+      "sha256": "5dae8ab61afeeb948ad14e5cab30154363deb07674eb43b53d76652118377af1"
+    },
+    {
+      "path": "tests/database/planner.test.ts",
+      "sha256": "68f7945737b144cb63f7a4e9fcafee4ba0b860fdbfe498277ba149ec0edfbb3a"
+    },
+    {
+      "path": "tests/database/policy-persistence.test.ts",
+      "sha256": "61b934a4d8d71dc9cb1f7f15de457c07006bb08ad7d465cb63cd385873f3f6a3"
+    },
+    {
+      "path": "tests/database/quotation-release.test.ts",
+      "sha256": "0705807a02d546bf00b6c04248c4e48e14b6df640c0adad7abeeb57ea69b2459"
+    },
+    {
+      "path": "tests/database/quotation-response.test.ts",
+      "sha256": "c5f6089e426e62a12493a61fced6ce42b1e0bf882aa9a53593a87c290c9d26b3"
+    },
+    {
+      "path": "tests/database/reports.test.ts",
+      "sha256": "f813d56a861ed0e13bdf905330292a3f40512371574c63a84d9567f3912f1898"
+    },
+    {
+      "path": "tests/demo/upgrade.test.ts",
+      "sha256": "66603295cc75d0f1ef5916f94ec7e33b104683d6e39594de3e33046816c852f1"
+    },
+    {
+      "path": "tests/helpers/quotation-response-http.ts",
+      "sha256": "8ec67b747c93ef0e3dacc8f480748169379000896c3cc22c54c9f0d562b62fe2"
+    },
+    {
+      "path": "tests/helpers/quotation-response.ts",
+      "sha256": "bacc988e7e969ca263edd38eb13ddfb96d81cb8e2bfab781a0e64fde72970389"
+    },
+    {
+      "path": "tests/http/quotation-response.test.ts",
+      "sha256": "da69788b39d26c420dd259c331b33778d2e7ac12dccb827654385232477df51e"
+    },
+    {
+      "path": "tests/unit/quotation-response.test.ts",
+      "sha256": "681598e60e2b5342d0e48175de98bba783906fa5ffd556f8b77849cc3b9b6dd1"
+    }
+  ]
+}

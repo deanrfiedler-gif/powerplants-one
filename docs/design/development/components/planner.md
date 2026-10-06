@@ -27,7 +27,7 @@ Tab/Shift+Tab and visible focus throughout. Use labelled controls as alternative
 ## States and interaction
 
 - **Default:** Representative synthetic content and normal interaction.
-- **Week:** Seven-day resource lane view.
+- **Week:** Seven-day resource lane view, with a continuing synthetic closure from 24 September 23:00 to 27 September 00:00 Australia/Sydney. It appears on 24, 25 and 26 September only; the end boundary is exclusive.
 - **Empty:** No matching example records; absence is distinct from failure.
 - **Read only:** Management actions unavailable in this example.
 
@@ -44,3 +44,13 @@ Changes to the source, styles, fixtures, specification or reference invalidate p
 ## Scheduling consumers
 
 PL-01 retains the existing PlannerBoard and appointment cards. Resource headings now link to scoped availability and competence evidence. The new long-label fixture exercises wrapping alongside the existing week, empty, proposed and read-only states. PL-02 to PL-05 use separate native compositions and do not claim this component as a direct consumer. See [Scheduling evidence](../../../testing/evidence/scheduling-resources/README.md); visual acceptance remains pending.
+
+The post-merge closure correction uses interval intersection in the display timezone, so a closure beginning before a day remains visible on that day. The existing `scope:PL-01` and `route:/schedule` consumer bindings remain exact. [Refinement evidence](../../../testing/evidence/scheduling-refinement/README.md) records checks separately from owner review.
+
+## Scheduling Step 4
+
+The `policy-hold` catalogue fixture keeps the original appointment and reservation visible and names a published scheduling hold. It does not simulate resolution authority. The host prepares the proposed interval using exact policy/published-head evidence; the server rechecks every save. Controlled moves retain the historic pin. New holds and stale resolutions remain distinct from customer contact, preparation and pack acknowledgement.
+
+Review policy preparation and impact reason/owner/publication at desktop and 390/320 px. Shared Button, fields, ReadState and ErrorNotice retain their contracts; legacy planner buttons remain an existing exception. There is no issued Step 4 mockup. Owner visual/device acceptance is pending. See `docs/testing/evidence/scheduling-policy-enforcement/README.md` for actual functional evidence; no review fingerprint is granted.
+
+Automatic policy preparation must show failures without moving focus out of a date being edited. Save stays unavailable until complete preparation succeeds; explicit command errors retain normal focus and recovery.

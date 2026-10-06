@@ -81,6 +81,12 @@ export async function serviceResult(
     source_reference: "SYN-MA-SERVICE",
     source_version: "1",
   };
+  const agreement = (await rows(
+    `SELECT a.reference, r.content FROM ppo.entitlement_assessments e
+     JOIN ppo.agreement_revisions r ON r.id=e.agreement_revision_id
+     JOIN ppo.service_agreements a ON a.id=r.agreement_id
+     WHERE e.id=$1`, [request.assessment_id],
+  ))[0];
   await saveWorkScope(p, wid, {
     ...base(),
     expected_version: 1,
@@ -92,11 +98,11 @@ export async function serviceResult(
       authority_evidence: evidence,
       coverage: {
         status: "Covered",
-        agreement_reference: null,
-        source_version: null,
-        effective_from: null,
-        effective_to: null,
-        assessment: "Synthetic exact Warranty source reviewed",
+        agreement_reference: agreement?.reference ?? null,
+        source_version: agreement?.content.source.revision ?? null,
+        effective_from: agreement?.content.effective_from ?? null,
+        effective_to: agreement?.content.effective_to ?? null,
+        assessment: "Synthetic exact Maintenance/Warranty source reviewed",
         reason: "Independent Work Order coverage record",
         charging_route: "FinanceReview",
         entitlement_assessment_id: request.assessment_id,

@@ -17,3 +17,5 @@ MaForm retains its original observed version and uncertain operation across guid
 Proposed departures: native disclosures and cards replace dense standalone layouts. Existing shell, semantic tokens, Field, Button, ValidationFields, ErrorNotice and command recovery remain authoritative. See the Maintenance handover for actual visual and functional evidence; owner/device acceptance remains separate.
 
 Native detail views show current source facts first. Raw retained identity metadata stays in a separate disclosure; it remains available for exact-reference review. Register names reuse the shared breadcrumb/header contract. Browser evidence covers the full native shell, both record views and registers, and all six Warranty detail tabs.
+
+Integration guidance: current Warranty evidence distinguishes an unimplemented Supply receiving bridge from source unavailability. New boundary state: `SupplyReceivingNotIntegrated`. Earlier immutable event labels remain historical. The maintained state fixture and owning page guides carry this distinction; review remains Pending.

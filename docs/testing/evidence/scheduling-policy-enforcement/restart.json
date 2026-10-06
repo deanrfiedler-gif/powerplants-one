@@ -1,0 +1,19 @@
+{
+  "source_head": null,
+  "app_pids": [
+    25768,
+    19356
+  ],
+  "postgres_started": [
+    "2026-09-30T09:45:04.922Z",
+    "2026-09-30T09:51:02.113Z"
+  ],
+  "preserved_tables": 32,
+  "originals_sha256": "ade374db9faed2d8aad376223105ddd98dff7bbe3ba36758855f02b97a506d4c",
+  "html_sha256": "9d635d5e1158a04947110f3c90d3ab6db0e76157db8d43d1db1bd21bb1ba6886",
+  "pdf_sha256": "7949b293e88b60b50192a35b2214edcd6328b1775f8217d576389d47f4b975d9",
+  "png_sha256": "8e0e39097d1e122a86d83ed2c236f3bc8de8b82c46a945fbe71b6bf0a059203e",
+  "accepted_operation": "af7764a9-c845-41f1-be85-5050f3efe79d",
+  "held_start": "1e849488-f936-48b3-92ac-cc2fbe95cca1",
+  "result": "Exact accepted recovery, delayed Start ReviewRequired, altered retry Conflict, publication replay and all snapshots/files unchanged"
+}

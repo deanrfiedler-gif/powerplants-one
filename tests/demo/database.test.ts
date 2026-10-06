@@ -393,7 +393,7 @@ test("invited actor persists proposal, preparation, contact and crew; conflictin
     expected_version: a.version, expected_work_order_version: a.work_order_version,
     expected_assignment_version: a.assignment_version, scope_revision_id: a.scope_revision_id,
     scope_version: a.scope_version, policy_version_id: a.policy_version_id,
-    scheduling_policy_id: id("a0"), scheduling_policy_version: 1, crew }; };
+    scheduling_policy_id: id("a0"), scheduling_policy_version: 1, scheduling_policy_hash: "130d586ec49c5e23dffd49916148babc6ddf329a442e054ecc1c29f9089cca44", publication_head_version: 1, selected_policy: {id: "a0000000-0000-4000-8000-000000000001", version: 1, content_hash: "130d586ec49c5e23dffd49916148babc6ddf329a442e054ecc1c29f9089cca44"}, crew }; };
   const code = (value: string) => (e: unknown) => (e as { code: string }).code === value;
   await assert.rejects(confirmAppointment(actor, visit, await booking()), code("BookingBlocked"));
   await assessWorkReadiness(actor, work.id, { ...base(), expected_version: (await read()).work_order_version,

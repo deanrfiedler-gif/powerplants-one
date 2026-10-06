@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. Implementation contract for review; business and visual acceptance pending. Authority: [ADR-0049](../decisions/ADR-0049-maintenance-warranty-native.md), BP-01 SVC-12.1–SVC-12.5 / PPO-015. Acceptance traces: AT-19, AT-33 and relevant AT-25. This is a synthetic application contract, not warranty policy.
+Owner: Dean Fiedler. Implementation contract for review; business and visual acceptance pending. Authority: [PPO-MA-NATIVE-DEC](../decisions/maintenance-warranty-native.md), BP-01 SVC-12.1–SVC-12.5 / PPO-015. Acceptance traces: AT-19, AT-33 and relevant AT-25. This is a synthetic application contract, not warranty policy.
 
 ## Resources and commands
 
@@ -46,11 +46,11 @@ Customer updates retain exact completed Service result, recipient/content/revisi
 
 Claims retain a shared UUID, exact evidence package/hash, supplier and integer minor-unit amounts with explicit currency/tax basis. Submission and response evidence dates are ordered after the failure/submission. Partial/full/rejected amounts must match the response, cannot exceed the claim or invalidate retained credits. Finance credit links require finance.reconcile, exact approval, external ERP company key, case-insensitive unique reference, date and reconciliation evidence; totals cannot exceed approval. Unrecovered disposition is separately recorded. A credit reference does not assert cash or an ERP posting.
 
-SC-08 remains unavailable. External Authorised → Received → Disposed evidence, or a pre-movement NotRequired decision, is a Warranty-side coordination record. It does not receive stock, quarantine goods or establish warehouse custody. MYOB remains ERP authority; no endpoint or transaction is invented.
+Native SC-08 exists; its Warranty return receiving bridge is not integrated. New Warranty events record `NotIntegrated` / `SupplyReceivingNotIntegrated`; earlier immutable events remain unchanged. External Authorised → Received → Disposed evidence, or a pre-movement NotRequired decision, is a Warranty-side coordination record. It does not receive stock, quarantine goods or establish warehouse custody. MYOB remains ERP authority; no endpoint or transaction is invented.
 
 ## Permissions, reads and UI
 
-Capabilities: maintenance.read/manage/assess/agreement.approve and warranty.read/manage/assess/goodwill/recovery. Existing Service scope, Activity and finance.reconcile authority remains necessary at its boundary. Seed 49 copies only selected existing synthetic principals' scoped shared.read grants; no invited tester or new user is added. Revoked/expired grants remain revoked; seed receipts prevent replay from restoring them.
+Capabilities: maintenance.read/manage/assess/agreement.approve and warranty.read/manage/assess/goodwill/recovery. Existing Service scope, Activity and finance.reconcile authority remains necessary at its boundary. Seed 51 copies only selected existing synthetic principals' scoped shared.read grants; no invited tester or new user is added. Revoked/expired grants remain revoked; seed receipts prevent replay from restoring them.
 
 Registers admit only currently readable records. Search/state/sort/page are URL-restorable. Counts refer to the admitted set from at most 200 source candidates; Partial is explicit and pagination is 30. This bounded prototype read is not an enterprise-wide total. Native Sales Aftercare reads MA-01/MA-05 with current access. Historical facts remain immutable even when operational currentness changes.
 

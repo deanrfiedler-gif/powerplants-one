@@ -39,3 +39,11 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 The draft User Guide `guide.es.05` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## Bounded native release
+
+The native `/estimating/quotes/[id]/release` workflow extends the existing quotation and renderer with exact independent synthetic approval, issue and recorded distribution. [Current guidance](route-estimating-quotes-id-release.md) and [execution evidence](../../../delivery/quotation-release-handover.md) govern the implemented subset. The retained six-view/r03 design, owner acceptance and operational commercial policy remain separate.
+
+## ES-06 receiving link
+
+An exact issued revision now links to the staff response page. Reported acceptance, corrections and negotiation remain separate from ES-05 approval/issue; the link passes this exact revision. See [response contract](../../../contracts/quotation-response.md). The shared panel stylesheet also serves ES-06; its controls and tokens are unchanged.

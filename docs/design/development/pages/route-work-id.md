@@ -40,3 +40,19 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 The draft User Guide `guide.page.work.id` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## Scheduling Step 4 integration
+
+Preserve this entry's scope ID and page type. Reuse shared fields, Button, ReadState/ErrorNotice and existing appointment/planner controls. Incoming handovers: exact published selection, immutable impact, retained booking pin and owned Activity. Outgoing handovers: controlled appointment/resolution receipt and refreshed readiness; customer, pack, Finance and issued documents retain their separate authority.
+
+Desktop must show the impact reason, responsible owner, source publication and permitted next action. Booking preparation follows the proposed interval and publication head, including future policies; stale saves retain entries and need fresh review. Completing an Activity or acknowledging a pack cannot clear the policy hold. Later source changes restore it. The appointment's online resolution disclosure requires controlled change/cancellation/replacement and fresh evaluation. Uncertain responses retry the original unchanged.
+
+At 390/320 px, stack fields/actions, wrap exact identifiers and keep hold/recovery text readable without horizontal overflow. Retain keyboard alternatives to drag and native disclosure/label semantics. Delayed offline Start is rechecked on reconnect and may remain ReviewRequired with original evidence retained. Publication and resolution are online only. No Step 4 issued mockup is available; the existing retained HTML remains the source reference. Additional content is a proposed visual departure pending owner review. Functional evidence: `docs/testing/evidence/scheduling-policy-enforcement/README.md`; captures and source checks do not grant visual/device/owner acceptance.
+
+## FI-06 corrective handover
+
+An incident-owned Activity provides Return to incident and corrective evidence from its stored association when current incident access permits it. Activity completion remains separate from evidence acceptance, incident closure and hold release. No restricted instruction or evidence is copied into the Activity. The native link uses the existing record layout at desktop/phone widths; retain keyboard focus and wrap the explanatory text. Compiled fixture: tests/browser/field-incidents.spec.ts. Independent review remains pending.
+
+## FI-07 receiving handover
+
+A permitted report follow-up exposes Return to original service report and response. Existing Activity owner/due update and owner completion commands retain history; completing contact does not rewrite a customer response or close an incident/defect. The reverse link independently checks current report scope. See the FI-07 contract and evidence.

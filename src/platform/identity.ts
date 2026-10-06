@@ -47,6 +47,10 @@ export async function createSession(profile: string, previous_token?: string) {
       "changes-verifier",
       "commissioning-equipment",
       "estimating-source-reviewer",
+      "quotation-approver",
+      "quotation-issuer",
+      "scheduling-policy-reviewer",
+      "scheduling-policy-publisher",
     ].includes(profile)
   )
     throw new AppError(

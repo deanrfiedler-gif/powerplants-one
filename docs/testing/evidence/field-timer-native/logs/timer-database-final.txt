@@ -1,0 +1,17 @@
+✔ FI01 one personal timer spans appointments, preserves denied originals and checks receipt authority (28928.2562ms)
+✔ FI01 zero-second transitions, real Undo expiry and report freeze keep distinct authority (35028.7175ms)
+✔ FI01 additive 0049 upgrade retains existing time, arrivals, receipts and revoked grants (102802.3199ms)
+✔ FI01 durable transitions, pause notes, competing tabs, idempotent retry, correction lineage and separate arrival (30736.6643ms)
+✔ FI01 Undo keeps originals and reopens the exact stretch without duplicates (25829.0629ms)
+✔ FI01 source drift retains review-required time and revocation refuses commands (26329.1737ms)
+✔ FI01 invalid temporal input, one active timer index and event retention cannot be bypassed (34141.1805ms)
+✔ FI02 timer originals retain sequence, deduplicate lost responses and preserve revoked evidence in restricted recovery (19289.4284ms)
+✔ FI02 exact readiness review precedes provisional attendance and rejects changed cached sources without granting permission (23222.8018ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 349924.5061

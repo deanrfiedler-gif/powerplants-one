@@ -1,0 +1,40 @@
+{
+  "result": "Passed actual Chrome 200% zoom, keyboard guide and focus return",
+  "geometry": {
+    "innerWidth": 720,
+    "innerHeight": 600,
+    "devicePixelRatio": 2,
+    "scrollWidth": 720
+  },
+  "widths": [
+    {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "owners": [
+        "main"
+      ]
+    },
+    {
+      "width": 1024,
+      "scrollWidth": 1024,
+      "owners": [
+        "main"
+      ]
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "owners": [
+        "main"
+      ]
+    },
+    {
+      "width": 320,
+      "scrollWidth": 320,
+      "owners": [
+        "main"
+      ]
+    }
+  ],
+  "limit": "Desktop emulator; human screen-reader, physical-device and owner visual acceptance pending"
+}

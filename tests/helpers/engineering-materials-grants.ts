@@ -102,15 +102,58 @@ export function assertOnlyEngineeringSeedGrantsAdded(original: Grant[], upgraded
   assert.equal(sourceReviewer.length,3);
   const technical = original.filter(g=>g.user_id===coordinator&&g.company_id===companyA&&g.scope_type==="Company"&&g.capability==="engineering.read").flatMap(g=>[[profiles.reviewer,"engineering.technical.review"],[profiles.release,"engineering.technical.issue"],[profiles.release,"engineering.technical.distribute"],[coordinator,"engineering.technical.source"]].map(([user_id,capability])=>({...g,user_id,capability})));
   assert.equal(technical.length,4);
-  const maintenance=original.filter(g=>g.capability==="shared.read").flatMap(g=>{
+  const maintenance=maintenanceSeedGrants(original);
+  const expected=[...maintenance,...earlier,...acceptanceSeedGrants(original,earlier),...customerReview,...technical,...sourceReviewer,...supplySeedGrants(original),...schedulingPolicySeedGrants(original),...incidentSeedGrants(original),...estimateReviewSeedGrants(original),...quotationReleaseSeedGrants(original)];
+  assert.equal(materials.length, 31);
+  assert.equal(changes.length, 21); // twelve reads for three profiles and nine duty grants
+  assert.equal(commissioning.length, 18); // four reads for one profile, six duty grants and eight My Work action grants
+  assert.deepEqual(sorted(upgraded.filter(g => !ids.has(g.id))), sorted(expected));
+}
+
+// Seed 49 copies exact duties from existing synthetic scopes and adds no user.
+export function supplySeedGrants(original: Grant[]): Grant[] {
+ const readers=new Set([1,2,5,7,8,10,11,12,13,14].map(n=>`30000000-0000-4000-8000-${String(n).padStart(12,"0")}`));
+ return original.filter(g=>readers.has(String(g.user_id))&&g.capability==="shared.read").flatMap(g=>(g.user_id===coordinator?["supply.read","supply.coordinate","supply.inspect","supply.fulfil","supply.return","supply.custody"]:["supply.read"]).map(capability=>({...g,capability})));
+}
+
+// Seed 56 preserves each existing exact fictional scope; it creates no user.
+export function incidentSeedGrants(original: Grant[]): Grant[] {
+  return original.flatMap(g => g.user_id === coordinator && g.capability === "service.work_order.edit"
+    ? ["incident.read","incident.report","incident.review","incident.close","incident.sensitive"].map(capability=>({...g,capability}))
+    : ["30000000-0000-4000-8000-000000000010","30000000-0000-4000-8000-000000000011"].includes(String(g.user_id)) && g.capability === "field.read.own"
+      ? ["incident.read","incident.report"].map(capability=>({...g,capability})) : []);
+}
+
+// Seed 54: exact independent Workspace read scopes and ONE duty for each fictional
+// identity. No inference from existing coordinators or hosted profiles.
+export function schedulingPolicySeedGrants(original: Grant[]): Grant[] {
+  const template = original.find(g => new Date(g.valid_from as string | Date).toISOString() === "2026-01-01T00:00:00.000Z");
+  assert(template, "Existing fixture includes the explicit 2026 baseline instant");
+  const workspace = "10000000-0000-4000-8000-000000000001";
+  return ["review", "publish"].flatMap((duty, index) => ["shared.read", "schedule.read", "service.work_order.read", "service.ticket.read", "activity.read", `schedule.policy.${duty}`].map(capability => ({
+    ...template, workspace_id: workspace, user_id: `a0540000-0000-4000-8000-00000000000${index + 1}`,
+    company_id: null, capability, scope_type: "Workspace", scope_id: workspace, site_id: null,
+    valid_from: template.valid_from, valid_to: null,
+  })));
+}
+
+export function estimateReviewSeedGrants(original: Grant[]): Grant[] {
+  const duties = original.filter(g => g.user_id === coordinator && g.company_id === companyA && g.scope_type === "Company" && g.capability === "estimating.read").flatMap(g => ["estimating.review.completeness", "estimating.review.price", "estimating.review.technical"].map(capability => ({ ...g, user_id: "e5030045-0000-4000-8000-000000000001", capability })));
+  return [...duties,...original.filter(g => g.user_id === coordinator && g.company_id === companyA && g.scope_type === "Company" && ["crm.opportunity.read","shared.internal.read"].includes(String(g.capability))).map(g=>({...g,user_id:"e5030045-0000-4000-8000-000000000001"}))];
+}
+
+export function quotationReleaseSeedGrants(original: Grant[]): Grant[] {
+  const source=original.filter(g=>g.user_id===coordinator&&g.company_id===companyA&&g.scope_type==="Company");
+  const profiles=["e5050059-0000-4000-8000-000000000001","e5050059-0000-4000-8000-000000000002"];
+  return [...source.filter(g=>["shared.read","shared.internal.read","crm.opportunity.read","estimating.read","estimating.quote.read"].includes(String(g.capability))).flatMap(g=>profiles.map(user_id=>({...g,user_id}))),...source.filter(g=>g.capability==="estimating.read").flatMap(g=>[[profiles[0],"estimating.quote.approve"],[profiles[1],"estimating.quote.issue"],[profiles[1],"estimating.quote.distribute"]].map(([user_id,capability])=>({...g,user_id,capability})))];
+}
+
+// Seed 51 copies only named fictional principals and their original scope/validity.
+export function maintenanceSeedGrants(original: Grant[]): Grant[] {
+  return original.filter(g=>g.capability==="shared.read").flatMap(g=>{
     const id=String(g.user_id);
     const caps=[coordinator,secondCompany].includes(id)?["maintenance.read","maintenance.manage","maintenance.assess","warranty.read","warranty.manage","warranty.assess","warranty.recovery"]:
       ["30000000-0000-4000-8000-000000000002","30000000-0000-4000-8000-000000000012","30000000-0000-4000-8000-000000000014"].includes(id)?["maintenance.read","warranty.read",...(id.endsWith("012")?["maintenance.agreement.approve","warranty.goodwill"]:[])]:[];
     return caps.map(capability=>({...g,capability}));
   });
-  const expected=[...maintenance,...earlier,...acceptanceSeedGrants(original,earlier),...customerReview,...technical,...sourceReviewer];
-  assert.equal(materials.length, 31);
-  assert.equal(changes.length, 21); // twelve reads for three profiles and nine duty grants
-  assert.equal(commissioning.length, 18); // four reads for one profile, six duty grants and eight My Work action grants
-  assert.deepEqual(sorted(upgraded.filter(g => !ids.has(g.id))), sorted(expected));
 }

@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-03T04:38:30.676Z",
+  "platform": "win32",
+  "rows": [
+    {
+      "same_literal": false,
+      "same_case_insensitive": false,
+      "is_symlink": false,
+      "mode": 438
+    },
+    {
+      "same_literal": false,
+      "same_case_insensitive": false,
+      "is_symlink": false,
+      "mode": 438
+    }
+  ],
+  "finding": "Windows TEMP resolves DEAN~1.FIE to Dean.Fiedler; existing exact canonical-path guards refuse before writing or Git-ancestor checks. Reproduced unchanged-main unit failures."
+}

@@ -1,0 +1,25 @@
+{
+  "runtime_source": "bd8e23f9a4e12314e49bddc48170eb0d4a73cba8",
+  "runtime_policy_source": "89faa078a22525653e6e8f07cb82425372385b07",
+  "compiled_build": "UZPI1x18dLnHDUDBsGSWz",
+  "results": {
+    "policy_units_passed": 14,
+    "policy_database_passed": 7,
+    "compiled_browser_passed": 8
+  },
+  "boundary": "Own disposable port-55440 ppo_synthetic_test; six policy/navigation and two CR05 cases. Explicit compiled listener PID 17264 and HTTP 200 readiness; Playwright webServer undefined. Documentation planning files were in progress; no clean entire-working-tree claim. Earlier issued evidence remains unchanged.",
+  "files": {
+    "policy-unit.txt": {
+      "sha256_lf": "20959d52f880b62899d4ed6970fa6d1489f74fb98aada83aacdeed5f8a66c6f0",
+      "bytes_lf": 1553
+    },
+    "policy-database.txt": {
+      "sha256_lf": "66ffefeb366fa0d49e4dcaa353b905c5c883809db0741c24a020311828c11a29",
+      "bytes_lf": 825
+    },
+    "compiled-browser.txt": {
+      "sha256_lf": "a6d17c1a378e8b675a12fff719f2cabc2f36da6229e3004d23aa66febc01f749",
+      "bytes_lf": 1900
+    }
+  }
+}

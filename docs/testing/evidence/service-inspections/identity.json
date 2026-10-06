@@ -1,0 +1,18 @@
+{
+  "postgres": "16.15",
+  "node": "v24.21.0",
+  "base": "feb01e57c1ffdab0a5f8d1a5664ab5144bd37ccd",
+  "runtime_trees": {
+    "tests": "2e9a4ccbea591042721d2f5c0f40850420dd6f22",
+    "scripts": "b753eccf4f10d3dd804c942117cb1b26aeeca94c",
+    "db": "cf997f389095750f22b521dfe946470873dfed5e",
+    "src": "da1109fe319b4796cb72ef7a7bbb25db31df0d8b"
+  },
+  "branch": "codex/service-inspections",
+  "build_id": "D49Y9dS7Qw2QbEKy6RmRr",
+  "npm": "11.19.0",
+  "package_lock_blob": "d5b275c33cf83e5dc0fb61dd9ca4346066c7ee60",
+  "browser": "Chrome 154.0.8037.93",
+  "playwright": "1.63.0",
+  "note": "Compiled runtime source is identified by src/db trees; scripts/tests include the final proof helper. The delivery PR commit retains these exact trees; documentation/CI reporting is separate."
+}

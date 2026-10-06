@@ -5,7 +5,7 @@ let channel: BroadcastChannel | undefined;
 export const sessionLockEvent = "ppo-session-lock";
 export const sessionReadyEvent = "ppo-session-ready";
 function clearOnlineRecovery() {
-  try { sessionStorage.removeItem("ppo-pl01-command-v1"); sessionStorage.removeItem("ppo-pl01-command-v1:accepted"); } catch { /* Storage may already be unavailable. */ }
+  try { for (const key of ["ppo-pl01-command-v1", "ppo-pl04-command-v1"]) { sessionStorage.removeItem(key); sessionStorage.removeItem(key + ":accepted"); } } catch { /* Storage may already be unavailable. */ }
 }
 export function businessViewChannel() {
   // Sharing one instance within this tab prevents a switch from locking its sender.

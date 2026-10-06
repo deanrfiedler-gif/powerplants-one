@@ -1,0 +1,20 @@
+{
+  "executed_at": "2026-10-02T07:06:12.103Z",
+  "executed_checkout": "3549d7384f5251023ac36ef0e439784fce2c39ef",
+  "report": "7df6b779-afc3-401f-a7f1-47d46dfbf781",
+  "captures": [
+    {
+      "file": "history-1440.png",
+      "width": 1440,
+      "sha256": "d1cbd7a363842254eda61e93591fddc5373a720e2c04dd37144f29bb6ea7f3b6",
+      "bytes": 141869
+    },
+    {
+      "file": "history-390.png",
+      "width": 390,
+      "sha256": "73cd5c8b4dc8b98e95e96764062e4788fc8eb00f114d12a6f11a4edbbc1095a2",
+      "bytes": 81212
+    }
+  ],
+  "acceptance": "Technical visual inspection only; independent acceptance pending"
+}

@@ -19,11 +19,15 @@ import {
   plannerContext,
   plannerZones,
   safePlannerReturn,
+  reviewCriteria,
+  demandCommitments,
 } from "../../navigation";
 import { addDays, utcFromLocal } from "../../time";
 import {
   travelSequences,
   scenarioSummary,
+  hasOpenSchedulingFollowup,
+  travelAvailabilityConflicts,
   type CapacityWorkspace,
   type ChangesWorkspace,
 } from "../../workspace-model";
@@ -79,14 +83,18 @@ function WindowControls({
         label={dayOnly ? "Review day" : "Period starting"}
         type="date"
         value={w.context.day}
-        onChange={(day) => w.update({ day, appointment_id: "" })}
+        onChange={(day) =>
+          w.update({ day, appointment_id: "", selected_id: "" })
+        }
       />
       {!dayOnly && (
         <ReviewSelect
           name="review-days"
           label="Horizon"
           value={String(w.horizon)}
-          onChange={(days) => w.update({ days, appointment_id: "" })}
+          onChange={(days) =>
+            w.update({ days, appointment_id: "", selected_id: "" })
+          }
           options={[
             { id: "7", display_name: "7 days" },
             { id: "28", display_name: "28 days" },
@@ -106,7 +114,12 @@ function WindowControls({
         label="Site"
         value={w.context.site}
         onChange={(site_id) =>
-          w.update({ site_id, appointment_id: "", resource_id: "" })
+          w.update({
+            site_id,
+            appointment_id: "",
+            selected_id: "",
+            resource_id: "",
+          })
         }
         options={[
           { id: "", display_name: "All permitted sites" },
@@ -243,26 +256,28 @@ export function ChangesWorkspaceScreen() {
       focusReview.current = false;
     }
   }, [data]);
-  const [view, setView] = useState("review"),
-    [selected, setSelected] = useState("");
+  const criteria = reviewCriteria(new URLSearchParams(w.search.toString())),
+    view = criteria.queue,
+    selected = criteria.selected;
   const items =
     data?.items.filter(
       (a) =>
         view === "history" ||
         (view === "requests" && a.requests.length > 0) ||
         (view === "cancellations" && a.status === "Cancelled") ||
-        (view === "contact" &&
-          a.followups.some((f) => f.status !== "Completed")) ||
+        (view === "contact" && hasOpenSchedulingFollowup(a)) ||
         (view === "review" &&
           (a.requests.some((r) => r.status === "Pending") ||
             a.customer_commitment === "Changed" ||
             a.scope_review_required ||
-            a.followups.some((f) => f.status !== "Completed"))),
+            hasOpenSchedulingFollowup(a))),
     ) ?? [];
   const a = data?.focused
     ? data.items[0]
     : (items.find((a) => a.id === selected) ?? items[0]);
-  const returnTo = safePlannerReturn("/schedule/changes?" + w.search);
+  const returnQuery = new URLSearchParams(w.search.toString());
+  if (a) returnQuery.set("selected_id", a.id);
+  const returnTo = safePlannerReturn("/schedule/changes?" + returnQuery);
   return (
     <section className="scheduling-workspace">
       <SchedulingNavigation />
@@ -277,7 +292,9 @@ export function ChangesWorkspaceScreen() {
           name="change-view"
           label="Queue"
           value={view}
-          onChange={setView}
+          onChange={(queue) =>
+            w.update({ queue, selected_id: "", appointment_id: "" })
+          }
           options={[
             { id: "review", display_name: "Needs review" },
             { id: "requests", display_name: "Change requests" },
@@ -310,8 +327,7 @@ export function ChangesWorkspaceScreen() {
                   key={v.id}
                   aria-pressed={a?.id === v.id}
                   onClick={() => {
-                    setSelected(v.id);
-                    if (focus) w.update({ appointment_id: "" });
+                    w.update({ selected_id: v.id, appointment_id: "" });
                   }}
                 >
                   <span>
@@ -352,6 +368,8 @@ export function ChangesWorkspaceScreen() {
 }
 export function TravelWorkspaceScreen() {
   const w = useReviewWindow("/schedule/travel", 1);
+  // Keep the permitted resource choices available when changing this local filter.
+  w.query.delete("resource_id");
   // Travel always reads one local day, including DST transitions.
   w.query.set(
     "to",
@@ -372,7 +390,7 @@ export function TravelWorkspaceScreen() {
       <ReadState {...read} retry={read.reload} />
       {data && (
         <TravelReview
-          key={w.query.toString() + data.observed_at}
+          key={w.search.toString() + data.observed_at}
           data={data}
           w={w}
         />
@@ -381,8 +399,8 @@ export function TravelWorkspaceScreen() {
   );
 }
 function TravelReview({ data, w }: { data: Schedule; w: ReviewWindow }) {
-  const [resource, setResource] = useState(w.context.resource),
-    [sequence, setSequence] = useState<string[]>([]);
+  const resource = w.context.resource;
+  const [sequence, setSequence] = useState<string[]>([]);
   const visits = travelSequences(data.items, resource),
     selected = data.resources.find((r) => r.id === resource);
   const ordered = sequence.length
@@ -403,8 +421,7 @@ function TravelReview({ data, w }: { data: Schedule; w: ReviewWindow }) {
           label="Resource / crew member"
           value={resource}
           onChange={(v) => {
-            setResource(v);
-            setSequence([]);
+            w.update({ resource_id: v });
           }}
           options={[
             { id: "", display_name: "All permitted resources" },
@@ -425,6 +442,12 @@ function TravelReview({ data, w }: { data: Schedule; w: ReviewWindow }) {
         Sequence changes are analytical and do not change appointment times.
         Select one resource to compare a different order.
       </p>
+      {w.context.site && (
+        <p>
+          Site filter active: other visits may be outside this list. Busy
+          intervals still include all reservations for the selected resource.
+        </p>
+      )}
       {selected && (
         <details>
           <summary>Other busy intervals and availability blocks</summary>
@@ -458,11 +481,10 @@ function TravelReview({ data, w }: { data: Schedule; w: ReviewWindow }) {
             ordered[i - 1].resource_id === v.resource_id &&
             Date.parse(ordered[i - 1].appointment.start_at) >
               Date.parse(a.start_at);
-          const block = data.resources
-            .find((r) => r.id === v.resource_id)
-            ?.blocks?.some(
-              (b) => b.start_at < v.reserved_end && b.end_at > v.reserved_start,
-            );
+          const conflicts = travelAvailabilityConflicts(
+            v,
+            data.resources.find((r) => r.id === v.resource_id),
+          );
           return (
             <li key={v.key} className="scheduling-card">
               <h2>
@@ -501,17 +523,23 @@ function TravelReview({ data, w }: { data: Schedule; w: ReviewWindow }) {
                 {v.reason || "Unknown / unreviewed basis"}
               </p>
               <p>
-                Original order {original}.{" "}
+                Original order {original}. Original schedule:{" "}
                 {v.gap_minutes === null
                   ? "First reservation for this resource."
                   : v.overlap
                     ? `Reservation overlap: ${-v.gap_minutes} min — review conflict.`
                     : `Gap after previous buffered reservation: ${v.gap_minutes} min; route sufficiency unknown.`}
               </p>
-              {block && (
+              {conflicts.blocks.length > 0 && (
                 <p role="status">
                   Availability block overlaps this reservation — review with the
                   coordinator.
+                </p>
+              )}
+              {conflicts.closures.length > 0 && (
+                <p role="status">
+                  Calendar closure overlaps this visit or its travel allowance —
+                  review with the coordinator.
                 </p>
               )}
               {reversed && (
@@ -547,6 +575,7 @@ function TravelReview({ data, w }: { data: Schedule; w: ReviewWindow }) {
                       timezone: w.context.zone,
                       appointment_id: a.id,
                       resource_id: v.resource_id,
+                      ...(w.context.site ? { site_id: w.context.site } : {}),
                     })
                   }
                 >
@@ -588,9 +617,9 @@ export function CapacityWorkspaceScreen() {
       <ReadState {...read} retry={read.reload} />
       {data && (
         <CapacityReview
-          key={w.query.toString() + data.observed_at}
+          key={w.search.toString() + data.observed_at}
           data={data}
-          context={w.context}
+          w={w}
         />
       )}
     </section>
@@ -598,17 +627,20 @@ export function CapacityWorkspaceScreen() {
 }
 function CapacityReview({
   data,
-  context,
+  w,
 }: {
   data: CapacityWorkspace;
-  context: ReturnType<typeof plannerContext>;
+  w: ReviewWindow;
 }) {
-  const [domain, setDomain] = useState(""),
-    [commitment, setCommitment] = useState(""),
-    [resource, setResource] = useState(context.resource),
-    [skill, setSkill] = useState(""),
-    [unknown, setUnknown] = useState(false),
-    [excluded, setExcluded] = useState<string[]>([]);
+  const {
+    domain,
+    commitment,
+    resource,
+    skill,
+    unknownEffort: unknown,
+  } = reviewCriteria(new URLSearchParams(w.search.toString()));
+  const [excluded, setExcluded] = useState<string[]>([]);
+  const context = w.context;
   const items = data.items.filter(
     (i) =>
       (!domain || i.domain === domain) &&
@@ -645,7 +677,7 @@ function CapacityReview({
           name="capacity-domain"
           label="Domain"
           value={domain}
-          onChange={setDomain}
+          onChange={(domain) => w.update({ domain })}
           options={[
             { id: "", display_name: "All permitted domains" },
             ...data.sources.map((s) => ({
@@ -658,22 +690,17 @@ function CapacityReview({
           name="capacity-class"
           label="Commitment"
           value={commitment}
-          onChange={setCommitment}
+          onChange={(commitment) => w.update({ commitment })}
           options={[
             { id: "", display_name: "All source commitments" },
-            ...[
-              "Operational booking",
-              "Authorised demand",
-              "Proposed visit",
-              "Source plan",
-            ].map((v) => ({ id: v, display_name: v })),
+            ...demandCommitments.map((v) => ({ id: v, display_name: v })),
           ]}
         />
         <ReviewSelect
           name="capacity-resource"
           label="Resource"
           value={resource}
-          onChange={setResource}
+          onChange={(resource_id) => w.update({ resource_id })}
           options={[
             { id: "", display_name: "All / unmapped" },
             { id: "unknown", display_name: "Unknown resource" },
@@ -684,7 +711,7 @@ function CapacityReview({
           name="capacity-skill"
           label="Required skill"
           value={skill}
-          onChange={setSkill}
+          onChange={(skill) => w.update({ skill })}
           options={[
             { id: "", display_name: "All / unknown" },
             { id: "unknown", display_name: "Unknown skill requirement" },
@@ -698,7 +725,9 @@ function CapacityReview({
           <input
             type="checkbox"
             checked={unknown}
-            onChange={(e) => setUnknown(e.target.checked)}
+            onChange={(e) =>
+              w.update({ unknown_effort: e.target.checked ? "1" : "" })
+            }
           />{" "}
           Unknown effort only
         </label>
@@ -707,7 +736,8 @@ function CapacityReview({
         <h2>Scenario comparison</h2>
         <p>
           Exclude contributions to explore a scenario. No source record changes;
-          refresh resets this comparison.
+          refresh or changing filters resets this comparison. Filters are
+          retained in the page address.
         </p>
         <p>
           Visible baseline: {original.contributions} contributions ·{" "}

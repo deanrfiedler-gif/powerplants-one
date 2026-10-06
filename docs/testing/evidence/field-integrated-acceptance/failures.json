@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "failures": [
+    {
+      "id": "F01",
+      "source": "PR337 and current unchanged main",
+      "logs": [
+        "units-branch.txt",
+        "units-main.txt"
+      ],
+      "original": "Four Windows units fail identically: two P06 stores, one P12 private path, one warm-route source manifest.",
+      "cause": "Warm-route source native separators violate its existing contract. Three other Windows failures use TEMP short-name DEAN~1.FIE; realpath returns Dean.Fiedler, triggering existing exact canonical-path guards. Reproduced on unchanged main; no guard weakened.",
+      "correction": "Normalise the route source separator only; no safety-guard or assertion changes.",
+      "disposition": "568/571 final local units; existing warm-route tests pass. Three retained Windows canonical-path fixture failures remain separate from Linux final CI."
+    },
+    {
+      "id": "F02",
+      "source": "PR337",
+      "original": "P07 draft late operation_receipts rollback exceeded unchanged120000ms.",
+      "logs": [
+        "p07-rollback-branch-02.txt",
+        "p07-rollback-main-02.txt"
+      ],
+      "cause": null,
+      "disposition": "Exact case passed branch22.027s and unchanged current main62.432s; original cause unresolved. Earlier final CI passed690/690. No timeout change."
+    },
+    {
+      "id": "F03",
+      "source": "Scheduling Step5",
+      "original": "Reports online submission offline-original recovery fillSubmission reason locator present but hidden exceeded15s in one CI lane.",
+      "cause": null,
+      "disposition": "Earlier unchanged-main10/10 controls and sibling lane passed. Current focused compiled Reports proof recorded separately; no retry establishes the old cause."
+    },
+    {
+      "id": "F04",
+      "source": "Retained PT27 audit",
+      "original": "All16 compiled groups missed candidate3-second p95,3.42–10.03 seconds.",
+      "cause": null,
+      "disposition": "Open performance finding; technical timings and CI status do not measure human benefit or change the target.",
+      "current_observation": "Current-main compiled profile still misses all 16 groups: 3.864–10.029s. See performance-main.json; original findings retained."
+    },
+    {
+      "id": "F05",
+      "source": "Current restart",
+      "logs": [
+        "prepare.txt",
+        "app-restarted.out",
+        "app-restarted.err",
+        "app-restarted-02.txt"
+      ],
+      "original": "App process remained alive without3022 listener; continuation ECONNREFUSED before login.",
+      "cause": null,
+      "disposition": "Stopped exact owned attempt; same build launched33644 and same-record journey continued. Health must precede continuation. No data reset."
+    },
+    {
+      "id": "F06",
+      "source": "Current phase driver",
+      "logs": [
+        "prepare-02.txt",
+        "prepare-03.txt"
+      ],
+      "original": "New continuation page was blank; identity helper could not find Local demo identity.",
+      "cause": "API login creates session but does not navigate the UI.",
+      "correction": "Navigate to exact retained report before UI identity helper.",
+      "disposition": "Prepare, finish and history phases passed with saved records."
+    },
+    {
+      "id": "F07",
+      "source": "Current selection",
+      "logs": [
+        "p07-rollback-branch.txt",
+        "p07-rollback-main.txt"
+      ],
+      "original": "Wrong pattern or file selected no named test; Node reported file wrapper as1pass.",
+      "cause": "Harness invocation selection error.",
+      "disposition": "Not counted. Correct exact field.test.ts case passed in branch/main -02 logs."
+    },
+    {
+      "id": "F08",
+      "source": "Current layout",
+      "logs": [
+        "layout.txt",
+        "layout-02.txt"
+      ],
+      "original": "Exact receiving URL reached but navigation not complete within5000ms.",
+      "cause": null,
+      "disposition": "Unchanged-script rerun passed four widths, actual200% zoom and focus. First failure remains unresolved."
+    },
+    {
+      "id": "F09",
+      "source": "Current regression launcher",
+      "logs": [
+        "regression-app.txt",
+        "regression-app-02.txt"
+      ],
+      "original": "First same-checkout launcher stalled; separate-copy launch attempted before copy completion and failed missing.next/static.",
+      "cause": "Second attempt ran before its required build copy completed; first startup stall remains unresolved.",
+      "disposition": "No browser proof counted until full copy and healthy listener verified."
+    },
+    {
+      "id": "F10",
+      "source": "Current compiled browser first run",
+      "logs": [
+        "browser.txt",
+        "regression-pg.log",
+        "regression-reset.txt"
+      ],
+      "original": "12 command cases failed;6 reference cases passed.",
+      "cause": "The exact P07 fault-injection test leaves ppo.p07_failure on operation_receipts until next reset. PostgreSQL logs retain its SYN late rollback challenge during browser requests.",
+      "disposition": "Reset only task-owned disposable regression fixture before rerunning; narrative and prior retained environments preserved. Main runtime/source identical to current baseline."
+    },
+    {
+      "id": "F11",
+      "source": "Current unchanged-main compiled inspection case",
+      "logs": [
+        "browser-02.txt",
+        "inspection-negative-03.txt",
+        "inspection-corrected-delay.txt",
+        "inspection-final.txt",
+        "inspection-corrected-delay-03.txt",
+        "inspection-final-02.txt"
+      ],
+      "original": "Expected Saved draft version5 at5000ms; UI still displayed3 while saved-version read was outstanding.",
+      "cause": "Missing asynchronous read precondition in test: original retry returned exact same operation receipt version5 and subsequent GET contained version5/retained findings. Display assertion budget started before command/read completion. Controlled6000ms receipt delay reproduces old-test failure.",
+      "correction": "Await exact version5 and original findings in appointment-specific GET before unchanged5000ms display assertion; retain overall180s test budget. Configurable synthetic dates preserve earlier records on focused reruns.",
+      "disposition": "Corrected delayed control passed 1/1; current compiled desktop/phone full cases passed 2/2. This test-boundary correction has no application semantics; F13 separately records the UI defect. No inferred cause for older Reports/P07 timeouts."
+    },
+    {
+      "id": "F12",
+      "source": "Inspection controlled experiments",
+      "original": "Initial private control imports did not load; first corrected control used a reserved fixture date; a later control and briefly overlapping normal run changed shared preparation.",
+      "logs": [
+        "inspection-negative.txt",
+        "inspection-negative-02.txt",
+        "inspection-corrected-delay.txt",
+        "inspection-corrected-delay-02.txt",
+        "inspection-final.txt",
+        "inspection-overlap-stop.txt",
+        "inspection-corrected-delay-03.txt"
+      ],
+      "disposition": "Loader attempts ran no cases. Existing booking conflict correctly refused. The overlapping runner was stopped and retained without a pass; subsequent controls are serial and use distinct dates. The corrected delayed full case passed1/1 in -03. Retained ReassessmentRequired state is not overwritten."
+    },
+    {
+      "id": "F13",
+      "source": "Unchanged-main compiled inspection host",
+      "original": "Attempt2 button looked enabled while choose() returned during original-receipt lookup; the click was ignored.",
+      "cause": "Trace call@450 clicked at103879ms during the actor-bound operation lookup103775–103948ms. Button availability omitted the same busy/pending condition already enforced by choose().",
+      "logs": [
+        "inspection-old-ui.txt",
+        "inspection-final-02.txt"
+      ],
+      "negative": "Held real lookup on unchanged compiled main fails existing native button disabled expectation; no receipt is fabricated.",
+      "correction": "One native disabled attribute follows existing busy/unresolved-original guard; held lookup must disable then release and allow selection. No new authority, schema or recovery protocol.",
+      "disposition": "Current compiled desktop/phone outcome in verification.json; actual independent visual/device acceptance pending."
+    }
+  ]
+}

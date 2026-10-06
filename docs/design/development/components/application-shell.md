@@ -52,7 +52,15 @@ The secondary SchedulingNavigation composition reuses current shell permission d
 
 Native Scheduling captures exposed legacy identity-grid rules placing header utilities over Service tabs at phone widths. The Scheduling stylesheet restores the existing shell flex row only where SchedulingNavigation is present, following the existing Customers containment pattern. Header button containment is checked at all captured widths; broader legacy shell migration remains separate.
 
+## Notification history reads
+
+The `scope:SH-03` notification host also covers populated repeated-event history. Its request-scoped source reads retain current authority, immutable notice identities and explicit loading/partial states; no cross-request content cache is introduced. The `notification-history-window` state and pending alignment item link to the [bounded read decision](../../../decisions/shared-notification-read-efficiency.md). The shared geometry fixture preserves every seven-width/five-page assertion while resizing each mounted page, with the original deadline and review status unchanged.
+
+The `scope:SH-01` host includes `my-work-breakpoint-read`: crossing 780px mounts the other overview and reads current data again. Its fixture uses the existing exact-response transport observer before the unchanged render assertion. Delayed, refused and unrelated responses are explicit; same-layout resizing does not invent a read. This corrects proof readiness without caching application data or changing authority, layout, assertion deadlines or acceptance status.
+
 ## Native Engineering consumers
+
+The EN-02 host fixture also opens Page guide while a real post-save read is pending, then releases that read. The Engineering inspector owns focus only for a newly selected record; refreshing the same selection must not close a shell panel by taking focus. Guide Escape/opener restoration and inspector close/reselection remain explicit keyboard destinations. The `scope:EN-02` consumer and `engineering-guide-during-refresh` state bind this regression to the existing shell host; shell outside-focus dismissal is unchanged. [PR #344 execution evidence](../../../testing/evidence/quotation-supply-followup/README.md) records the baseline failure and candidate proof separately from owner/device acceptance.
 
 EN-02–EN-05 reuse the shared menu and workspace controls under #ppo-engineering-control. The rail exposes basis, drawings and reviews; queries remain contextual. ProductHeader resolves module/view breadcrumbs and the information icon resolves route-specific guidance. Existing EN-06–EN-08 controls/defaults remain. Below 1100 CSS px the native Engineering workspace owns one scroll surface for context, controls and the selected record; it never leaves a tiny inner evidence viewport. Host fixture states: author, reviewer, issuer, read-only, denied and authority not configured. Functional evidence and paired review remain in the programme handover; no review fingerprint is adopted.
 
@@ -78,4 +86,15 @@ The source register, authored evidence form, independent review and estimate com
 
 ## Maintenance and Warranty consumers
 
-MA-01–MA-07 now reuse this component through the native registers and record workspaces. Exact bindings are in components.json. Synthetic long labels, uncertain saves, stale versions and separate customer/recovery states are in tests/fixtures/maintenance-ui.json and the Maintenance browser journeys. Review 1440/1024/390/320 px and guide draft retention before owner acceptance.
+MA-01–MA-07 now reuse this component through the native registers and record workspaces. Exact bindings are in components.json. Synthetic long labels, uncertain saves, stale versions and separate customer/recovery states are in docs/design/development/maintenance-fixtures.json and the Maintenance browser journeys. Review 1440/1024/390/320 px and guide draft retention before owner acceptance.
+## PL-04 dedicated local duties
+
+The existing local identity selector includes the distinct fictional scheduling policy reviewer and publisher. Neither receives booking-edit authority. Host fixtures in `tests/scheduling-browser/publication.spec.ts` exercise Scheduling navigation, direct saved-record URLs and identity switches while a protected read is in flight. Session lock clears both PL-01 and PL-04 local journals and remounts the business view; another actor cannot inherit displayed evidence. Hosted identities and grants are unchanged. [Step 5 verification](../../../testing/evidence/scheduling-policy-interface/README.md) is implementation evidence; paired shell/device acceptance stays open.
+
+## FI-06 consumer
+
+IncidentScreen uses this shared control on scope:FI-06 and its three /service/incidents routes. Host/state fixtures: tests/browser/field-incidents.spec.ts and tests/database/field-incidents.test.ts. Review dirty/conflict/uncertain, denied/restricted and reopened outcomes at 1440/1024/390/320 and actual 200% zoom; owner acceptance pending.
+
+## Current development guidance during ES-07 navigation
+
+The existing development guide retains desktop/mobile content, focus, loading and unavailable states. Its pathname lookup now reads the current register binding and guide without rebuilding the full design catalogue. Exact routes still precede record patterns; changed content loses old review applicability and removed bindings remain unavailable. The full catalogue, access gate, Git history and hosted snapshot are unchanged. The live-edit/unknown-binding fixture is `tests/unit/development-workspace.test.ts`; compiled ES-07 and shared-shell journeys remain host proof. Consumer bindings include ES-07; the development-register page records the corresponding lookup boundary. No new accepted image or owner/device/screen-reader review is claimed.

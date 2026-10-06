@@ -77,7 +77,7 @@ function validationControl(field: string, scope: ParentNode = document) {
     });
   return matches.length === 1 ? matches[0] : undefined;
 }
-export function ErrorNotice({ error }: { error: unknown }) {
+export function ErrorNotice({ error, focusOnError = true }: { error: unknown; focusOnError?: boolean }) {
   const [targets, setTargets] = useState<Record<string, string>>({});
   const notice = useCallback((node: HTMLDivElement | null) => {
     if (node && error) {
@@ -86,9 +86,9 @@ export function ErrorNotice({ error }: { error: unknown }) {
         const control = validationControl(field, node.closest("form") ?? document);
         return control?.id ? [[field, control.id]] : [];
       })));
-      node.focus();
+      if (focusOnError) node.focus();
     }
-  }, [error]);
+  }, [error, focusOnError]);
   if (!error) return null;
   const e = error as Failure;
   return (
@@ -229,11 +229,14 @@ export function Stamp({
     </>
   );
 }
-export function Status({ value }: { value: string }) {
-  const tone = ["Completed","Confirmed","Approved","Authorised","Issued"].includes(value) ? "success"
+export type StatusTone = "success" | "attention" | "danger" | "info" | "neutral";
+// `tone` lets a caller that owns a domain mapping (for example ES-01 readiness)
+// choose the tone; without it every existing caller keeps this value mapping.
+export function Status({ value, tone: chosen }: { value: string; tone?: StatusTone }) {
+  const tone = chosen ?? (["Completed","Confirmed","Approved","Authorised","Issued"].includes(value) ? "success"
     : ["NeedsInformation","Unresolved","Disputed","DueNeeded","Planned","Proposed"].includes(value) ? "attention"
     : ["Urgent","Overdue","Failed","Error"].includes(value) ? "danger"
-    : ["Open","InProgress","Enquiry","Qualified","Sent"].includes(value) ? "info" : "neutral";
+    : ["Open","InProgress","Enquiry","Qualified","Sent"].includes(value) ? "info" : "neutral");
   return <span className={`status-chip tone-${tone}`}>{friendly(value)}</span>;
 }
 export function PageHeader({
@@ -457,17 +460,19 @@ export function ReadState({
   error,
   retry,
   retained = false,
+  focusOnError = true,
 }: {
   loading: boolean;
   error: unknown;
   retry: () => void;
   retained?: boolean;
+  focusOnError?: boolean;
 }) {
   return (
     <>
       {loading && <p role="status">Loading permitted records…</p>}
       {retained && (loading || !!error) && <p role="status">Previously loaded details are retained. Current status is unconfirmed until loading succeeds.</p>}
-      <ErrorNotice error={error} />
+      <ErrorNotice error={error} focusOnError={focusOnError} />
       {!!error && (
         <button className="secondary" onClick={retry}>
           Retry loading

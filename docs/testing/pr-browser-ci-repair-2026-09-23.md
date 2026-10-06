@@ -107,3 +107,20 @@ On 24 September 2026 (Australia/Sydney), PR #297 head `10b15df` failed its [comp
 A controlled loopback fixture returns the relevant data after six seconds and an unrelated successful response immediately. Both route cases reproduced the original five-second failure with navigation alone. With the shared helper, the two delayed routes and a rejected HTTP 503 case passed on desktop and mobile: six of six, no skips. These fixtures prove the readiness boundary and error guard, not a production latency target.
 
 The complete compiled SH sequence then passed **11/11 in 1.5 minutes**, including warm-up and both five-case browser projects; all 450 routes were reachable. The responsive case passed in 17.5 seconds on desktop and 20.7 seconds on mobile. Focused ESLint, whitespace and documentation-foundation checks passed. Evidence is in ignored `tmp/my-work-after.log`, `tmp/my-work-after-results`, `tmp/my-work-sh-final.log` and `tmp/my-work-sh-final-results` in the repair validation worktree. An earlier isolated responsive selection was interrupted at a notification capture because it omitted the preceding notification scenario; a subsequent run overlapped that server's shutdown and failed warm-up. Neither is counted as passing verification. Fresh full PR CI remains required before merge.
+
+
+## Open-PR readiness and diagnostic repair, 25 September 2026
+
+Dean authorised fixing and merging open PRs #315, #317 and #318. Their work is isolated from the root checkout's uncommitted field-quality planning. Branch protection was read directly and its seven configured required contexts are recorded in STATUS; no protection setting was changed.
+
+### Site read readiness (#315)
+
+[The failed diagnostic job](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/36005833139/job/107653621522) reached the Site page but asserted its original OEM note while the retained snapshot still showed `Loading permitted records`. The same job's other two scenarios passed. `prepareJourney` now observes the exact initial Site GET, requires HTTP 200/private-no-store and the expected Site identity, then retains the existing five-second content assertion. The journey delays that real response by 6.5 seconds, preserving its body and status. This reproduced the original failure before the helper fix, including its exact note assertion. No application timeout, permission or business command is changed.
+
+### Compiled diagnostic runner (#318)
+
+[The documentation PR diagnostic job](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/36061734890/job/107842042066) failed before all three selected procedures: one of 519 route warm-ups could not complete while the development compiler was cold. The failed Facilities equipment route took 176,812 ms; the following route responded and the server continued. This establishes a warm-up failure, not a completed application scenario or a proven compiler defect. The diagnostic job now reuses the build it already creates, through `playwright.compiled.config.ts`, as the other application browser lanes already do. The three selected procedures, lifecycle diagnostics, warm-up reachability assertion and test deadlines are retained.
+
+### Local verification and limits
+
+The reconciled #315 application built on Node 24.21.0; foundation, prototype, naming, design-register integrity, TypeScript and focused ESLint passed. Chrome was 154.0.8037.58. Compiled warm-up reached all 521 routes in 13.7 seconds and the phone loading/failure/recovery scenario passed. A first helper edit incorrectly addressed the Site envelope and was corrected to `items[0].id`. The separate report scenario cannot run unmodified on the isolated local port because its existing helper sends a hard-coded port-3000 Origin; this is not a passing report result. The full journey also requires the CI browser's UTC timezone for its device-time fixture. Local test configuration uses that timezone explicitly; the committed browser configuration is unchanged. Final branch CI is required before merge and is distinct from owner/device acceptance or deployment.

@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { facilitySeedCounters, facilitySeedIdentities } from "./facility-seed-identities";
+import { supplySeedIdentities } from "./supply-seed-identities";
 import { test } from "node:test";
 import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
@@ -852,7 +853,7 @@ export function ownerTransferCases() {
             : oldTables[i] === "reference_counters"
               ? facilitySeedCounters(tableRows.map(r => r.row)).map(row => ({ row }))
               : oldTables[i] === "business_identities"
-                ? [...tableRows, ...facilitySeedIdentities(before[oldTables.indexOf("reference_counters")].map(r => r.row)).map(row => ({ row }))].sort((a, b) => a.row.id.localeCompare(b.row.id))
+                ? [...tableRows, ...facilitySeedIdentities(before[oldTables.indexOf("reference_counters")].map(r => r.row)).map(row => ({ row })), ...supplySeedIdentities.map(row => ({ row }))].sort((a, b) => a.row.id.localeCompare(b.row.id))
                 : tableRows,
       ),
     );

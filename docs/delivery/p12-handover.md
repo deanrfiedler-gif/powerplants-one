@@ -42,3 +42,31 @@ The first integration source `da92832331d8ca653aeff88657c80f47840c517c` failed t
 | PT-27 and device/accessibility | P11 raw load and original review evidence retained | Candidate three-second p95 was missed in all 16 measured groups; physical-device and screen-reader review remain absent |
 
 P12 component delivery does not close the complete PP-01 acceptance boundary. Current main’s maintenance and the CRM/E1 originals are preserved; no workflow content is authored by this integration. No hosted deployment/reset, operational data migration, ERP/SharePoint effect or customer distribution is included.
+
+## Later selected service-return component — 27 September 2026
+
+The historical procedure table above describes its original source. The later `codex/service-return-verification` branch completes both selected desktop/phone narratives through a second technician's return attendance, photo-backed checks and a separately issued report on the same work order. Original reserved customer responses and reconciled Finance outputs remain unchanged. Clean browser source `f1fa3fb` passed both journeys; clean restart source `83bccf1` preserved 175 receipts, 61 checked tables and 36 exact files across application/PostgreSQL restart. See the [retained evidence and limits](../testing/evidence/field-timer-native/README.md#completed-service-return-follow-up).
+
+This is additional PT-30 component evidence, not complete PT-30 acceptance. PT-28's compatible application update, scheduling-policy publication and future-booking impacts remain unexecuted; source inspection found no existing policy publication command. All P01–P12 prerequisites, earlier findings, PT-27 candidate misses and owner/device acceptance retain their separate disposition. The restart does not repeat PT-22's isolated backup/restore procedure.
+
+## Compatible application update component — 27 September 2026
+
+The subsequent `codex/pt28-compatible-update-proof` rehearsal now executes the compatible-update portion on two actual compiled releases. Old source `80b2f41` / schema 0049 created six accepted originals with lost responses, one unsent supported observation and one explicitly unsupported fixture. Candidate `2faa3be` / schema 0050 recovered the six original receipts, accepted the queued observation once, retained the unsupported original and preserved the exact PNG and issued pack HTML/PDF/manifest. Returning to the old software against schema 0050 preserved those same outcomes without a schema downgrade or database restore. The [evidence and repeat procedure](../testing/evidence/offline-compatible-update/README.md) identify the real worker waiting/activation, clean source/build identities, earlier setup failures and private pre-update archive.
+
+This supersedes only the earlier unexecuted compatible-application-update component. Complete PT-28 remains open for scheduling-policy publication, owned future-booking impacts and the remaining exact written obligations. No new-command or Finance/external-outcome rollback guarantee, template publication, repeated PT-22 restore, hosted deployment or owner acceptance is inferred.
+
+## Bounded policy impact review — 27 September
+
+The [native PL-04 duration/effective-date comparison](scheduling-policy-impact-handover.md) provides a read-only affected-booking review and exact controlled-booking handover. It creates no policy revision or owned impact task. API-C26 publication and complete PT-28/PT-30 remain outstanding; the earlier compatible-update and rollback evidence keeps its original scope.
+
+## Scheduling Step 6 current execution — 1 October 2026
+
+The [Step 6 acceptance map](../testing/evidence/scheduling-step6/README.md) supersedes earlier unexecuted policy/update/rollback and continuous-return statements for its exact desktop/phone sources. PT-28's written local synthetic procedure passed, including published holds and retained synthetic Finance through compatible Step 4 rollback. The continuous PT-30 technical narrative, real app/PostgreSQL restarts and next-technician history executed successfully. Full owner/prior-case acceptance, PT-27 and physical-device/screen-reader/visual review remain open. [Owner walkthrough](scheduling-step6-owner-walkthrough.md).
+
+PT-22 retains its earlier `d28cfc25/aeaf966a` isolated-restore pass. Step 6 retained native Windows checkpoints but performed no restore; neither those archives nor a restart are a repeated PT-22. Step 6 merged through #333; its original source-bound proof does not imply deployment. See the current acceptance checkpoint below.
+
+## Current acceptance checkpoint — 3 October 2026
+
+PR [#337](https://github.com/deanrfiedler-gif/powerplants-one/pull/337) is merged as `6e8b898aeb150b0a4b42c3087605556a057986ad` at `2026-10-03T03:45:54Z`; all 18 final-head checks passed on `41c6f2c909947e93608a2850198b374de671f1e4`. FI-03/04 #334, FI-06 #335, FI-07 #336 and Scheduling Step 6 #333 are also merged. Dated pending/next-increment statements elsewhere in this handover retain their original checkpoints and are superseded for current integration by this paragraph. Post-merge checks are recorded separately in the [current execution ledger](../testing/evidence/field-integrated-acceptance/README.md).
+
+The [acceptance/prerequisite ledger](../testing/field-integrated-acceptance-ledger.md) maps every written PT to its exact source, evidence scope, remaining obligation and owner. Step 6's bounded written PT-28 pass is retained; full PT-30/PP-01, PT-27 findings and actual independent/owner acceptance remain open. The [current-build owner session](field-integrated-owner-walkthrough.md) and [benefit instrument](../testing/field-benefit-measurement.md) are prepared separately from technical execution. No merge or deployment of this acceptance increment is authorised or performed.

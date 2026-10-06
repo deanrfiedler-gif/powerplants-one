@@ -1,5 +1,7 @@
 "use client";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { plannerContext, plannerZones } from "../scheduling/navigation";
 import { SchedulingNavigation } from "../scheduling/components/client/workspace-navigation.client";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import {
@@ -24,7 +26,6 @@ import {
 } from "../scheduling/field-technicians-view";
 import { localDateTime } from "../scheduling/time";
 
-const zone = "Australia/Brisbane";
 type View = "visits" | "team" | "attention";
 const views = [
   ["visits", "Visits"],
@@ -43,14 +44,14 @@ const blank = (): VisitFilters => ({
   status: "",
   sort: "time",
 });
-const time = (iso: string) =>
+const time = (iso: string, zone: string) =>
   new Intl.DateTimeFormat("en-AU", {
     timeZone: zone,
     hour: "2-digit",
     minute: "2-digit",
     hour12: false,
   }).format(new Date(iso));
-const stamp = (iso: string) =>
+const stamp = (iso: string, zone: string) =>
   new Intl.DateTimeFormat("en-AU", {
     timeZone: zone,
     day: "numeric",
@@ -169,7 +170,7 @@ function Assets({ appointment }: { appointment: Appointment }) {
     </>
   );
 }
-function VisitDetails({ id, close }: { id: string; close: () => void }) {
+function VisitDetails({ id, close, zone }: { id: string; close: () => void; zone: string }) {
   const read = useResource<Envelope<Appointment>>(`appointments/${id}`);
   const a = !read.loading && !read.error ? read.data?.items[0] : null;
   const [tab, setTab] = useState<string>("summary");
@@ -214,7 +215,7 @@ function VisitDetails({ id, close }: { id: string; close: () => void }) {
         {a && (
           <>
             <p className="ft-dialog-sub">
-              {a.site_name} · {stamp(a.start_at)} AEST
+              {a.site_name} · {stamp(a.start_at, zone)} · {zone}
             </p>
             <div className="ft-dialog-tags">
               <Badge value={a.status} />
@@ -284,9 +285,9 @@ function VisitDetails({ id, close }: { id: string; close: () => void }) {
                     </dd>
                   </div>
                   <div>
-                    <dt>Visit window · AEST</dt>
+                    <dt>Visit window · {zone}</dt>
                     <dd>
-                      {time(a.start_at)} – {time(a.end_at)}
+                      {time(a.start_at, zone)} – {time(a.end_at, zone)}
                     </dd>
                   </div>
                   <div>
@@ -376,7 +377,7 @@ function VisitDetails({ id, close }: { id: string; close: () => void }) {
                         <small>
                           {label(f.status)} ·{" "}
                           {f.due_at
-                            ? `${stamp(f.due_at)} AEST`
+                            ? `${stamp(f.due_at, zone)} · ${zone}`
                             : f.due_needed
                               ? "Due date needed"
                               : "No due date"}
@@ -412,10 +413,16 @@ function VisitDetails({ id, close }: { id: string; close: () => void }) {
 }
 
 export function FieldTechniciansScreen() {
-  const [day, setDay] = useState(() =>
-    localDateTime(new Date().toISOString(), zone).slice(0, 10),
-  );
-  const [site, setSite] = useState("");
+  const search = useSearchParams();
+  const query = new URLSearchParams(search.toString());
+  const selectedZone = plannerContext(query).zone;
+  const { day, site, zone } = plannerContext(query,
+    localDateTime(new Date().toISOString(), selectedZone).slice(0, 10));
+  const update = (patch: Record<string, string>) => {
+    const q = new URLSearchParams(search.toString());
+    Object.entries(patch).forEach(([key, value]) => value ? q.set(key, value) : q.delete(key));
+    window.history.replaceState(null, "", "/service/technicians?" + q);
+  };
   const [view, setView] = useState<View>("visits");
   const [filters, setFilters] = useState<Record<View, VisitFilters>>({
     visits: blank(),
@@ -635,18 +642,22 @@ export function FieldTechniciansScreen() {
               value={day}
               onChange={(e) => {
                 setSelected(null);
-                setDay(e.target.value);
+                if (e.target.value) update({ day: e.target.value });
               }}
             />
           </label>
-          <span>AEST · Australia/Brisbane</span>
+          <label><span className="ft-sr">Display timezone</span>
+            <select value={zone} onChange={(e) => { setSelected(null); update({ timezone: e.target.value }); }}>
+              {plannerZones.map(zone => <option key={zone} value={zone}>{zone}</option>)}
+            </select>
+          </label>
           <label>
             <span className="ft-sr">Site</span>
             <select
               value={site}
               onChange={(e) => {
                 setSelected(null);
-                setSite(e.target.value);
+                update({ site_id: e.target.value, resource_id: "" });
               }}
             >
               <option value="">All permitted sites</option>
@@ -671,7 +682,7 @@ export function FieldTechniciansScreen() {
           </button>
           <span className="ft-update">
             {data
-              ? `Read ${stamp(data.observed_at)} AEST`
+              ? `Read ${stamp(data.observed_at, zone)} · ${zone}`
               : "Current results unconfirmed"}
           </span>
         </div>
@@ -743,7 +754,7 @@ export function FieldTechniciansScreen() {
                       >
                         <td className="ft-person-cell">
                           <Person name={r.name} />
-                          <Link href={`/service/technicians/${r.id}?day=${day}`}>Availability &amp; competence</Link>
+                          <Link href={`/service/technicians/${r.id}?` + new URLSearchParams({ day, timezone: zone, ...(site ? { site_id: site } : {}) })}>Availability &amp; competence</Link>
                           <button
                             className="ft-record-link"
                             aria-label={`View visits for ${r.name}`}
@@ -775,7 +786,7 @@ export function FieldTechniciansScreen() {
                         <td data-label="First scheduled visit">
                           {assigned[0] ? (
                             <>
-                              {time(assigned[0].start_at)} ·{" "}
+                              {time(assigned[0].start_at, zone)} ·{" "}
                               {assigned[0].scope_summary ||
                                 assigned[0].display_number}
                               <span className="ft-cell-sub">
@@ -844,14 +855,14 @@ export function FieldTechniciansScreen() {
                           <div className="ft-time">
                             {localDateTime(v.start_at, zone).slice(0, 10) ===
                             day
-                              ? time(v.start_at)
-                              : stamp(v.start_at)}
+                              ? time(v.start_at, zone)
+                              : stamp(v.start_at, zone)}
                             <small>
                               –{" "}
                               {localDateTime(v.end_at, zone).slice(0, 10) ===
                               day
-                                ? time(v.end_at)
-                                : stamp(v.end_at)}
+                                ? time(v.end_at, zone)
+                                : stamp(v.end_at, zone)}
                             </small>
                           </div>
                         </td>
@@ -950,7 +961,7 @@ export function FieldTechniciansScreen() {
         <Link href="/schedule">Open Service planner</Link>
       </footer>
       {selected && data && (
-        <VisitDetails key={selected} id={selected} close={close} />
+        <VisitDetails key={selected} id={selected} close={close} zone={zone} />
       )}
     </section>
   );

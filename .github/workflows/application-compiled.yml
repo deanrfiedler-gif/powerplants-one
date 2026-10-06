@@ -16,8 +16,38 @@ defaults:
 jobs:
   compiled:
     name: Desktop and mobile browser suite against the compiled application
+    needs: compiled_suites
+    if: always()
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    timeout-minutes: 5
+    steps:
+      - name: Require every compiled proof group to complete successfully
+        env:
+          PPO_SUITE_RESULT: ${{ needs.compiled_suites.result }}
+        run: test "$PPO_SUITE_RESULT" = success
+
+  compiled_suites:
+    name: Compiled application ${{ matrix.suite }} proof
+    runs-on: ubuntu-24.04
+    # Each browser project keeps its warm-up dependency and original deadlines.
+    # Each matrix job owns a separate app and disposable database; tests within
+    # a project remain serial. Retained fixtures/restarts stay independent.
+    timeout-minutes: ${{ matrix.timeout_minutes }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - suite: browser-desktop
+            project: desktop-chromium
+            timeout_minutes: 60
+            artifact_name: compiled-application-browser-desktop-evidence
+          - suite: browser-mobile
+            project: mobile-chromium
+            timeout_minutes: 60
+            artifact_name: compiled-application-browser-mobile-evidence
+          - suite: retained
+            timeout_minutes: 25
+            artifact_name: compiled-application-retained-evidence
     services:
       postgres:
         image: postgres:16.15
@@ -57,6 +87,10 @@ jobs:
           npm run build
           test -f .next/BUILD_ID
           echo "build_id=$(cat .next/BUILD_ID)" >> "$GITHUB_OUTPUT"
+      - name: Configure disposable PostgreSQL lock capacity
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: bash scripts/configure-test-postgres.sh
       - name: Configure disposable loopback database
         id: database_setup
         run: |
@@ -70,12 +104,87 @@ jobs:
           npm run db:seed
           npm run db:health
       - name: Desktop and mobile browser checks against the compiled application
-        if: ${{ !cancelled() && steps.database_setup.outcome == 'success' }}
+        if: ${{ startsWith(matrix.suite, 'browser-') && !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
+          PPO_BROWSER_PROJECT: ${{ matrix.project }}
           PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/compiled-browser/results.json
         run: |
           echo "Compiled build ${{ steps.build.outputs.build_id }} for source ${PPO_SOURCE_HEAD}"
-          npx playwright test --config=playwright.compiled.config.ts --reporter=list,json
+          npx playwright test --config=playwright.compiled.config.ts --project="$PPO_BROWSER_PROJECT" --reporter=list,json
+      - name: Scheduling Steps 4–5 isolated publication, recovery and hold journeys
+        if: ${{ matrix.suite == 'retained' && !cancelled() && steps.database_setup.outcome == 'success' && steps.build.outcome == 'success' }}
+        env:
+          PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/scheduling-step4-browser/results.json
+        run: node --env-file=.env.local node_modules/@playwright/test/cli.js test --config=playwright.scheduling.config.ts --output verification-evidence/scheduling-step4-browser --reporter=list,json
+      - name: Retain timer originals across real process restarts
+        if: ${{ matrix.suite == 'retained' && !cancelled() && steps.database_setup.outcome == 'success' && steps.build.outcome == 'success' }}
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: |
+          PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
+          ppo_timer_pid=
+          trap 'if [ -n "$ppo_timer_pid" ]; then kill "$ppo_timer_pid" 2>/dev/null || true; fi' EXIT
+          start_timer_app() {
+            node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > "$RUNNER_TEMP/timer-$1.log" 2>&1 &
+            ppo_timer_pid=$!
+            ppo_timer_ready=0
+            for attempt in $(seq 1 60); do
+              kill -0 "$ppo_timer_pid" 2>/dev/null || exit 1
+              if curl --fail --silent http://127.0.0.1:3000/ > /dev/null; then ppo_timer_ready=1; break; fi
+              sleep 1
+            done
+            test "$ppo_timer_ready" = 1
+          }
+          start_timer_app before
+          PPO_RESTART_SERVER_PID="$ppo_timer_pid" node --env-file=.env.local --import tsx scripts/field-timer-restart-proof.ts write
+          kill "$ppo_timer_pid"
+          wait "$ppo_timer_pid" || true
+          ppo_timer_pid=
+          docker restart "$PPO_POSTGRES_CONTAINER"
+          for attempt in $(seq 1 30); do
+            docker exec "$PPO_POSTGRES_CONTAINER" pg_isready -U ppo_local -d ppo_synthetic_test && break
+            sleep 1
+          done
+          start_timer_app after
+          PPO_RESTART_SERVER_PID="$ppo_timer_pid" node --env-file=.env.local --import tsx scripts/field-timer-restart-proof.ts verify
+          node --env-file=.env.local --import tsx scripts/field-timer-zoom-proof.ts
+          mkdir -p verification-evidence/field-timer-restart
+          cp tmp/field-timer-restart/verified.json tmp/field-timer-restart/before.png tmp/field-timer-restart/after.png verification-evidence/field-timer-restart/
+          cp tmp/field-timer-restart/zoom.json tmp/field-timer-restart/zoom-page.png tmp/field-timer-restart/zoom-dialog.png verification-evidence/field-timer-restart/
+      - name: Scheduling policy originals across app and PostgreSQL restart
+        if: ${{ matrix.suite == 'retained' && !cancelled() && steps.database_setup.outcome == 'success' && steps.build.outcome == 'success' }}
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+          PPO_POLICY_RESTART_DIRECTORY: ${{ runner.temp }}/ppo-scheduling-policy-restart
+        run: |
+          PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
+          ppo_policy_pid=
+          trap 'if [ -n "$ppo_policy_pid" ]; then kill "$ppo_policy_pid" 2>/dev/null || true; fi' EXIT
+          start_policy_app() {
+            node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > "$RUNNER_TEMP/policy-$1.log" 2>&1 &
+            ppo_policy_pid=$!
+            ppo_policy_ready=0
+            for attempt in $(seq 1 60); do
+              kill -0 "$ppo_policy_pid" 2>/dev/null || exit 1
+              if curl --fail --silent http://127.0.0.1:3000/ > /dev/null; then ppo_policy_ready=1; break; fi
+              sleep 1
+            done
+            test "$ppo_policy_ready" = 1
+          }
+          start_policy_app before
+          PPO_RESTART_SERVER_PID="$ppo_policy_pid" node --env-file=.env.local --import tsx scripts/scheduling-policy-restart-proof.ts write
+          kill "$ppo_policy_pid"
+          wait "$ppo_policy_pid" || true
+          ppo_policy_pid=
+          docker restart "$PPO_POSTGRES_CONTAINER"
+          for attempt in $(seq 1 30); do
+            docker exec "$PPO_POSTGRES_CONTAINER" pg_isready -U ppo_local -d ppo_synthetic_test && break
+            sleep 1
+          done
+          start_policy_app after
+          PPO_RESTART_SERVER_PID="$ppo_policy_pid" node --env-file=.env.local --import tsx scripts/scheduling-policy-restart-proof.ts verify
+          mkdir -p verification-evidence/scheduling-policy-restart
+          cp "$PPO_POLICY_RESTART_DIRECTORY/verified.json" verification-evidence/scheduling-policy-restart/
       - name: Prepare retained browser review diagnostics immediately
         if: ${{ always() && steps.database_setup.outcome == 'success' }}
         id: browser_review
@@ -84,7 +193,7 @@ jobs:
         if: ${{ always() && steps.browser_review.outcome == 'success' }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: compiled-application-browser-evidence
+          name: ${{ matrix.artifact_name }}
           path: |
             test-results/
             verification-evidence/

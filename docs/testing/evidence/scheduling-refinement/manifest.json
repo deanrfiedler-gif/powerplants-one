@@ -1,0 +1,433 @@
+{
+  "runtime_commit": "1bce81239a6ba0982201985ba9b40061c9f2f50c",
+  "capture_type": "Original Chrome PNG; no image manipulation",
+  "images": [
+    {
+      "file": "images/capacity-1024x768.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "199d906e72c2b13a9b165a9c33bd968eccc114f69be00cbb45c52839177aefa8",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/capacity-1440x960.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "52fa7a63ed5f9deede634d9cd9c2377bd01c136440e1dd126944e376e0410435",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/capacity-200-percent-detail.png",
+      "width": 1422,
+      "height": 864,
+      "sha256": "3c7b5b6939a8962b9ea7e74cec571069b19e1015218cbd9995ec145b0c5f42dd",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/capacity-200-percent.png",
+      "width": 1422,
+      "height": 864,
+      "sha256": "7c16f9e8749726155f56a83bb7139fc14d930eca50a2b41f038bb899cf1b31d0",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/capacity-320x844-detail.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "be4fbaec46eb5f6b2dd78172530de1bbacc08e7e078c6992714f6ad829ff8845",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/capacity-320x844.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "741add195d4b6e5d91bea39a27e6669e897cf4f176edbfe5a4689990c5629ce1",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/capacity-390x844.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "f85e7311c7348068f2c17c013ee78c4ab2dc9dea215587c28cafbbc237941155",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/capacity-restored-filters-desktop.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "c75c55faa584830ed975c1c8e4bd9339c27cdd224bd051ea88972f9b7a1545ae",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/capacity-restored-filters-phone.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "652b4cd6975f522e3a829b228803401a6789370f37e41c434760806650572e8a",
+      "source": "compiled native synthetic application",
+      "manual_inspection": false
+    },
+    {
+      "file": "images/changes-1024x768.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "6f9f036e7bca877c6818ebdb17c41d65c6513a98431728816435539963904f85",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/changes-1440x960.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "0e61e85c7c4be31ff25d790390ca0e1ce5135a8f376c23a108e155e55f5023ad",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/changes-200-percent-detail.png",
+      "width": 1422,
+      "height": 864,
+      "sha256": "46785ac19c732af897f57cf2c7bca515c5b1139dfda2b89de0d3882db0be6542",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/changes-200-percent.png",
+      "width": 1422,
+      "height": 864,
+      "sha256": "b6a844506e7454732eae201bbbc3f40100133d7695b2fc79298119a7825f8186",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/changes-320x844-detail.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "73142a5b4cfc0dd9efa17bef3069c915dcdc7a407ccdd971043feb9ea1afb96a",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/changes-320x844.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "87031e101ae8d1781829e8986e71b04aaafffb85103381e5b6469053a4d026b7",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/changes-390x844.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "ba41a69d999a83d7daee2327c53ca7f062b32599263ddb6d8966da16f7329480",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/continuing-calendar-closure-desktop.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "0cf461d40393a62dd6aa2d332c81d4953e9b8aa758072650b05a9ce11e40fbf3",
+      "source": "Maintained synthetic PlannerBoard component fixture; no source write",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/continuing-calendar-closure-phone.png",
+      "width": 390,
+      "height": 976,
+      "sha256": "d26d6064dec64ea7c4b57b1eb6e1831e67db2f117e7517e8de2b0e0337a7b02e",
+      "source": "Maintained synthetic PlannerBoard component fixture; no source write",
+      "manual_inspection": false
+    },
+    {
+      "file": "images/field-team-1024x768.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "d7507c84432c798ac17bf6ecd71a6a27502d27d86aad02008b3e8ae9914b2493",
+      "source": "compiled native synthetic application",
+      "manual_inspection": false
+    },
+    {
+      "file": "images/field-team-1440x960.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "2299b391511b5542523ea5961857044fcf3e357ad959b7b384d7a0e3842fad78",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/field-team-200-percent.png",
+      "width": 1422,
+      "height": 864,
+      "sha256": "be0462a1d1b9c94886f5536c7fa2a33e67ef37f57783dfc757170b32536c3402",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/field-team-320x844.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "1b5d2dede854b985f85b74ec57a2769ed253024645c73be5e4ec13b8ed554ace",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/field-team-390x844.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "91404b8b91b6a12e7d799036b4254f8ee86d2283c285611dd8be225847ab25ba",
+      "source": "compiled native synthetic application",
+      "manual_inspection": false
+    },
+    {
+      "file": "images/planner-1024x768.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "d316b0defacd3338e17facefd62a125d5c18d8b03602d89229f233b2b9a63a07",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/planner-1440x960.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "c63326e968b798f132a1ced7722246a7a6cc32ea50fcce3e9a4d3d0defcb85a3",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/planner-200-percent-detail.png",
+      "width": 1422,
+      "height": 864,
+      "sha256": "fa6f2134a4fe37f70717ae661a33a47dbe319f9f9bfe402d142c23a6caefa1b1",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/planner-200-percent.png",
+      "width": 1422,
+      "height": 864,
+      "sha256": "71b89262bf49c2f79ecf8cc495c1cc9a09ac9f6fe3daf6a6d0716686561df813",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/planner-320x844-detail.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "a6bfe2f0d53bff0c2ad1975965a27d78c642b5e42380e2fca35049ae88b76d34",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/planner-320x844.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "30c14d13eeebb0dda4db8b3ab5072af5fb140e2eba6415fd94d0d19e2ccd3da1",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/planner-390x844.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "ccfa320e9042204606901b041c70ccbdbffa1d1967f8890752db8c486b2fda62",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/resource-1024x768.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "1cb0f24ce2cba276369d3b00023de3270309410e8ee2ad2169e6f5750e9e5b13",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/resource-1440x960.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "74bf4a4739fa3b754a580faf6270b631d966772ec7419c95089e2a1e96fa95cf",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/resource-200-percent-detail.png",
+      "width": 1422,
+      "height": 864,
+      "sha256": "da09e6f73a4fd63162a1688099f644efe237754c82407c3a192e6ff62483ca77",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/resource-200-percent.png",
+      "width": 1422,
+      "height": 864,
+      "sha256": "b6578f2e714f9673fe0bcf9e79d61e8074db584615b3d4a9f2912132a2b780aa",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/resource-320x844-detail.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "cde35ac17a2ba7e08d16784a48e8a807d604b57b9295490a384c99f1ae9a51eb",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/resource-320x844.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "8d7f7b953cfa5353394ea9de7572a97d953966a1a82ced9da1835b3c9c9a8ea1",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/resource-390x844.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "14e8dd92bfc1cd75b65f904a84f200999d4db47a23070dba294cc9956ffb3e34",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/resource-timezone-context-desktop.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "cf9a16310c854d8ece9500c8bfb8c4f02da2e22b55f8acb34f6f6eafa55131b8",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/resource-timezone-context-phone.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "a3d8475fdb0130550094b7d9589baa5d8cc4aeb2ee1da30b6925044ecce5f59d",
+      "source": "compiled native synthetic application",
+      "manual_inspection": false
+    },
+    {
+      "file": "images/retained-reference-1440x960.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "affa18b26dfd6d5c6aee684d9df985ee2b788581964b0e0a53bae22e51951ec2",
+      "source": "retained issued Scheduling r01 HTML",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/travel-1024x768.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "5035f47ee510c19131538932ce0fd409e8a7f8b1e10a39a357b452a62b1f7ef5",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/travel-1440x960.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "67545b1cf0265c4e6327cc13ab1306ed1f3ec8e008290113d680dbf4ee1c3dea",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/travel-200-percent.png",
+      "width": 1422,
+      "height": 864,
+      "sha256": "3682f4956251ef90aeb0bd4e2ce4d424131763adf07437c04682fc13b5db1d02",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/travel-320x844-detail.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "38d346c31ea5ef1f4e514ff37141d86d3f2183d5ca56177137dd3d03377d3f94",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/travel-320x844.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "ebe79fc091cb064966b599dfa7af34ea4edb28d51628f65a7f37d315154b342d",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/travel-390x844.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "ac7f09a8320b54bbdf03a48d02a83498fb73e0513ac3ec58b46ceb12a4029294",
+      "source": "compiled native synthetic application",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/travel-closure-challenge-desktop.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "7ede536ad51fcc6ce951445fffb0f49fa615015c420caf65f4d02d252f042c0b",
+      "source": "Compiled synthetic application with read-only calendar response challenge; no source write",
+      "manual_inspection": true,
+      "inspection": "Implementation visual inspection; owner/device acceptance pending"
+    },
+    {
+      "file": "images/travel-closure-challenge-phone.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "79d1d89ac617b03338a69f6be2ea9f70a2e4696ce3ade62f5feba76ee7eb46dd",
+      "source": "Compiled synthetic application with read-only calendar response challenge; no source write",
+      "manual_inspection": false
+    }
+  ],
+  "manually_inspected_count": 42
+}

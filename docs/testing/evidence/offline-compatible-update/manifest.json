@@ -1,0 +1,99 @@
+{
+  "preparation_harness_head": "81ca7a79f8e7bebc27f1c52545769e2049516131",
+  "update_and_rollback_harness_head": "2faa3bebab399a1fa9975fe4d604d07edc1c7fa1",
+  "harness_sha256_lf": "95b5e964ce42b191f978db9a5ef012b0914937515604d59fd1b228b1f08a729e",
+  "files": {
+    "prepared.json": {
+      "bytes": 1197,
+      "sha256": "94924fab1cee4d39869708b06b3a7f3b766bbf916c38da81b32fa2926ab3fb20",
+      "original_sha256": "94924fab1cee4d39869708b06b3a7f3b766bbf916c38da81b32fa2926ab3fb20"
+    },
+    "verified.json": {
+      "bytes": 3744,
+      "sha256": "951b5ef091b63feea126a1b8fbf076366e29227c5e5eb363e4f8ccb5ef9bfd2a",
+      "original_sha256": "951b5ef091b63feea126a1b8fbf076366e29227c5e5eb363e4f8ccb5ef9bfd2a"
+    },
+    "rollback.json": {
+      "bytes": 3744,
+      "sha256": "7d89614184417c9ee26c99eaa1270d160e3c3e0d64f7e9a9167d5b0f3f705ee8",
+      "original_sha256": "7d89614184417c9ee26c99eaa1270d160e3c3e0d64f7e9a9167d5b0f3f705ee8"
+    },
+    "archive.json": {
+      "bytes": 474,
+      "sha256": "3ed6e028bc7fc8748240a3d9082b62bd5439281666273fea42f4b0d25bd8ae91",
+      "original_sha256": "3ed6e028bc7fc8748240a3d9082b62bd5439281666273fea42f4b0d25bd8ae91"
+    },
+    "before-update.png": {
+      "bytes": 365927,
+      "sha256": "b44cc7ee7f6e3dc70e3bcb5efad73f86c82bc9d3605b5ae460e115e3d53e2e3e",
+      "original_sha256": "b44cc7ee7f6e3dc70e3bcb5efad73f86c82bc9d3605b5ae460e115e3d53e2e3e"
+    },
+    "verify-waiting.png": {
+      "bytes": 375588,
+      "sha256": "f9d9fce9ab529ff8655a7f63624cdb77419440cc7c7449904983eed32806991d",
+      "original_sha256": "f9d9fce9ab529ff8655a7f63624cdb77419440cc7c7449904983eed32806991d"
+    },
+    "verify-retained.png": {
+      "bytes": 366507,
+      "sha256": "dbf2bd7547ae1cca32841aac88e1afa9996b582354220cf94fccf96361f11dc1",
+      "original_sha256": "dbf2bd7547ae1cca32841aac88e1afa9996b582354220cf94fccf96361f11dc1"
+    },
+    "rollback-waiting.png": {
+      "bytes": 367744,
+      "sha256": "5af6dc95782a6ff08b6de95cab9016e50598ee452f582a2765f9d69639c213ac",
+      "original_sha256": "5af6dc95782a6ff08b6de95cab9016e50598ee452f582a2765f9d69639c213ac"
+    },
+    "rollback-retained.png": {
+      "bytes": 374534,
+      "sha256": "2c5b73a96d5faa40aa90881307cdc83e6ef075555df12635514d5b4dce5f971d",
+      "original_sha256": "2c5b73a96d5faa40aa90881307cdc83e6ef075555df12635514d5b4dce5f971d"
+    },
+    "prepare.txt": {
+      "bytes": 80,
+      "sha256": "73c36e80806305e42fb91cb35bf73fb62f2daaf7af6f3a484efbc0167190b345",
+      "original_sha256": "f7da97a52bd3c13895b144163507908e513592ff35d89f757fbc7ccf696b7bda"
+    },
+    "verify.txt": {
+      "bytes": 79,
+      "sha256": "0be966a0e7504734183a632767521c31a8be11770e12835f8ad13ac6afd03815",
+      "original_sha256": "3b2c2859f5081a1210cd8455e05a66ea7ea8d90247bfd76a02504a48adb73e3b"
+    },
+    "rollback.txt": {
+      "bytes": 81,
+      "sha256": "ce7de49ad11b2970a3aeeab76e24f70688bfc4e645ca8dd4c785a4c43bdc2582",
+      "original_sha256": "8d53f76fedc692668afcc6d8529bf2117f1d258b4ed136303c56c4a947b1c3af"
+    },
+    "earlier-storage-refusal.txt": {
+      "bytes": 598,
+      "sha256": "cbf18c16b6bd79b6103196090c81bcf88aa19fefd7fd155fe15b8a8f86ec3364",
+      "original_sha256": "f32bfedcd5d198fc8d9fd6d31f25331f3824771a242e75edb552d6ceb9bf2c00"
+    },
+    "fixture-shell-recovery.txt": {
+      "bytes": 194,
+      "sha256": "f358e25982f76fa91e065d93df50add564bad9305dbfdaef254b0f4679c74c35",
+      "original_sha256": "07c26990adaed287672a72e415b5a2823f33faaa7aa888fd9c53dc4001df4f18"
+    },
+    "baseline-build.txt": {
+      "bytes": 21050,
+      "sha256": "bfb9de5383e95014a946cb1e86fc40c08d2fa4096e90f4be391848b78160dac5",
+      "original_sha256": "d28308f7407aeab5c27cf24bd543befb02789a54254bd6f85f059cc049575e5f"
+    }
+  },
+  "log_normalisation": "UTF-8; LF; ANSI colours and trailing whitespace removed. Original hashes retained.",
+  "limits": "Synthetic local compiled update and old-command rollback. No private dump/profile or raw original payload is published. Screenshots are functional observations, not visual/device/owner acceptance.",
+  "phase_log_times_utc": {
+    "prepare": {
+      "created": "2026-09-27T10:54:57.805052+00:00",
+      "last_written": "2026-09-27T10:55:18.117715+00:00"
+    },
+    "verify": {
+      "created": "2026-09-27T11:04:46.372068+00:00",
+      "last_written": "2026-09-27T11:05:02.918811+00:00"
+    },
+    "rollback": {
+      "created": "2026-09-27T11:05:36.078210+00:00",
+      "last_written": "2026-09-27T11:05:52.310886+00:00"
+    }
+  },
+  "timing_scope": "Observed invocation log creation and final success-log write on Windows; not a performance benchmark or cleanup-duration measurement."
+}

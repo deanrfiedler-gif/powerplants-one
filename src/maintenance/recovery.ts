@@ -146,7 +146,7 @@ export async function createClaim(p: Principal, input: unknown) {
         p,
         row,
         "Prepared",
-        { package_hash: hash(pack), sc08_receiving: "Unavailable" },
+        { package_hash: hash(pack), sc08_receiving: "NotIntegrated" },
         reason,
       );
       return row;
@@ -285,7 +285,7 @@ export async function recoveryCommand(
           );
         Object.assign(detail, {
           stage,
-          receiving_state: "SC08Unavailable",
+          receiving_state: "SupplyReceivingNotIntegrated",
           source_mode: "ExternalEvidenceReference",
           asset_id: w.asset_id,
         });

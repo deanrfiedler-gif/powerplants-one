@@ -1,0 +1,107 @@
+{
+  "source_head": "8efa005b09aa73857211d9aff3c87cc420681f44",
+  "verified_at": "2026-10-06T13:36:11.105Z",
+  "original_postmaster": "2026-10-06 13:33:00.748519+00",
+  "restarted_postmaster": "2026-10-06 13:35:45.554327+00",
+  "exact_replays": 12,
+  "original_operation_receipts": 23,
+  "unchanged_snapshot_rows": 1085,
+  "unchanged_output_files": [
+    {
+      "id": "162d9ca6-649f-43b1-baa9-c3b191db27b4",
+      "kind": "html",
+      "name": "162d9ca6-649f-43b1-baa9-c3b191db27b4.html",
+      "hash": "4676096f16d7e5988dae577ff98f8e303bd3d05f3e94e40b0bdd1cb7510fb0ec"
+    },
+    {
+      "id": "162d9ca6-649f-43b1-baa9-c3b191db27b4",
+      "kind": "pdf",
+      "name": "162d9ca6-649f-43b1-baa9-c3b191db27b4.pdf",
+      "hash": "69e8820562cb7c29a40115a4de3a401ae700716cc62689b03145bc582d7b2e0a"
+    },
+    {
+      "id": "85c1fa82-26c2-4cdd-801e-8efbfdeefb39",
+      "kind": "html",
+      "name": "85c1fa82-26c2-4cdd-801e-8efbfdeefb39.html",
+      "hash": "6df6a2516211abaeed9a900028b965a0789fd3d87318b0765409f6a2b1c174c9"
+    },
+    {
+      "id": "85c1fa82-26c2-4cdd-801e-8efbfdeefb39",
+      "kind": "pdf",
+      "name": "85c1fa82-26c2-4cdd-801e-8efbfdeefb39.pdf",
+      "hash": "9591e3ff8a4c82882c20c86445c8d30da12b0779cacfe593ead4c03ceb6be979"
+    }
+  ],
+  "allocation_outcome_id": "8a87139f-118a-465c-b8cb-3c30dfe6c5c2",
+  "impact_predecessor": "2f037fb8-af11-4d9b-95e5-1126bb0d91e0",
+  "receiving_ids": [
+    "e9877457-d168-4c1d-889c-ef491abc966c",
+    "a86dff11-b894-4b5c-9cd8-37f6562a2f5e",
+    "4c4b76ba-ba9d-4ae1-b5b8-785d417d53bf",
+    "4876b823-2c6b-4eea-9edc-f4fdfd2b00c2",
+    "d0fb02f1-3040-4ed3-9338-e7d7a639523a",
+    "d0226f31-baf5-4fd0-aa74-27276a374614"
+  ],
+  "native_receipts": [
+    {
+      "state": "Active",
+      "task_ids": [
+        "75d09191-435d-4d46-935c-60f112258e42"
+      ],
+      "warnings": [],
+      "record_id": "05523c6f-3bcf-4084-8146-f9aa7f64eaa4",
+      "receipt_id": "0b29db22-5f51-4aa6-af27-e8c324e0c1f6",
+      "accepted_at": "2026-10-06T13:35:36.475Z",
+      "operation_id": "92d34adb-334f-4385-9afc-7f7275a1c1d0",
+      "record_version": 5
+    },
+    {
+      "state": "Active",
+      "task_ids": [
+        "ef892cbe-6aab-42b9-abea-a5271b6f94a7"
+      ],
+      "warnings": [],
+      "record_id": "05523c6f-3bcf-4084-8146-f9aa7f64eaa4",
+      "receipt_id": "69cbfdf2-4b64-4bf3-94bf-2e07730067cc",
+      "accepted_at": "2026-10-06T13:35:36.483Z",
+      "operation_id": "adecdc4d-0a04-402c-8f73-15fa64ed75c3",
+      "record_version": 6
+    },
+    {
+      "state": "Recorded",
+      "task_ids": [
+        "c5264ef8-85c8-4a08-b1f3-cc0b9d64c3de"
+      ],
+      "warnings": [],
+      "record_id": "61994a06-d596-40bb-9a75-af0d92f55e25",
+      "receipt_id": "bc566c42-5a6d-4e61-94fa-8014eb720daf",
+      "accepted_at": "2026-10-06T13:35:36.492Z",
+      "operation_id": "2b6fe28a-8c95-4fa8-b545-c7b02ed257ab",
+      "record_version": 5
+    }
+  ],
+  "retained_predecessor": {
+    "id": "bdf3a901-b6aa-4b09-ac02-579241cc6721",
+    "note": "SYN Manual coordination",
+    "phase": "Procurement",
+    "title": "SYN dependent installation",
+    "status": "Planned",
+    "version": 1,
+    "owner_id": "30000000-0000-4000-8000-000000000001",
+    "progress": 0,
+    "milestone": false,
+    "synthetic": true,
+    "company_id": "20000000-0000-4000-8000-000000000001",
+    "created_at": "2026-10-06T13:35:23.826848+00:00",
+    "created_by": "30000000-0000-4000-8000-000000000001",
+    "project_id": "05523c6f-3bcf-4084-8146-f9aa7f64eaa4",
+    "start_date": "2027-12-01",
+    "updated_at": "2026-10-06T13:35:23.826848+00:00",
+    "updated_by": "30000000-0000-4000-8000-000000000001",
+    "finish_date": "2027-12-10",
+    "workspace_id": "10000000-0000-4000-8000-000000000001",
+    "project_version": 3,
+    "external_owner_id": null
+  },
+  "unmet": "3.624999"
+}

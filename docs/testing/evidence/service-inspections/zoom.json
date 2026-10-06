@@ -1,0 +1,18 @@
+{
+  "result": "Passed",
+  "actual_zoom": "200%",
+  "geometry": {
+    "innerWidth": 720,
+    "innerHeight": 500,
+    "devicePixelRatio": 2,
+    "scrollWidth": 720
+  },
+  "focused_detail_bounds": {
+    "x": 57,
+    "y": 194.1328125,
+    "width": 606,
+    "height": 44
+  },
+  "keyboard": "Native source details open/close with Enter and retain focus",
+  "limits": "Synthetic Chrome; owner/physical-device/screen-reader acceptance separate"
+}

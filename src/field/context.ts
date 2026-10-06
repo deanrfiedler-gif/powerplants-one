@@ -95,6 +95,7 @@ export async function currentCaptureState(
   c: QueryClient,
   p: Principal,
   ctx: Awaited<ReturnType<typeof attendanceContext>>,
+  inspectionCapture = false,
 ) {
   const pack = (
     await c.query(
@@ -102,7 +103,7 @@ export async function currentCaptureState(
       [p.workspace_id, ctx.a.id],
     )
   ).rows[0];
-  const readiness = await dispatchReadiness(c, p, ctx.a.id, true);
+  const readiness = await dispatchReadiness(c, p, ctx.a.id, true, inspectionCapture);
   return readiness.component_ready &&
     ctx.a.status === "InProgress" &&
     !ctx.a.dispatch_hold &&
