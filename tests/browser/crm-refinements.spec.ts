@@ -1,5 +1,6 @@
 import { toggleWorklistFilters, fillOpportunitySearch, keyOpportunitySearch } from "../helpers/crm-worklist-ui";
 import { captureTransferComparison } from "../helpers/crm-transfer-capture";
+import { crmRefinementCall as call } from "../helpers/crm-refinement-call";
 import { keyActivate, keySelect, keyType } from "../helpers/quality-keyboard";
 import { committed } from "../helpers/quality-prepare";
 import {
@@ -21,15 +22,6 @@ test.beforeAll(() => {
     throw new Error("CRM browser fixture writes require disposable ppo_synthetic_test");
 });
 test.afterAll(closeDatabase);
-async function call(page: Page, path: string, body?: unknown) {
-  const r = await page.request.fetch(`/api/v1/${path}`, {
-    method: body === undefined ? "GET" : "POST",
-    headers: body === undefined ? {} : { Origin: "http://127.0.0.1:3000" },
-    data: body,
-  });
-  expect(r.ok(), await r.text()).toBe(true);
-  return r.json();
-}
 test("owner transfer compares separate activities and persists original/current ownership on desktop and phone",async({page},info)=>{
   await call(page,"local-session",{profile:"coordinator"});
   const input={...crmDiscovery(),title:`SYN Transfer journey ${info.project.name}`};input.initial_action.summary=("SYN Long separate activity comparison "+"scopeword".repeat(220)).slice(0,2000);await call(page,"crm/opportunities",input);
