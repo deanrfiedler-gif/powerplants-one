@@ -324,10 +324,23 @@ for (const role of roles)
       "MaterialReceive",
       materialReceiving(await currentFollowup(f), role),
     );
+    const before = await rows("project_tasks");
+    await assert.rejects(executeMaterial(f.owner, f.id, "MaterialApply", cmd), {
+      code: "VersionConflict",
+      status: 409,
+    });
+    // A refreshed envelope cannot revive the review's superseded receiving IDs.
+    const current = await currentFollowup(f);
+    const refreshed = materialApply(current);
+    assert.equal(refreshed.review_id, cmd.review_id);
+    assert.equal(refreshed.review_hash, cmd.review_hash);
     await assert.rejects(
-      executeMaterial(f.owner, f.id, "MaterialApply", cmd),
+      executeMaterial(f.owner, f.id, "MaterialApply", refreshed),
       conflict,
     );
+    assert.deepEqual(await rows("project_tasks"), before);
+    await assert.rejects(readOperation(f.owner, cmd.operation_id));
+    await assert.rejects(readOperation(f.owner, refreshed.operation_id));
     assert.equal(
       (await currentFollowup(f)).material_resolution.can_apply,
       false,

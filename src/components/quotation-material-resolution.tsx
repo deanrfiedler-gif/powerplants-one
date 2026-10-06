@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState, type ComponentProps } from "react";
+import { nextWeekday } from "../projects/model";
 import { SelectField, Status } from "./business-ui";
 import { Button, ButtonLink } from "./ui/button";
 import type { ReceiptCorrection } from "./quotation-receipt-correction";
@@ -404,8 +405,11 @@ export function MaterialResolution({
             Project version {d.project.project.version}; task{" "}
             {d.project.task.title} ({d.project.task.id}), owner{" "}
             {d.project.task.owner_id}, version {d.project.task.version};{" "}
-            {d.project.task.status}, {d.project.task.progress}% complete.
-            Proposed dates: Unscheduled. Current dates:{" "}
+            {d.project.task.status}, {d.project.task.progress}% complete.{" "}
+            {d.project.diamond && s.applied?.decision === "WithdrawForecast"
+              ? "Applied"
+              : "Proposed"}{" "}
+            dates: Unscheduled. Current dates:{" "}
             {d.project.task.start_date ?? "Unscheduled"} to{" "}
             {d.project.task.finish_date ?? "Unscheduled"}.
           </p>
@@ -418,11 +422,49 @@ export function MaterialResolution({
               <p>
                 Demand identifies this Project, not a task allocation. All seven
                 decisions explicitly receive A’s forecast consequence from the
-                applied allocation reduction. Proposed native ordering: A, B, C,
-                then D once; then only the selected Impact successor. Project
-                advances four times; Demand once. Five native receipts and the
-                returned outcome commit together.
+                applied allocation reduction.{" "}
+                {s.applied?.decision === "WithdrawForecast"
+                  ? "Applied"
+                  : "Proposed"}{" "}
+                native ordering: A, B, C, then D once; then only the selected
+                Impact successor. Project advances four times; Demand once. Five
+                native receipts and the returned outcome commit together.
               </p>
+              <p>
+                FS checks the next Monday–Friday date after predecessor finish;
+                SS checks predecessor start. These are native date warnings, not
+                resource availability or a configured lag. With withdrawn dates,
+                both paths retain their missing-date warnings.
+              </p>
+              <ul aria-label="Four native diamond constraints">
+                {(["b", "c", "d"] as const).flatMap((key) =>
+                  d.project.diamond![key].dependencies.map((edge) => {
+                    const selected = [
+                      ["A", d.project.task],
+                      ["B", d.project.diamond!.b],
+                      ["C", d.project.diamond!.c],
+                      ["D", d.project.diamond!.d],
+                    ] as const;
+                    const prior = selected.find(
+                      ([, task]) => task.id === edge.task_id,
+                    );
+                    const date =
+                      edge.kind === "FS"
+                        ? prior?.[1].finish_date
+                        : prior?.[1].start_date;
+                    return (
+                      <li key={`${key}:${edge.task_id}`}>
+                        {prior?.[0] ?? "Additional predecessor"} →{" "}
+                        {key.toUpperCase()} ({edge.kind}):{" "}
+                        {date
+                          ? `current native start bound ${edge.kind === "FS" ? nextWeekday(date) : date}`
+                          : "no current date bound; predecessor forecast unavailable"}
+                        .
+                      </li>
+                    );
+                  }),
+                )}
+              </ul>
               {(["b", "c", "d"] as const).map((key) => {
                 const task = d.project.diamond![key];
                 return (
@@ -431,9 +473,12 @@ export function MaterialResolution({
                     {task.owner_id}, version {task.version}; {task.status},{" "}
                     {task.progress}% complete. Current dates:{" "}
                     {task.start_date ?? "Unscheduled"} to{" "}
-                    {task.finish_date ?? "Unscheduled"}. Proposed dates:
-                    Unscheduled. Retain status, progress, owner, notes and every
-                    other native business field.{" "}
+                    {task.finish_date ?? "Unscheduled"}.{" "}
+                    {s.applied?.decision === "WithdrawForecast"
+                      ? "Applied"
+                      : "Proposed"}{" "}
+                    dates: Unscheduled. Retain status, progress, owner, notes
+                    and every other native business field.{" "}
                     {task.dependencies.map((edge) => (
                       <span key={edge.task_id}>
                         Predecessor {edge.task_id}: {edge.kind}.{" "}

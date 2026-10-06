@@ -79,6 +79,13 @@ test("ES07 diamond desktop/mobile receives seven effects and separately withdraw
       )
       .selectOption(f.diamond![key].id);
   await submit(page, "Propose exact forecast withdrawal", "material-propose");
+  const constraints = page.getByRole("list", {
+    name: "Four native diamond constraints",
+  });
+  await expect(constraints.getByRole("listitem")).toHaveCount(4);
+  for (const edge of ["A → B (FS)", "A → C (SS)", "B → D (FS)", "C → D (SS)"])
+    await expect(constraints).toContainText(edge);
+  await expect(constraints).toContainText("current native start bound");
   await evidence(page);
   await page
     .getByLabel("Material resolution review", { exact: true })
@@ -125,6 +132,11 @@ test("ES07 diamond desktop/mobile receives seven effects and separately withdraw
       name: /^Record (Demand|Project|Task|MaterialAction|Diamond task B|Diamond task C|Shared successor D) decision$/,
     }),
   ).toHaveCount(0);
+  await expect(constraints.getByRole("listitem")).toHaveCount(4);
+  for (const item of await constraints.getByRole("listitem").all())
+    await expect(item).toContainText(
+      "no current date bound; predecessor forecast unavailable",
+    );
   const s = (await f.current()).material_resolution;
   expect(s.applied!.native_receipts).toHaveLength(5);
   expect(s.dependencies!.unmet).toBe("3.624999");
