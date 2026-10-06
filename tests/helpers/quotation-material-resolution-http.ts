@@ -24,6 +24,7 @@ export {
 export async function materialHttpFixture(
   reviewed = false,
   dependency = false,
+  chain = false,
 ) {
   const project = projectInput(),
     task = { ...taskInput(), status: "Planned", progress: 0 };
@@ -36,6 +37,15 @@ export async function materialHttpFixture(
     progress: 0,
     dependencies: [{ task_id: task.id, kind: "FS" as const }],
   };
+  const chainEnd = {
+    ...taskInput(3),
+    title: "SYN downstream commissioning forecast",
+    start_date: "2027-12-13",
+    finish_date: "2027-12-17",
+    status: "Planned",
+    progress: 0,
+    dependencies: [{ task_id: successor.id, kind: "SS" as const }],
+  };
   const f = await shortfallHttpFixture(true, async (f, other) => {
     project.coordinator_id = other.owner_id;
     await json(f.owner, "projects", project);
@@ -44,6 +54,10 @@ export async function materialHttpFixture(
     if (dependency) {
       successor.owner_id = other.owner_id;
       await json(f.owner, `projects/${project.id}/tasks`, successor);
+    }
+    if (chain) {
+      chainEnd.owner_id = other.owner_id;
+      await json(f.owner, `projects/${project.id}/tasks`, chainEnd);
     }
     Object.assign(other.data, {
       origin_kind: "Project",
@@ -56,6 +70,7 @@ export async function materialHttpFixture(
     await json(f.owner, f.path + "/material-propose", {
       ...materialProposal(await f.current(), task.id),
       ...(dependency ? { successor_task_id: successor.id } : {}),
+      ...(chain ? { chain_end_task_id: chainEnd.id } : {}),
     });
     for (const r of (await f.current()).material_resolution.required)
       await json(
@@ -69,5 +84,11 @@ export async function materialHttpFixture(
       materialReview(await f.current()),
     );
   }
-  return { ...f, project, task, ...(dependency ? { successor } : {}) };
+  return {
+    ...f,
+    project,
+    task,
+    ...(dependency ? { successor } : {}),
+    ...(chain ? { chainEnd } : {}),
+  };
 }

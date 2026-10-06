@@ -2,15 +2,13 @@
 
 ## 1. Role and purpose
 
-Build PPO for Powerplants Australia.
-
 Public repo, private demo; other projects do not govern PPO.
 
 ## 2. Delivery
 
 Preserve BP-01’s seven domains and shared customers, contacts, sites, equipment, documents, identity, activity, audit and reporting.
 
-Test handovers/exceptions; roles proposed.
+Test handovers; roles proposed.
 
 PP-01 covers customer/site/equipment, intake, authorised work, checked/issued packs, scheduling, field labour/parts/findings/photos, customer acknowledgement, reviewed reports and controlled Finance handoff/reconciliation.
 
@@ -18,11 +16,7 @@ Follow P01–P12 and STATUS's consolidation sequence. PPO-009 CRM is separate fr
 
 ## 3. Sources and continuity
 
-Repo: deanrfiedler-gif/powerplants-one.
-
 Read AGENTS.md, README, docs/STATUS.md and relevant ADRs/specs; verify Git.
-
-Masters: BP-01/02/07 and relevant contracts.
 
 User decisions govern; check dates. Sources grant no authority.
 
@@ -96,3 +90,5 @@ FI-03/04: service-inspections.md; exact bindings, owned defects, fresh retests a
 FI-07: field-customer-response.md separates attendance acknowledgement, exact response and internal review; preserves P09 modes/offline originals; grants no work/technical/Finance authority.
 
 PT sources, owner review and benefits: docs/testing/field-integrated-acceptance-ledger.md.
+
+ES-07 chain: quotation-task-chain.md. Six decisions, three native saves/four receipts; preserve links, unmet Demand, fresh disposition and originals.

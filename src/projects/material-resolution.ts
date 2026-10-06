@@ -12,6 +12,7 @@ export async function forecastPosition(
   projectId: string,
   taskId: string,
   successorId?: string,
+  chainEndId?: string,
 ) {
   const project = await projectRow(c, p, projectId);
   const tasks = await tasksFor(c, p, projectId);
@@ -21,6 +22,11 @@ export async function forecastPosition(
     ? tasks.find((t) => t.id === successorId)
     : undefined;
   if (successorId && (!successor || successor.owner_unavailable))
+    throw unavailable();
+  const chainEnd = chainEndId
+    ? tasks.find((t) => t.id === chainEndId)
+    : undefined;
+  if (chainEndId && (!successor || !chainEnd || chainEnd.owner_unavailable))
     throw unavailable();
   const dependencies = (
     await c.query<{ task_id: string; predecessor_id: string; kind: string }>(
@@ -52,13 +58,21 @@ export async function forecastPosition(
     engineering,
     stages,
     ...(successor ? { successor } : {}),
+    ...(chainEnd ? { chainEnd } : {}),
   };
 }
 export function forecastHolds(
   position: Awaited<ReturnType<typeof forecastPosition>>,
 ) {
-  const { project, task, successor, dependencies, engineering, stages } =
-    position;
+  const {
+    project,
+    task,
+    successor,
+    chainEnd,
+    dependencies,
+    engineering,
+    stages,
+  } = position;
   const holds: string[] = [];
   if (project.lifecycle !== "Active")
     holds.push(
@@ -72,7 +86,45 @@ export function forecastHolds(
     holds.push("The task must have both forecast dates to withdraw.");
   if (!task.owner_id || task.external_owner_id)
     holds.push("An independently receiving internal task owner is required.");
-  if (successor) {
+  if (chainEnd) {
+    const selected = [task, successor!, chainEnd];
+    const ids = selected.map((t) => t.id);
+    const touching = dependencies.filter(
+      (d) => ids.includes(d.task_id) || ids.includes(d.predecessor_id),
+    );
+    if (
+      new Set(ids).size !== 3 ||
+      touching.length !== 2 ||
+      !touching.some(
+        (d) =>
+          d.predecessor_id === task.id &&
+          d.task_id === successor!.id &&
+          ["FS", "SS"].includes(d.kind),
+      ) ||
+      !touching.some(
+        (d) =>
+          d.predecessor_id === successor!.id &&
+          d.task_id === chainEnd.id &&
+          ["FS", "SS"].includes(d.kind),
+      )
+    )
+      holds.push(
+        "Select exactly A → B → C; additional, missing or reversed dependencies require separate Projects receiving.",
+      );
+    for (const next of selected.slice(1))
+      if (
+        next.status !== "Planned" ||
+        next.progress !== 0 ||
+        next.milestone ||
+        !next.start_date ||
+        !next.finish_date ||
+        !next.owner_id ||
+        next.external_owner_id
+      )
+        holds.push(
+          "Each chain successor must be an internally owned, dated, non-milestone, unstarted Planned task at zero progress.",
+        );
+  } else if (successor) {
     const touching = dependencies.filter(
       (d) =>
         [task.id, successor.id].includes(d.task_id) ||

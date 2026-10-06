@@ -185,7 +185,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // Populated upgrades preserve earlier evidence, histories, receipts and issued bytes.
   // 0068 adds an optional successor command/receiving role, no grants, seeds or identities.
   // Existing generic PPO table privileges suffice; migration ledger stays unavailable.
-  if (latestMigrationVersion !== 68) throw Error("Review the existing-demo upgrade for this release.");
+  // 0069 adds only optional third-task evidence and guards on the existing material table.
+  // Generic table privileges suffice; no grants, seeds, identity ALTER or ledger access.
+  // Both earlier payload families and populated native effects must survive this upgrade.
+  if (latestMigrationVersion !== 69) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

@@ -13,7 +13,8 @@ export const materialRoles = [
   "Task",
   "MaterialAction",
 ] as const;
-export type MaterialRole = (typeof materialRoles)[number] | "Successor";
+export type MaterialRole =
+  (typeof materialRoles)[number] | "Successor" | "ChainEnd";
 export function materialInput(
   id: string,
   action:
@@ -28,6 +29,7 @@ export function materialInput(
           "impact_id",
           "task_id",
           "successor_task_id",
+          "chain_end_task_id",
           "predecessor_id",
         ]
       : action === "MaterialApply"
@@ -53,6 +55,11 @@ export function materialInput(
       "expected_material_sequence",
       "Use the current material resolution sequence.",
     );
+  if (r.chain_end_task_id !== undefined && r.successor_task_id === undefined)
+    invalid(
+      "chain_end_task_id",
+      "Select the middle task before the third task.",
+    );
   return {
     ...envelope(id, r),
     action,
@@ -75,6 +82,9 @@ export function materialInput(
     ...(action === "MaterialPropose" && r.successor_task_id !== undefined
       ? { successor_task_id: uuid(r.successor_task_id, "successor_task_id") }
       : {}),
+    ...(action === "MaterialPropose" && r.chain_end_task_id !== undefined
+      ? { chain_end_task_id: uuid(r.chain_end_task_id, "chain_end_task_id") }
+      : {}),
     proposal_id: ["MaterialReceive", "MaterialReview"].includes(action)
       ? uuid(r.proposal_id, "proposal_id")
       : null,
@@ -89,7 +99,11 @@ export function materialInput(
         : null,
     role:
       action === "MaterialReceive"
-        ? choice(r.role, "role", [...materialRoles, "Successor"] as const)
+        ? choice(r.role, "role", [
+            ...materialRoles,
+            "Successor",
+            "ChainEnd",
+          ] as const)
         : null,
     decision:
       action === "MaterialReceive"

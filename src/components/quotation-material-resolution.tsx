@@ -18,6 +18,7 @@ export function MaterialResolution({
   const c = s.candidates.find((c) => c.impact.id === selected);
   const [task, setTask] = useState(c?.tasks[0]?.id ?? "");
   const [successor, setSuccessor] = useState("");
+  const [chainEnd, setChainEnd] = useState("");
   const [decisions, setDecisions] = useState<Record<string, string>>({});
   const [review, setReview] = useState("Hold");
   const [dirty, setDirty] = useState(false);
@@ -38,9 +39,10 @@ export function MaterialResolution({
       <h3>Resolve the affected Project forecast</h3>
       <p>
         Withdraw both forecast dates from an unstarted Planned task and, when
-        explicitly selected, its one directly dependent successor. Each affected
-        owner receives the complete exact proposal separately. Receipt and
-        allocation acceptance do not authorise this action.
+        explicitly selected, its directly dependent successor and a third task
+        dependent on that successor. Each affected owner receives the complete
+        exact proposal separately. Receipt and allocation acceptance do not
+        authorise this action.
       </p>
       <p>
         Project dates and the selected Demand version change. The exact Impact
@@ -74,6 +76,7 @@ export function MaterialResolution({
             onChange={(v) => {
               setSelected(v);
               setSuccessor("");
+              setChainEnd("");
               setTask(
                 s.candidates.find((x) => x.impact.id === v)?.tasks[0]?.id ?? "",
               );
@@ -100,6 +103,7 @@ export function MaterialResolution({
                 onChange={(v) => {
                   setTask(v);
                   setSuccessor("");
+                  setChainEnd("");
                   setDirty(true);
                 }}
               />
@@ -117,9 +121,34 @@ export function MaterialResolution({
                   }))}
                 onChange={(v) => {
                   setSuccessor(v);
+                  setChainEnd("");
                   setDirty(true);
                 }}
               />
+              {successor && (
+                <SelectField
+                  name="material-chain-end"
+                  label="Third task dependent on the selected successor"
+                  value={chainEnd}
+                  disabled={blocked}
+                  empty="No third task selected; one relationship only"
+                  options={c.tasks
+                    .filter(
+                      (x) =>
+                        x.id !== task &&
+                        x.id !== successor &&
+                        x.dependencies.some((d) => d.task_id === successor),
+                    )
+                    .map((x) => ({
+                      id: x.id,
+                      display_name: `${x.title} · ${x.dependencies.find((d) => d.task_id === successor)?.kind} from successor · ${x.start_date ?? "Unscheduled"} to ${x.finish_date ?? "Unscheduled"}`,
+                    }))}
+                  onChange={(v) => {
+                    setChainEnd(v);
+                    setDirty(true);
+                  }}
+                />
+              )}
               <Button
                 disabled={disabled || !owned || !task}
                 onClick={() =>
@@ -130,6 +159,7 @@ export function MaterialResolution({
                     impact_id: c.impact.id,
                     task_id: task,
                     ...(successor ? { successor_task_id: successor } : {}),
+                    ...(chainEnd ? { chain_end_task_id: chainEnd } : {}),
                     predecessor_id: proposal?.id ?? null,
                   })
                 }
@@ -186,10 +216,12 @@ export function MaterialResolution({
               ))}
           </ul>
           <p>
-            Project version {d.project.project.version}; task version{" "}
-            {d.project.task.version}; {d.project.task.status},{" "}
-            {d.project.task.progress}% complete. Proposed dates: Unscheduled.
-            Current dates: {d.project.task.start_date ?? "Unscheduled"} to{" "}
+            Project version {d.project.project.version}; task{" "}
+            {d.project.task.title} ({d.project.task.id}), owner{" "}
+            {d.project.task.owner_id}, version {d.project.task.version};{" "}
+            {d.project.task.status}, {d.project.task.progress}% complete.
+            Proposed dates: Unscheduled. Current dates:{" "}
+            {d.project.task.start_date ?? "Unscheduled"} to{" "}
             {d.project.task.finish_date ?? "Unscheduled"}.
           </p>
           <ButtonLink href={`/projects/${d.project.project.id}`}>
@@ -209,9 +241,28 @@ export function MaterialResolution({
                   (x) => x.task_id === d.project.task.id,
                 )?.kind
               }{" "}
-              link from the affected task remains. Both task versions advance
-              once; Project advances twice. Missing dates continue to prevent
-              checking the dependency dates.
+              link from the affected task remains. Each selected task advances
+              once; Project advances{" "}
+              {d.project.chainEnd ? "three times" : "twice"}. Missing dates
+              continue to prevent checking the dependency dates.
+            </p>
+          )}
+          {d.project.chainEnd && (
+            <p>
+              Third task {d.project.chainEnd.title} ({d.project.chainEnd.id}),
+              version {d.project.chainEnd.version}, owner{" "}
+              {d.project.chainEnd.owner_id}; {d.project.chainEnd.status},{" "}
+              {d.project.chainEnd.progress}% complete. Current dates:{" "}
+              {d.project.chainEnd.start_date ?? "Unscheduled"} to{" "}
+              {d.project.chainEnd.finish_date ?? "Unscheduled"}. Proposed dates:
+              Unscheduled. The{" "}
+              {
+                d.project.chainEnd.dependencies.find(
+                  (x) => x.task_id === d.project.successor?.id,
+                )?.kind
+              }{" "}
+              link from the successor remains. All three saves and the exact
+              Impact successor apply together; no partial completion.
             </p>
           )}
           <details>
@@ -227,6 +278,7 @@ export function MaterialResolution({
                   current: d,
                   project_command: proposal.project_command,
                   successor_command: proposal.successor_command,
+                  chain_end_command: proposal.chain_end_command,
                   impact_command: proposal.impact_command,
                 },
                 null,
@@ -247,15 +299,15 @@ export function MaterialResolution({
           {s.required.map((r) => (
             <div key={r.role} className="release-panel">
               <p>
-                {r.role} · record {r.record_id} · owner{" "}
-                {r.owner_id ?? "Unavailable"}.{" "}
+                {r.role === "ChainEnd" ? "Third task" : r.role} · record{" "}
+                {r.record_id} · owner {r.owner_id ?? "Unavailable"}.{" "}
                 <Status value={r.decision?.decision ?? "Not received"} />
               </p>
               {!s.applied && (
                 <>
                   <SelectField
                     name={`material-${r.role}-decision`}
-                    label={`${r.role} receiving decision`}
+                    label={`${r.role === "ChainEnd" ? "Third task" : r.role} receiving decision`}
                     value={decisions[r.role] ?? "Held"}
                     disabled={blocked}
                     options={["Accepted", "Returned", "Held"].map((id) => ({
@@ -285,7 +337,8 @@ export function MaterialResolution({
                       })
                     }
                   >
-                    Record {r.role} decision
+                    Record {r.role === "ChainEnd" ? "Third task" : r.role}{" "}
+                    decision
                   </Button>
                 </>
               )}
