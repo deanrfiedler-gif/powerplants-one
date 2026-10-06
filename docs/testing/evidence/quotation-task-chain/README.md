@@ -41,3 +41,5 @@ The assistant inspected compiled b2f1eac captures at [1440px](captures/completed
 ## Final candidate strengthening
 
 Three focused local PostgreSQL cases passed in 235.1 seconds: independent C-owner receiving and both populated 0068 upgrades, now replaying the original proposal as well as the original application after migration. Six focused units passed, including exact isolated/pair proposal operation hashes captured by executing unchanged main 4918948. TypeScript and the final documentation checks remain separate from those focused proofs. No assertions, deadlines, retries, proof groups or aggregates were weakened.
+
+Final proof review separates complete rollback snapshots from legacy upgrade normalisation. Rollback comparisons include the third native command. Only pre-0069 snapshots omit the new column, and the compatibility helper asserts it is null before doing so; new chain values can never be silently excluded. Fresh complete CI is required on the resulting head.

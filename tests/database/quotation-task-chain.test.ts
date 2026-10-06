@@ -296,7 +296,7 @@ for (const [kind, kind2] of [
 const rows = async (table: string) =>
   (
     await database().query(
-      `SELECT to_jsonb(t)-'chain_end_command' value FROM ppo.${table} t ORDER BY to_jsonb(t)::text`,
+      `SELECT to_jsonb(t) value FROM ppo.${table} t ORDER BY to_jsonb(t)::text`,
     )
   ).rows;
 for (const failure of ["ThirdTask", "Impact", "Outcome"] as const)
@@ -548,6 +548,17 @@ test("third task cannot be claimed by another accepted target; returned referral
   );
   assert.ok((await currentFollowup(first)).material_resolution.holds.length);
 });
+// Only legacy upgrade rows may omit the newly introduced nullable column.
+// Rollback snapshots above retain every field, including the third command.
+const legacyRows = async (table: string) =>
+  (await rows(table)).map(({ value }) => {
+    const old = { ...value };
+    if (Object.hasOwn(old, "chain_end_command")) {
+      assert.equal(old.chain_end_command, null);
+      delete old.chain_end_command;
+    }
+    return { value: old };
+  });
 for (const paired of [false, true])
   test(`populated 0068 upgrade preserves ${paired ? "two-task" : "isolated-task"} originals, every old row and output byte`, async () => {
     await database().query(
@@ -605,7 +616,7 @@ for (const paired of [false, true])
         "SELECT tablename FROM pg_tables WHERE schemaname='ppo' ORDER BY tablename",
       )
     ).rows.map((r) => r.tablename as string);
-    const before = await Promise.all(tables.map(rows));
+    const before = await Promise.all(tables.map(legacyRows));
     const ledger = (
       await database().query(
         "SELECT * FROM public.ppo_migrations ORDER BY version",
@@ -613,7 +624,7 @@ for (const paired of [false, true])
     ).rows;
     await migrate();
     await seed();
-    assert.deepEqual(await Promise.all(tables.map(rows)), before);
+    assert.deepEqual(await Promise.all(tables.map(legacyRows)), before);
     const now = (
       await database().query(
         "SELECT * FROM public.ppo_migrations ORDER BY version",
@@ -648,7 +659,7 @@ for (const paired of [false, true])
     }
     await migrate();
     await seed();
-    assert.deepEqual(await Promise.all(tables.map(rows)), before);
+    assert.deepEqual(await Promise.all(tables.map(legacyRows)), before);
   });
 test("Three-task chain accepts the native direction; reversed and newly added dependencies hold unexecuted receiving", async () => {
   const f = await fixture("SS");
