@@ -1,0 +1,22 @@
+{
+  "failed_head": "6d9f817a0754ae590c714a51b54fc6d8bf4d86b5",
+  "job_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37414164462/job/112108978135",
+  "suite": "tests/database/policy-persistence.test.ts",
+  "case": "populated 0050 upgrade preserves every old row/hash, registers 0053\u20130068 with reserved gaps and exact authority/instrument additions",
+  "database_shard_1": {
+    "tests": 470,
+    "passed": 469,
+    "failed": 1
+  },
+  "database_shard_2": {
+    "tests": 332,
+    "passed": 332,
+    "failed": 0
+  },
+  "cause": "Preserved-ledger assertion excluded fifteen additions, leaving newly added version 53 in the preserved prefix after sixteen migrations 53 through 68.",
+  "repair": "Exclude all sixteen added rows; retain deep equality of every old row/hash/timestamp and the exact complete version list.",
+  "runtime_code_changed": false,
+  "assertions_weakened": false,
+  "retries_added": false,
+  "deadlines_changed": false
+}
