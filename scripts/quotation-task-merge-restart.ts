@@ -20,7 +20,7 @@ import {
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
 const directory =
-  process.env.PPO_BRANCH_PROOF_DIRECTORY ??
+  process.env.PPO_MERGE_PROOF_DIRECTORY ??
   "verification-evidence/quotation-task-merge-restart";
 const checkpoint = path.join(directory, "checkpoint.json");
 const sha = (v: Uint8Array) => createHash("sha256").update(v).digest("hex");

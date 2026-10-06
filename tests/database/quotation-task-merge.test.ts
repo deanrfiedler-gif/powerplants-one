@@ -1,3 +1,5 @@
+import { materialDependencies } from "../../src/estimating/supply-followup/material-context";
+import { conversionReadClient } from "../../src/estimating/conversion/source-authority";
 import { createEngineeringRequest } from "../../src/engineering/service";
 import { engineeringInput } from "../helpers/engineering";
 import { activityCommand } from "../../src/activities/activities";
@@ -63,7 +65,7 @@ async function fixture(
   const f = await materialFixture();
   const b = {
     ...taskInput(2),
-    title: "SYN dependent installation",
+    title: "SYN retained independent predecessor",
     start_date: "2027-12-01",
     finish_date: "2027-12-10",
     owner_id: f.owner.actor_id,
@@ -995,6 +997,16 @@ const legacyRows = async (table: string) =>
     }
     return { value: old };
   });
+// Retain every table/row while bounding pool acquisition: hundreds of queued
+// acquires can expire before a query begins on a busy Windows test host.
+async function legacySnapshot(tables: string[]) {
+  const values: Awaited<ReturnType<typeof legacyRows>>[] = [];
+  for (let i = 0; i < tables.length; i += 4)
+    values.push(
+      ...(await Promise.all(tables.slice(i, i + 4).map(legacyRows))),
+    );
+  return values;
+}
 for (const topology of [
   "isolated-task",
   "two-task",
@@ -1074,7 +1086,7 @@ for (const topology of [
         "SELECT tablename FROM pg_tables WHERE schemaname='ppo' ORDER BY tablename",
       )
     ).rows.map((r) => r.tablename as string);
-    const before = await Promise.all(tables.map(legacyRows));
+    const before = await legacySnapshot(tables);
     const ledger = (
       await database().query(
         "SELECT * FROM public.ppo_migrations ORDER BY version",
@@ -1082,7 +1094,7 @@ for (const topology of [
     ).rows;
     await migrate();
     await seed();
-    assert.deepEqual(await Promise.all(tables.map(legacyRows)), before);
+    assert.deepEqual(await legacySnapshot(tables), before);
     const now = (
       await database().query(
         "SELECT * FROM public.ppo_migrations ORDER BY version",
@@ -1117,7 +1129,7 @@ for (const topology of [
     }
     await migrate();
     await seed();
-    assert.deepEqual(await Promise.all(tables.map(legacyRows)), before);
+    assert.deepEqual(await legacySnapshot(tables), before);
   });
 
 test("B's native position invalidates review even though the action never edits B; unrelated Project changes do not", async () => {
@@ -1286,4 +1298,106 @@ test("retained B owner receives independently; corrected Held and Returned decis
   );
   await assert.rejects(readOperation(owner, decision.operation_id));
   assert.ok((await currentFollowup(f)).material_resolution.holds.length);
+});
+
+test("B validity comes from native dates and warnings, never its label or receiving note", async () => {
+  const f = await fixture();
+  const schedule = await readSchedule(f.owner, f.project.id);
+  await saveTask(f.owner, f.project.id, {
+    ...f.b,
+    operation_id: randomUUID(),
+    expected_version: schedule.project.version,
+    title: "SYN valid predecessor label is not evidence",
+    start_date: "2027-12-11",
+    finish_date: "2027-12-13",
+  });
+  await executeMaterial(f.owner, f.id, "MaterialPropose", {
+    ...materialProposal(await currentFollowup(f), f.task.id),
+    merge_predecessor_task_id: f.b.id,
+    merge_successor_task_id: f.c.id,
+  });
+  const state = (await currentFollowup(f)).material_resolution;
+  assert.ok(state.dependencies!.project.retainedIssues!.length > 0);
+  assert.ok(
+    state.native_holds.some((x) =>
+      x.startsWith("B must have a valid native forecast"),
+    ),
+  );
+  await receiveMaterial(f);
+  await assert.rejects(
+    executeMaterial(
+      f.owner,
+      f.id,
+      "MaterialReview",
+      materialReview(await currentFollowup(f)),
+    ),
+    conflict,
+  );
+  assert.equal(state.can_apply, false);
+});
+
+test("restricted runtime prepared merge reads expose current retained B only with current authority and no ledger privilege", async () => {
+  const f = await fixture();
+  const proposal = (await currentFollowup(f)).material_resolution.proposal!;
+  const client = await database().connect();
+  const role = `ppo_merge_read_${randomUUID().replaceAll("-", "")}`;
+  try {
+    await client.query("BEGIN");
+    await client.query(
+      "SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE",
+      [f.owner.workspace_id],
+    );
+    await client.query(`CREATE ROLE ${role} NOLOGIN`);
+    await client.query(`GRANT USAGE ON SCHEMA ppo TO ${role}`);
+    await client.query(`GRANT SELECT ON ALL TABLES IN SCHEMA ppo TO ${role}`);
+    await client.query(`SET LOCAL ROLE ${role}`);
+    const read = await conversionReadClient(client, f.owner);
+    const current = () =>
+      materialDependencies(
+        read,
+        f.owner,
+        proposal.basis,
+        proposal.dependencies.allocation_outcome,
+        proposal.demand_id,
+        proposal.impact_id,
+        f.task.id,
+        f.owner.actor_id,
+        undefined,
+        undefined,
+        undefined,
+        f.b.id,
+        f.c.id,
+      );
+    const position = await current();
+    assert.deepEqual(
+      position.project.retainedPredecessor,
+      proposal.dependencies.project.retainedPredecessor,
+    );
+    assert.equal(
+      (
+        await client.query(
+          "SELECT has_table_privilege(current_user,'public.ppo_migrations','SELECT') allowed",
+        )
+      ).rows[0].allowed,
+      false,
+    );
+    await client.query("RESET ROLE");
+    await client.query(
+      "UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE workspace_id=$1 AND user_id=$2 AND capability='project.read'",
+      [f.owner.workspace_id, f.owner.actor_id],
+    );
+    await client.query(`SET LOCAL ROLE ${role}`);
+    await assert.rejects(current);
+    assert.equal(
+      (
+        await client.query(
+          "SELECT has_table_privilege(current_user,'public.ppo_migrations','SELECT') allowed",
+        )
+      ).rows[0].allowed,
+      false,
+    );
+  } finally {
+    await client.query("ROLLBACK");
+    client.release();
+  }
 });
