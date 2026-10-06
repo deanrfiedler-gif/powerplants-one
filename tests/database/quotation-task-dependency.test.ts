@@ -134,7 +134,7 @@ test("FS pair requires five exact decisions and atomically preserves dependency 
   assert.equal(e.after!.unmet, "3.624999");
   for (const task of after.tasks) {
     const old = before.tasks.find((v) => v.id === task.id)!;
-    if (![f.task.id, f.b.id].includes(task.id)) {
+    if (task.id !== f.task.id && task.id !== f.b.id) {
       assert.deepEqual(task, old);
       continue;
     }
