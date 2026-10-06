@@ -69,6 +69,10 @@ export const currentFollowup = async (f: {
 export async function allocatedFixture(
   shared = true,
   supplyKind: "Stock" | "Shipment" = "Stock",
+  prepareOther?: (
+    f: Awaited<ReturnType<typeof completedFixture>>,
+    other: ReturnType<typeof supplyInput>,
+  ) => Promise<void>,
 ) {
   const f = await completedFixture(),
     t = f.d.dispositions[0],
@@ -113,6 +117,7 @@ export async function allocatedFixture(
     site_id: "70000000-0000-4000-8000-000000000002",
     owner_id: f.owner.actor_id,
   });
+  await prepareOther?.(f, other);
   if (shared) await saveRecord(f.owner, other);
   const cmds = [];
   for (const [demand, amount] of [

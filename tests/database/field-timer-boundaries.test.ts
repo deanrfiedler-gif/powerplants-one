@@ -242,7 +242,7 @@ test("FI01 additive 0049 upgrade retains existing time, arrivals, receipts and r
   );
   assert.deepEqual(
     migrationsAfter.slice(migrationsBefore.length).map((row) => row.version),
-    [50, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66],
+    [50, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67],
   );
   await seed();
   await migrate();

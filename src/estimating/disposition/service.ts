@@ -37,7 +37,7 @@ async function execute(p: Principal, id: string, input: Input) {
       return { source, checked };
     },
     async (c, authorised) => {
-      const read = conversionReadClient(c, p);
+      const read = await conversionReadClient(c, p);
       const d = await conversionContext(read, p, id, authorised.source),
         t = await dispositionTarget(
           read,

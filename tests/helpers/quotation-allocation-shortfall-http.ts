@@ -28,8 +28,8 @@ export {
   shortfallReceiving,
   shortfallReview,
 } from "./quotation-allocation-shortfall";
-export async function shortfallHttpFixture(reviewed = false) {
-  const f = await allocatedHttpFixture("Shipment");
+export async function shortfallHttpFixture(reviewed = false, prepareOther?:Parameters<typeof allocatedHttpFixture>[1]) {
+  const f = await allocatedHttpFixture("Shipment",prepareOther);
   const current = async () =>
     (await conversionDetail(f.owner, f.id)).followups[0];
   await json(f.owner, f.path + "/supply-refer", referral(await current()));

@@ -1,5 +1,7 @@
 # Owned shared Shipment shortfall resolution
 
+**Integration reconciliation, 6 October 2026:** #347 merged as `be2cf5cc7f1b950296785ff64dc4de2d00ec5680`. Its 34 final-head checks passed. Post-merge proof jobs passed, but two aggregate jobs were cancelled without a runner; the separately observed workflows therefore failed. The [material-resolution ledger](../testing/evidence/quotation-material-resolution/README.md) retains exact check metadata and the next bounded native action. Earlier pre-merge wording and execution evidence below retain their historical meaning. Deployment remains separate.
+
 <!-- versioning: git; committed history is authoritative -->
 
 Owner: Dean Fiedler. 5 October 2026. SYN-ES07-06, authorised bounded synthetic implementation; independent review and owner acceptance pending. ES-07 / SC-01/03/04/09 / EST-03/08/09 / SCM-01/05/06/08 / IF-03/13/14 / AT-05/26/29. Parent IDs and issued references remain unchanged.

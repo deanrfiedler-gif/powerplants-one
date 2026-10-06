@@ -1386,7 +1386,7 @@
       "title": "Receiving, one-off resolution and controlled conversion",
       "kind": "scope",
       "module": "ES",
-      "summary": "Exact receiving and completed-target exception disposition with immutable per-target decisions and real native Forecast quantity revision. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds.",
+      "summary": "Exact receiving and completed-target exception disposition with immutable per-target decisions and real native Forecast quantity revision. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain.",
       "path": "/estimating/quotes/[id]/conversion",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -1424,11 +1424,17 @@
         "src/estimating/supply-followup/shortfall-service.ts",
         "src/supply/reductions.ts",
         "docs/decisions/quotation-allocation-shortfall.md",
-        "src/components/quotation-allocation-shortfall.tsx"
+        "src/components/quotation-allocation-shortfall.tsx",
+        "src/components/quotation-material-resolution.tsx",
+        "src/estimating/supply-followup/material-context.ts",
+        "src/estimating/supply-followup/material-service.ts",
+        "src/projects/material-resolution.ts",
+        "docs/contracts/quotation-material-resolution.md",
+        "docs/decisions/quotation-material-resolution.md"
       ],
       "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
       "visual_status": "Needs review",
-      "functional_status": "See quotation-allocation-shortfall execution ledger; source, runtime proof and acceptance remain separate",
+      "functional_status": "Prior evidence retained. SYN-ES07-07 local database, HTTP, compiled and actual restart checkpoints are recorded in docs/testing/evidence/quotation-material-resolution/README.md; final-head assurance is separate in the contribution PR. Visual/owner acceptance remains pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -1907,7 +1913,7 @@
       "title": "Baseline, forecast and dependency review",
       "kind": "scope",
       "module": "PJ",
-      "summary": "Extend the existing Gantt with controlled baselines, dependencies, calendars, actuals and forecast review.",
+      "summary": "Extend the existing Gantt with controlled baselines, dependencies, calendars, actuals and forecast review. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain.",
       "path": "/projects/programme",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -1918,10 +1924,17 @@
       "image_paths": [
         "docs/blueprints/projects-visuals/project-detail-desktop.png"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "src/components/quotation-material-resolution.tsx",
+        "src/estimating/supply-followup/material-context.ts",
+        "src/estimating/supply-followup/material-service.ts",
+        "src/projects/material-resolution.ts",
+        "docs/contracts/quotation-material-resolution.md",
+        "docs/decisions/quotation-material-resolution.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Prior evidence retained. SYN-ES07-07 local database, HTTP, compiled and actual restart checkpoints are recorded in docs/testing/evidence/quotation-material-resolution/README.md; final-head assurance is separate in the contribution PR. Visual/owner acceptance remains pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -3516,7 +3529,7 @@
       "title": "Material change-impact review",
       "kind": "scope",
       "module": "SC",
-      "summary": "Review before and after evidence through the owning module. Bookings and issued packs remain unchanged. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds.",
+      "summary": "Review before and after evidence through the owning module. Bookings and issued packs remain unchanged. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain.",
       "path": "/supply/changes",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -3553,11 +3566,17 @@
         "src/estimating/supply-followup/shortfall-service.ts",
         "src/supply/reductions.ts",
         "docs/decisions/quotation-allocation-shortfall.md",
-        "src/components/quotation-allocation-shortfall.tsx"
+        "src/components/quotation-allocation-shortfall.tsx",
+        "src/components/quotation-material-resolution.tsx",
+        "src/estimating/supply-followup/material-context.ts",
+        "src/estimating/supply-followup/material-service.ts",
+        "src/projects/material-resolution.ts",
+        "docs/contracts/quotation-material-resolution.md",
+        "docs/decisions/quotation-material-resolution.md"
       ],
       "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
       "visual_status": "Needs review",
-      "functional_status": "See quotation-allocation-shortfall execution ledger; source, runtime proof and acceptance remain separate",
+      "functional_status": "Prior evidence retained. SYN-ES07-07 local database, HTTP, compiled and actual restart checkpoints are recorded in docs/testing/evidence/quotation-material-resolution/README.md; final-head assurance is separate in the contribution PR. Visual/owner acceptance remains pending.",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6274,7 +6293,7 @@
       "title": "Project detail & Gantt",
       "kind": "route",
       "module": "PJ",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain.",
       "path": "/projects/[id]",
       "source_paths": [
         "src/app/(business)/projects/[id]/page.tsx"
@@ -6285,10 +6304,17 @@
       "image_paths": [
         "docs/blueprints/projects-visuals/project-detail-desktop.png"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "src/components/quotation-material-resolution.tsx",
+        "src/estimating/supply-followup/material-context.ts",
+        "src/estimating/supply-followup/material-service.ts",
+        "src/projects/material-resolution.ts",
+        "docs/contracts/quotation-material-resolution.md",
+        "docs/decisions/quotation-material-resolution.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Prior evidence retained. SYN-ES07-07 local database, HTTP, compiled and actual restart checkpoints are recorded in docs/testing/evidence/quotation-material-resolution/README.md; final-head assurance is separate in the contribution PR. Visual/owner acceptance remains pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -10590,7 +10616,7 @@
       "title": "supply / changes",
       "kind": "route",
       "module": "Unassigned",
-      "summary": "Review before and after evidence through the owning module. Bookings and issued packs remain unchanged. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds.",
+      "summary": "Review before and after evidence through the owning module. Bookings and issued packs remain unchanged. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain.",
       "path": "/supply/changes",
       "source_paths": [
         "src/app/(business)/supply/changes/page.tsx",
@@ -10626,11 +10652,17 @@
         "src/estimating/supply-followup/shortfall-service.ts",
         "src/supply/reductions.ts",
         "docs/decisions/quotation-allocation-shortfall.md",
-        "src/components/quotation-allocation-shortfall.tsx"
+        "src/components/quotation-allocation-shortfall.tsx",
+        "src/components/quotation-material-resolution.tsx",
+        "src/estimating/supply-followup/material-context.ts",
+        "src/estimating/supply-followup/material-service.ts",
+        "src/projects/material-resolution.ts",
+        "docs/contracts/quotation-material-resolution.md",
+        "docs/decisions/quotation-material-resolution.md"
       ],
       "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
       "visual_status": "Needs review",
-      "functional_status": "See quotation-allocation-shortfall execution ledger; source, runtime proof and acceptance remain separate",
+      "functional_status": "Prior evidence retained. SYN-ES07-07 local database, HTTP, compiled and actual restart checkpoints are recorded in docs/testing/evidence/quotation-material-resolution/README.md; final-head assurance is separate in the contribution PR. Visual/owner acceptance remains pending.",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -11454,7 +11486,7 @@
       "title": "Receiving, one-off resolution and controlled conversion",
       "kind": "route",
       "module": "ES",
-      "summary": "Exact receiving and completed-target exception disposition with immutable per-target decisions and real native Forecast quantity revision. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds.",
+      "summary": "Exact receiving and completed-target exception disposition with immutable per-target decisions and real native Forecast quantity revision. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain.",
       "path": "/estimating/quotes/[id]/conversion",
       "source_paths": [
         "src/app/(business)/estimating/quotes/[id]/conversion/page.tsx"
@@ -11491,11 +11523,17 @@
         "src/estimating/supply-followup/shortfall-service.ts",
         "src/supply/reductions.ts",
         "docs/decisions/quotation-allocation-shortfall.md",
-        "src/components/quotation-allocation-shortfall.tsx"
+        "src/components/quotation-allocation-shortfall.tsx",
+        "src/components/quotation-material-resolution.tsx",
+        "src/estimating/supply-followup/material-context.ts",
+        "src/estimating/supply-followup/material-service.ts",
+        "src/projects/material-resolution.ts",
+        "docs/contracts/quotation-material-resolution.md",
+        "docs/decisions/quotation-material-resolution.md"
       ],
       "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
       "visual_status": "Needs review",
-      "functional_status": "See quotation-allocation-shortfall execution ledger; source, runtime proof and acceptance remain separate",
+      "functional_status": "Prior evidence retained. SYN-ES07-07 local database, HTTP, compiled and actual restart checkpoints are recorded in docs/testing/evidence/quotation-material-resolution/README.md; final-head assurance is separate in the contribution PR. Visual/owner acceptance remains pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

@@ -41,3 +41,11 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 The draft User Guide `guide.page.projects.id` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## Owned material resolution — SYN-ES07-07
+
+Retain ES-07, SC-09 and PJ-03 and their r20 evidence/review, receiving-register and native Project detail patterns. MaterialResolution within QuotationSupplyFollowups reuses Field, SelectField, Button, Status, source disclosures, dirty comparison and the actor-bound journal. Incoming: original quotation/conversion, received Receipt correction, completed allocation reduction, exact Requested Impact/MaterialAction and current Project task. Outgoing: four separate receiving decisions, immutable review, native forecast withdrawal and exact Impact successor with receipts, then fresh readiness/ES-07 disposition. Activity completion is separate.
+
+Desktop compares quantities, unmet Demand, independent impacts and downstream versions before effects. Mobile 390/320 px stacks labels, wraps identifiers and keeps recovery before actions, with shared tokens, 44px targets and visible focus. Show Date needed explicitly. Completed receiving is retained history without renewed controls; continuing holds remain separate. Unknown originals block replacement through reload. Current authority precedes all linked snapshots/counts.
+
+Exact retained references remain the quoting r01 and Supply readiness r03 HTML; Projects uses ppo-projects-gantt-content-r10.html. Native material mockup images are missing. This bounded forecast-withdrawal panel is the declared adaptation; no general dispatcher or rescheduling policy is adopted. Host fixtures: tests/browser/quotation-material-resolution.spec.ts and its database/HTTP siblings. The material-resolution ledger records actual checks/captures. Paired visual, owner, physical-device and screen-reader review remain pending; no fingerprint is promoted.

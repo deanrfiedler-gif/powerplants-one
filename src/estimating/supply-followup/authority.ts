@@ -1,3 +1,8 @@
+import {
+  materialAvailable,
+  materialOriginalAuthority,
+  materialNativeAuthority,
+} from "./material-context";
 import type { Principal } from "../../platform/identity";
 import type { QueryClient } from "../../platform/permissions";
 import { AppError, unavailable } from "../../platform/errors";
@@ -115,6 +120,16 @@ export async function followupReceiptAuthority(
     )
   ).rows[0];
   if (!e) {
+    if (
+      (await materialAvailable(c)) &&
+      (
+        await c.query(
+          "SELECT 1 FROM ppo.quote_material_events WHERE workspace_id=$1 AND revision_id=$2 AND created_by=$3 AND operation_id=$4",
+          [p.workspace_id, id, p.actor_id, operation],
+        )
+      ).rowCount
+    )
+      return materialOriginalAuthority(c, p, id, operation);
     const { receiptOriginalAuthority, receiptAvailable } =
       await import("./receipt-context");
     if (await receiptAvailable(c)) {
@@ -158,6 +173,7 @@ export async function nativeFollowupReceiptAuthority(
   target: string,
   operation: string,
 ) {
+  await materialNativeAuthority(c, p, target, operation);
   if (!(await followupAvailable(c))) return;
   const e = (
     await c.query<FollowupEvent>(

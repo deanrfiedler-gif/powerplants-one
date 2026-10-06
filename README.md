@@ -1,6 +1,6 @@
 # Powerplants One
 
-Current ES-07 continuation: [independently received shared Shipment shortfall reductions](docs/delivery/quotation-allocation-shortfall-handover.md), extending [owned Supply follow-up](docs/contracts/quotation-supply-followup.md). Receipt correction merged in #346; [PR #347](https://github.com/deanrfiedler-gif/powerplants-one/pull/347) implements the bounded allocation action. Source, final-head validation, owner acceptance and deployment are distinct.
+Current ES-07 continuation: [owned downstream material resolution](docs/delivery/quotation-material-resolution-handover.md) after [received allocation reductions](docs/delivery/quotation-allocation-shortfall-handover.md). #347 is merged. The bounded Projects action withdraws an unstarted task forecast after four independent receiving decisions, retaining unmet Demand and other holds. Validation, visual/owner acceptance and deployment remain separate.
 
 
 Personal prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance. The repository is public; the application, data and hosted demo remain private and synthetic.

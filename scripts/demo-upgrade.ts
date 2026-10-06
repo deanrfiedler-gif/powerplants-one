@@ -180,7 +180,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // 0066 adds independently received allocation reductions and immediate statement conservation.
   // Reviewed hosted upgrade: no new seed/grant/user; generic runtime privileges include the new table.
   // Native receipts and earlier evidence remain intact on populated upgrades.
-  if (latestMigrationVersion !== 66) throw Error("Review the existing-demo upgrade for this release.");
+  // 0067 adds material receiving/outcomes and guards two existing native commands.
+  // No seeds, grants, users, identities or adapters change; generic runtime privileges apply.
+  // Populated upgrades preserve earlier evidence, histories, receipts and issued bytes.
+  if (latestMigrationVersion !== 67) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({
