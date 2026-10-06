@@ -571,7 +571,12 @@ for (const paired of [false, true])
         ...materialProposal(await currentFollowup(f), f.task.id),
         ...(paired ? { successor_task_id: b.id } : {}),
       };
-      await executeMaterial(f.owner, f.id, "MaterialPropose", proposal);
+      const proposalOriginal = await executeMaterial(
+        f.owner,
+        f.id,
+        "MaterialPropose",
+        proposal,
+      );
       await receiveMaterial(f);
       await executeMaterial(
         f.owner,
@@ -587,6 +592,8 @@ for (const paired of [false, true])
         cmd,
       );
       originals.push({
+        proposal,
+        proposalOriginal,
         f,
         cmd,
         original,
@@ -620,7 +627,19 @@ for (const paired of [false, true])
       now.filter((r) => r.version > 68).map((r) => r.version),
       [69],
     );
-    for (const { f, cmd, original, bytes } of originals) {
+    for (const {
+      f,
+      cmd,
+      original,
+      bytes,
+      proposal,
+      proposalOriginal,
+    } of originals) {
+      assert.deepEqual(
+        (await executeMaterial(f.owner, f.id, "MaterialPropose", proposal))
+          .receipt,
+        proposalOriginal.receipt,
+      );
       assert.deepEqual(await draftBytes(f.owner, f.id), bytes);
       assert.deepEqual(
         (await executeMaterial(f.owner, f.id, "MaterialApply", cmd)).receipt,

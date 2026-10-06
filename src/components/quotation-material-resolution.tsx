@@ -39,10 +39,10 @@ export function MaterialResolution({
       <h3>Resolve the affected Project forecast</h3>
       <p>
         Withdraw both forecast dates from an unstarted Planned task and, when
-        explicitly selected, its directly dependent successor and that
-        third task dependent on that successor. Each affected owner receives the complete exact
-        proposal separately. Receipt and allocation acceptance do not authorise
-        this action.
+        explicitly selected, its directly dependent successor and a third task
+        dependent on that successor. Each affected owner receives the complete
+        exact proposal separately. Receipt and allocation acceptance do not
+        authorise this action.
       </p>
       <p>
         Project dates and the selected Demand version change. The exact Impact

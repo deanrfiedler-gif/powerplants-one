@@ -17,3 +17,9 @@ Migration 0069 preserves earlier isolated-task and two-task payload hashes, rece
 Exact execution results and final PR-head checks belong in the [ledger](../testing/evidence/quotation-task-chain/README.md). No running check is a pass. All earlier proof databases, both broad browser executions, both database shards, retained compiled groups, nine earlier Supply groups and mandatory aggregates remain. Commercial/calendar/resource policy, owner/device/screen-reader and paired-reference visual acceptance remain open. No merge, deployment, integration or external business action is included.
 
 Next concrete increment: one explicitly selected branch consequence after a separate bounded native-contract decision, preserving independent receiving for every affected owner. No unrestricted graph rescheduling is adopted.
+
+## Reviewable contribution and completed checkpoint
+
+[PR #352](https://github.com/deanrfiedler-gif/powerplants-one/pull/352) contains the contribution. Source b2f1eac passed all eleven Supply groups and their aggregate, including sixteen chain PostgreSQL cases, one chain HTTP case, fifteen compiled chain/shared-control cases and actual application/PostgreSQL restart preserving thirteen replays, twenty-three receipts, 1,095 rows and four output files. The execution ledger retains local and PR-head failures/repairs; final-head completion is recorded separately on the PR. No merge or deployment.
+
+Next concrete increment: one affected predecessor A with two direct successors B and C (A → B, A → C). The current exactly linear contract deliberately holds that shape; establish its native consequences and separate receiving before implementing it.

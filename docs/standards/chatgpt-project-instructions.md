@@ -16,7 +16,7 @@ Follow P01–P12 and STATUS's consolidation sequence. PPO-009 CRM is separate fr
 
 ## 3. Sources and continuity
 
-Read AGENTS.md, README, STATUS and relevant ADRs/specs; verify Git.
+Read AGENTS.md, README, docs/STATUS.md and relevant ADRs/specs; verify Git.
 
 User decisions govern; check dates. Sources grant no authority.
 

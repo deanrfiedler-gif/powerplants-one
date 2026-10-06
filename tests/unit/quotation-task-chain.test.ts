@@ -1,5 +1,8 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import { createHash } from "node:crypto";
+import { canonical } from "../../src/platform/operations";
+import { materialInput } from "../../src/estimating/supply-followup/material-input";
 import {
   forecastHolds,
   forecastPosition,
@@ -20,6 +23,48 @@ const task = (id: string): Task => ({
   external_owner_id: null,
   owner_name: "Owner",
   dependencies: [],
+});
+test("0068 isolated and paired operation hashes remain exact when chain selection is omitted", () => {
+  const id = "10000000-0000-4000-8000-000000000001";
+  const value = {
+    operation_id: id,
+    schema_version: 1,
+    reason: "SYN retained original",
+    evidence: "SYN exact native evidence",
+    synthetic_only: true,
+    target_id: id,
+    execution_id: id,
+    expected_sequence: 4,
+    basis_hash: "a".repeat(64),
+    referral_id: id,
+    expected_material_sequence: 0,
+    predecessor_id: null,
+    allocation_outcome_id: id,
+    demand_id: id,
+    impact_id: id,
+    task_id: id,
+  };
+  // Captured by executing unchanged main 4918948, not derived from this parser.
+  const originals = [
+    [{}, "05571303aea6d440a07a0ceb62aa6b851e68086939b423e248b20aaa9ea1acd3"],
+    [
+      { successor_task_id: "10000000-0000-4000-8000-000000000002" },
+      "b7053e2bedd9a7c18ac6d708343320704424ccac78563cce799c9b12ff48b991",
+    ],
+  ] as const;
+  for (const [extra, hash] of originals) {
+    const input = materialInput(id, "MaterialPropose", { ...value, ...extra });
+    assert.equal(Object.hasOwn(input, "chain_end_task_id"), false);
+    assert.equal(
+      createHash("sha256")
+        .update(canonical({ command: "QuoteSupply:MaterialPropose", ...input }))
+        .digest("hex"),
+      hash,
+    );
+  }
+  assert.throws(() =>
+    materialInput(id, "MaterialPropose", { ...value, chain_end_task_id: id }),
+  );
 });
 test("exact three-task direction supports all native FS/SS combinations and refuses every extra edge", () => {
   for (const first of ["FS", "SS"] as const)
