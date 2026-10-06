@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. PD-01–05 completion authorised on 7 October 2026. [PR #358](https://github.com/deanrfiedler-gif/powerplants-one/pull/358), branch `codex/products-completion`, is based on refreshed main `58679be`. Local implementation and integrated Products proof are complete. The PR remains draft because GitHub's shared Chrome 155 setup fails before application checks; existing PR #355 owns that repair. Owner acceptance and deployment remain separate.
+Owner: Dean Fiedler. PD-01–05 completion authorised on 7 October 2026. [PR #358](https://github.com/deanrfiedler-gif/powerplants-one/pull/358), branch `codex/products-completion`, was based on main `58679be` and is reconciled with current main `95722ba`. Local implementation and integrated Products proof are complete. The PR remains draft pending fresh final-head CI. Earlier heads failed at shared Chrome 155 setup; PR #355 has since merged and is incorporated. Owner acceptance and deployment remain separate.
 
 The original unfinished `feat/products-catalogue-native` checkout at `cad98aca` remains unchanged. Its source, tests and retained captures were copied with a file-hash inventory and reconciled with current main. This work retains all newer Scheduling, Field, Supply and Estimating changes.
 

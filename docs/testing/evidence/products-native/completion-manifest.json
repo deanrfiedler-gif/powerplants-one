@@ -465,5 +465,18 @@
     },
     "distinct_cases_with_passing_evidence": 61,
     "initial_timeout_retained": true
+  },
+  "main_integration": {
+    "main_commit": "95722ba8839ed314962a87006b64302f294eca02",
+    "pull_request": 355,
+    "merged_at": "2026-10-06T22:28:11Z",
+    "changes": "Reviewed Chrome 155 guard, unit coverage and documentation only; Products runtime/schema/permissions/tests unchanged.",
+    "final_head_ci": "Pending; historical application-head failures remain recorded.",
+    "local_checks": {
+      "focused_browser_products_navigation_units": 12,
+      "design_register": "passed",
+      "focused_lint": "passed",
+      "installed_browser_check": "Chrome 154.0.8037.98 passed"
+    }
   }
 }

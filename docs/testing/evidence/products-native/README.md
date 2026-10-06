@@ -8,6 +8,8 @@ Owner: Dean Fiedler. Implementation review: Codex, 7 October 2026. Owner accepta
 
 [PR #358](https://github.com/deanrfiedler-gif/powerplants-one/pull/358) reconciles the original unfinished implementation with main `58679be051d8dc8da4356a714fb0f37d09902092`. The integrated source `f9c3fc61f558bda15e73cb76188f2d914cd21b72` and build `hRnXovuyfXzWYOWZQft2a` underpin database, HTTP, restart and visual proof. Final application source `57204c6c3458cad549c68d04d5494e7ca0d616ff` and build `QLKdHIBDrfM_mPxAhYE3F` add the pricing-journal correction and its focused unit/browser proof. That correction changes no database, server command, permissions or layout code. The original checkout's 136 inventoried files remain byte-identical. Issued references are unchanged.
 
+Main advanced to `95722ba8839ed314962a87006b64302f294eca02` when PR #355 merged at 22:28:11 UTC on 6 October (7 October Brisbane). The branch incorporates that reviewed Chrome 155 guard and its tests, preserving both status entries. Products runtime, schema, permissions and tests are unchanged by the integration. Earlier proof retains its exact source/build; all 12 focused browser-guard and Products/navigation units, focused lint, the design register and installed Chrome 154 check pass after integration. Fresh final-head CI remains pending and is not inferred from earlier local passes.
+
 Local execution used Windows, Node 24.21.0, npm 11.19.0, PostgreSQL 16.15, Playwright 1.63.0 and supported Chrome 154.0.8037.98. Two isolated loopback clusters used only `ppo_synthetic_test`: one for serial regression, one for HTTP/browser/restart proof. Both use the repository's existing 256 lock-slot setting. Document evidence is outside Git. No hosted or operational data was used.
 
 ## Executed verification
