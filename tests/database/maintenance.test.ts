@@ -370,7 +370,15 @@ test("MA05 separate CRM and Service owners, proposals do not extend source terms
     ["RelationshipReview", "TechnicalFollowUp"],
   );
   assert.equal((await workspace(a.p, "agreements", a.id)).row.version, 2);
-  assert.equal((await renewalSource(a.p, CRM.org)).state, "Available");
+  const aftercare = await renewalSource(a.p, CRM.org);
+  assert.equal(aftercare.state, "Available");
+  assert.deepEqual(aftercare.agreements.map((item: { id: string }) => item.id), [a.id]);
+  assert.deepEqual(aftercare.items.map((item: { id: string }) => item.id), [id]);
+  await rows("UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='maintenance.read'", [a.p.actor_id]);
+  const restricted = await renewalSource(a.p, CRM.org);
+  assert.equal(restricted.state, "Restricted");
+  assert.deepEqual(restricted.agreements, []);
+  assert.deepEqual(restricted.items, []);
 });
 test("MA06 exact evidence, stale assessment, separate goodwill and exact plan authority", async () => {
   const w = await warranty();
