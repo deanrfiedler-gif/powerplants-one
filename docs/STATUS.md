@@ -2,7 +2,9 @@
 
 ## Products completion — 7 October 2026
 
-Repository-writing session: `codex/products-completion`, based on refreshed main `58679be`. Dean authorised completion of PD-01–05, exact revision handoff repair, named synthetic access, integrated verification and a reviewable PR. The original unfinished checkout is preserved. Reserved migration 0052 is reconciled with the current registry through 0071; validation is in progress. Code delivery, visual observations, owner acceptance and deployment remain separate. See [Products handover](delivery/products-native-handover.md).
+Repository-writing session: [PR #358](https://github.com/deanrfiedler-gif/powerplants-one/pull/358), `codex/products-completion`, based on refreshed main `58679be`. Dean authorised completion of PD-01–05, exact revision handoff repair, named synthetic access, integrated verification and a reviewable PR. Native catalogue, publication, pricing, compatibility and synthetic import are implemented; historical pricing and uncertain-save recovery retain the exact revision. Four local synthetic duties and reserved migration 0052 are reconciled with the current registry through 0071. The original unfinished checkout and issued references are unchanged.
+
+Local Products unit/database/HTTP/browser, actual app/PostgreSQL restart and paired design evidence are complete, with source-specific results and earlier failures retained in the [evidence ledger](testing/evidence/products-native/README.md). GitHub's shared Chrome 155 setup fails before application checks; existing PR #355 owns that repair, so #358 remains draft. Code delivery, visual observations, owner acceptance, merge and deployment remain separate. See [Products handover](delivery/products-native-handover.md).
 
 ## Three-task Project merge continuation — 6 October 2026
 

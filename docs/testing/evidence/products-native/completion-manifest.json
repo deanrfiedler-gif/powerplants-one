@@ -1,0 +1,469 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-06T22:14:34.950264+00:00",
+  "application_source_commit": "57204c6c3458cad549c68d04d5494e7ca0d616ff",
+  "build_id": "QLKdHIBDrfM_mPxAhYE3F",
+  "browser_test_sha256": "fc209579a66294edd77e7c3073cac0a043d5e5c6c2910804eff923b0fb4a306b",
+  "original_checkout": {
+    "inventoried_files": 136,
+    "changed_files": 0
+  },
+  "environment": {
+    "node": "24.21.0",
+    "npm": "11.19.0",
+    "postgresql": "16.15",
+    "playwright": "1.63.0",
+    "chrome": "154.0.8037.98",
+    "os": "Windows",
+    "data": "synthetic only"
+  },
+  "products_checks": {
+    "focused_units_passed": 10,
+    "database_access_integration_upgrade_cases_passed": 12,
+    "compiled_http_case_passed": 1,
+    "browser_cases_passed": 12,
+    "browser_run_note": "11/12 in the final full run; remaining phone screenshot-protocol failure passed unchanged in an isolated rerun. Earlier failed attempts retained in README.",
+    "final_source_command_browser_cases_passed": 8,
+    "final_source_note": "Pricing target journal only; no layout, database, permissions or server-command changes. All eight affected desktop/phone command journeys pass, including committed binding response loss and exact-revision recovery. Earlier layout and restart evidence retain their own source/build."
+  },
+  "full_units": {
+    "tests": 608,
+    "passed": 605,
+    "failed": 3,
+    "unchanged_main_control_commit": "58679be051d8dc8da4356a714fb0f37d09902092",
+    "control_note": "All three Windows document-store/recovery failures reproduce in the selected four-case unchanged-main control (one pass, three failures).",
+    "source_head": "f9c3fc61f558bda15e73cb76188f2d914cd21b72"
+  },
+  "restart": {
+    "phase": "verify",
+    "source_head": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+    "build_id": "hRnXovuyfXzWYOWZQft2a",
+    "application_pids": [
+      34880,
+      37636,
+      28420
+    ],
+    "postgres_started_at": [
+      "2026-10-07 07:32:00.020833+10",
+      "2026-10-07 07:51:22.94704+10",
+      "2026-10-07 07:53:24.279883+10"
+    ],
+    "exact_tables": [
+      "products",
+      "product_revisions",
+      "product_events",
+      "product_cost_source_bindings",
+      "product_use_references",
+      "product_relationships",
+      "product_relationship_reviews",
+      "product_imports",
+      "product_import_plans",
+      "product_import_events",
+      "cost_sources",
+      "cost_source_revisions",
+      "cost_source_events"
+    ],
+    "original_receipts": 15,
+    "rows_sha256": "c80fcd8b21a4f3329fa68408328fe7a09faba3d6ed544e6a3346837571bb8718",
+    "result": "Exact retained rows and every original receipt/replay verified; no duplicate effects."
+  },
+  "review": {
+    "implementation_reviewer": "Codex",
+    "owner": "Dean Fiedler",
+    "owner_acceptance": null,
+    "physical_device_acceptance": null,
+    "screen_reader_acceptance": null,
+    "deployment": null,
+    "method": "Viewport captures of all six native desktop surfaces, representative phone surfaces and focused identifier disclosures; browser journeys inspect functional controls below the fold. Proposed adaptation, not an adopted baseline."
+  },
+  "captures": [
+    {
+      "file": "catalogue-1024.png",
+      "sha256": "6c65b2f8b7893fb797e877671d6806bf31a44c3cf0901aff8eb978a95c2a3fc0",
+      "width_css_px": 1024,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Captured; no separate visual acceptance asserted"
+    },
+    {
+      "file": "catalogue-1440.png",
+      "sha256": "642dcbd285ba9cbbfb4f2656a49637b7f9525632631f40e3048a40678bf40708",
+      "width_css_px": 1440,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Codex implementation inspection; owner acceptance pending"
+    },
+    {
+      "file": "catalogue-320.png",
+      "sha256": "ab9c0edcebcc7f3e830098ac804a14e548ca8f473f7a51e0cb73c29ce05361e7",
+      "width_css_px": 320,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Captured; no separate visual acceptance asserted"
+    },
+    {
+      "file": "catalogue-390.png",
+      "sha256": "4068c9ee77af6689e0b6720912c048096a9c444c5e44aa69aadc63d966fc5d5d",
+      "width_css_px": 390,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Codex implementation inspection; owner acceptance pending"
+    },
+    {
+      "file": "catalogue-720.png",
+      "sha256": "cadb80eb79d446d8a7e1ceb4cfae180b121aaec07ac82b9326e35a5a323ba3fe",
+      "width_css_px": 720,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Captured; no separate visual acceptance asserted"
+    },
+    {
+      "file": "compatibility-1024.png",
+      "sha256": "5beae88003c748d5944e7c218ccf7e512b84abc03c08b4aa0f16b1181082827c",
+      "width_css_px": 1024,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Captured; no separate visual acceptance asserted"
+    },
+    {
+      "file": "compatibility-1440.png",
+      "sha256": "bb2dda188e82b9aa6a5ca1dea58375f8a608d71fb09f88fbdbef333ba931bb09",
+      "width_css_px": 1440,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Codex implementation inspection; owner acceptance pending"
+    },
+    {
+      "file": "compatibility-320.png",
+      "sha256": "f8db9d48eea7036569e71148e8ea11504da5eab869115d511d0a90c0f72745f7",
+      "width_css_px": 320,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Codex implementation inspection; owner acceptance pending"
+    },
+    {
+      "file": "compatibility-390.png",
+      "sha256": "8bd6272fa8d5f705d4fa766d46b7d7bc472f37bfeb4d4bd90336d838efb687f6",
+      "width_css_px": 390,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Captured; no separate visual acceptance asserted"
+    },
+    {
+      "file": "compatibility-720.png",
+      "sha256": "69f22fbff4ac036652b4ecaabcf29a22f638cf0d1070ffe528ae42fa9dcf8ff9",
+      "width_css_px": 720,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Captured; no separate visual acceptance asserted"
+    },
+    {
+      "file": "detail-identifiers-1024.png",
+      "sha256": "86af5e43ed00c7c55f060992063d415678385f99b186734933448f1cab7ad1c3",
+      "width_css_px": 1024,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Captured; no separate visual acceptance asserted"
+    },
+    {
+      "file": "detail-identifiers-1440.png",
+      "sha256": "0fdc96bd27b6484bb82741d3322abb11a611957ea7b394e4e0860df193c7162b",
+      "width_css_px": 1440,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Codex implementation inspection; owner acceptance pending"
+    },
+    {
+      "file": "detail-identifiers-320.png",
+      "sha256": "d1fd315976819ccb85e998bdbe168163e43cc7dc25bee7336c94294ad54df3b8",
+      "width_css_px": 320,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Codex implementation inspection; owner acceptance pending"
+    },
+    {
+      "file": "detail-identifiers-390.png",
+      "sha256": "52faec0f79d6eb5256b645428c67819a81083b0c4141075486b364137ff007ba",
+      "width_css_px": 390,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Codex implementation inspection; owner acceptance pending"
+    },
+    {
+      "file": "detail-identifiers-720.png",
+      "sha256": "3f1bfa2c50a934232f649172f8a24eec8e01cc43e1745d45c3973410a8c05cca",
+      "width_css_px": 720,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Captured; no separate visual acceptance asserted"
+    },
+    {
+      "file": "import-1024.png",
+      "sha256": "7a1cfff9058f555d8a39080591d091f73224820d3a41352b875e6c3d292e296a",
+      "width_css_px": 1024,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Captured; no separate visual acceptance asserted"
+    },
+    {
+      "file": "import-1440.png",
+      "sha256": "43ac23ed9800d10fa28b5aa5640b4b11d74b3e3514f53ec9ce64b90170e63de0",
+      "width_css_px": 1440,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Codex implementation inspection; owner acceptance pending"
+    },
+    {
+      "file": "import-320.png",
+      "sha256": "031efd663288acdbb1c0c76c131211a19dde0af449d4a64ae42ba650afcfdc49",
+      "width_css_px": 320,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Captured; no separate visual acceptance asserted"
+    },
+    {
+      "file": "import-390.png",
+      "sha256": "623994a16f10e0a3642c9741d4ec889485e9196e8f146bf8ef0cbb66b2cfd5b0",
+      "width_css_px": 390,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Codex implementation inspection; owner acceptance pending"
+    },
+    {
+      "file": "import-720.png",
+      "sha256": "2f24948d95e42df26825d7fa9e53c24bdf93ed27abded7eb54b7d08d9ca9df06",
+      "width_css_px": 720,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Captured; no separate visual acceptance asserted"
+    },
+    {
+      "file": "pricing-1024.png",
+      "sha256": "244b16e9882bbb9f3b9b5cd5dfe5ada5245a93c2b74ed62fe3e16351db9a8eb6",
+      "width_css_px": 1024,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Captured; no separate visual acceptance asserted"
+    },
+    {
+      "file": "pricing-1440.png",
+      "sha256": "6236a414e9ec6233e8cd07c00f9cdb0936755b5c9c08eb2d5c358ccdd4f331f3",
+      "width_css_px": 1440,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Codex implementation inspection; owner acceptance pending"
+    },
+    {
+      "file": "pricing-320.png",
+      "sha256": "96a5383888bf9e8b749f39d82defbbc89737296109ffa53f96573e24e05a9bae",
+      "width_css_px": 320,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Captured; no separate visual acceptance asserted"
+    },
+    {
+      "file": "pricing-390.png",
+      "sha256": "ca5078cc230723f66cf4bd25cfa459ee132fb147e251004721aee0d8162bad3c",
+      "width_css_px": 390,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Codex implementation inspection; owner acceptance pending"
+    },
+    {
+      "file": "pricing-720.png",
+      "sha256": "91bf4244f0522c24ee8a6c85d1148f42c8666ea21e8d34f14f0bbc7e39a9725c",
+      "width_css_px": 720,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Captured; no separate visual acceptance asserted"
+    },
+    {
+      "file": "publication-1024.png",
+      "sha256": "a66800c78b2b19d4e92da2fcc28e613686050a8e04c7a43e388b8b74582ad390",
+      "width_css_px": 1024,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Captured; no separate visual acceptance asserted"
+    },
+    {
+      "file": "publication-1440.png",
+      "sha256": "67c08dc32b75a0f1fcbe4fd60a819b097ead56722716dd4fec07e98ec915eb23",
+      "width_css_px": 1440,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Codex implementation inspection; owner acceptance pending"
+    },
+    {
+      "file": "publication-320.png",
+      "sha256": "7080ed2909c99f0096b9d8e8ff935aa78d7cba6f2954a3db6ee67c7d10f50887",
+      "width_css_px": 320,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Captured; no separate visual acceptance asserted"
+    },
+    {
+      "file": "publication-390.png",
+      "sha256": "412abfae3fbbc8f1da5687b52e937ea13c05b8ed98f6153f46e68c3eb4a46700",
+      "width_css_px": 390,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Codex implementation inspection; owner acceptance pending"
+    },
+    {
+      "file": "publication-720.png",
+      "sha256": "12fafc86438fe09ab0b3e739192cd3dc70be56218c6fc1b72e6ef2b7bdde6991",
+      "width_css_px": 720,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Captured; no separate visual acceptance asserted"
+    },
+    {
+      "file": "reference-products-1024.png",
+      "sha256": "1a170be0a12e80ad264cc237ba3009602b4d42f39f2d86e9087c50b4e160d14d",
+      "width_css_px": 1024,
+      "source": "issued reference; see reference-sources.json",
+      "build_id": null,
+      "inspection": "Captured; no separate visual acceptance asserted"
+    },
+    {
+      "file": "reference-products-1440.png",
+      "sha256": "f10e0f1f6ce68257ddb2bb96423859ada86b6a7cb4cc196d353000039a603c74",
+      "width_css_px": 1440,
+      "source": "issued reference; see reference-sources.json",
+      "build_id": null,
+      "inspection": "Codex implementation inspection; owner acceptance pending"
+    },
+    {
+      "file": "reference-products-320.png",
+      "sha256": "afc8ecc66d60b7ae25cd911251220f4e4d5e2474679f39105bc238bb400da9c8",
+      "width_css_px": 320,
+      "source": "issued reference; see reference-sources.json",
+      "build_id": null,
+      "inspection": "Captured; no separate visual acceptance asserted"
+    },
+    {
+      "file": "reference-products-390.png",
+      "sha256": "5fe664486b29fa7c5355fdcb1aa1ff54d965e3d8f07fc2625ac914ac066a2602",
+      "width_css_px": 390,
+      "source": "issued reference; see reference-sources.json",
+      "build_id": null,
+      "inspection": "Captured; no separate visual acceptance asserted"
+    },
+    {
+      "file": "reference-products-720.png",
+      "sha256": "32d76c9b543a3f4d21e8988deb30e158f518a79ce67b97741e55ec5d491ecdfb",
+      "width_css_px": 720,
+      "source": "issued reference; see reference-sources.json",
+      "build_id": null,
+      "inspection": "Captured; no separate visual acceptance asserted"
+    },
+    {
+      "file": "reference-supplier-pricing-1024.png",
+      "sha256": "1cac7aa3b82917d634fa2618b49697c50945c330217e82749e4e993565ab8ef9",
+      "width_css_px": 1024,
+      "source": "issued reference; see reference-sources.json",
+      "build_id": null,
+      "inspection": "Captured; no separate visual acceptance asserted"
+    },
+    {
+      "file": "reference-supplier-pricing-1440.png",
+      "sha256": "de512e69b7b90d1a61c3fcea0decafecd25a8081bd3d5caeeab0b3f3caecb91b",
+      "width_css_px": 1440,
+      "source": "issued reference; see reference-sources.json",
+      "build_id": null,
+      "inspection": "Codex implementation inspection; owner acceptance pending"
+    },
+    {
+      "file": "reference-supplier-pricing-320.png",
+      "sha256": "00dbe10eb4f6507dfd5ceca1c1fe7f2cc72049952518ef2ee2fcb1d4938380d1",
+      "width_css_px": 320,
+      "source": "issued reference; see reference-sources.json",
+      "build_id": null,
+      "inspection": "Captured; no separate visual acceptance asserted"
+    },
+    {
+      "file": "reference-supplier-pricing-390.png",
+      "sha256": "77e5d5e0cc14a21dcf727d100dd124b68cb3ed284fe5ea4962b987d8fae5f279",
+      "width_css_px": 390,
+      "source": "issued reference; see reference-sources.json",
+      "build_id": null,
+      "inspection": "Captured; no separate visual acceptance asserted"
+    },
+    {
+      "file": "reference-supplier-pricing-720.png",
+      "sha256": "2fd546fc175443055a54cd308bff4cba23fd88bda57828b0a772b4eaa041b782",
+      "width_css_px": 720,
+      "source": "issued reference; see reference-sources.json",
+      "build_id": null,
+      "inspection": "Captured; no separate visual acceptance asserted"
+    },
+    {
+      "file": "technical-1024.png",
+      "sha256": "da75f27a18876d3dadaaaeb2ac6bfd255b9b015d3fbd74e29a263920bd78c743",
+      "width_css_px": 1024,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Captured; no separate visual acceptance asserted"
+    },
+    {
+      "file": "technical-1440.png",
+      "sha256": "414f3bc7516e51a1b591aa69bb0918100feaba03160bde4121b9aeff839b1045",
+      "width_css_px": 1440,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Codex implementation inspection; owner acceptance pending"
+    },
+    {
+      "file": "technical-320.png",
+      "sha256": "ed07723852d767e05165d7c6249a7c6e6952e7fbf742667ec0a1d92ad41bfa72",
+      "width_css_px": 320,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Codex implementation inspection; owner acceptance pending"
+    },
+    {
+      "file": "technical-390.png",
+      "sha256": "5a85ac96b4120212fc8fcb614492518ee40147246c67721711853a3d0474b3dd",
+      "width_css_px": 390,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Captured; no separate visual acceptance asserted"
+    },
+    {
+      "file": "technical-720.png",
+      "sha256": "c483ef851a72dc9704dce137075a1acafd6bdff4ff2bb15393b7e8b745d5dd66",
+      "width_css_px": 720,
+      "source": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+      "build_id": "hRnXovuyfXzWYOWZQft2a",
+      "inspection": "Captured; no separate visual acceptance asserted"
+    }
+  ],
+  "integrated_source_commit": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+  "integrated_build_id": "hRnXovuyfXzWYOWZQft2a",
+  "wider_database_regression": {
+    "summary": "regression-summary.json",
+    "initial_run": {
+      "tests": 61,
+      "pass": 60,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "unchanged_candidate_rerun": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "unchanged_main_control": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "distinct_cases_with_passing_evidence": 61,
+    "initial_timeout_retained": true
+  }
+}
