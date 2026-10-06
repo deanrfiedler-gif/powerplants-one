@@ -13,6 +13,56 @@ import {
   relationshipFixture,
 } from "../helpers/products";
 import { AppError } from "../../src/platform/errors";
+import { randomUUID } from "node:crypto";
+import { acceptsProductCommand } from "../../src/products/journal";
+import {
+  readJournal,
+  writeJournal,
+  type JournalEntry,
+} from "../../src/shared/lib/command-journal";
+
+test("PD source-binding journal restores its exact revision target and rejects unrelated extra queries", () => {
+  const id = randomUUID(),
+    revision = randomUUID();
+  const entry: JournalEntry = {
+    version: 1,
+    scope: { actor_id: randomUUID(), workspace_id: randomUUID() },
+    path: `products/${id}/pricing`,
+    target: `/products/pricing?product_id=${id}&revision_id=${revision}`,
+    body: { operation_id: randomUUID(), schema_version: 1 },
+    record_id: id,
+    label: "Record exact source binding",
+    phase: "pending",
+  };
+  const values = new Map<string, string>();
+  const storage = {
+    getItem: (key: string) => values.get(key) ?? null,
+    setItem: (key: string, value: string) => {
+      values.set(key, value);
+    },
+    removeItem: (key: string) => {
+      values.delete(key);
+    },
+  };
+  writeJournal(storage, "pricing", entry, acceptsProductCommand);
+  assert.deepEqual(
+    readJournal(storage, "pricing", entry.scope, acceptsProductCommand),
+    entry,
+  );
+  for (const target of [
+    `${entry.target}&next=elsewhere`,
+    `https://example.test${entry.target}`,
+    `/products/import?product_id=${id}&revision_id=${revision}`,
+  ])
+    assert.throws(() =>
+      writeJournal(
+        storage,
+        "invalid",
+        { ...entry, target },
+        acceptsProductCommand,
+      ),
+    );
+});
 
 test("PD typed technical/source provenance preserves explicit units, nulls and document applicability", () => {
   const c = productContent(productContentFixture());

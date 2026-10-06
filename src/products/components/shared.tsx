@@ -14,7 +14,7 @@ import { useIdentity } from "../../components/business-session";
 import { useCrmResource } from "../../components/crm-state";
 import { Button } from "../../components/ui/button";
 import { useRecoverableCommand } from "../../shared/ui/use-recoverable-command";
-import type { JournalEntry } from "../../shared/lib/command-journal";
+import { acceptsProductCommand } from "../journal";
 import type { listProducts, readProduct } from "../reads";
 import type { Content } from "../model";
 import "./products.css";
@@ -23,15 +23,11 @@ export type Catalogue = Awaited<ReturnType<typeof listProducts>>;
 export type Detail = Awaited<ReturnType<typeof readProduct>>;
 export const options = (values: readonly string[]) =>
   values.map((id) => ({ id, display_name: id }));
-const accepts = (e: JournalEntry) =>
-  /^products(?:\/[a-f0-9-]{36}(?:\/review|\/pricing|\/uses)?|\/relationships(?:\/[a-f0-9-]{36}\/review)?|\/imports(?:\/[a-f0-9-]{36}(?:\/map|\/review)?)?)?$/.test(
-    e.path,
-  ) && /^\/products(?:\/[a-z0-9-]+)?(?:\?[a-z_]+=[a-z0-9-]+)?$/.test(e.target);
 export function useProductCommand(key: string) {
   return useRecoverableCommand({
     key: `ppo:products:${key}`,
     scope: useIdentity(),
-    accepts,
+    accepts: acceptsProductCommand,
     transport: api,
   });
 }

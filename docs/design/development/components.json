@@ -2339,6 +2339,7 @@
       "dependencies": [
         "src/products/components/products.css",
         "src/products/model.ts",
+        "src/products/journal.ts",
         "src/development/component-examples.tsx",
         "src/development/component-fixtures.ts"
       ],

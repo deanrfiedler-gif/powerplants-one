@@ -27,6 +27,8 @@ Reuse ProductsFrame, ProductContext, TechnicalContent and Comparison; shared But
 3. Retain Mapped only for exact unit identity, or Unresolved with evidence; no automatic conversion is available.
 4. Open source authoring/review in ES-03. Follow a permitted affected-estimate link for deliberate comparison and refresh.
 
+If a source-binding response is lost, reload or recover its original operation. The saved-result link retains both product and revision; recovery must not send a replacement command or silently open the current head.
+
 Incoming: exact permitted Product/company/source context. Outgoing: ES-03 source review/refresh, EN-06 Materials, EN-07 Change Impact, EQ-06 Bulletins and EQ-07 Lifecycle as applicable. Published catalogue evidence is not an owning-domain suitability or commercial decision.
 
 ## Visual sources, departures and proof

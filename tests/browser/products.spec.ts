@@ -15,7 +15,7 @@ import { readCostSource } from "../../src/estimating/sources/reads";
 import { sourceInput } from "../helpers/estimating-sources";
 import { stageImport } from "../../src/products/imports";
 import { readImport } from "../../src/products/imports";
-import { readProduct } from "../../src/products/reads";
+import { readProduct, productPricing } from "../../src/products/reads";
 import { closeDatabase } from "../../src/platform/database";
 import { randomUUID, createHash } from "node:crypto";
 import { crmBase, CRM } from "../helpers/crm";
@@ -196,6 +196,61 @@ test("PD historical pricing handoff retains the selected revision through naviga
       exact: true,
     }),
   ).toHaveCount(0);
+  const current = await readProduct(f.author.p, f.variant.id);
+  await page
+    .getByLabel("Supplier cost source", { exact: true })
+    .selectOption(source.id);
+  await page
+    .getByLabel("Exact source revision", { exact: true })
+    .selectOption(cost.revision.id);
+  await page
+    .getByLabel("Identity and unit mapping evidence", { exact: true })
+    .fill("SYN exact successor source evidence");
+  await page
+    .getByLabel("Reason and evidence basis", { exact: true })
+    .fill("SYN deliberate successor mapping");
+  let lost = false;
+  await page.route(
+    `**/api/v1/products/${f.variant.id}/pricing`,
+    async (route) => {
+      if (route.request().method() === "POST" && !lost) {
+        lost = true;
+        await route.fetch();
+        await route.abort("connectionreset");
+      } else await route.continue();
+    },
+  );
+  await page
+    .getByRole("button", { name: "Record exact source binding", exact: true })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Outcome unknown", exact: true }),
+  ).toBeVisible();
+  await page.reload();
+  await expect(
+    page.getByText("Saved / recovered:", { exact: false }),
+  ).toBeVisible();
+  await page
+    .getByRole("link", { name: "Open saved result", exact: true })
+    .click();
+  await expect(page).toHaveURL(
+    new RegExp(`revision_id=${current.revision.id}`),
+  );
+  expect(
+    (
+      await productPricing(f.author.p, f.variant.id, {
+        revision_id: current.revision.id,
+      })
+    ).sources,
+  ).toHaveLength(1);
+  expect(
+    (
+      await productPricing(f.author.p, f.variant.id, {
+        revision_id: first.revision.id,
+      })
+    ).sources,
+  ).toHaveLength(1);
+  await page.unrouteAll({ behavior: "wait" });
 });
 async function login(page: Page, token: string) {
   await page.context().addCookies([
@@ -284,8 +339,9 @@ test("PD all five compiled native pages: exact identities, phone reflow, keyboar
     ["compatibility", `/products/compatibility?product_id=${f.variant.id}`],
     ["import", `/products/import?batch_id=${batchId}`],
   ];
-  const widths =
-    info.project.name.includes("desktop") ? [1440, 1024, 720] : [390, 320];
+  const widths = info.project.name.includes("desktop")
+    ? [1440, 1024, 720]
+    : [390, 320];
   for (const width of widths) {
     await page.setViewportSize({
       width,
@@ -461,7 +517,11 @@ test("PD publication and candidate evidence use independent browser review witho
   ).toBeVisible();
   await login(page, f.author.token);
   await page.goto(`/products/compatibility?product_id=${f.variant.id}`);
-  await page.getByText("Prepare compatibility or candidate-replacement evidence", { exact: true }).click();
+  await page
+    .getByText("Prepare compatibility or candidate-replacement evidence", {
+      exact: true,
+    })
+    .click();
   const form = page.locator("form").filter({
     has: page.getByRole("button", {
       name: "Save relationship evidence",

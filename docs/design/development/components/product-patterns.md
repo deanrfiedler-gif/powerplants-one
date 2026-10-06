@@ -29,3 +29,5 @@ The fixture proves presentation only. The owning routes use shared read-error, v
 ## Completion refinement
 
 ProductContext retains catalogue, technical and source basis prominently and moves internal UUIDs into a labelled native disclosure. Open disclosures leave space below the keyboard focus outline so it does not touch the revealed text. The selected historical revision remains exact when opening pricing. The real fixture states and Products desktop/phone journeys exercise these exports; review observations are recorded in the completion evidence, with owner acceptance separate.
+
+Products recovery accepts the bounded product-plus-revision pricing target. A committed source binding whose response is lost restores its original receipt and opens that same revision; additional or external return-target queries remain refused.
