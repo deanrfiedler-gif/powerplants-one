@@ -6,7 +6,7 @@ Owner: Dean Fiedler. SYN-ES07-10. Functional proof, final-head CI, visual review
 
 ## Starting reconciliation
 
-[Actual GitHub observation](starting-verification.json) confirms #352 merge 1ffcf653 and all 41 successful checks on final head 3a2e1c0. The separate post-merge observation records 28 successful checks and eight still running; these are not passes. Refresh again before handover. #349's cancelled compiled job and failed aggregate, #351's unchanged-main Scheduling race and repaired ledger assertion, and #352's development failures, naming repair and superseded cancellations remain unchanged in their original ledgers. Current reconciliation supersedes pre-merge wording without rewriting historical checkpoints.
+[Actual GitHub observation](starting-verification.json) confirms #352 merge 1ffcf653 and all 41 successful checks on final head 3a2e1c0. The separate post-merge observation records 28 successful checks and eight still running; these are not passes. That initial checkpoint is retained; the final observation is recorded below. #349's cancelled compiled job and failed aggregate, #351's unchanged-main Scheduling race and repaired ledger assertion, and #352's development failures, naming repair and superseded cancellations remain unchanged in their original ledgers. Current reconciliation supersedes pre-merge wording without rewriting historical checkpoints.
 
 New task-owned PostgreSQL 16 cluster on loopback 5683, ppo_synthetic_test; live schema inspected through 0069 before selecting 0070. Existing proof databases and unfinished Excel import remain untouched. Node 24.21.0/npm 11.19.0 and copied locked dependencies. No dependency or lockfile changes.
 
@@ -47,3 +47,9 @@ Assistant inspection of the source-specific [desktop capture](candidate-branch-d
 The separate final #352 post-merge observation, final branch-head results and exact identity/outcome comparison of both complete broad browser executions are attached to the PR after completion. This ledger's candidate checkpoints do not substitute for that gate.
 
 The reusable [browser equivalence checker](../../../../scripts/check-browser-equivalence.py) compares project/file/full-title identity, expected and actual outcome, and every attempt. It requires a single zero-retry attempt per case, no unexpected/flaky results, and only the existing shared warm-up duplicated by desktop/mobile isolation. Expected passed/skipped counts and verified artifact source head are explicit command arguments. It was exercised against the retained #352 final-head artifacts: 691 exact identities, 612 passed and 79 retained skips, no differences. Branch final-head artifacts require their own comparison and provenance.
+
+## Final #352 post-merge reconciliation
+
+[Exact check and workflow observation](main-postmerge-final.json), separately fetched for merge `1ffcf653cd94982ea3f58253d3dc9c4f9be7ebbc`, confirms all 38 checks completed successfully: 37 assurance checks, including both isolated database shards, both complete broad browser executions, all eleven Supply groups and mandatory aggregates, plus the distinct deployment check. These are actual post-merge results, not inferred from head 3a2e1c0. This task did not deploy or verify the hosted demo. Owner acceptance remains separate.
+
+The documentation reconciliation follows repaired source 7c93f25. Its queued/running checks are not final-head proof; any superseded executions retain their actual outcomes. Final PR-head verification must complete on the contribution including this observation. Earlier #349/#351/#352 failures, repairs and cancellations remain unchanged.

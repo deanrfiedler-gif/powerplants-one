@@ -27,3 +27,5 @@ Next concrete increment: one affected predecessor A with two direct successors B
 ## Current integration reconciliation
 
 #352 is merged as `1ffcf653cd94982ea3f58253d3dc9c4f9be7ebbc`, from final head `3a2e1c02bdbfd84af589e1618b33bc30d9d72e7a` with all 41 checks successful. Earlier contribution/pre-merge statements retain their checkpoint meaning. Post-merge results are separately refreshed in the [branch ledger](../testing/evidence/quotation-task-branch/README.md); no deployment/owner acceptance follows from them. The next branch is now the separate [SYN-ES07-10 contribution](quotation-task-branch-handover.md). This handover and every retained chain contract/original keep their linear meaning.
+
+The final independent #352 post-merge observation is [retained with the branch continuation](../testing/evidence/quotation-task-branch/main-postmerge-final.json): all 37 assurance checks and the separate deployment check succeeded. This supersedes earlier running-check observations without changing their historical meaning; it grants no visual or owner acceptance and this task performed no deployment.
