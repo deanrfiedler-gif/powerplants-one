@@ -188,7 +188,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // 0069 adds only optional third-task evidence and guards on the existing material table.
   // Generic table privileges suffice; no grants, seeds, identity ALTER or ledger access.
   // Both earlier payload families and populated native effects must survive this upgrade.
-  if (latestMigrationVersion !== 69) throw Error("Review the existing-demo upgrade for this release.");
+  // 0070 adds optional branch-command evidence and a separate receiving role. No seeds,
+  // grants, identities or business-row rewrite. Existing runtime table grants apply;
+  // current catalog shape isolates prepared plans. Populated 0069 and hosted upgrades prove preservation.
+  if (latestMigrationVersion !== 70) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

@@ -70,7 +70,8 @@ export async function receivingWorklist(
          LEFT JOIN ppo.project_tasks chain_end ON chain_end.workspace_id=e.workspace_id AND chain_end.id=(e.dependencies->'project'->'chainEnd'->>'id')::uuid
          JOIN ppo.projects p ON (p.workspace_id,p.id)=(t.workspace_id,t.project_id)
          JOIN ppo.activities a ON a.workspace_id=e.workspace_id AND a.id=(e.dependencies->'activity'->>'id')::uuid
-         WHERE e.workspace_id=$1 AND e.action='MaterialPropose' AND $2::uuid IN (d.owner_id,t.owner_id,p.coordinator_id,a.owner_id,successor.owner_id,chain_end.owner_id)`,
+         LEFT JOIN ppo.project_tasks branch_successor ON branch_successor.workspace_id=e.workspace_id AND branch_successor.id=(e.dependencies->'project'->'branchSuccessor'->>'id')::uuid
+         WHERE e.workspace_id=$1 AND e.action='MaterialPropose' AND $2::uuid IN (d.owner_id,t.owner_id,p.coordinator_id,a.owner_id,successor.owner_id,chain_end.owner_id,branch_successor.owner_id)`,
           [p.workspace_id, p.actor_id],
         )
       ).rows)

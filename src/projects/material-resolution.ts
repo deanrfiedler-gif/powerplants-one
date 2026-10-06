@@ -13,6 +13,7 @@ export async function forecastPosition(
   taskId: string,
   successorId?: string,
   chainEndId?: string,
+  branchSuccessorId?: string,
 ) {
   const project = await projectRow(c, p, projectId);
   const tasks = await tasksFor(c, p, projectId);
@@ -27,6 +28,17 @@ export async function forecastPosition(
     ? tasks.find((t) => t.id === chainEndId)
     : undefined;
   if (chainEndId && (!successor || !chainEnd || chainEnd.owner_unavailable))
+    throw unavailable();
+  const branchSuccessor = branchSuccessorId
+    ? tasks.find((t) => t.id === branchSuccessorId)
+    : undefined;
+  if (
+    branchSuccessorId &&
+    (!successor ||
+      chainEnd ||
+      !branchSuccessor ||
+      branchSuccessor.owner_unavailable)
+  )
     throw unavailable();
   const dependencies = (
     await c.query<{ task_id: string; predecessor_id: string; kind: string }>(
@@ -59,6 +71,9 @@ export async function forecastPosition(
     stages,
     ...(successor ? { successor } : {}),
     ...(chainEnd ? { chainEnd } : {}),
+    ...(branchSuccessor
+      ? { branchSuccessor, topology: "Branch" as const }
+      : {}),
   };
 }
 export function forecastHolds(
@@ -69,6 +84,7 @@ export function forecastHolds(
     task,
     successor,
     chainEnd,
+    branchSuccessor,
     dependencies,
     engineering,
     stages,
@@ -86,13 +102,15 @@ export function forecastHolds(
     holds.push("The task must have both forecast dates to withdraw.");
   if (!task.owner_id || task.external_owner_id)
     holds.push("An independently receiving internal task owner is required.");
-  if (chainEnd) {
-    const selected = [task, successor!, chainEnd];
+  if (chainEnd || branchSuccessor) {
+    const third = branchSuccessor ?? chainEnd!;
+    const selected = [task, successor!, third];
     const ids = selected.map((t) => t.id);
     const touching = dependencies.filter(
       (d) => ids.includes(d.task_id) || ids.includes(d.predecessor_id),
     );
     if (
+      !!(chainEnd && branchSuccessor) ||
       new Set(ids).size !== 3 ||
       touching.length !== 2 ||
       !touching.some(
@@ -103,13 +121,15 @@ export function forecastHolds(
       ) ||
       !touching.some(
         (d) =>
-          d.predecessor_id === successor!.id &&
-          d.task_id === chainEnd.id &&
+          d.predecessor_id === (branchSuccessor ? task.id : successor!.id) &&
+          d.task_id === third.id &&
           ["FS", "SS"].includes(d.kind),
       )
     )
       holds.push(
-        "Select exactly A → B → C; additional, missing or reversed dependencies require separate Projects receiving.",
+        branchSuccessor
+          ? "Select exactly A → B and A → C; additional, missing or reversed dependencies require separate Projects receiving."
+          : "Select exactly A → B → C; additional, missing or reversed dependencies require separate Projects receiving.",
       );
     for (const next of selected.slice(1))
       if (
@@ -122,7 +142,7 @@ export function forecastHolds(
         next.external_owner_id
       )
         holds.push(
-          "Each chain successor must be an internally owned, dated, non-milestone, unstarted Planned task at zero progress.",
+          "Each selected successor must be an internally owned, dated, non-milestone, unstarted Planned task at zero progress.",
         );
   } else if (successor) {
     const touching = dependencies.filter(

@@ -14,7 +14,7 @@ export const materialRoles = [
   "MaterialAction",
 ] as const;
 export type MaterialRole =
-  (typeof materialRoles)[number] | "Successor" | "ChainEnd";
+  (typeof materialRoles)[number] | "Successor" | "ChainEnd" | "BranchSuccessor";
 export function materialInput(
   id: string,
   action:
@@ -30,6 +30,7 @@ export function materialInput(
           "task_id",
           "successor_task_id",
           "chain_end_task_id",
+          "branch_successor_task_id",
           "predecessor_id",
         ]
       : action === "MaterialApply"
@@ -60,6 +61,14 @@ export function materialInput(
       "chain_end_task_id",
       "Select the middle task before the third task.",
     );
+  if (
+    r.branch_successor_task_id !== undefined &&
+    (r.successor_task_id === undefined || r.chain_end_task_id !== undefined)
+  )
+    invalid(
+      "branch_successor_task_id",
+      "Select B and C as direct successors of A; a branch cannot also be a linear chain.",
+    );
   return {
     ...envelope(id, r),
     action,
@@ -85,6 +94,14 @@ export function materialInput(
     ...(action === "MaterialPropose" && r.chain_end_task_id !== undefined
       ? { chain_end_task_id: uuid(r.chain_end_task_id, "chain_end_task_id") }
       : {}),
+    ...(action === "MaterialPropose" && r.branch_successor_task_id !== undefined
+      ? {
+          branch_successor_task_id: uuid(
+            r.branch_successor_task_id,
+            "branch_successor_task_id",
+          ),
+        }
+      : {}),
     proposal_id: ["MaterialReceive", "MaterialReview"].includes(action)
       ? uuid(r.proposal_id, "proposal_id")
       : null,
@@ -103,6 +120,7 @@ export function materialInput(
             ...materialRoles,
             "Successor",
             "ChainEnd",
+            "BranchSuccessor",
           ] as const)
         : null,
     decision:
