@@ -3,6 +3,7 @@ import type { QueryClient } from "../platform/permissions";
 import { projectRow, tasksFor } from "./service";
 import { engineeringRow } from "../engineering/service";
 import { access as acceptanceAccess } from "./acceptance/context";
+import { scheduleIssues } from "./model";
 import { unavailable } from "../platform/errors";
 
 // This is the owning workflow's bounded receiving contract, not a dispatcher.
@@ -14,6 +15,8 @@ export async function forecastPosition(
   successorId?: string,
   chainEndId?: string,
   branchSuccessorId?: string,
+  mergePredecessorId?: string,
+  mergeSuccessorId?: string,
 ) {
   const project = await projectRow(c, p, projectId);
   const tasks = await tasksFor(c, p, projectId);
@@ -40,6 +43,32 @@ export async function forecastPosition(
       branchSuccessor.owner_unavailable)
   )
     throw unavailable();
+  const mergePredecessor = mergePredecessorId
+    ? tasks.find((t) => t.id === mergePredecessorId)
+    : undefined;
+  const mergeSuccessor = mergeSuccessorId
+    ? tasks.find((t) => t.id === mergeSuccessorId)
+    : undefined;
+  if (
+    (mergePredecessorId || mergeSuccessorId) &&
+    (!mergePredecessor ||
+      !mergeSuccessor ||
+      mergePredecessor.owner_unavailable ||
+      mergeSuccessor.owner_unavailable ||
+      successor ||
+      chainEnd ||
+      branchSuccessor)
+  )
+    throw unavailable();
+  // Read the exact retained native row only after current protected task/owner reads.
+  const retainedPredecessor = mergePredecessor
+    ? (
+        await c.query<{ value: Record<string, unknown> }>(
+          "SELECT to_jsonb(t) value FROM ppo.project_tasks t WHERE workspace_id=$1 AND project_id=$2 AND id=$3",
+          [p.workspace_id, projectId, mergePredecessor.id],
+        )
+      ).rows[0].value
+    : undefined;
   const dependencies = (
     await c.query<{ task_id: string; predecessor_id: string; kind: string }>(
       "SELECT task_id,predecessor_id,kind FROM ppo.project_dependencies WHERE workspace_id=$1 AND project_id=$2 ORDER BY task_id,predecessor_id",
@@ -69,6 +98,15 @@ export async function forecastPosition(
     dependencies,
     engineering,
     stages,
+    ...(mergePredecessor && mergeSuccessor
+      ? {
+          topology: "Merge" as const,
+          mergePredecessor,
+          mergeSuccessor,
+          retainedPredecessor,
+          retainedIssues: scheduleIssues(mergePredecessor, tasks),
+        }
+      : {}),
     ...(successor ? { successor } : {}),
     ...(chainEnd ? { chainEnd } : {}),
     ...(branchSuccessor
@@ -85,6 +123,8 @@ export function forecastHolds(
     successor,
     chainEnd,
     branchSuccessor,
+    mergePredecessor,
+    mergeSuccessor,
     dependencies,
     engineering,
     stages,
@@ -102,7 +142,51 @@ export function forecastHolds(
     holds.push("The task must have both forecast dates to withdraw.");
   if (!task.owner_id || task.external_owner_id)
     holds.push("An independently receiving internal task owner is required.");
-  if (chainEnd || branchSuccessor) {
+  if (mergePredecessor && mergeSuccessor) {
+    const selected = [task, mergePredecessor, mergeSuccessor],
+      ids = selected.map((t) => t.id);
+    const touching = dependencies.filter(
+      (d) => ids.includes(d.task_id) || ids.includes(d.predecessor_id),
+    );
+    if (
+      new Set(ids).size !== 3 ||
+      touching.length !== 2 ||
+      ![task, mergePredecessor].every((prior) =>
+        touching.some(
+          (d) =>
+            d.predecessor_id === prior.id &&
+            d.task_id === mergeSuccessor.id &&
+            ["FS", "SS"].includes(d.kind),
+        ),
+      )
+    )
+      holds.push(
+        "Select exactly A → C and B → C; additional, missing or reversed dependencies require separate Projects receiving.",
+      );
+    for (const selectedTask of selected.slice(1))
+      if (
+        selectedTask.status !== "Planned" ||
+        selectedTask.progress !== 0 ||
+        selectedTask.milestone ||
+        !selectedTask.start_date ||
+        !selectedTask.finish_date ||
+        !selectedTask.owner_id ||
+        selectedTask.external_owner_id
+      )
+        holds.push(
+          "Each selected merge task must be internally owned, dated, non-milestone and Planned at zero progress.",
+        );
+    if (
+      mergePredecessor.dependencies.length ||
+      (position.retainedIssues?.length ?? 0) ||
+      !mergePredecessor.start_date ||
+      !mergePredecessor.finish_date ||
+      mergePredecessor.finish_date < mergePredecessor.start_date
+    )
+      holds.push(
+        "B must have a valid native forecast with no incoming dependencies or native schedule warnings; its exact position is retained, without a new commitment.",
+      );
+  } else if (chainEnd || branchSuccessor) {
     const third = branchSuccessor ?? chainEnd!;
     const selected = [task, successor!, third];
     const ids = selected.map((t) => t.id);

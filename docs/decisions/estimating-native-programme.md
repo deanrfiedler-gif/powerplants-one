@@ -1,6 +1,12 @@
 # Native Estimating and Quotation programme authority
 
-## Three-task Project branch continuation — 6 October 2026
+## Three-task Project merge continuation — 6 October 2026
+
+Refreshed main is #353 merge `7e61c742acbfd2bb894218bd6e78b08c25ef69df`, containing checked head `2beb040997ed9d4f056c2c60dcdcc6473689398c`. All 43 final-head checks across 16 workflows passed. The separately fetched post-merge observation is retained in the merge execution ledger; queued/running checks are not passes. Earlier #349 cancellation/failed aggregate, #351 unchanged-main Scheduling race and repaired migration assertion, #352 development failures/naming repair/cancellations and #353 migration-constant/invalid-fixture/timestamp repairs, timeout/startup failure, baseline Windows failures and superseded cancellations remain unchanged in their historical ledgers. Deployment, source-specific proof and owner acceptance remain separate.
+
+SYN-ES07-11 makes the previously held three-task merge A → C and B → C executable after an independently received allocation reduction. Six decisions cover Demand, Project coordinator, A, MaterialAction, retained predecessor B and shared successor C. Native saves withdraw A/C forecasts; B's complete native row, dates, status, progress, owner, version and history remain exact. Project advances twice and Demand once; both FS/SS relationships remain, with three native receipts. Unmet Demand and independent holds remain; current ES-07 exceptions require fresh disposition. Migration 0071 preserves earlier isolated, pair, chain and branch contracts and original recovery. See [decision](../decisions/quotation-task-merge.md), [handover](../delivery/quotation-task-merge-handover.md) and [ledger](../testing/evidence/quotation-task-merge/README.md).
+
+## Retained pre-#353-merge checkpoint — 6 October 2026
 
 Refreshed main is #352 merge `1ffcf653cd94982ea3f58253d3dc9c4f9be7ebbc`, checked head `3a2e1c02bdbfd84af589e1618b33bc30d9d72e7a`; all 41 head checks passed. The separate final post-merge observation now has all 38 checks successful: 37 assurance checks and the deployment job. This task did not deploy or verify hosted behaviour. Exact check/run evidence is retained in the branch ledger. Earlier failures/repairs/cancellations remain evidence; deployment and owner acceptance remain separate. This supersedes current pre-merge wording below while retaining its checkpoint meaning.
 

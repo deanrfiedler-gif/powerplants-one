@@ -3637,6 +3637,11 @@
           "id": "branch-receiving",
           "label": "Six decisions for a Project branch",
           "description": "A → B and A → C; explicit topology, both FS/SS relationships, distinct Branch task C receiving, current/proposed dates, extra-edge holds and four-receipt atomic outcome. Real host: tests/browser/quotation-task-branch.spec.ts."
+        },
+        {
+          "id": "merge-receiving",
+          "label": "Six decisions for a Project merge with retained B",
+          "description": "A → C and B → C; current native B position, two exact FS/SS links, independent B retention decision, A/C effects, extra-edge holds and three-receipt atomic outcome. Real host: tests/browser/quotation-task-merge.spec.ts."
         }
       ],
       "implementation": [
@@ -3698,7 +3703,8 @@
         "docs/decisions/quotation-material-resolution.md",
         "docs/decisions/quotation-task-dependency.md",
         "docs/decisions/quotation-task-chain.md",
-        "docs/decisions/quotation-task-branch.md"
+        "docs/decisions/quotation-task-branch.md",
+        "docs/decisions/quotation-task-merge.md"
       ],
       "reference": {
         "path": "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",
@@ -3794,6 +3800,14 @@
           "expected": "Paired review of explicit branch topology, six responsibilities and continuing material holds.",
           "actual": "Native branch adaptation; accepted branch images and owner/device/screen-reader review pending.",
           "action": "Compare compiled host evidence against the bounded branch contract; preserve chain and branch meaning.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "merge-resolution-review",
+          "expected": "Paired review of merge topology, retained B, six responsibilities and continuing holds.",
+          "actual": "Native merge adaptation; accepted imagery and owner/device/screen-reader review pending.",
+          "action": "Compare compiled host evidence with the bounded merge contract; preserve all earlier topology meaning.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

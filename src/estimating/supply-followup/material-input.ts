@@ -14,11 +14,19 @@ export const materialRoles = [
   "MaterialAction",
 ] as const;
 export type MaterialRole =
-  (typeof materialRoles)[number] | "Successor" | "ChainEnd" | "BranchSuccessor";
+  | (typeof materialRoles)[number]
+  | "Successor"
+  | "ChainEnd"
+  | "BranchSuccessor"
+  | "MergePredecessor"
+  | "MergeSuccessor";
 export function materialInput(
   id: string,
   action:
-    "MaterialPropose" | "MaterialReceive" | "MaterialReview" | "MaterialApply",
+    | "MaterialPropose"
+    | "MaterialReceive"
+    | "MaterialReview"
+    | "MaterialApply",
   value: unknown,
 ) {
   const extra =
@@ -31,6 +39,8 @@ export function materialInput(
           "successor_task_id",
           "chain_end_task_id",
           "branch_successor_task_id",
+          "merge_predecessor_task_id",
+          "merge_successor_task_id",
           "predecessor_id",
         ]
       : action === "MaterialApply"
@@ -69,6 +79,19 @@ export function materialInput(
       "branch_successor_task_id",
       "Select B and C as direct successors of A; a branch cannot also be a linear chain.",
     );
+  if (
+    (r.merge_predecessor_task_id !== undefined ||
+      r.merge_successor_task_id !== undefined) &&
+    (r.merge_predecessor_task_id === undefined ||
+      r.merge_successor_task_id === undefined ||
+      r.successor_task_id !== undefined ||
+      r.chain_end_task_id !== undefined ||
+      r.branch_successor_task_id !== undefined)
+  )
+    invalid(
+      "merge_predecessor_task_id",
+      "Select B and C together for A → C and B → C; earlier topology inputs cannot authorise a merge.",
+    );
   return {
     ...envelope(id, r),
     action,
@@ -94,11 +117,25 @@ export function materialInput(
     ...(action === "MaterialPropose" && r.chain_end_task_id !== undefined
       ? { chain_end_task_id: uuid(r.chain_end_task_id, "chain_end_task_id") }
       : {}),
-    ...(action === "MaterialPropose" && r.branch_successor_task_id !== undefined
+    ...(action === "MaterialPropose" &&
+    r.branch_successor_task_id !== undefined
       ? {
           branch_successor_task_id: uuid(
             r.branch_successor_task_id,
             "branch_successor_task_id",
+          ),
+        }
+      : {}),
+    ...(action === "MaterialPropose" &&
+    r.merge_predecessor_task_id !== undefined
+      ? {
+          merge_predecessor_task_id: uuid(
+            r.merge_predecessor_task_id,
+            "merge_predecessor_task_id",
+          ),
+          merge_successor_task_id: uuid(
+            r.merge_successor_task_id,
+            "merge_successor_task_id",
           ),
         }
       : {}),
@@ -121,6 +158,8 @@ export function materialInput(
             "Successor",
             "ChainEnd",
             "BranchSuccessor",
+            "MergePredecessor",
+            "MergeSuccessor",
           ] as const)
         : null,
     decision:

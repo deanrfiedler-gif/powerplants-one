@@ -1434,7 +1434,8 @@
         "docs/decisions/quotation-task-dependency.md",
         "docs/decisions/quotation-task-chain.md",
         "src/estimating/supply-followup/reads.ts",
-        "docs/decisions/quotation-task-branch.md"
+        "docs/decisions/quotation-task-branch.md",
+        "docs/decisions/quotation-task-merge.md"
       ],
       "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
       "visual_status": "Needs review",
@@ -1938,7 +1939,8 @@
         "docs/decisions/quotation-task-dependency.md",
         "docs/decisions/quotation-task-chain.md",
         "src/estimating/supply-followup/reads.ts",
-        "docs/decisions/quotation-task-branch.md"
+        "docs/decisions/quotation-task-branch.md",
+        "docs/decisions/quotation-task-merge.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -3584,7 +3586,8 @@
         "docs/decisions/quotation-task-dependency.md",
         "docs/decisions/quotation-task-chain.md",
         "src/estimating/supply-followup/reads.ts",
-        "docs/decisions/quotation-task-branch.md"
+        "docs/decisions/quotation-task-branch.md",
+        "docs/decisions/quotation-task-merge.md"
       ],
       "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
       "visual_status": "Needs review",
@@ -6326,7 +6329,8 @@
         "docs/decisions/quotation-task-dependency.md",
         "docs/decisions/quotation-task-chain.md",
         "src/estimating/supply-followup/reads.ts",
-        "docs/decisions/quotation-task-branch.md"
+        "docs/decisions/quotation-task-branch.md",
+        "docs/decisions/quotation-task-merge.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -10678,7 +10682,8 @@
         "docs/decisions/quotation-task-dependency.md",
         "docs/decisions/quotation-task-chain.md",
         "src/estimating/supply-followup/reads.ts",
-        "docs/decisions/quotation-task-branch.md"
+        "docs/decisions/quotation-task-branch.md",
+        "docs/decisions/quotation-task-merge.md"
       ],
       "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
       "visual_status": "Needs review",
@@ -11555,7 +11560,8 @@
         "docs/decisions/quotation-task-dependency.md",
         "docs/decisions/quotation-task-chain.md",
         "src/estimating/supply-followup/reads.ts",
-        "docs/decisions/quotation-task-branch.md"
+        "docs/decisions/quotation-task-branch.md",
+        "docs/decisions/quotation-task-merge.md"
       ],
       "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
       "visual_status": "Needs review",
