@@ -27,11 +27,7 @@ import {
   acknowledgement,
   referral,
 } from "../helpers/quotation-supply-followup";
-import {
-  database,
-  closeDatabase,
-  transaction,
-} from "../../src/platform/database";
+import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import {
   saveTask,
@@ -1013,76 +1009,37 @@ test("ES07 branch: Activity completion and review notes cannot clear operational
   );
 });
 
-for (const outgoing of [false, true])
-  test(`a new ${outgoing ? "outgoing" : "incoming"} edge at each branch task holds a frozen review even without a Project version change`, async () => {
-    const f = await fixture();
-    const other = {
-      ...taskInput(4),
-      owner_id: f.owner.actor_id,
-      status: "Planned",
-      progress: 0,
-    };
-    await saveTask(f.owner, f.project.id, other);
-    await executeMaterial(f.owner, f.id, "MaterialPropose", {
-      ...materialProposal(await currentFollowup(f), f.task.id),
-      successor_task_id: f.b.id,
-      branch_successor_task_id: f.c.id,
-    });
-    await receiveMaterial(f);
-    await executeMaterial(
-      f.owner,
-      f.id,
-      "MaterialReview",
-      materialReview(await currentFollowup(f)),
-    );
-    const original = await currentFollowup(f),
-      cmd = materialApply(original);
-    const project = (await readSchedule(f.owner, f.project.id)).project;
-    // Simulate a concurrent schema-level edge introduction without an aggregate version bump,
-    // so this proves complete edge reinspection rather than only optimistic version refusal.
-    for (const selected of [f.task.id, f.b.id, f.c.id]) {
-      const edge = [
-        f.owner.workspace_id,
-        f.project.id,
-        outgoing ? other.id : selected,
-        outgoing ? selected : other.id,
-      ];
-      await database().query(
-        "INSERT INTO ppo.project_dependencies(workspace_id,project_id,task_id,predecessor_id,kind) VALUES($1,$2,$3,$4,'FS')",
-        edge,
-      );
-      try {
-        const current = await currentFollowup(f);
-        assert.ok(current.material_resolution.holds.length);
-        assert.ok(
-          current.material_resolution.native_holds.some((h) =>
-            h.includes("additional"),
-          ),
-        );
-        assert.equal(current.material_resolution.can_apply, false);
-        await assert.rejects(
-          executeMaterial(f.owner, f.id, "MaterialApply", cmd),
-          conflict,
-        );
-        assert.deepEqual(
-          (await readSchedule(f.owner, f.project.id)).project,
-          project,
-        );
-      } finally {
-        await database().query(
-          "DELETE FROM ppo.project_dependencies WHERE workspace_id=$1 AND project_id=$2 AND task_id=$3 AND predecessor_id=$4",
-          edge,
-        );
-      }
-    }
-    assert.equal(
-      (await currentFollowup(f)).material_resolution.can_apply,
-      true,
-    );
+// Dependency writes are native task saves: the database also requires the exact
+// schedule snapshot. Separate graph-specific assertions prove fresh edge inspection.
+async function changeDependencies(
+  f: Awaited<ReturnType<typeof fixture>>,
+  id: string,
+  dependencies: { task_id: string; kind: "FS" | "SS" }[],
+) {
+  const schedule = await readSchedule(f.owner, f.project.id);
+  const task = schedule.tasks.find((t) => t.id === id)!;
+  await saveTask(f.owner, f.project.id, {
+    ...taskInput(schedule.project.version),
+    id,
+    title: task.title,
+    phase: task.phase,
+    status: task.status,
+    milestone: task.milestone,
+    progress: task.progress,
+    start_date: task.start_date,
+    finish_date: task.finish_date,
+    note: task.note,
+    owner_id: task.owner_id,
+    external_owner_id: task.external_owner_id,
+    dependencies,
   });
-
-test("branch review refuses B-C cross-links, a merge, reversed and missing selected relationships", async () => {
-  const f = await fixture();
+}
+async function freezeBranch(f: Awaited<ReturnType<typeof fixture>>) {
+  await executeMaterial(f.owner, f.id, "MaterialPropose", {
+    ...materialProposal(await currentFollowup(f), f.task.id),
+    successor_task_id: f.b.id,
+    branch_successor_task_id: f.c.id,
+  });
   await receiveMaterial(f);
   await executeMaterial(
     f.owner,
@@ -1090,52 +1047,95 @@ test("branch review refuses B-C cross-links, a merge, reversed and missing selec
     "MaterialReview",
     materialReview(await currentFollowup(f)),
   );
-  const original = await currentFollowup(f),
-    cmd = materialApply(original),
-    d = original.material_resolution.dependencies!.project.dependencies;
-  const edge = (task_id: string, predecessor_id: string) => ({
-    task_id,
-    predecessor_id,
-    kind: "FS",
-  });
-  const replace = async (edges: typeof d) =>
-    transaction(async (c) => {
-      await c.query(
-        "DELETE FROM ppo.project_dependencies WHERE workspace_id=$1 AND project_id=$2",
-        [f.owner.workspace_id, f.project.id],
-      );
-      for (const e of edges)
-        await c.query(
-          "INSERT INTO ppo.project_dependencies(workspace_id,project_id,task_id,predecessor_id,kind) VALUES($1,$2,$3,$4,$5)",
-          [
-            f.owner.workspace_id,
-            f.project.id,
-            e.task_id,
-            e.predecessor_id,
-            e.kind,
-          ],
-        );
+  return materialApply(await currentFollowup(f));
+}
+async function assertGraphRefusal(
+  f: Awaited<ReturnType<typeof fixture>>,
+  command: ReturnType<typeof materialApply>,
+) {
+  const before = await readSchedule(f.owner, f.project.id);
+  const t = await currentFollowup(f);
+  assert.ok(t.material_resolution.holds.length);
+  assert.ok(
+    t.material_resolution.native_holds.some((h) => h.includes("additional")),
+  );
+  assert.equal(t.material_resolution.can_apply, false);
+  await assert.rejects(
+    executeMaterial(f.owner, f.id, "MaterialApply", command),
+    conflict,
+  );
+  const after = await readSchedule(f.owner, f.project.id);
+  assert.deepEqual(after.project, before.project);
+  assert.deepEqual(after.tasks, before.tasks);
+  assert.equal((await currentFollowup(f)).material_resolution.applied, null);
+}
+
+for (const outgoing of [false, true])
+  for (const selectedName of ["A", "B", "C"] as const)
+    test(`a new ${outgoing ? "outgoing" : "incoming"} edge at branch task ${selectedName} holds frozen review and is explicitly identified by fresh graph inspection`, async () => {
+      const f = await fixture();
+      const other = {
+        ...taskInput(4),
+        owner_id: f.owner.actor_id,
+        status: "Planned",
+        progress: 0,
+      };
+      await saveTask(f.owner, f.project.id, other);
+      const command = await freezeBranch(f);
+      const selected =
+        selectedName === "A"
+          ? f.task.id
+          : selectedName === "B"
+            ? f.b.id
+            : f.c.id;
+      const changed = outgoing ? other.id : selected;
+      const schedule = await readSchedule(f.owner, f.project.id);
+      const oldDependencies = schedule.tasks.find(
+        (t) => t.id === changed,
+      )!.dependencies;
+      await changeDependencies(f, changed, [
+        ...oldDependencies,
+        { task_id: outgoing ? selected : other.id, kind: "FS" },
+      ]);
+      await assertGraphRefusal(f, command);
+      // Restoring the topology does not revive earlier consent across the native versions.
+      await changeDependencies(f, changed, oldDependencies);
+      const restored = await currentFollowup(f);
+      assert.equal(restored.material_resolution.native_holds.length, 0);
+      assert.equal(restored.material_resolution.can_apply, false);
+      assert.ok(restored.material_resolution.holds.length);
     });
-  for (const edges of [
-    [...d, edge(f.c.id, f.b.id)],
-    [...d, edge(f.b.id, f.c.id)],
-    [edge(f.c.id, f.task.id), edge(f.c.id, f.b.id)],
-    [edge(f.task.id, f.b.id), edge(f.c.id, f.task.id)],
-    d.slice(0, 1),
-    d.slice(1),
-  ]) {
-    await replace(edges);
-    try {
-      const t = await currentFollowup(f);
-      assert.ok(t.material_resolution.native_holds.length);
-      assert.equal(t.material_resolution.can_apply, false);
-      await assert.rejects(
-        executeMaterial(f.owner, f.id, "MaterialApply", cmd),
-        conflict,
+
+for (const shape of [
+  "B to C",
+  "C to B",
+  "merge",
+  "reversed A-B",
+  "missing A-B",
+  "missing A-C",
+] as const)
+  test(`branch review refuses ${shape} introduced by native dependency saves`, async () => {
+    const f = await fixture();
+    const command = await freezeBranch(f);
+    const dep = (task_id: string, kind: "FS" | "SS" = "FS") => ({
+      task_id,
+      kind,
+    });
+    if (shape === "B to C")
+      await changeDependencies(f, f.c.id, [dep(f.task.id, "SS"), dep(f.b.id)]);
+    else if (shape === "C to B")
+      await changeDependencies(f, f.b.id, [dep(f.task.id), dep(f.c.id)]);
+    else if (shape === "merge") {
+      await changeDependencies(f, f.b.id, []);
+      await changeDependencies(f, f.c.id, [dep(f.task.id, "SS"), dep(f.b.id)]);
+    } else if (shape === "reversed A-B") {
+      await changeDependencies(f, f.b.id, []);
+      await changeDependencies(f, f.task.id, [dep(f.b.id)]);
+    } else
+      await changeDependencies(
+        f,
+        shape === "missing A-B" ? f.b.id : f.c.id,
+        [],
       );
-    } finally {
-      await replace(d);
-    }
-  }
-  assert.equal((await currentFollowup(f)).material_resolution.can_apply, true);
-});
+    await assertGraphRefusal(f, command);
+  });
