@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        suite: [database, receipt-database, shortfall-database, material-database, dependency-database, runtime, shortfall-runtime, material-runtime, dependency-runtime]
+        suite: [database, receipt-database, shortfall-database, material-database, dependency-database, chain-database, runtime, shortfall-runtime, material-runtime, dependency-runtime, chain-runtime]
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     services:
@@ -77,13 +77,16 @@ jobs:
       - name: Dependency downstream receiving native effects and populated upgrade PostgreSQL proof
         if: matrix.suite == 'dependency-database'
         run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/quotation-task-dependency.test.ts
+      - name: Three-task chain receiving native effects and populated upgrade PostgreSQL proof
+        if: matrix.suite == 'chain-database'
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/quotation-task-chain.test.ts
       - name: Initialise the isolated runtime database
-        if: matrix.suite == 'runtime' || matrix.suite == 'shortfall-runtime' || matrix.suite == 'material-runtime' || matrix.suite == 'dependency-runtime'
+        if: matrix.suite == 'runtime' || matrix.suite == 'shortfall-runtime' || matrix.suite == 'material-runtime' || matrix.suite == 'dependency-runtime' || matrix.suite == 'chain-runtime'
         run: |
           npm run db:migrate
           npm run db:seed
       - name: Compile the exact contribution
-        if: matrix.suite == 'runtime' || matrix.suite == 'shortfall-runtime' || matrix.suite == 'material-runtime' || matrix.suite == 'dependency-runtime'
+        if: matrix.suite == 'runtime' || matrix.suite == 'shortfall-runtime' || matrix.suite == 'material-runtime' || matrix.suite == 'dependency-runtime' || matrix.suite == 'chain-runtime'
         run: npm run build
       - name: Compiled HTTP and write the restart checkpoint
         if: matrix.suite == 'runtime'
@@ -217,6 +220,39 @@ jobs:
       - name: Dependency compiled desktop mobile and shared-control proof
         if: matrix.suite == 'dependency-runtime'
         run: npx playwright test --config=playwright.compiled.config.ts tests/browser/quotation-task-dependency.spec.ts tests/browser/component-catalogue.spec.ts --output verification-evidence/quotation-task-dependency-browser --reporter=list
+      - name: Three-task chain compiled HTTP and write the restart checkpoint
+        if: matrix.suite == 'chain-runtime'
+        run: |
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > "$RUNNER_TEMP/ppo-supply-followup-http.log" 2>&1 &
+          ppo_supply_pid=$!
+          trap 'kill "$ppo_supply_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            curl --fail --silent http://127.0.0.1:3000/ > /dev/null && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx --test tests/http/quotation-task-chain.test.ts
+          PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/quotation-task-chain-restart.ts write
+      - name: Three-task chain actual PostgreSQL restart and original evidence recovery
+        if: matrix.suite == 'chain-runtime'
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: |
+          docker restart "$PPO_POSTGRES_CONTAINER"
+          for attempt in $(seq 1 30); do
+            docker exec "$PPO_POSTGRES_CONTAINER" pg_isready -U ppo_local -d ppo_synthetic_test && break
+            sleep 1
+          done
+          node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > "$RUNNER_TEMP/ppo-supply-followup-reopen.log" 2>&1 &
+          ppo_supply_pid=$!
+          trap 'kill "$ppo_supply_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            curl --fail --silent http://127.0.0.1:3000/ > /dev/null && break
+            sleep 1
+          done
+          PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/quotation-task-chain-restart.ts verify
+      - name: Three-task chain compiled desktop mobile and shared-control proof
+        if: matrix.suite == 'chain-runtime'
+        run: npx playwright test --config=playwright.compiled.config.ts tests/browser/quotation-task-chain.spec.ts tests/browser/component-catalogue.spec.ts --output verification-evidence/quotation-task-chain-browser --reporter=list
       - name: Retain synthetic execution evidence
         if: always() && matrix.suite == 'runtime'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -255,5 +291,16 @@ jobs:
           path: |
             verification-evidence/quotation-task-dependency-browser/
             verification-evidence/quotation-task-dependency-restart/
+            !**/trace.zip
+          retention-days: 14
+
+      - name: Retain synthetic chain execution evidence
+        if: always() && matrix.suite == 'chain-runtime'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: Quotation-task-chain-evidence
+          path: |
+            verification-evidence/quotation-task-chain-browser/
+            verification-evidence/quotation-task-chain-restart/
             !**/trace.zip
           retention-days: 14

@@ -144,3 +144,7 @@ J5 separates submitted deliverables, technical review, customer acceptance, open
 | PRJ-08 | Preserve handover/closure distinction | J5 staged acceptance/support/closeout; PA-18 |
 
 D-010 commercial policy, D-014 Smartsheet authority/parity and D-026 migration remain open. Unresolved design details are tracked as G01–G08 in the source assessment; no master decision is closed by this package. AT-01/09/17/20/21/24/30/32/34/36/38 stay at existing statuses. PA cases are authored future procedures only.
+
+## Owned three-task forecast chain — SYN-ES07-09
+
+SYN-ES07-09 extends the exact received allocation outcome to explicitly selected A → B → C in the same Active Project. Six separate decisions cover Demand, Project coordinator, A owner, MaterialAction owner, B owner and C owner. Immutable review precedes separate atomic application of three native task saves and the exact Impact successor. All four FS/SS combinations are supported; every additional touching edge or consequential link holds execution. Each task advances once, Project three times, Demand once; both relationships remain. Four native receipts substantiate scoped forecast withdrawal. Unmet Demand, independent Impacts, the Activity lifecycle and fresh explicit ES-07 disposition remain. Earlier isolated/two-task payloads and outcomes retain recovery. See [decision](../decisions/quotation-task-chain.md), [handover](../delivery/quotation-task-chain-handover.md) and [execution ledger](../testing/evidence/quotation-task-chain/README.md).

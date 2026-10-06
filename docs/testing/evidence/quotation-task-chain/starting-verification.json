@@ -1,0 +1,909 @@
+{
+  "merge": "4918948e4d1d85d29416e634c0b8025f948df814",
+  "pr": {
+    "headRefOid": "22aecbec3d8931356c18a6d6c7d050cc2b4922e8",
+    "mergeCommit": {
+      "oid": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    "mergedAt": "2026-10-06T07:24:11Z",
+    "number": 351,
+    "state": "MERGED",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T06:54:55Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853123/job/112126555858",
+        "name": "P01\u2013P11 browser proof",
+        "startedAt": "2026-10-06T05:42:17Z",
+        "status": "COMPLETED",
+        "workflowName": "Application assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:48:44Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853089/job/112126555396",
+        "name": "demo",
+        "startedAt": "2026-10-06T05:42:17Z",
+        "status": "COMPLETED",
+        "workflowName": "Azure demo preparation checks"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:51:09Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853086/job/112126555255",
+        "name": "leads",
+        "startedAt": "2026-10-06T05:42:16Z",
+        "status": "COMPLETED",
+        "workflowName": "CRM Leads implementation"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:44:27Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853067/job/112126554986",
+        "name": "CRM header and board visual checks",
+        "startedAt": "2026-10-06T05:42:17Z",
+        "status": "COMPLETED",
+        "workflowName": "CRM refinements assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T06:18:42Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853081/job/112126555438",
+        "name": "Compiled application browser-desktop proof",
+        "startedAt": "2026-10-06T05:42:17Z",
+        "status": "COMPLETED",
+        "workflowName": "Compiled application browser assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:42:46Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853049/job/112126554976",
+        "name": "register",
+        "startedAt": "2026-10-06T05:42:16Z",
+        "status": "COMPLETED",
+        "workflowName": "Development register integrity"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:42:39Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853060/job/112126555213",
+        "name": "Check documentation foundation",
+        "startedAt": "2026-10-06T05:42:17Z",
+        "status": "COMPLETED",
+        "workflowName": "Documentation assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:49:13Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853041/job/112126555030",
+        "name": "Email Calendar persisted journey and server permissions",
+        "startedAt": "2026-10-06T05:42:17Z",
+        "status": "COMPLETED",
+        "workflowName": "Email Calendar journey assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:55:06Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853066/job/112126555134",
+        "name": "Engineering EN-01\u2013EN-08 commands, lineage and browser journeys",
+        "startedAt": "2026-10-06T05:42:17Z",
+        "status": "COMPLETED",
+        "workflowName": "Engineering native workflow assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T06:10:46Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853046/job/112126555229",
+        "name": "E1 manual estimate, draft output and restart proof",
+        "startedAt": "2026-10-06T05:42:17Z",
+        "status": "COMPLETED",
+        "workflowName": "Estimating E1 assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:44:42Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853098/job/112126554999",
+        "name": "Synthetic estimating design checks",
+        "startedAt": "2026-10-06T05:43:25Z",
+        "status": "COMPLETED",
+        "workflowName": "Estimating design assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:49:07Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853085/job/112126555365",
+        "name": "Projects r10 scoped persistence and desktop interaction",
+        "startedAt": "2026-10-06T05:42:22Z",
+        "status": "COMPLETED",
+        "workflowName": "Projects Gantt assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:47:27Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853174/job/112126555887",
+        "name": "ES-07 Supply database proof",
+        "startedAt": "2026-10-06T05:42:17Z",
+        "status": "COMPLETED",
+        "workflowName": "Quotation Supply follow-up assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:47:56Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853097/job/112126555332",
+        "name": "ES-07 exact receiving, native conversion and recovery",
+        "startedAt": "2026-10-06T05:42:17Z",
+        "status": "COMPLETED",
+        "workflowName": "Quotation conversion assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:49:46Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853075/job/112126555291",
+        "name": "ES-07 completed conversion disposition and recovery",
+        "startedAt": "2026-10-06T05:42:17Z",
+        "status": "COMPLETED",
+        "workflowName": "Quotation disposition assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:48:51Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853137/job/112126555730",
+        "name": "ES-06 exact response, recovery and receiving boundary",
+        "startedAt": "2026-10-06T05:42:17Z",
+        "status": "COMPLETED",
+        "workflowName": "Quotation response assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T06:00:35Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853123/job/112126555639",
+        "name": "P01\u2013P11 finance proof",
+        "startedAt": "2026-10-06T05:42:17Z",
+        "status": "COMPLETED",
+        "workflowName": "Application assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T06:07:02Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853081/job/112126555161",
+        "name": "Compiled application browser-mobile proof",
+        "startedAt": "2026-10-06T05:42:16Z",
+        "status": "COMPLETED",
+        "workflowName": "Compiled application browser assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:45:59Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853174/job/112126555949",
+        "name": "ES-07 Supply receipt-database proof",
+        "startedAt": "2026-10-06T05:42:17Z",
+        "status": "COMPLETED",
+        "workflowName": "Quotation Supply follow-up assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:50:17Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853123/job/112126555687",
+        "name": "P01\u2013P11 reports proof",
+        "startedAt": "2026-10-06T05:42:17Z",
+        "status": "COMPLETED",
+        "workflowName": "Application assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:48:44Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853081/job/112126555290",
+        "name": "Compiled application retained proof",
+        "startedAt": "2026-10-06T05:42:16Z",
+        "status": "COMPLETED",
+        "workflowName": "Compiled application browser assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:46:56Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853174/job/112126555688",
+        "name": "ES-07 Supply shortfall-database proof",
+        "startedAt": "2026-10-06T05:42:17Z",
+        "status": "COMPLETED",
+        "workflowName": "Quotation Supply follow-up assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:51:28Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853123/job/112126555690",
+        "name": "P01\u2013P11 http proof",
+        "startedAt": "2026-10-06T05:42:18Z",
+        "status": "COMPLETED",
+        "workflowName": "Application assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:48:22Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853174/job/112126555881",
+        "name": "ES-07 Supply material-database proof",
+        "startedAt": "2026-10-06T05:42:53Z",
+        "status": "COMPLETED",
+        "workflowName": "Quotation Supply follow-up assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T06:44:20Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853123/job/112126556234",
+        "name": "P01\u2013P11 database-1 proof",
+        "startedAt": "2026-10-06T05:42:17Z",
+        "status": "COMPLETED",
+        "workflowName": "Application assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:46:21Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853174/job/112126555911",
+        "name": "ES-07 Supply dependency-database proof",
+        "startedAt": "2026-10-06T05:42:17Z",
+        "status": "COMPLETED",
+        "workflowName": "Quotation Supply follow-up assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T06:33:44Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853123/job/112126555743",
+        "name": "P01\u2013P11 database-2 proof",
+        "startedAt": "2026-10-06T05:42:17Z",
+        "status": "COMPLETED",
+        "workflowName": "Application assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:51:45Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853174/job/112126555835",
+        "name": "ES-07 Supply runtime proof",
+        "startedAt": "2026-10-06T05:42:17Z",
+        "status": "COMPLETED",
+        "workflowName": "Quotation Supply follow-up assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:47:53Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853174/job/112126555883",
+        "name": "ES-07 Supply shortfall-runtime proof",
+        "startedAt": "2026-10-06T05:42:17Z",
+        "status": "COMPLETED",
+        "workflowName": "Quotation Supply follow-up assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:50:58Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853174/job/112126555833",
+        "name": "ES-07 Supply material-runtime proof",
+        "startedAt": "2026-10-06T05:42:18Z",
+        "status": "COMPLETED",
+        "workflowName": "Quotation Supply follow-up assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:51:09Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853174/job/112126555809",
+        "name": "ES-07 Supply dependency-runtime proof",
+        "startedAt": "2026-10-06T05:42:17Z",
+        "status": "COMPLETED",
+        "workflowName": "Quotation Supply follow-up assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:55:31Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853123/job/112126555653",
+        "name": "P11 focused integrated quality and access proof",
+        "startedAt": "2026-10-06T05:42:17Z",
+        "status": "COMPLETED",
+        "workflowName": "Application assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T06:00:29Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853067/job/112126555199",
+        "name": "CRM desktop and mobile persistence and interaction proof",
+        "startedAt": "2026-10-06T05:42:18Z",
+        "status": "COMPLETED",
+        "workflowName": "CRM refinements assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T06:18:48Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853081/job/112136395608",
+        "name": "Desktop and mobile browser suite against the compiled application",
+        "startedAt": "2026-10-06T06:18:45Z",
+        "status": "COMPLETED",
+        "workflowName": "Compiled application browser assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:51:49Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853174/job/112129039457",
+        "name": "ES-07 owned Supply follow-up and original recovery",
+        "startedAt": "2026-10-06T05:51:47Z",
+        "status": "COMPLETED",
+        "workflowName": "Quotation Supply follow-up assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:47:13Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853123/job/112126555648",
+        "name": "P11 focused original HTTP and output isolation proof",
+        "startedAt": "2026-10-06T05:42:17Z",
+        "status": "COMPLETED",
+        "workflowName": "Application assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:51:26Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853123/job/112126555677",
+        "name": "P11 declared load and raw core-read performance proof",
+        "startedAt": "2026-10-06T05:42:16Z",
+        "status": "COMPLETED",
+        "workflowName": "Application assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T05:49:30Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853123/job/112126555501",
+        "name": "P11 three original browser failures diagnostic replay",
+        "startedAt": "2026-10-06T05:42:17Z",
+        "status": "COMPLETED",
+        "workflowName": "Application assurance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T06:55:01Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37419853123/job/112147143556",
+        "name": "P01\u2013P11 and CRM I1\u2013I2 local application and PostgreSQL proof",
+        "startedAt": "2026-10-06T06:54:57Z",
+        "status": "COMPLETED",
+        "workflowName": "Application assurance"
+      }
+    ],
+    "url": "https://github.com/deanrfiedler-gif/powerplants-one/pull/351"
+  },
+  "post_merge_checks": [
+    {
+      "name": "ES-07 owned Supply follow-up and original recovery",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-06T07:33:48Z",
+      "completed_at": "2026-10-06T07:33:51Z",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438653/job/112159776032",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "P11 focused integrated quality and access proof",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-06T07:24:17Z",
+      "completed_at": "2026-10-06T07:37:47Z",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438695/job/112156576237",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "CRM header and board visual checks",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-06T07:24:17Z",
+      "completed_at": "2026-10-06T07:26:29Z",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438818/job/112156575927",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "P01\u2013P11 finance proof",
+      "status": "in_progress",
+      "conclusion": null,
+      "started_at": "2026-10-06T07:24:17Z",
+      "completed_at": null,
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438695/job/112156575769",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "ES-07 Supply material-database proof",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-06T07:24:17Z",
+      "completed_at": "2026-10-06T07:29:34Z",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438653/job/112156575692",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "P01\u2013P11 browser proof",
+      "status": "in_progress",
+      "conclusion": null,
+      "started_at": "2026-10-06T07:24:17Z",
+      "completed_at": null,
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438695/job/112156575688",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "CRM desktop and mobile persistence and interaction proof",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-06T07:24:17Z",
+      "completed_at": "2026-10-06T07:40:21Z",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438818/job/112156575682",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "P01\u2013P11 database-1 proof",
+      "status": "in_progress",
+      "conclusion": null,
+      "started_at": "2026-10-06T07:24:16Z",
+      "completed_at": null,
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438695/job/112156575609",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "P01\u2013P11 http proof",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-06T07:24:17Z",
+      "completed_at": "2026-10-06T07:33:25Z",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438695/job/112156575576",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "ES-07 exact receiving, native conversion and recovery",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-06T07:24:17Z",
+      "completed_at": "2026-10-06T07:30:36Z",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438828/job/112156575549",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "P01\u2013P11 database-2 proof",
+      "status": "in_progress",
+      "conclusion": null,
+      "started_at": "2026-10-06T07:24:16Z",
+      "completed_at": null,
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438695/job/112156575543",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "Synthetic estimating design checks",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-06T07:24:16Z",
+      "completed_at": "2026-10-06T07:25:37Z",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438609/job/112156575533",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "P11 three original browser failures diagnostic replay",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-06T07:24:18Z",
+      "completed_at": "2026-10-06T07:32:16Z",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438695/job/112156575507",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "P01\u2013P11 reports proof",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-06T07:24:17Z",
+      "completed_at": "2026-10-06T07:32:22Z",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438695/job/112156575486",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "P11 focused original HTTP and output isolation proof",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-06T07:24:16Z",
+      "completed_at": "2026-10-06T07:29:00Z",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438695/job/112156575453",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "ES-07 Supply runtime proof",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-06T07:24:17Z",
+      "completed_at": "2026-10-06T07:33:46Z",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438653/job/112156575380",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "ES-07 Supply dependency-runtime proof",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-06T07:24:17Z",
+      "completed_at": "2026-10-06T07:32:21Z",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438653/job/112156575379",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "ES-07 Supply shortfall-database proof",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-06T07:24:16Z",
+      "completed_at": "2026-10-06T07:28:59Z",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438653/job/112156575366",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "ES-07 Supply receipt-database proof",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-06T07:24:17Z",
+      "completed_at": "2026-10-06T07:27:37Z",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438653/job/112156575358",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "register",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-06T07:24:17Z",
+      "completed_at": "2026-10-06T07:24:53Z",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438704/job/112156575331",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "Compiled application browser-desktop proof",
+      "status": "in_progress",
+      "conclusion": null,
+      "started_at": "2026-10-06T07:24:16Z",
+      "completed_at": null,
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438626/job/112156575305",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "ES-07 Supply database proof",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-06T07:24:17Z",
+      "completed_at": "2026-10-06T07:29:55Z",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438653/job/112156575297",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "ES-07 Supply material-runtime proof",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-06T07:24:16Z",
+      "completed_at": "2026-10-06T07:32:51Z",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438653/job/112156575288",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "Email Calendar persisted journey and server permissions",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-06T07:24:17Z",
+      "completed_at": "2026-10-06T07:29:04Z",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438709/job/112156575279",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "Compiled application retained proof",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-06T07:24:18Z",
+      "completed_at": "2026-10-06T07:31:11Z",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438626/job/112156575273",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "ES-07 Supply shortfall-runtime proof",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-06T07:24:16Z",
+      "completed_at": "2026-10-06T07:28:57Z",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438653/job/112156575261",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "P11 declared load and raw core-read performance proof",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-06T07:24:16Z",
+      "completed_at": "2026-10-06T07:34:39Z",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438695/job/112156575181",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "ES-06 exact response, recovery and receiving boundary",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-06T07:24:17Z",
+      "completed_at": "2026-10-06T07:30:33Z",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438686/job/112156575180",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "E1 manual estimate, draft output and restart proof",
+      "status": "in_progress",
+      "conclusion": null,
+      "started_at": "2026-10-06T07:24:16Z",
+      "completed_at": null,
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438673/job/112156575163",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "ES-07 completed conversion disposition and recovery",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-06T07:24:16Z",
+      "completed_at": "2026-10-06T07:29:27Z",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438625/job/112156575154",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "ES-07 Supply dependency-database proof",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-06T07:24:16Z",
+      "completed_at": "2026-10-06T07:28:59Z",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438653/job/112156575151",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "Compiled application browser-mobile proof",
+      "status": "in_progress",
+      "conclusion": null,
+      "started_at": "2026-10-06T07:24:16Z",
+      "completed_at": null,
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438626/job/112156575089",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    },
+    {
+      "name": "Check documentation foundation",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-06T07:24:16Z",
+      "completed_at": "2026-10-06T07:24:37Z",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37429438628/job/112156574732",
+      "head_sha": "4918948e4d1d85d29416e634c0b8025f948df814"
+    }
+  ],
+  "final_head_check_runs": {
+    "checks": [
+      {
+        "conclusion": "success",
+        "name": "P01\u2013P11 and CRM I1\u2013I2 local application and PostgreSQL proof",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Desktop and mobile browser suite against the compiled application",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "ES-07 owned Supply follow-up and original recovery",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "P01\u2013P11 database-1 proof",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "ES-07 Supply receipt-database proof",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "ES-07 Supply dependency-database proof",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "ES-07 Supply database proof",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "ES-07 Supply shortfall-runtime proof",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "ES-07 Supply material-database proof",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "P01\u2013P11 browser proof",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "ES-07 Supply runtime proof",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "ES-07 Supply material-runtime proof",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "ES-07 Supply dependency-runtime proof",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "P01\u2013P11 database-2 proof",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "ES-06 exact response, recovery and receiving boundary",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "P01\u2013P11 http proof",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "ES-07 Supply shortfall-database proof",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "P01\u2013P11 reports proof",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "P11 declared load and raw core-read performance proof",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "P11 focused integrated quality and access proof",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "P11 focused original HTTP and output isolation proof",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "P01\u2013P11 finance proof",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "P11 three original browser failures diagnostic replay",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Compiled application browser-desktop proof",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "demo",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Projects r10 scoped persistence and desktop interaction",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "ES-07 exact receiving, native conversion and recovery",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "ES-07 completed conversion disposition and recovery",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Compiled application retained proof",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "leads",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "E1 manual estimate, draft output and restart proof",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Check documentation foundation",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "CRM desktop and mobile persistence and interaction proof",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Compiled application browser-mobile proof",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Engineering EN-01\u2013EN-08 commands, lineage and browser journeys",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Email Calendar persisted journey and server permissions",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Synthetic estimating design checks",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "CRM header and board visual checks",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "register",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Contacts model and native browser review",
+        "status": "completed"
+      }
+    ],
+    "total": 40
+  }
+}

@@ -230,7 +230,7 @@ test("FS pair requires five exact decisions and atomically preserves dependency 
 const rows = async (table: string) =>
   (
     await database().query(
-      `SELECT to_jsonb(t)-'successor_command' value FROM ppo.${table} t ORDER BY to_jsonb(t)::text`,
+      `SELECT to_jsonb(t)-'successor_command'-'chain_end_command' value FROM ppo.${table} t ORDER BY to_jsonb(t)::text`,
     )
   ).rows;
 test("late refusal rolls back both task saves, dependency rows, histories and Impact; missing original is inconclusive and exact retry succeeds", async () => {
@@ -503,7 +503,7 @@ test("populated 0067 upgrade preserves isolated resolution, receiving, allocatio
   );
   assert.deepEqual(
     now.filter((r) => r.version > 67).map((r) => r.version),
-    [68],
+    [68, 69],
   );
   assert.deepEqual(await draftBytes(f.owner, f.id), bytes);
   assert.deepEqual(

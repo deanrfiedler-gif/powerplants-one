@@ -71,6 +71,7 @@ export type MaterialEvent = {
   review_hash: string | null;
   effect_receiving_ids: string[];
   project_command: ReturnType<typeof parseTask>;
+  chain_end_command?: ReturnType<typeof parseTask> | null;
   successor_command?: ReturnType<typeof parseTask> | null;
   impact_command: ReturnType<typeof factCommand> & { record_id: string };
   reason: string;
@@ -133,6 +134,7 @@ export async function materialDependencies(
   taskId: string,
   nativeActor: string = p.actor_id,
   successorId?: string,
+  chainEndId?: string,
 ) {
   const demand = await supplyRecord(c, p, demandId);
   if (demand.data.origin_kind !== "Project" || !demand.data.origin_id)
@@ -181,6 +183,7 @@ export async function materialDependencies(
     demand.data.origin_id,
     taskId,
     successorId,
+    chainEndId,
   );
   // Bind effective authority without exposing another owner's grant rows.
   // Only duties and scopes used by this exact source/downstream graph enter it.
@@ -225,6 +228,9 @@ export async function materialDependencies(
     ["MaterialAction", activity.owner_id, ["activity.edit"]],
     ...(project.successor
       ? [["Successor", project.successor.owner_id, []] as const]
+      : []),
+    ...(project.chainEnd
+      ? [["ChainEnd", project.chainEnd.owner_id, []] as const]
       : []),
     ["NativeActor", nativeActor, ["supply.coordinate", "project.edit"]],
   ] as const) {
@@ -333,6 +339,7 @@ export function materialEffects(d: MaterialDependencies) {
   const roles: MaterialRole[] = [
     ...materialRoles,
     ...(d.project.successor ? ["Successor" as const] : []),
+    ...(d.project.chainEnd ? ["ChainEnd" as const] : []),
   ];
   return roles.map((role) => ({
     role,
@@ -345,7 +352,9 @@ export function materialEffects(d: MaterialDependencies) {
             ? d.project.task.id
             : role === "Successor"
               ? d.project.successor!.id
-              : d.activity.id,
+              : role === "ChainEnd"
+                ? d.project.chainEnd!.id
+                : d.activity.id,
     owner_id:
       role === "Demand"
         ? d.demand.owner_id
@@ -355,7 +364,9 @@ export function materialEffects(d: MaterialDependencies) {
             ? d.project.task.owner_id
             : role === "Successor"
               ? d.project.successor!.owner_id
-              : d.activity.owner_id,
+              : role === "ChainEnd"
+                ? d.project.chainEnd!.owner_id
+                : d.activity.owner_id,
   }));
 }
 // The caller owns Checked for one actor's serialized read only. Do not retain
@@ -413,6 +424,7 @@ export async function materialEvidenceAuthority(
       d.project.project.id,
       d.project.task.id,
       d.project.successor?.id,
+      d.project.chainEnd?.id,
     );
     for (const row of d.project.engineering) {
       const { engineeringRow } = await import("../../engineering/service");
@@ -482,7 +494,7 @@ export async function materialOwner(
       ? "supply.coordinate"
       : role === "Project"
         ? "project.edit"
-        : role === "Task" || role === "Successor"
+        : role === "Task" || role === "Successor" || role === "ChainEnd"
           ? "project.read"
           : "activity.edit";
   const owner = await scopedOwner(
@@ -567,6 +579,7 @@ export async function materialState(
         proposal.task_id,
         proposal.created_by,
         proposal.dependencies.project.successor?.id,
+        proposal.dependencies.project.chainEnd?.id,
       )
     : null;
   const holds: string[] = [];
@@ -701,7 +714,7 @@ export async function materialOriginalAuthority(
         ? "supply.coordinate"
         : role === "Project"
           ? "project.edit"
-          : role === "Task" || role === "Successor"
+          : role === "Task" || role === "Successor" || role === "ChainEnd"
             ? "project.read"
             : "activity.edit";
     if (!(await hasPermission(c, p, cap, d.company_id, d.site_id ?? undefined)))
@@ -717,7 +730,7 @@ export async function materialNativeAuthority(
   if (!(await materialAvailable(c))) return;
   const proposal = (
     await c.query<MaterialEvent>(
-      "SELECT * FROM ppo.quote_material_events WHERE workspace_id=$1 AND action='MaterialPropose' AND (project_command->>'operation_id'=$2 OR to_jsonb(quote_material_events)->'successor_command'->>'operation_id'=$2 OR impact_command->>'operation_id'=$2)",
+      "SELECT * FROM ppo.quote_material_events WHERE workspace_id=$1 AND action='MaterialPropose' AND (project_command->>'operation_id'=$2 OR to_jsonb(quote_material_events)->'successor_command'->>'operation_id'=$2 OR to_jsonb(quote_material_events)->'chain_end_command'->>'operation_id'=$2 OR impact_command->>'operation_id'=$2)",
       [p.workspace_id, operation],
     )
   ).rows[0];
@@ -730,7 +743,8 @@ export async function materialNativeAuthority(
   ).rows[0];
   const expected =
     proposal.project_command.operation_id === operation ||
-    proposal.successor_command?.operation_id === operation
+    proposal.successor_command?.operation_id === operation ||
+    proposal.chain_end_command?.operation_id === operation
       ? proposal.project_command.project_id
       : proposal.demand_id;
   if (!applied || applied.created_by !== p.actor_id || target !== expected)

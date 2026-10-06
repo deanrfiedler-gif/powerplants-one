@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. SYN-ES07-08. Implemented in [PR #351](https://github.com/deanrfiedler-gif/powerplants-one/pull/351); source-specific execution evidence is retained below and in the ledger. Final-head CI, independent review, owner acceptance and deployment remain separate. [Decision](../decisions/quotation-task-dependency.md), [material contract](../contracts/quotation-material-resolution.md), [execution ledger](../testing/evidence/quotation-task-dependency/README.md).
+Owner: Dean Fiedler. SYN-ES07-08. Merged as `4918948` from checked head `22aecbe`, with all 40 head checks passed. Post-merge results are separate in the [chain reconciliation](../testing/evidence/quotation-task-chain/README.md). Implemented in [PR #351](https://github.com/deanrfiedler-gif/powerplants-one/pull/351); source-specific execution evidence is retained below and in the ledger. Final-head CI, independent review, owner acceptance and deployment remain separate. [Decision](../decisions/quotation-task-dependency.md), [material contract](../contracts/quotation-material-resolution.md), [execution ledger](../testing/evidence/quotation-task-dependency/README.md).
 
 SYN-ES07-08 adds explicit receiving for one FS/SS successor: withdraw both forecast dates from A and B, preserve their dependency, require five separate owner decisions, then atomically execute two native Projects task saves and the exact Impact successor. Project advances twice; each task and the selected Demand once. Unmet Demand, independent Impacts, Activity ownership and fresh explicit ES-07 disposition remain. Additional relationships or consequential links hold execution.
 
@@ -16,7 +16,7 @@ Current material readiness and unmet quantity are recomputed. The retained link 
 
 Migration 0068 adds no grants/seeds/identity types. Existing runtime privileges and catalog-based prepared reads remain; old command payloads and isolated outcomes remain recoverable. All earlier proof databases, unfinished Excel import, mandatory shards, complete broad browser runs, retained groups and aggregates remain. No framework, service, integration or deployment infrastructure is added.
 
-Next concrete programme increment: independently received handling of a three-task chain with exact owning Projects effects, after review of this one-edge slice; no graph-wide action is implied. Operational policy, accepted native imagery, paired visual, physical-device, screen-reader and owner acceptance remain open.
+The formerly next three-task increment is now the separate [SYN-ES07-09 contribution](quotation-task-chain-handover.md); this handover retains the one-edge contract and its historical proof. No graph-wide action is implied. Operational policy, accepted native imagery, paired visual, physical-device, screen-reader and owner acceptance remain open.
 
 Runtime source 4ab5a48 passed the complete dedicated Supply workflow, including seven new PostgreSQL cases and dependency HTTP/compiled 1/15. Both local and CI application/PostgreSQL restarts recovered eleven exact commands and twenty-two original receipts while preserving 1,061 snapshot rows and four output files. Captures at 1440/390/320px have bounded assistant observations; no owner or paired-mockup acceptance is claimed. The final PR head and completed broad checks are recorded on the PR, separately from this retained source checkpoint. #350's existing compiled desktop/mobile isolation is reused with complete 685-case discovery equivalence and unchanged deadlines/aggregates.
 

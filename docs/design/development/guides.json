@@ -6582,10 +6582,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-10-05",
+      "prepared_at": "2026-10-06",
       "source_commit": "a32b3b53c45bdc74061f3612c15d71c0544504d8",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance.",
+      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance. Chain execution is recorded separately in docs/testing/evidence/quotation-task-chain/README.md.",
       "sections": [
         {
           "section_id": "purpose",
@@ -6658,7 +6658,8 @@
             "The assigned owner accepts review, returns or holds. After acceptance record Retain, Hold or Adjust existing allocation, then apply that exact current review separately. Adjustment reuses Supply:Allocate on already Approved demand, preserves allocation identity/basis and enforces units, exact decimals and conservation. Consequential dependencies remain held.",
             "Select Reconcile unknown reservation outcome for an existing Unknown ExternalOutcome/Reservation fact. Retain its source operation, enter the evidenced result, UTC observation time and complete lookup evidence. Save review and Apply separately. Recover the native receipt, inspect remaining holds and explicitly reassess ES-07. This records evidence only. Unavailable lookup is inconclusive.",
             "In Resolve shared Shipment allocation shortfall, inspect original/corrected evidence and all Demands. Enter exact reduced quantities; blank means unchanged and zero preserves identity. Propose exact allocation reductions. Each changed Demand owner separately records Accepted, Returned or Held for the complete proposal. Review independently received reductions freezes consent and original command. Apply exact Supply review separately; native application is atomic for several allocations.",
-            "After an independently received allocation reduction, select the exact Requested Impact and Task A, then explicitly select its dependent successor B. Compare both tasks and the FS/SS direction. Record Demand, Project, Task, MaterialAction and Successor decisions separately, freeze the complete review, then apply. Additional links, changed evidence or missing consent hold execution."
+            "After an independently received allocation reduction, select the exact Requested Impact and Task A, then explicitly select its dependent successor B. Compare both tasks and the FS/SS direction. Record Demand, Project, Task, MaterialAction and Successor decisions separately, freeze the complete review, then apply. Additional links, changed evidence or missing consent hold execution.",
+            "After an exact received allocation reduction, select the affected task A, its successor B and the third task C dependent on B. All must be internally owned, dated Planned tasks at zero progress. Review both FS/SS links and all remaining holds. Record separate Demand, Project, Task, MaterialAction, Successor and Third task decisions, then freeze review and Apply separately. Extra edges or consequential links hold this action."
           ],
           "steps": [],
           "rows": [],
@@ -6672,7 +6673,8 @@
             "Applied retention resolves only the reviewed exception. Applied quantity revision changes the real native Forecast through Supply:Revise, preserving histories and producing an owned Supply impact. Later relevant changes reopen review. No replacement conversion, deletion, zero quantity, cancellation, procurement or work release is supported.",
             "Returned evidence references actual native effects and original receipts. Explicitly review and apply a fresh ES-07 disposition; notes and Activity completion do not clear exceptions. Approved demand stays Approved and quantity remains held. A separately eligible Forecast uses the existing positive quantity review/application. Supply impacts remain visible.",
             "Inspect the actual original native receipt, before/after versions, capacity and remaining unmet Demand. Obtain fresh readiness and a new explicit ES-07 disposition if a current exception exists. Owning workflows retain operational impacts; notes, Activity completion and completed Supply work do not clear them.",
-            "Check all three native receipts and both Unscheduled tasks with their dependency retained. Unmet Demand and independent holds continue. Reassess readiness and explicitly disposition any current ES-07 exception; Activity completion is separate."
+            "Check all three native receipts and both Unscheduled tasks with their dependency retained. Unmet Demand and independent holds continue. Reassess readiness and explicitly disposition any current ES-07 exception; Activity completion is separate.",
+            "A completed chain action returns four native receipts: three task saves and only the selected Impact successor. All three forecasts become Unscheduled; both dependencies stay. Unmet Demand, independent Impacts and MaterialAction remain. Reassess current readiness and explicitly disposition a current ES-07 exception; quotation retention does not stop operational follow-up."
           ],
           "steps": [],
           "rows": [],
@@ -6710,7 +6712,8 @@
             "After a lost response or inconclusive receipt, use Recover original conversion receipt or Retry exact original. Replacement actions stay blocked; a missing receipt is not proof of failure. Reload under the same authorised identity to recover the original operation. Stale edits remain visible; compare current evidence before Use current receiving basis. Revoked authority denies history and original recovery.",
             "The shared ES-07 journal covers review and application. Unknown outcomes block replacement; a missing receipt is inconclusive. Reload recovers the original result or permits exact-original retry. After stale evidence, compare this selected target and use Use compared disposition evidence; your text remains.",
             "Recover the original before replacement. Lost responses/inconclusive lookups retain exact operation/content across reload; current permissions precede recovery. Compare refreshed evidence without losing entered proposals.",
-            "After an uncertain result, recover the original action before replacement. Missing receipt is inconclusive. Exact retry keeps original quantities and operation; changed payload fails. All allocations roll back together on native refusal."
+            "After an uncertain result, recover the original action before replacement. Missing receipt is inconclusive. Exact retry keeps original quantities and operation; changed payload fails. All allocations roll back together on native refusal.",
+            "The third-task decision belongs to this complete proposal. Earlier isolated-task or two-task consent cannot transfer. Changed owners/effects/evidence require renewed receiving. Corrected decisions require a new review. Missing original receipts are inconclusive; recover or retry the unchanged actor-bound original before replacement."
           ],
           "steps": [],
           "rows": [],
@@ -6796,9 +6799,11 @@
         "docs/contracts/quotation-supply-followup.md",
         "docs/decisions/quotation-supply-followup-native.md",
         "docs/decisions/quotation-receipt-correction.md",
-        "docs/delivery/quotation-receipt-correction-handover.md"
+        "docs/delivery/quotation-receipt-correction-handover.md",
+        "docs/decisions/quotation-task-chain.md",
+        "docs/delivery/quotation-task-chain-handover.md"
       ],
-      "change_summary": "Adopted SYN-ES07-05 existing Receipt correction and independent affected-demand receiving.",
+      "change_summary": "SYN-ES07-09: independently receive exactly three Project task consequences.",
       "document_id": "PPO-GUIDE-ES-07",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -9946,10 +9951,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-06",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance.",
+      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance. Chain execution is recorded separately in docs/testing/evidence/quotation-task-chain/README.md.",
       "sections": [
         {
           "section_id": "purpose",
@@ -10037,7 +10042,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Task sequence for review against the applicable running release.",
+            "After an exact received allocation reduction, select the affected task A, its successor B and the third task C dependent on B. All must be internally owned, dated Planned tasks at zero progress. Review both FS/SS links and all remaining holds. Record separate Demand, Project, Task, MaterialAction, Successor and Third task decisions, then freeze review and Apply separately. Extra edges or consequential links hold this action."
           ],
           "steps": [
             "Distinguish the saved baseline from the current forecast",
@@ -10053,7 +10059,8 @@
           "paragraphs": [
             "Schedule movement can be explained against a preserved baseline.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A Gantt edit must not silently change confirmed service bookings."
+            "A Gantt edit must not silently change confirmed service bookings.",
+            "A completed chain action returns four native receipts: three task saves and only the selected Impact successor. All three forecasts become Unscheduled; both dependencies stay. Unmet Demand, independent Impacts and MaterialAction remain. Reassess current readiness and explicitly disposition a current ES-07 exception; quotation retention does not stop operational follow-up."
           ],
           "steps": [],
           "rows": [],
@@ -10109,7 +10116,9 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
+          "paragraphs": [
+            "The third-task decision belongs to this complete proposal. Earlier isolated-task or two-task consent cannot transfer. Changed owners/effects/evidence require renewed receiving. Corrected decisions require a new review. Missing original receipts are inconclusive; recover or retry the unchanged actor-bound original before replacement."
+          ],
           "steps": [],
           "rows": [
             [
@@ -10200,9 +10209,11 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/projects/ppo-projects-gantt-content-r10.html",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/quotation-task-chain.md",
+        "docs/delivery/quotation-task-chain-handover.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "SYN-ES07-09: independently receive exactly three Project task consequences.",
       "document_id": "PPO-GUIDE-PJ-03",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -19539,10 +19550,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-10-05",
+      "prepared_at": "2026-10-06",
       "source_commit": "0f10b7fb46a8ab512e9b019573ece272cf5920b9",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance.",
+      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance. Chain execution is recorded separately in docs/testing/evidence/quotation-task-chain/README.md.",
       "sections": [
         {
           "section_id": "purpose",
@@ -19617,7 +19628,8 @@
             "The assigned owner accepts review, returns or holds. After acceptance record Retain, Hold or Adjust existing allocation, then apply that exact current review separately. Adjustment reuses Supply:Allocate on already Approved demand, preserves allocation identity/basis and enforces units, exact decimals and conservation. Consequential dependencies remain held.",
             "Select Reconcile unknown reservation outcome for an existing Unknown ExternalOutcome/Reservation fact. Retain its source operation, enter the evidenced result, UTC observation time and complete lookup evidence. Save review and Apply separately. Recover the native receipt, inspect remaining holds and explicitly reassess ES-07. This records evidence only. Unavailable lookup is inconclusive.",
             "In Resolve shared Shipment allocation shortfall, inspect original/corrected evidence and all Demands. Enter exact reduced quantities; blank means unchanged and zero preserves identity. Propose exact allocation reductions. Each changed Demand owner separately records Accepted, Returned or Held for the complete proposal. Review independently received reductions freezes consent and original command. Apply exact Supply review separately; native application is atomic for several allocations.",
-            "After an independently received allocation reduction, select the exact Requested Impact and Task A, then explicitly select its dependent successor B. Compare both tasks and the FS/SS direction. Record Demand, Project, Task, MaterialAction and Successor decisions separately, freeze the complete review, then apply. Additional links, changed evidence or missing consent hold execution."
+            "After an independently received allocation reduction, select the exact Requested Impact and Task A, then explicitly select its dependent successor B. Compare both tasks and the FS/SS direction. Record Demand, Project, Task, MaterialAction and Successor decisions separately, freeze the complete review, then apply. Additional links, changed evidence or missing consent hold execution.",
+            "After an exact received allocation reduction, select the affected task A, its successor B and the third task C dependent on B. All must be internally owned, dated Planned tasks at zero progress. Review both FS/SS links and all remaining holds. Record separate Demand, Project, Task, MaterialAction, Successor and Third task decisions, then freeze review and Apply separately. Extra edges or consequential links hold this action."
           ],
           "steps": [],
           "rows": [],
@@ -19630,7 +19642,8 @@
             "Synthetic/manual coordination only. No live purchase, reservation, ERP receipt/shipment/return/credit, customer message, automatic reschedule or stock/Finance ledger is provided. Visual review, owner acceptance and deployment are separate.",
             "Returned evidence references actual native effects and original receipts. Explicitly review and apply a fresh ES-07 disposition; notes and Activity completion do not clear exceptions. Approved demand stays Approved and quantity remains held. A separately eligible Forecast uses the existing positive quantity review/application. Supply impacts remain visible.",
             "Inspect the actual original native receipt, before/after versions, capacity and remaining unmet Demand. Obtain fresh readiness and a new explicit ES-07 disposition if a current exception exists. Owning workflows retain operational impacts; notes, Activity completion and completed Supply work do not clear them.",
-            "Check all three native receipts and both Unscheduled tasks with their dependency retained. Unmet Demand and independent holds continue. Reassess readiness and explicitly disposition any current ES-07 exception; Activity completion is separate."
+            "Check all three native receipts and both Unscheduled tasks with their dependency retained. Unmet Demand and independent holds continue. Reassess readiness and explicitly disposition any current ES-07 exception; Activity completion is separate.",
+            "A completed chain action returns four native receipts: three task saves and only the selected Impact successor. All three forecasts become Unscheduled; both dependencies stay. Unmet Demand, independent Impacts and MaterialAction remain. Reassess current readiness and explicitly disposition a current ES-07 exception; quotation retention does not stop operational follow-up."
           ],
           "steps": [],
           "rows": [],
@@ -19665,7 +19678,8 @@
           "paragraphs": [
             "For validation errors, correct the named fields. For a stale revision, refresh and compare the retained proposal against current evidence. An uncertain save retains its original operation and content in this browser session: check the original receipt or retry that exact PPO save. Restored access is checked before any receipt is disclosed. Unknown external outcomes require evidence against the original reference; absence is not proof of failure.",
             "Recover the original before replacement. Lost responses/inconclusive lookups retain exact operation/content across reload; current permissions precede recovery. Compare refreshed evidence without losing entered proposals.",
-            "After an uncertain result, recover the original action before replacement. Missing receipt is inconclusive. Exact retry keeps original quantities and operation; changed payload fails. All allocations roll back together on native refusal."
+            "After an uncertain result, recover the original action before replacement. Missing receipt is inconclusive. Exact retry keeps original quantities and operation; changed payload fails. All allocations roll back together on native refusal.",
+            "The third-task decision belongs to this complete proposal. Earlier isolated-task or two-task consent cannot transfer. Changed owners/effects/evidence require renewed receiving. Corrected decisions require a new review. Missing original receipts are inconclusive; recover or retry the unchanged actor-bound original before replacement."
           ],
           "steps": [],
           "rows": [],
@@ -19748,9 +19762,11 @@
         "docs/contracts/quotation-supply-followup.md",
         "docs/decisions/quotation-supply-followup-native.md",
         "docs/decisions/quotation-receipt-correction.md",
-        "docs/delivery/quotation-receipt-correction-handover.md"
+        "docs/delivery/quotation-receipt-correction-handover.md",
+        "docs/decisions/quotation-task-chain.md",
+        "docs/delivery/quotation-task-chain-handover.md"
       ],
-      "change_summary": "Adopted SYN-ES07-05 existing Receipt correction and independent affected-demand receiving.",
+      "change_summary": "SYN-ES07-09: independently receive exactly three Project task consequences.",
       "document_id": "PPO-GUIDE-SC-09",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -42226,10 +42242,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-06",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance.",
+      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance. Chain execution is recorded separately in docs/testing/evidence/quotation-task-chain/README.md.",
       "sections": [
         {
           "section_id": "purpose",
@@ -42318,7 +42334,8 @@
           "title": "Complete the main task",
           "paragraphs": [
             "Task sequence for review against the applicable running release.",
-            "After an independently received allocation reduction, select the exact Requested Impact and Task A, then explicitly select its dependent successor B. Compare both tasks and the FS/SS direction. Record Demand, Project, Task, MaterialAction and Successor decisions separately, freeze the complete review, then apply. Additional links, changed evidence or missing consent hold execution."
+            "After an independently received allocation reduction, select the exact Requested Impact and Task A, then explicitly select its dependent successor B. Compare both tasks and the FS/SS direction. Record Demand, Project, Task, MaterialAction and Successor decisions separately, freeze the complete review, then apply. Additional links, changed evidence or missing consent hold execution.",
+            "After an exact received allocation reduction, select the affected task A, its successor B and the third task C dependent on B. All must be internally owned, dated Planned tasks at zero progress. Review both FS/SS links and all remaining holds. Record separate Demand, Project, Task, MaterialAction, Successor and Third task decisions, then freeze review and Apply separately. Extra edges or consequential links hold this action."
           ],
           "steps": [
             "Confirm the record reference and customer/site context in this record workspace.",
@@ -42336,7 +42353,8 @@
             "Project health has evidence and an accountable response.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
             "A colour indicator alone does not explain delivery health or acceptance.",
-            "Check all three native receipts and both Unscheduled tasks with their dependency retained. Unmet Demand and independent holds continue. Reassess readiness and explicitly disposition any current ES-07 exception; Activity completion is separate."
+            "Check all three native receipts and both Unscheduled tasks with their dependency retained. Unmet Demand and independent holds continue. Reassess readiness and explicitly disposition any current ES-07 exception; Activity completion is separate.",
+            "A completed chain action returns four native receipts: three task saves and only the selected Impact successor. All three forecasts become Unscheduled; both dependencies stay. Unmet Demand, independent Impacts and MaterialAction remain. Reassess current readiness and explicitly disposition a current ES-07 exception; quotation retention does not stop operational follow-up."
           ],
           "steps": [],
           "rows": [],
@@ -42392,7 +42410,9 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
+          "paragraphs": [
+            "The third-task decision belongs to this complete proposal. Earlier isolated-task or two-task consent cannot transfer. Changed owners/effects/evidence require renewed receiving. Corrected decisions require a new review. Missing original receipts are inconclusive; recover or retry the unchanged actor-bound original before replacement."
+          ],
           "steps": [],
           "rows": [
             [
@@ -42480,9 +42500,11 @@
       "source_paths": [
         "src/app/(business)/projects/[id]/page.tsx",
         "docs/reference/ui/projects/ppo-projects-gantt-content-r10.html",
-        "docs/blueprints/BP-06-projects-commercial-delivery.md"
+        "docs/blueprints/BP-06-projects-commercial-delivery.md",
+        "docs/decisions/quotation-task-chain.md",
+        "docs/delivery/quotation-task-chain-handover.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "SYN-ES07-09: independently receive exactly three Project task consequences.",
       "document_id": "PPO-GUIDE-PAGE-PROJECTS-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -68658,7 +68680,8 @@
           "paragraphs": [
             "For validation errors, correct the named fields. For a stale revision, refresh and compare the retained proposal against current evidence. An uncertain save retains its original operation and content in this browser session: check the original receipt or retry that exact PPO save. Restored access is checked before any receipt is disclosed. Unknown external outcomes require evidence against the original reference; absence is not proof of failure.",
             "Recover the original before replacement. Lost responses/inconclusive lookups retain exact operation/content across reload; current permissions precede recovery. Compare refreshed evidence without losing entered proposals.",
-            "After an uncertain result, recover the original action before replacement. Missing receipt is inconclusive. Exact retry keeps original quantities and operation; changed payload fails. All allocations roll back together on native refusal."
+            "After an uncertain result, recover the original action before replacement. Missing receipt is inconclusive. Exact retry keeps original quantities and operation; changed payload fails. All allocations roll back together on native refusal.",
+            "The third-task decision belongs to this complete proposal. Earlier isolated-task or two-task consent cannot transfer. Changed owners/effects/evidence require renewed receiving. Corrected decisions require a new review. Missing original receipts are inconclusive; recover or retry the unchanged actor-bound original before replacement."
           ],
           "steps": [],
           "headers": [],
@@ -68692,12 +68715,14 @@
           "rows": []
         }
       ],
-      "prepared_at": "2026-10-05",
-      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance.",
-      "change_summary": "Adopted SYN-ES07-05 existing Receipt correction and independent affected-demand receiving.",
+      "prepared_at": "2026-10-06",
+      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance. Chain execution is recorded separately in docs/testing/evidence/quotation-task-chain/README.md.",
+      "change_summary": "SYN-ES07-09: independently receive exactly three Project task consequences.",
       "source_paths": [
         "docs/decisions/quotation-receipt-correction.md",
-        "docs/delivery/quotation-receipt-correction-handover.md"
+        "docs/delivery/quotation-receipt-correction-handover.md",
+        "docs/decisions/quotation-task-chain.md",
+        "docs/delivery/quotation-task-chain-handover.md"
       ]
     },
     {
@@ -70590,7 +70615,8 @@
             "The assigned owner accepts review, returns or holds. After acceptance record Retain, Hold or Adjust existing allocation, then apply that exact current review separately. Adjustment reuses Supply:Allocate on already Approved demand, preserves allocation identity/basis and enforces units, exact decimals and conservation. Consequential dependencies remain held.",
             "Select Reconcile unknown reservation outcome for an existing Unknown ExternalOutcome/Reservation fact. Retain its source operation, enter the evidenced result, UTC observation time and complete lookup evidence. Save review and Apply separately. Recover the native receipt, inspect remaining holds and explicitly reassess ES-07. This records evidence only. Unavailable lookup is inconclusive.",
             "In Resolve shared Shipment allocation shortfall, inspect original/corrected evidence and all Demands. Enter exact reduced quantities; blank means unchanged and zero preserves identity. Propose exact allocation reductions. Each changed Demand owner separately records Accepted, Returned or Held for the complete proposal. Review independently received reductions freezes consent and original command. Apply exact Supply review separately; native application is atomic for several allocations.",
-            "After an independently received allocation reduction, select the exact Requested Impact and Task A, then explicitly select its dependent successor B. Compare both tasks and the FS/SS direction. Record Demand, Project, Task, MaterialAction and Successor decisions separately, freeze the complete review, then apply. Additional links, changed evidence or missing consent hold execution."
+            "After an independently received allocation reduction, select the exact Requested Impact and Task A, then explicitly select its dependent successor B. Compare both tasks and the FS/SS direction. Record Demand, Project, Task, MaterialAction and Successor decisions separately, freeze the complete review, then apply. Additional links, changed evidence or missing consent hold execution.",
+            "After an exact received allocation reduction, select the affected task A, its successor B and the third task C dependent on B. All must be internally owned, dated Planned tasks at zero progress. Review both FS/SS links and all remaining holds. Record separate Demand, Project, Task, MaterialAction, Successor and Third task decisions, then freeze review and Apply separately. Extra edges or consequential links hold this action."
           ],
           "steps": [],
           "rows": [],
@@ -70604,7 +70630,8 @@
             "Applied retention resolves only the reviewed exception. Applied quantity revision changes the real native Forecast through Supply:Revise, preserving histories and producing an owned Supply impact. Later relevant changes reopen review. No replacement conversion, deletion, zero quantity, cancellation, procurement or work release is supported.",
             "Returned evidence references actual native effects and original receipts. Explicitly review and apply a fresh ES-07 disposition; notes and Activity completion do not clear exceptions. Approved demand stays Approved and quantity remains held. A separately eligible Forecast uses the existing positive quantity review/application. Supply impacts remain visible.",
             "Inspect the actual original native receipt, before/after versions, capacity and remaining unmet Demand. Obtain fresh readiness and a new explicit ES-07 disposition if a current exception exists. Owning workflows retain operational impacts; notes, Activity completion and completed Supply work do not clear them.",
-            "Check all three native receipts and both Unscheduled tasks with their dependency retained. Unmet Demand and independent holds continue. Reassess readiness and explicitly disposition any current ES-07 exception; Activity completion is separate."
+            "Check all three native receipts and both Unscheduled tasks with their dependency retained. Unmet Demand and independent holds continue. Reassess readiness and explicitly disposition any current ES-07 exception; Activity completion is separate.",
+            "A completed chain action returns four native receipts: three task saves and only the selected Impact successor. All three forecasts become Unscheduled; both dependencies stay. Unmet Demand, independent Impacts and MaterialAction remain. Reassess current readiness and explicitly disposition a current ES-07 exception; quotation retention does not stop operational follow-up."
           ],
           "steps": [],
           "rows": [],
@@ -70642,7 +70669,8 @@
             "After a lost response or inconclusive receipt, use Recover original conversion receipt or Retry exact original. Replacement actions stay blocked; a missing receipt is not proof of failure. Reload under the same authorised identity to recover the original operation. Stale edits remain visible; compare current evidence before Use current receiving basis. Revoked authority denies history and original recovery.",
             "The shared ES-07 journal covers review and application. Unknown outcomes block replacement; a missing receipt is inconclusive. Reload recovers the original result or permits exact-original retry. After stale evidence, compare this selected target and use Use compared disposition evidence; your text remains.",
             "Recover the original before replacement. Lost responses/inconclusive lookups retain exact operation/content across reload; current permissions precede recovery. Compare refreshed evidence without losing entered proposals.",
-            "After an uncertain result, recover the original action before replacement. Missing receipt is inconclusive. Exact retry keeps original quantities and operation; changed payload fails. All allocations roll back together on native refusal."
+            "After an uncertain result, recover the original action before replacement. Missing receipt is inconclusive. Exact retry keeps original quantities and operation; changed payload fails. All allocations roll back together on native refusal.",
+            "The third-task decision belongs to this complete proposal. Earlier isolated-task or two-task consent cannot transfer. Changed owners/effects/evidence require renewed receiving. Corrected decisions require a new review. Missing original receipts are inconclusive; recover or retry the unchanged actor-bound original before replacement."
           ],
           "steps": [],
           "rows": [],
@@ -70711,8 +70739,8 @@
           "rows": []
         }
       ],
-      "prepared_at": "2026-10-05",
-      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance.",
+      "prepared_at": "2026-10-06",
+      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance. Chain execution is recorded separately in docs/testing/evidence/quotation-task-chain/README.md.",
       "source_paths": [
         "src/app/(business)/estimating/quotes/[id]/conversion/page.tsx",
         "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",
@@ -70723,14 +70751,16 @@
         "docs/contracts/quotation-supply-followup.md",
         "docs/decisions/quotation-supply-followup-native.md",
         "docs/decisions/quotation-receipt-correction.md",
-        "docs/delivery/quotation-receipt-correction-handover.md"
+        "docs/delivery/quotation-receipt-correction-handover.md",
+        "docs/decisions/quotation-task-chain.md",
+        "docs/delivery/quotation-task-chain-handover.md"
       ],
       "workflow_basis": [
         "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",
         "docs/blueprints/BP-04-estimating-quotation.md",
         "docs/decisions/quotation-conversion-native.md"
       ],
-      "change_summary": "Adopted SYN-ES07-05 existing Receipt correction and independent affected-demand receiving."
+      "change_summary": "SYN-ES07-09: independently receive exactly three Project task consequences."
     }
   ]
 }
