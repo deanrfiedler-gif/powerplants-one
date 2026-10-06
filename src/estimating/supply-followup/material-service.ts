@@ -11,7 +11,10 @@ import { factCommand } from "../../supply/validation";
 import { recordFactInTransaction } from "../../supply/commands";
 import { saveTaskInTransaction } from "../../projects/service";
 import { parseTask } from "../../projects/validation";
-import { conversionAuthority, conversionContext } from "../conversion/context";
+import {
+  conversionAuthority,
+  conversionContext,
+} from "../conversion/context";
 import { conversionReadClient } from "../conversion/source-authority";
 import { dispositionHash } from "../disposition/context";
 import { releaseHash } from "../release/context";
@@ -103,6 +106,8 @@ export async function executeMaterial(
         reviewHash: string | null = null;
       let deps: MaterialEvent["dependencies"],
         projectCommand: MaterialEvent["project_command"],
+        mergeSuccessorCommand: MaterialEvent["merge_successor_command"] =
+          null,
         branchSuccessorCommand: MaterialEvent["branch_successor_command"] =
           null,
         chainEndCommand: MaterialEvent["chain_end_command"] = null,
@@ -132,7 +137,7 @@ export async function executeMaterial(
         const competing = (
           await c.query(
             `SELECT 1 FROM ppo.quote_material_events p WHERE p.workspace_id=$1 AND p.target_id<>$2 AND p.action='MaterialPropose'
-         AND (p.impact_id=$3 OR p.task_id=ANY($4::uuid[]) OR (p.dependencies->'project'->'successor'->>'id')::uuid=ANY($4::uuid[]) OR (p.dependencies->'project'->'chainEnd'->>'id')::uuid=ANY($4::uuid[]) OR (p.dependencies->'project'->'branchSuccessor'->>'id')::uuid=ANY($4::uuid[]))
+         AND (p.impact_id=$3 OR p.task_id=ANY($4::uuid[]) OR (p.dependencies->'project'->'successor'->>'id')::uuid=ANY($4::uuid[]) OR (p.dependencies->'project'->'chainEnd'->>'id')::uuid=ANY($4::uuid[]) OR (p.dependencies->'project'->'branchSuccessor'->>'id')::uuid=ANY($4::uuid[]) OR (p.dependencies->'project'->'mergePredecessor'->>'id')::uuid=ANY($4::uuid[]) OR (p.dependencies->'project'->'mergeSuccessor'->>'id')::uuid=ANY($4::uuid[]))
          AND p.id=(SELECT id FROM ppo.quote_material_events WHERE workspace_id=p.workspace_id AND target_id=p.target_id AND action='MaterialPropose' ORDER BY sequence DESC LIMIT 1)
          AND p.referral_id=(SELECT id FROM ppo.quote_supply_events WHERE workspace_id=p.workspace_id AND target_id=p.target_id AND action='Refer' ORDER BY sequence DESC LIMIT 1)
          AND 'Accepted'=(SELECT decision FROM ppo.quote_supply_events WHERE workspace_id=p.workspace_id AND referral_id=p.referral_id AND action='Receive' ORDER BY sequence DESC LIMIT 1)
@@ -143,6 +148,12 @@ export async function executeMaterial(
               input.impact_id,
               [
                 input.task_id,
+                ...(input.merge_predecessor_task_id
+                  ? [
+                      input.merge_predecessor_task_id,
+                      input.merge_successor_task_id!,
+                    ]
+                  : []),
                 ...(input.successor_task_id ? [input.successor_task_id] : []),
                 ...(input.chain_end_task_id ? [input.chain_end_task_id] : []),
                 ...(input.branch_successor_task_id
@@ -168,6 +179,8 @@ export async function executeMaterial(
           input.successor_task_id,
           input.chain_end_task_id,
           input.branch_successor_task_id,
+          input.merge_predecessor_task_id,
+          input.merge_successor_task_id,
         );
         const task = deps.project.task;
         projectCommand = parseTask(deps.project.project.id, {
@@ -192,6 +205,25 @@ export async function executeMaterial(
           const next = deps.project.successor;
           const { project_id: nativeProject, ...firstTask } = projectCommand;
           successorCommand = parseTask(nativeProject, {
+            ...firstTask,
+            operation_id: randomUUID(),
+            expected_version: deps.project.project.version + 1,
+            id: next.id,
+            title: next.title,
+            phase: next.phase,
+            status: next.status,
+            milestone: next.milestone,
+            progress: next.progress,
+            note: next.note,
+            owner_id: next.owner_id,
+            external_owner_id: next.external_owner_id,
+            dependencies: next.dependencies,
+          });
+        }
+        if (deps.project.mergeSuccessor) {
+          const next = deps.project.mergeSuccessor;
+          const { project_id: nativeProject, ...firstTask } = projectCommand;
+          mergeSuccessorCommand = parseTask(nativeProject, {
             ...firstTask,
             operation_id: randomUUID(),
             expected_version: deps.project.project.version + 1,
@@ -258,14 +290,20 @@ export async function executeMaterial(
               ...deps.impact.data,
               state: "Reviewed",
               review_reference:
-                (branchSuccessorCommand
-                  ? "SYN-ES07-10 three-task branch A to B and A to C forecast withdrawal; SaveProjectTask original operation "
-                  : chainEndCommand
-                    ? "SYN-ES07-09 three-task chain forecast withdrawal; SaveProjectTask original operation "
-                    : successorCommand
-                      ? "SYN-ES07-08 dependency forecast withdrawal; SaveProjectTask original operation "
-                      : "SYN-ES07-07 forecast withdrawal; SaveProjectTask original operation ") +
+                (mergeSuccessorCommand
+                  ? "SYN-ES07-11 merge A to C and B to C; retain B exact; forecast withdrawal SaveProjectTask original operation "
+                  : branchSuccessorCommand
+                    ? "SYN-ES07-10 three-task branch A to B and A to C forecast withdrawal; SaveProjectTask original operation "
+                    : chainEndCommand
+                      ? "SYN-ES07-09 three-task chain forecast withdrawal; SaveProjectTask original operation "
+                      : successorCommand
+                        ? "SYN-ES07-08 dependency forecast withdrawal; SaveProjectTask original operation "
+                        : "SYN-ES07-07 forecast withdrawal; SaveProjectTask original operation ") +
                 projectCommand.operation_id +
+                (mergeSuccessorCommand
+                  ? "; merge C SaveProjectTask original operation " +
+                    mergeSuccessorCommand.operation_id
+                  : "") +
                 (successorCommand
                   ? "; successor SaveProjectTask original operation " +
                     successorCommand.operation_id
@@ -291,7 +329,12 @@ export async function executeMaterial(
           basis: t.basis,
           dependencies: deps,
           project_command: projectCommand,
-          ...(successorCommand ? { successor_command: successorCommand } : {}),
+          ...(mergeSuccessorCommand
+            ? { merge_successor_command: mergeSuccessorCommand }
+            : {}),
+          ...(successorCommand
+            ? { successor_command: successorCommand }
+            : {}),
           ...(chainEndCommand ? { chain_end_command: chainEndCommand } : {}),
           ...(branchSuccessorCommand
             ? { branch_successor_command: branchSuccessorCommand }
@@ -312,6 +355,7 @@ export async function executeMaterial(
         deps = s.dependencies!;
         proposalId = prop.id;
         projectCommand = prop.project_command;
+        mergeSuccessorCommand = prop.merge_successor_command;
         successorCommand = prop.successor_command;
         chainEndCommand = prop.chain_end_command;
         branchSuccessorCommand = prop.branch_successor_command;
@@ -335,7 +379,10 @@ export async function executeMaterial(
           if (owner.actor_id !== p.actor_id) throw unavailable();
         } else {
           if (t.referral.owner_id !== p.actor_id) throw unavailable();
-          await followupOwner(c, p, p.actor_id, t.basis, { context, checked });
+          await followupOwner(c, p, p.actor_id, t.basis, {
+            context,
+            checked,
+          });
           await materialCommandAuthority(c, p, prop, checked);
           receivingIds = s.required
             .filter((x) => x.decision)
@@ -380,6 +427,7 @@ export async function executeMaterial(
             if (decision === "WithdrawForecast") {
               for (const native of [
                 projectCommand,
+                ...(mergeSuccessorCommand ? [mergeSuccessorCommand] : []),
                 ...(successorCommand ? [successorCommand] : []),
                 ...(chainEndCommand ? [chainEndCommand] : []),
                 ...(branchSuccessorCommand ? [branchSuccessorCommand] : []),
@@ -460,6 +508,8 @@ export async function executeMaterial(
               deps.project.successor?.id,
               deps.project.chainEnd?.id,
               deps.project.branchSuccessor?.id,
+              deps.project.mergePredecessor?.id,
+              deps.project.mergeSuccessor?.id,
             );
           }
         }
@@ -491,6 +541,9 @@ export async function executeMaterial(
         review_hash: reviewHash,
         effect_receiving_ids: receivingIds,
         project_command: projectCommand,
+        ...(mergeSuccessorCommand
+          ? { merge_successor_command: mergeSuccessorCommand }
+          : {}),
         ...(successorCommand ? { successor_command: successorCommand } : {}),
         ...(chainEndCommand ? { chain_end_command: chainEndCommand } : {}),
         ...(branchSuccessorCommand

@@ -1,0 +1,112 @@
+{
+  "source_head": "8efa005b09aa73857211d9aff3c87cc420681f44",
+  "verified_at": "2026-10-06T13:41:51.015Z",
+  "original_postmaster": "2026-10-06 23:35:27.245939+10",
+  "restarted_postmaster": "2026-10-06 23:40:24.704765+10",
+  "exact_replays": 12,
+  "original_operation_receipts": 23,
+  "unchanged_snapshot_rows": 1085,
+  "unchanged_output_files": [
+    {
+      "id": "dd471219-9529-489a-b6b4-d17497704664",
+      "kind": "html",
+      "name": "dd471219-9529-489a-b6b4-d17497704664.html",
+      "hash": "4676096f16d7e5988dae577ff98f8e303bd3d05f3e94e40b0bdd1cb7510fb0ec"
+    },
+    {
+      "id": "dd471219-9529-489a-b6b4-d17497704664",
+      "kind": "pdf",
+      "name": "dd471219-9529-489a-b6b4-d17497704664.pdf",
+      "hash": "050db77e3171ce06d60e78c96c506fc7b777697dfbe0e5232d5d67dcf386d0af"
+    },
+    {
+      "id": "e669540f-4e3e-483d-9c93-2263ab9a1723",
+      "kind": "html",
+      "name": "e669540f-4e3e-483d-9c93-2263ab9a1723.html",
+      "hash": "6df6a2516211abaeed9a900028b965a0789fd3d87318b0765409f6a2b1c174c9"
+    },
+    {
+      "id": "e669540f-4e3e-483d-9c93-2263ab9a1723",
+      "kind": "pdf",
+      "name": "e669540f-4e3e-483d-9c93-2263ab9a1723.pdf",
+      "hash": "9587ce48e0ee74acd55617b25c753857e29105162f504e1484e18a08217ad0a2"
+    }
+  ],
+  "allocation_outcome_id": "9867a282-455e-4812-a3f7-82920d66a510",
+  "impact_predecessor": "dd63ebf9-0124-4ec4-829e-d2919cf81e1e",
+  "receiving_ids": [
+    "77d4f071-4616-4b0b-8ed4-09b2596c81bb",
+    "447f3ffa-ed0e-4ea5-a4ca-1dcca4400fe6",
+    "1db8ff66-f453-4baf-a13a-8a29ac311912",
+    "3920f842-f20e-4e2b-82e8-9a323aff3701",
+    "868ed1c4-d80b-40b1-b85c-5ba6914bad14",
+    "fe28624f-81a2-4cc5-81b1-60db024b1a3e"
+  ],
+  "native_receipts": [
+    {
+      "state": "Active",
+      "task_ids": [
+        "98b1daae-ef55-4f74-9c10-9f84dbc7aa58"
+      ],
+      "warnings": [],
+      "record_id": "bd5bc1ef-9327-4a48-922a-43feecb85478",
+      "receipt_id": "2c88fb19-f089-4d10-a750-0ff6b21b6689",
+      "accepted_at": "2026-10-06T13:39:14.380Z",
+      "operation_id": "e631dea7-3a4f-47bb-b27a-b3cae72cf69f",
+      "record_version": 5
+    },
+    {
+      "state": "Active",
+      "task_ids": [
+        "5bf627b5-bb24-43e5-acc5-a101e80f9c8b"
+      ],
+      "warnings": [],
+      "record_id": "bd5bc1ef-9327-4a48-922a-43feecb85478",
+      "receipt_id": "780d8f73-394d-4778-8741-1617ea73f495",
+      "accepted_at": "2026-10-06T13:39:14.396Z",
+      "operation_id": "f711da95-2281-4d17-ac48-4b06278b8158",
+      "record_version": 6
+    },
+    {
+      "state": "Recorded",
+      "task_ids": [
+        "4088cf85-fc18-4bf6-961e-69846f79b280"
+      ],
+      "warnings": [],
+      "record_id": "5f96f568-1a04-4740-8345-fcb4c93909ce",
+      "receipt_id": "26faa21a-d3fd-4d9d-929b-26aad83c5f62",
+      "accepted_at": "2026-10-06T13:39:14.416Z",
+      "operation_id": "d4199400-d441-456c-826f-139c8f172d56",
+      "record_version": 5
+    }
+  ],
+  "retained_predecessor": {
+    "id": "2a700597-acf4-4852-9fec-0d047f68a38d",
+    "note": "SYN Manual coordination",
+    "phase": "Procurement",
+    "title": "SYN dependent installation",
+    "status": "Planned",
+    "version": 1,
+    "owner_id": "30000000-0000-4000-8000-000000000001",
+    "progress": 0,
+    "milestone": false,
+    "synthetic": true,
+    "company_id": "20000000-0000-4000-8000-000000000001",
+    "created_at": "2026-10-06T23:38:45.954267+10:00",
+    "created_by": "30000000-0000-4000-8000-000000000001",
+    "project_id": "bd5bc1ef-9327-4a48-922a-43feecb85478",
+    "start_date": "2027-12-01",
+    "updated_at": "2026-10-06T23:38:45.954267+10:00",
+    "updated_by": "30000000-0000-4000-8000-000000000001",
+    "finish_date": "2027-12-10",
+    "workspace_id": "10000000-0000-4000-8000-000000000001",
+    "project_version": 3,
+    "external_owner_id": null
+  },
+  "unmet": "3.624999",
+  "application_processes": {
+    "before": 51656,
+    "after": 11436
+  },
+  "scope": "Candidate compiled application; proof script environment variable renamed locally. No application source change. Final-head CI is separate."
+}

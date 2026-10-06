@@ -191,7 +191,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // 0070 adds optional branch-command evidence and a separate receiving role. No seeds,
   // grants, identities or business-row rewrite. Existing runtime table grants apply;
   // current catalog shape isolates prepared plans. Populated 0069 and hosted upgrades prove preservation.
-  if (latestMigrationVersion !== 70) throw Error("Review the existing-demo upgrade for this release.");
+  // 0071 adds exclusive merge evidence and two receiving roles on the existing table.
+  // Earlier columns/payloads remain; no seed, grant, identity or table privilege change.
+  // The generic runtime grants remain sufficient; the migration ledger stays restricted.
+  if (latestMigrationVersion !== 71) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

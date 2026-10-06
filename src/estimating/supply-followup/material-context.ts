@@ -9,7 +9,12 @@ import { scopedOwner } from "../../shared/authority";
 import { visibleActivity } from "../../activities/activities";
 import { supplyRecord, financeAllowed } from "../../supply/context";
 import { factsFor, materialBasis } from "../../supply/reads";
-import { currentFacts, decimal, quantity, type Fact } from "../../supply/model";
+import {
+  currentFacts,
+  decimal,
+  quantity,
+  type Fact,
+} from "../../supply/model";
 import { allocationChanges } from "../../supply/reductions";
 import { projectRow, tasksFor } from "../../projects/service";
 import {
@@ -44,7 +49,10 @@ export type MaterialEvent = {
   execution_id: string;
   sequence: number;
   action:
-    "MaterialPropose" | "MaterialReceive" | "MaterialReview" | "MaterialApply";
+    | "MaterialPropose"
+    | "MaterialReceive"
+    | "MaterialReview"
+    | "MaterialApply";
   referral_id: string;
   receiving_id: string;
   proposal_id: string;
@@ -71,6 +79,7 @@ export type MaterialEvent = {
   review_hash: string | null;
   effect_receiving_ids: string[];
   project_command: ReturnType<typeof parseTask>;
+  merge_successor_command?: ReturnType<typeof parseTask> | null;
   branch_successor_command?: ReturnType<typeof parseTask> | null;
   chain_end_command?: ReturnType<typeof parseTask> | null;
   successor_command?: ReturnType<typeof parseTask> | null;
@@ -137,6 +146,8 @@ export async function materialDependencies(
   successorId?: string,
   chainEndId?: string,
   branchSuccessorId?: string,
+  mergePredecessorId?: string,
+  mergeSuccessorId?: string,
 ) {
   const demand = await supplyRecord(c, p, demandId);
   if (demand.data.origin_kind !== "Project" || !demand.data.origin_id)
@@ -145,7 +156,9 @@ export async function materialDependencies(
     );
   const allFacts = await factsFor(c, p, demand),
     facts = currentFacts(allFacts);
-  const impact = allFacts.find((f) => f.id === impactId && f.kind === "Impact");
+  const impact = allFacts.find(
+    (f) => f.id === impactId && f.kind === "Impact",
+  );
   if (!impact?.activity_id) throw unavailable();
   const chain: Fact[] = [];
   let ancestor: Fact | undefined = impact;
@@ -162,7 +175,10 @@ export async function materialDependencies(
     )
   ).rows) {
     const record = await supplyRecord(c, p, a.supply_id);
-    sources.push({ record, facts: currentFacts(await factsFor(c, p, record)) });
+    sources.push({
+      record,
+      facts: currentFacts(await factsFor(c, p, record)),
+    });
   }
   const children = [];
   for (const row of (
@@ -187,6 +203,8 @@ export async function materialDependencies(
     successorId,
     chainEndId,
     branchSuccessorId,
+    mergePredecessorId,
+    mergeSuccessorId,
   );
   // Bind effective authority without exposing another owner's grant rows.
   // Only duties and scopes used by this exact source/downstream graph enter it.
@@ -237,6 +255,12 @@ export async function materialDependencies(
       : []),
     ...(project.branchSuccessor
       ? [["BranchSuccessor", project.branchSuccessor.owner_id, []] as const]
+      : []),
+    ...(project.mergePredecessor
+      ? [["MergePredecessor", project.mergePredecessor.owner_id, []] as const]
+      : []),
+    ...(project.mergeSuccessor
+      ? [["MergeSuccessor", project.mergeSuccessor.owner_id, []] as const]
       : []),
     ["NativeActor", nativeActor, ["supply.coordinate", "project.edit"]],
   ] as const) {
@@ -309,6 +333,10 @@ export async function materialDependencies(
 }
 export function materialHolds(d: MaterialDependencies) {
   const holds = forecastHolds(d.project);
+  if (d.project.topology === "Merge" && decimal(d.unmet) <= 0n)
+    holds.push(
+      "A merge withdrawal requires current unmet Demand after the received reduction; do not infer an unsupported forecast from a note.",
+    );
   if (
     !d.facts.some((f) => f.id === d.impact.id && f.data.state === "Requested")
   )
@@ -344,6 +372,9 @@ export function materialHolds(d: MaterialDependencies) {
 export function materialEffects(d: MaterialDependencies) {
   const roles: MaterialRole[] = [
     ...materialRoles,
+    ...(d.project.mergePredecessor
+      ? ["MergePredecessor" as const, "MergeSuccessor" as const]
+      : []),
     ...(d.project.successor ? ["Successor" as const] : []),
     ...(d.project.chainEnd ? ["ChainEnd" as const] : []),
     ...(d.project.branchSuccessor ? ["BranchSuccessor" as const] : []),
@@ -351,33 +382,41 @@ export function materialEffects(d: MaterialDependencies) {
   return roles.map((role) => ({
     role,
     record_id:
-      role === "Demand"
-        ? d.demand.id
-        : role === "Project"
-          ? d.project.project.id
-          : role === "Task"
-            ? d.project.task.id
-            : role === "Successor"
-              ? d.project.successor!.id
-              : role === "ChainEnd"
-                ? d.project.chainEnd!.id
-                : role === "BranchSuccessor"
-                  ? d.project.branchSuccessor!.id
-                  : d.activity.id,
+      role === "MergePredecessor"
+        ? d.project.mergePredecessor!.id
+        : role === "MergeSuccessor"
+          ? d.project.mergeSuccessor!.id
+          : role === "Demand"
+            ? d.demand.id
+            : role === "Project"
+              ? d.project.project.id
+              : role === "Task"
+                ? d.project.task.id
+                : role === "Successor"
+                  ? d.project.successor!.id
+                  : role === "ChainEnd"
+                    ? d.project.chainEnd!.id
+                    : role === "BranchSuccessor"
+                      ? d.project.branchSuccessor!.id
+                      : d.activity.id,
     owner_id:
-      role === "Demand"
-        ? d.demand.owner_id
-        : role === "Project"
-          ? d.project.project.coordinator_id
-          : role === "Task"
-            ? d.project.task.owner_id
-            : role === "Successor"
-              ? d.project.successor!.owner_id
-              : role === "ChainEnd"
-                ? d.project.chainEnd!.owner_id
-                : role === "BranchSuccessor"
-                  ? d.project.branchSuccessor!.owner_id
-                  : d.activity.owner_id,
+      role === "MergePredecessor"
+        ? d.project.mergePredecessor!.owner_id
+        : role === "MergeSuccessor"
+          ? d.project.mergeSuccessor!.owner_id
+          : role === "Demand"
+            ? d.demand.owner_id
+            : role === "Project"
+              ? d.project.project.coordinator_id
+              : role === "Task"
+                ? d.project.task.owner_id
+                : role === "Successor"
+                  ? d.project.successor!.owner_id
+                  : role === "ChainEnd"
+                    ? d.project.chainEnd!.owner_id
+                    : role === "BranchSuccessor"
+                      ? d.project.branchSuccessor!.owner_id
+                      : d.activity.owner_id,
   }));
 }
 // The caller owns Checked for one actor's serialized read only. Do not retain
@@ -437,6 +476,8 @@ export async function materialEvidenceAuthority(
       d.project.successor?.id,
       d.project.chainEnd?.id,
       d.project.branchSuccessor?.id,
+      d.project.mergePredecessor?.id,
+      d.project.mergeSuccessor?.id,
     );
     for (const row of d.project.engineering) {
       const { engineeringRow } = await import("../../engineering/service");
@@ -498,7 +539,9 @@ export async function materialOwner(
   role: MaterialRole,
   checked?: Checked,
 ) {
-  const effect = materialEffects(e.dependencies).find((x) => x.role === role)!;
+  const effect = materialEffects(e.dependencies).find(
+    (x) => x.role === role,
+  )!;
   if (!effect?.owner_id) throw unavailable();
   const r = e.dependencies.demand;
   const cap =
@@ -509,7 +552,9 @@ export async function materialOwner(
         : role === "Task" ||
             role === "Successor" ||
             role === "ChainEnd" ||
-            role === "BranchSuccessor"
+            role === "BranchSuccessor" ||
+            role === "MergePredecessor" ||
+            role === "MergeSuccessor"
           ? "project.read"
           : "activity.edit";
   const owner = await scopedOwner(
@@ -564,7 +609,11 @@ export async function materialState(
   );
   const candidates = [];
   for (const candidate of allocationMaterialCandidates(basis, followups)) {
-    const activity = await visibleActivity(c, p, candidate.impact.activity_id!);
+    const activity = await visibleActivity(
+      c,
+      p,
+      candidate.impact.activity_id!,
+    );
     const project = await projectRow(c, p, candidate.demand.data.origin_id!);
     const tasks = (await tasksFor(c, p, project.id)).filter(
       (t) => t.owner_id && !t.owner_unavailable,
@@ -596,6 +645,8 @@ export async function materialState(
         proposal.dependencies.project.successor?.id,
         proposal.dependencies.project.chainEnd?.id,
         proposal.dependencies.project.branchSuccessor?.id,
+        proposal.dependencies.project.mergePredecessor?.id,
+        proposal.dependencies.project.mergeSuccessor?.id,
       )
     : null;
   const holds: string[] = [];
@@ -628,10 +679,14 @@ export async function materialState(
       );
   }
   const required = [];
-  for (const effect of proposal ? materialEffects(proposal.dependencies) : []) {
+  for (const effect of proposal
+    ? materialEffects(proposal.dependencies)
+    : []) {
     const decision =
       current
-        .filter((e) => e.action === "MaterialReceive" && e.role === effect.role)
+        .filter(
+          (e) => e.action === "MaterialReceive" && e.role === effect.role,
+        )
         .at(-1) ?? null;
     const local: string[] = [];
     let can_receive = false;
@@ -643,7 +698,13 @@ export async function materialState(
           ". Receipt/allocation acceptance is insufficient.",
       );
     try {
-      const owner = await materialOwner(c, p, proposal!, effect.role, checked);
+      const owner = await materialOwner(
+        c,
+        p,
+        proposal!,
+        effect.role,
+        checked,
+      );
       can_receive = owner.actor_id === p.actor_id;
     } catch (e) {
       if (!(e instanceof AppError)) throw e;
@@ -733,10 +794,14 @@ export async function materialOriginalAuthority(
           : role === "Task" ||
               role === "Successor" ||
               role === "ChainEnd" ||
-              role === "BranchSuccessor"
+              role === "BranchSuccessor" ||
+              role === "MergePredecessor" ||
+              role === "MergeSuccessor"
             ? "project.read"
             : "activity.edit";
-    if (!(await hasPermission(c, p, cap, d.company_id, d.site_id ?? undefined)))
+    if (
+      !(await hasPermission(c, p, cap, d.company_id, d.site_id ?? undefined))
+    )
       throw unavailable();
   }
 }
@@ -749,7 +814,7 @@ export async function materialNativeAuthority(
   if (!(await materialAvailable(c))) return;
   const proposal = (
     await c.query<MaterialEvent>(
-      "SELECT * FROM ppo.quote_material_events WHERE workspace_id=$1 AND action='MaterialPropose' AND (project_command->>'operation_id'=$2 OR to_jsonb(quote_material_events)->'successor_command'->>'operation_id'=$2 OR to_jsonb(quote_material_events)->'chain_end_command'->>'operation_id'=$2 OR to_jsonb(quote_material_events)->'branch_successor_command'->>'operation_id'=$2 OR impact_command->>'operation_id'=$2)",
+      "SELECT * FROM ppo.quote_material_events WHERE workspace_id=$1 AND action='MaterialPropose' AND (project_command->>'operation_id'=$2 OR to_jsonb(quote_material_events)->'successor_command'->>'operation_id'=$2 OR to_jsonb(quote_material_events)->'chain_end_command'->>'operation_id'=$2 OR to_jsonb(quote_material_events)->'branch_successor_command'->>'operation_id'=$2 OR to_jsonb(quote_material_events)->'merge_successor_command'->>'operation_id'=$2 OR impact_command->>'operation_id'=$2)",
       [p.workspace_id, operation],
     )
   ).rows[0];
@@ -764,6 +829,7 @@ export async function materialNativeAuthority(
     proposal.project_command.operation_id === operation ||
     proposal.successor_command?.operation_id === operation ||
     proposal.chain_end_command?.operation_id === operation ||
+    proposal.merge_successor_command?.operation_id === operation ||
     proposal.branch_successor_command?.operation_id === operation
       ? proposal.project_command.project_id
       : proposal.demand_id;

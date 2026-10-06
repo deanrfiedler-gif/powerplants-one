@@ -650,6 +650,10 @@ const legacyRows = async (table: string) =>
       assert.equal(old.branch_successor_command, null);
       delete old.branch_successor_command;
     }
+    if (Object.hasOwn(old, "merge_successor_command")) {
+      assert.equal(old.merge_successor_command, null);
+      delete old.merge_successor_command;
+    }
     return { value: old };
   });
 for (const topology of ["isolated-task", "two-task", "linear-chain"])
@@ -739,7 +743,7 @@ for (const topology of ["isolated-task", "two-task", "linear-chain"])
     );
     assert.deepEqual(
       now.filter((r) => r.version > 69).map((r) => r.version),
-      [70],
+      [70, 71],
     );
     for (const {
       f,

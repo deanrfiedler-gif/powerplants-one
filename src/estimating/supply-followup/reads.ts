@@ -14,9 +14,10 @@ export async function receivingWorklist(
 ) {
   object(query, []);
   return transaction(async (client) => {
-    await client.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [
-      p.workspace_id,
-    ]);
+    await client.query(
+      "SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE",
+      [p.workspace_id],
+    );
     const c = await conversionReadClient(client, p);
     let coordinationError: AppError | null = null;
     try {
@@ -71,7 +72,9 @@ export async function receivingWorklist(
          JOIN ppo.projects p ON (p.workspace_id,p.id)=(t.workspace_id,t.project_id)
          JOIN ppo.activities a ON a.workspace_id=e.workspace_id AND a.id=(e.dependencies->'activity'->>'id')::uuid
          LEFT JOIN ppo.project_tasks branch_successor ON branch_successor.workspace_id=e.workspace_id AND branch_successor.id=(e.dependencies->'project'->'branchSuccessor'->>'id')::uuid
-         WHERE e.workspace_id=$1 AND e.action='MaterialPropose' AND $2::uuid IN (d.owner_id,t.owner_id,p.coordinator_id,a.owner_id,successor.owner_id,chain_end.owner_id,branch_successor.owner_id)`,
+         LEFT JOIN ppo.project_tasks merge_predecessor ON merge_predecessor.workspace_id=e.workspace_id AND merge_predecessor.id=(e.dependencies->'project'->'mergePredecessor'->>'id')::uuid
+         LEFT JOIN ppo.project_tasks merge_successor ON merge_successor.workspace_id=e.workspace_id AND merge_successor.id=(e.dependencies->'project'->'mergeSuccessor'->>'id')::uuid
+         WHERE e.workspace_id=$1 AND e.action='MaterialPropose'  AND $2::uuid IN (d.owner_id,t.owner_id,p.coordinator_id,a.owner_id,successor.owner_id,chain_end.owner_id,branch_successor.owner_id,merge_predecessor.owner_id,merge_successor.owner_id)`,
           [p.workspace_id, p.actor_id],
         )
       ).rows)
@@ -88,7 +91,8 @@ export async function receivingWorklist(
         );
         if (rowSummary) rows.push(rowSummary);
       } catch (e) {
-        if (!(e instanceof AppError && [403, 404].includes(e.status))) throw e;
+        if (!(e instanceof AppError && [403, 404].includes(e.status)))
+          throw e;
       }
     }
     if (coordinationError && !rows.length) throw coordinationError;

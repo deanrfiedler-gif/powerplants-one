@@ -417,7 +417,7 @@ test("ES07 dependency populated 0063 upgrade preserves all rows, accepted review
   );
   assert.deepEqual(
     after.filter((r) => r.version > 63).map((r) => r.version),
-    [64, 65, 66, 67, 68, 69, 70],
+    [64, 65, 66, 67, 68, 69, 70, 71],
   );
   assert.deepEqual(await draftBytes(f.owner, f.draft.id), draft);
   assert.deepEqual(await draftBytes(f.owner, f.id), issued);

@@ -20,6 +20,8 @@ export function MaterialResolution({
   const [successor, setSuccessor] = useState("");
   const [chainEnd, setChainEnd] = useState("");
   const [branchSuccessor, setBranchSuccessor] = useState("");
+  const [mergePredecessor, setMergePredecessor] = useState("");
+  const [mergeSuccessor, setMergeSuccessor] = useState("");
   const [decisions, setDecisions] = useState<Record<string, string>>({});
   const [review, setReview] = useState("Hold");
   const [dirty, setDirty] = useState(false);
@@ -35,6 +37,16 @@ export function MaterialResolution({
   };
   const proposal = s.proposal;
   const d = s.dependencies;
+  const roleLabel = (role: string) =>
+    role === "ChainEnd"
+      ? "Third task"
+      : role === "BranchSuccessor"
+        ? "Branch task C"
+        : role === "MergePredecessor"
+          ? "Retained predecessor B"
+          : role === "MergeSuccessor"
+            ? "Merge task C"
+            : role;
   return (
     <section aria-label="Owned downstream material resolution">
       <h3>Resolve the affected Project forecast</h3>
@@ -42,15 +54,16 @@ export function MaterialResolution({
         Withdraw both forecast dates from an unstarted Planned task and, when
         explicitly selected, its directly dependent successor and a third task
         dependent on that successor, or a branch with two direct successors of
-        the affected task (A → B and A → C). Each affected owner receives the
-        complete exact proposal separately. Receipt and allocation acceptance do
-        not authorise this action.
+        the affected task (A → B and A → C), or a merge (A → C and B → C) that
+        withdraws A/C and retains B exactly. Each affected owner receives the
+        complete exact proposal separately. Receipt and allocation acceptance
+        do not authorise this action.
       </p>
       <p>
         Project dates and the selected Demand version change. The exact Impact
         receives a successor linked to verified Projects evidence.
-        MaterialAction remains an Activity with its own lifecycle. Unmet Demand
-        and independent holds remain.
+        MaterialAction remains an Activity with its own lifecycle. Unmet
+        Demand and independent holds remain.
       </p>
       {!c && !proposal && (
         <p>
@@ -78,10 +91,13 @@ export function MaterialResolution({
             onChange={(v) => {
               setSelected(v);
               setSuccessor("");
+              setMergePredecessor("");
+              setMergeSuccessor("");
               setChainEnd("");
               setBranchSuccessor("");
               setTask(
-                s.candidates.find((x) => x.impact.id === v)?.tasks[0]?.id ?? "",
+                s.candidates.find((x) => x.impact.id === v)?.tasks[0]?.id ??
+                  "",
               );
               setDirty(true);
             }}
@@ -106,6 +122,8 @@ export function MaterialResolution({
                 onChange={(v) => {
                   setTask(v);
                   setSuccessor("");
+                  setMergePredecessor("");
+                  setMergeSuccessor("");
                   setChainEnd("");
                   setBranchSuccessor("");
                   setDirty(true);
@@ -118,13 +136,17 @@ export function MaterialResolution({
                 disabled={blocked}
                 empty="No successor selected; isolated task only"
                 options={c.tasks
-                  .filter((x) => x.dependencies.some((d) => d.task_id === task))
+                  .filter((x) =>
+                    x.dependencies.some((d) => d.task_id === task),
+                  )
                   .map((x) => ({
                     id: x.id,
                     display_name: `${x.title} · ${x.dependencies.find((d) => d.task_id === task)?.kind} from selected task · ${x.start_date ?? "Unscheduled"} to ${x.finish_date ?? "Unscheduled"}`,
                   }))}
                 onChange={(v) => {
                   setSuccessor(v);
+                  setMergePredecessor("");
+                  setMergeSuccessor("");
                   setChainEnd("");
                   setBranchSuccessor("");
                   setDirty(true);
@@ -150,6 +172,8 @@ export function MaterialResolution({
                     }))}
                   onChange={(v) => {
                     setChainEnd(v);
+                    setMergePredecessor("");
+                    setMergeSuccessor("");
                     setBranchSuccessor("");
                     setDirty(true);
                   }}
@@ -175,13 +199,67 @@ export function MaterialResolution({
                     }))}
                   onChange={(v) => {
                     setBranchSuccessor(v);
+                    setMergePredecessor("");
+                    setMergeSuccessor("");
                     setChainEnd("");
                     setDirty(true);
                   }}
                 />
               )}
+              <SelectField
+                name="material-merge-successor"
+                label="Merge task C dependent on both A and B"
+                value={mergeSuccessor}
+                disabled={blocked}
+                empty="No merge selected"
+                options={c.tasks
+                  .filter(
+                    (x) =>
+                      x.dependencies.length === 2 &&
+                      x.dependencies.some((d) => d.task_id === task),
+                  )
+                  .map((x) => ({ id: x.id, display_name: x.title }))}
+                onChange={(v) => {
+                  setMergeSuccessor(v);
+                  setMergePredecessor("");
+                  setSuccessor("");
+                  setChainEnd("");
+                  setBranchSuccessor("");
+                  setDirty(true);
+                }}
+              />
+              {mergeSuccessor && (
+                <SelectField
+                  name="material-merge-predecessor"
+                  label="Retained predecessor B whose forecast remains unchanged"
+                  value={mergePredecessor}
+                  disabled={blocked}
+                  empty="Select the other predecessor of C"
+                  options={c.tasks
+                    .filter(
+                      (x) =>
+                        x.id !== task &&
+                        c.tasks
+                          .find((t) => t.id === mergeSuccessor)
+                          ?.dependencies.some((d) => d.task_id === x.id),
+                    )
+                    .map((x) => ({
+                      id: x.id,
+                      display_name: `${x.title} · ${x.start_date} to ${x.finish_date} · retain exact position`,
+                    }))}
+                  onChange={(v) => {
+                    setMergePredecessor(v);
+                    setDirty(true);
+                  }}
+                />
+              )}
               <Button
-                disabled={disabled || !owned || !task}
+                disabled={
+                  disabled ||
+                  !owned ||
+                  !task ||
+                  (!!mergeSuccessor && !mergePredecessor)
+                }
                 onClick={() =>
                   send("material-propose", {
                     ...envelope,
@@ -189,6 +267,12 @@ export function MaterialResolution({
                     demand_id: c.demand.id,
                     impact_id: c.impact.id,
                     task_id: task,
+                    ...(mergeSuccessor
+                      ? {
+                          merge_predecessor_task_id: mergePredecessor,
+                          merge_successor_task_id: mergeSuccessor,
+                        }
+                      : {}),
                     ...(successor ? { successor_task_id: successor } : {}),
                     ...(chainEnd ? { chain_end_task_id: chainEnd } : {}),
                     ...(branchSuccessor
@@ -218,8 +302,8 @@ export function MaterialResolution({
             <Status value={d.material.readiness.state} />
           </p>
           <p>
-            Impact {proposal.impact_id}; MaterialAction {d.activity.id}, version{" "}
-            {d.activity.version}, {d.activity.state}. Referral{" "}
+            Impact {proposal.impact_id}; MaterialAction {d.activity.id},
+            version {d.activity.version}, {d.activity.state}. Referral{" "}
             {t.referral?.date_needed ? "Date needed" : t.referral?.due_date}.
           </p>
           <p>
@@ -261,10 +345,58 @@ export function MaterialResolution({
           <ButtonLink href={`/projects/${d.project.project.id}`}>
             Open owning Project
           </ButtonLink>
+          {d.project.mergePredecessor && d.project.mergeSuccessor && (
+            <>
+              <p>
+                Merge: A → C and B → C. B is retained; A and C become
+                Unscheduled. Project advances twice, Demand once. Two native
+                task saves and the exact Impact successor apply together.
+              </p>
+              <p>
+                Retained predecessor B {d.project.mergePredecessor.title} (
+                {d.project.mergePredecessor.id}), owner{" "}
+                {d.project.mergePredecessor.owner_id}, version{" "}
+                {d.project.mergePredecessor.version};{" "}
+                {d.project.mergePredecessor.status},{" "}
+                {d.project.mergePredecessor.progress}% complete. Current and
+                retained dates: {d.project.mergePredecessor.start_date} to{" "}
+                {d.project.mergePredecessor.finish_date}. No B save, version
+                increment or schedule event. Native schedule warnings:{" "}
+                {d.project.retainedIssues?.join(" ") || "None"}. This is
+                retention of the exact native position, without a new resource
+                or commercial commitment.
+              </p>
+              <p>
+                Merge task C {d.project.mergeSuccessor.title} (
+                {d.project.mergeSuccessor.id}), owner{" "}
+                {d.project.mergeSuccessor.owner_id}, version{" "}
+                {d.project.mergeSuccessor.version};{" "}
+                {d.project.mergeSuccessor.status},{" "}
+                {d.project.mergeSuccessor.progress}% complete. Current dates:{" "}
+                {d.project.mergeSuccessor.start_date ?? "Unscheduled"} to{" "}
+                {d.project.mergeSuccessor.finish_date ?? "Unscheduled"}.
+                Proposed dates: Unscheduled. A → C (
+                {
+                  d.project.mergeSuccessor.dependencies.find(
+                    (x) => x.task_id === d.project.task.id,
+                  )?.kind
+                }
+                ) and B → C (
+                {
+                  d.project.mergeSuccessor.dependencies.find(
+                    (x) => x.task_id === d.project.mergePredecessor!.id,
+                  )?.kind
+                }
+                ) remain. C's dates cannot be supported through A while A is
+                Unscheduled. Unmet Demand remains; no replacement dates or
+                work authority are granted.
+              </p>
+            </>
+          )}
           {d.project.successor && (
             <p>
-              Successor {d.project.successor.title} ({d.project.successor.id}),
-              version {d.project.successor.version}, owner{" "}
+              Successor {d.project.successor.title} ({d.project.successor.id}
+              ), version {d.project.successor.version}, owner{" "}
               {d.project.successor.owner_id}; {d.project.successor.status},{" "}
               {d.project.successor.progress}% complete. Current dates:{" "}
               {d.project.successor.start_date ?? "Unscheduled"} to{" "}
@@ -280,7 +412,8 @@ export function MaterialResolution({
               {d.project.chainEnd || d.project.branchSuccessor
                 ? "three times"
                 : "twice"}
-              . Missing dates continue to prevent checking the dependency dates.
+              . Missing dates continue to prevent checking the dependency
+              dates.
             </p>
           )}
           {d.project.chainEnd && (
@@ -290,8 +423,8 @@ export function MaterialResolution({
               {d.project.chainEnd.owner_id}; {d.project.chainEnd.status},{" "}
               {d.project.chainEnd.progress}% complete. Current dates:{" "}
               {d.project.chainEnd.start_date ?? "Unscheduled"} to{" "}
-              {d.project.chainEnd.finish_date ?? "Unscheduled"}. Proposed dates:
-              Unscheduled. The{" "}
+              {d.project.chainEnd.finish_date ?? "Unscheduled"}. Proposed
+              dates: Unscheduled. The{" "}
               {
                 d.project.chainEnd.dependencies.find(
                   (x) => x.task_id === d.project.successor?.id,
@@ -310,8 +443,8 @@ export function MaterialResolution({
               {d.project.branchSuccessor.status},{" "}
               {d.project.branchSuccessor.progress}% complete. Current dates:{" "}
               {d.project.branchSuccessor.start_date ?? "Unscheduled"} to{" "}
-              {d.project.branchSuccessor.finish_date ?? "Unscheduled"}. Proposed
-              dates: Unscheduled. The{" "}
+              {d.project.branchSuccessor.finish_date ?? "Unscheduled"}.
+              Proposed dates: Unscheduled. The{" "}
               {
                 d.project.branchSuccessor.dependencies.find(
                   (x) => x.task_id === d.project.task.id,
@@ -324,7 +457,8 @@ export function MaterialResolution({
           )}
           <details>
             <summary>
-              Exact source, Receipt, allocation, Impact and downstream evidence
+              Exact source, Receipt, allocation, Impact and downstream
+              evidence
             </summary>
             <pre>
               {JSON.stringify(
@@ -334,6 +468,9 @@ export function MaterialResolution({
                     proposal.dependencies.allocation_outcome,
                   current: d,
                   project_command: proposal.project_command,
+                  merge_successor_command: proposal.merge_successor_command,
+                  retained_predecessor:
+                    proposal.dependencies.project.retainedPredecessor,
                   successor_command: proposal.successor_command,
                   chain_end_command: proposal.chain_end_command,
                   branch_successor_command: proposal.branch_successor_command,
@@ -357,19 +494,22 @@ export function MaterialResolution({
           {s.required.map((r) => (
             <div key={r.role} className="release-panel">
               <p>
-                {r.role === "ChainEnd"
-                  ? "Third task"
-                  : r.role === "BranchSuccessor"
-                    ? "Branch task C"
-                    : r.role}{" "}
-                · record {r.record_id} · owner {r.owner_id ?? "Unavailable"}.{" "}
+                {roleLabel(r.role)} · record {r.record_id} · owner{" "}
+                {r.owner_id ?? "Unavailable"}.{" "}
                 <Status value={r.decision?.decision ?? "Not received"} />
               </p>
+              {r.role === "MergePredecessor" && (
+                <p>
+                  This decision acknowledges the exact retained B forecast and
+                  both incoming relationships to C. It authorises no B edit or
+                  new schedule, resource or commercial commitment.
+                </p>
+              )}
               {!s.applied && (
                 <>
                   <SelectField
                     name={`material-${r.role}-decision`}
-                    label={`${r.role === "ChainEnd" ? "Third task" : r.role === "BranchSuccessor" ? "Branch task C" : r.role} receiving decision`}
+                    label={`${roleLabel(r.role)} receiving decision`}
                     value={decisions[r.role] ?? "Held"}
                     disabled={blocked}
                     options={["Accepted", "Returned", "Held"].map((id) => ({
@@ -399,13 +539,7 @@ export function MaterialResolution({
                       })
                     }
                   >
-                    Record{" "}
-                    {r.role === "ChainEnd"
-                      ? "Third task"
-                      : r.role === "BranchSuccessor"
-                        ? "Branch task C"
-                        : r.role}{" "}
-                    decision
+                    Record {roleLabel(r.role)} decision
                   </Button>
                 </>
               )}
@@ -518,8 +652,8 @@ export function MaterialResolution({
         </>
       )}
       <p>
-        Commercial and cross-workflow approval policy: Not configured. This path
-        does not authorise work, replenishment or external transactions.
+        Commercial and cross-workflow approval policy: Not configured. This
+        path does not authorise work, replenishment or external transactions.
       </p>
     </section>
   );
