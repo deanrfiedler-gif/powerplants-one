@@ -11,11 +11,17 @@ export async function forecastPosition(
   p: Principal,
   projectId: string,
   taskId: string,
+  successorId?: string,
 ) {
   const project = await projectRow(c, p, projectId);
   const tasks = await tasksFor(c, p, projectId);
   const task = tasks.find((t) => t.id === taskId);
   if (!task || task.owner_unavailable) throw unavailable();
+  const successor = successorId
+    ? tasks.find((t) => t.id === successorId)
+    : undefined;
+  if (successorId && (!successor || successor.owner_unavailable))
+    throw unavailable();
   const dependencies = (
     await c.query<{ task_id: string; predecessor_id: string; kind: string }>(
       "SELECT task_id,predecessor_id,kind FROM ppo.project_dependencies WHERE workspace_id=$1 AND project_id=$2 ORDER BY task_id,predecessor_id",
@@ -39,12 +45,20 @@ export async function forecastPosition(
     )
   ).rows;
   if (stages.length) await acceptanceAccess(c, p, projectId, "scope");
-  return { project, task, dependencies, engineering, stages };
+  return {
+    project,
+    task,
+    dependencies,
+    engineering,
+    stages,
+    ...(successor ? { successor } : {}),
+  };
 }
 export function forecastHolds(
   position: Awaited<ReturnType<typeof forecastPosition>>,
 ) {
-  const { project, task, dependencies, engineering, stages } = position;
+  const { project, task, successor, dependencies, engineering, stages } =
+    position;
   const holds: string[] = [];
   if (project.lifecycle !== "Active")
     holds.push(
@@ -58,7 +72,35 @@ export function forecastHolds(
     holds.push("The task must have both forecast dates to withdraw.");
   if (!task.owner_id || task.external_owner_id)
     holds.push("An independently receiving internal task owner is required.");
-  if (
+  if (successor) {
+    const touching = dependencies.filter(
+      (d) =>
+        [task.id, successor.id].includes(d.task_id) ||
+        [task.id, successor.id].includes(d.predecessor_id),
+    );
+    if (
+      successor.id === task.id ||
+      touching.length !== 1 ||
+      touching[0]?.task_id !== successor.id ||
+      touching[0]?.predecessor_id !== task.id ||
+      !["FS", "SS"].includes(touching[0]?.kind)
+    )
+      holds.push(
+        "Select exactly one successor relationship from the affected task; additional or reversed dependencies require separate Projects receiving.",
+      );
+    if (
+      successor.status !== "Planned" ||
+      successor.progress !== 0 ||
+      successor.milestone ||
+      !successor.start_date ||
+      !successor.finish_date ||
+      !successor.owner_id ||
+      successor.external_owner_id
+    )
+      holds.push(
+        "The successor must be an internally owned, dated, non-milestone, unstarted Planned task at zero progress.",
+      );
+  } else if (
     dependencies.some(
       (d) => d.task_id === task.id || d.predecessor_id === task.id,
     )

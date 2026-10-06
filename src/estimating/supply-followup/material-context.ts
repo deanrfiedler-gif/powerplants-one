@@ -71,6 +71,7 @@ export type MaterialEvent = {
   review_hash: string | null;
   effect_receiving_ids: string[];
   project_command: ReturnType<typeof parseTask>;
+  successor_command?: ReturnType<typeof parseTask> | null;
   impact_command: ReturnType<typeof factCommand> & { record_id: string };
   reason: string;
   evidence: string;
@@ -131,6 +132,7 @@ export async function materialDependencies(
   impactId: string,
   taskId: string,
   nativeActor: string = p.actor_id,
+  successorId?: string,
 ) {
   const demand = await supplyRecord(c, p, demandId);
   if (demand.data.origin_kind !== "Project" || !demand.data.origin_id)
@@ -173,7 +175,13 @@ export async function materialDependencies(
       ? decimal(demand.quantity) - allocated
       : 0n,
   );
-  const project = await forecastPosition(c, p, demand.data.origin_id, taskId);
+  const project = await forecastPosition(
+    c,
+    p,
+    demand.data.origin_id,
+    taskId,
+    successorId,
+  );
   // Bind effective authority without exposing another owner's grant rows.
   // Only duties and scopes used by this exact source/downstream graph enter it.
   const scopes = [
@@ -215,6 +223,9 @@ export async function materialDependencies(
     ["Project", project.project.coordinator_id, ["project.edit"]],
     ["Task", project.task.owner_id, []],
     ["MaterialAction", activity.owner_id, ["activity.edit"]],
+    ...(project.successor
+      ? [["Successor", project.successor.owner_id, []] as const]
+      : []),
     ["NativeActor", nativeActor, ["supply.coordinate", "project.edit"]],
   ] as const) {
     const grants = (
@@ -319,7 +330,11 @@ export function materialHolds(d: MaterialDependencies) {
   return holds;
 }
 export function materialEffects(d: MaterialDependencies) {
-  return materialRoles.map((role) => ({
+  const roles: MaterialRole[] = [
+    ...materialRoles,
+    ...(d.project.successor ? ["Successor" as const] : []),
+  ];
+  return roles.map((role) => ({
     role,
     record_id:
       role === "Demand"
@@ -328,7 +343,9 @@ export function materialEffects(d: MaterialDependencies) {
           ? d.project.project.id
           : role === "Task"
             ? d.project.task.id
-            : d.activity.id,
+            : role === "Successor"
+              ? d.project.successor!.id
+              : d.activity.id,
     owner_id:
       role === "Demand"
         ? d.demand.owner_id
@@ -336,7 +353,9 @@ export function materialEffects(d: MaterialDependencies) {
           ? d.project.project.coordinator_id
           : role === "Task"
             ? d.project.task.owner_id
-            : d.activity.owner_id,
+            : role === "Successor"
+              ? d.project.successor!.owner_id
+              : d.activity.owner_id,
   }));
 }
 // The caller owns Checked for one actor's serialized read only. Do not retain
@@ -388,7 +407,13 @@ export async function materialEvidenceAuthority(
         throw unavailable();
     }
     // Reuse native protected dependency readers before historical snapshots/counts.
-    await forecastPosition(c, p, d.project.project.id, d.project.task.id);
+    await forecastPosition(
+      c,
+      p,
+      d.project.project.id,
+      d.project.task.id,
+      d.project.successor?.id,
+    );
     for (const row of d.project.engineering) {
       const { engineeringRow } = await import("../../engineering/service");
       await engineeringRow(c, p, row.id);
@@ -450,14 +475,14 @@ export async function materialOwner(
   checked?: Checked,
 ) {
   const effect = materialEffects(e.dependencies).find((x) => x.role === role)!;
-  if (!effect.owner_id) throw unavailable();
+  if (!effect?.owner_id) throw unavailable();
   const r = e.dependencies.demand;
   const cap =
     role === "Demand"
       ? "supply.coordinate"
       : role === "Project"
         ? "project.edit"
-        : role === "Task"
+        : role === "Task" || role === "Successor"
           ? "project.read"
           : "activity.edit";
   const owner = await scopedOwner(
@@ -541,6 +566,7 @@ export async function materialState(
         proposal.impact_id,
         proposal.task_id,
         proposal.created_by,
+        proposal.dependencies.project.successor?.id,
       )
     : null;
   const holds: string[] = [];
@@ -675,7 +701,7 @@ export async function materialOriginalAuthority(
         ? "supply.coordinate"
         : role === "Project"
           ? "project.edit"
-          : role === "Task"
+          : role === "Task" || role === "Successor"
             ? "project.read"
             : "activity.edit";
     if (!(await hasPermission(c, p, cap, d.company_id, d.site_id ?? undefined)))
@@ -691,7 +717,7 @@ export async function materialNativeAuthority(
   if (!(await materialAvailable(c))) return;
   const proposal = (
     await c.query<MaterialEvent>(
-      "SELECT * FROM ppo.quote_material_events WHERE workspace_id=$1 AND action='MaterialPropose' AND (project_command->>'operation_id'=$2 OR impact_command->>'operation_id'=$2)",
+      "SELECT * FROM ppo.quote_material_events WHERE workspace_id=$1 AND action='MaterialPropose' AND (project_command->>'operation_id'=$2 OR to_jsonb(quote_material_events)->'successor_command'->>'operation_id'=$2 OR impact_command->>'operation_id'=$2)",
       [p.workspace_id, operation],
     )
   ).rows[0];
@@ -703,7 +729,8 @@ export async function materialNativeAuthority(
     )
   ).rows[0];
   const expected =
-    proposal.project_command.operation_id === operation
+    proposal.project_command.operation_id === operation ||
+    proposal.successor_command?.operation_id === operation
       ? proposal.project_command.project_id
       : proposal.demand_id;
   if (!applied || applied.created_by !== p.actor_id || target !== expected)

@@ -2837,6 +2837,11 @@
           "id": "denied",
           "label": "Revoked or switched identity",
           "description": "Protected evidence and in-flight results clear; ordinary comparison remains permission-scoped."
+        },
+        {
+          "id": "records-reread",
+          "label": "Saved record list reread",
+          "description": "PolicyPublicationWorkspace on /schedule/policy-impact retains explicit disclosure intent while a new record-type or refresh read unmounts protected content. Current permitted results reopen in place; keyboard close/open and exact saved publication links remain available."
         }
       ],
       "implementation": [
@@ -2900,6 +2905,14 @@
           "expected": "The successor heading receives focus even if the separate current-head read completes after Edit.",
           "actual": "The frame-based focus request can run before the form exists; reproduced on unchanged main. The mount-bound repair passes all 18 compiled Scheduling cases, including delayed-head focus on desktop and phone; owner/device review remains pending.",
           "action": "Retain desktop/mobile delayed-read regression evidence in docs/testing/evidence/scheduling-successor-focus/README.md; owner/device acceptance remains pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "scheduling-record-disclosure-review",
+          "expected": "Saved-record type changes and refresh retain explicit disclosure intent on desktop and phone without retaining stale protected records.",
+          "actual": "Queued native toggle ordering reproduces a hidden saved publication list on unchanged main. Synchronous summary intent is the bounded repair; execution and owner/device review remain separate.",
+          "action": "Retain the source-specific regression and viewport evidence in docs/testing/evidence/scheduling-record-disclosure/README.md; do not promote an acceptance fingerprint.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -3495,7 +3508,7 @@
       "title": "Exact receiving and controlled conversion",
       "category": "Forms",
       "module": "ES",
-      "purpose": "Attributable receiving, explicit item resolution, frozen plan and atomic native Forecast demand with original recovery. Completed targets receive immutable Retain/Hold/ReviseQuantity decisions and separately applied native effects. Held targets enter owned Supply receiving, immutable allocation review, separate native application and returned evidence. Existing Receipt correction freezes independently received shared-demand effects before native application. Receipt-derived Shipment shortfall separately receives each changed Demand before exact atomic allocation reduction. Four independently received material effects permit native Project forecast withdrawal with exact Impact succession and remaining holds.",
+      "purpose": "Attributable receiving, explicit item resolution, frozen plan and atomic native Forecast demand with original recovery. Completed targets receive immutable Retain/Hold/ReviseQuantity decisions and separately applied native effects. Held targets enter owned Supply receiving, immutable allocation review, separate native application and returned evidence. Existing Receipt correction freezes independently received shared-demand effects before native application. Receipt-derived Shipment shortfall separately receives each changed Demand before exact atomic allocation reduction. Four independently received material effects permit native Project forecast withdrawal with exact Impact succession and remaining holds. One explicit FS/SS successor adds a fifth independent decision and third native receipt.",
       "owner": "Dean Fiedler",
       "example": null,
       "coverage": "Host example",
@@ -3609,6 +3622,11 @@
           "id": "material-outcome",
           "label": "Forecast withdrawn; unmet Demand retained",
           "description": "Separate immutable review/application, two native receipts, exact Impact successor and fresh ES-07 disposition. Activities and independent holds remain."
+        },
+        {
+          "id": "dependency-receiving",
+          "label": "Five decisions for one dependency",
+          "description": "Both task positions, exact retained FS/SS link, corrected/held receiving, native paired outcome and uncertain originals. Real fixtures: tests/browser/quotation-task-dependency.spec.ts."
         }
       ],
       "implementation": [
@@ -3667,7 +3685,8 @@
         "src/estimating/supply-followup/material-service.ts",
         "src/projects/material-resolution.ts",
         "docs/contracts/quotation-material-resolution.md",
-        "docs/decisions/quotation-material-resolution.md"
+        "docs/decisions/quotation-material-resolution.md",
+        "docs/decisions/quotation-task-dependency.md"
       ],
       "reference": {
         "path": "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",
@@ -3739,6 +3758,14 @@
           "expected": "Paired desktop/mobile owner review of exact forecast effects and remaining operational holds.",
           "actual": "New native host; accepted mockup images and owner/device/screen-reader review pending.",
           "action": "Review execution captures and contract differences separately from functional proof.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "dependency-resolution-review",
+          "expected": "Paired review of both task consequences and five distinct responsibilities.",
+          "actual": "Accepted native imagery and owner/device/screen-reader review pending.",
+          "action": "Compare compiled host evidence against the bounded contract.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

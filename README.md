@@ -1,6 +1,6 @@
 # Powerplants One
 
-Current ES-07 continuation: [owned downstream material resolution](docs/delivery/quotation-material-resolution-handover.md) after [received allocation reductions](docs/delivery/quotation-allocation-shortfall-handover.md). #348 is merged; `codex/quotation-material-runtime` corrects its prepared-read naming for the hosted runtime's existing privileges. The bounded Projects action withdraws an unstarted task forecast after four independent receiving decisions, retaining unmet Demand and other holds. Final-head validation, visual/owner acceptance and deployment remain separate.
+Current ES-07 continuation: [owned Project dependency resolution](docs/delivery/quotation-task-dependency-handover.md). #348 and #349 are merged. The new bounded path receives both tasks before withdrawing their unsupported forecasts, preserving the dependency, unmet Demand and independent holds. Exact validation and remaining acceptance are recorded separately from deployment.
 
 
 Personal prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance. The repository is public; the application, data and hosted demo remain private and synthetic.

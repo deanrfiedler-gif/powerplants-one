@@ -1386,7 +1386,7 @@
       "title": "Receiving, one-off resolution and controlled conversion",
       "kind": "scope",
       "module": "ES",
-      "summary": "Exact receiving and completed-target exception disposition with immutable per-target decisions and real native Forecast quantity revision. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain.",
+      "summary": "Exact receiving and completed-target exception disposition with immutable per-target decisions and real native Forecast quantity revision. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit.",
       "path": "/estimating/quotes/[id]/conversion",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -1430,7 +1430,8 @@
         "src/estimating/supply-followup/material-service.ts",
         "src/projects/material-resolution.ts",
         "docs/contracts/quotation-material-resolution.md",
-        "docs/decisions/quotation-material-resolution.md"
+        "docs/decisions/quotation-material-resolution.md",
+        "docs/decisions/quotation-task-dependency.md"
       ],
       "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
       "visual_status": "Needs review",
@@ -1913,7 +1914,7 @@
       "title": "Baseline, forecast and dependency review",
       "kind": "scope",
       "module": "PJ",
-      "summary": "Extend the existing Gantt with controlled baselines, dependencies, calendars, actuals and forecast review. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain.",
+      "summary": "Extend the existing Gantt with controlled baselines, dependencies, calendars, actuals and forecast review. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor requires independent receiving before both native forecasts are withdrawn.",
       "path": "/projects/programme",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -1930,7 +1931,8 @@
         "src/estimating/supply-followup/material-service.ts",
         "src/projects/material-resolution.ts",
         "docs/contracts/quotation-material-resolution.md",
-        "docs/decisions/quotation-material-resolution.md"
+        "docs/decisions/quotation-material-resolution.md",
+        "docs/decisions/quotation-task-dependency.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -3529,7 +3531,7 @@
       "title": "Material change-impact review",
       "kind": "scope",
       "module": "SC",
-      "summary": "Review before and after evidence through the owning module. Bookings and issued packs remain unchanged. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain.",
+      "summary": "Review before and after evidence through the owning module. Bookings and issued packs remain unchanged. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit.",
       "path": "/supply/changes",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -3572,7 +3574,8 @@
         "src/estimating/supply-followup/material-service.ts",
         "src/projects/material-resolution.ts",
         "docs/contracts/quotation-material-resolution.md",
-        "docs/decisions/quotation-material-resolution.md"
+        "docs/decisions/quotation-material-resolution.md",
+        "docs/decisions/quotation-task-dependency.md"
       ],
       "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
       "visual_status": "Needs review",
@@ -6293,7 +6296,7 @@
       "title": "Project detail & Gantt",
       "kind": "route",
       "module": "PJ",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain.",
+      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit.",
       "path": "/projects/[id]",
       "source_paths": [
         "src/app/(business)/projects/[id]/page.tsx"
@@ -6310,7 +6313,8 @@
         "src/estimating/supply-followup/material-service.ts",
         "src/projects/material-resolution.ts",
         "docs/contracts/quotation-material-resolution.md",
-        "docs/decisions/quotation-material-resolution.md"
+        "docs/decisions/quotation-material-resolution.md",
+        "docs/decisions/quotation-task-dependency.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -10616,7 +10620,7 @@
       "title": "supply / changes",
       "kind": "route",
       "module": "Unassigned",
-      "summary": "Review before and after evidence through the owning module. Bookings and issued packs remain unchanged. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain.",
+      "summary": "Review before and after evidence through the owning module. Bookings and issued packs remain unchanged. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit.",
       "path": "/supply/changes",
       "source_paths": [
         "src/app/(business)/supply/changes/page.tsx",
@@ -10658,7 +10662,8 @@
         "src/estimating/supply-followup/material-service.ts",
         "src/projects/material-resolution.ts",
         "docs/contracts/quotation-material-resolution.md",
-        "docs/decisions/quotation-material-resolution.md"
+        "docs/decisions/quotation-material-resolution.md",
+        "docs/decisions/quotation-task-dependency.md"
       ],
       "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
       "visual_status": "Needs review",
@@ -10764,7 +10769,7 @@
       "title": "supply / material readiness",
       "kind": "route",
       "module": "Unassigned",
-      "summary": "Review the exact material scope, usable supply and owned blockers. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds.",
+      "summary": "Review the exact material scope, usable supply and owned blockers. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit.",
       "path": "/supply/material-readiness",
       "source_paths": [
         "src/app/(business)/supply/material-readiness/page.tsx",
@@ -10791,7 +10796,9 @@
         "src/estimating/supply-followup/shortfall-service.ts",
         "src/supply/reductions.ts",
         "docs/decisions/quotation-allocation-shortfall.md",
-        "src/components/quotation-allocation-shortfall.tsx"
+        "src/components/quotation-allocation-shortfall.tsx",
+        "docs/decisions/quotation-task-dependency.md",
+        "src/projects/material-resolution.ts"
       ],
       "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
       "visual_status": "Needs review",
@@ -11145,7 +11152,7 @@
       ],
       "scope_status": "Built synthetic comparison and native policy workflow; wider acceptance remains open",
       "visual_status": "Needs review",
-      "functional_status": "Step 6 integrated update/restart/compatible rollback and service-return evidence: docs/testing/evidence/scheduling-step6/README.md. Independent visual/owner/device acceptance remains pending. Delayed-head successor focus repair and unchanged-main reproduction: docs/testing/evidence/scheduling-successor-focus/README.md.",
+      "functional_status": "Step 6 integrated update/restart/compatible rollback and service-return evidence: docs/testing/evidence/scheduling-step6/README.md. Independent visual/owner/device acceptance remains pending. Delayed-head successor focus repair and unchanged-main reproduction: docs/testing/evidence/scheduling-successor-focus/README.md. Saved-record disclosure ordering and unchanged-main comparison: docs/testing/evidence/scheduling-record-disclosure/README.md.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -11486,7 +11493,7 @@
       "title": "Receiving, one-off resolution and controlled conversion",
       "kind": "route",
       "module": "ES",
-      "summary": "Exact receiving and completed-target exception disposition with immutable per-target decisions and real native Forecast quantity revision. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain.",
+      "summary": "Exact receiving and completed-target exception disposition with immutable per-target decisions and real native Forecast quantity revision. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit.",
       "path": "/estimating/quotes/[id]/conversion",
       "source_paths": [
         "src/app/(business)/estimating/quotes/[id]/conversion/page.tsx"
@@ -11529,7 +11536,8 @@
         "src/estimating/supply-followup/material-service.ts",
         "src/projects/material-resolution.ts",
         "docs/contracts/quotation-material-resolution.md",
-        "docs/decisions/quotation-material-resolution.md"
+        "docs/decisions/quotation-material-resolution.md",
+        "docs/decisions/quotation-task-dependency.md"
       ],
       "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
       "visual_status": "Needs review",

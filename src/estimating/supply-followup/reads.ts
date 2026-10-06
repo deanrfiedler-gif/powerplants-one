@@ -66,9 +66,10 @@ export async function receivingWorklist(
           `SELECT DISTINCT e.target_id FROM ppo.quote_material_events e
          JOIN ppo.supply_records d ON (d.workspace_id,d.id)=(e.workspace_id,e.demand_id)
          JOIN ppo.project_tasks t ON (t.workspace_id,t.id)=(e.workspace_id,e.task_id)
+         LEFT JOIN ppo.project_tasks successor ON successor.workspace_id=e.workspace_id AND successor.id=(e.dependencies->'project'->'successor'->>'id')::uuid
          JOIN ppo.projects p ON (p.workspace_id,p.id)=(t.workspace_id,t.project_id)
          JOIN ppo.activities a ON a.workspace_id=e.workspace_id AND a.id=(e.dependencies->'activity'->>'id')::uuid
-         WHERE e.workspace_id=$1 AND e.action='MaterialPropose' AND $2::uuid IN (d.owner_id,t.owner_id,p.coordinator_id,a.owner_id)`,
+         WHERE e.workspace_id=$1 AND e.action='MaterialPropose' AND $2::uuid IN (d.owner_id,t.owner_id,p.coordinator_id,a.owner_id,successor.owner_id)`,
           [p.workspace_id, p.actor_id],
         )
       ).rows)

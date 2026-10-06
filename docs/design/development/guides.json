@@ -6657,7 +6657,8 @@
             "Choose Retain, Revise eligible Forecast quantity, or Continue hold. Record disposition review freezes the decision but leaves the exception open. Open saved receiving, inspect the exact reviewed action, then enter application evidence and Apply reviewed disposition. A Hold requires a replacement review; it cannot be applied.",
             "The assigned owner accepts review, returns or holds. After acceptance record Retain, Hold or Adjust existing allocation, then apply that exact current review separately. Adjustment reuses Supply:Allocate on already Approved demand, preserves allocation identity/basis and enforces units, exact decimals and conservation. Consequential dependencies remain held.",
             "Select Reconcile unknown reservation outcome for an existing Unknown ExternalOutcome/Reservation fact. Retain its source operation, enter the evidenced result, UTC observation time and complete lookup evidence. Save review and Apply separately. Recover the native receipt, inspect remaining holds and explicitly reassess ES-07. This records evidence only. Unavailable lookup is inconclusive.",
-            "In Resolve shared Shipment allocation shortfall, inspect original/corrected evidence and all Demands. Enter exact reduced quantities; blank means unchanged and zero preserves identity. Propose exact allocation reductions. Each changed Demand owner separately records Accepted, Returned or Held for the complete proposal. Review independently received reductions freezes consent and original command. Apply exact Supply review separately; native application is atomic for several allocations."
+            "In Resolve shared Shipment allocation shortfall, inspect original/corrected evidence and all Demands. Enter exact reduced quantities; blank means unchanged and zero preserves identity. Propose exact allocation reductions. Each changed Demand owner separately records Accepted, Returned or Held for the complete proposal. Review independently received reductions freezes consent and original command. Apply exact Supply review separately; native application is atomic for several allocations.",
+            "After an independently received allocation reduction, select the exact Requested Impact and Task A, then explicitly select its dependent successor B. Compare both tasks and the FS/SS direction. Record Demand, Project, Task, MaterialAction and Successor decisions separately, freeze the complete review, then apply. Additional links, changed evidence or missing consent hold execution."
           ],
           "steps": [],
           "rows": [],
@@ -6670,7 +6671,8 @@
             "Open native demand to inspect each actual linked Forecast record. Source line, plan and original receipt remain linked. Demand does not approve procurement or start work. Labour, Freight, Engineering and Subcontract lines retain commercial evidence without material-demand effects; this is not partial commercial acceptance.",
             "Applied retention resolves only the reviewed exception. Applied quantity revision changes the real native Forecast through Supply:Revise, preserving histories and producing an owned Supply impact. Later relevant changes reopen review. No replacement conversion, deletion, zero quantity, cancellation, procurement or work release is supported.",
             "Returned evidence references actual native effects and original receipts. Explicitly review and apply a fresh ES-07 disposition; notes and Activity completion do not clear exceptions. Approved demand stays Approved and quantity remains held. A separately eligible Forecast uses the existing positive quantity review/application. Supply impacts remain visible.",
-            "Inspect the actual original native receipt, before/after versions, capacity and remaining unmet Demand. Obtain fresh readiness and a new explicit ES-07 disposition if a current exception exists. Owning workflows retain operational impacts; notes, Activity completion and completed Supply work do not clear them."
+            "Inspect the actual original native receipt, before/after versions, capacity and remaining unmet Demand. Obtain fresh readiness and a new explicit ES-07 disposition if a current exception exists. Owning workflows retain operational impacts; notes, Activity completion and completed Supply work do not clear them.",
+            "Check all three native receipts and both Unscheduled tasks with their dependency retained. Unmet Demand and independent holds continue. Reassess readiness and explicitly disposition any current ES-07 exception; Activity completion is separate."
           ],
           "steps": [],
           "rows": [],
@@ -10181,7 +10183,8 @@
             "A valid allocation position does not satisfy Demand or resolve its Impact. After a completed received reduction, open the accepted Supply referral and compare current readiness, the exact Requested Impact/MaterialAction and existing Project task. Only an unstarted internally owned Planned task with both dates and no consequential dependency qualifies.",
             "The Demand owner, Project coordinator, task owner and MaterialAction owner must each record Accepted, Returned or Held for the complete proposed forecast withdrawal. Earlier Receipt/allocation acceptance supplies no authority. A person holding several roles still decides separately.",
             "Freeze the exact review, then apply separately. Success withdraws both forecast dates and returns two original receipts plus the exact Impact successor. It does not complete the Activity, change quantities or restore readiness. Other impacts and unmet Demand remain. Retain/Hold returns continuing owning-workflow follow-up.",
-            "Recompute readiness and explicitly disposition any current ES-07 exception. Operational work remains available after quotation retention. Recover or retry an uncertain original; missing receipts are inconclusive and replacements stay blocked."
+            "Recompute readiness and explicitly disposition any current ES-07 exception. Operational work remains available after quotation retention. Recover or retry an uncertain original; missing receipts are inconclusive and replacements stay blocked.",
+            "For one real FS/SS dependency, open the accepted Supply referral and explicitly select the affected Task A and its one successor B. Compare both current owners, versions and dates. Demand owner, Project coordinator, A owner, MaterialAction owner and B owner each receive the complete proposal separately. Freeze review, then apply the two native task saves and exact Impact successor atomically. Both tasks become Unscheduled with their relationship retained. Extra links or consequential records hold execution; unmet Demand, other Impacts and missing-date warnings remain. Check all three original receipts, reassess readiness and explicitly disposition any current ES-07 exception."
           ],
           "steps": [],
           "headers": [],
@@ -19613,7 +19616,8 @@
             "Review the requested capture, record Reviewed and the owning module's exact outcome reference. This records coordination evidence; it never applies the downstream decision automatically.",
             "The assigned owner accepts review, returns or holds. After acceptance record Retain, Hold or Adjust existing allocation, then apply that exact current review separately. Adjustment reuses Supply:Allocate on already Approved demand, preserves allocation identity/basis and enforces units, exact decimals and conservation. Consequential dependencies remain held.",
             "Select Reconcile unknown reservation outcome for an existing Unknown ExternalOutcome/Reservation fact. Retain its source operation, enter the evidenced result, UTC observation time and complete lookup evidence. Save review and Apply separately. Recover the native receipt, inspect remaining holds and explicitly reassess ES-07. This records evidence only. Unavailable lookup is inconclusive.",
-            "In Resolve shared Shipment allocation shortfall, inspect original/corrected evidence and all Demands. Enter exact reduced quantities; blank means unchanged and zero preserves identity. Propose exact allocation reductions. Each changed Demand owner separately records Accepted, Returned or Held for the complete proposal. Review independently received reductions freezes consent and original command. Apply exact Supply review separately; native application is atomic for several allocations."
+            "In Resolve shared Shipment allocation shortfall, inspect original/corrected evidence and all Demands. Enter exact reduced quantities; blank means unchanged and zero preserves identity. Propose exact allocation reductions. Each changed Demand owner separately records Accepted, Returned or Held for the complete proposal. Review independently received reductions freezes consent and original command. Apply exact Supply review separately; native application is atomic for several allocations.",
+            "After an independently received allocation reduction, select the exact Requested Impact and Task A, then explicitly select its dependent successor B. Compare both tasks and the FS/SS direction. Record Demand, Project, Task, MaterialAction and Successor decisions separately, freeze the complete review, then apply. Additional links, changed evidence or missing consent hold execution."
           ],
           "steps": [],
           "rows": [],
@@ -19625,7 +19629,8 @@
           "paragraphs": [
             "Synthetic/manual coordination only. No live purchase, reservation, ERP receipt/shipment/return/credit, customer message, automatic reschedule or stock/Finance ledger is provided. Visual review, owner acceptance and deployment are separate.",
             "Returned evidence references actual native effects and original receipts. Explicitly review and apply a fresh ES-07 disposition; notes and Activity completion do not clear exceptions. Approved demand stays Approved and quantity remains held. A separately eligible Forecast uses the existing positive quantity review/application. Supply impacts remain visible.",
-            "Inspect the actual original native receipt, before/after versions, capacity and remaining unmet Demand. Obtain fresh readiness and a new explicit ES-07 disposition if a current exception exists. Owning workflows retain operational impacts; notes, Activity completion and completed Supply work do not clear them."
+            "Inspect the actual original native receipt, before/after versions, capacity and remaining unmet Demand. Obtain fresh readiness and a new explicit ES-07 disposition if a current exception exists. Owning workflows retain operational impacts; notes, Activity completion and completed Supply work do not clear them.",
+            "Check all three native receipts and both Unscheduled tasks with their dependency retained. Unmet Demand and independent holds continue. Reassess readiness and explicitly disposition any current ES-07 exception; Activity completion is separate."
           ],
           "steps": [],
           "rows": [],
@@ -42312,7 +42317,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Task sequence for review against the applicable running release.",
+            "After an independently received allocation reduction, select the exact Requested Impact and Task A, then explicitly select its dependent successor B. Compare both tasks and the FS/SS direction. Record Demand, Project, Task, MaterialAction and Successor decisions separately, freeze the complete review, then apply. Additional links, changed evidence or missing consent hold execution."
           ],
           "steps": [
             "Confirm the record reference and customer/site context in this record workspace.",
@@ -42329,7 +42335,8 @@
           "paragraphs": [
             "Project health has evidence and an accountable response.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A colour indicator alone does not explain delivery health or acceptance."
+            "A colour indicator alone does not explain delivery health or acceptance.",
+            "Check all three native receipts and both Unscheduled tasks with their dependency retained. Unmet Demand and independent holds continue. Reassess readiness and explicitly disposition any current ES-07 exception; Activity completion is separate."
           ],
           "steps": [],
           "rows": [],
@@ -68677,7 +68684,8 @@
             "A valid allocation position does not satisfy Demand or resolve its Impact. After a completed received reduction, open the accepted Supply referral and compare current readiness, the exact Requested Impact/MaterialAction and existing Project task. Only an unstarted internally owned Planned task with both dates and no consequential dependency qualifies.",
             "The Demand owner, Project coordinator, task owner and MaterialAction owner must each record Accepted, Returned or Held for the complete proposed forecast withdrawal. Earlier Receipt/allocation acceptance supplies no authority. A person holding several roles still decides separately.",
             "Freeze the exact review, then apply separately. Success withdraws both forecast dates and returns two original receipts plus the exact Impact successor. It does not complete the Activity, change quantities or restore readiness. Other impacts and unmet Demand remain. Retain/Hold returns continuing owning-workflow follow-up.",
-            "Recompute readiness and explicitly disposition any current ES-07 exception. Operational work remains available after quotation retention. Recover or retry an uncertain original; missing receipts are inconclusive and replacements stay blocked."
+            "Recompute readiness and explicitly disposition any current ES-07 exception. Operational work remains available after quotation retention. Recover or retry an uncertain original; missing receipts are inconclusive and replacements stay blocked.",
+            "For one real FS/SS dependency, open the accepted Supply referral and explicitly select the affected Task A and its one successor B. Compare both current owners, versions and dates. Demand owner, Project coordinator, A owner, MaterialAction owner and B owner each receive the complete proposal separately. Freeze review, then apply the two native task saves and exact Impact successor atomically. Both tasks become Unscheduled with their relationship retained. Extra links or consequential records hold execution; unmet Demand, other Impacts and missing-date warnings remain. Check all three original receipts, reassess readiness and explicitly disposition any current ES-07 exception."
           ],
           "steps": [],
           "headers": [],
@@ -69396,7 +69404,8 @@
           "section_id": "quick-start",
           "title": "Quick start",
           "paragraphs": [
-            "The reviewer enters maximum visit minutes, an explicit local effective time/timezone and a reason. Save immutable proposal, then request a complete server review. Copy its stable review link for the distinct publisher to inspect and explicitly publish. Reopen saved records remains available after reload."
+            "The reviewer enters maximum visit minutes, an explicit local effective time/timezone and a reason. Save immutable proposal, then request a complete server review. Copy its stable review link for the distinct publisher to inspect and explicitly publish. Reopen saved records remains available after reload.",
+            "Open Reopen saved records, then choose Proposals, Reviews or Publications. The list stays open after changing type or refreshing, once current access and records are loaded. Use the exact saved-record link. Keyboard activation also opens and closes the disclosure; unavailable access clears protected results."
           ],
           "steps": [],
           "headers": [],
@@ -70580,7 +70589,8 @@
             "Choose Retain, Revise eligible Forecast quantity, or Continue hold. Record disposition review freezes the decision but leaves the exception open. Open saved receiving, inspect the exact reviewed action, then enter application evidence and Apply reviewed disposition. A Hold requires a replacement review; it cannot be applied.",
             "The assigned owner accepts review, returns or holds. After acceptance record Retain, Hold or Adjust existing allocation, then apply that exact current review separately. Adjustment reuses Supply:Allocate on already Approved demand, preserves allocation identity/basis and enforces units, exact decimals and conservation. Consequential dependencies remain held.",
             "Select Reconcile unknown reservation outcome for an existing Unknown ExternalOutcome/Reservation fact. Retain its source operation, enter the evidenced result, UTC observation time and complete lookup evidence. Save review and Apply separately. Recover the native receipt, inspect remaining holds and explicitly reassess ES-07. This records evidence only. Unavailable lookup is inconclusive.",
-            "In Resolve shared Shipment allocation shortfall, inspect original/corrected evidence and all Demands. Enter exact reduced quantities; blank means unchanged and zero preserves identity. Propose exact allocation reductions. Each changed Demand owner separately records Accepted, Returned or Held for the complete proposal. Review independently received reductions freezes consent and original command. Apply exact Supply review separately; native application is atomic for several allocations."
+            "In Resolve shared Shipment allocation shortfall, inspect original/corrected evidence and all Demands. Enter exact reduced quantities; blank means unchanged and zero preserves identity. Propose exact allocation reductions. Each changed Demand owner separately records Accepted, Returned or Held for the complete proposal. Review independently received reductions freezes consent and original command. Apply exact Supply review separately; native application is atomic for several allocations.",
+            "After an independently received allocation reduction, select the exact Requested Impact and Task A, then explicitly select its dependent successor B. Compare both tasks and the FS/SS direction. Record Demand, Project, Task, MaterialAction and Successor decisions separately, freeze the complete review, then apply. Additional links, changed evidence or missing consent hold execution."
           ],
           "steps": [],
           "rows": [],
@@ -70593,7 +70603,8 @@
             "Open native demand to inspect each actual linked Forecast record. Source line, plan and original receipt remain linked. Demand does not approve procurement or start work. Labour, Freight, Engineering and Subcontract lines retain commercial evidence without material-demand effects; this is not partial commercial acceptance.",
             "Applied retention resolves only the reviewed exception. Applied quantity revision changes the real native Forecast through Supply:Revise, preserving histories and producing an owned Supply impact. Later relevant changes reopen review. No replacement conversion, deletion, zero quantity, cancellation, procurement or work release is supported.",
             "Returned evidence references actual native effects and original receipts. Explicitly review and apply a fresh ES-07 disposition; notes and Activity completion do not clear exceptions. Approved demand stays Approved and quantity remains held. A separately eligible Forecast uses the existing positive quantity review/application. Supply impacts remain visible.",
-            "Inspect the actual original native receipt, before/after versions, capacity and remaining unmet Demand. Obtain fresh readiness and a new explicit ES-07 disposition if a current exception exists. Owning workflows retain operational impacts; notes, Activity completion and completed Supply work do not clear them."
+            "Inspect the actual original native receipt, before/after versions, capacity and remaining unmet Demand. Obtain fresh readiness and a new explicit ES-07 disposition if a current exception exists. Owning workflows retain operational impacts; notes, Activity completion and completed Supply work do not clear them.",
+            "Check all three native receipts and both Unscheduled tasks with their dependency retained. Unmet Demand and independent holds continue. Reassess readiness and explicitly disposition any current ES-07 exception; Activity completion is separate."
           ],
           "steps": [],
           "rows": [],

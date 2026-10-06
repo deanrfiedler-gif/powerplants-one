@@ -133,11 +133,17 @@ export function PolicyPublicationWorkspace() {
         Temporary comparison below is separate. Saved proposals and reviews are
         immutable. Publication does not grant dispatch or Start approval.
       </p>
-      <details
-        open={recordsOpen}
-        onToggle={(event) => setRecordsOpen(event.currentTarget.open)}
-      >
-        <summary>Reopen saved records</summary>
+      <details open={recordsOpen}>
+        <summary
+          onClick={(event) => {
+            // A new record-type read unmounts protected content immediately.
+            // Keep explicit intent before the native queued toggle can be lost.
+            event.preventDefault();
+            setRecordsOpen((open) => !open);
+          }}
+        >
+          Reopen saved records
+        </summary>
         <SelectField
           name="policy-record-kind"
           label="Saved record type"

@@ -17,6 +17,7 @@ export function MaterialResolution({
   const [selected, setSelected] = useState(s.candidates[0]?.impact.id ?? "");
   const c = s.candidates.find((c) => c.impact.id === selected);
   const [task, setTask] = useState(c?.tasks[0]?.id ?? "");
+  const [successor, setSuccessor] = useState("");
   const [decisions, setDecisions] = useState<Record<string, string>>({});
   const [review, setReview] = useState("Hold");
   const [dirty, setDirty] = useState(false);
@@ -36,9 +37,10 @@ export function MaterialResolution({
     <section aria-label="Owned downstream material resolution">
       <h3>Resolve the affected Project forecast</h3>
       <p>
-        Withdraw both forecast dates from one unstarted Planned task. Each
-        affected owner receives the complete exact proposal separately. Receipt
-        and allocation acceptance do not authorise this action.
+        Withdraw both forecast dates from an unstarted Planned task and, when
+        explicitly selected, its one directly dependent successor. Each affected
+        owner receives the complete exact proposal separately. Receipt and
+        allocation acceptance do not authorise this action.
       </p>
       <p>
         Project dates and the selected Demand version change. The exact Impact
@@ -71,6 +73,7 @@ export function MaterialResolution({
             }))}
             onChange={(v) => {
               setSelected(v);
+              setSuccessor("");
               setTask(
                 s.candidates.find((x) => x.impact.id === v)?.tasks[0]?.id ?? "",
               );
@@ -96,6 +99,24 @@ export function MaterialResolution({
                 }))}
                 onChange={(v) => {
                   setTask(v);
+                  setSuccessor("");
+                  setDirty(true);
+                }}
+              />
+              <SelectField
+                name="material-successor"
+                label="Dependent successor whose forecast must also be withdrawn"
+                value={successor}
+                disabled={blocked}
+                empty="No successor selected; isolated task only"
+                options={c.tasks
+                  .filter((x) => x.dependencies.some((d) => d.task_id === task))
+                  .map((x) => ({
+                    id: x.id,
+                    display_name: `${x.title} · ${x.dependencies.find((d) => d.task_id === task)?.kind} from selected task · ${x.start_date ?? "Unscheduled"} to ${x.finish_date ?? "Unscheduled"}`,
+                  }))}
+                onChange={(v) => {
+                  setSuccessor(v);
                   setDirty(true);
                 }}
               />
@@ -108,6 +129,7 @@ export function MaterialResolution({
                     demand_id: c.demand.id,
                     impact_id: c.impact.id,
                     task_id: task,
+                    ...(successor ? { successor_task_id: successor } : {}),
                     predecessor_id: proposal?.id ?? null,
                   })
                 }
@@ -173,6 +195,25 @@ export function MaterialResolution({
           <ButtonLink href={`/projects/${d.project.project.id}`}>
             Open owning Project
           </ButtonLink>
+          {d.project.successor && (
+            <p>
+              Successor {d.project.successor.title} ({d.project.successor.id}),
+              version {d.project.successor.version}, owner{" "}
+              {d.project.successor.owner_id}; {d.project.successor.status},{" "}
+              {d.project.successor.progress}% complete. Current dates:{" "}
+              {d.project.successor.start_date ?? "Unscheduled"} to{" "}
+              {d.project.successor.finish_date ?? "Unscheduled"}. Proposed
+              dates: Unscheduled. The{" "}
+              {
+                d.project.successor.dependencies.find(
+                  (x) => x.task_id === d.project.task.id,
+                )?.kind
+              }{" "}
+              link from the affected task remains. Both task versions advance
+              once; Project advances twice. Missing dates continue to prevent
+              checking the dependency dates.
+            </p>
+          )}
           <details>
             <summary>
               Exact source, Receipt, allocation, Impact and downstream evidence
@@ -185,6 +226,7 @@ export function MaterialResolution({
                     proposal.dependencies.allocation_outcome,
                   current: d,
                   project_command: proposal.project_command,
+                  successor_command: proposal.successor_command,
                   impact_command: proposal.impact_command,
                 },
                 null,

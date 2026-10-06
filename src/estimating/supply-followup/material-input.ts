@@ -13,7 +13,7 @@ export const materialRoles = [
   "Task",
   "MaterialAction",
 ] as const;
-export type MaterialRole = (typeof materialRoles)[number];
+export type MaterialRole = (typeof materialRoles)[number] | "Successor";
 export function materialInput(
   id: string,
   action:
@@ -27,6 +27,7 @@ export function materialInput(
           "demand_id",
           "impact_id",
           "task_id",
+          "successor_task_id",
           "predecessor_id",
         ]
       : action === "MaterialApply"
@@ -70,6 +71,10 @@ export function materialInput(
     impact_id:
       action === "MaterialPropose" ? uuid(r.impact_id, "impact_id") : null,
     task_id: action === "MaterialPropose" ? uuid(r.task_id, "task_id") : null,
+    // Omission preserves the normalised input/hash of every earlier original.
+    ...(action === "MaterialPropose" && r.successor_task_id !== undefined
+      ? { successor_task_id: uuid(r.successor_task_id, "successor_task_id") }
+      : {}),
     proposal_id: ["MaterialReceive", "MaterialReview"].includes(action)
       ? uuid(r.proposal_id, "proposal_id")
       : null,
@@ -84,7 +89,7 @@ export function materialInput(
         : null,
     role:
       action === "MaterialReceive"
-        ? choice(r.role, "role", materialRoles)
+        ? choice(r.role, "role", [...materialRoles, "Successor"] as const)
         : null,
     decision:
       action === "MaterialReceive"

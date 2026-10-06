@@ -1,0 +1,31 @@
+{
+  "baseline_commit": "61babd1a073d0163e87069a033e56ce74d5e5773",
+  "original_ci_head": "5da55c407b2ae8c3db636fb2fbd21bd84f1facb0",
+  "original_ci_job": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37410298685/job/112097008756",
+  "original_result": {
+    "passed": 17,
+    "failed": 1,
+    "test_timeout_ms": 120000
+  },
+  "baseline_build": "passed",
+  "baseline_diagnostic": {
+    "passed": 0,
+    "failed": 1,
+    "assertion_timeout_ms": 5000,
+    "fixture_sha256": "d74b7c150cf5e1e11665999dcdb6dd53157d19047f73994fe26a3b726b2fd89c",
+    "implementation_sha256": "02863999b806cc37b1d1232435140d663d5192f1fcd0938206bb8dcdbaacf257",
+    "note": "Unchanged application source; only the diagnostic test was added. The candidate fixture is formatted without behavioral changes."
+  },
+  "candidate_result": {
+    "build": "passed",
+    "scheduling_cases": 20,
+    "passed": 20,
+    "failed": 0,
+    "duration_minutes": 10.1,
+    "implementation_sha256": "821166007e6ed39d184809839cadce23188f3b2452609ac8fd3fe13ec4a7475a",
+    "fixture_sha256": "410d2e048ff8f5f581b365c52610f953e8faf78000a1aeeac04fc0e6df50d1db",
+    "database_port": 5678,
+    "application_port": 3078,
+    "baseline_and_restart_databases_preserved": true
+  }
+}
