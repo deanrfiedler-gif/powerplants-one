@@ -1,15 +1,15 @@
 import { chromium } from "playwright";
 
-// ADR-0022 r02: keep stable Chrome patches current without silently adopting an
-// untested major or falling back to Playwright's older bundled Chromium. Each
-// reviewed major carries the earliest patch accepted for it. Chrome stable
-// rolled to 154 on 22 September 2026 and `npm run browser:install` now installs
-// it; 153 stays accepted while installed machines still carry it. A newer major
-// still requires its own tested maintenance change.
+// ADR-0022 and browser-runtime-maintenance: accept only tested Chrome majors,
+// with no fallback to Playwright's older bundled Chromium. Each reviewed major
+// carries its earliest accepted patch. Stable installation supplied 155 on
+// 6 October 2026; earlier reviewed majors remain compatible. A newer major
+// requires its own tested maintenance change.
 export const browserChannel = "chrome" as const;
 export const reviewedBrowserVersions = [
   "153.0.8010.36",
   "154.0.8037.57",
+  "155.0.8059.39",
 ] as const;
 export const minimumBrowserVersion = reviewedBrowserVersions[0];
 const supported = reviewedBrowserVersions.join(" or ");
@@ -32,7 +32,7 @@ export function assertSupportedBrowser(version: string): void {
       actual[firstDifference] < reviewed[firstDifference])
   ) {
     throw new Error(
-      `PPO requires stable Chrome ${supported} or a later patch of that major. Install the reviewed browser with npm run browser:install.`,
+      `PPO requires stable Chrome ${supported} or a later patch of that major. Received ${JSON.stringify(version)}. Install the reviewed browser with npm run browser:install.`,
     );
   }
 }
