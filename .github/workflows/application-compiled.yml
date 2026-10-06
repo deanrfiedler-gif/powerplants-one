@@ -29,16 +29,22 @@ jobs:
   compiled_suites:
     name: Compiled application ${{ matrix.suite }} proof
     runs-on: ubuntu-24.04
-    # The complete broad invocation keeps its original limit. Independent
-    # retained fixtures and process restarts own a separate disposable database.
+    # Each browser project keeps its warm-up dependency and original deadlines.
+    # Each matrix job owns a separate app and disposable database; tests within
+    # a project remain serial. Retained fixtures/restarts stay independent.
     timeout-minutes: ${{ matrix.timeout_minutes }}
     strategy:
       fail-fast: false
       matrix:
         include:
-          - suite: browser
+          - suite: browser-desktop
+            project: desktop-chromium
             timeout_minutes: 60
-            artifact_name: compiled-application-browser-evidence
+            artifact_name: compiled-application-browser-desktop-evidence
+          - suite: browser-mobile
+            project: mobile-chromium
+            timeout_minutes: 60
+            artifact_name: compiled-application-browser-mobile-evidence
           - suite: retained
             timeout_minutes: 25
             artifact_name: compiled-application-retained-evidence
@@ -98,12 +104,13 @@ jobs:
           npm run db:seed
           npm run db:health
       - name: Desktop and mobile browser checks against the compiled application
-        if: ${{ matrix.suite == 'browser' && !cancelled() && steps.database_setup.outcome == 'success' }}
+        if: ${{ startsWith(matrix.suite, 'browser-') && !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
+          PPO_BROWSER_PROJECT: ${{ matrix.project }}
           PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/compiled-browser/results.json
         run: |
           echo "Compiled build ${{ steps.build.outputs.build_id }} for source ${PPO_SOURCE_HEAD}"
-          npx playwright test --config=playwright.compiled.config.ts --reporter=list,json
+          npx playwright test --config=playwright.compiled.config.ts --project="$PPO_BROWSER_PROJECT" --reporter=list,json
       - name: Scheduling Steps 4–5 isolated publication, recovery and hold journeys
         if: ${{ matrix.suite == 'retained' && !cancelled() && steps.database_setup.outcome == 'success' && steps.build.outcome == 'success' }}
         env:
