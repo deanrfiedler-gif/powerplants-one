@@ -57,6 +57,60 @@ before(reset);
 after(closeDatabase);
 const code = (v: string) => (e: unknown) => (e as { code: string }).code === v;
 
+test("prepared reads work without migration-ledger privilege and refresh changed relation result shapes", async () => {
+  const owner = (await createSession("coordinator")).principal;
+  const c = await database().connect();
+  // Generated identifiers contain only this fixed prefix and UUID hex.
+  const suffix = randomUUID().replaceAll("-", "");
+  const role = `ppo_material_read_${suffix}`;
+  const table = `ppo.material_read_${suffix}`;
+  try {
+    await c.query("BEGIN");
+    await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [
+      owner.workspace_id,
+    ]);
+    await c.query(`CREATE ROLE ${role} NOLOGIN`);
+    await c.query(`GRANT USAGE ON SCHEMA ppo TO ${role}`);
+    await c.query(`GRANT SELECT ON ALL TABLES IN SCHEMA ppo TO ${role}`);
+    await c.query(`CREATE TABLE ${table}(value text NOT NULL)`);
+    await c.query(`INSERT INTO ${table} VALUES('SYN original')`);
+    await c.query(`GRANT SELECT ON ${table} TO ${role}`);
+    await c.query(`SET LOCAL ROLE ${role}`);
+    assert.equal(
+      (
+        await c.query(
+          "SELECT has_table_privilege(current_user,'public.ppo_migrations','SELECT') allowed",
+        )
+      ).rows[0].allowed,
+      false,
+    );
+    const read = await conversionReadClient(c, owner);
+    assert.equal(await hasPermission(read, owner, "project.edit"), true);
+    const sql = `SELECT * FROM ${table}`;
+    assert.deepEqual((await read.query(sql)).rows, [{ value: "SYN original" }]);
+    await c.query("RESET ROLE");
+    await c.query(
+      `ALTER TABLE ${table} ADD COLUMN consequence text NOT NULL DEFAULT 'SYN new field'`,
+    );
+    await c.query(`SET LOCAL ROLE ${role}`);
+    const upgraded = await conversionReadClient(c, owner);
+    assert.deepEqual((await upgraded.query(sql)).rows, [
+      { value: "SYN original", consequence: "SYN new field" },
+    ]);
+    assert.equal(
+      (
+        await c.query(
+          "SELECT has_table_privilege(current_user,'public.ppo_migrations','SELECT') allowed",
+        )
+      ).rows[0].allowed,
+      false,
+    );
+  } finally {
+    await c.query("ROLLBACK");
+    c.release();
+  }
+});
+
 test("prepared read plans retain current actors, record changes, revoked grants and server-clock expiry", async () => {
   const owner = (await createSession("coordinator")).principal;
   const other = await secondOwner(owner);

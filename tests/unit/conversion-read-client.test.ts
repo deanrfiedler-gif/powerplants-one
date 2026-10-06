@@ -4,12 +4,12 @@ import type { QueryClient } from "../../src/platform/permissions";
 import { conversionReadClient } from "../../src/estimating/conversion/source-authority";
 
 test("prepared conversion reads execute every call and separate SQL/schema shapes without retaining actor results", async () => {
-  let ledger = "50:original,67:current";
+  let layout = "original-relation-layout";
   const calls: unknown[][] = [];
   const client: QueryClient = {
     query: ((...args: unknown[]) => {
       calls.push(args);
-      return Promise.resolve({ rows: [{ ledger, call: calls.length }] });
+      return Promise.resolve({ rows: [{ layout, call: calls.length }] });
     }) as QueryClient["query"],
   };
   const p = {
@@ -33,8 +33,8 @@ test("prepared conversion reads execute every call and separate SQL/schema shape
   );
   await read.query("SELECT $1::text AS different_shape", ["first"]);
   assert.notEqual((calls.at(-1)![0] as { name: string }).name, configs[0].name);
-  // A reserved lower migration can land without changing max(version).
-  ledger = "50:original,51:reserved-gap,67:current";
+  // A reserved lower migration can change relations without changing max(version).
+  layout = "changed-relation-layout";
   const upgraded = await conversionReadClient(client, p);
   await upgraded.query("SELECT $1::text AS actor", ["first"]);
   assert.notEqual((calls.at(-1)![0] as { name: string }).name, configs[0].name);
@@ -45,7 +45,7 @@ test("conversion read facade preserves configured queries, callbacks and non-SEL
   const client: QueryClient = {
     query: ((...args: unknown[]) => {
       calls.push(args);
-      return Promise.resolve({ rows: [{ ledger: "67:current" }] });
+      return Promise.resolve({ rows: [{ layout: "current-layout" }] });
     }) as QueryClient["query"],
   };
   const read = await conversionReadClient(client, {

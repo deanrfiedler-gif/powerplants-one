@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. SYN-ES07-07; implemented contribution on `codex/quotation-material-resolution`, from #347 merge `be2cf5cc7f1b950296785ff64dc4de2d00ec5680`. [Contract](../contracts/quotation-material-resolution.md), [decision](../decisions/quotation-material-resolution.md), [execution ledger](../testing/evidence/quotation-material-resolution/README.md). No merge or deployment.
+Owner: Dean Fiedler. SYN-ES07-07 was delivered through #348, merged by the repository owner as `7c60381099e5f3e7c286b73528f9d1b138f441ca` after all 37 checks on `2be344f` passed. The agent did not perform that merge. `codex/quotation-material-runtime` corrects prepared-read naming for existing hosted runtime privileges and adds a restricted-role regression, from that refreshed main. No merge or deployment of this correction is authorised. [Contract](../contracts/quotation-material-resolution.md), [decision](../decisions/quotation-material-resolution.md), [execution ledger](../testing/evidence/quotation-material-resolution/README.md).
 
 The previously held case is an affected, independently allocated Project-origin Demand with an exact current Requested Impact after a completed received allocation reduction. Its accepted referral can now propose withdrawal of both dates from one unstarted Planned Project task. The Demand owner, Project coordinator, task owner and MaterialAction owner each independently receive the complete proposal. Freeze a review, inspect its evidence, then apply separately.
 

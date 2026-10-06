@@ -16,14 +16,19 @@ export async function conversionReadClient(
   c: QueryClient,
   p: Principal,
 ): Promise<QueryClient> {
-  const ledger = (
+  const layout = (
     await c.query(
-      "SELECT coalesce(string_agg(version::text||':'||sha256,',' ORDER BY version),'') AS ledger FROM public.ppo_migrations",
+      `SELECT md5(coalesce(string_agg(concat_ws(':',r.oid,a.attnum,a.attname,a.atttypid,a.atttypmod,a.attcollation),',' ORDER BY r.oid,a.attnum),'')) AS layout
+       FROM pg_catalog.pg_namespace n JOIN pg_catalog.pg_class r ON r.relnamespace=n.oid
+       JOIN pg_catalog.pg_attribute a ON a.attrelid=r.oid
+       WHERE n.nspname='ppo' AND r.relkind IN ('r','p','v','m','f','c')
+       AND a.attnum>0 AND NOT a.attisdropped`,
     )
-  ).rows[0].ledger;
+  ).rows[0].layout;
   // Reuse SQL parsing/plans, never results. Every execution still evaluates
   // current parameters, authority and clock_timestamp() on PostgreSQL.
-  // The complete ledger also separates result shapes when reserved gaps land.
+  // Actual relation layouts separate result shapes, including reserved-gap
+  // upgrades and rebuilt schemas. Catalog metadata needs no ledger privilege.
   const names = new Map<string, string>();
   const read: QueryClient = {
     query: ((...args: unknown[]) => {
@@ -37,7 +42,7 @@ export async function conversionReadClient(
         return Reflect.apply(c.query, c, args);
       let name = names.get(sql);
       if (!name) {
-        name = `ppo-es07-${createHash("sha256").update(ledger).update("\n").update(sql).digest("hex").slice(0, 48)}`;
+        name = `ppo-es07-${createHash("sha256").update(layout).update("\n").update(sql).digest("hex").slice(0, 48)}`;
         names.set(sql, name);
       }
       return c.query({ name, text: sql, values });
