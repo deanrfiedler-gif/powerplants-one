@@ -1,0 +1,12 @@
+✔ LC-14 Deal lists exact quotations from both independently costed alternatives without changing the stable primary or any native fact (16471.019ms)
+✔ LC-14 Deal preserves release identity and render state while quote access revocation hides every quotation (1714.3058ms)
+✔ E2 alternatives cost separately; selection never switches the stable CRM primary or mutates old quotes (29636.6876ms)
+✔ mobile projections preserve contact identity, exact commercial links and separate estimating permission (38495.6709ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 92609.3292

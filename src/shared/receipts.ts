@@ -1,4 +1,6 @@
+import { followupReceiptAuthority as salesFollowupReceiptAuthority } from "../sales/followup";
 import { estimatingBindingReceiptAuthority } from "../sales/estimating-binding";
+import { deliveryBindingReceiptAuthority } from "../sales/delivery-binding";
 import { productReceiptAuthority } from "../products/context";
 import { receiptAuthority as maintenanceReceiptAuthority, } from "../maintenance/reads";
 import { followupReceiptAuthority } from "../estimating/supply-followup/authority";
@@ -76,7 +78,14 @@ export async function readOperation(
   );
   const r = result.rows[0];
   if (!r) throw unavailable();
-  if (["Product", "ProductRelationship", "ProductImport"].includes(r.object_type)) {
+  if (r.object_type === "Activity" && r.command?.startsWith("SalesFollowup:")) {
+    return transaction(async c => {
+      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [p.workspace_id]);
+      await c.query("SELECT ppo.lock_crm_transfer_authority($1)", [p.workspace_id]);
+      await salesFollowupReceiptAuthority(c,p,r.record_id,operation_id);
+      return r.result as OperationReceipt;
+    });
+  } else if (["Product", "ProductRelationship", "ProductImport"].includes(r.object_type)) {
     await productReceiptAuthority(client,p,r.record_id,r.command,r.object_type);
   } else if (["ServiceAgreement","EntitlementAssessment","MaintenancePlan","MaintenanceOccurrence","RenewalReview","WarrantyCase","SupplierClaim"].includes(r.object_type)) {
     await maintenanceReceiptAuthority(client,p,r.record_id,r.object_type,r.command,(r.result as OperationReceipt).record_version);
@@ -129,6 +138,12 @@ export async function readOperation(
   } else if (r.object_type === "AftercareRecord") {
     await aftercareReceiptAuthority(client, p, r.record_id, r.command);
   } else if (r.object_type === "SalesHandover") {
+    if (r.command === "SalesHandover:BindDelivery") return transaction(async c => {
+      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [p.workspace_id]);
+      await c.query("SELECT ppo.lock_crm_transfer_authority($1)",[p.workspace_id]);
+      await deliveryBindingReceiptAuthority(c,p,r.record_id,operation_id);
+      return r.result as OperationReceipt;
+    });
     if (r.command === "SalesHandover:BindEstimating") return transaction(async c => {
       await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [p.workspace_id]);
       await c.query("SELECT ppo.lock_crm_transfer_authority($1)",[p.workspace_id]);

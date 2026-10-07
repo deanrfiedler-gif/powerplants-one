@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "synthetic": true,
-  "source": "tests/browser/leads.spec.ts; tests/database/leads-continuity.test.ts; tests/database/leads-amendments.test.ts; tests/database/sales-estimating-binding.test.ts; tests/browser/sales-estimating-binding.spec.ts",
+  "source": "tests/browser/leads.spec.ts; tests/database/leads-continuity.test.ts; tests/database/leads-amendments.test.ts; tests/database/sales-estimating-binding.test.ts; tests/browser/sales-estimating-binding.spec.ts; tests/database/commercial-continuity.test.ts; tests/browser/commercial-continuity.spec.ts; tests/database/outcome-sources.test.ts; tests/browser/outcome-sources.spec.ts",
   "owner": "Dean Fiedler",
   "review_status": "Pending owner and paired visual review",
   "states": [
@@ -60,6 +60,66 @@
     {
       "key": "link-response-lost",
       "description": "Actor-scoped journal recovers one immutable link after response loss and reload."
+    },
+    {
+      "key": "all-option-quotes",
+      "description": "A and B have separately costed native estimates and exact quotations; selection does not change the stable CRM primary or suppress B."
+    },
+    {
+      "key": "release-facts",
+      "description": "Draft and Release revision labels, independent approval, exact issue, response and native Supply conversion remain separate."
+    },
+    {
+      "key": "response-correction",
+      "description": "A latest staff-reported correction refreshes the Deal evidence while native history retains the earlier report."
+    },
+    {
+      "key": "restricted-commercial-refresh",
+      "description": "Denied native release refresh clears previously displayed issue/response/conversion facts and retains an explicit retry."
+    },
+    {
+      "key": "outcome-review-frozen",
+      "description": "Refreshing after a response correction retains the exact reviewed command; stale submission refuses all effects."
+    },
+    {
+      "key": "outcome-original-recovery",
+      "description": "An accepted Won with a lost HTTP response recovers the original operation after an actual Declined correction; history retains both facts."
+    },
+    {
+      "key": "outcome-evidence-denied",
+      "description": "Denied preview clears displayed quotation facts and submission basis; separate evidence must be explicitly selected and described."
+    },
+    {
+      "key": "legacy-outcome-narrative",
+      "description": "Historical outcomes retain their original payload and receipt and do not acquire a fabricated native quotation link."
+    },
+    {
+      "key": "won-native-independent-recovery",
+      "description": "Project creation and accepted Sales binding each recover their original operation after lost responses; a later Sales successor retains historical attribution."
+    },
+    {
+      "key": "won-service-intake-return",
+      "description": "An independently saved Service intake returns to a draft work order; the explicit Sales link does not create or approve native scope."
+    },
+    {
+      "key": "won-unknown-site-stale-native",
+      "description": "An unknown Sales site is explicitly compared to the native site; changed native versions reject stale comparisons without changing the accepted Sales source."
+    },
+    {
+      "key": "won-native-access-denied",
+      "description": "A denied receiving refresh removes the reviewed native identity and comparison. Actual native grant removal also hides link identities and original receipts in database proof."
+    },
+    {
+      "key": "return-to-sales-project",
+      "description": "Project native Activity to independently saved Lead, original creation recovery, fixed link and explicit native next-action planning."
+    },
+    {
+      "key": "return-to-sales-service",
+      "description": "Restricted completed Service Activity to separately worded Internal review and qualified Deal, with original source untouched and original link recovery after completion."
+    },
+    {
+      "key": "return-to-sales-stale-denied",
+      "description": "Refresh retains the fixed source/target comparison; stale intent has no effects, and denied refresh clears protected review. Current native Project access governs CRM Activity visibility."
     }
   ]
 }

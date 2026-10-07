@@ -88,6 +88,26 @@
           "id": "es07-host",
           "label": "ES-07 receiving host",
           "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery. Material receiving/recovery host: tests/browser/quotation-material-resolution.spec.ts."
+        },
+        {
+          "id": "deal-commercial-host",
+          "label": "Exact Deal commercial evidence",
+          "description": "tests/browser/commercial-continuity.spec.ts exercises real issued-response/correction reads and a mocked denied-refresh presentation in the Deal host; database tests prove actual quote-scope denial."
+        },
+        {
+          "id": "outcome-evidence-host",
+          "label": "Explicit outcome evidence",
+          "description": "LC-15 actual host in tests/browser/outcome-sources.spec.ts: fixed native review, stale refusal, denied comparison, separate evidence and exact original recovery. No isolated renderer."
+        },
+        {
+          "id": "won-delivery-host",
+          "label": "Native Won receiving",
+          "description": "LC-16 real hosts: independent intake/native creation, fixed link review, changed-source refusal, protected-view clearing and exact original recovery. See tests/browser/sales-delivery-binding.spec.ts; no isolated renderer."
+        },
+        {
+          "id": "sales-followup-host",
+          "label": "Reviewed return to Sales",
+          "description": "LC-17 host scenarios: Project/Service source, separate Internal review, native Lead/Deal create-return, fixed comparison, denied refresh and original recovery. tests/browser/sales-followup.spec.ts; no isolated renderer."
         }
       ],
       "implementation": [
@@ -108,7 +128,12 @@
         "docs/decisions/field-closed-visit-guidance.md",
         "docs/design/development/maintenance-fixtures.json",
         "src/components/sales-estimating-link.tsx",
-        "docs/design/development/lead-continuity-fixtures.json"
+        "docs/design/development/lead-continuity-fixtures.json",
+        "src/components/commercial-quotation.tsx",
+        "src/components/opportunity-outcome-source.tsx",
+        "src/components/sales-delivery-link.tsx",
+        "src/components/sales-delivery-creation.tsx",
+        "src/components/sales-followup.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -238,7 +263,19 @@
         "route:/warranty/supplier-recovery/[id]",
         "route:/estimating/discovery/new",
         "route:/estimating/discovery/[id]",
-        "scope:CR-02"
+        "scope:CR-02",
+        "scope:CR-01",
+        "route:/sales/opportunities/[id]",
+        "scope:CR-03",
+        "scope:PJ-01",
+        "route:/projects/[id]",
+        "route:/projects/new",
+        "route:/service/tickets/new",
+        "route:/service/work-orders/new",
+        "route:/sales/leads/[id]",
+        "route:/sales/leads",
+        "route:/sales/opportunities/new",
+        "route:/work/new"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -330,6 +367,38 @@
           "expected": "Keep saved-source comparison and original-result recovery visible through Sales-to-Estimating creation and linking.",
           "actual": "LC-13 reuses native controls and journal; exact new-state mockup images are missing.",
           "action": "Review desktop/phone create-return, fixed comparison, denied context and original recovery before adopting a baseline.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-deal-commercial-evidence",
+          "expected": "Permitted native evidence with explicit loading, denied refresh and retry at desktop/phone widths.",
+          "actual": "LC-14 host states and bindings added; exact new-state mockup images are missing.",
+          "action": "Review real host captures, keyboard/focus and long held-source text before accepting a baseline.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-outcome-evidence",
+          "expected": "Evidence source and fixed comparison remain clear and reachable across desktop/phone states.",
+          "actual": "LC-15 host adaptation implemented; exact new-state mockup images missing.",
+          "action": "Review source choice, long evidence, keyboard/focus and original recovery before baseline adoption.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-won-delivery",
+          "expected": "Review native creation, link comparison and recovery at matching desktop/phone viewports.",
+          "actual": "LC-16 host adaptation implemented; exact new-state mockups are missing.",
+          "action": "Use retained references and actual host evidence for a future paired review; preserve pending review.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "sales-followup-host-review",
+          "expected": "Review native creation, fixed comparison and separate-review forms at desktop/phone widths, keyboard/zoom and current authority states.",
+          "actual": "LC-17 host adaptation and synthetic fixtures; exact state mockups missing.",
+          "action": "Inspect retained evidence and pair with the accepted reference before design acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -645,6 +714,11 @@
           "id": "programme",
           "label": "Programme",
           "description": "Programme mode over synthetic project context."
+        },
+        {
+          "id": "sales-context-dialog",
+          "label": "Accepted Sales context",
+          "description": "Real Project host opens the shared native-dialog pattern for exact accepted Sales history without adding a sibling inside the fixed schedule workspace."
         }
       ],
       "implementation": [
@@ -657,7 +731,9 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/components/sales-delivery-link.tsx",
+        "src/components/projects-screens.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/projects/ppo-projects-gantt-content-r10.html",
@@ -679,6 +755,14 @@
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "Task editing and server history are not part of this presentation fixture. Dependency warnings are advisory. Full paired r10 visual acceptance remains open.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "gantt-sales-context",
+          "expected": "Keep the schedule visible and operable on desktop and phone while exposing Sales provenance on demand.",
+          "actual": "LC-16 replaces an initially failed sibling-panel layout with an explicit Sales handovers dialog. Final desktop/phone host verification passes, including Escape and return focus; paired design review remains pending.",
+          "action": "Retain failure evidence, verify schedule and dialog at both viewports, then seek paired review against a matching new-state reference.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -900,6 +984,21 @@
           "id": "es07-host",
           "label": "ES-07 receiving host",
           "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery. Material receiving/recovery host: tests/browser/quotation-material-resolution.spec.ts."
+        },
+        {
+          "id": "outcome-evidence-host",
+          "label": "Explicit outcome evidence",
+          "description": "LC-15 actual host in tests/browser/outcome-sources.spec.ts: fixed native review, stale refusal, denied comparison, separate evidence and exact original recovery. No isolated renderer."
+        },
+        {
+          "id": "won-delivery-host",
+          "label": "Native Won receiving",
+          "description": "LC-16 real hosts: independent intake/native creation, fixed link review, changed-source refusal, protected-view clearing and exact original recovery. See tests/browser/sales-delivery-binding.spec.ts; no isolated renderer."
+        },
+        {
+          "id": "sales-followup-host",
+          "label": "Reviewed return to Sales",
+          "description": "LC-17 host scenarios: Project/Service source, separate Internal review, native Lead/Deal create-return, fixed comparison, denied refresh and original recovery. tests/browser/sales-followup.spec.ts; no isolated renderer."
         }
       ],
       "implementation": [
@@ -921,7 +1020,11 @@
         "src/components/equipment-controls.tsx",
         "docs/design/development/maintenance-fixtures.json",
         "docs/design/development/lead-continuity-fixtures.json",
-        "src/components/sales-estimating-link.tsx"
+        "src/components/sales-estimating-link.tsx",
+        "src/components/opportunity-outcome-source.tsx",
+        "src/components/sales-delivery-link.tsx",
+        "src/components/sales-delivery-creation.tsx",
+        "src/components/sales-followup.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -1024,7 +1127,20 @@
         "route:/sales/leads/[id]",
         "route:/estimating/discovery/new",
         "route:/estimating/discovery/[id]",
-        "scope:CR-02"
+        "scope:CR-02",
+        "scope:CR-01",
+        "scope:CR-03",
+        "scope:PJ-01",
+        "scope:SC-04",
+        "scope:SC-05",
+        "route:/projects/[id]",
+        "route:/projects/new",
+        "route:/sales/opportunities/[id]",
+        "route:/service/tickets/new",
+        "route:/service/work-orders/[id]",
+        "route:/service/work-orders/new",
+        "route:/sales/opportunities/new",
+        "route:/work/new"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -1116,6 +1232,30 @@
           "expected": "Keep saved-source comparison and original-result recovery visible through Sales-to-Estimating creation and linking.",
           "actual": "LC-13 reuses native controls and journal; exact new-state mockup images are missing.",
           "action": "Review desktop/phone create-return, fixed comparison, denied context and original recovery before adopting a baseline.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fields-outcome-evidence",
+          "expected": "Evidence source and fixed comparison remain clear and reachable across desktop/phone states.",
+          "actual": "LC-15 host adaptation implemented; exact new-state mockup images missing.",
+          "action": "Review source choice, long evidence, keyboard/focus and original recovery before baseline adoption.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fields-won-delivery",
+          "expected": "Review native creation, link comparison and recovery at matching desktop/phone viewports.",
+          "actual": "LC-16 host adaptation implemented; exact new-state mockups are missing.",
+          "action": "Use retained references and actual host evidence for a future paired review; preserve pending review.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "sales-followup-host-review",
+          "expected": "Review native creation, fixed comparison and separate-review forms at desktop/phone widths, keyboard/zoom and current authority states.",
+          "actual": "LC-17 host adaptation and synthetic fixtures; exact state mockups missing.",
+          "action": "Inspect retained evidence and pair with the accepted reference before design acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1243,6 +1383,26 @@
           "id": "es07-host",
           "label": "ES-07 receiving host",
           "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery. Material receiving/recovery host: tests/browser/quotation-material-resolution.spec.ts."
+        },
+        {
+          "id": "deal-commercial-host",
+          "label": "Exact Deal commercial evidence",
+          "description": "tests/browser/commercial-continuity.spec.ts exercises real issued-response/correction reads and a mocked denied-refresh presentation in the Deal host; database tests prove actual quote-scope denial."
+        },
+        {
+          "id": "outcome-evidence-host",
+          "label": "Explicit outcome evidence",
+          "description": "LC-15 actual host in tests/browser/outcome-sources.spec.ts: fixed native review, stale refusal, denied comparison, separate evidence and exact original recovery. No isolated renderer."
+        },
+        {
+          "id": "won-delivery-host",
+          "label": "Native Won receiving",
+          "description": "LC-16 real hosts: independent intake/native creation, fixed link review, changed-source refusal, protected-view clearing and exact original recovery. See tests/browser/sales-delivery-binding.spec.ts; no isolated renderer."
+        },
+        {
+          "id": "sales-followup-host",
+          "label": "Reviewed return to Sales",
+          "description": "LC-17 host scenarios: Project/Service source, separate Internal review, native Lead/Deal create-return, fixed comparison, denied refresh and original recovery. tests/browser/sales-followup.spec.ts; no isolated renderer."
         }
       ],
       "implementation": [
@@ -1259,7 +1419,12 @@
         "src/app/styles/customers.css",
         "docs/design/development/maintenance-fixtures.json",
         "docs/design/development/lead-continuity-fixtures.json",
-        "src/components/sales-estimating-link.tsx"
+        "src/components/sales-estimating-link.tsx",
+        "src/components/commercial-quotation.tsx",
+        "src/components/opportunity-outcome-source.tsx",
+        "src/components/sales-delivery-link.tsx",
+        "src/components/sales-delivery-creation.tsx",
+        "src/components/sales-followup.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -1353,7 +1518,21 @@
         "route:/sales/leads/[id]",
         "route:/estimating/discovery/new",
         "route:/estimating/discovery/[id]",
-        "scope:CR-02"
+        "scope:CR-02",
+        "scope:CR-01",
+        "route:/sales/opportunities/[id]",
+        "scope:CR-03",
+        "scope:PJ-01",
+        "scope:SC-04",
+        "scope:SC-05",
+        "route:/projects/[id]",
+        "route:/projects/new",
+        "route:/service/tickets/new",
+        "route:/service/work-orders/[id]",
+        "route:/service/work-orders/new",
+        "route:/sales/opportunities/new",
+        "route:/work/[id]",
+        "route:/work/new"
       ],
       "desktop": "Submit an empty title to focus the summary, then follow its link to the field. Correct the title and save to clear the example error.",
       "mobile": "Summary and inline errors must remain visible at 320 px and 200% zoom.",
@@ -1437,6 +1616,38 @@
           "expected": "Keep saved-source comparison and original-result recovery visible through Sales-to-Estimating creation and linking.",
           "actual": "LC-13 reuses native controls and journal; exact new-state mockup images are missing.",
           "action": "Review desktop/phone create-return, fixed comparison, denied context and original recovery before adopting a baseline.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "validation-deal-commercial-evidence",
+          "expected": "Permitted native evidence with explicit loading, denied refresh and retry at desktop/phone widths.",
+          "actual": "LC-14 host states and bindings added; exact new-state mockup images are missing.",
+          "action": "Review real host captures, keyboard/focus and long held-source text before accepting a baseline.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "validation-outcome-evidence",
+          "expected": "Evidence source and fixed comparison remain clear and reachable across desktop/phone states.",
+          "actual": "LC-15 host adaptation implemented; exact new-state mockup images missing.",
+          "action": "Review source choice, long evidence, keyboard/focus and original recovery before baseline adoption.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "validation-won-delivery",
+          "expected": "Review native creation, link comparison and recovery at matching desktop/phone viewports.",
+          "actual": "LC-16 host adaptation implemented; exact new-state mockups are missing.",
+          "action": "Use retained references and actual host evidence for a future paired review; preserve pending review.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "sales-followup-host-review",
+          "expected": "Review native creation, fixed comparison and separate-review forms at desktop/phone widths, keyboard/zoom and current authority states.",
+          "actual": "LC-17 host adaptation and synthetic fixtures; exact state mockups missing.",
+          "action": "Inspect retained evidence and pair with the accepted reference before design acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

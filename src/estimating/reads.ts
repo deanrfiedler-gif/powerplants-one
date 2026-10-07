@@ -96,7 +96,13 @@ export async function opportunityCommercial(p: Principal, id: string, query: Rec
   return {
     estimate: d ? {id:d.id,display_number:d.display_number,state:d.state,title:d.saved.title,version:d.saved.version,sell_total:d.saved.sell_total} : null,
     site_name: d?.context.site ?? null,
-    quotes: d?.quotes.map(q=>({id:String(q.id),display_number:String(q.display_number),version:Number(q.version)})) ?? [],
+    quotes: items.flatMap(item => item.quotes.map(q => ({
+      id: String(q.id), display_number: String(q.display_number), version: Number(q.version),
+      estimate_id: item.id, estimate_display_number: item.display_number,
+      estimate_version_id: String(q.estimate_version_id),
+      option_label: item.discovery_basis?.option_label ?? null,
+      release: q.release === true, render_state: String(q.render_state),
+    }))),
     can_create,
     ...(bound&&items.some(i=>i.discovery_basis)?{estimates:items.map(i=>({id:i.id,display_number:i.display_number,state:i.state,title:i.saved.title,version:i.saved.version,sell_total:i.saved.sell_total,option_id:i.option_id,discovery_basis:i.discovery_basis??null}))}:{}),
   };

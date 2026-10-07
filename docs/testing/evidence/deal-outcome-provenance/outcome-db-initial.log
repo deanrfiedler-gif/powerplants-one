@@ -1,0 +1,41 @@
+✔ LC-15 exact quotation-based Won retains one outcome and original recovery after a native response correction (13531.9378ms)
+✔ LC-15 separate evidence is explicit; absent legacy source retains its exact old payload and narrative outcome (483.4495ms)
+✔ LC-15 stale reviewed response, wrong Deal and mismatched outcome refuse every effect (4484.4544ms)
+✔ LC-15 current quote permission governs stored source identities and original outcome recovery (3367.2691ms)
+✖ LC-15 late publication failure rolls back outcome, handover, source, receipt and audit together (3756.9815ms)
+✔ LC-15 populated 0074 upgrade retains every old outcome and original receipt without fabricating native provenance (9888.0451ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 44371.4537
+
+✖ failing tests:
+
+test at tests\database\outcome-sources.test.ts:1:8688
+✖ LC-15 late publication failure rolls back outcome, handover, source, receipt and audit together (3756.9815ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  Error: Check the record relationships, effective dates and permitted hierarchy.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\database\outcome-sources.test.ts:309:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Check the record relationships, effective dates and permitted hierarchy.
+        at sharedOperation (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\platform\operations.ts:225:13)
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\database\outcome-sources.test.ts:309:5)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    operator: 'rejects',
+    diff: 'simple'
+  }

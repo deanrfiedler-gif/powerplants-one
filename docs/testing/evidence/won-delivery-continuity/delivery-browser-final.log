@@ -1,0 +1,25 @@
+Database reset: completed
+[WebServer] (node:28452) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.98"}
+
+Running 12 tests using 1 worker
+
+(node:24852) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop-chromium] › tests\browser\projects-gantt.spec.ts:15:1 › Projects navigation, existing-context creation and an uncertain task save survive reload (4.8s)
+  ok  2 [desktop-chromium] › tests\browser\sales-delivery-binding.spec.ts:110:1 › LC-16 native project creation and delivery link recover separately after lost responses and Sales successor (7.7s)
+  ok  3 [desktop-chromium] › tests\browser\sales-delivery-binding.spec.ts:217:1 › LC-16 Service intake returns to a native work order and the explicit link preserves independent scope authority (7.1s)
+  ok  4 [desktop-chromium] › tests\browser\sales-delivery-binding.spec.ts:297:1 › LC-16 unknown-site comparison stays frozen through native changes and requires a new review (4.4s)
+  ok  5 [desktop-chromium] › tests\browser\sales-delivery-binding.spec.ts:351:1 › LC-16 a denied receiving refresh removes the reviewed native identity and accepted Sales details (2.5s)
+  ok  6 [desktop-chromium] › tests\browser\work-orders.spec.ts:30:1 › P04 SC-05 draft, authority refusal, dispute, identity limits, mandatory blocker, exception and approved history (7.0s)
+(node:29780) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  7 [mobile-chromium] › tests\browser\projects-gantt.spec.ts:15:1 › Projects navigation, existing-context creation and an uncertain task save survive reload (3.6s)
+  ok  8 [mobile-chromium] › tests\browser\sales-delivery-binding.spec.ts:110:1 › LC-16 native project creation and delivery link recover separately after lost responses and Sales successor (6.8s)
+  ok  9 [mobile-chromium] › tests\browser\sales-delivery-binding.spec.ts:217:1 › LC-16 Service intake returns to a native work order and the explicit link preserves independent scope authority (6.7s)
+  ok 10 [mobile-chromium] › tests\browser\sales-delivery-binding.spec.ts:297:1 › LC-16 unknown-site comparison stays frozen through native changes and requires a new review (4.5s)
+  ok 11 [mobile-chromium] › tests\browser\sales-delivery-binding.spec.ts:351:1 › LC-16 a denied receiving refresh removes the reviewed native identity and accepted Sales details (2.3s)
+  ok 12 [mobile-chromium] › tests\browser\work-orders.spec.ts:30:1 › P04 SC-05 draft, authority refusal, dispute, identity limits, mandatory blocker, exception and approved history (6.7s)
+
+  12 passed (1.3m)

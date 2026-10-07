@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: LC-17 Lead link is exactly once and retains native history, ownership and designated actions
+ok 1 - LC-17 Lead link is exactly once and retains native history, ownership and designated actions
+  ---
+  duration_ms: 18596.8053
+  type: 'test'
+  ...
+# Subtest: LC-17 Opportunity link is exactly once and retains native history, ownership and designated actions
+ok 2 - LC-17 Opportunity link is exactly once and retains native history, ownership and designated actions
+  ---
+  duration_ms: 17118.2353
+  type: 'test'
+  ...
+# Subtest: LC-17 restricted completed source creates a separate reviewed Internal action and preserves exact original
+ok 3 - LC-17 restricted completed source creates a separate reviewed Internal action and preserves exact original
+  ---
+  duration_ms: 51942.8744
+  type: 'test'
+  ...
+# Subtest: LC-17 stale source, stale target, unreviewed wording and a second Sales destination have no effects
+ok 4 - LC-17 stale source, stale target, unreviewed wording and a second Sales destination have no effects
+  ---
+  duration_ms: 47027.2705
+  type: 'test'
+  ...
+# Subtest: LC-17 incompatible site, closed Lead and non-owner are refused without changing source
+ok 5 - LC-17 incompatible site, closed Lead and non-owner are refused without changing source
+  ---
+  duration_ms: 22024.1633
+  type: 'test'
+  ...
+# Subtest: LC-17 current permission revocation hides source and blocks original recovery across nested reviews
+ok 6 - LC-17 current permission revocation hides source and blocks original recovery across nested reviews
+  ---
+  duration_ms: 19793.8785
+  type: 'test'
+  ...
+# Subtest: LC-17 late publication failure rolls back link, version, receipt and audit atomically
+ok 7 - LC-17 late publication failure rolls back link, version, receipt and audit atomically
+  ---
+  duration_ms: 21014.4745
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 199737.9828

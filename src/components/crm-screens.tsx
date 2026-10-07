@@ -1,10 +1,12 @@
 "use client";
+import { SalesActivityCreation, type ActivitySalesCreation } from "./sales-followup";
 import Link from "next/link";
 import { OpportunityWorkflows } from "./opportunity-workflows";
 import { OpportunityCorrespondence } from "./opportunity-correspondence";
 import { useEffect, useState } from "react";
 import { LookupField, LocalDateTimeField, RecordTabs, RecordPanel } from "./record-ui";
 import { DealDialog, DealInformation, DealScope, dealAmount, dealClose, type DealMode } from "./crm-deal-controls";
+import { OutcomeSourceHistory } from "./opportunity-outcome-source";
 import { ProductIcon } from "./product-icons";
 import { OpportunityCommercial, OpportunityFiles } from "./opportunity-commercial";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -192,21 +194,24 @@ function ActionFields({
   );
 }
 export function NewOpportunity() {
+  return <SalesActivityCreation kind="Opportunity">{sales => <NewOpportunityForm sales={sales}/>}</SalesActivityCreation>;
+}
+function NewOpportunityForm({sales}:{sales?:ActivitySalesCreation}) {
   const p = useIdentity(),
     router = useRouter(),
     [id] = useState(() => crypto.randomUUID()),
-    [company, setCompany] = useState(""),
-    [org, setOrg] = useState(""),
-    [site, setSite] = useState(""),
+    [company, setCompany] = useState(sales?.source.activity.company_id ?? ""),
+    [org, setOrg] = useState(sales?.source.customer_id ?? ""),
+    [site, setSite] = useState(sales?.source.activity.site_id ?? ""),
     [person, setPerson] = useState(""),
     [owner, setOwner] = useState(p.actor_id),
     [title, setTitle] = useState(""),
-    [need, setNeed] = useState(""),
+    [need, setNeed] = useState(sales?.source.activity.summary ?? ""),
     [qualification, setQualification] = useState(""),
     [siteReason, setSiteReason] = useState(""),
     [contactReason, setContactReason] = useState(""),
     [channel, setChannel] = useState("Phone"),
-    [source, setSource] = useState(""),
+    [source, setSource] = useState(sales ? `Reviewed Activity ${sales.source.activity.id}, version ${sales.source.activity.version}` : ""),
     [action, setAction] = useState(() => emptyAction(p.actor_id));
   const available = useCrmResource<Options>("crm/options?kind=Company");
   const siteRequired=available.data?.items.find(x=>x.id===company)?.requires_site ?? false;
@@ -244,7 +249,7 @@ export function NewOpportunity() {
               noValidate
               onSubmit={(e) => {
                 e.preventDefault();
-                void command.send("crm/opportunities", {
+                const fields = {
                   id,
                   company_id: company,
                   organisation_id: org,
@@ -266,10 +271,11 @@ export function NewOpportunity() {
                   },
                   reason:
                     "Create synthetic owned opportunity and initial action",
-                });
+                };
+                if(sales) void sales.send(fields); else void command.send("crm/opportunities",fields);
               }}
             >
-              <fieldset disabled={command.busy || command.uncertain}>
+              <fieldset disabled={command.busy || command.uncertain || sales?.blocked}>
                 <legend>Deal and customer context</legend>
                 <Field name="qualification_note" label="Qualification outcome" value={qualification} onChange={setQualification} multiline required maxLength={2000}/>
                 <p>Discovery starts with a qualified customer need. If the contact is unknown, the initial Activity must identify that contact and belong to the deal owner.</p>
@@ -480,7 +486,7 @@ function OpportunityContent({
         {o.can_transfer && <button className="secondary" disabled={command.busy||command.uncertain} onClick={()=>setDialog("transfer")}>Transfer deal owner</button>}
         {o.can_record_outcome && <button className="secondary" disabled={command.busy || command.uncertain} onClick={()=>setDialog("outcome")}>Record sales outcome</button>}
       </div>}
-      {o.handover_due && <section className="crm-panel" aria-label="Handover due"><h2>Handover due</h2><p>Accountable owner: {o.handover_due.owner_name}. Receiving route and owner still need confirmation.</p><p>Won at deal version {o.handover_due.opportunity_version}. Existing activities retain their owners.</p></section>}
+      {o.handover_due && <section className="crm-panel" aria-label="Handover due"><h2>Handover due</h2><p>Accountable owner: {o.handover_due.owner_name}. This owner was accountable when Won was recorded. Current receiving progress appears in the linked workflows below.</p><p>Won at deal version {o.handover_due.opportunity_version}. Existing activities retain their owners.</p></section>}
       {dialog && <DealDialog id={o.id} mode={dialog} targetStage={targetStage} onClose={() => {setDialog(null);setTargetStage(undefined);}} onSaved={(receipt, _old, stage) => {
         setDialog(null);setTargetStage(undefined);
         // Our accepted stage command can advance a clean sibling form. Existing
@@ -759,6 +765,7 @@ function OpportunityContent({
               {o.owner_transfers.filter(t=>t.event_id===e.id).map(t=><p key={t.event_id}>{t.from_owner_name} → {t.to_owner_name}. Activities retained their owners.</p>)}
               {e.lost_reason && <p>Lost reason: {e.lost_reason}</p>}
               {e.acceptance_evidence && <p className="crm-narrative">Acceptance evidence: {e.acceptance_evidence}</p>}
+              {e.event_type === "OpportunityOutcomeRecorded" && <OutcomeSourceHistory source={o.outcome_sources.find(s => s.event_id === e.id)} />}
               <details>
                 <summary>Recorded need and qualification</summary>
                 <p className="crm-narrative">{e.need_summary}</p>

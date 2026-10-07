@@ -4595,6 +4595,49 @@
           "steps": [],
           "rows": [],
           "headers": []
+        },
+        {
+          "section_id": "exact-commercial-evidence",
+          "title": "Read exact quotation and response evidence",
+          "paragraphs": [
+            "Estimates & quotations includes revisions from all permitted estimate alternatives. Draft and Release revisions are labelled separately; Documents uses the same permitted records.",
+            "Open a release revision’s evidence to inspect independent approval, recorded issue and current source check. Review the staff-recorded response and its holds separately. Native conversion has its own receiving, target and follow-up history. None of these reads records a Deal outcome or authorises delivery.",
+            "If a correction is recorded, the current response refreshes while the native response history retains earlier reports. Restricted or unavailable evidence is not an empty lifecycle. Use Retry after access is restored; stale evidence is removed on a denied refresh."
+          ],
+          "steps": [
+            "Choose Estimates & quotations on the Deal.",
+            "Find the required option, estimate and exact revision.",
+            "Expand issue, reported response and conversion evidence, then follow the native history links for review."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "explicit-outcome-evidence",
+          "title": "Record a sourced sales outcome",
+          "paragraphs": [
+            "Choose an Outcome evidence source before recording Won or Lost. For a native quotation, select its release, read the current report and holds, then Review quotation basis. Won requires the native accepted response to be ready; Lost requires a declined report. Existing stage, acceptance evidence and lost reason remain required.",
+            "Separate outcome evidence requires a narrative describing the independently reviewed evidence. It does not assert a native quotation response. Recording the outcome does not convert scope or authorise delivery.",
+            "Refreshing quotation evidence preserves your exact reviewed comparison. If it changed, discard the comparison and review the current basis. A denied refresh hides the comparison; choose evidence again only with current permission.",
+            "If the save result is uncertain, Confirm original save outcome. The original decision remains recoverable even if a native response is corrected later, subject to current access. History distinguishes the recorded response, latest report on that revision, separate evidence and older narrative outcomes without native links."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "native-won-receiving",
+          "title": "Continue an accepted Won handover",
+          "paragraphs": [
+            "Accept the current Won handover and its receiving owner before choosing a native Project or Service destination. Create a native record through its existing form, or choose a matching record owned and editable by the receiver. Creation saves separately.",
+            "For Service, link a permitted request or use Record a new Service request and return. Intake retains its own owner and explicit unknowns. Save the draft work order, return to the handover, then review its exact customer, site and version. Native scope, authorisation and booking still require their usual decisions.",
+            "Review delivery link freezes the compared Sales and native versions. Supply a link reason; when Sales left the site unknown, explicitly review the chosen native site. If either source changes, discard and review a fresh comparison. Refresh alone never changes your reviewed submission.",
+            "Check original native creation or Check original delivery link resolves an uncertain save; Retry exact original sends the retained operation. Same-tab recovery survives reload. A later Sales successor preserves earlier attribution as historical. Current access still governs recovery.",
+            "The native record shows exact accepted Sales context beside its own controls. The Deal shows source-derived receiving progress and retains the original accountable Won event and existing Activity owners/dates. A link is not evidence of completed delivery. Parts receiving remains an unresolved native route."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
         }
       ],
       "related_entry_keys": [
@@ -4980,6 +5023,20 @@
           "title": "Guide review and feedback",
           "paragraphs": [
             "Owner: Dean Fiedler. Draft article; owner and visual acceptance remain pending. Actual tests and captures are recorded separately in the implementation handover. A source commit or passing test is not operational approval."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "native-won-receiving",
+          "title": "Continue an accepted Won handover",
+          "paragraphs": [
+            "Accept the current Won handover and its receiving owner before choosing a native Project or Service destination. Create a native record through its existing form, or choose a matching record owned and editable by the receiver. Creation saves separately.",
+            "For Service, link a permitted request or use Record a new Service request and return. Intake retains its own owner and explicit unknowns. Save the draft work order, return to the handover, then review its exact customer, site and version. Native scope, authorisation and booking still require their usual decisions.",
+            "Review delivery link freezes the compared Sales and native versions. Supply a link reason; when Sales left the site unknown, explicitly review the chosen native site. If either source changes, discard and review a fresh comparison. Refresh alone never changes your reviewed submission.",
+            "Check original native creation or Check original delivery link resolves an uncertain save; Retry exact original sends the retained operation. Same-tab recovery survives reload. A later Sales successor preserves earlier attribution as historical. Current access still governs recovery.",
+            "The native record shows exact accepted Sales context beside its own controls. The Deal shows source-derived receiving progress and retains the original accountable Won event and existing Activity owners/dates. A link is not evidence of completed delivery. Parts receiving remains an unresolved native route."
           ],
           "steps": [],
           "rows": [],
@@ -9728,6 +9785,21 @@
             "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
             "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
             "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "native-won-receiving",
+          "title": "Continue an accepted Won handover",
+          "paragraphs": [
+            "Accept the current Won handover and its receiving owner before choosing a native Project or Service destination. Create a native record through its existing form, or choose a matching record owned and editable by the receiver. Creation saves separately.",
+            "For Service, link a permitted request or use Record a new Service request and return. Intake retains its own owner and explicit unknowns. Save the draft work order, return to the handover, then review its exact customer, site and version. Native scope, authorisation and booking still require their usual decisions.",
+            "Review delivery link freezes the compared Sales and native versions. Supply a link reason; when Sales left the site unknown, explicitly review the chosen native site. If either source changes, discard and review a fresh comparison. Refresh alone never changes your reviewed submission.",
+            "Check original native creation or Check original delivery link resolves an uncertain save; Retry exact original sends the retained operation. Same-tab recovery survives reload. A later Sales successor preserves earlier attribution as historical. Current access still governs recovery.",
+            "The native record shows exact accepted Sales context beside its own controls. The Deal shows source-derived receiving progress and retains the original accountable Won event and existing Activity owners/dates. A link is not evidence of completed delivery. Parts receiving remains an unresolved native route.",
+            "In Projects, choose Sales handovers to open the exact context in a dialog. Close it or press Escape to return focus to that action; the schedule stays visible behind it."
           ],
           "steps": [],
           "rows": [],
@@ -18373,6 +18445,20 @@
           "steps": [],
           "rows": [],
           "headers": []
+        },
+        {
+          "section_id": "native-won-receiving",
+          "title": "Continue an accepted Won handover",
+          "paragraphs": [
+            "Accept the current Won handover and its receiving owner before choosing a native Project or Service destination. Create a native record through its existing form, or choose a matching record owned and editable by the receiver. Creation saves separately.",
+            "For Service, link a permitted request or use Record a new Service request and return. Intake retains its own owner and explicit unknowns. Save the draft work order, return to the handover, then review its exact customer, site and version. Native scope, authorisation and booking still require their usual decisions.",
+            "Review delivery link freezes the compared Sales and native versions. Supply a link reason; when Sales left the site unknown, explicitly review the chosen native site. If either source changes, discard and review a fresh comparison. Refresh alone never changes your reviewed submission.",
+            "Check original native creation or Check original delivery link resolves an uncertain save; Retry exact original sends the retained operation. Same-tab recovery survives reload. A later Sales successor preserves earlier attribution as historical. Current access still governs recovery.",
+            "The native record shows exact accepted Sales context beside its own controls. The Deal shows source-derived receiving progress and retains the original accountable Won event and existing Activity owners/dates. A link is not evidence of completed delivery. Parts receiving remains an unresolved native route."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
         }
       ],
       "related_entry_keys": [
@@ -18548,6 +18634,20 @@
           "title": "Guide review and feedback",
           "paragraphs": [
             "Draft guide and native functional work; owner acceptance and deployment remain pending."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "native-won-receiving",
+          "title": "Continue an accepted Won handover",
+          "paragraphs": [
+            "Accept the current Won handover and its receiving owner before choosing a native Project or Service destination. Create a native record through its existing form, or choose a matching record owned and editable by the receiver. Creation saves separately.",
+            "For Service, link a permitted request or use Record a new Service request and return. Intake retains its own owner and explicit unknowns. Save the draft work order, return to the handover, then review its exact customer, site and version. Native scope, authorisation and booking still require their usual decisions.",
+            "Review delivery link freezes the compared Sales and native versions. Supply a link reason; when Sales left the site unknown, explicitly review the chosen native site. If either source changes, discard and review a fresh comparison. Refresh alone never changes your reviewed submission.",
+            "Check original native creation or Check original delivery link resolves an uncertain save; Retry exact original sends the retained operation. Same-tab recovery survives reload. A later Sales successor preserves earlier attribution as historical. Current access still governs recovery.",
+            "The native record shows exact accepted Sales context beside its own controls. The Deal shows source-derived receiving progress and retains the original accountable Won event and existing Activity owners/dates. A link is not evidence of completed delivery. Parts receiving remains an unresolved native route."
           ],
           "steps": [],
           "rows": [],
@@ -41824,7 +41924,8 @@
             "After an independently received allocation reduction, select the exact Requested Impact and Task A, then explicitly select its dependent successor B. Compare both tasks and the FS/SS direction. Record Demand, Project, Task, MaterialAction and Successor decisions separately, freeze the complete review, then apply. Additional links, changed evidence or missing consent hold execution.",
             "After an exact received allocation reduction, select the affected task A, its successor B and the third task C dependent on B. All must be internally owned, dated Planned tasks at zero progress. Review both FS/SS links and all remaining holds. Record separate Demand, Project, Task, MaterialAction, Successor and Third task decisions, then freeze review and Apply separately. Extra edges or consequential links hold this action.",
             "Select affected A, successor B and Branch task C directly dependent on A. Demand, Project coordinator, A, MaterialAction, B and C owners each record a separate Accepted, Returned or Held decision. Freeze review, then apply separately. Branch C and linear-chain Third task choices are mutually exclusive; previous Receipt/allocation/task/chain decisions do not authorise this proposal.",
-            "Select affected A, Merge task C, then its Retained predecessor B. Demand, Project, A, MaterialAction, B and C owners each record Accepted, Returned or Held separately. B acknowledges its complete retained native position and dependency context, without a new commitment. Freeze review, then apply separately. Prior Receipt/allocation/isolated/pair/chain/branch consent does not transfer."
+            "Select affected A, Merge task C, then its Retained predecessor B. Demand, Project, A, MaterialAction, B and C owners each record Accepted, Returned or Held separately. B acknowledges its complete retained native position and dependency context, without a new commitment. Freeze review, then apply separately. Prior Receipt/allocation/isolated/pair/chain/branch consent does not transfer.",
+            "LC-17: Open the owned follow-up Activity. Review existing Sales records, independently capture a Lead or explicitly qualified Deal when needed, and return for an exact link comparison. A restricted original needs a separately worded Internal review with its own owner and date. A linked Lead can use native Plan next activity to designate that retained action. Project Sales context starts Activity capture; aftercare still requires separate receiving confirmation."
           ],
           "steps": [
             "Confirm the record reference and customer/site context in this record workspace.",
@@ -41904,7 +42005,8 @@
           "paragraphs": [
             "The third-task decision belongs to this complete proposal. Earlier isolated-task or two-task consent cannot transfer. Changed owners/effects/evidence require renewed receiving. Corrected decisions require a new review. Missing original receipts are inconclusive; recover or retry the unchanged actor-bound original before replacement.",
             "Branch originals use the existing actor-bound journal. Changed topology, dependencies, evidence, versions, ownership or authority holds pending work. Missing receipts are inconclusive; recover or retry the exact original before replacement. No partial branch completion is reported.",
-            "Changes to retained B, either relationship, source, ownership, authority or receiving hold unexecuted work. The actor-bound journal retains uncertain originals through reload. Missing lookup is inconclusive; recover or retry exactly before replacement. No partial merge completion is reported."
+            "Changes to retained B, either relationship, source, ownership, authority or receiving hold unexecuted work. The actor-bound journal retains uncertain originals through reload. Missing lookup is inconclusive; recover or retry exactly before replacement. No partial merge completion is reported.",
+            "Creation, Sales linking and receiving acknowledgement save separately. Check the original creation/link after an uncertain response; never start a replacement intent. A stale comparison must be discarded and reviewed again. Current source, target and original provenance access govern recovery; the original owner/date and source history remain intact."
           ],
           "steps": [],
           "rows": [
@@ -41997,6 +42099,21 @@
           "headers": [],
           "rows": [],
           "id": "material-diamond"
+        },
+        {
+          "section_id": "native-won-receiving",
+          "title": "Continue an accepted Won handover",
+          "paragraphs": [
+            "Accept the current Won handover and its receiving owner before choosing a native Project or Service destination. Create a native record through its existing form, or choose a matching record owned and editable by the receiver. Creation saves separately.",
+            "For Service, link a permitted request or use Record a new Service request and return. Intake retains its own owner and explicit unknowns. Save the draft work order, return to the handover, then review its exact customer, site and version. Native scope, authorisation and booking still require their usual decisions.",
+            "Review delivery link freezes the compared Sales and native versions. Supply a link reason; when Sales left the site unknown, explicitly review the chosen native site. If either source changes, discard and review a fresh comparison. Refresh alone never changes your reviewed submission.",
+            "Check original native creation or Check original delivery link resolves an uncertain save; Retry exact original sends the retained operation. Same-tab recovery survives reload. A later Sales successor preserves earlier attribution as historical. Current access still governs recovery.",
+            "The native record shows exact accepted Sales context beside its own controls. The Deal shows source-derived receiving progress and retains the original accountable Won event and existing Activity owners/dates. A link is not evidence of completed delivery. Parts receiving remains an unresolved native route.",
+            "In Projects, choose Sales handovers to open the exact context in a dialog. Close it or press Escape to return focus to that action; the schedule stays visible behind it."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
         }
       ],
       "related_entry_keys": [
@@ -42267,6 +42384,20 @@
             "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
             "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
             "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "native-won-receiving",
+          "title": "Continue an accepted Won handover",
+          "paragraphs": [
+            "Accept the current Won handover and its receiving owner before choosing a native Project or Service destination. Create a native record through its existing form, or choose a matching record owned and editable by the receiver. Creation saves separately.",
+            "For Service, link a permitted request or use Record a new Service request and return. Intake retains its own owner and explicit unknowns. Save the draft work order, return to the handover, then review its exact customer, site and version. Native scope, authorisation and booking still require their usual decisions.",
+            "Review delivery link freezes the compared Sales and native versions. Supply a link reason; when Sales left the site unknown, explicitly review the chosen native site. If either source changes, discard and review a fresh comparison. Refresh alone never changes your reviewed submission.",
+            "Check original native creation or Check original delivery link resolves an uncertain save; Retry exact original sends the retained operation. Same-tab recovery survives reload. A later Sales successor preserves earlier attribution as historical. Current access still governs recovery.",
+            "The native record shows exact accepted Sales context beside its own controls. The Deal shows source-derived receiving progress and retains the original accountable Won event and existing Activity owners/dates. A link is not evidence of completed delivery. Parts receiving remains an unresolved native route."
           ],
           "steps": [],
           "rows": [],
@@ -42661,7 +42792,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Task sequence for review against the applicable running release.",
+            "LC-17: Open the owned follow-up Activity. Review existing Sales records, independently capture a Lead or explicitly qualified Deal when needed, and return for an exact link comparison. A restricted original needs a separately worded Internal review with its own owner and date. A linked Lead can use native Plan next activity to designate that retained action. Project Sales context starts Activity capture; aftercare still requires separate receiving confirmation."
           ],
           "steps": [
             "Confirm the record reference and customer/site context in this record workspace.",
@@ -42739,7 +42871,9 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
+          "paragraphs": [
+            "Creation, Sales linking and receiving acknowledgement save separately. Check the original creation/link after an uncertain response; never start a replacement intent. A stale comparison must be discarded and reviewed again. Current source, target and original provenance access govern recovery; the original owner/date and source history remain intact."
+          ],
           "steps": [],
           "rows": [
             [
@@ -42943,7 +43077,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Task sequence for review against the applicable running release.",
+            "LC-17: Open the owned follow-up Activity. Review existing Sales records, independently capture a Lead or explicitly qualified Deal when needed, and return for an exact link comparison. A restricted original needs a separately worded Internal review with its own owner and date. A linked Lead can use native Plan next activity to designate that retained action. Project Sales context starts Activity capture; aftercare still requires separate receiving confirmation."
           ],
           "steps": [
             "Use + Lead to capture the enquiry and its source",
@@ -43020,7 +43155,9 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
+          "paragraphs": [
+            "Creation, Sales linking and receiving acknowledgement save separately. Check the original creation/link after an uncertain response; never start a replacement intent. A stale comparison must be discarded and reviewed again. Current source, target and original provenance access govern recovery; the original owner/date and source history remain intact."
+          ],
           "steps": [],
           "rows": [
             [
@@ -43196,7 +43333,9 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [],
+          "paragraphs": [
+            "LC-17: Open the owned follow-up Activity. Review existing Sales records, independently capture a Lead or explicitly qualified Deal when needed, and return for an exact link comparison. A restricted original needs a separately worded Internal review with its own owner and date. A linked Lead can use native Plan next activity to designate that retained action. Project Sales context starts Activity capture; aftercare still requires separate receiving confirmation."
+          ],
           "steps": [
             "Open a deal from filtered Board, List or Forecast.",
             "Confirm customer/site and scope, then inspect the next Activity and Tasks.",
@@ -43242,7 +43381,8 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "Validation identifies the field to correct without discarding the draft. On a version conflict, compare the saved version with your proposal before deliberately using its version. An uncertain operation stays in the durable local journal: Check original result or Retry exact original. Do not issue a replacement while the original outcome is unknown. Reload with the same authorised identity to reconcile. A denied source needs restored legitimate access."
+            "Validation identifies the field to correct without discarding the draft. On a version conflict, compare the saved version with your proposal before deliberately using its version. An uncertain operation stays in the durable local journal: Check original result or Retry exact original. Do not issue a replacement while the original outcome is unknown. Reload with the same authorised identity to reconcile. A denied source needs restored legitimate access.",
+            "Creation, Sales linking and receiving acknowledgement save separately. Check the original creation/link after an uncertain response; never start a replacement intent. A stale comparison must be discarded and reviewed again. Current source, target and original provenance access govern recovery; the original owner/date and source history remain intact."
           ],
           "steps": [],
           "rows": [],
@@ -43273,6 +43413,49 @@
           "title": "Guide review and feedback",
           "paragraphs": [
             "Owner: Dean Fiedler. Draft article; owner and visual acceptance remain pending. Actual tests and captures are recorded separately in the implementation handover. A source commit or passing test is not operational approval."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "exact-commercial-evidence",
+          "title": "Read exact quotation and response evidence",
+          "paragraphs": [
+            "Estimates & quotations includes revisions from all permitted estimate alternatives. Draft and Release revisions are labelled separately; Documents uses the same permitted records.",
+            "Open a release revision’s evidence to inspect independent approval, recorded issue and current source check. Review the staff-recorded response and its holds separately. Native conversion has its own receiving, target and follow-up history. None of these reads records a Deal outcome or authorises delivery.",
+            "If a correction is recorded, the current response refreshes while the native response history retains earlier reports. Restricted or unavailable evidence is not an empty lifecycle. Use Retry after access is restored; stale evidence is removed on a denied refresh."
+          ],
+          "steps": [
+            "Choose Estimates & quotations on the Deal.",
+            "Find the required option, estimate and exact revision.",
+            "Expand issue, reported response and conversion evidence, then follow the native history links for review."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "explicit-outcome-evidence",
+          "title": "Record a sourced sales outcome",
+          "paragraphs": [
+            "Choose an Outcome evidence source before recording Won or Lost. For a native quotation, select its release, read the current report and holds, then Review quotation basis. Won requires the native accepted response to be ready; Lost requires a declined report. Existing stage, acceptance evidence and lost reason remain required.",
+            "Separate outcome evidence requires a narrative describing the independently reviewed evidence. It does not assert a native quotation response. Recording the outcome does not convert scope or authorise delivery.",
+            "Refreshing quotation evidence preserves your exact reviewed comparison. If it changed, discard the comparison and review the current basis. A denied refresh hides the comparison; choose evidence again only with current permission.",
+            "If the save result is uncertain, Confirm original save outcome. The original decision remains recoverable even if a native response is corrected later, subject to current access. History distinguishes the recorded response, latest report on that revision, separate evidence and older narrative outcomes without native links."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "native-won-receiving",
+          "title": "Continue an accepted Won handover",
+          "paragraphs": [
+            "Accept the current Won handover and its receiving owner before choosing a native Project or Service destination. Create a native record through its existing form, or choose a matching record owned and editable by the receiver. Creation saves separately.",
+            "For Service, link a permitted request or use Record a new Service request and return. Intake retains its own owner and explicit unknowns. Save the draft work order, return to the handover, then review its exact customer, site and version. Native scope, authorisation and booking still require their usual decisions.",
+            "Review delivery link freezes the compared Sales and native versions. Supply a link reason; when Sales left the site unknown, explicitly review the chosen native site. If either source changes, discard and review a fresh comparison. Refresh alone never changes your reviewed submission.",
+            "Check original native creation or Check original delivery link resolves an uncertain save; Retry exact original sends the retained operation. Same-tab recovery survives reload. A later Sales successor preserves earlier attribution as historical. Current access still governs recovery.",
+            "The native record shows exact accepted Sales context beside its own controls. The Deal shows source-derived receiving progress and retains the original accountable Won event and existing Activity owners/dates. A link is not evidence of completed delivery. Parts receiving remains an unresolved native route."
           ],
           "steps": [],
           "rows": [],
@@ -43407,7 +43590,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Task sequence for review against the applicable running release.",
+            "LC-17: Open the owned follow-up Activity. Review existing Sales records, independently capture a Lead or explicitly qualified Deal when needed, and return for an exact link comparison. A restricted original needs a separately worded Internal review with its own owner and date. A linked Lead can use native Plan next activity to designate that retained action. Project Sales context starts Activity capture; aftercare still requires separate receiving confirmation."
           ],
           "steps": [
             "Search the related register for an existing record before creating another.",
@@ -43480,7 +43664,9 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
+          "paragraphs": [
+            "Creation, Sales linking and receiving acknowledgement save separately. Check the original creation/link after an uncertain response; never start a replacement intent. A stale comparison must be discarded and reviewed again. Current source, target and original provenance access govern recovery; the original owner/date and source history remain intact."
+          ],
           "steps": [],
           "rows": [
             [
@@ -46151,6 +46337,20 @@
           "steps": [],
           "rows": [],
           "headers": []
+        },
+        {
+          "section_id": "native-won-receiving",
+          "title": "Continue an accepted Won handover",
+          "paragraphs": [
+            "Accept the current Won handover and its receiving owner before choosing a native Project or Service destination. Create a native record through its existing form, or choose a matching record owned and editable by the receiver. Creation saves separately.",
+            "For Service, link a permitted request or use Record a new Service request and return. Intake retains its own owner and explicit unknowns. Save the draft work order, return to the handover, then review its exact customer, site and version. Native scope, authorisation and booking still require their usual decisions.",
+            "Review delivery link freezes the compared Sales and native versions. Supply a link reason; when Sales left the site unknown, explicitly review the chosen native site. If either source changes, discard and review a fresh comparison. Refresh alone never changes your reviewed submission.",
+            "Check original native creation or Check original delivery link resolves an uncertain save; Retry exact original sends the retained operation. Same-tab recovery survives reload. A later Sales successor preserves earlier attribution as historical. Current access still governs recovery.",
+            "The native record shows exact accepted Sales context beside its own controls. The Deal shows source-derived receiving progress and retains the original accountable Won event and existing Activity owners/dates. A link is not evidence of completed delivery. Parts receiving remains an unresolved native route."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
         }
       ],
       "related_entry_keys": [
@@ -46709,6 +46909,20 @@
           "steps": [],
           "rows": [],
           "headers": []
+        },
+        {
+          "section_id": "native-won-receiving",
+          "title": "Continue an accepted Won handover",
+          "paragraphs": [
+            "Accept the current Won handover and its receiving owner before choosing a native Project or Service destination. Create a native record through its existing form, or choose a matching record owned and editable by the receiver. Creation saves separately.",
+            "For Service, link a permitted request or use Record a new Service request and return. Intake retains its own owner and explicit unknowns. Save the draft work order, return to the handover, then review its exact customer, site and version. Native scope, authorisation and booking still require their usual decisions.",
+            "Review delivery link freezes the compared Sales and native versions. Supply a link reason; when Sales left the site unknown, explicitly review the chosen native site. If either source changes, discard and review a fresh comparison. Refresh alone never changes your reviewed submission.",
+            "Check original native creation or Check original delivery link resolves an uncertain save; Retry exact original sends the retained operation. Same-tab recovery survives reload. A later Sales successor preserves earlier attribution as historical. Current access still governs recovery.",
+            "The native record shows exact accepted Sales context beside its own controls. The Deal shows source-derived receiving progress and retains the original accountable Won event and existing Activity owners/dates. A link is not evidence of completed delivery. Parts receiving remains an unresolved native route."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
         }
       ],
       "related_entry_keys": [
@@ -46976,6 +47190,20 @@
             "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
             "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
             "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "native-won-receiving",
+          "title": "Continue an accepted Won handover",
+          "paragraphs": [
+            "Accept the current Won handover and its receiving owner before choosing a native Project or Service destination. Create a native record through its existing form, or choose a matching record owned and editable by the receiver. Creation saves separately.",
+            "For Service, link a permitted request or use Record a new Service request and return. Intake retains its own owner and explicit unknowns. Save the draft work order, return to the handover, then review its exact customer, site and version. Native scope, authorisation and booking still require their usual decisions.",
+            "Review delivery link freezes the compared Sales and native versions. Supply a link reason; when Sales left the site unknown, explicitly review the chosen native site. If either source changes, discard and review a fresh comparison. Refresh alone never changes your reviewed submission.",
+            "Check original native creation or Check original delivery link resolves an uncertain save; Retry exact original sends the retained operation. Same-tab recovery survives reload. A later Sales successor preserves earlier attribution as historical. Current access still governs recovery.",
+            "The native record shows exact accepted Sales context beside its own controls. The Deal shows source-derived receiving progress and retains the original accountable Won event and existing Activity owners/dates. A link is not evidence of completed delivery. Parts receiving remains an unresolved native route."
           ],
           "steps": [],
           "rows": [],
@@ -49237,7 +49465,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Task sequence for review against the applicable running release.",
+            "LC-17: Open the owned follow-up Activity. Review existing Sales records, independently capture a Lead or explicitly qualified Deal when needed, and return for an exact link comparison. A restricted original needs a separately worded Internal review with its own owner and date. A linked Lead can use native Plan next activity to designate that retained action. Project Sales context starts Activity capture; aftercare still requires separate receiving confirmation."
           ],
           "steps": [
             "Confirm the record reference and customer/site context in this record workspace.",
@@ -49312,7 +49541,8 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "Scheduling Step 4: a published impact holds unstarted work immediately, even when the policy starts later. Activity completion or pack acknowledgement does not clear it. Use the named owner and booking link for a controlled change or cancellation/replacement, evaluate current evidence, then save the guarded resolution online. Later source changes restore the hold. Retry an uncertain save unchanged to recover its receipt. Delayed offline Start is rechecked against current authority; ReviewRequired retains its original."
+            "Scheduling Step 4: a published impact holds unstarted work immediately, even when the policy starts later. Activity completion or pack acknowledgement does not clear it. Use the named owner and booking link for a controlled change or cancellation/replacement, evaluate current evidence, then save the guarded resolution online. Later source changes restore the hold. Retry an uncertain save unchanged to recover its receipt. Delayed offline Start is rechecked against current authority; ReviewRequired retains its original.",
+            "Creation, Sales linking and receiving acknowledgement save separately. Check the original creation/link after an uncertain response; never start a replacement intent. A stale comparison must be discarded and reviewed again. Current source, target and original provenance access govern recovery; the original owner/date and source history remain intact."
           ],
           "steps": [],
           "rows": [
@@ -49508,7 +49738,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Task sequence for review against the applicable running release.",
+            "LC-17: Open the owned follow-up Activity. Review existing Sales records, independently capture a Lead or explicitly qualified Deal when needed, and return for an exact link comparison. A restricted original needs a separately worded Internal review with its own owner and date. A linked Lead can use native Plan next activity to designate that retained action. Project Sales context starts Activity capture; aftercare still requires separate receiving confirmation."
           ],
           "steps": [
             "Search the related register for an existing record before creating another.",
@@ -49581,7 +49812,9 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
+          "paragraphs": [
+            "Creation, Sales linking and receiving acknowledgement save separately. Check the original creation/link after an uncertain response; never start a replacement intent. A stale comparison must be discarded and reviewed again. Current source, target and original provenance access govern recovery; the original owner/date and source history remain intact."
+          ],
           "steps": [],
           "rows": [
             [
@@ -67022,7 +67255,9 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [],
+          "paragraphs": [
+            "LC-17: Open the owned follow-up Activity. Review existing Sales records, independently capture a Lead or explicitly qualified Deal when needed, and return for an exact link comparison. A restricted original needs a separately worded Internal review with its own owner and date. A linked Lead can use native Plan next activity to designate that retained action. Project Sales context starts Activity capture; aftercare still requires separate receiving confirmation."
+          ],
           "steps": [
             "Create aftercare from an issued report and choose responsible owners.",
             "Record the date choice or exact commitment/rule, and refresh source preparation.",
@@ -67070,7 +67305,8 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "Validation identifies the field to correct without discarding the draft. On a version conflict, compare the saved version with your proposal before deliberately using its version. An uncertain operation stays in the durable local journal: Check original result or Retry exact original. Do not issue a replacement while the original outcome is unknown. Reload with the same authorised identity to reconcile. A denied source needs restored legitimate access."
+            "Validation identifies the field to correct without discarding the draft. On a version conflict, compare the saved version with your proposal before deliberately using its version. An uncertain operation stays in the durable local journal: Check original result or Retry exact original. Do not issue a replacement while the original outcome is unknown. Reload with the same authorised identity to reconcile. A denied source needs restored legitimate access.",
+            "Creation, Sales linking and receiving acknowledgement save separately. Check the original creation/link after an uncertain response; never start a replacement intent. A stale comparison must be discarded and reviewed again. Current source, target and original provenance access govern recovery; the original owner/date and source history remain intact."
           ],
           "steps": [],
           "rows": [],
@@ -67800,6 +68036,20 @@
           "title": "Guide review and feedback",
           "paragraphs": [
             "Owner: Dean Fiedler. Draft article; owner and visual acceptance remain pending. Actual tests and captures are recorded separately in the implementation handover. A source commit or passing test is not operational approval."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "native-won-receiving",
+          "title": "Continue an accepted Won handover",
+          "paragraphs": [
+            "Accept the current Won handover and its receiving owner before choosing a native Project or Service destination. Create a native record through its existing form, or choose a matching record owned and editable by the receiver. Creation saves separately.",
+            "For Service, link a permitted request or use Record a new Service request and return. Intake retains its own owner and explicit unknowns. Save the draft work order, return to the handover, then review its exact customer, site and version. Native scope, authorisation and booking still require their usual decisions.",
+            "Review delivery link freezes the compared Sales and native versions. Supply a link reason; when Sales left the site unknown, explicitly review the chosen native site. If either source changes, discard and review a fresh comparison. Refresh alone never changes your reviewed submission.",
+            "Check original native creation or Check original delivery link resolves an uncertain save; Retry exact original sends the retained operation. Same-tab recovery survives reload. A later Sales successor preserves earlier attribution as historical. Current access still governs recovery.",
+            "The native record shows exact accepted Sales context beside its own controls. The Deal shows source-derived receiving progress and retains the original accountable Won event and existing Activity owners/dates. A link is not evidence of completed delivery. Parts receiving remains an unresolved native route."
           ],
           "steps": [],
           "rows": [],

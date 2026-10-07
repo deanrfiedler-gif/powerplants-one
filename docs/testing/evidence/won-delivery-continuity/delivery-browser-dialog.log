@@ -1,0 +1,150 @@
+Database reset: completed
+[WebServer] (node:36028) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.98"}
+
+Running 12 tests using 1 worker
+
+(node:33908) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop-chromium] › tests\browser\projects-gantt.spec.ts:15:1 › Projects navigation, existing-context creation and an uncertain task save survive reload (5.7s)
+  x   2 [desktop-chromium] › tests\browser\sales-delivery-binding.spec.ts:110:1 › LC-16 native project creation and delivery link recover separately after lost responses and Sales successor (16.5s)
+(node:36756) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  3 [desktop-chromium] › tests\browser\sales-delivery-binding.spec.ts:213:1 › LC-16 Service intake returns to a native work order and the explicit link preserves independent scope authority (14.8s)
+  ok  4 [desktop-chromium] › tests\browser\sales-delivery-binding.spec.ts:293:1 › LC-16 unknown-site comparison stays frozen through native changes and requires a new review (8.2s)
+  ok  5 [desktop-chromium] › tests\browser\sales-delivery-binding.spec.ts:347:1 › LC-16 a denied receiving refresh removes the reviewed native identity and accepted Sales details (5.8s)
+  ok  6 [desktop-chromium] › tests\browser\work-orders.spec.ts:30:1 › P04 SC-05 draft, authority refusal, dispute, identity limits, mandatory blocker, exception and approved history (12.4s)
+(node:35860) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  7 [mobile-chromium] › tests\browser\projects-gantt.spec.ts:15:1 › Projects navigation, existing-context creation and an uncertain task save survive reload (4.8s)
+  x   8 [mobile-chromium] › tests\browser\sales-delivery-binding.spec.ts:110:1 › LC-16 native project creation and delivery link recover separately after lost responses and Sales successor (16.4s)
+(node:28828) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  9 [mobile-chromium] › tests\browser\sales-delivery-binding.spec.ts:213:1 › LC-16 Service intake returns to a native work order and the explicit link preserves independent scope authority (16.0s)
+  ok 10 [mobile-chromium] › tests\browser\sales-delivery-binding.spec.ts:293:1 › LC-16 unknown-site comparison stays frozen through native changes and requires a new review (8.2s)
+  ok 11 [mobile-chromium] › tests\browser\sales-delivery-binding.spec.ts:347:1 › LC-16 a denied receiving refresh removes the reviewed native identity and accepted Sales details (4.8s)
+  x  12 [mobile-chromium] › tests\browser\work-orders.spec.ts:30:1 › P04 SC-05 draft, authority refusal, dispute, identity limits, mandatory blocker, exception and approved history (6.2s)
+
+
+  1) [desktop-chromium] › tests\browser\sales-delivery-binding.spec.ts:110:1 › LC-16 native project creation and delivery link recover separately after lost responses and Sales successor 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('button', { name: 'Sales handovers', exact: true })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('button', { name: 'Sales handovers', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Sales handovers', exact: true })
+        14 × locator resolved to <button class="schedule-history">Sales handovers</button>
+           - unexpected value "inactive"
+
+
+      208 |   await page.keyboard.press("Escape");
+      209 |   await expect(page.getByRole("dialog", {name:"Project Sales handovers", exact:true})).toHaveCount(0);
+    > 210 |   await expect(page.getByRole("button", {name:"Sales handovers", exact:true})).toBeFocused();
+          |                                                                                ^
+      211 | });
+      212 |
+      213 | test("LC-16 Service intake returns to a native work order and the explicit link preserves independent scope authority", async ({
+        at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\sales-delivery-binding.spec.ts:210:80
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\sales-delivery-binding-LC--87a5b-sponses-and-Sales-successor-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\sales-delivery-binding-LC--87a5b-sponses-and-Sales-successor-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\sales-delivery-binding-LC--87a5b-sponses-and-Sales-successor-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\sales-delivery-binding-LC--87a5b-sponses-and-Sales-successor-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-chromium] › tests\browser\sales-delivery-binding.spec.ts:110:1 › LC-16 native project creation and delivery link recover separately after lost responses and Sales successor 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('button', { name: 'Sales handovers', exact: true })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('button', { name: 'Sales handovers', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Sales handovers', exact: true })
+        14 × locator resolved to <button class="schedule-history">Sales handovers</button>
+           - unexpected value "inactive"
+
+
+      208 |   await page.keyboard.press("Escape");
+      209 |   await expect(page.getByRole("dialog", {name:"Project Sales handovers", exact:true})).toHaveCount(0);
+    > 210 |   await expect(page.getByRole("button", {name:"Sales handovers", exact:true})).toBeFocused();
+          |                                                                                ^
+      211 | });
+      212 |
+      213 | test("LC-16 Service intake returns to a native work order and the explicit link preserves independent scope authority", async ({
+        at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\sales-delivery-binding.spec.ts:210:80
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\sales-delivery-binding-LC--87a5b-sponses-and-Sales-successor-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\sales-delivery-binding-LC--87a5b-sponses-and-Sales-successor-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\sales-delivery-binding-LC--87a5b-sponses-and-Sales-successor-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\sales-delivery-binding-LC--87a5b-sponses-and-Sales-successor-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [mobile-chromium] › tests\browser\work-orders.spec.ts:30:1 › P04 SC-05 draft, authority refusal, dispute, identity limits, mandatory blocker, exception and approved history 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator: getByRole('region', { name: 'Local demonstration identity', exact: true })
+    Expected: "false"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveAttribute" getByRole('region', { name: 'Local demonstration identity', exact: true }) with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Local demonstration identity', exact: true })
+
+
+      3 |   `${t}000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
+      4 | async function identity(page: Page, profile = "coordinator") {
+    > 5 |   await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
+        |                                                                                                 ^
+      6 |   if (!(await page.getByLabel("Identity", { exact: true }).isVisible())) await page.getByRole("button", { name: "Change identity", exact: true }).click();
+      7 |
+      8 |   await page.getByLabel("Identity", { exact: true }).selectOption(profile);
+        at identity (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\work-orders.spec.ts:5:97)
+        at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\work-orders.spec.ts:34:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\work-orders-P04-SC-05-draf-6e6e3-eption-and-approved-history-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\work-orders-P04-SC-05-draf-6e6e3-eption-and-approved-history-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\work-orders-P04-SC-05-draf-6e6e3-eption-and-approved-history-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\work-orders-P04-SC-05-draf-6e6e3-eption-and-approved-history-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    [desktop-chromium] › tests\browser\sales-delivery-binding.spec.ts:110:1 › LC-16 native project creation and delivery link recover separately after lost responses and Sales successor 
+    [mobile-chromium] › tests\browser\sales-delivery-binding.spec.ts:110:1 › LC-16 native project creation and delivery link recover separately after lost responses and Sales successor 
+    [mobile-chromium] › tests\browser\work-orders.spec.ts:30:1 › P04 SC-05 draft, authority refusal, dispute, identity limits, mandatory blocker, exception and approved history 
+  9 passed (2.5m)

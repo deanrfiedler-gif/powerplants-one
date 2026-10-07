@@ -1,4 +1,5 @@
 "use client";
+import { DeliveryProgress } from "./sales-delivery-link";
 import Link from "next/link";
 import type { listHandovers } from "../sales/handover-service";
 import type { listAftercare } from "../sales/aftercare-service";
@@ -38,13 +39,18 @@ export function OpportunityWorkflows({
             {r.loading && <p role="status">Loading linked workflow…</p>}
             <ErrorNotice error={r.error} />
             {r.data?.items.map((d) => (
-              <p key={d.record.id}>
-                <Link href={`/sales/handoffs/${route}/${d.record.id}`}>
-                  Revision {d.record.revision}
-                </Link>{" "}
-                · <Status value={d.record.state} />
-                {d.source_changed ? " · Renewed source review needed" : ""}
-              </p>
+              <div key={d.record.id}>
+                <p>
+                  <Link href={`/sales/handoffs/${route}/${d.record.id}`}>
+                    Revision {d.record.revision}
+                  </Link>{" "}
+                  · <Status value={d.record.state} />
+                  {d.source_changed ? " · Renewed source review needed" : ""}
+                </p>
+                {name === "Won receiving" && (
+                  <DeliveryProgress id={d.record.id} />
+                )}
+              </div>
             ))}
             <Link href={`/sales/handoffs/${route}?opportunity_id=${id}`}>
               Open {String(name)} workflow

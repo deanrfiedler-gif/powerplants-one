@@ -972,7 +972,7 @@
       "title": "Opportunity detail and internal work",
       "kind": "scope",
       "module": "CR",
-      "summary": "Maintain one opportunity with source-owned customer context, accountable next action, commercial evidence and linked handovers. Incoming converted Leads retain their captured enquiry, resolved context and ownership history.",
+      "summary": "Maintain one opportunity with source-owned customer context, accountable next action, commercial evidence and linked handovers. Incoming converted Leads retain their captured enquiry, resolved context and ownership history. LC-14 shows every permitted option quotation and exact native release/response/conversion evidence. LC-15 requires explicit outcome evidence and retains the exact original source through later corrections. LC-16 carries accepted Won context into an explicitly linked native Project or Service work order; native intake, scope and authorisation remain independent.",
       "path": "/sales/opportunities/[id]",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -988,11 +988,22 @@
         "docs/contracts/lead-to-delivery-continuity.md",
         "docs/decisions/lead-customer-context.md",
         "docs/design/development/lead-continuity-fixtures.json",
-        "docs/testing/evidence/lead-context-resolution/README.md"
+        "docs/testing/evidence/lead-context-resolution/README.md",
+        "src/components/commercial-quotation.tsx",
+        "src/components/opportunity-commercial.tsx",
+        "src/estimating/reads.ts",
+        "src/components/opportunity-outcome-source.tsx",
+        "src/crm/outcome-sources.ts",
+        "docs/decisions/deal-outcome-evidence.md",
+        "docs/testing/evidence/deal-outcome-provenance/README.md",
+        "docs/decisions/won-delivery-continuity.md",
+        "docs/testing/evidence/won-delivery-continuity/README.md",
+        "src/components/sales-delivery-link.tsx",
+        "src/components/sales-delivery-creation.tsx"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "See sales-native-completion-handover for existing Deal assurance. LC-12 local functional proof: six database cases, selected populated upgrades and 15 compiled desktop/phone checks with one retained skip. See lead-context-resolution evidence; paired visual and owner acceptance remain pending.",
+      "functional_status": "See sales-native-completion-handover for existing Deal assurance. LC-12 local functional proof: six database cases, selected populated upgrades and 15 compiled desktop/phone checks with one retained skip. See lead-context-resolution evidence; paired visual and owner acceptance remain pending. LC-14: four database and four compiled desktop/phone scenarios pass; see docs/testing/evidence/deal-commercial-continuity/README.md. Source facts, paired visual/owner review and final-head CI remain separate. LC-15: seven final database cases, an earlier 58-case combined run, 12 selected upgrades and 10 compiled desktop/phone scenarios pass; see docs/testing/evidence/deal-outcome-provenance/README.md. Paired/owner review remains pending. LC-16 passes eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases; see won-delivery-continuity evidence, including retained initial layout/focus failures. Paired design and owner acceptance remain pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -1048,7 +1059,7 @@
       "title": "Won-deal receiving handover",
       "kind": "scope",
       "module": "CR",
-      "summary": "Prepare and receive a precise delivery handover while preserving the immutable Won handover-due obligation.",
+      "summary": "Prepare and receive a precise delivery handover while preserving the immutable Won handover-due obligation. LC-16 carries accepted Won context into an explicitly linked native Project or Service work order; native intake, scope and authorisation remain independent.",
       "path": "/sales/handoffs/won",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -1060,11 +1071,15 @@
       "dependencies": [
         "src/components/sales-handover.tsx",
         "src/sales/handover-service.ts",
-        "src/sales/handover-model.ts"
+        "src/sales/handover-model.ts",
+        "docs/decisions/won-delivery-continuity.md",
+        "docs/testing/evidence/won-delivery-continuity/README.md",
+        "src/components/sales-delivery-link.tsx",
+        "src/components/sales-delivery-creation.tsx"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "See sales-native-completion-handover for executed assurance",
+      "functional_status": "See sales-native-completion-handover for executed assurance LC-16 passes eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases; see won-delivery-continuity evidence, including retained initial layout/focus failures. Paired design and owner acceptance remain pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -1875,7 +1890,7 @@
       "title": "Project initiation and receiving review",
       "kind": "scope",
       "module": "PJ",
-      "summary": "Extend project creation with accepted commercial scope, receiving review, owned assumptions and return/rework.",
+      "summary": "Extend project creation with accepted commercial scope, receiving review, owned assumptions and return/rework. LC-16 carries accepted Won context into an explicitly linked native Project or Service work order; native intake, scope and authorisation remain independent.",
       "path": "/projects/new",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -1884,10 +1899,15 @@
       "design_path": "docs/design/development/pages/scope-pj-01.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/decisions/won-delivery-continuity.md",
+        "docs/testing/evidence/won-delivery-continuity/README.md",
+        "src/components/sales-delivery-link.tsx",
+        "src/components/sales-delivery-creation.tsx"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Not recorded here LC-16 passes eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases; see won-delivery-continuity evidence, including retained initial layout/focus failures. Paired design and owner acceptance remain pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -3383,7 +3403,7 @@
       "title": "Receipt, inspection and quarantine",
       "kind": "scope",
       "module": "SC",
-      "summary": "Capture physical receipt and inspection. Arrival and quarantine do not establish usable stock. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds.",
+      "summary": "Capture physical receipt and inspection. Arrival and quarantine do not establish usable stock. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds. LC-16 carries accepted Won context into an explicitly linked native Project or Service work order; native intake, scope and authorisation remain independent.",
       "path": "/supply/receipts",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -3415,11 +3435,15 @@
         "src/estimating/supply-followup/shortfall-service.ts",
         "src/supply/reductions.ts",
         "docs/decisions/quotation-allocation-shortfall.md",
-        "src/components/quotation-allocation-shortfall.tsx"
+        "src/components/quotation-allocation-shortfall.tsx",
+        "docs/decisions/won-delivery-continuity.md",
+        "docs/testing/evidence/won-delivery-continuity/README.md",
+        "src/components/sales-delivery-link.tsx",
+        "src/components/sales-delivery-creation.tsx"
       ],
       "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
       "visual_status": "Needs review",
-      "functional_status": "See quotation-allocation-shortfall execution ledger; source, runtime proof and acceptance remain separate",
+      "functional_status": "See quotation-allocation-shortfall execution ledger; source, runtime proof and acceptance remain separate LC-16 passes eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases; see won-delivery-continuity evidence, including retained initial layout/focus failures. Paired design and owner acceptance remain pending.",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -3436,7 +3460,7 @@
       "title": "Stock availability and reservations",
       "kind": "scope",
       "module": "SC",
-      "summary": "Dated source observations, explicit units and completeness. Live reservations are not configured.",
+      "summary": "Dated source observations, explicit units and completeness. Live reservations are not configured. LC-16 carries accepted Won context into an explicitly linked native Project or Service work order; native intake, scope and authorisation remain independent.",
       "path": "/supply/stock",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -3459,11 +3483,15 @@
         "src/supply/components/forms.tsx",
         "src/supply/components/recovery.tsx",
         "src/supply/guide.ts",
-        "src/app/styles/supply.css"
+        "src/app/styles/supply.css",
+        "docs/decisions/won-delivery-continuity.md",
+        "docs/testing/evidence/won-delivery-continuity/README.md",
+        "src/components/sales-delivery-link.tsx",
+        "src/components/sales-delivery-creation.tsx"
       ],
       "scope_status": "native synthetic implementation; review pending",
       "visual_status": "Needs review",
-      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317",
+      "functional_status": "Native focused proof passed: 17 unit, 11 database, HTTP and 60 compiled browser cases; broader CI in PR 317 LC-16 passes eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases; see won-delivery-continuity evidence, including retained initial layout/focus failures. Paired design and owner acceptance remain pending.",
       "deployment_status": "Not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6471,7 +6499,7 @@
       "title": "Project detail & Gantt",
       "kind": "route",
       "module": "PJ",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold. Explicit four-task diamond receiving and D saved once; earlier merge B retention remains.",
+      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold. Explicit four-task diamond receiving and D saved once; earlier merge B retention remains. LC-16 carries accepted Won context into an explicitly linked native Project or Service work order; native intake, scope and authorisation remain independent.",
       "path": "/projects/[id]",
       "source_paths": [
         "src/app/(business)/projects/[id]/page.tsx"
@@ -6494,11 +6522,18 @@
         "src/estimating/supply-followup/reads.ts",
         "docs/decisions/quotation-task-branch.md",
         "docs/decisions/quotation-task-merge.md",
-        "docs/decisions/quotation-task-diamond.md"
+        "docs/decisions/quotation-task-diamond.md",
+        "docs/decisions/won-delivery-continuity.md",
+        "docs/testing/evidence/won-delivery-continuity/README.md",
+        "src/components/sales-delivery-link.tsx",
+        "src/components/sales-delivery-creation.tsx",
+        "src/components/sales-followup.tsx",
+        "src/sales/followup.ts",
+        "docs/design/development/lead-continuity-fixtures.json"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Prior evidence retained. SYN-ES07-07 local database, HTTP, compiled and actual restart checkpoints are recorded in docs/testing/evidence/quotation-material-resolution/README.md; final-head assurance is separate in the contribution PR. Visual/owner acceptance remains pending.",
+      "functional_status": "Prior evidence retained. SYN-ES07-07 local database, HTTP, compiled and actual restart checkpoints are recorded in docs/testing/evidence/quotation-material-resolution/README.md; final-head assurance is separate in the contribution PR. Visual/owner acceptance remains pending. LC-16 passes eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases; see won-delivery-continuity evidence, including retained initial layout/focus failures. Paired design and owner acceptance remain pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6515,7 +6550,7 @@
       "title": "Create project",
       "kind": "route",
       "module": "PJ",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. LC-16 carries accepted Won context into an explicitly linked native Project or Service work order; native intake, scope and authorisation remain independent.",
       "path": "/projects/new",
       "source_paths": [
         "src/app/(business)/projects/new/page.tsx"
@@ -6524,10 +6559,15 @@
       "design_path": "docs/design/development/pages/route-projects-new.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/decisions/won-delivery-continuity.md",
+        "docs/testing/evidence/won-delivery-continuity/README.md",
+        "src/components/sales-delivery-link.tsx",
+        "src/components/sales-delivery-creation.tsx"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Not recorded here LC-16 passes eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases; see won-delivery-continuity evidence, including retained initial layout/focus failures. Paired design and owner acceptance remain pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6587,7 +6627,9 @@
         "docs/contracts/lead-to-delivery-continuity.md",
         "docs/decisions/lead-customer-context.md",
         "docs/design/development/lead-continuity-fixtures.json",
-        "docs/testing/evidence/lead-context-resolution/README.md"
+        "docs/testing/evidence/lead-context-resolution/README.md",
+        "src/components/sales-followup.tsx",
+        "src/sales/followup.ts"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -6618,7 +6660,9 @@
         "docs/contracts/lead-to-delivery-continuity.md",
         "docs/decisions/lead-customer-context.md",
         "docs/design/development/lead-continuity-fixtures.json",
-        "docs/testing/evidence/lead-context-resolution/README.md"
+        "docs/testing/evidence/lead-context-resolution/README.md",
+        "src/components/sales-followup.tsx",
+        "src/sales/followup.ts"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -6636,7 +6680,7 @@
       "title": "Opportunity detail",
       "kind": "route",
       "module": "CR",
-      "summary": "Maintain one opportunity with source-owned customer context, accountable next action, commercial evidence and linked handovers.",
+      "summary": "Maintain one opportunity with source-owned customer context, accountable next action, commercial evidence and linked handovers. LC-14 shows every permitted option quotation and exact native release/response/conversion evidence. LC-15 requires explicit outcome evidence and retains the exact original source through later corrections. LC-16 carries accepted Won context into an explicitly linked native Project or Service work order; native intake, scope and authorisation remain independent.",
       "path": "/sales/opportunities/[id]",
       "source_paths": [
         "src/app/(business)/sales/opportunities/[id]/page.tsx"
@@ -6649,11 +6693,25 @@
         "src/components/crm-screens.tsx",
         "src/components/opportunity-workflows.tsx",
         "src/components/opportunity-correspondence.tsx",
-        "docs/contracts/lead-to-delivery-continuity.md"
+        "docs/contracts/lead-to-delivery-continuity.md",
+        "src/components/commercial-quotation.tsx",
+        "src/components/opportunity-commercial.tsx",
+        "src/estimating/reads.ts",
+        "docs/design/development/lead-continuity-fixtures.json",
+        "src/components/opportunity-outcome-source.tsx",
+        "src/crm/outcome-sources.ts",
+        "docs/decisions/deal-outcome-evidence.md",
+        "docs/testing/evidence/deal-outcome-provenance/README.md",
+        "docs/decisions/won-delivery-continuity.md",
+        "docs/testing/evidence/won-delivery-continuity/README.md",
+        "src/components/sales-delivery-link.tsx",
+        "src/components/sales-delivery-creation.tsx",
+        "src/components/sales-followup.tsx",
+        "src/sales/followup.ts"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "See sales-native-completion-handover for executed assurance",
+      "functional_status": "See sales-native-completion-handover for executed assurance LC-14: four database and four compiled desktop/phone scenarios pass; see docs/testing/evidence/deal-commercial-continuity/README.md. Source facts, paired visual/owner review and final-head CI remain separate. LC-15: seven final database cases, an earlier 58-case combined run, 12 selected upgrades and 10 compiled desktop/phone scenarios pass; see docs/testing/evidence/deal-outcome-provenance/README.md. Paired/owner review remains pending. LC-16 passes eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases; see won-delivery-continuity evidence, including retained initial layout/focus failures. Paired design and owner acceptance remain pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6678,7 +6736,11 @@
       "design_path": "docs/design/development/pages/route-sales-opportunities-new.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "src/components/sales-followup.tsx",
+        "src/sales/followup.ts",
+        "docs/design/development/lead-continuity-fixtures.json"
+      ],
       "scope_status": "built",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -7073,7 +7135,7 @@
       "title": "Create service request",
       "kind": "route",
       "module": "SV",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. LC-16 carries accepted Won context into an explicitly linked native Project or Service work order; native intake, scope and authorisation remain independent.",
       "path": "/service/tickets/new",
       "source_paths": [
         "src/app/(business)/service/tickets/new/page.tsx"
@@ -7086,11 +7148,15 @@
         "docs/reference/ui/service-cases/native-refinement-r02/18-phone-log-request.png"
       ],
       "dependencies": [
-        "docs/decisions/service-requests-native-refinement.md"
+        "docs/decisions/service-requests-native-refinement.md",
+        "docs/decisions/won-delivery-continuity.md",
+        "docs/testing/evidence/won-delivery-continuity/README.md",
+        "src/components/sales-delivery-link.tsx",
+        "src/components/sales-delivery-creation.tsx"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Not recorded here LC-16 passes eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases; see won-delivery-continuity evidence, including retained initial layout/focus failures. Paired design and owner acceptance remain pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -7151,7 +7217,7 @@
       "title": "Work order detail",
       "kind": "route",
       "module": "SV",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. LC-16 carries accepted Won context into an explicitly linked native Project or Service work order; native intake, scope and authorisation remain independent.",
       "path": "/service/work-orders/[id]",
       "source_paths": [
         "src/app/(business)/service/work-orders/[id]/page.tsx"
@@ -7165,11 +7231,15 @@
         "src/scheduling/components/client/policy-holds.client.tsx",
         "src/field/visit-guidance.ts",
         "src/components/field-visit-entry.tsx",
-        "docs/decisions/field-closed-visit-guidance.md"
+        "docs/decisions/field-closed-visit-guidance.md",
+        "docs/decisions/won-delivery-continuity.md",
+        "docs/testing/evidence/won-delivery-continuity/README.md",
+        "src/components/sales-delivery-link.tsx",
+        "src/components/sales-delivery-creation.tsx"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Closed-visit guidance: execution and retained evidence in docs/testing/evidence/field-closed-visit/README.md; human review remains pending.",
+      "functional_status": "Closed-visit guidance: execution and retained evidence in docs/testing/evidence/field-closed-visit/README.md; human review remains pending. LC-16 passes eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases; see won-delivery-continuity evidence, including retained initial layout/focus failures. Paired design and owner acceptance remain pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -7186,7 +7256,7 @@
       "title": "Create work order",
       "kind": "route",
       "module": "SV",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. LC-16 carries accepted Won context into an explicitly linked native Project or Service work order; native intake, scope and authorisation remain independent.",
       "path": "/service/work-orders/new",
       "source_paths": [
         "src/app/(business)/service/work-orders/new/page.tsx"
@@ -7195,10 +7265,15 @@
       "design_path": "docs/design/development/pages/route-service-work-orders-new.md",
       "html_path": "docs/reference/ui/service/PPO-Work-Orders-Workspace-r01.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/decisions/won-delivery-continuity.md",
+        "docs/testing/evidence/won-delivery-continuity/README.md",
+        "src/components/sales-delivery-link.tsx",
+        "src/components/sales-delivery-creation.tsx"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Not recorded here LC-16 passes eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases; see won-delivery-continuity evidence, including retained initial layout/focus failures. Paired design and owner acceptance remain pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -7522,7 +7597,10 @@
         "src/scheduling/policy-holds.ts",
         "src/scheduling/components/client/policy-holds.client.tsx",
         "src/reports/context.ts",
-        "src/components/activity-screens.tsx"
+        "src/components/activity-screens.tsx",
+        "src/components/sales-followup.tsx",
+        "src/sales/followup.ts",
+        "docs/design/development/lead-continuity-fixtures.json"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -7552,7 +7630,11 @@
       "design_path": "docs/design/development/pages/route-work-new.md",
       "html_path": "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "src/components/sales-followup.tsx",
+        "src/sales/followup.ts",
+        "docs/design/development/lead-continuity-fixtures.json"
+      ],
       "scope_status": "built",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -10398,7 +10480,10 @@
       "dependencies": [
         "src/components/sales-aftercare.tsx",
         "src/sales/aftercare-service.ts",
-        "src/sales/aftercare-model.ts"
+        "src/sales/aftercare-model.ts",
+        "src/components/sales-followup.tsx",
+        "src/sales/followup.ts",
+        "docs/design/development/lead-continuity-fixtures.json"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
@@ -10522,7 +10607,7 @@
       "title": "Won-deal receiving handover record",
       "kind": "route",
       "module": "CR",
-      "summary": "Prepare and receive a precise delivery handover while preserving the immutable Won handover-due obligation.",
+      "summary": "Prepare and receive a precise delivery handover while preserving the immutable Won handover-due obligation. LC-16 carries accepted Won context into an explicitly linked native Project or Service work order; native intake, scope and authorisation remain independent.",
       "path": "/sales/handoffs/won/[id]",
       "source_paths": [
         "src/app/(business)/sales/handoffs/won/[id]/page.tsx"
@@ -10534,11 +10619,15 @@
       "dependencies": [
         "src/components/sales-handover.tsx",
         "src/sales/handover-service.ts",
-        "src/sales/handover-model.ts"
+        "src/sales/handover-model.ts",
+        "docs/decisions/won-delivery-continuity.md",
+        "docs/testing/evidence/won-delivery-continuity/README.md",
+        "src/components/sales-delivery-link.tsx",
+        "src/components/sales-delivery-creation.tsx"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "See sales-native-completion-handover for executed assurance",
+      "functional_status": "See sales-native-completion-handover for executed assurance LC-16 passes eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases; see won-delivery-continuity evidence, including retained initial layout/focus failures. Paired design and owner acceptance remain pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

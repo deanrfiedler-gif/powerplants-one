@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "implementation_parent": "4ef23cf",
+  "execution_scope": "Local checked implementation before evidence packaging; source hashes identify the exact changed implementation and tests. Final-head CI and acceptance remain separate.",
+  "source_files": [
+    {
+      "path": "src/components/commercial-quotation.tsx",
+      "sha256": "29221cd95d46fb62324ca05952b542175c3720dc9595bbfc7de6ce253273be8a",
+      "bytes": 6432
+    },
+    {
+      "path": "src/components/opportunity-commercial.tsx",
+      "sha256": "549c32c5adf1a17b16abf5f2199e9dd7541ec6b79532bbf66ac6b2c8088d5722",
+      "bytes": 3710
+    },
+    {
+      "path": "src/estimating/reads.ts",
+      "sha256": "ca99b6c7967c684330e27f6d4f6c446c42d0b68643e6303e86e4c4b5b3513afa",
+      "bytes": 11033
+    },
+    {
+      "path": "tests/browser/commercial-continuity.spec.ts",
+      "sha256": "77d2354e2b0b51d1ce005685a7ade18b72a558e1f1e5eaad0dc67c7381033f5e",
+      "bytes": 4519
+    },
+    {
+      "path": "tests/database/commercial-continuity.test.ts",
+      "sha256": "ffa6ace70a0e0155393649cab5599409059d9b8bae1fbb36f7e3bef7ad6fcd1d",
+      "bytes": 3902
+    }
+  ],
+  "evidence_files": [
+    {
+      "path": "docs/testing/evidence/deal-commercial-continuity/commercial-browser-final.log",
+      "sha256": "3625a935ab24fba6d7f1ffd62f823c662fd28a469ce6821c6121be0c19f585de",
+      "bytes": 1429
+    },
+    {
+      "path": "docs/testing/evidence/deal-commercial-continuity/commercial-browser-pre-label.log",
+      "sha256": "372dce6c6abdb3146ce9d5dc5eaa4960f217b33ad965b6e1a29551445fb78ef3",
+      "bytes": 1431
+    },
+    {
+      "path": "docs/testing/evidence/deal-commercial-continuity/commercial-build-final.log",
+      "sha256": "0526c585a9f04b5c4afdd805f9533bda7cc065fe633a54abfb7ba0dee338f8d8",
+      "bytes": 25737
+    },
+    {
+      "path": "docs/testing/evidence/deal-commercial-continuity/commercial-db-initial.log",
+      "sha256": "2cfee6b98bb9eea9ad79c64aaf2d4c45122348fac5c8a6a12207460ff46a1454",
+      "bytes": 636
+    },
+    {
+      "path": "docs/testing/evidence/deal-commercial-continuity/commercial-foundation-final.log",
+      "sha256": "bcd9202c70f014ad7defe8374a5fcbfda746ea7f79c0b7b221f77aaae4866dfe",
+      "bytes": 330
+    },
+    {
+      "path": "docs/testing/evidence/deal-commercial-continuity/commercial-foundation.log",
+      "sha256": "3e871f55d3915a29a60d02f0acb38e5409c6a458141320e09d6a89bf89d858bb",
+      "bytes": 330
+    },
+    {
+      "path": "docs/testing/evidence/deal-commercial-continuity/commercial-lint-final.log",
+      "sha256": "3d33f40c80d9aa3df343c357e43b00f214189513ba842430e562b5fbe75aefda",
+      "bytes": 42
+    },
+    {
+      "path": "docs/testing/evidence/deal-commercial-continuity/commercial-lint.log",
+      "sha256": "3d33f40c80d9aa3df343c357e43b00f214189513ba842430e562b5fbe75aefda",
+      "bytes": 42
+    },
+    {
+      "path": "docs/testing/evidence/deal-commercial-continuity/commercial-naming-final.log",
+      "sha256": "aaddb23babf2469988a2d55a2b5bf9e387b470ce1e69bc983f906557a36272f6",
+      "bytes": 296
+    },
+    {
+      "path": "docs/testing/evidence/deal-commercial-continuity/commercial-naming.log",
+      "sha256": "92ec129cd06d43f09f2846302ec0d6f9977b4bda558eb05fa055387374622fa1",
+      "bytes": 296
+    },
+    {
+      "path": "docs/testing/evidence/deal-commercial-continuity/commercial-prototype.log",
+      "sha256": "9b7839c713adf06d51e41256fd2e991c6acc00fca36c33caff1ef7e02d55251b",
+      "bytes": 526
+    },
+    {
+      "path": "docs/testing/evidence/deal-commercial-continuity/commercial-studio.log",
+      "sha256": "e54246ce6d663bbbc52e76eb1107b17246e348645643edd5d0a2c9d5e0c83c76",
+      "bytes": 429
+    },
+    {
+      "path": "docs/testing/evidence/deal-commercial-continuity/commercial-typecheck-initial.log",
+      "sha256": "bc8033ab9263f80d6936b509b40414d8d01fa804136bf8b2d00f7ac11abe7a2a",
+      "bytes": 51
+    },
+    {
+      "path": "docs/testing/evidence/deal-commercial-continuity/desktop-commercial-evidence.png",
+      "sha256": "8f5421f680d5a0a7b57676f571d99258caf2ea53615c8ecc86cd1f6dbc862fc7",
+      "bytes": 111671
+    },
+    {
+      "path": "docs/testing/evidence/deal-commercial-continuity/mobile-commercial-evidence.png",
+      "sha256": "62f351f29bff8d870e46d983ae9b3c40548e94a96e099957110692b43ea7470c",
+      "bytes": 69917
+    },
+    {
+      "path": "docs/testing/evidence/deal-commercial-continuity/README.md",
+      "sha256": "3d61caf23aa558c57a7b25f91d42c58dc8a87679e09214d86f1bbf494923a869",
+      "bytes": 4030
+    }
+  ]
+}

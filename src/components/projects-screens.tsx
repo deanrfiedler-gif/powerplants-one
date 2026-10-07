@@ -17,6 +17,11 @@ import {
 } from "./business-ui";
 import { useIdentity } from "./business-session";
 import { LookupField, useUnsavedChanges } from "./record-ui";
+import {
+  DeliveryCreation,
+  type SalesCreation,
+} from "./sales-delivery-creation";
+import { DeliverySalesSources } from "./sales-delivery-link";
 import { ProjectsGantt } from "./projects-gantt";
 import { ProjectTaskPanel } from "./project-task-panel";
 import {
@@ -28,7 +33,11 @@ import {
 } from "../projects/model";
 import type { ShellContext } from "../shell/model";
 
-export function ProjectRegister({ programme = false }: { programme?: boolean }) {
+export function ProjectRegister({
+  programme = false,
+}: {
+  programme?: boolean;
+}) {
   const [search, setSearch] = useState(""),
     [cursors, setCursors] = useState<(string | null)[]>([null]);
   const cursor = cursors.at(-1),
@@ -40,14 +49,21 @@ export function ProjectRegister({ programme = false }: { programme?: boolean }) 
     <section className="project-register">
       <RegisterHeading
         title={programme ? "Programme" : "Projects"}
-        description={programme ? "Choose a project to open its saved tasks, dependencies and Gantt schedule." : "Plan delivery, assign responsibility and track the schedule."}
+        description={
+          programme
+            ? "Choose a project to open its saved tasks, dependencies and Gantt schedule."
+            : "Plan delivery, assign responsibility and track the schedule."
+        }
       >
-        <Link href="/projects/acceptance">Staged Acceptance &amp; Closeout</Link>
-        {!programme && context.data?.actions.some((a) => a.id === "project") && (
-          <Link href="/projects/new" className="primary-link">
-            + Project
-          </Link>
-        )}
+        <Link href="/projects/acceptance">
+          Staged Acceptance &amp; Closeout
+        </Link>
+        {!programme &&
+          context.data?.actions.some((a) => a.id === "project") && (
+            <Link href="/projects/new" className="primary-link">
+              + Project
+            </Link>
+          )}
       </RegisterHeading>
       <Field
         name="project-search"
@@ -122,14 +138,23 @@ type Options = {
   has_more: boolean;
 };
 export function NewProject() {
+  return (
+    <DeliveryCreation kind="Projects">
+      {(sales) => <NewProjectForm sales={sales} />}
+    </DeliveryCreation>
+  );
+}
+function NewProjectForm({ sales }: { sales?: SalesCreation }) {
   const router = useRouter(),
     command = useCommand();
   const [id] = useState(() => crypto.randomUUID()),
-    [title, setTitle] = useState(""),
-    [customer, setCustomer] = useState(""),
-    [company, setCompany] = useState(""),
-    [site, setSite] = useState(""),
-    [coordinator, setCoordinator] = useState(""),
+    [title, setTitle] = useState(sales?.source.title ?? ""),
+    [customer, setCustomer] = useState(sales?.source.customer_id ?? ""),
+    [company, setCompany] = useState(sales?.source.company_id ?? ""),
+    [site, setSite] = useState(sales?.source.site_id ?? ""),
+    [coordinator, setCoordinator] = useState(
+      sales?.source.receiving_owner_id ?? "",
+    ),
     [target, setTarget] = useState("");
   const [customerQuery, setCustomerQuery] = useState(""),
     [siteQuery, setSiteQuery] = useState(""),
@@ -166,31 +191,31 @@ export function NewProject() {
         className="business-card"
         onSubmit={async (e) => {
           e.preventDefault();
-          if (command.busy) return;
-          const receipt = await command.send<{ record_id: string }>(
-            "projects",
-            {
-              id,
-              title,
-              company_id: company,
-              organisation_id: customer,
-              site_id: site,
-              coordinator_id: coordinator,
-              target_date: target || null,
-              reason: "Created project schedule",
-            },
-          );
-          if (receipt) router.push(`/projects/${receipt.record_id}`);
+          if (command.busy || sales?.blocked) return;
+          const fields = {
+            id,
+            title,
+            company_id: company,
+            organisation_id: customer,
+            site_id: site,
+            coordinator_id: coordinator,
+            target_date: target || null,
+            reason: "Created project schedule",
+          };
+          const receipt = sales
+            ? await sales.send(fields)
+            : await command.send<{ record_id: string }>("projects", fields);
+          if (receipt && !sales) router.push(`/projects/${receipt.record_id}`);
         }}
       >
-        <ValidationFields error={command.error}>
-          <ErrorNotice error={command.error} />
+        <ValidationFields error={sales?.error ?? command.error}>
+          <ErrorNotice error={sales?.error ?? command.error} />
           {uncertain && (
             <p role="status">
               Retry the unchanged action to confirm the original save.
             </p>
           )}
-          <fieldset disabled={command.busy || uncertain}>
+          <fieldset disabled={command.busy || uncertain || sales?.blocked}>
             <Field
               name="title"
               label="Project name"
@@ -267,7 +292,13 @@ export function NewProject() {
           <button
             type="submit"
             className="project-primary"
-            disabled={command.busy || !customer || !site || !coordinator}
+            disabled={
+              command.busy ||
+              sales?.blocked ||
+              !customer ||
+              !site ||
+              !coordinator
+            }
           >
             {command.busy
               ? "Creating…"
@@ -354,11 +385,18 @@ function History({ id, onClose }: { id: string; onClose: () => void }) {
     </dialog>
   );
 }
-export function ProjectSchedulePage({ id, programme = false }: { id: string; programme?: boolean }) {
+export function ProjectSchedulePage({
+  id,
+  programme = false,
+}: {
+  id: string;
+  programme?: boolean;
+}) {
   const identity = useIdentity(),
     resource = useResource<Schedule>(`projects/${id}`),
     [panel, setPanel] = useState<{ task: Task | null } | null>(null),
     [history, setHistory] = useState(false),
+    [sales, setSales] = useState(false),
     [saved, setSaved] = useState(""),
     [blocked, setBlocked] = useState(false);
   if (blocked || isDenied(resource.error))
@@ -372,7 +410,9 @@ export function ProjectSchedulePage({ id, programme = false }: { id: string; pro
             }
           }
         />
-        <Link href={programme ? "/projects/programme" : "/projects"}>{programme ? "Back to programme" : "Back to projects"}</Link>
+        <Link href={programme ? "/projects/programme" : "/projects"}>
+          {programme ? "Back to programme" : "Back to projects"}
+        </Link>
       </section>
     );
   if (!resource.data)
@@ -394,6 +434,7 @@ export function ProjectSchedulePage({ id, programme = false }: { id: string; pro
         saved={saved}
         onTask={(task) => setPanel({ task })}
         onHistory={() => setHistory(true)}
+        onSalesContext={() => setSales(true)}
         onRefresh={resource.reload}
       />
       {resource.error && (
@@ -402,6 +443,7 @@ export function ProjectSchedulePage({ id, programme = false }: { id: string; pro
           <button onClick={resource.reload}>Retry refresh</button>
         </div>
       )}
+      {sales && <ProjectSalesDialog id={id} company={resource.data.project.company_id} site={resource.data.project.site_id} onClose={() => setSales(false)} />}
       {panel && (
         <ProjectTaskPanel
           schedule={resource.data}
@@ -422,5 +464,54 @@ export function ProjectSchedulePage({ id, programme = false }: { id: string; pro
       )}
       {history && <History id={id} onClose={() => setHistory(false)} />}
     </>
+  );
+}
+
+function ProjectSalesDialog({
+  id,
+  company,
+  site,
+  onClose,
+}: {
+  id: string;
+  company: string;
+  site: string;
+  onClose: () => void;
+}) {
+  const dialog = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    const node = dialog.current,
+      opener = document.activeElement;
+    node?.showModal();
+    return () => {
+      node?.close();
+      if (opener instanceof HTMLElement && opener.isConnected) opener.focus();
+    };
+  }, []);
+  return (
+    <dialog
+      ref={dialog}
+      className="ppo-project-dialog"
+      aria-label="Project Sales handovers"
+      onCancel={(e) => {
+        e.preventDefault();
+        onClose();
+      }}
+    >
+      <header>
+        <h2>Project Sales context</h2>
+        <button
+          type="button"
+          aria-label="Close Sales handovers"
+          onClick={onClose}
+        >
+          ×
+        </button>
+      </header>
+      <div className="project-task-details">
+        <p><Link href={`/work/new?${new URLSearchParams({type:"Project",id,company,site,kind:"CustomerContact",access:"Internal"})}`}>Record a customer need for Sales review</Link>. Give the review an owner and date before continuing to a Lead or qualified Deal.</p>
+        <DeliverySalesSources kind="Projects" id={id} />
+      </div>
+    </dialog>
   );
 }

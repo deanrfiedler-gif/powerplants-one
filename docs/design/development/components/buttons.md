@@ -122,3 +122,30 @@ Host fixtures: `tests/browser/quotation-supply-followup.spec.ts` (receiving, rea
 ## Accepted Sales brief to native Estimating (LC-13)
 
 The Sales handover and native Discovery hosts reuse this control with explicit create-return, fixed source comparison and exact-original recovery. Consumer bindings and synthetic states are in the register and lead-continuity-fixtures.json. Compare desktop/phone scope wrapping, keyboard controls and denied-context removal; exact new-state mockups are missing and no accepted fingerprint is assigned.
+
+## Deal commercial evidence (LC-14)
+
+Consumer: `src/components/commercial-quotation.tsx`, CR-01 and the Deal record. Native disclosure and shared retry/error controls expose current permission-checked issue/response/conversion facts. A denied refresh removes prior evidence; retry is explicit. Host fixtures: `tests/browser/commercial-continuity.spec.ts`. Desktop/phone and missing-image requirements remain in the live page specification; paired visual, keyboard and owner review is pending.
+
+## Explicit outcome evidence (LC-15)
+
+Retain CR-01 and the r20 record workspace with its existing outcome dialog. Incoming handover: permitted native quotation issue/response and the current Deal; outgoing: the exact outcome event, immutable evidence and existing Won handover due. Reuse Field, SelectField, Button, ValidationFields, ErrorNotice, shared tokens and the existing dialog/footer (retained host exception). The proposed adaptation requires an explicit native or separate evidence choice; it does not infer Won.
+
+Show current native facts and the frozen reviewed comparison separately. Background refresh cannot replace the submitted source. Denied refresh hides prior native facts; uncertain save locks replacement and exposes original recovery. History distinguishes recorded response, latest report, changed native issue, separate evidence and historical narrative outcomes. Desktop keeps review before the save footer. At 390/320 CSS px, stack selectors and narrative, wrap long text and keep review/discard/recovery reachable; verify keyboard focus and 200% zoom separately.
+
+Host states are in lead-continuity-fixtures.json and tests/browser/outcome-sources.spec.ts. Retain the exact HTML references above; no exact new-state mockup image is available. Functional proof does not assign an accepted fingerprint. Paired visual, owner, physical-device and screen-reader acceptance remain pending.
+
+
+## Native Won receiving (LC-16)
+
+Existing controls serve the explicit delivery comparison and native create-and-return hosts in sales-delivery-link.tsx and sales-delivery-creation.tsx. Buttons retain busy/uncertain states; fields preserve a fixed reviewed snapshot until explicit discard; denied reads remove comparison content. Native forms retain their scoped legacy controls. Fixtures: lead-continuity-fixtures.json; actual tests: tests/browser/sales-delivery-binding.spec.ts. New-state mockups and paired review remain pending; no review fingerprint is adopted.
+
+## LC-17 reviewed follow-up back to Sales
+
+Preserve the existing scope and r20 page type. Incoming context is an owned native Activity from Project delivery, Service/aftercare or Maintenance/renewal. Reuse Button, Field/SelectField, LocalDateTimeField, RecordLink, ErrorNotice, the existing Lead modal, native Deal form and actor-bound command journal. Original Activities, native qualification and receiving acknowledgement remain separate authorities.
+
+From Project Sales context, record a customer need as an Internal CustomerContact Activity with an owner and date. In Activity detail, review existing Sales records, choose Lead or qualified Deal, independently capture through the native form if needed, then return for a fixed comparison and explicit link. A restricted, technical or completed original can create a separate Internal RelationshipReview with reviewed wording and its own date; preserve original restrictions and history. A Lead link can then open native next-action planning with the retained Activity selected. Qualification and the Deal initial action are never inferred. Aftercare receiving still requires its separate confirmed Deal reference.
+
+Desktop: show original native links, current customer/site, Activity version/state/date, selected Sales reference/version and separate source attribution. Refresh cannot advance a frozen comparison. A stale save changes no record; discard and compare again. Unknown creation/link results expose original lookup and exact retry; permission loss clears protected comparisons. Project content remains in the existing dialog to preserve Gantt geometry.
+
+Phone: stack fields and recovery controls, wrap names/references, retain readable labels and reachability of native modal actions. Keep the source context and all required review choices visible at 390/320 px. Preserve Escape/return-focus of the existing Project dialog. New LC-17 state mockups and accepted images are missing; this is a proposed host adaptation pending paired visual, keyboard/zoom, physical-device and owner review. Functional checks are recorded separately in `docs/testing/evidence/sales-followup-continuity/README.md`; no accepted fingerprint is supplied.

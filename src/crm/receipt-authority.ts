@@ -1,3 +1,4 @@
+import { outcomeSourceReceiptAuthority } from "./outcome-sources";
 import type { Principal } from "../platform/identity";
 import { hasPermission, type QueryClient } from "../platform/permissions";
 import { unavailable } from "../platform/errors";
@@ -107,11 +108,12 @@ export async function opportunityReceiptActions(
 ) {
   const event = (
     await c.query(
-      "SELECT event_type,next_activity_id,identification_activity_id FROM ppo.opportunity_events WHERE workspace_id=$1 AND opportunity_id=$2 AND created_by=$3 AND operation_id=$4",
+      "SELECT id,event_type,next_activity_id,identification_activity_id FROM ppo.opportunity_events WHERE workspace_id=$1 AND opportunity_id=$2 AND created_by=$3 AND operation_id=$4",
       [p.workspace_id, id, p.actor_id, operation],
     )
   ).rows[0];
   if (!event) return;
+  if (event.event_type === "OpportunityOutcomeRecorded") await outcomeSourceReceiptAuthority(c,p,event.id);
   for (const actionId of new Set<string>(
     [event.next_activity_id, event.identification_activity_id].filter(Boolean),
   )) {

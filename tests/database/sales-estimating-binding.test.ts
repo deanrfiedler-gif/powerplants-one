@@ -403,8 +403,8 @@ test("LC-13 populated 0073 upgrade retains accepted brief bytes, native Discover
   const upgraded = await rows(
     "SELECT * FROM public.ppo_migrations ORDER BY version",
   );
-  assert.deepEqual(upgraded.slice(0, -1), ledger);
-  assert.equal(upgraded.at(-1)?.version, 74);
+  assert.deepEqual(upgraded.slice(0, -3), ledger);
+  assert.deepEqual(upgraded.slice(-3).map(row => row.version), [74, 75, 76]);
   assert.deepEqual(
     await readOperation(f.p, f.create.operation_id),
     f.created.receipt,

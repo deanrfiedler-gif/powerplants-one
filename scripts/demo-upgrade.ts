@@ -219,7 +219,17 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // grants are preserved. No seed, user or identity type is added. Generic
   // table/function grants cover the bridge; populated and runtime-role upgrade
   // proofs must verify the new retained evidence and original recovery.
-  if (latestMigrationVersion !== 74) throw Error("Review the existing-demo upgrade for this release.");
+  // 0075 adds an empty immutable Deal outcome-source companion with typed native
+  // quote/issue/response references. Historical narrative outcomes, grants, seeds,
+  // users and receipt hashes remain unchanged. Generic runtime table/function
+  // privileges cover this additive evidence; populated and runtime-role upgrade
+  // proofs must retain old outcomes and original recovery.
+  // 0076 adds an empty exact accepted Won-to-native-delivery companion. Existing
+  // Project/Service source rows, accepted Sales hashes, receipts and authorities
+  // remain unchanged. There is no seed, user or grant addition; generic runtime
+  // table/function privileges cover it. Preserve original receiving and native
+  // creation receipts in populated and restricted-role upgrade proofs.
+  if (latestMigrationVersion !== 76) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

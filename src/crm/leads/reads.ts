@@ -1,3 +1,4 @@
+import { projectsAvailable } from "../../projects/visibility";
 import type { Principal } from "../../platform/identity";
 import { database } from "../../platform/database";
 import { AppError, unavailable } from "../../platform/errors";
@@ -39,7 +40,7 @@ export async function readLead(p: Principal, id: string) {
   };
   const actionIds = (
     await c.query<{ id: string }>(
-      `SELECT a.id FROM ppo.activities a WHERE a.workspace_id=$1 AND ${activityVisibility("a", true, true)} AND EXISTS(SELECT 1 FROM ppo.activity_links x WHERE x.workspace_id=a.workspace_id AND x.activity_id=a.id AND x.lead_id=$3) ORDER BY a.created_at,a.id`,
+      `SELECT a.id FROM ppo.activities a WHERE a.workspace_id=$1 AND ${activityVisibility("a", true, true, await projectsAvailable(c))} AND EXISTS(SELECT 1 FROM ppo.activity_links x WHERE x.workspace_id=a.workspace_id AND x.activity_id=a.id AND x.lead_id=$3) ORDER BY a.created_at,a.id`,
       [p.workspace_id, p.actor_id, id],
     )
   ).rows;

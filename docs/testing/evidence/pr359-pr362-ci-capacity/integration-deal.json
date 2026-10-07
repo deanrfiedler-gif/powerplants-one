@@ -1,0 +1,49 @@
+{
+  "pr": 362,
+  "built_application_source": "33dfd8e",
+  "integrated_ancestry": "c55d301",
+  "application_bytes_unchanged_since_build": true,
+  "integrated_main": "9f06bef",
+  "workflows": "application.yml and estimating-e1.yml exactly match integrated main",
+  "checks": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "build": "passed",
+    "actionlint": "passed",
+    "foundation": "passed",
+    "prototype": "passed",
+    "naming": "passed",
+    "studio": "passed; 350 entries retain existing unreviewed status",
+    "focused_units": {
+      "passed": 11,
+      "failed": 0
+    },
+    "cross_domain_upgrades_and_receipts": {
+      "passed": 25,
+      "failed": 0
+    },
+    "products_upgrades": {
+      "passed": 6,
+      "failed": 0,
+      "starting_versions": [
+        25,
+        48,
+        71,
+        72,
+        74,
+        76
+      ],
+      "expected_latest_version": 76,
+      "test_sha256": "2570832be06d8c4cf7a0bf2af8f82663152a8a4fc6e14d9dc01bbd5544e354de"
+    },
+    "compiled_browser": {
+      "passed": 5,
+      "failed": 0,
+      "composition": "Two existing notification setup cases, two desktop/mobile SH geometry cases, and retained warm-up",
+      "browser": "reviewed Chrome 154.0.8037.98"
+    }
+  },
+  "database_boundary": "Separate disposable loopback PostgreSQL instance; ppo_synthetic_test only",
+  "ci": "Fresh final-head execution required",
+  "limits": "The initial geometry-only filtered run omitted its earlier notification setup and was stopped as incomplete. The corrected selection preserves every existing assertion. No full local browser run, visual acceptance or business acceptance is claimed."
+}

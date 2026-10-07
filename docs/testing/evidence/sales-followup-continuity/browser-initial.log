@@ -1,0 +1,145 @@
+Database reset: completed
+[WebServer] (node:36176) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.98"}
+
+Running 12 tests using 1 worker
+
+(node:34336) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop-chromium] › tests\browser\crm.spec.ts:119:1 › CA-01/04/13 desktop and phone full sales journey via real UI, validation, completion and reload (20.0s)
+Leads console: Failed to load resource: net::ERR_FAILED
+  ok  2 [desktop-chromium] › tests\browser\leads.spec.ts:10:1 › LC-11 a site discovered after lead follow-up keeps source obligations through lost-response recovery (4.7s)
+  ok  3 [desktop-chromium] › tests\browser\projects-gantt.spec.ts:15:1 › Projects navigation, existing-context creation and an uncertain task save survive reload (2.8s)
+  x   4 [desktop-chromium] › tests\browser\sales-followup.spec.ts:72:1 › LC-17 Project need creates and recovers a native Lead, then explicitly links and plans the retained Activity (2.0m)
+(node:10048) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  5 [desktop-chromium] › tests\browser\sales-followup.spec.ts:173:1 › LC-17 restricted follow-up creates a separate review and a qualified Deal; original link recovery survives completion (7.4s)
+  ok  6 [desktop-chromium] › tests\browser\sales-followup.spec.ts:283:1 › LC-17 fixed comparison refuses stale context and a denied refresh clears private review (2.6s)
+(node:18880) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  7 [mobile-chromium] › tests\browser\crm.spec.ts:119:1 › CA-01/04/13 desktop and phone full sales journey via real UI, validation, completion and reload (17.8s)
+Leads console: Failed to load resource: net::ERR_FAILED
+  ok  8 [mobile-chromium] › tests\browser\leads.spec.ts:10:1 › LC-11 a site discovered after lead follow-up keeps source obligations through lost-response recovery (5.9s)
+  ok  9 [mobile-chromium] › tests\browser\projects-gantt.spec.ts:15:1 › Projects navigation, existing-context creation and an uncertain task save survive reload (4.3s)
+  x  10 [mobile-chromium] › tests\browser\sales-followup.spec.ts:72:1 › LC-17 Project need creates and recovers a native Lead, then explicitly links and plans the retained Activity (2.0m)
+(node:35460) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 11 [mobile-chromium] › tests\browser\sales-followup.spec.ts:173:1 › LC-17 restricted follow-up creates a separate review and a qualified Deal; original link recovery survives completion (5.9s)
+  ok 12 [mobile-chromium] › tests\browser\sales-followup.spec.ts:283:1 › LC-17 fixed comparison refuses stale context and a denied refresh clears private review (1.8s)
+
+
+  1) [desktop-chromium] › tests\browser\sales-followup.spec.ts:72:1 › LC-17 Project need creates and recovers a native Lead, then explicitly links and plans the retained Activity
+
+    Test timeout of 120000ms exceeded.
+
+    Error: locator.click: Test timeout of 120000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Add lead', exact: true })
+        - locator resolved to <button aria-label="Add lead" class="lead-add lead-primary">…</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <dialog open="" class="lead-modal " aria-labelledby="lead-dialog-title">…</dialog> intercepts pointer events
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <dialog open="" class="lead-modal " aria-labelledby="lead-dialog-title">…</dialog> intercepts pointer events
+        - retrying click action
+          - waiting 100ms
+        223 × waiting for element to be visible, enabled and stable
+            - element is visible, enabled and stable
+            - scrolling into view if needed
+            - done scrolling
+            - <dialog open="" class="lead-modal " aria-labelledby="lead-dialog-title">…</dialog> intercepts pointer events
+          - retrying click action
+            - waiting 500ms
+
+
+      122 |     await route.abort("failed");
+      123 |   });
+    > 124 |   await page.getByRole("button", { name: "Add lead", exact: true }).click();
+          |                                                                     ^
+      125 |   await expect(
+      126 |     page.getByRole("button", { name: "Check original Sales creation" }),
+      127 |   ).toBeVisible();
+        at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\sales-followup.spec.ts:124:69
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-chromium] › tests\browser\sales-followup.spec.ts:72:1 › LC-17 Project need creates and recovers a native Lead, then explicitly links and plans the retained Activity
+
+    Test timeout of 120000ms exceeded.
+
+    Error: locator.click: Test timeout of 120000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Add lead', exact: true })
+        - locator resolved to <button aria-label="Add lead" class="lead-add lead-primary">…</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <button type="submit" class="lead-primary">Save lead</button> from <dialog open="" class="lead-modal " aria-labelledby="lead-dialog-title">…</dialog> subtree intercepts pointer events
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <button type="submit" class="lead-primary">Save lead</button> from <dialog open="" class="lead-modal " aria-labelledby="lead-dialog-title">…</dialog> subtree intercepts pointer events
+        - retrying click action
+          - waiting 100ms
+        217 × waiting for element to be visible, enabled and stable
+            - element is visible, enabled and stable
+            - scrolling into view if needed
+            - done scrolling
+            - <button type="submit" class="lead-primary">Save lead</button> from <dialog open="" class="lead-modal " aria-labelledby="lead-dialog-title">…</dialog> subtree intercepts pointer events
+          - retrying click action
+            - waiting 500ms
+
+
+      122 |     await route.abort("failed");
+      123 |   });
+    > 124 |   await page.getByRole("button", { name: "Save lead", exact: true }).click();
+          |                                                                     ^
+      125 |   await expect(
+      126 |     page.getByRole("button", { name: "Check original Sales creation" }),
+      127 |   ).toBeVisible();
+        at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\sales-followup.spec.ts:124:69
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop-chromium] › tests\browser\sales-followup.spec.ts:72:1 › LC-17 Project need creates and recovers a native Lead, then explicitly links and plans the retained Activity
+    [mobile-chromium] › tests\browser\sales-followup.spec.ts:72:1 › LC-17 Project need creates and recovers a native Lead, then explicitly links and plans the retained Activity
+  10 passed (5.6m)

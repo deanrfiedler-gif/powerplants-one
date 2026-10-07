@@ -1,0 +1,161 @@
+Database reset: completed
+[WebServer] (node:31960) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.98"}
+
+Running 18 tests using 1 worker
+
+(node:2544) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop-chromium] › tests\browser\crm.spec.ts:119:1 › CA-01/04/13 desktop and phone full sales journey via real UI, validation, completion and reload (18.4s)
+Leads console: Failed to load resource: net::ERR_FAILED
+  ok  2 [desktop-chromium] › tests\browser\leads.spec.ts:10:1 › LC-11 a site discovered after lead follow-up keeps source obligations through lost-response recovery (6.6s)
+  ok  3 [desktop-chromium] › tests\browser\projects-gantt.spec.ts:15:1 › Projects navigation, existing-context creation and an uncertain task save survive reload (4.5s)
+  x   4 [desktop-chromium] › tests\browser\sales-followup.spec.ts:72:1 › LC-17 Project need creates and recovers a native Lead, then explicitly links and plans the retained Activity (6.5s)
+(node:28456) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  5 [desktop-chromium] › tests\browser\sales-followup.spec.ts:171:1 › LC-17 restricted follow-up creates a separate review and a qualified Deal; original link recovery survives completion (5.6s)
+  ok  6 [desktop-chromium] › tests\browser\sales-followup.spec.ts:281:1 › LC-17 fixed comparison refuses stale context and a denied refresh clears private review (2.0s)
+  x   7 [desktop-chromium] › tests\browser\search-navigation.spec.ts:9:1 › search geometry waits for its exact initial read before the render assertion (8.1s)
+(node:25576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  8 [desktop-chromium] › tests\browser\search-navigation.spec.ts:23:1 › search readiness rejects an unsuccessful initial read (1.6s)
+  ok  9 [desktop-chromium] › tests\browser\sh-platform.spec.ts:233:1 › SH review perspectives, responsive geometry and current My Work interiors (12.2s)
+(node:30760) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 10 [mobile-chromium] › tests\browser\crm.spec.ts:119:1 › CA-01/04/13 desktop and phone full sales journey via real UI, validation, completion and reload (14.4s)
+Leads console: Failed to load resource: net::ERR_FAILED
+  ok 11 [mobile-chromium] › tests\browser\leads.spec.ts:10:1 › LC-11 a site discovered after lead follow-up keeps source obligations through lost-response recovery (2.9s)
+  ok 12 [mobile-chromium] › tests\browser\projects-gantt.spec.ts:15:1 › Projects navigation, existing-context creation and an uncertain task save survive reload (2.1s)
+  x  13 [mobile-chromium] › tests\browser\sales-followup.spec.ts:72:1 › LC-17 Project need creates and recovers a native Lead, then explicitly links and plans the retained Activity (5.0s)
+(node:26912) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 14 [mobile-chromium] › tests\browser\sales-followup.spec.ts:171:1 › LC-17 restricted follow-up creates a separate review and a qualified Deal; original link recovery survives completion (5.1s)
+  ok 15 [mobile-chromium] › tests\browser\sales-followup.spec.ts:281:1 › LC-17 fixed comparison refuses stale context and a denied refresh clears private review (1.9s)
+  x  16 [mobile-chromium] › tests\browser\search-navigation.spec.ts:9:1 › search geometry waits for its exact initial read before the render assertion (7.5s)
+(node:5272) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 17 [mobile-chromium] › tests\browser\search-navigation.spec.ts:23:1 › search readiness rejects an unsuccessful initial read (1.4s)
+  ok 18 [mobile-chromium] › tests\browser\sh-platform.spec.ts:233:1 › SH review perspectives, responsive geometry and current My Work interiors (9.5s)
+
+
+  1) [desktop-chromium] › tests\browser\sales-followup.spec.ts:72:1 › LC-17 Project need creates and recovers a native Lead, then explicitly links and plans the retained Activity
+
+    TypeError: Cannot read properties of null (reading 'id')
+
+      157 |   ).toHaveValue(id);
+      158 |   await page.getByRole("button", { name: "Save", exact: true }).click();
+    > 159 |   expect((await call(page, `crm/leads/${target}`)).next_activity.id).toBe(id);
+          |                                                                  ^
+      160 |   const a = (await call(page, `activities/${id}`)).items[0];
+      161 |   expect(a.owner_id).toBe(original.owner_id);
+      162 |   expect(a.due_at).toBe(original.due_at);
+        at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\sales-followup.spec.ts:159:66
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop-chromium] › tests\browser\search-navigation.spec.ts:9:1 › search geometry waits for its exact initial read before the render assertion
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      19 |   expect(Date.now() - start).toBeGreaterThanOrEqual(6000);
+      20 |   await expect(page.getByText(/results on this page/)).toBeVisible();
+    > 21 |   expect(reads).toBe(1);
+         |                 ^
+      22 | });
+      23 | test("search readiness rejects an unsuccessful initial read", async ({ page }) => {
+      24 |   await page.route("**/api/v1/search?*", route => route.fulfill({
+        at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\search-navigation.spec.ts:21:17
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\search-navigation-search-g-37a70-before-the-render-assertion-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\search-navigation-search-g-37a70-before-the-render-assertion-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\search-navigation-search-g-37a70-before-the-render-assertion-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\search-navigation-search-g-37a70-before-the-render-assertion-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [mobile-chromium] › tests\browser\sales-followup.spec.ts:72:1 › LC-17 Project need creates and recovers a native Lead, then explicitly links and plans the retained Activity
+
+    TypeError: Cannot read properties of null (reading 'id')
+
+      157 |   ).toHaveValue(id);
+      158 |   await page.getByRole("button", { name: "Save", exact: true }).click();
+    > 159 |   expect((await call(page, `crm/leads/${target}`)).next_activity.id).toBe(id);
+          |                                                                  ^
+      160 |   const a = (await call(page, `activities/${id}`)).items[0];
+      161 |   expect(a.owner_id).toBe(original.owner_id);
+      162 |   expect(a.due_at).toBe(original.due_at);
+        at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\sales-followup.spec.ts:159:66
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile-chromium] › tests\browser\search-navigation.spec.ts:9:1 › search geometry waits for its exact initial read before the render assertion
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      19 |   expect(Date.now() - start).toBeGreaterThanOrEqual(6000);
+      20 |   await expect(page.getByText(/results on this page/)).toBeVisible();
+    > 21 |   expect(reads).toBe(1);
+         |                 ^
+      22 | });
+      23 | test("search readiness rejects an unsuccessful initial read", async ({ page }) => {
+      24 |   await page.route("**/api/v1/search?*", route => route.fulfill({
+        at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\search-navigation.spec.ts:21:17
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\search-navigation-search-g-37a70-before-the-render-assertion-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\search-navigation-search-g-37a70-before-the-render-assertion-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\search-navigation-search-g-37a70-before-the-render-assertion-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\search-navigation-search-g-37a70-before-the-render-assertion-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [desktop-chromium] › tests\browser\sales-followup.spec.ts:72:1 › LC-17 Project need creates and recovers a native Lead, then explicitly links and plans the retained Activity
+    [desktop-chromium] › tests\browser\search-navigation.spec.ts:9:1 › search geometry waits for its exact initial read before the render assertion
+    [mobile-chromium] › tests\browser\sales-followup.spec.ts:72:1 › LC-17 Project need creates and recovers a native Lead, then explicitly links and plans the retained Activity
+    [mobile-chromium] › tests\browser\search-navigation.spec.ts:9:1 › search geometry waits for its exact initial read before the render assertion
+  14 passed (3.5m)

@@ -3,6 +3,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { readIntake } from "../service/intake";
+import {
+  DeliveryCreation,
+  type SalesCreation,
+} from "./sales-delivery-creation";
 import { useIdentity } from "./business-session";
 import {
   EnumField,
@@ -22,6 +26,19 @@ import {
 } from "./business-ui";
 export type Intake = Awaited<ReturnType<typeof readIntake>>;
 export function TicketCreate({ siteId }: { siteId?: string }) {
+  return (
+    <DeliveryCreation kind="Service" intake>
+      {(sales) => <TicketCreateForm siteId={siteId} sales={sales} />}
+    </DeliveryCreation>
+  );
+}
+function TicketCreateForm({
+  siteId,
+  sales,
+}: {
+  siteId?: string;
+  sales?: SalesCreation;
+}) {
   const r = useResource<Envelope<Option & { company_id: string }>>(
     siteId ? `sites/${siteId}` : null,
   );
@@ -41,8 +58,11 @@ export function TicketCreate({ siteId }: { siteId?: string }) {
       )}{" "}
       {(!siteId || r.data) && (
         <IntakeForm
-          initialSite={siteId}
-          initialCompany={r.data?.items[0].company_id}
+          initialSite={siteId ?? sales?.source.site_id ?? undefined}
+          initialCompany={
+            r.data?.items[0].company_id ?? sales?.source.company_id
+          }
+          sales={sales}
         />
       )}
     </>
@@ -172,11 +192,13 @@ export function TicketDetail({ id }: { id: string }) {
 }
 function IntakeForm({
   ticket: t,
+  sales,
   initialSite,
   initialCompany,
   reload,
 }: {
   ticket?: Intake;
+  sales?: SalesCreation;
   initialSite?: string;
   initialCompany?: string;
   reload?: () => void;
@@ -240,6 +262,7 @@ function IntakeForm({
   );
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+    if (cmd.busy || sales?.blocked) return;
     const fields = {
       received_at: v.received ? `${v.received}:00Z` : null,
       channel: v.channel,
@@ -257,28 +280,30 @@ function IntakeForm({
       next_action: v.next_action,
       reason: v.reason,
     };
-    const result = await cmd.send<{
-      record_id: string;
-      record_version: number;
-    }>(
-      t ? `service/tickets/${id}/save-intake` : "service/tickets",
-      t
-        ? { ...fields, expected_version: expected }
-        : { ...fields, id, company_id: v.company },
-    );
+    const result = sales
+      ? await sales.send({ ...fields, id, company_id: v.company })
+      : await cmd.send<{
+          record_id: string;
+          record_version: number;
+        }>(
+          t ? `service/tickets/${id}/save-intake` : "service/tickets",
+          t
+            ? { ...fields, expected_version: expected }
+            : { ...fields, id, company_id: v.company },
+        );
     if (result) {
       setExpected(result.record_version);
       if (t) reload?.();
-      else router.push(`/service/tickets/${result.record_id}`);
+      else if (!sales) router.push(`/service/tickets/${result.record_id}`);
     }
   }
   return (
     <section className="detail-section">
       <h2>{t ? "Edit intake details" : "Intake details"}</h2>
-      <ErrorNotice error={cmd.error} />
+      <ErrorNotice error={sales?.error ?? cmd.error} />
       <p role="status">{cmd.saved}</p>
       <form className="form-panel" onSubmit={submit}>
-        <fieldset disabled={cmd.busy}>
+        <fieldset disabled={cmd.busy || sales?.blocked}>
           <div className="form-grid">
             {!t && (
               <SelectField

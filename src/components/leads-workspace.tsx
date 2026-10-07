@@ -1,4 +1,5 @@
 "use client";
+import { SalesActivityCreation, type ActivitySalesCreation } from "./sales-followup";
 import Link from "next/link";
 import { LeadsDesktopList } from "./leads-desktop-list";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -289,7 +290,9 @@ function LeadForm({
   onAccepted,
   onCancel,
   onPending,
+  sales,
 }: {
+  sales?: ActivitySalesCreation;
   mode: Mode;
   lead: Lead | null;
   onAccepted: (id: string) => void;
@@ -297,28 +300,29 @@ function LeadForm({
   onPending: (v: boolean) => void;
 }) {
   const identity = useIdentity(),
-    formId = useId();
+    formId = useId(),
+    params = useSearchParams();
   const [expectedVersion] = useState(lead?.version);
   const resolved =
     lead?.resolution?.state === "Available" ? lead.resolution : lead;
   const [title, setTitle] = useState(lead?.title ?? ""),
-    [need, setNeed] = useState(lead?.need_summary ?? ""),
+    [need, setNeed] = useState(lead?.need_summary ?? sales?.source.activity.summary ?? ""),
     [orgText, setOrgText] = useState(lead?.organisation_text ?? ""),
     [contactText, setContactText] = useState(lead?.contact_text ?? "");
-  const [company, setCompany] = useState(lead?.company_id ?? ""),
+  const [company, setCompany] = useState(lead?.company_id ?? sales?.source.activity.company_id ?? ""),
     [owner, setOwner] = useState(lead?.owner_id ?? identity.actor_id),
-    [org, setOrg] = useState(resolved?.organisation_id ?? ""),
-    [site, setSite] = useState(resolved?.site_id ?? ""),
+    [org, setOrg] = useState(resolved?.organisation_id ?? sales?.source.customer_id ?? ""),
+    [site, setSite] = useState(resolved?.site_id ?? sales?.source.activity.site_id ?? ""),
     [person, setPerson] = useState(resolved?.primary_person_id ?? "");
   const [source, setSource] = useState(lead?.source_channel ?? "Phone"),
-    [basis, setBasis] = useState(lead?.source_basis ?? ""),
+    [basis, setBasis] = useState(lead?.source_basis ?? (sales ? `Reviewed Activity ${sales.source.activity.id}, version ${sales.source.activity.version}` : "")),
     [status, setStatus] = useState(lead?.status ?? "New"),
     [note, setNote] = useState(""),
     [reason, setReason] = useState("");
   const [siteReason, setSiteReason] = useState(""),
     [contactReason, setContactReason] = useState(""),
     [actionChoice, setActionChoice] = useState(
-      lead?.next_activity &&
+      mode === "action" && lead?.actions.some(a => a.id === params.get("plan_activity") && ["Open","InProgress"].includes(a.status)) ? params.get("plan_activity")! : lead?.next_activity &&
         ["Open", "InProgress"].includes(lead.next_activity.status)
         ? lead.next_activity.id
         : "new",
@@ -336,7 +340,7 @@ function LeadForm({
       "Unsaved",
       onPending,
     ),
-    locked = command.busy || command.uncertain;
+    locked = command.busy || command.uncertain || sales?.blocked;
   const heading = {
     add: "Add lead",
     edit: "Edit lead",
@@ -385,7 +389,7 @@ function LeadForm({
       source_basis: basis,
     };
     if (mode === "add") {
-      await command.send("crm/leads", {
+      const fields = {
         reason: base.reason,
         id: crypto.randomUUID(),
         company_id: company,
@@ -394,7 +398,8 @@ function LeadForm({
         site_id: site || null,
         primary_person_id: person || null,
         ...detail,
-      });
+      };
+      if(sales) await sales.send(fields); else await command.send("crm/leads",fields);
       return;
     }
     const root = `crm/leads/${lead!.id}`;
@@ -489,6 +494,7 @@ function LeadForm({
         </p>
       </header>
       <div className="lead-dialog-body">
+        {sales?.context}
         <ErrorNotice error={command.error} />
         <fieldset disabled={locked}>
           {(capture || convert) && (
@@ -1412,7 +1418,7 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
         ? "add"
         : leadId && params.get("resolve") === "1"
           ? "resolve"
-          : null,
+          : leadId && params.get("plan") === "1" ? "action" : null,
     ),
     [pending, setPending] = useState(false),
     [filters, setFilters] = useState(false),
@@ -1480,7 +1486,7 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
     );
     list.reload();
     detail.reload();
-    if (leadId && params.get("resolve") === "1")
+    if (leadId && (params.get("resolve") === "1" || params.get("plan") === "1"))
       router.replace(`/sales/leads/${leadId}`);
     if (!leadId) router.push(`/sales/leads/${id}${query ? `?${query}` : ""}`);
   };
@@ -1945,14 +1951,7 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
             mode !== "resolve" &&
             mode !== "transfer" &&
             (mode === "add" || detail.data) ? (
-            <LeadForm
-              key={`${mode}:${leadId ?? "new"}`}
-              mode={mode}
-              lead={detail.data}
-              onAccepted={accepted}
-              onCancel={close}
-              onPending={setPending}
-            />
+            mode === "add" ? <SalesActivityCreation kind="Lead" onPending={setPending}>{sales => <LeadForm mode="add" lead={null} sales={sales} onAccepted={accepted} onCancel={close} onPending={setPending}/>}</SalesActivityCreation> : <LeadForm key={`${mode}:${leadId ?? "new"}`} mode={mode} lead={detail.data} onAccepted={accepted} onCancel={close} onPending={setPending}/>
           ) : detail.data ? (
             <LeadDetail lead={detail.data} setMode={setMode} />
           ) : (

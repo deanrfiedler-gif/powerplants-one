@@ -37,3 +37,9 @@ First integrated head `9865262` exposed a retained Products test pin: [Products 
 Update the exact latest and added-version expectations to 74 on #359 and 76 on #362. Preserve the four original starting points and every row/hash/grant/receipt assertion; add populated pre-Products starting points at 74 and, on the Deal branch, 76. These cases prove Products 0052 can fill its original gap after the newer Sales migrations while retaining existing estimates and quotations. The repository guidance now includes this additional exact registry consumer.
 
 The corrected #359 Products upgrade suite passes all five populated-history cases, including the new 0074 starting point. [Lead integration results](integration-lead.json) retain the exact test-file hash and earlier failed CI head. Together with the preceding checks, the Lead repair has 25 passing local database cases and 11 focused units; no assertion or original case was removed.
+
+### Deal integration checkpoint
+
+[Deal integration results](integration-deal.json) record 25 combined upgrade/receipt cases, six Products populated-history upgrades through 0076, 11 focused units and five compiled browser checks (desktop/phone notification setup and SH geometry, plus warm-up). Build, TypeScript, lint, workflow lint and foundation/prototype/naming/studio pass. The built application bytes from `33dfd8e` remain unchanged by the later documentation and Products assertion commits.
+
+The overlapping Search readiness repairs are reconciled to main's existing real delayed-response geometry scenario. Its first narrowly filtered local invocation omitted the earlier notification-producing case, reached an empty notification list and was stopped as incomplete. Including that retained setup case passes both desktop and phone without changing any assertion. Browser screenshots remain local diagnostics; no new visual acceptance is recorded. Fresh final-head CI remains separate from this local proof.

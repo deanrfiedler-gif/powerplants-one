@@ -1,0 +1,15 @@
+
+> powerplants-one@0.1.0 build
+> node --import tsx scripts/build-offline.ts && next build
+
+▲ Next.js 16.3.4 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 175ms
+- Experiments (use with caution):
+  · turbopackMemoryEviction: "auto"
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 94s
+  Running TypeScript ...
+tests/browser/sales-followup.spec.ts(21,82): error TS2322: Type 'string' is not assignable to type '`${string}-${string}-${string}-${string}-${string}`'.
+Failed to type check.

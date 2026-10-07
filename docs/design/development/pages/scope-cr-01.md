@@ -61,7 +61,7 @@ Mobile: stack fields/actions, keep every tab reachable and contain table/history
 
 Loading, empty/filter-empty, partial, failed, denied, read-only, validation, saving, saved, uncertain and source-changed states remain explicit. The guide `guide.cr.01` carries normal and recovery steps.
 
-Retained reference: `docs/reference/ui/crm/PPO-Deal-Workspace-r01.html`. Missing mobile reference images are explicitly unprovided. The current shell and server authority govern departures from demonstration HTML. ES-05/06/07, agreements and automatic downstream effects remain unavailable under ADR-0046. Actual paired captures and differences are recorded in `docs/delivery/sales-native-completion-handover.md`; acceptance is pending.
+Retained reference: `docs/reference/ui/crm/PPO-Deal-Workspace-r01.html`. Missing mobile reference images are explicitly unprovided. The current shell and server authority govern departures from demonstration HTML. The earlier ADR-0046 boundary is historical: native ES-05/06/07 now supplies release, response and Supply conversion. Agreements and automatic downstream effects remain unavailable. Actual paired captures and differences are recorded in `docs/delivery/sales-native-completion-handover.md`; acceptance is pending.
 
 Paired review refinement: the Overview begins with Next customer action and Customer objective in the existing two-column detail grid, stacking on phones. Deal information and linked receiving workflows follow. Transfer/outcome controls share one wrapping row; no authority changes.
 
@@ -88,3 +88,30 @@ Desktop: keep captured/current context headings distinct, long record names wrap
 Exact new resolution/transfer/create-return mockup images are missing. Retained Leads reference: `docs/reference/ui/crm/PPO-Leads-Desktop-Container-r01.html`; shared customer reference: `docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html`. These additive states are proposed adaptations under the existing scope, pending paired visual and owner review. No fingerprint is adopted. See [customer-context decision](../../../decisions/lead-customer-context.md) and [synthetic state examples](../lead-continuity-fixtures.json).
 
 Local functional checks and limited capture inspection are retained in [LC-12 execution evidence](../../../testing/evidence/lead-context-resolution/README.md). Paired source, owner and physical-device review remain pending.
+
+## Exact commercial evidence in Deals (LC-14)
+
+Keep CR-01 and its r20 record workspace page type. Incoming: all permitted native estimate alternatives and exact quotation revisions. Outgoing: the existing ES-05 release, ES-06 reported-response and ES-07 receiving/target/history routes. Reuse Button, ErrorNotice, Stamp, native details disclosure, shared tokens and the existing CRM panel (retained host exception). No native command or lifecycle is copied into Sales.
+
+Every permitted alternative contributes its own quotation revisions to Estimates & quotations and Documents. Label Draft and Release separately, preserve the estimate/option and output state, and open exact native evidence on request. An issued event, current source check, staff-recorded response and native Supply conversion are independent facts. A current correction replaces the displayed latest response while native history retains its predecessor. Unavailable or restricted evidence must never read as not issued/not converted. A denied refresh removes previously displayed evidence and offers an explicit permitted retry. Reading evidence never records Won or authorises Project/Service delivery.
+
+Desktop: use labelled revision cards, a stable option/estimate link and separate issue, response and conversion sections. Phone: stack cards and wrap long held-source/response text at 390 and 320 CSS px; keep native history and retry controls reachable without horizontal page scrolling. Native summary controls must be keyboard reachable. Existing exact source HTML/images above remain the retained references; exact new-state mockup images are missing. This additive host adaptation awaits paired visual and owner acceptance; no accepted fingerprint is assigned.
+
+## Explicit outcome evidence (LC-15)
+
+Retain CR-01 and the r20 record workspace with its existing outcome dialog. Incoming handover: permitted native quotation issue/response and the current Deal; outgoing: the exact outcome event, immutable evidence and existing Won handover due. Reuse Field, SelectField, Button, ValidationFields, ErrorNotice, shared tokens and the existing dialog/footer (retained host exception). The proposed adaptation requires an explicit native or separate evidence choice; it does not infer Won.
+
+Show current native facts and the frozen reviewed comparison separately. Background refresh cannot replace the submitted source. Denied refresh hides prior native facts; uncertain save locks replacement and exposes original recovery. History distinguishes recorded response, latest report, changed native issue, separate evidence and historical narrative outcomes. Desktop keeps review before the save footer. At 390/320 CSS px, stack selectors and narrative, wrap long text and keep review/discard/recovery reachable; verify keyboard focus and 200% zoom separately.
+
+Host states are in lead-continuity-fixtures.json and tests/browser/outcome-sources.spec.ts. Retain the exact HTML references above; no exact new-state mockup image is available. Functional proof does not assign an accepted fingerprint. Paired visual, owner, physical-device and screen-reader acceptance remain pending.
+
+
+## Native Won receiving (LC-16)
+
+Keep this existing scope and page type. Incoming handover: exact accepted Won Sales event; outgoing: independently created native Project or Service work order and a separately reviewed typed binding. The Deal reads native receiving state and the retained Activity separately. It does not infer delivery completion from acceptance, a link or an Authorised work order.
+
+Reuse shared Button, Field, SelectField, ErrorNotice, recoverable command journal, existing native lookup controls and record guard. Preserve the native Project Gantt and Service scope/readiness layouts. Proposed addition: a scoped Sales-context panel, explicit fixed-version comparison and create-and-return actions. Existing native form buttons remain documented legacy controls; no new theme or navigation system is introduced.
+
+Desktop and phone: wrap reported scope and references; show original Sales revision beside current native state, owner and version. Keep Review, link reason, discard and original-recovery actions visible in normal document flow. A refresh must not silently substitute a reviewed comparison. Denied comparison reads remove its protected content. Unknown Sales site requires an explicit native site choice and does not rewrite the accepted source. New Service intake and work-order creation save independently before link review; existing native scope and authorisation controls remain.
+
+Exact new-state mockup/HTML images are missing. Retained module references above are baseline context. Implementation captures and synthetic checks are recorded in `docs/testing/evidence/won-delivery-continuity/README.md`; they do not grant paired visual, keyboard/200% zoom, physical-device or owner acceptance. Review fingerprints remain unchanged.

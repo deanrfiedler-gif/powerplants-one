@@ -114,6 +114,8 @@ test("owned Won handover and structured Lost survive reload on desktop and phone
     await page.goto(`/sales/opportunities/${input.id}`);
     await page.getByRole("button",{name:"Record sales outcome",exact:true}).click();
     const dialog=page.getByRole("dialog");
+    await dialog.getByLabel("Outcome evidence source", {exact:true}).selectOption("Independent");
+    await dialog.getByLabel("Separate outcome evidence", {exact:true}).fill("SYN fictional separate evidence reviewed by Sales");
     if(outcome==="Won") await dialog.getByLabel("Acceptance or order evidence").fill("SYN Fictional accepted scope for controlled handover");
     else {
       await dialog.getByRole("button",{name:"Record outcome",exact:true}).click();
@@ -152,6 +154,8 @@ test("accepted outcome with a lost response recovers its original receipt withou
   await page.goto(`/sales/opportunities/${input.id}`);
   await page.getByRole("button",{name:"Record sales outcome",exact:true}).click();
   const dialog=page.getByRole("dialog"); await dialog.getByLabel("Lost reason").selectOption("Timing");
+  await dialog.getByLabel("Outcome evidence source", {exact:true}).selectOption("Independent");
+  await dialog.getByLabel("Separate outcome evidence", {exact:true}).fill("SYN fictional timing decision reviewed by Sales");
   let acceptedOperation:string|undefined;
   await page.route(`**/api/v1/crm/opportunities/${input.id}/outcome`,async route=>{
     acceptedOperation=route.request().postDataJSON().operation_id;

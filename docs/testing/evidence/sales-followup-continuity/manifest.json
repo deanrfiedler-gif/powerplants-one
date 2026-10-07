@@ -1,0 +1,396 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "implementation_parent": "14e76daa2b6bf16a45b352d05b6c35eae1523650",
+  "application_parent": "e8dd29054d56b7253747a05be33a92149a1f3477",
+  "execution_scope": "Locally tested LC-17 application; final eight-case database and eighteen-case compiled browser proof. Earlier combined and failed runs are retained separately. Hashes use staged Git blobs; owner review, final-head CI and deployment are separate.",
+  "source_files": [
+    {
+      "path": ".gitattributes",
+      "sha256": "22b21a558cccaaae9d24623e3700b9e02d93e18205d47c63a1daf619e9ab0c9a",
+      "bytes": 1961
+    },
+    {
+      "path": "docs/STATUS.md",
+      "sha256": "1954021cedcacf2b9d772a33f4cdae9cc0ea2c364d1ea17489c9427734d4bdf4",
+      "bytes": 61972
+    },
+    {
+      "path": "docs/contracts/lead-to-delivery-continuity.md",
+      "sha256": "87181d79d1fe8299d423eb904fbc90097d3232f3f98cba5c4b6d4c5b3045d48e",
+      "bytes": 14965
+    },
+    {
+      "path": "docs/decisions/sales-followup-continuity.md",
+      "sha256": "315bf8d274e3b369b63f5d4f82699c69a09c1e783646e903b5f7c905c7da234c",
+      "bytes": 3953
+    },
+    {
+      "path": "docs/design/development/components.json",
+      "sha256": "2af81c4a9b7288cec03ffd9567dd966347ef05408434819bc2cf106618dcca1c",
+      "bytes": 212410
+    },
+    {
+      "path": "docs/design/development/components/buttons.md",
+      "sha256": "139c69dc95e10e56a7980d3883965cc2d91bac3c0f48a2541444ee124b209456",
+      "bytes": 17774
+    },
+    {
+      "path": "docs/design/development/components/fields.md",
+      "sha256": "1ff6d62e05f029c5d42cf996b2e79310ea816a4e587597add3abbdd6d4a80154",
+      "bytes": 15901
+    },
+    {
+      "path": "docs/design/development/components/validation.md",
+      "sha256": "abe6f1db6e36d71e224c7a39eee669977f134180c1f31317ba52cacee3aa09ea",
+      "bytes": 15128
+    },
+    {
+      "path": "docs/design/development/guides.json",
+      "sha256": "8f658c8de3a9c3288717a2eee00f314ed6229e159c1734a0bddfaf4de8109526",
+      "bytes": 3611192
+    },
+    {
+      "path": "docs/design/development/lead-continuity-fixtures.json",
+      "sha256": "4930c370549fbf59d99e6f109e439fd7b9ef79e7619860a999eafef815df32a4",
+      "bytes": 6551
+    },
+    {
+      "path": "docs/design/development/pages/route-projects-id.md",
+      "sha256": "52418e57ff03bec1df77dfe128537698db07b0525c70e457ffb30bf817d5fe2d",
+      "bytes": 21693
+    },
+    {
+      "path": "docs/design/development/pages/route-sales-aftercare-id.md",
+      "sha256": "50e2f67ee182bc92ad2b536dbb7c1663d39b78466a6728a2aa180521462fdaa4",
+      "bytes": 5174
+    },
+    {
+      "path": "docs/design/development/pages/route-sales-leads-id.md",
+      "sha256": "231f57151ecb895599df03e199186317d8fd69586efbaa5ea6cc6a922bb72f79",
+      "bytes": 9980
+    },
+    {
+      "path": "docs/design/development/pages/route-sales-leads.md",
+      "sha256": "7261fe9c6a118a8001c009599c15b35537a904d8a93198d0ea32a0821fa39b1f",
+      "bytes": 9877
+    },
+    {
+      "path": "docs/design/development/pages/route-sales-opportunities-id.md",
+      "sha256": "e3ba1290c0090bba1ff49dc4697655dd19a35c5add280a5ccc91ee4fe8731c68",
+      "bytes": 14363
+    },
+    {
+      "path": "docs/design/development/pages/route-sales-opportunities-new.md",
+      "sha256": "c71b094547d3dc58efc378d8b64c8f68e2b980f033d6d36c17be5bd9b4711570",
+      "bytes": 5682
+    },
+    {
+      "path": "docs/design/development/pages/route-work-id.md",
+      "sha256": "54023d284d52a19d545b13d80e6f7bc107727059b535213bff47a44cbd36ab48",
+      "bytes": 8175
+    },
+    {
+      "path": "docs/design/development/pages/route-work-new.md",
+      "sha256": "4672dbbbc351faecaecc9ef1341b03850af74796d5bf43c72107977d07f37a1a",
+      "bytes": 5662
+    },
+    {
+      "path": "docs/design/development/register.json",
+      "sha256": "dd6f2814fd6e2654594172eb45fb1d7aaca5798028ef033af2bd41ca73fbe487",
+      "bytes": 522473
+    },
+    {
+      "path": "docs/standards/chatgpt-project-instructions.md",
+      "sha256": "4d1ed46e979fe645a4ea341ce138b73a24cfe401388501c713a74285ca7b9075",
+      "bytes": 8010
+    },
+    {
+      "path": "docs/standards/document-register.csv",
+      "sha256": "a466b460edfb73f3aedaa60a2c0ab28f579c0df0ecd1f0b3061ebc1d9a920df9",
+      "bytes": 121348
+    },
+    {
+      "path": "src/app/(business)/sales/opportunities/new/page.tsx",
+      "sha256": "f8e631ec8bb4bbcc209ccbe8d34832e86279e9bc3eea93d2501dc9c6ad4b638a",
+      "bytes": 228
+    },
+    {
+      "path": "src/app/api/v1/activities/[id]/sales-followup/review/route.ts",
+      "sha256": "8ff616f764e3452f499278b680d09454f6410cd744ac07bb168542e8ef0f66d9",
+      "bytes": 216
+    },
+    {
+      "path": "src/app/api/v1/activities/[id]/sales-followup/route.ts",
+      "sha256": "18485076bce486fee0c3ddc85005c147d0d5af9f0b433df3c42ebfe7c82118d0",
+      "bytes": 359
+    },
+    {
+      "path": "src/components/activity-screens.tsx",
+      "sha256": "40be7f7fcaa6cd546281ea89c23a3208a87989357451e46cb4f681b7f47fbd61",
+      "bytes": 15745
+    },
+    {
+      "path": "src/components/crm-screens.tsx",
+      "sha256": "c8f0fef0e6e34c02d18d9e8716586939cddf3a514711b4c3b0f3f1fa81b816ea",
+      "bytes": 34287
+    },
+    {
+      "path": "src/components/leads-workspace.tsx",
+      "sha256": "2fbc35211617d0da8d31cb7d8571b3c74b81498a6d1f04bdccb29b5e045d42e9",
+      "bytes": 66385
+    },
+    {
+      "path": "src/components/projects-screens.tsx",
+      "sha256": "2c41c6e2e3f901cac9ab5f1afbeccf6b27ac7b648cddc47bb8451ad11a3505c7",
+      "bytes": 16146
+    },
+    {
+      "path": "src/components/sales-aftercare.tsx",
+      "sha256": "393cbd8b95cecf38d2fb852fad097be65aac8fe31b24122148a5aa4faacb927c",
+      "bytes": 40823
+    },
+    {
+      "path": "src/components/sales-followup.tsx",
+      "sha256": "ee59312ed613fcccac92f5c53097181a3c7f83a27fb5a0b504d5448b403d2f35",
+      "bytes": 20952
+    },
+    {
+      "path": "src/crm/leads/reads.ts",
+      "sha256": "c7dbd9ae0344d09e2c9c502e415b5928288ea93cb145b3e5f5893cfda6de96db",
+      "bytes": 17165
+    },
+    {
+      "path": "src/crm/planning-gaps.ts",
+      "sha256": "12e1c65ad6c57f5f9f8395c99d8d3aef0686ea648551d5f3d230a4bec0626e17",
+      "bytes": 9152
+    },
+    {
+      "path": "src/crm/reads.ts",
+      "sha256": "e53f37af8a305aaea6563f3ac2e5ab79d8486dea2dc78eec66f24067e5b60179",
+      "bytes": 15010
+    },
+    {
+      "path": "src/crm/worklist.ts",
+      "sha256": "489884125d70beff05f42acab9b084b144e65f41ebea2bd564962471f937b6f9",
+      "bytes": 11500
+    },
+    {
+      "path": "src/sales/followup.ts",
+      "sha256": "d29a5de67de0a456eb02276394d758b7e2228eab10455c7b29c7daa1c833a4db",
+      "bytes": 22382
+    },
+    {
+      "path": "src/shared/receipts.ts",
+      "sha256": "d2dfbc5814cc72d6a2a9e61cb8cff775839903c3914e0f29960c69f350deddf7",
+      "bytes": 24890
+    },
+    {
+      "path": "tests/browser/sales-followup.spec.ts",
+      "sha256": "1a0c69064cf3da399ca059da89f7b44bd5ea66b0947adcd71f43c66d0def6c23",
+      "bytes": 12917
+    },
+    {
+      "path": "tests/database/sales-followup.test.ts",
+      "sha256": "4d30cceaffe0c55dfbd8ad4b8d0dc809d320f50f3d6c23b0f21200a2e3d93610",
+      "bytes": 13368
+    }
+  ],
+  "evidence_files": [
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/README.md",
+      "sha256": "4f2dd15038d6bb984db10fc959f280923dac6754cf7c902b3d4a7b9489fcb397",
+      "bytes": 9515
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/browser-final.log",
+      "sha256": "444d1e576ecbfd89460434f18a75ff7f1e0158762abc5a8c48be021800ac5e09",
+      "bytes": 3886
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/browser-initial.log",
+      "sha256": "7ff3cc80d8d53c175eef4e4c41a63e25dde5f4d838f07801a6b8595fe43e5c1f",
+      "bytes": 11183
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/browser-intermediate.log",
+      "sha256": "9ab4d510ff09a0862fae0c863a78782c8f04ad5fd86fd8ccf10ad7af0c4b16b2",
+      "bytes": 14529
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/build-final.log",
+      "sha256": "6b237d24f3bfdc3759babe8f1ccb0da1d6199817cb29021269d4684e259b4608",
+      "bytes": 26030
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/build-initial.log",
+      "sha256": "8cea499b5471d2f86cbc8ea995df0072f94bb8b2895bd17d93f242465dc89205",
+      "bytes": 538
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/build-intermediate.log",
+      "sha256": "e786ff0ce6f884d53b694fbcbd855fe5dde16d9c53190c530ec230ccc1235827",
+      "bytes": 26032
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/build-modal.log",
+      "sha256": "1c9431439a3dcc994a1bbd0e9b466b4a346fb7bf1caf6c9deed869d039e5f538",
+      "bytes": 26032
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/build-repair.log",
+      "sha256": "761cb894e502b0636d0649e78e37a2b2a8f6f49e4081b789b0cd18cbe3c63461",
+      "bytes": 26034
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/database-combined.log",
+      "sha256": "cc3a9ba535e361099ffe3e21193ef3dee73d09f4615e10adf72cb0c776869f6f",
+      "bytes": 4120
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/database-final.log",
+      "sha256": "eca1e6ea3ea32ddaaaf75aa33138c41f79dd19b2ec33906e638e944dca0192a2",
+      "bytes": 2206
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/database-initial.log",
+      "sha256": "33dde6830d04391df0289f0525edb1c6c2ed7900ce8803ae5caa19d0ffa264cf",
+      "bytes": 12299
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/database-projections.log",
+      "sha256": "bdfa28c830b9cf339cb489bdade6ee7907b135b775d252c46abc037c9fd98bcb",
+      "bytes": 1963
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/database-repair.log",
+      "sha256": "4db3f7681350c4d82ea6d147eaf613d4483751c447f86024bcb63210cb563e79",
+      "bytes": 4234
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/final-sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-desktop-chromium-project-lead-link-review.png",
+      "sha256": "5c2ee09af2e3f06ac32449c09577910246602e7f70b7098cdc1bae72eb8e3fff",
+      "bytes": 124771
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/final-sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-mobile-chromium-project-lead-link-review.png",
+      "sha256": "84fa4d06589c409a70da47cc10c615d267eb92553e0247447297d05fa094564a",
+      "bytes": 73308
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/final-sales-followup-LC-17-restr-ba106-ecovery-survives-completion-desktop-chromium-retained-review-deal-history.png",
+      "sha256": "4c702d40e655d7cc3d475658aa4b9f2c4b2dfaf178eb20f9c16de272f3735d83",
+      "bytes": 139335
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/final-sales-followup-LC-17-restr-ba106-ecovery-survives-completion-mobile-chromium-retained-review-deal-history.png",
+      "sha256": "d4b1e82ff15e662011b5f8f2d3898b9c208b8e598b2c0b7842df877f170a781e",
+      "bytes": 73765
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/foundation.log",
+      "sha256": "f52831e48a4e6c1a1edb3f2c9e54b4f61b45ad9414eb8fe476a2d67df8b2f96f",
+      "bytes": 330
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/initial-sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-desktop-chromium-error-context.md",
+      "sha256": "e60a087a02463a679be3dce18c46abb528b064cbdf2736bc77b56c0a201917e3",
+      "bytes": 20229
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/initial-sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-desktop-chromium-test-failed-1.png",
+      "sha256": "3017bdb05b15321cd51f1ccbd787c2c5f98551f234cc67a7f40a1332cf368e86",
+      "bytes": 112446
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/initial-sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-mobile-chromium-error-context.md",
+      "sha256": "dc920cef34a415563f23a51f7b89a9a22dd8eb0bf6f19374ac4925eff81bacc0",
+      "bytes": 15862
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/initial-sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-mobile-chromium-test-failed-1.png",
+      "sha256": "7d561a177b59404c3a594cd0e34f0574ab1569ea35e703b0449d7b1e70c5fd05",
+      "bytes": 56448
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/initial-sales-followup-LC-17-restr-ba106-ecovery-survives-completion-desktop-chromium-retained-review-deal-history.png",
+      "sha256": "4a29d39398dfa2c4e83aa4e65a83a91ec36ad59531fe7aa66470f221aedb1242",
+      "bytes": 139219
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/initial-sales-followup-LC-17-restr-ba106-ecovery-survives-completion-mobile-chromium-retained-review-deal-history.png",
+      "sha256": "ede910ab82cbbe558ca8ec45136ba573da8cf7ebe28715860afc5b7f8daefd48",
+      "bytes": 74530
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/intermediate-sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-desktop-chromium-error-context.md",
+      "sha256": "542af31094e9df501b1088f1e204e26ac0681944ece7417128d9d497e62f176d",
+      "bytes": 20699
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/intermediate-sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-desktop-chromium-project-lead-link-review.png",
+      "sha256": "ab3388f81f3a71d3970a9d738d6ab095c223ee6ac02aacb66a1ea70593b2a2fc",
+      "bytes": 125025
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/intermediate-sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-desktop-chromium-test-failed-1.png",
+      "sha256": "00c929a8d3ab15fc74f3af3d6796f76bcdb9b2d9a0607cf5e06b432df42141c1",
+      "bytes": 76943
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/intermediate-sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-mobile-chromium-error-context.md",
+      "sha256": "5327f6a025ed4fd9113817fdadd2267a426e067da1bf760b05f735673a783e0d",
+      "bytes": 15792
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/intermediate-sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-mobile-chromium-project-lead-link-review.png",
+      "sha256": "abcaa2f6594cb7bbff8e4daa74b7e35ba31c0ee4096a0f039c40bdd51f0eb3ee",
+      "bytes": 72646
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/intermediate-sales-followup-LC-17-Proje-c41a8-plans-the-retained-Activity-mobile-chromium-test-failed-1.png",
+      "sha256": "c5c4533a383bf3002985b37879bb395f6d7c6bba3ac0298279faf7263ab304d5",
+      "bytes": 21675
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/intermediate-sales-followup-LC-17-restr-ba106-ecovery-survives-completion-desktop-chromium-retained-review-deal-history.png",
+      "sha256": "cca06ec538447d4bffee018303cf84fd63bb6bdb9df48cf9f673952ef10ab93f",
+      "bytes": 139456
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/intermediate-sales-followup-LC-17-restr-ba106-ecovery-survives-completion-mobile-chromium-retained-review-deal-history.png",
+      "sha256": "d1f22a2de040738a2a7782fb5dd569adbc0291932d7613216c058bde4ea190c9",
+      "bytes": 73495
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/lint.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/naming.log",
+      "sha256": "5d9746c7115f73bb0d9e5330845f9e559a9f06b566c55bd57c67a3d99ec240bb",
+      "bytes": 296
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/prototype.log",
+      "sha256": "9b7839c713adf06d51e41256fd2e991c6acc00fca36c33caff1ef7e02d55251b",
+      "bytes": 526
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/studio.log",
+      "sha256": "e54246ce6d663bbbc52e76eb1107b17246e348645643edd5d0a2c9d5e0c83c76",
+      "bytes": 429
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/typecheck.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/testing/evidence/sales-followup-continuity/unit.log",
+      "sha256": "4934c4a80d37b73072cabcc6998899a3409c86f2a853fee23502d3304ee32528",
+      "bytes": 622
+    }
+  ]
+}
