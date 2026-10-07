@@ -991,6 +991,7 @@ for (const shape of [
 const legacyRows = async (table: string) =>
   (await rows(table)).map(({ value }) => {
     const old = { ...value };
+    if (Object.hasOwn(old,"diamond_commands")) { assert.equal(old.diamond_commands,null); delete old.diamond_commands; }
     if (Object.hasOwn(old, "merge_successor_command")) {
       assert.equal(old.merge_successor_command, null);
       delete old.merge_successor_command;
@@ -1106,7 +1107,7 @@ for (const topology of [
     );
     assert.deepEqual(
       now.filter((r) => r.version > 70).map((r) => r.version),
-      [71],
+      [71, 72],
     );
     for (const {
       f,

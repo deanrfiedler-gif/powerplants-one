@@ -33,8 +33,8 @@ test("department shell fits laptop, desktop and compact viewports with centred s
     expect(geometry.railWidth).toBe(76); expect(geometry.headerHeight).toBe(64); expect(geometry.logoCentre).toBe(38);
     expect(geometry.logoWidth).toBe(54); expect(geometry.logoY).toBe(32); expect(Math.abs(geometry.groupCentre - width / 2)).toBeLessThanOrEqual(2); expect(geometry.plusGap).toBeCloseTo(12, 0); expect(geometry.discWidth, "quick-add disc stays inside its button").toBeCloseTo(40, 0);
     expect(geometry.railFits && geometry.pageFits && geometry.controlsFit && geometry.noOverlap).toBe(true);
-    expect(geometry.moreBottom).toBeLessThanOrEqual(height); expect(geometry.icons).toEqual([25, 25, 25, 25, 25, 25, 25]);
-    expect(await page.locator(".ppo-primary-nav a").evaluateAll(links => links.map(link => link.getAttribute("aria-label")))).toEqual(["Pulse", "Leads", "Deals", "Activities", "Tasks", "Sales Inbox", "Contacts"]);
+    expect(geometry.moreBottom).toBeLessThanOrEqual(height); expect(geometry.icons).toEqual([25, 25, 25, 25, 25, 25, 25, 25]);
+    expect(await page.locator(".ppo-primary-nav a").evaluateAll(links => links.map(link => link.getAttribute("aria-label")))).toEqual(["Pulse", "Leads", "Deals", "Activities", "Tasks", "Sales Inbox", "Contacts", "Products"]);
     expect(["1", "normal"]).toContain(geometry.zoom);
     await page.screenshot({ path: info.outputPath(`shell-${width}x${height}.png`) });
     await page.getByRole("button", { name: "More", exact: true }).click();
@@ -209,14 +209,14 @@ test("runtime shell matches the retained r17 reference typography, panel geometr
       // r17 geometry is retained; the navigation decision replaces planned links
       // with ready, permitted destinations, including native Supply Chain.
       await expect(actualPanel.locator(".ppo-menu-group").first().locator(".ppo-more-link")).toHaveText(["Sales", "Estimating & quotation", "Engineering", "Projects", "Service operations", "Supply chain", "Finance"]);
-      // CS-08 and the three native Sales handover/aftercare destinations are included. Footer count includes Help;
+      // Native Products, CS-08 and all three Sales handover/aftercare destinations are included. Footer count includes Help;
       // installation actions are separate controls. Retained r17 bytes stay unchanged.
-      await expect(actualPanel.locator(".ppo-menu-group .ppo-more-link")).toHaveCount(27);
+      await expect(actualPanel.locator(".ppo-menu-group .ppo-more-link")).toHaveCount(28);
       await expect(actualPanel.locator(".ppo-help-link")).toBeVisible();
-      for (const [name, href] of [["Sales-to-Estimating handovers", "/sales/handoffs/estimating"], ["Won-deal receiving", "/sales/handoffs/won"], ["Aftercare & renewal", "/sales/aftercare"]]) {
+      for (const [name, href] of [["Products", "/products?department=sales"], ["Sales-to-Estimating handovers", "/sales/handoffs/estimating"], ["Won-deal receiving", "/sales/handoffs/won"], ["Aftercare & renewal", "/sales/aftercare"]]) {
         await expect(actualPanel.getByRole("link", { name, exact: true })).toHaveAttribute("href", href);
       }
-      await expect(actualPanel.locator("footer")).toContainText("28 destinations");
+      await expect(actualPanel.locator("footer")).toContainText("29 destinations");
       await expect(actualPanel.getByRole("link", { name: "Facilities & growing areas", exact: true })).toHaveAttribute("href", "/facilities?department=sales");
       await expect(actualPanel.getByRole("link", { name: "Site surveys & as-found", exact: true })).toHaveAttribute("href", "/surveys?department=sales");
     }

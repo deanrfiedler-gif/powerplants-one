@@ -1,6 +1,12 @@
 # Native Estimating and Quotation programme
 
-## Three-task Project merge continuation — 6 October 2026
+## Four-task Project diamond continuation — 7 October 2026
+
+Refreshed main is #354 merge `58679be051d8dc8da4356a714fb0f37d09902092`, with checked head `110e6ede0cff36a1351a9bc8265479e015abd127`. All 45 final-head checks across 16 workflows passed. The independently fetched merge-SHA assurance finished with two passes and 39 failures across 12 workflows; a separately triggered deployment job also failed. The browser installer supplied Chrome 155.0.8059.39 beyond the reviewed 153/154 gate. Exact observations and repairs are retained in the diamond execution ledger; failed post-merge proof is not replaced by PR-head proof. Earlier #349/#351/#352/#353/#354 failures, repairs and cancellations retain their historical evidence. No deployment or owner acceptance is inferred.
+
+SYN-ES07-12 makes the previously held four-task Project diamond A → B, A → C, B → D and C → D executable after an independently received allocation reduction. Seven separate decisions precede immutable review and separate atomic application. Four native saves withdraw A/B/C/D forecasts in that order, saving D once, followed by only the selected Impact successor. All sixteen FS/SS combinations are in scope. Four Project increments, one increment per task, one Demand increment and five native receipts preserve all four relationships, unaffected fields, allocations, Receipt facts, unmet Demand and independent holds. Fresh ES-07 disposition and MaterialAction ownership remain separate. Migration 0072 preserves earlier topology hashes, roles, outcomes and recovery, including merge B retention. See [decision](../decisions/quotation-task-diamond.md), [handover](../delivery/quotation-task-diamond-handover.md) and [ledger](../testing/evidence/quotation-task-diamond/README.md).
+
+## Retained pre-#354-merge checkpoint — 6 October 2026
 
 Refreshed main is #353 merge `7e61c742acbfd2bb894218bd6e78b08c25ef69df`, containing checked head `2beb040997ed9d4f056c2c60dcdcc6473689398c`. All 43 final-head checks across 16 workflows passed. Independently fetched #353 post-merge assurance is complete: all 39 checks across 12 workflows passed. The exact merge-SHA observation is retained in the merge ledger; deployment and owner acceptance remain separate. Earlier #349 cancellation/failed aggregate, #351 unchanged-main Scheduling race and repaired migration assertion, #352 development failures/naming repair/cancellations and #353 migration-constant/invalid-fixture/timestamp repairs, timeout/startup failure, baseline Windows failures and superseded cancellations remain unchanged in their historical ledgers. Deployment, source-specific proof and owner acceptance remain separate.
 

@@ -146,14 +146,14 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // Seed 53 binds the exact trusted root and never resets a head or adds users/grants.
   // Runtime grants cover the new tables; immutable triggers and deferred graph checks
   // remain in force. No policy command, tester duty, audit/outbox enum or dispatch change.
-  // Reserved 0051/0052 stay absent: this loop applies actual missing registry entries.
+  // 0051 remains reserved; the later 0052 gap addition is reviewed below.
   // 0054 adds internal-only command evidence and two distinct local synthetic duties.
   // Typed identities flush pending 0026 events; issued sources remain unchanged.
   // Seed replay preserves revoked grants and adds no hosted tester authority.
   // Commands stay unregistered until Step 4 enforcement is proved.
   // 0055 adds immutable Service template/binding/event/output tables only. Seed
   // 55 supplies fictional catalogue versions and an instrument, with no users or grants. Shared
-  // attempts and installed SQL/seed bytes remain intact; 0051/0052 stay reserved.
+  // attempts and installed SQL/seed bytes remain intact; 0055 filled neither reserved gap.
   // 0056 adds isolated incident storage. Seed 56 grants only the three named
   // local synthetic profiles, never hosted testers; existing rows and revoked
   // grants remain unchanged. Populated upgrade/reseed proof is required.
@@ -198,8 +198,13 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // constraints without replacing later definitions. Deferred identity events are drained before ALTER.
   // Seed 52 adds four local-only fictional duties and exact Company A grants. It adds no hosted
   // profile, invitation or capability to additions. Existing hosted testers receive no Products access.
-  // Latest remains 71: this fills the reserved gap; both fresh and post-0071 installation are proved.
-  if (latestMigrationVersion !== 71) throw Error("Review the existing-demo upgrade for this release.");
+  // Reserved 0052 remains additive when installed after 0072; exact originals are retained.
+  // 0072 adds nullable explicit diamond commands and distinct receiving roles.
+  // Earlier rows acquire null only; old position overloads, payloads and original outcomes remain.
+  // No seed, grant, user, identity type or output change. Generic runtime grants cover the
+  // added functions; no migration-ledger read privilege is introduced. Populated upgrades
+  // must prove earlier topology recovery and complete preserved records.
+  if (latestMigrationVersion !== 72) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

@@ -1,0 +1,421 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-07T02:59:16.133616+00:00",
+  "failed_head": "4033004c0c037aa54178ec8323ae29cc7f925687",
+  "check_counts": {
+    "FAILURE": 4,
+    "SUCCESS": 43
+  },
+  "checks": [
+    {
+      "name": "leads",
+      "workflow": "CRM Leads implementation",
+      "conclusion": "FAILURE",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281757/job/112534627116"
+    },
+    {
+      "name": "CRM header and board visual checks",
+      "workflow": "CRM refinements assurance",
+      "conclusion": "FAILURE",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281834/job/112534627045"
+    },
+    {
+      "name": "Access review model and native browser review",
+      "workflow": "Access review design review",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281865/job/112534627589"
+    },
+    {
+      "name": "P01\u2013P11 browser proof",
+      "workflow": "Application assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281860/job/112534628031"
+    },
+    {
+      "name": "demo",
+      "workflow": "Azure demo preparation checks",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281933/job/112534627804"
+    },
+    {
+      "name": "Compiled application browser-desktop proof",
+      "workflow": "Compiled application browser assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281750/job/112534627408"
+    },
+    {
+      "name": "register",
+      "workflow": "Development register integrity",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281950/job/112534627835"
+    },
+    {
+      "name": "Check documentation foundation",
+      "workflow": "Documentation assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281748/job/112534627009"
+    },
+    {
+      "name": "Email Calendar persisted journey and server permissions",
+      "workflow": "Email Calendar journey assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281891/job/112534627250"
+    },
+    {
+      "name": "Engineering EN-01\u2013EN-08 commands, lineage and browser journeys",
+      "workflow": "Engineering native workflow assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281867/job/112534627612"
+    },
+    {
+      "name": "E1 manual estimate, draft output and restart proof",
+      "workflow": "Estimating E1 assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281895/job/112534627522"
+    },
+    {
+      "name": "PD catalogue, publication, source context, compatibility and import",
+      "workflow": "Native Products assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281764/job/112534627083"
+    },
+    {
+      "name": "Projects r10 scoped persistence and desktop interaction",
+      "workflow": "Projects Gantt assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281903/job/112534627642"
+    },
+    {
+      "name": "ES-07 Supply database proof",
+      "workflow": "Quotation Supply follow-up assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281751/job/112534627990"
+    },
+    {
+      "name": "ES-07 exact receiving, native conversion and recovery",
+      "workflow": "Quotation conversion assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281824/job/112534627369"
+    },
+    {
+      "name": "ES-07 completed conversion disposition and recovery",
+      "workflow": "Quotation disposition assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281850/job/112534627695"
+    },
+    {
+      "name": "ES-06 exact response, recovery and receiving boundary",
+      "workflow": "Quotation response assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281862/job/112534627469"
+    },
+    {
+      "name": "Registered UI design baseline integrity",
+      "workflow": "UI design baseline assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281733/job/112534626851"
+    },
+    {
+      "name": "P01\u2013P11 finance proof",
+      "workflow": "Application assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281860/job/112534628122"
+    },
+    {
+      "name": "Compiled application browser-mobile proof",
+      "workflow": "Compiled application browser assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281750/job/112534627336"
+    },
+    {
+      "name": "ES-07 Supply receipt-database proof",
+      "workflow": "Quotation Supply follow-up assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281751/job/112534627848"
+    },
+    {
+      "name": "P01\u2013P11 reports proof",
+      "workflow": "Application assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281860/job/112534628023"
+    },
+    {
+      "name": "Compiled application retained proof",
+      "workflow": "Compiled application browser assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281750/job/112534627112"
+    },
+    {
+      "name": "ES-07 Supply shortfall-database proof",
+      "workflow": "Quotation Supply follow-up assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281751/job/112534627962"
+    },
+    {
+      "name": "P01\u2013P11 http proof",
+      "workflow": "Application assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281860/job/112534628024"
+    },
+    {
+      "name": "ES-07 Supply material-database proof",
+      "workflow": "Quotation Supply follow-up assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281751/job/112534627984"
+    },
+    {
+      "name": "P01\u2013P11 database-1 proof",
+      "workflow": "Application assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281860/job/112534627745"
+    },
+    {
+      "name": "ES-07 Supply dependency-database proof",
+      "workflow": "Quotation Supply follow-up assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281751/job/112534628017"
+    },
+    {
+      "name": "P01\u2013P11 database-2 proof",
+      "workflow": "Application assurance",
+      "conclusion": "FAILURE",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281860/job/112534628043"
+    },
+    {
+      "name": "ES-07 Supply chain-database proof",
+      "workflow": "Quotation Supply follow-up assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281751/job/112534628028"
+    },
+    {
+      "name": "ES-07 Supply branch-database proof",
+      "workflow": "Quotation Supply follow-up assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281751/job/112534627988"
+    },
+    {
+      "name": "ES-07 Supply merge-database proof",
+      "workflow": "Quotation Supply follow-up assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281751/job/112534628111"
+    },
+    {
+      "name": "ES-07 Supply runtime proof",
+      "workflow": "Quotation Supply follow-up assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281751/job/112534628048"
+    },
+    {
+      "name": "ES-07 Supply shortfall-runtime proof",
+      "workflow": "Quotation Supply follow-up assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281751/job/112534628083"
+    },
+    {
+      "name": "ES-07 Supply material-runtime proof",
+      "workflow": "Quotation Supply follow-up assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281751/job/112534628034"
+    },
+    {
+      "name": "ES-07 Supply dependency-runtime proof",
+      "workflow": "Quotation Supply follow-up assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281751/job/112534627952"
+    },
+    {
+      "name": "ES-07 Supply chain-runtime proof",
+      "workflow": "Quotation Supply follow-up assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281751/job/112534628132"
+    },
+    {
+      "name": "ES-07 Supply branch-runtime proof",
+      "workflow": "Quotation Supply follow-up assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281751/job/112534628142"
+    },
+    {
+      "name": "ES-07 Supply merge-runtime proof",
+      "workflow": "Quotation Supply follow-up assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281751/job/112534628299"
+    },
+    {
+      "name": "P11 focused integrated quality and access proof",
+      "workflow": "Application assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281860/job/112534627876"
+    },
+    {
+      "name": "CRM desktop and mobile persistence and interaction proof",
+      "workflow": "CRM refinements assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281834/job/112534627307"
+    },
+    {
+      "name": "Desktop and mobile browser suite against the compiled application",
+      "workflow": "Compiled application browser assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281750/job/112547437302"
+    },
+    {
+      "name": "ES-07 owned Supply follow-up and original recovery",
+      "workflow": "Quotation Supply follow-up assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281751/job/112543218987"
+    },
+    {
+      "name": "P11 focused original HTTP and output isolation proof",
+      "workflow": "Application assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281860/job/112534627544"
+    },
+    {
+      "name": "P11 declared load and raw core-read performance proof",
+      "workflow": "Application assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281860/job/112534627917"
+    },
+    {
+      "name": "P11 three original browser failures diagnostic replay",
+      "workflow": "Application assurance",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281860/job/112534627809"
+    },
+    {
+      "name": "P01\u2013P11 and CRM I1\u2013I2 local application and PostgreSQL proof",
+      "workflow": "Application assurance",
+      "conclusion": "FAILURE",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37541281860/job/112563674715"
+    }
+  ],
+  "diagnosis": [
+    {
+      "failure": "Three Leads/Projects integration cases fail in Leads and database shard 2.",
+      "cause": "The exact >=18 seed-receipt list omitted Products seed 52; the migration list was already correct.",
+      "repair": "Add seed 52 in order, retain complete prior receipts and all repeat-run assertions."
+    },
+    {
+      "failure": "Missing contract for /products in module conformance.",
+      "cause": "All six Products workspace entries referenced nonexistent products-native-composition instead of their distinct registered IDs.",
+      "repair": "Bind each route to its existing products-native-* record; retain proposed status and source hashes."
+    },
+    {
+      "failure": "Sales rail has eight icons rather than seven; More has 28 links rather than 27.",
+      "cause": "Products became ready but the explicit all-permitted fixture expectations were not updated.",
+      "repair": "Require all eight ordered rail labels, 25 px icons, 28 More links, 29 destinations including Help, and exact department-preserving Products href."
+    }
+  ],
+  "unchanged_main_comparison": {
+    "main_commit": "fbf2ed39b0686a52d286aa55c6cfb8549672f569",
+    "identical_checked_commit": "14102dc573e2b7604eb0275ee3b8a0ef429c2c0a",
+    "identical_git_tree": "b0e14cb31747a825766741970660b4925cbd0349",
+    "leads": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37552680425/job/112571611791",
+    "database_shard_2": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37552680438/job/112571612026",
+    "main_visual": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37560099376/job/112595182796",
+    "result": "All failing cases pass on the identical-tree checked head; current-main visual run independently passes 39 cases with 30 retained skips."
+  },
+  "main_reconciliation": "Incorporates reviewed migration 72 and all diamond changes. Combined exact migration counts include both 52 and 72; hosted review gate remains at main-reviewed 72. Products proof retains earlier upgrade cases and adds missing-52 installation after 72.",
+  "local_checks": {
+    "focused_units": {
+      "passed": 14,
+      "failed": 0
+    },
+    "visual_initial": {
+      "passed": 38,
+      "failed": 1,
+      "skipped": 30
+    },
+    "visual_unchanged_shell_rerun": {
+      "passed": 1,
+      "failed": 0
+    },
+    "visual_limit": "The original shell comparison hit its unchanged 30-second deadline during concurrent local work; isolated unchanged case passed in 18.2 seconds. No timeout/retry/assertion was weakened; precise transient cause unresolved.",
+    "design_register": "passed after removing unsupported tests/ui dependency entries; fixture references remain in the component state/specification",
+    "database": {
+      "counts": {
+        "tests": 14,
+        "pass": 14,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "cases": [
+        {
+          "name": "FI01 additive 0049 upgrade retains existing time, arrivals, receipts and revoked grants",
+          "duration_ms": 132623.676
+        },
+        {
+          "name": "fresh combined installation retains both registries and both domains through repeat migration and seed",
+          "duration_ms": 63201.2558
+        },
+        {
+          "name": "main 0017 upgrades through Leads 0018 then Projects 0019 without replacing prior migration receipts",
+          "duration_ms": 44481.8626
+        },
+        {
+          "name": "an existing Leads 0018 record and receipt survive the Projects upgrade exactly",
+          "duration_ms": 31922.0833
+        },
+        {
+          "name": "a database carrying the original Gantt 0018 checksum is preserved and refused, never relabelled or replayed",
+          "duration_ms": 20336.1642
+        },
+        {
+          "name": "populated 0050 upgrade preserves every old row/hash, registers 0053\u20130070 with reserved gaps and exact authority/instrument additions",
+          "duration_ms": 27382.9056
+        },
+        {
+          "name": "fresh installation applies only registered files through 0070, retains reserved gaps and repeats without changes",
+          "duration_ms": 22730.4397
+        },
+        {
+          "name": "PD upgrade from 25 preserves originals and exact new duties; repeat migration/seed is inert",
+          "duration_ms": 29273.2909
+        },
+        {
+          "name": "PD upgrade from 48 preserves originals and exact new duties; repeat migration/seed is inert",
+          "duration_ms": 21492.5281
+        },
+        {
+          "name": "PD upgrade from 71 preserves originals and exact new duties; repeat migration/seed is inert",
+          "duration_ms": 23775.4154
+        },
+        {
+          "name": "PD upgrade from 72 preserves originals and exact new duties; repeat migration/seed is inert",
+          "duration_ms": 25586.8559
+        },
+        {
+          "name": "upgrade preserves saved CRM, mailbox, sessions, old grants and invitation limits; retry is idempotent",
+          "duration_ms": 24317.1501
+        },
+        {
+          "name": "a baseline executed from Windows CRLF SQL upgrades without rewriting historical checksums",
+          "duration_ms": 36697.8114
+        },
+        {
+          "name": "a late privilege failure rolls back schema, seed receipts and grant additions together",
+          "duration_ms": 28624.9956
+        }
+      ],
+      "database": "ppo_synthetic_test",
+      "port": 55472,
+      "data": "synthetic only",
+      "execution": "Serial; no retries or deadline changes"
+    },
+    "lint": "passed",
+    "typescript": "passed",
+    "foundation": "passed: all 78 parent IDs and issued sources retained",
+    "naming": "passed: 7971 project instruction characters"
+  },
+  "final_head_ci": "Pending fresh repair head; original successful checks are not promoted to final-head results.",
+  "repair_source_hashes": {
+    "src/shell/module-workspaces.ts": "8cdb90d993cdcf81b4fb9357ec60b09eb0878b22d818af2043165ba6278f2d1f",
+    "tests/ui/desktop-shell.spec.ts": "1682ef0b63dca09b33101bec126854e96cc17cd8b60bac0073a3bdd2a59e172f",
+    "tests/database/leads-projects-integration.test.ts": "9fa486a5e88975249f7fcc50be3c60744d48a40bd27a17baae3ad0a709ffbc49",
+    "tests/database/products-upgrade.test.ts": "fa0c675b959f959038aef56ea9184072cf57568bbe0f961a6e919836c2c13b63",
+    "tests/database/policy-persistence.test.ts": "a52f6f10acd8634c0eba6066b223d0b50a0db59fc03a38c40b7643f440fce499",
+    "scripts/demo-upgrade.ts": "9c0e1bd9d082de7dc3c846b7b137b9d21f9d38e7e1b9b9244617c94ab2d023b8"
+  }
+}

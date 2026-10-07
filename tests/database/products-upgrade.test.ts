@@ -34,7 +34,7 @@ const shape = (rs: Record<string, unknown>[]) =>
       return JSON.stringify(r);
     })
     .sort();
-for (const through of [25, 48, 71])
+for (const through of [25, 48, 71, 72])
   test(`PD upgrade from ${through} preserves originals and exact new duties; repeat migration/seed is inert`, async () => {
     await database().query(
       await readFile(
@@ -121,11 +121,11 @@ for (const through of [25, 48, 71])
       migrated.filter((r) => versions.has(r.version)),
       ledger,
     );
-    assert.equal(migrated.at(-1)?.version, 71);
-    if (through === 71)
+    assert.equal(migrated.at(-1)?.version, 72);
+    if (through >= 71)
       assert.deepEqual(
         migrated.filter((r) => !versions.has(r.version)).map((r) => r.version),
-        [52],
+        through === 71 ? [52, 72] : [52],
       );
     const users = await rows("SELECT * FROM ppo.users ORDER BY id"),
       receipts = await rows("SELECT * FROM ppo.seed_receipts ORDER BY version");

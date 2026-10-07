@@ -6585,7 +6585,7 @@
       "prepared_at": "2026-10-06",
       "source_commit": "a32b3b53c45bdc74061f3612c15d71c0544504d8",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance. Chain execution is recorded separately in docs/testing/evidence/quotation-task-chain/README.md. Branch execution: docs/testing/evidence/quotation-task-branch/README.md; source presence is not visual or owner acceptance. Merge execution: docs/testing/evidence/quotation-task-merge/README.md; source presence is not visual/owner acceptance.",
+      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance. Chain execution is recorded separately in docs/testing/evidence/quotation-task-chain/README.md. Branch execution: docs/testing/evidence/quotation-task-branch/README.md; source presence is not visual or owner acceptance. Merge execution: docs/testing/evidence/quotation-task-merge/README.md; source presence is not visual/owner acceptance. Diamond execution: docs/testing/evidence/quotation-task-diamond/README.md; source presence is not acceptance.",
       "sections": [
         {
           "section_id": "purpose",
@@ -6790,6 +6790,19 @@
           "steps": [],
           "headers": [],
           "rows": []
+        },
+        {
+          "section_id": "material-resolution",
+          "title": "Receive both paths into the shared successor",
+          "paragraphs": [
+            "Select A, B, C and D only for A → B, A → C, B → D and C → D. Demand identifies the Project; explicitly receive A’s allocation consequence. All seven responsibilities decide separately, including each task owner.",
+            "Compare original quotation/Receipt/allocation evidence with current Demand, both paths, all four task positions and retained fields. Freeze review, then apply separately. Native order A/B/C/D saves D once, followed by only the selected Impact successor.",
+            "Extra edges, changed evidence/ownership/authority or corrected receiving hold pending work. MaterialAction, unmet Demand and independent holds remain; reassess readiness and explicitly disposition every current ES-07 exception. Recover uncertain originals before replacement. Earlier merge B retention remains unchanged."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": [],
+          "id": "material-diamond"
         }
       ],
       "related_entry_keys": [
@@ -6815,9 +6828,11 @@
         "docs/decisions/quotation-task-branch.md",
         "docs/delivery/quotation-task-branch-handover.md",
         "docs/decisions/quotation-task-merge.md",
-        "docs/delivery/quotation-task-merge-handover.md"
+        "docs/delivery/quotation-task-merge-handover.md",
+        "docs/decisions/quotation-task-diamond.md",
+        "docs/delivery/quotation-task-diamond-handover.md"
       ],
-      "change_summary": "SYN-ES07-11: explicit merge receiving, native A/C withdrawal and complete B retention.",
+      "change_summary": "SYN-ES07-12: explicit four-task diamond, seven decisions, both paths and one D save.",
       "document_id": "PPO-GUIDE-ES-07",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -9968,7 +9983,7 @@
       "prepared_at": "2026-10-06",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance. Chain execution is recorded separately in docs/testing/evidence/quotation-task-chain/README.md. Branch execution: docs/testing/evidence/quotation-task-branch/README.md; source presence is not visual or owner acceptance. Merge execution: docs/testing/evidence/quotation-task-merge/README.md; source presence is not visual/owner acceptance.",
+      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance. Chain execution is recorded separately in docs/testing/evidence/quotation-task-chain/README.md. Branch execution: docs/testing/evidence/quotation-task-branch/README.md; source presence is not visual or owner acceptance. Merge execution: docs/testing/evidence/quotation-task-merge/README.md; source presence is not visual/owner acceptance. Diamond execution: docs/testing/evidence/quotation-task-diamond/README.md; source presence is not acceptance.",
       "sections": [
         {
           "section_id": "purpose",
@@ -10222,6 +10237,19 @@
           "steps": [],
           "headers": [],
           "rows": []
+        },
+        {
+          "section_id": "material-resolution",
+          "title": "Receive both paths into the shared successor",
+          "paragraphs": [
+            "Select A, B, C and D only for A → B, A → C, B → D and C → D. Demand identifies the Project; explicitly receive A’s allocation consequence. All seven responsibilities decide separately, including each task owner.",
+            "Compare original quotation/Receipt/allocation evidence with current Demand, both paths, all four task positions and retained fields. Freeze review, then apply separately. Native order A/B/C/D saves D once, followed by only the selected Impact successor.",
+            "Extra edges, changed evidence/ownership/authority or corrected receiving hold pending work. MaterialAction, unmet Demand and independent holds remain; reassess readiness and explicitly disposition every current ES-07 exception. Recover uncertain originals before replacement. Earlier merge B retention remains unchanged."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": [],
+          "id": "material-diamond"
         }
       ],
       "related_entry_keys": [
@@ -10239,9 +10267,11 @@
         "docs/decisions/quotation-task-branch.md",
         "docs/delivery/quotation-task-branch-handover.md",
         "docs/decisions/quotation-task-merge.md",
-        "docs/delivery/quotation-task-merge-handover.md"
+        "docs/delivery/quotation-task-merge-handover.md",
+        "docs/decisions/quotation-task-diamond.md",
+        "docs/delivery/quotation-task-diamond-handover.md"
       ],
-      "change_summary": "SYN-ES07-11: explicit merge receiving, native A/C withdrawal and complete B retention.",
+      "change_summary": "SYN-ES07-12: explicit four-task diamond, seven decisions, both paths and one D save.",
       "document_id": "PPO-GUIDE-PJ-03",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -19581,7 +19611,7 @@
       "prepared_at": "2026-10-06",
       "source_commit": "0f10b7fb46a8ab512e9b019573ece272cf5920b9",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance. Chain execution is recorded separately in docs/testing/evidence/quotation-task-chain/README.md. Branch execution: docs/testing/evidence/quotation-task-branch/README.md; source presence is not visual or owner acceptance. Merge execution: docs/testing/evidence/quotation-task-merge/README.md; source presence is not visual/owner acceptance.",
+      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance. Chain execution is recorded separately in docs/testing/evidence/quotation-task-chain/README.md. Branch execution: docs/testing/evidence/quotation-task-branch/README.md; source presence is not visual or owner acceptance. Merge execution: docs/testing/evidence/quotation-task-merge/README.md; source presence is not visual/owner acceptance. Diamond execution: docs/testing/evidence/quotation-task-diamond/README.md; source presence is not acceptance.",
       "sections": [
         {
           "section_id": "purpose",
@@ -19781,6 +19811,19 @@
           "steps": [],
           "headers": [],
           "rows": []
+        },
+        {
+          "section_id": "material-resolution",
+          "title": "Receive both paths into the shared successor",
+          "paragraphs": [
+            "Select A, B, C and D only for A → B, A → C, B → D and C → D. Demand identifies the Project; explicitly receive A’s allocation consequence. All seven responsibilities decide separately, including each task owner.",
+            "Compare original quotation/Receipt/allocation evidence with current Demand, both paths, all four task positions and retained fields. Freeze review, then apply separately. Native order A/B/C/D saves D once, followed by only the selected Impact successor.",
+            "Extra edges, changed evidence/ownership/authority or corrected receiving hold pending work. MaterialAction, unmet Demand and independent holds remain; reassess readiness and explicitly disposition every current ES-07 exception. Recover uncertain originals before replacement. Earlier merge B retention remains unchanged."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": [],
+          "id": "material-diamond"
         }
       ],
       "related_entry_keys": [
@@ -19806,9 +19849,11 @@
         "docs/decisions/quotation-task-branch.md",
         "docs/delivery/quotation-task-branch-handover.md",
         "docs/decisions/quotation-task-merge.md",
-        "docs/delivery/quotation-task-merge-handover.md"
+        "docs/delivery/quotation-task-merge-handover.md",
+        "docs/decisions/quotation-task-diamond.md",
+        "docs/delivery/quotation-task-diamond-handover.md"
       ],
-      "change_summary": "SYN-ES07-11: explicit merge receiving, native A/C withdrawal and complete B retention.",
+      "change_summary": "SYN-ES07-12: explicit four-task diamond, seven decisions, both paths and one D save.",
       "document_id": "PPO-GUIDE-SC-09",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -42121,7 +42166,7 @@
       "prepared_at": "2026-10-06",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance. Chain execution is recorded separately in docs/testing/evidence/quotation-task-chain/README.md. Branch execution: docs/testing/evidence/quotation-task-branch/README.md; source presence is not visual or owner acceptance. Merge execution: docs/testing/evidence/quotation-task-merge/README.md; source presence is not visual/owner acceptance.",
+      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance. Chain execution is recorded separately in docs/testing/evidence/quotation-task-chain/README.md. Branch execution: docs/testing/evidence/quotation-task-branch/README.md; source presence is not visual or owner acceptance. Merge execution: docs/testing/evidence/quotation-task-merge/README.md; source presence is not visual/owner acceptance. Diamond execution: docs/testing/evidence/quotation-task-diamond/README.md; source presence is not acceptance.",
       "sections": [
         {
           "section_id": "purpose",
@@ -42377,6 +42422,19 @@
           "steps": [],
           "headers": [],
           "rows": []
+        },
+        {
+          "section_id": "material-resolution",
+          "title": "Receive both paths into the shared successor",
+          "paragraphs": [
+            "Select A, B, C and D only for A → B, A → C, B → D and C → D. Demand identifies the Project; explicitly receive A’s allocation consequence. All seven responsibilities decide separately, including each task owner.",
+            "Compare original quotation/Receipt/allocation evidence with current Demand, both paths, all four task positions and retained fields. Freeze review, then apply separately. Native order A/B/C/D saves D once, followed by only the selected Impact successor.",
+            "Extra edges, changed evidence/ownership/authority or corrected receiving hold pending work. MaterialAction, unmet Demand and independent holds remain; reassess readiness and explicitly disposition every current ES-07 exception. Recover uncertain originals before replacement. Earlier merge B retention remains unchanged."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": [],
+          "id": "material-diamond"
         }
       ],
       "related_entry_keys": [
@@ -42392,9 +42450,11 @@
         "docs/decisions/quotation-task-branch.md",
         "docs/delivery/quotation-task-branch-handover.md",
         "docs/decisions/quotation-task-merge.md",
-        "docs/delivery/quotation-task-merge-handover.md"
+        "docs/delivery/quotation-task-merge-handover.md",
+        "docs/decisions/quotation-task-diamond.md",
+        "docs/delivery/quotation-task-diamond-handover.md"
       ],
-      "change_summary": "SYN-ES07-11: explicit merge receiving, native A/C withdrawal and complete B retention.",
+      "change_summary": "SYN-ES07-12: explicit four-task diamond, seven decisions, both paths and one D save.",
       "document_id": "PPO-GUIDE-PAGE-PROJECTS-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -68607,11 +68667,24 @@
           "steps": [],
           "headers": [],
           "rows": []
+        },
+        {
+          "section_id": "material-resolution",
+          "title": "Receive both paths into the shared successor",
+          "paragraphs": [
+            "Select A, B, C and D only for A → B, A → C, B → D and C → D. Demand identifies the Project; explicitly receive A’s allocation consequence. All seven responsibilities decide separately, including each task owner.",
+            "Compare original quotation/Receipt/allocation evidence with current Demand, both paths, all four task positions and retained fields. Freeze review, then apply separately. Native order A/B/C/D saves D once, followed by only the selected Impact successor.",
+            "Extra edges, changed evidence/ownership/authority or corrected receiving hold pending work. MaterialAction, unmet Demand and independent holds remain; reassess readiness and explicitly disposition every current ES-07 exception. Recover uncertain originals before replacement. Earlier merge B retention remains unchanged."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": [],
+          "id": "material-diamond"
         }
       ],
       "prepared_at": "2026-10-06",
-      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance. Chain execution is recorded separately in docs/testing/evidence/quotation-task-chain/README.md. Branch execution: docs/testing/evidence/quotation-task-branch/README.md; source presence is not visual or owner acceptance. Merge execution: docs/testing/evidence/quotation-task-merge/README.md; source presence is not visual/owner acceptance.",
-      "change_summary": "SYN-ES07-11: explicit merge receiving, native A/C withdrawal and complete B retention.",
+      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance. Chain execution is recorded separately in docs/testing/evidence/quotation-task-chain/README.md. Branch execution: docs/testing/evidence/quotation-task-branch/README.md; source presence is not visual or owner acceptance. Merge execution: docs/testing/evidence/quotation-task-merge/README.md; source presence is not visual/owner acceptance. Diamond execution: docs/testing/evidence/quotation-task-diamond/README.md; source presence is not acceptance.",
+      "change_summary": "SYN-ES07-12: explicit four-task diamond, seven decisions, both paths and one D save.",
       "source_paths": [
         "docs/decisions/quotation-receipt-correction.md",
         "docs/delivery/quotation-receipt-correction-handover.md",
@@ -68620,7 +68693,9 @@
         "docs/decisions/quotation-task-branch.md",
         "docs/delivery/quotation-task-branch-handover.md",
         "docs/decisions/quotation-task-merge.md",
-        "docs/delivery/quotation-task-merge-handover.md"
+        "docs/delivery/quotation-task-merge-handover.md",
+        "docs/decisions/quotation-task-diamond.md",
+        "docs/delivery/quotation-task-diamond-handover.md"
       ]
     },
     {
@@ -70645,10 +70720,23 @@
           "steps": [],
           "headers": [],
           "rows": []
+        },
+        {
+          "section_id": "material-resolution",
+          "title": "Receive both paths into the shared successor",
+          "paragraphs": [
+            "Select A, B, C and D only for A → B, A → C, B → D and C → D. Demand identifies the Project; explicitly receive A’s allocation consequence. All seven responsibilities decide separately, including each task owner.",
+            "Compare original quotation/Receipt/allocation evidence with current Demand, both paths, all four task positions and retained fields. Freeze review, then apply separately. Native order A/B/C/D saves D once, followed by only the selected Impact successor.",
+            "Extra edges, changed evidence/ownership/authority or corrected receiving hold pending work. MaterialAction, unmet Demand and independent holds remain; reassess readiness and explicitly disposition every current ES-07 exception. Recover uncertain originals before replacement. Earlier merge B retention remains unchanged."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": [],
+          "id": "material-diamond"
         }
       ],
       "prepared_at": "2026-10-06",
-      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance. Chain execution is recorded separately in docs/testing/evidence/quotation-task-chain/README.md. Branch execution: docs/testing/evidence/quotation-task-branch/README.md; source presence is not visual or owner acceptance. Merge execution: docs/testing/evidence/quotation-task-merge/README.md; source presence is not visual/owner acceptance.",
+      "runtime_evidence": "SYN-ES07-07 checks: docs/testing/evidence/quotation-material-resolution/README.md. Source presence is not owner or visual acceptance. Chain execution is recorded separately in docs/testing/evidence/quotation-task-chain/README.md. Branch execution: docs/testing/evidence/quotation-task-branch/README.md; source presence is not visual or owner acceptance. Merge execution: docs/testing/evidence/quotation-task-merge/README.md; source presence is not visual/owner acceptance. Diamond execution: docs/testing/evidence/quotation-task-diamond/README.md; source presence is not acceptance.",
       "source_paths": [
         "src/app/(business)/estimating/quotes/[id]/conversion/page.tsx",
         "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",
@@ -70665,14 +70753,16 @@
         "docs/decisions/quotation-task-branch.md",
         "docs/delivery/quotation-task-branch-handover.md",
         "docs/decisions/quotation-task-merge.md",
-        "docs/delivery/quotation-task-merge-handover.md"
+        "docs/delivery/quotation-task-merge-handover.md",
+        "docs/decisions/quotation-task-diamond.md",
+        "docs/delivery/quotation-task-diamond-handover.md"
       ],
       "workflow_basis": [
         "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",
         "docs/blueprints/BP-04-estimating-quotation.md",
         "docs/decisions/quotation-conversion-native.md"
       ],
-      "change_summary": "SYN-ES07-11: explicit merge receiving, native A/C withdrawal and complete B retention."
+      "change_summary": "SYN-ES07-12: explicit four-task diamond, seven decisions, both paths and one D save."
     },
     {
       "guide_key": "guide.route-products-id",

@@ -27,6 +27,7 @@ export async function materialHttpFixture(
   chain = false,
   branch = false,
   merge = false,
+  diamond = false,
 ) {
   const project = projectInput(),
     task = { ...taskInput(), status: "Planned", progress: 0 };
@@ -51,20 +52,41 @@ export async function materialHttpFixture(
           { task_id: task.id, kind: "FS" as const },
           { task_id: successor.id, kind: "SS" as const },
         ]
-      : [{ task_id: branch ? task.id : successor.id, kind: "SS" as const }],
+      : [
+          {
+            task_id: branch || diamond ? task.id : successor.id,
+            kind: "SS" as const,
+          },
+        ],
+  };
+  const diamondEnd = {
+    ...taskInput(4),
+    title: "SYN shared diamond successor D",
+    start_date: "2027-12-20",
+    finish_date: "2027-12-24",
+    status: "Planned",
+    progress: 0,
+    dependencies: [
+      { task_id: successor.id, kind: "FS" as const },
+      { task_id: chainEnd.id, kind: "SS" as const },
+    ],
   };
   const f = await shortfallHttpFixture(true, async (f, other) => {
     project.coordinator_id = other.owner_id;
     await json(f.owner, "projects", project);
     task.owner_id = other.owner_id;
     await json(f.owner, `projects/${project.id}/tasks`, task);
-    if (dependency || merge) {
+    if (dependency || merge || diamond) {
       successor.owner_id = other.owner_id;
       await json(f.owner, `projects/${project.id}/tasks`, successor);
     }
-    if (chain || branch || merge) {
+    if (chain || branch || merge || diamond) {
       chainEnd.owner_id = other.owner_id;
       await json(f.owner, `projects/${project.id}/tasks`, chainEnd);
+    }
+    if (diamond) {
+      diamondEnd.owner_id = other.owner_id;
+      await json(f.owner, `projects/${project.id}/tasks`, diamondEnd);
     }
     Object.assign(other.data, {
       origin_kind: "Project",
@@ -72,14 +94,17 @@ export async function materialHttpFixture(
       origin_reference: "SYN pre-existing Project material demand",
     });
   });
-  await json(
-    f.owner,
-    f.path + "/supply-apply",
-    supplyApply(await f.current()),
-  );
+  await json(f.owner, f.path + "/supply-apply", supplyApply(await f.current()));
   if (reviewed) {
     await json(f.owner, f.path + "/material-propose", {
       ...materialProposal(await f.current(), task.id),
+      ...(diamond
+        ? {
+            diamond_b_task_id: successor.id,
+            diamond_c_task_id: chainEnd.id,
+            diamond_d_task_id: diamondEnd.id,
+          }
+        : {}),
       ...(dependency ? { successor_task_id: successor.id } : {}),
       ...(chain ? { chain_end_task_id: chainEnd.id } : {}),
       ...(branch ? { branch_successor_task_id: chainEnd.id } : {}),
@@ -106,11 +131,12 @@ export async function materialHttpFixture(
     ...f,
     project,
     task,
+    ...(diamond
+      ? { diamond: { b: successor, c: chainEnd, d: diamondEnd } }
+      : {}),
     ...(dependency ? { successor } : {}),
     ...(chain ? { chainEnd } : {}),
     ...(branch ? { branchSuccessor: chainEnd } : {}),
-    ...(merge
-      ? { mergePredecessor: successor, mergeSuccessor: chainEnd }
-      : {}),
+    ...(merge ? { mergePredecessor: successor, mergeSuccessor: chainEnd } : {}),
   };
 }

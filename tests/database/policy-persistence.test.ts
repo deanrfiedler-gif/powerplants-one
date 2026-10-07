@@ -167,13 +167,13 @@ test("populated 0050 upgrade preserves every old row/hash, registers 0053–0070
       "SELECT * FROM public.ppo_migrations ORDER BY version",
     )
   ).rows;
-  assert.deepEqual(ledger.slice(0, -20), oldLedger);
-  assert.equal(ledger.at(-1).version, 71);
+  assert.deepEqual(ledger.slice(0, -21), oldLedger);
+  assert.equal(ledger.at(-1).version, 72);
   assert.deepEqual(
     ledger.map((r) => r.version),
     [
       ...Array.from({ length: 50 }, (_, i) => i + 1).filter((n) => n !== 16),
-      52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71,
+      52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72,
     ],
   );
   const receipts = (
@@ -681,7 +681,7 @@ test("fresh installation applies only registered files through 0070, retains res
     ).rows.map((r) => r.version),
     [
       ...Array.from({ length: 50 }, (_, i) => i + 1).filter((n) => n !== 16),
-      52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71,
+      52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72,
     ],
   );
   const first = await snapshot(await tables());

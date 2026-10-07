@@ -553,6 +553,7 @@ test("third task cannot be claimed by another accepted target; returned referral
 const legacyRows = async (table: string) =>
   (await rows(table)).map(({ value }) => {
     const old = { ...value };
+    if (Object.hasOwn(old,"diamond_commands")) { assert.equal(old.diamond_commands,null); delete old.diamond_commands; }
     if (Object.hasOwn(old, "chain_end_command")) {
       assert.equal(old.chain_end_command, null);
       delete old.chain_end_command;
@@ -644,7 +645,7 @@ for (const paired of [false, true])
     );
     assert.deepEqual(
       now.filter((r) => r.version > 68).map((r) => r.version),
-      [69, 70, 71],
+      [69, 70, 71, 72],
     );
     for (const {
       f,
