@@ -26,7 +26,7 @@ export function useDiscoveryNavigation(dirty: boolean, pending: boolean, interna
       if (!bypass.current && (dirty || pending)) setLeave({ run });
       else run();
     };
-    const unregister = registerNavigationReview(review);
+    const unregister = registerNavigationReview(review, 1000);
     const push = history.pushState,
       replace = history.replaceState;
     const intercept = (original: History["pushState"]): History["pushState"] =>

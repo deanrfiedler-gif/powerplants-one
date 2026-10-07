@@ -91,12 +91,13 @@ export function LocalDateTimeField({ name, validationField, label = "Due date an
 
 // Native unload warning, in-app links and the installed app's Reload action share the
 // same dirty state. Tabs retain mounted drafts.
-export function useUnsavedChanges(dirty: boolean, pending = false) {
+export function useUnsavedChanges(dirty: boolean, pending = false, retainedQuery: readonly string[] = []) {
   usePendingWork(dirty || pending);
+  const retainedKeys = retainedQuery.join(",");
   useEffect(() => {
     if (!dirty && !pending) return;
     return guardBrowserNavigation(run => {
       if (!pending && window.confirm("Leave this page and discard unsaved changes?")) run();
-    }, pending ? 200 : 10);
-  }, [dirty, pending]);
+    }, pending ? 200 : retainedKeys ? 5 : 10, pending ? [] : retainedKeys.split(",").filter(Boolean));
+  }, [dirty, pending, retainedKeys]);
 }

@@ -35,7 +35,8 @@ export function useContactView(allowed: readonly string[], fallback: string, par
     (next: string) => {
       const query = new URLSearchParams(params);
       query.set(parameter, allowed.includes(next) ? next : fallback);
-      navigateWithReview(() => router.push(`${path}?${query}`, { scroll: false }));
+      const href = `${path}?${query}`;
+      navigateWithReview(() => router.push(href, { scroll: false }), { href });
     },
   ] as const;
 }

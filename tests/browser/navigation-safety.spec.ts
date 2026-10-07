@@ -19,7 +19,7 @@ test("N03 CRM compatibility aliases retain supported list and record query state
   }
 });
 test("N04/N05/N10 Home and Workspace follow the current synthetic identity", async ({ page }) => {
-  await login(page,"technician"); await page.goto("/");
+  await login(page,"assigned-technician"); await page.goto("/");
   const context = await (await page.request.get("/api/v1/shell/context")).json();
   expect(context.navigation).not.toContain("finance");
   await expect(page).not.toHaveURL(origin()+"/");
@@ -28,15 +28,15 @@ test("N04/N05/N10 Home and Workspace follow the current synthetic identity", asy
   await expect(picker).toBeVisible();
   expect(await picker.locator("option").allTextContents()).not.toContain("Finance");
   await page.screenshot({path:test.info().outputPath("restricted-workspace.png")});
-  // Explicit no-grant presentation fixture. Server authorization is still real.
-  await page.route("**/api/v1/shell/context", route=>route.fulfill({json:{display_name:"SYN no grants",navigation:[],actions:[],can_preview:false,preference_scope:"nav:none"}}));
+  // Existing unassigned Technician has no grants; no transport mock or new grant.
+  await login(page,"technician");
   await page.goto("/");
   await expect(page.getByText("No operational destinations are available for your current identity.", {exact:true})).toBeVisible();
 });
 test("N07/N08/N20 dirty preferences protect pointer, keyboard, touch and workspace intent", async ({ page, isMobile }) => {
   await login(page); const time=await dirtyPreferences(page), value=await time.inputValue();
   const preference=await page.evaluate(()=>Object.fromEntries(Object.entries(localStorage).filter(([key])=>key.startsWith("ppo.shell"))));
-  page.on("dialog",dialog=>dialog.dismiss());
+  let reviews=0;page.on("dialog",dialog=>{reviews++;void dialog.dismiss();});
   await page.getByRole("button",{name:"More",exact:true}).click();
   await page.getByLabel("Workspace",{exact:true}).selectOption("engineering");
   await expect(page).toHaveURL(/\/work\/updates$/); await expect(time).toHaveValue(value);
@@ -53,7 +53,9 @@ test("N07/N08/N20 dirty preferences protect pointer, keyboard, touch and workspa
   await expect(page).toHaveURL(/\/work\/updates$/); await expect(time).toHaveValue(value);
   await page.keyboard.press("Escape");
   // Native Chrome history traversal is separate from an anchor or beforeunload.
-  await page.goBack(); await expect(page).toHaveURL(/\/work\/updates$/); await expect(time).toHaveValue(value);
+  const beforeBack=reviews;await page.evaluate(()=>history.back());
+  await expect.poll(()=>reviews).toBeGreaterThan(beforeBack);
+  await expect(page).toHaveURL(/\/work\/updates$/); await expect(time).toHaveValue(value);
 });
 test("N18/N19 primary rail expands, persists and retains endpoints in a short window", async ({ page, isMobile }) => {
   test.skip(isMobile,"Primary rail is a desktop control; mobile uses labelled More/Workspace.");
@@ -63,6 +65,10 @@ test("N18/N19 primary rail expands, persists and retains endpoints in a short wi
   expect(await page.locator(".ppo-rail").evaluate(el=>el.getBoundingClientRect().width)).toBe(232);
   await page.screenshot({path:test.info().outputPath("expanded-desktop.png")});
   await page.reload(); await expect(page.getByRole("button",{name:"Collapse primary navigation",exact:true})).toBeVisible();
+  await login(page,"observer");await page.reload();
+  await expect(page.getByRole("button",{name:"Expand primary navigation",exact:true})).toBeEnabled();
+  await login(page);await page.reload();
+  await expect(page.getByRole("button",{name:"Collapse primary navigation",exact:true})).toBeVisible();
   await page.setViewportSize({width:1280,height:400});
   await page.getByRole("button",{name:"More",exact:true}).click();
   await expect(page.getByLabel("Workspace",{exact:true})).toBeVisible();

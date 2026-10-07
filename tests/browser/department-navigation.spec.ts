@@ -40,7 +40,7 @@ const rails = {
   estimate: ["My Work", "Intake & workload", "Intake", "Estimation wizard", "Specialist configurations", "Cost sources", "Quotations"],
   engineering: ["My Work", "Engineering workload", "Design basis & interfaces", "Drawings", "Technical queries", "Materials & substitutions", "Change review", "Technical reviews", "Commissioning & as-built"],
   projects: ["My Work", "Projects", "Programme", "Acceptance & closeout"],
-  service: ["My Work", "Service requests", "Work orders", "Schedule", "Field team", "Job packs", "Service review", "My jobs", "My inspections", "Incidents and actions", "Inspection review", "Equipment", "Service agreements", "Maintenance", "Warranty"],
+  service: ["My Work", "Service requests", "Work orders", "Schedule", "Field team", "Job packs", "Service review", "Incidents and actions", "Inspection review", "Equipment", "Service agreements", "Maintenance", "Warranty"],
   supply: ["My Work", "Material demand", "Purchasing", "Inbound shipments", "Receiving", "Stock & reservations", "Dispatch & delivery", "Returns & claims"],
   finance: ["My Work", "Finance handoffs", "Customer accounts"],
 };
@@ -151,9 +151,9 @@ test("Engineering and Service retain shared Contacts view through records, reloa
   await expect(page.getByRole("heading", { name: "Organisations", exact: true })).toBeVisible();
   await page.goto("/contacts?department=engineering");
   await expect(page).toHaveURL(/view=organisations/);
-  await page.getByRole("button", { name: "Change identity", exact: true }).click();
+  await page.getByRole("button", { name: "More", exact: true }).click();
   await page.getByLabel("Workspace", { exact: true }).selectOption("service");
-  await expect(page).toHaveURL(/department=service/);
+  await expect(page).toHaveURL(/\/service\/tickets$/);
   await expect(page.getByRole("navigation", { name: "Service operations shortcuts" })).toBeVisible();
 });
 test("Finance chooser preserves the exact permitted account and its rail after reload", async ({ page }) => {

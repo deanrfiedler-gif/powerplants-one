@@ -42,6 +42,11 @@ test("N01 saved survey opens each exact Equipment record and returns to its sour
     await page.getByRole("link", { name: "Return to source survey", exact: true }).click();
     await expect(page).toHaveURL(new RegExp(`/surveys/${survey}(?:\\?|$)`));
   }
+  expect((await page.request.post("/api/v1/local-session",{headers:{Origin:baseURL!},data:{profile:"technician"}})).ok()).toBe(true);
+  const denied=page.waitForResponse(r=>r.url().includes(`/api/v1/equipment/${assets[0]}`)&&[403,404].includes(r.status()));
+  await page.goto(`/equipment/${assets[0]}?returnTo=${encodeURIComponent(`/surveys/${survey}`)}`);await denied;
+  await expect(page.getByRole("heading",{name:"SYN NAV Equipment 1",exact:true})).toHaveCount(0);
+  await expect(page.getByRole("link",{name:"Return to source survey",exact:true})).toHaveCount(0);
 });
 
 test("N02 continuing obligation opens exact owned Activity and returns to its obligation", async ({ page }) => {

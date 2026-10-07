@@ -10,7 +10,8 @@ async function fixture():Promise<Fixture>{
 }
 test("N13 scoped continuation reaches a quotation beyond the first 100 estimates",async({page})=>{
   test.setTimeout(90000);const f=await fixture();
-  await page.goto(`/estimating/quotes?q=${encodeURIComponent(f.batch)}`);
+  const read=page.waitForResponse(r=>r.url().includes("/api/v1/navigation/quotations?")&&r.ok(),{timeout:60000});
+  await page.goto(`/estimating/quotes?q=${encodeURIComponent(f.batch)}`);await read;
   await expect(page.getByText(/this is not a complete quotation register/)).toBeVisible();
   await expect(page.locator(`main a[href='/estimating/quotes/${f.older.quote}']`)).toHaveCount(0);
   await page.getByRole("link",{name:"Continue to older estimates",exact:true}).click();
@@ -22,10 +23,10 @@ test("N13 scoped continuation reaches a quotation beyond the first 100 estimates
 });
 test("N24 Deal sections and exact estimate revisions restore through reload and Back",async({page})=>{
   const f=await fixture();await page.goto(`/sales/opportunities/${f.deal}?section=commercial`);
-  await expect(page.getByRole("tab",{name:"Commercial",exact:true})).toHaveAttribute("aria-selected","true");
-  await page.reload();await expect(page.getByRole("tab",{name:"Commercial",exact:true})).toHaveAttribute("aria-selected","true");
+  await expect(page.getByRole("tab",{name:"Estimates & quotations",exact:true})).toHaveAttribute("aria-selected","true");
+  await page.reload();await expect(page.getByRole("tab",{name:"Estimates & quotations",exact:true})).toHaveAttribute("aria-selected","true");
   await page.getByRole("tab",{name:"Overview",exact:true}).click();await expect(page).toHaveURL(/section=overview/);
-  await page.goBack();await expect(page.getByRole("tab",{name:"Commercial",exact:true})).toHaveAttribute("aria-selected","true");
+  await page.goBack();await expect(page.getByRole("tab",{name:"Estimates & quotations",exact:true})).toHaveAttribute("aria-selected","true");
   await page.goto(`/estimating/estimates/${f.estimate}?version_id=${f.original_version}`);
   await expect(page.getByText(/Viewing saved version 1 · Current version 2/)).toBeVisible();
   await page.reload();await expect(page.getByText(/Viewing saved version 1 · Current version 2/)).toBeVisible();

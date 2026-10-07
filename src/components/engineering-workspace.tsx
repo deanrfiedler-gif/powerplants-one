@@ -3,7 +3,8 @@ import { useContactView } from "./contact-workspace";
 import { ControlSummary } from "../engineering/control/components/summary";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { navigateWithReview } from "./navigation-intent";
 import { useIdentity } from "./business-session";
 import {
   ErrorNotice,
@@ -185,6 +186,7 @@ function Modal({
 export function EngineeringWorkspace({ initialId }: { initialId?: string }) {
   const identity = useIdentity(),
     params = useSearchParams(),
+    path = usePathname(), router = useRouter(),
     root = useRef<HTMLElement>(null);
   const [view, setView] = useState("all"),
     [search, setSearch] = useState(""),
@@ -193,8 +195,14 @@ export function EngineeringWorkspace({ initialId }: { initialId?: string }) {
     [attention, setAttention] = useState(false),
     [sort, setSort] = useState("ref"),
     [cursors, setCursors] = useState<(string | null)[]>([null]);
-  const [selected, setSelected] = useState<string | null>(initialId ?? null),
-    [request, setRequest] = useState(params.get("create") === "1"),
+  const selected = initialId ?? params.get("package_id");
+  const setSelected = (id: string | null) => {
+    const q = new URLSearchParams(params);
+    if (id) q.set("package_id", id); else { q.delete("package_id"); q.delete("section"); }
+    const href = `${initialId && !id ? "/engineering" : path}?${q}`;
+    navigateWithReview(() => router.push(href, {scroll:false}), {href});
+  };
+  const [request, setRequest] = useState(params.get("create") === "1"),
     [notes, setNotes] = useState<Record<string, string>>({});
   const query = new URLSearchParams({
     q: search,
@@ -292,7 +300,7 @@ export function EngineeringWorkspace({ initialId }: { initialId?: string }) {
       setAttention(false);
     });
   const filtered = !!(search || discipline || mine || attention);
-  useUnsavedChanges(Object.values(notes).some(Boolean));
+  useUnsavedChanges(Object.values(notes).some(Boolean), false, ["section", "package_id"]);
   const nextAction = (p: EngineeringPackage) => (
     <div className="eng-next">
       {p.next_action}
@@ -949,7 +957,7 @@ function PackageDrawer({
 }) {
   const resource = useResource<EngineeringDetail>("engineering/" + id),
     command = useCommand();
-  const [tab, setTab] = useContactView(tabs.map(([key]) => key), "overview");
+  const [tab, setTab] = useContactView(tabs.map(([key]) => key), "overview", "section");
   const [edit, setEdit] = useState(false),
     [editBlocked, setEditBlocked] = useState(false),
     [editDirty, setEditDirty] = useState(false),
@@ -960,7 +968,7 @@ function PackageDrawer({
       !!(command.error as Failure | null)?.retryable ||
       editBlocked;
   const noteVersion = useRef<number | null>(null);
-  useUnsavedChanges(!!draft, blocked);
+  useUnsavedChanges(!!draft, blocked, ["section"]);
   const close = () => {
     if (
       !blocked &&

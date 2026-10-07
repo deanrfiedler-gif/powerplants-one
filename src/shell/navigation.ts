@@ -367,7 +367,9 @@ export function workspaceForLocation(path: string, query: URLSearchParams, prefe
   return availableWorkspaces(permitted, true)[0]?.id ?? candidate;
 }
 export function activitiesHref(day?: string | null, sales = true) {
-  const q = new URLSearchParams({ day: day && /^\d{4}-\d{2}-\d{2}$/.test(day) ? day : localDay(new Date().toISOString()) });
+  const parsed = day && /^\d{4}-\d{2}-\d{2}$/.test(day) ? Date.parse(`${day}T00:00:00.000Z`) : NaN;
+  const valid = Number.isFinite(parsed) && new Date(parsed).toISOString().slice(0,10) === day;
+  const q = new URLSearchParams({ day: valid ? day! : localDay(new Date().toISOString()) });
   if (sales) { q.set("scope", "sales"); q.set("department", "sales"); }
   return `/calendar?${q}`;
 }

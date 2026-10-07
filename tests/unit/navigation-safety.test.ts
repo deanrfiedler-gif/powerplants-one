@@ -31,6 +31,7 @@ test("N12 Sales Activities keeps one day/scope/department policy", () => {
   const day="2026-10-08", expected=activitiesHref(day);
   assert.equal(departmentHref(`/calendar?day=${day}`,"sales"),expected);
   assert.equal(new URL(activitiesHref(day,false),"https://ppo.invalid").searchParams.get("scope"),null);
+  for(const invalid of ["2026-02-30","2026-99-99","../work"]) assert.equal(activitiesHref(invalid),activitiesHref());
 });
 test("N14/N22 specific task identity and parent precede generic prefixes", () => {
   const id="10000000-0000-4000-8000-000000000001";
