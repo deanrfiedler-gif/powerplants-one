@@ -29,6 +29,16 @@ Any Retain requires a newly created, dated next Activity owned by the lead owner
 
 Validation must cover unchanged legacy conversion, a site discovered after follow-up, incompatible source retention, stale and hidden source refusal, a missing owned/dated review action, exact original replay, concurrent duplicate conversion and a late failure rolling back all effects. Desktop/phone flows must expose the comparison and preserve uncertain commands for recovery.
 
+## LC-13: accepted estimating brief continuity
+
+The receiver explicitly links the exact accepted Sales brief event to the native estimating workspace for the same Deal. Compare the current accepted handover version/source hash and the native workspace version, selected option and scope revision. A changed source, successor, different Deal, hidden target or changed workspace blocks new intent. The receiver must also own and be allowed to edit the destination workspace. No default grant is added.
+
+Creation reuses the native discovery workflow and its original receipt. It returns to the handover for a separate explicit link review. If creation succeeds and linking is interrupted or refused, the workspace remains visible and its original creation receipt remains valid. Existing workspaces use the same explicit comparison. Linking never confirms discovery answers, copies costs, changes quotation status or rewrites accepted Sales evidence. The original problem, scope, exclusions, assumptions, unknowns and requested-date basis remain available beside the native workspace as attributed Sales context.
+
+Bindings are immutable companions keyed to the exact acceptance event. A later accepted successor can be explicitly linked to the same workspace; earlier bindings remain labelled historical. Current-source changes are shown separately from the retained acceptance. New link intent requires current acceptance and matching source facts. Actor-bound original recovery validates the retained link plus current access to the handover, workspace and referenced revision, without treating a later Sales successor as cancellation of the earlier link.
+
+Migration 0074 adds only the companion and its constraints. Existing Sales and Estimating command shapes, frozen source-hash strings, migration receipts, seeds, grants and identities remain unchanged. No technology is introduced. Local proof covers stale/hidden/wrong-Deal refusal, historical recovery, independent discovery preservation, competing/duplicate linking, atomic rollback, populated upgrades and desktop/phone create-return/link recovery. [LC-13 execution evidence](../testing/evidence/estimating-brief-continuity/README.md) retains exact scope, failures and limits. Increment 2 has local functional proof; increments 3–6 remain open.
+
 ## Evidence boundaries
 
 Issued reference snapshots and historical payloads remain unchanged. No new technology is selected by this contract. Acceptance of a Sales handover, issue of a synthetic quotation, recording a response, recording Won and destination execution are distinct facts. MYOB remains the intended ERP authority; SharePoint and native CAD retain their roles. Owner/device/business acceptance, migration/cutover and deployment remain separate from code and synthetic checks.

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "synthetic": true,
-  "source": "tests/browser/leads.spec.ts; tests/database/leads-continuity.test.ts; tests/database/leads-amendments.test.ts",
+  "source": "tests/browser/leads.spec.ts; tests/database/leads-continuity.test.ts; tests/database/leads-amendments.test.ts; tests/database/sales-estimating-binding.test.ts; tests/browser/sales-estimating-binding.spec.ts",
   "owner": "Dean Fiedler",
   "review_status": "Pending owner and paired visual review",
   "states": [
@@ -40,6 +40,26 @@
     {
       "key": "no-recipient",
       "description": "No eligible recipient appears without existing Lead editing and all-target visibility. The transfer submit stays disabled."
+    },
+    {
+      "key": "accepted-brief-awaits-workspace",
+      "description": "Current accepted Sales revision has no native workspace; the receiver can create native Discovery and return."
+    },
+    {
+      "key": "workspace-awaits-link",
+      "description": "Native creation is saved; exact accepted Sales and native versions are separately compared before linking."
+    },
+    {
+      "key": "linked-brief-successor",
+      "description": "A successor Sales draft makes the earlier link historical without changing independent discovery or losing original recovery."
+    },
+    {
+      "key": "link-stale-or-restricted",
+      "description": "Changed versions refuse new linking; restricted native targets expose no identities or retained comparison."
+    },
+    {
+      "key": "link-response-lost",
+      "description": "Actor-scoped journal recovers one immutable link after response loss and reload."
     }
   ]
 }

@@ -1,3 +1,4 @@
+import { estimatingBindingReceiptAuthority } from "../sales/estimating-binding";
 import { receiptAuthority as maintenanceReceiptAuthority, } from "../maintenance/reads";
 import { followupReceiptAuthority } from "../estimating/supply-followup/authority";
 import { releaseReceiptAuthority } from "../estimating/release/context";
@@ -125,6 +126,12 @@ export async function readOperation(
   } else if (r.object_type === "AftercareRecord") {
     await aftercareReceiptAuthority(client, p, r.record_id, r.command);
   } else if (r.object_type === "SalesHandover") {
+    if (r.command === "SalesHandover:BindEstimating") return transaction(async c => {
+      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [p.workspace_id]);
+      await c.query("SELECT ppo.lock_crm_transfer_authority($1)",[p.workspace_id]);
+      await estimatingBindingReceiptAuthority(c,p,r.record_id,operation_id);
+      return r.result as OperationReceipt;
+    });
     await handoverReceiptAuthority(client, p, r.record_id, r.command);
   } else if (
     r.command === "FieldReadinessAcknowledge" &&

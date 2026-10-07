@@ -1,0 +1,20 @@
+[WebServer] (node:34160) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.98"}
+
+Running 8 tests using 1 worker
+
+(node:29612) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop-chromium] › tests\browser\estimating-discovery.spec.ts:190:1 › E2 browser creates scoped discovery and retains the original unknown creation through candidate refresh (9.1s)
+  ok 2 [desktop-chromium] › tests\browser\sales-estimating-binding.spec.ts:89:1 › LC-13 create native Discovery from accepted Sales and return for an explicit link with independent recovery (9.3s)
+  ok 3 [desktop-chromium] › tests\browser\sales-estimating-binding.spec.ts:249:1 › LC-13 stale reviewed link is refused and accepted lost-response link survives reload without a second POST (4.5s)
+  ok 4 [desktop-chromium] › tests\browser\sales-workflows.spec.ts:119:1 › CR02 frozen submission survives clarification, acceptance and reload (5.7s)
+(node:6760) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 5 [mobile-chromium] › tests\browser\estimating-discovery.spec.ts:190:1 › E2 browser creates scoped discovery and retains the original unknown creation through candidate refresh (6.8s)
+  ok 6 [mobile-chromium] › tests\browser\sales-estimating-binding.spec.ts:89:1 › LC-13 create native Discovery from accepted Sales and return for an explicit link with independent recovery (7.7s)
+  ok 7 [mobile-chromium] › tests\browser\sales-estimating-binding.spec.ts:249:1 › LC-13 stale reviewed link is refused and accepted lost-response link survives reload without a second POST (5.3s)
+  ok 8 [mobile-chromium] › tests\browser\sales-workflows.spec.ts:119:1 › CR02 frozen submission survives clarification, acceptance and reload (6.4s)
+
+  8 passed (2.4m)
