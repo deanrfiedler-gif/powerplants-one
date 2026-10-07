@@ -19,14 +19,14 @@ export type MaterialRole =
   | "ChainEnd"
   | "BranchSuccessor"
   | "MergePredecessor"
-  | "MergeSuccessor";
+  | "MergeSuccessor"
+  | "DiamondB"
+  | "DiamondC"
+  | "DiamondD";
 export function materialInput(
   id: string,
   action:
-    | "MaterialPropose"
-    | "MaterialReceive"
-    | "MaterialReview"
-    | "MaterialApply",
+    "MaterialPropose" | "MaterialReceive" | "MaterialReview" | "MaterialApply",
   value: unknown,
 ) {
   const extra =
@@ -41,6 +41,9 @@ export function materialInput(
           "branch_successor_task_id",
           "merge_predecessor_task_id",
           "merge_successor_task_id",
+          "diamond_b_task_id",
+          "diamond_c_task_id",
+          "diamond_d_task_id",
           "predecessor_id",
         ]
       : action === "MaterialApply"
@@ -92,6 +95,26 @@ export function materialInput(
       "merge_predecessor_task_id",
       "Select B and C together for A → C and B → C; earlier topology inputs cannot authorise a merge.",
     );
+  const diamondKeys = [
+    "diamond_b_task_id",
+    "diamond_c_task_id",
+    "diamond_d_task_id",
+  ] as const;
+  if (
+    diamondKeys.some((k) => r[k] !== undefined) &&
+    (diamondKeys.some((k) => r[k] === undefined) ||
+      [
+        "successor_task_id",
+        "chain_end_task_id",
+        "branch_successor_task_id",
+        "merge_predecessor_task_id",
+        "merge_successor_task_id",
+      ].some((k) => r[k] !== undefined))
+  )
+    invalid(
+      "diamond_b_task_id",
+      "Select B, C and D together for the explicit four-edge diamond; earlier topology inputs cannot authorise it.",
+    );
   return {
     ...envelope(id, r),
     action,
@@ -117,8 +140,7 @@ export function materialInput(
     ...(action === "MaterialPropose" && r.chain_end_task_id !== undefined
       ? { chain_end_task_id: uuid(r.chain_end_task_id, "chain_end_task_id") }
       : {}),
-    ...(action === "MaterialPropose" &&
-    r.branch_successor_task_id !== undefined
+    ...(action === "MaterialPropose" && r.branch_successor_task_id !== undefined
       ? {
           branch_successor_task_id: uuid(
             r.branch_successor_task_id,
@@ -137,6 +159,13 @@ export function materialInput(
             r.merge_successor_task_id,
             "merge_successor_task_id",
           ),
+        }
+      : {}),
+    ...(action === "MaterialPropose" && r.diamond_b_task_id !== undefined
+      ? {
+          diamond_b_task_id: uuid(r.diamond_b_task_id, "diamond_b_task_id"),
+          diamond_c_task_id: uuid(r.diamond_c_task_id, "diamond_c_task_id"),
+          diamond_d_task_id: uuid(r.diamond_d_task_id, "diamond_d_task_id"),
         }
       : {}),
     proposal_id: ["MaterialReceive", "MaterialReview"].includes(action)
@@ -160,6 +189,9 @@ export function materialInput(
             "BranchSuccessor",
             "MergePredecessor",
             "MergeSuccessor",
+            "DiamondB",
+            "DiamondC",
+            "DiamondD",
           ] as const)
         : null,
     decision:

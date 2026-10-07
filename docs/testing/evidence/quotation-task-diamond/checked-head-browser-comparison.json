@@ -1,0 +1,115 @@
+{
+  "baseline_head": "110e6ede0cff36a1351a9bc8265479e015abd127",
+  "baseline_sha256": "dae6829f7ff77572dcab4edf2f0922ec5fb01d3121b74b315276653caef32648",
+  "source_head": "f18083d83fe6424549481c00e009bae278a0e931",
+  "preserved_identities_and_outcomes": 703,
+  "current_case_identities": 709,
+  "missing": [],
+  "changed": [],
+  "added": [
+    {
+      "identity": [
+        "desktop-chromium",
+        "quotation-task-diamond.spec.ts",
+        "ES07 diamond desktop/mobile receives seven effects and separately withdraws native dates while unmet Demand remains"
+      ],
+      "expected": "passed",
+      "outcome": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "identity": [
+        "desktop-chromium",
+        "quotation-task-diamond.spec.ts",
+        "ES07 diamond inconclusive unsent lookup blocks replacement and retries the unchanged original"
+      ],
+      "expected": "passed",
+      "outcome": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "identity": [
+        "desktop-chromium",
+        "quotation-task-diamond.spec.ts",
+        "ES07 diamond lost committed response recovers exact atomic original after reload"
+      ],
+      "expected": "passed",
+      "outcome": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "identity": [
+        "mobile-chromium",
+        "quotation-task-diamond.spec.ts",
+        "ES07 diamond desktop/mobile receives seven effects and separately withdraws native dates while unmet Demand remains"
+      ],
+      "expected": "passed",
+      "outcome": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "identity": [
+        "mobile-chromium",
+        "quotation-task-diamond.spec.ts",
+        "ES07 diamond inconclusive unsent lookup blocks replacement and retries the unchanged original"
+      ],
+      "expected": "passed",
+      "outcome": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "identity": [
+        "mobile-chromium",
+        "quotation-task-diamond.spec.ts",
+        "ES07 diamond lost committed response recovers exact atomic original after reload"
+      ],
+      "expected": "passed",
+      "outcome": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "retry": 0
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "passed": 630,
+    "skipped": 79
+  },
+  "duplicate": [
+    [
+      "warm-up",
+      "warm-up.setup.ts",
+      "warm every route once before the browser projects"
+    ]
+  ],
+  "retried_or_flaky": 0,
+  "transient_fetch_retry_annotations": [],
+  "transient_fetch_retry_warnings": []
+}

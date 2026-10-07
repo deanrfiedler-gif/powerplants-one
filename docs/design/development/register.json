@@ -1386,7 +1386,7 @@
       "title": "Receiving, one-off resolution and controlled conversion",
       "kind": "scope",
       "module": "ES",
-      "summary": "Exact receiving and completed-target exception disposition with immutable per-target decisions and real native Forecast quantity revision. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold.",
+      "summary": "Exact receiving and completed-target exception disposition with immutable per-target decisions and real native Forecast quantity revision. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold. Explicit four-task diamond receiving and D saved once; earlier merge B retention remains.",
       "path": "/estimating/quotes/[id]/conversion",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -1435,7 +1435,8 @@
         "docs/decisions/quotation-task-chain.md",
         "src/estimating/supply-followup/reads.ts",
         "docs/decisions/quotation-task-branch.md",
-        "docs/decisions/quotation-task-merge.md"
+        "docs/decisions/quotation-task-merge.md",
+        "docs/decisions/quotation-task-diamond.md"
       ],
       "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
       "visual_status": "Needs review",
@@ -1918,7 +1919,7 @@
       "title": "Baseline, forecast and dependency review",
       "kind": "scope",
       "module": "PJ",
-      "summary": "Extend the existing Gantt with controlled baselines, dependencies, calendars, actuals and forecast review. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor requires independent receiving before both native forecasts are withdrawn. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold.",
+      "summary": "Extend the existing Gantt with controlled baselines, dependencies, calendars, actuals and forecast review. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor requires independent receiving before both native forecasts are withdrawn. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold. Explicit four-task diamond receiving and D saved once; earlier merge B retention remains.",
       "path": "/projects/programme",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -1940,7 +1941,8 @@
         "docs/decisions/quotation-task-chain.md",
         "src/estimating/supply-followup/reads.ts",
         "docs/decisions/quotation-task-branch.md",
-        "docs/decisions/quotation-task-merge.md"
+        "docs/decisions/quotation-task-merge.md",
+        "docs/decisions/quotation-task-diamond.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -3595,7 +3597,7 @@
       "title": "Material change-impact review",
       "kind": "scope",
       "module": "SC",
-      "summary": "Review before and after evidence through the owning module. Bookings and issued packs remain unchanged. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold.",
+      "summary": "Review before and after evidence through the owning module. Bookings and issued packs remain unchanged. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold. Explicit four-task diamond receiving and D saved once; earlier merge B retention remains.",
       "path": "/supply/changes",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -3643,7 +3645,8 @@
         "docs/decisions/quotation-task-chain.md",
         "src/estimating/supply-followup/reads.ts",
         "docs/decisions/quotation-task-branch.md",
-        "docs/decisions/quotation-task-merge.md"
+        "docs/decisions/quotation-task-merge.md",
+        "docs/decisions/quotation-task-diamond.md"
       ],
       "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
       "visual_status": "Needs review",
@@ -6364,7 +6367,7 @@
       "title": "Project detail & Gantt",
       "kind": "route",
       "module": "PJ",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold.",
+      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold. Explicit four-task diamond receiving and D saved once; earlier merge B retention remains.",
       "path": "/projects/[id]",
       "source_paths": [
         "src/app/(business)/projects/[id]/page.tsx"
@@ -6386,7 +6389,8 @@
         "docs/decisions/quotation-task-chain.md",
         "src/estimating/supply-followup/reads.ts",
         "docs/decisions/quotation-task-branch.md",
-        "docs/decisions/quotation-task-merge.md"
+        "docs/decisions/quotation-task-merge.md",
+        "docs/decisions/quotation-task-diamond.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -10692,7 +10696,7 @@
       "title": "supply / changes",
       "kind": "route",
       "module": "Unassigned",
-      "summary": "Review before and after evidence through the owning module. Bookings and issued packs remain unchanged. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold.",
+      "summary": "Review before and after evidence through the owning module. Bookings and issued packs remain unchanged. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold. Explicit four-task diamond receiving and D saved once; earlier merge B retention remains.",
       "path": "/supply/changes",
       "source_paths": [
         "src/app/(business)/supply/changes/page.tsx",
@@ -10739,7 +10743,8 @@
         "docs/decisions/quotation-task-chain.md",
         "src/estimating/supply-followup/reads.ts",
         "docs/decisions/quotation-task-branch.md",
-        "docs/decisions/quotation-task-merge.md"
+        "docs/decisions/quotation-task-merge.md",
+        "docs/decisions/quotation-task-diamond.md"
       ],
       "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
       "visual_status": "Needs review",
@@ -11569,7 +11574,7 @@
       "title": "Receiving, one-off resolution and controlled conversion",
       "kind": "route",
       "module": "ES",
-      "summary": "Exact receiving and completed-target exception disposition with immutable per-target decisions and real native Forecast quantity revision. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold.",
+      "summary": "Exact receiving and completed-target exception disposition with immutable per-target decisions and real native Forecast quantity revision. Owned reservation-outcome reconciliation retains original source identity, separate ES-07 reassessment and other holds. Owned Receipt correction requires each affected Demand owner and retains actual native effects and remaining holds. Owned corrected-Shipment shortfall uses exact separately received allocation reductions; capacity validity retains unmet Demand and holds. Owned Project forecast withdrawal requires four independently received effects; unmet Demand and independent holds remain. One selected FS/SS successor can independently receive paired forecast withdrawal; both dates and exact native effects remain explicit. Explicit A → B → C withdrawal requires six separate decisions and four native receipts; other edges hold. Explicit four-task diamond receiving and D saved once; earlier merge B retention remains.",
       "path": "/estimating/quotes/[id]/conversion",
       "source_paths": [
         "src/app/(business)/estimating/quotes/[id]/conversion/page.tsx"
@@ -11617,7 +11622,8 @@
         "docs/decisions/quotation-task-chain.md",
         "src/estimating/supply-followup/reads.ts",
         "docs/decisions/quotation-task-branch.md",
-        "docs/decisions/quotation-task-merge.md"
+        "docs/decisions/quotation-task-merge.md",
+        "docs/decisions/quotation-task-diamond.md"
       ],
       "scope_status": "Bounded synthetic shared allocation reductions; priority and consequential reversal remain outside scope",
       "visual_status": "Needs review",

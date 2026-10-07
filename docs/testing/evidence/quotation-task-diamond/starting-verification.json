@@ -1,0 +1,1070 @@
+{
+  "observed_at": "2026-10-06T20:31:01.834745+00:00",
+  "merge_sha": "58679be051d8dc8da4356a714fb0f37d09902092",
+  "checks": [
+    {
+      "name": "deploy",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37525905563/job/112482728116",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "ES-07 owned Supply follow-up and original recovery",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956381/job/112481277892",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "Desktop and mobile browser suite against the compiled application",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956394/job/112480357559",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "P01\u2013P11 and CRM I1\u2013I2 local application and PostgreSQL proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956294/job/112480335460",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "ES-07 completed conversion disposition and recovery",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956336/job/112479499563",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "ES-07 Supply material-database proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956381/job/112479499474",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "ES-07 Supply merge-runtime proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956381/job/112479499229",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "ES-07 Supply dependency-runtime proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956381/job/112479499217",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "ES-07 Supply database proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956381/job/112479499083",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "register",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956535/job/112479499072",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "ES-07 Supply receipt-database proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956381/job/112479499048",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "ES-07 Supply shortfall-runtime proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956381/job/112479498982",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "ES-07 Supply dependency-database proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956381/job/112479498953",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "ES-07 Supply shortfall-database proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956381/job/112479498945",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "ES-07 Supply material-runtime proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956381/job/112479498941",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "ES-07 Supply chain-runtime proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956381/job/112479498940",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "ES-07 Supply branch-database proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956381/job/112479498911",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "ES-07 Supply merge-database proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956381/job/112479498899",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "ES-07 Supply chain-database proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956381/job/112479498837",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "ES-07 Supply branch-runtime proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956381/job/112479498834",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "Email Calendar persisted journey and server permissions",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956304/job/112479498832",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "P11 declared load and raw core-read performance proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956294/job/112479498798",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "Compiled application retained proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956394/job/112479498777",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "ES-07 Supply runtime proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956381/job/112479498664",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "P01\u2013P11 http proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956294/job/112479498570",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "P01\u2013P11 database-2 proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956294/job/112479498563",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "P01\u2013P11 database-1 proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956294/job/112479498553",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "P01\u2013P11 browser proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956294/job/112479498411",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "P11 focused integrated quality and access proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956294/job/112479498404",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "Compiled application browser-desktop proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956394/job/112479498357",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "CRM header and board visual checks",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956322/job/112479498252",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "P11 focused original HTTP and output isolation proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956294/job/112479498208",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "P01\u2013P11 finance proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956294/job/112479498200",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "Compiled application browser-mobile proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956394/job/112479498154",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "P01\u2013P11 reports proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956294/job/112479498153",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "Check documentation foundation",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956356/job/112479498131",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "CRM desktop and mobile persistence and interaction proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956322/job/112479497961",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "ES-06 exact response, recovery and receiving boundary",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956337/job/112479497874",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "Synthetic estimating design checks",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956312/job/112479497846",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "E1 manual estimate, draft output and restart proof",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956311/job/112479497823",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "P11 three original browser failures diagnostic replay",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956294/job/112479497807",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    },
+    {
+      "name": "ES-07 exact receiving, native conversion and recovery",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37524956323/job/112479497281",
+      "head_sha": "58679be051d8dc8da4356a714fb0f37d09902092"
+    }
+  ],
+  "runs": [
+    {
+      "conclusion": "failure",
+      "databaseId": 37525905563,
+      "headSha": "58679be051d8dc8da4356a714fb0f37d09902092",
+      "name": "Update Azure private demo",
+      "status": "completed",
+      "jobs": [
+        {
+          "id": 112482728116,
+          "name": "deploy",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Build and push the selected main commit on GitHub"
+          ]
+        }
+      ]
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 37524956356,
+      "headSha": "58679be051d8dc8da4356a714fb0f37d09902092",
+      "name": "Documentation assurance",
+      "status": "completed",
+      "jobs": [
+        {
+          "id": 112479498131,
+          "name": "Check documentation foundation",
+          "conclusion": "success",
+          "failed_steps": []
+        }
+      ]
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 37524956535,
+      "headSha": "58679be051d8dc8da4356a714fb0f37d09902092",
+      "name": "Development register integrity",
+      "status": "completed",
+      "jobs": [
+        {
+          "id": 112479499072,
+          "name": "register",
+          "conclusion": "success",
+          "failed_steps": []
+        }
+      ]
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 37524956323,
+      "headSha": "58679be051d8dc8da4356a714fb0f37d09902092",
+      "name": "Quotation conversion assurance",
+      "status": "completed",
+      "jobs": [
+        {
+          "id": 112479497281,
+          "name": "ES-07 exact receiving, native conversion and recovery",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install the existing pinned runtime and document renderer"
+          ]
+        }
+      ]
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 37524956294,
+      "headSha": "58679be051d8dc8da4356a714fb0f37d09902092",
+      "name": "Application assurance",
+      "status": "completed",
+      "jobs": [
+        {
+          "id": 112479497807,
+          "name": "P11 three original browser failures diagnostic replay",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install pinned controlled PDF renderer"
+          ]
+        },
+        {
+          "id": 112479498153,
+          "name": "P01\u2013P11 reports proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install pinned controlled PDF renderer"
+          ]
+        },
+        {
+          "id": 112479498200,
+          "name": "P01\u2013P11 finance proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install pinned controlled PDF renderer"
+          ]
+        },
+        {
+          "id": 112479498208,
+          "name": "P11 focused original HTTP and output isolation proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install pinned controlled PDF renderer"
+          ]
+        },
+        {
+          "id": 112479498404,
+          "name": "P11 focused integrated quality and access proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install pinned controlled PDF renderer"
+          ]
+        },
+        {
+          "id": 112479498411,
+          "name": "P01\u2013P11 browser proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install pinned controlled PDF renderer"
+          ]
+        },
+        {
+          "id": 112479498553,
+          "name": "P01\u2013P11 database-1 proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install pinned controlled PDF renderer"
+          ]
+        },
+        {
+          "id": 112479498563,
+          "name": "P01\u2013P11 database-2 proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install pinned controlled PDF renderer"
+          ]
+        },
+        {
+          "id": 112479498570,
+          "name": "P01\u2013P11 http proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install pinned controlled PDF renderer"
+          ]
+        },
+        {
+          "id": 112479498798,
+          "name": "P11 declared load and raw core-read performance proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install pinned controlled PDF renderer",
+            "Retain allowlisted network metadata and remove raw capture"
+          ]
+        },
+        {
+          "id": 112480335460,
+          "name": "P01\u2013P11 and CRM I1\u2013I2 local application and PostgreSQL proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Require every retained suite to complete successfully"
+          ]
+        }
+      ]
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 37524956337,
+      "headSha": "58679be051d8dc8da4356a714fb0f37d09902092",
+      "name": "Quotation response assurance",
+      "status": "completed",
+      "jobs": [
+        {
+          "id": 112479497874,
+          "name": "ES-06 exact response, recovery and receiving boundary",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install the existing pinned runtime and document renderer"
+          ]
+        }
+      ]
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 37524956336,
+      "headSha": "58679be051d8dc8da4356a714fb0f37d09902092",
+      "name": "Quotation disposition assurance",
+      "status": "completed",
+      "jobs": [
+        {
+          "id": 112479499563,
+          "name": "ES-07 completed conversion disposition and recovery",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install the existing pinned runtime and document renderer"
+          ]
+        }
+      ]
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 37524956312,
+      "headSha": "58679be051d8dc8da4356a714fb0f37d09902092",
+      "name": "Estimating design assurance",
+      "status": "completed",
+      "jobs": [
+        {
+          "id": 112479497846,
+          "name": "Synthetic estimating design checks",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Use existing exact package and browser pins"
+          ]
+        }
+      ]
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 37524956322,
+      "headSha": "58679be051d8dc8da4356a714fb0f37d09902092",
+      "name": "CRM refinements assurance",
+      "status": "completed",
+      "jobs": [
+        {
+          "id": 112479497961,
+          "name": "CRM desktop and mobile persistence and interaction proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install pinned controlled PDF renderer"
+          ]
+        },
+        {
+          "id": 112479498252,
+          "name": "CRM header and board visual checks",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Prepare isolated component review"
+          ]
+        }
+      ]
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 37524956394,
+      "headSha": "58679be051d8dc8da4356a714fb0f37d09902092",
+      "name": "Compiled application browser assurance",
+      "status": "completed",
+      "jobs": [
+        {
+          "id": 112479498154,
+          "name": "Compiled application browser-mobile proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install pinned controlled PDF renderer and browser"
+          ]
+        },
+        {
+          "id": 112479498357,
+          "name": "Compiled application browser-desktop proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install pinned controlled PDF renderer and browser"
+          ]
+        },
+        {
+          "id": 112479498777,
+          "name": "Compiled application retained proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install pinned controlled PDF renderer and browser"
+          ]
+        },
+        {
+          "id": 112480357559,
+          "name": "Desktop and mobile browser suite against the compiled application",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Require every compiled proof group to complete successfully"
+          ]
+        }
+      ]
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 37524956304,
+      "headSha": "58679be051d8dc8da4356a714fb0f37d09902092",
+      "name": "Email Calendar journey assurance",
+      "status": "completed",
+      "jobs": [
+        {
+          "id": 112479498832,
+          "name": "Email Calendar persisted journey and server permissions",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Pinned runtime and static checks"
+          ]
+        }
+      ]
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 37524956311,
+      "headSha": "58679be051d8dc8da4356a714fb0f37d09902092",
+      "name": "Estimating E1 assurance",
+      "status": "completed",
+      "jobs": [
+        {
+          "id": 112479497823,
+          "name": "E1 manual estimate, draft output and restart proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Pinned runtime and static checks"
+          ]
+        }
+      ]
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 37524956381,
+      "headSha": "58679be051d8dc8da4356a714fb0f37d09902092",
+      "name": "Quotation Supply follow-up assurance",
+      "status": "completed",
+      "jobs": [
+        {
+          "id": 112479498664,
+          "name": "ES-07 Supply runtime proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install the existing pinned runtime and document renderer"
+          ]
+        },
+        {
+          "id": 112479498834,
+          "name": "ES-07 Supply branch-runtime proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install the existing pinned runtime and document renderer"
+          ]
+        },
+        {
+          "id": 112479498837,
+          "name": "ES-07 Supply chain-database proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install the existing pinned runtime and document renderer"
+          ]
+        },
+        {
+          "id": 112479498899,
+          "name": "ES-07 Supply merge-database proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install the existing pinned runtime and document renderer"
+          ]
+        },
+        {
+          "id": 112479498911,
+          "name": "ES-07 Supply branch-database proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install the existing pinned runtime and document renderer"
+          ]
+        },
+        {
+          "id": 112479498940,
+          "name": "ES-07 Supply chain-runtime proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install the existing pinned runtime and document renderer"
+          ]
+        },
+        {
+          "id": 112479498941,
+          "name": "ES-07 Supply material-runtime proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install the existing pinned runtime and document renderer"
+          ]
+        },
+        {
+          "id": 112479498945,
+          "name": "ES-07 Supply shortfall-database proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install the existing pinned runtime and document renderer"
+          ]
+        },
+        {
+          "id": 112479498953,
+          "name": "ES-07 Supply dependency-database proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install the existing pinned runtime and document renderer"
+          ]
+        },
+        {
+          "id": 112479498982,
+          "name": "ES-07 Supply shortfall-runtime proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install the existing pinned runtime and document renderer"
+          ]
+        },
+        {
+          "id": 112479499048,
+          "name": "ES-07 Supply receipt-database proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install the existing pinned runtime and document renderer"
+          ]
+        },
+        {
+          "id": 112479499083,
+          "name": "ES-07 Supply database proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install the existing pinned runtime and document renderer"
+          ]
+        },
+        {
+          "id": 112479499217,
+          "name": "ES-07 Supply dependency-runtime proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install the existing pinned runtime and document renderer"
+          ]
+        },
+        {
+          "id": 112479499229,
+          "name": "ES-07 Supply merge-runtime proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install the existing pinned runtime and document renderer"
+          ]
+        },
+        {
+          "id": 112479499474,
+          "name": "ES-07 Supply material-database proof",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Install the existing pinned runtime and document renderer"
+          ]
+        },
+        {
+          "id": 112481277892,
+          "name": "ES-07 owned Supply follow-up and original recovery",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Require every isolated Supply proof group"
+          ]
+        }
+      ]
+    }
+  ],
+  "pr354_head": "110e6ede0cff36a1351a9bc8265479e015abd127",
+  "pr354_checks": [
+    {
+      "name": "P01\u2013P11 and CRM I1\u2013I2 local application and PostgreSQL proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546829/job/112371845020",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "Desktop and mobile browser suite against the compiled application",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546679/job/112348701888",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "ES-07 owned Supply follow-up and original recovery",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546826/job/112337915974",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "demo",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546966/job/112330686820",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "CRM desktop and mobile persistence and interaction proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546944/job/112330667508",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "CRM header and board visual checks",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546944/job/112330667093",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "ES-07 Supply merge-runtime proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546826/job/112330663926",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "ES-07 Supply branch-runtime proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546826/job/112330663857",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "ES-07 Supply runtime proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546826/job/112330663843",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "ES-07 Supply shortfall-runtime proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546826/job/112330663835",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "ES-07 Supply merge-database proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546826/job/112330663810",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "ES-07 Supply chain-runtime proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546826/job/112330663806",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "ES-07 Supply branch-database proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546826/job/112330663785",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "ES-07 Supply material-database proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546826/job/112330663739",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "ES-07 Supply receipt-database proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546826/job/112330663715",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "ES-07 Supply material-runtime proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546826/job/112330663704",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "ES-07 Supply dependency-database proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546826/job/112330663688",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "ES-07 Supply dependency-runtime proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546826/job/112330663687",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "ES-06 exact response, recovery and receiving boundary",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546870/job/112330663686",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "ES-07 Supply database proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546826/job/112330663660",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "E1 manual estimate, draft output and restart proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481547048/job/112330663658",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "Synthetic estimating design checks",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481547186/job/112330663657",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "ES-07 Supply chain-database proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546826/job/112330663634",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "leads",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546854/job/112330663480",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "Check documentation foundation",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546841/job/112330663445",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "ES-07 Supply shortfall-database proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546826/job/112330663351",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "P01\u2013P11 browser proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546829/job/112330663327",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "P01\u2013P11 database-1 proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546829/job/112330663147",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "P01\u2013P11 http proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546829/job/112330663125",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "P01\u2013P11 database-2 proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546829/job/112330663048",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "register",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546823/job/112330663031",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "P11 focused original HTTP and output isolation proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546829/job/112330662829",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "P01\u2013P11 finance proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546829/job/112330662781",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "ES-07 completed conversion disposition and recovery",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546955/job/112330662773",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "P01\u2013P11 reports proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546829/job/112330662750",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "P11 declared load and raw core-read performance proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546829/job/112330662709",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "P11 three original browser failures diagnostic replay",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546829/job/112330662672",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "P11 focused integrated quality and access proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546829/job/112330662370",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "ES-07 exact receiving, native conversion and recovery",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546923/job/112330662193",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "Engineering EN-01\u2013EN-08 commands, lineage and browser journeys",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546839/job/112330662087",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "Email Calendar persisted journey and server permissions",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546849/job/112330662041",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "Compiled application browser-mobile proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546679/job/112330661985",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "Compiled application browser-desktop proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546679/job/112330661978",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "Projects r10 scoped persistence and desktop interaction",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546827/job/112330661798",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    },
+    {
+      "name": "Compiled application retained proof",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37481546679/job/112330661612",
+      "head_sha": "110e6ede0cff36a1351a9bc8265479e015abd127"
+    }
+  ]
+}

@@ -3748,7 +3748,7 @@
       "title": "Exact receiving and controlled conversion",
       "category": "Forms",
       "module": "ES",
-      "purpose": "Attributable receiving, explicit item resolution, frozen plan and atomic native Forecast demand with original recovery. Completed targets receive immutable Retain/Hold/ReviseQuantity decisions and separately applied native effects. Held targets enter owned Supply receiving, immutable allocation review, separate native application and returned evidence. Existing Receipt correction freezes independently received shared-demand effects before native application. Receipt-derived Shipment shortfall separately receives each changed Demand before exact atomic allocation reduction. Four independently received material effects permit native Project forecast withdrawal with exact Impact succession and remaining holds. One explicit FS/SS successor adds a fifth independent decision and third native receipt. Explicit third task adds its own receiving decision, native save and fourth receipt.",
+      "purpose": "Attributable receiving, explicit item resolution, frozen plan and atomic native Forecast demand with original recovery. Completed targets receive immutable Retain/Hold/ReviseQuantity decisions and separately applied native effects. Held targets enter owned Supply receiving, immutable allocation review, separate native application and returned evidence. Existing Receipt correction freezes independently received shared-demand effects before native application. Receipt-derived Shipment shortfall separately receives each changed Demand before exact atomic allocation reduction. Four independently received material effects permit native Project forecast withdrawal with exact Impact succession and remaining holds. One explicit FS/SS successor adds a fifth independent decision and third native receipt. Explicit third task adds its own receiving decision, native save and fourth receipt. An explicit four-task diamond adds seven responsibilities, four native saves with D once, and five native receipts.",
       "owner": "Dean Fiedler",
       "example": null,
       "coverage": "Host example",
@@ -3882,6 +3882,26 @@
           "id": "merge-receiving",
           "label": "Six decisions for a Project merge with retained B",
           "description": "A → C and B → C; current native B position, two exact FS/SS links, independent B retention decision, A/C effects, extra-edge holds and three-receipt atomic outcome. Real host: tests/browser/quotation-task-merge.spec.ts."
+        },
+        {
+          "id": "diamond-seven-receiving",
+          "label": "Seven diamond responsibilities",
+          "description": "Explicit A to B to D and A to C to D, current and proposed positions; seven independent Accepted, Returned or Held decisions. Fixture: tests/browser/quotation-task-diamond.spec.ts."
+        },
+        {
+          "id": "diamond-both-paths-held",
+          "label": "Changed diamond path",
+          "description": "Changed topology, native position, authority or receiving holds unexecuted work; retain both paths and shared successor evidence."
+        },
+        {
+          "id": "diamond-d-once-returned",
+          "label": "Four withdrawn forecasts, D once",
+          "description": "Four native task saves, five native receipts, one Impact successor; unmet Demand, Activity and independent holds retained."
+        },
+        {
+          "id": "diamond-original-uncertain",
+          "label": "Diamond original uncertain",
+          "description": "Missing receipt remains inconclusive; current authority then exact retry or original recovery."
         }
       ],
       "implementation": [
@@ -3944,7 +3964,8 @@
         "docs/decisions/quotation-task-dependency.md",
         "docs/decisions/quotation-task-chain.md",
         "docs/decisions/quotation-task-branch.md",
-        "docs/decisions/quotation-task-merge.md"
+        "docs/decisions/quotation-task-merge.md",
+        "docs/decisions/quotation-task-diamond.md"
       ],
       "reference": {
         "path": "docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html",
@@ -3958,8 +3979,8 @@
         "scope:SC-09",
         "route:/supply/changes"
       ],
-      "desktop": "One shell scroll owner; exact binding, recovery, six decision regions, source/target review and immutable history.",
-      "mobile": "Stacked panels at 390/320 px; wrap identities and preserve labelled fields and original recovery above forms.",
+      "desktop": "One shell scroll owner; exact binding, recovery, six decision regions, source/target review and immutable history. Show four task positions, both paths into D, seven decisions and one D save.",
+      "mobile": "Stacked panels at 390/320 px; wrap identities and preserve labelled fields and original recovery above forms. Stack all four task positions and seven labelled decisions; wrap exact IDs and preserve separate review/apply.",
       "keyboard": "Native labelled inputs, shared buttons, visible focus and error focus; no drag-only decision.",
       "limitations": "Actual fixtures in tests/browser/quotation-conversion.spec.ts. Supply Demand Forecast only; no operational master, ERP order, customer signature or work authority. Positive Forecast quantity revision only; dependent/Approved target changes held. Disposition host examples use actual compiled synthetic fixtures. Existing allocation quantity adjustment requires an already Approved demand; zero retains native identity and class. No ERP reservation release or cancellation. See tests/browser/quotation-supply-followup.spec.ts. Original reservation evidence only; no external action or removal of other holds. Shortfall reductions preserve Demand/Receipt content; no priority, replenishment or external release. AllocationShortfall reuses existing controls and journal. Project forecast withdrawal only; no replenishment, priority, rescheduling or automatic Activity completion.",
       "gaps": [
@@ -4048,6 +4069,14 @@
           "expected": "Paired review of merge topology, retained B, six responsibilities and continuing holds.",
           "actual": "Native merge adaptation; accepted imagery and owner/device/screen-reader review pending.",
           "action": "Compare compiled host evidence with the bounded merge contract; preserve all earlier topology meaning.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "diamond-resolution-review",
+          "expected": "Paired review of four tasks, both paths into D, seven responsibilities and continuing holds.",
+          "actual": "Native extension; accepted diamond images and owner/device/screen-reader review pending.",
+          "action": "Compare source-specific execution evidence against the diamond contract without altering historical topology meaning.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
