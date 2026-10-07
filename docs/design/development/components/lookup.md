@@ -44,3 +44,7 @@ Changes to the source, styles, fixtures, specification or reference invalidate p
 ## Leads consumer
 
 The Leads host uses this control to select a permitted organisation, site and contact. A changed site may require explicit retention of original follow-up, with an owned dated review on the new Deal. Host state examples live in [lead continuity fixtures](../lead-continuity-fixtures.json). The shared lookup implementation is unchanged. Its typed text is never proof of a selected site; selection and command validation remain separate. Paired review of the new host adaptation is pending.
+
+## LC-12 consumer alignment
+
+Leads customer resolution and transfer reuse this control family, with native shared creation as the return destination. Keep record selection explicit, reasons retained and uncertain-original recovery locked against a duplicate command. Host fixtures are in [lead continuity examples](../lead-continuity-fixtures.json); no exact new state mockup or paired acceptance is claimed. Check desktop/mobile reachability, disabled state and permission-filtered choices in the host.

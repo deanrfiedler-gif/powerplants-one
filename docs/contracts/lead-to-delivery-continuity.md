@@ -2,6 +2,8 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
+LC-12 implementation adds explicit customer resolution and owned Lead transfer under [the customer-context decision](../decisions/lead-customer-context.md). Captured context and source Activity ownership remain retained. Native customer/person/affiliation/site forms return to an explicit Lead resolution review; each shared save has its own original receipt. Resolution supersession retains every selection and reason. Current target visibility guards the resolution projection, history and mutations; unavailable customer context is labelled without exposing its identities. A transfer compares all Activity versions, checks the eligible recipient and retains exact event/receipt evidence for former-owner original recovery. No default grant or capability is added; recipients must already hold the required access. Local synthetic verification is recorded in [LC-12 execution evidence](../testing/evidence/lead-context-resolution/README.md). Owner acceptance, final-head CI and deployment remain separate. The first delivery increment now has local functional proof; increments 2–6 remain open.
+
 Owner: Dean Fiedler. Review: proposed implementation contract; owner acceptance pending.
 
 Authority: the user's 7 October 2026 instruction to proceed with completing the Leads/Deals journey, followed by the explicit repository-writing handover from Maintenance. Parent scope: CRM-01–CRM-08; AT-01, AT-02, AT-03, AT-25, AT-26 and AT-33. Existing manual Leads and CR-01–CR-05 scope IDs remain unchanged. This is a synthetic prototype contribution, not a production integration or customer commitment.

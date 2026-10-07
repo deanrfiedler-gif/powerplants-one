@@ -1,0 +1,39 @@
+[WebServer] (node:29088) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.98"}
+
+Running 16 tests using 1 worker
+
+(node:33124) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Leads console: Failed to load resource: net::ERR_FAILED
+  ok  1 [desktop-chromium] › tests\browser\leads.spec.ts:10:1 › LC-11 a site discovered after lead follow-up keeps source obligations through lost-response recovery (5.2s)
+Leads console: Failed to load resource: net::ERR_FAILED
+  ok  2 [desktop-chromium] › tests\browser\leads.spec.ts:61:1 › LC-12 resolves an unknown enquiry and recovers the exact saved context (2.6s)
+Leads console: Failed to load resource: the server responded with a status of 409 (Conflict)
+Leads console: Failed to load resource: the server responded with a status of 403 (Forbidden)
+  ok  3 [desktop-chromium] › tests\browser\leads.spec.ts:96:1 › LC-12 a background refresh cannot advance the reviewed version and denied context is cleared (1.6s)
+Leads console: Failed to load resource: net::ERR_FAILED
+  ok  4 [desktop-chromium] › tests\browser\leads.spec.ts:115:1 › LC-12 creates a customer, dated contact affiliation and site then returns for explicit lead resolution (5.0s)
+  ok  5 [desktop-chromium] › tests\browser\leads.spec.ts:164:1 › approved leads list/detail and atomic conversion persist through reload (2.8s)
+  ok  6 [desktop-chromium] › tests\browser\leads.spec.ts:222:1 › Add lead has one scroll body, fixed actions, focus return and navy add button at phone sizes (1.4s)
+  ok  7 [desktop-chromium] › tests\browser\leads.spec.ts:288:1 › manual lead saves with an unverified organisation and survives reload (2.3s)
+  ok  8 [desktop-chromium] › tests\browser\leads.spec.ts:319:1 › approved desktop columns resize independently and retain widths with quiet aligned handles (2.2s)
+(node:13832) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Leads console: Failed to load resource: net::ERR_FAILED
+  ok  9 [mobile-chromium] › tests\browser\leads.spec.ts:10:1 › LC-11 a site discovered after lead follow-up keeps source obligations through lost-response recovery (4.3s)
+Leads console: Failed to load resource: net::ERR_FAILED
+  ok 10 [mobile-chromium] › tests\browser\leads.spec.ts:61:1 › LC-12 resolves an unknown enquiry and recovers the exact saved context (2.8s)
+Leads console: Failed to load resource: the server responded with a status of 409 (Conflict)
+Leads console: Failed to load resource: the server responded with a status of 403 (Forbidden)
+  ok 11 [mobile-chromium] › tests\browser\leads.spec.ts:96:1 › LC-12 a background refresh cannot advance the reviewed version and denied context is cleared (1.3s)
+Leads console: Failed to load resource: net::ERR_FAILED
+  ok 12 [mobile-chromium] › tests\browser\leads.spec.ts:115:1 › LC-12 creates a customer, dated contact affiliation and site then returns for explicit lead resolution (4.4s)
+  ok 13 [mobile-chromium] › tests\browser\leads.spec.ts:164:1 › approved leads list/detail and atomic conversion persist through reload (2.8s)
+  ok 14 [mobile-chromium] › tests\browser\leads.spec.ts:222:1 › Add lead has one scroll body, fixed actions, focus return and navy add button at phone sizes (2.2s)
+  ok 15 [mobile-chromium] › tests\browser\leads.spec.ts:288:1 › manual lead saves with an unverified organisation and survives reload (2.7s)
+  -  16 [mobile-chromium] › tests\browser\leads.spec.ts:319:1 › approved desktop columns resize independently and retain widths with quiet aligned handles
+
+  1 skipped
+  15 passed (57.0s)

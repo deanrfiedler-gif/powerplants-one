@@ -1,0 +1,26 @@
+✔ LC-12 resolution retains capture and actions, fences current context, and recovers exact originals (10437.0172ms)
+✔ LC-12 transfers preserve independent obligations; former owner may recover originals but cannot mutate (11660.5396ms)
+✔ LC-12 stale activities, hidden recipients and invalid customer context leave no partial effects (12311.8636ms)
+✔ LC-12 immutable companions and late failures preserve exact state (11574.0093ms)
+✔ LC-12 populated previous-version upgrade preserves all Lead originals and permission grants (26007.6183ms)
+✔ LC-11 site resolution preserves source obligations and exact concurrent original recovery (12150.6614ms)
+✔ LC-11 exact membership and activity versions fence reviewed conversion without partial effects (11789.8559ms)
+✔ LC-11 retained obligations need an owned dated relationship review and cannot evade compatible carrying (12589.9859ms)
+✔ LC-11 current source access governs conversion, history disclosure and original recovery (11210.8033ms)
+✔ LC-11 a late outbox failure rolls back the Deal, review activity, links, source evidence and receipt (16875.6132ms)
+✔ LC-01/02/06 manual capture, note, completed history and independent-owner action survive one durable conversion (37694.4074ms)
+✔ LC-04/05 same-intent retries and competing intents commit exactly one linked deal (24312.0861ms)
+✔ LC-05 missing identification is specific; failure after tentative insertion rolls back every effect (52022.4802ms)
+✔ LC-03/06 current permission, company and all-target checks precede reads and replay (29216.1481ms)
+✔ LC-07 archive, disqualify and reopen preserve history; converted source is immutable (43075.5993ms)
+✔ LC-06 incompatible Activity site context blocks without a partial conversion (35892.1154ms)
+✔ LC-04 two different concurrent conversion intents cannot create two deals (36529.3956ms)
+✔ LC-08 ordered pagination keeps signed filter context and visits each lead once (15159.3414ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 417019.512

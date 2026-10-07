@@ -1,0 +1,71 @@
+✔ LC-12 resolution retains capture and actions, fences current context, and recovers exact originals (14674.6134ms)
+✖ LC-12 transfers preserve independent obligations; former owner may recover originals but cannot mutate (17051.1925ms)
+✖ LC-12 stale activities, hidden recipients and invalid customer context leave no partial effects (21643.5563ms)
+✔ LC-12 immutable companions and late failures preserve exact state (17055.6513ms)
+✔ LC-12 populated previous-version upgrade preserves all Lead originals and permission grants (43796.3128ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 3
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 116945.6419
+
+✖ failing tests:
+
+test at tests\database\leads-amendments.test.ts:1:4506
+✖ LC-12 transfers preserve independent obligations; former owner may recover originals but cannot mutate (17051.1925ms)
+  error: column "scope_kind" of relation "permission_grants" does not exist
+      at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\node_modules\pg-pool\index.js:45:11
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async receiver (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\database\leads-amendments.test.ts:38:3)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\database\leads-amendments.test.ts:61:38)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 140,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '70',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_target.c',
+    line: '1071',
+    routine: 'checkInsertTargets'
+  }
+
+test at tests\database\leads-amendments.test.ts:1:6194
+✖ LC-12 stale activities, hidden recipients and invalid customer context leave no partial effects (21643.5563ms)
+  error: column "scope_kind" of relation "permission_grants" does not exist
+      at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\node_modules\pg-pool\index.js:45:11
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async receiver (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\database\leads-amendments.test.ts:38:3)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\database\leads-amendments.test.ts:80:37)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 140,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '70',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_target.c',
+    line: '1071',
+    routine: 'checkInsertTargets'
+  }

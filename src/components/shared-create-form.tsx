@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useCrmCommand } from "./crm-state";
 import { useIdentity } from "./business-session";
 import {
   EnumField,
@@ -23,14 +24,20 @@ export function SharedCreateForm({
 }) {
   const p = useIdentity(),
     router = useRouter(),
-    cmd = useCommand(),
+    ordinaryCommand = useCommand(),
     kind = initial.kind ?? "customer";
+  const lead =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+      initial.lead ?? "",
+    ) && ["customer", "site", "person", "affiliation"].includes(kind)
+      ? initial.lead
+      : null;
   const [v, setV] = useState<Record<string, string>>({
     company: initial.company ?? "",
     site: initial.site ?? "",
     parent: initial.parent ?? "",
     owner: p.actor_id,
-    name: "",
+    name: lead ? (initial.name ?? "") : "",
     location: "",
     timezone: "Australia/Brisbane",
     contact: "",
@@ -40,7 +47,7 @@ export function SharedCreateForm({
     role: "",
     from: "",
     to: "",
-    person: "",
+    person: lead ? (initial.person ?? "") : "",
     email: "",
     phone: "",
     preference: "",
@@ -61,6 +68,35 @@ export function SharedCreateForm({
   });
   const [newId] = useState(() => crypto.randomUUID()),
     [expected, setExpected] = useState(Number(initial.version ?? 1));
+  const leadReturn = (
+    organisation = v.parent,
+    site = v.site,
+    person = v.person,
+  ) =>
+    `/sales/leads/${lead}?${new URLSearchParams({ resolve: "1", organisation_id: organisation, site_id: site, primary_person_id: person })}`;
+  const leadCommand = useCrmCommand(() => {
+    if (kind === "person") {
+      router.push(
+        `/customers/new?${new URLSearchParams({ kind: "affiliation", lead: lead!, company: v.company, parent: v.parent, site: v.site, person: newId, created_person: "1" })}`,
+      );
+      router.refresh();
+    } else
+      router.push(
+        leadReturn(
+          kind === "customer" ? newId : v.parent,
+          kind === "site" ? newId : kind === "customer" ? "" : v.site,
+          kind === "customer" ? "" : v.person,
+        ),
+      );
+  });
+  const cmd = lead
+    ? {
+        busy: leadCommand.busy,
+        error: leadCommand.error,
+        clear: leadCommand.clearError,
+      }
+    : ordinaryCommand;
+  const locked = cmd.busy || (!!lead && leadCommand.uncertain);
   const set = (k: string, value: string) => setV((s) => ({ ...s, [k]: value }));
   const companies = useResource<Envelope<Option>>("selectors/companies");
   const owners = useResource<Envelope<Option>>(
@@ -104,7 +140,13 @@ export function SharedCreateForm({
     <Field
       key={key}
       name={"shared-" + key}
-      validationField={key === "name" ? (kind === "asset" ? "description" : "display_name") : key}
+      validationField={
+        key === "name"
+          ? kind === "asset"
+            ? "description"
+            : "display_name"
+          : key
+      }
       label={label}
       value={v[key] ?? ""}
       onChange={(value) => set(key, value)}
@@ -123,7 +165,15 @@ export function SharedCreateForm({
     <SelectField
       key={key}
       name={"shared-" + key}
-      validationField={key === "company" ? (kind === "person" ? "company_ids" : "company_id") : key === "owner" ? "owner_id" : key}
+      validationField={
+        key === "company"
+          ? kind === "person"
+            ? "company_ids"
+            : "company_id"
+          : key === "owner"
+            ? "owner_id"
+            : key
+      }
       label={label}
       value={v[key] ?? ""}
       onChange={(value) => set(key, value)}
@@ -133,6 +183,7 @@ export function SharedCreateForm({
   );
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+    if (locked) return;
     let path = "",
       destination = "",
       fields: Record<string, unknown> = { id: newId, reason: v.reason };
@@ -243,7 +294,11 @@ export function SharedCreateForm({
       };
     }
     if (!path) return;
-    const result = await cmd.send(path, fields);
+    if (lead) {
+      await leadCommand.send(path, fields);
+      return;
+    }
+    const result = await ordinaryCommand.send(path, fields);
     if (result) router.push(destination);
   }
   const titles: Record<string, string> = {
@@ -258,6 +313,20 @@ export function SharedCreateForm({
   return (
     <ValidationFields error={cmd.error}>
       <Link href="/customers">← Customer context</Link>
+      {lead && !locked && (
+        <p>
+          <Link href={leadReturn()}>
+            Return to lead and review the selection
+          </Link>
+        </p>
+      )}
+      {lead && kind === "affiliation" && initial.created_person === "1" && (
+        <p role="status">
+          The contact has been saved. Add its customer affiliation with the
+          correct role and dates before selecting it on the lead. If this step
+          fails, the saved contact remains available.
+        </p>
+      )}
       <PageHeader
         eyebrow="Synthetic context / Record capture"
         title={titles[kind] ?? "Unsupported record type"}
@@ -267,10 +336,37 @@ export function SharedCreateForm({
         work authority or verified source evidence is created.
       </p>
       <ErrorNotice error={cmd.error} />
-      {["customer", "person", "site", "asset"].includes(kind) && <ReadState loading={companies.loading} error={companies.error} retry={companies.reload} />}
-      {["customer", "site"].includes(kind) && v.company && <ReadState loading={owners.loading} error={owners.error} retry={owners.reload} />}
-      <form className="form-panel" onSubmit={submit}>
-        <fieldset disabled={cmd.busy || (["customer", "person", "site", "asset"].includes(kind) && companies.loading) || (["customer", "site"].includes(kind) && !!v.company && owners.loading)}>
+      {["customer", "person", "site", "asset"].includes(kind) && (
+        <ReadState
+          loading={companies.loading}
+          error={companies.error}
+          retry={companies.reload}
+        />
+      )}
+      {["customer", "site"].includes(kind) && v.company && (
+        <ReadState
+          loading={owners.loading}
+          error={owners.error}
+          retry={owners.reload}
+        />
+      )}
+      <form
+        className="form-panel"
+        onSubmit={submit}
+        onChange={() => {
+          if (lead) leadCommand.dirty();
+        }}
+      >
+        <fieldset
+          disabled={
+            locked ||
+            (["customer", "person", "site", "asset"].includes(kind) &&
+              companies.loading) ||
+            (["customer", "site"].includes(kind) &&
+              !!v.company &&
+              owners.loading)
+          }
+        >
           <div className="form-grid">
             {["customer", "person", "site", "asset"].includes(kind) &&
               select(
@@ -490,6 +586,16 @@ export function SharedCreateForm({
           </button>
         </fieldset>
       </form>
+      {lead && <p role="status">{leadCommand.status}</p>}
+      {lead && leadCommand.uncertain && (
+        <button
+          type="button"
+          disabled={leadCommand.busy}
+          onClick={() => void leadCommand.reconcile()}
+        >
+          Confirm original save
+        </button>
+      )}
       {[
         companies,
         ...(["customer", "site"].includes(kind) ? [owners] : []),
@@ -510,12 +616,17 @@ export function SharedCreateForm({
             Parent record version: {parent.data.items[0].version}. Your entries
             remain in the form.
           </p>
-          <button className="secondary" onClick={parent.reload}>
+          <button
+            className="secondary"
+            disabled={locked}
+            onClick={parent.reload}
+          >
             Compare current saved parent
           </button>
           {parent.data.items[0].version !== expected && (
             <button
               className="secondary"
+              disabled={locked}
               onClick={() => {
                 setExpected(parent.data!.items[0].version);
                 cmd.clear();
@@ -534,6 +645,12 @@ export function SharedCreateForm({
               <Link href={"/customers/" + o.id}>
                 {o.display_name} · {o.display_number}
               </Link>
+              {lead && !locked && (
+                <Link href={leadReturn(o.id, "", "")}>
+                  {" "}
+                  Use this customer on the lead
+                </Link>
+              )}
             </p>
           ))}
           <p>

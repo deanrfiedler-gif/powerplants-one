@@ -1,0 +1,10 @@
+✔ LC-12 transfers preserve independent obligations; former owner may recover originals but cannot mutate (9744.0563ms)
+✔ main 0017 upgrades through Leads 0018 then Projects 0019 without replacing prior migration receipts (19989.9098ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 33024.7652

@@ -1,0 +1,14 @@
+✔ LC-12 resolution retains capture and actions, fences current context, and recovers exact originals (21023.7971ms)
+✔ LC-12 transfers preserve independent obligations; former owner may recover originals but cannot mutate (38445.4534ms)
+✔ LC-12 stale activities, hidden recipients and invalid customer context leave no partial effects (22628.4044ms)
+✔ LC-12 immutable companions and late failures preserve exact state (9795.3788ms)
+✔ LC-12 creation recovery preserves the separate creator and eligible Lead owner duties (8892.0859ms)
+✔ LC-12 populated previous-version upgrade preserves all Lead originals and permission grants (19325.5705ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 122034.7411

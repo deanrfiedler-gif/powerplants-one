@@ -36,6 +36,14 @@ export const leadsGuide = {
   ],
   steps: [
     [
+      "Resolve customer records",
+      "Open Resolve customer context to select the customer, site and contact. Create and return uses the shared record forms; each save is separate. A new contact needs a dated customer affiliation. Review the returned selection and save the lead context with a reason. The captured enquiry and earlier selections remain in history.",
+    ],
+    [
+      "Transfer accountability",
+      "The current owner can transfer an active lead to an eligible recipient. Compare every linked activity; those activities keep their owners, dates and outcomes. No available recipient means the required access has not been established. Confirm original save recovers an accepted transfer even after ownership changes.",
+    ],
+    [
       "Add a lead",
       "Use the + Lead button. Record the title, the organisation or contact, and where the enquiry came from. The arrow beside the button will hold bulk import once that is available.",
     ],

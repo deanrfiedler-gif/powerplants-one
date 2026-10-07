@@ -57,6 +57,110 @@ async function call(page: Page, path: string, body?: unknown) {
   expect(r.ok(), await r.text()).toBe(true);
   return r.json();
 }
+
+test("LC-12 resolves an unknown enquiry and recovers the exact saved context",async({page},info)=>{
+  await call(page,"local-session",{profile:"coordinator"});
+  const input={...leadCreate(),organisation_id:null,site_id:null,primary_person_id:null};
+  input.title=`SYN Resolve customer ${input.id}`;
+  await call(page,"crm/leads",input);
+  await page.goto(`/sales/leads/${input.id}`);
+  await page.getByRole("button",{name:"Resolve customer context",exact:true}).click();
+  for(const [label,id] of [["Customer organisation",CRM.org],["Customer site",CRM.site],["Customer contact",CRM.person]]){
+    await page.getByRole("combobox",{name:label,exact:true}).click();
+    await page.locator(`[role=option][data-record-id="${id}"]`).click();
+  }
+  await page.getByLabel("Reason for this change",{exact:true}).fill("SYN Confirmed the customer, site and contact for the original enquiry.");
+  await page.screenshot({path:info.outputPath("lead-customer-resolution.png")});
+  let posts=0;
+  await page.route(`**/api/v1/crm/leads/${input.id}/resolve`,async route=>{
+    posts++;const response=await route.fetch();expect(response.ok(),await response.text()).toBe(true);await route.abort("failed");
+  });
+  await page.getByRole("button",{name:"Save customer context",exact:true}).click();
+  await page.getByRole("button",{name:"Confirm original save",exact:true}).click();
+  await expect(page.getByRole("heading",{name:"Resolved customer context",exact:true})).toBeVisible();
+  expect(posts).toBe(1);
+  const lead=await call(page,`crm/leads/${input.id}`);
+  expect(lead.organisation_id).toBeNull();expect(lead.resolution.organisation_id).toBe(CRM.org);
+  await page.reload();
+  await expect(page.getByRole("dialog")).toContainText("Selected at lead version 2");
+  await page.getByRole("button",{name:"Convert to deal",exact:true}).click();
+  await expect(page.getByRole("combobox",{name:"Existing organisation",exact:true})).not.toHaveValue("");
+  await page.getByRole("button",{name:"Cancel",exact:true}).click();
+  await page.getByRole("button",{name:"Transfer ownership",exact:true}).click();
+  await expect(page.getByRole("button",{name:"Transfer lead",exact:true})).toBeDisabled();
+  await expect(page.getByRole("heading",{name:"Transfer lead ownership",exact:true})).toBeVisible();
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  await page.screenshot({path:info.outputPath("lead-owner-comparison.png")});
+});
+
+test("LC-12 a background refresh cannot advance the reviewed version and denied context is cleared",async({page})=>{
+  await call(page,"local-session",{profile:"coordinator"});
+  const input=leadCreate();input.title=`SYN Frozen review ${input.id}`;
+  await call(page,"crm/leads",input);await page.goto(`/sales/leads/${input.id}`);
+  await page.getByRole("button",{name:"Resolve customer context",exact:true}).click();
+  await page.getByLabel("Reason for this change",{exact:true}).fill("SYN Selected the current customer context");
+  await call(page,`crm/leads/${input.id}`,{...crmBase(),expected_version:1,action:"note",note:"SYN Concurrent customer update"});
+  const refresh=page.waitForResponse(r=>r.url().endsWith(`/api/v1/crm/leads/${input.id}`)&&r.request().method()==="GET");
+  await page.evaluate(()=>window.dispatchEvent(new Event("focus")));expect((await(await refresh).json()).version).toBe(2);
+  await page.getByRole("button",{name:"Save customer context",exact:true}).click();
+  await expect(page.getByRole("dialog")).toContainText("This lead changed");
+  expect((await call(page,`crm/leads/${input.id}`)).resolution).toBeNull();
+  // Presentation proof for a current-authority refusal; real permission checks are database-tested.
+  await page.route(`**/api/v1/crm/leads/${input.id}/resolve`,route=>route.fulfill({status:403,contentType:"application/json",body:JSON.stringify({error:{code:"Forbidden",message:"Current access revoked",retryable:false}})}));
+  await page.getByRole("button",{name:"Save customer context",exact:true}).click();
+  await expect(page.getByRole("heading",{name:"Lead context unavailable",exact:true})).toBeVisible();
+  await expect(page.getByRole("combobox",{name:"Customer organisation",exact:true})).toHaveCount(0);
+});
+
+test("LC-12 creates a customer, dated contact affiliation and site then returns for explicit lead resolution",async({page},info)=>{
+  test.setTimeout(180000);
+  await call(page,"local-session",{profile:"coordinator"});
+  const input={...leadCreate(),organisation_id:null,site_id:null,primary_person_id:null,organisation_text:"",contact_text:"SYN Nursery Contact"};
+  input.title=`SYN New prospect ${input.id}`;input.organisation_text=`SYN Nursery ${input.id}`;
+  await call(page,"crm/leads",input);
+  await page.goto(`/sales/leads/${input.id}`);
+  await page.getByRole("button",{name:"Resolve customer context",exact:true}).click();
+  await page.getByRole("button",{name:"Create customer and return",exact:true}).click();
+  await expect(page.getByLabel("Display name",{exact:true})).toHaveValue(input.organisation_text!);
+  await page.getByLabel("Reason for capture",{exact:true}).fill("SYN New prospect recorded from the enquiry");
+  let creates=0;
+  await page.route("**/api/v1/customers",async route=>{
+    if(route.request().method()!=="POST") return route.continue();
+    creates++;const response=await route.fetch();expect(response.ok(),await response.text()).toBe(true);await route.abort("failed");
+  });
+  await page.getByRole("button",{name:"Save record",exact:true}).click();
+  await page.getByRole("button",{name:"Confirm original save",exact:true}).click();
+  expect(creates).toBe(1);
+  await expect(page.getByRole("heading",{name:"Resolve customer context",exact:true})).toBeVisible();
+  expect((await call(page,`crm/leads/${input.id}`)).resolution).toBeNull();
+  await page.getByRole("button",{name:"Create contact and return",exact:true}).click();
+  await page.getByLabel("Reason for capture",{exact:true}).fill("SYN Contact supplied with this enquiry");
+  await page.getByRole("button",{name:"Save record",exact:true}).click();
+  await expect(page.getByRole("heading",{name:"Add an existing contact affiliation",exact:true})).toBeVisible();
+  await expect(page.getByText("The contact has been saved.",{exact:false})).toBeVisible();
+  await page.getByLabel("Affiliation role",{exact:true}).fill("Site contact");
+  await page.getByLabel("Valid from",{exact:true}).fill("2026-01-01");
+  await page.getByLabel("Reason for capture",{exact:true}).fill("SYN Customer confirmed the current affiliation");
+  await page.getByRole("button",{name:"Save record",exact:true}).click();
+  await expect(page.getByRole("heading",{name:"Resolve customer context",exact:true})).toBeVisible();
+  await page.getByRole("button",{name:"Create site and return",exact:true}).click();
+  await page.getByLabel("Display name",{exact:true}).fill(`SYN Site ${input.id}`);
+  await page.getByLabel("Known location / explicit location uncertainty",{exact:true}).fill("SYN Growing site; access to be confirmed");
+  await page.getByLabel("Relationship role",{exact:true}).selectOption("Operator");
+  await page.getByLabel("Effective from (UTC)",{exact:true}).fill("2026-01-01T00:00");
+  await page.getByLabel("Reason for capture",{exact:true}).fill("SYN Customer confirmed the site relationship");
+  await page.getByRole("button",{name:"Save record",exact:true}).click();
+  await expect(page.getByRole("heading",{name:"Resolve customer context",exact:true})).toBeVisible();
+  await page.getByLabel("Reason for this change",{exact:true}).fill("SYN Reviewed all newly saved customer records against the enquiry");
+  await page.getByRole("button",{name:"Save customer context",exact:true}).click();
+  await expect(page.getByRole("heading",{name:"Resolved customer context",exact:true})).toBeVisible();
+  const lead=await call(page,`crm/leads/${input.id}`);
+  expect(lead.resolution.state).toBe("Available");expect(lead.resolution.site_id).toBeTruthy();expect(lead.resolution.primary_person_id).toBeTruthy();
+  expect(lead.organisation_id).toBeNull();expect(lead.events.filter((e:{event_type:string})=>e.event_type==="ResolveLeadContext")).toHaveLength(1);
+  await page.reload();await expect(page.getByRole("dialog")).toContainText(`SYN Site ${input.id}`);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  await page.screenshot({path:info.outputPath("lead-created-customer-context.png")});
+});
 test("approved leads list/detail and atomic conversion persist through reload", async ({
   page,
 }, info) => {
