@@ -130,3 +130,20 @@ test("N12 Sales Activities preserves selected day in rail, phone, More and searc
   await page.goto("/work?department=service");await page.getByRole("button",{name:"More",exact:true}).click();
   await expect(page.locator(".ppo-more-panel:visible").getByRole("link",{name:"Personal Calendar",exact:true})).toHaveAttribute("href","/calendar?department=service");
 });
+
+test("N11 blank workspace More opens each permitted operational entry",async({page})=>{
+  for(const [profile,workspace,target,label,api,title] of [
+    ["coordinator","estimate","/estimating/intake","Intake","/api/v1/sales/handovers","Estimating Intake"],
+    ["assigned-technician","service","/my-jobs/inspections","My inspections","/api/v1/my-jobs/inspections","Inspection capture"],
+    ["coordinator","service","/service/incidents","Incidents and actions","/api/v1/service/incidents","Incidents and corrective actions"],
+    ["coordinator","service","/service/inspections","Inspection review","/api/v1/service/inspections","Inspection review"],
+  ]){
+    await login(page,profile);await page.goto(`/work?department=${workspace}`);
+    await page.getByRole("button",{name:"More",exact:true}).click();
+    const link=page.locator(".ppo-more-panel:visible").getByRole("link",{name:label,exact:true});
+    await expect(link).toHaveAttribute("href",target);
+    const read=page.waitForResponse(r=>new URL(r.url()).pathname===api&&r.request().method()==="GET"&&r.ok());
+    await link.click();await read;await expect(page).toHaveURL(origin()+target);
+    await expect(page.getByRole("heading",{name:title,level:1,exact:true})).toBeVisible();
+  }
+});
