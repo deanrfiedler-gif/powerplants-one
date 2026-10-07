@@ -18,6 +18,11 @@ import {
   visibleLead,
 } from "./context";
 import { sources } from "./validation";
+import {
+  currentResolution,
+  visibleCustomerContext,
+  type LeadResolution,
+} from "./resolution-context";
 export async function readLead(p: Principal, id: string) {
   const c = database(),
     l = await visibleLead(c, p, id);
@@ -100,6 +105,32 @@ export async function readLead(p: Principal, id: string) {
   const conversion_review = conversion
     ? await conversionReview(p, id, !!deal)
     : null;
+  const resolution = await readResolution(p, id);
+  const resolution_history = resolution
+    ? await Promise.all(
+        (
+          await c.query<LeadResolution>(
+            "SELECT company_id,organisation_id,site_id,primary_person_id,event_id,lead_version FROM ppo.lead_context_resolutions WHERE workspace_id=$1 AND lead_id=$2 ORDER BY lead_version",
+            [p.workspace_id, id],
+          )
+        ).rows.map((r) => readResolution(p, id, r)),
+      )
+    : [];
+  const ownership_history = (
+    await c.query("SELECT to_regclass('ppo.lead_owner_transfers') AS relation")
+  ).rows[0].relation
+    ? (
+        await c.query<{
+          event_id: string;
+          lead_version: number;
+          from_owner_name: string;
+          to_owner_name: string;
+        }>(
+          "SELECT t.event_id,t.lead_version,f.display_name AS from_owner_name,u.display_name AS to_owner_name FROM ppo.lead_owner_transfers t JOIN ppo.users f ON (f.workspace_id,f.id)=(t.workspace_id,t.from_owner_id) JOIN ppo.users u ON (u.workspace_id,u.id)=(t.workspace_id,t.to_owner_id) WHERE t.workspace_id=$1 AND t.lead_id=$2 ORDER BY t.lead_version",
+          [p.workspace_id, id],
+        )
+      ).rows
+    : [];
   return {
     ...l,
     ...labels,
@@ -120,10 +151,43 @@ export async function readLead(p: Principal, id: string) {
               : "Upcoming",
     deal,
     conversion_review,
+    resolution,
+    resolution_history,
+    ownership_history,
     can_edit,
     can_convert,
     synthetic: true as const,
   };
+}
+
+async function readResolution(
+  p: Principal,
+  id: string,
+  original?: LeadResolution,
+) {
+  const c = database(),
+    r = original ?? (await currentResolution(c, p, id));
+  if (!r) return null;
+  try {
+    await visibleCustomerContext(c, p, r);
+    const organisation = r.organisation_id
+      ? await visible(c, p, "Organisation", r.organisation_id)
+      : null;
+    const site = r.site_id ? await visible(c, p, "Site", r.site_id) : null;
+    const person = r.primary_person_id
+      ? await visible(c, p, "Person", r.primary_person_id)
+      : null;
+    return {
+      state: "Available" as const,
+      ...r,
+      organisation_name: organisation?.display_name ?? null,
+      site_name: site?.display_name ?? null,
+      contact_name: person?.display_name ?? null,
+    };
+  } catch (e) {
+    if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
+    return { state: "Restricted" as const };
+  }
 }
 
 async function conversionReview(

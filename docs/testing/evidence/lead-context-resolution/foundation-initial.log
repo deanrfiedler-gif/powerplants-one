@@ -1,0 +1,15 @@
+{
+  "status": "failed",
+  "issued_sources": 22,
+  "requirements": 78,
+  "decisions": 29,
+  "planned_acceptance": 38,
+  "backlog_items": 16,
+  "linked_issues": 16,
+  "local_links_checked": 6953,
+  "files_scanned_for_markers": 4361,
+  "errors": [
+    "docs\\testing\\evidence\\lead-context-resolution\\README.md: broken local link: manifest.json"
+  ],
+  "scope": "Documentation assurance only; no business acceptance tests executed"
+}

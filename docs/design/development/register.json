@@ -972,7 +972,7 @@
       "title": "Opportunity detail and internal work",
       "kind": "scope",
       "module": "CR",
-      "summary": "Maintain one opportunity with source-owned customer context, accountable next action, commercial evidence and linked handovers.",
+      "summary": "Maintain one opportunity with source-owned customer context, accountable next action, commercial evidence and linked handovers. Incoming converted Leads retain their captured enquiry, resolved context and ownership history.",
       "path": "/sales/opportunities/[id]",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -985,11 +985,14 @@
         "src/components/crm-screens.tsx",
         "src/components/opportunity-workflows.tsx",
         "src/components/opportunity-correspondence.tsx",
-        "docs/contracts/lead-to-delivery-continuity.md"
+        "docs/contracts/lead-to-delivery-continuity.md",
+        "docs/decisions/lead-customer-context.md",
+        "docs/design/development/lead-continuity-fixtures.json",
+        "docs/testing/evidence/lead-context-resolution/README.md"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "See sales-native-completion-handover for executed assurance",
+      "functional_status": "See sales-native-completion-handover for existing Deal assurance. LC-12 local functional proof: six database cases, selected populated upgrades and 15 compiled desktop/phone checks with one retained skip. See lead-context-resolution evidence; paired visual and owner acceptance remain pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -5575,7 +5578,7 @@
       "title": "Create customer / shared record",
       "kind": "route",
       "module": "CS",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "Create a shared customer, person, dated affiliation or site; Leads callers return to an explicit customer-context review after each separate saved result.",
       "path": "/customers/new",
       "source_paths": [
         "src/app/(business)/customers/new/page.tsx"
@@ -5584,10 +5587,14 @@
       "design_path": "docs/design/development/pages/route-customers-new.md",
       "html_path": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/decisions/lead-customer-context.md",
+        "docs/design/development/lead-continuity-fixtures.json",
+        "docs/testing/evidence/lead-context-resolution/README.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "LC-12 local functional proof: six database cases, selected populated upgrades and 15 compiled desktop/phone checks with one retained skip. See lead-context-resolution evidence; paired visual and owner acceptance remain pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6471,7 +6478,7 @@
       "title": "Lead detail",
       "kind": "route",
       "module": "CR",
-      "summary": "This page address exists in the inspected application source. Open it from a running app using an identity with the required access.",
+      "summary": "LC-12 customer resolution and owned Lead transfer preserve captured enquiry facts, source Activities and exact original recovery. Native customer/contact/site creation returns to an explicit Lead selection review.",
       "path": "/sales/leads/[id]",
       "source_paths": [
         "src/app/(business)/sales/leads/[id]/page.tsx"
@@ -6481,11 +6488,14 @@
       "html_path": "docs/reference/ui/crm/PPO-Leads-Desktop-Container-r01.html",
       "image_paths": [],
       "dependencies": [
-        "docs/contracts/lead-to-delivery-continuity.md"
+        "docs/contracts/lead-to-delivery-continuity.md",
+        "docs/decisions/lead-customer-context.md",
+        "docs/design/development/lead-continuity-fixtures.json",
+        "docs/testing/evidence/lead-context-resolution/README.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "LC-12 local functional proof: six database cases, selected populated upgrades and 15 compiled desktop/phone checks with one retained skip. See lead-context-resolution evidence; paired visual and owner acceptance remain pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6499,7 +6509,7 @@
       "title": "Leads",
       "kind": "route",
       "module": "CR",
-      "summary": "This page address exists in the inspected application source. Open it from a running app using an identity with the required access.",
+      "summary": "LC-12 customer resolution and owned Lead transfer preserve captured enquiry facts, source Activities and exact original recovery. Native customer/contact/site creation returns to an explicit Lead selection review.",
       "path": "/sales/leads",
       "source_paths": [
         "src/app/(business)/sales/leads/page.tsx"
@@ -6509,11 +6519,14 @@
       "html_path": "docs/reference/ui/crm/PPO-Leads-Desktop-Container-r01.html",
       "image_paths": [],
       "dependencies": [
-        "docs/contracts/lead-to-delivery-continuity.md"
+        "docs/contracts/lead-to-delivery-continuity.md",
+        "docs/decisions/lead-customer-context.md",
+        "docs/design/development/lead-continuity-fixtures.json",
+        "docs/testing/evidence/lead-context-resolution/README.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "LC-12 local functional proof: six database cases, selected populated upgrades and 15 compiled desktop/phone checks with one retained skip. See lead-context-resolution evidence; paired visual and owner acceptance remain pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

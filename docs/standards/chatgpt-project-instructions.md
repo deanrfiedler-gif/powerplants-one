@@ -78,7 +78,7 @@ Fertigation: priva-fertigation-native-handover.md. Preserve exact scopes, neutra
 
 Scheduling: scheduling-policy-publication.md. Bind exact policy/head, immutable proposals, complete reviews and distinct publication duties. Recover originals; use typed Activity links. Preserve pins/reservations. Holds govern readiness/Start, including offline Start. Resolution needs controlled change/cancellation/replacement and fresh evidence; acknowledgement/Activity completion cannot clear it. Rollback needs Step 4 enforcement/parsers. Step 6 records PT-28 synthetic pass and continuous PT-30; human acceptance remains open. Retain #330 and installed SQL; 0052 remains reserved.
 
-Sales CR-01–05: follow ADR-0046 and sales-native-completion-handover.md. Preserve frozen submissions, immutable Won due, source-scoped receipts and aftercare unknown policies. Receiving creates no downstream work.
+Sales: ADR-0046 / sales-native-completion-handover.md; Leads: lead-customer-context.md. Retain frozen submissions/Won due, scoped receipts, aftercare unknowns, captured Leads and Activity owners. Receiving creates no work.
 
 Equipment: ADR-0045 / equipment-native-completion-handover.md. Reuse Assets, CS, Inspection and SH; scanning is read-only. Preserve originals and historic context. Recovery grants no controller-restore authority; support grants no replacement authority.
 

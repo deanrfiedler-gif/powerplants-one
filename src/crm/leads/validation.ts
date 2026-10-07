@@ -220,3 +220,52 @@ function parseSourceActivityReview(value: unknown) {
     invalid("source_activity_review", "Review each activity once.");
   return items;
 }
+
+export function parseLeadResolution(id: string, value: unknown) {
+  const r = object(value, [
+    ...commonKeys,
+    "expected_version",
+    "organisation_id",
+    "site_id",
+    "primary_person_id",
+  ]);
+  return {
+    ...common(r),
+    id: uuid(id, "id"),
+    expected_version: version(r.expected_version),
+    organisation_id: uuid(r.organisation_id, "organisation_id"),
+    site_id: optionalId(r.site_id, "site_id"),
+    primary_person_id: optionalId(r.primary_person_id, "primary_person_id"),
+  };
+}
+export function parseLeadTransfer(id: string, value: unknown) {
+  const r = object(value, [
+    ...commonKeys,
+    "expected_version",
+    "new_owner_id",
+    "expected_activity_versions",
+  ]);
+  if (
+    !Array.isArray(r.expected_activity_versions) ||
+    r.expected_activity_versions.length > 200
+  )
+    invalid(
+      "expected_activity_versions",
+      "Compare every linked activity (up to 200).",
+    );
+  const activities = (r.expected_activity_versions as unknown[])
+    .map((item) => {
+      const a = object(item, ["id", "version"]);
+      return { id: uuid(a.id, "activity_id"), version: version(a.version) };
+    })
+    .sort((a, b) => a.id.localeCompare(b.id));
+  if (new Set(activities.map((a) => a.id)).size !== activities.length)
+    invalid("expected_activity_versions", "Compare each activity once.");
+  return {
+    ...common(r),
+    id: uuid(id, "id"),
+    expected_version: version(r.expected_version),
+    new_owner_id: uuid(r.new_owner_id, "new_owner_id"),
+    expected_activity_versions: activities,
+  };
+}

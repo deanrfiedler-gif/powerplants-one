@@ -22,6 +22,7 @@ import {
   parseLeadConversion,
 } from "./validation";
 import { leadReceiptAuthority } from "./receipt-authority";
+import { currentResolution } from "./resolution-context";
 const conflict = (message: string) =>
   new AppError(409, "LeadConflict", message);
 function editable(l: Lead, version: number, active = false) {
@@ -131,7 +132,13 @@ export async function createLead(p: Principal, value: unknown) {
           )
         ).rowCount
       )
-        await leadReceiptAuthority(c, p, command.id, "CreateLead");
+        await leadReceiptAuthority(
+          c,
+          p,
+          command.id,
+          "CreateLead",
+          command.operation_id,
+        );
     },
     async (c) => {
       const {
@@ -175,7 +182,7 @@ export async function changeLead(p: Principal, id: string, value: unknown) {
     p,
     command,
     name,
-    (c) => leadReceiptAuthority(c, p, id, name),
+    (c) => leadReceiptAuthority(c, p, id, name, command.operation_id),
     async (c, l) => {
       editable(l, command.expected_version);
       let fields: Record<string, unknown>;
@@ -255,7 +262,8 @@ export async function planLeadAction(p: Principal, id: string, value: unknown) {
     p,
     command,
     "PlanLeadAction",
-    (c) => leadReceiptAuthority(c, p, id, "PlanLeadAction"),
+    (c) =>
+      leadReceiptAuthority(c, p, id, "PlanLeadAction", command.operation_id),
     async (c, l) => {
       editable(l, command.expected_version, true);
       let actionId = command.activity_id;
@@ -289,6 +297,7 @@ export async function convertLead(p: Principal, id: string, value: unknown) {
         p,
         id,
         "ConvertLeadToOpportunity",
+        command.operation_id,
       );
       const context = {
         company_id: l.company_id,
@@ -421,11 +430,17 @@ export async function convertLead(p: Principal, id: string, value: unknown) {
       if (nextId) await activeAction(c, p, l, nextId);
       if (command.new_action) nextId = command.new_action.id;
       if (!nextId) throw unavailable();
+      const resolution = await currentResolution(c, p, id);
       if (
-        (l.organisation_id && l.organisation_id !== command.organisation_id) ||
-        (l.primary_person_id &&
-          l.primary_person_id !== command.primary_person_id) ||
-        (l.site_id && l.site_id !== command.site_id)
+        resolution
+          ? resolution.organisation_id !== command.organisation_id ||
+            resolution.primary_person_id !== command.primary_person_id ||
+            resolution.site_id !== command.site_id
+          : (l.organisation_id &&
+              l.organisation_id !== command.organisation_id) ||
+            (l.primary_person_id &&
+              l.primary_person_id !== command.primary_person_id) ||
+            (l.site_id && l.site_id !== command.site_id)
       )
         throw new AppError(
           422,

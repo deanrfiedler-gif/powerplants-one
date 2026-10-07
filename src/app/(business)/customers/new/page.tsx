@@ -4,5 +4,11 @@ export default async function Page({
 }: {
   searchParams: Promise<Record<string, string>>;
 }) {
-  return <SharedCreateForm initial={await searchParams} />;
+  const initial = await searchParams;
+  return (
+    <SharedCreateForm
+      key={`${initial.kind ?? "customer"}:${initial.lead ?? ""}:${initial.person ?? ""}`}
+      initial={initial}
+    />
+  );
 }

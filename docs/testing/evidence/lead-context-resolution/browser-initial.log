@@ -1,0 +1,115 @@
+[WebServer] (node:4488) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.98"}
+
+Running 14 tests using 1 worker
+
+(node:23236) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Leads console: Failed to load resource: net::ERR_FAILED
+  ok  1 [desktop-chromium] › tests\browser\leads.spec.ts:10:1 › LC-11 a site discovered after lead follow-up keeps source obligations through lost-response recovery (6.5s)
+Leads console: Failed to load resource: net::ERR_FAILED
+  x   2 [desktop-chromium] › tests\browser\leads.spec.ts:61:1 › LC-12 resolves an unknown enquiry and recovers the exact saved context (7.8s)
+(node:36340) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Leads console: Failed to load resource: net::ERR_FAILED
+  ok  3 [desktop-chromium] › tests\browser\leads.spec.ts:96:1 › LC-12 creates a customer, dated contact affiliation and site then returns for explicit lead resolution (9.4s)
+  ok  4 [desktop-chromium] › tests\browser\leads.spec.ts:145:1 › approved leads list/detail and atomic conversion persist through reload (4.8s)
+  ok  5 [desktop-chromium] › tests\browser\leads.spec.ts:203:1 › Add lead has one scroll body, fixed actions, focus return and navy add button at phone sizes (2.1s)
+  ok  6 [desktop-chromium] › tests\browser\leads.spec.ts:269:1 › manual lead saves with an unverified organisation and survives reload (3.8s)
+  ok  7 [desktop-chromium] › tests\browser\leads.spec.ts:300:1 › approved desktop columns resize independently and retain widths with quiet aligned handles (3.7s)
+(node:36088) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Leads console: Failed to load resource: net::ERR_FAILED
+  ok  8 [mobile-chromium] › tests\browser\leads.spec.ts:10:1 › LC-11 a site discovered after lead follow-up keeps source obligations through lost-response recovery (5.2s)
+Leads console: Failed to load resource: net::ERR_FAILED
+  x   9 [mobile-chromium] › tests\browser\leads.spec.ts:61:1 › LC-12 resolves an unknown enquiry and recovers the exact saved context (9.3s)
+(node:35544) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Leads console: Failed to load resource: net::ERR_FAILED
+  ok 10 [mobile-chromium] › tests\browser\leads.spec.ts:96:1 › LC-12 creates a customer, dated contact affiliation and site then returns for explicit lead resolution (7.2s)
+  ok 11 [mobile-chromium] › tests\browser\leads.spec.ts:145:1 › approved leads list/detail and atomic conversion persist through reload (4.3s)
+  ok 12 [mobile-chromium] › tests\browser\leads.spec.ts:203:1 › Add lead has one scroll body, fixed actions, focus return and navy add button at phone sizes (3.2s)
+  ok 13 [mobile-chromium] › tests\browser\leads.spec.ts:269:1 › manual lead saves with an unverified organisation and survives reload (4.1s)
+  -  14 [mobile-chromium] › tests\browser\leads.spec.ts:300:1 › approved desktop columns resize independently and retain widths with quiet aligned handles
+
+
+  1) [desktop-chromium] › tests\browser\leads.spec.ts:61:1 › LC-12 resolves an unknown enquiry and recovers the exact saved context 
+
+    Error: expect(locator).not.toHaveValue(expected) failed
+
+    Locator: getByRole('combobox', { name: 'Organisation', exact: true })
+    Expected: not ""
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "not toHaveValue" getByRole('combobox', { name: 'Organisation', exact: true }) with timeout 5000ms
+      - waiting for getByRole('combobox', { name: 'Organisation', exact: true })
+
+
+      85 |   await expect(page.getByRole("dialog")).toContainText("Selected at lead version 2");
+      86 |   await page.getByRole("button",{name:"Convert to deal",exact:true}).click();
+    > 87 |   await expect(page.getByRole("combobox",{name:"Organisation",exact:true})).not.toHaveValue("");
+         |                                                                                 ^
+      88 |   await page.getByRole("button",{name:"Cancel",exact:true}).click();
+      89 |   await page.getByRole("button",{name:"Transfer ownership",exact:true}).click();
+      90 |   await expect(page.getByRole("button",{name:"Transfer lead",exact:true})).toBeDisabled();
+        at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\leads.spec.ts:87:81
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\leads-LC-12-resolves-an-un-10312-ers-the-exact-saved-context-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\leads-LC-12-resolves-an-un-10312-ers-the-exact-saved-context-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\leads-LC-12-resolves-an-un-10312-ers-the-exact-saved-context-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\leads-LC-12-resolves-an-un-10312-ers-the-exact-saved-context-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-chromium] › tests\browser\leads.spec.ts:61:1 › LC-12 resolves an unknown enquiry and recovers the exact saved context 
+
+    Error: expect(locator).not.toHaveValue(expected) failed
+
+    Locator: getByRole('combobox', { name: 'Organisation', exact: true })
+    Expected: not ""
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "not toHaveValue" getByRole('combobox', { name: 'Organisation', exact: true }) with timeout 5000ms
+      - waiting for getByRole('combobox', { name: 'Organisation', exact: true })
+
+
+      85 |   await expect(page.getByRole("dialog")).toContainText("Selected at lead version 2");
+      86 |   await page.getByRole("button",{name:"Convert to deal",exact:true}).click();
+    > 87 |   await expect(page.getByRole("combobox",{name:"Organisation",exact:true})).not.toHaveValue("");
+         |                                                                                 ^
+      88 |   await page.getByRole("button",{name:"Cancel",exact:true}).click();
+      89 |   await page.getByRole("button",{name:"Transfer ownership",exact:true}).click();
+      90 |   await expect(page.getByRole("button",{name:"Transfer lead",exact:true})).toBeDisabled();
+        at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\leads.spec.ts:87:81
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\leads-LC-12-resolves-an-un-10312-ers-the-exact-saved-context-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\leads-LC-12-resolves-an-un-10312-ers-the-exact-saved-context-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\leads-LC-12-resolves-an-un-10312-ers-the-exact-saved-context-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\leads-LC-12-resolves-an-un-10312-ers-the-exact-saved-context-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop-chromium] › tests\browser\leads.spec.ts:61:1 › LC-12 resolves an unknown enquiry and recovers the exact saved context 
+    [mobile-chromium] › tests\browser\leads.spec.ts:61:1 › LC-12 resolves an unknown enquiry and recovers the exact saved context 
+  1 skipped
+  11 passed (1.7m)

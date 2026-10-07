@@ -191,7 +191,11 @@ export async function readOperation(
         throw unavailable();
     }
   } else if (r.object_type === "Lead") {
-    await leadReceiptAuthority(client, p, r.record_id, r.command);
+    return transaction(async c=>{
+      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE",[p.workspace_id]);
+      await leadReceiptAuthority(c, p, r.record_id, r.command, operation_id);
+      return r.result as OperationReceipt;
+    });
   } else if (r.object_type === "FinancialHandoff") {
     await financeContext(client, p, r.record_id, receiptCapability(r.command));
   } else if (r.object_type === "FinanceAccount") {

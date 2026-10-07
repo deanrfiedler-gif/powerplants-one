@@ -4449,7 +4449,7 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-24",
+      "prepared_at": "2026-10-07",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "See docs/delivery/sales-native-completion-handover.md for executed evidence; not owner acceptance.",
@@ -4528,7 +4528,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Deal Workspace links to handover records without duplicating their write controls. Won does not imply conversion, delivery or revenue."
+            "Deal Workspace links to handover records without duplicating their write controls. Won does not imply conversion, delivery or revenue.",
+            "The linked converted Lead retains its original enquiry, later customer selections and ownership transfers. Review that history through the source link. LC-12 resolution and ownership editing apply before conversion; converted Leads remain terminal."
           ],
           "steps": [],
           "rows": [],
@@ -4609,9 +4610,10 @@
         "src/components/crm-screens.tsx",
         "src/components/opportunity-workflows.tsx",
         "src/components/opportunity-correspondence.tsx",
-        "docs/decisions/ADR-0046-sales-native-workflows.md"
+        "docs/decisions/ADR-0046-sales-native-workflows.md",
+        "docs/decisions/lead-customer-context.md"
       ],
-      "change_summary": "Native Sales workflow, authority, source ownership, recovery and boundaries.",
+      "change_summary": "Preserve incoming Lead resolution and ownership history while retaining native Deal workflow controls.",
       "document_id": "PPO-GUIDE-CR-01",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -36072,7 +36074,7 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-07",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "Not run for this guide",
@@ -36169,7 +36171,10 @@
             "Search the related register for an existing record before creating another.",
             "Complete the information requested by the creation form; keep unknown values explicit.",
             "Review the entered context, save through the page action and inspect the resulting record/confirmation.",
-            "Then continue the wider workflow: Follow linked records to review relationship history"
+            "Then continue the wider workflow: Follow linked records to review relationship history",
+            "For a Lead return, review the preselected company and customer; enter the actual shared-record details and reason. Search possible duplicates before creating another customer.",
+            "Save the shared record once. A saved contact continues to a separate customer affiliation with an explicit role and valid dates. A site relationship likewise needs its role and dates.",
+            "Return to the Lead, review the selected saved records and save its customer resolution explicitly. Each earlier shared save remains retained if a later link fails."
           ],
           "rows": [],
           "headers": []
@@ -36180,7 +36185,8 @@
           "paragraphs": [
             "One correctly identified customer context with owned information gaps.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Account visibility and credit decisions require separate Finance permissions. Similar names are not proof of duplicate identity."
+            "Account visibility and credit decisions require separate Finance permissions. Similar names are not proof of duplicate identity.",
+            "Captured enquiry facts remain separate from the latest resolution. Conversion must match the current saved resolution. Historical selections are visible only under current target access; business acceptance and deployment are separate."
           ],
           "steps": [],
           "rows": [],
@@ -36262,6 +36268,18 @@
             [
               "Guide differs from the page",
               "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
+            ],
+            [
+              "Uncertain Lead or shared creation save",
+              "Use Confirm original save before trying another creation or transfer. Accepted-original recovery remains actor-bound after a Lead transfer."
+            ],
+            [
+              "A later linking step fails",
+              "The earlier customer/contact/site save remains retained. Return to the Lead and select that existing record; do not create it again."
+            ],
+            [
+              "No eligible recipient",
+              "Current Lead editing permission and visibility of captured/resolved context and every Activity are required. No extra grant is implied by this workflow."
             ]
           ],
           "headers": [
@@ -36310,9 +36328,10 @@
       "source_paths": [
         "src/app/(business)/customers/new/page.tsx",
         "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/lead-customer-context.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "LC-12 customer resolution and owned Lead transfer preserve captured enquiry facts, source Activities and exact original recovery. Native customer/contact/site creation returns to an explicit Lead selection review.",
       "document_id": "PPO-GUIDE-PAGE-CUSTOMERS-NEW",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -42636,7 +42655,7 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-07",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "Not run for this guide",
@@ -42735,7 +42754,10 @@
             "Use + Lead to capture the enquiry and its source",
             "Use Everyone and Filters to narrow the list; review Inbox, Archived, Disqualified and Converted separately",
             "Open the lead title or row menu to review, schedule follow-up or perform an available transition",
-            "Convert a qualified enquiry to its linked deal and retain the original lead history"
+            "Convert a qualified enquiry to its linked deal and retain the original lead history",
+            "On an active owned Lead, use Resolve customer context. Search permitted customer, site and contact records. Save the selection with a reason; later corrections retain previous selections.",
+            "If a shared record is missing, use Create customer/site/contact and return. Each shared save stands on its own. Add a dated customer affiliation after creating a contact, then explicitly review and save the Lead selection.",
+            "Use Transfer ownership to compare every source activity and choose an eligible recipient. Activities retain their current owners and dates. Missing recipient access is a blocking state, not a reason to assign an unrelated person."
           ],
           "rows": [],
           "headers": []
@@ -42746,7 +42768,8 @@
           "paragraphs": [
             "The enquiry has an accountable next action or an attributable conversion/disposition.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Conversion preserves the lead history. A lead and a deal are distinct records; current server access is checked again when saving."
+            "Conversion preserves the lead history. A lead and a deal are distinct records; current server access is checked again when saving.",
+            "Captured enquiry facts remain separate from the latest resolution. Conversion must match the current saved resolution. Historical selections are visible only under current target access; business acceptance and deployment are separate."
           ],
           "steps": [],
           "rows": [],
@@ -42828,6 +42851,18 @@
             [
               "Guide differs from the page",
               "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
+            ],
+            [
+              "Uncertain Lead or shared creation save",
+              "Use Confirm original save before trying another creation or transfer. Accepted-original recovery remains actor-bound after a Lead transfer."
+            ],
+            [
+              "A later linking step fails",
+              "The earlier customer/contact/site save remains retained. Return to the Lead and select that existing record; do not create it again."
+            ],
+            [
+              "No eligible recipient",
+              "Current Lead editing permission and visibility of captured/resolved context and every Activity are required. No extra grant is implied by this workflow."
             ]
           ],
           "headers": [
@@ -42874,9 +42909,10 @@
       "source_paths": [
         "src/app/(business)/sales/leads/[id]/page.tsx",
         "docs/blueprints/BP-03-crm.md",
-        "src/components/leads-guide.ts"
+        "src/components/leads-guide.ts",
+        "docs/decisions/lead-customer-context.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "LC-12 customer resolution and owned Lead transfer preserve captured enquiry facts, source Activities and exact original recovery. Native customer/contact/site creation returns to an explicit Lead selection review.",
       "document_id": "PPO-GUIDE-PAGE-SALES-LEADS-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -42901,7 +42937,7 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-07",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "Not run for this guide",
@@ -42999,7 +43035,10 @@
             "Use + Lead to capture the enquiry and its source",
             "Use Everyone and Filters to narrow the list; review Inbox, Archived, Disqualified and Converted separately",
             "Open the lead title or row menu to review, schedule follow-up or perform an available transition",
-            "Convert a qualified enquiry to its linked deal and retain the original lead history"
+            "Convert a qualified enquiry to its linked deal and retain the original lead history",
+            "On an active owned Lead, use Resolve customer context. Search permitted customer, site and contact records. Save the selection with a reason; later corrections retain previous selections.",
+            "If a shared record is missing, use Create customer/site/contact and return. Each shared save stands on its own. Add a dated customer affiliation after creating a contact, then explicitly review and save the Lead selection.",
+            "Use Transfer ownership to compare every source activity and choose an eligible recipient. Activities retain their current owners and dates. Missing recipient access is a blocking state, not a reason to assign an unrelated person."
           ],
           "rows": [],
           "headers": []
@@ -43010,7 +43049,8 @@
           "paragraphs": [
             "The enquiry has an accountable next action or an attributable conversion/disposition.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Conversion preserves the lead history. A lead and a deal are distinct records; current server access is checked again when saving."
+            "Conversion preserves the lead history. A lead and a deal are distinct records; current server access is checked again when saving.",
+            "Captured enquiry facts remain separate from the latest resolution. Conversion must match the current saved resolution. Historical selections are visible only under current target access; business acceptance and deployment are separate."
           ],
           "steps": [],
           "rows": [],
@@ -43092,6 +43132,18 @@
             [
               "Guide differs from the page",
               "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
+            ],
+            [
+              "Uncertain Lead or shared creation save",
+              "Use Confirm original save before trying another creation or transfer. Accepted-original recovery remains actor-bound after a Lead transfer."
+            ],
+            [
+              "A later linking step fails",
+              "The earlier customer/contact/site save remains retained. Return to the Lead and select that existing record; do not create it again."
+            ],
+            [
+              "No eligible recipient",
+              "Current Lead editing permission and visibility of captured/resolved context and every Activity are required. No extra grant is implied by this workflow."
             ]
           ],
           "headers": [
@@ -43138,9 +43190,10 @@
       "source_paths": [
         "src/app/(business)/sales/leads/page.tsx",
         "docs/blueprints/BP-03-crm.md",
-        "src/components/leads-guide.ts"
+        "src/components/leads-guide.ts",
+        "docs/decisions/lead-customer-context.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "LC-12 customer resolution and owned Lead transfer preserve captured enquiry facts, source Activities and exact original recovery. Native customer/contact/site creation returns to an explicit Lead selection review.",
       "document_id": "PPO-GUIDE-PAGE-SALES-LEADS",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
