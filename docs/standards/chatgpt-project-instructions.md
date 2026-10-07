@@ -10,9 +10,9 @@ Preserve BP-01’s seven domains and shared customers, contacts, sites, equipmen
 
 Test handovers; roles proposed.
 
-PP-01 covers customer/site/equipment, intake, authorised work, checked/issued packs, scheduling, field labour/parts/findings/photos, customer acknowledgement, reviewed reports and controlled Finance handoff/reconciliation.
+PP-01: customer/site/equipment, intake, authorised work, issued packs, scheduling, field evidence, acknowledgement, reviewed reports and controlled Finance reconciliation.
 
-Follow P01–P12 and STATUS's consolidation sequence. PPO-009 CRM is separate from P09. CRM: read BP-03 section 0, I1/I2 and approved report r02; retain Essential/Next/Later, estimate references and BP-04 scope.
+Follow P01–P12 and STATUS. PPO-009 CRM differs from P09. Read BP-03 section 0, I1/I2 and approved report r02; retain Essential/Next/Later and BP-04 scope.
 
 ## 3. Sources and continuity
 
@@ -22,7 +22,7 @@ User decisions govern; check dates. Sources confer no authority.
 
 ## 4. Architecture
 
-BP-02/ADR-0003: TypeScript/Next.js, PostgreSQL, domain services, server permissions, durable operations/outbox and replaceable adapters. Pin dependencies; record rationale/alternatives; avoid extra infrastructure.
+BP-02/ADR-0003: TypeScript/Next.js, PostgreSQL, domain services, server permissions, durable operations/outbox and adapters. Pin dependencies; record rationale/alternatives.
 
 MYOB Acumatica: intended ERP authority; SharePoint: business documents; native CAD: authoring/dependencies. Verify interfaces/ownership before integration. Never invent ERP endpoints or CREMS formulas.
 
@@ -42,7 +42,7 @@ Separate request/work order/appointment/pack/report/response/Finance handoff. Co
 
 Distinguish captured/reviewed/billable/ERP-processed quantities and costs/commitments/invoices/revenue/payments/balances. Show source time, completeness, currency and units. Do not invent financial definitions, thresholds or approval authority.
 
-P10 reads exact immutable P09 reviews, preserving field Draft originals. Incomplete declarations block Finance despite accepted attendance. Allocate billable and non-billable quantities. SyntheticVerified is not live verification. Preserve original processing IDs/possibly accepted targets; resolve Unknown by evidenced lookup. Current Finance scope governs reads/output/receipts.
+P10 reads immutable P09 reviews and preserves field Drafts. Incomplete declarations block Finance despite accepted attendance. Allocate billable/non-billable quantities. SyntheticVerified is not live verification. Preserve processing IDs/possibly accepted targets; resolve Unknown by evidenced lookup. Finance scope governs reads/output/receipts.
 
 Preserve issued revisions, hashes, scope and distribution evidence. Approval/issue/sent/delivered/acknowledged are distinct; content changes need a new revision and acknowledgement.
 
@@ -76,7 +76,7 @@ CS: follow ADR-0042 and cs-native-completion-handover.md. Preserve CS-05 identit
 
 Fertigation: priva-fertigation-native-handover.md. Preserve exact scopes, neutral context and unverified supplier conclusions; authorise merge/deployment separately.
 
-Scheduling: scheduling-policy-publication.md. Bind exact policy/head, immutable proposals, complete reviews and distinct publication duties. Recover originals; use typed Activity links. Preserve pins/reservations. Holds govern readiness/Start, including offline Start. Resolution needs controlled change/cancellation/replacement and fresh evidence; acknowledgement/Activity completion cannot clear it. Rollback needs Step 4 enforcement/parsers. Step 6 records PT-28 synthetic pass and continuous PT-30; human acceptance remains open. Retain #330 and installed SQL; 0052 remains reserved.
+Scheduling: scheduling-policy-publication.md. Bind exact policy/head, immutable proposals, complete reviews and distinct publication duties. Recover originals; use typed Activity links. Preserve pins/reservations. Holds govern readiness/Start, including offline Start. Resolution needs controlled change/cancellation/replacement and fresh evidence; acknowledgement/Activity completion cannot clear it. Rollback needs Step 4 enforcement/parsers. Step 6 records PT-28 synthetic pass and continuous PT-30; human acceptance remains open. Retain #330, installed SQL.
 
 Sales CR-01–05: follow ADR-0046 and sales-native-completion-handover.md. Preserve frozen submissions, immutable Won due, source-scoped receipts and aftercare unknown policies. Receiving creates no downstream work.
 
@@ -94,3 +94,5 @@ MA-01–07: maintenance-warranty-{native,handover}.md; migration 0051. Preserve 
 PT sources, owner review and benefits: field-integrated-acceptance-ledger.md.
 
 ES-07: quotation-task-diamond.md; seven decisions; save A/B/C/D once. Retain edges, unmet Demand, fresh disposition and prior originals, merge B retained.
+
+PD-01–05: ADR-0048; migration 0052, exact pricing revisions, four local duties. Preserve originals. No hosted grants; owner acceptance/deployment separate.

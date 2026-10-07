@@ -1,3 +1,4 @@
+import { productReceiptAuthority } from "../products/context";
 import { receiptAuthority as maintenanceReceiptAuthority, } from "../maintenance/reads";
 import { followupReceiptAuthority } from "../estimating/supply-followup/authority";
 import { releaseReceiptAuthority } from "../estimating/release/context";
@@ -74,7 +75,9 @@ export async function readOperation(
   );
   const r = result.rows[0];
   if (!r) throw unavailable();
-  if (["ServiceAgreement","EntitlementAssessment","MaintenancePlan","MaintenanceOccurrence","RenewalReview","WarrantyCase","SupplierClaim"].includes(r.object_type)) {
+  if (["Product", "ProductRelationship", "ProductImport"].includes(r.object_type)) {
+    await productReceiptAuthority(client,p,r.record_id,r.command,r.object_type);
+  } else if (["ServiceAgreement","EntitlementAssessment","MaintenancePlan","MaintenanceOccurrence","RenewalReview","WarrantyCase","SupplierClaim"].includes(r.object_type)) {
     await maintenanceReceiptAuthority(client,p,r.record_id,r.object_type,r.command,(r.result as OperationReceipt).record_version);
   } else if (["SchedulingPolicyProposal", "SchedulingPolicyReview", "SchedulingPolicyPublication", "SchedulingPolicyResolution"].includes(r.object_type)) {
     return transaction(async c => {

@@ -1,0 +1,32 @@
+{
+  "main_source": "c228c4f6bfd063e73fb11b67155ce0b1abf2749e",
+  "build_id": "pcxMilKhbsipa7FT7AuwV",
+  "tracked_main_changes": "",
+  "boundary": "Unmodified compiled main with the retained SH read-drain helper; each original Search GET deliberately held for six seconds. Both assertion outcomes are recorded below; no response body replacement or retry.",
+  "records": [
+    {
+      "wait_for_original_response": false,
+      "assertion_timeout_ms": 5000,
+      "assertion_duration_ms": 5016,
+      "result": "failed as expected",
+      "error": "expect(locator).toBeVisible() failed\n\nLocator: getByText(/results on this page/)\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" getByText(/results on this page/) with timeout 5000ms\n  - waiting for getByText(/results on this page/)\n",
+      "original_gets": 2,
+      "response_status": 200,
+      "response_body_sha256": "8d8f316a3bf2346ab96eead61268189900000520ae37995ddff0ef63f97bdde6",
+      "held_response_ms": 6010,
+      "returned_state": "complete"
+    },
+    {
+      "wait_for_original_response": true,
+      "assertion_timeout_ms": 5000,
+      "assertion_duration_ms": 6,
+      "result": "passed",
+      "error": null,
+      "original_gets": 2,
+      "response_status": 200,
+      "response_body_sha256": "8ae8a40b1411fc819f2ed3aa9a025a34341dacce2b7e9a49c7cace004b53e138",
+      "held_response_ms": 6001,
+      "returned_state": "complete"
+    }
+  ]
+}

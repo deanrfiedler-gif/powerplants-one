@@ -1,0 +1,19 @@
+{
+  "source_reference": "d686723d4e2c0bb6893713f81532dfb041b9af36",
+  "boundary": "Playwright discovery only. No browser/application case is executed by --list.",
+  "all": {
+    "desktop-chromium": 364,
+    "mobile-chromium": 364,
+    "warm-up": 1
+  },
+  "desktop": {
+    "desktop-chromium": 364,
+    "warm-up": 1
+  },
+  "mobile": {
+    "mobile-chromium": 364,
+    "warm-up": 1
+  },
+  "original_selection_sha256": "8cd398dbd35fa5028ad4fa8750f22d392004a14ac10645ee71347d0c3f7fe432",
+  "result": "Both selections cover every original test. Only the existing warm-up dependency repeats in the two isolated jobs."
+}

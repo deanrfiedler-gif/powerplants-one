@@ -6,6 +6,16 @@ import type {
   ScheduleAppointment,
 } from "../scheduling/components/client/planner-screens.client";
 import { emptyConfiguration } from "../estimating/configuration-definition";
+import type { Content as ProductContent } from "../products/model";
+
+export const productTechnicalFixture: ProductContent = {
+  title: "SYN Verdant control unit", manufacturer: "Fictional Verdant Controls", model: "VC-20", variant: "24 V / two relay",
+  technical_revision: "TECH-A", source_reference: "SYN-NOTE", source_revision: "A", source_date: "2026-09-20",
+  description: "Synthetic technical catalogue evidence. Installation suitability remains with Engineering.", unit: "each",
+  attributes: [{key:"voltage",value:"24",unit:"V",status:"SourceReported",evidence:"SYN source A",clarification_owner:null},{key:"interface",value:null,unit:"text",status:"Unresolved",evidence:"Protocol not supplied",clarification_owner:"SYN Engineering clarification owner"}],
+  documents:[{provider:"Synthetic document reference",entity_key:"SYN-VC20",revision:"A",title:"SYN Controller specification",type:"PDF",applicability:"Applicable",basis:"Exact 24 V variant",source_date:"2026-09-20"}],
+  lifecycle:"Unknown",lifecycle_evidence:"Support not confirmed; retain the original identity.",support_until:null,data_mode:"Synthetic",
+};
 
 export const fixtureDate = "2026-09-23";
 export const fixtureTime = "2026-09-23T00:00:00Z";

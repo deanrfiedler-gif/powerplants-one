@@ -1,0 +1,201 @@
+{
+  "observation": "The E1 job exceeded its unchanged 30-minute overall deadline. Every test/evidence phase reported success; the setup-node post step was skipped. The cancelled job remains failed CI evidence, not a passing check.",
+  "job": {
+    "id": 112721488189,
+    "run_id": 37599916101,
+    "head_sha": "2e4a1d3f7b0de7c8b44a3674a1c8538a2aba2dac",
+    "status": "completed",
+    "conclusion": "cancelled",
+    "name": "E1 manual estimate, draft output and restart proof",
+    "started_at": "2026-10-07T09:20:23Z",
+    "completed_at": "2026-10-07T09:50:32Z",
+    "html_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37599916101/job/112721488189",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-10-07T09:20:24Z",
+        "completed_at": "2026-10-07T09:20:25Z"
+      },
+      {
+        "name": "Initialize containers",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-10-07T09:20:25Z",
+        "completed_at": "2026-10-07T09:20:40Z"
+      },
+      {
+        "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-10-07T09:20:40Z",
+        "completed_at": "2026-10-07T09:20:55Z"
+      },
+      {
+        "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-10-07T09:20:55Z",
+        "completed_at": "2026-10-07T09:20:58Z"
+      },
+      {
+        "name": "Configure disposable PostgreSQL lock capacity",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-10-07T09:20:58Z",
+        "completed_at": "2026-10-07T09:20:58Z"
+      },
+      {
+        "name": "Pinned runtime and static checks",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-10-07T09:20:58Z",
+        "completed_at": "2026-10-07T09:23:51Z"
+      },
+      {
+        "name": "Disposable current schema and E1 PostgreSQL proof",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-10-07T09:23:51Z",
+        "completed_at": "2026-10-07T09:37:22Z"
+      },
+      {
+        "name": "Compile the exact E1 E2 ES-02 application",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-10-07T09:37:22Z",
+        "completed_at": "2026-10-07T09:38:42Z"
+      },
+      {
+        "name": "Record the actual compiled checkout and fertigation source hashes",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9,
+        "started_at": "2026-10-07T09:38:42Z",
+        "completed_at": "2026-10-07T09:38:42Z"
+      },
+      {
+        "name": "E1 real direct HTTP proof",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10,
+        "started_at": "2026-10-07T09:38:42Z",
+        "completed_at": "2026-10-07T09:39:28Z"
+      },
+      {
+        "name": "E1 journey through three application and browser processes and two PostgreSQL restarts",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11,
+        "started_at": "2026-10-07T09:39:28Z",
+        "completed_at": "2026-10-07T09:40:38Z"
+      },
+      {
+        "name": "Native fertigation exact bytes after the application and PostgreSQL restarts",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 12,
+        "started_at": "2026-10-07T09:40:38Z",
+        "completed_at": "2026-10-07T09:40:47Z"
+      },
+      {
+        "name": "Compiled E1 desktop, phone, 320px, uncertain response and long output",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 13,
+        "started_at": "2026-10-07T09:40:47Z",
+        "completed_at": "2026-10-07T09:43:49Z"
+      },
+      {
+        "name": "Compiled ES-02, My Work, Engineering materials and shell regression",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 14,
+        "started_at": "2026-10-07T09:43:49Z",
+        "completed_at": "2026-10-07T09:46:01Z"
+      },
+      {
+        "name": "Compiled ES-08 specialist workbench and recovery",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 15,
+        "started_at": "2026-10-07T09:46:01Z",
+        "completed_at": "2026-10-07T09:48:29Z"
+      },
+      {
+        "name": "Compiled native fertigation save, clean context, conflict and large registers",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 16,
+        "started_at": "2026-10-07T09:48:29Z",
+        "completed_at": "2026-10-07T09:50:25Z"
+      },
+      {
+        "name": "Retain exact synthetic evidence",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 17,
+        "started_at": "2026-10-07T09:50:25Z",
+        "completed_at": "2026-10-07T09:50:28Z"
+      },
+      {
+        "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 32,
+        "started_at": "2026-10-07T09:50:28Z",
+        "completed_at": "2026-10-07T09:50:28Z"
+      },
+      {
+        "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 33,
+        "started_at": "2026-10-07T09:50:28Z",
+        "completed_at": "2026-10-07T09:50:28Z"
+      },
+      {
+        "name": "Stop containers",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 34,
+        "started_at": "2026-10-07T09:50:28Z",
+        "completed_at": "2026-10-07T09:50:29Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 35,
+        "started_at": "2026-10-07T09:50:29Z",
+        "completed_at": "2026-10-07T09:50:29Z"
+      }
+    ]
+  },
+  "annotations": [
+    {
+      "path": ".github",
+      "blob_href": "https://github.com/deanrfiedler-gif/powerplants-one/blob/2e4a1d3f7b0de7c8b44a3674a1c8538a2aba2dac/.github",
+      "start_line": 1,
+      "start_column": null,
+      "end_line": 1,
+      "end_column": null,
+      "annotation_level": "failure",
+      "title": "",
+      "message": "The job has exceeded the maximum execution time of 30m0s",
+      "raw_details": ""
+    }
+  ],
+  "results_file": "cancelled-e1-results.txt",
+  "results_sha256": "7210576711e1ead34256c56116b945e6c17034b2053f47c540d92e63e2ca0aca",
+  "retention": "Only timestamped test summaries and selected public job metadata are retained. Full log is private under ignored tmp/. Other workflows on the same head are separate observations."
+}
