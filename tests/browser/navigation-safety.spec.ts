@@ -23,7 +23,7 @@ test("N03 CRM compatibility aliases retain supported list and record query state
   expect((await page.request.post("/api/v1/crm/leads",{headers:{Origin:origin()},data:lead})).ok()).toBe(true);
   await page.goto(`/crm/leads/${lead.id}?view=activities`);
   await expect(page).toHaveURL(`${origin()}/sales/leads/${lead.id}?view=activities`);
-  await expect(page.getByRole("heading",{name:lead.title,level:1,exact:true})).toBeVisible();
+  await expect(page.getByRole("dialog",{name:lead.title,exact:true}).getByRole("heading",{name:lead.title,level:2,exact:true})).toBeVisible();
   await page.goto("/crm/opportunities/new?company_id="+lead.company_id);
   await expect(page).toHaveURL(origin()+"/sales/opportunities/new?company_id="+lead.company_id);
   const deal=crmDiscovery();
