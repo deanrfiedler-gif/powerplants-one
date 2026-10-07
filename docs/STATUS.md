@@ -1,5 +1,9 @@
 # Current prototype status
 
+## PR #359 and #362 CI capacity repair — 7 October 2026
+
+Repository-writing session: **Repair failed PRs #359 and #362**, on their existing PR branches through isolated repair checkouts, under Dean's current request. Both primary browser jobs exhausted the 90-minute budget; #359 also exhausted Estimating's 30-minute budget. The [repair decision](decisions/ci-retained-suite-isolation.md#leads-and-deals-browser-and-estimating-budgets--7-october-2026) separates complete desktop/mobile projects and Estimating database/runtime groups while preserving all tests, deadlines, restart boundaries and mandatory aggregates. [Repair evidence](testing/evidence/pr359-pr362-ci-capacity/README.md) records validation and limitations. Application, migration, seed, grant and live design bytes are unchanged. Repaired-head CI remains pending; no merge, deployment or business acceptance is implied. Earlier writing-slot statements below are historical.
+
 ## Lead-to-delivery continuity — 7 October 2026
 
 Final implementation increment: `codex/sales-followup-continuity`, based on [PR #364](https://github.com/deanrfiedler-gif/powerplants-one/pull/364), application checkpoint `e8dd290` and separate Search proof repair `14e76da`. LC-17 completes the programme's sixth increment: owned delivery/Service follow-up returns through native Lead or qualified Deal capture and an explicit link comparison. Original owner/date/state/source links and independent native recovery remain. Project-linked actions now stay visible in native CRM planning and conversion. No new migration, seed, grant, user or dependency; registry remains **0076**, with Products retaining **0052**.
