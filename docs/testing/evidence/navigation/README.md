@@ -51,3 +51,5 @@ Required lint, TypeScript, build, browser runtime, studio, foundation, naming an
 | Foundation / naming / prototype | Passed documentation assurance; 78 parent IDs and 22 issued references retained. Prototype was checked earlier with no PP-01 package changes. |
 
 The final exact-account run exposed hidden desktop ancestors. A native Page hierarchy disclosure repairs this defect and passed desktop/mobile with denied-identity clearing and Escape focus return. Its actual captures were inspected and are linked in the screenshot review. All capability and schema source files remain unchanged.
+
+Published as [draft PR #367](https://github.com/deanrfiedler-gif/powerplants-one/pull/367). The private disposable database is stopped after verification; source, ignored test configuration and private originals remain available for a deliberate review rerun. Final-head CI and owner/device acceptance are pending. No merge or deployment was performed.
