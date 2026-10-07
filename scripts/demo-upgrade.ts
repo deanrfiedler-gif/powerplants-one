@@ -151,14 +151,14 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // Seed 53 binds the exact trusted root and never resets a head or adds users/grants.
   // Runtime grants cover the new tables; immutable triggers and deferred graph checks
   // remain in force. No policy command, tester duty, audit/outbox enum or dispatch change.
-  // Reserved 0051/0052 stay absent: this loop applies actual missing registry entries.
+  // Former reserved gaps 0051/0052 are reviewed additive installations below.
   // 0054 adds internal-only command evidence and two distinct local synthetic duties.
   // Typed identities flush pending 0026 events; issued sources remain unchanged.
   // Seed replay preserves revoked grants and adds no hosted tester authority.
   // Commands stay unregistered until Step 4 enforcement is proved.
   // 0055 adds immutable Service template/binding/event/output tables only. Seed
   // 55 supplies fictional catalogue versions and an instrument, with no users or grants. Shared
-  // attempts and installed SQL/seed bytes remain intact; 0051 was reserved at that checkpoint; this contribution installs Maintenance there. 0052 stays reserved.
+  // attempts and installed SQL/seed bytes remain intact; 0051 and 0052 now install their separate additive domains.
   // 0056 adds isolated incident storage. Seed 56 grants only the three named
   // local synthetic profiles, never hosted testers; existing rows and revoked
   // grants remain unchanged. Populated upgrade/reseed proof is required.
@@ -199,6 +199,11 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // 0071 adds exclusive merge evidence and two receiving roles on the existing table.
   // Earlier columns/payloads remain; no seed, grant, identity or table privilege change.
   // The generic runtime grants remain sufficient; the migration ledger stays restricted.
+  // Reviewed 0052: additive typed Products tables; extend live identity/audit/outbox/capability
+  // constraints without replacing later definitions. Deferred identity events are drained before ALTER.
+  // Seed 52 adds four local-only fictional duties and exact Company A grants. It adds no hosted
+  // profile, invitation or capability to additions. Existing hosted testers receive no Products access.
+  // Reserved 0052 remains additive when installed after 0072; exact originals are retained.
   // 0072 adds nullable explicit diamond commands and distinct receiving roles.
   // Earlier rows acquire null only; old position overloads, payloads and original outcomes remain.
   // No seed, grant, user, identity type or output change. Generic runtime grants cover the

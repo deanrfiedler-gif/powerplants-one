@@ -78,7 +78,9 @@ test("upgrade preserves saved CRM, mailbox, sessions, old grants and invitation 
   // Seed 31 adds one for EN-08: the Equipment records receiver that the installed base had nobody for.
   // Seed 53 bootstraps the trusted scheduling root only; no added users or grants.
   // Seed 54 adds only fictional local policy duties, never hosted roles.
-  assert.equal(addedUsers.length,18);
+  assert.equal(addedUsers.length,22);
+  assert.deepEqual(addedUsers.filter(r=>String(r.row.subject_id).startsWith("products-")).map(r=>r.row.subject_id).sort(),["products-author","products-publisher","products-reader","products-reviewer"]);
+  assert.equal((await database().query("SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u ON (u.workspace_id,u.id)=(g.workspace_id,g.user_id) WHERE g.capability LIKE 'products.%' AND u.issuer<>'PPO-LocalSynthetic'")).rowCount,0);
   assert.deepEqual(addedUsers.filter(r=>String(r.row.subject_id).startsWith("quotation-")).map(r=>r.row.subject_id).sort(),["quotation-approver","quotation-issuer"]);
   assert.equal((await database().query("SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u ON (u.workspace_id,u.id)=(g.workspace_id,g.user_id) WHERE g.capability IN ('estimating.quote.approve','estimating.quote.issue','estimating.quote.distribute') AND u.issuer<>'PPO-LocalSynthetic'")).rowCount,0);
   assert.equal((await database().query("SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u ON u.workspace_id=g.workspace_id AND u.id=g.user_id WHERE g.capability LIKE 'incident.%' AND u.issuer<>'PPO-LocalSynthetic'")).rowCount,0);
@@ -188,7 +190,7 @@ test("a baseline executed from Windows CRLF SQL upgrades without rewriting histo
   // 0039 adds ES-02 child identity integrity without a synthetic seed.
   // 0040 adds ES-08 specialist evidence and immutable policy manifests; seed 40 adds no users or grants.
   // 0041 adds typed Facility details and additive synthetic identities, with no users/grants.
-  assert.equal(final.length, baseline.length + 58);
+  assert.equal(final.length, baseline.length + 59);
   assert.ok((await db.query("SELECT to_regclass('ppo.projects') AS relation")).rows[0].relation);
 });
 

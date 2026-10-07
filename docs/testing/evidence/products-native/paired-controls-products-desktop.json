@@ -1,0 +1,53 @@
+{
+  "sources": [
+    {
+      "path": "docs/reference/ui/products/PPO-Products-Preview-r04.html",
+      "sha256": "bd2d8074d824932fc259406994d5fd5f359058949ddede9bda652d50ff69fdbd",
+      "heading": {
+        "text": "Products",
+        "font": "Roboto, Verdana, sans-serif",
+        "size": "24px",
+        "colour": "rgb(36, 42, 55)"
+      }
+    },
+    {
+      "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+      "heading": {
+        "text": "The Powerplants Onetheme & style board.",
+        "font": "PPOBoardRoboto, Roboto, Verdana, sans-serif",
+        "size": "38px",
+        "colour": "rgb(36, 42, 55)"
+      }
+    }
+  ],
+  "observations": [
+    {
+      "width": 1440,
+      "overflow": false,
+      "font": "Roboto, Verdana, sans-serif",
+      "size": "25.6px",
+      "colour": "rgb(36, 42, 55)",
+      "focus": "solid"
+    },
+    {
+      "width": 1024,
+      "overflow": false,
+      "font": "Roboto, Verdana, sans-serif",
+      "size": "25.6px",
+      "colour": "rgb(36, 42, 55)",
+      "focus": "solid"
+    },
+    {
+      "width": 720,
+      "overflow": false,
+      "font": "Roboto, Verdana, sans-serif",
+      "size": "25.6px",
+      "colour": "rgb(36, 42, 55)",
+      "focus": "solid"
+    }
+  ],
+  "source_head": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+  "build_id": "hRnXovuyfXzWYOWZQft2a",
+  "status": "Measured proposed native adaptation; owner/device acceptance separate"
+}

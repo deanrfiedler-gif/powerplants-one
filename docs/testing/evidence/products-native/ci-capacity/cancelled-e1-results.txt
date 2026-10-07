@@ -1,0 +1,28 @@
+E1 manual estimate, draft output and restart proof	Pinned runtime and static checks	2026-10-07T09:23:24.0035833Z ℹ tests 616
+E1 manual estimate, draft output and restart proof	Pinned runtime and static checks	2026-10-07T09:23:24.0036167Z ℹ suites 0
+E1 manual estimate, draft output and restart proof	Pinned runtime and static checks	2026-10-07T09:23:24.0036458Z ℹ pass 616
+E1 manual estimate, draft output and restart proof	Pinned runtime and static checks	2026-10-07T09:23:24.0036696Z ℹ fail 0
+E1 manual estimate, draft output and restart proof	Pinned runtime and static checks	2026-10-07T09:23:24.0036946Z ℹ cancelled 0
+E1 manual estimate, draft output and restart proof	Pinned runtime and static checks	2026-10-07T09:23:24.0037206Z ℹ skipped 0
+E1 manual estimate, draft output and restart proof	Pinned runtime and static checks	2026-10-07T09:23:24.0037586Z ℹ todo 0
+E1 manual estimate, draft output and restart proof	Pinned runtime and static checks	2026-10-07T09:23:24.0037874Z ℹ duration_ms 33396.383252
+E1 manual estimate, draft output and restart proof	Disposable current schema and E1 PostgreSQL proof	2026-10-07T09:37:21.9948351Z ℹ tests 110
+E1 manual estimate, draft output and restart proof	Disposable current schema and E1 PostgreSQL proof	2026-10-07T09:37:21.9949854Z ℹ suites 0
+E1 manual estimate, draft output and restart proof	Disposable current schema and E1 PostgreSQL proof	2026-10-07T09:37:21.9950742Z ℹ pass 110
+E1 manual estimate, draft output and restart proof	Disposable current schema and E1 PostgreSQL proof	2026-10-07T09:37:21.9951278Z ℹ fail 0
+E1 manual estimate, draft output and restart proof	Disposable current schema and E1 PostgreSQL proof	2026-10-07T09:37:21.9951570Z ℹ cancelled 0
+E1 manual estimate, draft output and restart proof	Disposable current schema and E1 PostgreSQL proof	2026-10-07T09:37:21.9952035Z ℹ skipped 0
+E1 manual estimate, draft output and restart proof	Disposable current schema and E1 PostgreSQL proof	2026-10-07T09:37:21.9952899Z ℹ todo 0
+E1 manual estimate, draft output and restart proof	Disposable current schema and E1 PostgreSQL proof	2026-10-07T09:37:21.9953405Z ℹ duration_ms 810599.743351
+E1 manual estimate, draft output and restart proof	E1 real direct HTTP proof	2026-10-07T09:39:13.8917912Z ℹ tests 16
+E1 manual estimate, draft output and restart proof	E1 real direct HTTP proof	2026-10-07T09:39:13.8918511Z ℹ suites 0
+E1 manual estimate, draft output and restart proof	E1 real direct HTTP proof	2026-10-07T09:39:13.8918928Z ℹ pass 16
+E1 manual estimate, draft output and restart proof	E1 real direct HTTP proof	2026-10-07T09:39:13.8919338Z ℹ fail 0
+E1 manual estimate, draft output and restart proof	E1 real direct HTTP proof	2026-10-07T09:39:13.8919761Z ℹ cancelled 0
+E1 manual estimate, draft output and restart proof	E1 real direct HTTP proof	2026-10-07T09:39:13.8920187Z ℹ skipped 0
+E1 manual estimate, draft output and restart proof	E1 real direct HTTP proof	2026-10-07T09:39:13.8920567Z ℹ todo 0
+E1 manual estimate, draft output and restart proof	E1 real direct HTTP proof	2026-10-07T09:39:13.8921028Z ℹ duration_ms 21273.012019
+E1 manual estimate, draft output and restart proof	Compiled E1 desktop, phone, 320px, uncertain response and long output	2026-10-07T09:43:49.3666219Z   36 passed (3.0m)
+E1 manual estimate, draft output and restart proof	Compiled ES-02, My Work, Engineering materials and shell regression	2026-10-07T09:46:01.5390691Z   29 passed (2.2m)
+E1 manual estimate, draft output and restart proof	Compiled ES-08 specialist workbench and recovery	2026-10-07T09:48:29.0718281Z   10 passed (2.4m)
+E1 manual estimate, draft output and restart proof	Compiled native fertigation save, clean context, conflict and large registers	2026-10-07T09:50:25.1536988Z   18 passed (1.9m)

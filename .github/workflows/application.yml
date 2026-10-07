@@ -27,28 +27,28 @@ jobs:
     runs-on: ubuntu-24.04
     # Each lane owns its disposable database; all original phases remain serial
     # within their lane. HTTP/restart proofs start at their original clean-reset
-    # boundary; all three native database shards keep serial file execution.
-    # A shard exhausted its budget with tests still passing; see the retained
-    # suite isolation decision. Keep every discovered file and test deadline.
-    # Desktop and mobile each keep the full discovered project and warm-up;
-    # focused browser/restart phases run once in the desktop lane.
+    # boundary; all four native database shards keep serial file execution.
+    # Browser projects use isolated databases; focused CRM/restart phases remain
+    # in the original browser lane. Retain every test and deadline (see isolation ADR).
     # The stable p01 gate requires every lane to pass within the same deadline.
     timeout-minutes: 90
     strategy:
       fail-fast: false
       matrix:
-        suite: [finance, reports, http]
+        suite: [browser, finance, reports, http]
         include:
-          - suite: browser-desktop
-            project: desktop-chromium
+          - suite: browser
+            browser_project: desktop-chromium
           - suite: browser-mobile
-            project: mobile-chromium
+            browser_project: mobile-chromium
           - suite: database-1
-            database_shard: 1/3
+            database_shard: 1/4
           - suite: database-2
-            database_shard: 2/3
+            database_shard: 2/4
           - suite: database-3
-            database_shard: 3/3
+            database_shard: 3/4
+          - suite: database-4
+            database_shard: 4/4
     services:
       postgres:
         image: postgres:16.15
@@ -101,19 +101,19 @@ jobs:
           npm run db:seed
           npm run db:health
       - name: CS-05 compiled facilities proof
-        if: matrix.suite == 'browser-desktop'
+        if: matrix.suite == 'browser'
         # Run the dedicated CS-05 proof once in the retained browser lane.
         run: npx playwright test tests/browser/facilities.spec.ts --config=playwright.compiled.config.ts --no-deps --output verification-evidence/facilities --reporter=list
       - name: Mobile CRM projections, scoped links and complete phone journey
-        if: matrix.suite == 'browser-desktop'
+        if: matrix.suite == 'browser'
         run: |
           node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/database/mobile-crm.test.ts
           npx playwright test --config=playwright.compiled.config.ts tests/browser/mobile-crm.spec.ts tests/browser/crm.spec.ts --output verification-evidence/mobile-crm --reporter=list
       - name: Focused I2 identity, query equivalence and responsive presentation proof
-        if: ${{ matrix.suite == 'browser-desktop' && !cancelled() && steps.database_setup.outcome == 'success' }}
+        if: ${{ matrix.suite == 'browser' && !cancelled() && steps.database_setup.outcome == 'success' }}
         run: npx playwright test --config=playwright.compiled.config.ts tests/browser/crm-i2.spec.ts --output verification-evidence/i2-focused-browser --reporter=list
       - name: CRM I1 accepted journey across application and PostgreSQL restarts
-        if: ${{ matrix.suite == 'browser-desktop' && !cancelled() && steps.database_setup.outcome == 'success' }}
+        if: ${{ matrix.suite == 'browser' && !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
         run: |
@@ -125,19 +125,19 @@ jobs:
           done
           node --env-file=.env.local --import tsx scripts/crm-restart-proof.ts verify
       - name: Desktop and mobile browser checks
-        if: ${{ startsWith(matrix.suite, 'browser-') && !cancelled() && steps.database_setup.outcome == 'success' }}
+        if: ${{ startsWith(matrix.suite, 'browser') && !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
-          PPO_BROWSER_PROJECT: ${{ matrix.project }}
+          PPO_BROWSER_PROJECT: ${{ matrix.browser_project }}
           PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/p11-full-browser/results.json
         run: |
           npm run browser:install
           npm run test:browser -- --config=playwright.compiled.config.ts --project="$PPO_BROWSER_PROJECT" --reporter=list,json
       - name: Prepare retained browser review diagnostics immediately
-        if: ${{ startsWith(matrix.suite, 'browser-') && always() && steps.database_setup.outcome == 'success' }}
+        if: ${{ startsWith(matrix.suite, 'browser') && always() && steps.database_setup.outcome == 'success' }}
         id: browser_review
         run: python3 scripts/prepare-review-evidence.py
       - name: Preserve original retained browser evidence immediately
-        if: ${{ startsWith(matrix.suite, 'browser-') && always() && steps.browser_review.outcome == 'success' }}
+        if: ${{ startsWith(matrix.suite, 'browser') && always() && steps.browser_review.outcome == 'success' }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: P11-retained-${{ matrix.suite }}-evidence

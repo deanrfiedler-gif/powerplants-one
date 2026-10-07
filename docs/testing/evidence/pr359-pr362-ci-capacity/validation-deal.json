@@ -1,0 +1,19 @@
+{
+  "baseline": "f309c04487c0df396ee202a2a3f7b6912c578b1d",
+  "workflow_command_preservation": "passed; original and repaired workflow bytes match the #359 comparison",
+  "actionlint": "passed (1.7.12)",
+  "playwright_discovery": {
+    "all": 757,
+    "desktop_with_warmup": 379,
+    "mobile_with_warmup": 379,
+    "only_overlap": "one retained warm-up dependency",
+    "all_business_tests_selected_exactly_once": true
+  },
+  "scope": "Discovery and workflow validation only; browser assertions and database tests not executed locally.",
+  "repository_checks": {
+    "foundation": "passed",
+    "prototype": "passed",
+    "naming": "passed",
+    "studio": "passed"
+  }
+}

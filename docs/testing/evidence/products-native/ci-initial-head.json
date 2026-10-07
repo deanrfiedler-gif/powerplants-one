@@ -1,0 +1,289 @@
+{
+  "source_head": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+  "observed_at": "2026-10-06T22:09:15.6758697Z",
+  "note": "Point-in-time head checks; failed browser setup uses unreviewed Chrome 155 before application tests. Running and queued checks are not passes.",
+  "checks": [
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536202194/job/112522332964",
+      "name": "P01–P11 and CRM I1–I2 local application and PostgreSQL proof",
+      "state": "FAILURE",
+      "workflow": "Application assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536201954/job/112521992516",
+      "name": "ES-07 owned Supply follow-up and original recovery",
+      "state": "FAILURE",
+      "workflow": "Quotation Supply follow-up assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536202194/job/112517642446",
+      "name": "P01–P11 database-1 proof",
+      "state": "FAILURE",
+      "workflow": "Application assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536202194/job/112517642409",
+      "name": "P01–P11 finance proof",
+      "state": "FAILURE",
+      "workflow": "Application assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536202194/job/112517642184",
+      "name": "P11 three original browser failures diagnostic replay",
+      "state": "FAILURE",
+      "workflow": "Application assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536201954/job/112517642233",
+      "name": "ES-07 Supply merge-runtime proof",
+      "state": "FAILURE",
+      "workflow": "Quotation Supply follow-up assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536201954/job/112517642111",
+      "name": "ES-07 Supply shortfall-database proof",
+      "state": "FAILURE",
+      "workflow": "Quotation Supply follow-up assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536201954/job/112517641924",
+      "name": "ES-07 Supply material-runtime proof",
+      "state": "FAILURE",
+      "workflow": "Quotation Supply follow-up assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536201954/job/112517642132",
+      "name": "ES-07 Supply branch-runtime proof",
+      "state": "FAILURE",
+      "workflow": "Quotation Supply follow-up assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536202194/job/112517642393",
+      "name": "P01–P11 http proof",
+      "state": "FAILURE",
+      "workflow": "Application assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536202163/job/112520956694",
+      "name": "Desktop and mobile browser suite against the compiled application",
+      "state": "FAILURE",
+      "workflow": "Compiled application browser assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536201954/job/112517642122",
+      "name": "ES-07 Supply runtime proof",
+      "state": "FAILURE",
+      "workflow": "Quotation Supply follow-up assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536202194/job/112517642325",
+      "name": "P01–P11 database-2 proof",
+      "state": "FAILURE",
+      "workflow": "Application assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536202194/job/112517642241",
+      "name": "P01–P11 browser proof",
+      "state": "FAILURE",
+      "workflow": "Application assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536202194/job/112517642106",
+      "name": "P01–P11 reports proof",
+      "state": "FAILURE",
+      "workflow": "Application assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536201954/job/112517641900",
+      "name": "ES-07 Supply material-database proof",
+      "state": "FAILURE",
+      "workflow": "Quotation Supply follow-up assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536201954/job/112517641958",
+      "name": "ES-07 Supply database proof",
+      "state": "FAILURE",
+      "workflow": "Quotation Supply follow-up assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536201954/job/112517642016",
+      "name": "ES-07 Supply shortfall-runtime proof",
+      "state": "FAILURE",
+      "workflow": "Quotation Supply follow-up assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536201954/job/112517641919",
+      "name": "ES-07 Supply dependency-runtime proof",
+      "state": "FAILURE",
+      "workflow": "Quotation Supply follow-up assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536201954/job/112517641838",
+      "name": "ES-07 Supply branch-database proof",
+      "state": "FAILURE",
+      "workflow": "Quotation Supply follow-up assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536201972/job/112517640877",
+      "name": "E1 manual estimate, draft output and restart proof",
+      "state": "FAILURE",
+      "workflow": "Estimating E1 assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536202194/job/112517642108",
+      "name": "P11 focused original HTTP and output isolation proof",
+      "state": "FAILURE",
+      "workflow": "Application assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536201954/job/112517641794",
+      "name": "ES-07 Supply chain-runtime proof",
+      "state": "FAILURE",
+      "workflow": "Quotation Supply follow-up assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536202160/job/112517641355",
+      "name": "Email Calendar persisted journey and server permissions",
+      "state": "FAILURE",
+      "workflow": "Email Calendar journey assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536202163/job/112517642995",
+      "name": "Compiled application retained proof",
+      "state": "FAILURE",
+      "workflow": "Compiled application browser assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536202194/job/112517641996",
+      "name": "P11 focused integrated quality and access proof",
+      "state": "FAILURE",
+      "workflow": "Application assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536201954/job/112517641948",
+      "name": "ES-07 Supply receipt-database proof",
+      "state": "FAILURE",
+      "workflow": "Quotation Supply follow-up assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536202200/job/112517641456",
+      "name": "PD catalogue, publication, source context, compatibility and import",
+      "state": "FAILURE",
+      "workflow": "Native Products assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536202044/job/112517641502",
+      "name": "demo",
+      "state": "FAILURE",
+      "workflow": "Azure demo preparation checks"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536201923/job/112517640948",
+      "name": "CRM header and board visual checks",
+      "state": "FAILURE",
+      "workflow": "CRM refinements assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536201954/job/112517641874",
+      "name": "ES-07 Supply chain-database proof",
+      "state": "FAILURE",
+      "workflow": "Quotation Supply follow-up assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536201923/job/112517640530",
+      "name": "CRM desktop and mobile persistence and interaction proof",
+      "state": "FAILURE",
+      "workflow": "CRM refinements assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536201954/job/112517641881",
+      "name": "ES-07 Supply dependency-database proof",
+      "state": "FAILURE",
+      "workflow": "Quotation Supply follow-up assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536202360/job/112517643054",
+      "name": "Access review model and native browser review",
+      "state": "FAILURE",
+      "workflow": "Access review design review"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536202163/job/112517642823",
+      "name": "Compiled application browser-mobile proof",
+      "state": "FAILURE",
+      "workflow": "Compiled application browser assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536201986/job/112517641141",
+      "name": "ES-07 completed conversion disposition and recovery",
+      "state": "FAILURE",
+      "workflow": "Quotation disposition assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536202163/job/112517642571",
+      "name": "Compiled application browser-desktop proof",
+      "state": "FAILURE",
+      "workflow": "Compiled application browser assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536202054/job/112517641316",
+      "name": "leads",
+      "state": "FAILURE",
+      "workflow": "CRM Leads implementation"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536201954/job/112517641446",
+      "name": "ES-07 Supply merge-database proof",
+      "state": "FAILURE",
+      "workflow": "Quotation Supply follow-up assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536201895/job/112517640994",
+      "name": "Registered UI design baseline integrity",
+      "state": "FAILURE",
+      "workflow": "UI design baseline assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536202020/job/112517640911",
+      "name": "Check documentation foundation",
+      "state": "SUCCESS",
+      "workflow": "Documentation assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536201966/job/112517640776",
+      "name": "Projects r10 scoped persistence and desktop interaction",
+      "state": "FAILURE",
+      "workflow": "Projects Gantt assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536202194/job/112517641739",
+      "name": "P11 declared load and raw core-read performance proof",
+      "state": "FAILURE",
+      "workflow": "Application assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536202005/job/112517640618",
+      "name": "Engineering EN-01–EN-08 commands, lineage and browser journeys",
+      "state": "FAILURE",
+      "workflow": "Engineering native workflow assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536202115/job/112517641432",
+      "name": "ES-06 exact response, recovery and receiving boundary",
+      "state": "FAILURE",
+      "workflow": "Quotation response assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536202011/job/112517640967",
+      "name": "ES-07 exact receiving, native conversion and recovery",
+      "state": "FAILURE",
+      "workflow": "Quotation conversion assurance"
+    },
+    {
+      "link": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37536202110/job/112517641694",
+      "name": "register",
+      "state": "SUCCESS",
+      "workflow": "Development register integrity"
+    }
+  ]
+}

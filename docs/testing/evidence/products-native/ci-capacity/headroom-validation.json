@@ -1,0 +1,47 @@
+{
+  "source_reference": "d686723d4e2c0bb6893713f81532dfb041b9af36",
+  "workflow_sha256": "40adba7d538874d9e9ef62e5ff441f0b625a49eb373ed7cf72d1e8a6ac9053dd",
+  "result": "passed",
+  "allowed_changes": "Four native database partitions; isolated desktop/mobile selection for the full browser phase with unique immediate artifacts. All earlier focused browser/CRM/restart commands stay once in the original browser lane.",
+  "unchanged": "Every other parsed workflow value, step, test glob, assertion/deadline, service, pinned action, dependency, application/SQL/test source and mandatory aggregate.",
+  "foundation": {
+    "status": "passed",
+    "issued_sources": 22,
+    "requirements": 78,
+    "decisions": 29,
+    "planned_acceptance": 38,
+    "backlog_items": 16,
+    "linked_issues": 16,
+    "local_links_checked": 7011,
+    "files_scanned_for_markers": 4437,
+    "errors": [],
+    "scope": "Documentation assurance only; no business acceptance tests executed"
+  },
+  "naming": {
+    "status": "passed",
+    "document_records": 474,
+    "standing_exceptions": 9,
+    "metadata_documents_compared": 317,
+    "git_masters": 195,
+    "project_instruction_characters": 7934,
+    "errors": [],
+    "scope": "Naming and documentation consistency only; runtime behaviour is verified separately"
+  },
+  "probe_lint": "passed",
+  "selection": {
+    "database_files": 99,
+    "database_partition_sizes": [
+      25,
+      25,
+      25,
+      24
+    ],
+    "new_discovered_failure": "exactly one failing shard",
+    "browser_cases": {
+      "desktop": 364,
+      "mobile": 364,
+      "warm_up": 1
+    },
+    "browser_union": "every original case; only warm-up repeats"
+  }
+}

@@ -1,6 +1,7 @@
 import { followupReceiptAuthority as salesFollowupReceiptAuthority } from "../sales/followup";
 import { estimatingBindingReceiptAuthority } from "../sales/estimating-binding";
 import { deliveryBindingReceiptAuthority } from "../sales/delivery-binding";
+import { productReceiptAuthority } from "../products/context";
 import { receiptAuthority as maintenanceReceiptAuthority, } from "../maintenance/reads";
 import { followupReceiptAuthority } from "../estimating/supply-followup/authority";
 import { releaseReceiptAuthority } from "../estimating/release/context";
@@ -84,6 +85,8 @@ export async function readOperation(
       await salesFollowupReceiptAuthority(c,p,r.record_id,operation_id);
       return r.result as OperationReceipt;
     });
+  } else if (["Product", "ProductRelationship", "ProductImport"].includes(r.object_type)) {
+    await productReceiptAuthority(client,p,r.record_id,r.command,r.object_type);
   } else if (["ServiceAgreement","EntitlementAssessment","MaintenancePlan","MaintenanceOccurrence","RenewalReview","WarrantyCase","SupplierClaim"].includes(r.object_type)) {
     await maintenanceReceiptAuthority(client,p,r.record_id,r.object_type,r.command,(r.result as OperationReceipt).record_version);
   } else if (["SchedulingPolicyProposal", "SchedulingPolicyReview", "SchedulingPolicyPublication", "SchedulingPolicyResolution"].includes(r.object_type)) {
