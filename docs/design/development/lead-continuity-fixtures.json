@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "synthetic": true,
-  "source": "tests/browser/leads.spec.ts; tests/database/leads-continuity.test.ts; tests/database/leads-amendments.test.ts; tests/database/sales-estimating-binding.test.ts; tests/browser/sales-estimating-binding.spec.ts; tests/database/commercial-continuity.test.ts; tests/browser/commercial-continuity.spec.ts",
+  "source": "tests/browser/leads.spec.ts; tests/database/leads-continuity.test.ts; tests/database/leads-amendments.test.ts; tests/database/sales-estimating-binding.test.ts; tests/browser/sales-estimating-binding.spec.ts; tests/database/commercial-continuity.test.ts; tests/browser/commercial-continuity.spec.ts; tests/database/outcome-sources.test.ts; tests/browser/outcome-sources.spec.ts",
   "owner": "Dean Fiedler",
   "review_status": "Pending owner and paired visual review",
   "states": [
@@ -76,6 +76,22 @@
     {
       "key": "restricted-commercial-refresh",
       "description": "Denied native release refresh clears previously displayed issue/response/conversion facts and retains an explicit retry."
+    },
+    {
+      "key": "outcome-review-frozen",
+      "description": "Refreshing after a response correction retains the exact reviewed command; stale submission refuses all effects."
+    },
+    {
+      "key": "outcome-original-recovery",
+      "description": "An accepted Won with a lost HTTP response recovers the original operation after an actual Declined correction; history retains both facts."
+    },
+    {
+      "key": "outcome-evidence-denied",
+      "description": "Denied preview clears displayed quotation facts and submission basis; separate evidence must be explicitly selected and described."
+    },
+    {
+      "key": "legacy-outcome-narrative",
+      "description": "Historical outcomes retain their original payload and receipt and do not acquire a fabricated native quotation link."
     }
   ]
 }

@@ -16,6 +16,8 @@ import { LookupField } from "./record-ui";
 import type { ownerTransferOptions } from "../crm/owner-transfer";
 import type { readOpportunity } from "../crm/reads";
 import type { OperationReceipt } from "../platform/operations";
+import type { OutcomeSource } from "../crm/outcome-sources";
+import { OpportunityOutcomeSource } from "./opportunity-outcome-source";
 
 export type DealRecord = Awaited<ReturnType<typeof readOpportunity>>;
 export type DealMode = "snapshot" | "information" | "scope" | "stage" | "outcome" | "transfer";
@@ -334,6 +336,7 @@ function DealEditor({
     [lostReason, setLostReason] = useState(""),
     [acceptanceEvidence, setAcceptanceEvidence] = useState(""),
     [outcomeNote, setOutcomeNote] = useState(""),
+    [commercialSource, setCommercialSource] = useState<OutcomeSource | null>(null),
     [search, setSearch] = useState("");
   const command = useCrmCommand(
     (r) => onAccepted(r, o, mode === "stage"),
@@ -359,8 +362,10 @@ function DealEditor({
       const {next_activity:next,identification_activity:identification}=comparison;
       return command.send(`crm/opportunities/${o.id}/transfer-owner`,{expected_version:version,new_owner_id:newOwner,reason:transferReason,expected_next_activity:{id:next.id,version:next.version},expected_identification_activity:identification?{id:identification.id,version:identification.version}:null});
     }
-    if (mode === "outcome")
-      return command.send(`crm/opportunities/${o.id}/outcome`, {expected_version:version,close_outcome:outcome,lost_reason:outcome === "Lost" ? lostReason : null,acceptance_evidence:outcome === "Won" ? acceptanceEvidence : null,reason:outcomeNote.trim() || `Record ${outcome} sales outcome`});
+    if (mode === "outcome") {
+      if (!commercialSource) return;
+      return command.send(`crm/opportunities/${o.id}/outcome`, {expected_version:version,close_outcome:outcome,lost_reason:outcome === "Lost" ? lostReason : null,acceptance_evidence:outcome === "Won" ? acceptanceEvidence : null,commercial_source:commercialSource,reason:outcomeNote.trim() || `Record ${outcome} sales outcome`});
+    }
     if (mode === "information")
       return command.send(`crm/opportunities/${o.id}/information`, {
         expected_version: version,
@@ -459,7 +464,8 @@ function DealEditor({
             <Field name="reason" label="Transfer reason" value={transferReason} onChange={setTransferReason} multiline required maxLength={1000}/>
           </>}
           {mode === "outcome" && <>
-            <SelectField name="close_outcome" label="Sales outcome" value={outcome} onChange={setOutcome} options={(o.stage_id === "Closing" ? ["Won","Lost"] : ["Lost"]).map(id=>({id,display_name:id}))} required />
+            <SelectField name="close_outcome" label="Sales outcome" value={outcome} onChange={value => { setOutcome(value); setCommercialSource(null); }} options={(o.stage_id === "Closing" ? ["Won","Lost"] : ["Lost"]).map(id=>({id,display_name:id}))} required />
+            <OpportunityOutcomeSource key={outcome} id={o.id} version={version} outcome={outcome} onChange={setCommercialSource} />
             {outcome === "Lost" ? <SelectField name="lost_reason" label="Lost reason" value={lostReason} onChange={setLostReason} options={["Price","Competitor","Timing","No decision"].map(id=>({id,display_name:id}))} required /> : <Field name="acceptance_evidence" label="Acceptance or order evidence" value={acceptanceEvidence} onChange={setAcceptanceEvidence} multiline required maxLength={2000} />}
             <Field name="reason" label="Outcome notes (optional)" value={outcomeNote} onChange={setOutcomeNote} maxLength={1000} />
             <p>{outcome === "Won" ? `Handover will be due, owned by ${o.owner_name}, until a receiving route and owner are confirmed.` : "The stage and existing activities will remain in the record."} Reopening is unavailable.</p>
@@ -626,6 +632,7 @@ function DealEditor({
             type="submit"
             disabled={
               blocked ||
+              (mode === "outcome" && !commercialSource) ||
               version !== o.version ||
               (mode === "stage" && stage === o.stage_id) || (mode === "transfer" && handover.data?.opportunity_version !== version)
             }

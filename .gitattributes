@@ -38,3 +38,5 @@ docs/testing/evidence/estimating-brief-continuity/*.log text eol=lf
 docs/testing/evidence/maintenance-warranty/integration/ci-capacity/*.txt text eol=lf
 
 docs/testing/evidence/deal-commercial-continuity/*.log text eol=lf
+
+docs/testing/evidence/deal-outcome-provenance/*.log text eol=lf

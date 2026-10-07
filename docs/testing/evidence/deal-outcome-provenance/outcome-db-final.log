@@ -1,0 +1,15 @@
+✔ LC-15 exact quotation-based Won retains one outcome and original recovery after a native response correction (20599.1515ms)
+✔ LC-15 separate evidence is explicit; absent legacy source retains its exact old payload and narrative outcome (454.6651ms)
+✔ LC-15 stale reviewed response, wrong Deal and mismatched outcome refuse every effect (5943.988ms)
+✔ LC-15 current quote permission governs stored source identities and original outcome recovery (6232.2758ms)
+✔ LC-15 a quotation successor invalidates a reviewed new outcome without changing the original issued evidence (5924.1812ms)
+✔ LC-15 late publication failure rolls back outcome, handover, source, receipt and audit together (5694.8504ms)
+✔ LC-15 populated 0074 upgrade retains every old outcome and original receipt without fabricating native provenance (11666.5663ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 58400.7563

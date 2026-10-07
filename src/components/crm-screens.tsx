@@ -5,6 +5,7 @@ import { OpportunityCorrespondence } from "./opportunity-correspondence";
 import { useEffect, useState } from "react";
 import { LookupField, LocalDateTimeField, RecordTabs, RecordPanel } from "./record-ui";
 import { DealDialog, DealInformation, DealScope, dealAmount, dealClose, type DealMode } from "./crm-deal-controls";
+import { OutcomeSourceHistory } from "./opportunity-outcome-source";
 import { ProductIcon } from "./product-icons";
 import { OpportunityCommercial, OpportunityFiles } from "./opportunity-commercial";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -759,6 +760,7 @@ function OpportunityContent({
               {o.owner_transfers.filter(t=>t.event_id===e.id).map(t=><p key={t.event_id}>{t.from_owner_name} → {t.to_owner_name}. Activities retained their owners.</p>)}
               {e.lost_reason && <p>Lost reason: {e.lost_reason}</p>}
               {e.acceptance_evidence && <p className="crm-narrative">Acceptance evidence: {e.acceptance_evidence}</p>}
+              {e.event_type === "OpportunityOutcomeRecorded" && <OutcomeSourceHistory source={o.outcome_sources.find(s => s.event_id === e.id)} />}
               <details>
                 <summary>Recorded need and qualification</summary>
                 <p className="crm-narrative">{e.need_summary}</p>

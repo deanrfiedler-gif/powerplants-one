@@ -1,0 +1,23 @@
+Database reset: completed
+[WebServer] (node:33976) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.98"}
+
+Running 10 tests using 1 worker
+
+(node:27968) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop-chromium] › tests\browser\crm-refinements.spec.ts:106:1 › owned Won handover and structured Lost survive reload on desktop and phone (8.9s)
+  ok  2 [desktop-chromium] › tests\browser\crm-refinements.spec.ts:151:1 › accepted outcome with a lost response recovers its original receipt without another effect (1.8s)
+  ok  3 [desktop-chromium] › tests\browser\outcome-sources.spec.ts:47:1 › LC-15 quotation outcome recovers the exact original after a lost response and later native correction (9.4s)
+  ok  4 [desktop-chromium] › tests\browser\outcome-sources.spec.ts:112:1 › LC-15 background refresh preserves the reviewed comparison and stale submission has no outcome effect (8.0s)
+  ok  5 [desktop-chromium] › tests\browser\outcome-sources.spec.ts:171:1 › LC-15 denied refresh removes the native comparison and requires a fresh explicit source choice (7.6s)
+(node:15612) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  6 [mobile-chromium] › tests\browser\crm-refinements.spec.ts:106:1 › owned Won handover and structured Lost survive reload on desktop and phone (6.2s)
+  ok  7 [mobile-chromium] › tests\browser\crm-refinements.spec.ts:151:1 › accepted outcome with a lost response recovers its original receipt without another effect (1.6s)
+  ok  8 [mobile-chromium] › tests\browser\outcome-sources.spec.ts:47:1 › LC-15 quotation outcome recovers the exact original after a lost response and later native correction (8.5s)
+  ok  9 [mobile-chromium] › tests\browser\outcome-sources.spec.ts:112:1 › LC-15 background refresh preserves the reviewed comparison and stale submission has no outcome effect (8.4s)
+  ok 10 [mobile-chromium] › tests\browser\outcome-sources.spec.ts:171:1 › LC-15 denied refresh removes the native comparison and requires a fresh explicit source choice (7.1s)
+
+  10 passed (2.6m)
