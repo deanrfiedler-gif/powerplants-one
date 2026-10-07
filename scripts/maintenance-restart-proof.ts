@@ -38,16 +38,54 @@ async function outputHashes(paths: string[]) {
     path, sha256: createHash("sha256").update(await readFile(path)).digest("hex"),
   })));
 }
+async function verifyOutputs(paths: string[], appointment: string) {
+  const contents = [];
+  for (const path of paths) {
+    const bytes = await readFile(path);
+    const sha256 = createHash("sha256").update(bytes).digest("hex");
+    if (bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))) {
+      const attachment = await database().query(
+        "SELECT id FROM ppo.field_attachments WHERE appointment_id=$1 AND content_hash=$2 AND status='Available'",
+        [appointment, sha256],
+      );
+      assert.equal(attachment.rowCount, 1, "The PNG belongs to this reviewed attendance");
+      contents.push({ kind: "PNG", sha256 });
+      continue;
+    }
+    const bundle = JSON.parse(bytes.toString("utf8"));
+    const pdf = Buffer.from(bundle.pdf_base64, "base64");
+    assert.ok(pdf.subarray(0, 5).equals(Buffer.from("%PDF-")));
+    const htmlHash = createHash("sha256").update(bundle.html).digest("hex");
+    const pdfHash = createHash("sha256").update(pdf).digest("hex");
+    const issued = await database().query(
+      "SELECT 'Pack' AS kind, manifest FROM ppo.pack_issues WHERE manifest->'store_key'->>'sha256'=$1 UNION ALL SELECT 'Report' AS kind, manifest FROM ppo.report_issues WHERE manifest->'store_key'->>'sha256'=$1",
+      [sha256],
+    );
+    assert.equal(issued.rowCount, 1, "The bundle has one exact issued manifest");
+    const { kind, manifest } = issued.rows[0];
+    assert.equal(bundle.job_id, manifest.job_id);
+    assert.equal(htmlHash, manifest.html_hash);
+    assert.equal(pdfHash, manifest.pdf_hash);
+    assert.equal(Buffer.byteLength(bundle.html), manifest.html_bytes);
+    assert.equal(pdf.length, manifest.pdf_bytes);
+    contents.push({ kind, sha256, html_hash: htmlHash, pdf_hash: pdfHash });
+  }
+  assert.deepEqual(contents.map((item) => item.kind).sort(), ["PNG", "Pack", "Report"]);
+  return contents;
+}
 const digest = (value: unknown) =>
   createHash("sha256").update(JSON.stringify(value)).digest("hex");
 await mkdir(root, { recursive: true });
-const login = await fetch(origin + "/api/v1/local-session", {
-  method: "POST",
-  headers: { origin, "content-type": "application/json" },
-  body: JSON.stringify({ profile: "coordinator" }),
-});
-assert.equal(login.status, 200);
-const cookie = login.headers.get("set-cookie")!.split(";")[0];
+let cookie = "";
+async function signIn() {
+  const login = await fetch(origin + "/api/v1/local-session", {
+    method: "POST",
+    headers: { origin, "content-type": "application/json" },
+    body: JSON.stringify({ profile: "coordinator" }),
+  });
+  assert.equal(login.status, 200);
+  cookie = login.headers.get("set-cookie")!.split(";")[0];
+}
 async function call(path: string, data?: unknown) {
   const r = await fetch(origin + "/api/v1/" + path, {
     method: data === undefined ? "GET" : "POST",
@@ -84,6 +122,7 @@ try {
     await database().query("SELECT pg_postmaster_start_time()::text AS at")
   ).rows[0].at;
   if (phase === "write") {
+    await signIn();
     const priorFiles = new Set(await files());
     const a = await plan(),
       w = await warranty();
@@ -156,7 +195,7 @@ try {
       path = `warranty/cases/${w.id}`;
     const receipt = await call(path, command), original = await snapshot();
     const outputs = await outputHashes((await files()).filter((path) => !priorFiles.has(path)));
-    assert.ok(outputs.length >= 4, "Retain the pack, reviewed report outputs and PNG evidence");
+    const contentOutputs = await verifyOutputs(outputs.map((output) => output.path), service.appointment);
     const replays = [
       { path: preparePath, command: prepare, receipt: prepared },
       { path: receivePath, command: receive, receipt: received },
@@ -171,7 +210,7 @@ try {
         path,
         receipt,
         original,
-        replays, outputs, filePaths: await files(),
+        replays, outputs, contentOutputs, appointment: service.appointment, filePaths: await files(),
       }),
     );
     console.log(
@@ -196,20 +235,42 @@ try {
       proof.databaseStarted,
       "PostgreSQL must restart",
     );
+    const recovered = await snapshot();
+    assert.deepEqual(recovered, proof.original, "Every original survives before reauthentication");
+    await signIn();
+    const authenticated = await snapshot();
+    const oldAuditIds = new Set(proof.original.audit_events.map((row: { id: string }) => row.id));
+    const loginEvents = authenticated.audit_events.filter((row: { id: string }) => !oldAuditIds.has(row.id));
+    assert.equal(loginEvents.length, 1, "Reauthentication creates exactly one Session audit event");
+    const loginEvent = loginEvents[0];
+    assert.ok(Number.isFinite(Date.parse(loginEvent.occurred_at)));
+    assert.deepEqual({ ...loginEvent, id: null, occurred_at: null }, {
+      id: null, occurred_at: null, schema_version: 1,
+      workspace_id: proof.original.service_agreements[0].workspace_id,
+      actor_id: CRM.owner, object_type: "Session", object_id: CRM.owner,
+      operation_id: null, outcome: "Accepted", reason: "Local synthetic identity selected",
+      details: { profile: "coordinator" },
+    });
+    assert.deepEqual({
+      ...authenticated,
+      audit_events: authenticated.audit_events.filter((row: { id: string }) => row.id !== loginEvent.id),
+    }, proof.original, "Authentication preserves every earlier row and adds only its exact audit event");
     for (const original of proof.replays) {
       assert.deepEqual(await call(`operations/${original.command.operation_id}`), original.receipt);
       assert.deepEqual(await call(original.path, original.command), original.receipt);
     }
     assert.deepEqual(await outputHashes(proof.outputs.map((o: { path: string }) => o.path)), proof.outputs);
+    assert.deepEqual(await verifyOutputs(proof.outputs.map((o: { path: string }) => o.path), proof.appointment), proof.contentOutputs);
     assert.deepEqual(await files(), proof.filePaths);
     const current = await snapshot();
-    assert.deepEqual(current, proof.original);
+    assert.deepEqual(current, authenticated, "Original receipt lookup and replay add no effects");
     console.log(
       JSON.stringify({
         phase,
         serverPid,
         databaseStarted,
-        sha256: digest(current),
+        sha256: digest(recovered),
+        authenticatedSha256: digest(current), authenticationEvents: 1,
         replays: proof.replays.length, outputFiles: proof.outputs.length,
         result:
           "Exact typed originals, audit/outbox and receipt survive both restarts; retry adds no effects",

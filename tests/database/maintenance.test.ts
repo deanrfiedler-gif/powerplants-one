@@ -333,7 +333,11 @@ test("MA03/04 overlapping and concurrent generation, deferral and exact request 
   );
 });
 test("MA05 separate CRM and Service owners, proposals do not extend source terms", async () => {
-  const a = await agreement(),
+  const p = await principal(),
+    otherCustomer = "50000000-0000-4000-8000-000000000002",
+    beforeCustomer = await renewalSource(p, CRM.org),
+    beforeOther = await renewalSource(p, otherCustomer),
+    a = await agreement(p),
     id = randomUUID();
   await createRenewal(a.p, {
     ...base(),
@@ -370,15 +374,52 @@ test("MA05 separate CRM and Service owners, proposals do not extend source terms
     ["RelationshipReview", "TechnicalFollowUp"],
   );
   assert.equal((await workspace(a.p, "agreements", a.id)).row.version, 2);
+
+  // A second permitted customer at the same site makes missing customer
+  // filtering observable even when the file already contains other agreements.
+  const otherAgreement = randomUUID(), otherRenewal = randomUUID();
+  await createAgreement(p, { ...a.cmd, ...base(), id: otherAgreement, customer_id: otherCustomer });
+  await agreementCommand(await principal("finance-reviewer"), otherAgreement, {
+    ...base(), expected_version: 1, action: "Approve",
+    authority_reference: "SYN separate customer source approval",
+  });
+  const otherRevision = (await rows(
+    "SELECT current_revision_id FROM ppo.service_agreements WHERE id=$1", [otherAgreement],
+  ))[0].current_revision_id;
+  await createRenewal(p, {
+    ...base(), id: otherRenewal, agreement_revision_id: otherRevision,
+    site_id: CRM.site, owner_id: CRM.owner, review_from: "2028-10-01",
+    next_date: "2028-10-15", next_action: "SYN separate customer review",
+  });
+  const ids = (items: { id: string }[]) => items.map((item) => item.id).sort();
   const aftercare = await renewalSource(a.p, CRM.org);
   assert.equal(aftercare.state, "Available");
-  assert.deepEqual(aftercare.agreements.map((item: { id: string }) => item.id), [a.id]);
-  assert.deepEqual(aftercare.items.map((item: { id: string }) => item.id), [id]);
-  await rows("UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='maintenance.read'", [a.p.actor_id]);
-  const restricted = await renewalSource(a.p, CRM.org);
-  assert.equal(restricted.state, "Restricted");
-  assert.deepEqual(restricted.agreements, []);
-  assert.deepEqual(restricted.items, []);
+  assert.deepEqual(ids(aftercare.agreements), [...ids(beforeCustomer.agreements), a.id].sort());
+  assert.deepEqual(ids(aftercare.items), [...ids(beforeCustomer.items), id].sort());
+  const otherAftercare = await renewalSource(p, otherCustomer);
+  assert.equal(otherAftercare.state, "Available");
+  assert.deepEqual(ids(otherAftercare.agreements), [...ids(beforeOther.agreements), otherAgreement].sort());
+  assert.deepEqual(ids(otherAftercare.items), [...ids(beforeOther.items), otherRenewal].sort());
+
+  const readGrants = await rows(
+    "SELECT id,valid_to::text AS valid_to FROM ppo.permission_grants WHERE user_id=$1 AND capability='maintenance.read' ORDER BY id", [p.actor_id],
+  );
+  assert.ok(readGrants.length > 0);
+  try {
+    await rows("UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='maintenance.read'", [p.actor_id]);
+    for (const customer of [CRM.org, otherCustomer]) {
+      const restricted = await renewalSource(p, customer);
+      assert.equal(restricted.state, "Restricted");
+      assert.deepEqual(restricted.agreements, []);
+      assert.deepEqual(restricted.items, []);
+    }
+  } finally {
+    for (const grant of readGrants)
+      await rows("UPDATE ppo.permission_grants SET valid_to=$2 WHERE id=$1", [grant.id, grant.valid_to]);
+  }
+  assert.deepEqual(await rows(
+    "SELECT id,valid_to::text AS valid_to FROM ppo.permission_grants WHERE user_id=$1 AND capability='maintenance.read' ORDER BY id", [p.actor_id],
+  ), readGrants);
 });
 test("MA06 exact evidence, stale assessment, separate goodwill and exact plan authority", async () => {
   const w = await warranty();
