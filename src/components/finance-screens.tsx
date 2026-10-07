@@ -1250,6 +1250,7 @@ export function AccountScreen({
       )}
       {d && (
         <>
+          {!r.error && <RecordIdentity reference={d.account.fixture_key} title={`Customer account · ${d.account.currency}`} />}
           <p>
             {d.account.status} · {d.account.currency} · legal company{" "}
             {d.account.company_id}

@@ -20,3 +20,18 @@ test("N29 Finance entry rechecks exact sources without creating a handoff",async
   await expect(page.getByRole("navigation",{name:"Breadcrumb",exact:true})).toContainText("Finance handoff");
   expect(writes).toBe(0);
 });
+
+test("N14 exact permitted Finance account extends its module hierarchy",async({page,baseURL})=>{
+  expect((await page.request.post("/api/v1/local-session",{headers:{Origin:baseURL!},data:{profile:"finance"}})).ok()).toBe(true);
+  const list=await page.request.get("/api/v1/navigation/accounts");expect(list.ok()).toBe(true);
+  const {items}=await list.json();expect(items.length).toBeGreaterThan(0);const account=items[0];
+  await page.goto("/finance/accounts");
+  const read=page.waitForResponse(r=>r.url().includes(`/api/v1/customers/${account.customer_id}/account-observations?account_id=${account.id}`)&&r.ok());
+  await page.locator(`main a[href='/customers/${account.customer_id}/account?account_id=${account.id}&department=finance']`).click();
+  const exact=await (await read).json();const breadcrumb=page.getByRole("navigation",{name:"Breadcrumb",exact:true});
+  await expect(breadcrumb).toContainText(exact.account.fixture_key);
+  await expect(breadcrumb.getByRole("link",{name:"Customer accounts",exact:true})).toHaveAttribute("href","/finance/accounts");
+  expect((await page.request.post("/api/v1/local-session",{headers:{Origin:baseURL!},data:{profile:"technician"}})).ok()).toBe(true);
+  const denied=page.waitForResponse(r=>r.url().includes(`/api/v1/customers/${account.customer_id}/account-observations?account_id=${account.id}`)&&[403,404].includes(r.status()));
+  await page.reload();await denied;await expect(breadcrumb).not.toContainText(exact.account.fixture_key);
+});

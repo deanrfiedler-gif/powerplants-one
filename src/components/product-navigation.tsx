@@ -481,6 +481,10 @@ export function ProductHeader() {
         href: rootDestination && canOpen(rootDestination, shell.context?.navigation ?? [], shell.hosted) ? rootDestination.href : undefined,
         kind: "root",
       });
+    if (page && !crumb && destination(page.id)?.label !== page.label && page.id !== "search") {
+      const parent = destination(page.id);
+      if (parent) crumbs.push({key:"module",label:parent.label,kind:"page",href:canOpen(parent,shell.context?.navigation ?? [],shell.hosted) ? parent.href : undefined});
+    }
     crumbs.push({ key: "page", label, kind: crumb ? "root" : "page", href: crumb && page && canOpen(page, shell.context?.navigation ?? [], shell.hosted) ? page.href : undefined });
     // Each bounded module keeps its identity between the domain and the destination its menu names.
     if (view) crumbs.push({ key: "view", label: view, kind: crumb ? "page" : "view" });
