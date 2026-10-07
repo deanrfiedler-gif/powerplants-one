@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: MA01 typed identity, exact receipt, commercial duty, scope and immutable source
+ok 1 - MA01 typed identity, exact receipt, commercial duty, scope and immutable source
+  ---
+  duration_ms: 7462.2246
+  type: 'test'
+  ...
+# Subtest: MA02 a later decision or source revision makes old entitlement historical
+ok 2 - MA02 a later decision or source revision makes old entitlement historical
+  ---
+  duration_ms: 187.0716
+  type: 'test'
+  ...
+# Subtest: MA02 omitted area cannot bypass the equipment's physical facility exclusion
+ok 3 - MA02 omitted area cannot bypass the equipment's physical facility exclusion
+  ---
+  duration_ms: 178.1758
+  type: 'test'
+  ...
+# Subtest: MA03/04 overlapping and concurrent generation, deferral and exact request retries
+ok 4 - MA03/04 overlapping and concurrent generation, deferral and exact request retries
+  ---
+  duration_ms: 670.0962
+  type: 'test'
+  ...
+# Subtest: MA05 separate CRM and Service owners, proposals do not extend source terms
+ok 5 - MA05 separate CRM and Service owners, proposals do not extend source terms
+  ---
+  duration_ms: 540.3844
+  type: 'test'
+  ...
+# Subtest: MA06 exact evidence, stale assessment, separate goodwill and exact plan authority
+ok 6 - MA06 exact evidence, stale assessment, separate goodwill and exact plan authority
+  ---
+  duration_ms: 229.6454
+  type: 'test'
+  ...
+# Subtest: MA07 supplier evidence chronology, partial approval, credit reference and independent disposition
+ok 7 - MA07 supplier evidence chronology, partial approval, credit reference and independent disposition
+  ---
+  duration_ms: 429.4854
+  type: 'test'
+  ...
+# Subtest: current action revocation blocks original operation receipt replay
+ok 8 - current action revocation blocks original operation receipt replay
+  ---
+  duration_ms: 91.1039
+  type: 'test'
+  ...
+# Subtest: AT-33 relocation and retirement retain original obligations and require future-plan review
+ok 9 - AT-33 relocation and retirement retain original obligations and require future-plan review
+  ---
+  duration_ms: 689.0506
+  type: 'test'
+  ...
+# Subtest: MA06 goodwill is separate from entitlement and Service authority; withdrawal blocks receiving
+ok 10 - MA06 goodwill is separate from entitlement and Service authority; withdrawal blocks receiving
+  ---
+  duration_ms: 556.062
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 12486.7191

@@ -1,0 +1,400 @@
+{
+  "source": "34aa32a54e67434cc7f15346d9d26989578f67c1",
+  "files": [
+    {
+      "path": "logs/domain-current.log",
+      "sha256": "518f105c3fca4f7d84e45453b2c52c79418ca9aa455c41d4ebee5eb2d44aa0c3",
+      "raw_private_sha256": "694bfd5297a03369f8213bffa1cc796efc5c46ddd3638ce177f66e2db2080abd",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/maintenance-integration-proof.log",
+      "sha256": "b5064a37d7036a9329e050716f481cda1641d81a4ea716f68160c01666267724",
+      "raw_private_sha256": "6dda5aec407531e5953d6a85dfcdeb3134921166f11d1d43a88bbfe2d7126d98",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/upgrade-current.log",
+      "sha256": "8bace1445a1e4fe8c189a312d1d5de91a752cd52b8410efb299a0b2f5738fdea",
+      "raw_private_sha256": "0c23ac6841f01a9f3a1573d22d412c2d0cb8990c3301d753e0cdd22bea82d9f7",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/targeted-regressions-final.log",
+      "sha256": "9f9dba3996e57f41d52075a2615d982204c59f357069cccd7d953c44a1adec43",
+      "raw_private_sha256": "8fd9ce32db1682f5d4adfd20d58631c26cb62c563b95607bd046f3cb7e12543d",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/upgrade-main-complete-baseline.log",
+      "sha256": "4b5adc13ca2faca33047dae5eb6561ea0334683e83d3744b61ce3decb693b2c1",
+      "raw_private_sha256": "6ad56e8444d9bf4bf121dae258cfc45981fcb7ae74376a6c4ebf624206253cb9",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/unit-all-current.log",
+      "sha256": "81730222859a7c220b9d0e10e49565d7c732921d96089eeba559ea42e35cdef0",
+      "raw_private_sha256": "0d700408c400597c597b3b09e9d2678c1d445f5a2ca642c3fd9b4e97fd1296fd",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/windows-current.log",
+      "sha256": "945d2bb7258fe682d39927e34b0cb6d7f77c78f4caa78ba4c38e25b6ef06f9f9",
+      "raw_private_sha256": "9620a7a2cac8be650255dbf44da6effc2b8cd506c6a5660b50a43b389b57ca6d",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/windows-main-baseline.log",
+      "sha256": "0e806e81137501e712bb2cbb184579c5b58e4562eb7f2d861bb7c62b43d62450",
+      "raw_private_sha256": "1ba57578ec6eaa658662b31c0be775604676071c03b383163db4bc60cd433521",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/cli-main-complete-baseline.log",
+      "sha256": "aeb7b3db71beb73c7922b82b2e117519a2077008572d35984c885e1435775fd4",
+      "raw_private_sha256": "81efcd8f479d452ae2ea6c89c77c4baa715e6d5f500520d6e076947065800685",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/cli-final.log",
+      "sha256": "cdaacea50f39b910b793d7d7debb3ae785e5563ba7c7d463ef2446b490aec07f",
+      "raw_private_sha256": "80d30e7cff4fde70ff5cac2881aa354835ac444a65a2db99ebea62b0826c7b80",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/units-final-focused.log",
+      "sha256": "de5aaf2ab69fa6e05e3544e6015020f299221e9203e4e3eec8304ed024df6858",
+      "raw_private_sha256": "5fc9a1e0d262c3e3f75ea1fb2002845762833a4a3eaca928e2505c8cea2826da",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/build-final.log",
+      "sha256": "ff7472051c91d0f6342ea1639246849a3c1d94f3af1148d8cdc6fae3ec0c51d5",
+      "raw_private_sha256": "cb53c0768f5a1d236005fc7dd39260bba33783abae85648674fd185ae9b812c1",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/typecheck-final-tests.log",
+      "sha256": "ba33a711c461001825075a9a3872deaa3e393e4cc3c15731565002c473e7ee5d",
+      "raw_private_sha256": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/lint-current.log",
+      "sha256": "8f0118f13844c97d75efd81d7b64eea1d158ee3bdca218bf56f7625ccce6edc6",
+      "raw_private_sha256": "144b8ef738aebf80f098340cd52aae1ca2b3b236fc5859b5d6806e5ec9ac9f64",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/lint-final-focused.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_private_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/studio-final.log",
+      "sha256": "e54246ce6d663bbbc52e76eb1107b17246e348645643edd5d0a2c9d5e0c83c76",
+      "raw_private_sha256": "6f23262d5ab7408a3699f5203dfabfc3adfeae9c391be0d7cdd2fa0142a5c18e",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/foundation-final.log",
+      "sha256": "3f31a36b7ca73341615eee36294f54fe71c02877183197d0babfe0c2a3829709",
+      "raw_private_sha256": "925e18b461e9086eb4e27da5e25bb7f36615c9a8e5913db63ecdbe2a282b604c",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/prototype-final.log",
+      "sha256": "9b7839c713adf06d51e41256fd2e991c6acc00fca36c33caff1ef7e02d55251b",
+      "raw_private_sha256": "f7b48b580707ab4071e3dcda23d38936db1c757240cbc5996bf54ed4fceb2ff3",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/naming-final.log",
+      "sha256": "7c6c738e3fd2ce2058e69d4dcb6fd305df67cd9a56cebf69e78ffe2060223c40",
+      "raw_private_sha256": "e76d36d87e2e842413354ed92679231bd53cdbc5a963a4dddc7f92d327529d5f",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/access-browser-current.log",
+      "sha256": "5596e0d0b62b149fd66aa25493d7c0a2f3eb9ee8ad802f655186646fb3c7fc69",
+      "raw_private_sha256": "ffc015e60593173f0759bc0934b799f5ed1ed03c0f60ad33130c8fb3b985d56d",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/http-final.log",
+      "sha256": "f5ababa0b9772bd733ef033d2875453244280a202a1e17dad8144378240f9035",
+      "raw_private_sha256": "fb3efc55dee09df9ff5944d57f359a229866b1f91a72a85910c7db30ba148d5b",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/browser-final.log",
+      "sha256": "49a2886cfb104f518bebcc4025ba248eb62af591788aed24a0512385b3413ca5",
+      "raw_private_sha256": "a6e8ca0c2f2dda8aac280059dd5484fc1c46707b05016cd37bf136f38af7f732",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/restart-write.log",
+      "sha256": "3b36aaff888d055b17249527e27541b5f346ce7637c2bdde704fcfb27f3e85a4",
+      "raw_private_sha256": "c557c5c725306597e2cd7b923749c8ed8f486f512eaf5bb2644f793e2d3c7442",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "34aa32a"
+    },
+    {
+      "path": "logs/restart-verify.log",
+      "sha256": "ab25ae3c361f0aeb8ec88e18f7f4447dd1a67afefac8b575a18205c879b913c5",
+      "raw_private_sha256": "9f0ecb89324402f39f4280b6062129d7780e438bc0f3e3d55d65a5c8d1c0caa2",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "34aa32a"
+    },
+    {
+      "path": "logs/restart-write-initial.log",
+      "sha256": "7f7165a0cd3c0dac086dbbd1981ae1e3bf25121a94c6620be97520564afc5982",
+      "raw_private_sha256": "40aad0de946e56a24c97604a56704ed3ad5ef5edea22e193b68fbc7ad47afeec",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/restart-verify-initial.log",
+      "sha256": "04cbcc99ab7ad7ca4bacd5efeeaa4abf4cf3478c300928e7c919b7a7d57ba8b4",
+      "raw_private_sha256": "049755112a3a1632168709850500f285003ac6352391f5e67f51fe59ad16b6e4",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/layout-final.log",
+      "sha256": "5e4eafae86651f03c68b3eb7ec5ae3e21aed341a070706b702948513309e3141",
+      "raw_private_sha256": "453461e8357bfb46239d6834f7161d567d17fc602ae6b4f6d258985f515d06e2",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "34aa32a"
+    },
+    {
+      "path": "logs/typecheck-restart-proof.log",
+      "sha256": "ba33a711c461001825075a9a3872deaa3e393e4cc3c15731565002c473e7ee5d",
+      "raw_private_sha256": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/lint-restart-proof.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_private_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/maintenance-file-final.log",
+      "sha256": "5593747d82943379c65993712065e18a4fe1d0ffc9de15909fcdeb46c5ecf11d",
+      "raw_private_sha256": "e30645d60ca742dc368b3ffe640f9df152efefe4145c2b9387b5a8547e7b97ba",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/maintenance-file-unavailable-database.log",
+      "sha256": "b07406d8bbd55f16f31496461da8d34b03cc316213ab3918725cab0dbc023f1d",
+      "raw_private_sha256": "741f29ca2573d6f6eb68ebfb9df856c64445a7a207ee8717c11628e9562ea2da",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "Earlier integration attempt; see ledger for source and disposition."
+    },
+    {
+      "path": "logs/diamond-integration-db.log",
+      "sha256": "12499d424fe6cb24aa915814f2c5803127738040e899cc461226987ed8017efc",
+      "raw_private_sha256": "014b0933d434f53adf083fb21743aed125dc1383cc2eb145136bbffb9e708c92",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "34aa32a"
+    },
+    {
+      "path": "logs/build-diamond.log",
+      "sha256": "d8b12938d49fbcecfe2a7d9f5d38b402ca4439b68c39c32bd3127fb8419edad6",
+      "raw_private_sha256": "b18bce173373776e2440b256347fe7f43cf5e699c9b6d9dfd369901212f54f5d",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "34aa32a"
+    },
+    {
+      "path": "logs/browser-diamond.log",
+      "sha256": "2465ff090d1212ff12f8c9d6dc8d87a2916a94bd7f14794fd16c2387b95fb211",
+      "raw_private_sha256": "dec4244635acb8792453fa96141de0320071d9bee4053a1d4249cd81d2ba9fbf",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "34aa32a"
+    },
+    {
+      "path": "logs/http-diamond.log",
+      "sha256": "3d8fb1be7b318ae6b9745cb22253f7c3b22424f8c1bca54d4d44bbd6734fd152",
+      "raw_private_sha256": "7884d27bce7188099e36f4b52d6f0d4872844afbd56de946945cc70913761266",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "34aa32a"
+    },
+    {
+      "path": "logs/foundation-diamond.log",
+      "sha256": "65c812a6d88d0442a7b2be415ca5b6a583b1c9240227dbaa123ded1748c7f32a",
+      "raw_private_sha256": "33093aad73d04e2271abb5d3c154bf722c8f72434ca2e22831d5b8afe289bc0a",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "34aa32a"
+    },
+    {
+      "path": "logs/typecheck-diamond.log",
+      "sha256": "ba33a711c461001825075a9a3872deaa3e393e4cc3c15731565002c473e7ee5d",
+      "raw_private_sha256": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "34aa32a"
+    },
+    {
+      "path": "logs/studio-diamond-sync.log",
+      "sha256": "adf715d94fcedb63db16bd34ce936ca3c53ac4e2b57f5a8746fd6212b94a5107",
+      "raw_private_sha256": "36ed0326e107920ca258cc241b6f0788f7f7fda1ac0b92c62182a76888230df2",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "34aa32a"
+    },
+    {
+      "path": "logs/naming-diamond.log",
+      "sha256": "905b11cb3082b13ca16863144129ffa834ebd57057ead5364be533a83119fa20",
+      "raw_private_sha256": "7b593c8b6477616558c0503ff7da6dd9d1ffb93445e7b80b7e5d47f18c3f424c",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "34aa32a"
+    },
+    {
+      "path": "logs/units-diamond.log",
+      "sha256": "7d2d012ef418fcab401f65199b6d86d18561605f5c157eab1215e0bb5569df06",
+      "raw_private_sha256": "75c49b26ab5e3f80554b997cf1749d3df58bcbd9c288e336460ccd75bdce9526",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "34aa32a"
+    },
+    {
+      "path": "logs/lint-diamond.log",
+      "sha256": "8f0118f13844c97d75efd81d7b64eea1d158ee3bdca218bf56f7625ccce6edc6",
+      "raw_private_sha256": "144b8ef738aebf80f098340cd52aae1ca2b3b236fc5859b5d6806e5ec9ac9f64",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "34aa32a"
+    },
+    {
+      "path": "logs/foundation-delivery.log",
+      "sha256": "6ca3ab0f04417436c8be4e95f5dc95e00cac16a2c1dd2f466f44082fcd96b3f3",
+      "raw_private_sha256": "4d37e16004f7697831aa5e086281e2b356f2b127c6286486569652274d3ef524",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "34aa32a"
+    },
+    {
+      "path": "logs/prototype-delivery.log",
+      "sha256": "9b7839c713adf06d51e41256fd2e991c6acc00fca36c33caff1ef7e02d55251b",
+      "raw_private_sha256": "f7b48b580707ab4071e3dcda23d38936db1c757240cbc5996bf54ed4fceb2ff3",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "34aa32a"
+    },
+    {
+      "path": "logs/naming-delivery.log",
+      "sha256": "905b11cb3082b13ca16863144129ffa834ebd57057ead5364be533a83119fa20",
+      "raw_private_sha256": "7b593c8b6477616558c0503ff7da6dd9d1ffb93445e7b80b7e5d47f18c3f424c",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "34aa32a"
+    },
+    {
+      "path": "logs/studio-delivery.log",
+      "sha256": "e54246ce6d663bbbc52e76eb1107b17246e348645643edd5d0a2c9d5e0c83c76",
+      "raw_private_sha256": "6f23262d5ab7408a3699f5203dfabfc3adfeae9c391be0d7cdd2fa0142a5c18e",
+      "redaction": "Private paths and trailing whitespace normalised; credential-bearing lines omitted if present. Failed restart row dump is an assertion-delta excerpt.",
+      "checkpoint": "34aa32a"
+    },
+    {
+      "path": "layout/completed-due-1440.png",
+      "sha256": "bc9bd496a0698765fc0674e2ee9bca8356ecb423663f5b6d405e7e5519ebafc6",
+      "inspection": "Visually inspected by implementation agent; no owner acceptance."
+    },
+    {
+      "path": "layout/maintenance-agreements-cards-390.png",
+      "sha256": "9afd599b95999d07ceea495d92b129e5e6fbfbcfa8c6e335d209a47b9289d930",
+      "inspection": "Automated only; no visual inspection or owner acceptance claimed."
+    },
+    {
+      "path": "layout/maintenance-coverage-cards-390.png",
+      "sha256": "24acaa072719e7f35490d9591d2784ee075777679a0dd97567f8c4ce596338ce",
+      "inspection": "Automated only; no visual inspection or owner acceptance claimed."
+    },
+    {
+      "path": "layout/maintenance-due-cards-390.png",
+      "sha256": "f6b12cc8f833a47a57fe5b0f202b1955bd2b119b3c019d3f5b68362395210a71",
+      "inspection": "Automated only; no visual inspection or owner acceptance claimed."
+    },
+    {
+      "path": "layout/maintenance-plans-cards-390.png",
+      "sha256": "56bf57d1aef4d0d85b8cdc7148e4646929a888b9d06e76a207928790451d9ca0",
+      "inspection": "Automated only; no visual inspection or owner acceptance claimed."
+    },
+    {
+      "path": "layout/maintenance-renewals-cards-390.png",
+      "sha256": "bd5b0234b82e97661ddf80fef3c1af8ed0cc3fc1613225e77bff4e3e6bc3be74",
+      "inspection": "Automated only; no visual inspection or owner acceptance claimed."
+    },
+    {
+      "path": "layout/measurements.json",
+      "sha256": "183f44b0ed7b2c7979cc48c7fa775dbf66971c7254e5bc85fb33238d5fd183ab",
+      "inspection": "Automated only; no visual inspection or owner acceptance claimed."
+    },
+    {
+      "path": "layout/warranty-cases-cards-390.png",
+      "sha256": "c97a4dba53c3391811e6d459fc0c3e7542ddddedc4973215f0b00924dc6e374b",
+      "inspection": "Automated only; no visual inspection or owner acceptance claimed."
+    },
+    {
+      "path": "layout/warranty-form-1024.png",
+      "sha256": "6981da40a473225ed6ad623f9b1ba44ece046ccfcb0f9a46ff8ee3beff10558b",
+      "inspection": "Automated only; no visual inspection or owner acceptance claimed."
+    },
+    {
+      "path": "layout/warranty-form-1440.png",
+      "sha256": "721c2962c5e13927378737b810a07f235f58b25665b686b6a4b332205ad9e14d",
+      "inspection": "Automated only; no visual inspection or owner acceptance claimed."
+    },
+    {
+      "path": "layout/warranty-form-320.png",
+      "sha256": "02200ef3da617a82f24f121eaea869e7f69fac04f2e45be8442d876522c061ba",
+      "inspection": "Visually inspected by implementation agent; no owner acceptance."
+    },
+    {
+      "path": "layout/warranty-form-390.png",
+      "sha256": "ecb6a5794cd6bc4ab08f7863b0e861794ede917020ee7275c917e2610ecbbe03",
+      "inspection": "Visually inspected by implementation agent; no owner acceptance."
+    },
+    {
+      "path": "layout/warranty-form-720.png",
+      "sha256": "1d5aa4fba72e96efac3ec1062a5a6ecf55d8db367c83a51673bc06ae5b3ad35d",
+      "inspection": "Automated only; no visual inspection or owner acceptance claimed."
+    },
+    {
+      "path": "layout/warranty-supplier-recovery-cards-390.png",
+      "sha256": "52898eb989ab6fc4c7dbf1adff8a26f1a1ae458383971a86a9e3a098bf12d433",
+      "inspection": "Automated only; no visual inspection or owner acceptance claimed."
+    },
+    {
+      "path": "layout/maintenance-agreements-1440.png",
+      "sha256": "e5376ee451b555a4091c315a609091b6bac753f818126c4d325907e95a2dea19",
+      "inspection": "Visually inspected by implementation agent; no owner acceptance."
+    },
+    {
+      "path": "layout/maintenance-agreements-390.png",
+      "sha256": "86b5ef08545be460b462328d7946a5e85b0651c91e1a49e59a6c994ea8c49789",
+      "inspection": "Visually inspected by implementation agent; no owner acceptance."
+    }
+  ]
+}

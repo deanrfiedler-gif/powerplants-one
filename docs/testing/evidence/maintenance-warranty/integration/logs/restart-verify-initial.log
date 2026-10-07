@@ -1,0 +1,44 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+... Skipped lines
+
+  {
+    agreement_revisions: [
+      {
+        agreement_id: 'e04d40b8-79d8-4398-a14d-1e975c6e7d54',
+        company_id: '20000000-0000-4000-8000-000000000001',
+...
+        details: {
++         profile: 'coordinator'
++       },
++       id: '736b8089-6908-4fe7-a35f-ee0075d8b763',
++       object_id: '30000000-0000-4000-8000-000000000001',
++       object_type: 'Session',
++       occurred_at: '2026-10-07T08:33:32.918233+10:00',
++       operation_id: null,
++       outcome: 'Accepted',
++       reason: 'Local synthetic identity selected',
++       schema_version: 1,
++       workspace_id: '10000000-0000-4000-8000-000000000001'
++     },
++     {
++       actor_id: '30000000-0000-4000-8000-000000000001',
++       details: {
+          command: 'FinaliseReportIssue',
+          issue_id: 'e96023d0-7c26-49ce-add8-fb5c882d92c4',
+          job_id: '4131ec67-a556-4520-83e4-583372992d75',
+          output_hash: 'fabeefe4b67aad71718052cfd636fd7f260802eded7f38790aed77eecbc4f095'
+        },
+
+    at <anonymous> (WORKTREE\scripts\maintenance-restart-proof.ts:242:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: {
+    service_agreements: [
+      {
+[Full synthetic row dump retained privately; assertion delta above is complete.]

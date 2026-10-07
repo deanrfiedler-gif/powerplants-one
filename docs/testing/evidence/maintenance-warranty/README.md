@@ -2,6 +2,8 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
+Current combined-tree verification is recorded separately in the [integration ledger](integration/README.md). The evidence below retains its original source and environment.
+
 Owner: Dean Fiedler. Review: local implementation inspection complete; owner/business/device acceptance pending. Branch: `feat/maintenance-warranty-native`. Initial base: `0f10b7fb46a8ab512e9b019573ece272cf5920b9`; incorporated main: `2173cc64eed54b1e3fb8334495f7cd924206d13f`; tested implementation: `60e2da3ea56f599faf24ca9b6a54dd5792c37715`. Subsequent delivery commits retain evidence and documentation without changing that application implementation.
 
 Environment: Windows, Node 24.21.0, PostgreSQL 16 disposable `ppo_synthetic_test` on isolated loopback port 55499, compiled application on port 3099. Browser: stable Chrome 154.0.8037.58 / Playwright 1.63.0. Synthetic data only. The [handover](../../../delivery/maintenance-warranty-handover.md) carries commands, outcomes and failed-run disposition. No deployment or business acceptance is claimed.
