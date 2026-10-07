@@ -1,0 +1,170 @@
+TAP version 13
+# Subtest: MA01 typed identity, exact receipt, commercial duty, scope and immutable source
+not ok 1 - MA01 typed identity, exact receipt, commercial duty, scope and immutable source
+  ---
+  duration_ms: 7.1291
+  type: 'test'
+  location: 'USER_PROFILE\\.codex\\worktrees\\maintenance-warranty-completion\\powerplants-one\\tests\\database\\maintenance.test.ts:1:1572'
+  failureType: 'hookFailed'
+  error: 'connect ECONNREFUSED 127.0.0.1:55921'
+  code: 'ECONNREFUSED'
+  stack: |-
+    WORKTREE\node_modules\pg-pool\index.js:45:11
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async transaction (WORKTREE\src\platform\database.ts:39:18)
+    async TestContext.reset (WORKTREE\scripts\database.ts:108:3)
+    async TestHook.run (node:internal/test_runner/test:1409:7)
+  ...
+# Subtest: MA02 a later decision or source revision makes old entitlement historical
+not ok 2 - MA02 a later decision or source revision makes old entitlement historical
+  ---
+  duration_ms: 2.9181
+  type: 'test'
+  location: 'USER_PROFILE\\.codex\\worktrees\\maintenance-warranty-completion\\powerplants-one\\tests\\database\\maintenance.test.ts:1:2973'
+  failureType: 'hookFailed'
+  error: 'connect ECONNREFUSED 127.0.0.1:55921'
+  code: 'ECONNREFUSED'
+  stack: |-
+    WORKTREE\node_modules\pg-pool\index.js:45:11
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async transaction (WORKTREE\src\platform\database.ts:39:18)
+    async TestContext.reset (WORKTREE\scripts\database.ts:108:3)
+    async TestHook.run (node:internal/test_runner/test:1409:7)
+  ...
+# Subtest: MA02 omitted area cannot bypass the equipment's physical facility exclusion
+not ok 3 - MA02 omitted area cannot bypass the equipment's physical facility exclusion
+  ---
+  duration_ms: 0.2357
+  type: 'test'
+  location: 'USER_PROFILE\\.codex\\worktrees\\maintenance-warranty-completion\\powerplants-one\\tests\\database\\maintenance.test.ts:1:3619'
+  failureType: 'hookFailed'
+  error: 'connect ECONNREFUSED 127.0.0.1:55921'
+  code: 'ECONNREFUSED'
+  stack: |-
+    WORKTREE\node_modules\pg-pool\index.js:45:11
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async transaction (WORKTREE\src\platform\database.ts:39:18)
+    async TestContext.reset (WORKTREE\scripts\database.ts:108:3)
+    async TestHook.run (node:internal/test_runner/test:1409:7)
+  ...
+# Subtest: MA03/04 overlapping and concurrent generation, deferral and exact request retries
+not ok 4 - MA03/04 overlapping and concurrent generation, deferral and exact request retries
+  ---
+  duration_ms: 0.1203
+  type: 'test'
+  location: 'USER_PROFILE\\.codex\\worktrees\\maintenance-warranty-completion\\powerplants-one\\tests\\database\\maintenance.test.ts:1:4487'
+  failureType: 'hookFailed'
+  error: 'connect ECONNREFUSED 127.0.0.1:55921'
+  code: 'ECONNREFUSED'
+  stack: |-
+    WORKTREE\node_modules\pg-pool\index.js:45:11
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async transaction (WORKTREE\src\platform\database.ts:39:18)
+    async TestContext.reset (WORKTREE\scripts\database.ts:108:3)
+    async TestHook.run (node:internal/test_runner/test:1409:7)
+  ...
+# Subtest: MA05 separate CRM and Service owners, proposals do not extend source terms
+not ok 5 - MA05 separate CRM and Service owners, proposals do not extend source terms
+  ---
+  duration_ms: 0.1078
+  type: 'test'
+  location: 'USER_PROFILE\\.codex\\worktrees\\maintenance-warranty-completion\\powerplants-one\\tests\\database\\maintenance.test.ts:1:7609'
+  failureType: 'hookFailed'
+  error: 'connect ECONNREFUSED 127.0.0.1:55921'
+  code: 'ECONNREFUSED'
+  stack: |-
+    WORKTREE\node_modules\pg-pool\index.js:45:11
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async transaction (WORKTREE\src\platform\database.ts:39:18)
+    async TestContext.reset (WORKTREE\scripts\database.ts:108:3)
+    async TestHook.run (node:internal/test_runner/test:1409:7)
+  ...
+# Subtest: MA06 exact evidence, stale assessment, separate goodwill and exact plan authority
+not ok 6 - MA06 exact evidence, stale assessment, separate goodwill and exact plan authority
+  ---
+  duration_ms: 0.0863
+  type: 'test'
+  location: 'USER_PROFILE\\.codex\\worktrees\\maintenance-warranty-completion\\powerplants-one\\tests\\database\\maintenance.test.ts:1:11044'
+  failureType: 'hookFailed'
+  error: 'connect ECONNREFUSED 127.0.0.1:55921'
+  code: 'ECONNREFUSED'
+  stack: |-
+    WORKTREE\node_modules\pg-pool\index.js:45:11
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async transaction (WORKTREE\src\platform\database.ts:39:18)
+    async TestContext.reset (WORKTREE\scripts\database.ts:108:3)
+    async TestHook.run (node:internal/test_runner/test:1409:7)
+  ...
+# Subtest: MA07 supplier evidence chronology, partial approval, credit reference and independent disposition
+not ok 7 - MA07 supplier evidence chronology, partial approval, credit reference and independent disposition
+  ---
+  duration_ms: 0.0675
+  type: 'test'
+  location: 'USER_PROFILE\\.codex\\worktrees\\maintenance-warranty-completion\\powerplants-one\\tests\\database\\maintenance.test.ts:1:12732'
+  failureType: 'hookFailed'
+  error: 'connect ECONNREFUSED 127.0.0.1:55921'
+  code: 'ECONNREFUSED'
+  stack: |-
+    WORKTREE\node_modules\pg-pool\index.js:45:11
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async transaction (WORKTREE\src\platform\database.ts:39:18)
+    async TestContext.reset (WORKTREE\scripts\database.ts:108:3)
+    async TestHook.run (node:internal/test_runner/test:1409:7)
+  ...
+# Subtest: current action revocation blocks original operation receipt replay
+not ok 8 - current action revocation blocks original operation receipt replay
+  ---
+  duration_ms: 0.0755
+  type: 'test'
+  location: 'USER_PROFILE\\.codex\\worktrees\\maintenance-warranty-completion\\powerplants-one\\tests\\database\\maintenance.test.ts:1:15649'
+  failureType: 'hookFailed'
+  error: 'connect ECONNREFUSED 127.0.0.1:55921'
+  code: 'ECONNREFUSED'
+  stack: |-
+    WORKTREE\node_modules\pg-pool\index.js:45:11
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async transaction (WORKTREE\src\platform\database.ts:39:18)
+    async TestContext.reset (WORKTREE\scripts\database.ts:108:3)
+    async TestHook.run (node:internal/test_runner/test:1409:7)
+  ...
+# Subtest: AT-33 relocation and retirement retain original obligations and require future-plan review
+not ok 9 - AT-33 relocation and retirement retain original obligations and require future-plan review
+  ---
+  duration_ms: 0.1086
+  type: 'test'
+  location: 'USER_PROFILE\\.codex\\worktrees\\maintenance-warranty-completion\\powerplants-one\\tests\\database\\maintenance.test.ts:1:16248'
+  failureType: 'hookFailed'
+  error: 'connect ECONNREFUSED 127.0.0.1:55921'
+  code: 'ECONNREFUSED'
+  stack: |-
+    WORKTREE\node_modules\pg-pool\index.js:45:11
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async transaction (WORKTREE\src\platform\database.ts:39:18)
+    async TestContext.reset (WORKTREE\scripts\database.ts:108:3)
+    async TestHook.run (node:internal/test_runner/test:1409:7)
+  ...
+# Subtest: MA06 goodwill is separate from entitlement and Service authority; withdrawal blocks receiving
+not ok 10 - MA06 goodwill is separate from entitlement and Service authority; withdrawal blocks receiving
+  ---
+  duration_ms: 0.1237
+  type: 'test'
+  location: 'USER_PROFILE\\.codex\\worktrees\\maintenance-warranty-completion\\powerplants-one\\tests\\database\\maintenance.test.ts:1:17911'
+  failureType: 'hookFailed'
+  error: 'connect ECONNREFUSED 127.0.0.1:55921'
+  code: 'ECONNREFUSED'
+  stack: |-
+    WORKTREE\node_modules\pg-pool\index.js:45:11
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async transaction (WORKTREE\src\platform\database.ts:39:18)
+    async TestContext.reset (WORKTREE\scripts\database.ts:108:3)
+    async TestHook.run (node:internal/test_runner/test:1409:7)
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 0
+# fail 10
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 9813.9042

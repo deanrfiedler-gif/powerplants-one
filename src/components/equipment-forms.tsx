@@ -345,7 +345,7 @@ export function EquipmentChangePanel({
                       ? `revision ${preview.impact.configuration.revision}`
                       : "Not recorded"}
                   </p>
-                  <p>{preview.impact.maintenance}</p>
+                  <p>{preview.impact.maintenance.state}: {preview.impact.maintenance.plans.length} source plans. {preview.impact.maintenance.effect}</p>
                   <p>{preview.impact.documents}</p>
                   <p>
                     This preview does not apply the change. The saved proposal
@@ -471,7 +471,7 @@ function EquipmentChangeReview({
           {change.basis.warranty.end ?? "End unknown"}
         </dd>
       </dl>
-      <p>{change.basis.maintenance}</p>
+      <p>{typeof change.basis.maintenance === "string" ? change.basis.maintenance : `${change.basis.maintenance.state}: ${change.basis.maintenance.plans.length} source plans. ${change.basis.maintenance.effect ?? ""}`}</p>
       <p>{change.basis.documents}</p>
       <p>
         Source: {change.source_reference} · {change.source_revision}

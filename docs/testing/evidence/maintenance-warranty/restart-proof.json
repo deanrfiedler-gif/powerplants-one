@@ -1,0 +1,43 @@
+{
+  "implementation": "60e2da3ea56f599faf24ca9b6a54dd5792c37715",
+  "database": "ppo_synthetic_test",
+  "port": 55499,
+  "write": {
+    "phase": "write",
+    "serverPid": 12644,
+    "databaseStarted": "2026-09-24 23:27:51.033675+10",
+    "sha256": "7509ca6dbc73fcd6db9f749d52d772e4b27c9474a348fa523b9a2ddff7f07826",
+    "result": "Original retained; both process restarts still required"
+  },
+  "verify": {
+    "phase": "verify",
+    "serverPid": 14408,
+    "databaseStarted": "2026-09-25 07:11:27.919629+10",
+    "sha256": "7509ca6dbc73fcd6db9f749d52d772e4b27c9474a348fa523b9a2ddff7f07826",
+    "result": "Exact typed originals, audit/outbox and receipt survive both restarts; retry adds no effects"
+  },
+  "retained_rows": {
+    "service_agreements": 15,
+    "agreement_revisions": 18,
+    "agreement_scope": 18,
+    "maintenance_plans": 10,
+    "maintenance_plan_revisions": 11,
+    "maintenance_plan_tasks": 11,
+    "maintenance_occurrences": 34,
+    "entitlement_assessments": 22,
+    "renewal_reviews": 8,
+    "warranty_cases": 11,
+    "supplier_claims": 8,
+    "maintenance_events": 199,
+    "operation_receipts": 1,
+    "audit_events": 1,
+    "outbox_jobs": 1
+  },
+  "assertions": [
+    "application process changed",
+    "PostgreSQL postmaster start changed",
+    "original receipt GET exactly equals original POST",
+    "identical command POST returns original receipt",
+    "typed table and operation-specific audit/outbox snapshots deep-equal; no new effects"
+  ]
+}

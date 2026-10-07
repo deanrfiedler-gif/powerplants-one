@@ -18,6 +18,15 @@
 
   /* Plain-English labels are Proposed design copy; the key is authoritative. */
   const LABELS={
+    'maintenance.read':'Read permitted agreements and maintenance',
+    'maintenance.manage':'Maintain agreements plans and obligations',
+    'maintenance.assess':'Review sourced entitlement and maintenance',
+    'maintenance.agreement.approve':'Approve exact agreement commercial terms',
+    'warranty.read':'Read permitted warranty and recovery records',
+    'warranty.manage':'Maintain warranty evidence and customer updates',
+    'warranty.assess':'Assess warranty and exact remedy outcomes',
+    'warranty.goodwill':'Decide goodwill for an exact remedy plan',
+    'warranty.recovery':'Coordinate exact supplier recovery evidence',
     'incident.read':'Read permitted incident records',
     'incident.report':'Report assigned incident facts and corrective evidence',
     'incident.review':'Triage incidents and independently review corrective evidence',
@@ -64,7 +73,7 @@
     'engineering.material.review':'Review released materials and substitutions','engineering.material.release':'Authorise and issue material releases','engineering.material.receive':'Receive material handovers','engineering.material.source':'Operate the synthetic source adapter',
     'engineering.change.review':'Review engineering change proposals','engineering.change.decide':'Record technical decisions on engineering changes','engineering.change.receive':'Receive engineering change requests','engineering.change.verify':'Record retest results for engineering changes','engineering.change.close':'Close engineering changes',
     'engineering.commissioning.capture':'Capture commissioning test evidence','engineering.commissioning.review':'Review commissioning evidence and approve as-built records','engineering.commissioning.issue':'Issue and withdraw commissioning releases','engineering.commissioning.receive':'Receive commissioning and as-built releases'};
-  const FAMILY_NAMES={incident:'Incidents',acceptance:'Acceptance & closeout',supply:'Supply Chain',shared:'Shared records',service:'Service',activity:'Activities',schedule:'Scheduling',pack:'Job packs',field:'Field work (own)',report:'Service reports',crm:'CRM',finance:'Finance',estimating:'Estimating',email:'Email & calendar',project:'Projects',engineering:'Engineering'};
+  const FAMILY_NAMES={maintenance:"Maintenance",warranty:"Warranty",incident:'Incidents',acceptance:'Acceptance & closeout',supply:'Supply Chain',shared:'Shared records',service:'Service',activity:'Activities',schedule:'Scheduling',pack:'Job packs',field:'Field work (own)',report:'Service reports',crm:'CRM',finance:'Finance',estimating:'Estimating',email:'Email & calendar',project:'Projects',engineering:'Engineering'};
   const capability=key=>({key,label:LABELS[key],family:key.split('.')[0],familyName:FAMILY_NAMES[key.split('.')[0]],
     reads:/\.read(\.own)?$/.test(key),own:key.endsWith('.own'),
     restricted:key.startsWith('finance.')||key==='shared.finance.read'||key==='shared.internal.read',

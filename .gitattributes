@@ -28,3 +28,6 @@ docs/testing/evidence/field-timer-native/service-return/*.txt text eol=lf
 docs/testing/evidence/offline-compatible-update/*.txt text eol=lf
 docs/testing/evidence/scheduling-policy-impact/*.txt text eol=lf
 docs/testing/evidence/cr05-reload/stack/*.txt text eol=lf
+# Maintenance integration logs are fingerprinted in their evidence manifest.
+docs/testing/evidence/maintenance-warranty/integration/logs/*.log text eol=lf
+docs/testing/evidence/maintenance-warranty/integration/ci-capacity/*.txt text eol=lf

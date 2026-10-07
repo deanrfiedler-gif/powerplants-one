@@ -1,0 +1,42 @@
+✖ agreement to due maintenance to reviewed Service outcome preserves the original obligation and exact retry (30025.9465ms)
+✔ partial reviewed Service results retain an open remedy and refuse customer resolution (57456.6049ms)
+✔ canonical replacement receives exact completed work, preserves identities and owns future maintenance (54545.2636ms)
+✔ completed exact Service remedy needs current customer update and response; recovery stays outstanding (98034.8456ms)
+✔ MA01 typed identity, exact receipt, commercial duty, scope and immutable source (73569.0217ms)
+✔ MA02 a later decision or source revision makes old entitlement historical (1040.3831ms)
+✔ MA02 omitted area cannot bypass the equipment's physical facility exclusion (1006.1154ms)
+✔ MA03/04 overlapping and concurrent generation, deferral and exact request retries (3651.2062ms)
+✔ MA05 separate CRM and Service owners, proposals do not extend source terms (1796.3061ms)
+✔ MA06 exact evidence, stale assessment, separate goodwill and exact plan authority (1683.6613ms)
+✔ MA07 supplier evidence chronology, partial approval, credit reference and independent disposition (2232.7178ms)
+✔ current action revocation blocks original operation receipt replay (381.3188ms)
+✔ AT-33 relocation and retirement retain original obligations and require future-plan review (3499.184ms)
+✔ MA06 goodwill is separate from entitlement and Service authority; withdrawal blocks receiving (2837.0672ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 13
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 348814.0888
+
+✖ failing tests:
+
+test at tests\database\maintenance-service.test.ts:1:1286
+✖ agreement to due maintenance to reviewed Service outcome preserves the original obligation and exact retry (30025.9465ms)
+  Error: Check the highlighted details.
+      at invalid (WORKTREE\src\platform\validation.ts:3:9)
+      at writeScope (WORKTREE\src\service\work-orders.ts:223:9)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (WORKTREE\src\service\work-orders.ts:484:7)
+      at async <anonymous> (WORKTREE\src\platform\operations.ts:192:22)
+      at async transaction (WORKTREE\src\platform\database.ts:44:20)
+      at async sharedOperation (WORKTREE\src\platform\operations.ts:157:12)
+      at async serviceResult (WORKTREE\tests\helpers\maintenance-service.ts:84:3)
+      at async TestContext.<anonymous> (WORKTREE\tests\database\maintenance-service.test.ts:50:18)
+      at async Test.run (node:internal/test_runner/test:1409:7) {
+    status: 422,
+    code: 'InvalidData',
+    field_errors: [ { field: 'entitlement_assessment_id', message: 'Retain the exact managed agreement reference and source revision.' } ]
+  }

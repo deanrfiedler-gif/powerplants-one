@@ -1,0 +1,55 @@
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.98"}
+
+Running 31 tests using 1 worker
+
+(node:16600) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[warm-up] 642 routes in 42477 ms, 0 unreachable. Slowest:
+ 12769 ms  200  /development/design-system
+  5715 ms  200  /development/page-register
+  4850 ms  404  /api/development/reference
+  4676 ms  200  /api/development/catalog
+   257 ms  200  /engineering/00000000-0000-4000-8000-000000000000/changes
+   236 ms  200  /estimating/discovery/00000000-0000-4000-8000-000000000000/costing
+   224 ms  200  /engineering/commissioning/handovers
+   215 ms  200  /engineering/00000000-0000-4000-8000-000000000000/materials
+   204 ms  200  /my-jobs
+   193 ms  200  /schedule
+  ok  1 [warm-up] › tests\browser\warm-up.setup.ts:10:1 › warm every route once before the browser projects (42.6s)
+(node:17304) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  2 [desktop-chromium] › tests\browser\department-navigation.spec.ts:47:1 › Sales Tasks uses the same saved action as My Work and completes that action once (10.8s)
+  ok  3 [desktop-chromium] › tests\browser\department-navigation.spec.ts:94:1 › all seven actual department rails retain canonical order and dimensions (8.5s)
+  ok  4 [desktop-chromium] › tests\browser\department-navigation.spec.ts:115:1 › Sales active drawings, real landing pages and More keyboard state (6.3s)
+  ok  5 [desktop-chromium] › tests\browser\department-navigation.spec.ts:137:1 › Engineering and Service retain shared Contacts view through records, reload, back and new tabs (4.2s)
+  ok  6 [desktop-chromium] › tests\browser\department-navigation.spec.ts:159:1 › Finance chooser preserves the exact permitted account and its rail after reload (2.0s)
+  ok  7 [desktop-chromium] › tests\browser\department-navigation.spec.ts:170:1 › Programme chooser opens a supported schedule context and returns to the chooser (2.4s)
+  ok  8 [desktop-chromium] › tests\browser\department-navigation.spec.ts:188:1 › shared URL context survives unavailable browser storage (1.5s)
+  ok  9 [desktop-chromium] › tests\browser\department-navigation.spec.ts:199:1 › specific Engineering, Projects and Fertigation destinations preserve their active parent (6.1s)
+  ok 10 [desktop-chromium] › tests\browser\department-navigation.spec.ts:211:1 › short desktop keeps More and logo anchored while shortcuts scroll (2.6s)
+  ok 11 [desktop-chromium] › tests\browser\department-navigation.spec.ts:225:1 › phone and 200 percent equivalent reflow keep the established navigation (3.3s)
+  ok 12 [desktop-chromium] › tests\browser\department-navigation.spec.ts:244:1 › restricted and empty access omit links; server guards still refuse account access (2.4s)
+  ok 13 [desktop-chromium] › tests\browser\maintenance.spec.ts:247:1 › all fourteen native routes expose their exact guide and preserve shell focus (34.4s)
+  ok 14 [desktop-chromium] › tests\browser\maintenance.spec.ts:283:1 › native reviewed forms preserve draft through guidance and recover a lost accepted response (3.7s)
+  ok 15 [desktop-chromium] › tests\browser\maintenance.spec.ts:347:1 › paired original references and complete native shell reflow with overflow negative control (36.5s)
+  ok 16 [desktop-chromium] › tests\browser\maintenance.spec.ts:443:1 › filtered-empty, read-only, missing record and failed-read recovery are explicit (6.6s)
+(node:30108) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  -  17 [mobile-chromium] › tests\browser\department-navigation.spec.ts:47:1 › Sales Tasks uses the same saved action as My Work and completes that action once
+  -  18 [mobile-chromium] › tests\browser\department-navigation.spec.ts:94:1 › all seven actual department rails retain canonical order and dimensions
+  -  19 [mobile-chromium] › tests\browser\department-navigation.spec.ts:115:1 › Sales active drawings, real landing pages and More keyboard state
+  -  20 [mobile-chromium] › tests\browser\department-navigation.spec.ts:137:1 › Engineering and Service retain shared Contacts view through records, reload, back and new tabs
+  -  21 [mobile-chromium] › tests\browser\department-navigation.spec.ts:159:1 › Finance chooser preserves the exact permitted account and its rail after reload
+  -  22 [mobile-chromium] › tests\browser\department-navigation.spec.ts:170:1 › Programme chooser opens a supported schedule context and returns to the chooser
+  -  23 [mobile-chromium] › tests\browser\department-navigation.spec.ts:188:1 › shared URL context survives unavailable browser storage
+  -  24 [mobile-chromium] › tests\browser\department-navigation.spec.ts:199:1 › specific Engineering, Projects and Fertigation destinations preserve their active parent
+  -  25 [mobile-chromium] › tests\browser\department-navigation.spec.ts:211:1 › short desktop keeps More and logo anchored while shortcuts scroll
+  -  26 [mobile-chromium] › tests\browser\department-navigation.spec.ts:225:1 › phone and 200 percent equivalent reflow keep the established navigation
+  -  27 [mobile-chromium] › tests\browser\department-navigation.spec.ts:244:1 › restricted and empty access omit links; server guards still refuse account access
+  ok 28 [mobile-chromium] › tests\browser\maintenance.spec.ts:247:1 › all fourteen native routes expose their exact guide and preserve shell focus (1.0m)
+  ok 29 [mobile-chromium] › tests\browser\maintenance.spec.ts:283:1 › native reviewed forms preserve draft through guidance and recover a lost accepted response (5.2s)
+  ok 30 [mobile-chromium] › tests\browser\maintenance.spec.ts:347:1 › paired original references and complete native shell reflow with overflow negative control (50.4s)
+  ok 31 [mobile-chromium] › tests\browser\maintenance.spec.ts:443:1 › filtered-empty, read-only, missing record and failed-read recovery are explicit (5.4s)
+
+  11 skipped
+  20 passed (5.2m)

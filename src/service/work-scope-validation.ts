@@ -68,6 +68,7 @@ export function coverageFields(value: unknown) {
     "assessment",
     "reason",
     "charging_route",
+    "entitlement_assessment_id",
   ]);
   const status = choice(r.status, "status", coverageStates),
     agreement_reference = optionalText(
@@ -105,6 +106,7 @@ export function coverageFields(value: unknown) {
     );
   return {
     status,
+    ...(r.entitlement_assessment_id == null ? {} : { entitlement_assessment_id: uuid(r.entitlement_assessment_id,"entitlement_assessment_id") }),
     agreement_reference,
     source_version,
     effective_from,

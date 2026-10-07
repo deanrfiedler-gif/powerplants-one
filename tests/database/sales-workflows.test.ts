@@ -379,7 +379,9 @@ test("CR05 issued source -> chosen date -> prepared review -> attributed feedbac
   let d = await readAftercare(p, id);
   assert.equal(d.record.state, "ReviewCompleted");
   assert.equal(d.record.content.review.due_date, null);
-  assert.equal(d.agreements.state, "Unavailable");
+  assert.equal(d.agreements.state, "Available");
+  assert.deepEqual(d.agreements.agreements, []);
+  assert.deepEqual(d.agreements.items, []);
   const work = {
     ...crmBase(),
     ...crmAction(p.actor_id),

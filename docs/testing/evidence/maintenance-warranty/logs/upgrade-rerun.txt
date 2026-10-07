@@ -1,0 +1,10 @@
+✔ P07 upgrade from P06 and repeat seed retain exact original issue, source, receipts and revoked grants (80715.1721ms)
+✔ P10 additive upgrade from real P09 issued originals retains exact rows, bytes, migration checksums and repeat seeds (49626.2018ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 143391.9432

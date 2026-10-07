@@ -1,0 +1,29 @@
+{
+  "synthetic": true,
+  "long_title": "SYN Northbank multi-site covered equipment and controlled-area maintenance agreement — long source and equipment names must wrap safely",
+  "states": [
+    "loading",
+    "empty",
+    "filtered-empty",
+    "read-only",
+    "missing-context",
+    "validation",
+    "stale-version",
+    "saving",
+    "uncertain",
+    "recovered",
+    "success"
+  ],
+  "boundaries": [
+    "Customer Resolved / Supplier Prepared",
+    "External return evidence / SupplyReceivingNotIntegrated",
+    "Original due 2026-01-31 / Deferred target 2026-02-03",
+    "Claim 10000 / Approved 6000 / Credit linked 4000 / Unrecovered 6000"
+  ],
+  "source_availability": [
+    "Available",
+    "Partial",
+    "Unavailable",
+    "Unknown"
+  ]
+}

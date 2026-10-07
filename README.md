@@ -80,6 +80,10 @@ Field operations use `/service/technicians`: the [approved r04 design](docs/deci
 
 Technicians use `/my-jobs` and `/my-jobs/:id`. Riley and Morgan acknowledge and start independently. Supported fictional PNGs are registered, uploaded and verified before availability. Completion drafts can be submitted separately for service review at `/service/reports`. Exact reviewed HTML/PDF, owned remaining work, immutable report revisions and customer responses are available in the P09 implementation. **Field workflow preview — integrated acceptance incomplete**. The dedicated `/offline/index.html` workspace downloads up to two permitted jobs, commits original evidence and PNGs to IndexedDB, and explicitly retries bounded original operations with per-item receipts and owned exception recovery. Offline authority remains provisional.
 
+## Maintenance and Warranty integration
+
+MA-01–MA-07 provide agreement, coverage, plan, due-work, renewal, warranty-case and supplier-recovery workspaces. The recurring journey retains the original due obligation while Service independently authorises and reviews work. Warranty customer outcomes, supplier recovery and Finance evidence remain separate. The [handover](docs/delivery/maintenance-warranty-handover.md) separates current integration verification from retained branch evidence and outstanding acceptance. Warranty-to-Supply receiving is not integrated.
+
 ## Working screens
 
 P11's bounded exceptions/recovery checkpoint is at `/admin`, using existing current-owner recovery permissions. Cross-tab identity changes clear displayed business and diagnostic views. [P11 handover](docs/delivery/p11-handover.md) records implemented fixes, actual verification limits and outstanding integrated work. Final contribution and merged-main completion are established by the handover’s authoritative external record; [P12 recovery](docs/delivery/p12-handover.md) is merged through #166, with actual verification and remaining procedure limits recorded separately.

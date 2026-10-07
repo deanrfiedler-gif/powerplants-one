@@ -185,6 +185,13 @@ for (const state of ["Approved", "OutcomeUnknown", "Reconciled"]) {
       ]),
       ...coordinatorGrants.filter(g => g.value.capability === "shared.edit").map(g => ({ ...g.value, capability: "engineering.material.source" })),
     );
+    // Seed 51 copies only declared fictional Maintenance/Warranty duties and original scope validity.
+    expected.push(...originalGrants.filter(g=>g.value.capability==="shared.read").flatMap(g=>{
+      const id=String(g.value.user_id);
+      const caps=["30000000-0000-4000-8000-000000000001","30000000-0000-4000-8000-000000000008"].includes(id)?["maintenance.read","maintenance.manage","maintenance.assess","warranty.read","warranty.manage","warranty.assess","warranty.recovery"]:
+        ["30000000-0000-4000-8000-000000000002","30000000-0000-4000-8000-000000000012","30000000-0000-4000-8000-000000000014"].includes(id)?["maintenance.read","warranty.read",...(id.endsWith("012")?["maintenance.agreement.approve","warranty.goodwill"]:[])]:[];
+      return caps.map(capability=>({...g.value,capability}));
+    }));
     // Seed 47 adds only four narrow technical duties to existing fictional identities.
     expected.push(...companyAGrants.filter(g=>g.value.capability==="shared.edit").flatMap(g=>[
       [materials.reviewer,"engineering.technical.review"],[materials.release,"engineering.technical.issue"],

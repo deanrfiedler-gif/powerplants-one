@@ -140,6 +140,11 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // offline factual recovery commands. It rewrites no existing evidence, identity,
   // seed or grant. Generic runtime privileges include the additive tables.
   // Existing reports without timers retain their original submission contract.
+  // 0051 uses the reserved Maintenance/Warranty slot, including an already-current database.
+  // It appends typed records and existing checks after flushing deferred identity events.
+  // Seed 51 adds 22 scoped duties to existing fictional principals only; no user or hosted
+  // invitation changes. Generic runtime table grants apply. Original rows, ledger hashes,
+  // outputs and revoked grants must survive both the ascending and late-slot upgrade.
   // 0053: additive scheduling family, immutable proposals/reviews/publications/impacts
   // and typed Activity companions. Only publication has an identity because the existing
   // receipt FK requires it; pending identity events are flushed before the additive CHECK.
@@ -153,7 +158,7 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // Commands stay unregistered until Step 4 enforcement is proved.
   // 0055 adds immutable Service template/binding/event/output tables only. Seed
   // 55 supplies fictional catalogue versions and an instrument, with no users or grants. Shared
-  // attempts and installed SQL/seed bytes remain intact; 0051/0052 stay reserved.
+  // attempts and installed SQL/seed bytes remain intact; 0051 was reserved at that checkpoint; this contribution installs Maintenance there. 0052 stays reserved.
   // 0056 adds isolated incident storage. Seed 56 grants only the three named
   // local synthetic profiles, never hosted testers; existing rows and revoked
   // grants remain unchanged. Populated upgrade/reseed proof is required.

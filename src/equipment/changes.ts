@@ -1,4 +1,8 @@
 import { createHash, randomUUID } from "node:crypto";
+import {
+  maintenanceImpact,
+  requireMaintenanceReview,
+} from "../maintenance/equipment-impact";
 import type { PoolClient } from "pg";
 import { database } from "../platform/database";
 import { AppError, unavailable } from "../platform/errors";
@@ -169,8 +173,7 @@ export async function equipmentImpact(
       start: a.warranty_start as string | null,
       end: a.warranty_end as string | null,
     },
-    maintenance:
-      "No canonical maintenance contract is available; no status transfers.",
+    maintenance: await maintenanceImpact(c, p, id),
     documents:
       "Existing documents and configurations remain attached to their original identity and revision.",
   };
@@ -406,7 +409,20 @@ export async function reviewEquipmentChange(
           );
         if (
           row.kind !== "Configuration" &&
-          (impact.work.length || impact.tickets.length)
+          (impact.work.length || impact.tickets.length) &&
+          !(
+            row.kind === "Replace" &&
+            impact.work.every((w) =>
+              impact.maintenance.replacement_results.some(
+                (r) => r.work_order_id === w.id,
+              ),
+            ) &&
+            impact.tickets.every((t) =>
+              impact.maintenance.replacement_results.some(
+                (r) => r.ticket_id === t.id,
+              ),
+            )
+          )
         )
           invalid(
             "consequences",
@@ -440,7 +456,10 @@ export async function reviewEquipmentChange(
           ],
         )
       ).rows[0];
-      if (cmd.decision === "Apply") await applyChange(c, p, row);
+      if (cmd.decision === "Apply") {
+        await applyChange(c, p, row);
+        await requireMaintenanceReview(c, p, row.asset_id, row.id, cmd.reason);
+      }
       return saved;
     },
     "EquipmentChange",

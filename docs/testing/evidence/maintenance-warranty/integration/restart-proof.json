@@ -1,0 +1,99 @@
+{
+  "source": "34aa32a54e67434cc7f15346d9d26989578f67c1",
+  "proof_script_sha256": "d627594d7a8f7139b9583b8a8c718dfb8c22958316938cefc1dc2d2f3999d99f",
+  "table_counts": {
+    "service_agreements": 7,
+    "agreement_revisions": 7,
+    "agreement_scope": 7,
+    "maintenance_plans": 7,
+    "maintenance_plan_revisions": 7,
+    "maintenance_plan_tasks": 7,
+    "maintenance_occurrences": 21,
+    "entitlement_assessments": 14,
+    "renewal_reviews": 7,
+    "warranty_cases": 8,
+    "supplier_claims": 7,
+    "maintenance_events": 112,
+    "maintenance_work_requests": 1,
+    "maintenance_service_results": 1,
+    "warranty_resolution_plans": 0,
+    "tickets": 7,
+    "work_orders": 11,
+    "work_order_tickets": 11,
+    "scope_revisions": 12,
+    "scope_items": 11,
+    "scope_assets": 11,
+    "coverage_assessments": 11,
+    "appointments": 14,
+    "assignments": 4,
+    "pack_revisions": 1,
+    "pack_issues": 1,
+    "field_attendances": 1,
+    "field_entries": 4,
+    "field_attachments": 1,
+    "service_reports": 1,
+    "report_revisions": 1,
+    "report_reviews": 1,
+    "report_issues": 1,
+    "report_presentations": 2,
+    "operation_receipts": 120,
+    "audit_events": 169,
+    "outbox_jobs": 120
+  },
+  "original_operations": 3,
+  "content_outputs": [
+    {
+      "kind": "Pack",
+      "sha256": "68c7b9bc369cbbb1f480d443ea15cdc9bbaf1d4a13bf7fc4316d1da430a68d96",
+      "html_hash": "abba6203e699d91b4f29e2185c6be4e09ee297a3d844fc3d7af1d43fe85c0206",
+      "pdf_hash": "97e63a0936144cde6a4afae42fc56a2be32a6b93268a8be3170bd0a5a040f66e"
+    },
+    {
+      "kind": "Report",
+      "sha256": "aa37e15e8569e67cc1a83f4d966be50b41656d642d26790175fc371c2608c339",
+      "html_hash": "2b51c7074520455cfcc9cd5f3781f4a40808c5f1d204e903b9fbe2f242f377ea",
+      "pdf_hash": "ab06731e623ebbec864deba440ded010f241cc4fdfe8027707d2aeb162b3e2cd"
+    },
+    {
+      "kind": "PNG",
+      "sha256": "8e0e39097d1e122a86d83ed2c236f3bc8de8b82c46a945fbe71b6bf0a059203e"
+    }
+  ],
+  "outputs": [
+    {
+      "kind": "Pack",
+      "sha256": "68c7b9bc369cbbb1f480d443ea15cdc9bbaf1d4a13bf7fc4316d1da430a68d96"
+    },
+    {
+      "kind": "Report",
+      "sha256": "aa37e15e8569e67cc1a83f4d966be50b41656d642d26790175fc371c2608c339"
+    },
+    {
+      "kind": "PNG",
+      "sha256": "8e0e39097d1e122a86d83ed2c236f3bc8de8b82c46a945fbe71b6bf0a059203e"
+    }
+  ],
+  "phase_results": [
+    {
+      "phase": "write",
+      "serverPid": 892,
+      "databaseStarted": "2026-10-07 12:10:47.183962+10",
+      "sha256": "1ff6c94082e17992227ebb98eda0e68d1dddc5dd21a64eafc44090cba5e8fafc",
+      "replays": 3,
+      "outputFiles": 3,
+      "result": "Original retained; both process restarts still required"
+    },
+    {
+      "phase": "verify",
+      "serverPid": 34452,
+      "databaseStarted": "2026-10-07 12:27:18.52261+10",
+      "sha256": "1ff6c94082e17992227ebb98eda0e68d1dddc5dd21a64eafc44090cba5e8fafc",
+      "authenticatedSha256": "b1af027c16bceec5e488cdb82900ba21e46537235a031682cc1073f94ebcc41a",
+      "authenticationEvents": 1,
+      "replays": 3,
+      "outputFiles": 3,
+      "result": "Exact typed originals, audit/outbox and receipt survive both restarts; retry adds no effects"
+    }
+  ],
+  "boundary": "Full checkpoint, private paths and credentials remain outside Git. Both phase results must pass exact deep comparison."
+}

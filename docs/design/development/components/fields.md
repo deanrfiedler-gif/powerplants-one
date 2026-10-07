@@ -69,6 +69,9 @@ EQ-01 through EQ-09 reuse the shared control in their applicable register, recor
 
 LocalDateTimeField accepts an optional canonical `validationField` independently of its DOM `name`. Equipment supplies stable React instance IDs to Field and LocalDateTimeField so mounted tab drafts and repeated evidence cards have distinct label/error targets. The catalogue fixture shows configuration and movement times with separate IDs and one canonical command-field name; defaults for existing consumers remain unchanged. Browser verification checks active-tab entry and duplicate-ID absence. This additive adapter has not received owner visual acceptance.
 
+## Maintenance and Warranty consumers
+
+MA-01–MA-07 now reuse this component through the native registers and record workspaces. Exact bindings are in components.json. Synthetic long labels, uncertain saves, stale versions and separate customer/recovery states are in docs/design/development/maintenance-fixtures.json and the Maintenance browser journeys. Review 1440/1024/390/320 px and guide draft retention before owner acceptance.
 
 ## FI-05 field readiness consumer
 

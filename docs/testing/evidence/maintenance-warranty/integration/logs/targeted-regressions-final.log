@@ -1,0 +1,172 @@
+TAP version 13
+# Subtest: E2 migration formalises exact E1 identities and preserves every accepted cost, quote, receipt and stored original
+ok 1 - E2 migration formalises exact E1 identities and preserves every accepted cost, quote, receipt and stored original
+  ---
+  duration_ms: 94262.6987
+  type: 'test'
+  ...
+# Subtest: DR01-DB03 migration 24 originals survive upgrade, deliberate concurrent adoption and exact quotation recovery
+ok 2 - DR01-DB03 migration 24 originals survive upgrade, deliberate concurrent adoption and exact quotation recovery
+  ---
+  duration_ms: 113187.8134
+  type: 'test'
+  ...
+# Subtest: E2 migration 27 and repeated seed retain legacy DTOs, ledgers, receipts and exact stored quotations
+ok 3 - E2 migration 27 and repeated seed retain legacy DTOs, ledgers, receipts and exact stored quotations
+  ---
+  duration_ms: 99350.0966
+  type: 'test'
+  ...
+# Subtest: partial reviewed Service results retain an open remedy and refuse customer resolution
+ok 4 - partial reviewed Service results retain an open remedy and refuse customer resolution
+  ---
+  duration_ms: 99482.7528
+  type: 'test'
+  ...
+# Subtest: canonical replacement receives exact completed work, preserves identities and owns future maintenance
+ok 5 - canonical replacement receives exact completed work, preserves identities and owns future maintenance
+  ---
+  duration_ms: 51439.4156
+  type: 'test'
+  ...
+# Subtest: completed exact Service remedy needs current customer update and response; recovery stays outstanding
+ok 6 - completed exact Service remedy needs current customer update and response; recovery stays outstanding
+  ---
+  duration_ms: 36306.9203
+  type: 'test'
+  ...
+# Subtest: P08 additive P07 upgrade preserves attendance, receipt, bytes and revoked grants
+ok 7 - P08 additive P07 upgrade preserves attendance, receipt, bytes and revoked grants
+  ---
+  duration_ms: 107761.9774
+  type: 'test'
+  ...
+# Subtest: populated 0050 upgrade preserves every old row/hash, registers 0051 and 0053–0071 with reserved gaps and exact authority/instrument additions
+ok 8 - populated 0050 upgrade preserves every old row/hash, registers 0051 and 0053–0071 with reserved gaps and exact authority/instrument additions
+  ---
+  duration_ms: 51496.8509
+  type: 'test'
+  ...
+# Subtest: fresh installation applies only registered files through 0070, retains reserved gaps and repeats without changes
+ok 9 - fresh installation applies only registered files through 0070, retains reserved gaps and repeats without changes
+  ---
+  duration_ms: 30767.2115
+  type: 'test'
+  ...
+# Subtest: CR05 issued source -> chosen date -> prepared review -> attributed feedback -> completed review -> closure and correction
+ok 10 - CR05 issued source -> chosen date -> prepared review -> attributed feedback -> completed review -> closure and correction
+  ---
+  duration_ms: 59948.4434
+  type: 'test'
+  ...
+# Demo upgrade stage: load-release
+# Demo upgrade stage: connect
+# Demo upgrade stage: validate-target
+# Demo upgrade stage: migration-history
+# Demo migration mismatch: version=18 expected=2c36b8e173f805e0184e59284c0856d982ecc5a71ea60d61d64854f3ec186255 stored=bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+# Subtest: an old conflicting Gantt-18 ledger is refused before any migrations, seeds or grants change
+ok 11 - an old conflicting Gantt-18 ledger is refused before any migrations, seeds or grants change
+  ---
+  duration_ms: 13339.06
+  type: 'test'
+  ...
+# Demo upgrade stage: load-release
+# Demo upgrade stage: connect
+# Demo upgrade stage: validate-target
+# Demo upgrade stage: migration-history
+# Demo upgrade stage: identity-history
+# Demo upgrade stage: seed-history
+# Demo upgrade stage: apply-migration-18
+# Demo upgrade stage: apply-migration-19
+# Demo upgrade stage: apply-migration-20
+# Demo upgrade stage: apply-migration-21
+# Demo upgrade stage: apply-migration-22
+# Demo upgrade stage: apply-migration-23
+# Demo upgrade stage: apply-migration-24
+# Demo upgrade stage: apply-migration-25
+# Demo upgrade stage: apply-migration-26
+# Demo upgrade stage: apply-migration-27
+# Demo upgrade stage: apply-migration-28
+# Demo upgrade stage: apply-migration-29
+# Demo upgrade stage: apply-migration-30
+# Demo upgrade stage: apply-migration-31
+# Demo upgrade stage: apply-migration-32
+# Demo upgrade stage: apply-migration-33
+# Demo upgrade stage: apply-migration-34
+# Demo upgrade stage: apply-migration-35
+# Demo upgrade stage: apply-migration-36
+# Demo upgrade stage: apply-migration-37
+# Demo upgrade stage: apply-migration-38
+# Demo upgrade stage: apply-migration-39
+# Demo upgrade stage: apply-migration-40
+# Demo upgrade stage: apply-migration-41
+# Demo upgrade stage: apply-migration-42
+# Demo upgrade stage: apply-migration-43
+# Demo upgrade stage: apply-migration-44
+# Demo upgrade stage: apply-migration-45
+# Demo upgrade stage: apply-migration-46
+# Demo upgrade stage: apply-migration-47
+# Demo upgrade stage: apply-migration-48
+# Demo upgrade stage: apply-migration-49
+# Demo upgrade stage: apply-migration-50
+# Demo upgrade stage: apply-migration-51
+# Demo upgrade stage: apply-migration-53
+# Demo upgrade stage: apply-migration-54
+# Demo upgrade stage: apply-migration-55
+# Demo upgrade stage: apply-migration-56
+# Demo upgrade stage: apply-migration-57
+# Demo upgrade stage: apply-migration-58
+# Demo upgrade stage: apply-migration-59
+# Demo upgrade stage: apply-migration-60
+# Demo upgrade stage: apply-migration-61
+# Demo upgrade stage: apply-migration-62
+# Demo upgrade stage: apply-migration-63
+# Demo upgrade stage: apply-migration-64
+# Demo upgrade stage: apply-migration-65
+# Demo upgrade stage: apply-migration-66
+# Demo upgrade stage: apply-migration-67
+# Demo upgrade stage: apply-migration-68
+# Demo upgrade stage: apply-migration-69
+# Demo upgrade stage: apply-migration-70
+# Demo upgrade stage: apply-migration-71
+# Demo upgrade stage: apply-seed-18
+# Demo upgrade stage: apply-seed-19
+# Demo upgrade stage: apply-seed-20
+# Demo upgrade stage: apply-seed-21
+# Demo upgrade stage: apply-seed-24
+# Demo upgrade stage: apply-seed-29
+# Demo upgrade stage: apply-seed-30
+# Demo upgrade stage: apply-seed-31
+# Demo upgrade stage: apply-seed-32
+# Demo upgrade stage: apply-seed-40
+# Demo upgrade stage: apply-seed-41
+# Demo upgrade stage: apply-seed-44
+# Demo upgrade stage: apply-seed-47
+# Demo upgrade stage: apply-seed-48
+# Demo upgrade stage: apply-seed-49
+# Demo upgrade stage: apply-seed-51
+# Demo upgrade stage: apply-seed-53
+# Demo upgrade stage: apply-seed-54
+# Demo upgrade stage: apply-seed-55
+# Demo upgrade stage: apply-seed-56
+# Demo upgrade stage: apply-seed-58
+# Demo upgrade stage: apply-seed-59
+# Demo upgrade stage: runtime-grants
+# Demo upgrade stage: tester-capabilities
+# Demo upgrade stage: tester-role-profiles
+# Demo upgrade stage: verify-privileges
+# Subtest: a late privilege failure rolls back schema, seed receipts and grant additions together
+ok 12 - a late privilege failure rolls back schema, seed receipts and grant additions together
+  ---
+  duration_ms: 27115.3908
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 880068.7115
