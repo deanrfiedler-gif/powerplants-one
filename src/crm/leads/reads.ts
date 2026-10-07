@@ -97,6 +97,9 @@ export async function readLead(p: Principal, id: string) {
     if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
   }
   const next = actions.find((a) => a.id === l.next_activity_id) ?? null;
+  const conversion_review = conversion
+    ? await conversionReview(p, id, !!deal)
+    : null;
   return {
     ...l,
     ...labels,
@@ -116,10 +119,64 @@ export async function readLead(p: Principal, id: string) {
               ? "Overdue"
               : "Upcoming",
     deal,
+    conversion_review,
     can_edit,
     can_convert,
     synthetic: true as const,
   };
+}
+
+async function conversionReview(
+  p: Principal,
+  id: string,
+  dealVisible: boolean,
+) {
+  const evidence = (
+    await database().query<{
+      retained: {
+        id: string;
+        version: number;
+        reason: string;
+        summary: string;
+        owner_id: string;
+        site_id: string | null;
+        status: string;
+        due_at: string | null;
+      }[];
+      review_activity_id: string;
+    }>(
+      `SELECT a.details->'retained_source_activities' AS retained,a.details->>'review_activity_id' AS review_activity_id
+     FROM ppo.lead_conversions x JOIN ppo.audit_events a ON (a.workspace_id,a.actor_id,a.operation_id)=(x.workspace_id,x.created_by,x.operation_id)
+     WHERE x.workspace_id=$1 AND x.lead_id=$2 AND a.object_type='Lead' AND a.object_id=x.lead_id
+       AND a.outcome='Accepted' AND a.details->>'command'='ConvertLeadToOpportunity'`,
+      [p.workspace_id, id],
+    )
+  ).rows[0];
+  if (!evidence?.retained?.length) return null;
+  const restricted = {
+    state: "Restricted" as const,
+    retained: [],
+    review_activity: null,
+  };
+  if (!dealVisible) return restricted;
+  try {
+    const retained = await Promise.all(
+      evidence.retained.map(async (original) => {
+        const current = await readActivity(p, original.id);
+        return {
+          ...original,
+          current_status: current.status,
+          current_owner: current.owner_name,
+          current_version: current.version,
+        };
+      }),
+    );
+    const review_activity = await readActivity(p, evidence.review_activity_id);
+    return { state: "Available" as const, retained, review_activity };
+  } catch (e) {
+    if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
+    return restricted;
+  }
 }
 export async function listLeads(p: Principal, input: unknown = {}) {
   const c = database();

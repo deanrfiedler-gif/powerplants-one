@@ -12,10 +12,7 @@ import {
   activityLinks,
   type ActivityInput,
 } from "../../activities/activities";
-import {
-  relationshipContext,
-  eligibleOpportunityOwner,
-} from "../context";
+import { relationshipContext, eligibleOpportunityOwner } from "../context";
 import { opportunityEvent } from "../opportunities";
 import { leadContext, type Lead } from "./context";
 import {
@@ -315,24 +312,75 @@ export async function convertLead(p: Principal, id: string, value: unknown) {
         primary_person_id: command.primary_person_id,
         pipeline_definition_id: ACTIVE_PIPELINE_ID,
       };
-      // Every original action is carried by identity. Incompatible context blocks before commit.
+      // Legacy commands carry every original. An explicit comparison can retain
+      // differently scoped history on the Lead with a new owned Deal review.
       const originals = (
         await c.query<{ activity_id: string }>(
           "SELECT activity_id FROM ppo.activity_links WHERE workspace_id=$1 AND lead_id=$2 ORDER BY activity_id",
           [p.workspace_id, id],
         )
       ).rows;
+      const review = command.source_activity_review;
+      if (
+        review &&
+        (review.length !== originals.length ||
+          originals.some(
+            ({ activity_id }) =>
+              !review.some((item) => item.id === activity_id),
+          ))
+      )
+        throw new AppError(
+          409,
+          "LeadActivityComparisonConflict",
+          "The linked activities changed. Reload and review every original activity.",
+        );
+      const retained: {
+        id: string;
+        version: number;
+        reason: string;
+        summary: string;
+        owner_id: string;
+        site_id: string | null;
+        status: string;
+        due_at: string | null;
+      }[] = [];
       const actions: ActivityInput[] = [];
       for (const { activity_id } of originals) {
         const a = await visibleActivity(c, p, activity_id),
           links = await activityLinks(c, p, activity_id);
+        const compared = review?.find((item) => item.id === activity_id);
+        if (compared && compared.version !== a.version)
+          throw new AppError(
+            409,
+            "LeadActivityComparisonConflict",
+            "A source activity changed. Reload and review its current owner and outcome.",
+          );
+        await authoriseActivityInput(c, p, { ...a, links });
+        if (compared?.disposition === "Retain") {
+          if (a.site_id === command.site_id || a.access_class !== "Internal")
+            throw new AppError(
+              422,
+              "LEAD_ACTIVITY_CONTEXT",
+              "Carry compatible activities to the Deal. Only differently scoped source activities can be retained.",
+            );
+          retained.push({
+            id: a.id,
+            version: a.version,
+            reason: compared.reason!,
+            summary: a.summary,
+            owner_id: a.owner_id,
+            site_id: a.site_id,
+            status: a.status,
+            due_at: a.due_at,
+          });
+          continue;
+        }
         if (a.site_id !== command.site_id || a.access_class !== "Internal")
           throw new AppError(
             422,
             "LEAD_ACTIVITY_CONTEXT",
             "A linked activity has a different site or access context. Preserve its history and review the conversion context.",
           );
-        await authoriseActivityInput(c, p, { ...a, links });
         // Validate all future targets and the independent Activity owner, without creating the new target yet.
         const future = {
           ...a,
@@ -356,6 +404,19 @@ export async function convertLead(p: Principal, id: string, value: unknown) {
         );
         actions.push({ ...a, links });
       }
+      if (
+        retained.length &&
+        (!command.new_action ||
+          command.new_action.kind !== "RelationshipReview" ||
+          command.new_action.owner_id !== l.owner_id ||
+          !command.new_action.due_at ||
+          command.new_action.due_needed)
+      )
+        throw new AppError(
+          422,
+          "LEAD_REVIEW_ACTION_REQUIRED",
+          "Create a dated Deal follow-up owned by the lead owner to review the retained source obligations.",
+        );
       let nextId = command.activity_id;
       if (nextId) await activeAction(c, p, l, nextId);
       if (command.new_action) nextId = command.new_action.id;
@@ -375,9 +436,17 @@ export async function convertLead(p: Principal, id: string, value: unknown) {
       // specific command error before the non-deferrable row CHECK rejects it.
       const identificationId = command.identification_activity_id;
       if (!command.primary_person_id && !identificationId)
-        throw new AppError(422, "CRM_IDENTIFICATION_REQUIRED", "Choose an active contact-identification action owned by the lead owner.");
+        throw new AppError(
+          422,
+          "CRM_IDENTIFICATION_REQUIRED",
+          "Choose an active contact-identification action owned by the lead owner.",
+        );
       if (command.primary_person_id && identificationId)
-        throw new AppError(422, "CRM_IDENTIFICATION_INVALID", "A resolved contact does not need a separate identification action.");
+        throw new AppError(
+          422,
+          "CRM_IDENTIFICATION_INVALID",
+          "A resolved contact does not need a separate identification action.",
+        );
       const o = (
         await c.query(
           `INSERT INTO ppo.opportunities(id,workspace_id,company_id,created_by,updated_by,organisation_id,site_id,primary_person_id,site_unknown_reason,contact_unknown_reason,title,need_summary,source_channel,source_basis,owner_id,pipeline_definition_id,next_activity_id,stage_id,qualification_note,identification_activity_id) VALUES($1,$2,$3,$4,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,'Discovery',$17,$18) RETURNING *`,
@@ -476,6 +545,13 @@ export async function convertLead(p: Principal, id: string, value: unknown) {
           opportunity_id: o.id,
           next_activity_id: nextId,
           preserved_activity_ids: actions.map((a) => a.id),
+          ...(review
+            ? {
+                source_activity_review: review,
+                retained_source_activities: retained,
+                review_activity_id: retained.length ? nextId : null,
+              }
+            : {}),
         },
       };
     },

@@ -1,5 +1,9 @@
 # Current prototype status
 
+## Lead-to-delivery continuity — 7 October 2026
+
+Repository-writing session: **Assess lead-to-module flow**, branch `codex/lead-to-delivery`, following Maintenance's explicit release at `e17aca5`. The contribution starts on that unmerged PR #357 checkpoint, which includes main #356. Maintenance retains read-only CI observation; any further repair requires coordination. The user authorised the Leads/Deals completion programme. [Working contract](../docs/contracts/lead-to-delivery-continuity.md) records the increments, existing native authorities and remaining work. Implementation and verification are in progress; no completion, business acceptance or deployment is claimed.
+
 ## Maintenance and Warranty integration — 7 October 2026
 
 Repository-writing handover: **Assess lead-to-module flow** (Leads/Deals) follows this completed Maintenance checkpoint. **Find next Powerplants One work**, branch `codex/maintenance-warranty-completion`, held the slot after ES-07's explicit release and retains only read-only CI observation after its final push/handover. Further source repairs require coordination. The contribution is reconciled with current main `fbf2ed3` (#356), preserving Maintenance migration/seed **0051** and ES-07 **0072**. Maintenance adds nine capabilities (120 combined) and 22 scoped grants, with no new users.

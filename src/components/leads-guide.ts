@@ -53,7 +53,7 @@ export const leadsGuide = {
     ],
     [
       "Convert when it is real",
-      "Converting creates the linked deal and moves the lead into the Converted view. The lead stays readable afterwards, so the history of the enquiry is not lost.",
+      "Converting creates the linked deal and moves the lead into the Converted view. If a newly identified site differs from an earlier activity, record a review plan for that source activity and create a dated Deal review owned by the lead owner. Original owners, dates and history stay on the lead; both records show the follow-through. Use Confirm original save if the result is uncertain.",
     ],
   ],
   journeyIntro:

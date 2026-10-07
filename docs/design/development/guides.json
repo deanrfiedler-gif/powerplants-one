@@ -4458,7 +4458,8 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Maintain one opportunity with source-owned customer context, accountable next action, commercial evidence and linked handovers."
+            "Maintain one opportunity with source-owned customer context, accountable next action, commercial evidence and linked handovers.",
+            "When a site is resolved after lead follow-up, review every original activity. Differently scoped activities keep their original owner, date and source link; record a review plan for each and create a dated RelationshipReview owned by the lead owner on the Deal. Converted Lead and Deal show the retained obligations and their current status. Changed or inaccessible source activities block conversion; an uncertain save is recovered using Confirm original save."
           ],
           "steps": [],
           "rows": [],
@@ -42646,7 +42647,8 @@
           "paragraphs": [
             "Use Lead detail to work towards this outcome: The enquiry has an accountable next action or an attributable conversion/disposition.",
             "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "Conversion preserves the lead history. A lead and a deal are distinct records; current server access is checked again when saving."
+            "Conversion preserves the lead history. A lead and a deal are distinct records; current server access is checked again when saving.",
+            "When a site is resolved after lead follow-up, review every original activity. Differently scoped activities keep their original owner, date and source link; record a review plan for each and create a dated RelationshipReview owned by the lead owner on the Deal. Converted Lead and Deal show the retained obligations and their current status. Changed or inaccessible source activities block conversion; an uncertain save is recovered using Confirm original save."
           ],
           "steps": [],
           "rows": [],
@@ -42910,7 +42912,8 @@
           "paragraphs": [
             "Use Leads to work towards this outcome: The enquiry has an accountable next action or an attributable conversion/disposition.",
             "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "Conversion preserves the lead history. A lead and a deal are distinct records; current server access is checked again when saving."
+            "Conversion preserves the lead history. A lead and a deal are distinct records; current server access is checked again when saving.",
+            "When a site is resolved after lead follow-up, review every original activity. Differently scoped activities keep their original owner, date and source link; record a review plan for each and create a dated RelationshipReview owned by the lead owner on the Deal. Converted Lead and Deal show the retained obligations and their current status. Changed or inaccessible source activities block conversion; an uncertain save is recovered using Confirm original save."
           ],
           "steps": [],
           "rows": [],
@@ -43171,7 +43174,8 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Maintain one opportunity with source-owned customer context, accountable next action, commercial evidence and linked handovers."
+            "Maintain one opportunity with source-owned customer context, accountable next action, commercial evidence and linked handovers.",
+            "When a site is resolved after lead follow-up, review every original activity. Differently scoped activities keep their original owner, date and source link; record a review plan for each and create a dated RelationshipReview owned by the lead owner on the Deal. Converted Lead and Deal show the retained obligations and their current status. Changed or inaccessible source activities block conversion; an uncertain save is recovered using Confirm original save."
           ],
           "steps": [],
           "rows": [],

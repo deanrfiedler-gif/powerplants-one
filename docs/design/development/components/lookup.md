@@ -40,3 +40,7 @@ Real permission-filtered search and paging stay with each host; these examples u
 Review at 1440 × 960, 1024 × 768, 820 × 800, 390 × 844 and 320 × 700 where relevant; check browser zoom and keyboard operation separately. Compare the same state and viewport with the retained reference. Record exact commit, reviewer, date, fixture state, viewport, result and evidence paths in the component review record. Automated source fingerprints do not grant acceptance.
 
 Changes to the source, styles, fixtures, specification or reference invalidate prior evidence. Update this master and its component record in the same pull request. Keep app business checks separate from catalogue presentation checks.
+
+## Leads consumer
+
+The Leads host uses this control to select a permitted organisation, site and contact. A changed site may require explicit retention of original follow-up, with an owned dated review on the new Deal. Host state examples live in [lead continuity fixtures](../lead-continuity-fixtures.json). The shared lookup implementation is unchanged. Its typed text is never proof of a selected site; selection and command validation remain separate. Paired review of the new host adaptation is pending.

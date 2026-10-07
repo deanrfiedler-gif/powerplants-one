@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "source": "tests/browser/leads.spec.ts; tests/database/leads-continuity.test.ts",
+  "owner": "Dean Fiedler",
+  "review_status": "Pending owner and paired visual review",
+  "states": [
+    { "key": "site-discovered", "description": "Original lead activity has no site; selecting the permitted site exposes its owner/status, required review plan and a new owned dated RelationshipReview." },
+    { "key": "stale-source", "description": "Changed source Activity version or membership refuses the entire conversion; reload and compare before issuing a new intent." },
+    { "key": "source-restricted", "description": "Missing source access blocks conversion or shows a restricted historical review without disclosing source facts." },
+    { "key": "accepted-response-lost", "description": "Confirm original save recovers the accepted operation, exactly one Deal and one new review Activity." },
+    { "key": "converted", "description": "Lead and Deal show retained source follow-up, its review plan, original version and current owner/status; original rows and links remain unchanged." }
+  ]
+}

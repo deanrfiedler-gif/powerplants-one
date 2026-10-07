@@ -606,7 +606,15 @@ function OpportunityContent({
         </ValidationFields>}
       </RecordPanel>
       <RecordPanel id="opportunity" tab="timeline" value={tab}>
-      {o.source_lead && <section><h3>Source lead</h3><Link href={`/sales/leads/${o.source_lead.id}`}>{o.source_lead.display_number}</Link>{o.source_lead.events.filter(e=>e.note).map(e=><article key={e.id}><p style={{whiteSpace:"pre-wrap"}}>{e.note}</p><small>{e.actor_name} · {new Date(e.created_at).toLocaleString("en-AU")}</small></article>)}</section>}
+      {o.source_lead && <section><h3>Source lead</h3><Link href={`/sales/leads/${o.source_lead.id}`}>{o.source_lead.display_number}</Link>{o.source_lead.events.filter(e=>e.note).map(e=><article key={e.id}><p style={{whiteSpace:"pre-wrap"}}>{e.note}</p><small>{e.actor_name} · {new Date(e.created_at).toLocaleString("en-AU")}</small></article>)}
+        {o.source_lead.conversion_review?.state === "Restricted" && <p>Source follow-up review unavailable under your current access.</p>}
+        {o.source_lead.conversion_review?.state === "Available" && <>
+          <h4>Retained lead follow-up</h4>
+          <Link href={`/work/${o.source_lead.conversion_review.review_activity.id}`}>{o.source_lead.conversion_review.review_activity.summary}</Link>
+          <p>{o.source_lead.conversion_review.review_activity.owner_name} · {o.source_lead.conversion_review.review_activity.status}</p>
+          {o.source_lead.conversion_review.retained.map(a => <article key={a.id}><Link href={`/work/${a.id}`}>{a.summary}</Link><p>{a.reason}</p><small>{a.current_owner} · {a.current_status} · retained at version {a.version}</small></article>)}
+        </>}
+      </section>}
 
         <section className="crm-panel">
           <h2>{NEXT_LABELS[o.next_action_state]}</h2>

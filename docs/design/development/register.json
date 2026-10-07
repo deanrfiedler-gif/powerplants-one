@@ -984,7 +984,8 @@
       "dependencies": [
         "src/components/crm-screens.tsx",
         "src/components/opportunity-workflows.tsx",
-        "src/components/opportunity-correspondence.tsx"
+        "src/components/opportunity-correspondence.tsx",
+        "docs/contracts/lead-to-delivery-continuity.md"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
@@ -6477,9 +6478,11 @@
       ],
       "guide_key": "guide.page.sales.leads.id",
       "design_path": "docs/design/development/pages/route-sales-leads-id.md",
-      "html_path": null,
+      "html_path": "docs/reference/ui/crm/PPO-Leads-Desktop-Container-r01.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/contracts/lead-to-delivery-continuity.md"
+      ],
       "scope_status": "built",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -6503,9 +6506,11 @@
       ],
       "guide_key": "guide.page.sales.leads",
       "design_path": "docs/design/development/pages/route-sales-leads.md",
-      "html_path": null,
+      "html_path": "docs/reference/ui/crm/PPO-Leads-Desktop-Container-r01.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/contracts/lead-to-delivery-continuity.md"
+      ],
       "scope_status": "built",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -6534,7 +6539,8 @@
       "dependencies": [
         "src/components/crm-screens.tsx",
         "src/components/opportunity-workflows.tsx",
-        "src/components/opportunity-correspondence.tsx"
+        "src/components/opportunity-correspondence.tsx",
+        "docs/contracts/lead-to-delivery-continuity.md"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",

@@ -323,6 +323,7 @@ function LeadForm({
     [summary, setSummary] = useState(""),
     [due, setDue] = useState(""),
     [identify, setIdentify] = useState("");
+  const [retentionReasons, setRetentionReasons] = useState<Record<string, string>>({});
   const command = useCrmCommand(
       (r) => onAccepted(r.record_id),
       "Unsaved",
@@ -349,6 +350,8 @@ function LeadForm({
   const capture = mode === "add" || mode === "edit",
     convert = mode === "convert",
     activity = mode === "action" || convert;
+  const retained = convert ? lead?.actions.filter((a) => a.site_id !== (site || null)) ?? [] : [];
+  const selectedAction = retained.length ? "new" : actionChoice;
   async function submit() {
     const base = {
       reason:
@@ -388,11 +391,11 @@ function LeadForm({
     const root = `crm/leads/${lead!.id}`;
     if (activity) {
       const new_action =
-        actionChoice === "new"
+        selectedAction === "new"
           ? {
               id: actionId,
-              owner_id: actionOwner,
-              kind: "CustomerContact",
+              owner_id: retained.length ? lead!.owner_id : actionOwner,
+              kind: retained.length ? "RelationshipReview" : "CustomerContact",
               summary,
               due_at: due ? new Date(due).toISOString() : null,
               due_needed: !due,
@@ -400,7 +403,7 @@ function LeadForm({
           : null;
       const plan = {
         ...base,
-        activity_id: actionChoice === "new" ? null : actionChoice,
+        activity_id: selectedAction === "new" ? null : selectedAction,
         new_action,
       };
       await command.send(
@@ -418,6 +421,11 @@ function LeadForm({
               need_summary: need,
               qualification_note: note,
               identification_activity_id: person ? null : identify || null,
+              ...(retained.length ? { source_activity_review: lead!.actions.map((a) => ({
+                id: a.id, version: a.version,
+                disposition: a.site_id === (site || null) ? "Carry" : "Retain",
+                reason: a.site_id === (site || null) ? null : retentionReasons[a.id] ?? "",
+              })) } : {}),
             }
           : plan,
       );
@@ -658,11 +666,20 @@ function LeadForm({
           )}
           {activity && (
             <>
+              {retained.length > 0 && <section aria-label="Review source activities">
+                <h3>Keep the original follow-up connected</h3>
+                <p>These activities belong to the lead's earlier site context. Their owners, dates and history stay on the lead. Create a dated Deal review owned by {lead?.owner_name} to follow through on each obligation.</p>
+                {retained.map((a) => <div key={a.id}>
+                  <p><Link href={`/work/${a.id}`} target="_blank">{a.summary}</Link> · {a.owner_name} · {a.status}</p>
+                  <TextArea label={`Review plan for ${a.summary}`} name={`retain_${a.id}`} value={retentionReasons[a.id] ?? ""} onChange={(value) => setRetentionReasons((before) => ({ ...before, [a.id]: value }))} required maxLength={1000} />
+                </div>)}
+              </section>}
               <label>
                 Next activity
                 <select
-                  value={actionChoice}
+                  value={selectedAction}
                   onChange={(e) => setActionChoice(e.target.value)}
+                  disabled={retained.length > 0}
                 >
                   <option value="new">Create a new activity</option>
                   {lead?.actions
@@ -674,29 +691,30 @@ function LeadForm({
                     ))}
                 </select>
               </label>
-              {actionChoice === "new" ? (
+              {selectedAction === "new" ? (
                 <>
                   <TextArea
-                    label="Activity summary"
+                    label={retained.length ? "Source follow-up review summary" : "Activity summary"}
                     name="activity_summary"
                     value={summary}
                     onChange={setSummary}
                     required
                   />
-                  <Picker
+                  {retained.length ? <p>Review owner: {lead?.owner_name}</p> : <Picker
                     label="Activity owner"
                     name="activity_owner_id"
                     kind="ActionOwner"
                     value={actionOwner}
                     onChange={setActionOwner}
                     context={context}
-                  />
+                  />}
                   <label>
-                    Due date and time (optional)
+                    Due date and time {retained.length ? "(required for the source review)" : "(optional)"}
                     <input
                       type="datetime-local"
                       value={due}
                       onChange={(e) => setDue(e.target.value)}
+                      required={retained.length > 0}
                     />
                   </label>
                   <small>
@@ -719,13 +737,14 @@ function LeadForm({
                     required
                   >
                     <option value="">Choose an owned active activity</option>
-                    {actionChoice === "new" &&
-                      actionOwner === lead?.owner_id && (
+                    {selectedAction === "new" &&
+                      (retained.length > 0 || actionOwner === lead?.owner_id) && (
                         <option value={actionId}>The new activity above</option>
                       )}
                     {lead?.actions
                       .filter(
                         (a) =>
+                          a.site_id === (site || null) &&
                           a.owner_id === lead.owner_id &&
                           ["Open", "InProgress"].includes(a.status) &&
                           ["CustomerContact", "RelationshipReview"].includes(
@@ -911,6 +930,16 @@ function LeadDetail({
                 <Link href={`/sales/opportunities/${lead.deal.id}`}>
                   Open deal · {lead.deal.display_number}
                 </Link>
+                {lead.conversion_review?.state === "Restricted" && <p>Source follow-up review unavailable under your current access.</p>}
+                {lead.conversion_review?.state === "Available" && <section>
+                  <h3>Source follow-up review</h3>
+                  <Link href={`/work/${lead.conversion_review.review_activity.id}`}>{lead.conversion_review.review_activity.summary}</Link>
+                  <p>{lead.conversion_review.review_activity.owner_name} · {lead.conversion_review.review_activity.status}</p>
+                  {lead.conversion_review.retained.map((a) => <article key={a.id}>
+                    <Link href={`/work/${a.id}`}>{a.summary}</Link>
+                    <p>{a.reason}</p><small>{a.current_owner} · {a.current_status} · retained at version {a.version}</small>
+                  </article>)}
+                </section>}
               </>
             ) : (
               "Linked deal unavailable"

@@ -6,6 +6,48 @@ test.beforeEach(async ({ page }) => {
   page.on("pageerror", error => console.error("Leads browser error:", error.message));
   page.on("console", message => { if (message.type() === "error") console.error("Leads console:", message.text()); });
 });
+
+test("LC-11 a site discovered after lead follow-up keeps source obligations through lost-response recovery", async ({ page }, info) => {
+  await call(page, "local-session", { profile: "coordinator" });
+  const input = { ...leadCreate(), site_id: null }, action = { ...crmAction(), summary: "SYN Resolve the original customer questions" };
+  input.title = `SYN Site resolution ${input.id}`;
+  await call(page, "crm/leads", input);
+  await call(page, `crm/leads/${input.id}/next-action`, { ...crmBase(), expected_version: 1, activity_id: null, new_action: action });
+  const original = (await call(page, `activities/${action.id}`)).items[0];
+  await page.goto(`/sales/leads/${input.id}`);
+  await page.getByRole("button", { name: "Convert to deal", exact: true }).click();
+  await page.getByRole("combobox", { name: "Site", exact: true }).click();
+  await page.locator(`[role=option][data-record-id="${CRM.site}"]`).click();
+  await expect(page.getByRole("heading", { name: "Keep the original follow-up connected" })).toBeVisible();
+  await expect(page.getByRole("combobox", { name: "Next activity", exact: true })).toBeDisabled();
+  await page.getByLabel(`Review plan for ${action.summary}`).fill("SYN Confirm the unresolved questions against the newly identified site.");
+  await page.getByLabel("Qualification note", { exact: true }).fill("SYN Customer and site confirmed for owned discovery.");
+  await page.getByLabel("Source follow-up review summary", { exact: true }).fill("SYN Review retained enquiry questions with the site contact");
+  await page.getByLabel("Due date and time (required for the source review)").fill("2031-11-13T13:00");
+  await page.screenshot({ path: info.outputPath("lead-site-review.png") });
+  let intercepted = 0;
+  await page.route(`**/api/v1/crm/leads/${input.id}/convert`, async route => {
+    intercepted++;
+    const response = await route.fetch();
+    expect(response.ok(), await response.text()).toBe(true);
+    await route.abort("failed");
+  });
+  await page.getByRole("button", { name: "Convert to deal", exact: true }).click();
+  await page.getByRole("button", { name: "Confirm original save", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Source follow-up review", exact: true })).toBeVisible();
+  const lead = await call(page, `crm/leads/${input.id}`);
+  expect(lead.status).toBe("Converted");
+  expect(intercepted).toBe(1);
+  expect((await call(page, `activities/${action.id}`)).items[0]).toEqual(original);
+  await page.reload();
+  await expect(page.getByRole("heading", { name: "Source follow-up review", exact: true })).toBeVisible();
+  await page.goto(`/sales/opportunities/${lead.deal.id}`);
+  await page.getByRole("tab", { name: "Activities", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Retained lead follow-up", exact: true })).toBeVisible();
+  await expect(page.getByRole("link", { name: action.summary, exact: true })).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.screenshot({ path: info.outputPath("deal-retained-lead-follow-up.png") });
+});
 async function call(page: Page, path: string, body?: unknown) {
   const r = await page.request.fetch(`/api/v1/${path}`, {
     method: body === undefined ? "GET" : "POST",

@@ -1105,7 +1105,8 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "docs/design/development/lead-continuity-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -1114,7 +1115,9 @@
       },
       "specification": "docs/design/development/components/lookup.md",
       "used_on": [
-        "route:/projects/new"
+        "route:/projects/new",
+        "route:/sales/leads",
+        "route:/sales/leads/[id]"
       ],
       "desktop": "Typed text is not a selected record. Changing search clears selection; choose an explicit result.",
       "mobile": "The result list stays within the available width; long names wrap.",
@@ -1126,6 +1129,14 @@
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "Real permission-filtered search and paging stay with each host; these examples use a local result list.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "lookup-lead-context-review",
+          "expected": "Selecting a resolved site preserves original lead activities and exposes an owned review for incompatible context.",
+          "actual": "The Leads host reuses LookupField and its legacy modal; the retained source does not depict the new conversion review.",
+          "action": "Review LC-11 desktop/phone host evidence, keyboard selection and uncertain-original recovery.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

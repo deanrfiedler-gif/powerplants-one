@@ -135,6 +135,7 @@ export function parseLeadConversion(id: string, value: unknown) {
     "activity_id",
     "new_action",
     "identification_activity_id",
+    "source_activity_review",
   ]);
   const plan = parseLeadPlan(id, {
     ...Object.fromEntries(commonKeys.map((k) => [k, r[k]])),
@@ -183,5 +184,39 @@ export function parseLeadConversion(id: string, value: unknown) {
       r.identification_activity_id,
       "identification_activity_id",
     ),
+    // Absence preserves the original command and its accepted payload hash.
+    ...(r.source_activity_review === undefined
+      ? {}
+      : {
+          source_activity_review: parseSourceActivityReview(
+            r.source_activity_review,
+          ),
+        }),
   };
+}
+
+function parseSourceActivityReview(value: unknown) {
+  if (!Array.isArray(value) || value.length > 200)
+    invalid("source_activity_review", "Review up to 200 original activities.");
+  const items = (value as unknown[])
+    .map((item) => {
+      const r = object(item, ["id", "version", "disposition", "reason"]);
+      const disposition = choice(r.disposition, "disposition", [
+        "Carry",
+        "Retain",
+      ] as const);
+      if (disposition === "Carry" && r.reason != null)
+        invalid("reason", "A carried activity needs no retention reason.");
+      return {
+        id: uuid(r.id, "activity_id"),
+        version: version(r.version),
+        disposition,
+        reason:
+          disposition === "Retain" ? narrative(r.reason, "reason", 1000) : null,
+      };
+    })
+    .sort((a, b) => a.id.localeCompare(b.id));
+  if (new Set(items.map((item) => item.id)).size !== items.length)
+    invalid("source_activity_review", "Review each activity once.");
+  return items;
 }
