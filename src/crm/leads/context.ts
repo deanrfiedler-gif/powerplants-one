@@ -9,6 +9,10 @@ import {
 import { companyContext, scopedOwner } from "../../shared/authority";
 import { visibility } from "../../shared/reads";
 import { uuid } from "../../shared/validation";
+import {
+  currentResolution,
+  visibleCustomerContext,
+} from "./resolution-context";
 export type Lead = {
   id: string;
   workspace_id: string;
@@ -96,6 +100,11 @@ export async function leadAuthority(
 ) {
   const l = await visibleLead(c, p, id);
   await leadContext(c, p, l, cap);
+  const resolution = await currentResolution(c, p, id);
+  if (resolution) {
+    await visibleCustomerContext(c, p, resolution);
+    await leadContext(c, p, { ...resolution, owner_id: l.owner_id }, cap);
+  }
   if (owned && l.owner_id !== p.actor_id)
     throw new AppError(
       403,

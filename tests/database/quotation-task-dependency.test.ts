@@ -503,7 +503,7 @@ test("populated 0067 upgrade preserves isolated resolution, receiving, allocatio
   );
   assert.deepEqual(
     now.filter((r) => r.version > 67).map((r) => r.version),
-    [68, 69, 70, 71, 72],
+    [68, 69, 70, 71, 72, 73, 74],
   );
   assert.deepEqual(await draftBytes(f.owner, f.id), bytes);
   assert.deepEqual(

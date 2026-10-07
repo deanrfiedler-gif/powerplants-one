@@ -1,0 +1,21 @@
+✔ LC-11 site resolution preserves source obligations and exact concurrent original recovery (10272.4699ms)
+✔ LC-11 exact membership and activity versions fence reviewed conversion without partial effects (10770.9857ms)
+✔ LC-11 retained obligations need an owned dated relationship review and cannot evade compatible carrying (12331.0334ms)
+✔ LC-11 current source access governs conversion, history disclosure and original recovery (12744.893ms)
+✔ LC-11 a late outbox failure rolls back the Deal, review activity, links, source evidence and receipt (12590.9148ms)
+✔ LC-01/02/06 manual capture, note, completed history and independent-owner action survive one durable conversion (13639.5391ms)
+✔ LC-04/05 same-intent retries and competing intents commit exactly one linked deal (10778.7588ms)
+✔ LC-05 missing identification is specific; failure after tentative insertion rolls back every effect (13973.3494ms)
+✔ LC-03/06 current permission, company and all-target checks precede reads and replay (24312.0136ms)
+✔ LC-07 archive, disqualify and reopen preserve history; converted source is immutable (65259.1302ms)
+✔ LC-06 incompatible Activity site context blocks without a partial conversion (27928.3699ms)
+✔ LC-04 two different concurrent conversion intents cannot create two deals (23166.1002ms)
+✔ LC-08 ordered pagination keeps signed filter context and visits each lead once (31212.1631ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 272918.704

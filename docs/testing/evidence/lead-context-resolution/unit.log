@@ -1,0 +1,11 @@
+✔ Leads accept incomplete manual enquiries without invented shared records (3.6535ms)
+✔ conversion rejects owner reassignment, false qualification and ambiguous next actions (2.3706ms)
+✔ lead changes retain explicit lifecycle commands, reasons and strict versions (0.6731ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10737.2454

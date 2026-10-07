@@ -209,7 +209,17 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // No seed, grant, user, identity type or output change. Generic runtime grants cover the
   // added functions; no migration-ledger read privilege is introduced. Populated upgrades
   // must prove earlier topology recovery and complete preserved records.
-  if (latestMigrationVersion !== 72) throw Error("Review the existing-demo upgrade for this release.");
+  // 0073 adds empty immutable Lead resolution/transfer companions and guarded
+  // owner transitions. Existing capture rows, event/receipt bytes, identities and
+  // grants are unchanged; no seed or user is added. Generic table privileges
+  // cover the companions. Current-owner editing and target visibility remain
+  // application checks; populated upgrades must preserve original recovery.
+  // 0074 adds an empty immutable Sales-to-Estimating binding companion.
+  // Existing accepted brief hashes, native Discovery/cost rows, receipts and
+  // grants are preserved. No seed, user or identity type is added. Generic
+  // table/function grants cover the bridge; populated and runtime-role upgrade
+  // proofs must verify the new retained evidence and original recovery.
+  if (latestMigrationVersion !== 74) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

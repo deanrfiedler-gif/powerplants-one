@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "source": "tests/browser/leads.spec.ts; tests/database/leads-continuity.test.ts; tests/database/leads-amendments.test.ts; tests/database/sales-estimating-binding.test.ts; tests/browser/sales-estimating-binding.spec.ts",
+  "owner": "Dean Fiedler",
+  "review_status": "Pending owner and paired visual review",
+  "states": [
+    {
+      "key": "site-discovered",
+      "description": "Original lead activity has no site; selecting the permitted site exposes its owner/status, required review plan and a new owned dated RelationshipReview."
+    },
+    {
+      "key": "stale-source",
+      "description": "Changed source Activity version or membership refuses the entire conversion; reload and compare before issuing a new intent."
+    },
+    {
+      "key": "source-restricted",
+      "description": "Missing source access blocks conversion or shows a restricted historical review without disclosing source facts."
+    },
+    {
+      "key": "accepted-response-lost",
+      "description": "Confirm original save recovers the accepted operation, exactly one Deal and one new review Activity."
+    },
+    {
+      "key": "converted",
+      "description": "Lead and Deal show retained source follow-up, its review plan, original version and current owner/status; original rows and links remain unchanged."
+    },
+    {
+      "key": "resolved-customer",
+      "description": "Unknown capture remains unchanged; current customer, site and contact selection is labelled with its Lead version. Earlier selections and reasons are retained."
+    },
+    {
+      "key": "create-and-return",
+      "description": "Shared customer/person/affiliation/site saves each retain their own receipt; return preselects IDs but requires explicit Lead resolution save."
+    },
+    {
+      "key": "owner-transfer",
+      "description": "Current owner compares every Activity ID/version and eligible receiver; transferred Lead and unchanged independent Activity obligations remain visible."
+    },
+    {
+      "key": "no-recipient",
+      "description": "No eligible recipient appears without existing Lead editing and all-target visibility. The transfer submit stays disabled."
+    },
+    {
+      "key": "accepted-brief-awaits-workspace",
+      "description": "Current accepted Sales revision has no native workspace; the receiver can create native Discovery and return."
+    },
+    {
+      "key": "workspace-awaits-link",
+      "description": "Native creation is saved; exact accepted Sales and native versions are separately compared before linking."
+    },
+    {
+      "key": "linked-brief-successor",
+      "description": "A successor Sales draft makes the earlier link historical without changing independent discovery or losing original recovery."
+    },
+    {
+      "key": "link-stale-or-restricted",
+      "description": "Changed versions refuse new linking; restricted native targets expose no identities or retained comparison."
+    },
+    {
+      "key": "link-response-lost",
+      "description": "Actor-scoped journal recovers one immutable link after response loss and reload."
+    }
+  ]
+}

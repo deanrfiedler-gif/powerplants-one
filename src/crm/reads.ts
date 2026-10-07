@@ -83,10 +83,10 @@ export async function readOpportunity(p: Principal, id: string) {
     } catch (e) {
       if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
     }
-  let source_lead: {id:string;display_number:string;events:Awaited<ReturnType<typeof readLead>>["events"]}|null=null;
+  let source_lead: {id:string;display_number:string;events:Awaited<ReturnType<typeof readLead>>["events"];conversion_review:Awaited<ReturnType<typeof readLead>>["conversion_review"]}|null=null;
   if(await leadsAvailable(c)) {
     const source=(await c.query("SELECT lead_id FROM ppo.lead_conversions WHERE workspace_id=$1 AND opportunity_id=$2",[p.workspace_id,id])).rows[0];
-    if(source) try {const lead=await readLead(p,source.lead_id);source_lead={id:lead.id,display_number:lead.display_number,events:lead.events};} catch(e) {if(!(e instanceof AppError)||![403,404].includes(e.status))throw e;}
+    if(source) try {const lead=await readLead(p,source.lead_id);source_lead={id:lead.id,display_number:lead.display_number,events:lead.events,conversion_review:lead.conversion_review};} catch(e) {if(!(e instanceof AppError)||![403,404].includes(e.status))throw e;}
   }
   const stages = (await c.query<StageDefinition>(
     "SELECT stage_id,ordinal FROM ppo.crm_stage_definitions WHERE workspace_id=$1 AND pipeline_definition_id=$2 ORDER BY ordinal",

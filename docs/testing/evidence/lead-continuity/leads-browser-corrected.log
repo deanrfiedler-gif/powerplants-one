@@ -1,0 +1,25 @@
+[WebServer] (node:16732) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.98"}
+
+Running 10 tests using 1 worker
+
+(node:15616) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Leads console: Failed to load resource: net::ERR_FAILED
+  ok  1 [desktop-chromium] › tests\browser\leads.spec.ts:10:1 › LC-11 a site discovered after lead follow-up keeps source obligations through lost-response recovery (11.9s)
+  ok  2 [desktop-chromium] › tests\browser\leads.spec.ts:60:1 › approved leads list/detail and atomic conversion persist through reload (7.7s)
+  ok  3 [desktop-chromium] › tests\browser\leads.spec.ts:118:1 › Add lead has one scroll body, fixed actions, focus return and navy add button at phone sizes (3.4s)
+  ok  4 [desktop-chromium] › tests\browser\leads.spec.ts:184:1 › manual lead saves with an unverified organisation and survives reload (5.1s)
+  ok  5 [desktop-chromium] › tests\browser\leads.spec.ts:215:1 › approved desktop columns resize independently and retain widths with quiet aligned handles (7.2s)
+(node:22732) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Leads console: Failed to load resource: net::ERR_FAILED
+  ok  6 [mobile-chromium] › tests\browser\leads.spec.ts:10:1 › LC-11 a site discovered after lead follow-up keeps source obligations through lost-response recovery (9.6s)
+  ok  7 [mobile-chromium] › tests\browser\leads.spec.ts:60:1 › approved leads list/detail and atomic conversion persist through reload (7.5s)
+  ok  8 [mobile-chromium] › tests\browser\leads.spec.ts:118:1 › Add lead has one scroll body, fixed actions, focus return and navy add button at phone sizes (5.4s)
+  ok  9 [mobile-chromium] › tests\browser\leads.spec.ts:184:1 › manual lead saves with an unverified organisation and survives reload (5.9s)
+  -  10 [mobile-chromium] › tests\browser\leads.spec.ts:215:1 › approved desktop columns resize independently and retain widths with quiet aligned handles
+
+  1 skipped
+  9 passed (2.1m)

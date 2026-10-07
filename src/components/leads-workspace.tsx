@@ -10,6 +10,7 @@ import { denied, useCrmCommand, useCrmResource } from "./crm-state";
 import { ProductIcon, type ProductIconName } from "./product-icons";
 import { WorklistChoice, WorklistMenu } from "./crm-worklist-tools";
 import type { listLeads, readLead } from "../crm/leads/reads";
+import type { leadTransferOptions } from "../crm/leads/amendments";
 type Lead = Awaited<ReturnType<typeof readLead>>;
 type List = Awaited<ReturnType<typeof listLeads>>;
 type Mode =
@@ -22,6 +23,7 @@ type Mode =
   | "unarchive"
   | "disqualify"
   | "reopen";
+type AmendmentMode = "resolve" | "transfer";
 const sourceOptions = ["Phone", "Email", "Meeting", "Referral", "Other"];
 const leadViews: { id: string; label: string; icon: ProductIconName }[] = [
   { id: "Active", label: "Inbox", icon: "inbox" },
@@ -296,15 +298,18 @@ function LeadForm({
 }) {
   const identity = useIdentity(),
     formId = useId();
+  const [expectedVersion] = useState(lead?.version);
+  const resolved =
+    lead?.resolution?.state === "Available" ? lead.resolution : lead;
   const [title, setTitle] = useState(lead?.title ?? ""),
     [need, setNeed] = useState(lead?.need_summary ?? ""),
     [orgText, setOrgText] = useState(lead?.organisation_text ?? ""),
     [contactText, setContactText] = useState(lead?.contact_text ?? "");
   const [company, setCompany] = useState(lead?.company_id ?? ""),
     [owner, setOwner] = useState(lead?.owner_id ?? identity.actor_id),
-    [org, setOrg] = useState(lead?.organisation_id ?? ""),
-    [site, setSite] = useState(lead?.site_id ?? ""),
-    [person, setPerson] = useState(lead?.primary_person_id ?? "");
+    [org, setOrg] = useState(resolved?.organisation_id ?? ""),
+    [site, setSite] = useState(resolved?.site_id ?? ""),
+    [person, setPerson] = useState(resolved?.primary_person_id ?? "");
   const [source, setSource] = useState(lead?.source_channel ?? "Phone"),
     [basis, setBasis] = useState(lead?.source_basis ?? ""),
     [status, setStatus] = useState(lead?.status ?? "New"),
@@ -323,6 +328,9 @@ function LeadForm({
     [summary, setSummary] = useState(""),
     [due, setDue] = useState(""),
     [identify, setIdentify] = useState("");
+  const [retentionReasons, setRetentionReasons] = useState<
+    Record<string, string>
+  >({});
   const command = useCrmCommand(
       (r) => onAccepted(r.record_id),
       "Unsaved",
@@ -349,6 +357,10 @@ function LeadForm({
   const capture = mode === "add" || mode === "edit",
     convert = mode === "convert",
     activity = mode === "action" || convert;
+  const retained = convert
+    ? (lead?.actions.filter((a) => a.site_id !== (site || null)) ?? [])
+    : [];
+  const selectedAction = retained.length ? "new" : actionChoice;
   async function submit() {
     const base = {
       reason:
@@ -362,7 +374,7 @@ function LeadForm({
             convert: "Qualify and convert lead",
           } as Record<string, string>
         )[mode],
-      expected_version: lead?.version,
+      expected_version: expectedVersion,
     };
     const detail = {
       title,
@@ -388,11 +400,11 @@ function LeadForm({
     const root = `crm/leads/${lead!.id}`;
     if (activity) {
       const new_action =
-        actionChoice === "new"
+        selectedAction === "new"
           ? {
               id: actionId,
-              owner_id: actionOwner,
-              kind: "CustomerContact",
+              owner_id: retained.length ? lead!.owner_id : actionOwner,
+              kind: retained.length ? "RelationshipReview" : "CustomerContact",
               summary,
               due_at: due ? new Date(due).toISOString() : null,
               due_needed: !due,
@@ -400,7 +412,7 @@ function LeadForm({
           : null;
       const plan = {
         ...base,
-        activity_id: actionChoice === "new" ? null : actionChoice,
+        activity_id: selectedAction === "new" ? null : selectedAction,
         new_action,
       };
       await command.send(
@@ -418,6 +430,20 @@ function LeadForm({
               need_summary: need,
               qualification_note: note,
               identification_activity_id: person ? null : identify || null,
+              ...(retained.length
+                ? {
+                    source_activity_review: lead!.actions.map((a) => ({
+                      id: a.id,
+                      version: a.version,
+                      disposition:
+                        a.site_id === (site || null) ? "Carry" : "Retain",
+                      reason:
+                        a.site_id === (site || null)
+                          ? null
+                          : (retentionReasons[a.id] ?? ""),
+                    })),
+                  }
+                : {}),
             }
           : plan,
       );
@@ -658,11 +684,46 @@ function LeadForm({
           )}
           {activity && (
             <>
+              {retained.length > 0 && (
+                <section aria-label="Review source activities">
+                  <h3>Keep the original follow-up connected</h3>
+                  <p>
+                    These activities belong to the lead's earlier site context.
+                    Their owners, dates and history stay on the lead. Create a
+                    dated Deal review owned by {lead?.owner_name} to follow
+                    through on each obligation.
+                  </p>
+                  {retained.map((a) => (
+                    <div key={a.id}>
+                      <p>
+                        <Link href={`/work/${a.id}`} target="_blank">
+                          {a.summary}
+                        </Link>{" "}
+                        · {a.owner_name} · {a.status}
+                      </p>
+                      <TextArea
+                        label={`Review plan for ${a.summary}`}
+                        name={`retain_${a.id}`}
+                        value={retentionReasons[a.id] ?? ""}
+                        onChange={(value) =>
+                          setRetentionReasons((before) => ({
+                            ...before,
+                            [a.id]: value,
+                          }))
+                        }
+                        required
+                        maxLength={1000}
+                      />
+                    </div>
+                  ))}
+                </section>
+              )}
               <label>
                 Next activity
                 <select
-                  value={actionChoice}
+                  value={selectedAction}
                   onChange={(e) => setActionChoice(e.target.value)}
+                  disabled={retained.length > 0}
                 >
                   <option value="new">Create a new activity</option>
                   {lead?.actions
@@ -674,29 +735,41 @@ function LeadForm({
                     ))}
                 </select>
               </label>
-              {actionChoice === "new" ? (
+              {selectedAction === "new" ? (
                 <>
                   <TextArea
-                    label="Activity summary"
+                    label={
+                      retained.length
+                        ? "Source follow-up review summary"
+                        : "Activity summary"
+                    }
                     name="activity_summary"
                     value={summary}
                     onChange={setSummary}
                     required
                   />
-                  <Picker
-                    label="Activity owner"
-                    name="activity_owner_id"
-                    kind="ActionOwner"
-                    value={actionOwner}
-                    onChange={setActionOwner}
-                    context={context}
-                  />
+                  {retained.length ? (
+                    <p>Review owner: {lead?.owner_name}</p>
+                  ) : (
+                    <Picker
+                      label="Activity owner"
+                      name="activity_owner_id"
+                      kind="ActionOwner"
+                      value={actionOwner}
+                      onChange={setActionOwner}
+                      context={context}
+                    />
+                  )}
                   <label>
-                    Due date and time (optional)
+                    Due date and time{" "}
+                    {retained.length
+                      ? "(required for the source review)"
+                      : "(optional)"}
                     <input
                       type="datetime-local"
                       value={due}
                       onChange={(e) => setDue(e.target.value)}
+                      required={retained.length > 0}
                     />
                   </label>
                   <small>
@@ -719,13 +792,15 @@ function LeadForm({
                     required
                   >
                     <option value="">Choose an owned active activity</option>
-                    {actionChoice === "new" &&
-                      actionOwner === lead?.owner_id && (
+                    {selectedAction === "new" &&
+                      (retained.length > 0 ||
+                        actionOwner === lead?.owner_id) && (
                         <option value={actionId}>The new activity above</option>
                       )}
                     {lead?.actions
                       .filter(
                         (a) =>
+                          a.site_id === (site || null) &&
                           a.owner_id === lead.owner_id &&
                           ["Open", "InProgress"].includes(a.status) &&
                           ["CustomerContact", "RelationshipReview"].includes(
@@ -785,12 +860,279 @@ function LeadForm({
     </form>
   );
 }
+function LeadAmendmentForm({
+  mode,
+  lead,
+  onAccepted,
+  onCancel,
+  onPending,
+}: {
+  mode: AmendmentMode;
+  lead: Lead;
+  onAccepted: (id: string) => void;
+  onCancel: () => void;
+  onPending: (v: boolean) => void;
+}) {
+  const params = useSearchParams(),
+    router = useRouter();
+  // Polling can refresh eligibility, but cannot silently accept a newer review basis.
+  const [basis] = useState({ version: lead.version, activities: lead.actions });
+  const resolved =
+    lead.resolution?.state === "Available" ? lead.resolution : lead;
+  const [org, setOrg] = useState(
+      params.get("organisation_id") ?? resolved.organisation_id ?? "",
+    ),
+    [site, setSite] = useState(params.get("site_id") ?? resolved.site_id ?? ""),
+    [person, setPerson] = useState(
+      params.get("primary_person_id") ?? resolved.primary_person_id ?? "",
+    ),
+    [owner, setOwner] = useState(""),
+    [search, setSearch] = useState(""),
+    [reason, setReason] = useState("");
+  const transfer = useCrmResource<
+    Awaited<ReturnType<typeof leadTransferOptions>>
+  >(
+    mode === "transfer"
+      ? `crm/leads/${lead.id}/transfer-owner?${qs({ q: search, limit: "20" })}`
+      : null,
+    true,
+  );
+  const command = useCrmCommand(
+      (r) => onAccepted(r.record_id),
+      "Unsaved",
+      onPending,
+    ),
+    locked = command.busy || command.uncertain;
+  const context = {
+    company_id: lead.company_id,
+    organisation_id: org,
+    site_id: site,
+    primary_person_id: person,
+  };
+  const create = (kind: string) => {
+    command.discard();
+    router.push(
+      `/customers/new?${qs({ kind, lead: lead.id, company: lead.company_id, parent: org, site, person, name: kind === "customer" ? (lead.organisation_text ?? "") : kind === "person" ? (lead.contact_text ?? "") : "" })}`,
+    );
+  };
+  if (
+    denied(command.error) ||
+    denied(transfer.error) ||
+    lead.resolution?.state === "Restricted"
+  )
+    return (
+      <>
+        <header className="lead-dialog-head">
+          <h2 id="lead-dialog-title">Lead context unavailable</h2>
+        </header>
+        <div className="lead-dialog-body">
+          <ErrorNotice error={command.error ?? transfer.error} />
+          <p>Current access no longer permits this customer comparison.</p>
+        </div>
+      </>
+    );
+  return (
+    <form
+      className="lead-form"
+      onChange={() => command.dirty()}
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (locked) return;
+        void command.send(
+          `crm/leads/${lead.id}/${mode === "resolve" ? "resolve" : "transfer-owner"}`,
+          mode === "resolve"
+            ? {
+                expected_version: basis.version,
+                organisation_id: org,
+                site_id: site || null,
+                primary_person_id: person || null,
+                reason,
+              }
+            : {
+                expected_version: basis.version,
+                new_owner_id: owner,
+                expected_activity_versions: basis.activities.map((a) => ({
+                  id: a.id,
+                  version: a.version,
+                })),
+                reason,
+              },
+        );
+      }}
+    >
+      <header className="lead-dialog-head">
+        <h2 id="lead-dialog-title">
+          {mode === "resolve"
+            ? "Resolve customer context"
+            : "Transfer lead ownership"}
+        </h2>
+        <p>
+          {lead.display_number} · {lead.title}
+        </p>
+      </header>
+      <div className="lead-dialog-body">
+        <ErrorNotice error={command.error} />
+        <fieldset disabled={locked}>
+          {mode === "resolve" ? (
+            <>
+              <p>
+                Choose the customer records for this enquiry. The original
+                capture and follow-up history stay retained. Conversion uses the
+                saved selection.
+              </p>
+              <Picker
+                label="Customer organisation"
+                name="organisation_id"
+                kind="Organisation"
+                value={org}
+                onChange={(v) => {
+                  setOrg(v);
+                  setSite("");
+                  setPerson("");
+                }}
+                context={{ company_id: lead.company_id }}
+              />
+              <button
+                type="button"
+                className="secondary"
+                onClick={() => create("customer")}
+              >
+                Create customer and return
+              </button>
+              <Picker
+                label="Customer site"
+                name="site_id"
+                kind="Site"
+                value={site}
+                onChange={setSite}
+                context={context}
+              />
+              <button
+                type="button"
+                className="secondary"
+                disabled={!org}
+                onClick={() => create("site")}
+              >
+                Create site and return
+              </button>
+              <Picker
+                label="Customer contact"
+                name="primary_person_id"
+                kind="Person"
+                value={person}
+                onChange={setPerson}
+                context={context}
+              />
+              <button
+                type="button"
+                className="secondary"
+                disabled={!org}
+                onClick={() => create("person")}
+              >
+                Create contact and return
+              </button>
+              <button
+                type="button"
+                className="secondary"
+                disabled={!org}
+                onClick={() => create("affiliation")}
+              >
+                Link an existing contact
+              </button>
+              <p>
+                Creating a shared record saves it separately. Return here to
+                review and save the Lead selection. A contact needs a dated
+                customer affiliation.
+              </p>
+            </>
+          ) : (
+            <>
+              <p>
+                Transfer accountability for this lead. Linked activities keep
+                their existing owners, due dates and outcomes.
+              </p>
+              <ErrorNotice error={transfer.error} />
+              <LookupField
+                label="New lead owner"
+                name="new_owner_id"
+                value={owner}
+                onChange={setOwner}
+                search={search}
+                onSearch={setSearch}
+                options={transfer.data?.items ?? []}
+                loading={transfer.loading}
+                more={!!transfer.data?.next_cursor}
+                error={!!transfer.error}
+              />
+              {transfer.data && !transfer.data.items.length && (
+                <p>
+                  No eligible recipient matches. The recipient needs Lead
+                  editing access and visibility of the captured customer
+                  context, current resolution and every linked activity.
+                </p>
+              )}
+              <h3>Activities included in this comparison</h3>
+              {basis.activities.length === 0 && <p>No linked activities.</p>}
+              {basis.activities.map((a) => (
+                <p key={a.id}>
+                  <Link href={`/work/${a.id}`}>{a.summary}</Link> · {a.status} ·
+                  version {a.version}
+                  <small>
+                    {a.owner_name} ·{" "}
+                    {a.due_at ? date(a.due_at) : "Due date needed"}
+                  </small>
+                </p>
+              ))}
+            </>
+          )}
+          <TextArea
+            label="Reason for this change"
+            name="reason"
+            value={reason}
+            onChange={setReason}
+            required
+            maxLength={1000}
+          />
+        </fieldset>
+      </div>
+      <footer className="lead-dialog-foot">
+        <span role="status">{command.busy ? "Saving…" : command.status}</span>
+        <button
+          type="button"
+          className="secondary"
+          disabled={locked}
+          onClick={onCancel}
+        >
+          Cancel
+        </button>
+        {command.uncertain ? (
+          <button
+            type="button"
+            disabled={command.busy}
+            onClick={() => void command.reconcile()}
+          >
+            Confirm original save
+          </button>
+        ) : (
+          <button
+            type="submit"
+            disabled={
+              locked || (mode === "resolve" ? !org : !owner || !transfer.data)
+            }
+          >
+            {mode === "resolve" ? "Save customer context" : "Transfer lead"}
+          </button>
+        )}
+      </footer>
+    </form>
+  );
+}
 function LeadDetail({
   lead,
   setMode,
 }: {
   lead: Lead;
-  setMode: (mode: Mode) => void;
+  setMode: (mode: Mode | AmendmentMode) => void;
 }) {
   return (
     <>
@@ -803,6 +1145,7 @@ function LeadDetail({
         {lead.is_archived && <span className="lead-pill">Archived</span>}
       </header>
       <div className="lead-dialog-body">
+        <h3>Captured enquiry</h3>
         <div className="lead-facts">
           {[
             [
@@ -826,6 +1169,65 @@ function LeadDetail({
             </div>
           ))}
         </div>
+        <section>
+          <h3>Resolved customer context</h3>
+          {lead.resolution?.state === "Available" ? (
+            <>
+              <p>
+                <Link href={`/customers/${lead.resolution.organisation_id}`}>
+                  {lead.resolution.organisation_name}
+                </Link>
+              </p>
+              <p>
+                {lead.resolution.site_id ? (
+                  <Link href={`/sites/${lead.resolution.site_id}`}>
+                    {lead.resolution.site_name}
+                  </Link>
+                ) : (
+                  "Site not yet known"
+                )}
+              </p>
+              <p>
+                {lead.resolution.primary_person_id ? (
+                  <Link href={`/people/${lead.resolution.primary_person_id}`}>
+                    {lead.resolution.contact_name}
+                  </Link>
+                ) : (
+                  "Contact not yet known"
+                )}
+              </p>
+              <small>
+                Selected at lead version {lead.resolution.lead_version}. Earlier
+                reasons remain in history.
+              </small>
+            </>
+          ) : (
+            <p>
+              {lead.resolution?.state === "Restricted"
+                ? "Current customer context is unavailable under your access."
+                : "No later resolution recorded. Captured customer links apply."}
+            </p>
+          )}
+          {lead.resolution_history.length > 1 && (
+            <details>
+              <summary>Earlier customer selections</summary>
+              {lead.resolution_history.slice(0, -1).map((r, i) => (
+                <p key={i}>
+                  {r?.state === "Available"
+                    ? `Version ${r.lead_version}: ${r.organisation_name} · ${r.site_name ?? "Site unknown"} · ${r.contact_name ?? "Contact unknown"}`
+                    : "Selection unavailable under your current access."}
+                </p>
+              ))}
+            </details>
+          )}
+          {lead.can_edit &&
+            !lead.is_archived &&
+            lead.status !== "Disqualified" && (
+              <button className="secondary" onClick={() => setMode("resolve")}>
+                Resolve customer context
+              </button>
+            )}
+        </section>
         <section>
           <h3>Requirement / enquiry</h3>
           <p className="lead-narrative">
@@ -885,6 +1287,14 @@ function LeadDetail({
                   {e.actor_name} · {date(e.created_at)}
                 </small>
                 <p className="lead-narrative">{e.note ?? e.reason}</p>
+                {lead.ownership_history
+                  .filter((t) => t.event_id === e.id)
+                  .map((t) => (
+                    <p key={t.event_id}>
+                      {t.from_owner_name} → {t.to_owner_name} · lead version{" "}
+                      {t.lead_version}
+                    </p>
+                  ))}
               </article>
             ))}
             {lead.actions.map((a) => (
@@ -911,6 +1321,36 @@ function LeadDetail({
                 <Link href={`/sales/opportunities/${lead.deal.id}`}>
                   Open deal · {lead.deal.display_number}
                 </Link>
+                {lead.conversion_review?.state === "Restricted" && (
+                  <p>
+                    Source follow-up review unavailable under your current
+                    access.
+                  </p>
+                )}
+                {lead.conversion_review?.state === "Available" && (
+                  <section>
+                    <h3>Source follow-up review</h3>
+                    <Link
+                      href={`/work/${lead.conversion_review.review_activity.id}`}
+                    >
+                      {lead.conversion_review.review_activity.summary}
+                    </Link>
+                    <p>
+                      {lead.conversion_review.review_activity.owner_name} ·{" "}
+                      {lead.conversion_review.review_activity.status}
+                    </p>
+                    {lead.conversion_review.retained.map((a) => (
+                      <article key={a.id}>
+                        <Link href={`/work/${a.id}`}>{a.summary}</Link>
+                        <p>{a.reason}</p>
+                        <small>
+                          {a.current_owner} · {a.current_status} · retained at
+                          version {a.version}
+                        </small>
+                      </article>
+                    ))}
+                  </section>
+                )}
               </>
             ) : (
               "Linked deal unavailable"
@@ -919,6 +1359,11 @@ function LeadDetail({
         )}
         {lead.can_edit && (
           <div className="lead-secondary-actions">
+            {!lead.is_archived && lead.status !== "Disqualified" && (
+              <button className="secondary" onClick={() => setMode("transfer")}>
+                Transfer ownership
+              </button>
+            )}
             {!lead.is_archived && lead.status !== "Disqualified" && (
               <button className="secondary" onClick={() => setMode("edit")}>
                 Edit lead
@@ -962,8 +1407,12 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
   const router = useRouter(),
     params = useSearchParams(),
     identity = useIdentity();
-  const [mode, setMode] = useState<Mode | null>(
-      params.get("create") === "1" ? "add" : null,
+  const [mode, setMode] = useState<Mode | AmendmentMode | null>(
+      params.get("create") === "1"
+        ? "add"
+        : leadId && params.get("resolve") === "1"
+          ? "resolve"
+          : null,
     ),
     [pending, setPending] = useState(false),
     [filters, setFilters] = useState(false),
@@ -971,7 +1420,9 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
     [sortOpen, setSortOpen] = useState(false),
     [notice, setNotice] = useState("");
   const requestedCreate = params.get("create") === "1";
-  useEffect(() => { if (requestedCreate) queueMicrotask(() => setMode("add")); }, [requestedCreate]);
+  useEffect(() => {
+    if (requestedCreate) queueMicrotask(() => setMode("add"));
+  }, [requestedCreate]);
   const [search, setSearch] = useState(params.get("q") ?? "");
   const lastSentSearch = useRef(params.get("q") ?? "");
   useEffect(() => {
@@ -1014,8 +1465,10 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
     setPending(false);
     if (mode) {
       setMode(null);
-      if (requestedCreate) router.replace(`/sales/leads${query ? `?${query}` : ""}`);
-    } else router.push(`/sales/leads?${query ? `${query}&` : ""}focus=${leadId}`);
+      if (requestedCreate)
+        router.replace(`/sales/leads${query ? `?${query}` : ""}`);
+    } else
+      router.push(`/sales/leads?${query ? `${query}&` : ""}focus=${leadId}`);
   };
   const accepted = (id: string) => {
     setPending(false);
@@ -1027,6 +1480,8 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
     );
     list.reload();
     detail.reload();
+    if (leadId && params.get("resolve") === "1")
+      router.replace(`/sales/leads/${leadId}`);
     if (!leadId) router.push(`/sales/leads/${id}${query ? `?${query}` : ""}`);
   };
   const focused = useRef(false);
@@ -1039,7 +1494,8 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
         ),
       ].find(
         (a) =>
-          a.href.includes(`/sales/leads/${id}`) && a.getClientRects().length > 0,
+          a.href.includes(`/sales/leads/${id}`) &&
+          a.getClientRects().length > 0,
       );
       if (target) {
         target.focus({ preventScroll: true });
@@ -1112,7 +1568,9 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
   );
   /* Desktop consolidates the same filters into themed menus; the selects above
      stay for the phone filter panel. */
-  const narrowed = ["q", "status", "source"].filter((k) => !!params.get(k)).length;
+  const narrowed = ["q", "status", "source"].filter(
+    (k) => !!params.get(k),
+  ).length;
   const desktopFilters = (
     <div className="lead-filter-menus">
       <WorklistChoice
@@ -1237,114 +1695,116 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
       </header>
       <div className="lead-toolbar-row">
         <nav className="lead-lifecycle-tabs" aria-label="Lead lifecycle">
-        {leadViews.map((v) => (
-          <button
-            key={v.id}
-            aria-current={view === v.id ? "page" : undefined}
-            aria-label={v.label}
-            title={v.label}
-            onClick={() => change("view", v.id)}
-          >
-            <ProductIcon name={v.icon} />
-          </button>
-        ))}
-      </nav>
-      <div className="lead-heading">
-        <h1 className="sr-only">Leads</h1>
-        {list.data?.can_create && (
-          <div className="lead-add-group">
+          {leadViews.map((v) => (
             <button
-              className="lead-add lead-primary"
-              aria-label="Add lead"
-              onClick={() => setMode("add")}
+              key={v.id}
+              aria-current={view === v.id ? "page" : undefined}
+              aria-label={v.label}
+              title={v.label}
+              onClick={() => change("view", v.id)}
             >
-              <ProductIcon name="plus" />
-              <span>Lead</span>
-            </button>
-            <WorklistMenu
-              label="Add lead options"
-              className="lead-add-more"
-              text={<ProductIcon name="caret" />}
-            >
-              <p className="lead-menu-note">
-                This action is not yet available.
-              </p>
-              <button type="button" className="secondary" disabled>
-                Import data
-              </button>
-            </WorklistMenu>
-          </div>
-        )}
-      </div>
-      <div className="lead-list-controls">
-        <span className="lead-result-count">
-          {items.length}
-          {list.data?.next_cursor ? "+" : ""}{" "}
-          {items.length === 1 ? "lead" : "leads"}
-        </span>
-        {desktopFilters}
-        <div className={`lead-search ${searchOpen ? "open" : ""}`}>
-          <label>
-            Search leads
-            <Icon name="search" />
-            <input
-              type="search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search leads"
-            />
-          </label>
-        </div>
-        <div className={`lead-toolbar ${filters ? "open" : ""}`}>
-          <label className="lead-desktop-view">
-            View
-            <select
-              value={view}
-              onChange={(e) => {
-                change("view", e.target.value);
-              }}
-            >
-              {["Active", "Archived", "Disqualified", "Converted"].map((v) => (
-                <option key={v}>{v}</option>
-              ))}
-            </select>
-          </label>
-          {filterControls}
-        </div>
-        <div className={`lead-sort ${sortOpen ? "open" : ""}`}>
-          <label>
-            Sort by
-            <Icon name="sort" />
-            <select
-              value={params.get("sort") ?? "Newest"}
-              onChange={(e) => change("sort", e.target.value)}
-            >
-              {["Newest", "Oldest", "Name"].map((v) => (
-                <option key={v}>{v}</option>
-              ))}
-            </select>
-          </label>
-        </div>
-        <WorklistMenu
-          label="Leads options"
-          className="lead-toolbar-more"
-          text={<ProductIcon name="more" />}
-        >
-          <p className="lead-menu-note">
-            These actions are not yet available.
-          </p>
-          {[
-            "Export filter results",
-            "Import data",
-            "Open data cleanup",
-            "Restore data",
-            "Settings",
-          ].map((v) => (
-            <button key={v} type="button" className="secondary" disabled>
-              {v}
+              <ProductIcon name={v.icon} />
             </button>
           ))}
-        </WorklistMenu>
+        </nav>
+        <div className="lead-heading">
+          <h1 className="sr-only">Leads</h1>
+          {list.data?.can_create && (
+            <div className="lead-add-group">
+              <button
+                className="lead-add lead-primary"
+                aria-label="Add lead"
+                onClick={() => setMode("add")}
+              >
+                <ProductIcon name="plus" />
+                <span>Lead</span>
+              </button>
+              <WorklistMenu
+                label="Add lead options"
+                className="lead-add-more"
+                text={<ProductIcon name="caret" />}
+              >
+                <p className="lead-menu-note">
+                  This action is not yet available.
+                </p>
+                <button type="button" className="secondary" disabled>
+                  Import data
+                </button>
+              </WorklistMenu>
+            </div>
+          )}
+        </div>
+        <div className="lead-list-controls">
+          <span className="lead-result-count">
+            {items.length}
+            {list.data?.next_cursor ? "+" : ""}{" "}
+            {items.length === 1 ? "lead" : "leads"}
+          </span>
+          {desktopFilters}
+          <div className={`lead-search ${searchOpen ? "open" : ""}`}>
+            <label>
+              Search leads
+              <Icon name="search" />
+              <input
+                type="search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search leads"
+              />
+            </label>
+          </div>
+          <div className={`lead-toolbar ${filters ? "open" : ""}`}>
+            <label className="lead-desktop-view">
+              View
+              <select
+                value={view}
+                onChange={(e) => {
+                  change("view", e.target.value);
+                }}
+              >
+                {["Active", "Archived", "Disqualified", "Converted"].map(
+                  (v) => (
+                    <option key={v}>{v}</option>
+                  ),
+                )}
+              </select>
+            </label>
+            {filterControls}
+          </div>
+          <div className={`lead-sort ${sortOpen ? "open" : ""}`}>
+            <label>
+              Sort by
+              <Icon name="sort" />
+              <select
+                value={params.get("sort") ?? "Newest"}
+                onChange={(e) => change("sort", e.target.value)}
+              >
+                {["Newest", "Oldest", "Name"].map((v) => (
+                  <option key={v}>{v}</option>
+                ))}
+              </select>
+            </label>
+          </div>
+          <WorklistMenu
+            label="Leads options"
+            className="lead-toolbar-more"
+            text={<ProductIcon name="more" />}
+          >
+            <p className="lead-menu-note">
+              These actions are not yet available.
+            </p>
+            {[
+              "Export filter results",
+              "Import data",
+              "Open data cleanup",
+              "Restore data",
+              "Settings",
+            ].map((v) => (
+              <button key={v} type="button" className="secondary" disabled>
+                {v}
+              </button>
+            ))}
+          </WorklistMenu>
         </div>
       </div>
       <p className="lead-notice" role="status">
@@ -1472,7 +1932,19 @@ export function LeadsWorkspace({ leadId }: { leadId?: string }) {
           locked={pending}
           drawer={!mode}
         >
-          {mode && (mode === "add" || detail.data) ? (
+          {(mode === "resolve" || mode === "transfer") && detail.data ? (
+            <LeadAmendmentForm
+              key={`${mode}:${leadId}`}
+              mode={mode}
+              lead={detail.data}
+              onAccepted={accepted}
+              onCancel={close}
+              onPending={setPending}
+            />
+          ) : mode &&
+            mode !== "resolve" &&
+            mode !== "transfer" &&
+            (mode === "add" || detail.data) ? (
             <LeadForm
               key={`${mode}:${leadId ?? "new"}`}
               mode={mode}

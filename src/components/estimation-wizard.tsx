@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { SpecialistEntry } from "./specialist-entry";
+import { WorkspaceSalesBriefs } from "./sales-estimating-link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
@@ -1171,6 +1172,7 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                 )}
                 {
                   <div key={current.option.id} hidden={tab !== "Discovery"}>
+                    <WorkspaceSalesBriefs id={id} />
                     <FertigationReceivedNotes items={current.fertigation_handovers}/>
                     <nav className="es02-steps" aria-label="Discovery steps">
                       {steps.map((s, i) => (

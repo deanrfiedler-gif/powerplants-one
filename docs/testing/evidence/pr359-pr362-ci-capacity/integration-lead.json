@@ -1,0 +1,62 @@
+{
+  "pr": 359,
+  "tested_source": "cfa621f",
+  "integrated_main": "9f06bef",
+  "workflows": "application.yml and estimating-e1.yml exactly match integrated main",
+  "checks": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "build": "passed",
+    "actionlint": "passed",
+    "foundation": "passed",
+    "prototype": "passed",
+    "naming": "passed",
+    "studio": "passed; 350 entries retain existing unreviewed status",
+    "focused_units": {
+      "passed": 11,
+      "failed": 0
+    },
+    "cross_domain_upgrades": {
+      "passed": 16,
+      "failed": 0
+    },
+    "products_and_estimating_receipts": {
+      "passed": 4,
+      "failed": 0
+    }
+  },
+  "aggregate_exit_codes": {
+    ".github/workflows/application.yml": {
+      "success": 0,
+      "failure": 1,
+      "cancelled": 1,
+      "skipped": 1,
+      "missing": 1
+    },
+    ".github/workflows/estimating-e1.yml": {
+      "success": 0,
+      "failure": 1,
+      "cancelled": 1,
+      "skipped": 1,
+      "missing": 1
+    }
+  },
+  "database_boundary": "Separate disposable loopback PostgreSQL instance; ppo_synthetic_test only",
+  "ci": "Fresh final-head execution required",
+  "limits": "Focused local checks do not establish full browser or business acceptance. Original timed-out jobs remain incomplete.",
+  "products_registry_followup": {
+    "failed_ci_head": "9865262",
+    "main_control": "9f06bef; Products workflow 37620433273 passed",
+    "passed": 5,
+    "failed": 0,
+    "starting_versions": [
+      25,
+      48,
+      71,
+      72,
+      74
+    ],
+    "expected_latest_version": 74,
+    "test_sha256": "fc99f9eb23cc6dcb83246ac4f0de11d865f9d23b1641141ad427e6ca9937262e"
+  }
+}

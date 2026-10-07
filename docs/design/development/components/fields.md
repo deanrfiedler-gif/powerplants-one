@@ -109,3 +109,11 @@ Incoming: exact completed conversion, disposition/continuing hold, triggering so
 Desktop shows original/current evidence and dependency disclosures before forms. Mobile at 390/320 px stacks fields, wraps identifiers and keeps recovery above forms; use 16px input text, 44px targets, labels and visible keyboard focus. Dirty proposals remain after refresh for explicit comparison. Unknown outcomes block replacement and retain original content across reload.
 
 Host fixtures: `tests/browser/quotation-supply-followup.spec.ts` (receiving, real effects, stale comparison, denied identity, lost response, inconclusive lookup and exact retry). Shared catalogue examples remain reference-only for domain behavior. See `docs/testing/evidence/quotation-supply-followup/README.md` for actual executions/captures. Exact retained references remain `docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html` and `docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html`; neither proves native execution. Accepted follow-up mockup images are missing. Owner, physical-device, screen-reader review and deployment remain separate and pending; no fingerprint is promoted.
+
+## LC-12 consumer alignment
+
+Leads customer resolution and transfer reuse this control family, with native shared creation as the return destination. Keep record selection explicit, reasons retained and uncertain-original recovery locked against a duplicate command. Host fixtures are in [lead continuity examples](../lead-continuity-fixtures.json); no exact new state mockup or paired acceptance is claimed. Check desktop/mobile reachability, disabled state and permission-filtered choices in the host.
+
+## Accepted Sales brief to native Estimating (LC-13)
+
+The Sales handover and native Discovery hosts reuse this control with explicit create-return, fixed source comparison and exact-original recovery. Consumer bindings and synthetic states are in the register and lead-continuity-fixtures.json. Compare desktop/phone scope wrapping, keyboard controls and denied-context removal; exact new-state mockups are missing and no accepted fingerprint is assigned.

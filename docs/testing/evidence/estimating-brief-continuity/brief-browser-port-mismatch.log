@@ -1,0 +1,244 @@
+[WebServer] (node:8496) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.98"}
+
+Running 8 tests using 1 worker
+
+(node:35936) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop-chromium] › tests\browser\estimating-discovery.spec.ts:190:1 › E2 browser creates scoped discovery and retains the original unknown creation through candidate refresh (11.8s)
+  x  2 [desktop-chromium] › tests\browser\sales-estimating-binding.spec.ts:89:1 › LC-13 create native Discovery from accepted Sales and return for an explicit link with independent recovery (429ms)
+(node:36668) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 [desktop-chromium] › tests\browser\sales-estimating-binding.spec.ts:249:1 › LC-13 stale reviewed link is refused and accepted lost-response link survives reload without a second POST (1.4s)
+(node:740) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  4 [desktop-chromium] › tests\browser\sales-workflows.spec.ts:119:1 › CR02 frozen submission survives clarification, acceptance and reload (1.4s)
+(node:32512) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 5 [mobile-chromium] › tests\browser\estimating-discovery.spec.ts:190:1 › E2 browser creates scoped discovery and retains the original unknown creation through candidate refresh (10.9s)
+  x  6 [mobile-chromium] › tests\browser\sales-estimating-binding.spec.ts:89:1 › LC-13 create native Discovery from accepted Sales and return for an explicit link with independent recovery (703ms)
+(node:27104) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  7 [mobile-chromium] › tests\browser\sales-estimating-binding.spec.ts:249:1 › LC-13 stale reviewed link is refused and accepted lost-response link survives reload without a second POST (1.6s)
+(node:31636) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  8 [mobile-chromium] › tests\browser\sales-workflows.spec.ts:119:1 › CR02 frozen submission survives clarification, acceptance and reload (1.6s)
+
+
+  1) [desktop-chromium] › tests\browser\sales-estimating-binding.spec.ts:89:1 › LC-13 create native Discovery from accepted Sales and return for an explicit link with independent recovery 
+
+    Error: Local synthetic access only.
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      12 |     data: body,
+      13 |   });
+    > 14 |   expect(r.ok(), await r.text()).toBe(true);
+         |                                  ^
+      15 |   return r.json();
+      16 | }
+      17 | async function fixture(page: Page) {
+        at call (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\sales-estimating-binding.spec.ts:14:34)
+        at fixture (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\sales-estimating-binding.spec.ts:18:3)
+        at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\sales-estimating-binding.spec.ts:92:13
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\sales-estimating-binding-L-6836f-k-with-independent-recovery-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\sales-estimating-binding-L-6836f-k-with-independent-recovery-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\sales-estimating-binding-L-6836f-k-with-independent-recovery-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\sales-estimating-binding-L-6836f-k-with-independent-recovery-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop-chromium] › tests\browser\sales-estimating-binding.spec.ts:249:1 › LC-13 stale reviewed link is refused and accepted lost-response link survives reload without a second POST 
+
+    Error: Local synthetic access only.
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      12 |     data: body,
+      13 |   });
+    > 14 |   expect(r.ok(), await r.text()).toBe(true);
+         |                                  ^
+      15 |   return r.json();
+      16 | }
+      17 | async function fixture(page: Page) {
+        at call (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\sales-estimating-binding.spec.ts:14:34)
+        at fixture (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\sales-estimating-binding.spec.ts:18:3)
+        at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\sales-estimating-binding.spec.ts:252:13
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\sales-estimating-binding-L-b5a7e-eload-without-a-second-POST-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\sales-estimating-binding-L-b5a7e-eload-without-a-second-POST-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\sales-estimating-binding-L-b5a7e-eload-without-a-second-POST-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\sales-estimating-binding-L-b5a7e-eload-without-a-second-POST-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [desktop-chromium] › tests\browser\sales-workflows.spec.ts:119:1 › CR02 frozen submission survives clarification, acceptance and reload 
+
+    Error: Local synthetic access only.
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      17 |     data: body,
+      18 |   });
+    > 19 |   expect(r.ok(), await r.text()).toBe(true);
+         |                                  ^
+      20 |   return r.json();
+      21 | }
+      22 | async function captureSizes(
+        at call (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\sales-workflows.spec.ts:19:34)
+        at deal (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\sales-workflows.spec.ts:55:3)
+        at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\sales-workflows.spec.ts:122:13
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\sales-workflows-CR02-froze-2e3ea-ation-acceptance-and-reload-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\sales-workflows-CR02-froze-2e3ea-ation-acceptance-and-reload-desktop-chromium\error-context.md
+
+    Error Context: test-results\sales-workflows-CR02-froze-2e3ea-ation-acceptance-and-reload-desktop-chromium\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\sales-workflows-CR02-froze-2e3ea-ation-acceptance-and-reload-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\sales-workflows-CR02-froze-2e3ea-ation-acceptance-and-reload-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile-chromium] › tests\browser\sales-estimating-binding.spec.ts:89:1 › LC-13 create native Discovery from accepted Sales and return for an explicit link with independent recovery 
+
+    Error: Local synthetic access only.
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      12 |     data: body,
+      13 |   });
+    > 14 |   expect(r.ok(), await r.text()).toBe(true);
+         |                                  ^
+      15 |   return r.json();
+      16 | }
+      17 | async function fixture(page: Page) {
+        at call (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\sales-estimating-binding.spec.ts:14:34)
+        at fixture (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\sales-estimating-binding.spec.ts:18:3)
+        at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\sales-estimating-binding.spec.ts:92:13
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\sales-estimating-binding-L-6836f-k-with-independent-recovery-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\sales-estimating-binding-L-6836f-k-with-independent-recovery-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\sales-estimating-binding-L-6836f-k-with-independent-recovery-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\sales-estimating-binding-L-6836f-k-with-independent-recovery-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [mobile-chromium] › tests\browser\sales-estimating-binding.spec.ts:249:1 › LC-13 stale reviewed link is refused and accepted lost-response link survives reload without a second POST 
+
+    Error: Local synthetic access only.
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      12 |     data: body,
+      13 |   });
+    > 14 |   expect(r.ok(), await r.text()).toBe(true);
+         |                                  ^
+      15 |   return r.json();
+      16 | }
+      17 | async function fixture(page: Page) {
+        at call (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\sales-estimating-binding.spec.ts:14:34)
+        at fixture (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\sales-estimating-binding.spec.ts:18:3)
+        at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\sales-estimating-binding.spec.ts:252:13
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\sales-estimating-binding-L-b5a7e-eload-without-a-second-POST-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\sales-estimating-binding-L-b5a7e-eload-without-a-second-POST-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\sales-estimating-binding-L-b5a7e-eload-without-a-second-POST-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\sales-estimating-binding-L-b5a7e-eload-without-a-second-POST-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [mobile-chromium] › tests\browser\sales-workflows.spec.ts:119:1 › CR02 frozen submission survives clarification, acceptance and reload 
+
+    Error: Local synthetic access only.
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      17 |     data: body,
+      18 |   });
+    > 19 |   expect(r.ok(), await r.text()).toBe(true);
+         |                                  ^
+      20 |   return r.json();
+      21 | }
+      22 | async function captureSizes(
+        at call (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\sales-workflows.spec.ts:19:34)
+        at deal (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\sales-workflows.spec.ts:55:3)
+        at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\sales-workflows.spec.ts:122:13
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\sales-workflows-CR02-froze-2e3ea-ation-acceptance-and-reload-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\sales-workflows-CR02-froze-2e3ea-ation-acceptance-and-reload-mobile-chromium\error-context.md
+
+    Error Context: test-results\sales-workflows-CR02-froze-2e3ea-ation-acceptance-and-reload-mobile-chromium\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\sales-workflows-CR02-froze-2e3ea-ation-acceptance-and-reload-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\sales-workflows-CR02-froze-2e3ea-ation-acceptance-and-reload-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6 failed
+    [desktop-chromium] › tests\browser\sales-estimating-binding.spec.ts:89:1 › LC-13 create native Discovery from accepted Sales and return for an explicit link with independent recovery 
+    [desktop-chromium] › tests\browser\sales-estimating-binding.spec.ts:249:1 › LC-13 stale reviewed link is refused and accepted lost-response link survives reload without a second POST 
+    [desktop-chromium] › tests\browser\sales-workflows.spec.ts:119:1 › CR02 frozen submission survives clarification, acceptance and reload 
+    [mobile-chromium] › tests\browser\sales-estimating-binding.spec.ts:89:1 › LC-13 create native Discovery from accepted Sales and return for an explicit link with independent recovery 
+    [mobile-chromium] › tests\browser\sales-estimating-binding.spec.ts:249:1 › LC-13 stale reviewed link is refused and accepted lost-response link survives reload without a second POST 
+    [mobile-chromium] › tests\browser\sales-workflows.spec.ts:119:1 › CR02 frozen submission survives clarification, acceptance and reload 
+  2 passed (1.4m)

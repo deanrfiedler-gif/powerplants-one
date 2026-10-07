@@ -972,7 +972,7 @@
       "title": "Opportunity detail and internal work",
       "kind": "scope",
       "module": "CR",
-      "summary": "Maintain one opportunity with source-owned customer context, accountable next action, commercial evidence and linked handovers.",
+      "summary": "Maintain one opportunity with source-owned customer context, accountable next action, commercial evidence and linked handovers. Incoming converted Leads retain their captured enquiry, resolved context and ownership history.",
       "path": "/sales/opportunities/[id]",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -984,11 +984,15 @@
       "dependencies": [
         "src/components/crm-screens.tsx",
         "src/components/opportunity-workflows.tsx",
-        "src/components/opportunity-correspondence.tsx"
+        "src/components/opportunity-correspondence.tsx",
+        "docs/contracts/lead-to-delivery-continuity.md",
+        "docs/decisions/lead-customer-context.md",
+        "docs/design/development/lead-continuity-fixtures.json",
+        "docs/testing/evidence/lead-context-resolution/README.md"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "See sales-native-completion-handover for executed assurance",
+      "functional_status": "See sales-native-completion-handover for existing Deal assurance. LC-12 local functional proof: six database cases, selected populated upgrades and 15 compiled desktop/phone checks with one retained skip. See lead-context-resolution evidence; paired visual and owner acceptance remain pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -1007,7 +1011,7 @@
       "title": "Sales-to-estimating handover",
       "kind": "scope",
       "module": "CR",
-      "summary": "Save a Sales brief, submit an exact frozen revision and record an independent Estimating receiving decision.",
+      "summary": "Save a Sales brief, submit an exact frozen revision and record an independent Estimating receiving decision. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored.",
       "path": "/sales/handoffs/estimating",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -1019,11 +1023,15 @@
       "dependencies": [
         "src/components/sales-handover.tsx",
         "src/sales/handover-service.ts",
-        "src/sales/handover-model.ts"
+        "src/sales/handover-model.ts",
+        "src/components/sales-estimating-link.tsx",
+        "src/sales/estimating-binding.ts",
+        "docs/contracts/lead-to-delivery-continuity.md",
+        "docs/design/development/lead-continuity-fixtures.json"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "See sales-native-completion-handover for executed assurance",
+      "functional_status": "See sales-native-completion-handover for executed assurance LC-13: 10 database, 11 selected upgrade and 8 compiled desktop/phone checks pass; docs/testing/evidence/estimating-brief-continuity/README.md retains bounded proof and earlier failures. Paired visual/owner acceptance and final-head CI remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -1142,7 +1150,7 @@
       "title": "Estimating intake and workload",
       "kind": "scope",
       "module": "ES",
-      "summary": "Native permission-scoped opportunity workload, exact discovery readiness/ownership and saved-estimate links. Intake allocation, acceptance, returns and priority policy remain Not configured.",
+      "summary": "Native permission-scoped opportunity workload, exact discovery readiness/ownership and saved-estimate links. Intake allocation, acceptance, returns and priority policy remain Not configured. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored.",
       "path": "/estimating",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -1160,11 +1168,15 @@
       "dependencies": [
         "src/estimating/workload.ts",
         "src/estimating/workload-query.ts",
-        "docs/delivery/estimating-programme-handover.md"
+        "docs/delivery/estimating-programme-handover.md",
+        "src/components/sales-estimating-link.tsx",
+        "src/sales/estimating-binding.ts",
+        "docs/contracts/lead-to-delivery-continuity.md",
+        "docs/design/development/lead-continuity-fixtures.json"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Native workload implemented; verification recorded in the programme handover",
+      "functional_status": "Native workload implemented; verification recorded in the programme handover LC-13: 10 database, 11 selected upgrade and 8 compiled desktop/phone checks pass; docs/testing/evidence/estimating-brief-continuity/README.md retains bounded proof and earlier failures. Paired visual/owner acceptance and final-head CI remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -1184,7 +1196,7 @@
       "title": "Estimation Wizard · discovery, alternatives & revisions",
       "kind": "scope",
       "module": "ES",
-      "summary": "Native five-step wizard, immutable alternatives/revisions, structured multi-area scope and exact manual-cost basis delivered by PR #272. Specialist wording reconciled; commercial approval remains separate.",
+      "summary": "Native five-step wizard, immutable alternatives/revisions, structured multi-area scope and exact manual-cost basis delivered by PR #272. Specialist wording reconciled; commercial approval remains separate. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored.",
       "path": "/estimating/discovery",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -1200,10 +1212,16 @@
         "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-S2-Configuration-r01.png",
         "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-R2-Phone-390-Configuration-r01.png"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "src/components/sales-estimating-link.tsx",
+        "src/sales/estimating-binding.ts",
+        "docs/contracts/lead-to-delivery-continuity.md",
+        "docs/design/development/lead-continuity-fixtures.json",
+        "src/components/estimation-wizard.tsx"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Not recorded here LC-13: 10 database, 11 selected upgrade and 8 compiled desktop/phone checks pass; docs/testing/evidence/estimating-brief-continuity/README.md retains bounded proof and earlier failures. Paired visual/owner acceptance and final-head CI remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -5645,7 +5663,7 @@
       "title": "Create customer / shared record",
       "kind": "route",
       "module": "CS",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "Create a shared customer, person, dated affiliation or site; Leads callers return to an explicit customer-context review after each separate saved result.",
       "path": "/customers/new",
       "source_paths": [
         "src/app/(business)/customers/new/page.tsx"
@@ -5654,10 +5672,14 @@
       "design_path": "docs/design/development/pages/route-customers-new.md",
       "html_path": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/decisions/lead-customer-context.md",
+        "docs/design/development/lead-continuity-fixtures.json",
+        "docs/testing/evidence/lead-context-resolution/README.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "LC-12 local functional proof: six database cases, selected populated upgrades and 15 compiled desktop/phone checks with one retained skip. See lead-context-resolution evidence; paired visual and owner acceptance remain pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -5981,7 +6003,7 @@
       "title": "Discovery workspace",
       "kind": "route",
       "module": "ES",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored.",
       "path": "/estimating/discovery/[id]",
       "source_paths": [
         "src/app/(business)/estimating/discovery/[id]/page.tsx"
@@ -6000,10 +6022,16 @@
         "docs/testing/evidence/es02-design-board-r01/build-configuration-1440x960.png",
         "docs/testing/evidence/es02-design-board-r01/build-configuration-390x844.png"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "src/components/sales-estimating-link.tsx",
+        "src/sales/estimating-binding.ts",
+        "docs/contracts/lead-to-delivery-continuity.md",
+        "docs/design/development/lead-continuity-fixtures.json",
+        "src/components/estimation-wizard.tsx"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Not recorded here LC-13: 10 database, 11 selected upgrade and 8 compiled desktop/phone checks pass; docs/testing/evidence/estimating-brief-continuity/README.md retains bounded proof and earlier failures. Paired visual/owner acceptance and final-head CI remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6019,7 +6047,7 @@
       "title": "Create discovery workspace",
       "kind": "route",
       "module": "ES",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored.",
       "path": "/estimating/discovery/new",
       "source_paths": [
         "src/app/(business)/estimating/discovery/new/page.tsx"
@@ -6028,10 +6056,15 @@
       "design_path": "docs/design/development/pages/route-estimating-discovery-new.md",
       "html_path": "docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "src/components/sales-estimating-link.tsx",
+        "src/sales/estimating-binding.ts",
+        "docs/contracts/lead-to-delivery-continuity.md",
+        "docs/design/development/lead-continuity-fixtures.json"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Not recorded here LC-13: 10 database, 11 selected upgrade and 8 compiled desktop/phone checks pass; docs/testing/evidence/estimating-brief-continuity/README.md retains bounded proof and earlier failures. Paired visual/owner acceptance and final-head CI remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6541,19 +6574,24 @@
       "title": "Lead detail",
       "kind": "route",
       "module": "CR",
-      "summary": "This page address exists in the inspected application source. Open it from a running app using an identity with the required access.",
+      "summary": "LC-12 customer resolution and owned Lead transfer preserve captured enquiry facts, source Activities and exact original recovery. Native customer/contact/site creation returns to an explicit Lead selection review.",
       "path": "/sales/leads/[id]",
       "source_paths": [
         "src/app/(business)/sales/leads/[id]/page.tsx"
       ],
       "guide_key": "guide.page.sales.leads.id",
       "design_path": "docs/design/development/pages/route-sales-leads-id.md",
-      "html_path": null,
+      "html_path": "docs/reference/ui/crm/PPO-Leads-Desktop-Container-r01.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/contracts/lead-to-delivery-continuity.md",
+        "docs/decisions/lead-customer-context.md",
+        "docs/design/development/lead-continuity-fixtures.json",
+        "docs/testing/evidence/lead-context-resolution/README.md"
+      ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "LC-12 local functional proof: six database cases, selected populated upgrades and 15 compiled desktop/phone checks with one retained skip. See lead-context-resolution evidence; paired visual and owner acceptance remain pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6567,19 +6605,24 @@
       "title": "Leads",
       "kind": "route",
       "module": "CR",
-      "summary": "This page address exists in the inspected application source. Open it from a running app using an identity with the required access.",
+      "summary": "LC-12 customer resolution and owned Lead transfer preserve captured enquiry facts, source Activities and exact original recovery. Native customer/contact/site creation returns to an explicit Lead selection review.",
       "path": "/sales/leads",
       "source_paths": [
         "src/app/(business)/sales/leads/page.tsx"
       ],
       "guide_key": "guide.page.sales.leads",
       "design_path": "docs/design/development/pages/route-sales-leads.md",
-      "html_path": null,
+      "html_path": "docs/reference/ui/crm/PPO-Leads-Desktop-Container-r01.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/contracts/lead-to-delivery-continuity.md",
+        "docs/decisions/lead-customer-context.md",
+        "docs/design/development/lead-continuity-fixtures.json",
+        "docs/testing/evidence/lead-context-resolution/README.md"
+      ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "LC-12 local functional proof: six database cases, selected populated upgrades and 15 compiled desktop/phone checks with one retained skip. See lead-context-resolution evidence; paired visual and owner acceptance remain pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6605,7 +6648,8 @@
       "dependencies": [
         "src/components/crm-screens.tsx",
         "src/components/opportunity-workflows.tsx",
-        "src/components/opportunity-correspondence.tsx"
+        "src/components/opportunity-correspondence.tsx",
+        "docs/contracts/lead-to-delivery-continuity.md"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
@@ -10306,7 +10350,7 @@
       "title": "Estimating Intake",
       "kind": "route",
       "module": "ES",
-      "summary": "Save a Sales brief, submit an exact frozen revision and record an independent Estimating receiving decision.",
+      "summary": "Save a Sales brief, submit an exact frozen revision and record an independent Estimating receiving decision. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored.",
       "path": "/estimating/intake",
       "source_paths": [
         "src/app/(business)/estimating/intake/page.tsx"
@@ -10318,11 +10362,15 @@
       "dependencies": [
         "src/components/sales-handover.tsx",
         "src/sales/handover-service.ts",
-        "src/sales/handover-model.ts"
+        "src/sales/handover-model.ts",
+        "src/components/sales-estimating-link.tsx",
+        "src/sales/estimating-binding.ts",
+        "docs/contracts/lead-to-delivery-continuity.md",
+        "docs/design/development/lead-continuity-fixtures.json"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "See sales-native-completion-handover for executed assurance",
+      "functional_status": "See sales-native-completion-handover for executed assurance LC-13: 10 database, 11 selected upgrade and 8 compiled desktop/phone checks pass; docs/testing/evidence/estimating-brief-continuity/README.md retains bounded proof and earlier failures. Paired visual/owner acceptance and final-head CI remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -10402,7 +10450,7 @@
       "title": "Sales-to-estimating handover record",
       "kind": "route",
       "module": "CR",
-      "summary": "Save a Sales brief, submit an exact frozen revision and record an independent Estimating receiving decision.",
+      "summary": "Save a Sales brief, submit an exact frozen revision and record an independent Estimating receiving decision. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored.",
       "path": "/sales/handoffs/estimating/[id]",
       "source_paths": [
         "src/app/(business)/sales/handoffs/estimating/[id]/page.tsx"
@@ -10414,11 +10462,15 @@
       "dependencies": [
         "src/components/sales-handover.tsx",
         "src/sales/handover-service.ts",
-        "src/sales/handover-model.ts"
+        "src/sales/handover-model.ts",
+        "src/components/sales-estimating-link.tsx",
+        "src/sales/estimating-binding.ts",
+        "docs/contracts/lead-to-delivery-continuity.md",
+        "docs/design/development/lead-continuity-fixtures.json"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "See sales-native-completion-handover for executed assurance",
+      "functional_status": "See sales-native-completion-handover for executed assurance LC-13: 10 database, 11 selected upgrade and 8 compiled desktop/phone checks pass; docs/testing/evidence/estimating-brief-continuity/README.md retains bounded proof and earlier failures. Paired visual/owner acceptance and final-head CI remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -10434,7 +10486,7 @@
       "title": "Sales-to-estimating handover worklist",
       "kind": "route",
       "module": "CR",
-      "summary": "Save a Sales brief, submit an exact frozen revision and record an independent Estimating receiving decision.",
+      "summary": "Save a Sales brief, submit an exact frozen revision and record an independent Estimating receiving decision. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored.",
       "path": "/sales/handoffs/estimating",
       "source_paths": [
         "src/app/(business)/sales/handoffs/estimating/page.tsx"
@@ -10446,11 +10498,15 @@
       "dependencies": [
         "src/components/sales-handover.tsx",
         "src/sales/handover-service.ts",
-        "src/sales/handover-model.ts"
+        "src/sales/handover-model.ts",
+        "src/components/sales-estimating-link.tsx",
+        "src/sales/estimating-binding.ts",
+        "docs/contracts/lead-to-delivery-continuity.md",
+        "docs/design/development/lead-continuity-fixtures.json"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "See sales-native-completion-handover for executed assurance",
+      "functional_status": "See sales-native-completion-handover for executed assurance LC-13: 10 database, 11 selected upgrade and 8 compiled desktop/phone checks pass; docs/testing/evidence/estimating-brief-continuity/README.md retains bounded proof and earlier failures. Paired visual/owner acceptance and final-head CI remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
