@@ -443,7 +443,7 @@ export function ProjectSchedulePage({
           <button onClick={resource.reload}>Retry refresh</button>
         </div>
       )}
-      {sales && <ProjectSalesDialog id={id} onClose={() => setSales(false)} />}
+      {sales && <ProjectSalesDialog id={id} company={resource.data.project.company_id} site={resource.data.project.site_id} onClose={() => setSales(false)} />}
       {panel && (
         <ProjectTaskPanel
           schedule={resource.data}
@@ -469,9 +469,13 @@ export function ProjectSchedulePage({
 
 function ProjectSalesDialog({
   id,
+  company,
+  site,
   onClose,
 }: {
   id: string;
+  company: string;
+  site: string;
   onClose: () => void;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
@@ -505,6 +509,7 @@ function ProjectSalesDialog({
         </button>
       </header>
       <div className="project-task-details">
+        <p><Link href={`/work/new?${new URLSearchParams({type:"Project",id,company,site,kind:"CustomerContact",access:"Internal"})}`}>Record a customer need for Sales review</Link>. Give the review an owner and date before continuing to a Lead or qualified Deal.</p>
         <DeliverySalesSources kind="Projects" id={id} />
       </div>
     </dialog>

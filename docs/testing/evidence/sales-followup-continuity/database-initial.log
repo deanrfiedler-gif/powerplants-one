@@ -1,0 +1,232 @@
+✖ LC-17 Lead link is exactly once and retains native history, ownership and designated actions (10123.9916ms)
+✖ LC-17 Opportunity link is exactly once and retains native history, ownership and designated actions (13419.5427ms)
+✖ LC-17 restricted completed source creates a separate reviewed Internal action and preserves exact original (13635.6139ms)
+✖ LC-17 stale source, stale target, unreviewed wording and a second Sales destination have no effects (17119.6415ms)
+✖ LC-17 wrong customer/site, closed Lead and non-owner are refused without changing source (18056.5325ms)
+✖ LC-17 current permission revocation hides source and blocks original recovery across nested reviews (19662.059ms)
+✖ LC-17 late publication failure rolls back link, version, receipt and audit atomically (20759.2936ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 0
+ℹ fail 7
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 121599.1709
+
+✖ failing tests:
+
+test at tests\database\sales-followup.test.ts:1:2814
+✖ LC-17 Lead link is exactly once and retains native history, ownership and designated actions (10123.9916ms)
+  error: column "created_at" does not exist
+      at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async source (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\sales\followup.ts:173:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\sales\followup.ts:561:15)
+      at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\platform\database.ts:44:20)
+      at async input (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\database\sales-followup.test.ts:84:13)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\database\sales-followup.test.ts:101:11)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    length: 111,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '189',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3727',
+    routine: 'errorMissingColumn'
+  }
+
+test at tests\database\sales-followup.test.ts:1:2814
+✖ LC-17 Opportunity link is exactly once and retains native history, ownership and designated actions (13419.5427ms)
+  error: column "created_at" does not exist
+      at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async source (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\sales\followup.ts:173:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\sales\followup.ts:561:15)
+      at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\platform\database.ts:44:20)
+      at async input (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\database\sales-followup.test.ts:84:13)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\database\sales-followup.test.ts:101:11)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 111,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '189',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3727',
+    routine: 'errorMissingColumn'
+  }
+
+test at tests\database\sales-followup.test.ts:1:4505
+✖ LC-17 restricted completed source creates a separate reviewed Internal action and preserves exact original (13635.6139ms)
+  error: column "created_at" does not exist
+      at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async source (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\sales\followup.ts:173:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\sales\followup.ts:561:15)
+      at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\platform\database.ts:44:20)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\database\sales-followup.test.ts:181:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 111,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '189',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3727',
+    routine: 'errorMissingColumn'
+  }
+
+test at tests\database\sales-followup.test.ts:1:6043
+✖ LC-17 stale source, stale target, unreviewed wording and a second Sales destination have no effects (17119.6415ms)
+  error: column "created_at" does not exist
+      at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async source (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\sales\followup.ts:173:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\sales\followup.ts:561:15)
+      at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\platform\database.ts:44:20)
+      at async input (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\database\sales-followup.test.ts:84:13)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\database\sales-followup.test.ts:218:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 111,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '189',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3727',
+    routine: 'errorMissingColumn'
+  }
+
+test at tests\database\sales-followup.test.ts:1:6910
+✖ LC-17 wrong customer/site, closed Lead and non-owner are refused without changing source (18056.5325ms)
+  error: column "created_at" does not exist
+      at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async source (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\sales\followup.ts:173:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\sales\followup.ts:561:15)
+      at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\platform\database.ts:44:20)
+      at async input (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\database\sales-followup.test.ts:84:13)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\database\sales-followup.test.ts:250:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 111,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '189',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3727',
+    routine: 'errorMissingColumn'
+  }
+
+test at tests\database\sales-followup.test.ts:1:7819
+✖ LC-17 current permission revocation hides source and blocks original recovery across nested reviews (19662.059ms)
+  error: column "created_at" does not exist
+      at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async source (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\sales\followup.ts:173:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\sales\followup.ts:561:15)
+      at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\platform\database.ts:44:20)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\database\sales-followup.test.ts:283:13)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 111,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '189',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3727',
+    routine: 'errorMissingColumn'
+  }
+
+test at tests\database\sales-followup.test.ts:1:8777
+✖ LC-17 late publication failure rolls back link, version, receipt and audit atomically (20759.2936ms)
+  error: column "created_at" does not exist
+      at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async source (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\sales\followup.ts:173:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\sales\followup.ts:561:15)
+      at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\platform\database.ts:44:20)
+      at async input (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\database\sales-followup.test.ts:84:13)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\database\sales-followup.test.ts:311:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 111,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '189',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3727',
+    routine: 'errorMissingColumn'
+  }

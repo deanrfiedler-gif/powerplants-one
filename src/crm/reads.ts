@@ -1,3 +1,4 @@
+import { projectsAvailable } from "../projects/visibility";
 import { readOutcomeSources } from "./outcome-sources";
 import { ACTIVE_PIPELINE_ID, ACTIVE_PIPELINE_LABEL } from "./stages";
 import type { StageDefinition } from "./stages";
@@ -42,7 +43,7 @@ export async function readOpportunity(p: Principal, id: string) {
   ).rows[0];
   const visibleActions = (
     await c.query(
-      `SELECT a.id FROM ppo.activities a WHERE a.workspace_id=$1 AND ${activityVisibility("a", true, await leadsAvailable(c))} AND EXISTS(SELECT 1 FROM ppo.activity_links l WHERE l.workspace_id=a.workspace_id AND l.activity_id=a.id AND l.opportunity_id=$3) ORDER BY a.created_at,a.id`,
+      `SELECT a.id FROM ppo.activities a WHERE a.workspace_id=$1 AND ${activityVisibility("a", true, await leadsAvailable(c), await projectsAvailable(c))} AND EXISTS(SELECT 1 FROM ppo.activity_links l WHERE l.workspace_id=a.workspace_id AND l.activity_id=a.id AND l.opportunity_id=$3) ORDER BY a.created_at,a.id`,
       [p.workspace_id, p.actor_id, id],
     )
   ).rows;

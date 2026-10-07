@@ -10,6 +10,8 @@ Authority: the user's 7 October 2026 instruction to proceed with completing the 
 
 The default commercial journey starts with a manual lead. Direct qualified Deal and direct Service intake remain valid. Shared customer/contact/site records, native Activities, Estimating release/response/conversion, Projects, Service and Maintenance remain their respective authorities. There is no second quote, activity or delivery store.
 
+Current implementation checkpoint: all six increments have local synthetic functional proof through LC-17. The sections below preserve each incremental checkpoint; their earlier “remaining” statements describe that point in delivery. PR review, fresh final-head CI, owner acceptance and deployment remain separate. [LC-17 execution evidence](../testing/evidence/sales-followup-continuity/README.md) closes the return-to-Sales implementation.
+
 ## Delivery increments
 
 1. Resolve customer context, preserve lead follow-up through conversion, and provide accountable lead ownership/correction.
@@ -56,6 +58,16 @@ Migration 0075 adds an immutable companion to the original outcome event, with e
 The [receiving decision](../decisions/won-delivery-continuity.md) introduces an immutable typed association between the exact accepted Won event and a native Project or Service work order. The current receiver must own and be able to edit the same-company/customer destination; known Sales site must match and any previously unknown site is separately reviewed. New link intent compares source hash, Sales version and native version/site. Native creation, Service intake and link recovery remain separate; a later Sales successor retains original attribution and current access still governs recovery.
 
 Native pages show attributed Sales context alongside their own scope/readiness authority; Projects uses an on-demand dialog that preserves the fixed Gantt workspace. Deal progress reads actual handover, binding and native state, and its original Won accountability event and Activity owners/dates remain intact. No second lifecycle, completion percentage, automatic scope approval, task creation or booking is introduced. Migration 0076 adds no seed, grant or identity. [LC-16 execution evidence](../testing/evidence/won-delivery-continuity/README.md) records the verification and initial repairs. Eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases pass. Increments 4–5 have local functional proof; return-to-Sales increment 6 remains open.
+
+## LC-17: reviewed follow-up returns to native Sales
+
+The [follow-up decision](../decisions/sales-followup-continuity.md) reuses a dated, actor-owned Internal CustomerContact or RelationshipReview. An explicit comparison adds one matching open Lead/Deal relationship while retaining the Activity's original owner, date, state and native links. Native capture saves and recovers independently before returning to that comparison. Qualification, duplicate review and designation of the next action remain explicit native Sales decisions.
+
+Restricted, technical or completed sources can prepare a separately worded, dated Internal review. Exact original Activity/version evidence and native source links remain; the original source is unchanged. Project and Organisation anchors must match the selected customer; site-only context requires a current site party. Current original provenance and target access govern new intent and original link/review receipt recovery, including nested reviews. Completion after a saved link does not cancel that original receipt. Restricted Finance sources cannot use this continuation. Aftercare receiving acknowledgement remains separate.
+
+Native Lead/Deal detail, worklist and planning-gap projections now include permitted Project-linked Activities using the existing upgrade-safe Project visibility branch. A Lead can explicitly plan that retained Activity and carry it through native conversion without losing the Project link. No migration, seed, grant, capability, user, dependency or external integration is added.
+
+[LC-17 execution evidence](../testing/evidence/sales-followup-continuity/README.md) records eight final focused database cases, fifteen earlier combined CRM/Projects compatibility cases, five units and eighteen compiled desktop/phone cases (six new continuation, six retained native journeys and six separate Search readiness repair checks). Build, TypeScript, lint, foundation, prototype, naming and studio checks pass. All six programme increments now have local implementation proof; owner/business/device acceptance, full final-head assurance, merge and deployment remain separate.
 
 ## Evidence boundaries
 

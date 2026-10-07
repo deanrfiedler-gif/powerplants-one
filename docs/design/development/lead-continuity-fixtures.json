@@ -108,6 +108,18 @@
     {
       "key": "won-native-access-denied",
       "description": "A denied receiving refresh removes the reviewed native identity and comparison. Actual native grant removal also hides link identities and original receipts in database proof."
+    },
+    {
+      "key": "return-to-sales-project",
+      "description": "Project native Activity to independently saved Lead, original creation recovery, fixed link and explicit native next-action planning."
+    },
+    {
+      "key": "return-to-sales-service",
+      "description": "Restricted completed Service Activity to separately worded Internal review and qualified Deal, with original source untouched and original link recovery after completion."
+    },
+    {
+      "key": "return-to-sales-stale-denied",
+      "description": "Refresh retains the fixed source/target comparison; stale intent has no effects, and denied refresh clears protected review. Current native Project access governs CRM Activity visibility."
     }
   ]
 }

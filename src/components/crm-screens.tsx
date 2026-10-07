@@ -1,4 +1,5 @@
 "use client";
+import { SalesActivityCreation, type ActivitySalesCreation } from "./sales-followup";
 import Link from "next/link";
 import { OpportunityWorkflows } from "./opportunity-workflows";
 import { OpportunityCorrespondence } from "./opportunity-correspondence";
@@ -193,21 +194,24 @@ function ActionFields({
   );
 }
 export function NewOpportunity() {
+  return <SalesActivityCreation kind="Opportunity">{sales => <NewOpportunityForm sales={sales}/>}</SalesActivityCreation>;
+}
+function NewOpportunityForm({sales}:{sales?:ActivitySalesCreation}) {
   const p = useIdentity(),
     router = useRouter(),
     [id] = useState(() => crypto.randomUUID()),
-    [company, setCompany] = useState(""),
-    [org, setOrg] = useState(""),
-    [site, setSite] = useState(""),
+    [company, setCompany] = useState(sales?.source.activity.company_id ?? ""),
+    [org, setOrg] = useState(sales?.source.customer_id ?? ""),
+    [site, setSite] = useState(sales?.source.activity.site_id ?? ""),
     [person, setPerson] = useState(""),
     [owner, setOwner] = useState(p.actor_id),
     [title, setTitle] = useState(""),
-    [need, setNeed] = useState(""),
+    [need, setNeed] = useState(sales?.source.activity.summary ?? ""),
     [qualification, setQualification] = useState(""),
     [siteReason, setSiteReason] = useState(""),
     [contactReason, setContactReason] = useState(""),
     [channel, setChannel] = useState("Phone"),
-    [source, setSource] = useState(""),
+    [source, setSource] = useState(sales ? `Reviewed Activity ${sales.source.activity.id}, version ${sales.source.activity.version}` : ""),
     [action, setAction] = useState(() => emptyAction(p.actor_id));
   const available = useCrmResource<Options>("crm/options?kind=Company");
   const siteRequired=available.data?.items.find(x=>x.id===company)?.requires_site ?? false;
@@ -245,7 +249,7 @@ export function NewOpportunity() {
               noValidate
               onSubmit={(e) => {
                 e.preventDefault();
-                void command.send("crm/opportunities", {
+                const fields = {
                   id,
                   company_id: company,
                   organisation_id: org,
@@ -267,10 +271,11 @@ export function NewOpportunity() {
                   },
                   reason:
                     "Create synthetic owned opportunity and initial action",
-                });
+                };
+                if(sales) void sales.send(fields); else void command.send("crm/opportunities",fields);
               }}
             >
-              <fieldset disabled={command.busy || command.uncertain}>
+              <fieldset disabled={command.busy || command.uncertain || sales?.blocked}>
                 <legend>Deal and customer context</legend>
                 <Field name="qualification_note" label="Qualification outcome" value={qualification} onChange={setQualification} multiline required maxLength={2000}/>
                 <p>Discovery starts with a qualified customer need. If the contact is unknown, the initial Activity must identify that contact and belong to the deal owner.</p>

@@ -1,0 +1,100 @@
+TAP version 13
+# Subtest: CA-02/03/05 I2 shared result contract has stable tied sorts, exact page counts and no business effects
+ok 1 - CA-02/03/05 I2 shared result contract has stable tied sorts, exact page counts and no business effects
+  ---
+  duration_ms: 44635.762
+  type: 'test'
+  ...
+# Subtest: CA-02/06 I2 cursors bind identity and every filter and detect changed authorised result windows
+ok 2 - CA-02/06 I2 cursors bind identity and every filter and detect changed authorised result windows
+  ---
+  duration_ms: 24957.1206
+  type: 'test'
+  ...
+# Subtest: CA-06/10 I2 reader selectors, company/site/person boundaries and denied identities share opportunity scope
+ok 3 - CA-06/10 I2 reader selectors, company/site/person boundaries and denied identities share opportunity scope
+  ---
+  duration_ms: 28554.4987
+  type: 'test'
+  ...
+# Subtest: CA-06/10 I2 all-target Activity content, aggregates and receipts obey current grant revocation
+ok 4 - CA-06/10 I2 all-target Activity content, aggregates and receipts obey current grant revocation
+  ---
+  duration_ms: 12943.8327
+  type: 'test'
+  ...
+# Subtest: fresh combined installation retains both registries and both domains through repeat migration and seed
+ok 5 - fresh combined installation retains both registries and both domains through repeat migration and seed
+  ---
+  duration_ms: 27723.476
+  type: 'test'
+  ...
+# Subtest: main 0017 upgrades through Leads 0018 then Projects 0019 without replacing prior migration receipts
+ok 6 - main 0017 upgrades through Leads 0018 then Projects 0019 without replacing prior migration receipts
+  ---
+  duration_ms: 25906.6616
+  type: 'test'
+  ...
+# Subtest: an existing Leads 0018 record and receipt survive the Projects upgrade exactly
+ok 7 - an existing Leads 0018 record and receipt survive the Projects upgrade exactly
+  ---
+  duration_ms: 30870.0047
+  type: 'test'
+  ...
+# Subtest: a database carrying the original Gantt 0018 checksum is preserved and refused, never relabelled or replayed
+ok 8 - a database carrying the original Gantt 0018 checksum is preserved and refused, never relabelled or replayed
+  ---
+  duration_ms: 29147.5329
+  type: 'test'
+  ...
+# Subtest: LC-17 Lead link is exactly once and retains native history, ownership and designated actions
+ok 9 - LC-17 Lead link is exactly once and retains native history, ownership and designated actions
+  ---
+  duration_ms: 53856.1751
+  type: 'test'
+  ...
+# Subtest: LC-17 Opportunity link is exactly once and retains native history, ownership and designated actions
+ok 10 - LC-17 Opportunity link is exactly once and retains native history, ownership and designated actions
+  ---
+  duration_ms: 23581.5959
+  type: 'test'
+  ...
+# Subtest: LC-17 restricted completed source creates a separate reviewed Internal action and preserves exact original
+ok 11 - LC-17 restricted completed source creates a separate reviewed Internal action and preserves exact original
+  ---
+  duration_ms: 26769.1028
+  type: 'test'
+  ...
+# Subtest: LC-17 stale source, stale target, unreviewed wording and a second Sales destination have no effects
+ok 12 - LC-17 stale source, stale target, unreviewed wording and a second Sales destination have no effects
+  ---
+  duration_ms: 13283.0155
+  type: 'test'
+  ...
+# Subtest: LC-17 incompatible site, closed Lead and non-owner are refused without changing source
+ok 13 - LC-17 incompatible site, closed Lead and non-owner are refused without changing source
+  ---
+  duration_ms: 13398.0843
+  type: 'test'
+  ...
+# Subtest: LC-17 current permission revocation hides source and blocks original recovery across nested reviews
+ok 14 - LC-17 current permission revocation hides source and blocks original recovery across nested reviews
+  ---
+  duration_ms: 12699.3672
+  type: 'test'
+  ...
+# Subtest: LC-17 late publication failure rolls back link, version, receipt and audit atomically
+ok 15 - LC-17 late publication failure rolls back link, version, receipt and audit atomically
+  ---
+  duration_ms: 15628.5792
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 403425.1249

@@ -1,3 +1,4 @@
+import { projectsAvailable } from "../projects/visibility";
 import { database } from "../platform/database";
 import type { Principal } from "../platform/identity";
 import { hasPermission, scopeSql } from "../platform/permissions";
@@ -40,7 +41,7 @@ export async function listPlanningGaps(
     JOIN ppo.users u ON (u.workspace_id,u.id)=(o.workspace_id,o.owner_id)
     JOIN ppo.organisations r ON (r.workspace_id,r.id)=(o.workspace_id,o.organisation_id)
     LEFT JOIN ppo.people pe ON (pe.workspace_id,pe.id)=(o.workspace_id,o.primary_person_id)
-    JOIN ppo.activities a ON (a.workspace_id,a.id)=(o.workspace_id,o.next_activity_id) AND ${activityVisibility("a", true, await leadsAvailable(c))}
+    JOIN ppo.activities a ON (a.workspace_id,a.id)=(o.workspace_id,o.next_activity_id) AND ${activityVisibility("a", true, await leadsAvailable(c), await projectsAvailable(c))}
     WHERE o.workspace_id=$1 AND ${opportunityVisibility()} AND o.close_outcome='Open'
       AND a.status NOT IN ('Open','InProgress')
       AND ($3::uuid IS NULL OR o.owner_id=$3) AND ($4::uuid IS NULL OR o.company_id=$4)`;
@@ -90,7 +91,7 @@ export async function listOverdueOpportunities(
     JOIN ppo.users u ON (u.workspace_id,u.id)=(o.workspace_id,o.owner_id)
     JOIN ppo.organisations r ON (r.workspace_id,r.id)=(o.workspace_id,o.organisation_id)
     LEFT JOIN ppo.people pe ON (pe.workspace_id,pe.id)=(o.workspace_id,o.primary_person_id)
-    JOIN ppo.activities a ON (a.workspace_id,a.id)=(o.workspace_id,o.next_activity_id) AND ${activityVisibility("a", true, await leadsAvailable(c))}
+    JOIN ppo.activities a ON (a.workspace_id,a.id)=(o.workspace_id,o.next_activity_id) AND ${activityVisibility("a", true, await leadsAvailable(c), await projectsAvailable(c))}
     JOIN ppo.users au ON (au.workspace_id,au.id)=(a.workspace_id,a.owner_id)
     WHERE o.workspace_id=$1 AND ${opportunityVisibility()} AND o.close_outcome='Open'
       AND a.status IN ('Open','InProgress') AND NOT a.due_needed AND a.due_at<$5::timestamptz
