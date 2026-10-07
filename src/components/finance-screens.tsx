@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { RecordIdentity } from "../shell/record-identity";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
@@ -839,6 +840,7 @@ export function FinanceDetail({ id }: { id: string }) {
       {cmd.notice}
       {d && h && (
         <>
+          {!r.error && <RecordIdentity reference={h.display_number} title={`Finance handoff · ${d.work.customer}`} />}
           <div className={styles.row}>
             <p>
               {d.work.customer} · {d.work.site} · {d.work.reference}

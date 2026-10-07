@@ -1,5 +1,6 @@
 "use client";
 import { OfflineEntry } from "./offline-entry";
+import { RecordIdentity } from "../shell/record-identity";
 import { useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import {
@@ -868,6 +869,7 @@ export function ReportScreen({ id }: { id: string }) {
   return (
     <div id="ppo-reports" className="business-shell report-screen">
       <Link href="/service/reports">All service reports</Link>
+      {r && !resource.error && <RecordIdentity reference={`${r.reference} · Revision ${r.revision}`} title="Service report" />}
       <h1>{r?.reference ?? "Service report"}</h1>
       {r?.finance_navigation && <nav aria-label="Report Finance handoff">{r.finance_navigation.existing.map(h => <p key={h.id}><Link href={h.href}>Review Finance handoff · {h.reference}</Link></p>)}{r.finance_navigation.prepare_href && <p><Link href={r.finance_navigation.prepare_href}>Prepare Finance handoff for this reviewed report</Link></p>}<p>Opening a handoff creates no record or allocation. Finance validates current sources and recipients independently.</p></nav>}
       <Synthetic />

@@ -60,4 +60,10 @@ test("N02 continuing obligation opens exact owned Activity and returns to its ob
   await page.getByRole("link", { name: "Return to acceptance obligation", exact: true }).click();
   await expect(page).toHaveURL(new RegExp(`/projects/acceptance/stages/${fixture.stage}.*#obligation-${fixture.obligation}$`));
   await expect(page.locator(`#obligation-${fixture.obligation}`)).toBeVisible();
+  const profile=await page.request.post("/api/v1/local-session",{headers:{Origin:new URL(test.info().project.use.baseURL!).origin},data:{profile:"technician"}});
+  expect(profile.ok()).toBe(true);
+  const denied=page.waitForResponse(r=>r.url().includes(`/api/v1/activities/${fixture.activity}`)&&[403,404].includes(r.status()));
+  await page.goto(`/work/${fixture.activity}?returnTo=${encodeURIComponent(`/projects/acceptance/stages/${fixture.stage}#obligation-${fixture.obligation}`)}`);await denied;
+  await expect(page.getByRole("heading",{name:fixture.summary,exact:true})).toHaveCount(0);
+  await expect(page.getByRole("link",{name:"Return to acceptance obligation",exact:true})).toHaveCount(0);
 });

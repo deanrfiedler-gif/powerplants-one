@@ -19,7 +19,7 @@ test("N13 scoped continuation reaches a quotation beyond the first 100 estimates
   const exact=page.locator(`main a[href='/estimating/quotes/${f.older.quote}']`);
   await expect(exact).toContainText(f.older.title);await exact.click();
   await expect(page).toHaveURL(new RegExp(`/estimating/quotes/${f.older.quote}$`));
-  await expect(page.getByRole("heading",{name:/Draft quotation/})).toBeVisible();
+  await expect(page.getByRole("heading",{name:f.older.title,level:1,exact:true})).toBeVisible();
 });
 test("N24 Deal sections and exact estimate revisions restore through reload and Back",async({page})=>{
   const f=await fixture();await page.goto(`/sales/opportunities/${f.deal}?section=commercial`);

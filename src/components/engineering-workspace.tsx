@@ -1,5 +1,6 @@
 "use client";
 import { useContactView } from "./contact-workspace";
+import { RecordIdentity } from "../shell/record-identity";
 import { ControlSummary } from "../engineering/control/components/summary";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
@@ -1013,6 +1014,7 @@ function PackageDrawer({
       />
       {p && !resource.error && (
         <>
+          <RecordIdentity reference={p.display_number} title={p.title} />
           <div className="eng-dialog-head" style={{ paddingTop: 0 }}>
             <p>
               {p.customer_name} · {p.context_title}

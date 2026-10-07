@@ -1,4 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
+import { crmCreate, crmDiscovery } from "../helpers/crm";
 const origin = () => new URL(test.info().project.use.baseURL!).origin;
 async function login(page: Page, profile = "coordinator") {
   const result = await page.request.post("/api/v1/local-session", { headers: { Origin: origin() }, data: { profile } });
@@ -17,6 +18,18 @@ test("N03 CRM compatibility aliases retain supported list and record query state
   for (const [from,to] of [["/crm/leads?view=Archived&q=SYN", "/sales/leads?view=Archived&q=SYN"], ["/crm/opportunities?view=list&q=SYN", "/sales/opportunities?view=list&q=SYN"]]) {
     await page.goto(from); await expect(page).toHaveURL(origin()+to);
   }
+  const lead=crmCreate();
+  expect((await page.request.post("/api/v1/crm/leads",{headers:{Origin:origin()},data:lead})).ok()).toBe(true);
+  await page.goto(`/crm/leads/${lead.id}?view=activities`);
+  await expect(page).toHaveURL(`${origin()}/sales/leads/${lead.id}?view=activities`);
+  await expect(page.getByRole("heading",{name:lead.title,level:1,exact:true})).toBeVisible();
+  await page.goto("/crm/opportunities/new?company_id="+lead.company_id);
+  await expect(page).toHaveURL(origin()+"/sales/opportunities/new?company_id="+lead.company_id);
+  const deal=crmDiscovery();
+  expect((await page.request.post("/api/v1/crm/opportunities",{headers:{Origin:origin()},data:deal})).ok()).toBe(true);
+  await page.goto(`/crm/opportunities/${deal.id}?section=commercial`);
+  await expect(page).toHaveURL(`${origin()}/sales/opportunities/${deal.id}?section=commercial`);
+  await expect(page.getByRole("tab",{name:"Estimates & quotations",exact:true})).toHaveAttribute("aria-selected","true");
 });
 test("N04/N05/N10 Home and Workspace follow the current synthetic identity", async ({ page }) => {
   await login(page,"assigned-technician"); await page.goto("/");
@@ -56,13 +69,20 @@ test("N07/N08/N20 dirty preferences protect pointer, keyboard, touch and workspa
   const beforeBack=reviews;await page.evaluate(()=>history.back());
   await expect.poll(()=>reviews).toBeGreaterThan(beforeBack);
   await expect(page).toHaveURL(/\/work\/updates$/); await expect(time).toHaveValue(value);
+  page.removeAllListeners("dialog");page.on("dialog",dialog=>void dialog.accept());
+  if(isMobile)await page.getByRole("button",{name:"Open global search",exact:true}).click();
+  await search.fill("opportunity");await expect(option).toBeVisible();await option.click();
+  await expect(page).toHaveURL(/\/sales\/opportunities/);
 });
 test("N18/N19 primary rail expands, persists and retains endpoints in a short window", async ({ page, isMobile }) => {
   test.skip(isMobile,"Primary rail is a desktop control; mobile uses labelled More/Workspace.");
-  await login(page); await page.goto("/work?department=service");
+  await login(page);
+  const overview=page.waitForResponse(r=>r.url().includes("/api/v1/work/overview?")&&r.request().method()==="GET"&&r.ok());
+  await page.goto("/work?department=service"); await overview;
   await page.getByRole("button",{name:"Expand primary navigation",exact:true}).click();
   await expect(page.getByRole("button",{name:"Collapse primary navigation",exact:true})).toHaveAttribute("aria-expanded","true");
   expect(await page.locator(".ppo-rail").evaluate(el=>el.getBoundingClientRect().width)).toBe(232);
+  await expect(page.getByText("Loading your work…", {exact:true})).not.toBeVisible();
   await page.screenshot({path:test.info().outputPath("expanded-desktop.png")});
   await page.reload(); await expect(page.getByRole("button",{name:"Collapse primary navigation",exact:true})).toBeVisible();
   await login(page,"observer");await page.reload();
