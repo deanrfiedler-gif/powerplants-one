@@ -121,3 +121,8 @@ The Sales handover and native Discovery hosts reuse this control with explicit c
 ## Explicit Deal outcome source (LC-15)
 
 The existing Deal dialog reuses Field and SelectField for a required native quotation or separate narrative evidence choice. Native comparison remains frozen on refresh; denied facts are removed, and uncertain commands lock replacement until original recovery. Bindings and host examples are in components.json and lead-continuity-fixtures.json. Desktop/phone wrapping, labels, focus and 200% zoom require the live CR-01 page review; exact new-state mockup images and owner acceptance remain pending.
+
+
+## Native Won receiving (LC-16)
+
+Existing controls serve the explicit delivery comparison and native create-and-return hosts in sales-delivery-link.tsx and sales-delivery-creation.tsx. Buttons retain busy/uncertain states; fields preserve a fixed reviewed snapshot until explicit discard; denied reads remove comparison content. Native forms retain their scoped legacy controls. Fixtures: lead-continuity-fixtures.json; actual tests: tests/browser/sales-delivery-binding.spec.ts. New-state mockups and paired review remain pending; no review fingerprint is adopted.

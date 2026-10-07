@@ -99,3 +99,16 @@ Desktop shows A → B → D and A → C → D with four owners/versions/statuses
 Mobile stacks positions, paths and decisions, wraps IDs and avoids horizontal page overflow at 320px. All selectors/buttons have labels and keyboard focus; recovery and returned evidence remain reachable without drag or hover. Existing shell/tokens/controls apply; no new theme or accepted legacy exception.
 
 Host/state fixtures: tests/browser/quotation-task-diamond.spec.ts (seven decisions, lost committed response, inconclusive lookup/exact retry), tests/http/quotation-task-diamond.test.ts and tests/database/quotation-task-diamond.test.ts, quotation-task-diamond-boundaries.test.ts and quotation-task-diamond-receiving.test.ts. Retain exact references docs/reference/ui/quoting/PPO-One-Off-Item-Resolution-and-Conversion-r01.html, docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html and docs/reference/ui/projects/ppo-projects-gantt-content-r10.html. Accepted diamond mockup images are missing. This diamond panel is a proposed departure requiring paired visual and owner review before baseline adoption. Review fingerprints/device/screen-reader acceptance remain unchanged. Actual execution: docs/testing/evidence/quotation-task-diamond/README.md.
+
+
+## Native Won receiving (LC-16)
+
+Keep this existing scope and page type. Incoming handover: exact accepted Won Sales event; outgoing: independently created native Project or Service work order and a separately reviewed typed binding. The Deal reads native receiving state and the retained Activity separately. It does not infer delivery completion from acceptance, a link or an Authorised work order.
+
+Reuse shared Button, Field, SelectField, ErrorNotice, recoverable command journal, existing native lookup controls and record guard. Preserve the native Project Gantt and Service scope/readiness layouts. Proposed addition: a scoped Sales-context panel, explicit fixed-version comparison and create-and-return actions. Existing native form buttons remain documented legacy controls; no new theme or navigation system is introduced.
+
+Desktop and phone: wrap reported scope and references; show original Sales revision beside current native state, owner and version. Keep Review, link reason, discard and original-recovery actions visible in normal document flow. A refresh must not silently substitute a reviewed comparison. Denied comparison reads remove its protected content. Unknown Sales site requires an explicit native site choice and does not rewrite the accepted source. New Service intake and work-order creation save independently before link review; existing native scope and authorisation controls remain.
+
+Exact new-state mockup/HTML images are missing. Retained module references above are baseline context. Implementation captures and synthetic checks are recorded in `docs/testing/evidence/won-delivery-continuity/README.md`; they do not grant paired visual, keyboard/200% zoom, physical-device or owner acceptance. Review fingerprints remain unchanged.
+
+Project host refinement: open **Sales handovers** to read this context in the existing native-dialog pattern. Keep the fixed Gantt workspace intact; close/Escape returns to the originating action. Initial sibling-panel phone failure is retained in the execution evidence.

@@ -1,0 +1,11 @@
+✔ every forward SQL migration is registered exactly once; recovery is not a forward migration (7.4474ms)
+✔ local checksum compatibility preserves exact encodings and refuses content changes or misplaced exceptions (4.0582ms)
+✔ duplicate migration or seed versions fail before SQL dispatch; reserved gaps remain valid (1.4104ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 215.7979

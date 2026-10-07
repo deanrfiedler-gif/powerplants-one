@@ -1,0 +1,69 @@
+Database reset: completed
+[WebServer] (node:29008) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.98"}
+
+Running 12 tests using 1 worker
+
+(node:30260) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop-chromium] › tests\browser\projects-gantt.spec.ts:15:1 › Projects navigation, existing-context creation and an uncertain task save survive reload (4.5s)
+  ok  2 [desktop-chromium] › tests\browser\sales-delivery-binding.spec.ts:110:1 › LC-16 native project creation and delivery link recover separately after lost responses and Sales successor (9.0s)
+  ok  3 [desktop-chromium] › tests\browser\sales-delivery-binding.spec.ts:204:1 › LC-16 Service intake returns to a native work order and the explicit link preserves independent scope authority (9.8s)
+  ok  4 [desktop-chromium] › tests\browser\sales-delivery-binding.spec.ts:284:1 › LC-16 unknown-site comparison stays frozen through native changes and requires a new review (5.3s)
+  ok  5 [desktop-chromium] › tests\browser\sales-delivery-binding.spec.ts:338:1 › LC-16 a denied receiving refresh removes the reviewed native identity and accepted Sales details (2.6s)
+  ok  6 [desktop-chromium] › tests\browser\work-orders.spec.ts:30:1 › P04 SC-05 draft, authority refusal, dispute, identity limits, mandatory blocker, exception and approved history (7.9s)
+(node:34092) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   7 [mobile-chromium] › tests\browser\projects-gantt.spec.ts:15:1 › Projects navigation, existing-context creation and an uncertain task save survive reload (7.5s)
+(node:33820) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  8 [mobile-chromium] › tests\browser\sales-delivery-binding.spec.ts:110:1 › LC-16 native project creation and delivery link recover separately after lost responses and Sales successor (9.4s)
+  ok  9 [mobile-chromium] › tests\browser\sales-delivery-binding.spec.ts:204:1 › LC-16 Service intake returns to a native work order and the explicit link preserves independent scope authority (9.4s)
+  ok 10 [mobile-chromium] › tests\browser\sales-delivery-binding.spec.ts:284:1 › LC-16 unknown-site comparison stays frozen through native changes and requires a new review (6.1s)
+  ok 11 [mobile-chromium] › tests\browser\sales-delivery-binding.spec.ts:338:1 › LC-16 a denied receiving refresh removes the reviewed native identity and accepted Sales details (2.9s)
+  ok 12 [mobile-chromium] › tests\browser\work-orders.spec.ts:30:1 › P04 SC-05 draft, authority refusal, dispute, identity limits, mandatory blocker, exception and approved history (7.6s)
+
+
+  1) [mobile-chromium] › tests\browser\projects-gantt.spec.ts:15:1 › Projects navigation, existing-context creation and an uncertain task save survive reload 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  getByRole('heading', { name: 'SYN Gantt integration mobile-chromium 1791353543992', exact: true })
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'SYN Gantt integration mobile-chromium 1791353543992', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'SYN Gantt integration mobile-chromium 1791353543992', exact: true })
+        12 × locator resolved to <h1>SYN Gantt integration mobile-chromium 17913535439…</h1>
+           - unexpected value "hidden"
+
+
+      36 |   await expect(page).toHaveURL(/\/projects\/[0-9a-f-]{36}$/);
+      37 |   const id = page.url().split("/").at(-1)!;
+    > 38 |   await expect(page.getByRole("heading", { name, exact: true })).toBeVisible();
+         |                                                                  ^
+      39 |   const rejectedOrigin = await page.request.post(
+      40 |     `/api/v1/projects/${id}/tasks`,
+      41 |     { headers: { Origin: "https://example.invalid" }, data: taskInput() },
+        at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\projects-gantt.spec.ts:38:66
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\projects-gantt-Projects-na-54d1b-in-task-save-survive-reload-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\projects-gantt-Projects-na-54d1b-in-task-save-survive-reload-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\projects-gantt-Projects-na-54d1b-in-task-save-survive-reload-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\projects-gantt-Projects-na-54d1b-in-task-save-survive-reload-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [mobile-chromium] › tests\browser\projects-gantt.spec.ts:15:1 › Projects navigation, existing-context creation and an uncertain task save survive reload 
+  11 passed (1.6m)

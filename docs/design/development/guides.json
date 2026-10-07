@@ -4624,6 +4624,20 @@
           "steps": [],
           "rows": [],
           "headers": []
+        },
+        {
+          "section_id": "native-won-receiving",
+          "title": "Continue an accepted Won handover",
+          "paragraphs": [
+            "Accept the current Won handover and its receiving owner before choosing a native Project or Service destination. Create a native record through its existing form, or choose a matching record owned and editable by the receiver. Creation saves separately.",
+            "For Service, link a permitted request or use Record a new Service request and return. Intake retains its own owner and explicit unknowns. Save the draft work order, return to the handover, then review its exact customer, site and version. Native scope, authorisation and booking still require their usual decisions.",
+            "Review delivery link freezes the compared Sales and native versions. Supply a link reason; when Sales left the site unknown, explicitly review the chosen native site. If either source changes, discard and review a fresh comparison. Refresh alone never changes your reviewed submission.",
+            "Check original native creation or Check original delivery link resolves an uncertain save; Retry exact original sends the retained operation. Same-tab recovery survives reload. A later Sales successor preserves earlier attribution as historical. Current access still governs recovery.",
+            "The native record shows exact accepted Sales context beside its own controls. The Deal shows source-derived receiving progress and retains the original accountable Won event and existing Activity owners/dates. A link is not evidence of completed delivery. Parts receiving remains an unresolved native route."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
         }
       ],
       "related_entry_keys": [
@@ -5009,6 +5023,20 @@
           "title": "Guide review and feedback",
           "paragraphs": [
             "Owner: Dean Fiedler. Draft article; owner and visual acceptance remain pending. Actual tests and captures are recorded separately in the implementation handover. A source commit or passing test is not operational approval."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "native-won-receiving",
+          "title": "Continue an accepted Won handover",
+          "paragraphs": [
+            "Accept the current Won handover and its receiving owner before choosing a native Project or Service destination. Create a native record through its existing form, or choose a matching record owned and editable by the receiver. Creation saves separately.",
+            "For Service, link a permitted request or use Record a new Service request and return. Intake retains its own owner and explicit unknowns. Save the draft work order, return to the handover, then review its exact customer, site and version. Native scope, authorisation and booking still require their usual decisions.",
+            "Review delivery link freezes the compared Sales and native versions. Supply a link reason; when Sales left the site unknown, explicitly review the chosen native site. If either source changes, discard and review a fresh comparison. Refresh alone never changes your reviewed submission.",
+            "Check original native creation or Check original delivery link resolves an uncertain save; Retry exact original sends the retained operation. Same-tab recovery survives reload. A later Sales successor preserves earlier attribution as historical. Current access still governs recovery.",
+            "The native record shows exact accepted Sales context beside its own controls. The Deal shows source-derived receiving progress and retains the original accountable Won event and existing Activity owners/dates. A link is not evidence of completed delivery. Parts receiving remains an unresolved native route."
           ],
           "steps": [],
           "rows": [],
@@ -9757,6 +9785,21 @@
             "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
             "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
             "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "native-won-receiving",
+          "title": "Continue an accepted Won handover",
+          "paragraphs": [
+            "Accept the current Won handover and its receiving owner before choosing a native Project or Service destination. Create a native record through its existing form, or choose a matching record owned and editable by the receiver. Creation saves separately.",
+            "For Service, link a permitted request or use Record a new Service request and return. Intake retains its own owner and explicit unknowns. Save the draft work order, return to the handover, then review its exact customer, site and version. Native scope, authorisation and booking still require their usual decisions.",
+            "Review delivery link freezes the compared Sales and native versions. Supply a link reason; when Sales left the site unknown, explicitly review the chosen native site. If either source changes, discard and review a fresh comparison. Refresh alone never changes your reviewed submission.",
+            "Check original native creation or Check original delivery link resolves an uncertain save; Retry exact original sends the retained operation. Same-tab recovery survives reload. A later Sales successor preserves earlier attribution as historical. Current access still governs recovery.",
+            "The native record shows exact accepted Sales context beside its own controls. The Deal shows source-derived receiving progress and retains the original accountable Won event and existing Activity owners/dates. A link is not evidence of completed delivery. Parts receiving remains an unresolved native route.",
+            "In Projects, choose Sales handovers to open the exact context in a dialog. Close it or press Escape to return focus to that action; the schedule stays visible behind it."
           ],
           "steps": [],
           "rows": [],
@@ -18402,6 +18445,20 @@
           "steps": [],
           "rows": [],
           "headers": []
+        },
+        {
+          "section_id": "native-won-receiving",
+          "title": "Continue an accepted Won handover",
+          "paragraphs": [
+            "Accept the current Won handover and its receiving owner before choosing a native Project or Service destination. Create a native record through its existing form, or choose a matching record owned and editable by the receiver. Creation saves separately.",
+            "For Service, link a permitted request or use Record a new Service request and return. Intake retains its own owner and explicit unknowns. Save the draft work order, return to the handover, then review its exact customer, site and version. Native scope, authorisation and booking still require their usual decisions.",
+            "Review delivery link freezes the compared Sales and native versions. Supply a link reason; when Sales left the site unknown, explicitly review the chosen native site. If either source changes, discard and review a fresh comparison. Refresh alone never changes your reviewed submission.",
+            "Check original native creation or Check original delivery link resolves an uncertain save; Retry exact original sends the retained operation. Same-tab recovery survives reload. A later Sales successor preserves earlier attribution as historical. Current access still governs recovery.",
+            "The native record shows exact accepted Sales context beside its own controls. The Deal shows source-derived receiving progress and retains the original accountable Won event and existing Activity owners/dates. A link is not evidence of completed delivery. Parts receiving remains an unresolved native route."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
         }
       ],
       "related_entry_keys": [
@@ -18577,6 +18634,20 @@
           "title": "Guide review and feedback",
           "paragraphs": [
             "Draft guide and native functional work; owner acceptance and deployment remain pending."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "native-won-receiving",
+          "title": "Continue an accepted Won handover",
+          "paragraphs": [
+            "Accept the current Won handover and its receiving owner before choosing a native Project or Service destination. Create a native record through its existing form, or choose a matching record owned and editable by the receiver. Creation saves separately.",
+            "For Service, link a permitted request or use Record a new Service request and return. Intake retains its own owner and explicit unknowns. Save the draft work order, return to the handover, then review its exact customer, site and version. Native scope, authorisation and booking still require their usual decisions.",
+            "Review delivery link freezes the compared Sales and native versions. Supply a link reason; when Sales left the site unknown, explicitly review the chosen native site. If either source changes, discard and review a fresh comparison. Refresh alone never changes your reviewed submission.",
+            "Check original native creation or Check original delivery link resolves an uncertain save; Retry exact original sends the retained operation. Same-tab recovery survives reload. A later Sales successor preserves earlier attribution as historical. Current access still governs recovery.",
+            "The native record shows exact accepted Sales context beside its own controls. The Deal shows source-derived receiving progress and retains the original accountable Won event and existing Activity owners/dates. A link is not evidence of completed delivery. Parts receiving remains an unresolved native route."
           ],
           "steps": [],
           "rows": [],
@@ -42192,6 +42263,21 @@
           "headers": [],
           "rows": [],
           "id": "material-diamond"
+        },
+        {
+          "section_id": "native-won-receiving",
+          "title": "Continue an accepted Won handover",
+          "paragraphs": [
+            "Accept the current Won handover and its receiving owner before choosing a native Project or Service destination. Create a native record through its existing form, or choose a matching record owned and editable by the receiver. Creation saves separately.",
+            "For Service, link a permitted request or use Record a new Service request and return. Intake retains its own owner and explicit unknowns. Save the draft work order, return to the handover, then review its exact customer, site and version. Native scope, authorisation and booking still require their usual decisions.",
+            "Review delivery link freezes the compared Sales and native versions. Supply a link reason; when Sales left the site unknown, explicitly review the chosen native site. If either source changes, discard and review a fresh comparison. Refresh alone never changes your reviewed submission.",
+            "Check original native creation or Check original delivery link resolves an uncertain save; Retry exact original sends the retained operation. Same-tab recovery survives reload. A later Sales successor preserves earlier attribution as historical. Current access still governs recovery.",
+            "The native record shows exact accepted Sales context beside its own controls. The Deal shows source-derived receiving progress and retains the original accountable Won event and existing Activity owners/dates. A link is not evidence of completed delivery. Parts receiving remains an unresolved native route.",
+            "In Projects, choose Sales handovers to open the exact context in a dialog. Close it or press Escape to return focus to that action; the schedule stays visible behind it."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
         }
       ],
       "related_entry_keys": [
@@ -42462,6 +42548,20 @@
             "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
             "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
             "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "native-won-receiving",
+          "title": "Continue an accepted Won handover",
+          "paragraphs": [
+            "Accept the current Won handover and its receiving owner before choosing a native Project or Service destination. Create a native record through its existing form, or choose a matching record owned and editable by the receiver. Creation saves separately.",
+            "For Service, link a permitted request or use Record a new Service request and return. Intake retains its own owner and explicit unknowns. Save the draft work order, return to the handover, then review its exact customer, site and version. Native scope, authorisation and booking still require their usual decisions.",
+            "Review delivery link freezes the compared Sales and native versions. Supply a link reason; when Sales left the site unknown, explicitly review the chosen native site. If either source changes, discard and review a fresh comparison. Refresh alone never changes your reviewed submission.",
+            "Check original native creation or Check original delivery link resolves an uncertain save; Retry exact original sends the retained operation. Same-tab recovery survives reload. A later Sales successor preserves earlier attribution as historical. Current access still governs recovery.",
+            "The native record shows exact accepted Sales context beside its own controls. The Deal shows source-derived receiving progress and retains the original accountable Won event and existing Activity owners/dates. A link is not evidence of completed delivery. Parts receiving remains an unresolved native route."
           ],
           "steps": [],
           "rows": [],
@@ -43497,6 +43597,20 @@
             "Separate outcome evidence requires a narrative describing the independently reviewed evidence. It does not assert a native quotation response. Recording the outcome does not convert scope or authorise delivery.",
             "Refreshing quotation evidence preserves your exact reviewed comparison. If it changed, discard the comparison and review the current basis. A denied refresh hides the comparison; choose evidence again only with current permission.",
             "If the save result is uncertain, Confirm original save outcome. The original decision remains recoverable even if a native response is corrected later, subject to current access. History distinguishes the recorded response, latest report on that revision, separate evidence and older narrative outcomes without native links."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "native-won-receiving",
+          "title": "Continue an accepted Won handover",
+          "paragraphs": [
+            "Accept the current Won handover and its receiving owner before choosing a native Project or Service destination. Create a native record through its existing form, or choose a matching record owned and editable by the receiver. Creation saves separately.",
+            "For Service, link a permitted request or use Record a new Service request and return. Intake retains its own owner and explicit unknowns. Save the draft work order, return to the handover, then review its exact customer, site and version. Native scope, authorisation and booking still require their usual decisions.",
+            "Review delivery link freezes the compared Sales and native versions. Supply a link reason; when Sales left the site unknown, explicitly review the chosen native site. If either source changes, discard and review a fresh comparison. Refresh alone never changes your reviewed submission.",
+            "Check original native creation or Check original delivery link resolves an uncertain save; Retry exact original sends the retained operation. Same-tab recovery survives reload. A later Sales successor preserves earlier attribution as historical. Current access still governs recovery.",
+            "The native record shows exact accepted Sales context beside its own controls. The Deal shows source-derived receiving progress and retains the original accountable Won event and existing Activity owners/dates. A link is not evidence of completed delivery. Parts receiving remains an unresolved native route."
           ],
           "steps": [],
           "rows": [],
@@ -46375,6 +46489,20 @@
           "steps": [],
           "rows": [],
           "headers": []
+        },
+        {
+          "section_id": "native-won-receiving",
+          "title": "Continue an accepted Won handover",
+          "paragraphs": [
+            "Accept the current Won handover and its receiving owner before choosing a native Project or Service destination. Create a native record through its existing form, or choose a matching record owned and editable by the receiver. Creation saves separately.",
+            "For Service, link a permitted request or use Record a new Service request and return. Intake retains its own owner and explicit unknowns. Save the draft work order, return to the handover, then review its exact customer, site and version. Native scope, authorisation and booking still require their usual decisions.",
+            "Review delivery link freezes the compared Sales and native versions. Supply a link reason; when Sales left the site unknown, explicitly review the chosen native site. If either source changes, discard and review a fresh comparison. Refresh alone never changes your reviewed submission.",
+            "Check original native creation or Check original delivery link resolves an uncertain save; Retry exact original sends the retained operation. Same-tab recovery survives reload. A later Sales successor preserves earlier attribution as historical. Current access still governs recovery.",
+            "The native record shows exact accepted Sales context beside its own controls. The Deal shows source-derived receiving progress and retains the original accountable Won event and existing Activity owners/dates. A link is not evidence of completed delivery. Parts receiving remains an unresolved native route."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
         }
       ],
       "related_entry_keys": [
@@ -46933,6 +47061,20 @@
           "steps": [],
           "rows": [],
           "headers": []
+        },
+        {
+          "section_id": "native-won-receiving",
+          "title": "Continue an accepted Won handover",
+          "paragraphs": [
+            "Accept the current Won handover and its receiving owner before choosing a native Project or Service destination. Create a native record through its existing form, or choose a matching record owned and editable by the receiver. Creation saves separately.",
+            "For Service, link a permitted request or use Record a new Service request and return. Intake retains its own owner and explicit unknowns. Save the draft work order, return to the handover, then review its exact customer, site and version. Native scope, authorisation and booking still require their usual decisions.",
+            "Review delivery link freezes the compared Sales and native versions. Supply a link reason; when Sales left the site unknown, explicitly review the chosen native site. If either source changes, discard and review a fresh comparison. Refresh alone never changes your reviewed submission.",
+            "Check original native creation or Check original delivery link resolves an uncertain save; Retry exact original sends the retained operation. Same-tab recovery survives reload. A later Sales successor preserves earlier attribution as historical. Current access still governs recovery.",
+            "The native record shows exact accepted Sales context beside its own controls. The Deal shows source-derived receiving progress and retains the original accountable Won event and existing Activity owners/dates. A link is not evidence of completed delivery. Parts receiving remains an unresolved native route."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
         }
       ],
       "related_entry_keys": [
@@ -47200,6 +47342,20 @@
             "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
             "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
             "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "native-won-receiving",
+          "title": "Continue an accepted Won handover",
+          "paragraphs": [
+            "Accept the current Won handover and its receiving owner before choosing a native Project or Service destination. Create a native record through its existing form, or choose a matching record owned and editable by the receiver. Creation saves separately.",
+            "For Service, link a permitted request or use Record a new Service request and return. Intake retains its own owner and explicit unknowns. Save the draft work order, return to the handover, then review its exact customer, site and version. Native scope, authorisation and booking still require their usual decisions.",
+            "Review delivery link freezes the compared Sales and native versions. Supply a link reason; when Sales left the site unknown, explicitly review the chosen native site. If either source changes, discard and review a fresh comparison. Refresh alone never changes your reviewed submission.",
+            "Check original native creation or Check original delivery link resolves an uncertain save; Retry exact original sends the retained operation. Same-tab recovery survives reload. A later Sales successor preserves earlier attribution as historical. Current access still governs recovery.",
+            "The native record shows exact accepted Sales context beside its own controls. The Deal shows source-derived receiving progress and retains the original accountable Won event and existing Activity owners/dates. A link is not evidence of completed delivery. Parts receiving remains an unresolved native route."
           ],
           "steps": [],
           "rows": [],
@@ -68024,6 +68180,20 @@
           "title": "Guide review and feedback",
           "paragraphs": [
             "Owner: Dean Fiedler. Draft article; owner and visual acceptance remain pending. Actual tests and captures are recorded separately in the implementation handover. A source commit or passing test is not operational approval."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "native-won-receiving",
+          "title": "Continue an accepted Won handover",
+          "paragraphs": [
+            "Accept the current Won handover and its receiving owner before choosing a native Project or Service destination. Create a native record through its existing form, or choose a matching record owned and editable by the receiver. Creation saves separately.",
+            "For Service, link a permitted request or use Record a new Service request and return. Intake retains its own owner and explicit unknowns. Save the draft work order, return to the handover, then review its exact customer, site and version. Native scope, authorisation and booking still require their usual decisions.",
+            "Review delivery link freezes the compared Sales and native versions. Supply a link reason; when Sales left the site unknown, explicitly review the chosen native site. If either source changes, discard and review a fresh comparison. Refresh alone never changes your reviewed submission.",
+            "Check original native creation or Check original delivery link resolves an uncertain save; Retry exact original sends the retained operation. Same-tab recovery survives reload. A later Sales successor preserves earlier attribution as historical. Current access still governs recovery.",
+            "The native record shows exact accepted Sales context beside its own controls. The Deal shows source-derived receiving progress and retains the original accountable Won event and existing Activity owners/dates. A link is not evidence of completed delivery. Parts receiving remains an unresolved native route."
           ],
           "steps": [],
           "rows": [],

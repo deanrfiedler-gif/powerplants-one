@@ -219,7 +219,12 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // users and receipt hashes remain unchanged. Generic runtime table/function
   // privileges cover this additive evidence; populated and runtime-role upgrade
   // proofs must retain old outcomes and original recovery.
-  if (latestMigrationVersion !== 75) throw Error("Review the existing-demo upgrade for this release.");
+  // 0076 adds an empty exact accepted Won-to-native-delivery companion. Existing
+  // Project/Service source rows, accepted Sales hashes, receipts and authorities
+  // remain unchanged. There is no seed, user or grant addition; generic runtime
+  // table/function privileges cover it. Preserve original receiving and native
+  // creation receipts in populated and restricted-role upgrade proofs.
+  if (latestMigrationVersion !== 76) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

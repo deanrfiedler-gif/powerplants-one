@@ -10,6 +10,11 @@ import {
 } from "../scheduling";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import {
+  DeliveryCreation,
+  type SalesCreation,
+} from "./sales-delivery-creation";
+import { DeliverySalesSources } from "./sales-delivery-link";
 import { useIdentity } from "./business-session";
 import {
   EnumField,
@@ -187,7 +192,11 @@ function draftScope(r: Scope | null): ScopeInput {
     coverage: r?.coverage
       ? {
           status: r.coverage.status,
-          ...(r.coverage.entitlement_assessment_id ? {entitlement_assessment_id:r.coverage.entitlement_assessment_id} : {}),
+          ...(r.coverage.entitlement_assessment_id
+            ? {
+                entitlement_assessment_id: r.coverage.entitlement_assessment_id,
+              }
+            : {}),
           agreement_reference: r.coverage.agreement_reference,
           source_version: r.coverage.source_version,
           effective_from: r.coverage.effective_from,
@@ -303,13 +312,26 @@ export function WorkOrderList() {
   );
 }
 export function NewWorkOrder() {
+  return (
+    <DeliveryCreation kind="Service">
+      {(sales) => <NewWorkOrderForm sales={sales} />}
+    </DeliveryCreation>
+  );
+}
+function NewWorkOrderForm({ sales }: { sales?: SalesCreation }) {
   const params = useSearchParams(),
     router = useRouter(),
     identity = useIdentity();
-  const [company, setCompany] = useState(params.get("company_id") ?? ""),
-    [site, setSite] = useState(params.get("site_id") ?? ""),
-    [customer, setCustomer] = useState(""),
-    [owner, setOwner] = useState(identity?.actor_id ?? ""),
+  const [company, setCompany] = useState(
+      sales?.source.company_id ?? params.get("company_id") ?? "",
+    ),
+    [site, setSite] = useState(
+      sales?.source.site_id ?? params.get("site_id") ?? "",
+    ),
+    [customer, setCustomer] = useState(sales?.source.customer_id ?? ""),
+    [owner, setOwner] = useState(
+      sales?.source.receiving_owner_id ?? identity?.actor_id ?? "",
+    ),
     [tickets, setTickets] = useState<string[]>(
       params.get("ticket_id") ? [params.get("ticket_id")!] : [],
     ),
@@ -349,133 +371,153 @@ export function NewWorkOrder() {
         title="New work order"
         description="A draft retains the service request history and starts a separate scope decision."
       />
-      <ValidationFields error={cmd.error}>
+      <ValidationFields error={sales?.error ?? cmd.error}>
         <form
           className="panel"
           onSubmit={async (e) => {
             e.preventDefault();
-            const result = await cmd.send<{ record_id: string }>(
-              "service/work-orders",
-              {
-                id,
-                company_id: company,
-                site_id: site,
-                customer_id: customer,
-                service_owner_id: owner,
-                tickets: tickets.map((ticket_id) => ({
-                  ticket_id,
-                  issue_disposition: disposition,
-                })),
-                reason: "Create a synthetic work-order draft",
-              },
-            );
-            if (result) router.push(`/service/work-orders/${result.record_id}`);
+            if (cmd.busy || sales?.blocked) return;
+            const fields = {
+              id,
+              company_id: company,
+              site_id: site,
+              customer_id: customer,
+              service_owner_id: owner,
+              tickets: tickets.map((ticket_id) => ({
+                ticket_id,
+                issue_disposition: disposition,
+              })),
+              reason: "Create a synthetic work-order draft",
+            };
+            const result = sales
+              ? await sales.send(fields)
+              : await cmd.send<{ record_id: string }>(
+                  "service/work-orders",
+                  fields,
+                );
+            if (result && !sales)
+              router.push(`/service/work-orders/${result.record_id}`);
           }}
         >
-          <ErrorNotice error={cmd.error} />
-          <div className="form-grid">
-            <SelectField
-              name="wo-company"
-              label="Company context"
-              value={company}
-              onChange={(v) => {
-                setCompany(v);
-                setSite("");
-                setCustomer("");
-                setTickets([]);
-              }}
-              options={companies.data?.items ?? []}
-              required
-            />
-            <SelectField
-              name="wo-site"
-              label="Service site"
-              value={site}
-              onChange={(v) => {
-                setSite(v);
-                setCustomer("");
-                setTickets([]);
-              }}
-              options={sites.data?.items ?? []}
-              required
-            />
-            <SelectField
-              name="wo-customer"
-              label="Customer at this site"
-              value={customer}
-              onChange={setCustomer}
-              options={(detail?.parties ?? [])
-                .filter((p) => p.is_current)
-                .map((p) => ({
-                  id: p.organisation_id,
-                  display_name: p.display_name,
-                }))
-                .filter((p, i, a) => a.findIndex((x) => x.id === p.id) === i)}
-              required
-            />
-            <SelectField
-              name="wo-owner"
-              label="Service owner"
-              value={owner}
-              onChange={setOwner}
-              options={owners.data?.items ?? []}
-              required
-            />
-          </div>
-          <SelectField
-            name="wo-ticket"
-            label="Service request to link"
-            value={selected}
-            onChange={setSelected}
-            options={(requests.data?.items ?? []).map((t) => ({
-              ...t,
-              display_name: t.summary,
-            }))}
-          />
-          <button
-            type="button"
-            className="secondary"
-            disabled={!selected || tickets.includes(selected)}
-            onClick={() => {
-              setTickets([...tickets, selected]);
-              setSelected("");
-            }}
-          >
-            Link service request
-          </button>
-          <ul>
-            {tickets.map((t) => (
-              <li key={t}>
-                {requests.data?.items.find((r) => r.id === t)?.display_number ??
-                  t}{" "}
-                <button
-                  type="button"
-                  className="secondary"
-                  onClick={() => setTickets(tickets.filter((x) => x !== t))}
+          <ErrorNotice error={sales?.error ?? cmd.error} />
+          <fieldset disabled={cmd.busy || sales?.blocked}>
+            <div className="form-grid">
+              <SelectField
+                name="wo-company"
+                label="Company context"
+                value={company}
+                onChange={(v) => {
+                  setCompany(v);
+                  setSite("");
+                  setCustomer("");
+                  setTickets([]);
+                }}
+                options={companies.data?.items ?? []}
+                required
+              />
+              <SelectField
+                name="wo-site"
+                label="Service site"
+                value={site}
+                onChange={(v) => {
+                  setSite(v);
+                  setCustomer("");
+                  setTickets([]);
+                }}
+                options={sites.data?.items ?? []}
+                required
+              />
+              <SelectField
+                name="wo-customer"
+                label="Customer at this site"
+                value={customer}
+                onChange={setCustomer}
+                options={(detail?.parties ?? [])
+                  .filter((p) => p.is_current)
+                  .map((p) => ({
+                    id: p.organisation_id,
+                    display_name: p.display_name,
+                  }))
+                  .filter((p, i, a) => a.findIndex((x) => x.id === p.id) === i)}
+                required
+              />
+              <SelectField
+                name="wo-owner"
+                label="Service owner"
+                value={owner}
+                onChange={setOwner}
+                options={owners.data?.items ?? []}
+                required
+              />
+            </div>
+            {sales && (
+              <p>
+                <Link
+                  href={`/service/tickets/new?${new URLSearchParams({ sales_handover: sales.source.handover_id, sales_acceptance: sales.source.acceptance_event_id!, ...(site ? { site } : {}) })}`}
                 >
-                  Remove link
-                </button>
-              </li>
-            ))}
-          </ul>
-          <Field
-            name="issue_disposition"
-            label="Purpose of these linked requests"
-            value={disposition}
-            onChange={setDisposition}
-            multiline
-            maxLength={2000}
-            required
-          />
-          {[companies, sites, customers, owners, requests].map((r, i) => (
-            <ReadState
-              key={i}
-              loading={r.loading}
-              error={r.error}
-              retry={r.reload}
+                  Record a new Service request and return
+                </Link>
+                . Request intake saves independently. Unsaved work-order choices
+                are not transferred.
+              </p>
+            )}
+            <SelectField
+              name="wo-ticket"
+              label="Service request to link"
+              value={selected}
+              onChange={setSelected}
+              options={(requests.data?.items ?? []).map((t) => ({
+                ...t,
+                display_name: t.summary,
+              }))}
             />
-          ))}
-          <button disabled={cmd.busy}>Save draft work order</button>
+            <button
+              type="button"
+              className="secondary"
+              disabled={!selected || tickets.includes(selected)}
+              onClick={() => {
+                setTickets([...tickets, selected]);
+                setSelected("");
+              }}
+            >
+              Link service request
+            </button>
+            <ul>
+              {tickets.map((t) => (
+                <li key={t}>
+                  {requests.data?.items.find((r) => r.id === t)
+                    ?.display_number ?? t}{" "}
+                  <button
+                    type="button"
+                    className="secondary"
+                    onClick={() => setTickets(tickets.filter((x) => x !== t))}
+                  >
+                    Remove link
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <Field
+              name="issue_disposition"
+              label="Purpose of these linked requests"
+              value={disposition}
+              onChange={setDisposition}
+              multiline
+              maxLength={2000}
+              required
+            />
+            {[companies, sites, customers, owners, requests].map((r, i) => (
+              <ReadState
+                key={i}
+                loading={r.loading}
+                error={r.error}
+                retry={r.reload}
+              />
+            ))}
+            <button disabled={cmd.busy || sales?.blocked}>
+              Save draft work order
+            </button>
+          </fieldset>
         </form>
       </ValidationFields>
     </>
@@ -964,7 +1006,8 @@ function ScopeForm({
                 name={`coverage-${k}`}
                 label={
                   {
-                    entitlement_assessment_id: "Managed entitlement assessment identity (optional)",
+                    entitlement_assessment_id:
+                      "Managed entitlement assessment identity (optional)",
                     agreement_reference: "Agreement reference",
                     source_version: "Agreement version",
                     effective_from: "Effective from",
@@ -1096,8 +1139,11 @@ function AssessmentForm({
     [expiry, setExpiry] = useState(""),
     [expected, setExpected] = useState(w.version);
   const returnTarget = safeBookingTarget(useSearchParams().get("returnTo"));
-  const recoverable = !!visit && returnTarget?.split("?")[0] === `/service/appointments/${visit.id}`;
-  const memoryCommand = useCommand(), durableCommand = useBookingCommand(recoverable);
+  const recoverable =
+    !!visit &&
+    returnTarget?.split("?")[0] === `/service/appointments/${visit.id}`;
+  const memoryCommand = useCommand(),
+    durableCommand = useBookingCommand(recoverable);
   const cmd = recoverable ? durableCommand : memoryCommand;
   const pc = rows.find((x) => x.criterion_code === criterion);
   return (
@@ -1106,36 +1152,49 @@ function AssessmentForm({
         onSubmit={async (e) => {
           e.preventDefault();
           const fields = {
-              expected_version: expected,
-              assessment: {
-                scope_revision_id: r.id,
-                scope_version: r.version,
-                appointment_id: visit?.id ?? null,
-                criterion_code: criterion,
-                outcome,
-                reason,
-                evidence: [
-                  "Pass",
-                  "PermittedException",
-                  "NotApplicable",
-                ].includes(outcome)
-                  ? evidence
-                  : null,
-                source_as_at: asAt ? new Date(asAt).toISOString() : null,
-                valid_until: expiry ? new Date(expiry).toISOString() : null,
-              },
-              reason: "Review synthetic readiness evidence",
-            };
+            expected_version: expected,
+            assessment: {
+              scope_revision_id: r.id,
+              scope_version: r.version,
+              appointment_id: visit?.id ?? null,
+              criterion_code: criterion,
+              outcome,
+              reason,
+              evidence: [
+                "Pass",
+                "PermittedException",
+                "NotApplicable",
+              ].includes(outcome)
+                ? evidence
+                : null,
+              source_as_at: asAt ? new Date(asAt).toISOString() : null,
+              valid_until: expiry ? new Date(expiry).toISOString() : null,
+            },
+            reason: "Review synthetic readiness evidence",
+          };
           const result = recoverable
-            ? await durableCommand.send(`service/work-orders/${w.id}/readiness`, fields, returnTarget!, "Readiness assessment", w.id)
-            : await memoryCommand.send<{ record_version: number }>(`service/work-orders/${w.id}/readiness`, fields);
+            ? await durableCommand.send(
+                `service/work-orders/${w.id}/readiness`,
+                fields,
+                returnTarget!,
+                "Readiness assessment",
+                w.id,
+              )
+            : await memoryCommand.send<{ record_version: number }>(
+                `service/work-orders/${w.id}/readiness`,
+                fields,
+              );
           if (result) {
             setExpected(result.record_version);
             onSaved();
           }
         }}
       >
-        {recoverable ? <BookingRecovery command={durableCommand} /> : <ErrorNotice error={cmd.error} />}
+        {recoverable ? (
+          <BookingRecovery command={durableCommand} />
+        ) : (
+          <ErrorNotice error={cmd.error} />
+        )}
         <ConflictReview
           version={expected}
           latest={w.version}
@@ -1201,7 +1260,14 @@ function AssessmentForm({
             onChange={setEvidence}
           />
         )}
-        <button disabled={cmd.busy || (recoverable && (!durableCommand.ready || !!durableCommand.pending))}>Record readiness review</button>
+        <button
+          disabled={
+            cmd.busy ||
+            (recoverable && (!durableCommand.ready || !!durableCommand.pending))
+          }
+        >
+          Record readiness review
+        </button>
         <p role="status">{cmd.saved}</p>
       </form>
     </ValidationFields>
@@ -1295,9 +1361,10 @@ function VisitForm({
             }}
           />
           <p>
-            Proposal basis: work order v{expected ?? w.version}, scope r{proposalScope.revision} · v
-            {proposalScope.version}. Comparing saved changes retains your input; adopt
-            reviewed current context explicitly.
+            Proposal basis: work order v{expected ?? w.version}, scope r
+            {proposalScope.revision} · v{proposalScope.version}. Comparing saved
+            changes retains your input; adopt reviewed current context
+            explicitly.
           </p>
           <p>
             Enter instants in your device timezone. The saved proposal is shown
@@ -1439,6 +1506,7 @@ export function WorkOrderDetail({ id }: { id: string }) {
               · Readiness saves separately from contact and confirmation.
             </p>
           )}
+          <DeliverySalesSources kind="Service" id={id} />
           <div className="wo-state">
             <Status value={w.status} />
             <Status value={r?.coverage?.status ?? "Unknown"} />
@@ -1591,9 +1659,16 @@ export function WorkOrderDetail({ id }: { id: string }) {
                     proposal retains its original scope context.
                   </p>
                 )}
-                {v.policy_impacts?.filter(x => x.held).map(x => <p className="callout" key={x.impact_id}>
-                  Scheduling policy hold: {x.reason}. Owner: {x.owner_name}. Source publication: <span className="record-id">{x.publication_id}</span>. {x.next_action}
-                </p>)}
+                {v.policy_impacts
+                  ?.filter((x) => x.held)
+                  .map((x) => (
+                    <p className="callout" key={x.impact_id}>
+                      Scheduling policy hold: {x.reason}. Owner: {x.owner_name}.
+                      Source publication:{" "}
+                      <span className="record-id">{x.publication_id}</span>.{" "}
+                      {x.next_action}
+                    </p>
+                  ))}
                 <p>
                   {visitPreparationGuidance(
                     v.status,
