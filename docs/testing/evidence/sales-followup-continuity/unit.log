@@ -1,0 +1,13 @@
+✔ CRM shared URL preserves criteria and presentation but never an actor-bound page token (6.4633ms)
+✔ CRM location input ignores duplicate/unsupported controls and retains legacy links without deriving authority (0.9751ms)
+✔ Leads accept incomplete manual enquiries without invented shared records (3.2867ms)
+✔ conversion rejects owner reassignment, false qualification and ambiguous next actions (1.5379ms)
+✔ lead changes retain explicit lifecycle commands, reasons and strict versions (0.6543ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2837.0763

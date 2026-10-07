@@ -6455,7 +6455,10 @@
         "docs/decisions/won-delivery-continuity.md",
         "docs/testing/evidence/won-delivery-continuity/README.md",
         "src/components/sales-delivery-link.tsx",
-        "src/components/sales-delivery-creation.tsx"
+        "src/components/sales-delivery-creation.tsx",
+        "src/components/sales-followup.tsx",
+        "src/sales/followup.ts",
+        "docs/design/development/lead-continuity-fixtures.json"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -6553,7 +6556,9 @@
         "docs/contracts/lead-to-delivery-continuity.md",
         "docs/decisions/lead-customer-context.md",
         "docs/design/development/lead-continuity-fixtures.json",
-        "docs/testing/evidence/lead-context-resolution/README.md"
+        "docs/testing/evidence/lead-context-resolution/README.md",
+        "src/components/sales-followup.tsx",
+        "src/sales/followup.ts"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -6584,7 +6589,9 @@
         "docs/contracts/lead-to-delivery-continuity.md",
         "docs/decisions/lead-customer-context.md",
         "docs/design/development/lead-continuity-fixtures.json",
-        "docs/testing/evidence/lead-context-resolution/README.md"
+        "docs/testing/evidence/lead-context-resolution/README.md",
+        "src/components/sales-followup.tsx",
+        "src/sales/followup.ts"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -6627,7 +6634,9 @@
         "docs/decisions/won-delivery-continuity.md",
         "docs/testing/evidence/won-delivery-continuity/README.md",
         "src/components/sales-delivery-link.tsx",
-        "src/components/sales-delivery-creation.tsx"
+        "src/components/sales-delivery-creation.tsx",
+        "src/components/sales-followup.tsx",
+        "src/sales/followup.ts"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
@@ -6656,7 +6665,11 @@
       "design_path": "docs/design/development/pages/route-sales-opportunities-new.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "src/components/sales-followup.tsx",
+        "src/sales/followup.ts",
+        "docs/design/development/lead-continuity-fixtures.json"
+      ],
       "scope_status": "built",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -7513,7 +7526,10 @@
         "src/scheduling/policy-holds.ts",
         "src/scheduling/components/client/policy-holds.client.tsx",
         "src/reports/context.ts",
-        "src/components/activity-screens.tsx"
+        "src/components/activity-screens.tsx",
+        "src/components/sales-followup.tsx",
+        "src/sales/followup.ts",
+        "docs/design/development/lead-continuity-fixtures.json"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -7543,7 +7559,11 @@
       "design_path": "docs/design/development/pages/route-work-new.md",
       "html_path": "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "src/components/sales-followup.tsx",
+        "src/sales/followup.ts",
+        "docs/design/development/lead-continuity-fixtures.json"
+      ],
       "scope_status": "built",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -10389,7 +10409,10 @@
       "dependencies": [
         "src/components/sales-aftercare.tsx",
         "src/sales/aftercare-service.ts",
-        "src/sales/aftercare-model.ts"
+        "src/sales/aftercare-model.ts",
+        "src/components/sales-followup.tsx",
+        "src/sales/followup.ts",
+        "docs/design/development/lead-continuity-fixtures.json"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",

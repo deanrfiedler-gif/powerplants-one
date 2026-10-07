@@ -1,4 +1,5 @@
 "use client";
+import { SalesFollowupPanel } from "./sales-followup";
 import { IncidentActivityHandover } from "../incidents/activity-handover";
 import { PolicyHolds } from "../scheduling/components/client/policy-holds.client";
 import Link from "next/link";
@@ -127,6 +128,7 @@ function ActivityEditor({
           </RecordLink>
         ))}
       </div>
+      <SalesFollowupPanel id={a.id} onLinked={reload} />
       {a.kind === "CustomerContact" && (
         <p className="scope-note">
           Recording an activity does not prove that a message was sent,
@@ -276,14 +278,14 @@ export function ActivityCreate({
     router = useRouter(),
     cmd = useCommand();
   const [company, setCompany] = useState(initial.company ?? ""),
-    [kind, setKind] = useState("TechnicalFollowUp"),
+    [kind, setKind] = useState(kinds.includes(initial.kind) ? initial.kind : "TechnicalFollowUp"),
     [type, setType] = useState(initial.type ?? "Site"),
     [target, setTarget] = useState(initial.id ?? ""),
     [summary, setSummary] = useState(""),
     [owner, setOwner] = useState(p.actor_id),
     [needed, setNeeded] = useState(true),
     [due, setDue] = useState(""),
-    [access, setAccess] = useState("RestrictedService"),
+    [access, setAccess] = useState(initial.access === "Internal" ? "Internal" : "RestrictedService"),
     [recordId] = useState(() => crypto.randomUUID());
   const companies = useResource<Envelope<Option>>("selectors/companies"),
     path = (
@@ -292,13 +294,14 @@ export function ActivityCreate({
         Site: "sites",
         Asset: "assets",
         Ticket: "service/tickets",
+        Project: "projects",
       } as Record<string, string>
     )[type];
   const records = useResource<
     Envelope<
-      Option & { company_id?: string; site_id?: string; summary?: string }
+      Option & { company_id?: string; site_id?: string; summary?: string; title?: string }
     >
-  >(company ? `${path}?company_id=${company}&limit=200` : null);
+  >(company && path ? type === "Project" ? `projects?q=${encodeURIComponent(target || initial.id || "")}&limit=100` : `${path}?company_id=${company}&limit=200` : null);
   const selected = records.data?.items.find((o) => o.id === target),
     site = type === "Site" ? target : (selected?.site_id ?? initial.site ?? "");
   const owners = useResource<Envelope<Option>>(
@@ -349,7 +352,7 @@ export function ActivityCreate({
               name="follow-type"
               label="Linked record type"
               value={type}
-              values={["Organisation", "Site", "Asset", "Ticket"]}
+              values={["Organisation", "Site", "Asset", "Ticket", "Project"]}
               onChange={(v) => {
                 setType(v);
                 setTarget("");
@@ -360,9 +363,9 @@ export function ActivityCreate({
               label="Linked record"
               value={target}
               onChange={setTarget}
-              options={(records.data?.items ?? []).map((o) => ({
+              options={(records.data?.items ?? []).filter(o => !o.company_id || o.company_id === company).map((o) => ({
                 ...o,
-                display_name: o.display_name ?? o.description ?? o.summary,
+                display_name: o.display_name ?? o.description ?? o.summary ?? o.title,
               }))}
               required
             />
@@ -409,10 +412,9 @@ export function ActivityCreate({
               Due date still needed
             </label>
             {!needed && (
-              <Field
+              <LocalDateTimeField
                 name="follow-due"
-                label="Due instant (UTC)"
-                type="datetime-local"
+                label="Due date and time"
                 value={due}
                 onChange={setDue}
                 required

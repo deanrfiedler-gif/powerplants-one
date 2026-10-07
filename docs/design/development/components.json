@@ -103,6 +103,11 @@
           "id": "won-delivery-host",
           "label": "Native Won receiving",
           "description": "LC-16 real hosts: independent intake/native creation, fixed link review, changed-source refusal, protected-view clearing and exact original recovery. See tests/browser/sales-delivery-binding.spec.ts; no isolated renderer."
+        },
+        {
+          "id": "sales-followup-host",
+          "label": "Reviewed return to Sales",
+          "description": "LC-17 host scenarios: Project/Service source, separate Internal review, native Lead/Deal create-return, fixed comparison, denied refresh and original recovery. tests/browser/sales-followup.spec.ts; no isolated renderer."
         }
       ],
       "implementation": [
@@ -127,7 +132,8 @@
         "src/components/commercial-quotation.tsx",
         "src/components/opportunity-outcome-source.tsx",
         "src/components/sales-delivery-link.tsx",
-        "src/components/sales-delivery-creation.tsx"
+        "src/components/sales-delivery-creation.tsx",
+        "src/components/sales-followup.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -254,7 +260,11 @@
         "route:/projects/[id]",
         "route:/projects/new",
         "route:/service/tickets/new",
-        "route:/service/work-orders/new"
+        "route:/service/work-orders/new",
+        "route:/sales/leads/[id]",
+        "route:/sales/leads",
+        "route:/sales/opportunities/new",
+        "route:/work/new"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -370,6 +380,14 @@
           "expected": "Review native creation, link comparison and recovery at matching desktop/phone viewports.",
           "actual": "LC-16 host adaptation implemented; exact new-state mockups are missing.",
           "action": "Use retained references and actual host evidence for a future paired review; preserve pending review.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "sales-followup-host-review",
+          "expected": "Review native creation, fixed comparison and separate-review forms at desktop/phone widths, keyboard/zoom and current authority states.",
+          "actual": "LC-17 host adaptation and synthetic fixtures; exact state mockups missing.",
+          "action": "Inspect retained evidence and pair with the accepted reference before design acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -965,6 +983,11 @@
           "id": "won-delivery-host",
           "label": "Native Won receiving",
           "description": "LC-16 real hosts: independent intake/native creation, fixed link review, changed-source refusal, protected-view clearing and exact original recovery. See tests/browser/sales-delivery-binding.spec.ts; no isolated renderer."
+        },
+        {
+          "id": "sales-followup-host",
+          "label": "Reviewed return to Sales",
+          "description": "LC-17 host scenarios: Project/Service source, separate Internal review, native Lead/Deal create-return, fixed comparison, denied refresh and original recovery. tests/browser/sales-followup.spec.ts; no isolated renderer."
         }
       ],
       "implementation": [
@@ -989,7 +1012,8 @@
         "src/components/sales-estimating-link.tsx",
         "src/components/opportunity-outcome-source.tsx",
         "src/components/sales-delivery-link.tsx",
-        "src/components/sales-delivery-creation.tsx"
+        "src/components/sales-delivery-creation.tsx",
+        "src/components/sales-followup.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -1092,7 +1116,9 @@
         "route:/sales/opportunities/[id]",
         "route:/service/tickets/new",
         "route:/service/work-orders/[id]",
-        "route:/service/work-orders/new"
+        "route:/service/work-orders/new",
+        "route:/sales/opportunities/new",
+        "route:/work/new"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -1200,6 +1226,14 @@
           "expected": "Review native creation, link comparison and recovery at matching desktop/phone viewports.",
           "actual": "LC-16 host adaptation implemented; exact new-state mockups are missing.",
           "action": "Use retained references and actual host evidence for a future paired review; preserve pending review.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "sales-followup-host-review",
+          "expected": "Review native creation, fixed comparison and separate-review forms at desktop/phone widths, keyboard/zoom and current authority states.",
+          "actual": "LC-17 host adaptation and synthetic fixtures; exact state mockups missing.",
+          "action": "Inspect retained evidence and pair with the accepted reference before design acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1342,6 +1376,11 @@
           "id": "won-delivery-host",
           "label": "Native Won receiving",
           "description": "LC-16 real hosts: independent intake/native creation, fixed link review, changed-source refusal, protected-view clearing and exact original recovery. See tests/browser/sales-delivery-binding.spec.ts; no isolated renderer."
+        },
+        {
+          "id": "sales-followup-host",
+          "label": "Reviewed return to Sales",
+          "description": "LC-17 host scenarios: Project/Service source, separate Internal review, native Lead/Deal create-return, fixed comparison, denied refresh and original recovery. tests/browser/sales-followup.spec.ts; no isolated renderer."
         }
       ],
       "implementation": [
@@ -1362,7 +1401,8 @@
         "src/components/commercial-quotation.tsx",
         "src/components/opportunity-outcome-source.tsx",
         "src/components/sales-delivery-link.tsx",
-        "src/components/sales-delivery-creation.tsx"
+        "src/components/sales-delivery-creation.tsx",
+        "src/components/sales-followup.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -1456,7 +1496,10 @@
         "route:/projects/new",
         "route:/service/tickets/new",
         "route:/service/work-orders/[id]",
-        "route:/service/work-orders/new"
+        "route:/service/work-orders/new",
+        "route:/sales/opportunities/new",
+        "route:/work/[id]",
+        "route:/work/new"
       ],
       "desktop": "Submit an empty title to focus the summary, then follow its link to the field. Correct the title and save to clear the example error.",
       "mobile": "Summary and inline errors must remain visible at 320 px and 200% zoom.",
@@ -1564,6 +1607,14 @@
           "expected": "Review native creation, link comparison and recovery at matching desktop/phone viewports.",
           "actual": "LC-16 host adaptation implemented; exact new-state mockups are missing.",
           "action": "Use retained references and actual host evidence for a future paired review; preserve pending review.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "sales-followup-host-review",
+          "expected": "Review native creation, fixed comparison and separate-review forms at desktop/phone widths, keyboard/zoom and current authority states.",
+          "actual": "LC-17 host adaptation and synthetic fixtures; exact state mockups missing.",
+          "action": "Inspect retained evidence and pair with the accepted reference before design acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

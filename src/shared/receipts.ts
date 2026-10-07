@@ -1,3 +1,4 @@
+import { followupReceiptAuthority as salesFollowupReceiptAuthority } from "../sales/followup";
 import { estimatingBindingReceiptAuthority } from "../sales/estimating-binding";
 import { deliveryBindingReceiptAuthority } from "../sales/delivery-binding";
 import { receiptAuthority as maintenanceReceiptAuthority, } from "../maintenance/reads";
@@ -76,7 +77,14 @@ export async function readOperation(
   );
   const r = result.rows[0];
   if (!r) throw unavailable();
-  if (["ServiceAgreement","EntitlementAssessment","MaintenancePlan","MaintenanceOccurrence","RenewalReview","WarrantyCase","SupplierClaim"].includes(r.object_type)) {
+  if (r.object_type === "Activity" && r.command?.startsWith("SalesFollowup:")) {
+    return transaction(async c => {
+      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [p.workspace_id]);
+      await c.query("SELECT ppo.lock_crm_transfer_authority($1)", [p.workspace_id]);
+      await salesFollowupReceiptAuthority(c,p,r.record_id,operation_id);
+      return r.result as OperationReceipt;
+    });
+  } else if (["ServiceAgreement","EntitlementAssessment","MaintenancePlan","MaintenanceOccurrence","RenewalReview","WarrantyCase","SupplierClaim"].includes(r.object_type)) {
     await maintenanceReceiptAuthority(client,p,r.record_id,r.object_type,r.command,(r.result as OperationReceipt).record_version);
   } else if (["SchedulingPolicyProposal", "SchedulingPolicyReview", "SchedulingPolicyPublication", "SchedulingPolicyResolution"].includes(r.object_type)) {
     return transaction(async c => {

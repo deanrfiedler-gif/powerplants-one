@@ -42090,7 +42090,8 @@
             "After an independently received allocation reduction, select the exact Requested Impact and Task A, then explicitly select its dependent successor B. Compare both tasks and the FS/SS direction. Record Demand, Project, Task, MaterialAction and Successor decisions separately, freeze the complete review, then apply. Additional links, changed evidence or missing consent hold execution.",
             "After an exact received allocation reduction, select the affected task A, its successor B and the third task C dependent on B. All must be internally owned, dated Planned tasks at zero progress. Review both FS/SS links and all remaining holds. Record separate Demand, Project, Task, MaterialAction, Successor and Third task decisions, then freeze review and Apply separately. Extra edges or consequential links hold this action.",
             "Select affected A, successor B and Branch task C directly dependent on A. Demand, Project coordinator, A, MaterialAction, B and C owners each record a separate Accepted, Returned or Held decision. Freeze review, then apply separately. Branch C and linear-chain Third task choices are mutually exclusive; previous Receipt/allocation/task/chain decisions do not authorise this proposal.",
-            "Select affected A, Merge task C, then its Retained predecessor B. Demand, Project, A, MaterialAction, B and C owners each record Accepted, Returned or Held separately. B acknowledges its complete retained native position and dependency context, without a new commitment. Freeze review, then apply separately. Prior Receipt/allocation/isolated/pair/chain/branch consent does not transfer."
+            "Select affected A, Merge task C, then its Retained predecessor B. Demand, Project, A, MaterialAction, B and C owners each record Accepted, Returned or Held separately. B acknowledges its complete retained native position and dependency context, without a new commitment. Freeze review, then apply separately. Prior Receipt/allocation/isolated/pair/chain/branch consent does not transfer.",
+            "LC-17: Open the owned follow-up Activity. Review existing Sales records, independently capture a Lead or explicitly qualified Deal when needed, and return for an exact link comparison. A restricted original needs a separately worded Internal review with its own owner and date. A linked Lead can use native Plan next activity to designate that retained action. Project Sales context starts Activity capture; aftercare still requires separate receiving confirmation."
           ],
           "steps": [
             "Confirm the record reference and customer/site context in this record workspace.",
@@ -42170,7 +42171,8 @@
           "paragraphs": [
             "The third-task decision belongs to this complete proposal. Earlier isolated-task or two-task consent cannot transfer. Changed owners/effects/evidence require renewed receiving. Corrected decisions require a new review. Missing original receipts are inconclusive; recover or retry the unchanged actor-bound original before replacement.",
             "Branch originals use the existing actor-bound journal. Changed topology, dependencies, evidence, versions, ownership or authority holds pending work. Missing receipts are inconclusive; recover or retry the exact original before replacement. No partial branch completion is reported.",
-            "Changes to retained B, either relationship, source, ownership, authority or receiving hold unexecuted work. The actor-bound journal retains uncertain originals through reload. Missing lookup is inconclusive; recover or retry exactly before replacement. No partial merge completion is reported."
+            "Changes to retained B, either relationship, source, ownership, authority or receiving hold unexecuted work. The actor-bound journal retains uncertain originals through reload. Missing lookup is inconclusive; recover or retry exactly before replacement. No partial merge completion is reported.",
+            "Creation, Sales linking and receiving acknowledgement save separately. Check the original creation/link after an uncertain response; never start a replacement intent. A stale comparison must be discarded and reviewed again. Current source, target and original provenance access govern recovery; the original owner/date and source history remain intact."
           ],
           "steps": [],
           "rows": [
@@ -42956,7 +42958,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Task sequence for review against the applicable running release.",
+            "LC-17: Open the owned follow-up Activity. Review existing Sales records, independently capture a Lead or explicitly qualified Deal when needed, and return for an exact link comparison. A restricted original needs a separately worded Internal review with its own owner and date. A linked Lead can use native Plan next activity to designate that retained action. Project Sales context starts Activity capture; aftercare still requires separate receiving confirmation."
           ],
           "steps": [
             "Confirm the record reference and customer/site context in this record workspace.",
@@ -43034,7 +43037,9 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
+          "paragraphs": [
+            "Creation, Sales linking and receiving acknowledgement save separately. Check the original creation/link after an uncertain response; never start a replacement intent. A stale comparison must be discarded and reviewed again. Current source, target and original provenance access govern recovery; the original owner/date and source history remain intact."
+          ],
           "steps": [],
           "rows": [
             [
@@ -43238,7 +43243,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Task sequence for review against the applicable running release.",
+            "LC-17: Open the owned follow-up Activity. Review existing Sales records, independently capture a Lead or explicitly qualified Deal when needed, and return for an exact link comparison. A restricted original needs a separately worded Internal review with its own owner and date. A linked Lead can use native Plan next activity to designate that retained action. Project Sales context starts Activity capture; aftercare still requires separate receiving confirmation."
           ],
           "steps": [
             "Use + Lead to capture the enquiry and its source",
@@ -43315,7 +43321,9 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
+          "paragraphs": [
+            "Creation, Sales linking and receiving acknowledgement save separately. Check the original creation/link after an uncertain response; never start a replacement intent. A stale comparison must be discarded and reviewed again. Current source, target and original provenance access govern recovery; the original owner/date and source history remain intact."
+          ],
           "steps": [],
           "rows": [
             [
@@ -43491,7 +43499,9 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [],
+          "paragraphs": [
+            "LC-17: Open the owned follow-up Activity. Review existing Sales records, independently capture a Lead or explicitly qualified Deal when needed, and return for an exact link comparison. A restricted original needs a separately worded Internal review with its own owner and date. A linked Lead can use native Plan next activity to designate that retained action. Project Sales context starts Activity capture; aftercare still requires separate receiving confirmation."
+          ],
           "steps": [
             "Open a deal from filtered Board, List or Forecast.",
             "Confirm customer/site and scope, then inspect the next Activity and Tasks.",
@@ -43537,7 +43547,8 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "Validation identifies the field to correct without discarding the draft. On a version conflict, compare the saved version with your proposal before deliberately using its version. An uncertain operation stays in the durable local journal: Check original result or Retry exact original. Do not issue a replacement while the original outcome is unknown. Reload with the same authorised identity to reconcile. A denied source needs restored legitimate access."
+            "Validation identifies the field to correct without discarding the draft. On a version conflict, compare the saved version with your proposal before deliberately using its version. An uncertain operation stays in the durable local journal: Check original result or Retry exact original. Do not issue a replacement while the original outcome is unknown. Reload with the same authorised identity to reconcile. A denied source needs restored legitimate access.",
+            "Creation, Sales linking and receiving acknowledgement save separately. Check the original creation/link after an uncertain response; never start a replacement intent. A stale comparison must be discarded and reviewed again. Current source, target and original provenance access govern recovery; the original owner/date and source history remain intact."
           ],
           "steps": [],
           "rows": [],
@@ -43745,7 +43756,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Task sequence for review against the applicable running release.",
+            "LC-17: Open the owned follow-up Activity. Review existing Sales records, independently capture a Lead or explicitly qualified Deal when needed, and return for an exact link comparison. A restricted original needs a separately worded Internal review with its own owner and date. A linked Lead can use native Plan next activity to designate that retained action. Project Sales context starts Activity capture; aftercare still requires separate receiving confirmation."
           ],
           "steps": [
             "Search the related register for an existing record before creating another.",
@@ -43818,7 +43830,9 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
+          "paragraphs": [
+            "Creation, Sales linking and receiving acknowledgement save separately. Check the original creation/link after an uncertain response; never start a replacement intent. A stale comparison must be discarded and reviewed again. Current source, target and original provenance access govern recovery; the original owner/date and source history remain intact."
+          ],
           "steps": [],
           "rows": [
             [
@@ -49617,7 +49631,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Task sequence for review against the applicable running release.",
+            "LC-17: Open the owned follow-up Activity. Review existing Sales records, independently capture a Lead or explicitly qualified Deal when needed, and return for an exact link comparison. A restricted original needs a separately worded Internal review with its own owner and date. A linked Lead can use native Plan next activity to designate that retained action. Project Sales context starts Activity capture; aftercare still requires separate receiving confirmation."
           ],
           "steps": [
             "Confirm the record reference and customer/site context in this record workspace.",
@@ -49692,7 +49707,8 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "Scheduling Step 4: a published impact holds unstarted work immediately, even when the policy starts later. Activity completion or pack acknowledgement does not clear it. Use the named owner and booking link for a controlled change or cancellation/replacement, evaluate current evidence, then save the guarded resolution online. Later source changes restore the hold. Retry an uncertain save unchanged to recover its receipt. Delayed offline Start is rechecked against current authority; ReviewRequired retains its original."
+            "Scheduling Step 4: a published impact holds unstarted work immediately, even when the policy starts later. Activity completion or pack acknowledgement does not clear it. Use the named owner and booking link for a controlled change or cancellation/replacement, evaluate current evidence, then save the guarded resolution online. Later source changes restore the hold. Retry an uncertain save unchanged to recover its receipt. Delayed offline Start is rechecked against current authority; ReviewRequired retains its original.",
+            "Creation, Sales linking and receiving acknowledgement save separately. Check the original creation/link after an uncertain response; never start a replacement intent. A stale comparison must be discarded and reviewed again. Current source, target and original provenance access govern recovery; the original owner/date and source history remain intact."
           ],
           "steps": [],
           "rows": [
@@ -49888,7 +49904,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Task sequence for review against the applicable running release.",
+            "LC-17: Open the owned follow-up Activity. Review existing Sales records, independently capture a Lead or explicitly qualified Deal when needed, and return for an exact link comparison. A restricted original needs a separately worded Internal review with its own owner and date. A linked Lead can use native Plan next activity to designate that retained action. Project Sales context starts Activity capture; aftercare still requires separate receiving confirmation."
           ],
           "steps": [
             "Search the related register for an existing record before creating another.",
@@ -49961,7 +49978,9 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
+          "paragraphs": [
+            "Creation, Sales linking and receiving acknowledgement save separately. Check the original creation/link after an uncertain response; never start a replacement intent. A stale comparison must be discarded and reviewed again. Current source, target and original provenance access govern recovery; the original owner/date and source history remain intact."
+          ],
           "steps": [],
           "rows": [
             [
@@ -67402,7 +67421,9 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [],
+          "paragraphs": [
+            "LC-17: Open the owned follow-up Activity. Review existing Sales records, independently capture a Lead or explicitly qualified Deal when needed, and return for an exact link comparison. A restricted original needs a separately worded Internal review with its own owner and date. A linked Lead can use native Plan next activity to designate that retained action. Project Sales context starts Activity capture; aftercare still requires separate receiving confirmation."
+          ],
           "steps": [
             "Create aftercare from an issued report and choose responsible owners.",
             "Record the date choice or exact commitment/rule, and refresh source preparation.",
@@ -67450,7 +67471,8 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "Validation identifies the field to correct without discarding the draft. On a version conflict, compare the saved version with your proposal before deliberately using its version. An uncertain operation stays in the durable local journal: Check original result or Retry exact original. Do not issue a replacement while the original outcome is unknown. Reload with the same authorised identity to reconcile. A denied source needs restored legitimate access."
+            "Validation identifies the field to correct without discarding the draft. On a version conflict, compare the saved version with your proposal before deliberately using its version. An uncertain operation stays in the durable local journal: Check original result or Retry exact original. Do not issue a replacement while the original outcome is unknown. Reload with the same authorised identity to reconcile. A denied source needs restored legitimate access.",
+            "Creation, Sales linking and receiving acknowledgement save separately. Check the original creation/link after an uncertain response; never start a replacement intent. A stale comparison must be discarded and reviewed again. Current source, target and original provenance access govern recovery; the original owner/date and source history remain intact."
           ],
           "steps": [],
           "rows": [],

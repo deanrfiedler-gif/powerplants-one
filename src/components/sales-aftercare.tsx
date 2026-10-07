@@ -1130,6 +1130,7 @@ function ReferralForm({
             {ref.summary} · {ref.context} · {ref.impact}
           </p>
           <p>{ref.note}</p>
+          {kind === "Crm" && ref.next_activity_id && <p><Link href={`/work/${ref.next_activity_id}`}>Review the owned follow-up in Sales</Link>. Capture an unqualified need as a Lead, or explicitly create and link a qualified Deal. Confirm the receiving outcome here separately.</p>}
         </>
       )}
       {(!ref || ref.state === "Returned") && (

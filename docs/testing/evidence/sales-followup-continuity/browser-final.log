@@ -1,0 +1,33 @@
+Database reset: completed
+[WebServer] (node:32368) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.98"}
+
+Running 18 tests using 1 worker
+
+(node:29264) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop-chromium] › tests\browser\crm.spec.ts:119:1 › CA-01/04/13 desktop and phone full sales journey via real UI, validation, completion and reload (15.8s)
+Leads console: Failed to load resource: net::ERR_FAILED
+  ok  2 [desktop-chromium] › tests\browser\leads.spec.ts:10:1 › LC-11 a site discovered after lead follow-up keeps source obligations through lost-response recovery (4.1s)
+  ok  3 [desktop-chromium] › tests\browser\projects-gantt.spec.ts:15:1 › Projects navigation, existing-context creation and an uncertain task save survive reload (2.8s)
+  ok  4 [desktop-chromium] › tests\browser\sales-followup.spec.ts:72:1 › LC-17 Project need creates and recovers a native Lead, then explicitly links and plans the retained Activity (5.3s)
+  ok  5 [desktop-chromium] › tests\browser\sales-followup.spec.ts:174:1 › LC-17 restricted follow-up creates a separate review and a qualified Deal; original link recovery survives completion (5.0s)
+  ok  6 [desktop-chromium] › tests\browser\sales-followup.spec.ts:284:1 › LC-17 fixed comparison refuses stale context and a denied refresh clears private review (2.1s)
+  ok  7 [desktop-chromium] › tests\browser\search-navigation.spec.ts:9:1 › search geometry waits for its exact initial read before the render assertion (7.3s)
+  ok  8 [desktop-chromium] › tests\browser\search-navigation.spec.ts:20:1 › search readiness rejects an unsuccessful initial read (609ms)
+  ok  9 [desktop-chromium] › tests\browser\sh-platform.spec.ts:233:1 › SH review perspectives, responsive geometry and current My Work interiors (9.3s)
+(node:30540) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 10 [mobile-chromium] › tests\browser\crm.spec.ts:119:1 › CA-01/04/13 desktop and phone full sales journey via real UI, validation, completion and reload (16.4s)
+Leads console: Failed to load resource: net::ERR_FAILED
+  ok 11 [mobile-chromium] › tests\browser\leads.spec.ts:10:1 › LC-11 a site discovered after lead follow-up keeps source obligations through lost-response recovery (4.0s)
+  ok 12 [mobile-chromium] › tests\browser\projects-gantt.spec.ts:15:1 › Projects navigation, existing-context creation and an uncertain task save survive reload (2.8s)
+  ok 13 [mobile-chromium] › tests\browser\sales-followup.spec.ts:72:1 › LC-17 Project need creates and recovers a native Lead, then explicitly links and plans the retained Activity (4.4s)
+  ok 14 [mobile-chromium] › tests\browser\sales-followup.spec.ts:174:1 › LC-17 restricted follow-up creates a separate review and a qualified Deal; original link recovery survives completion (4.1s)
+  ok 15 [mobile-chromium] › tests\browser\sales-followup.spec.ts:284:1 › LC-17 fixed comparison refuses stale context and a denied refresh clears private review (1.6s)
+  ok 16 [mobile-chromium] › tests\browser\search-navigation.spec.ts:9:1 › search geometry waits for its exact initial read before the render assertion (7.6s)
+  ok 17 [mobile-chromium] › tests\browser\search-navigation.spec.ts:20:1 › search readiness rejects an unsuccessful initial read (1.1s)
+  ok 18 [mobile-chromium] › tests\browser\sh-platform.spec.ts:233:1 › SH review perspectives, responsive geometry and current My Work interiors (18.0s)
+
+  18 passed (2.1m)
