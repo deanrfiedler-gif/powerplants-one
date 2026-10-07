@@ -19565,22 +19565,20 @@
       "title": "Catalogue and product technical workspace",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Native synthetic workflow; operational access and owner acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-09-25",
+      "source_commit": "cad98aca42cb233f142029d11601a78d7d4b521e",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/testing/evidence/products-native/README.md; checks and visual review are separate.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Catalogue and product technical workspace to work towards this outcome: The selected product has an attributable technical basis.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "Similar product names do not establish interchangeability."
+            "Find the exact Family, Model or Variant by UUID, synthetic alias, provider key or model; inspect retained technical and source evidence."
           ],
           "steps": [],
           "rows": [],
@@ -19590,9 +19588,9 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Product/model/variant, technical attributes, units and source evidence.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Confirm company scope, exact identity and explicit Products grants. Existing roles receive no new operational grants from this implementation.",
+            "Use synthetic evidence only. MYOB remains ERP authority; SharePoint and native CAD retain document authoring.",
+            "In the local synthetic app, use the session selector to choose Synthetic Products reader, author, reviewer or publisher. The author prepares and submits a draft, the reviewer records independent review, then the publisher publishes that exact revision. Existing and hosted users receive no Products grant."
           ],
           "steps": [],
           "rows": [],
@@ -19603,11 +19601,8 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Find the exact model and variant",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Search and apply kind, state or lifecycle filters; the query remains in the URL.",
+            "Open the exact model/variant and inspect catalogue revision separately from explicit technical/source revision."
           ],
           "rows": [],
           "headers": []
@@ -19619,38 +19614,29 @@
           "steps": [],
           "rows": [
             [
-              "Page context",
-              "Catalogue and product technical workspace · Pages + tabs"
+              "Context",
+              "Company, exact identity, catalogue revision and separate technical/source revision."
             ],
             [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
+              "Work area",
+              "Register / technical record with words for unknown and review states."
             ],
             [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
+              "Handover",
+              "Open the owning record and verify its current permission/state."
             ]
           ],
           "headers": [
             "Area",
-            "How to use it"
+            "Purpose"
           ]
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Product/model/variant, technical attributes, units and source evidence.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Source provider/key and dates, explicit units, evidence and a reason for each command. Blank support/validity dates remain unknown.",
+            "Names and SYN- aliases are display references. UUIDs and external company/provider/entity keys identify retained records."
           ],
           "steps": [],
           "rows": [],
@@ -19659,13 +19645,12 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Find the exact model and variant",
-            "Review applicable technical and lifecycle information",
-            "Use the controlled source when selecting a product"
+            "Search and apply kind, state or lifecycle filters; the query remains in the URL.",
+            "Open the exact model/variant and inspect catalogue revision separately from explicit technical/source revision.",
+            "Inspect attribute units, unresolved clarification owners, controlled document applicability and lifecycle evidence.",
+            "Choose a retained revision before handing its exact identity to an authorised receiving workspace."
           ],
           "rows": [],
           "headers": []
@@ -19674,9 +19659,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "The selected product has an attributable technical basis.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Similar product names do not establish interchangeability."
+            "Inspect the saved record and exact original receipt. A click, parse, saved draft or review does not imply publication, installation suitability, quotation or stock commitment.",
+            "PD-03 hands source authoring and deliberate estimate refresh to ES-03. PD-04 hands application suitability to Engineering and installed impact to Equipment."
           ],
           "steps": [],
           "rows": [],
@@ -19689,41 +19673,40 @@
           "steps": [],
           "rows": [
             [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
+              "Loading / failed read",
+              "Wait or retry. Failed reads never become an empty register."
             ],
             [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
+              "Empty / filtered empty",
+              "Clear filters or create an authorised synthetic record; the permitted list is limited to 100."
             ],
             [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
+              "Read only / unavailable",
+              "An explicit grant or permitted source is missing. Do not infer that the record does not exist."
             ],
             [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
+              "Draft / Submitted / Reviewed / Published",
+              "Separate retained states; published history is immutable and successors require new review."
             ],
             [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
+              "Stale / validation",
+              "Retain inputs, inspect the newer basis and deliberately prepare a new command."
             ],
             [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
+              "Outcome unknown / recovered",
+              "Recover the original operation receipt or retry the exact journalled command; never duplicate the effect."
             ]
           ],
           "headers": [
-            "State or situation",
-            "Meaning and response"
+            "State",
+            "Action"
           ]
         },
         {
-          "section_id": "examples",
-          "title": "Worked examples",
+          "section_id": "example",
+          "title": "Synthetic example",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare product/model/variant, technical attributes, units and source evidence. Follow the task sequence and check that the selected product has an attributable technical basis. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Catalogue and product technical workspace has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Similar product names do not establish interchangeability."
+            "SYN Verdant VC20 24V and 230V have similar labels but separate variants. A missing interface has a named clarification owner. A nominated successor remains a candidate until bounded review; original use records remain unchanged."
           ],
           "steps": [],
           "rows": [],
@@ -19731,46 +19714,22 @@
         },
         {
           "section_id": "recovery",
-          "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "title": "Recovery and exceptions",
+          "paragraphs": [
+            "Pending commands are bound to the current actor and retained in the shared command journal. Reload checks the original receipt. Changed payload with the same operation is refused.",
+            "For an import, inspect the immutable mapping plan and comparison hash. Stale target versions or any blocking row roll back the entire application; exclusion is explicit and reasoned."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
-          "title": "Mobile, keyboard and offline use",
+          "title": "Mobile, keyboard and offline",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "At 390/320 px, cards and before/after sections stack in reading order. Labels and evidence wrap; actions remain available by keyboard.",
+            "Unsaved forms use the shared leave warning. No Products offline command queue is implemented. Reconnect and recover a pending original result.",
+            "Use Tab/Shift+Tab, Enter for controls and the shell information panel; these Product workspaces add no bespoke modal or drag interaction."
           ],
           "steps": [],
           "rows": [],
@@ -19778,10 +19737,12 @@
         },
         {
           "section_id": "resources",
-          "title": "Related guidance and procedures",
+          "title": "Sources and related workspaces",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "Exact retained visual reference: docs/reference/ui/products/PPO-Products-Preview-r04.html.",
+            "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html",
+            "docs/contracts/products-catalogue.md",
+            "docs/delivery/products-native-handover.md"
           ],
           "steps": [],
           "rows": [],
@@ -19789,11 +19750,10 @@
         },
         {
           "section_id": "review",
-          "title": "Guide review and feedback",
+          "title": "Review and applicability",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide. Owner: Dean Fiedler. Visual review, automated proof, owner acceptance, operational access allocation and deployment are separate.",
+            "Production file formats, live feeds, stock availability/commitment, FX, unit conversion and commercial policy extensions remain Not configured."
           ],
           "steps": [],
           "rows": [],
@@ -19801,14 +19761,21 @@
         }
       ],
       "related_entry_keys": [
-        "scope:AD-05"
+        "scope:AD-05",
+        "route:/products",
+        "route:/products/[id]",
+        "scope:ES-03",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EQ-07",
+        "scope:EQ-06"
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/products/PPO-Products-Preview-r04.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "7 October completion: named synthetic duties, exact historical pricing handoff and published-basis navigation; owner guide review remains pending.",
       "document_id": "PPO-GUIDE-PD-01",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -19826,25 +19793,23 @@
     {
       "guide_key": "guide.pd.02",
       "entry_key": "scope:PD-02",
-      "title": "Catalogue authoring and publication review",
+      "title": "Catalogue authoring and publication",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Native synthetic workflow; operational access and owner acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-09-25",
+      "source_commit": "cad98aca42cb233f142029d11601a78d7d4b521e",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/testing/evidence/products-native/README.md; checks and visual review are separate.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Catalogue authoring and publication review to work towards this outcome: Users can distinguish draft and published product information.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "Publication of catalogue data is not technical approval for a particular installation."
+            "Prepare immutable catalogue successors, compare exact predecessor content and independently review before publication."
           ],
           "steps": [],
           "rows": [],
@@ -19854,9 +19819,9 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Draft revision, changed attributes, reviewer and publication audience.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Confirm company scope, exact identity and explicit Products grants. Existing roles receive no new operational grants from this implementation.",
+            "Use synthetic evidence only. MYOB remains ERP authority; SharePoint and native CAD retain document authoring.",
+            "In the local synthetic app, use the session selector to choose Synthetic Products reader, author, reviewer or publisher. The author prepares and submits a draft, the reviewer records independent review, then the publisher publishes that exact revision. Existing and hosted users receive no Products grant."
           ],
           "steps": [],
           "rows": [],
@@ -19867,11 +19832,8 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Prepare changes with supporting evidence",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Select a product or prepare a new identity with company, kind, exact parent, SYN- alias and provider/entity key.",
+            "Edit typed content and inspect the proposed before/after comparison; save with a reason and source evidence."
           ],
           "rows": [],
           "headers": []
@@ -19883,38 +19845,29 @@
           "steps": [],
           "rows": [
             [
-              "Page context",
-              "Catalogue authoring and publication review · Page"
+              "Context",
+              "Company, exact identity, catalogue revision and separate technical/source revision."
             ],
             [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
+              "Work area",
+              "Review queue / record / form with words for unknown and review states."
             ],
             [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
+              "Handover",
+              "Open the owning record and verify its current permission/state."
             ]
           ],
           "headers": [
             "Area",
-            "How to use it"
+            "Purpose"
           ]
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Draft revision, changed attributes, reviewer and publication audience.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Source provider/key and dates, explicit units, evidence and a reason for each command. Blank support/validity dates remain unknown.",
+            "Names and SYN- aliases are display references. UUIDs and external company/provider/entity keys identify retained records."
           ],
           "steps": [],
           "rows": [],
@@ -19923,13 +19876,13 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Prepare changes with supporting evidence",
-            "Review the exact successor revision",
-            "Publish or withdraw through the agreed catalogue lifecycle"
+            "Select a product or prepare a new identity with company, kind, exact parent, SYN- alias and provider/entity key.",
+            "Edit typed content and inspect the proposed before/after comparison; save with a reason and source evidence.",
+            "Submit the exact revision. A separate explicitly granted actor records Reviewed or Returned.",
+            "Publish the reviewed revision with purpose, audience and effective date; later publication supersedes the prior published basis.",
+            "Withdraw a published revision when required. A successor draft retains the original publication and technical provenance."
           ],
           "rows": [],
           "headers": []
@@ -19938,9 +19891,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Users can distinguish draft and published product information.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Publication of catalogue data is not technical approval for a particular installation."
+            "Inspect the saved record and exact original receipt. A click, parse, saved draft or review does not imply publication, installation suitability, quotation or stock commitment.",
+            "PD-03 hands source authoring and deliberate estimate refresh to ES-03. PD-04 hands application suitability to Engineering and installed impact to Equipment."
           ],
           "steps": [],
           "rows": [],
@@ -19953,41 +19905,40 @@
           "steps": [],
           "rows": [
             [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
+              "Loading / failed read",
+              "Wait or retry. Failed reads never become an empty register."
             ],
             [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
+              "Empty / filtered empty",
+              "Clear filters or create an authorised synthetic record; the permitted list is limited to 100."
             ],
             [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
+              "Read only / unavailable",
+              "An explicit grant or permitted source is missing. Do not infer that the record does not exist."
             ],
             [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
+              "Draft / Submitted / Reviewed / Published",
+              "Separate retained states; published history is immutable and successors require new review."
             ],
             [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
+              "Stale / validation",
+              "Retain inputs, inspect the newer basis and deliberately prepare a new command."
             ],
             [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
+              "Outcome unknown / recovered",
+              "Recover the original operation receipt or retry the exact journalled command; never duplicate the effect."
             ]
           ],
           "headers": [
-            "State or situation",
-            "Meaning and response"
+            "State",
+            "Action"
           ]
         },
         {
-          "section_id": "examples",
-          "title": "Worked examples",
+          "section_id": "example",
+          "title": "Synthetic example",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare draft revision, changed attributes, reviewer and publication audience. Follow the task sequence and check that users can distinguish draft and published product information. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Catalogue authoring and publication review has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Publication of catalogue data is not technical approval for a particular installation."
+            "SYN Verdant VC20 24V and 230V have similar labels but separate variants. A missing interface has a named clarification owner. A nominated successor remains a candidate until bounded review; original use records remain unchanged."
           ],
           "steps": [],
           "rows": [],
@@ -19995,46 +19946,22 @@
         },
         {
           "section_id": "recovery",
-          "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "title": "Recovery and exceptions",
+          "paragraphs": [
+            "Pending commands are bound to the current actor and retained in the shared command journal. Reload checks the original receipt. Changed payload with the same operation is refused.",
+            "For an import, inspect the immutable mapping plan and comparison hash. Stale target versions or any blocking row roll back the entire application; exclusion is explicit and reasoned."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
-          "title": "Mobile, keyboard and offline use",
+          "title": "Mobile, keyboard and offline",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "At 390/320 px, cards and before/after sections stack in reading order. Labels and evidence wrap; actions remain available by keyboard.",
+            "Unsaved forms use the shared leave warning. No Products offline command queue is implemented. Reconnect and recover a pending original result.",
+            "Use Tab/Shift+Tab, Enter for controls and the shell information panel; these Product workspaces add no bespoke modal or drag interaction."
           ],
           "steps": [],
           "rows": [],
@@ -20042,10 +19969,12 @@
         },
         {
           "section_id": "resources",
-          "title": "Related guidance and procedures",
+          "title": "Sources and related workspaces",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "No exact dedicated accepted HTML baseline exists for this scope. The native composition derives from written scope, workflow and house components.",
+            "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html",
+            "docs/contracts/products-catalogue.md",
+            "docs/delivery/products-native-handover.md"
           ],
           "steps": [],
           "rows": [],
@@ -20053,11 +19982,10 @@
         },
         {
           "section_id": "review",
-          "title": "Guide review and feedback",
+          "title": "Review and applicability",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide. Owner: Dean Fiedler. Visual review, automated proof, owner acceptance, operational access allocation and deployment are separate.",
+            "Production file formats, live feeds, stock availability/commitment, FX, unit conversion and commercial policy extensions remain Not configured."
           ],
           "steps": [],
           "rows": [],
@@ -20065,13 +19993,19 @@
         }
       ],
       "related_entry_keys": [
-        "scope:PD-01"
+        "scope:PD-01",
+        "route:/products/publication",
+        "scope:ES-03",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EQ-07",
+        "scope:EQ-06"
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "7 October completion: named synthetic duties, exact historical pricing handoff and published-basis navigation; owner guide review remains pending.",
       "document_id": "PPO-GUIDE-PD-02",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -20088,25 +20022,23 @@
     {
       "guide_key": "guide.pd.03",
       "entry_key": "scope:PD-03",
-      "title": "Price books and supplier-source maintenance",
+      "title": "Product supplier-source context",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Native synthetic workflow; operational access and owner acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-09-25",
+      "source_commit": "cad98aca42cb233f142029d11601a78d7d4b521e",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/testing/evidence/products-native/README.md; checks and visual review are separate.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Price books and supplier-source maintenance to work towards this outcome: Pricing evidence is current and traceable.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "A refreshed price book must not silently reprice an issued quotation."
+            "Connect exact Product and existing ES-03 CostSource revisions without duplicating commercial content or repricing saved work."
           ],
           "steps": [],
           "rows": [],
@@ -20116,9 +20048,9 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Supplier source, price revision, currency, units, validity and FX basis.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Confirm company scope, exact identity and explicit Products grants. Existing roles receive no new operational grants from this implementation.",
+            "Use synthetic evidence only. MYOB remains ERP authority; SharePoint and native CAD retain document authoring.",
+            "In the local synthetic app, use the session selector to choose Synthetic Products reader, author, reviewer or publisher. The author prepares and submits a draft, the reviewer records independent review, then the publisher publishes that exact revision. Existing and hosted users receive no Products grant."
           ],
           "steps": [],
           "rows": [],
@@ -20129,11 +20061,8 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Identify the applicable supplier price source",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Select the exact product and source revision; source reads require both Products commercial and Estimating permissions.",
+            "Check supplier/item, unit, source review, quantity tiers, AUD/excluding-tax basis and source-validity dates."
           ],
           "rows": [],
           "headers": []
@@ -20145,38 +20074,29 @@
           "steps": [],
           "rows": [
             [
-              "Page context",
-              "Price books and supplier-source maintenance · Page"
+              "Context",
+              "Company, exact identity, catalogue revision and separate technical/source revision."
             ],
             [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
+              "Work area",
+              "Register / evidence comparison with words for unknown and review states."
             ],
             [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
+              "Handover",
+              "Open the owning record and verify its current permission/state."
             ]
           ],
           "headers": [
             "Area",
-            "How to use it"
+            "Purpose"
           ]
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Supplier source, price revision, currency, units, validity and FX basis.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Source provider/key and dates, explicit units, evidence and a reason for each command. Blank support/validity dates remain unknown.",
+            "Names and SYN- aliases are display references. UUIDs and external company/provider/entity keys identify retained records."
           ],
           "steps": [],
           "rows": [],
@@ -20185,13 +20105,12 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Identify the applicable supplier price source",
-            "Review revision and validity changes",
-            "Preserve existing estimate cost bases when preparing refresh proposals"
+            "Select the exact product and source revision; source reads require both Products commercial and Estimating permissions.",
+            "Check supplier/item, unit, source review, quantity tiers, AUD/excluding-tax basis and source-validity dates.",
+            "Retain Mapped only for exact unit identity, or Unresolved with evidence; no automatic conversion is available.",
+            "Open source authoring/review in ES-03. Follow a permitted affected-estimate link for deliberate comparison and refresh."
           ],
           "rows": [],
           "headers": []
@@ -20200,9 +20119,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Pricing evidence is current and traceable.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A refreshed price book must not silently reprice an issued quotation."
+            "Inspect the saved record and exact original receipt. A click, parse, saved draft or review does not imply publication, installation suitability, quotation or stock commitment.",
+            "PD-03 hands source authoring and deliberate estimate refresh to ES-03. PD-04 hands application suitability to Engineering and installed impact to Equipment."
           ],
           "steps": [],
           "rows": [],
@@ -20215,41 +20133,40 @@
           "steps": [],
           "rows": [
             [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
+              "Loading / failed read",
+              "Wait or retry. Failed reads never become an empty register."
             ],
             [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
+              "Empty / filtered empty",
+              "Clear filters or create an authorised synthetic record; the permitted list is limited to 100."
             ],
             [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
+              "Read only / unavailable",
+              "An explicit grant or permitted source is missing. Do not infer that the record does not exist."
             ],
             [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
+              "Draft / Submitted / Reviewed / Published",
+              "Separate retained states; published history is immutable and successors require new review."
             ],
             [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
+              "Stale / validation",
+              "Retain inputs, inspect the newer basis and deliberately prepare a new command."
             ],
             [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
+              "Outcome unknown / recovered",
+              "Recover the original operation receipt or retry the exact journalled command; never duplicate the effect."
             ]
           ],
           "headers": [
-            "State or situation",
-            "Meaning and response"
+            "State",
+            "Action"
           ]
         },
         {
-          "section_id": "examples",
-          "title": "Worked examples",
+          "section_id": "example",
+          "title": "Synthetic example",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare supplier source, price revision, currency, units, validity and fx basis. Follow the task sequence and check that pricing evidence is current and traceable. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Price books and supplier-source maintenance has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A refreshed price book must not silently reprice an issued quotation."
+            "SYN Verdant VC20 24V and 230V have similar labels but separate variants. A missing interface has a named clarification owner. A nominated successor remains a candidate until bounded review; original use records remain unchanged."
           ],
           "steps": [],
           "rows": [],
@@ -20257,46 +20174,22 @@
         },
         {
           "section_id": "recovery",
-          "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "title": "Recovery and exceptions",
+          "paragraphs": [
+            "Pending commands are bound to the current actor and retained in the shared command journal. Reload checks the original receipt. Changed payload with the same operation is refused.",
+            "For an import, inspect the immutable mapping plan and comparison hash. Stale target versions or any blocking row roll back the entire application; exclusion is explicit and reasoned."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
-          "title": "Mobile, keyboard and offline use",
+          "title": "Mobile, keyboard and offline",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "At 390/320 px, cards and before/after sections stack in reading order. Labels and evidence wrap; actions remain available by keyboard.",
+            "Unsaved forms use the shared leave warning. No Products offline command queue is implemented. Reconnect and recover a pending original result.",
+            "Use Tab/Shift+Tab, Enter for controls and the shell information panel; these Product workspaces add no bespoke modal or drag interaction."
           ],
           "steps": [],
           "rows": [],
@@ -20304,10 +20197,12 @@
         },
         {
           "section_id": "resources",
-          "title": "Related guidance and procedures",
+          "title": "Sources and related workspaces",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "Exact retained visual reference: docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html.",
+            "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html",
+            "docs/contracts/products-catalogue.md",
+            "docs/delivery/products-native-handover.md"
           ],
           "steps": [],
           "rows": [],
@@ -20315,11 +20210,10 @@
         },
         {
           "section_id": "review",
-          "title": "Guide review and feedback",
+          "title": "Review and applicability",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide. Owner: Dean Fiedler. Visual review, automated proof, owner acceptance, operational access allocation and deployment are separate.",
+            "Production file formats, live feeds, stock availability/commitment, FX, unit conversion and commercial policy extensions remain Not configured."
           ],
           "steps": [],
           "rows": [],
@@ -20328,14 +20222,20 @@
       ],
       "related_entry_keys": [
         "scope:PD-01",
-        "scope:AD-05"
+        "scope:AD-05",
+        "route:/products/pricing",
+        "scope:ES-03",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EQ-07",
+        "scope:EQ-06"
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "7 October completion: named synthetic duties, exact historical pricing handoff and published-basis navigation; owner guide review remains pending.",
       "document_id": "PPO-GUIDE-PD-03",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -20353,25 +20253,23 @@
     {
       "guide_key": "guide.pd.04",
       "entry_key": "scope:PD-04",
-      "title": "Compatibility, replacements and product lifecycle",
+      "title": "Compatibility, replacements and lifecycle",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Native synthetic workflow; operational access and owner acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-09-25",
+      "source_commit": "cad98aca42cb233f142029d11601a78d7d4b521e",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/testing/evidence/products-native/README.md; checks and visual review are separate.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Compatibility, replacements and product lifecycle to work towards this outcome: A proposed replacement has a stated evidence basis.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "A successor product is not automatically a compatible substitute."
+            "Record bounded product-level candidate relationships, unresolved interface criteria and separate receiving-domain uses."
           ],
           "steps": [],
           "rows": [],
@@ -20381,9 +20279,9 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Model/version, interface, replacement evidence and lifecycle limits.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Confirm company scope, exact identity and explicit Products grants. Existing roles receive no new operational grants from this implementation.",
+            "Use synthetic evidence only. MYOB remains ERP authority; SharePoint and native CAD retain document authoring.",
+            "In the local synthetic app, use the session selector to choose Synthetic Products reader, author, reviewer or publisher. The author prepares and submits a draft, the reviewer records independent review, then the publisher publishes that exact revision. Existing and hosted users receive no Products grant."
           ],
           "steps": [],
           "rows": [],
@@ -20394,11 +20292,8 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Compare the intended equipment configuration",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Choose exact original and candidate revisions; similar display names do not identify a record.",
+            "Record relationship purpose, evidence, conditions, limitations, lifecycle source and criteria with clarification owners."
           ],
           "rows": [],
           "headers": []
@@ -20410,38 +20305,29 @@
           "steps": [],
           "rows": [
             [
-              "Page context",
-              "Compatibility, replacements and product lifecycle · Page or tabs"
+              "Context",
+              "Company, exact identity, catalogue revision and separate technical/source revision."
             ],
             [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
+              "Work area",
+              "Evidence record / comparison / review with words for unknown and review states."
             ],
             [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
+              "Handover",
+              "Open the owning record and verify its current permission/state."
             ]
           ],
           "headers": [
             "Area",
-            "How to use it"
+            "Purpose"
           ]
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Model/version, interface, replacement evidence and lifecycle limits.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Source provider/key and dates, explicit units, evidence and a reason for each command. Blank support/validity dates remain unknown.",
+            "Names and SYN- aliases are display references. UUIDs and external company/provider/entity keys identify retained records."
           ],
           "steps": [],
           "rows": [],
@@ -20450,13 +20336,13 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Compare the intended equipment configuration",
-            "Review compatibility and replacement evidence",
-            "Record limitations and the technical review outcome"
+            "Choose exact original and candidate revisions; similar display names do not identify a record.",
+            "Record relationship purpose, evidence, conditions, limitations, lifecycle source and criteria with clarification owners.",
+            "A separate reviewer records Conditional only when every criterion is Met, or Unresolved/Rejected.",
+            "Preview a permitted Asset or Engineering MaterialLine and retain its exact version as observed-use evidence.",
+            "Open Engineering Materials/Change Impact or Equipment Lifecycle/Bulletins for the owning decision; retained Product references never change those records."
           ],
           "rows": [],
           "headers": []
@@ -20465,9 +20351,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "A proposed replacement has a stated evidence basis.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A successor product is not automatically a compatible substitute."
+            "Inspect the saved record and exact original receipt. A click, parse, saved draft or review does not imply publication, installation suitability, quotation or stock commitment.",
+            "PD-03 hands source authoring and deliberate estimate refresh to ES-03. PD-04 hands application suitability to Engineering and installed impact to Equipment."
           ],
           "steps": [],
           "rows": [],
@@ -20480,41 +20365,40 @@
           "steps": [],
           "rows": [
             [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
+              "Loading / failed read",
+              "Wait or retry. Failed reads never become an empty register."
             ],
             [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
+              "Empty / filtered empty",
+              "Clear filters or create an authorised synthetic record; the permitted list is limited to 100."
             ],
             [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
+              "Read only / unavailable",
+              "An explicit grant or permitted source is missing. Do not infer that the record does not exist."
             ],
             [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
+              "Draft / Submitted / Reviewed / Published",
+              "Separate retained states; published history is immutable and successors require new review."
             ],
             [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
+              "Stale / validation",
+              "Retain inputs, inspect the newer basis and deliberately prepare a new command."
             ],
             [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
+              "Outcome unknown / recovered",
+              "Recover the original operation receipt or retry the exact journalled command; never duplicate the effect."
             ]
           ],
           "headers": [
-            "State or situation",
-            "Meaning and response"
+            "State",
+            "Action"
           ]
         },
         {
-          "section_id": "examples",
-          "title": "Worked examples",
+          "section_id": "example",
+          "title": "Synthetic example",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare model/version, interface, replacement evidence and lifecycle limits. Follow the task sequence and check that a proposed replacement has a stated evidence basis. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Compatibility, replacements and product lifecycle has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A successor product is not automatically a compatible substitute."
+            "SYN Verdant VC20 24V and 230V have similar labels but separate variants. A missing interface has a named clarification owner. A nominated successor remains a candidate until bounded review; original use records remain unchanged."
           ],
           "steps": [],
           "rows": [],
@@ -20522,46 +20406,22 @@
         },
         {
           "section_id": "recovery",
-          "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "title": "Recovery and exceptions",
+          "paragraphs": [
+            "Pending commands are bound to the current actor and retained in the shared command journal. Reload checks the original receipt. Changed payload with the same operation is refused.",
+            "For an import, inspect the immutable mapping plan and comparison hash. Stale target versions or any blocking row roll back the entire application; exclusion is explicit and reasoned."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
-          "title": "Mobile, keyboard and offline use",
+          "title": "Mobile, keyboard and offline",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "At 390/320 px, cards and before/after sections stack in reading order. Labels and evidence wrap; actions remain available by keyboard.",
+            "Unsaved forms use the shared leave warning. No Products offline command queue is implemented. Reconnect and recover a pending original result.",
+            "Use Tab/Shift+Tab, Enter for controls and the shell information panel; these Product workspaces add no bespoke modal or drag interaction."
           ],
           "steps": [],
           "rows": [],
@@ -20569,10 +20429,12 @@
         },
         {
           "section_id": "resources",
-          "title": "Related guidance and procedures",
+          "title": "Sources and related workspaces",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "No exact dedicated accepted HTML baseline exists for this scope. The native composition derives from written scope, workflow and house components.",
+            "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html",
+            "docs/contracts/products-catalogue.md",
+            "docs/delivery/products-native-handover.md"
           ],
           "steps": [],
           "rows": [],
@@ -20580,11 +20442,10 @@
         },
         {
           "section_id": "review",
-          "title": "Guide review and feedback",
+          "title": "Review and applicability",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide. Owner: Dean Fiedler. Visual review, automated proof, owner acceptance, operational access allocation and deployment are separate.",
+            "Production file formats, live feeds, stock availability/commitment, FX, unit conversion and commercial policy extensions remain Not configured."
           ],
           "steps": [],
           "rows": [],
@@ -20592,13 +20453,19 @@
         }
       ],
       "related_entry_keys": [
-        "scope:PD-01"
+        "scope:PD-01",
+        "route:/products/compatibility",
+        "scope:ES-03",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EQ-07",
+        "scope:EQ-06"
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "7 October completion: named synthetic duties, exact historical pricing handoff and published-basis navigation; owner guide review remains pending.",
       "document_id": "PPO-GUIDE-PD-04",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -20618,22 +20485,20 @@
       "title": "Catalogue import and exception review",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Native synthetic workflow; operational access and owner acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-09-25",
+      "source_commit": "cad98aca42cb233f142029d11601a78d7d4b521e",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/testing/evidence/products-native/README.md; checks and visual review are separate.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Catalogue import and exception review to work towards this outcome: An import has a reviewable and attributable outcome.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "A source file is not authority to overwrite controlled catalogue records."
+            "Stage bounded synthetic JSON, resolve exact mappings, independently review the change set and apply draft records atomically."
           ],
           "steps": [],
           "rows": [],
@@ -20643,9 +20508,9 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Source file, mapping, units, duplicates and validation findings.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Confirm company scope, exact identity and explicit Products grants. Existing roles receive no new operational grants from this implementation.",
+            "Use synthetic evidence only. MYOB remains ERP authority; SharePoint and native CAD retain document authoring.",
+            "In the local synthetic app, use the session selector to choose Synthetic Products reader, author, reviewer or publisher. The author prepares and submits a draft, the reviewer records independent review, then the publisher publishes that exact revision. Existing and hosted users receive no Products grant."
           ],
           "steps": [],
           "rows": [],
@@ -20656,11 +20521,8 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Stage the source and inspect field mappings",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Stage a file or pasted JSON in PPO synthetic catalogue 1 format, up to 12,000 UTF-8 bytes and 50 rows; retain source description/provider/company/time.",
+            "Inspect raw rows, source hash and original keys. Choose Resolve exact target, New identity or Exclude with a reason."
           ],
           "rows": [],
           "headers": []
@@ -20672,38 +20534,29 @@
           "steps": [],
           "rows": [
             [
-              "Page context",
-              "Catalogue import and exception review · Page"
+              "Context",
+              "Company, exact identity, catalogue revision and separate technical/source revision."
             ],
             [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
+              "Work area",
+              "Import workbench / exceptions / comparison with words for unknown and review states."
             ],
             [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
+              "Handover",
+              "Open the owning record and verify its current permission/state."
             ]
           ],
           "headers": [
             "Area",
-            "How to use it"
+            "Purpose"
           ]
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Source file, mapping, units, duplicates and validation findings.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Source provider/key and dates, explicit units, evidence and a reason for each command. Blank support/validity dates remain unknown.",
+            "Names and SYN- aliases are display references. UUIDs and external company/provider/entity keys identify retained records."
           ],
           "steps": [],
           "rows": [],
@@ -20712,13 +20565,13 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Stage the source and inspect field mappings",
-            "Resolve exceptions and duplicate candidates",
-            "Review the intended change set before controlled application"
+            "Stage a file or pasted JSON in PPO synthetic catalogue 1 format, up to 12,000 UTF-8 bytes and 50 rows; retain source description/provider/company/time.",
+            "Inspect raw rows, source hash and original keys. Choose Resolve exact target, New identity or Exclude with a reason.",
+            "Prepare a mapping preview. Inspect duplicate candidates, missing units/context, unsupported claims and exact before/after values.",
+            "Correct every blocking exception; similarity is never automatic merge. A separate reviewer approves the exact comparison hash.",
+            "Apply the reviewed plan. Published targets receive draft successors; new identities remain Draft. Open resulting records and retain the original receipt."
           ],
           "rows": [],
           "headers": []
@@ -20727,9 +20580,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "An import has a reviewable and attributable outcome.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A source file is not authority to overwrite controlled catalogue records."
+            "Inspect the saved record and exact original receipt. A click, parse, saved draft or review does not imply publication, installation suitability, quotation or stock commitment.",
+            "PD-03 hands source authoring and deliberate estimate refresh to ES-03. PD-04 hands application suitability to Engineering and installed impact to Equipment."
           ],
           "steps": [],
           "rows": [],
@@ -20742,41 +20594,40 @@
           "steps": [],
           "rows": [
             [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
+              "Loading / failed read",
+              "Wait or retry. Failed reads never become an empty register."
             ],
             [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
+              "Empty / filtered empty",
+              "Clear filters or create an authorised synthetic record; the permitted list is limited to 100."
             ],
             [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
+              "Read only / unavailable",
+              "An explicit grant or permitted source is missing. Do not infer that the record does not exist."
             ],
             [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
+              "Draft / Submitted / Reviewed / Published",
+              "Separate retained states; published history is immutable and successors require new review."
             ],
             [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
+              "Stale / validation",
+              "Retain inputs, inspect the newer basis and deliberately prepare a new command."
             ],
             [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
+              "Outcome unknown / recovered",
+              "Recover the original operation receipt or retry the exact journalled command; never duplicate the effect."
             ]
           ],
           "headers": [
-            "State or situation",
-            "Meaning and response"
+            "State",
+            "Action"
           ]
         },
         {
-          "section_id": "examples",
-          "title": "Worked examples",
+          "section_id": "example",
+          "title": "Synthetic example",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare source file, mapping, units, duplicates and validation findings. Follow the task sequence and check that an import has a reviewable and attributable outcome. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Catalogue import and exception review has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A source file is not authority to overwrite controlled catalogue records."
+            "SYN Verdant VC20 24V and 230V have similar labels but separate variants. A missing interface has a named clarification owner. A nominated successor remains a candidate until bounded review; original use records remain unchanged."
           ],
           "steps": [],
           "rows": [],
@@ -20784,46 +20635,22 @@
         },
         {
           "section_id": "recovery",
-          "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "title": "Recovery and exceptions",
+          "paragraphs": [
+            "Pending commands are bound to the current actor and retained in the shared command journal. Reload checks the original receipt. Changed payload with the same operation is refused.",
+            "For an import, inspect the immutable mapping plan and comparison hash. Stale target versions or any blocking row roll back the entire application; exclusion is explicit and reasoned."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
-          "title": "Mobile, keyboard and offline use",
+          "title": "Mobile, keyboard and offline",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "At 390/320 px, cards and before/after sections stack in reading order. Labels and evidence wrap; actions remain available by keyboard.",
+            "Unsaved forms use the shared leave warning. No Products offline command queue is implemented. Reconnect and recover a pending original result.",
+            "Use Tab/Shift+Tab, Enter for controls and the shell information panel; these Product workspaces add no bespoke modal or drag interaction."
           ],
           "steps": [],
           "rows": [],
@@ -20831,10 +20658,12 @@
         },
         {
           "section_id": "resources",
-          "title": "Related guidance and procedures",
+          "title": "Sources and related workspaces",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "No exact dedicated accepted HTML baseline exists for this scope. The native composition derives from written scope, workflow and house components.",
+            "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html",
+            "docs/contracts/products-catalogue.md",
+            "docs/delivery/products-native-handover.md"
           ],
           "steps": [],
           "rows": [],
@@ -20842,11 +20671,10 @@
         },
         {
           "section_id": "review",
-          "title": "Guide review and feedback",
+          "title": "Review and applicability",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide. Owner: Dean Fiedler. Visual review, automated proof, owner acceptance, operational access allocation and deployment are separate.",
+            "Production file formats, live feeds, stock availability/commitment, FX, unit conversion and commercial policy extensions remain Not configured."
           ],
           "steps": [],
           "rows": [],
@@ -20856,13 +20684,19 @@
       "related_entry_keys": [
         "scope:AD-03",
         "scope:AD-05",
-        "scope:PD-02"
+        "scope:PD-02",
+        "route:/products/import",
+        "scope:ES-03",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EQ-07",
+        "scope:EQ-06"
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "7 October completion: named synthetic duties, exact historical pricing handoff and published-basis navigation; owner guide review remains pending.",
       "document_id": "PPO-GUIDE-PD-05",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -70576,6 +70410,1277 @@
         "docs/decisions/quotation-conversion-native.md"
       ],
       "change_summary": "SYN-ES07-12: explicit four-task diamond, seven decisions, both paths and one D save."
+    },
+    {
+      "guide_key": "guide.route-products-id",
+      "entry_key": "route:/products/[id]",
+      "title": "Exact product technical record",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic workflow; operational access and owner acceptance pending",
+      "source_commit": "cad98aca42cb233f142029d11601a78d7d4b521e",
+      "related_entry_keys": [
+        "scope:PD-01",
+        "route:/products",
+        "scope:ES-03",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EQ-07",
+        "scope:EQ-06"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Find the exact Family, Model or Variant by UUID, synthetic alias, provider key or model; inspect retained technical and source evidence."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Confirm company scope, exact identity and explicit Products grants. Existing roles receive no new operational grants from this implementation.",
+            "Use synthetic evidence only. MYOB remains ERP authority; SharePoint and native CAD retain document authoring.",
+            "In the local synthetic app, use the session selector to choose Synthetic Products reader, author, reviewer or publisher. The author prepares and submits a draft, the reviewer records independent review, then the publisher publishes that exact revision. Existing and hosted users receive no Products grant."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Search and apply kind, state or lifecycle filters; the query remains in the URL.",
+            "Open the exact model/variant and inspect catalogue revision separately from explicit technical/source revision."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [],
+          "steps": [],
+          "rows": [
+            [
+              "Context",
+              "Company, exact identity, catalogue revision and separate technical/source revision."
+            ],
+            [
+              "Work area",
+              "Register / technical record with words for unknown and review states."
+            ],
+            [
+              "Handover",
+              "Open the owning record and verify its current permission/state."
+            ]
+          ],
+          "headers": [
+            "Area",
+            "Purpose"
+          ]
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "Source provider/key and dates, explicit units, evidence and a reason for each command. Blank support/validity dates remain unknown.",
+            "Names and SYN- aliases are display references. UUIDs and external company/provider/entity keys identify retained records."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [],
+          "steps": [
+            "Search and apply kind, state or lifecycle filters; the query remains in the URL.",
+            "Open the exact model/variant and inspect catalogue revision separately from explicit technical/source revision.",
+            "Inspect attribute units, unresolved clarification owners, controlled document applicability and lifecycle evidence.",
+            "Choose a retained revision before handing its exact identity to an authorised receiving workspace."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Inspect the saved record and exact original receipt. A click, parse, saved draft or review does not imply publication, installation suitability, quotation or stock commitment.",
+            "PD-03 hands source authoring and deliberate estimate refresh to ES-03. PD-04 hands application suitability to Engineering and installed impact to Equipment."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [],
+          "steps": [],
+          "rows": [
+            [
+              "Loading / failed read",
+              "Wait or retry. Failed reads never become an empty register."
+            ],
+            [
+              "Empty / filtered empty",
+              "Clear filters or create an authorised synthetic record; the permitted list is limited to 100."
+            ],
+            [
+              "Read only / unavailable",
+              "An explicit grant or permitted source is missing. Do not infer that the record does not exist."
+            ],
+            [
+              "Draft / Submitted / Reviewed / Published",
+              "Separate retained states; published history is immutable and successors require new review."
+            ],
+            [
+              "Stale / validation",
+              "Retain inputs, inspect the newer basis and deliberately prepare a new command."
+            ],
+            [
+              "Outcome unknown / recovered",
+              "Recover the original operation receipt or retry the exact journalled command; never duplicate the effect."
+            ]
+          ],
+          "headers": [
+            "State",
+            "Action"
+          ]
+        },
+        {
+          "section_id": "example",
+          "title": "Synthetic example",
+          "paragraphs": [
+            "SYN Verdant VC20 24V and 230V have similar labels but separate variants. A missing interface has a named clarification owner. A nominated successor remains a candidate until bounded review; original use records remain unchanged."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Recovery and exceptions",
+          "paragraphs": [
+            "Pending commands are bound to the current actor and retained in the shared command journal. Reload checks the original receipt. Changed payload with the same operation is refused.",
+            "For an import, inspect the immutable mapping plan and comparison hash. Stale target versions or any blocking row roll back the entire application; exclusion is explicit and reasoned."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline",
+          "paragraphs": [
+            "At 390/320 px, cards and before/after sections stack in reading order. Labels and evidence wrap; actions remain available by keyboard.",
+            "Unsaved forms use the shared leave warning. No Products offline command queue is implemented. Reconnect and recover a pending original result.",
+            "Use Tab/Shift+Tab, Enter for controls and the shell information panel; these Product workspaces add no bespoke modal or drag interaction."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Sources and related workspaces",
+          "paragraphs": [
+            "Exact retained visual reference: docs/reference/ui/products/PPO-Products-Preview-r04.html.",
+            "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html",
+            "docs/contracts/products-catalogue.md",
+            "docs/delivery/products-native-handover.md"
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "review",
+          "title": "Review and applicability",
+          "paragraphs": [
+            "Draft guide. Owner: Dean Fiedler. Visual review, automated proof, owner acceptance, operational access allocation and deployment are separate.",
+            "Production file formats, live feeds, stock availability/commitment, FX, unit conversion and commercial policy extensions remain Not configured."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ],
+      "locale": "en-AU",
+      "prepared_at": "2026-09-25",
+      "runtime_evidence": "See docs/testing/evidence/products-native/README.md; checks and visual review are separate.",
+      "change_summary": "7 October completion: named synthetic duties, exact historical pricing handoff and published-basis navigation; owner guide review remains pending."
+    },
+    {
+      "guide_key": "guide.route-products-compatibility",
+      "entry_key": "route:/products/compatibility",
+      "title": "Compatibility, replacements and lifecycle",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic workflow; operational access and owner acceptance pending",
+      "source_commit": "cad98aca42cb233f142029d11601a78d7d4b521e",
+      "related_entry_keys": [
+        "scope:PD-04",
+        "scope:ES-03",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EQ-07",
+        "scope:EQ-06"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Record bounded product-level candidate relationships, unresolved interface criteria and separate receiving-domain uses."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Confirm company scope, exact identity and explicit Products grants. Existing roles receive no new operational grants from this implementation.",
+            "Use synthetic evidence only. MYOB remains ERP authority; SharePoint and native CAD retain document authoring.",
+            "In the local synthetic app, use the session selector to choose Synthetic Products reader, author, reviewer or publisher. The author prepares and submits a draft, the reviewer records independent review, then the publisher publishes that exact revision. Existing and hosted users receive no Products grant."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Choose exact original and candidate revisions; similar display names do not identify a record.",
+            "Record relationship purpose, evidence, conditions, limitations, lifecycle source and criteria with clarification owners."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [],
+          "steps": [],
+          "rows": [
+            [
+              "Context",
+              "Company, exact identity, catalogue revision and separate technical/source revision."
+            ],
+            [
+              "Work area",
+              "Evidence record / comparison / review with words for unknown and review states."
+            ],
+            [
+              "Handover",
+              "Open the owning record and verify its current permission/state."
+            ]
+          ],
+          "headers": [
+            "Area",
+            "Purpose"
+          ]
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "Source provider/key and dates, explicit units, evidence and a reason for each command. Blank support/validity dates remain unknown.",
+            "Names and SYN- aliases are display references. UUIDs and external company/provider/entity keys identify retained records."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [],
+          "steps": [
+            "Choose exact original and candidate revisions; similar display names do not identify a record.",
+            "Record relationship purpose, evidence, conditions, limitations, lifecycle source and criteria with clarification owners.",
+            "A separate reviewer records Conditional only when every criterion is Met, or Unresolved/Rejected.",
+            "Preview a permitted Asset or Engineering MaterialLine and retain its exact version as observed-use evidence.",
+            "Open Engineering Materials/Change Impact or Equipment Lifecycle/Bulletins for the owning decision; retained Product references never change those records."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Inspect the saved record and exact original receipt. A click, parse, saved draft or review does not imply publication, installation suitability, quotation or stock commitment.",
+            "PD-03 hands source authoring and deliberate estimate refresh to ES-03. PD-04 hands application suitability to Engineering and installed impact to Equipment."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [],
+          "steps": [],
+          "rows": [
+            [
+              "Loading / failed read",
+              "Wait or retry. Failed reads never become an empty register."
+            ],
+            [
+              "Empty / filtered empty",
+              "Clear filters or create an authorised synthetic record; the permitted list is limited to 100."
+            ],
+            [
+              "Read only / unavailable",
+              "An explicit grant or permitted source is missing. Do not infer that the record does not exist."
+            ],
+            [
+              "Draft / Submitted / Reviewed / Published",
+              "Separate retained states; published history is immutable and successors require new review."
+            ],
+            [
+              "Stale / validation",
+              "Retain inputs, inspect the newer basis and deliberately prepare a new command."
+            ],
+            [
+              "Outcome unknown / recovered",
+              "Recover the original operation receipt or retry the exact journalled command; never duplicate the effect."
+            ]
+          ],
+          "headers": [
+            "State",
+            "Action"
+          ]
+        },
+        {
+          "section_id": "example",
+          "title": "Synthetic example",
+          "paragraphs": [
+            "SYN Verdant VC20 24V and 230V have similar labels but separate variants. A missing interface has a named clarification owner. A nominated successor remains a candidate until bounded review; original use records remain unchanged."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Recovery and exceptions",
+          "paragraphs": [
+            "Pending commands are bound to the current actor and retained in the shared command journal. Reload checks the original receipt. Changed payload with the same operation is refused.",
+            "For an import, inspect the immutable mapping plan and comparison hash. Stale target versions or any blocking row roll back the entire application; exclusion is explicit and reasoned."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline",
+          "paragraphs": [
+            "At 390/320 px, cards and before/after sections stack in reading order. Labels and evidence wrap; actions remain available by keyboard.",
+            "Unsaved forms use the shared leave warning. No Products offline command queue is implemented. Reconnect and recover a pending original result.",
+            "Use Tab/Shift+Tab, Enter for controls and the shell information panel; these Product workspaces add no bespoke modal or drag interaction."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Sources and related workspaces",
+          "paragraphs": [
+            "No exact dedicated accepted HTML baseline exists for this scope. The native composition derives from written scope, workflow and house components.",
+            "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html",
+            "docs/contracts/products-catalogue.md",
+            "docs/delivery/products-native-handover.md"
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "review",
+          "title": "Review and applicability",
+          "paragraphs": [
+            "Draft guide. Owner: Dean Fiedler. Visual review, automated proof, owner acceptance, operational access allocation and deployment are separate.",
+            "Production file formats, live feeds, stock availability/commitment, FX, unit conversion and commercial policy extensions remain Not configured."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ],
+      "locale": "en-AU",
+      "prepared_at": "2026-09-25",
+      "runtime_evidence": "See docs/testing/evidence/products-native/README.md; checks and visual review are separate.",
+      "change_summary": "7 October completion: named synthetic duties, exact historical pricing handoff and published-basis navigation; owner guide review remains pending."
+    },
+    {
+      "guide_key": "guide.route-products-import",
+      "entry_key": "route:/products/import",
+      "title": "Catalogue import and exception review",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic workflow; operational access and owner acceptance pending",
+      "source_commit": "cad98aca42cb233f142029d11601a78d7d4b521e",
+      "related_entry_keys": [
+        "scope:PD-05",
+        "scope:ES-03",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EQ-07",
+        "scope:EQ-06"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Stage bounded synthetic JSON, resolve exact mappings, independently review the change set and apply draft records atomically."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Confirm company scope, exact identity and explicit Products grants. Existing roles receive no new operational grants from this implementation.",
+            "Use synthetic evidence only. MYOB remains ERP authority; SharePoint and native CAD retain document authoring.",
+            "In the local synthetic app, use the session selector to choose Synthetic Products reader, author, reviewer or publisher. The author prepares and submits a draft, the reviewer records independent review, then the publisher publishes that exact revision. Existing and hosted users receive no Products grant."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Stage a file or pasted JSON in PPO synthetic catalogue 1 format, up to 12,000 UTF-8 bytes and 50 rows; retain source description/provider/company/time.",
+            "Inspect raw rows, source hash and original keys. Choose Resolve exact target, New identity or Exclude with a reason."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [],
+          "steps": [],
+          "rows": [
+            [
+              "Context",
+              "Company, exact identity, catalogue revision and separate technical/source revision."
+            ],
+            [
+              "Work area",
+              "Import workbench / exceptions / comparison with words for unknown and review states."
+            ],
+            [
+              "Handover",
+              "Open the owning record and verify its current permission/state."
+            ]
+          ],
+          "headers": [
+            "Area",
+            "Purpose"
+          ]
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "Source provider/key and dates, explicit units, evidence and a reason for each command. Blank support/validity dates remain unknown.",
+            "Names and SYN- aliases are display references. UUIDs and external company/provider/entity keys identify retained records."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [],
+          "steps": [
+            "Stage a file or pasted JSON in PPO synthetic catalogue 1 format, up to 12,000 UTF-8 bytes and 50 rows; retain source description/provider/company/time.",
+            "Inspect raw rows, source hash and original keys. Choose Resolve exact target, New identity or Exclude with a reason.",
+            "Prepare a mapping preview. Inspect duplicate candidates, missing units/context, unsupported claims and exact before/after values.",
+            "Correct every blocking exception; similarity is never automatic merge. A separate reviewer approves the exact comparison hash.",
+            "Apply the reviewed plan. Published targets receive draft successors; new identities remain Draft. Open resulting records and retain the original receipt."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Inspect the saved record and exact original receipt. A click, parse, saved draft or review does not imply publication, installation suitability, quotation or stock commitment.",
+            "PD-03 hands source authoring and deliberate estimate refresh to ES-03. PD-04 hands application suitability to Engineering and installed impact to Equipment."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [],
+          "steps": [],
+          "rows": [
+            [
+              "Loading / failed read",
+              "Wait or retry. Failed reads never become an empty register."
+            ],
+            [
+              "Empty / filtered empty",
+              "Clear filters or create an authorised synthetic record; the permitted list is limited to 100."
+            ],
+            [
+              "Read only / unavailable",
+              "An explicit grant or permitted source is missing. Do not infer that the record does not exist."
+            ],
+            [
+              "Draft / Submitted / Reviewed / Published",
+              "Separate retained states; published history is immutable and successors require new review."
+            ],
+            [
+              "Stale / validation",
+              "Retain inputs, inspect the newer basis and deliberately prepare a new command."
+            ],
+            [
+              "Outcome unknown / recovered",
+              "Recover the original operation receipt or retry the exact journalled command; never duplicate the effect."
+            ]
+          ],
+          "headers": [
+            "State",
+            "Action"
+          ]
+        },
+        {
+          "section_id": "example",
+          "title": "Synthetic example",
+          "paragraphs": [
+            "SYN Verdant VC20 24V and 230V have similar labels but separate variants. A missing interface has a named clarification owner. A nominated successor remains a candidate until bounded review; original use records remain unchanged."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Recovery and exceptions",
+          "paragraphs": [
+            "Pending commands are bound to the current actor and retained in the shared command journal. Reload checks the original receipt. Changed payload with the same operation is refused.",
+            "For an import, inspect the immutable mapping plan and comparison hash. Stale target versions or any blocking row roll back the entire application; exclusion is explicit and reasoned."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline",
+          "paragraphs": [
+            "At 390/320 px, cards and before/after sections stack in reading order. Labels and evidence wrap; actions remain available by keyboard.",
+            "Unsaved forms use the shared leave warning. No Products offline command queue is implemented. Reconnect and recover a pending original result.",
+            "Use Tab/Shift+Tab, Enter for controls and the shell information panel; these Product workspaces add no bespoke modal or drag interaction."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Sources and related workspaces",
+          "paragraphs": [
+            "No exact dedicated accepted HTML baseline exists for this scope. The native composition derives from written scope, workflow and house components.",
+            "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html",
+            "docs/contracts/products-catalogue.md",
+            "docs/delivery/products-native-handover.md"
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "review",
+          "title": "Review and applicability",
+          "paragraphs": [
+            "Draft guide. Owner: Dean Fiedler. Visual review, automated proof, owner acceptance, operational access allocation and deployment are separate.",
+            "Production file formats, live feeds, stock availability/commitment, FX, unit conversion and commercial policy extensions remain Not configured."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ],
+      "locale": "en-AU",
+      "prepared_at": "2026-09-25",
+      "runtime_evidence": "See docs/testing/evidence/products-native/README.md; checks and visual review are separate.",
+      "change_summary": "7 October completion: named synthetic duties, exact historical pricing handoff and published-basis navigation; owner guide review remains pending."
+    },
+    {
+      "guide_key": "guide.route-products",
+      "entry_key": "route:/products",
+      "title": "Catalogue and product technical workspace",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic workflow; operational access and owner acceptance pending",
+      "source_commit": "cad98aca42cb233f142029d11601a78d7d4b521e",
+      "related_entry_keys": [
+        "scope:PD-01",
+        "route:/products/[id]",
+        "scope:ES-03",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EQ-07",
+        "scope:EQ-06"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Find the exact Family, Model or Variant by UUID, synthetic alias, provider key or model; inspect retained technical and source evidence."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Confirm company scope, exact identity and explicit Products grants. Existing roles receive no new operational grants from this implementation.",
+            "Use synthetic evidence only. MYOB remains ERP authority; SharePoint and native CAD retain document authoring.",
+            "In the local synthetic app, use the session selector to choose Synthetic Products reader, author, reviewer or publisher. The author prepares and submits a draft, the reviewer records independent review, then the publisher publishes that exact revision. Existing and hosted users receive no Products grant."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Search and apply kind, state or lifecycle filters; the query remains in the URL.",
+            "Open the exact model/variant and inspect catalogue revision separately from explicit technical/source revision."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [],
+          "steps": [],
+          "rows": [
+            [
+              "Context",
+              "Company, exact identity, catalogue revision and separate technical/source revision."
+            ],
+            [
+              "Work area",
+              "Register / technical record with words for unknown and review states."
+            ],
+            [
+              "Handover",
+              "Open the owning record and verify its current permission/state."
+            ]
+          ],
+          "headers": [
+            "Area",
+            "Purpose"
+          ]
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "Source provider/key and dates, explicit units, evidence and a reason for each command. Blank support/validity dates remain unknown.",
+            "Names and SYN- aliases are display references. UUIDs and external company/provider/entity keys identify retained records."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [],
+          "steps": [
+            "Search and apply kind, state or lifecycle filters; the query remains in the URL.",
+            "Open the exact model/variant and inspect catalogue revision separately from explicit technical/source revision.",
+            "Inspect attribute units, unresolved clarification owners, controlled document applicability and lifecycle evidence.",
+            "Choose a retained revision before handing its exact identity to an authorised receiving workspace."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Inspect the saved record and exact original receipt. A click, parse, saved draft or review does not imply publication, installation suitability, quotation or stock commitment.",
+            "PD-03 hands source authoring and deliberate estimate refresh to ES-03. PD-04 hands application suitability to Engineering and installed impact to Equipment."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [],
+          "steps": [],
+          "rows": [
+            [
+              "Loading / failed read",
+              "Wait or retry. Failed reads never become an empty register."
+            ],
+            [
+              "Empty / filtered empty",
+              "Clear filters or create an authorised synthetic record; the permitted list is limited to 100."
+            ],
+            [
+              "Read only / unavailable",
+              "An explicit grant or permitted source is missing. Do not infer that the record does not exist."
+            ],
+            [
+              "Draft / Submitted / Reviewed / Published",
+              "Separate retained states; published history is immutable and successors require new review."
+            ],
+            [
+              "Stale / validation",
+              "Retain inputs, inspect the newer basis and deliberately prepare a new command."
+            ],
+            [
+              "Outcome unknown / recovered",
+              "Recover the original operation receipt or retry the exact journalled command; never duplicate the effect."
+            ]
+          ],
+          "headers": [
+            "State",
+            "Action"
+          ]
+        },
+        {
+          "section_id": "example",
+          "title": "Synthetic example",
+          "paragraphs": [
+            "SYN Verdant VC20 24V and 230V have similar labels but separate variants. A missing interface has a named clarification owner. A nominated successor remains a candidate until bounded review; original use records remain unchanged."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Recovery and exceptions",
+          "paragraphs": [
+            "Pending commands are bound to the current actor and retained in the shared command journal. Reload checks the original receipt. Changed payload with the same operation is refused.",
+            "For an import, inspect the immutable mapping plan and comparison hash. Stale target versions or any blocking row roll back the entire application; exclusion is explicit and reasoned."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline",
+          "paragraphs": [
+            "At 390/320 px, cards and before/after sections stack in reading order. Labels and evidence wrap; actions remain available by keyboard.",
+            "Unsaved forms use the shared leave warning. No Products offline command queue is implemented. Reconnect and recover a pending original result.",
+            "Use Tab/Shift+Tab, Enter for controls and the shell information panel; these Product workspaces add no bespoke modal or drag interaction."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Sources and related workspaces",
+          "paragraphs": [
+            "Exact retained visual reference: docs/reference/ui/products/PPO-Products-Preview-r04.html.",
+            "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html",
+            "docs/contracts/products-catalogue.md",
+            "docs/delivery/products-native-handover.md"
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "review",
+          "title": "Review and applicability",
+          "paragraphs": [
+            "Draft guide. Owner: Dean Fiedler. Visual review, automated proof, owner acceptance, operational access allocation and deployment are separate.",
+            "Production file formats, live feeds, stock availability/commitment, FX, unit conversion and commercial policy extensions remain Not configured."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ],
+      "locale": "en-AU",
+      "prepared_at": "2026-09-25",
+      "runtime_evidence": "See docs/testing/evidence/products-native/README.md; checks and visual review are separate.",
+      "change_summary": "7 October completion: named synthetic duties, exact historical pricing handoff and published-basis navigation; owner guide review remains pending."
+    },
+    {
+      "guide_key": "guide.route-products-pricing",
+      "entry_key": "route:/products/pricing",
+      "title": "Product supplier-source context",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic workflow; operational access and owner acceptance pending",
+      "source_commit": "cad98aca42cb233f142029d11601a78d7d4b521e",
+      "related_entry_keys": [
+        "scope:PD-03",
+        "scope:ES-03",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EQ-07",
+        "scope:EQ-06"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Connect exact Product and existing ES-03 CostSource revisions without duplicating commercial content or repricing saved work."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Confirm company scope, exact identity and explicit Products grants. Existing roles receive no new operational grants from this implementation.",
+            "Use synthetic evidence only. MYOB remains ERP authority; SharePoint and native CAD retain document authoring.",
+            "In the local synthetic app, use the session selector to choose Synthetic Products reader, author, reviewer or publisher. The author prepares and submits a draft, the reviewer records independent review, then the publisher publishes that exact revision. Existing and hosted users receive no Products grant."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Select the exact product and source revision; source reads require both Products commercial and Estimating permissions.",
+            "Check supplier/item, unit, source review, quantity tiers, AUD/excluding-tax basis and source-validity dates."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [],
+          "steps": [],
+          "rows": [
+            [
+              "Context",
+              "Company, exact identity, catalogue revision and separate technical/source revision."
+            ],
+            [
+              "Work area",
+              "Register / evidence comparison with words for unknown and review states."
+            ],
+            [
+              "Handover",
+              "Open the owning record and verify its current permission/state."
+            ]
+          ],
+          "headers": [
+            "Area",
+            "Purpose"
+          ]
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "Source provider/key and dates, explicit units, evidence and a reason for each command. Blank support/validity dates remain unknown.",
+            "Names and SYN- aliases are display references. UUIDs and external company/provider/entity keys identify retained records."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [],
+          "steps": [
+            "Select the exact product and source revision; source reads require both Products commercial and Estimating permissions.",
+            "Check supplier/item, unit, source review, quantity tiers, AUD/excluding-tax basis and source-validity dates.",
+            "Retain Mapped only for exact unit identity, or Unresolved with evidence; no automatic conversion is available.",
+            "Open source authoring/review in ES-03. Follow a permitted affected-estimate link for deliberate comparison and refresh."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Inspect the saved record and exact original receipt. A click, parse, saved draft or review does not imply publication, installation suitability, quotation or stock commitment.",
+            "PD-03 hands source authoring and deliberate estimate refresh to ES-03. PD-04 hands application suitability to Engineering and installed impact to Equipment."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [],
+          "steps": [],
+          "rows": [
+            [
+              "Loading / failed read",
+              "Wait or retry. Failed reads never become an empty register."
+            ],
+            [
+              "Empty / filtered empty",
+              "Clear filters or create an authorised synthetic record; the permitted list is limited to 100."
+            ],
+            [
+              "Read only / unavailable",
+              "An explicit grant or permitted source is missing. Do not infer that the record does not exist."
+            ],
+            [
+              "Draft / Submitted / Reviewed / Published",
+              "Separate retained states; published history is immutable and successors require new review."
+            ],
+            [
+              "Stale / validation",
+              "Retain inputs, inspect the newer basis and deliberately prepare a new command."
+            ],
+            [
+              "Outcome unknown / recovered",
+              "Recover the original operation receipt or retry the exact journalled command; never duplicate the effect."
+            ]
+          ],
+          "headers": [
+            "State",
+            "Action"
+          ]
+        },
+        {
+          "section_id": "example",
+          "title": "Synthetic example",
+          "paragraphs": [
+            "SYN Verdant VC20 24V and 230V have similar labels but separate variants. A missing interface has a named clarification owner. A nominated successor remains a candidate until bounded review; original use records remain unchanged."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Recovery and exceptions",
+          "paragraphs": [
+            "Pending commands are bound to the current actor and retained in the shared command journal. Reload checks the original receipt. Changed payload with the same operation is refused.",
+            "For an import, inspect the immutable mapping plan and comparison hash. Stale target versions or any blocking row roll back the entire application; exclusion is explicit and reasoned."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline",
+          "paragraphs": [
+            "At 390/320 px, cards and before/after sections stack in reading order. Labels and evidence wrap; actions remain available by keyboard.",
+            "Unsaved forms use the shared leave warning. No Products offline command queue is implemented. Reconnect and recover a pending original result.",
+            "Use Tab/Shift+Tab, Enter for controls and the shell information panel; these Product workspaces add no bespoke modal or drag interaction."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Sources and related workspaces",
+          "paragraphs": [
+            "Exact retained visual reference: docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html.",
+            "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html",
+            "docs/contracts/products-catalogue.md",
+            "docs/delivery/products-native-handover.md"
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "review",
+          "title": "Review and applicability",
+          "paragraphs": [
+            "Draft guide. Owner: Dean Fiedler. Visual review, automated proof, owner acceptance, operational access allocation and deployment are separate.",
+            "Production file formats, live feeds, stock availability/commitment, FX, unit conversion and commercial policy extensions remain Not configured."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ],
+      "locale": "en-AU",
+      "prepared_at": "2026-09-25",
+      "runtime_evidence": "See docs/testing/evidence/products-native/README.md; checks and visual review are separate.",
+      "change_summary": "7 October completion: named synthetic duties, exact historical pricing handoff and published-basis navigation; owner guide review remains pending."
+    },
+    {
+      "guide_key": "guide.route-products-publication",
+      "entry_key": "route:/products/publication",
+      "title": "Catalogue authoring and publication",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic workflow; operational access and owner acceptance pending",
+      "source_commit": "cad98aca42cb233f142029d11601a78d7d4b521e",
+      "related_entry_keys": [
+        "scope:PD-02",
+        "scope:ES-03",
+        "scope:EN-06",
+        "scope:EN-07",
+        "scope:EQ-07",
+        "scope:EQ-06"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Prepare immutable catalogue successors, compare exact predecessor content and independently review before publication."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Confirm company scope, exact identity and explicit Products grants. Existing roles receive no new operational grants from this implementation.",
+            "Use synthetic evidence only. MYOB remains ERP authority; SharePoint and native CAD retain document authoring.",
+            "In the local synthetic app, use the session selector to choose Synthetic Products reader, author, reviewer or publisher. The author prepares and submits a draft, the reviewer records independent review, then the publisher publishes that exact revision. Existing and hosted users receive no Products grant."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Select a product or prepare a new identity with company, kind, exact parent, SYN- alias and provider/entity key.",
+            "Edit typed content and inspect the proposed before/after comparison; save with a reason and source evidence."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [],
+          "steps": [],
+          "rows": [
+            [
+              "Context",
+              "Company, exact identity, catalogue revision and separate technical/source revision."
+            ],
+            [
+              "Work area",
+              "Review queue / record / form with words for unknown and review states."
+            ],
+            [
+              "Handover",
+              "Open the owning record and verify its current permission/state."
+            ]
+          ],
+          "headers": [
+            "Area",
+            "Purpose"
+          ]
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "Source provider/key and dates, explicit units, evidence and a reason for each command. Blank support/validity dates remain unknown.",
+            "Names and SYN- aliases are display references. UUIDs and external company/provider/entity keys identify retained records."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [],
+          "steps": [
+            "Select a product or prepare a new identity with company, kind, exact parent, SYN- alias and provider/entity key.",
+            "Edit typed content and inspect the proposed before/after comparison; save with a reason and source evidence.",
+            "Submit the exact revision. A separate explicitly granted actor records Reviewed or Returned.",
+            "Publish the reviewed revision with purpose, audience and effective date; later publication supersedes the prior published basis.",
+            "Withdraw a published revision when required. A successor draft retains the original publication and technical provenance."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Inspect the saved record and exact original receipt. A click, parse, saved draft or review does not imply publication, installation suitability, quotation or stock commitment.",
+            "PD-03 hands source authoring and deliberate estimate refresh to ES-03. PD-04 hands application suitability to Engineering and installed impact to Equipment."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [],
+          "steps": [],
+          "rows": [
+            [
+              "Loading / failed read",
+              "Wait or retry. Failed reads never become an empty register."
+            ],
+            [
+              "Empty / filtered empty",
+              "Clear filters or create an authorised synthetic record; the permitted list is limited to 100."
+            ],
+            [
+              "Read only / unavailable",
+              "An explicit grant or permitted source is missing. Do not infer that the record does not exist."
+            ],
+            [
+              "Draft / Submitted / Reviewed / Published",
+              "Separate retained states; published history is immutable and successors require new review."
+            ],
+            [
+              "Stale / validation",
+              "Retain inputs, inspect the newer basis and deliberately prepare a new command."
+            ],
+            [
+              "Outcome unknown / recovered",
+              "Recover the original operation receipt or retry the exact journalled command; never duplicate the effect."
+            ]
+          ],
+          "headers": [
+            "State",
+            "Action"
+          ]
+        },
+        {
+          "section_id": "example",
+          "title": "Synthetic example",
+          "paragraphs": [
+            "SYN Verdant VC20 24V and 230V have similar labels but separate variants. A missing interface has a named clarification owner. A nominated successor remains a candidate until bounded review; original use records remain unchanged."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Recovery and exceptions",
+          "paragraphs": [
+            "Pending commands are bound to the current actor and retained in the shared command journal. Reload checks the original receipt. Changed payload with the same operation is refused.",
+            "For an import, inspect the immutable mapping plan and comparison hash. Stale target versions or any blocking row roll back the entire application; exclusion is explicit and reasoned."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline",
+          "paragraphs": [
+            "At 390/320 px, cards and before/after sections stack in reading order. Labels and evidence wrap; actions remain available by keyboard.",
+            "Unsaved forms use the shared leave warning. No Products offline command queue is implemented. Reconnect and recover a pending original result.",
+            "Use Tab/Shift+Tab, Enter for controls and the shell information panel; these Product workspaces add no bespoke modal or drag interaction."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Sources and related workspaces",
+          "paragraphs": [
+            "No exact dedicated accepted HTML baseline exists for this scope. The native composition derives from written scope, workflow and house components.",
+            "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html",
+            "docs/contracts/products-catalogue.md",
+            "docs/delivery/products-native-handover.md"
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "review",
+          "title": "Review and applicability",
+          "paragraphs": [
+            "Draft guide. Owner: Dean Fiedler. Visual review, automated proof, owner acceptance, operational access allocation and deployment are separate.",
+            "Production file formats, live feeds, stock availability/commitment, FX, unit conversion and commercial policy extensions remain Not configured."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ],
+      "locale": "en-AU",
+      "prepared_at": "2026-09-25",
+      "runtime_evidence": "See docs/testing/evidence/products-native/README.md; checks and visual review are separate.",
+      "change_summary": "7 October completion: named synthetic duties, exact historical pricing handoff and published-basis navigation; owner guide review remains pending."
     },
     {
       "guide_key": "guide.route-maintenance-agreements-id",

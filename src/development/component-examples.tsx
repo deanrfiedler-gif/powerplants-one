@@ -47,6 +47,8 @@ import {
 } from "./component-fixtures";
 import "../components/discovery.css";
 import "../components/estimation-wizard.css";
+import { TechnicalContent } from "../products/components/shared";
+import { productTechnicalFixture } from "./component-fixtures";
 
 function FieldsExample({
   state,
@@ -658,6 +660,8 @@ export function ComponentExample({
   tokens: { name: string; value: string }[];
 }) {
   switch (id) {
+    case "products":
+      return <div className="pd-workspace"><TechnicalContent content={{...productTechnicalFixture,attributes:state === "empty" ? [] : productTechnicalFixture.attributes,lifecycle:state === "retired" ? "Retired" : "Unknown"}}/></div>;
     case "foundations":
       return (
         <>

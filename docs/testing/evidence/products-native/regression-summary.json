@@ -1,0 +1,313 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-06T22:26:11.882026+00:00",
+  "database_source_commit": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+  "final_application_commit": "57204c6c3458cad549c68d04d5494e7ca0d616ff",
+  "note": "No database, permissions or server-command changes between these commits; the follow-on change is client recovery target validation.",
+  "database": "ppo_synthetic_test",
+  "execution": "Serial local PostgreSQL; synthetic data only",
+  "files": [
+    "tests/database/estimating-workspaces.test.ts",
+    "tests/database/estimating.test.ts",
+    "tests/database/field-timer-boundaries.test.ts",
+    "tests/database/policy-persistence.test.ts",
+    "tests/database/products-access.test.ts",
+    "tests/database/quality-upgrade.test.ts",
+    "tests/demo/upgrade.test.ts"
+  ],
+  "initial_run": {
+    "counts": {
+      "tests": 61,
+      "pass": 60,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "passed_cases": [
+      {
+        "name": "E2 persistence creates one selected option and exact immutable scope under identical operation races",
+        "duration_ms": 29942.513
+      },
+      {
+        "name": "E2 change comparisons reject stale writers and require explicit reconfirmation after membership changes",
+        "duration_ms": 29903.2539
+      },
+      {
+        "name": "E2 copies retained discovery as unconfirmed, fresh branches retain no inherited answers, and neither changes selection",
+        "duration_ms": 102972.4728
+      },
+      {
+        "name": "E2 hidden answers remain in their accepted predecessor and later activation requires deliberate confirmation",
+        "duration_ms": 86443.4304
+      },
+      {
+        "name": "E2 archived options keep exact original recovery; select/archive races use the whole workspace version",
+        "duration_ms": 83325.4723
+      },
+      {
+        "name": "E2 original receipts and captured labels are hidden after current relationship revocation, including inactive source options",
+        "duration_ms": 79592.7153
+      },
+      {
+        "name": "E2 identical operation UUIDs remain actor-scoped and recovery rechecks current edit access",
+        "duration_ms": 45163.1608
+      },
+      {
+        "name": "E2 shared-context changes reject the original proposal without altering its retained source or silently refreshing it",
+        "duration_ms": 37885.0277
+      },
+      {
+        "name": "E2 historical contact visibility is rechecked independently of current labels and versions",
+        "duration_ms": 109687.7448
+      },
+      {
+        "name": "E2 receipt, audit and outbox failures roll back the entire option graph",
+        "duration_ms": 68444.2847
+      },
+      {
+        "name": "E2 migration formalises exact E1 identities and preserves every accepted cost, quote, receipt and stored original",
+        "duration_ms": 103239.4571
+      },
+      {
+        "name": "E2 constraints refuse forged selection, related membership, history mutation and an eleventh retained option",
+        "duration_ms": 86280.3656
+      },
+      {
+        "name": "E2 recovery rechecks edit access to the exact original selected Site even after another option is selected",
+        "duration_ms": 35152.236
+      },
+      {
+        "name": "E2 permanent Facility placement rejects a move and preserves the retained discovery revision",
+        "duration_ms": 52900.8577
+      },
+      {
+        "name": "E2 application and SQL guards hold unsupported states anywhere in the group while ordinary render Pending remains editable",
+        "duration_ms": 34361.9281
+      },
+      {
+        "name": "E1-DB01 atomic creation, identical races and receipt recovery retain one original effect",
+        "duration_ms": 38861.0795
+      },
+      {
+        "name": "E1-DB02 reasoned successor, stale writers, exact predecessor and immutable original",
+        "duration_ms": 61553.7833
+      },
+      {
+        "name": "E1-DB03 server scope denial covers lists, selectors, commands, receipt replay and cross-workspace guesses",
+        "duration_ms": 29522.6949
+      },
+      {
+        "name": "E1-DB04 loss of linked person relationship hides aggregates, original receipts and exact quote files",
+        "duration_ms": 51181.01
+      },
+      {
+        "name": "E1-DB05 safe-only reader cannot retrieve internal costs; owner grants are not inferred",
+        "duration_ms": 70620.0846
+      },
+      {
+        "name": "E1-DB06 quote revisions bind exact saved versions, choices, reason and captured template; originals never advance",
+        "duration_ms": 50496.4436
+      },
+      {
+        "name": "E1-DB07 complete decimal data and matching quote membership required; empty draft remains unknown",
+        "duration_ms": 36891.1623
+      },
+      {
+        "name": "E1-DB08 crash after durable storage recovers byte-identical HTML/PDF without regeneration",
+        "duration_ms": 38315.5437
+      },
+      {
+        "name": "E1-DB09 failed rendering retains original revision and recovers same intent; Ready output cannot be overwritten",
+        "duration_ms": 49766.3157
+      },
+      {
+        "name": "E1-DB10 current-main upgrade and repeated seed preserve accepted CRM originals and revoked grants",
+        "duration_ms": 37050.3856
+      },
+      {
+        "name": "E1-DB11 graph constraints reject forged aggregate totals and unrelated current versions atomically",
+        "duration_ms": 21239.0339
+      },
+      {
+        "name": "DR01-DB01 expanded creation races retain one effect; flags bind original recovery and current authority",
+        "duration_ms": 23767.2941
+      },
+      {
+        "name": "DR01-DB02 direct SQL cannot mislabel line format, invent flags, change arithmetic or overwrite originals",
+        "duration_ms": 25921.0704
+      },
+      {
+        "name": "DR01-DB03 migration 24 originals survive upgrade, deliberate concurrent adoption and exact quotation recovery",
+        "duration_ms": 86064.437
+      },
+      {
+        "name": "E2 cost basis creates one exact option estimate across identical races and retains one atomic original",
+        "duration_ms": 29082.0686
+      },
+      {
+        "name": "E2 alternatives cost separately; selection never switches the stable CRM primary or mutates old quotes",
+        "duration_ms": 91206.237
+      },
+      {
+        "name": "E2 incomplete successors hold adoption while ordinary manual saves inherit the exact accepted scope",
+        "duration_ms": 99233.5802
+      },
+      {
+        "name": "E2 version Site controls saved context, exact quote output and historical receipt authority after current scope changes",
+        "duration_ms": 93808.7441
+      },
+      {
+        "name": "E2 safe draft readers do not acquire internal cost access and source revocation refuses exact recovery",
+        "duration_ms": 104428.4173
+      },
+      {
+        "name": "E2 retained contact visibility protects history and exact recovery after the current CRM contact changes",
+        "duration_ms": 67466.9935
+      },
+      {
+        "name": "E2 graph guards refuse missing, cross-option and mutable bases without accepting partial cost versions",
+        "duration_ms": 34268.1057
+      },
+      {
+        "name": "E2 adoption rolls back every root, cost, receipt and outbox row when recording the original fails",
+        "duration_ms": 48562.2684
+      },
+      {
+        "name": "E2 migration 27 and repeated seed retain legacy DTOs, ledgers, receipts and exact stored quotations",
+        "duration_ms": 89063.3934
+      },
+      {
+        "name": "FI01 one personal timer spans appointments, preserves denied originals and checks receipt authority",
+        "duration_ms": 53631.9853
+      },
+      {
+        "name": "FI01 zero-second transitions, real Undo expiry and report freeze keep distinct authority",
+        "duration_ms": 64321.6516
+      },
+      {
+        "name": "FI01 additive 0049 upgrade retains existing time, arrivals, receipts and revoked grants",
+        "duration_ms": 144157.1592
+      },
+      {
+        "name": "populated 0050 upgrade preserves every old row/hash, registers 0053\u20130070 with reserved gaps and exact authority/instrument additions",
+        "duration_ms": 32666.6914
+      },
+      {
+        "name": "PostgreSQL round-trip preserves exact canonical proposal/review bytes, timestamps, nulls and complete ordered population",
+        "duration_ms": 208.9656
+      },
+      {
+        "name": "immutable proposal revisions retain predecessors and reject forged source/head/actor/hash/workspace bindings",
+        "duration_ms": 82.2715
+      },
+      {
+        "name": "review refuses missing compliant candidates, substituted proposal, timestamp, event, population and typed booking links",
+        "duration_ms": 174.8992
+      },
+      {
+        "name": "linear publication advances family head separately from policy version and binds exact receipt, proposal and review",
+        "duration_ms": 257.5704
+      },
+      {
+        "name": "all evidence tables reject direct UPDATE/DELETE; head refuses DELETE",
+        "duration_ms": 118.7104
+      },
+      {
+        "name": "publication rejects re-bound operations, actors, receipts, task owners and incomplete impact/task graphs",
+        "duration_ms": 216.07
+      },
+      {
+        "name": "failure at each persistence stage rolls back policy, head, identities, impacts, tasks and receipt",
+        "duration_ms": 15464.9147
+      },
+      {
+        "name": "restricted hosted runtime can insert evidence but cannot mutate it or acquire identity/grant authority",
+        "duration_ms": 579.9914
+      },
+      {
+        "name": "direct reseed and runner retries preserve an advanced head, later evidence, old pins and revoked grants",
+        "duration_ms": 6722.0731
+      },
+      {
+        "name": "fresh installation applies only registered files through 0070, retains reserved gaps and repeats without changes",
+        "duration_ms": 60806.1899
+      },
+      {
+        "name": "named local Products duties complete independent publication without granting existing or hosted identities access",
+        "duration_ms": 55199.8757
+      },
+      {
+        "name": "P11 additive upgrade preserves actual current-main/P10 Approved records, original outputs and revoked receipt grants",
+        "duration_ms": 46506.0205
+      },
+      {
+        "name": "P11 additive upgrade preserves actual current-main/P10 OutcomeUnknown records, original outputs and revoked receipt grants",
+        "duration_ms": 37833.9975
+      },
+      {
+        "name": "P11 additive upgrade preserves actual current-main/P10 Reconciled records, original outputs and revoked receipt grants",
+        "duration_ms": 58820.5326
+      },
+      {
+        "name": "upgrade preserves saved CRM, mailbox, sessions, old grants and invitation limits; retry is idempotent",
+        "duration_ms": 23350.5689
+      },
+      {
+        "name": "an already-current demo requires explicit upgrade for missing booking grants",
+        "duration_ms": 31079.0663
+      },
+      {
+        "name": "an old conflicting Gantt-18 ledger is refused before any migrations, seeds or grants change",
+        "duration_ms": 56013.7992
+      },
+      {
+        "name": "a late privilege failure rolls back schema, seed receipts and grant additions together",
+        "duration_ms": 26319.5602
+      }
+    ],
+    "duration_ms": 3138848.2595
+  },
+  "retained_failure": {
+    "case": "a baseline executed from Windows CRLF SQL upgrades without rewriting historical checksums",
+    "duration_ms": 70026.7912,
+    "postgres_code": "57014",
+    "message": "canceling statement due to statement timeout",
+    "stage": "apply-seed-41",
+    "context": "Existing Facility seed INSERT into ppo.facilities, within ppo.shared_graph_guard(); before Products seed 52.",
+    "attribution": "Not reproduced by the isolated candidate rerun or unchanged-main control. The precise transient cause is not established; this is not claimed as a reproduced main defect."
+  },
+  "unchanged_candidate_isolated_rerun": {
+    "counts": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "passed_cases": [
+      {
+        "name": "a baseline executed from Windows CRLF SQL upgrades without rewriting historical checksums",
+        "duration_ms": 55736.5441
+      }
+    ],
+    "duration_ms": 74842.7904
+  },
+  "unchanged_main_control": {
+    "source_commit": "58679be051d8dc8da4356a714fb0f37d09902092",
+    "counts": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "passed_cases": [
+      {
+        "name": "a baseline executed from Windows CRLF SQL upgrades without rewriting historical checksums",
+        "duration_ms": 59083.6018
+      }
+    ],
+    "duration_ms": 62487.9845
+  },
+  "result": "All 61 distinct cases have passing evidence across the initial 60/61 run and unchanged 1/1 rerun. The original timeout remains a failed attempt; no assertion or timeout was weakened."
+}

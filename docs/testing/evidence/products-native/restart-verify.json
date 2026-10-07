@@ -1,0 +1,33 @@
+{
+  "phase": "verify",
+  "source_head": "f9c3fc61f558bda15e73cb76188f2d914cd21b72",
+  "build_id": "hRnXovuyfXzWYOWZQft2a",
+  "application_pids": [
+    34880,
+    37636,
+    28420
+  ],
+  "postgres_started_at": [
+    "2026-10-07 07:32:00.020833+10",
+    "2026-10-07 07:51:22.94704+10",
+    "2026-10-07 07:53:24.279883+10"
+  ],
+  "exact_tables": [
+    "products",
+    "product_revisions",
+    "product_events",
+    "product_cost_source_bindings",
+    "product_use_references",
+    "product_relationships",
+    "product_relationship_reviews",
+    "product_imports",
+    "product_import_plans",
+    "product_import_events",
+    "cost_sources",
+    "cost_source_revisions",
+    "cost_source_events"
+  ],
+  "original_receipts": 15,
+  "rows_sha256": "c80fcd8b21a4f3329fa68408328fe7a09faba3d6ed544e6a3346837571bb8718",
+  "result": "Exact retained rows and every original receipt/replay verified; no duplicate effects."
+}

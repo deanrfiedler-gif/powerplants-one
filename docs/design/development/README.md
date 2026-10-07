@@ -77,7 +77,7 @@ The repository-wide naming policy and retained-record boundary are documented in
 
 ## Component catalogue extension
 
-`components.json` is the stable component master; `components/*.md` supplies desktop/mobile rules. The current catalogue includes 19 runnable examples, ten host entries and ten reference-only entries. Current integration registers 344 entries and 190 source routes; review status remains separate from coverage. `studio:check` also validates component categories, renderer/export bindings, reference anchors, consumer keys and review records. Automatic fingerprints mark reviews stale; no test pass grants design approval.
+`components.json` is the stable component master; `components/*.md` supplies desktop/mobile rules. The current catalogue includes 19 runnable examples, ten host entries and ten reference-only entries. Current integration registers 350 entries and 196 source routes; review status remains separate from coverage. `studio:check` also validates component categories, renderer/export bindings, reference anchors, consumer keys and review records. Automatic fingerprints mark reviews stale; no test pass grants design approval.
 
 ## Hosted release model
 

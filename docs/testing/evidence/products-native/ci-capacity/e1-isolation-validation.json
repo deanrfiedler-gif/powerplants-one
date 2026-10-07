@@ -1,0 +1,35 @@
+{
+  "source_reference": "2e4a1d3f7b0de7c8b44a3674a1c8538a2aba2dac",
+  "workflow_sha256": "cff977033f1849327704944207c1cbd0b846b372d7d9e0179b14d07db2abc37c",
+  "result": "passed",
+  "matrix": [
+    "database",
+    "browser"
+  ],
+  "job_deadline_minutes": 30,
+  "individual_database_deadline_ms": 120000,
+  "whole_workflow_comparison": "Every original command preserved. Runtime/browser/PDF renderer installation and disposable service/configuration repeat across isolated jobs. Static/unit/database proof executes once; all compiled HTTP/restart/browser phases execute once together. Both jobs upload every retained evidence path with distinct artifact names; the original browser artifact name remains. Every downstream test command and environment is unchanged.",
+  "mandatory_original_name_gate": {
+    "success": 0,
+    "failure": 1,
+    "cancelled": 1,
+    "skipped": 1,
+    "(empty)": 1
+  },
+  "application_sql_dependencies": "unchanged",
+  "separate_test_repair": "Only retained SH Search readiness changes; see search-readiness.json. Every E1 command and selected path remains unchanged.",
+  "foundation": {
+    "status": "passed",
+    "local_links_checked": 7028,
+    "requirements": 78
+  },
+  "naming": {
+    "status": "passed",
+    "project_instruction_characters": 7934
+  },
+  "preserved_checkout": {
+    "files": 136,
+    "changed": 0
+  },
+  "build_boundary": "The retained Application workflow already compiles before database setup; the business layout is force-dynamic. E1 HTTP still performs its original explicit disposable reset before starting the server."
+}
