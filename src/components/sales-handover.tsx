@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { SalesDeliveryLink } from "./sales-delivery-link";
 import { SalesEstimatingLink } from "./sales-estimating-link";
 import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -380,6 +381,7 @@ function HandoverContentView({
         </p>
       )}
       {row.kind === "Estimating" && <SalesEstimatingLink id={row.id}/>}
+      {row.kind === "Won" && <SalesDeliveryLink id={row.id}/>}
       <RecordTabs
         id="handover"
         label="Handover sections"

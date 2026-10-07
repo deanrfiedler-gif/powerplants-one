@@ -1,0 +1,450 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "implementation_parent": "f898b6d",
+  "execution_scope": "Final locally tested LC-16 source before evidence packaging. Hashes use staged Git blobs. Initial failed and intermediate executions remain separately labelled. Paired review, final-head CI and deployment are separate.",
+  "source_files": [
+    {
+      "path": "db/migrations/0076-sales-delivery-bindings.sql",
+      "sha256": "1c4d1a6012c4255aa29f5c5012b90ad84e7c31fe63dc9ae4af6f7952e4fb1b79",
+      "bytes": 5054
+    },
+    {
+      "path": "scripts/demo-upgrade.ts",
+      "sha256": "58311ea69d54d3315d376155c93b0f9e27f5d4cc31e477ebfbe0b803b5452e95",
+      "bytes": 30322
+    },
+    {
+      "path": "scripts/migration-registry.ts",
+      "sha256": "4407b4bb231e2575b3b973a7008c502fbb570282ee080213598f139dbbd6438a",
+      "bytes": 6622
+    },
+    {
+      "path": "src/app/(business)/projects/new/page.tsx",
+      "sha256": "d7bc0feca36a168468c59e9356835b0adafe14b6b48dd3848d5972e73ae240ce",
+      "bytes": 253
+    },
+    {
+      "path": "src/app/(business)/service/tickets/new/page.tsx",
+      "sha256": "337ecee1b6aa6253ec99a4666a629707fe74f18d18ca3226aa94a5d2850ae213",
+      "bytes": 365
+    },
+    {
+      "path": "src/app/api/v1/projects/[id]/sales-handovers/route.ts",
+      "sha256": "f4f5caab73f0217f98515cb0ee46b7bb2331b669fb7752f6752f7d940c622904",
+      "bytes": 266
+    },
+    {
+      "path": "src/app/api/v1/sales/handovers/[id]/delivery/route.ts",
+      "sha256": "76cd2e40376ac3d3db6c95f11de13cf00d879370699d146ff148cbf3e67d6ffd",
+      "bytes": 350
+    },
+    {
+      "path": "src/app/api/v1/service/work-orders/[id]/sales-handovers/route.ts",
+      "sha256": "fd2805e694f573c7665457b309d5b28825c100a94359eb2cc116cbc162c90460",
+      "bytes": 271
+    },
+    {
+      "path": "src/components/crm-screens.tsx",
+      "sha256": "04f37b1ef0adeded785c8a3a427c5bea8f7cfb43c33a8d9fc0acf66ec52330f5",
+      "bytes": 33676
+    },
+    {
+      "path": "src/components/intake-screens.tsx",
+      "sha256": "1a1adecda7403e7b43fea21095bd1b46614f19bb40c6cce9b2a2ce29d1684bd8",
+      "bytes": 19218
+    },
+    {
+      "path": "src/components/opportunity-workflows.tsx",
+      "sha256": "61fed0f3276ef5faf20280210ed1500e48de4964d6cda94f883d5f14f180a8b7",
+      "bytes": 3021
+    },
+    {
+      "path": "src/components/projects-gantt.tsx",
+      "sha256": "6c9139c69810ad8ea4110ec14de85083a1bc1db175cbee39841a6f3ce4f2e5c8",
+      "bytes": 57969
+    },
+    {
+      "path": "src/components/projects-screens.tsx",
+      "sha256": "eb5c8ac078822ebdc689ea0be40f0eea15fdb07cddb68152ad000bc4b1bd860c",
+      "bytes": 15745
+    },
+    {
+      "path": "src/components/sales-delivery-creation.tsx",
+      "sha256": "eb6f80c5508837a3d9250eb5e6f3a4be51196cdba796b3003eea4f13b5c26c84",
+      "bytes": 6038
+    },
+    {
+      "path": "src/components/sales-delivery-link.tsx",
+      "sha256": "7af1107e57d3b2065d730784655b12c0acfc7319e276e0a4f6811aae5ffe12d1",
+      "bytes": 14242
+    },
+    {
+      "path": "src/components/sales-handover.tsx",
+      "sha256": "a39fcb210e861f3c5572166758819efb2b2e5c38021c50aef34043bba3e2beb9",
+      "bytes": 27756
+    },
+    {
+      "path": "src/components/work-order-screens.tsx",
+      "sha256": "bad20990cd35155deccd2ea1a1fd8f20cf5bc7913e047bf4730616f459dbc13c",
+      "bytes": 58049
+    },
+    {
+      "path": "src/sales/delivery-binding.ts",
+      "sha256": "b1ea6a627f64da2cecf97cce57e1756436a93614afbe713f46061ad306cdf87c",
+      "bytes": 17127
+    },
+    {
+      "path": "src/shared/receipts.ts",
+      "sha256": "15da749cb3f5a9d1a034e0cb66d01f324bcc0000e221c7e0b7a73e6261613969",
+      "bytes": 24368
+    },
+    {
+      "path": "tests/browser/sales-delivery-binding.spec.ts",
+      "sha256": "2802668bdb7cc12e69167d76757ae50c7a80fc55323dc7d1b9850b4aa7f65cd6",
+      "bytes": 12837
+    },
+    {
+      "path": "tests/database/field-customer-response.test.ts",
+      "sha256": "ba8a5eeea6a8118d5008e529ed1b6afe4a7dce0bac70c70bf22ebe08c87f7416",
+      "bytes": 24358
+    },
+    {
+      "path": "tests/database/field-timer-boundaries.test.ts",
+      "sha256": "1161cbd0feb427b3f853dd0bc04e325f66d750ddd91f524713cf3965b9ef7752",
+      "bytes": 10263
+    },
+    {
+      "path": "tests/database/field.test.ts",
+      "sha256": "2311e802ca8c87a5316437cc5aab7d71cd1af84b23c56790ceff7df974cc8dbd",
+      "bytes": 40549
+    },
+    {
+      "path": "tests/database/finance-upgrade.test.ts",
+      "sha256": "4b9cab543e0d80739e05fa93df51fec31392049150c04ee0c17c6604d83e5bb8",
+      "bytes": 7576
+    },
+    {
+      "path": "tests/database/leads-amendments.test.ts",
+      "sha256": "275cbe548d72b69779f7d13365ba9dfa2cc1fa7784e40ce87894128047693572",
+      "bytes": 12596
+    },
+    {
+      "path": "tests/database/leads-projects-integration.test.ts",
+      "sha256": "404acb577fce093338c8275968924b3503f19036e365f198aef60c2dc224f8a5",
+      "bytes": 7840
+    },
+    {
+      "path": "tests/database/offline.test.ts",
+      "sha256": "8ee3333fba392032ac086620c278e88b24add36350667680550e6de8e58653a9",
+      "bytes": 30205
+    },
+    {
+      "path": "tests/database/outcome-sources.test.ts",
+      "sha256": "0f5e113ef8a8639d6fba400faf476f58c818a83cf9db91c4e8bde55751626e0f",
+      "bytes": 13635
+    },
+    {
+      "path": "tests/database/packs.test.ts",
+      "sha256": "773c4ffcb882b04c5220efa33ce9f6c612a11bc1b4aa0a27908ad34c36826889",
+      "bytes": 39683
+    },
+    {
+      "path": "tests/database/planner.test.ts",
+      "sha256": "a632828b593c6b69a5c35600f6f78ed79fed0c3b7a1d8a759931eb870e8aba7d",
+      "bytes": 37038
+    },
+    {
+      "path": "tests/database/policy-persistence.test.ts",
+      "sha256": "8c51f3940985ae8628e1ae5af5f095dd4fe9b2a40dab3b360bbf7c423c1e439d",
+      "bytes": 24631
+    },
+    {
+      "path": "tests/database/quotation-allocation-shortfall.test.ts",
+      "sha256": "01f37c196993ed0c8665f4e59f0124fee995764800abe6e58bbfef61a85cafed",
+      "bytes": 31246
+    },
+    {
+      "path": "tests/database/quotation-conversion.test.ts",
+      "sha256": "01e0a0d14d9f6a7a265262895b49e138211f37de16f78328519992381c0fe37a",
+      "bytes": 19679
+    },
+    {
+      "path": "tests/database/quotation-disposition.test.ts",
+      "sha256": "aa7a9489f8bbb1326165933f0d40d34fb9528ccf1973f10f884c5cee870c7104",
+      "bytes": 27283
+    },
+    {
+      "path": "tests/database/quotation-material-resolution.test.ts",
+      "sha256": "c766bedc2cc416cb6b388944792b854777258a84044038671f516d004a4f7378",
+      "bytes": 31164
+    },
+    {
+      "path": "tests/database/quotation-receipt-correction.test.ts",
+      "sha256": "5859d6e45a1ff036fe5d15dd4cd1e3955e85c2b9873052036b9adfa6b4271f17",
+      "bytes": 27580
+    },
+    {
+      "path": "tests/database/quotation-release.test.ts",
+      "sha256": "98904ee58bec195d6b480bb3397873a83d1eca2193f859e13d82fdcc72ff79ad",
+      "bytes": 19957
+    },
+    {
+      "path": "tests/database/quotation-reservation-reconciliation.test.ts",
+      "sha256": "5bfc2740a3fa771e12c0016b138c8b7015b752c6d910a9afc6b1df5860a8244a",
+      "bytes": 16859
+    },
+    {
+      "path": "tests/database/quotation-response.test.ts",
+      "sha256": "549a8c6ca2dcdb975bc435f8f41a89850c261a87744ac00b515e0029f9017cbd",
+      "bytes": 17708
+    },
+    {
+      "path": "tests/database/quotation-supply-followup.test.ts",
+      "sha256": "073e275da75cb7076b7f8d987376b03e88598c2a2419a7caf16d69ae8b7ca1ad",
+      "bytes": 27717
+    },
+    {
+      "path": "tests/database/quotation-task-branch.test.ts",
+      "sha256": "00c1b21934a58ec43fc4b5b701716ae30b24cc481c8a8ad098c0900daa0f6bb8",
+      "bytes": 38186
+    },
+    {
+      "path": "tests/database/quotation-task-chain.test.ts",
+      "sha256": "04f015fd87caa8beffaac0d31b3556dc2b206cbe93a59da55b0621aa957e0023",
+      "bytes": 29575
+    },
+    {
+      "path": "tests/database/quotation-task-dependency.test.ts",
+      "sha256": "1ace170deb8735eed5ebebf22b814e62378bc6e5d07ebd8fa2bc6b575ed00f72",
+      "bytes": 19560
+    },
+    {
+      "path": "tests/database/quotation-task-diamond.test.ts",
+      "sha256": "331e17d3bedbe533efd9fbe114a1751797f06069ea0d5ad83ff6c34549f3378a",
+      "bytes": 19204
+    },
+    {
+      "path": "tests/database/quotation-task-merge.test.ts",
+      "sha256": "a45148773f1a1002575d76d7027871cc4b11e67eff3e968dc54e7aceefaed72b",
+      "bytes": 46735
+    },
+    {
+      "path": "tests/database/reports.test.ts",
+      "sha256": "37341c1b2feaa81f397de1e5f047a8034a268e046d914778ec831af027c014b1",
+      "bytes": 40331
+    },
+    {
+      "path": "tests/database/sales-delivery-binding.test.ts",
+      "sha256": "6ec59ce4007685fb5bdd5b9b569266dc5556110a5d2a8f16c8927fa12854fdf6",
+      "bytes": 12903
+    },
+    {
+      "path": "tests/database/sales-estimating-binding.test.ts",
+      "sha256": "5030bd662496fe993967e6dc0a4a68b9eb48a476c972de63f715e212f90191d2",
+      "bytes": 13714
+    },
+    {
+      "path": "tests/demo/upgrade.test.ts",
+      "sha256": "61d02e075028da64e6544542440978c04f6764fc40e8a69d6022b329d3e5846a",
+      "bytes": 17257
+    }
+  ],
+  "evidence_files": [
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/README.md",
+      "sha256": "311e1ec51e2264a7dc73e5c9c706322be94d0ba00523ed95870c79d8b9e28fdc",
+      "bytes": 6204
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/commands.json",
+      "sha256": "966bce626bfca30713cc12c40089c9980c2e3b103a25d9d338eb55a3a1d74de4",
+      "bytes": 1832
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/delivery-baseline-build.log",
+      "sha256": "c4d4db22f2cbe2c8a422e4d6acdf8d1d58cd52818dcdead748f1aedb2eb0edd1",
+      "bytes": 3005
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/delivery-browser-dialog.log",
+      "sha256": "9ff7c5a0e95bc2ed7ff0a194d917d18e22a76fb910ef4e4a50fca8fcd73d1968",
+      "bytes": 12767
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/delivery-browser-final.log",
+      "sha256": "71e407c7e23a1223208fafcb9601be56e5d517e2d8501ca62c14f747ccee17c7",
+      "bytes": 2971
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/delivery-browser-initial.log",
+      "sha256": "a2d145db5905c21d750b0843d48d8b0bde54013a1cd6e7101e68e24f1a380447",
+      "bytes": 6246
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/delivery-build-final.log",
+      "sha256": "3551d1d478aafe669a14f56f3927f37a15efe756ffd9291cce560f7d321097f2",
+      "bytes": 25936
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/delivery-build-focus.log",
+      "sha256": "3676130bba8e6255e52bd367cada4606ac84f22c2c4f0c063e5111709a45a940",
+      "bytes": 25939
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/delivery-build.log",
+      "sha256": "7be4053db01a982f2c9e2fd70877aad5e7cf13f3cffc579eb0151a11a607e4c7",
+      "bytes": 25938
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/delivery-db-final.log",
+      "sha256": "f62d36cbe5c31393444aa81ebe6bf6dd0de6c246eeac2b1ef97927b650a2f46d",
+      "bytes": 1104
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/delivery-db-initial.log",
+      "sha256": "dcf1505a088e6eef3cef3daa23654f8636c5064cda39c8157211d9761d5c05f4",
+      "bytes": 980
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/delivery-foundation-final.log",
+      "sha256": "6af04a932bdc5901c5398579c339d500e05a417cc4db861aed5ab722ee1bb7b5",
+      "bytes": 330
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/delivery-foundation.log",
+      "sha256": "681504ecfee1d5117baa5dcf28a85b957fe0a7ad7f3487d18559d586ae725088",
+      "bytes": 330
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/delivery-lint-final.log",
+      "sha256": "3d33f40c80d9aa3df343c357e43b00f214189513ba842430e562b5fbe75aefda",
+      "bytes": 42
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/delivery-lint-focus.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/delivery-lint.log",
+      "sha256": "3d33f40c80d9aa3df343c357e43b00f214189513ba842430e562b5fbe75aefda",
+      "bytes": 42
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/delivery-naming-final.log",
+      "sha256": "bbcdd09f844e64777b7676b2594944c71934549a66217a9850209885b6dbaa9f",
+      "bytes": 296
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/delivery-naming.log",
+      "sha256": "bbcdd09f844e64777b7676b2594944c71934549a66217a9850209885b6dbaa9f",
+      "bytes": 296
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/delivery-prototype-final.log",
+      "sha256": "9b7839c713adf06d51e41256fd2e991c6acc00fca36c33caff1ef7e02d55251b",
+      "bytes": 526
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/delivery-prototype.log",
+      "sha256": "9b7839c713adf06d51e41256fd2e991c6acc00fca36c33caff1ef7e02d55251b",
+      "bytes": 526
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/delivery-registry.log",
+      "sha256": "3b4fa64957bcb16427a00ba7f5ad547957f56c052cddf60506e9a8cf20f5c56d",
+      "bytes": 447
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/delivery-studio-final.log",
+      "sha256": "e54246ce6d663bbbc52e76eb1107b17246e348645643edd5d0a2c9d5e0c83c76",
+      "bytes": 429
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/delivery-studio.log",
+      "sha256": "e54246ce6d663bbbc52e76eb1107b17246e348645643edd5d0a2c9d5e0c83c76",
+      "bytes": 429
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/delivery-typecheck-backend.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/delivery-types-final.log",
+      "sha256": "bc8033ab9263f80d6936b509b40414d8d01fa804136bf8b2d00f7ac11abe7a2a",
+      "bytes": 51
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/delivery-upgrades.log",
+      "sha256": "d3ea4c2cf66fa7862b5d66026796e75b7d5ddaf2da7bbe400d28e6c506757375",
+      "bytes": 15056
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/desktop-delivery-explicit-site.png",
+      "sha256": "f767091dd6011bd8d176bf1452d5263cce1ca5ce0617a6f456c2c1f41119d2d9",
+      "bytes": 109570
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/desktop-delivery-project-history.png",
+      "sha256": "dae05eec63f30f7834ccb7d650e44427041462fc2d4eff86f32e7cda115cf9fe",
+      "bytes": 155521
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/desktop-delivery-service-scope.png",
+      "sha256": "3377f7cac5265a6c49cf8828abcbf34679008b84e3e37203dd045e3df4d06049",
+      "bytes": 108333
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/initial-desktop-delivery-explicit-site.png",
+      "sha256": "f767091dd6011bd8d176bf1452d5263cce1ca5ce0617a6f456c2c1f41119d2d9",
+      "bytes": 109570
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/initial-desktop-delivery-project-history.png",
+      "sha256": "7bf8878e12677e51e0617d26221efac5470e98b0439a796d441a159464e35737",
+      "bytes": 164021
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/initial-desktop-delivery-service-scope.png",
+      "sha256": "d6a2c8026c72fe61850366e15af00a99eeb2974a8f5d725dfd624614bf85cc45",
+      "bytes": 108324
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/initial-phone-delivery-explicit-site.png",
+      "sha256": "bb2ac917b17450f769d98673460e0f64c83f4c9e78f2463db7b1177b63c47a30",
+      "bytes": 71871
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/initial-phone-delivery-project-history.png",
+      "sha256": "626a6cab19a98eaead25e6af78349f10508c2536688e357ad56d2766bc39ac96",
+      "bytes": 63668
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/initial-phone-delivery-service-scope.png",
+      "sha256": "8f382f29332f43c6187b4b8b0c3bdd84535ce379624bce36baa55ee8827b6a8a",
+      "bytes": 72725
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/initial-project-phone-layout-failure.png",
+      "sha256": "645f0319254c0543e9c77402626871575a86dcf772456ec1c1e91a3cb3441a83",
+      "bytes": 22625
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/phone-delivery-explicit-site.png",
+      "sha256": "bb2ac917b17450f769d98673460e0f64c83f4c9e78f2463db7b1177b63c47a30",
+      "bytes": 71871
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/phone-delivery-project-history.png",
+      "sha256": "e1891cd003541afb61938a7a943b24f0456956d02254787e3d14859537131d74",
+      "bytes": 58595
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/phone-delivery-service-scope.png",
+      "sha256": "3e583fd815e54241b71aa5901952246213aa2da68f76e0c399acf0bc3e18a751",
+      "bytes": 72406
+    }
+  ]
+}

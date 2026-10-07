@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "document_records": 478,
+  "standing_exceptions": 9,
+  "metadata_documents_compared": 321,
+  "git_masters": 199,
+  "project_instruction_characters": 7997,
+  "errors": [],
+  "scope": "Naming and documentation consistency only; runtime behaviour is verified separately"
+}

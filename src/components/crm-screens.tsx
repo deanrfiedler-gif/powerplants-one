@@ -481,7 +481,7 @@ function OpportunityContent({
         {o.can_transfer && <button className="secondary" disabled={command.busy||command.uncertain} onClick={()=>setDialog("transfer")}>Transfer deal owner</button>}
         {o.can_record_outcome && <button className="secondary" disabled={command.busy || command.uncertain} onClick={()=>setDialog("outcome")}>Record sales outcome</button>}
       </div>}
-      {o.handover_due && <section className="crm-panel" aria-label="Handover due"><h2>Handover due</h2><p>Accountable owner: {o.handover_due.owner_name}. Receiving route and owner still need confirmation.</p><p>Won at deal version {o.handover_due.opportunity_version}. Existing activities retain their owners.</p></section>}
+      {o.handover_due && <section className="crm-panel" aria-label="Handover due"><h2>Handover due</h2><p>Accountable owner: {o.handover_due.owner_name}. This owner was accountable when Won was recorded. Current receiving progress appears in the linked workflows below.</p><p>Won at deal version {o.handover_due.opportunity_version}. Existing activities retain their owners.</p></section>}
       {dialog && <DealDialog id={o.id} mode={dialog} targetStage={targetStage} onClose={() => {setDialog(null);setTargetStage(undefined);}} onSaved={(receipt, _old, stage) => {
         setDialog(null);setTargetStage(undefined);
         // Our accepted stage command can advance a clean sibling form. Existing

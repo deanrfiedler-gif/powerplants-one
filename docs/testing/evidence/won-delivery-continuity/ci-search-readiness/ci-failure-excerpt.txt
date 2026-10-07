@@ -1,0 +1,42 @@
+2026-10-07T07:19:47.0528066Z   1) [desktop-chromium] › tests/browser/sh-platform.spec.ts:232:1 › SH review perspectives, responsive geometry and current My Work interiors
+2026-10-07T07:19:47.0529239Z
+2026-10-07T07:19:47.0529555Z     Error: expect(locator).toBeVisible() failed
+2026-10-07T07:19:47.0529986Z
+2026-10-07T07:19:47.0530273Z     Locator: getByText(/results on this page/)
+2026-10-07T07:19:47.0530848Z     Expected: visible
+2026-10-07T07:19:47.0531276Z     Timeout: 5000ms
+2026-10-07T07:19:47.0531579Z     Error: element(s) not found
+2026-10-07T07:19:47.0531783Z
+2026-10-07T07:19:47.0531885Z     Call log:
+2026-10-07T07:19:47.0532352Z       - Expect "toBeVisible" getByText(/results on this page/) with timeout 5000ms
+2026-10-07T07:19:47.0533258Z       - waiting for getByText(/results on this page/)
+2026-10-07T07:19:47.0533536Z
+2026-10-07T07:19:47.0533542Z
+2026-10-07T07:19:47.0534142Z       251 |       await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+2026-10-07T07:19:47.0534731Z       252 |       if (path.startsWith("/search"))
+2026-10-07T07:19:47.0535378Z     > 253 |         await expect(page.getByText(/results on this page/)).toBeVisible();
+2026-10-07T07:19:47.0536308Z           |                                                              ^
+2026-10-07T07:19:47.0537088Z       254 |       else if (path === "/work/reviews")
+2026-10-07T07:19:47.0538016Z       255 |         await expect(page.getByText(/matching tasks/)).toBeVisible();
+2026-10-07T07:19:47.0538664Z       256 |       else if (path === "/work/updates")
+2026-10-07T07:19:47.0539276Z         at /home/runner/work/powerplants-one/powerplants-one/tests/browser/sh-platform.spec.ts:253:62
+2026-10-07T07:19:47.0539677Z
+2026-10-07T07:19:47.0540151Z     attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+2026-10-07T07:19:47.0540959Z     test-results/sh-platform-SH-review-pers-4bf9d-d-current-My-Work-interiors-desktop-chromium/test-failed-1.png
+2026-10-07T07:19:47.0541796Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2026-10-07T07:19:47.0542084Z
+2026-10-07T07:19:47.0542804Z     Error Context: test-results/sh-platform-SH-review-pers-4bf9d-d-current-My-Work-interiors-desktop-chromium/error-context.md
+2026-10-07T07:19:47.0543364Z
+2026-10-07T07:19:47.0543766Z     attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+2026-10-07T07:19:47.0544816Z     test-results/sh-platform-SH-review-pers-4bf9d-d-current-My-Work-interiors-desktop-chromium/trace.zip
+2026-10-07T07:19:47.0545351Z     Usage:
+2026-10-07T07:19:47.0545465Z
+2026-10-07T07:19:47.0545979Z         npx playwright show-trace test-results/sh-platform-SH-review-pers-4bf9d-d-current-My-Work-interiors-desktop-chromium/trace.zip
+2026-10-07T07:19:47.0546549Z
+2026-10-07T07:19:47.0546900Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2026-10-07T07:19:47.0547178Z
+2026-10-07T07:19:47.0547255Z   1 failed
+2026-10-07T07:19:47.0547977Z     [desktop-chromium] › tests/browser/sh-platform.spec.ts:232:1 › SH review perspectives, responsive geometry and current My Work interiors
+2026-10-07T07:19:47.0548576Z   13 skipped
+2026-10-07T07:19:47.0548777Z   360 passed (41.9m)
+2026-10-07T07:19:47.1253656Z ##[error]Process completed with exit code 1.

@@ -1,0 +1,15 @@
+✔ LC-16 Projects links exact acceptance once without changing native scope and recovers after Sales successor (10291.911ms)
+✔ LC-16 Service links exact acceptance once without changing native scope and recovers after Sales successor (9336.1501ms)
+✔ LC-16 an unknown Sales site remains unknown while the exact native destination site is explicitly captured (8802.0919ms)
+✔ LC-16 stale target, mismatched site/route and changed Sales acceptance refuse every link effect (10255.8691ms)
+✔ LC-16 current native access hides stored identities and blocks original receipt recovery (9434.4476ms)
+✔ LC-16 late publication failure rolls back link/audit/receipt and preserves the independently created native record (10443.0228ms)
+✔ LC-16 populated 0075 upgrade preserves exact accepted Sales, native records, authorities and independent receipts (20806.7658ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 87299.9547

@@ -486,7 +486,7 @@ for (const topology of [
     );
     assert.deepEqual(
       now.filter((r) => r.version > 71).map((r) => r.version),
-      [72, 73, 74, 75],
+      [72, 73, 74, 75, 76],
     );
     for (const {
       f,

@@ -42,3 +42,8 @@ Task editing and server history are not part of this presentation fixture. Depen
 Review at 1440 × 960, 1024 × 768, 820 × 800, 390 × 844 and 320 × 700 where relevant; check browser zoom and keyboard operation separately. Compare the same state and viewport with the retained reference. Record exact commit, reviewer, date, fixture state, viewport, result and evidence paths in the component review record. Automated source fingerprints do not grant acceptance.
 
 Changes to the source, styles, fixtures, specification or reference invalidate prior evidence. Update this master and its component record in the same pull request. Keep app business checks separate from catalogue presentation checks.
+
+
+## Accepted Sales context (LC-16)
+
+The native Project host supplies an optional Sales handovers action. It opens the existing labelled native-dialog pattern, closes on Escape or explicit close, and retains browser focus return. Exact accepted Sales context and historical revisions are read inside the dialog; the fixed schedule workspace has no extra sibling panel. The initial sibling layout displaced the phone schedule and is retained as failed evidence. Final desktop/phone proof and limits: docs/testing/evidence/won-delivery-continuity/README.md. No paired design acceptance is claimed.

@@ -50,3 +50,14 @@ Uses `fields`, `lookup` (customer, site and equipment), `validation`, `status` a
 - **Adding to an existing request:** records the call as evidence with the *Reported symptom* basis on that request (D8, accepted; see the [refinement record](../../../decisions/service-requests-native-refinement.md)). It never changes that request's priority, owner or stage.
 - **Guide:** the draft User Guide `guide.page.service.tickets.new` describes the running page and remains Draft.
 - **Separate statuses:** source presence, visual review, functional testing, owner acceptance and deployment stay separate.
+
+
+## Native Won receiving (LC-16)
+
+Keep this existing scope and page type. Incoming handover: exact accepted Won Sales event; outgoing: independently created native Project or Service work order and a separately reviewed typed binding. The Deal reads native receiving state and the retained Activity separately. It does not infer delivery completion from acceptance, a link or an Authorised work order.
+
+Reuse shared Button, Field, SelectField, ErrorNotice, recoverable command journal, existing native lookup controls and record guard. Preserve the native Project Gantt and Service scope/readiness layouts. Proposed addition: a scoped Sales-context panel, explicit fixed-version comparison and create-and-return actions. Existing native form buttons remain documented legacy controls; no new theme or navigation system is introduced.
+
+Desktop and phone: wrap reported scope and references; show original Sales revision beside current native state, owner and version. Keep Review, link reason, discard and original-recovery actions visible in normal document flow. A refresh must not silently substitute a reviewed comparison. Denied comparison reads remove its protected content. Unknown Sales site requires an explicit native site choice and does not rewrite the accepted source. New Service intake and work-order creation save independently before link review; existing native scope and authorisation controls remain.
+
+Exact new-state mockup/HTML images are missing. Retained module references above are baseline context. Implementation captures and synthetic checks are recorded in `docs/testing/evidence/won-delivery-continuity/README.md`; they do not grant paired visual, keyboard/200% zoom, physical-device or owner acceptance. Review fingerprints remain unchanged.

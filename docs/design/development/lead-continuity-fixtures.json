@@ -92,6 +92,22 @@
     {
       "key": "legacy-outcome-narrative",
       "description": "Historical outcomes retain their original payload and receipt and do not acquire a fabricated native quotation link."
+    },
+    {
+      "key": "won-native-independent-recovery",
+      "description": "Project creation and accepted Sales binding each recover their original operation after lost responses; a later Sales successor retains historical attribution."
+    },
+    {
+      "key": "won-service-intake-return",
+      "description": "An independently saved Service intake returns to a draft work order; the explicit Sales link does not create or approve native scope."
+    },
+    {
+      "key": "won-unknown-site-stale-native",
+      "description": "An unknown Sales site is explicitly compared to the native site; changed native versions reject stale comparisons without changing the accepted Sales source."
+    },
+    {
+      "key": "won-native-access-denied",
+      "description": "A denied receiving refresh removes the reviewed native identity and comparison. Actual native grant removal also hides link identities and original receipts in database proof."
     }
   ]
 }

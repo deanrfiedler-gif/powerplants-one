@@ -117,3 +117,8 @@ Retain CR-01 and the r20 record workspace with its existing outcome dialog. Inco
 Show current native facts and the frozen reviewed comparison separately. Background refresh cannot replace the submitted source. Denied refresh hides prior native facts; uncertain save locks replacement and exposes original recovery. History distinguishes recorded response, latest report, changed native issue, separate evidence and historical narrative outcomes. Desktop keeps review before the save footer. At 390/320 CSS px, stack selectors and narrative, wrap long text and keep review/discard/recovery reachable; verify keyboard focus and 200% zoom separately.
 
 Host states are in lead-continuity-fixtures.json and tests/browser/outcome-sources.spec.ts. Retain the exact HTML references above; no exact new-state mockup image is available. Functional proof does not assign an accepted fingerprint. Paired visual, owner, physical-device and screen-reader acceptance remain pending.
+
+
+## Native Won receiving (LC-16)
+
+Existing controls serve the explicit delivery comparison and native create-and-return hosts in sales-delivery-link.tsx and sales-delivery-creation.tsx. Buttons retain busy/uncertain states; fields preserve a fixed reviewed snapshot until explicit discard; denied reads remove comparison content. Native forms retain their scoped legacy controls. Fixtures: lead-continuity-fixtures.json; actual tests: tests/browser/sales-delivery-binding.spec.ts. New-state mockups and paired review remain pending; no review fingerprint is adopted.
