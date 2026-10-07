@@ -30,6 +30,8 @@ test("N11/N15 blank More exposes operational entries and vocabulary finds canoni
 test("N12 Sales Activities keeps one day/scope/department policy", () => {
   const day="2026-10-08", expected=activitiesHref(day);
   assert.equal(departmentHref(`/calendar?day=${day}`,"sales"),expected);
+  assert.equal(departmentHref("/calendar","sales",day),expected);
+  assert.equal(menuGroups("calendar","service").flatMap(g=>g.items).find(d=>d.id==="calendar")?.label,"Personal Calendar");
   assert.equal(new URL(activitiesHref(day,false),"https://ppo.invalid").searchParams.get("scope"),null);
   for(const invalid of ["2026-02-30","2026-99-99","../work"]) assert.equal(activitiesHref(invalid),activitiesHref());
 });

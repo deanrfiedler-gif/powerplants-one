@@ -1,5 +1,6 @@
 import { test, expect, type Page } from "@playwright/test";
-import { crmCreate, crmDiscovery } from "../helpers/crm";
+import { crmDiscovery } from "../helpers/crm";
+import { leadCreate } from "../helpers/leads";
 const origin = () => new URL(test.info().project.use.baseURL!).origin;
 async function login(page: Page, profile = "coordinator") {
   const result = await page.request.post("/api/v1/local-session", { headers: { Origin: origin() }, data: { profile } });
@@ -18,7 +19,7 @@ test("N03 CRM compatibility aliases retain supported list and record query state
   for (const [from,to] of [["/crm/leads?view=Archived&q=SYN", "/sales/leads?view=Archived&q=SYN"], ["/crm/opportunities?view=list&q=SYN", "/sales/opportunities?view=list&q=SYN"]]) {
     await page.goto(from); await expect(page).toHaveURL(origin()+to);
   }
-  const lead=crmCreate();
+  const lead=leadCreate();
   expect((await page.request.post("/api/v1/crm/leads",{headers:{Origin:origin()},data:lead})).ok()).toBe(true);
   await page.goto(`/crm/leads/${lead.id}?view=activities`);
   await expect(page).toHaveURL(`${origin()}/sales/leads/${lead.id}?view=activities`);
@@ -71,7 +72,7 @@ test("N07/N08/N20 dirty preferences protect pointer, keyboard, touch and workspa
   await expect(page).toHaveURL(/\/work\/updates$/); await expect(time).toHaveValue(value);
   page.removeAllListeners("dialog");page.on("dialog",dialog=>void dialog.accept());
   if(isMobile)await page.getByRole("button",{name:"Open global search",exact:true}).click();
-  await search.fill("opportunity");await expect(option).toBeVisible();await option.click();
+  await search.click();await search.fill("opportunity");await expect(option).toBeVisible();await option.click();
   await expect(page).toHaveURL(/\/sales\/opportunities/);
 });
 test("N18/N19 primary rail expands, persists and retains endpoints in a short window", async ({ page, isMobile }) => {
@@ -104,4 +105,20 @@ test("N18 blocked storage retains expansion for the current identity and visit",
   await page.getByRole("button",{name:"Expand primary navigation",exact:true}).click();
   await page.locator(".ppo-primary-nav").getByRole("link",{name:"Leads",exact:true}).click();
   await expect(page.getByRole("button",{name:"Collapse primary navigation",exact:true})).toBeVisible();
+});
+
+test("N12 Sales Activities preserves selected day in rail, phone, More and search",async({page,isMobile})=>{
+  await login(page);const day="2026-09-08",href=`/calendar?day=${day}&scope=sales&department=sales`;
+  await page.goto(href);
+  const nav=page.getByRole("navigation",{name:isMobile?"Mobile navigation":"Sales shortcuts",exact:true});
+  await expect(nav.getByRole("link",{name:"Activities",exact:true})).toHaveAttribute("href",href);
+  await page.getByRole("button",{name:"More",exact:true}).click();
+  await expect(page.locator(".ppo-more-panel:visible").getByRole("link",{name:"Activities",exact:true})).toHaveAttribute("href",href);
+  await page.keyboard.press("Escape");
+  if(isMobile)await page.getByRole("button",{name:"Open global search",exact:true}).click();
+  const search=page.getByRole("combobox",{name:"Search Powerplants One",exact:true});await search.fill("activities");
+  const result=page.getByRole("option").filter({has:page.getByText("Activities",{exact:true})}).first();await result.click();
+  await expect(page).toHaveURL(origin()+href);
+  await page.goto("/work?department=service");await page.getByRole("button",{name:"More",exact:true}).click();
+  await expect(page.locator(".ppo-more-panel:visible").getByRole("link",{name:"Personal Calendar",exact:true})).toHaveAttribute("href","/calendar?department=service");
 });

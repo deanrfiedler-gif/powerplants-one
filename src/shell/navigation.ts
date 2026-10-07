@@ -373,13 +373,14 @@ export function activitiesHref(day?: string | null, sales = true) {
   if (sales) { q.set("scope", "sales"); q.set("department", "sales"); }
   return `/calendar?${q}`;
 }
-export function departmentHref(href: string, workspace: WorkspaceId) {
+export function departmentHref(href: string, workspace: WorkspaceId, day?: string | null) {
   const url = new URL(href, "http://ppo.local");
-  if (url.pathname === "/calendar" && workspace === "sales") return activitiesHref(url.searchParams.get("day"));
+  if (url.pathname === "/calendar" && workspace === "sales") return activitiesHref(url.searchParams.get("day") ?? day);
   if (!pageForPath(url.pathname)?.workspace) url.searchParams.set("department", workspace);
   return url.pathname + url.search + url.hash;
 }
 const synonyms: Record<string, readonly string[]> = {
+  calendar: ["calendar", "activity", "activities"],
   deals: ["opportunity", "opportunities", "deal"], customers: ["customer", "organisation", "organization"],
   contacts: ["customer", "organisation", "person", "people"], equipment: ["asset", "installed base"],
   planner: ["planner", "calendar", "dispatch schedule"], quotations: ["quote", "quotation", "estimate"],
@@ -396,7 +397,7 @@ export function menuGroups(query: string, workspace: WorkspaceId = "sales") {
     ...(q ? [{ title: "Workspace pages", ids: destinations.map(d => d.id) }] : []),
   ];
   const seen = new Set<string>();
-  return groups.map(g => ({ title: g.title, items: g.ids.map(destination).filter(d => {
+  return groups.map(g => ({ title: g.title, items: g.ids.map(destination).map(d => d.id === "calendar" && workspace !== "sales" ? {...d, label:"Personal Calendar", menuLabel:"Personal Calendar", synonyms:["calendar", "activities"]} : d).filter(d => {
     if (seen.has(d.id)) return false;
     seen.add(d.id);
     return [d.label, d.menuLabel ?? "", ...(d.synonyms ?? synonyms[d.id] ?? []), g.title, workspaces.find(w => w.id === d.workspace)?.label ?? ""].join(" ").toLocaleLowerCase("en-AU").includes(q);

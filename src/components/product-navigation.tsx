@@ -165,7 +165,7 @@ function ProductNavigationView({
       <Link
         key={item.id}
         className={mobile ? undefined : "ppo-more-link"}
-        href={departmentHref(item.href!, root?.id ?? workspaceId)}
+        href={departmentHref(item.href!, root?.id ?? workspaceId, new URLSearchParams(locationQuery).get("day"))}
         aria-label={label}
         aria-current={current?.id === item.id || (!mobile && !!root && current?.workspace === root.id) ? "page" : undefined}
         onClick={() => setMore(false)}
@@ -349,7 +349,7 @@ function ProductNavigationView({
           if (focused instanceof HTMLElement && scroller.current?.contains(focused)) tip(focused, focused.getAttribute("aria-label") ?? "");
           else setTooltip(null);
         }}>
-          {rail.map(item => <Link key={item.id} href={departmentHref(item.href!, workspaceId)}
+          {rail.map(item => <Link key={item.id} href={departmentHref(item.href!, workspaceId, new URLSearchParams(locationQuery).get("day"))}
             className="ppo-rail-item" aria-label={item.label} aria-current={activeId === item.id ? "page" : undefined}
             onMouseEnter={e => tip(e.currentTarget, item.label)} onMouseLeave={() => setTooltip(null)}
             onFocus={e => { reveal(e.currentTarget); tip(e.currentTarget, item.label); }} onBlur={() => setTooltip(null)}>
@@ -440,10 +440,11 @@ function ProductNavigationView({
 }
 export function ProductHeader() {
   const record = useRecordIdentity();
+  const query = useSearchParams();
   const path = usePathname(),
     page = pageForPath(path),
     shell = useShell();
-  const label = path === "/" ? "" : path === "/development/page-register" ? "Design & build" : path === "/development/design-system" ? "Component catalogue" : path.startsWith("/estimating/configurations") ? "Specialist configurations" : /^\/estimating\/discovery\/[^/]+$/.test(path) && !path.endsWith("/new") ? "Estimation Wizard" : (page?.id === "engineering" ? "Engineering" : page?.label ?? "Page unavailable");
+  const label = path === "/" ? "" : path === "/calendar" ? (query.get("scope") === "sales" ? "Sales Activities" : "Personal Calendar") : path === "/development/page-register" ? "Design & build" : path === "/development/design-system" ? "Component catalogue" : path.startsWith("/estimating/configurations") ? "Specialist configurations" : /^\/estimating\/discovery\/[^/]+$/.test(path) && !path.endsWith("/new") ? "Estimation Wizard" : (page?.id === "engineering" ? "Engineering" : page?.label ?? "Page unavailable");
   // My Work names its current view beside the module, as its secondary menu does. EN-06 names its module
   // there, and its destination after it for as long as its own menu is hidden (desktop-shell.css).
   const materials = page?.workspace === "engineering" ? materialsPath(path) : undefined;

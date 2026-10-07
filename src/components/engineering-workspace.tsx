@@ -188,7 +188,8 @@ export function EngineeringWorkspace({ initialId }: { initialId?: string }) {
   const identity = useIdentity(),
     params = useSearchParams(),
     path = usePathname(), router = useRouter(),
-    root = useRef<HTMLElement>(null);
+    root = useRef<HTMLElement>(null),
+    createdSelection = useRef<string | null>(null);
   const [view, setView] = useState("all"),
     [search, setSearch] = useState(""),
     [discipline, setDiscipline] = useState(""),
@@ -205,6 +206,17 @@ export function EngineeringWorkspace({ initialId }: { initialId?: string }) {
   };
   const [request, setRequest] = useState(params.get("create") === "1"),
     [notes, setNotes] = useState<Record<string, string>>({});
+  // The accepted command clears/closes its form first. Navigate after those
+  // mounted guards release, retaining any unrelated package notes.
+  useEffect(() => {
+    const created = createdSelection.current;
+    if (request || !created) return;
+    createdSelection.current = null;
+    const q = new URLSearchParams(params);
+    q.delete("create"); q.set("package_id", created);
+    const href = `${path}?${q}`;
+    navigateWithReview(() => router.push(href, {scroll:false}), {href});
+  }, [request, params, path, router]);
   const query = new URLSearchParams({
     q: search,
     view,
@@ -703,11 +715,11 @@ export function EngineeringWorkspace({ initialId }: { initialId?: string }) {
         open={request}
         onClose={() => setRequest(false)}
         onCreated={(id) => {
+          createdSelection.current = id;
           setRequest(false);
           clear();
           setView("all");
           records.reload();
-          setSelected(id);
         }}
       />
       {selected && (
@@ -763,8 +775,8 @@ function RequestDialog({
   const blocked =
     command.busy || !!(command.error as Failure | null)?.retryable;
   useUnsavedChanges(
-    !!(form.title || form.brief || form.context_id || form.owner_id),
-    blocked,
+    open && !!(form.title || form.brief || form.context_id || form.owner_id),
+    open && blocked,
   );
   return (
     <Modal

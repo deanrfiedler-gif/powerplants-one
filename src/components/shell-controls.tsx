@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { NotificationBell } from "./notification-workspace";
 import { navigateWithReview } from "./navigation-intent";
 import {
@@ -12,7 +12,7 @@ import {
 } from "react";
 import { useShell } from "./shell-provider";
 import { ShellAccountProfile, accountInitials } from "./shell-account-profile";
-import { canOpen, destination, departmentHref, menuGroups, workspaces } from "../shell/navigation";
+import { canOpen, destination, departmentHref, menuGroups, workspaceForLocation, workspaces } from "../shell/navigation";
 import { ShellPageGuide } from "./shell-page-guide";
 import { DevelopmentPageGuide } from "../development/page-guide";
 import { ShellIcon as ProductIcon } from "./shell-icon";
@@ -68,6 +68,7 @@ export function ShellControls({
 }) {
   const router = useRouter();
   const pathname = usePathname();
+  const locationQuery = useSearchParams();
   const { context, error: contextError, reload, hosted, preview, development } = useShell();
   const wide = useSyncExternalStore(
     subscribe,
@@ -234,10 +235,11 @@ export function ShellControls({
   };
   const actions = contextualActions(context?.actions ?? [], module);
   const query = q.trim();
-  const suggested = [workspaces.find(w => w.id === preview)!.primary, "work", "customers", "equipment"].map(destination);
-  const pageMatches = context ? (query.length >= 2 ? menuGroups(query).flatMap(group => group.items) : query ? [] : suggested).filter(item => canOpen(item, context.navigation, hosted)) : [];
+  const activeWorkspace = workspaceForLocation(pathname, new URLSearchParams(locationQuery), preview, context?.navigation ?? []);
+  const suggested = [workspaces.find(w => w.id === activeWorkspace)!.primary, "work", "customers", "equipment"].map(destination);
+  const pageMatches = context ? (query.length >= 2 ? menuGroups(query,activeWorkspace).flatMap(group => group.items) : query ? [] : suggested).filter(item => canOpen(item, context.navigation, hosted)) : [];
   const searchItems = [
-    ...pageMatches.map(item => ({ id: `page:${item.id}`, label: item.menuLabel ?? item.label, reference: item.workspace ? `${workspaces.find(w => w.id === item.workspace)!.label} pages` : ["home", "work", "mail"].includes(item.id) ? "My workspace" : "Shared records", href: departmentHref(item.href!, preview), kind: "Page", icon: workspaces.find(w => w.primary === item.id)?.id ?? (item.id === "equipment" ? "equipment" : item.icon) })),
+    ...pageMatches.map(item => ({ id: `page:${item.id}`, label: item.menuLabel ?? item.label, reference: item.workspace ? `${workspaces.find(w => w.id === item.workspace)!.label} pages` : ["home", "work", "mail", "calendar"].includes(item.id) ? "My workspace" : "Shared records", href: departmentHref(item.href!, activeWorkspace, locationQuery.get("day")), kind: "Page", icon: workspaces.find(w => w.primary === item.id)?.id ?? (item.id === "equipment" ? "equipment" : item.icon) })),
     ...(results?.items ?? []).map(item => ({ ...item, icon: "search" as const })),
   ];
   const onSearchKey = (event: KeyboardEvent<HTMLInputElement>) => {
