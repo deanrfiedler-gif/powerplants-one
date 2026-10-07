@@ -1,0 +1,147 @@
+[WebServer] (node:12992) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.98"}
+
+Running 10 tests using 1 worker
+
+(node:10288) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   1 [desktop-chromium] › tests\browser\leads.spec.ts:10:1 › LC-11 a site discovered after lead follow-up keeps source obligations through lost-response recovery (9.9s)
+(node:33144) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  2 [desktop-chromium] › tests\browser\leads.spec.ts:59:1 › approved leads list/detail and atomic conversion persist through reload (6.7s)
+  ok  3 [desktop-chromium] › tests\browser\leads.spec.ts:117:1 › Add lead has one scroll body, fixed actions, focus return and navy add button at phone sizes (2.3s)
+  ok  4 [desktop-chromium] › tests\browser\leads.spec.ts:183:1 › manual lead saves with an unverified organisation and survives reload (5.0s)
+  x   5 [desktop-chromium] › tests\browser\leads.spec.ts:214:1 › approved desktop columns resize independently and retain widths with quiet aligned handles (6.2s)
+(node:35780) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   6 [mobile-chromium] › tests\browser\leads.spec.ts:10:1 › LC-11 a site discovered after lead follow-up keeps source obligations through lost-response recovery (8.4s)
+(node:33448) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  7 [mobile-chromium] › tests\browser\leads.spec.ts:59:1 › approved leads list/detail and atomic conversion persist through reload (5.4s)
+  ok  8 [mobile-chromium] › tests\browser\leads.spec.ts:117:1 › Add lead has one scroll body, fixed actions, focus return and navy add button at phone sizes (3.4s)
+  ok  9 [mobile-chromium] › tests\browser\leads.spec.ts:183:1 › manual lead saves with an unverified organisation and survives reload (3.9s)
+  -  10 [mobile-chromium] › tests\browser\leads.spec.ts:214:1 › approved desktop columns resize independently and retain widths with quiet aligned handles
+
+
+  1) [desktop-chromium] › tests\browser\leads.spec.ts:10:1 › LC-11 a site discovered after lead follow-up keeps source obligations through lost-response recovery 
+
+    Error: expect(locator).toBeDisabled() failed
+
+    Locator: getByLabel('Next activity', { exact: true })
+    Expected: disabled
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeDisabled" getByLabel('Next activity', { exact: true }) with timeout 5000ms
+      - waiting for getByLabel('Next activity', { exact: true })
+
+
+      19 |   await page.locator(`[role=option][data-record-id="${CRM.site}"]`).click();
+      20 |   await expect(page.getByRole("heading", { name: "Keep the original follow-up connected" })).toBeVisible();
+    > 21 |   await expect(page.getByLabel("Next activity", { exact: true })).toBeDisabled();
+         |                                                                   ^
+      22 |   await page.getByLabel(`Review plan for ${action.summary}`).fill("SYN Confirm the unresolved questions against the newly identified site.");
+      23 |   await page.getByLabel("Qualification note", { exact: true }).fill("SYN Customer and site confirmed for owned discovery.");
+      24 |   await page.getByLabel("Source follow-up review summary", { exact: true }).fill("SYN Review retained enquiry questions with the site contact");
+        at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\leads.spec.ts:21:67
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\leads-LC-11-a-site-discove-c408a-ough-lost-response-recovery-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\leads-LC-11-a-site-discove-c408a-ough-lost-response-recovery-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\leads-LC-11-a-site-discove-c408a-ough-lost-response-recovery-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\leads-LC-11-a-site-discove-c408a-ough-lost-response-recovery-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop-chromium] › tests\browser\leads.spec.ts:214:1 › approved desktop columns resize independently and retain widths with quiet aligned handles 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('.lead-table tbody tr')
+    Expected: 1
+    Received: 2
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" locator('.lead-table tbody tr') with timeout 5000ms
+      - waiting for locator('.lead-table tbody tr')
+        4 × locator resolved to 0 elements
+          - unexpected value "0"
+        10 × locator resolved to 2 elements
+           - unexpected value "2"
+
+
+      223 |   await call(page, "crm/leads", input);
+      224 |   await page.goto(`/sales/leads?q=${encodeURIComponent(input.title)}`);
+    > 225 |   await expect(page.locator(".lead-table tbody tr")).toHaveCount(1);
+          |                                                      ^
+      226 |   await expect(page.locator(".lead-add")).toHaveText("Lead");
+      227 |   await page.getByRole("button", { name: "Reset columns" }).click();
+      228 |   // The selection and row-action rails are fixed; only .lead-col resizes.
+        at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\leads.spec.ts:225:54
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\leads-approved-desktop-col-b40bf--with-quiet-aligned-handles-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\leads-approved-desktop-col-b40bf--with-quiet-aligned-handles-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\leads-approved-desktop-col-b40bf--with-quiet-aligned-handles-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\leads-approved-desktop-col-b40bf--with-quiet-aligned-handles-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [mobile-chromium] › tests\browser\leads.spec.ts:10:1 › LC-11 a site discovered after lead follow-up keeps source obligations through lost-response recovery 
+
+    Error: expect(locator).toBeDisabled() failed
+
+    Locator: getByLabel('Next activity', { exact: true })
+    Expected: disabled
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeDisabled" getByLabel('Next activity', { exact: true }) with timeout 5000ms
+      - waiting for getByLabel('Next activity', { exact: true })
+
+
+      19 |   await page.locator(`[role=option][data-record-id="${CRM.site}"]`).click();
+      20 |   await expect(page.getByRole("heading", { name: "Keep the original follow-up connected" })).toBeVisible();
+    > 21 |   await expect(page.getByLabel("Next activity", { exact: true })).toBeDisabled();
+         |                                                                   ^
+      22 |   await page.getByLabel(`Review plan for ${action.summary}`).fill("SYN Confirm the unresolved questions against the newly identified site.");
+      23 |   await page.getByLabel("Qualification note", { exact: true }).fill("SYN Customer and site confirmed for owned discovery.");
+      24 |   await page.getByLabel("Source follow-up review summary", { exact: true }).fill("SYN Review retained enquiry questions with the site contact");
+        at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\leads.spec.ts:21:67
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\leads-LC-11-a-site-discove-c408a-ough-lost-response-recovery-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\leads-LC-11-a-site-discove-c408a-ough-lost-response-recovery-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\leads-LC-11-a-site-discove-c408a-ough-lost-response-recovery-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\leads-LC-11-a-site-discove-c408a-ough-lost-response-recovery-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    [desktop-chromium] › tests\browser\leads.spec.ts:10:1 › LC-11 a site discovered after lead follow-up keeps source obligations through lost-response recovery 
+    [desktop-chromium] › tests\browser\leads.spec.ts:214:1 › approved desktop columns resize independently and retain widths with quiet aligned handles 
+    [mobile-chromium] › tests\browser\leads.spec.ts:10:1 › LC-11 a site discovered after lead follow-up keeps source obligations through lost-response recovery 
+  1 skipped
+  6 passed (1.4m)

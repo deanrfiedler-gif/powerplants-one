@@ -1,0 +1,395 @@
+✔ LC-11 site resolution preserves source obligations and exact concurrent original recovery (10414.9005ms)
+✖ LC-11 exact membership and activity versions fence reviewed conversion without partial effects (317.2088ms)
+✖ LC-11 retained obligations need an owned dated relationship review and cannot evade compatible carrying (291.0283ms)
+✖ LC-11 current source access governs conversion, history disclosure and original recovery (246.0325ms)
+✖ LC-11 a late outbox failure rolls back the Deal, review activity, links, source evidence and receipt (280.3005ms)
+✖ LC-01/02/06 manual capture, note, completed history and independent-owner action survive one durable conversion (331.6932ms)
+✖ LC-04/05 same-intent retries and competing intents commit exactly one linked deal (277.0598ms)
+✖ LC-05 missing identification is specific; failure after tentative insertion rolls back every effect (282.7339ms)
+✖ LC-03/06 current permission, company and all-target checks precede reads and replay (295.8885ms)
+✖ LC-07 archive, disqualify and reopen preserve history; converted source is immutable (286.3024ms)
+✖ LC-06 incompatible Activity site context blocks without a partial conversion (300.3257ms)
+✖ LC-04 two different concurrent conversion intents cannot create two deals (295.0359ms)
+✖ LC-08 ordered pagination keeps signed filter context and visits each lead once (273.4367ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 1
+ℹ fail 12
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 25771.4018
+
+✖ failing tests:
+
+test at tests\database\leads-continuity.test.ts:1:3815
+✖ LC-11 exact membership and activity versions fence reviewed conversion without partial effects (317.2088ms)
+  error: out of shared memory
+      at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\scripts\database.ts:112:5)
+      at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\platform\database.ts:44:20)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\scripts\database.ts:108:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 138,
+    severity: 'ERROR',
+    code: '53200',
+    detail: undefined,
+    hint: 'You might need to increase max_locks_per_transaction.',
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'lock.c',
+    line: '1036',
+    routine: 'LockAcquireExtended'
+  }
+
+test at tests\database\leads-continuity.test.ts:1:4777
+✖ LC-11 retained obligations need an owned dated relationship review and cannot evade compatible carrying (291.0283ms)
+  error: out of shared memory
+      at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\scripts\database.ts:112:5)
+      at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\platform\database.ts:44:20)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\scripts\database.ts:108:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 138,
+    severity: 'ERROR',
+    code: '53200',
+    detail: undefined,
+    hint: 'You might need to increase max_locks_per_transaction.',
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'lock.c',
+    line: '1036',
+    routine: 'LockAcquireExtended'
+  }
+
+test at tests\database\leads-continuity.test.ts:1:5682
+✖ LC-11 current source access governs conversion, history disclosure and original recovery (246.0325ms)
+  error: out of shared memory
+      at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\scripts\database.ts:112:5)
+      at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\platform\database.ts:44:20)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\scripts\database.ts:108:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 138,
+    severity: 'ERROR',
+    code: '53200',
+    detail: undefined,
+    hint: 'You might need to increase max_locks_per_transaction.',
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'lock.c',
+    line: '1036',
+    routine: 'LockAcquireExtended'
+  }
+
+test at tests\database\leads-continuity.test.ts:1:6681
+✖ LC-11 a late outbox failure rolls back the Deal, review activity, links, source evidence and receipt (280.3005ms)
+  error: out of shared memory
+      at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\scripts\database.ts:112:5)
+      at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\platform\database.ts:44:20)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\scripts\database.ts:108:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 138,
+    severity: 'ERROR',
+    code: '53200',
+    detail: undefined,
+    hint: 'You might need to increase max_locks_per_transaction.',
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'lock.c',
+    line: '1036',
+    routine: 'LockAcquireExtended'
+  }
+
+test at tests\database\leads.test.ts:1:1748
+✖ LC-01/02/06 manual capture, note, completed history and independent-owner action survive one durable conversion (331.6932ms)
+  error: out of shared memory
+      at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\scripts\database.ts:112:5)
+      at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\platform\database.ts:44:20)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\scripts\database.ts:108:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    length: 138,
+    severity: 'ERROR',
+    code: '53200',
+    detail: undefined,
+    hint: 'You might need to increase max_locks_per_transaction.',
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'lock.c',
+    line: '1036',
+    routine: 'LockAcquireExtended'
+  }
+
+test at tests\database\leads.test.ts:1:4925
+✖ LC-04/05 same-intent retries and competing intents commit exactly one linked deal (277.0598ms)
+  error: out of shared memory
+      at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\scripts\database.ts:112:5)
+      at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\platform\database.ts:44:20)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\scripts\database.ts:108:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 138,
+    severity: 'ERROR',
+    code: '53200',
+    detail: undefined,
+    hint: 'You might need to increase max_locks_per_transaction.',
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'lock.c',
+    line: '1036',
+    routine: 'LockAcquireExtended'
+  }
+
+test at tests\database\leads.test.ts:1:5749
+✖ LC-05 missing identification is specific; failure after tentative insertion rolls back every effect (282.7339ms)
+  error: out of shared memory
+      at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\scripts\database.ts:112:5)
+      at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\platform\database.ts:44:20)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\scripts\database.ts:108:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 138,
+    severity: 'ERROR',
+    code: '53200',
+    detail: undefined,
+    hint: 'You might need to increase max_locks_per_transaction.',
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'lock.c',
+    line: '1036',
+    routine: 'LockAcquireExtended'
+  }
+
+test at tests\database\leads.test.ts:1:6533
+✖ LC-03/06 current permission, company and all-target checks precede reads and replay (295.8885ms)
+  error: out of shared memory
+      at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\scripts\database.ts:112:5)
+      at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\platform\database.ts:44:20)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\scripts\database.ts:108:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 138,
+    severity: 'ERROR',
+    code: '53200',
+    detail: undefined,
+    hint: 'You might need to increase max_locks_per_transaction.',
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'lock.c',
+    line: '1036',
+    routine: 'LockAcquireExtended'
+  }
+
+test at tests\database\leads.test.ts:1:7501
+✖ LC-07 archive, disqualify and reopen preserve history; converted source is immutable (286.3024ms)
+  error: out of shared memory
+      at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\scripts\database.ts:112:5)
+      at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\platform\database.ts:44:20)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\scripts\database.ts:108:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 138,
+    severity: 'ERROR',
+    code: '53200',
+    detail: undefined,
+    hint: 'You might need to increase max_locks_per_transaction.',
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'lock.c',
+    line: '1036',
+    routine: 'LockAcquireExtended'
+  }
+
+test at tests\database\leads.test.ts:1:8183
+✖ LC-06 incompatible Activity site context blocks without a partial conversion (300.3257ms)
+  error: out of shared memory
+      at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\scripts\database.ts:112:5)
+      at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\platform\database.ts:44:20)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\scripts\database.ts:108:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 138,
+    severity: 'ERROR',
+    code: '53200',
+    detail: undefined,
+    hint: 'You might need to increase max_locks_per_transaction.',
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'lock.c',
+    line: '1036',
+    routine: 'LockAcquireExtended'
+  }
+
+test at tests\database\leads.test.ts:1:8769
+✖ LC-04 two different concurrent conversion intents cannot create two deals (295.0359ms)
+  error: out of shared memory
+      at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\scripts\database.ts:112:5)
+      at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\platform\database.ts:44:20)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\scripts\database.ts:108:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 138,
+    severity: 'ERROR',
+    code: '53200',
+    detail: undefined,
+    hint: 'You might need to increase max_locks_per_transaction.',
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'lock.c',
+    line: '1036',
+    routine: 'LockAcquireExtended'
+  }
+
+test at tests\database\leads.test.ts:1:9357
+✖ LC-08 ordered pagination keeps signed filter context and visits each lead once (273.4367ms)
+  error: out of shared memory
+      at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\scripts\database.ts:112:5)
+      at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\platform\database.ts:44:20)
+      at async TestContext.reset (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\scripts\database.ts:108:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 138,
+    severity: 'ERROR',
+    code: '53200',
+    detail: undefined,
+    hint: 'You might need to increase max_locks_per_transaction.',
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'lock.c',
+    line: '1036',
+    routine: 'LockAcquireExtended'
+  }
