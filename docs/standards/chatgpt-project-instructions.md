@@ -8,7 +8,7 @@ Public repo, private demo; other projects do not govern PPO.
 
 Preserve BP-01’s seven domains and shared customers, contacts, sites, equipment, documents, identity, activity, audit and reporting.
 
-Test handovers; roles proposed.
+Roles proposed. Test a joined journey; separate HTTP, browser and owner proof.
 
 PP-01: customer/site/equipment, intake, authorised work, issued packs, scheduling, field evidence, acknowledgement, reviewed reports and controlled Finance reconciliation.
 

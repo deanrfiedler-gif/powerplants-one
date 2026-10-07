@@ -1,0 +1,27 @@
+[
+  {
+    "file": "desktop-entry-records.json",
+    "bytes": 869,
+    "sha256": "4be2e7be7cc8e1fe224d794f8a6ac59493b988d34b64aea6b7efab1b4ac89605"
+  },
+  {
+    "file": "desktop-project.png",
+    "bytes": 170729,
+    "sha256": "e25f01e0fbf53de8a617c4e7cf2cd553a28732a918951a062ea6796c072492ca"
+  },
+  {
+    "file": "mobile-entry-records.json",
+    "bytes": 868,
+    "sha256": "8859d32e8e34e799ed7e98e52a0da7cecfc861cb530c6abba6f9a8f71b1a389f"
+  },
+  {
+    "file": "mobile-sales-comparison.png",
+    "bytes": 74102,
+    "sha256": "02ba1bca5673080cdf74c26b60a9c8ab04d2fcf1dd9fa7b822967280dd74d0ca"
+  },
+  {
+    "file": "restart-summary.json",
+    "bytes": 3606,
+    "sha256": "a02189cb3279afe244484b90c0a94f09d4e52ea446b17c534379d6fba00bd816"
+  }
+]
