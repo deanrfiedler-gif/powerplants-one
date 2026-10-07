@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
-import { crmCreate, crmBase } from "./crm";
+import { crmCreate, crmDiscovery, crmBase } from "./crm";
 import { estimateInput, quoteCommand } from "./estimating";
 import type { readRelease } from "../../src/estimating/release/reads";
 type Detail = Awaited<ReturnType<typeof readRelease>>;
@@ -30,13 +30,15 @@ export async function json(cookie: string, path: string, body?: unknown) {
   assert.ok(r.ok, await r.clone().text());
   return r.json();
 }
-export async function httpFixture() {
+export async function httpFixture(closingDeal = false) {
   const owner = await session("coordinator"),
     reviewer = await session("estimating-source-reviewer"),
     approver = await session("quotation-approver"),
     issuer = await session("quotation-issuer"),
-    o = crmCreate();
+    o = closingDeal ? crmDiscovery() : crmCreate();
   await json(owner, "crm/opportunities", o);
+  if (closingDeal) for (const [i, stage_id] of ["Scoping", "Quoting"].entries())
+    await json(owner, `crm/opportunities/${o.id}/stage`, { ...crmBase(), expected_version: i + 1, stage_id, qualification_note: null, identification_activity_id: null });
   const input = estimateInput(o.id);
   await json(owner, "estimating/estimates", input);
   const reviewPath = `estimating/estimates/${input.id}/review`,

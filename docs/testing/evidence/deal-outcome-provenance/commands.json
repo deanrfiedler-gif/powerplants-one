@@ -1,0 +1,19 @@
+{
+  "environment": "Task-owned PostgreSQL 16, ppo_synthetic_test only. Private connection settings outside repository; explicit disposable reset authority required. Browser port and origin both 3000.",
+  "combined_database": "npx tsx --test --test-concurrency=1 tests/database/outcome-sources.test.ts tests/database/crm-refinements.test.ts",
+  "final_database": "node --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/outcome-sources.test.ts",
+  "browser": "npx playwright test -c playwright.compiled.config.ts tests/browser/outcome-sources.spec.ts tests/browser/crm-refinements.spec.ts --grep \"LC-15|owned Won handover|accepted outcome with a lost response\" --project desktop-chromium --project mobile-chromium --no-deps",
+  "upgrade": "node --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-name-pattern=\"E2 migration formalises|FI01 additive 0049 upgrade|LC-12 populated|LC-13 populated|fresh combined installation|main 0017 upgrades|an existing Leads 0018 record|populated 0050 upgrade|fresh installation applies only registered|upgrade preserves saved CRM|an already-current demo|a baseline executed\" tests/database/estimating-workspaces.test.ts tests/database/field-timer-boundaries.test.ts tests/database/leads-amendments.test.ts tests/database/sales-estimating-binding.test.ts tests/database/leads-projects-integration.test.ts tests/database/policy-persistence.test.ts tests/demo/upgrade.test.ts",
+  "other": [
+    "node --import tsx --test tests/unit/migration-registry.test.ts",
+    "npm run build",
+    "npm run typecheck",
+    "npm run lint",
+    "npx eslint src/components/opportunity-outcome-source.tsx",
+    "npx eslint src/crm/outcome-sources.ts tests/database/outcome-sources.test.ts tests/helpers/quotation-response-http.ts tests/helpers/quotation-release-http.ts",
+    "npm run studio:check",
+    "python scripts/check_foundation.py",
+    "python scripts/check_prototype.py",
+    "python scripts/check_naming.py"
+  ]
+}

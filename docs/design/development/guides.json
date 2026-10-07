@@ -4611,6 +4611,19 @@
           ],
           "rows": [],
           "headers": []
+        },
+        {
+          "section_id": "explicit-outcome-evidence",
+          "title": "Record a sourced sales outcome",
+          "paragraphs": [
+            "Choose an Outcome evidence source before recording Won or Lost. For a native quotation, select its release, read the current report and holds, then Review quotation basis. Won requires the native accepted response to be ready; Lost requires a declined report. Existing stage, acceptance evidence and lost reason remain required.",
+            "Separate outcome evidence requires a narrative describing the independently reviewed evidence. It does not assert a native quotation response. Recording the outcome does not convert scope or authorise delivery.",
+            "Refreshing quotation evidence preserves your exact reviewed comparison. If it changed, discard the comparison and review the current basis. A denied refresh hides the comparison; choose evidence again only with current permission.",
+            "If the save result is uncertain, Confirm original save outcome. The original decision remains recoverable even if a native response is corrected later, subject to current access. History distinguishes the recorded response, latest report on that revision, separate evidence and older narrative outcomes without native links."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
         }
       ],
       "related_entry_keys": [
@@ -43473,6 +43486,19 @@
             "Find the required option, estimate and exact revision.",
             "Expand issue, reported response and conversion evidence, then follow the native history links for review."
           ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "explicit-outcome-evidence",
+          "title": "Record a sourced sales outcome",
+          "paragraphs": [
+            "Choose an Outcome evidence source before recording Won or Lost. For a native quotation, select its release, read the current report and holds, then Review quotation basis. Won requires the native accepted response to be ready; Lost requires a declined report. Existing stage, acceptance evidence and lost reason remain required.",
+            "Separate outcome evidence requires a narrative describing the independently reviewed evidence. It does not assert a native quotation response. Recording the outcome does not convert scope or authorise delivery.",
+            "Refreshing quotation evidence preserves your exact reviewed comparison. If it changed, discard the comparison and review the current basis. A denied refresh hides the comparison; choose evidence again only with current permission.",
+            "If the save result is uncertain, Confirm original save outcome. The original decision remains recoverable even if a native response is corrected later, subject to current access. History distinguishes the recorded response, latest report on that revision, separate evidence and older narrative outcomes without native links."
+          ],
+          "steps": [],
           "rows": [],
           "headers": []
         }

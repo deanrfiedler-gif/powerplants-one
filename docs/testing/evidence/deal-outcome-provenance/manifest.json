@@ -1,0 +1,370 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "implementation_parent": "96a77011bcaf750077628e00d92f05a447574fa2",
+  "execution_scope": "Final source hashes identify implementation and selected tests. Earlier combined/initial runs and final focused source adjustment are distinguished in README. Paired review, final-head CI and deployment remain separate.",
+  "source_files": [
+    {
+      "path": "db/migrations/0075-opportunity-outcome-sources.sql",
+      "sha256": "01325c3b3411c21fcb9e49e2fb67ab9f7aa5ad21af6ab9df7bcf830164c80c05",
+      "bytes": 5725
+    },
+    {
+      "path": "scripts/demo-upgrade.ts",
+      "sha256": "cb4cbf1fd9311f669299e9fc229d462e9b5cb8972a6d1944a80f5b6629f4af39",
+      "bytes": 29925
+    },
+    {
+      "path": "scripts/migration-registry.ts",
+      "sha256": "da4e13915ecd3ed372a75ae4172d0d449e01f31438e4b1d5d2cca444defdb051",
+      "bytes": 6584
+    },
+    {
+      "path": "src/app/api/v1/crm/opportunities/[id]/outcome-basis/route.ts",
+      "sha256": "7987c8dc6a431ed48339ed38a6e71bfed3c646737658cd39e9cfa53b727efa51",
+      "bytes": 252
+    },
+    {
+      "path": "src/components/crm-deal-controls.tsx",
+      "sha256": "b634fcad8e2812c1dc7fca29bd3a14f847aad34e72999fc2db983343ad64fe9f",
+      "bytes": 27525
+    },
+    {
+      "path": "src/components/crm-screens.tsx",
+      "sha256": "8c38803cc2cab638caa4c0024101cb2210a0a5e5f8583da2a272f96955f81250",
+      "bytes": 33611
+    },
+    {
+      "path": "src/components/opportunity-outcome-source.tsx",
+      "sha256": "0a5e77a19b16a96e713a09691a6b39b1f5c8bc5271d839e1eb50110ae570f3fb",
+      "bytes": 8578
+    },
+    {
+      "path": "src/crm/outcome-sources.ts",
+      "sha256": "cbd1dad03c946e8620b50b75e695e85c84ae8baa0bbdbd3388f25d9a832a43b1",
+      "bytes": 9557
+    },
+    {
+      "path": "src/crm/outcomes.ts",
+      "sha256": "dba78fec84392e4f8ebd5eb0db1dd757f8f2cf12e0d3e80f4134102147ae711d",
+      "bytes": 6075
+    },
+    {
+      "path": "src/crm/reads.ts",
+      "sha256": "b385560693d64827bdc1cf842c7f787a7b157f1a066f4d82d3d82c2899b0bf3a",
+      "bytes": 14922
+    },
+    {
+      "path": "src/crm/receipt-authority.ts",
+      "sha256": "c1e46b11e14175b484b22dcc44c367997f9220cf6ee818e26c344facdbc7b0ea",
+      "bytes": 4885
+    },
+    {
+      "path": "tests/browser/crm-refinements.spec.ts",
+      "sha256": "7acaab74b9681e24eea558acb27337ed2592d99b74e506ca15c5d2a486b77d02",
+      "bytes": 36724
+    },
+    {
+      "path": "tests/browser/outcome-sources.spec.ts",
+      "sha256": "9e74384ac6ff257984976370a47a5737ddbecaf351cc733ee3f30352c4f11555",
+      "bytes": 7418
+    },
+    {
+      "path": "tests/database/field-customer-response.test.ts",
+      "sha256": "27788b3ccd58ee028ce403d258c1d1dda06e2f12143abe9f7248e7ea2bd66b2b",
+      "bytes": 24354
+    },
+    {
+      "path": "tests/database/field-timer-boundaries.test.ts",
+      "sha256": "2a59949860d6d46b18e03a331f0aa49d5946543d45580ddeb15304a20f42574e",
+      "bytes": 10259
+    },
+    {
+      "path": "tests/database/field.test.ts",
+      "sha256": "b42069be6ff0e2d44b1adb1e91552658f4c994c86d16716b3113424c2f8db54b",
+      "bytes": 40545
+    },
+    {
+      "path": "tests/database/finance-upgrade.test.ts",
+      "sha256": "0a7d320d9dbdecd63865c904817da44037293723a6c7f4810bf4a6860d35400b",
+      "bytes": 7572
+    },
+    {
+      "path": "tests/database/leads-amendments.test.ts",
+      "sha256": "dacabf064280b2fad8c09a28d32f759c5bee5fc720a62642b02b19a03d5366f8",
+      "bytes": 12592
+    },
+    {
+      "path": "tests/database/leads-projects-integration.test.ts",
+      "sha256": "e3ad9400f00165338f271917fac960471be14b6b716b07dbcfeec8593ebb7d43",
+      "bytes": 7836
+    },
+    {
+      "path": "tests/database/offline.test.ts",
+      "sha256": "3546250bff512c007b165d90af554471b961be2d4a486db0ae5bb9ac9f2f0c9a",
+      "bytes": 30201
+    },
+    {
+      "path": "tests/database/outcome-sources.test.ts",
+      "sha256": "bfda7c91e180fdb26f8236b7b24c083419d963585be95022aba0a6967a4b03e7",
+      "bytes": 13611
+    },
+    {
+      "path": "tests/database/packs.test.ts",
+      "sha256": "2c1a6037a13014e766364d9a326176b1741fd2ecd08a87df3ed7a0eb4bc7019f",
+      "bytes": 39679
+    },
+    {
+      "path": "tests/database/planner.test.ts",
+      "sha256": "101622671b32ad9cbe39dfa6441b04c1794bcebf07d5fe969daf6caf0b4f8524",
+      "bytes": 37034
+    },
+    {
+      "path": "tests/database/policy-persistence.test.ts",
+      "sha256": "42a4ae6047fdc2c86c79c9ff6a05a7364fc8bab47ea608e7f46d2eec9652839c",
+      "bytes": 24623
+    },
+    {
+      "path": "tests/database/quotation-allocation-shortfall.test.ts",
+      "sha256": "63a7a929a58aa8eda351d5899db08ed97682ee3572d723cabe42efb90d10beaa",
+      "bytes": 31242
+    },
+    {
+      "path": "tests/database/quotation-conversion.test.ts",
+      "sha256": "d63eeee8f30541af1e1c55585ea27f8baebe76c3ee6b88355c26d205d0cd4fbe",
+      "bytes": 19675
+    },
+    {
+      "path": "tests/database/quotation-disposition.test.ts",
+      "sha256": "5a8cec671459fd518fc6005c0bdd61c733b76ab12124899b9b55bd805b450f5a",
+      "bytes": 27279
+    },
+    {
+      "path": "tests/database/quotation-material-resolution.test.ts",
+      "sha256": "8875b80493235d4aa47377077448402b3ba900475a0f3123803a1aa018cc7a02",
+      "bytes": 31160
+    },
+    {
+      "path": "tests/database/quotation-receipt-correction.test.ts",
+      "sha256": "441532f996cbcb9d248441be621f265f3ab567b6919d156f36361a8314311e92",
+      "bytes": 27576
+    },
+    {
+      "path": "tests/database/quotation-release.test.ts",
+      "sha256": "b127e9ab4bf463cfc88d45ab8a28e4af4e5bc69d33278a52d0e39a03c5211342",
+      "bytes": 19953
+    },
+    {
+      "path": "tests/database/quotation-reservation-reconciliation.test.ts",
+      "sha256": "a4bdb447aeeaff5ee406e9dd519f614faa2afd58ea051b42f26d7796e1a66722",
+      "bytes": 16855
+    },
+    {
+      "path": "tests/database/quotation-response.test.ts",
+      "sha256": "38a3590921eed7dde120e9e7b7b594057a43870b6269ba1d93f627b17d3ae1b3",
+      "bytes": 17704
+    },
+    {
+      "path": "tests/database/quotation-supply-followup.test.ts",
+      "sha256": "401e167e5caa58f374a22443fff8509e18e2c196227dd9f8ac4370c683cd7b4d",
+      "bytes": 27713
+    },
+    {
+      "path": "tests/database/quotation-task-branch.test.ts",
+      "sha256": "64c7f35a74e9121d2850bf31e9414d9fdc08eec4373d9514c5b664e9d43a69cc",
+      "bytes": 38182
+    },
+    {
+      "path": "tests/database/quotation-task-chain.test.ts",
+      "sha256": "93e864c55921c48b582aac0e9c7ce93f19ed5dc3098d1df8b90147a15b184825",
+      "bytes": 29571
+    },
+    {
+      "path": "tests/database/quotation-task-dependency.test.ts",
+      "sha256": "65e484a2b89b9daa3ed0c69c44269f87881a1469102fa79e2b65d98b988d1da7",
+      "bytes": 19556
+    },
+    {
+      "path": "tests/database/quotation-task-diamond.test.ts",
+      "sha256": "8459a3b151a1431578a2cdbd757e710b25ee74228bf73f612aee27e46533be3d",
+      "bytes": 19200
+    },
+    {
+      "path": "tests/database/quotation-task-merge.test.ts",
+      "sha256": "df19771d27c9b4ad738d8cf8cff151e4bf278ead4320e82a633f58cc1054ef9c",
+      "bytes": 46731
+    },
+    {
+      "path": "tests/database/reports.test.ts",
+      "sha256": "410769c8067bcb3e091bfcb914fedc2b7a7d80bdaa28e730959bf058111e928f",
+      "bytes": 40327
+    },
+    {
+      "path": "tests/database/sales-estimating-binding.test.ts",
+      "sha256": "adc5213e88c41df16bb91e9fd10c5b49dc8f03903d4437b3d03392f02008dee3",
+      "bytes": 13709
+    },
+    {
+      "path": "tests/demo/upgrade.test.ts",
+      "sha256": "75283b0dd2457d29826b2594579b6d2651f0ec738b370155ecf3be3270f1f1f5",
+      "bytes": 17257
+    },
+    {
+      "path": "tests/helpers/quotation-release-http.ts",
+      "sha256": "c09cce970e8ff057e58907602d483c0392872a5afc8fe87c7c83edbaa72610db",
+      "bytes": 3680
+    },
+    {
+      "path": "tests/helpers/quotation-response-http.ts",
+      "sha256": "72f256e1e127435d9e848c563dabf173c65597c09bd43ef8a3db8c6c999596f2",
+      "bytes": 1462
+    }
+  ],
+  "evidence_files": [
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/commands.json",
+      "sha256": "544ab86038e12d2e6d19bb647537b3e3797bb84d020c701330346333dc6c2181",
+      "bytes": 1990
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/desktop-deliberate-review.png",
+      "sha256": "aba11d7d377750f85173d83a224ddb7d4f2da224e60b4da896d4cdd12dab00e2",
+      "bytes": 158442
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/desktop-original-evidence.png",
+      "sha256": "d30202a8817feb84fe5aedae88d6a21131abd0f0cb9e1763f6531b84efad33d2",
+      "bytes": 111436
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/mobile-deliberate-review.png",
+      "sha256": "0fe3a43dee5e0cf21935f220a537d183657d047d1536b577d1a32f5e5a72d413",
+      "bytes": 61835
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/mobile-original-evidence.png",
+      "sha256": "8aa3f20381b57ae5f62f9fbe8f195df41b60dd07e808285a822b803a72a59a25",
+      "bytes": 66231
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/outcome-browser.log",
+      "sha256": "c756e2db593817a386d4241ebbcb27e34684ae35132d5a1c76b19ff7b1b4ce74",
+      "bytes": 2466
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/outcome-build-final.log",
+      "sha256": "b534581c1b8443aa191db6c2f2f2b3e2a3e93033352de72a72eace7311153319",
+      "bytes": 25793
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/outcome-build-issued-basis.log",
+      "sha256": "39df559b33e2c6154a2c2e43146000f5ef084c5386b70cf0ca0cfb5eec415e6b",
+      "bytes": 25792
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/outcome-build.log",
+      "sha256": "b7d5c045e7b6b1d8723874a25e4413d372a31049522c58d823bee0182d7c53e5",
+      "bytes": 25790
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/outcome-db-final.log",
+      "sha256": "acf1616146d0d5579c748255bff96b4a1cbe70b30a5dc394b0d11a2ca5abed2e",
+      "bytes": 958
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/outcome-db-initial.log",
+      "sha256": "c8e18a5076379810d275040cafd1fbb4b6d1ccfa975738d59be498a03928e448",
+      "bytes": 2450
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/outcome-db.log",
+      "sha256": "75b91822b1e0fd0dbc67cc7fd91af7e3942491eed11502b3d1ad26e79212fa45",
+      "bytes": 6417
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/outcome-foundation-final.log",
+      "sha256": "7aee292f256ce6df07101fedb7df1d2355934639a6106a883307ed5aa3301e12",
+      "bytes": 330
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/outcome-foundation.log",
+      "sha256": "87ea5993fe0686166c1e6c6ce076ca5c8544798dbb29d04415b228cd92eaae13",
+      "bytes": 330
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/outcome-lint-final.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/outcome-lint-issued-basis.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/outcome-lint.log",
+      "sha256": "3d33f40c80d9aa3df343c357e43b00f214189513ba842430e562b5fbe75aefda",
+      "bytes": 42
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/outcome-naming-final.log",
+      "sha256": "079d70b109d8743d55dba21026050f6aff130aa90f1c838ff2c8984296185b3a",
+      "bytes": 296
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/outcome-naming.log",
+      "sha256": "079d70b109d8743d55dba21026050f6aff130aa90f1c838ff2c8984296185b3a",
+      "bytes": 296
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/outcome-prototype.log",
+      "sha256": "9b7839c713adf06d51e41256fd2e991c6acc00fca36c33caff1ef7e02d55251b",
+      "bytes": 526
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/outcome-registry-unit.log",
+      "sha256": "a390e2e7351fe3b3dcbebf700cc4f880c776646099b446fb51fd88cc8befd56c",
+      "bytes": 447
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/outcome-studio-final.log",
+      "sha256": "e54246ce6d663bbbc52e76eb1107b17246e348645643edd5d0a2c9d5e0c83c76",
+      "bytes": 429
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/outcome-studio.log",
+      "sha256": "e54246ce6d663bbbc52e76eb1107b17246e348645643edd5d0a2c9d5e0c83c76",
+      "bytes": 429
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/outcome-typecheck-backend.log",
+      "sha256": "bc8033ab9263f80d6936b509b40414d8d01fa804136bf8b2d00f7ac11abe7a2a",
+      "bytes": 51
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/outcome-typecheck-final.log",
+      "sha256": "bc8033ab9263f80d6936b509b40414d8d01fa804136bf8b2d00f7ac11abe7a2a",
+      "bytes": 51
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/outcome-typecheck-initial.log",
+      "sha256": "76dba449cf17d23da8cd523225947c079e1ce956cd5e1aef519a0f2a95a292cf",
+      "bytes": 190
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/outcome-typecheck-ui.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/outcome-upgrades.log",
+      "sha256": "d3fbb64d9c00b8392c2770ce8a7978d761674a87de7bf366eed3104f3996b918",
+      "bytes": 14807
+    },
+    {
+      "path": "docs/testing/evidence/deal-outcome-provenance/README.md",
+      "sha256": "7d6e488923985a832ea59cb49bd0b8a425e869c471f0245b7edb82753eda9215",
+      "bytes": 5666
+    }
+  ]
+}

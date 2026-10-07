@@ -93,6 +93,11 @@
           "id": "deal-commercial-host",
           "label": "Exact Deal commercial evidence",
           "description": "tests/browser/commercial-continuity.spec.ts exercises real issued-response/correction reads and a mocked denied-refresh presentation in the Deal host; database tests prove actual quote-scope denial."
+        },
+        {
+          "id": "outcome-evidence-host",
+          "label": "Explicit outcome evidence",
+          "description": "LC-15 actual host in tests/browser/outcome-sources.spec.ts: fixed native review, stale refusal, denied comparison, separate evidence and exact original recovery. No isolated renderer."
         }
       ],
       "implementation": [
@@ -114,7 +119,8 @@
         "docs/design/development/maintenance-fixtures.json",
         "src/components/sales-estimating-link.tsx",
         "docs/design/development/lead-continuity-fixtures.json",
-        "src/components/commercial-quotation.tsx"
+        "src/components/commercial-quotation.tsx",
+        "src/components/opportunity-outcome-source.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -335,6 +341,14 @@
           "expected": "Permitted native evidence with explicit loading, denied refresh and retry at desktop/phone widths.",
           "actual": "LC-14 host states and bindings added; exact new-state mockup images are missing.",
           "action": "Review real host captures, keyboard/focus and long held-source text before accepting a baseline.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-outcome-evidence",
+          "expected": "Evidence source and fixed comparison remain clear and reachable across desktop/phone states.",
+          "actual": "LC-15 host adaptation implemented; exact new-state mockup images missing.",
+          "action": "Review source choice, long evidence, keyboard/focus and original recovery before baseline adoption.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -905,6 +919,11 @@
           "id": "es07-host",
           "label": "ES-07 receiving host",
           "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery. Material receiving/recovery host: tests/browser/quotation-material-resolution.spec.ts."
+        },
+        {
+          "id": "outcome-evidence-host",
+          "label": "Explicit outcome evidence",
+          "description": "LC-15 actual host in tests/browser/outcome-sources.spec.ts: fixed native review, stale refusal, denied comparison, separate evidence and exact original recovery. No isolated renderer."
         }
       ],
       "implementation": [
@@ -926,7 +945,8 @@
         "src/components/equipment-controls.tsx",
         "docs/design/development/maintenance-fixtures.json",
         "docs/design/development/lead-continuity-fixtures.json",
-        "src/components/sales-estimating-link.tsx"
+        "src/components/sales-estimating-link.tsx",
+        "src/components/opportunity-outcome-source.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -1112,6 +1132,14 @@
           "action": "Review desktop/phone create-return, fixed comparison, denied context and original recovery before adopting a baseline.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fields-outcome-evidence",
+          "expected": "Evidence source and fixed comparison remain clear and reachable across desktop/phone states.",
+          "actual": "LC-15 host adaptation implemented; exact new-state mockup images missing.",
+          "action": "Review source choice, long evidence, keyboard/focus and original recovery before baseline adoption.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "review": null
@@ -1242,6 +1270,11 @@
           "id": "deal-commercial-host",
           "label": "Exact Deal commercial evidence",
           "description": "tests/browser/commercial-continuity.spec.ts exercises real issued-response/correction reads and a mocked denied-refresh presentation in the Deal host; database tests prove actual quote-scope denial."
+        },
+        {
+          "id": "outcome-evidence-host",
+          "label": "Explicit outcome evidence",
+          "description": "LC-15 actual host in tests/browser/outcome-sources.spec.ts: fixed native review, stale refusal, denied comparison, separate evidence and exact original recovery. No isolated renderer."
         }
       ],
       "implementation": [
@@ -1259,7 +1292,8 @@
         "docs/design/development/maintenance-fixtures.json",
         "docs/design/development/lead-continuity-fixtures.json",
         "src/components/sales-estimating-link.tsx",
-        "src/components/commercial-quotation.tsx"
+        "src/components/commercial-quotation.tsx",
+        "src/components/opportunity-outcome-source.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -1436,6 +1470,14 @@
           "expected": "Permitted native evidence with explicit loading, denied refresh and retry at desktop/phone widths.",
           "actual": "LC-14 host states and bindings added; exact new-state mockup images are missing.",
           "action": "Review real host captures, keyboard/focus and long held-source text before accepting a baseline.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "validation-outcome-evidence",
+          "expected": "Evidence source and fixed comparison remain clear and reachable across desktop/phone states.",
+          "actual": "LC-15 host adaptation implemented; exact new-state mockup images missing.",
+          "action": "Review source choice, long evidence, keyboard/focus and original recovery before baseline adoption.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

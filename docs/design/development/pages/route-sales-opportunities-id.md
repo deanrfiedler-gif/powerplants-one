@@ -62,7 +62,7 @@ Mobile: stack fields/actions, keep every tab reachable and contain table/history
 
 Loading, empty/filter-empty, partial, failed, denied, read-only, validation, saving, saved, uncertain and source-changed states remain explicit. The guide `guide.page.sales.opportunities.id` carries normal and recovery steps.
 
-Retained reference: `docs/reference/ui/crm/PPO-Deal-Workspace-r01.html`. Missing mobile reference images are explicitly unprovided. The current shell and server authority govern departures from demonstration HTML. ES-05/06/07, agreements and automatic downstream effects remain unavailable under ADR-0046. Actual paired captures and differences are recorded in `docs/delivery/sales-native-completion-handover.md`; acceptance is pending.
+Retained reference: `docs/reference/ui/crm/PPO-Deal-Workspace-r01.html`. Missing mobile reference images are explicitly unprovided. The current shell and server authority govern departures from demonstration HTML. The earlier ADR-0046 boundary is historical: native ES-05/06/07 now supplies release, response and Supply conversion. Agreements and automatic downstream effects remain unavailable. Actual paired captures and differences are recorded in `docs/delivery/sales-native-completion-handover.md`; acceptance is pending.
 
 ## Lead source continuity (LC-11)
 
@@ -81,3 +81,11 @@ Keep CR-01 and its r20 record workspace page type. Incoming: all permitted nativ
 Every permitted alternative contributes its own quotation revisions to Estimates & quotations and Documents. Label Draft and Release separately, preserve the estimate/option and output state, and open exact native evidence on request. An issued event, current source check, staff-recorded response and native Supply conversion are independent facts. A current correction replaces the displayed latest response while native history retains its predecessor. Unavailable or restricted evidence must never read as not issued/not converted. A denied refresh removes previously displayed evidence and offers an explicit permitted retry. Reading evidence never records Won or authorises Project/Service delivery.
 
 Desktop: use labelled revision cards, a stable option/estimate link and separate issue, response and conversion sections. Phone: stack cards and wrap long held-source/response text at 390 and 320 CSS px; keep native history and retry controls reachable without horizontal page scrolling. Native summary controls must be keyboard reachable. Existing exact source HTML/images above remain the retained references; exact new-state mockup images are missing. This additive host adaptation awaits paired visual and owner acceptance; no accepted fingerprint is assigned.
+
+## Explicit outcome evidence (LC-15)
+
+Retain CR-01 and the r20 record workspace with its existing outcome dialog. Incoming handover: permitted native quotation issue/response and the current Deal; outgoing: the exact outcome event, immutable evidence and existing Won handover due. Reuse Field, SelectField, Button, ValidationFields, ErrorNotice, shared tokens and the existing dialog/footer (retained host exception). The proposed adaptation requires an explicit native or separate evidence choice; it does not infer Won.
+
+Show current native facts and the frozen reviewed comparison separately. Background refresh cannot replace the submitted source. Denied refresh hides prior native facts; uncertain save locks replacement and exposes original recovery. History distinguishes recorded response, latest report, changed native issue, separate evidence and historical narrative outcomes. Desktop keeps review before the save footer. At 390/320 CSS px, stack selectors and narrative, wrap long text and keep review/discard/recovery reachable; verify keyboard focus and 200% zoom separately.
+
+Host states are in lead-continuity-fixtures.json and tests/browser/outcome-sources.spec.ts. Retain the exact HTML references above; no exact new-state mockup image is available. Functional proof does not assign an accepted fingerprint. Paired visual, owner, physical-device and screen-reader acceptance remain pending.

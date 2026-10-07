@@ -1,0 +1,5 @@
+
+> powerplants-one@0.1.0 typecheck
+> tsc --noEmit
+
+scripts/demo-upgrade.ts(217,7): error TS2367: This comparison appears to be unintentional because the types '75' and '74' have no overlap.

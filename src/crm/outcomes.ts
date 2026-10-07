@@ -1,3 +1,4 @@
+import { parseOutcomeSource, reviewOutcomeSource, retainOutcomeSource } from "./outcome-sources";
 import { randomUUID } from "node:crypto";
 import type { Principal } from "../platform/identity";
 import { visibleActivity } from "../activities/activities";
@@ -31,6 +32,7 @@ export function parseOpportunityOutcome(id: string, input: unknown) {
     "close_outcome",
     "lost_reason",
     "acceptance_evidence",
+    "commercial_source",
   ]);
   const close_outcome = choice(r.close_outcome, "close_outcome", [
     "Won",
@@ -45,6 +47,7 @@ export function parseOpportunityOutcome(id: string, input: unknown) {
     );
   return {
     ...common(r),
+    ...(r.commercial_source === undefined ? {} : { commercial_source: parseOutcomeSource(r.commercial_source) }),
     id: uuid(id, "id"),
     expected_version: version(r.expected_version),
     close_outcome,
@@ -114,6 +117,7 @@ return opportunityCommandAuthority(c,p,id,command.operation_id,"RecordOpportunit
         )
           throw unavailable();
       }
+      const source = command.commercial_source ? await reviewOutcomeSource(c,p,old,command.close_outcome,command.commercial_source) : null;
       const o = (
         await c.query<Opportunity>(
           `UPDATE ppo.opportunities SET close_outcome=$1,version=version+1,updated_by=$2,updated_at=clock_timestamp() WHERE workspace_id=$3 AND id=$4 RETURNING *`,
@@ -135,6 +139,7 @@ return opportunityCommandAuthority(c,p,id,command.operation_id,"RecordOpportunit
           id,
         ],
       );
+      if (source) await retainOutcomeSource(c,p,old,event,command.operation_id,source);
       if (command.close_outcome === "Won")
         await c.query(
           `INSERT INTO ppo.opportunity_handovers_due(workspace_id,company_id,opportunity_id,outcome_event_id,opportunity_version,owner_id,created_by,created_at)
@@ -148,6 +153,7 @@ return opportunityCommandAuthority(c,p,id,command.operation_id,"RecordOpportunit
           previous_version: old.version,
           close_outcome: command.close_outcome,
           outcome_event_id: event,
+          ...(source ? { commercial_source_kind: source.source.kind } : {}),
         },
       };
     },

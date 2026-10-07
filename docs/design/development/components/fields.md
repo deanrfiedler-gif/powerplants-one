@@ -117,3 +117,7 @@ Leads customer resolution and transfer reuse this control family, with native sh
 ## Accepted Sales brief to native Estimating (LC-13)
 
 The Sales handover and native Discovery hosts reuse this control with explicit create-return, fixed source comparison and exact-original recovery. Consumer bindings and synthetic states are in the register and lead-continuity-fixtures.json. Compare desktop/phone scope wrapping, keyboard controls and denied-context removal; exact new-state mockups are missing and no accepted fingerprint is assigned.
+
+## Explicit Deal outcome source (LC-15)
+
+The existing Deal dialog reuses Field and SelectField for a required native quotation or separate narrative evidence choice. Native comparison remains frozen on refresh; denied facts are removed, and uncertain commands lock replacement until original recovery. Bindings and host examples are in components.json and lead-continuity-fixtures.json. Desktop/phone wrapping, labels, focus and 200% zoom require the live CR-01 page review; exact new-state mockup images and owner acceptance remain pending.

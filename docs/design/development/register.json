@@ -972,7 +972,7 @@
       "title": "Opportunity detail and internal work",
       "kind": "scope",
       "module": "CR",
-      "summary": "Maintain one opportunity with source-owned customer context, accountable next action, commercial evidence and linked handovers. Incoming converted Leads retain their captured enquiry, resolved context and ownership history. LC-14 shows every permitted option quotation and exact native release/response/conversion evidence.",
+      "summary": "Maintain one opportunity with source-owned customer context, accountable next action, commercial evidence and linked handovers. Incoming converted Leads retain their captured enquiry, resolved context and ownership history. LC-14 shows every permitted option quotation and exact native release/response/conversion evidence. LC-15 requires explicit outcome evidence and retains the exact original source through later corrections.",
       "path": "/sales/opportunities/[id]",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -991,11 +991,15 @@
         "docs/testing/evidence/lead-context-resolution/README.md",
         "src/components/commercial-quotation.tsx",
         "src/components/opportunity-commercial.tsx",
-        "src/estimating/reads.ts"
+        "src/estimating/reads.ts",
+        "src/components/opportunity-outcome-source.tsx",
+        "src/crm/outcome-sources.ts",
+        "docs/decisions/deal-outcome-evidence.md",
+        "docs/testing/evidence/deal-outcome-provenance/README.md"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "See sales-native-completion-handover for existing Deal assurance. LC-12 local functional proof: six database cases, selected populated upgrades and 15 compiled desktop/phone checks with one retained skip. See lead-context-resolution evidence; paired visual and owner acceptance remain pending. LC-14: four database and four compiled desktop/phone scenarios pass; see docs/testing/evidence/deal-commercial-continuity/README.md. Source facts, paired visual/owner review and final-head CI remain separate.",
+      "functional_status": "See sales-native-completion-handover for existing Deal assurance. LC-12 local functional proof: six database cases, selected populated upgrades and 15 compiled desktop/phone checks with one retained skip. See lead-context-resolution evidence; paired visual and owner acceptance remain pending. LC-14: four database and four compiled desktop/phone scenarios pass; see docs/testing/evidence/deal-commercial-continuity/README.md. Source facts, paired visual/owner review and final-head CI remain separate. LC-15: seven final database cases, an earlier 58-case combined run, 12 selected upgrades and 10 compiled desktop/phone scenarios pass; see docs/testing/evidence/deal-outcome-provenance/README.md. Paired/owner review remains pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6568,7 +6572,7 @@
       "title": "Opportunity detail",
       "kind": "route",
       "module": "CR",
-      "summary": "Maintain one opportunity with source-owned customer context, accountable next action, commercial evidence and linked handovers. LC-14 shows every permitted option quotation and exact native release/response/conversion evidence.",
+      "summary": "Maintain one opportunity with source-owned customer context, accountable next action, commercial evidence and linked handovers. LC-14 shows every permitted option quotation and exact native release/response/conversion evidence. LC-15 requires explicit outcome evidence and retains the exact original source through later corrections.",
       "path": "/sales/opportunities/[id]",
       "source_paths": [
         "src/app/(business)/sales/opportunities/[id]/page.tsx"
@@ -6585,11 +6589,15 @@
         "src/components/commercial-quotation.tsx",
         "src/components/opportunity-commercial.tsx",
         "src/estimating/reads.ts",
-        "docs/design/development/lead-continuity-fixtures.json"
+        "docs/design/development/lead-continuity-fixtures.json",
+        "src/components/opportunity-outcome-source.tsx",
+        "src/crm/outcome-sources.ts",
+        "docs/decisions/deal-outcome-evidence.md",
+        "docs/testing/evidence/deal-outcome-provenance/README.md"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "See sales-native-completion-handover for executed assurance LC-14: four database and four compiled desktop/phone scenarios pass; see docs/testing/evidence/deal-commercial-continuity/README.md. Source facts, paired visual/owner review and final-head CI remain separate.",
+      "functional_status": "See sales-native-completion-handover for executed assurance LC-14: four database and four compiled desktop/phone scenarios pass; see docs/testing/evidence/deal-commercial-continuity/README.md. Source facts, paired visual/owner review and final-head CI remain separate. LC-15: seven final database cases, an earlier 58-case combined run, 12 selected upgrades and 10 compiled desktop/phone scenarios pass; see docs/testing/evidence/deal-outcome-provenance/README.md. Paired/owner review remains pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
