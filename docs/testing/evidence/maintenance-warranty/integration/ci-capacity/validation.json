@@ -1,0 +1,31 @@
+{
+  "foundation": {
+    "status": "passed",
+    "issued_sources": 22,
+    "requirements": 78,
+    "decisions": 29,
+    "planned_acceptance": 38,
+    "backlog_items": 16,
+    "linked_issues": 16,
+    "local_links_checked": 6926,
+    "files_scanned_for_markers": 4356,
+    "errors": [],
+    "scope": "Documentation assurance only; no business acceptance tests executed"
+  },
+  "naming": {
+    "status": "passed",
+    "document_records": 470,
+    "standing_exceptions": 9,
+    "metadata_documents_compared": 313,
+    "git_masters": 191,
+    "project_instruction_characters": 7983,
+    "errors": [],
+    "scope": "Naming and documentation consistency only; runtime behaviour is verified separately"
+  },
+  "workflow": {
+    "sha256": "057ef228e940b75b94c5365485ad253020898cca338f5266e30aa8c49355e54b",
+    "comparison": "Parsed complete workflow equals e17aca5 after restoring only its matrix include entries. Native test glob, serial execution, deadlines, failure aggregation, uploads and all other jobs are unchanged."
+  },
+  "unchanged_application": "src, db, scripts, tests, package.json and package-lock.json exactly match e17aca5.",
+  "boundary": "Local configuration/selection/documentation verification only; fresh actual three-shard CI remains required."
+}
