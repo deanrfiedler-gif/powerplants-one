@@ -29,3 +29,11 @@ An initial local upgrade invocation was refused because the disposable connectio
 ### Lead integration checkpoint
 
 [Lead integration results](integration-lead.json) record tested code `cfa621f`: 16 selected cross-domain/demo upgrade cases, four Products/Estimating receipt authority cases and 11 focused registry/Products/Leads units pass. Build, TypeScript, lint, workflow lint and foundation/prototype/naming/studio checks pass. The two adopted workflows exactly match main `9f06bef`; both aggregate commands reject failed, cancelled, skipped and missing dependency results. Studio retains 350 unreviewed entries; integrity success does not grant visual acceptance. No full local browser run is claimed.
+
+### Products upgrade registry integration
+
+First integrated head `9865262` exposed a retained Products test pin: [Products job 112802372936](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37624404971/job/112802372936) failed four upgrade cases because the installed latest version was 74 while their expected version remained 72. The same Products workflow [passes on unchanged main `9f06bef`](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37620433273). This is a combined-registry test integration failure, separate from the earlier job timeouts.
+
+Update the exact latest and added-version expectations to 74 on #359 and 76 on #362. Preserve the four original starting points and every row/hash/grant/receipt assertion; add populated pre-Products starting points at 74 and, on the Deal branch, 76. These cases prove Products 0052 can fill its original gap after the newer Sales migrations while retaining existing estimates and quotations. The repository guidance now includes this additional exact registry consumer.
+
+The corrected #359 Products upgrade suite passes all five populated-history cases, including the new 0074 starting point. [Lead integration results](integration-lead.json) retain the exact test-file hash and earlier failed CI head. Together with the preceding checks, the Lead repair has 25 passing local database cases and 11 focused units; no assertion or original case was removed.
