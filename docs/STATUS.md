@@ -1,5 +1,9 @@
 # Current prototype status
 
+## PR #359 and #362 CI capacity repair — 7 October 2026
+
+Repository-writing session: **Repair failed PRs #359 and #362**, on their existing PR branches through isolated repair checkouts, under Dean's current request. Both primary browser jobs exhausted the 90-minute budget; #359 also exhausted Estimating's 30-minute budget. The [repair decision](decisions/ci-retained-suite-isolation.md#leads-and-deals-browser-and-estimating-budgets--7-october-2026) separates complete desktop/mobile projects and Estimating database/runtime groups while preserving all tests, deadlines, restart boundaries and mandatory aggregates. [Repair evidence](testing/evidence/pr359-pr362-ci-capacity/README.md) records validation and limitations. Application, migration, seed, grant and live design bytes are unchanged. Repaired-head CI remains pending; no merge, deployment or business acceptance is implied. Earlier writing-slot statements below are historical.
+
 ## Lead-to-delivery continuity — 7 October 2026
 
 Current writing increment: `codex/estimating-brief-continuity`, based on [PR #360](https://github.com/deanrfiedler-gif/powerplants-one/pull/360) at `2c2def7`. Migration **0074** is reserved for an exact accepted Sales brief to native estimating workspace binding; Products retains **0052**. LC-11 and LC-12 are delivered as reviewable stacked PRs #359/#360 with local evidence. LC-13 now passes 10 database cases, 11 selected upgrade scenarios, 8 compiled desktop/phone checks, build, TypeScript and lint. [Execution evidence](testing/evidence/estimating-brief-continuity/README.md) retains earlier failures and review limits; foundation/prototype/naming/studio checks pass; PR publication and final-head CI remain separate. Programme increments 3–6 remain open.

@@ -1,0 +1,27 @@
+{
+  "baseline": "1343f5b9c88322f56ba6cd09e3c9aad72645f5c3",
+  "workflow_command_preservation": "passed",
+  "mandatory_aggregates": "passed",
+  "deadlines_and_isolation": "passed",
+  "actionlint": "passed (1.7.12)",
+  "playwright_discovery": {
+    "all": 729,
+    "desktop_with_warmup": 365,
+    "mobile_with_warmup": 365,
+    "only_overlap": "one retained warm-up dependency",
+    "all_business_tests_selected_exactly_once": true
+  },
+  "aggregate_exit_codes": {
+    "success": 0,
+    "failure": 1,
+    "cancelled": 1,
+    "skipped": 1
+  },
+  "scope": "Discovery and workflow validation only; browser assertions and database tests not executed locally.",
+  "repository_checks": {
+    "foundation": "passed",
+    "prototype": "passed",
+    "naming": "passed",
+    "studio": "passed"
+  }
+}
