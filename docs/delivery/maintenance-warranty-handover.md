@@ -14,6 +14,8 @@ Current-source verification passed 34 database cases, 13 focused units, one HTTP
 
 Native Supply now exists. Warranty’s return receiving bridge remains unimplemented; retained external evidence does not create Supply or ERP transactions. The earlier source-specific results below are historical and do not verify the combined tree.
 
+Final delivery head `e17aca5` completed 49 CI checks successfully, but the second full-database shard reached its unchanged 90-minute job limit and the dependent aggregate failed. It recorded 436 passing cases with no assertion failure or individual test timeout, continuing until two seconds before cancellation. The other shard passed 437 cases in an 80m16s test phase; current main also required 84m09s for its slower database job. The [capacity repair evidence](../testing/evidence/maintenance-warranty/integration/ci-capacity/README.md) and [existing isolation decision](../decisions/ci-retained-suite-isolation.md) extend the matrix to three native shards with every discovered file, assertion and deadline retained. Local selection proof covers all 95 files exactly once and preserves a newly discovered failure; real repaired-head CI remains required. Application, migration and test bytes are unchanged by this repair.
+
 ## Retained original-branch checkpoint
 
 All migration 0049, 101-capability and SC-08-unavailable references below describe the retained original branch. They are superseded for current integration by the checkpoint above.

@@ -1,0 +1,42 @@
+{
+  "source": "e17aca5b1fb2cc6241f709d11030162fa2dcc2f6",
+  "boundary": "Source-bound original observations; proposed workflow SHA and local-only validation are recorded separately. No fresh CI pass inferred.",
+  "files": [
+    {
+      "path": "ci-e17aca5-database-1.txt",
+      "sha256": "8a4e31338aea2c275abbe31fe21c82ac3997546e186e9a5a845359716df6e94b"
+    },
+    {
+      "path": "ci-e17aca5-database-2.txt",
+      "sha256": "fbf16d978ce6068a283da7bc23653833641bd2a6b7d16606ad673e377075ef6e"
+    },
+    {
+      "path": "ci-main-fbf2ed3-database-1.txt",
+      "sha256": "1e989172b8c9472bce97cc73058b387c7c04467f67e6966823d15fc5eb26ac31"
+    },
+    {
+      "path": "ci-main-fbf2ed3-database-2.txt",
+      "sha256": "9e75bd3e03a56c7faf6e62cbbc0dcbad2eaf6175d5b44823ddd0a5b4ecb408bd"
+    },
+    {
+      "path": "observations.json",
+      "sha256": "c2827f016d41040ef6be7346cc84ed6ecefbebc08b87c698af24e29abcc1c2c8"
+    },
+    {
+      "path": "README.md",
+      "sha256": "705260784e1bbd689f5bb92cea3e5b893f59cefb7849b51d25c5deb49aab8e8e"
+    },
+    {
+      "path": "shard-selection.json",
+      "sha256": "c4b0c74cd10ac1a6655df4f46eaeb3dc1379b43d209aa7f8272e23bb92afd5a1"
+    },
+    {
+      "path": "shard-selection.mjs",
+      "sha256": "476318252764af85de8b9262406e541f0fe53045dc2876a30d1b7a5bce96c9ce"
+    },
+    {
+      "path": "validation.json",
+      "sha256": "40b234c549b930ff1d5b31b489c7c1973f862873344f3f7d353c2462915bb3f5"
+    }
+  ]
+}
