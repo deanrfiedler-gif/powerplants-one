@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "implementation_parent": "e8dd29054d56b7253747a05be33a92149a1f3477",
+  "execution_scope": "Bounded Search readiness proof on the compiled LC-17 working tree. Search application bytes unchanged; full final-head CI remains separate. Hashes use staged Git blobs.",
+  "source_files": [
+    {
+      "path": "tests/browser/search-navigation.spec.ts",
+      "sha256": "4101abce02d0fa0e632145259c96933486fe25ed5ce9f65fa0f50a9e527f4542",
+      "bytes": 1288
+    },
+    {
+      "path": "tests/browser/sh-platform.spec.ts",
+      "sha256": "676978f3d60b8a536948bcf5fd92095c4a91bfb3fee9624a2a9e4c7790c9cf86",
+      "bytes": 20470
+    },
+    {
+      "path": "tests/helpers/search-navigation.ts",
+      "sha256": "e3fe61ce52ffa5b9d1a81efeeef89684e02f698f1020257122d435f9286d7978",
+      "bytes": 970
+    }
+  ],
+  "evidence_files": [
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/ci-search-readiness/README.md",
+      "sha256": "880c764a5eb3a202b03035ff4069018ae91ed0615b2d72a30fcdcc456a906af8",
+      "bytes": 3275
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/ci-search-readiness/ci-error-context.md",
+      "sha256": "81c5fe3454314e19ae291267b710f76b17d95407c8fadac717ee529e71100e9e",
+      "bytes": 11315
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/ci-search-readiness/ci-failure-excerpt.txt",
+      "sha256": "b5336559512821114992df2cb44dd31e89f7e7cdf20b70b57c84988479422bb1",
+      "bytes": 4018
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/ci-search-readiness/ci-search-loading.png",
+      "sha256": "04abb8c7158f9b102cadc48723660f8fc0ecad3791caa7e6c58cfd93b3799133",
+      "bytes": 106278
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/ci-search-readiness/initial-control-search-navigation-search-g-37a70-before-the-render-assertion-desktop-chromium-error-context.md",
+      "sha256": "ea8c58567c1c6adcf2186f47574eae12762675df8afc39d50530530d072af7ee",
+      "bytes": 25431
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/ci-search-readiness/initial-control-search-navigation-search-g-37a70-before-the-render-assertion-desktop-chromium-test-failed-1.png",
+      "sha256": "770045083a7ef5ea21be7d1a128648905272d1a275d6922f557004cdda60484d",
+      "bytes": 107809
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/ci-search-readiness/initial-control-search-navigation-search-g-37a70-before-the-render-assertion-mobile-chromium-error-context.md",
+      "sha256": "076235d088072c01aae5f2293ea087cf8d5508d02b9cec1fac2f5cf85e2ecfa9",
+      "bytes": 29312
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/ci-search-readiness/initial-control-search-navigation-search-g-37a70-before-the-render-assertion-mobile-chromium-test-failed-1.png",
+      "sha256": "dde276d7a7f3fa1c0e36bf47dd617bd5a7691e7e60240d5d912ff13fb9386541",
+      "bytes": 46078
+    },
+    {
+      "path": "docs/testing/evidence/won-delivery-continuity/ci-search-readiness/local-browser-proof.txt",
+      "sha256": "444d1e576ecbfd89460434f18a75ff7f1e0158762abc5a8c48be021800ac5e09",
+      "bytes": 3886
+    }
+  ]
+}

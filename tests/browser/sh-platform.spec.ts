@@ -14,6 +14,7 @@ import {
 import type { SignIn } from "../helpers/engineering-materials";
 import { finishApiReadsForTeardown, retainApiReadsForTeardown } from "../helpers/browser-read-drain";
 import { navigateToMyWork, resizeMyWork } from "../helpers/my-work-navigation";
+import { navigateToSearch } from "../helpers/search-navigation";
 
 test.beforeEach(async ({ page, baseURL }) => {
   await retainApiReadsForTeardown(page);
@@ -245,6 +246,7 @@ test("SH review perspectives, responsive geometry and current My Work interiors"
     await page.setViewportSize({ width: 1440, height: 900 });
     if (path === "/work" || path === "/work/actions")
       await navigateToMyWork(page, path);
+    else if (path.startsWith("/search")) await navigateToSearch(page, path);
     else await page.goto(path);
     for (const width of [1440, 1280, 1024, 768, 430, 390, 320]) {
       await resizeMyWork(page, { width, height: 900 });
