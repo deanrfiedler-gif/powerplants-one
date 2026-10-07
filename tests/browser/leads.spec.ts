@@ -182,8 +182,9 @@ test("approved leads list/detail and atomic conversion persist through reload", 
     await expect(
       page.getByRole("link", { name: "Back to deals" }),
     ).toBeVisible();
-    await expect(page.locator(".mobile-navigation")).not.toBeVisible();
-    await expect(page.locator(".topbar.ppo-shell-header")).not.toBeVisible();
+    await expect(page.locator(".mobile-navigation")).toBeVisible();
+    await expect(page.locator(".topbar.ppo-shell-header")).toBeVisible();
+    await expect(page.getByRole("button", { name: "More", exact: true })).toBeVisible();
   }
   await page.screenshot({ path: info.outputPath("leads-list.png") });
   await page
@@ -236,6 +237,11 @@ test("Add lead has one scroll body, fixed actions, focus return and navy add but
     : [{ width: 1440, height: 900 }]) {
     await page.setViewportSize(viewport);
     const add = page.getByRole("button", { name: "Add lead", exact: true });
+    if (info.project.use.isMobile) {
+      const addBounds = (await add.boundingBox())!;
+      const navigationBounds = (await page.locator(".mobile-navigation").boundingBox())!;
+      expect(addBounds.y + addBounds.height).toBeLessThanOrEqual(navigationBounds.y);
+    }
     await add.click();
     const modal = page.getByRole("dialog", { name: "Add lead", exact: true });
     await expect(modal).toBeVisible();

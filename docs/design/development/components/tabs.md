@@ -62,3 +62,7 @@ MA-01–MA-07 now reuse this component through the native registers and record w
 ## NAV URL-state consumers
 
 Deal section, Sales handover view and Engineering record view reuse validated existing URL selection. Invalid values fall back to the declared initial view and preserve unrelated query context. Estimate revision selection uses version_id with exact reader membership/access checks. Dirty and unknown-outcome work uses the shared navigation intent; Discovery retains its stronger guard. Existing RecordTabs/RecordPanel keyboard semantics remain. Inspect rendered deep links, reload and Back in the real host; catalogue snapshots do not prove server authority.
+
+NAV CI repair: a Sales handover's validated `view` changes retain mounted dirty Brief/Review/History panels. Different records and unrelated query changes still require leave review; pending/unknown commands still prevent leaving. Receipt-owned release removes only the confirmed saving form's guard before post-save routing, without approving another form or changing server authority. Host fixtures are the existing CRM stage, Project creation and CR03 exact-successor journeys; owner/device acceptance remains pending.
+
+Equipment's mounted Configuration/Movement/identity panels declare the same narrow retained `view` contract through useCrmCommand. The exact equipment ID, other query state and unknown-command lock remain. EQ03 browser proof checks retained r02 fields, preview, original recovery and successor identity across view changes and reload.

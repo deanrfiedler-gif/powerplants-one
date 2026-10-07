@@ -272,6 +272,13 @@
 .ppo-breadcrumb-trigger { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; flex: 0 0 44px; border: 0; border-radius: 6px; background: transparent; color: var(--ppo-rail-navy); padding: 0; }
 .ppo-breadcrumb-trigger:focus-visible { outline: 3px solid #a8d8ff; outline-offset: -3px; }
 .ppo-breadcrumb-trigger .product-icon { width: 20px; height: 20px; }
+@media (max-width: 780px) {
+  /* The full hierarchy remains in the labelled disclosure. Reserve the small
+     phone heading for the current page, alongside the 44px disclosure button. */
+  .ppo-shell-header .ppo-crumbs li:not(:last-child) { display: none; }
+  .ppo-shell-header .ppo-crumbs li:last-child { min-width: 0; }
+  .ppo-shell-header .ppo-crumbs li:last-child::before { content: none; }
+}
 .ppo-hierarchy-panel { position: fixed; inset: 68px auto auto 10px; margin: 0; width: min(360px, calc(100vw - 20px)); max-height: calc(100dvh - 80px); overflow: auto; padding: 12px; border: 1px solid #dce3eb; border-radius: 10px; background: #fff; color: #242a37; box-shadow: 0 8px 24px #242a3730; }
 .ppo-hierarchy-panel ol { margin: 8px 0 0; padding: 0; list-style: none; }
 .ppo-hierarchy-panel li :is(a,span) { display: flex; align-items: center; min-height: 44px; padding: 8px; overflow-wrap: anywhere; }

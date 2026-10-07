@@ -173,7 +173,7 @@ function NewProjectForm({ sales }: { sales?: SalesCreation }) {
         : null,
     );
   const uncertain = !!(command.error as Failure | null)?.retryable;
-  useUnsavedChanges(
+  const releaseAcceptedNavigation = useUnsavedChanges(
     !!(title || customer || site || coordinator || target),
     command.busy || uncertain,
   );
@@ -205,7 +205,10 @@ function NewProjectForm({ sales }: { sales?: SalesCreation }) {
           const receipt = sales
             ? await sales.send(fields)
             : await command.send<{ record_id: string }>("projects", fields);
-          if (receipt && !sales) router.push(`/projects/${receipt.record_id}`);
+          if (receipt && !sales) {
+            releaseAcceptedNavigation();
+            router.push(`/projects/${receipt.record_id}`);
+          }
         }}
       >
         <ValidationFields error={sales?.error ?? command.error}>

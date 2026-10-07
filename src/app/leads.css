@@ -518,7 +518,7 @@
   .leads-workspace .lead-add {
     position: fixed;
     right: 20px;
-    bottom: calc(22px + env(safe-area-inset-bottom));
+    bottom: calc(84px + env(safe-area-inset-bottom));
     width: 58px;
     height: 58px;
     min-height: 58px;

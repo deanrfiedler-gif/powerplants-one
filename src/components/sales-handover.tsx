@@ -287,7 +287,7 @@ function HandoverContentView({
     !!command.accepted && row.version < command.accepted.receipt.record_version;
   const blocked =
     command.busy || !!command.pending || !command.ready || refreshing;
-  useUnsavedChanges(dirty, !!command.pending);
+  useUnsavedChanges(dirty, !!command.pending, ["view"]);
   const set = <K extends keyof HandoverContent>(
     key: K,
     value: HandoverContent[K],

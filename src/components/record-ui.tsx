@@ -93,11 +93,18 @@ export function LocalDateTimeField({ name, validationField, label = "Due date an
 // same dirty state. Tabs retain mounted drafts.
 export function useUnsavedChanges(dirty: boolean, pending = false, retainedQuery: readonly string[] = []) {
   usePendingWork(dirty || pending);
+  const guard = useRef<(() => void) | null>(null);
   const retainedKeys = retainedQuery.join(",");
   useEffect(() => {
     if (!dirty && !pending) return;
-    return guardBrowserNavigation(run => {
+    const release = guardBrowserNavigation(run => {
       if (!pending && window.confirm("Leave this page and discard unsaved changes?")) run();
     }, pending ? 200 : retainedKeys ? 5 : 10, pending ? [] : retainedKeys.split(",").filter(Boolean));
+    guard.current = release;
+    return () => { release(); if (guard.current === release) guard.current = null; };
   }, [dirty, pending, retainedKeys]);
+  // A confirmed receipt can navigate before React commits the cleared dirty/
+  // pending state. Release only this form's guard; other owners still review.
+  // Never call this for an uncertain or failed command.
+  return () => { guard.current?.(); guard.current = null; };
 }

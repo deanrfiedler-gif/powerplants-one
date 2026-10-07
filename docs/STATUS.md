@@ -1,5 +1,9 @@
 # Current prototype status
 
+## PR #366 / #367 CI repair — 8 October 2026
+
+Repository-writing session: Dean requested repair of both failed PRs. The existing NAV branch owns application/test changes; the integrated-journey branch remains isolated. [Repair evidence](testing/evidence/pr366-pr367-repair/README.md) separates Ubuntu setup cancellations on #366 from reproduced NAV defects and superseded shell assertions on #367. Receipt-owned guard release, retained mounted handover views and mobile layout corrections preserve pending/unknown recovery, permissions and original commands. Checks and fresh-head CI are in progress; no merge, deployment or owner acceptance is implied.
+
 ## NAV navigation implementation — 8 October 2026
 
 Repository-writing session: Dean authorised NAV-02A through NAV-06 on `codex/nav-implementation`, isolated from the original checkout and based on actual remote main/audited `4f883d145b18876840c5ce5522059c95448dc086`. The [implementation plan and handover](delivery/navigation-implementation.md), [decision](decisions/navigation-consolidation.md) and [evidence ledger](testing/evidence/navigation/README.md) distinguish corrected source contracts, executed synthetic browser/unit checks and unverified fixture/host cases. Canonical Equipment/Activity links, permission-aware entry/workspaces, all-of Inspection review, shared leave intent, truthful hosted recovery, partial quotation continuation, URL state and a primary rail expansion evolve the existing shell. No new grant/schema/module/dependency is added. Login return and record-search expansion are explicitly deferred. Live page/component/guide masters are updated; issued snapshots, parent IDs and receiving authorities remain. Owner/device review, final CI, merge and deployment remain separate.

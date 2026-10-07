@@ -113,7 +113,7 @@ export function EquipmentChangePanel({
     r.reload();
     onSaved();
     setPreview(null);
-  });
+  }, "Unsaved", undefined, true, ["view"]);
   const dirty = () => {
     command.dirty();
     setPreview(null);
@@ -393,7 +393,7 @@ function EquipmentChangeReview({
   saved: () => void;
 }) {
   const [reason, setReason] = useState(""),
-    command = useCrmCommand(saved);
+    command = useCrmCommand(saved, "Unsaved", undefined, true, ["view"]);
   return (
     <article className="eq-card">
       <h3>

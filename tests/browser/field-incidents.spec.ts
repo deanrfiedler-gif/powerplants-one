@@ -421,7 +421,9 @@ test("FI06 compiled factual report, original recovery, return, owned correction,
       ),
     ).toBe(true);
     const owners = await page.evaluate(() =>
-      [...document.querySelectorAll("body *")]
+      // The primary rail has its own bounded scroll surface for long permitted
+      // department lists. The record still owns one page-content scroll body.
+      [...document.querySelectorAll("body *:not(.ppo-rail):not(.ppo-rail *)")]
         .filter(
           (e) =>
             e.scrollHeight > e.clientHeight + 1 &&

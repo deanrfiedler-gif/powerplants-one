@@ -131,7 +131,7 @@ export function EquipmentIdentityForm({
     `equipment/options?asset_id=${data.context.id}`,
     true,
   );
-  const command = useCrmCommand(saved),
+  const command = useCrmCommand(saved, "Unsaved", undefined, true, ["view"]),
     changed = basis.version !== data.asset.version;
   return (
     <details>

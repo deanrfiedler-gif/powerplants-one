@@ -356,7 +356,7 @@
         },
         {
           "id": "buttons-maintenance-adaptation",
-          "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
+          "expected": "Paired MA-01â€“MA-07 source and native consumer review across required widths",
           "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
           "action": "Review the MA handover and retained images before baseline adoption",
           "priority": "Medium",
@@ -1213,7 +1213,7 @@
         },
         {
           "id": "fields-maintenance-adaptation",
-          "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
+          "expected": "Paired MA-01â€“MA-07 source and native consumer review across required widths",
           "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
           "action": "Review the MA handover and retained images before baseline adoption",
           "priority": "Medium",
@@ -1597,7 +1597,7 @@
         },
         {
           "id": "validation-maintenance-adaptation",
-          "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
+          "expected": "Paired MA-01â€“MA-07 source and native consumer review across required widths",
           "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
           "action": "Review the MA handover and retained images before baseline adoption",
           "priority": "Medium",
@@ -1678,6 +1678,11 @@
           "id": "sales-workspace",
           "label": "Sales workspace",
           "description": "Eight native Sales workspace labels with keyboard selection and horizontal tab scrolling at phone widths; preview-only panels."
+        },
+        {
+          "id": "nav-accepted-routing",
+          "label": "NAV CI repair host",
+          "description": "Confirmed receipt follows exact created Project and CRM selection; dirty mounted handover view changes retain the draft. Failed/uncertain saves keep original recovery. Fixture: tests/browser/projects-gantt.spec.ts; tests/browser/crm-refinements.spec.ts; tests/browser/sales-workflows.spec.ts"
         }
       ],
       "implementation": [
@@ -1694,7 +1699,11 @@
         "src/app/styles/customers.css",
         "docs/design/development/maintenance-fixtures.json",
         "docs/design/development/navigation-fixtures.json",
-        "src/components/navigation-intent.ts"
+        "src/components/navigation-intent.ts",
+        "src/components/crm-state.ts",
+        "src/components/projects-screens.tsx",
+        "src/components/equipment-forms.tsx",
+        "src/components/equipment-timeline.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -1774,7 +1783,7 @@
         },
         {
           "id": "tabs-maintenance-adaptation",
-          "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
+          "expected": "Paired MA-01â€“MA-07 source and native consumer review across required widths",
           "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
           "action": "Review the MA handover and retained images before baseline adoption",
           "priority": "Medium",
@@ -1785,6 +1794,14 @@
           "expected": "Exact URL/context and leave/offline state review in real consumers.",
           "actual": "Host contracts changed; shared renderer semantics retained and owner/device review pending.",
           "action": "Review NAV URL-state and truthful recovery fixtures separately from isolated catalogue examples.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "tabs-nav-ci-repair-review",
+          "expected": "Confirmed post-save routing and readable/reachable phone controls with unchanged pending recovery.",
+          "actual": "Repair host fixtures and checks are recorded separately; owner/device acceptance remains pending.",
+          "action": "Review PR #367 repair evidence, exact consumer journeys and 320/390 px screenshots before owner acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2280,7 +2297,7 @@
         },
         {
           "id": "read-state-maintenance-adaptation",
-          "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
+          "expected": "Paired MA-01â€“MA-07 source and native consumer review across required widths",
           "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
           "action": "Review the MA handover and retained images before baseline adoption",
           "priority": "Medium",
@@ -2439,7 +2456,7 @@
         },
         {
           "id": "status-maintenance-adaptation",
-          "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
+          "expected": "Paired MA-01â€“MA-07 source and native consumer review across required widths",
           "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
           "action": "Review the MA handover and retained images before baseline adoption",
           "priority": "Medium",
@@ -2472,6 +2489,11 @@
           "id": "saving",
           "label": "Saving",
           "description": "Inspect the saving variant and its explanatory messages."
+        },
+        {
+          "id": "nav-phone-current-heading",
+          "label": "NAV CI repair host",
+          "description": "At 320/390 px the current page fits beside the hierarchy disclosure; Add Lead remains above the phone bar. More has ordinary Workspace and the full hierarchy remains available. Fixture: tests/ui/crm-board.spec.ts; tests/ui/desktop-shell.spec.ts; tests/browser/leads.spec.ts"
         }
       ],
       "implementation": [
@@ -2486,7 +2508,8 @@
         "src/development/component-examples.tsx",
         "src/development/component-fixtures.ts",
         "src/app/styles/customers.css",
-        "docs/design/development/maintenance-fixtures.json"
+        "docs/design/development/maintenance-fixtures.json",
+        "src/app/leads.css"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -2554,9 +2577,17 @@
         },
         {
           "id": "mobile-form-maintenance-adaptation",
-          "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
+          "expected": "Paired MA-01â€“MA-07 source and native consumer review across required widths",
           "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
           "action": "Review the MA handover and retained images before baseline adoption",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "mobile-form-nav-ci-repair-review",
+          "expected": "Confirmed post-save routing and readable/reachable phone controls with unchanged pending recovery.",
+          "actual": "Repair host fixtures and checks are recorded separately; owner/device acceptance remains pending.",
+          "action": "Review PR #367 repair evidence, exact consumer journeys and 320/390 px screenshots before owner acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2576,7 +2607,7 @@
         {
           "id": "engineering-host",
           "label": "Native Engineering host",
-          "description": "Use the real permitted EN-01–EN-08 routes through the shared business layout to inspect rail, breadcrumbs, secondary menu, information guidance and restricted states. This is host evidence, not an isolated component example."
+          "description": "Use the real permitted EN-01â€“EN-08 routes through the shared business layout to inspect rail, breadcrumbs, secondary menu, information guidance and restricted states. This is host evidence, not an isolated component example."
         },
         {
           "id": "service-phone-identity",
@@ -2657,6 +2688,11 @@
           "id": "nav-account-hierarchy",
           "label": "Account hierarchy",
           "description": "Exact authorized Finance account identity; Page hierarchy exposes module parent on all widths and Escape restores focus; identity denial clears record. Fixture: tests/browser/navigation-finance.spec.ts"
+        },
+        {
+          "id": "nav-phone-current-heading",
+          "label": "NAV CI repair host",
+          "description": "At 320/390 px the current page fits beside the hierarchy disclosure; Add Lead remains above the phone bar. More has ordinary Workspace and the full hierarchy remains available. Fixture: tests/ui/crm-board.spec.ts; tests/ui/desktop-shell.spec.ts; tests/browser/leads.spec.ts"
         }
       ],
       "implementation": [
@@ -2780,7 +2816,7 @@
         },
         {
           "id": "engineering-native-shell-review",
-          "expected": "Native EN-02–EN-05 rail, module/view breadcrumbs, menu and information guide at desktop/mobile widths.",
+          "expected": "Native EN-02â€“EN-05 rail, module/view breadcrumbs, menu and information guide at desktop/mobile widths.",
           "actual": "Native consumer added; owner and visual acceptance pending.",
           "action": "Use native Engineering evidence for paired review against r17 and EN-02 sources.",
           "priority": "Medium",
@@ -2868,7 +2904,7 @@
         },
         {
           "id": "application-shell-maintenance-adaptation",
-          "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
+          "expected": "Paired MA-01â€“MA-07 source and native consumer review across required widths",
           "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
           "action": "Review the MA handover and retained images before baseline adoption",
           "priority": "Medium",
@@ -2879,6 +2915,14 @@
           "expected": "Owner/device/real-zoom review of r22-informed compact/labelled desktop and labelled mobile, against retained shell r17.",
           "actual": "Proposed navigation implementation with bounded synthetic functional evidence; accepted new mockup images are missing.",
           "action": "Use NAV captures and ledger for paired review; source presence and test passes do not adopt a baseline.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-nav-ci-repair-review",
+          "expected": "Confirmed post-save routing and readable/reachable phone controls with unchanged pending recovery.",
+          "actual": "Repair host fixtures and checks are recorded separately; owner/device acceptance remains pending.",
+          "action": "Review PR #367 repair evidence, exact consumer journeys and 320/390 px screenshots before owner acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -4347,17 +4391,17 @@
         {
           "id": "chain-receiving",
           "label": "Six decisions for three tasks",
-          "description": "A → B → C; both FS/SS relationships, distinct Third task receiving, current/withdrawn dates, extra-edge holds and four-receipt atomic outcome. Real host: tests/browser/quotation-task-chain.spec.ts."
+          "description": "A â†’ B â†’ C; both FS/SS relationships, distinct Third task receiving, current/withdrawn dates, extra-edge holds and four-receipt atomic outcome. Real host: tests/browser/quotation-task-chain.spec.ts."
         },
         {
           "id": "branch-receiving",
           "label": "Six decisions for a Project branch",
-          "description": "A → B and A → C; explicit topology, both FS/SS relationships, distinct Branch task C receiving, current/proposed dates, extra-edge holds and four-receipt atomic outcome. Real host: tests/browser/quotation-task-branch.spec.ts."
+          "description": "A â†’ B and A â†’ C; explicit topology, both FS/SS relationships, distinct Branch task C receiving, current/proposed dates, extra-edge holds and four-receipt atomic outcome. Real host: tests/browser/quotation-task-branch.spec.ts."
         },
         {
           "id": "merge-receiving",
           "label": "Six decisions for a Project merge with retained B",
-          "description": "A → C and B → C; current native B position, two exact FS/SS links, independent B retention decision, A/C effects, extra-edge holds and three-receipt atomic outcome. Real host: tests/browser/quotation-task-merge.spec.ts."
+          "description": "A â†’ C and B â†’ C; current native B position, two exact FS/SS links, independent B retention decision, A/C effects, extra-edge holds and three-receipt atomic outcome. Real host: tests/browser/quotation-task-merge.spec.ts."
         },
         {
           "id": "diamond-seven-receiving",

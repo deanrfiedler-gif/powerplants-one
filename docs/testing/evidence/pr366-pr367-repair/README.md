@@ -1,0 +1,22 @@
+# PR #366 / #367 CI repair
+
+Dean requested repair on 8 October 2026. Remote main remains the audited `4f883d145b18876840c5ce5522059c95448dc086`. Existing PR heads are #366 `03f211eea8cae3708748f70338ecd096751ae7ea` and #367 `5fb31eb5cf54166c3c92875193fd229b3ea21e09`. Separate worktrees preserve the original user checkout. No dependency, migration, seed, capability or grant changes.
+
+## Revalidation and plan
+
+1. Inspect original job logs and reproduce with approved synthetic fixtures. #366 Application run `37683265111` (three jobs) and Supply run `37683264970` (diamond-receiving) stalled in Ubuntu package-index setup before tests. Retry only failed jobs; preserve installer pins, assertions and deadlines.
+2. Fix #367's receipt/navigation race in `record-ui.tsx`, `crm-state.ts` and Project creation. A confirmed receipt releases only the owning form's browser guard before its callback navigates. Failed/uncertain results keep original recovery and all other guards. Prove native Project creation and CRM stage selection without altering assertions.
+3. Retain mounted dirty Sales handover panels across validated `view` changes; unrelated query/path changes and pending results remain guarded. Prove exact successor save/return/accept with existing Sales workflows.
+4. Restore phone reachability in `leads.css` and `desktop-shell.css`: Add Lead above the phone bar; current breadcrumb readable at 320 px, full hierarchy in its existing labelled disclosure. Review actual screenshots and retain geometry checks.
+5. Update superseded test contracts only: ordinary Workspace in More, permission-aware `/` entry, eleven permitted Sales destinations, visible Leads global shell and removal of duplicate Service header tabs. Closed hierarchy content must not make current-breadcrumb assertions ambiguous.
+6. Update living design component bindings/fixtures/gaps, run lint/typecheck/build/studio checks, static UI and affected compiled browser suites plus leave/identity/recovery coverage. Push the existing #367 branch; monitor both PRs. No merge/deployment.
+
+The full desktop job `113057897925` subsequently confirmed Equipment's identical mounted-draft view defect, and Incidents' old assertion counted the newly bounded primary rail as a second page scroll owner. Extend the retained `view` contract to Equipment's existing forms; assert one content scroll owner separately from the permitted long rail. Products' fresh worker failed before fixture creation because it had no local environment: the untouched audited baseline helper reproduces the same refusal. Its suite now establishes `.env.local` explicitly, retaining `localConfig` and `ppo_synthetic_test` checks. No runtime environment defense is relaxed.
+
+## Reproduction environment
+
+Node 24.21.0, npm 11.19.0, Playwright 1.63.0, stable Chrome 154.0.8037.98 on Windows. Task-owned PostgreSQL 16 cluster with database `ppo_synthetic_test`; loopback app uses synthetic identities. Port 5548 could not bind (Windows permission denial), so only this task's cluster and ignored local connection setting moved to 5549. No shared database reset or migration.
+
+Static UI reproduction: **7 failed, 22 passed, 10 skipped**, matching original seven failures. First compiled attempt could not reach the database and is environment evidence only. After restoring the task cluster, CRM stage selection and Project post-save navigation reproduced the original failures. Other scenario results and repair verification are pending below.
+
+Private raw logs, screenshots and traces remain outside Git under `C:/Users/Dean.Fiedler/.codex/tmp/pr366-pr367-repair-20261008/`; publish only bounded synthetic summaries and selected reviewed images. CI job links provide the original hosted evidence. Functional proof, screenshot inspection, physical-device/zoom review, owner acceptance and deployment remain distinct.

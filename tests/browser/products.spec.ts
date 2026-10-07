@@ -20,6 +20,11 @@ import { closeDatabase } from "../../src/platform/database";
 import { randomUUID, createHash } from "node:crypto";
 import { crmBase, CRM } from "../helpers/crm";
 test.afterAll(closeDatabase);
+test.beforeAll(() => {
+  // A fresh worker must establish its own approved synthetic environment;
+  // earlier suites' environment loading is not part of this fixture contract.
+  if (!process.env.DATABASE_URL) process.loadEnvFile(".env.local");
+});
 
 test("PD paired source and native controls retain scoped layout, keyboard disclosure and phone reflow", async ({
   page,

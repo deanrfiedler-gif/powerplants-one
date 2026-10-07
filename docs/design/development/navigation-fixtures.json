@@ -43,6 +43,16 @@
       "id": "nav-account-hierarchy",
       "fixture": "tests/browser/navigation-finance.spec.ts",
       "description": "Exact authorized Finance account identity; Page hierarchy exposes module parent on all widths and Escape restores focus; identity denial clears record."
+    },
+    {
+      "id": "nav-accepted-routing",
+      "fixture": "tests/browser/projects-gantt.spec.ts; tests/browser/crm-refinements.spec.ts; tests/browser/sales-workflows.spec.ts",
+      "description": "Confirmed receipt follows exact created Project and CRM selection; dirty mounted handover view changes retain the draft. Failed/uncertain saves keep original recovery."
+    },
+    {
+      "id": "nav-phone-current-heading",
+      "fixture": "tests/ui/crm-board.spec.ts; tests/ui/desktop-shell.spec.ts; tests/browser/leads.spec.ts",
+      "description": "At 320/390 px the current page fits beside the hierarchy disclosure; Add Lead remains above the phone bar. More has ordinary Workspace and the full hierarchy remains available."
     }
   ]
 }

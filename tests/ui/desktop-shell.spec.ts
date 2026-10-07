@@ -33,8 +33,8 @@ test("department shell fits laptop, desktop and compact viewports with centred s
     expect(geometry.railWidth).toBe(76); expect(geometry.headerHeight).toBe(64); expect(geometry.logoCentre).toBe(38);
     expect(geometry.logoWidth).toBe(54); expect(geometry.logoY).toBe(32); expect(Math.abs(geometry.groupCentre - width / 2)).toBeLessThanOrEqual(2); expect(geometry.plusGap).toBeCloseTo(12, 0); expect(geometry.discWidth, "quick-add disc stays inside its button").toBeCloseTo(40, 0);
     expect(geometry.railFits && geometry.pageFits && geometry.controlsFit && geometry.noOverlap).toBe(true);
-    expect(geometry.moreBottom).toBeLessThanOrEqual(height); expect(geometry.icons).toEqual([25, 25, 25, 25, 25, 25, 25, 25]);
-    expect(await page.locator(".ppo-primary-nav a").evaluateAll(links => links.map(link => link.getAttribute("aria-label")))).toEqual(["Pulse", "Leads", "Deals", "Activities", "Tasks", "Sales Inbox", "Contacts", "Products"]);
+    expect(geometry.moreBottom).toBeLessThanOrEqual(height); expect(geometry.icons).toEqual(Array(11).fill(25));
+    expect(await page.locator(".ppo-primary-nav a").evaluateAll(links => links.map(link => link.getAttribute("aria-label")))).toEqual(["Pulse", "Leads", "Deals", "Activities", "Tasks", "Sales Inbox", "Sales-to-Estimating handovers", "Won-deal receiving", "Aftercare & renewal", "Contacts", "Products"]);
     expect(["1", "normal"]).toContain(geometry.zoom);
     await page.screenshot({ path: info.outputPath(`shell-${width}x${height}.png`) });
     await page.getByRole("button", { name: "More", exact: true }).click();
@@ -110,14 +110,14 @@ test("page guide is contextual and Supply selection requests its native readines
   await page.evaluate(() => window.addEventListener("fixture-router-push", event => {
     document.documentElement.dataset.requestedRoute = (event as CustomEvent<string>).detail;
   }));
-  await page.getByRole("button", { name: "Change identity", exact: true }).click();
-  await page.getByLabel("Preview workspace", { exact: true }).selectOption("supply");
+  await page.getByRole("button", { name: "More", exact: true }).click();
+  await page.getByLabel("Workspace", { exact: true }).selectOption("supply");
   await expect(page.locator("html")).toHaveAttribute("data-requested-route", "/supply/material-readiness");
   await expect(page.locator(".crm-card:visible")).toHaveCount(8);
   await page.reload();
-  await page.getByRole("button", { name: "Change identity", exact: true }).click();
+  await page.getByRole("button", { name: "More", exact: true }).click();
   // The harness remains on its owned Sales route, which overrides a remembered department.
-  await expect(page.getByLabel("Preview workspace", { exact: true })).toHaveValue("sales");
+  await expect(page.getByLabel("Workspace", { exact: true })).toHaveValue("sales");
 });
 
 test("runtime shell matches the retained r17 reference typography, panel geometry and guide layout", async ({ page, context }, info) => {
@@ -188,7 +188,9 @@ test("runtime shell matches the retained r17 reference typography, panel geometr
       expect(await style(actualHelp, ["background-color", "color"])).toEqual(await style(referenceHelp, ["background-color", "color"]));
     }
     if (kind === "account") {
-      const actualReset = actualPanel.getByRole("button", { name: "Reset preview preference" });
+      // NAV moves presentation-only preview into Development. The Account's
+      // remaining action retains the reference's secondary-button styling.
+      const actualReset = actualPanel.getByRole("button", { name: "Sign out", exact: true });
       const referenceReset = referencePanel.getByRole("button", { name: "Reset preview preference" });
       await actualReset.hover(); await referenceReset.hover();
       expect(await style(actualReset, ["background-color", "color"])).toEqual(await style(referenceReset, ["background-color", "color"]));

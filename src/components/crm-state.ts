@@ -58,13 +58,14 @@ export function useCrmCommand(
   initialStatus = "Unsaved",
   onPendingChange?: (pending: boolean) => void,
   nativeGuard = true,
+  retainedQuery: readonly string[] = [],
 ) {
   const [changed, setChanged] = useState(false);
   const [busy, setBusy] = useState(false),
     [error, setError] = useState<unknown>(null),
     [status, setStatus] = useState(initialStatus),
     [uncertain, setUncertain] = useState(false);
-  useUnsavedChanges(nativeGuard && changed, nativeGuard && (busy || uncertain));
+  const releaseAcceptedNavigation = useUnsavedChanges(nativeGuard && changed, nativeGuard && (busy || uncertain), retainedQuery);
   const pending = useRef<{
     path: string;
     body: Record<string, unknown>;
@@ -93,6 +94,7 @@ export function useCrmCommand(
       onPendingChange?.(false);
       setStatus("Saved to the server");
       setChanged(false);
+      releaseAcceptedNavigation();
       onAccepted(receipt);
     } catch (e) {
       setError(e);
