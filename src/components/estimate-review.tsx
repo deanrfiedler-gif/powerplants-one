@@ -1,4 +1,5 @@
 "use client";
+import { RecordIdentity } from "../shell/record-identity";
 import { useState } from "react";
 import {
   api,
@@ -167,6 +168,7 @@ function ReviewBody({
   return (
     <>
       <section className="est-panel" aria-label="Review basis">
+        <RecordIdentity reference={`${d.estimate.display_number} · Version ${d.saved.version}`} title={d.saved.title} />
         <h2>
           {d.estimate.display_number} · saved version {d.saved.version}
         </h2>

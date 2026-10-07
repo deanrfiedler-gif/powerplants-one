@@ -1,4 +1,5 @@
 "use client";
+import { useContactView } from "./contact-workspace";
 import { SalesActivityCreation, type ActivitySalesCreation } from "./sales-followup";
 import Link from "next/link";
 import { OpportunityWorkflows } from "./opportunity-workflows";
@@ -440,11 +441,10 @@ function OpportunityContent({
 }) {
   const [dialog, setDialog] = useState<DealMode | null>(null), [targetStage,setTargetStage] = useState<string | undefined>();
   const search = useSearchParams();
-  const section = search.get("section");
+  const [tab, setTab] = useContactView(["overview", "timeline", "details", "commercial", "files", "tasks", "correspondence", "history"], "overview", "section");
   const returnTo = search.get("return_to");
   const back = returnTo && /^\/sales\/opportunities(?:\?|$)/.test(returnTo) ? returnTo : "/sales/opportunities";
-  const [tab, setTab] = useState(section && ["overview", "timeline", "details", "commercial", "files", "tasks", "correspondence", "history"].includes(section) ? section : "overview"),
-    [version, setVersion] = useState(o.version),
+  const [version, setVersion] = useState(o.version),
     [need, setNeed] = useState(o.need_summary),
     [note, setNote] = useState(""),
     [identification, setIdentification] = useState(""),

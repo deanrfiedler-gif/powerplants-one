@@ -11,10 +11,10 @@ import { financeAccount } from "../finance/context";
 // Index adapters reuse the same scoped list and exact-record guards as the
 // existing workspaces. They neither choose an arbitrary record nor grant access.
 export async function quotationLanding(p: Principal, query: unknown) {
-  object(query, []);
+  const input = object(query, ["offset", "q"]);
   const c = database();
   await requireCapability(c, p, "estimating.quote.read");
-  const estimates = await listEstimates(p, {});
+  const estimates = await listEstimates(p, input as Record<string,string>);
   const items: { id: string; reference: string; title: string; version: number; state: string }[] = [];
   for (const estimate of estimates.items) {
     try {
@@ -27,7 +27,7 @@ export async function quotationLanding(p: Principal, query: unknown) {
       if (!(error instanceof AppError) || ![403, 404].includes(error.status)) throw error;
     }
   }
-  return { items, basis: "Permitted saved quotation revisions from the first 100 recently updated estimates. Draft output is not customer acceptance.", synthetic: true };
+  return { items, offset: estimates.offset, next_offset: estimates.next_offset, basis: "Permitted saved quotation revisions in this window of up to 100 recently updated estimates. Continue through older estimate windows; this is not a complete quotation register. Draft output is not customer acceptance.", synthetic: true };
 }
 export async function accountLanding(p: Principal, query: unknown) {
   object(query, []);

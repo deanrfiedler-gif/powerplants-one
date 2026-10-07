@@ -1,4 +1,5 @@
 "use client";
+import { OfflineEntry } from "./offline-entry";
 import { useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import {
@@ -227,13 +228,7 @@ export function CompletionSubmission({
           <ErrorNotice error={localError ?? c.error} />
           {!!localError && (
             <p>
-              <a
-                href="/offline/index.html"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Verify saved workspace in another tab
-              </a>
+              <OfflineEntry newTab>Verify saved workspace in another tab</OfflineEntry>
               . Keep this form open, verify your identity there and resolve any
               pending originals, then return to submit these same details.
             </p>
@@ -874,6 +869,7 @@ export function ReportScreen({ id }: { id: string }) {
     <div id="ppo-reports" className="business-shell report-screen">
       <Link href="/service/reports">All service reports</Link>
       <h1>{r?.reference ?? "Service report"}</h1>
+      {r?.finance_navigation && <nav aria-label="Report Finance handoff">{r.finance_navigation.existing.map(h => <p key={h.id}><Link href={h.href}>Review Finance handoff · {h.reference}</Link></p>)}{r.finance_navigation.prepare_href && <p><Link href={r.finance_navigation.prepare_href}>Prepare Finance handoff for this reviewed report</Link></p>}<p>Opening a handoff creates no record or allocation. Finance validates current sources and recipients independently.</p></nav>}
       <Synthetic />
       <ReadState
         loading={resource.loading}

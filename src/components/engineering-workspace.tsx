@@ -1,4 +1,5 @@
 "use client";
+import { useContactView } from "./contact-workspace";
 import { ControlSummary } from "../engineering/control/components/summary";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
@@ -948,8 +949,8 @@ function PackageDrawer({
 }) {
   const resource = useResource<EngineeringDetail>("engineering/" + id),
     command = useCommand();
-  const [tab, setTab] = useState("overview"),
-    [edit, setEdit] = useState(false),
+  const [tab, setTab] = useContactView(tabs.map(([key]) => key), "overview");
+  const [edit, setEdit] = useState(false),
     [editBlocked, setEditBlocked] = useState(false),
     [editDirty, setEditDirty] = useState(false),
     [notice, setNotice] = useState("");
