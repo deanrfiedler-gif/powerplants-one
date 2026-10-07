@@ -972,7 +972,7 @@
       "title": "Opportunity detail and internal work",
       "kind": "scope",
       "module": "CR",
-      "summary": "Maintain one opportunity with source-owned customer context, accountable next action, commercial evidence and linked handovers. Incoming converted Leads retain their captured enquiry, resolved context and ownership history.",
+      "summary": "Maintain one opportunity with source-owned customer context, accountable next action, commercial evidence and linked handovers. Incoming converted Leads retain their captured enquiry, resolved context and ownership history. LC-14 shows every permitted option quotation and exact native release/response/conversion evidence.",
       "path": "/sales/opportunities/[id]",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -988,11 +988,14 @@
         "docs/contracts/lead-to-delivery-continuity.md",
         "docs/decisions/lead-customer-context.md",
         "docs/design/development/lead-continuity-fixtures.json",
-        "docs/testing/evidence/lead-context-resolution/README.md"
+        "docs/testing/evidence/lead-context-resolution/README.md",
+        "src/components/commercial-quotation.tsx",
+        "src/components/opportunity-commercial.tsx",
+        "src/estimating/reads.ts"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "See sales-native-completion-handover for existing Deal assurance. LC-12 local functional proof: six database cases, selected populated upgrades and 15 compiled desktop/phone checks with one retained skip. See lead-context-resolution evidence; paired visual and owner acceptance remain pending.",
+      "functional_status": "See sales-native-completion-handover for existing Deal assurance. LC-12 local functional proof: six database cases, selected populated upgrades and 15 compiled desktop/phone checks with one retained skip. See lead-context-resolution evidence; paired visual and owner acceptance remain pending. LC-14: four database and four compiled desktop/phone scenarios pass; see docs/testing/evidence/deal-commercial-continuity/README.md. Source facts, paired visual/owner review and final-head CI remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -6565,7 +6568,7 @@
       "title": "Opportunity detail",
       "kind": "route",
       "module": "CR",
-      "summary": "Maintain one opportunity with source-owned customer context, accountable next action, commercial evidence and linked handovers.",
+      "summary": "Maintain one opportunity with source-owned customer context, accountable next action, commercial evidence and linked handovers. LC-14 shows every permitted option quotation and exact native release/response/conversion evidence.",
       "path": "/sales/opportunities/[id]",
       "source_paths": [
         "src/app/(business)/sales/opportunities/[id]/page.tsx"
@@ -6578,11 +6581,15 @@
         "src/components/crm-screens.tsx",
         "src/components/opportunity-workflows.tsx",
         "src/components/opportunity-correspondence.tsx",
-        "docs/contracts/lead-to-delivery-continuity.md"
+        "docs/contracts/lead-to-delivery-continuity.md",
+        "src/components/commercial-quotation.tsx",
+        "src/components/opportunity-commercial.tsx",
+        "src/estimating/reads.ts",
+        "docs/design/development/lead-continuity-fixtures.json"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "See sales-native-completion-handover for executed assurance",
+      "functional_status": "See sales-native-completion-handover for executed assurance LC-14: four database and four compiled desktop/phone scenarios pass; see docs/testing/evidence/deal-commercial-continuity/README.md. Source facts, paired visual/owner review and final-head CI remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

@@ -122,3 +122,7 @@ Host fixtures: `tests/browser/quotation-supply-followup.spec.ts` (receiving, rea
 ## Accepted Sales brief to native Estimating (LC-13)
 
 The Sales handover and native Discovery hosts reuse this control with explicit create-return, fixed source comparison and exact-original recovery. Consumer bindings and synthetic states are in the register and lead-continuity-fixtures.json. Compare desktop/phone scope wrapping, keyboard controls and denied-context removal; exact new-state mockups are missing and no accepted fingerprint is assigned.
+
+## Deal commercial evidence (LC-14)
+
+Consumer: `src/components/commercial-quotation.tsx`, CR-01 and the Deal record. Native disclosure and shared retry/error controls expose current permission-checked issue/response/conversion facts. A denied refresh removes prior evidence; retry is explicit. Host fixtures: `tests/browser/commercial-continuity.spec.ts`. Desktop/phone and missing-image requirements remain in the live page specification; paired visual, keyboard and owner review is pending.

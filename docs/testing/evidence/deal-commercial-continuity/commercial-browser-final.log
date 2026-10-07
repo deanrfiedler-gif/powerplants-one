@@ -1,0 +1,16 @@
+[WebServer] (node:23344) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.98"}
+
+Running 4 tests using 1 worker
+
+(node:36460) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop-chromium] › tests\browser\commercial-continuity.spec.ts:11:1 › LC-14 Deal exposes exact issued response and correction without relabelling it as a draft or changing Won (12.3s)
+  ok 2 [desktop-chromium] › tests\browser\commercial-continuity.spec.ts:79:1 › LC-14 a denied native refresh removes previously displayed issue facts and retains explicit recovery (9.3s)
+(node:14948) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [mobile-chromium] › tests\browser\commercial-continuity.spec.ts:11:1 › LC-14 Deal exposes exact issued response and correction without relabelling it as a draft or changing Won (14.7s)
+  ok 4 [mobile-chromium] › tests\browser\commercial-continuity.spec.ts:79:1 › LC-14 a denied native refresh removes previously displayed issue facts and retains explicit recovery (9.0s)
+
+  4 passed (1.0m)

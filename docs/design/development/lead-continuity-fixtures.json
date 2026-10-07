@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "synthetic": true,
-  "source": "tests/browser/leads.spec.ts; tests/database/leads-continuity.test.ts; tests/database/leads-amendments.test.ts; tests/database/sales-estimating-binding.test.ts; tests/browser/sales-estimating-binding.spec.ts",
+  "source": "tests/browser/leads.spec.ts; tests/database/leads-continuity.test.ts; tests/database/leads-amendments.test.ts; tests/database/sales-estimating-binding.test.ts; tests/browser/sales-estimating-binding.spec.ts; tests/database/commercial-continuity.test.ts; tests/browser/commercial-continuity.spec.ts",
   "owner": "Dean Fiedler",
   "review_status": "Pending owner and paired visual review",
   "states": [
@@ -60,6 +60,22 @@
     {
       "key": "link-response-lost",
       "description": "Actor-scoped journal recovers one immutable link after response loss and reload."
+    },
+    {
+      "key": "all-option-quotes",
+      "description": "A and B have separately costed native estimates and exact quotations; selection does not change the stable CRM primary or suppress B."
+    },
+    {
+      "key": "release-facts",
+      "description": "Draft and Release revision labels, independent approval, exact issue, response and native Supply conversion remain separate."
+    },
+    {
+      "key": "response-correction",
+      "description": "A latest staff-reported correction refreshes the Deal evidence while native history retains the earlier report."
+    },
+    {
+      "key": "restricted-commercial-refresh",
+      "description": "Denied native release refresh clears previously displayed issue/response/conversion facts and retains an explicit retry."
     }
   ]
 }

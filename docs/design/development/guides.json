@@ -4595,6 +4595,22 @@
           "steps": [],
           "rows": [],
           "headers": []
+        },
+        {
+          "section_id": "exact-commercial-evidence",
+          "title": "Read exact quotation and response evidence",
+          "paragraphs": [
+            "Estimates & quotations includes revisions from all permitted estimate alternatives. Draft and Release revisions are labelled separately; Documents uses the same permitted records.",
+            "Open a release revision’s evidence to inspect independent approval, recorded issue and current source check. Review the staff-recorded response and its holds separately. Native conversion has its own receiving, target and follow-up history. None of these reads records a Deal outcome or authorises delivery.",
+            "If a correction is recorded, the current response refreshes while the native response history retains earlier reports. Restricted or unavailable evidence is not an empty lifecycle. Use Retry after access is restored; stale evidence is removed on a denied refresh."
+          ],
+          "steps": [
+            "Choose Estimates & quotations on the Deal.",
+            "Find the required option, estimate and exact revision.",
+            "Expand issue, reported response and conversion evidence, then follow the native history links for review."
+          ],
+          "rows": [],
+          "headers": []
         }
       ],
       "related_entry_keys": [
@@ -43441,6 +43457,22 @@
             "Owner: Dean Fiedler. Draft article; owner and visual acceptance remain pending. Actual tests and captures are recorded separately in the implementation handover. A source commit or passing test is not operational approval."
           ],
           "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "exact-commercial-evidence",
+          "title": "Read exact quotation and response evidence",
+          "paragraphs": [
+            "Estimates & quotations includes revisions from all permitted estimate alternatives. Draft and Release revisions are labelled separately; Documents uses the same permitted records.",
+            "Open a release revision’s evidence to inspect independent approval, recorded issue and current source check. Review the staff-recorded response and its holds separately. Native conversion has its own receiving, target and follow-up history. None of these reads records a Deal outcome or authorises delivery.",
+            "If a correction is recorded, the current response refreshes while the native response history retains earlier reports. Restricted or unavailable evidence is not an empty lifecycle. Use Retry after access is restored; stale evidence is removed on a denied refresh."
+          ],
+          "steps": [
+            "Choose Estimates & quotations on the Deal.",
+            "Find the required option, estimate and exact revision.",
+            "Expand issue, reported response and conversion evidence, then follow the native history links for review."
+          ],
           "rows": [],
           "headers": []
         }

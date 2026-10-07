@@ -88,6 +88,11 @@
           "id": "es07-host",
           "label": "ES-07 receiving host",
           "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery. Material receiving/recovery host: tests/browser/quotation-material-resolution.spec.ts."
+        },
+        {
+          "id": "deal-commercial-host",
+          "label": "Exact Deal commercial evidence",
+          "description": "tests/browser/commercial-continuity.spec.ts exercises real issued-response/correction reads and a mocked denied-refresh presentation in the Deal host; database tests prove actual quote-scope denial."
         }
       ],
       "implementation": [
@@ -108,7 +113,8 @@
         "docs/decisions/field-closed-visit-guidance.md",
         "docs/design/development/maintenance-fixtures.json",
         "src/components/sales-estimating-link.tsx",
-        "docs/design/development/lead-continuity-fixtures.json"
+        "docs/design/development/lead-continuity-fixtures.json",
+        "src/components/commercial-quotation.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -227,7 +233,9 @@
         "route:/warranty/supplier-recovery/[id]",
         "route:/estimating/discovery/new",
         "route:/estimating/discovery/[id]",
-        "scope:CR-02"
+        "scope:CR-02",
+        "scope:CR-01",
+        "route:/sales/opportunities/[id]"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -319,6 +327,14 @@
           "expected": "Keep saved-source comparison and original-result recovery visible through Sales-to-Estimating creation and linking.",
           "actual": "LC-13 reuses native controls and journal; exact new-state mockup images are missing.",
           "action": "Review desktop/phone create-return, fixed comparison, denied context and original recovery before adopting a baseline.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-deal-commercial-evidence",
+          "expected": "Permitted native evidence with explicit loading, denied refresh and retry at desktop/phone widths.",
+          "actual": "LC-14 host states and bindings added; exact new-state mockup images are missing.",
+          "action": "Review real host captures, keyboard/focus and long held-source text before accepting a baseline.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1221,6 +1237,11 @@
           "id": "es07-host",
           "label": "ES-07 receiving host",
           "description": "tests/browser/quotation-conversion.spec.ts exercises received/returned, unresolved mapping, stale plan, unknown original, real targets and denied access in the owning page. tests/browser/quotation-disposition.spec.ts adds exact retain/revise/hold review, selective stale evidence, original recovery and native effects. tests/browser/quotation-supply-followup.spec.ts adds owned receiving, exact allocation effects, retained stale proposals and original recovery. Material receiving/recovery host: tests/browser/quotation-material-resolution.spec.ts."
+        },
+        {
+          "id": "deal-commercial-host",
+          "label": "Exact Deal commercial evidence",
+          "description": "tests/browser/commercial-continuity.spec.ts exercises real issued-response/correction reads and a mocked denied-refresh presentation in the Deal host; database tests prove actual quote-scope denial."
         }
       ],
       "implementation": [
@@ -1237,7 +1258,8 @@
         "src/app/styles/customers.css",
         "docs/design/development/maintenance-fixtures.json",
         "docs/design/development/lead-continuity-fixtures.json",
-        "src/components/sales-estimating-link.tsx"
+        "src/components/sales-estimating-link.tsx",
+        "src/components/commercial-quotation.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -1320,7 +1342,9 @@
         "route:/sales/leads/[id]",
         "route:/estimating/discovery/new",
         "route:/estimating/discovery/[id]",
-        "scope:CR-02"
+        "scope:CR-02",
+        "scope:CR-01",
+        "route:/sales/opportunities/[id]"
       ],
       "desktop": "Submit an empty title to focus the summary, then follow its link to the field. Correct the title and save to clear the example error.",
       "mobile": "Summary and inline errors must remain visible at 320 px and 200% zoom.",
@@ -1404,6 +1428,14 @@
           "expected": "Keep saved-source comparison and original-result recovery visible through Sales-to-Estimating creation and linking.",
           "actual": "LC-13 reuses native controls and journal; exact new-state mockup images are missing.",
           "action": "Review desktop/phone create-return, fixed comparison, denied context and original recovery before adopting a baseline.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "validation-deal-commercial-evidence",
+          "expected": "Permitted native evidence with explicit loading, denied refresh and retry at desktop/phone widths.",
+          "actual": "LC-14 host states and bindings added; exact new-state mockup images are missing.",
+          "action": "Review real host captures, keyboard/focus and long held-source text before accepting a baseline.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
