@@ -55,3 +55,9 @@ Reused components: existing shell/information-icon mapping, shared Button from s
 Proposed departures from retained Service Review & Reports r02: preserve DraftEvidence and IssuedReport; add explicit attendance-facts subject, append-only correction and receipt recovery; retain in-flow original evidence/history rather than copying demonstration persistence or issued-only controls. The application uses the existing 8px card token where r20 proposes 7px. No accepted native FI-07 desktop or phone mockup exists. Source/native captures are technical comparison evidence, not owner visual acceptance.
 
 See [decision](../../../decisions/field-customer-response.md), [acceptance matrix](../../../testing/field-customer-response-acceptance.md) and [executed evidence](../../../testing/evidence/field-customer-response/README.md). Visual review, physical-device/screen-reader acceptance and deployment remain separate; no review fingerprint is assigned.
+
+## NAV contextual navigation
+
+A permitted reviewed/issued Report can open an existing exact scoped Finance handoff. Only issued sources with preparation authority offer the rechecked form. Hosted offline recovery is explanatory; local recovery retains original operations.
+
+Desktop uses the existing shell with a 76 px compact or 232 px labelled primary rail. Mobile uses labelled destinations and More > Workspace; Home/search/help remain reachable. Check 320/390/780/781/1199/1200 px where applicable, long labels, visible focus and Escape/return focus. Missing accepted images remain explicit; no new accepted image or review fingerprint is recorded. Functional results and screenshot observations are in the NAV ledger; owner/device review and deployment remain separate.

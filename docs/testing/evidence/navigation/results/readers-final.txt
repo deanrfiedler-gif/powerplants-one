@@ -1,0 +1,14 @@
+Source commit: 6284b34f6dfe2e73703cebb999fff2045e9a2081
+Result: 2 passed: bounded quotation continuation and Finance report scope/context.
+Bounded excerpt; private original SHA-256: 489a0f1ec4c832b9f9a9aaf4ce32ae0402561ff7462ebaa0be0fc144e0c5c1ea
+
+✔ N13 real scoped windows expose the older exact quotation, never a complete-register claim (1215.5693ms)
+✔ N29 real Finance navigation uses exact current source revision and authoritative handoff scope (56.5932ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2860.9235

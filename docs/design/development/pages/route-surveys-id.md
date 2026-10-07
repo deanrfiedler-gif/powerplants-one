@@ -31,3 +31,9 @@ Reference: docs/reference/ui/customers/PPO-Site-Survey-and-As-Found-Workspace-r0
 ## Verification and acceptance
 
 The detailed page guide is `guide.route-surveys-id`. [CS receiving handover](../../../delivery/cs-native-completion-handover.md) records executed behaviour, visual inspection, source hashes and open business definitions. Owner/device acceptance and deployment remain separate.
+
+## NAV contextual navigation
+
+Saved Equipment entries use canonical /equipment/[id] with an exact bounded Survey source return. Missing or revoked option identities display Equipment unavailable in current scope, without the retained ID/name.
+
+Desktop uses the existing shell with a 76 px compact or 232 px labelled primary rail. Mobile uses labelled destinations and More > Workspace; Home/search/help remain reachable. Check 320/390/780/781/1199/1200 px where applicable, long labels, visible focus and Escape/return focus. Missing accepted images remain explicit; no new accepted image or review fingerprint is recorded. Functional results and screenshot observations are in the NAV ledger; owner/device review and deployment remain separate.

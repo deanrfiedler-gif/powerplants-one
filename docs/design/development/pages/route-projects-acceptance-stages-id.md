@@ -40,3 +40,9 @@ The [PJ-09 scope design](scope-pj-09.md) links the supplied desktop composition,
 The draft User Guide `guide.page.projects.acceptance.stages.id` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Prior component and compiled visual evidence is retained in the [PJ-09 verification record](../../../testing/evidence/project-acceptance-r01/README.md). A0 performs source reconciliation only. Fresh family regression, native guide walkthrough, owner/device acceptance and deployment remain separate. Do not replace a comparison image simply to make a test pass.
+
+## NAV contextual navigation
+
+Open owned Activity targets /work/[id] and returns to the same stage/obligation anchor. Receiving, owner/date, closeout and original-operation recovery remain independent.
+
+Desktop uses the existing shell with a 76 px compact or 232 px labelled primary rail. Mobile uses labelled destinations and More > Workspace; Home/search/help remain reachable. Check 320/390/780/781/1199/1200 px where applicable, long labels, visible focus and Escape/return focus. Missing accepted images remain explicit; no new accepted image or review fingerprint is recorded. Functional results and screenshot observations are in the NAV ledger; owner/device review and deployment remain separate.

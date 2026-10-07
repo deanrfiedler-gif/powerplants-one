@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "owner": "Dean Fiedler",
+  "source": "NAV-01 at 4f883d145b18876840c5ce5522059c95448dc086; NAV-02A–NAV-06 authorised implementation",
+  "review": "Pending; host fixtures do not grant owner or device acceptance",
+  "states": [
+    {
+      "id": "nav-contextual-records",
+      "fixture": "tests/browser/navigation-context.spec.ts",
+      "description": "Saved Survey with two exact Equipment targets; continuing Acceptance obligation with exact Activity/source return."
+    },
+    {
+      "id": "nav-permitted-home",
+      "fixture": "tests/unit/navigation-safety.test.ts; tests/browser/navigation-safety.spec.ts",
+      "description": "Lead-only, field-only, pack-reviewer capability contracts; real assigned technician and real unassigned no-grant technician."
+    },
+    {
+      "id": "nav-leave-cancel",
+      "fixture": "tests/browser/navigation-safety.spec.ts",
+      "description": "Dirty preferences cancel pointer/touch/keyboard search, workspace selection and native Chrome Back without changing the stored preference."
+    },
+    {
+      "id": "nav-rail-modes",
+      "fixture": "tests/browser/navigation-safety.spec.ts; tests/browser/department-navigation.spec.ts",
+      "description": "Compact 76 px, labelled 232 px, short-height long Service rail, blocked storage, mobile More/Workspace and visible Sales labels."
+    },
+    {
+      "id": "nav-authorized-context",
+      "fixture": "tests/unit/navigation-context.test.ts; tests/unit/navigation-safety.test.ts",
+      "description": "Bounded source returns, synonyms, specific route identity, Sales day/scope policy and all-of Inspection review discovery."
+    },
+    {
+      "id": "nav-operational-more",
+      "fixture": "tests/browser/navigation-safety.spec.ts",
+      "description": "Blank More opens receiving Intake, My inspections, Incidents and Inspection review after required successful reads."
+    },
+    {
+      "id": "nav-shareable-commercial",
+      "fixture": "tests/browser/navigation-commercial.spec.ts; tests/browser/navigation-finance.spec.ts",
+      "description": "Older quotation beyond 100 scoped estimates; selected Deal/Estimate revision; Finance validated report source without automatic POST."
+    },
+    {
+      "id": "nav-account-hierarchy",
+      "fixture": "tests/browser/navigation-finance.spec.ts",
+      "description": "Exact authorized Finance account identity; Page hierarchy exposes module parent on all widths and Escape restores focus; identity denial clears record."
+    }
+  ]
+}

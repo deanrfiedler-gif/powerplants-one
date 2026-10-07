@@ -1,0 +1,7 @@
+Source commit: 4086dad26a4fc0a60366196affb2003a0659e71d
+Result: 622 passed; 3 failed of 625. Three Windows failures reproduced on audited main.
+Bounded excerpt; private original SHA-256: f7bb542f587fa4d00f5e3e60271463f26da4a0338434a52cb94957e240998bb8
+
+> powerplants-one@0.1.0 test:unit
+> node --import tsx --test tests/unit/*.test.ts
+✔ FI02 failed, duplicate, missing and unresolved predecessors block later local timer intent (0.9362ms)

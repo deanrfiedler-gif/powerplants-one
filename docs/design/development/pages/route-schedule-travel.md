@@ -42,3 +42,9 @@ No exact page-specific retained HTML or accepted mockup exists. The native compo
 Resource selection survives reload. Travel review flags calendar closures as well as availability blocks against the complete buffered reservation, using exclusive end boundaries. Displayed gap figures are explicitly the original schedule when comparing a manual order. A site-filter warning explains omitted visits; the change handover retains exact site/resource/appointment/day/timezone. No routing estimate or booking mutation is introduced.
 
 [Refinement verification](../../../testing/evidence/scheduling-refinement/README.md) records actual checks and review limits. Visual status remains Needs review; no fingerprint is adopted.
+
+## NAV contextual navigation
+
+Travel review has a specific breadcrumb. Retain existing day/timezone/site/resource context and source checks.
+
+Desktop uses the existing shell with a 76 px compact or 232 px labelled primary rail. Mobile uses labelled destinations and More > Workspace; Home/search/help remain reachable. Check 320/390/780/781/1199/1200 px where applicable, long labels, visible focus and Escape/return focus. Missing accepted images remain explicit; no new accepted image or review fingerprint is recorded. Functional results and screenshot observations are in the NAV ledger; owner/device review and deployment remain separate.

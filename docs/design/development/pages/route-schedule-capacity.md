@@ -42,3 +42,9 @@ No exact page-specific retained HTML or accepted mockup exists. The native compo
 Domain, commitment, resource, required skill and unknown-effort filters are retained in the page address and restored on reload. Analytical exclusions remain in memory and reset on refresh or a filter change. Unknown resource and skill mappings remain explicit. Criteria confer no permission and do not change source records.
 
 [Refinement verification](../../../testing/evidence/scheduling-refinement/README.md) records actual checks and review limits. Visual status remains Needs review; no fingerprint is adopted.
+
+## NAV contextual navigation
+
+Demand and capacity has a specific breadcrumb. Preserve unknown demand and exact scoped source evidence.
+
+Desktop uses the existing shell with a 76 px compact or 232 px labelled primary rail. Mobile uses labelled destinations and More > Workspace; Home/search/help remain reachable. Check 320/390/780/781/1199/1200 px where applicable, long labels, visible focus and Escape/return focus. Missing accepted images remain explicit; no new accepted image or review fingerprint is recorded. Functional results and screenshot observations are in the NAV ledger; owner/device review and deployment remain separate.

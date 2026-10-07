@@ -1,0 +1,169 @@
+{
+  "application_checkpoint": "f1f04ba12c49003398652917b16d9c47e45edf8a",
+  "environment": "Windows; Node 24.21.0; npm 11.19.0; Playwright 1.63.0; stable Chrome 154.0.8037.98; task-owned loopback PostgreSQL 16 / ppo_synthetic_test",
+  "runs": [
+    {
+      "commit": "6284b34f6dfe2e73703cebb999fff2045e9a2081",
+      "command": "playwright test --config=playwright.compiled.config.ts tests/browser/department-navigation.spec.ts tests/browser/shell.spec.ts tests/browser/search-navigation.spec.ts tests/browser/navigation-context.spec.ts tests/browser/navigation-safety.spec.ts tests/browser/navigation-commercial.spec.ts tests/browser/navigation-layout.spec.ts tests/browser/navigation-finance.spec.ts tests/browser/engineering.spec.ts",
+      "result": "45 passed; 2 failed (obsolete Lead h1 assertion); 14 explicit skips. N03 repaired and freshly passed in module run.",
+      "evidence": "results/core-final.txt",
+      "original_sha256": "9ec343e2e64ae8e44210ae7aeb4186017757b2054bddf877b284510fb6d488c2"
+    },
+    {
+      "commit": "4086dad26a4fc0a60366196affb2003a0659e71d",
+      "command": "playwright test --config=playwright.compiled.config.ts tests/browser/navigation-safety.spec.ts tests/browser/customer-location.spec.ts tests/browser/equipment.spec.ts tests/browser/service-inspections.spec.ts tests/browser/reports.spec.ts tests/browser/finance.spec.ts tests/browser/quotation-supply-followup.spec.ts tests/browser/offline-identity.spec.ts --grep N03|CS01|EQ permissions|FI03/FI04 compiled|P09 complete UI|P10 PT-17|P08 identity|ES07 Supply desktop/mobile",
+      "result": "17 passed including warm-up; all 16 selected desktop/mobile module cases passed.",
+      "evidence": "results/module-final.txt",
+      "original_sha256": "c37e633115f983450eee138fda93a9409467c81d86dcf298cb6e8e31cf38962f"
+    },
+    {
+      "commit": "0c9d1387fefe2e7ac12c7f3d8f96613f0fcfd6a8",
+      "command": "playwright test --config=playwright.compiled.config.ts tests/browser/navigation-safety.spec.ts tests/browser/navigation-layout.spec.ts tests/browser/shell.spec.ts tests/browser/offline.spec.ts tests/browser/reports.spec.ts tests/browser/field-timer.spec.ts --grep N18|N19|responsive shell|unavailable dependency|P08 real offline UI|P09 online submission|FI01 accepted|FI02 retained",
+      "result": "16 passed; 3 explicit desktop-owned geometry skips in mobile project.",
+      "evidence": "results/layout-offline-final.txt",
+      "original_sha256": "94e72748fa6752e5db71f9fdeb700622e50bd8752138b72760954230788b00c2"
+    },
+    {
+      "commit": "6e6e91ae95696aab3db92e75be0fc19db569085a",
+      "command": "playwright test --config=playwright.compiled.config.ts tests/browser/navigation-safety.spec.ts tests/browser/sh-platform.spec.ts --grep N11|SH ",
+      "result": "13 passed including warm-up; N11 and all five SH cases on both projects.",
+      "evidence": "results/discovery-final.txt",
+      "original_sha256": "6eda7b0e8603682668df065b8c438e57b3f724802514359a578722250991b14c"
+    },
+    {
+      "commit": "43e1e8146e57ad51a1957438fe54d796f6471970",
+      "command": "playwright test --config=playwright.compiled.config.ts tests/browser/navigation-commercial.spec.ts tests/browser/navigation-context.spec.ts tests/browser/navigation-safety.spec.ts tests/browser/engineering.spec.ts tests/browser/sales-estimating-binding.spec.ts tests/browser/sales-delivery-binding.spec.ts tests/browser/commercial-continuity.spec.ts tests/browser/quotation-conversion.spec.ts",
+      "result": "38 passed; 5 failed; 2 skipped. Engineering guard and test fixture/assertion repairs have later core/module proof. Passed commercial/receiving/conversion cases retained at this exact commit.",
+      "evidence": "results/journeys-compiled.txt",
+      "original_sha256": "485fd20d7634074190e5368728a0dbd8cd86390065a5c910c44196ba29c5052e"
+    },
+    {
+      "commit": "e542f8296707d2b8247f94380415557804acd2cf",
+      "command": "playwright test --config=playwright.compiled.config.ts tests/browser/navigation-finance.spec.ts tests/browser/department-navigation.spec.ts --grep N14|N29|Finance chooser|specific Engineering",
+      "result": "6 passed; 1 failed (desktop hidden breadcrumb parent); 2 explicit mobile skips. Repaired with hierarchy disclosure; final run supersedes this defect.",
+      "evidence": "results/account-browser-final.txt",
+      "original_sha256": "03ef41c9c9bd09c081bc114f64cadc254139a5eb541a7c7277e171f9875f17cb"
+    },
+    {
+      "commit": "4086dad26a4fc0a60366196affb2003a0659e71d",
+      "command": "node --import tsx --test tests/unit/*.test.ts",
+      "result": "622 passed; 3 failed of 625. Three Windows failures reproduced on audited main.",
+      "evidence": "results/units-head.txt",
+      "original_sha256": "f7bb542f587fa4d00f5e3e60271463f26da4a0338434a52cb94957e240998bb8"
+    },
+    {
+      "commit": null,
+      "command": null,
+      "result": "9 passed.",
+      "evidence": "results/navigation-units-final.txt",
+      "original_sha256": "ea3b544784377946507357a8edb16ccce633ef8136f587556f2785afafd437ce",
+      "source_note": "Earlier candidate working tree; exact snapshot not retained. Superseded by committed-head units-hierarchy-final."
+    },
+    {
+      "commit": null,
+      "command": null,
+      "result": "9 passed.",
+      "evidence": "results/offline-boundaries.txt",
+      "original_sha256": "b19bac4255fc1bbda5b780b57be5250366e878a78d44c005d05f0e022a0b255e",
+      "source_note": "Earlier candidate working tree; exact snapshot not retained. Superseded by committed-head units-hierarchy-final."
+    },
+    {
+      "commit": "6e6e91ae95696aab3db92e75be0fc19db569085a",
+      "command": null,
+      "result": "1 passed after private PostgreSQL lock-limit repair. No application schema change.",
+      "evidence": "results/inspection-scope-final.txt",
+      "original_sha256": "0e93d94739bc6380d0ad31098f4f05a0e040dc2254908150f29c1960583f9a2b"
+    },
+    {
+      "commit": "6284b34f6dfe2e73703cebb999fff2045e9a2081",
+      "command": null,
+      "result": "2 passed: bounded quotation continuation and Finance report scope/context.",
+      "evidence": "results/readers-final.txt",
+      "original_sha256": "489a0f1ec4c832b9f9a9aaf4ce32ae0402561ff7462ebaa0be0fc144e0c5c1ea"
+    },
+    {
+      "commit": "f1f04ba12c49003398652917b16d9c47e45edf8a",
+      "command": "tsc --noEmit",
+      "result": "Passed.",
+      "evidence": "results/typecheck-hierarchy.txt",
+      "original_sha256": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28"
+    },
+    {
+      "commit": "f1f04ba12c49003398652917b16d9c47e45edf8a",
+      "command": "eslint .",
+      "result": "Passed.",
+      "evidence": "results/lint-hierarchy.txt",
+      "original_sha256": "144b8ef738aebf80f098340cd52aae1ca2b3b236fc5859b5d6806e5ec9ac9f64"
+    },
+    {
+      "commit": "f1f04ba12c49003398652917b16d9c47e45edf8a",
+      "command": "node --import tsx scripts/build-offline.ts && next build",
+      "result": "Passed; generated offline outputs unchanged.",
+      "evidence": "results/build-hierarchy.txt",
+      "original_sha256": "9917beac25c45ef780f66c60607c5355b33c55c779e614642e47852c0378a6d5"
+    },
+    {
+      "commit": "f1f04ba12c49003398652917b16d9c47e45edf8a",
+      "command": "playwright test --config=playwright.compiled.config.ts tests/browser/navigation-finance.spec.ts tests/browser/navigation-layout.spec.ts tests/browser/department-navigation.spec.ts tests/browser/shell.spec.ts tests/browser/search-navigation.spec.ts",
+      "result": "27 passed; 12 explicit skips. All final selected core/account/layout tests passed on configured projects.",
+      "evidence": "results/hierarchy-browser-final.txt",
+      "original_sha256": "82b42fe30b941fcf6b7aa4365bc6e500e1707481459166bb2ca82523ed33b72e"
+    },
+    {
+      "commit": "f1f04ba12c49003398652917b16d9c47e45edf8a",
+      "command": "node --import tsx --test tests/unit/*.test.ts",
+      "result": "625 tests: 622 passed; three unchanged Windows baseline failures (two document-store, one recovery assertion). All navigation/gateway units passed.",
+      "evidence": "results/units-hierarchy-final.txt",
+      "original_sha256": "b676f98b2d39d5ee2cac92ef0e1213e80a8b1dfb852483d6ab6119b550f3c9c1"
+    },
+    {
+      "commit": "4f883d145b18876840c5ce5522059c95448dc086",
+      "command": "node --import tsx --test tests/unit/document-store.test.ts tests/unit/recovery.test.ts (focused baseline reproduction)",
+      "result": "Same three Windows failures reproduced against untouched audited main.",
+      "evidence": "results/baseline-windows-units.txt",
+      "original_sha256": "8c6d09e1c1b276bb794873756883222cf5abe4c9de0424cd83d1ff82f7600ae9"
+    },
+    {
+      "commit": "4f883d145b18876840c5ce5522059c95448dc086",
+      "command": null,
+      "result": "PostgreSQL 53200 lock-limit failure also occurs on untouched audited main with the initial private cluster configuration.",
+      "evidence": "results/baseline-inspection-scope.txt",
+      "original_sha256": "1da9cb30fa1a140048fe8b6a20f7e2d3ff80f5de7b56c8992b55955cdc80e29e"
+    },
+    {
+      "commit": "f1f04ba12c49003398652917b16d9c47e45edf8a",
+      "command": "node --import tsx scripts/check-browser.ts",
+      "result": "Pinned runtime/stable Chrome check passed.",
+      "evidence": "results/browser-runtime-final.txt",
+      "original_sha256": "d6ce28cfdd23123cbe8d3f8669379648eb24befd757cb3d425cdb56d221ef076"
+    },
+    {
+      "commit": "f1f04ba12c49003398652917b16d9c47e45edf8a",
+      "command": "npm run studio:check",
+      "result": "Passed; 350 entries, 39 components, 196 routes; zero errors, 350 unreviewed, zero stale reviews.",
+      "evidence": "results/studio-navigation-handover.txt",
+      "original_sha256": "135df2793561f23518cde38c7c599f3bee8c07996b9f1c230811cff8030fb895"
+    },
+    {
+      "commit": "f1f04ba12c49003398652917b16d9c47e45edf8a",
+      "command": "python scripts/check_foundation.py",
+      "result": "Passed; 78 parent requirements and 22 unchanged issued references.",
+      "evidence": "results/foundation-navigation-final.txt",
+      "original_sha256": "a944aa3e018983c96710cc0102cad13b8808a258ab9dc880531d9c6384945e5e"
+    },
+    {
+      "commit": "f1f04ba12c49003398652917b16d9c47e45edf8a",
+      "command": "python scripts/check_naming.py",
+      "result": "Passed.",
+      "evidence": "results/naming-navigation-handover.txt",
+      "original_sha256": "c92f24ecba2bb5b0247e037747676789c41c3c117a6cb625a46c432f583157bd"
+    },
+    {
+      "commit": null,
+      "command": "python scripts/check_prototype.py",
+      "result": "Passed; documentation assurance only. Earlier candidate source, no prototype changes.",
+      "evidence": "results/prototype.txt",
+      "original_sha256": "f7b48b580707ab4071e3dcda23d38936db1c757240cbc5996bf54ed4fceb2ff3"
+    }
+  ]
+}

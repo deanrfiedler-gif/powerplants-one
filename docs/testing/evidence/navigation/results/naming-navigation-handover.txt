@@ -1,0 +1,14 @@
+Source commit: f1f04ba12c49003398652917b16d9c47e45edf8a
+Result: Passed.
+Private original SHA-256: c92f24ecba2bb5b0247e037747676789c41c3c117a6cb625a46c432f583157bd
+
+{
+  "status": "passed",
+  "document_records": 486,
+  "standing_exceptions": 9,
+  "metadata_documents_compared": 329,
+  "git_masters": 207,
+  "project_instruction_characters": 7997,
+  "errors": [],
+  "scope": "Naming and documentation consistency only; runtime behaviour is verified separately"
+}

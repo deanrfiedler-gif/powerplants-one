@@ -35,3 +35,7 @@ Agent technical inspection, 1 October 2026, build `D49Y9dS7Qw2QbEKy6RmRr`: [1440
 ## Original-receipt selection availability — 3 October 2026
 
 Attempt buttons are disabled while the existing command guard is busy or has an unresolved original. They become selectable after recovery; permission and applicability still govern receiving actions. The fixture holds the real actor-bound receipt response and verifies disabled selection followed by enabled selection, on desktop and phone. `tests/browser/service-inspections.spec.ts` also awaits the exact recovered draft read before its unchanged display assertion. Existing FI-03/FI-04 and both inspection-route bindings remain; no new authority or offline protocol. [Current evidence](../../../testing/evidence/field-integrated-acceptance/README.md) records actual outcomes. Review remains pending; no fingerprint or accepted native mockup is manufactured.
+
+## NAV discovery
+
+My inspections is a permitted Service destination; assigned-visit capture and contextual source paths remain authoritative. Desktop/phone More and ordinary Workspace retain equivalent meanings. Host evidence and acceptance remain separate; see the NAV ledger.

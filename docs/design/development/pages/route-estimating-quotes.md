@@ -8,9 +8,9 @@ This is an editable working specification. Existing accepted page baselines take
 
 This route is present in application source at ccc2251b. Review its specific workflow and release evidence; source presence does not establish deployment or full-scope acceptance.
 
-1. Inspect the saved Draft and its cost/scope basis
-2. Complete required approval before controlled issue
-3. Track distribution outcomes against the issued revision
+1. Filter the scoped estimate window by reference or title
+2. Continue to older windows of 100 estimates and retain q/offset in the URL
+3. Open an exact quotation, then use its independent release/response controls
 
 ## Desktop
 
@@ -39,3 +39,9 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 The draft User Guide `guide.page.estimating.quotes` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## NAV contextual navigation
+
+Filter by estimate reference/title and continue through older windows of up to 100 scoped estimates. offset and q are shareable state; each quotation receives an exact access check. Missing or restricted sources are partial, not an empty complete register.
+
+Desktop uses the existing shell with a 76 px compact or 232 px labelled primary rail. Mobile uses labelled destinations and More > Workspace; Home/search/help remain reachable. Check 320/390/780/781/1199/1200 px where applicable, long labels, visible focus and Escape/return focus. Missing accepted images remain explicit; no new accepted image or review fingerprint is recorded. Functional results and screenshot observations are in the NAV ledger; owner/device review and deployment remain separate.

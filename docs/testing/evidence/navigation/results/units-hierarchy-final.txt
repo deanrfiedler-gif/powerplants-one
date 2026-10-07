@@ -1,0 +1,36 @@
+Source commit: f1f04ba12c49003398652917b16d9c47e45edf8a
+Result: 625 tests: 622 passed; three unchanged Windows baseline failures (two document-store, one recovery assertion). All navigation/gateway units passed.
+Private original SHA-256: b676f98b2d39d5ee2cac92ef0e1213e80a8b1dfb852483d6ab6119b550f3c9c1
+
+> powerplants-one@0.1.0 test:unit
+> node --import tsx --test tests/unit/*.test.ts
+✖ P06 private adapter is write-once by original operation and verifies exact retrieved hashes (45.1835ms)
+✖ P06 source lookup never substitutes a latest version; symlink and in-repository stores are refused (96.6089ms)
+✔ public login and protected routes retain distinct HTTP and access boundaries (94.3977ms)
+✔ native Microsoft handoff, callback and logout preserve fixed destinations and secure cookies (19.7889ms)
+✔ callback failures become bounded recovery pages without reflecting provider details (112.0703ms)
+✔ login rate boundary still limits provider attempts and offers honest recovery (61.5727ms)
+✔ only state-validated provider cancellation receives cancelled presentation (12.5991ms)
+✔ local entry keeps Microsoft disabled; query states cannot inject markup or authority (4.7489ms)
+✔ canonical contextual targets retain distinct IDs and bounded source identities (3.4935ms)
+✔ source returns refuse foreign origins, protocol relatives, arbitrary queries and malformed IDs (0.6913ms)
+✔ N09 hosted recovery is explanatory and local originals retain their exact entry (18.9954ms)
+✔ N04/N05 permitted landing uses operational ownership without adding grants (9.9525ms)
+✔ N06 inspection discovery requires both capabilities; record scope remains separate (1.0301ms)
+✔ N12 Sales Activities keeps one day/scope/department policy (42.5749ms)
+✖ P12 separates checkpoint/source/destination and refuses Git paths, symlinks, hardlinks and non-private roots (47.1256ms)
+ℹ tests 625
+ℹ suites 0
+ℹ pass 622
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 37833.1092
+✖ failing tests:
+test at tests\unit\document-store.test.ts:1:302
+✖ P06 private adapter is write-once by original operation and verifies exact retrieved hashes (45.1835ms)
+test at tests\unit\document-store.test.ts:1:1128
+✖ P06 source lookup never substitutes a latest version; symlink and in-repository stores are refused (96.6089ms)
+test at tests\unit\recovery.test.ts:1:1298
+✖ P12 separates checkpoint/source/destination and refuses Git paths, symlinks, hardlinks and non-private roots (47.1256ms)

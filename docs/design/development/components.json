@@ -1692,7 +1692,9 @@
         "src/development/component-examples.tsx",
         "src/development/component-fixtures.ts",
         "src/app/styles/customers.css",
-        "docs/design/development/maintenance-fixtures.json"
+        "docs/design/development/maintenance-fixtures.json",
+        "docs/design/development/navigation-fixtures.json",
+        "src/components/navigation-intent.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -1775,6 +1777,14 @@
           "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
           "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
           "action": "Review the MA handover and retained images before baseline adoption",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "nav-tabs-context-review",
+          "expected": "Exact URL/context and leave/offline state review in real consumers.",
+          "actual": "Host contracts changed; shared renderer semantics retained and owner/device review pending.",
+          "action": "Review NAV URL-state and truthful recovery fixtures separately from isolated catalogue examples.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2060,7 +2070,9 @@
         "src/field/visit-guidance.ts",
         "src/components/field-visit-entry.tsx",
         "docs/decisions/field-closed-visit-guidance.md",
-        "docs/design/development/maintenance-fixtures.json"
+        "docs/design/development/maintenance-fixtures.json",
+        "docs/design/development/navigation-fixtures.json",
+        "src/components/navigation-intent.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -2271,6 +2283,14 @@
           "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
           "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
           "action": "Review the MA handover and retained images before baseline adoption",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "nav-read-state-context-review",
+          "expected": "Exact URL/context and leave/offline state review in real consumers.",
+          "actual": "Host contracts changed; shared renderer semantics retained and owner/device review pending.",
+          "action": "Review NAV URL-state and truthful recovery fixtures separately from isolated catalogue examples.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2597,6 +2617,46 @@
           "id": "products-native-navigation",
           "label": "Native Products navigation",
           "description": "The all-permitted Sales fixture includes Products as its eighth rail destination and in More. The six Products workspace routes resolve distinct proposed design records. Retained shell geometry, keyboard controls and permission filtering remain in force."
+        },
+        {
+          "id": "nav-contextual-records",
+          "label": "Contextual records",
+          "description": "Saved Survey with two exact Equipment targets; continuing Acceptance obligation with exact Activity/source return. Fixture: tests/browser/navigation-context.spec.ts"
+        },
+        {
+          "id": "nav-permitted-home",
+          "label": "Permitted home",
+          "description": "Lead-only, field-only, pack-reviewer capability contracts; real assigned technician and real unassigned no-grant technician. Fixture: tests/unit/navigation-safety.test.ts; tests/browser/navigation-safety.spec.ts"
+        },
+        {
+          "id": "nav-leave-cancel",
+          "label": "Leave cancel",
+          "description": "Dirty preferences cancel pointer/touch/keyboard search, workspace selection and native Chrome Back without changing the stored preference. Fixture: tests/browser/navigation-safety.spec.ts"
+        },
+        {
+          "id": "nav-rail-modes",
+          "label": "Rail modes",
+          "description": "Compact 76 px, labelled 232 px, short-height long Service rail, blocked storage, mobile More/Workspace and visible Sales labels. Fixture: tests/browser/navigation-safety.spec.ts; tests/browser/department-navigation.spec.ts"
+        },
+        {
+          "id": "nav-authorized-context",
+          "label": "Authorized context",
+          "description": "Bounded source returns, synonyms, specific route identity, Sales day/scope policy and all-of Inspection review discovery. Fixture: tests/unit/navigation-context.test.ts; tests/unit/navigation-safety.test.ts"
+        },
+        {
+          "id": "nav-operational-more",
+          "label": "Operational more",
+          "description": "Blank More opens receiving Intake, My inspections, Incidents and Inspection review after required successful reads. Fixture: tests/browser/navigation-safety.spec.ts"
+        },
+        {
+          "id": "nav-shareable-commercial",
+          "label": "Shareable commercial",
+          "description": "Older quotation beyond 100 scoped estimates; selected Deal/Estimate revision; Finance validated report source without automatic POST. Fixture: tests/browser/navigation-commercial.spec.ts; tests/browser/navigation-finance.spec.ts"
+        },
+        {
+          "id": "nav-account-hierarchy",
+          "label": "Account hierarchy",
+          "description": "Exact authorized Finance account identity; Page hierarchy exposes module parent on all widths and Escape restores focus; identity denial clears record. Fixture: tests/browser/navigation-finance.spec.ts"
         }
       ],
       "implementation": [
@@ -2635,7 +2695,17 @@
         "src/development/page-guide.tsx",
         "src/app/api/development/catalog/route.ts",
         "src/shell/module-workspaces.ts",
-        "docs/design/development/maintenance-fixtures.json"
+        "docs/design/development/maintenance-fixtures.json",
+        "src/shell/navigation.ts",
+        "src/components/navigation-intent.ts",
+        "src/components/shell-workspace-selector.tsx",
+        "src/components/application-frame.tsx",
+        "src/shell/record-identity.tsx",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md",
+        "src/components/shell-provider.tsx",
+        "src/components/offline-entry.tsx",
+        "src/app/leads.css"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -2679,9 +2749,9 @@
         "route:/warranty/supplier-recovery",
         "route:/warranty/supplier-recovery/[id]"
       ],
-      "desktop": "Review the real global search, workspace switcher, rail, More and utility controls around this catalogue. Shell access can be unavailable without a running identity/database service.",
-      "mobile": "Resize the actual browser window to review the mobile shell; component-frame presets do not resize the surrounding application. Native shell controls must remain inside the 64px header, including local identity at 390px and 320px; the legacy CRM grid must not overlay the first page action.",
-      "keyboard": "Check tab order, skip link, More dialog, Escape and focus return in the real host.",
+      "desktop": "76 px compact or 232 px labelled primary rail; accessible collapse button, identity/browser persistence and in-memory fallback. More contains ordinary permitted Workspace selection. Keep Home/More reachable with long and short rails; 1200 px secondary-menu docking remains.",
+      "mobile": "Retain the 780/781 px boundary, visible Sales labels and global shell on Leads. More provides labelled permitted Workspace selection; equivalent destinations retain date/scope/record meaning. Check 320 px without page overflow; touch targets aim for 44 px.",
+      "keyboard": "Check tab order, skip link, More dialog, Escape and focus return in the real host. Page hierarchy exposes authorized parents at every width, supports Escape and restores focus.",
       "limitations": "No synthetic permission grants are supplied. The host is not counted as an isolated runnable fixture.",
       "gaps": [
         {
@@ -2801,6 +2871,14 @@
           "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
           "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
           "action": "Review the MA handover and retained images before baseline adoption",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "nav-primary-rail-review",
+          "expected": "Owner/device/real-zoom review of r22-informed compact/labelled desktop and labelled mobile, against retained shell r17.",
+          "actual": "Proposed navigation implementation with bounded synthetic functional evidence; accepted new mockup images are missing.",
+          "action": "Use NAV captures and ledger for paired review; source presence and test passes do not adopt a baseline.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

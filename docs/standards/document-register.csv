@@ -483,3 +483,6 @@ PPO-DEAL-COMMERCIAL-EVIDENCE,Deal commercial continuity execution evidence,docs/
 PPO-DEAL-OUTCOME-EVIDENCE-DEC,Explicit Deal outcome evidence,docs/decisions/deal-outcome-evidence.md,,Implementation decision; local synthetic proof retained; owner review pending,Dean Fiedler,96a7701,,,git,
 PPO-WON-DELIVERY-CONTINUITY-DEC,Accepted Won handover to native delivery,docs/decisions/won-delivery-continuity.md,,Implementation decision; local synthetic proof retained; owner review pending,Dean Fiedler,f898b6d,,,git,
 PPO-SALES-FOLLOWUP-CONTINUITY-DEC,Reviewed follow-up back to Sales,docs/decisions/sales-followup-continuity.md,,Synthetic implementation verification passed; owner review pending,Dean Fiedler,e8dd290,,,git,
+PPO-NAV-DEC,Navigation consolidation,docs/decisions/navigation-consolidation.md,,Implementation; owner review pending,Dean Fiedler,4f883d145b18876840c5ce5522059c95448dc086,,,git,
+PPO-NAV-DEL,Navigation implementation,docs/delivery/navigation-implementation.md,,Implementation; owner review pending,Dean Fiedler,4f883d145b18876840c5ce5522059c95448dc086,,,git,
+PPO-NAV-EVID,Navigation verification ledger,docs/testing/evidence/navigation/README.md,,Implementation; owner review pending,Dean Fiedler,4f883d145b18876840c5ce5522059c95448dc086,,,git,

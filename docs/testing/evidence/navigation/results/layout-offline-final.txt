@@ -1,0 +1,24 @@
+Source commit: 0c9d1387fefe2e7ac12c7f3d8f96613f0fcfd6a8
+Result: 16 passed; 3 explicit desktop-owned geometry skips in mobile project.
+Bounded excerpt; private original SHA-256: 94e72748fa6752e5db71f9fdeb700622e50bd8752138b72760954230788b00c2
+
+> powerplants-one@0.1.0 test:browser
+> playwright test --config=playwright.compiled.config.ts tests/browser/navigation-safety.spec.ts tests/browser/navigation-layout.spec.ts tests/browser/shell.spec.ts tests/browser/offline.spec.ts tests/browser/reports.spec.ts tests/browser/field-timer.spec.ts --grep N18|N19|responsive shell|unavailable dependency|P08 real offline UI|P09 online submission|FI01 accepted|FI02 retained
+  ok  1 [warm-up] › tests\browser\warm-up.setup.ts:10:1 › warm every route once before the browser projects (24.7s)
+  ok  2 [desktop-chromium] › tests\browser\field-timer.spec.ts:66:1 › FI01 accepted timer presentation, actual saved intervals and original-action recovery (27.3s)
+  ok  3 [desktop-chromium] › tests\browser\field-timer.spec.ts:252:1 › FI02 retained offline timer sequence survives reload and a lost server response (11.3s)
+  ok  4 [desktop-chromium] › tests\browser\navigation-layout.spec.ts:2:1 › N19/N31 labelled destinations and shell controls retain all established breakpoints (7.7s)
+  ok  5 [desktop-chromium] › tests\browser\navigation-safety.spec.ts:78:1 › N18/N19 primary rail expands, persists and retains endpoints in a short window (6.7s)
+  ok  6 [desktop-chromium] › tests\browser\navigation-safety.spec.ts:109:1 › N18 blocked storage retains expansion for the current identity and visit (1.1s)
+  ok  7 [desktop-chromium] › tests\browser\offline.spec.ts:157:1 › P08 real offline UI interruption retains typed evidence and exact PNG, retries original receipt and saves draft (22.1s)
+  ok  8 [desktop-chromium] › tests\browser\reports.spec.ts:729:1 › P09 online submission refuses retained offline originals and recovers the same original through explicit sync (15.4s)
+  ok  9 [desktop-chromium] › tests\browser\shell.spec.ts:13:1 › responsive shell, keyboard focus, server save, read-only refusal and storage feasibility (4.1s)
+  ok 10 [desktop-chromium] › tests\browser\shell.spec.ts:112:1 › unavailable dependency and missing page show useful recoverable states (1.3s)
+  ok 11 [mobile-chromium] › tests\browser\field-timer.spec.ts:66:1 › FI01 accepted timer presentation, actual saved intervals and original-action recovery (26.3s)
+  ok 12 [mobile-chromium] › tests\browser\field-timer.spec.ts:252:1 › FI02 retained offline timer sequence survives reload and a lost server response (13.0s)
+  ok 16 [mobile-chromium] › tests\browser\offline.spec.ts:157:1 › P08 real offline UI interruption retains typed evidence and exact PNG, retries original receipt and saves draft (17.9s)
+  ok 17 [mobile-chromium] › tests\browser\reports.spec.ts:729:1 › P09 online submission refuses retained offline originals and recovers the same original through explicit sync (10.9s)
+  ok 18 [mobile-chromium] › tests\browser\shell.spec.ts:13:1 › responsive shell, keyboard focus, server save, read-only refusal and storage feasibility (3.4s)
+  ok 19 [mobile-chromium] › tests\browser\shell.spec.ts:112:1 › unavailable dependency and missing page show useful recoverable states (1.2s)
+  3 skipped
+  16 passed (3.6m)

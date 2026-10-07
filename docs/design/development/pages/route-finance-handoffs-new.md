@@ -40,3 +40,9 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 The draft User Guide `guide.page.finance.handoffs.new` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## NAV contextual navigation
+
+An issued Report may supply validated work_order_id and report_id. Read current source membership/readiness, deliberately select the report, and retain account/allocation/recipient controls. Opening the form neither saves nor posts a handoff.
+
+Desktop uses the existing shell with a 76 px compact or 232 px labelled primary rail. Mobile uses labelled destinations and More > Workspace; Home/search/help remain reachable. Check 320/390/780/781/1199/1200 px where applicable, long labels, visible focus and Escape/return focus. Missing accepted images remain explicit; no new accepted image or review fingerprint is recorded. Functional results and screenshot observations are in the NAV ledger; owner/device review and deployment remain separate.

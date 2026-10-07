@@ -58,3 +58,7 @@ EQ-01 through EQ-09 reuse the shared control in their applicable register, recor
 ## Maintenance and Warranty consumers
 
 MA-01–MA-07 now reuse this component through the native registers and record workspaces. Exact bindings are in components.json. Synthetic long labels, uncertain saves, stale versions and separate customer/recovery states are in docs/design/development/maintenance-fixtures.json and the Maintenance browser journeys. Review 1440/1024/390/320 px and guide draft retention before owner acceptance.
+
+## NAV URL-state consumers
+
+Deal section, Sales handover view and Engineering record view reuse validated existing URL selection. Invalid values fall back to the declared initial view and preserve unrelated query context. Estimate revision selection uses version_id with exact reader membership/access checks. Dirty and unknown-outcome work uses the shared navigation intent; Discovery retains its stronger guard. Existing RecordTabs/RecordPanel keyboard semantics remain. Inspect rendered deep links, reload and Back in the real host; catalogue snapshots do not prove server authority.

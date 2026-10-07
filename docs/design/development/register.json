@@ -24,7 +24,8 @@
       "summary": "The current /work overview exists. Retain it; wider departmental variants depend on future domain records.",
       "path": "/work",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/styles/my-work.css"
       ],
       "guide_key": "guide.sh.01",
       "design_path": "docs/design/development/pages/scope-sh-01.md",
@@ -46,7 +47,8 @@
       "related_keys": [
         "route:/work"
       ],
-      "reviewer": null
+      "reviewer": null,
+      "notes": "NAV expanded primary rail: populated My Work responds to available content width through a bounded container query. An actual screenshot exposed compressed titles; repair proof and owner/device review remain separate."
     },
     {
       "key": "scope:SH-02",
@@ -999,7 +1001,9 @@
         "docs/decisions/won-delivery-continuity.md",
         "docs/testing/evidence/won-delivery-continuity/README.md",
         "src/components/sales-delivery-link.tsx",
-        "src/components/sales-delivery-creation.tsx"
+        "src/components/sales-delivery-creation.tsx",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
@@ -1356,7 +1360,9 @@
         "src/components/quotation-release.css",
         "src/estimating/release/service.ts",
         "src/estimating/release/reads.ts",
-        "docs/contracts/quotation-release.md"
+        "docs/contracts/quotation-release.md",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "Bounded native synthetic release",
       "visual_status": "Needs review",
@@ -2595,7 +2601,9 @@
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
         "src/scheduling/components/client/workspace-navigation.client.tsx",
-        "src/app/styles/scheduling-workspaces.css"
+        "src/app/styles/scheduling-workspaces.css",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -2637,7 +2645,9 @@
         "src/scheduling/components/client/workspace-navigation.client.tsx",
         "src/app/styles/scheduling-workspaces.css",
         "src/scheduling/policy-holds.ts",
-        "src/scheduling/components/client/policy-holds.client.tsx"
+        "src/scheduling/components/client/policy-holds.client.tsx",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -2677,7 +2687,9 @@
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
         "src/scheduling/components/client/workspace-navigation.client.tsx",
-        "src/app/styles/scheduling-workspaces.css"
+        "src/app/styles/scheduling-workspaces.css",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -2807,7 +2819,9 @@
         "src/inspections/service-context.ts",
         "src/inspections/service-commands.ts",
         "docs/decisions/service-inspections.md",
-        "docs/testing/evidence/service-inspections/README.md"
+        "docs/testing/evidence/service-inspections/README.md",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -2847,7 +2861,9 @@
         "src/inspections/service-context.ts",
         "src/inspections/service-commands.ts",
         "docs/decisions/service-inspections.md",
-        "docs/testing/evidence/service-inspections/README.md"
+        "docs/testing/evidence/service-inspections/README.md",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -2893,7 +2909,9 @@
         "docs/testing/evidence/field-readiness-native/capture-manifest.json",
         "src/field/visit-guidance.ts",
         "src/components/field-visit-entry.tsx",
-        "docs/decisions/field-closed-visit-guidance.md"
+        "docs/decisions/field-closed-visit-guidance.md",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "Implemented; review pending",
       "visual_status": "Needs review",
@@ -2934,7 +2952,9 @@
         "src/incidents/context.ts",
         "src/incidents/holds.ts",
         "docs/decisions/field-incidents.md",
-        "docs/testing/evidence/field-incidents/README.md"
+        "docs/testing/evidence/field-incidents/README.md",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -3951,7 +3971,9 @@
         "src/products/components/products.css",
         "docs/contracts/products-catalogue.md",
         "docs/delivery/products-native-handover.md",
-        "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html"
+        "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "Native synthetic implementation; acceptance pending",
       "visual_status": "Needs review",
@@ -5642,7 +5664,10 @@
       "image_paths": [
         "docs/testing/evidence/department-navigation/finance-exact-account.png"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -5847,7 +5872,9 @@
       "dependencies": [
         "src/engineering/control/components/summary.tsx",
         "src/engineering/control/workload.ts",
-        "src/engineering/control/guide.ts"
+        "src/engineering/control/guide.ts",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -5926,7 +5953,9 @@
       "dependencies": [
         "docs/decisions/ADR-0045-equipment-native-workflows.md",
         "docs/delivery/equipment-native-completion-handover.md",
-        "docs/testing/evidence/equipment-native/README.md"
+        "docs/testing/evidence/equipment-native/README.md",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "Native implementation; synthetic verification recorded",
       "visual_status": "Implementation captures inspected; proposed native adaptation; owner acceptance pending",
@@ -6145,7 +6174,10 @@
       "design_path": "docs/design/development/pages/route-estimating-estimates-id.md",
       "html_path": "docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -6295,7 +6327,10 @@
       "design_path": "docs/design/development/pages/route-finance-handoffs-new.md",
       "html_path": "docs/reference/ui/finance/PPO-Finance-and-Commercial-Controls-r02.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -6707,7 +6742,9 @@
         "src/components/sales-delivery-link.tsx",
         "src/components/sales-delivery-creation.tsx",
         "src/components/sales-followup.tsx",
-        "src/sales/followup.ts"
+        "src/sales/followup.ts",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
@@ -6989,7 +7026,9 @@
         "src/shared/ui/use-recoverable-command.ts",
         "src/offline/app.ts",
         "docs/decisions/field-customer-response.md",
-        "docs/testing/evidence/field-customer-response/README.md"
+        "docs/testing/evidence/field-customer-response/README.md",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -7600,7 +7639,9 @@
         "src/components/activity-screens.tsx",
         "src/components/sales-followup.tsx",
         "src/sales/followup.ts",
-        "docs/design/development/lead-continuity-fixtures.json"
+        "docs/design/development/lead-continuity-fixtures.json",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -7678,10 +7719,10 @@
     },
     {
       "key": "route:/",
-      "title": "Home → My Work",
+      "title": "Home → permitted work",
       "kind": "route",
       "module": "SH",
-      "summary": "The home address redirects to the existing My Work overview.",
+      "summary": "Permission-aware authenticated start: My Work for activity readers, otherwise a declared permitted operational destination; clear no-grant state.",
       "path": "/",
       "source_paths": [
         "src/app/page.tsx"
@@ -7819,7 +7860,10 @@
       "design_path": "docs/design/development/pages/route-engineering-id-changes.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -7847,7 +7891,10 @@
       "design_path": "docs/design/development/pages/route-engineering-id-changes-handovers.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -7875,7 +7922,10 @@
       "design_path": "docs/design/development/pages/route-engineering-id-changes-history.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -7903,7 +7953,10 @@
       "design_path": "docs/design/development/pages/route-engineering-id-changes-impact.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -7931,7 +7984,10 @@
       "design_path": "docs/design/development/pages/route-engineering-id-changes-reviews.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -7959,7 +8015,10 @@
       "design_path": "docs/design/development/pages/route-engineering-id-changes-verification.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -7987,7 +8046,10 @@
       "design_path": "docs/design/development/pages/route-engineering-id-materials.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -8015,7 +8077,10 @@
       "design_path": "docs/design/development/pages/route-engineering-id-materials-handover.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -8043,7 +8108,10 @@
       "design_path": "docs/design/development/pages/route-engineering-id-materials-history.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -8071,7 +8139,10 @@
       "design_path": "docs/design/development/pages/route-engineering-id-materials-mapping.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -8099,7 +8170,10 @@
       "design_path": "docs/design/development/pages/route-engineering-id-materials-releases.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -8127,7 +8201,10 @@
       "design_path": "docs/design/development/pages/route-engineering-id-materials-substitutions.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -8295,7 +8372,10 @@
       "design_path": "docs/design/development/pages/route-engineering-commissioning-packages-id.md",
       "html_path": null,
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -8602,7 +8682,10 @@
       "design_path": "docs/design/development/pages/route-estimating-quotes.md",
       "html_path": "docs/reference/ui/quoting/PPO-Quotation-Approval-Issue-and-Distribution-r02.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -8971,7 +9054,9 @@
       "dependencies": [
         "docs/decisions/ADR-0033-staged-acceptance.md",
         "docs/delivery/pj09-staged-acceptance-handover.md",
-        "docs/testing/evidence/project-acceptance-r01/README.md"
+        "docs/testing/evidence/project-acceptance-r01/README.md",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -9075,7 +9160,7 @@
       "title": "Application shell",
       "kind": "system",
       "module": "Shared",
-      "summary": "Navigation, global search, context, page guide and the local design-workspace entry.",
+      "summary": "Permission-aware Home, ordinary Workspace in More, labelled/compact primary rail, global search/help and exact loaded breadcrumb context.",
       "path": null,
       "source_paths": [
         "src/components/product-navigation.tsx",
@@ -9096,11 +9181,18 @@
         "src/shell/search-service.ts",
         "docs/delivery/sh-platform-handover.md",
         "docs/testing/evidence/sh-platform/README.md",
-        "docs/testing/evidence/job-pack-i5/README.md"
+        "docs/testing/evidence/job-pack-i5/README.md",
+        "src/shell/navigation.ts",
+        "src/components/navigation-intent.ts",
+        "src/components/shell-workspace-selector.tsx",
+        "src/components/application-frame.tsx",
+        "src/shell/record-identity.tsx",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "Shared source",
       "visual_status": "Needs review",
-      "functional_status": "See linked source evidence",
+      "functional_status": "See NAV implementation ledger; source, functional proof and acceptance remain separate",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -9446,7 +9538,10 @@
       "design_path": "docs/design/development/pages/route-surveys-id.md",
       "html_path": "docs/reference/ui/customers/PPO-Site-Survey-and-As-Found-Workspace-r01.html",
       "image_paths": [],
-      "dependencies": [],
+      "dependencies": [
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
+      ],
       "scope_status": "Native implementation; owner acceptance pending",
       "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
       "functional_status": "Focused automated proof; see receiving handover",
@@ -9515,7 +9610,9 @@
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
         "src/scheduling/components/client/workspace-navigation.client.tsx",
-        "src/app/styles/scheduling-workspaces.css"
+        "src/app/styles/scheduling-workspaces.css",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -9551,7 +9648,9 @@
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
         "src/scheduling/components/client/workspace-navigation.client.tsx",
-        "src/app/styles/scheduling-workspaces.css"
+        "src/app/styles/scheduling-workspaces.css",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -9587,7 +9686,9 @@
         "src/scheduling/workspace-reads.ts",
         "src/scheduling/workspace-model.ts",
         "src/scheduling/components/client/workspace-navigation.client.tsx",
-        "src/app/styles/scheduling-workspaces.css"
+        "src/app/styles/scheduling-workspaces.css",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -9836,7 +9937,9 @@
         "src/engineering/control/components/workspace.tsx",
         "src/app/styles/engineering-control.css",
         "src/shell/secondary-menu.tsx",
-        "docs/decisions/ADR-0047-engineering-native-control.md"
+        "docs/decisions/ADR-0047-engineering-native-control.md",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "Native implementation present; review separate",
       "visual_status": "Needs review",
@@ -9873,7 +9976,9 @@
         "src/engineering/control/components/workspace.tsx",
         "src/app/styles/engineering-control.css",
         "src/shell/secondary-menu.tsx",
-        "docs/decisions/ADR-0047-engineering-native-control.md"
+        "docs/decisions/ADR-0047-engineering-native-control.md",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "Native implementation present; review separate",
       "visual_status": "Needs review",
@@ -9910,7 +10015,9 @@
         "src/engineering/control/components/workspace.tsx",
         "src/app/styles/engineering-control.css",
         "src/shell/secondary-menu.tsx",
-        "docs/decisions/ADR-0047-engineering-native-control.md"
+        "docs/decisions/ADR-0047-engineering-native-control.md",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "Native implementation present; review separate",
       "visual_status": "Needs review",
@@ -9947,7 +10054,9 @@
         "src/engineering/control/components/workspace.tsx",
         "src/app/styles/engineering-control.css",
         "src/shell/secondary-menu.tsx",
-        "docs/decisions/ADR-0047-engineering-native-control.md"
+        "docs/decisions/ADR-0047-engineering-native-control.md",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "Native implementation present; review separate",
       "visual_status": "Needs review",
@@ -9987,7 +10096,9 @@
         "src/engineering/control/components/workspace.tsx",
         "src/app/styles/engineering-control.css",
         "src/shell/secondary-menu.tsx",
-        "docs/decisions/ADR-0047-engineering-native-control.md"
+        "docs/decisions/ADR-0047-engineering-native-control.md",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "Native implementation present; review separate",
       "visual_status": "Needs review",
@@ -10024,7 +10135,9 @@
         "src/engineering/control/components/workspace.tsx",
         "src/app/styles/engineering-control.css",
         "src/shell/secondary-menu.tsx",
-        "docs/decisions/ADR-0047-engineering-native-control.md"
+        "docs/decisions/ADR-0047-engineering-native-control.md",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "Native implementation present; review separate",
       "visual_status": "Needs review",
@@ -10061,7 +10174,9 @@
         "src/engineering/control/components/workspace.tsx",
         "src/app/styles/engineering-control.css",
         "src/shell/secondary-menu.tsx",
-        "docs/decisions/ADR-0047-engineering-native-control.md"
+        "docs/decisions/ADR-0047-engineering-native-control.md",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "Native implementation present; review separate",
       "visual_status": "Needs review",
@@ -10106,7 +10221,9 @@
         "src/engineering/control/components/workspace.tsx",
         "src/app/styles/engineering-control.css",
         "src/shell/secondary-menu.tsx",
-        "docs/decisions/ADR-0047-engineering-native-control.md"
+        "docs/decisions/ADR-0047-engineering-native-control.md",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "Native implementation present; review separate",
       "visual_status": "Needs review",
@@ -10146,7 +10263,9 @@
         "src/engineering/control/components/workspace.tsx",
         "src/app/styles/engineering-control.css",
         "src/shell/secondary-menu.tsx",
-        "docs/decisions/ADR-0047-engineering-native-control.md"
+        "docs/decisions/ADR-0047-engineering-native-control.md",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "Native implementation present; review separate",
       "visual_status": "Needs review",
@@ -10183,7 +10302,9 @@
         "src/engineering/control/components/workspace.tsx",
         "src/app/styles/engineering-control.css",
         "src/shell/secondary-menu.tsx",
-        "docs/decisions/ADR-0047-engineering-native-control.md"
+        "docs/decisions/ADR-0047-engineering-native-control.md",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "Native implementation present; review separate",
       "visual_status": "Needs review",
@@ -10223,7 +10344,9 @@
         "src/engineering/control/components/workspace.tsx",
         "src/app/styles/engineering-control.css",
         "src/shell/secondary-menu.tsx",
-        "docs/decisions/ADR-0047-engineering-native-control.md"
+        "docs/decisions/ADR-0047-engineering-native-control.md",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "Native implementation present; review separate",
       "visual_status": "Needs review",
@@ -10260,7 +10383,9 @@
         "src/engineering/control/components/workspace.tsx",
         "src/app/styles/engineering-control.css",
         "src/shell/secondary-menu.tsx",
-        "docs/decisions/ADR-0047-engineering-native-control.md"
+        "docs/decisions/ADR-0047-engineering-native-control.md",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "Native implementation present; review separate",
       "visual_status": "Needs review",
@@ -10448,7 +10573,9 @@
         "src/components/sales-estimating-link.tsx",
         "src/sales/estimating-binding.ts",
         "docs/contracts/lead-to-delivery-continuity.md",
-        "docs/design/development/lead-continuity-fixtures.json"
+        "docs/design/development/lead-continuity-fixtures.json",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
@@ -11399,7 +11526,9 @@
         "src/components/field-readiness-screen.tsx",
         "src/app/field-readiness.css",
         "docs/testing/evidence/field-readiness-native/README.md",
-        "docs/testing/evidence/field-readiness-native/capture-manifest.json"
+        "docs/testing/evidence/field-readiness-native/capture-manifest.json",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "Implemented; review pending",
       "visual_status": "Needs review",
@@ -11445,7 +11574,9 @@
         "src/scheduling/policy-records.ts",
         "src/scheduling/policy-commands.ts",
         "src/scheduling/policy-journal.ts",
-        "docs/decisions/scheduling-policy-publication.md"
+        "docs/decisions/scheduling-policy-publication.md",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "Built synthetic comparison and native policy workflow; wider acceptance remains open",
       "visual_status": "Needs review",
@@ -11485,7 +11616,9 @@
         "src/inspections/service-context.ts",
         "src/inspections/service-commands.ts",
         "docs/decisions/service-inspections.md",
-        "docs/testing/evidence/service-inspections/README.md"
+        "docs/testing/evidence/service-inspections/README.md",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -11525,7 +11658,9 @@
         "src/inspections/service-context.ts",
         "src/inspections/service-commands.ts",
         "docs/decisions/service-inspections.md",
-        "docs/testing/evidence/service-inspections/README.md"
+        "docs/testing/evidence/service-inspections/README.md",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -11652,7 +11787,9 @@
         "src/incidents/context.ts",
         "src/incidents/holds.ts",
         "docs/decisions/field-incidents.md",
-        "docs/testing/evidence/field-incidents/README.md"
+        "docs/testing/evidence/field-incidents/README.md",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -11692,7 +11829,9 @@
         "src/components/estimate-review.css",
         "src/estimating/review/service.ts",
         "src/estimating/review/reads.ts",
-        "docs/contracts/estimating-review.md"
+        "docs/contracts/estimating-review.md",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "Bounded native review; commercial approval not configured",
       "visual_status": "Needs review",
@@ -11960,7 +12099,9 @@
         "src/products/components/products.css",
         "docs/contracts/products-catalogue.md",
         "docs/delivery/products-native-handover.md",
-        "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html"
+        "docs/reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html",
+        "docs/design/development/navigation-fixtures.json",
+        "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "Native synthetic implementation; acceptance pending",
       "visual_status": "Needs review",

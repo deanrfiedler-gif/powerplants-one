@@ -19,3 +19,7 @@ The live component gallery consumes runtime tokens and the shared Button compone
 ## Recovery and review
 
 Restore an unwanted working-source change through a reviewed successor in Git. Preserve issued references and past acceptance evidence. Verify keyboard navigation, focus, long content, loading, read-only and error states in the owning workflow. No complete visual review is recorded for this new development surface yet.
+
+## NAV hosted entry
+
+Hosted Field, exception, Report and timer recovery actions explain that local offline originals are unavailable in hosted mode. The gateway continues to refuse /offline; local synthetic links and original-command recovery remain. No menu correction weakens the gateway or claims offline deployment.

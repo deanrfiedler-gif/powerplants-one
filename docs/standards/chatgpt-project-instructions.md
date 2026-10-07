@@ -96,3 +96,5 @@ PT sources, owner review and benefits: field-integrated-acceptance-ledger.md.
 ES-07: quotation-task-diamond.md; seven decisions; save A/B/C/D once. Retain edges, unmet Demand, fresh disposition and prior originals, merge B retained.
 
 PD-01–05: ADR-0048; migration 0052, exact pricing revisions, four local duties. Preserve originals. No hosted grants; owner acceptance/deployment separate.
+
+NAV: navigation-consolidation.md; retain scope/recovery.

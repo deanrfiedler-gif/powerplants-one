@@ -29,3 +29,9 @@ The draft guide `guide.route-estimating-estimates-id-review` contains prerequisi
 ## Inspected synthetic viewport captures
 
 [Desktop reviewed overview](../../../testing/evidence/estimating-review/reviewed-overview-desktop.png) and [320px review basis](../../../testing/evidence/estimating-review/review-basis-320.png) were inspected against native source `8e3d348`; [provenance and limits](../../../testing/evidence/estimating-review/manifest.json). These are runtime captures, not adopted reference designs. Full visual/owner review stays pending.
+
+## NAV contextual navigation
+
+Breadcrumb identity names Estimate review. The loaded exact reference/version/title is retained separately from approval and quotation issue. Parent navigation and source record links retain their distinct purposes.
+
+Desktop uses the existing shell with a 76 px compact or 232 px labelled primary rail. Mobile uses labelled destinations and More > Workspace; Home/search/help remain reachable. Check 320/390/780/781/1199/1200 px where applicable, long labels, visible focus and Escape/return focus. Missing accepted images remain explicit; no new accepted image or review fingerprint is recorded. Functional results and screenshot observations are in the NAV ledger; owner/device review and deployment remain separate.

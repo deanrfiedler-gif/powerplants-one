@@ -1,0 +1,13 @@
+Source commit: 6e6e91ae95696aab3db92e75be0fc19db569085a
+Result: 1 passed after private PostgreSQL lock-limit repair. No application schema change.
+Bounded excerpt; private original SHA-256: 0e93d94739bc6380d0ad31098f4f05a0e040dc2254908150f29c1960583f9a2b
+
+✔ FI03 missing criteria and unknown applicability remain incomplete owned obligations; source/permission changes deny new work and receipts (29181.2751ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 32419.9318

@@ -68,3 +68,9 @@ Reuse the shared online journal with an opt-in receipt check for server-allocate
 ## Step 6 functional evidence
 
 [Integrated execution and release map](../../../testing/evidence/scheduling-step6/README.md) and [owner walkthrough](../../../delivery/scheduling-step6-owner-walkthrough.md) add update/restart/rollback and Service/Finance handovers. Scope, page type, reused components, incoming/outgoing bindings and implementation are unchanged. No new accepted mockup exists; visual/guide/component review remains pending and no fingerprint is adopted.
+
+## NAV contextual navigation
+
+Scheduling change follow-up has its own breadcrumb and retains the shared secondary-menu view, day/timezone/site/resource query contract.
+
+Desktop uses the existing shell with a 76 px compact or 232 px labelled primary rail. Mobile uses labelled destinations and More > Workspace; Home/search/help remain reachable. Check 320/390/780/781/1199/1200 px where applicable, long labels, visible focus and Escape/return focus. Missing accepted images remain explicit; no new accepted image or review fingerprint is recorded. Functional results and screenshot observations are in the NAV ledger; owner/device review and deployment remain separate.

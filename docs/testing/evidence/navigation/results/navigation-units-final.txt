@@ -1,0 +1,16 @@
+Source: earlier candidate working tree; exact snapshot not retained; final committed-head unit run supersedes this diagnostic.
+Result: 9 passed.
+Bounded excerpt; private original SHA-256: ea3b544784377946507357a8edb16ccce633ef8136f587556f2785afafd437ce
+
+✔ N11/N15 blank More exposes operational entries and vocabulary finds canonical pages (1.2038ms)
+✔ N12 Sales Activities keeps one day/scope/department policy (14.1176ms)
+✔ N14/N22 specific task identity and parent precede generic prefixes (0.7251ms)
+✔ N07/N08 leave review cancels all transition side effects and preserves stronger review (0.1803ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1660.3803

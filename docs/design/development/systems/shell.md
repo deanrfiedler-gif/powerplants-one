@@ -35,3 +35,11 @@ I5 found legacy identity-dependent grid styles placing utilities over the Servic
 ## Products navigation and design bindings
 
 The permitted Sales fixture includes Products as its eighth primary destination and in More. Keep the 25 px semantic icons, fixed rail endpoints, header geometry and department-preserving Products link. Six native Products workspace routes bind their corresponding `products-native-*` records in `ui-baselines.json`; those records remain proposed compositions. The shell/conformance fixtures test exact links, source hashes and owning proof files without changing issued r17 or granting owner acceptance. The Products capability and existing permission filter continue to decide visibility. See the [Products evidence ledger](../../../testing/evidence/products-native/README.md) for the failed head and repair results.
+
+## NAV shell evolution
+
+The primary rail defaults to its established compact 76 px mode and expands to labelled 232 px mode. Its schema-checked preference belongs to the identity/browser, with a visit-memory fallback when storage fails. Navy `#242a37` is primary, green `#62bb46` remains a restrained brand accent, and semantic status colours remain. Roboto, logo and icons are reused. The 780/781 px shell boundary and 1200 px secondary-menu docking are retained. Sales phone destinations gain visible labels and Leads retains global Home/More/search/help. Service and Email duplicate header tabs are removed where the module already owns the same views. This is a proposed departure from retained shell r17, informed by theme r22; no issued source or baseline acceptance changes.
+
+
+
+Ordinary Workspace lives in More and uses an eligible operational landing; Development Shell preview is presentation only. Search/page navigation reviews dirty work before changing location or preference. Exact loaded reference/title extends route breadcrumbs; denied and loading identity context clears it. Host states are maintained in navigation-fixtures.json. Screenshot inspection and owner/device acceptance are separate in the NAV ledger.

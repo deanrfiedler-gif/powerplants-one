@@ -46,3 +46,9 @@ Outgoing: exact reviewed basis/document/issue sources through the existing EN-06
 
 Guide: guide.route-engineering-id-basis-sources. The global information icon resolves route-specific native guidance and the draft development article.
 Evidence: docs/delivery/engineering-native-control-handover.md. Functional proof, visual review, business acceptance and deployment are separate. Review fields remain blank until actual review; no deployment is authorised.
+
+## NAV contextual navigation
+
+Engineering record sections retain validated view URL state and exact package context. Special Materials, Changes and Commissioning parents take precedence over generic Engineering routes. Module menus and receiving authority remain intact.
+
+Desktop uses the existing shell with a 76 px compact or 232 px labelled primary rail. Mobile uses labelled destinations and More > Workspace; Home/search/help remain reachable. Check 320/390/780/781/1199/1200 px where applicable, long labels, visible focus and Escape/return focus. Missing accepted images remain explicit; no new accepted image or review fingerprint is recorded. Functional results and screenshot observations are in the NAV ledger; owner/device review and deployment remain separate.
