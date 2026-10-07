@@ -1,5 +1,7 @@
 # Current prototype status
 
+**Products #358 measured CI headroom, 7 October 2026:** integrated head `d686723` passed all 52 checks across 18 workflows, including 984 database cases, 616 units and the primary 650-pass browser suite (79 retained skips). Database-2 left only 18 seconds of its 90-minute budget; the primary browser job left 3m04s. The [capacity follow-up](testing/evidence/products-native/ci-capacity/README.md#measured-headroom-follow-up) adds a fourth native database shard and isolates full desktop/mobile browser projects while preserving every focused/restart phase, test, deadline and mandatory gate. Application/SQL/test/dependency bytes are unchanged; final-head CI is separate from the green checkpoint.
+
 **Products #358 capacity follow-up, 7 October 2026:** head `af9e26b` passed 49 checks, including corrected Leads/CRM visual and native Products restart proof. Database-1 exceeded its unchanged 90-minute job limit after 510 passes and no failed assertion; its mandatory aggregate failed. The contribution integrates main `c228c4f`, Maintenance/Warranty and its existing three-shard repair. Exact capabilities, migrations/seeds/grants and shared design bindings retain both modules. [Capacity evidence](testing/evidence/products-native/ci-capacity/README.md) separates the cancelled original, local verification and final-head CI. Owner acceptance and deployment remain separate.
 
 ## Products completion — 7 October 2026
