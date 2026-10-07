@@ -54,8 +54,7 @@ jobs:
           npm run lint
           npm run typecheck
           npm run test:unit
-      - name: Browser runtime
-        if: matrix.suite == 'browser'
+      - name: Controlled browser and PDF renderer
         run: npm run browser:install
       - name: Disposable database configuration
         run: |
@@ -150,10 +149,10 @@ jobs:
           PPO_PORT: "3042"
         run: npx playwright test --config=playwright.fertigation.config.ts --output verification-evidence/fertigation-browser --reporter=list
       - name: Retain exact synthetic evidence
-        if: always() && matrix.suite == 'browser'
+        if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: Estimating-E1-evidence
+          name: ${{ matrix.suite == 'browser' && 'Estimating-E1-evidence' || 'Estimating-E1-database-evidence' }}
           path: |
             verification-evidence/estimating-e1-*/
             verification-evidence/estimating-es02-browser/

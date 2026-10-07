@@ -1,0 +1,120 @@
+{
+  "source_head": "2e4a1d3f7b0de7c8b44a3674a1c8538a2aba2dac",
+  "run_id": 37599916422,
+  "job_id": 112721490049,
+  "artifact_id": 11474119516,
+  "stats": {
+    "startTime": "2026-10-07T09:32:24.252Z",
+    "duration": 2208334.23,
+    "expected": 298,
+    "skipped": 66,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "failed_cases": [
+    {
+      "file": "sh-platform.spec.ts",
+      "line": 232,
+      "title": "SH review perspectives, responsive geometry and current My Work interiors",
+      "project": "mobile-chromium",
+      "status": "failed",
+      "duration_ms": 41242,
+      "start_time": "2026-10-07T10:05:23.351Z",
+      "retry": 0,
+      "error": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByText(/results on this page/)\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" getByText(/results on this page/) with timeout 5000ms\n  - waiting for getByText(/results on this page/)\n",
+      "error_location": {
+        "file": "/home/runner/work/powerplants-one/powerplants-one/tests/browser/sh-platform.spec.ts",
+        "column": 62,
+        "line": 253
+      }
+    }
+  ],
+  "screenshot": {
+    "file": "search-failure.png",
+    "sha256": "b9f6aabf2e854d2f1381b3b55dfd804717466785a6e8b7f148e6ea60b2ad070f",
+    "inspection": "The failure screenshot already displays the SYN results count and records at 1440px. The five-second count assertion had just expired. This is not proof of the exact original request latency."
+  },
+  "unchanged_main": "c228c4f6bfd063e73fb11b67155ce0b1abf2749e",
+  "identical_git_blobs": {
+    "tests/browser/sh-platform.spec.ts": "84bfb8b6be945ebce511a35f668c47834db5f5ad",
+    "tests/helpers/browser-read-drain.ts": "ef0de2d8f4a975e08a00a6bbffe6f943c8d8c5fb",
+    "tests/helpers/my-work-navigation.ts": "8da0ab4cd9bac1c35d773b5bc39b89fde98ebba6",
+    "src/components/platform-search.tsx": "eae655b31579a04bf6a8688e4d32d4eca28fe20c",
+    "src/components/platform-resource.ts": "1d35a4d05ef5cf317ab6ebfcef1bb341498a24ce",
+    "src/shell/search-service.ts": "a139a5ffd64a5c755b3b3480f70630c93da1f060",
+    "src/app/api/v1/search/route.ts": "f5fcb11d04b7ae01da3fed2f143a53c7a38a553e"
+  },
+  "control": "search-main-control.json",
+  "repair": "Await the original Search GET before applying the unchanged five-second visibility and geometry assertions. Both browser projects deliberately hold the real initial reads for six seconds; each read is forwarded once, without a synthetic body or retry. The 180-second whole-case deadline remains unchanged.",
+  "local_incomplete_fixture_attempt": {
+    "selection": "Geometry case alone, without its retained preceding notification-creation case.",
+    "stats": {
+      "startTime": "2026-10-07T10:38:39.024Z",
+      "duration": 449054.694,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "observation": "Both projects timed out scrolling to the first notification on /work/updates before reaching the changed Search section. The next validation includes the unchanged original notification case; no fixture assertion is removed or deadline extended."
+  },
+  "local_complete_selection": {
+    "stats": {
+      "startTime": "2026-10-07T10:46:54.734Z",
+      "duration": 56165.264,
+      "expected": 5,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "title": "warm every route once before the browser projects",
+        "project": "warm-up",
+        "status": "expected",
+        "duration_ms": 12014,
+        "retry": 0
+      },
+      {
+        "title": "SH notification event, explicit read, source guard, grouped state and preferences persist",
+        "project": "desktop-chromium",
+        "status": "expected",
+        "duration_ms": 3252,
+        "retry": 0
+      },
+      {
+        "title": "SH review perspectives, responsive geometry and current My Work interiors",
+        "project": "desktop-chromium",
+        "status": "expected",
+        "duration_ms": 12943,
+        "retry": 0
+      },
+      {
+        "title": "SH notification event, explicit read, source guard, grouped state and preferences persist",
+        "project": "mobile-chromium",
+        "status": "expected",
+        "duration_ms": 3226,
+        "retry": 0
+      },
+      {
+        "title": "SH review perspectives, responsive geometry and current My Work interiors",
+        "project": "mobile-chromium",
+        "status": "expected",
+        "duration_ms": 12831,
+        "retry": 0
+      }
+    ],
+    "compiled_build_id": "QLKdHIBDrfM_mPxAhYE3F",
+    "test_sha256": "b6c72a91c8165fddce07568a013100d18897cb5731340e30cb55c3ed5cb85230",
+    "browser": "Chrome 154.0.8037.98",
+    "runtime": "Node 24.21.0 / Playwright 1.63.0",
+    "checks": [
+      "targeted ESLint passed",
+      "TypeScript passed",
+      "foundation: 7028 links and 78 parent requirements passed",
+      "naming: 7934 project-instruction characters passed",
+      "design register: 350 entries / 196 routes passed; review states unchanged"
+    ],
+    "boundary": "Selected retained Products-build browser proof with the unchanged original notification fixture. Exact unmodified-main build/control is separately recorded. Full final-head CI builds and runs the combined source separately."
+  }
+}

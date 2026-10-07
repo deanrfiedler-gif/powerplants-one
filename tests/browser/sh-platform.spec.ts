@@ -245,7 +245,28 @@ test("SH review perspectives, responsive geometry and current My Work interiors"
     await page.setViewportSize({ width: 1440, height: 900 });
     if (path === "/work" || path === "/work/actions")
       await navigateToMyWork(page, path);
-    else await page.goto(path);
+    else if (path.startsWith("/search")) {
+      // The heading can render before Search's original data arrives. Hold
+      // each real initial read beyond the unchanged five-second UI assertion
+      // to exercise this ordering on both projects without retrying any read.
+      await page.route("**/api/v1/search?q=SYN", async (route) => {
+        const response = await route.fetch({
+          headers: { ...route.request().headers(), connection: "close" },
+        });
+        await new Promise((resolve) => setTimeout(resolve, 6000));
+        await route.fulfill({ response });
+      });
+      const searchRead = page.waitForResponse((response) => {
+        const url = new URL(response.url());
+        return response.request().method() === "GET" &&
+          url.pathname === "/api/v1/search" && url.searchParams.get("q") === "SYN";
+      });
+      await page.goto(path);
+      const response = await searchRead;
+      expect(response.status()).toBe(200);
+      expect(await response.finished()).toBeNull();
+      expect(Array.isArray((await response.json()).items)).toBe(true);
+    } else await page.goto(path);
     for (const width of [1440, 1280, 1024, 768, 430, 390, 320]) {
       await resizeMyWork(page, { width, height: 900 });
       await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
