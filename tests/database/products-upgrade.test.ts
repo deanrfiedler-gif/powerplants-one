@@ -17,6 +17,7 @@ import { createProduct } from "../../src/products/commands";
 import {
   assertOnlyEngineeringSeedGrantsAdded,
   productsSeedGrants,
+  maintenanceSeedGrants,
   supplySeedGrants,
   schedulingPolicySeedGrants,
   incidentSeedGrants,
@@ -105,6 +106,7 @@ for (const through of [25, 48, 71, 72])
           ...(through === 48
             ? [
                 ...supplySeedGrants(grants),
+                ...maintenanceSeedGrants(grants),
                 ...schedulingPolicySeedGrants(grants),
                 ...incidentSeedGrants(grants),
                 ...estimateReviewSeedGrants(grants),

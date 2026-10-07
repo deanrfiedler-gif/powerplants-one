@@ -1,0 +1,510 @@
+✔ EQ migration upgrade across deferred identity backfill, retained originals and repeat seed (77563.0665ms)
+✔ tests\database\estimating-workspaces.test.ts (5544.4852ms)
+✔ E1-DB10 current-main upgrade and repeated seed preserve accepted CRM originals and revoked grants (204484.7789ms)
+✖ DR01-DB03 migration 24 originals survive upgrade, deliberate concurrent adoption and exact quotation recovery (180544.9708ms)
+✔ FI01 additive 0049 upgrade retains existing time, arrivals, receipts and revoked grants (162171.2962ms)
+✔ P07 upgrade from P06 and repeat seed retain exact original issue, source, receipts and revoked grants (144153.1893ms)
+✔ P10 additive upgrade from real P09 issued originals retains exact rows, bytes, migration checksums and repeat seeds (59401.5801ms)
+✔ main 0017 upgrades through Leads 0018 then Projects 0019 without replacing prior migration receipts (58366.5196ms)
+✔ an existing Leads 0018 record and receipt survive the Projects upgrade exactly (196302.4542ms)
+✖ P08 additive P07 upgrade preserves attendance, receipt, bytes and revoked grants (65240.7682ms)
+✔ P06 upgrade and repeat seed preserve exact P05 SQL evidence, revoked grants and accepted receipts (112723.6708ms)
+✔ P05 additive upgrade preserves exact P04 proposal bytes, receipts, source hashes and revoked grants; repeat seed preserves edits (144295.4388ms)
+✖ populated 0050 upgrade preserves every old row/hash, registers 0051 and 0053–0071 with reserved gaps and exact authority/instrument additions (69866.5983ms)
+✔ direct reseed and runner retries preserve an advanced head, later evidence, old pins and revoked grants (16134.5599ms)
+✔ P11 additive upgrade preserves actual current-main/P10 Approved records, original outputs and revoked receipt grants (75127.0693ms)
+✔ P11 additive upgrade preserves actual current-main/P10 OutcomeUnknown records, original outputs and revoked receipt grants (67639.7622ms)
+✔ P11 additive upgrade preserves actual current-main/P10 Reconciled records, original outputs and revoked receipt grants (66532.6295ms)
+✔ P09 fresh and P08 upgrade preserve originals and repeat seed does not revive revoked report grants (81616.6062ms)
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo migration mismatch: version=18 expected=2c36b8e173f805e0184e59284c0856d982ecc5a71ea60d61d64854f3ec186255 stored=missing
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: apply-migration-18
+Demo upgrade stage: apply-migration-19
+Demo upgrade stage: apply-migration-20
+Demo upgrade stage: apply-migration-21
+Demo upgrade stage: apply-migration-22
+Demo upgrade stage: apply-migration-23
+Demo upgrade stage: apply-migration-24
+Demo upgrade stage: apply-migration-25
+Demo upgrade stage: apply-migration-26
+Demo upgrade stage: apply-migration-27
+Demo upgrade stage: apply-migration-28
+Demo upgrade stage: apply-migration-29
+Demo upgrade stage: apply-migration-30
+Demo upgrade stage: apply-migration-31
+Demo upgrade stage: apply-migration-32
+Demo upgrade stage: apply-migration-33
+Demo upgrade stage: apply-migration-34
+Demo upgrade stage: apply-migration-35
+Demo upgrade stage: apply-migration-36
+Demo upgrade stage: apply-migration-37
+Demo upgrade stage: apply-migration-38
+Demo upgrade stage: apply-migration-39
+Demo upgrade stage: apply-migration-40
+Demo upgrade stage: apply-migration-41
+Demo upgrade stage: apply-migration-42
+Demo upgrade stage: apply-migration-43
+Demo upgrade stage: apply-migration-44
+Demo upgrade stage: apply-migration-45
+Demo upgrade stage: apply-migration-46
+Demo upgrade stage: apply-migration-47
+Demo upgrade stage: apply-migration-48
+Demo upgrade stage: apply-migration-49
+Demo upgrade stage: apply-migration-50
+Demo upgrade stage: apply-migration-51
+Demo upgrade stage: apply-migration-53
+Demo upgrade stage: apply-migration-54
+Demo upgrade stage: apply-migration-55
+Demo upgrade stage: apply-migration-56
+Demo upgrade stage: apply-migration-57
+Demo upgrade stage: apply-migration-58
+Demo upgrade stage: apply-migration-59
+Demo upgrade stage: apply-migration-60
+Demo upgrade stage: apply-migration-61
+Demo upgrade stage: apply-migration-62
+Demo upgrade stage: apply-migration-63
+Demo upgrade stage: apply-migration-64
+Demo upgrade stage: apply-migration-65
+Demo upgrade stage: apply-migration-66
+Demo upgrade stage: apply-migration-67
+Demo upgrade stage: apply-migration-68
+Demo upgrade stage: apply-migration-69
+Demo upgrade stage: apply-migration-70
+Demo upgrade stage: apply-migration-71
+Demo upgrade stage: apply-seed-18
+Demo upgrade stage: apply-seed-19
+Demo upgrade stage: apply-seed-20
+Demo upgrade stage: apply-seed-21
+Demo upgrade stage: apply-seed-24
+Demo upgrade stage: apply-seed-29
+Demo upgrade stage: apply-seed-30
+Demo upgrade stage: apply-seed-31
+Demo upgrade stage: apply-seed-32
+Demo upgrade stage: apply-seed-40
+Demo upgrade stage: apply-seed-41
+Demo upgrade stage: apply-seed-44
+Demo upgrade stage: apply-seed-47
+Demo upgrade stage: apply-seed-48
+Demo upgrade stage: apply-seed-49
+Demo upgrade stage: apply-seed-51
+Demo upgrade stage: apply-seed-53
+Demo upgrade stage: apply-seed-54
+Demo upgrade stage: apply-seed-55
+Demo upgrade stage: apply-seed-56
+Demo upgrade stage: apply-seed-58
+Demo upgrade stage: apply-seed-59
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+✔ upgrade preserves saved CRM, mailbox, sessions, old grants and invitation limits; retry is idempotent (57432.8786ms)
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: apply-migration-18
+Demo upgrade stage: apply-migration-19
+Demo upgrade stage: apply-migration-20
+Demo upgrade stage: apply-migration-21
+Demo upgrade stage: apply-migration-22
+Demo upgrade stage: apply-migration-23
+Demo upgrade stage: apply-migration-24
+Demo upgrade stage: apply-migration-25
+Demo upgrade stage: apply-migration-26
+Demo upgrade stage: apply-migration-27
+Demo upgrade stage: apply-migration-28
+Demo upgrade stage: apply-migration-29
+Demo upgrade stage: apply-migration-30
+Demo upgrade stage: apply-migration-31
+Demo upgrade stage: apply-migration-32
+Demo upgrade stage: apply-migration-33
+Demo upgrade stage: apply-migration-34
+Demo upgrade stage: apply-migration-35
+Demo upgrade stage: apply-migration-36
+Demo upgrade stage: apply-migration-37
+Demo upgrade stage: apply-migration-38
+Demo upgrade stage: apply-migration-39
+Demo upgrade stage: apply-migration-40
+Demo upgrade stage: apply-migration-41
+Demo upgrade stage: apply-migration-42
+Demo upgrade stage: apply-migration-43
+Demo upgrade stage: apply-migration-44
+Demo upgrade stage: apply-migration-45
+Demo upgrade stage: apply-migration-46
+Demo upgrade stage: apply-migration-47
+Demo upgrade stage: apply-migration-48
+Demo upgrade stage: apply-migration-49
+Demo upgrade stage: apply-migration-50
+Demo upgrade stage: apply-migration-51
+Demo upgrade stage: apply-migration-53
+Demo upgrade stage: apply-migration-54
+Demo upgrade stage: apply-migration-55
+Demo upgrade stage: apply-migration-56
+Demo upgrade stage: apply-migration-57
+Demo upgrade stage: apply-migration-58
+Demo upgrade stage: apply-migration-59
+Demo upgrade stage: apply-migration-60
+Demo upgrade stage: apply-migration-61
+Demo upgrade stage: apply-migration-62
+Demo upgrade stage: apply-migration-63
+Demo upgrade stage: apply-migration-64
+Demo upgrade stage: apply-migration-65
+Demo upgrade stage: apply-migration-66
+Demo upgrade stage: apply-migration-67
+Demo upgrade stage: apply-migration-68
+Demo upgrade stage: apply-migration-69
+Demo upgrade stage: apply-migration-70
+Demo upgrade stage: apply-migration-71
+Demo upgrade stage: apply-seed-18
+Demo upgrade stage: apply-seed-19
+Demo upgrade stage: apply-seed-20
+Demo upgrade stage: apply-seed-21
+Demo upgrade stage: apply-seed-24
+Demo upgrade stage: apply-seed-29
+Demo upgrade stage: apply-seed-30
+Demo upgrade stage: apply-seed-31
+Demo upgrade stage: apply-seed-32
+Demo upgrade stage: apply-seed-40
+Demo upgrade stage: apply-seed-41
+Demo upgrade stage: apply-seed-44
+Demo upgrade stage: apply-seed-47
+Demo upgrade stage: apply-seed-48
+Demo upgrade stage: apply-seed-49
+Demo upgrade stage: apply-seed-51
+Demo upgrade stage: apply-seed-53
+Demo upgrade stage: apply-seed-54
+Demo upgrade stage: apply-seed-55
+Demo upgrade stage: apply-seed-56
+Demo upgrade stage: apply-seed-58
+Demo upgrade stage: apply-seed-59
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+✔ an already-current demo requires explicit upgrade for missing booking grants (30367.7561ms)
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: apply-migration-18
+Demo upgrade stage: apply-migration-19
+Demo upgrade stage: apply-migration-20
+Demo upgrade stage: apply-migration-21
+Demo upgrade stage: apply-migration-22
+Demo upgrade stage: apply-migration-23
+Demo upgrade stage: apply-migration-24
+Demo upgrade stage: apply-migration-25
+Demo upgrade stage: apply-migration-26
+Demo upgrade stage: apply-migration-27
+Demo upgrade stage: apply-migration-28
+Demo upgrade stage: apply-migration-29
+Demo upgrade stage: apply-migration-30
+Demo upgrade stage: apply-migration-31
+Demo upgrade stage: apply-migration-32
+Demo upgrade stage: apply-migration-33
+Demo upgrade stage: apply-migration-34
+Demo upgrade stage: apply-migration-35
+Demo upgrade stage: apply-migration-36
+Demo upgrade stage: apply-migration-37
+Demo upgrade stage: apply-migration-38
+Demo upgrade stage: apply-migration-39
+Demo upgrade stage: apply-migration-40
+Demo upgrade stage: apply-migration-41
+Demo upgrade stage: apply-migration-42
+Demo upgrade stage: apply-migration-43
+Demo upgrade stage: apply-migration-44
+Demo upgrade stage: apply-migration-45
+Demo upgrade stage: apply-migration-46
+Demo upgrade stage: apply-migration-47
+Demo upgrade stage: apply-migration-48
+Demo upgrade stage: apply-migration-49
+Demo upgrade stage: apply-migration-50
+Demo upgrade stage: apply-migration-51
+Demo upgrade stage: apply-migration-53
+Demo upgrade stage: apply-migration-54
+Demo upgrade stage: apply-migration-55
+Demo upgrade stage: apply-migration-56
+Demo upgrade stage: apply-migration-57
+Demo upgrade stage: apply-migration-58
+Demo upgrade stage: apply-migration-59
+Demo upgrade stage: apply-migration-60
+Demo upgrade stage: apply-migration-61
+Demo upgrade stage: apply-migration-62
+Demo upgrade stage: apply-migration-63
+Demo upgrade stage: apply-migration-64
+Demo upgrade stage: apply-migration-65
+Demo upgrade stage: apply-migration-66
+Demo upgrade stage: apply-migration-67
+Demo upgrade stage: apply-migration-68
+Demo upgrade stage: apply-migration-69
+Demo upgrade stage: apply-migration-70
+Demo upgrade stage: apply-migration-71
+Demo upgrade stage: apply-seed-18
+Demo upgrade stage: apply-seed-19
+Demo upgrade stage: apply-seed-20
+Demo upgrade stage: apply-seed-21
+Demo upgrade stage: apply-seed-24
+Demo upgrade stage: apply-seed-29
+Demo upgrade stage: apply-seed-30
+Demo upgrade stage: apply-seed-31
+Demo upgrade stage: apply-seed-32
+Demo upgrade stage: apply-seed-40
+Demo upgrade stage: apply-seed-41
+Demo upgrade stage: apply-seed-44
+Demo upgrade stage: apply-seed-47
+Demo upgrade stage: apply-seed-48
+Demo upgrade stage: apply-seed-49
+Demo upgrade stage: apply-seed-51
+Demo upgrade stage: apply-seed-53
+Demo upgrade stage: apply-seed-54
+Demo upgrade stage: apply-seed-55
+Demo upgrade stage: apply-seed-56
+Demo upgrade stage: apply-seed-58
+Demo upgrade stage: apply-seed-59
+Demo upgrade stage: apply-hosted-migration-2
+Demo upgrade stage: apply-hosted-migration-3
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+Demo upgrade stage: load-release
+Demo upgrade stage: connect
+Demo upgrade stage: validate-target
+Demo upgrade stage: migration-history
+Demo upgrade stage: identity-history
+Demo upgrade stage: seed-history
+Demo upgrade stage: runtime-grants
+Demo upgrade stage: tester-capabilities
+Demo upgrade stage: tester-role-profiles
+Demo upgrade stage: verify-privileges
+Demo upgrade stage: exercise-runtime-role
+Demo upgrade stage: commit
+✔ a baseline executed from Windows CRLF SQL upgrades without rewriting historical checksums (65482.0774ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 18
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2137994.0633
+
+✖ failing tests:
+
+test at tests\database\estimating.test.ts:1:18327
+✖ DR01-DB03 migration 24 originals survive upgrade, deliberate concurrent adoption and exact quotation recovery (180544.9708ms)
+  'test timed out after 180000ms'
+
+test at tests\database\offline.test.ts:1:1790
+✖ P08 additive P07 upgrade preserves attendance, receipt, bytes and revoked grants (65240.7682ms)
+  error: canceling statement due to statement timeout
+      at WORKTREE\node_modules\pg-pool\index.js:45:11
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (WORKTREE\tests\database\offline.test.ts:59:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    length: 109,
+    severity: 'ERROR',
+    code: '57014',
+    detail: undefined,
+    hint: undefined,
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'postgres.c',
+    line: '3396',
+    routine: 'ProcessInterrupts'
+  }
+
+test at tests\database\policy-persistence.test.ts:1:3526
+✖ populated 0050 upgrade preserves every old row/hash, registers 0051 and 0053–0071 with reserved gaps and exact authority/instrument additions (69866.5983ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+
+    [
+      {
+        agreement_reference: 'SYN-PPO-AGR-000001',
+        assessed_at: '2026-10-07T07:39:05.537352+10:00',
+        assessed_by: '30000000-0000-4000-8000-000000000001',
+  ...
+        effective_to: '2032-12-31',
+  +     entitlement_assessment_id: null,
+        id: '92000000-0000-4000-8000-000000000001',
+        reason: 'Fictional evidence for P04 component review.',
+        site_id: '70000000-0000-4000-8000-000000000001',
+        source_version: '1',
+        status: 'Covered',
+  ...
+        effective_to: '2032-12-31',
+  +     entitlement_assessment_id: null,
+        id: '92000000-0000-4000-8000-000000000002',
+        reason: 'Fictional evidence for P04 component review.',
+        site_id: '70000000-0000-4000-8000-000000000001',
+        source_version: '1',
+        status: 'Covered',
+  ...
+        effective_to: '2032-12-31',
+  +     entitlement_assessment_id: null,
+        id: '92000000-0000-4000-8000-000000000003',
+        reason: 'Fictional evidence for P04 component review.',
+        site_id: '70000000-0000-4000-8000-000000000001',
+        source_version: '1',
+        status: 'NotCovered',
+  ...
+        effective_to: '2032-12-31',
+  +     entitlement_assessment_id: null,
+        id: '92000000-0000-4000-8000-000000000004',
+        reason: 'Fictional evidence for P04 component review.',
+        site_id: '70000000-0000-4000-8000-000000000001',
+        source_version: '1',
+        status: 'Disputed',
+  ...
+        effective_to: '2032-12-31',
+  +     entitlement_assessment_id: null,
+        id: '92000000-0000-4000-8000-000000000005',
+        reason: 'Fictional evidence for P04 component review.',
+        site_id: '70000000-0000-4000-8000-000000000001',
+        source_version: '1',
+        status: 'Unknown',
+  ...
+        effective_to: '2032-12-31',
+  +     entitlement_assessment_id: null,
+        id: '92000000-0000-4000-8000-000000000006',
+        reason: 'Fictional evidence for P04 component review.',
+        site_id: '70000000-0000-4000-8000-000000000001',
+        source_version: '1',
+        status: 'Covered',
+  ...
+        effective_to: '2032-12-31',
+  +     entitlement_assessment_id: null,
+        id: '92000000-0000-4000-8000-000000000007',
+        reason: 'Fictional evidence for P04 component review.',
+        site_id: '70000000-0000-4000-8000-000000000001',
+        source_version: '1',
+        status: 'NotApplicable',
+  ...
+        effective_to: '2032-12-31',
+  +     entitlement_assessment_id: null,
+        id: '92000000-0000-4000-8000-000000000008',
+        reason: 'Fictional evidence for P04 component review.',
+        site_id: '70000000-0000-4000-8000-000000000001',
+        source_version: '1',
+        status: 'Disputed',
+  ...
+        effective_to: '2032-12-31',
+  +     entitlement_assessment_id: null,
+        id: '92000000-0000-4000-8000-000000000009',
+        reason: 'Fictional evidence for P04 component review.',
+        site_id: '70000000-0000-4000-8000-000000000001',
+        source_version: '1',
+        status: 'Unknown',
+  ...
+        effective_to: null,
+  +     entitlement_assessment_id: null,
+        id: 'ac000000-0000-4000-8000-000000000001',
+        reason: 'Fictional agreement',
+        site_id: '70000000-0000-4000-8000-000000000001',
+        source_version: null,
+        status: 'Covered',
+
+      at TestContext.<anonymous> (WORKTREE\tests\database\policy-persistence.test.ts:142:119)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { id: '92000000-0000-4000-8000-000000000001', reason: 'Fictional evidence for P04 component review.', status: 'Covered', site_id: '70000000-0000-4000-8000-000000000001', version: 1, synthetic: true, assessment: 'Synthetic manual Covered assessment; no financial disposition.', company_id: '20000000-0000-4000-8000-000000000001', created_at: '2026-10-07T07:39:05.537352+10:00', created_by: '30000000-0000-4000-8000-000000000001', updated_at: '2026-10-07T07:39:05.537352+10:00', updated_by: '30000000-0000-4000-8000-000000000001', assessed_at: '2026-10-07T07:39:05.537352+10:00', assessed_by: '30000000-0000-4000-8000-000000000001', effective_to: '2032-12-31', workspace_id: '10000000-0000-4000-8000-000000000001', work_order_id: '90000000-0000-4000-8000-000000000001', charging_route: 'FinanceReview', effective_from: '2026-01-01', source_version: '1', agreement_reference: 'SYN-PPO-AGR-000001', entitlement_assessment_id: null }, { id: '92000000-0000-4000-8000-000000000002', reason: 'Fictional evidence for P04 component review.', status: 'Covered', site_id: '70000000-0000-4000-8000-000000000001', version: 1, synthetic: true, assessment: 'Synthetic manual Covered assessment; no financial disposition.', company_id: '20000000-0000-4000-8000-000000000001', created_at: '2026-10-07T07:39:05.652311+10:00', created_by: '30000000-0000-4000-8000-000000000001', updated_at: '2026-10-07T07:39:05.652311+10:00', updated_by: '30000000-0000-4000-8000-000000000001', assessed_at: '2026-10-07T07:39:05.652311+10:00', assessed_by: '30000000-0000-4000-8000-000000000001', effective_to: '2032-12-31', workspace_id: '10000000-0000-4000-8000-000000000001', work_order_id: '90000000-0000-4000-8000-000000000002', charging_route: 'FinanceReview', effective_from: '2026-01-01', source_version: '1', agreement_reference: 'SYN-PPO-AGR-000002', entitlement_assessment_id: null }, { id: '92000000-0000-4000-8000-000000000003', reason: 'Fictional evidence for P04 component review.', status: 'NotCovered', site_id: '70000000-0000-4000-8000-000000000001', version: 1, synthetic: true, assessment: 'Synthetic manual NotCovered assessment; no financial disposition.', company_id: '20000000-0000-4000-8000-000000000001', created_at: '2026-10-07T07:39:05.693832+10:00', created_by: '30000000-0000-4000-8000-000000000001', updated_at: '2026-10-07T07:39:05.693833+10:00', updated_by: '30000000-0000-4000-8000-000000000001', assessed_at: '2026-10-07T07:39:05.693833+10:00', assessed_by: '30000000-0000-4000-8000-000000000001', effective_to: '2032-12-31', workspace_id: '10000000-0000-4000-8000-000000000001', work_order_id: '90000000-0000-4000-8000-000000000003', charging_route: 'FinanceReview', effective_from: '2026-01-01', source_version: '1', agreement_reference: 'SYN-PPO-AGR-000003', entitlement_assessment_id: null }, { id: '92000000-0000-4000-8000-000000000004', reason: 'Fictional evidence for P04 component review.', status: 'Disputed', site_id: '70000000-0000-4000-8000-000000000001', version: 1, synthetic: true, assessment: 'Synthetic manual Disputed assessment; no financial disposition.', company_id: '20000000-0000-4000-8000-000000000001', created_at: '2026-10-07T07:39:05.706455+10:00', created_by: '30000000-0000-4000-8000-000000000001', updated_at: '2026-10-07T07:39:05.706455+10:00', updated_by: '30000000-0000-4000-8000-000000000001', assessed_at: '2026-10-07T07:39:05.706455+10:00', assessed_by: '30000000-0000-4000-8000-000000000001', effective_to: '2032-12-31', workspace_id: '10000000-0000-4000-8000-000000000001', work_order_id: '90000000-0000-4000-8000-000000000004', charging_route: 'FinanceReview', effective_from: '2026-01-01', source_version: '1', agreement_reference: 'SYN-PPO-AGR-000004', entitlement_assessment_id: null }, { id: '92000000-0000-4000-8000-000000000005', reason: 'Fictional evidence for P04 component review.', status: 'Unknown', site_id: '70000000-0000-4000-8000-000000000001', version: 1, synthetic: true, assessment: 'Synthetic manual Unknown assessment; no financial disposition.', company_id: '20000000-0000-4000-8000-000000000001', created_at: '2026-10-07T07:39:05.717252+10:00', created_by: '30000000-0000-4000-8000-000000000001', updated_at: '2026-10-07T07:39:05.717253+10:00', updated_by: '30000000-0000-4000-8000-000000000001', assessed_at: '2026-10-07T07:39:05.717253+10:00', assessed_by: '30000000-0000-4000-8000-000000000001', effective_to: '2032-12-31', workspace_id: '10000000-0000-4000-8000-000000000001', work_order_id: '90000000-0000-4000-8000-000000000005', charging_route: 'FinanceReview', effective_from: '2026-01-01', source_version: '1', agreement_reference: 'SYN-PPO-AGR-000005', entitlement_assessment_id: null }, { id: '92000000-0000-4000-8000-000000000006', reason: 'Fictional evidence for P04 component review.', status: 'Covered', site_id: '70000000-0000-4000-8000-000000000001', version: 1, synthetic: true, assessment: 'Synthetic manual Covered assessment; no financial disposition.', company_id: '20000000-0000-4000-8000-000000000001', created_at: '2026-10-07T07:39:05.730796+10:00', created_by: '30000000-0000-4000-8000-000000000001', updated_at: '2026-10-07T07:39:05.730797+10:00', updated_by: '30000000-0000-4000-8000-000000000001', assessed_at: '2026-10-07T07:39:05.730797+10:00', assessed_by: '30000000-0000-4000-8000-000000000001', effective_to: '2032-12-31', workspace_id: '10000000-0000-4000-8000-000000000001', work_order_id: '90000000-0000-4000-8000-000000000006', charging_route: 'FinanceReview', effective_from: '2026-01-01', source_version: '1', agreement_reference: 'SYN-PPO-AGR-000006', entitlement_assessment_id: null }, { id: '92000000-0000-4000-8000-000000000007', reason: 'Fictional evidence for P04 component review.', status: 'NotApplicable', site_id: '70000000-0000-4000-8000-000000000001', version: 1, synthetic: true, assessment: 'Synthetic manual NotApplicable assessment; no financial disposition.', company_id: '20000000-0000-4000-8000-000000000001', created_at: '2026-10-07T07:39:05.739881+10:00', created_by: '30000000-0000-4000-8000-000000000001', updated_at: '2026-10-07T07:39:05.739881+10:00', updated_by: '30000000-0000-4000-8000-000000000001', assessed_at: '2026-10-07T07:39:05.739881+10:00', assessed_by: '30000000-0000-4000-8000-000000000001', effective_to: '2032-12-31', workspace_id: '10000000-0000-4000-8000-000000000001', work_order_id: '90000000-0000-4000-8000-000000000007', charging_route: 'FinanceReview', effective_from: '2026-01-01', source_version: '1', agreement_reference: 'SYN-PPO-AGR-000007', entitlement_assessment_id: null }, { id: '92000000-0000-4000-8000-000000000008', reason: 'Fictional evidence for P04 component review.', status: 'Disputed', site_id: '70000000-0000-4000-8000-000000000001', version: 1, synthetic: true, assessment: 'Synthetic manual Disputed assessment; no financial disposition.', company_id: '20000000-0000-4000-8000-000000000001', created_at: '2026-10-07T07:39:05.751879+10:00', created_by: '30000000-0000-4000-8000-000000000001', updated_at: '2026-10-07T07:39:05.751879+10:00', updated_by: '30000000-0000-4000-8000-000000000001', assessed_at: '2026-10-07T07:39:05.75188+10:00', assessed_by: '30000000-0000-4000-8000-000000000001', effective_to: '2032-12-31', workspace_id: '10000000-0000-4000-8000-000000000001', work_order_id: '90000000-0000-4000-8000-000000000008', charging_route: 'FinanceReview', effective_from: '2026-01-01', source_version: '1', agreement_reference: 'SYN-PPO-AGR-000008', entitlement_assessment_id: null }, { id: '92000000-0000-4000-8000-000000000009', reason: 'Fictional evidence for P04 component review.', status: 'Unknown', site_id: '70000000-0000-4000-8000-000000000001', version: 1, synthetic: true, assessment: 'Synthetic manual Unknown assessment; no financial disposition.', company_id: '20000000-0000-4000-8000-000000000001', created_at: '2026-10-07T07:39:05.771041+10:00', created_by: '30000000-0000-4000-8000-000000000001', updated_at: '2026-10-07T07:39:05.771041+10:00', updated_by: '30000000-0000-4000-8000-000000000001', assessed_at: '2026-10-07T07:39:05.771041+10:00', assessed_by: '30000000-0000-4000-8000-000000000001', effective_to: '2032-12-31', workspace_id: '10000000-0000-4000-8000-000000000001', work_order_id: '90000000-0000-4000-8000-000000000009', charging_route: 'FinanceReview', effective_from: '2026-01-01', source_version: '1', agreement_reference: 'SYN-PPO-AGR-000009', entitlement_assessment_id: null }, { id: 'ac000000-0000-4000-8000-000000000001', reason: 'Fictional agreement', status: 'Covered', site_id: '70000000-0000-4000-8000-000000000001', version: 1, synthetic: true, assessment: 'SYN manual coverage assessment; billability undecided.', company_id: '20000000-0000-4000-8000-000000000001', created_at: '2026-10-07T07:39:05.876997+10:00', created_by: '30000000-0000-4000-8000-000000000001', updated_at: '2026-10-07T07:39:05.876997+10:00', updated_by: '30000000-0000-4000-8000-000000000001', assessed_at: '2026-10-07T07:39:05.876998+10:00', assessed_by: '30000000-0000-4000-8000-000000000001', effective_to: null, workspace_id: '10000000-0000-4000-8000-000000000001', work_order_id: 'a9000000-0000-4000-8000-000000000001', charging_route: 'FinanceReview', effective_from: null, source_version: null, agreement_reference: null, entitlement_assessment_id: null } ],
+    expected: [ { id: '92000000-0000-4000-8000-000000000001', reason: 'Fictional evidence for P04 component review.', status: 'Covered', site_id: '70000000-0000-4000-8000-000000000001', version: 1, synthetic: true, assessment: 'Synthetic manual Covered assessment; no financial disposition.', company_id: '20000000-0000-4000-8000-000000000001', created_at: '2026-10-07T07:39:05.537352+10:00', created_by: '30000000-0000-4000-8000-000000000001', updated_at: '2026-10-07T07:39:05.537352+10:00', updated_by: '30000000-0000-4000-8000-000000000001', assessed_at: '2026-10-07T07:39:05.537352+10:00', assessed_by: '30000000-0000-4000-8000-000000000001', effective_to: '2032-12-31', workspace_id: '10000000-0000-4000-8000-000000000001', work_order_id: '90000000-0000-4000-8000-000000000001', charging_route: 'FinanceReview', effective_from: '2026-01-01', source_version: '1', agreement_reference: 'SYN-PPO-AGR-000001' }, { id: '92000000-0000-4000-8000-000000000002', reason: 'Fictional evidence for P04 component review.', status: 'Covered', site_id: '70000000-0000-4000-8000-000000000001', version: 1, synthetic: true, assessment: 'Synthetic manual Covered assessment; no financial disposition.', company_id: '20000000-0000-4000-8000-000000000001', created_at: '2026-10-07T07:39:05.652311+10:00', created_by: '30000000-0000-4000-8000-000000000001', updated_at: '2026-10-07T07:39:05.652311+10:00', updated_by: '30000000-0000-4000-8000-000000000001', assessed_at: '2026-10-07T07:39:05.652311+10:00', assessed_by: '30000000-0000-4000-8000-000000000001', effective_to: '2032-12-31', workspace_id: '10000000-0000-4000-8000-000000000001', work_order_id: '90000000-0000-4000-8000-000000000002', charging_route: 'FinanceReview', effective_from: '2026-01-01', source_version: '1', agreement_reference: 'SYN-PPO-AGR-000002' }, { id: '92000000-0000-4000-8000-000000000003', reason: 'Fictional evidence for P04 component review.', status: 'NotCovered', site_id: '70000000-0000-4000-8000-000000000001', version: 1, synthetic: true, assessment: 'Synthetic manual NotCovered assessment; no financial disposition.', company_id: '20000000-0000-4000-8000-000000000001', created_at: '2026-10-07T07:39:05.693832+10:00', created_by: '30000000-0000-4000-8000-000000000001', updated_at: '2026-10-07T07:39:05.693833+10:00', updated_by: '30000000-0000-4000-8000-000000000001', assessed_at: '2026-10-07T07:39:05.693833+10:00', assessed_by: '30000000-0000-4000-8000-000000000001', effective_to: '2032-12-31', workspace_id: '10000000-0000-4000-8000-000000000001', work_order_id: '90000000-0000-4000-8000-000000000003', charging_route: 'FinanceReview', effective_from: '2026-01-01', source_version: '1', agreement_reference: 'SYN-PPO-AGR-000003' }, { id: '92000000-0000-4000-8000-000000000004', reason: 'Fictional evidence for P04 component review.', status: 'Disputed', site_id: '70000000-0000-4000-8000-000000000001', version: 1, synthetic: true, assessment: 'Synthetic manual Disputed assessment; no financial disposition.', company_id: '20000000-0000-4000-8000-000000000001', created_at: '2026-10-07T07:39:05.706455+10:00', created_by: '30000000-0000-4000-8000-000000000001', updated_at: '2026-10-07T07:39:05.706455+10:00', updated_by: '30000000-0000-4000-8000-000000000001', assessed_at: '2026-10-07T07:39:05.706455+10:00', assessed_by: '30000000-0000-4000-8000-000000000001', effective_to: '2032-12-31', workspace_id: '10000000-0000-4000-8000-000000000001', work_order_id: '90000000-0000-4000-8000-000000000004', charging_route: 'FinanceReview', effective_from: '2026-01-01', source_version: '1', agreement_reference: 'SYN-PPO-AGR-000004' }, { id: '92000000-0000-4000-8000-000000000005', reason: 'Fictional evidence for P04 component review.', status: 'Unknown', site_id: '70000000-0000-4000-8000-000000000001', version: 1, synthetic: true, assessment: 'Synthetic manual Unknown assessment; no financial disposition.', company_id: '20000000-0000-4000-8000-000000000001', created_at: '2026-10-07T07:39:05.717252+10:00', created_by: '30000000-0000-4000-8000-000000000001', updated_at: '2026-10-07T07:39:05.717253+10:00', updated_by: '30000000-0000-4000-8000-000000000001', assessed_at: '2026-10-07T07:39:05.717253+10:00', assessed_by: '30000000-0000-4000-8000-000000000001', effective_to: '2032-12-31', workspace_id: '10000000-0000-4000-8000-000000000001', work_order_id: '90000000-0000-4000-8000-000000000005', charging_route: 'FinanceReview', effective_from: '2026-01-01', source_version: '1', agreement_reference: 'SYN-PPO-AGR-000005' }, { id: '92000000-0000-4000-8000-000000000006', reason: 'Fictional evidence for P04 component review.', status: 'Covered', site_id: '70000000-0000-4000-8000-000000000001', version: 1, synthetic: true, assessment: 'Synthetic manual Covered assessment; no financial disposition.', company_id: '20000000-0000-4000-8000-000000000001', created_at: '2026-10-07T07:39:05.730796+10:00', created_by: '30000000-0000-4000-8000-000000000001', updated_at: '2026-10-07T07:39:05.730797+10:00', updated_by: '30000000-0000-4000-8000-000000000001', assessed_at: '2026-10-07T07:39:05.730797+10:00', assessed_by: '30000000-0000-4000-8000-000000000001', effective_to: '2032-12-31', workspace_id: '10000000-0000-4000-8000-000000000001', work_order_id: '90000000-0000-4000-8000-000000000006', charging_route: 'FinanceReview', effective_from: '2026-01-01', source_version: '1', agreement_reference: 'SYN-PPO-AGR-000006' }, { id: '92000000-0000-4000-8000-000000000007', reason: 'Fictional evidence for P04 component review.', status: 'NotApplicable', site_id: '70000000-0000-4000-8000-000000000001', version: 1, synthetic: true, assessment: 'Synthetic manual NotApplicable assessment; no financial disposition.', company_id: '20000000-0000-4000-8000-000000000001', created_at: '2026-10-07T07:39:05.739881+10:00', created_by: '30000000-0000-4000-8000-000000000001', updated_at: '2026-10-07T07:39:05.739881+10:00', updated_by: '30000000-0000-4000-8000-000000000001', assessed_at: '2026-10-07T07:39:05.739881+10:00', assessed_by: '30000000-0000-4000-8000-000000000001', effective_to: '2032-12-31', workspace_id: '10000000-0000-4000-8000-000000000001', work_order_id: '90000000-0000-4000-8000-000000000007', charging_route: 'FinanceReview', effective_from: '2026-01-01', source_version: '1', agreement_reference: 'SYN-PPO-AGR-000007' }, { id: '92000000-0000-4000-8000-000000000008', reason: 'Fictional evidence for P04 component review.', status: 'Disputed', site_id: '70000000-0000-4000-8000-000000000001', version: 1, synthetic: true, assessment: 'Synthetic manual Disputed assessment; no financial disposition.', company_id: '20000000-0000-4000-8000-000000000001', created_at: '2026-10-07T07:39:05.751879+10:00', created_by: '30000000-0000-4000-8000-000000000001', updated_at: '2026-10-07T07:39:05.751879+10:00', updated_by: '30000000-0000-4000-8000-000000000001', assessed_at: '2026-10-07T07:39:05.75188+10:00', assessed_by: '30000000-0000-4000-8000-000000000001', effective_to: '2032-12-31', workspace_id: '10000000-0000-4000-8000-000000000001', work_order_id: '90000000-0000-4000-8000-000000000008', charging_route: 'FinanceReview', effective_from: '2026-01-01', source_version: '1', agreement_reference: 'SYN-PPO-AGR-000008' }, { id: '92000000-0000-4000-8000-000000000009', reason: 'Fictional evidence for P04 component review.', status: 'Unknown', site_id: '70000000-0000-4000-8000-000000000001', version: 1, synthetic: true, assessment: 'Synthetic manual Unknown assessment; no financial disposition.', company_id: '20000000-0000-4000-8000-000000000001', created_at: '2026-10-07T07:39:05.771041+10:00', created_by: '30000000-0000-4000-8000-000000000001', updated_at: '2026-10-07T07:39:05.771041+10:00', updated_by: '30000000-0000-4000-8000-000000000001', assessed_at: '2026-10-07T07:39:05.771041+10:00', assessed_by: '30000000-0000-4000-8000-000000000001', effective_to: '2032-12-31', workspace_id: '10000000-0000-4000-8000-000000000001', work_order_id: '90000000-0000-4000-8000-000000000009', charging_route: 'FinanceReview', effective_from: '2026-01-01', source_version: '1', agreement_reference: 'SYN-PPO-AGR-000009' }, { id: 'ac000000-0000-4000-8000-000000000001', reason: 'Fictional agreement', status: 'Covered', site_id: '70000000-0000-4000-8000-000000000001', version: 1, synthetic: true, assessment: 'SYN manual coverage assessment; billability undecided.', company_id: '20000000-0000-4000-8000-000000000001', created_at: '2026-10-07T07:39:05.876997+10:00', created_by: '30000000-0000-4000-8000-000000000001', updated_at: '2026-10-07T07:39:05.876997+10:00', updated_by: '30000000-0000-4000-8000-000000000001', assessed_at: '2026-10-07T07:39:05.876998+10:00', assessed_by: '30000000-0000-4000-8000-000000000001', effective_to: null, workspace_id: '10000000-0000-4000-8000-000000000001', work_order_id: 'a9000000-0000-4000-8000-000000000001', charging_route: 'FinanceReview', effective_from: null, source_version: null, agreement_reference: null } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

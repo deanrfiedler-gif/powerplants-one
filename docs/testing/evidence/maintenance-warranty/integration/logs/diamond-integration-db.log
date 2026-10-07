@@ -1,0 +1,652 @@
+TAP version 13
+# Subtest: FI01 one personal timer spans appointments, preserves denied originals and checks receipt authority
+ok 1 - FI01 one personal timer spans appointments, preserves denied originals and checks receipt authority
+  ---
+  duration_ms: 13691.9638
+  type: 'test'
+  ...
+# Subtest: FI01 zero-second transitions, real Undo expiry and report freeze keep distinct authority
+ok 2 - FI01 zero-second transitions, real Undo expiry and report freeze keep distinct authority
+  ---
+  duration_ms: 19843.1798
+  type: 'test'
+  ...
+# Subtest: FI01 additive 0049 upgrade retains existing time, arrivals, receipts and revoked grants
+ok 3 - FI01 additive 0049 upgrade retains existing time, arrivals, receipts and revoked grants
+  ---
+  duration_ms: 25145.1684
+  type: 'test'
+  ...
+# Subtest: agreement to due maintenance to reviewed Service outcome preserves the original obligation and exact retry
+ok 4 - agreement to due maintenance to reviewed Service outcome preserves the original obligation and exact retry
+  ---
+  duration_ms: 15576.2179
+  type: 'test'
+  ...
+# Subtest: partial reviewed Service results retain an open remedy and refuse customer resolution
+ok 5 - partial reviewed Service results retain an open remedy and refuse customer resolution
+  ---
+  duration_ms: 15456.5007
+  type: 'test'
+  ...
+# Subtest: canonical replacement receives exact completed work, preserves identities and owns future maintenance
+ok 6 - canonical replacement receives exact completed work, preserves identities and owns future maintenance
+  ---
+  duration_ms: 17643.2743
+  type: 'test'
+  ...
+# Subtest: completed exact Service remedy needs current customer update and response; recovery stays outstanding
+ok 7 - completed exact Service remedy needs current customer update and response; recovery stays outstanding
+  ---
+  duration_ms: 23593.8788
+  type: 'test'
+  ...
+# Subtest: late reserved Maintenance migration preserves the current schema, originals, outputs and exact grants
+ok 8 - late reserved Maintenance migration preserves the current schema, originals, outputs and exact grants
+  ---
+  duration_ms: 18747.9953
+  type: 'test'
+  ...
+# Subtest: MA01 typed identity, exact receipt, commercial duty, scope and immutable source
+ok 9 - MA01 typed identity, exact receipt, commercial duty, scope and immutable source
+  ---
+  duration_ms: 11450.5122
+  type: 'test'
+  ...
+# Subtest: MA02 a later decision or source revision makes old entitlement historical
+ok 10 - MA02 a later decision or source revision makes old entitlement historical
+  ---
+  duration_ms: 319.8445
+  type: 'test'
+  ...
+# Subtest: MA02 omitted area cannot bypass the equipment's physical facility exclusion
+ok 11 - MA02 omitted area cannot bypass the equipment's physical facility exclusion
+  ---
+  duration_ms: 274.3958
+  type: 'test'
+  ...
+# Subtest: MA03/04 overlapping and concurrent generation, deferral and exact request retries
+ok 12 - MA03/04 overlapping and concurrent generation, deferral and exact request retries
+  ---
+  duration_ms: 938.941
+  type: 'test'
+  ...
+# Subtest: MA05 separate CRM and Service owners, proposals do not extend source terms
+ok 13 - MA05 separate CRM and Service owners, proposals do not extend source terms
+  ---
+  duration_ms: 975.3644
+  type: 'test'
+  ...
+# Subtest: MA06 exact evidence, stale assessment, separate goodwill and exact plan authority
+ok 14 - MA06 exact evidence, stale assessment, separate goodwill and exact plan authority
+  ---
+  duration_ms: 413.4545
+  type: 'test'
+  ...
+# Subtest: MA07 supplier evidence chronology, partial approval, credit reference and independent disposition
+ok 15 - MA07 supplier evidence chronology, partial approval, credit reference and independent disposition
+  ---
+  duration_ms: 653.3577
+  type: 'test'
+  ...
+# Subtest: current action revocation blocks original operation receipt replay
+ok 16 - current action revocation blocks original operation receipt replay
+  ---
+  duration_ms: 97.7497
+  type: 'test'
+  ...
+# Subtest: AT-33 relocation and retirement retain original obligations and require future-plan review
+ok 17 - AT-33 relocation and retirement retain original obligations and require future-plan review
+  ---
+  duration_ms: 881.6716
+  type: 'test'
+  ...
+# Subtest: MA06 goodwill is separate from entitlement and Service authority; withdrawal blocks receiving
+ok 18 - MA06 goodwill is separate from entitlement and Service authority; withdrawal blocks receiving
+  ---
+  duration_ms: 739.3909
+  type: 'test'
+  ...
+# Subtest: populated 0050 upgrade preserves every old row/hash, registers 0051 and 0053–0072 with reserved gaps and exact authority/instrument additions
+ok 19 - populated 0050 upgrade preserves every old row/hash, registers 0051 and 0053–0072 with reserved gaps and exact authority/instrument additions
+  ---
+  duration_ms: 14981.8304
+  type: 'test'
+  ...
+# Subtest: PostgreSQL round-trip preserves exact canonical proposal/review bytes, timestamps, nulls and complete ordered population
+ok 20 - PostgreSQL round-trip preserves exact canonical proposal/review bytes, timestamps, nulls and complete ordered population
+  ---
+  duration_ms: 164.2253
+  type: 'test'
+  ...
+# Subtest: immutable proposal revisions retain predecessors and reject forged source/head/actor/hash/workspace bindings
+ok 21 - immutable proposal revisions retain predecessors and reject forged source/head/actor/hash/workspace bindings
+  ---
+  duration_ms: 84.3249
+  type: 'test'
+  ...
+# Subtest: review refuses missing compliant candidates, substituted proposal, timestamp, event, population and typed booking links
+ok 22 - review refuses missing compliant candidates, substituted proposal, timestamp, event, population and typed booking links
+  ---
+  duration_ms: 124.0719
+  type: 'test'
+  ...
+# Subtest: linear publication advances family head separately from policy version and binds exact receipt, proposal and review
+ok 23 - linear publication advances family head separately from policy version and binds exact receipt, proposal and review
+  ---
+  duration_ms: 151.0927
+  type: 'test'
+  ...
+# Subtest: all evidence tables reject direct UPDATE/DELETE; head refuses DELETE
+ok 24 - all evidence tables reject direct UPDATE/DELETE; head refuses DELETE
+  ---
+  duration_ms: 73.3259
+  type: 'test'
+  ...
+# Subtest: publication rejects re-bound operations, actors, receipts, task owners and incomplete impact/task graphs
+ok 25 - publication rejects re-bound operations, actors, receipts, task owners and incomplete impact/task graphs
+  ---
+  duration_ms: 151.2257
+  type: 'test'
+  ...
+# Subtest: failure at each persistence stage rolls back policy, head, identities, impacts, tasks and receipt
+ok 26 - failure at each persistence stage rolls back policy, head, identities, impacts, tasks and receipt
+  ---
+  duration_ms: 6575.1376
+  type: 'test'
+  ...
+# Subtest: restricted hosted runtime can insert evidence but cannot mutate it or acquire identity/grant authority
+ok 27 - restricted hosted runtime can insert evidence but cannot mutate it or acquire identity/grant authority
+  ---
+  duration_ms: 643.8914
+  type: 'test'
+  ...
+# Subtest: direct reseed and runner retries preserve an advanced head, later evidence, old pins and revoked grants
+ok 28 - direct reseed and runner retries preserve an advanced head, later evidence, old pins and revoked grants
+  ---
+  duration_ms: 3519.5177
+  type: 'test'
+  ...
+# Subtest: fresh installation applies only registered files through 0072, retains reserved gaps and repeats without changes
+ok 29 - fresh installation applies only registered files through 0072, retains reserved gaps and repeats without changes
+  ---
+  duration_ms: 18064.2668
+  type: 'test'
+  ...
+# Demo upgrade stage: load-release
+# Demo upgrade stage: connect
+# Demo upgrade stage: validate-target
+# Demo upgrade stage: migration-history
+# Demo migration mismatch: version=18 expected=2c36b8e173f805e0184e59284c0856d982ecc5a71ea60d61d64854f3ec186255 stored=missing
+# Demo upgrade stage: load-release
+# Demo upgrade stage: connect
+# Demo upgrade stage: validate-target
+# Demo upgrade stage: migration-history
+# Demo upgrade stage: identity-history
+# Demo upgrade stage: seed-history
+# Demo upgrade stage: apply-migration-18
+# Demo upgrade stage: apply-migration-19
+# Demo upgrade stage: apply-migration-20
+# Demo upgrade stage: apply-migration-21
+# Demo upgrade stage: apply-migration-22
+# Demo upgrade stage: apply-migration-23
+# Demo upgrade stage: apply-migration-24
+# Demo upgrade stage: apply-migration-25
+# Demo upgrade stage: apply-migration-26
+# Demo upgrade stage: apply-migration-27
+# Demo upgrade stage: apply-migration-28
+# Demo upgrade stage: apply-migration-29
+# Demo upgrade stage: apply-migration-30
+# Demo upgrade stage: apply-migration-31
+# Demo upgrade stage: apply-migration-32
+# Demo upgrade stage: apply-migration-33
+# Demo upgrade stage: apply-migration-34
+# Demo upgrade stage: apply-migration-35
+# Demo upgrade stage: apply-migration-36
+# Demo upgrade stage: apply-migration-37
+# Demo upgrade stage: apply-migration-38
+# Demo upgrade stage: apply-migration-39
+# Demo upgrade stage: apply-migration-40
+# Demo upgrade stage: apply-migration-41
+# Demo upgrade stage: apply-migration-42
+# Demo upgrade stage: apply-migration-43
+# Demo upgrade stage: apply-migration-44
+# Demo upgrade stage: apply-migration-45
+# Demo upgrade stage: apply-migration-46
+# Demo upgrade stage: apply-migration-47
+# Demo upgrade stage: apply-migration-48
+# Demo upgrade stage: apply-migration-49
+# Demo upgrade stage: apply-migration-50
+# Demo upgrade stage: apply-migration-51
+# Demo upgrade stage: apply-migration-53
+# Demo upgrade stage: apply-migration-54
+# Demo upgrade stage: apply-migration-55
+# Demo upgrade stage: apply-migration-56
+# Demo upgrade stage: apply-migration-57
+# Demo upgrade stage: apply-migration-58
+# Demo upgrade stage: apply-migration-59
+# Demo upgrade stage: apply-migration-60
+# Demo upgrade stage: apply-migration-61
+# Demo upgrade stage: apply-migration-62
+# Demo upgrade stage: apply-migration-63
+# Demo upgrade stage: apply-migration-64
+# Demo upgrade stage: apply-migration-65
+# Demo upgrade stage: apply-migration-66
+# Demo upgrade stage: apply-migration-67
+# Demo upgrade stage: apply-migration-68
+# Demo upgrade stage: apply-migration-69
+# Demo upgrade stage: apply-migration-70
+# Demo upgrade stage: apply-migration-71
+# Demo upgrade stage: apply-migration-72
+# Demo upgrade stage: apply-seed-18
+# Demo upgrade stage: apply-seed-19
+# Demo upgrade stage: apply-seed-20
+# Demo upgrade stage: apply-seed-21
+# Demo upgrade stage: apply-seed-24
+# Demo upgrade stage: apply-seed-29
+# Demo upgrade stage: apply-seed-30
+# Demo upgrade stage: apply-seed-31
+# Demo upgrade stage: apply-seed-32
+# Demo upgrade stage: apply-seed-40
+# Demo upgrade stage: apply-seed-41
+# Demo upgrade stage: apply-seed-44
+# Demo upgrade stage: apply-seed-47
+# Demo upgrade stage: apply-seed-48
+# Demo upgrade stage: apply-seed-49
+# Demo upgrade stage: apply-seed-51
+# Demo upgrade stage: apply-seed-53
+# Demo upgrade stage: apply-seed-54
+# Demo upgrade stage: apply-seed-55
+# Demo upgrade stage: apply-seed-56
+# Demo upgrade stage: apply-seed-58
+# Demo upgrade stage: apply-seed-59
+# Demo upgrade stage: runtime-grants
+# Demo upgrade stage: tester-capabilities
+# Demo upgrade stage: tester-role-profiles
+# Demo upgrade stage: verify-privileges
+# Demo upgrade stage: exercise-runtime-role
+# Demo upgrade stage: commit
+# Demo upgrade stage: load-release
+# Demo upgrade stage: connect
+# Demo upgrade stage: validate-target
+# Demo upgrade stage: migration-history
+# Demo upgrade stage: identity-history
+# Demo upgrade stage: seed-history
+# Demo upgrade stage: tester-capabilities
+# Demo upgrade stage: tester-role-profiles
+# Demo upgrade stage: verify-privileges
+# Demo upgrade stage: exercise-runtime-role
+# Demo upgrade stage: commit
+# Demo upgrade stage: load-release
+# Demo upgrade stage: connect
+# Demo upgrade stage: validate-target
+# Demo upgrade stage: migration-history
+# Demo upgrade stage: identity-history
+# Demo upgrade stage: seed-history
+# Demo upgrade stage: runtime-grants
+# Demo upgrade stage: tester-capabilities
+# Demo upgrade stage: tester-role-profiles
+# Demo upgrade stage: verify-privileges
+# Demo upgrade stage: exercise-runtime-role
+# Demo upgrade stage: commit
+# Subtest: upgrade preserves saved CRM, mailbox, sessions, old grants and invitation limits; retry is idempotent
+ok 30 - upgrade preserves saved CRM, mailbox, sessions, old grants and invitation limits; retry is idempotent
+  ---
+  duration_ms: 12021.4688
+  type: 'test'
+  ...
+# Demo upgrade stage: load-release
+# Demo upgrade stage: connect
+# Demo upgrade stage: validate-target
+# Demo upgrade stage: migration-history
+# Demo upgrade stage: identity-history
+# Demo upgrade stage: seed-history
+# Demo upgrade stage: apply-migration-18
+# Demo upgrade stage: apply-migration-19
+# Demo upgrade stage: apply-migration-20
+# Demo upgrade stage: apply-migration-21
+# Demo upgrade stage: apply-migration-22
+# Demo upgrade stage: apply-migration-23
+# Demo upgrade stage: apply-migration-24
+# Demo upgrade stage: apply-migration-25
+# Demo upgrade stage: apply-migration-26
+# Demo upgrade stage: apply-migration-27
+# Demo upgrade stage: apply-migration-28
+# Demo upgrade stage: apply-migration-29
+# Demo upgrade stage: apply-migration-30
+# Demo upgrade stage: apply-migration-31
+# Demo upgrade stage: apply-migration-32
+# Demo upgrade stage: apply-migration-33
+# Demo upgrade stage: apply-migration-34
+# Demo upgrade stage: apply-migration-35
+# Demo upgrade stage: apply-migration-36
+# Demo upgrade stage: apply-migration-37
+# Demo upgrade stage: apply-migration-38
+# Demo upgrade stage: apply-migration-39
+# Demo upgrade stage: apply-migration-40
+# Demo upgrade stage: apply-migration-41
+# Demo upgrade stage: apply-migration-42
+# Demo upgrade stage: apply-migration-43
+# Demo upgrade stage: apply-migration-44
+# Demo upgrade stage: apply-migration-45
+# Demo upgrade stage: apply-migration-46
+# Demo upgrade stage: apply-migration-47
+# Demo upgrade stage: apply-migration-48
+# Demo upgrade stage: apply-migration-49
+# Demo upgrade stage: apply-migration-50
+# Demo upgrade stage: apply-migration-51
+# Demo upgrade stage: apply-migration-53
+# Demo upgrade stage: apply-migration-54
+# Demo upgrade stage: apply-migration-55
+# Demo upgrade stage: apply-migration-56
+# Demo upgrade stage: apply-migration-57
+# Demo upgrade stage: apply-migration-58
+# Demo upgrade stage: apply-migration-59
+# Demo upgrade stage: apply-migration-60
+# Demo upgrade stage: apply-migration-61
+# Demo upgrade stage: apply-migration-62
+# Demo upgrade stage: apply-migration-63
+# Demo upgrade stage: apply-migration-64
+# Demo upgrade stage: apply-migration-65
+# Demo upgrade stage: apply-migration-66
+# Demo upgrade stage: apply-migration-67
+# Demo upgrade stage: apply-migration-68
+# Demo upgrade stage: apply-migration-69
+# Demo upgrade stage: apply-migration-70
+# Demo upgrade stage: apply-migration-71
+# Demo upgrade stage: apply-migration-72
+# Demo upgrade stage: apply-seed-18
+# Demo upgrade stage: apply-seed-19
+# Demo upgrade stage: apply-seed-20
+# Demo upgrade stage: apply-seed-21
+# Demo upgrade stage: apply-seed-24
+# Demo upgrade stage: apply-seed-29
+# Demo upgrade stage: apply-seed-30
+# Demo upgrade stage: apply-seed-31
+# Demo upgrade stage: apply-seed-32
+# Demo upgrade stage: apply-seed-40
+# Demo upgrade stage: apply-seed-41
+# Demo upgrade stage: apply-seed-44
+# Demo upgrade stage: apply-seed-47
+# Demo upgrade stage: apply-seed-48
+# Demo upgrade stage: apply-seed-49
+# Demo upgrade stage: apply-seed-51
+# Demo upgrade stage: apply-seed-53
+# Demo upgrade stage: apply-seed-54
+# Demo upgrade stage: apply-seed-55
+# Demo upgrade stage: apply-seed-56
+# Demo upgrade stage: apply-seed-58
+# Demo upgrade stage: apply-seed-59
+# Demo upgrade stage: runtime-grants
+# Demo upgrade stage: tester-capabilities
+# Demo upgrade stage: tester-role-profiles
+# Demo upgrade stage: verify-privileges
+# Demo upgrade stage: exercise-runtime-role
+# Demo upgrade stage: commit
+# Demo upgrade stage: load-release
+# Demo upgrade stage: connect
+# Demo upgrade stage: validate-target
+# Demo upgrade stage: migration-history
+# Demo upgrade stage: identity-history
+# Demo upgrade stage: seed-history
+# Demo upgrade stage: tester-capabilities
+# Demo upgrade stage: load-release
+# Demo upgrade stage: connect
+# Demo upgrade stage: validate-target
+# Demo upgrade stage: migration-history
+# Demo upgrade stage: identity-history
+# Demo upgrade stage: seed-history
+# Demo upgrade stage: runtime-grants
+# Demo upgrade stage: tester-capabilities
+# Demo upgrade stage: tester-role-profiles
+# Demo upgrade stage: verify-privileges
+# Demo upgrade stage: exercise-runtime-role
+# Demo upgrade stage: commit
+# Demo upgrade stage: load-release
+# Demo upgrade stage: connect
+# Demo upgrade stage: validate-target
+# Demo upgrade stage: migration-history
+# Demo upgrade stage: identity-history
+# Demo upgrade stage: seed-history
+# Demo upgrade stage: tester-capabilities
+# Demo upgrade stage: tester-role-profiles
+# Demo upgrade stage: verify-privileges
+# Demo upgrade stage: exercise-runtime-role
+# Demo upgrade stage: commit
+# Subtest: an already-current demo requires explicit upgrade for missing booking grants
+ok 31 - an already-current demo requires explicit upgrade for missing booking grants
+  ---
+  duration_ms: 15846.7912
+  type: 'test'
+  ...
+# Demo upgrade stage: load-release
+# Demo upgrade stage: connect
+# Demo upgrade stage: validate-target
+# Demo upgrade stage: migration-history
+# Demo upgrade stage: identity-history
+# Demo upgrade stage: seed-history
+# Demo upgrade stage: apply-migration-18
+# Demo upgrade stage: apply-migration-19
+# Demo upgrade stage: apply-migration-20
+# Demo upgrade stage: apply-migration-21
+# Demo upgrade stage: apply-migration-22
+# Demo upgrade stage: apply-migration-23
+# Demo upgrade stage: apply-migration-24
+# Demo upgrade stage: apply-migration-25
+# Demo upgrade stage: apply-migration-26
+# Demo upgrade stage: apply-migration-27
+# Demo upgrade stage: apply-migration-28
+# Demo upgrade stage: apply-migration-29
+# Demo upgrade stage: apply-migration-30
+# Demo upgrade stage: apply-migration-31
+# Demo upgrade stage: apply-migration-32
+# Demo upgrade stage: apply-migration-33
+# Demo upgrade stage: apply-migration-34
+# Demo upgrade stage: apply-migration-35
+# Demo upgrade stage: apply-migration-36
+# Demo upgrade stage: apply-migration-37
+# Demo upgrade stage: apply-migration-38
+# Demo upgrade stage: apply-migration-39
+# Demo upgrade stage: apply-migration-40
+# Demo upgrade stage: apply-migration-41
+# Demo upgrade stage: apply-migration-42
+# Demo upgrade stage: apply-migration-43
+# Demo upgrade stage: apply-migration-44
+# Demo upgrade stage: apply-migration-45
+# Demo upgrade stage: apply-migration-46
+# Demo upgrade stage: apply-migration-47
+# Demo upgrade stage: apply-migration-48
+# Demo upgrade stage: apply-migration-49
+# Demo upgrade stage: apply-migration-50
+# Demo upgrade stage: apply-migration-51
+# Demo upgrade stage: apply-migration-53
+# Demo upgrade stage: apply-migration-54
+# Demo upgrade stage: apply-migration-55
+# Demo upgrade stage: apply-migration-56
+# Demo upgrade stage: apply-migration-57
+# Demo upgrade stage: apply-migration-58
+# Demo upgrade stage: apply-migration-59
+# Demo upgrade stage: apply-migration-60
+# Demo upgrade stage: apply-migration-61
+# Demo upgrade stage: apply-migration-62
+# Demo upgrade stage: apply-migration-63
+# Demo upgrade stage: apply-migration-64
+# Demo upgrade stage: apply-migration-65
+# Demo upgrade stage: apply-migration-66
+# Demo upgrade stage: apply-migration-67
+# Demo upgrade stage: apply-migration-68
+# Demo upgrade stage: apply-migration-69
+# Demo upgrade stage: apply-migration-70
+# Demo upgrade stage: apply-migration-71
+# Demo upgrade stage: apply-migration-72
+# Demo upgrade stage: apply-seed-18
+# Demo upgrade stage: apply-seed-19
+# Demo upgrade stage: apply-seed-20
+# Demo upgrade stage: apply-seed-21
+# Demo upgrade stage: apply-seed-24
+# Demo upgrade stage: apply-seed-29
+# Demo upgrade stage: apply-seed-30
+# Demo upgrade stage: apply-seed-31
+# Demo upgrade stage: apply-seed-32
+# Demo upgrade stage: apply-seed-40
+# Demo upgrade stage: apply-seed-41
+# Demo upgrade stage: apply-seed-44
+# Demo upgrade stage: apply-seed-47
+# Demo upgrade stage: apply-seed-48
+# Demo upgrade stage: apply-seed-49
+# Demo upgrade stage: apply-seed-51
+# Demo upgrade stage: apply-seed-53
+# Demo upgrade stage: apply-seed-54
+# Demo upgrade stage: apply-seed-55
+# Demo upgrade stage: apply-seed-56
+# Demo upgrade stage: apply-seed-58
+# Demo upgrade stage: apply-seed-59
+# Demo upgrade stage: apply-hosted-migration-2
+# Demo upgrade stage: apply-hosted-migration-3
+# Demo upgrade stage: runtime-grants
+# Demo upgrade stage: tester-capabilities
+# Demo upgrade stage: tester-role-profiles
+# Demo upgrade stage: verify-privileges
+# Demo upgrade stage: exercise-runtime-role
+# Demo upgrade stage: commit
+# Demo upgrade stage: load-release
+# Demo upgrade stage: connect
+# Demo upgrade stage: validate-target
+# Demo upgrade stage: migration-history
+# Demo upgrade stage: identity-history
+# Demo upgrade stage: seed-history
+# Demo upgrade stage: tester-capabilities
+# Demo upgrade stage: tester-role-profiles
+# Demo upgrade stage: verify-privileges
+# Demo upgrade stage: exercise-runtime-role
+# Demo upgrade stage: commit
+# Demo upgrade stage: load-release
+# Demo upgrade stage: connect
+# Demo upgrade stage: validate-target
+# Demo upgrade stage: migration-history
+# Demo upgrade stage: identity-history
+# Demo upgrade stage: seed-history
+# Demo upgrade stage: runtime-grants
+# Demo upgrade stage: tester-capabilities
+# Demo upgrade stage: tester-role-profiles
+# Demo upgrade stage: verify-privileges
+# Demo upgrade stage: exercise-runtime-role
+# Demo upgrade stage: commit
+# Subtest: a baseline executed from Windows CRLF SQL upgrades without rewriting historical checksums
+ok 32 - a baseline executed from Windows CRLF SQL upgrades without rewriting historical checksums
+  ---
+  duration_ms: 23593.9003
+  type: 'test'
+  ...
+# Demo upgrade stage: load-release
+# Demo upgrade stage: connect
+# Demo upgrade stage: validate-target
+# Demo upgrade stage: migration-history
+# Demo migration mismatch: version=18 expected=2c36b8e173f805e0184e59284c0856d982ecc5a71ea60d61d64854f3ec186255 stored=bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+# Subtest: an old conflicting Gantt-18 ledger is refused before any migrations, seeds or grants change
+ok 33 - an old conflicting Gantt-18 ledger is refused before any migrations, seeds or grants change
+  ---
+  duration_ms: 10436.8267
+  type: 'test'
+  ...
+# Demo upgrade stage: load-release
+# Demo upgrade stage: connect
+# Demo upgrade stage: validate-target
+# Demo upgrade stage: migration-history
+# Demo upgrade stage: identity-history
+# Demo upgrade stage: seed-history
+# Demo upgrade stage: apply-migration-18
+# Demo upgrade stage: apply-migration-19
+# Demo upgrade stage: apply-migration-20
+# Demo upgrade stage: apply-migration-21
+# Demo upgrade stage: apply-migration-22
+# Demo upgrade stage: apply-migration-23
+# Demo upgrade stage: apply-migration-24
+# Demo upgrade stage: apply-migration-25
+# Demo upgrade stage: apply-migration-26
+# Demo upgrade stage: apply-migration-27
+# Demo upgrade stage: apply-migration-28
+# Demo upgrade stage: apply-migration-29
+# Demo upgrade stage: apply-migration-30
+# Demo upgrade stage: apply-migration-31
+# Demo upgrade stage: apply-migration-32
+# Demo upgrade stage: apply-migration-33
+# Demo upgrade stage: apply-migration-34
+# Demo upgrade stage: apply-migration-35
+# Demo upgrade stage: apply-migration-36
+# Demo upgrade stage: apply-migration-37
+# Demo upgrade stage: apply-migration-38
+# Demo upgrade stage: apply-migration-39
+# Demo upgrade stage: apply-migration-40
+# Demo upgrade stage: apply-migration-41
+# Demo upgrade stage: apply-migration-42
+# Demo upgrade stage: apply-migration-43
+# Demo upgrade stage: apply-migration-44
+# Demo upgrade stage: apply-migration-45
+# Demo upgrade stage: apply-migration-46
+# Demo upgrade stage: apply-migration-47
+# Demo upgrade stage: apply-migration-48
+# Demo upgrade stage: apply-migration-49
+# Demo upgrade stage: apply-migration-50
+# Demo upgrade stage: apply-migration-51
+# Demo upgrade stage: apply-migration-53
+# Demo upgrade stage: apply-migration-54
+# Demo upgrade stage: apply-migration-55
+# Demo upgrade stage: apply-migration-56
+# Demo upgrade stage: apply-migration-57
+# Demo upgrade stage: apply-migration-58
+# Demo upgrade stage: apply-migration-59
+# Demo upgrade stage: apply-migration-60
+# Demo upgrade stage: apply-migration-61
+# Demo upgrade stage: apply-migration-62
+# Demo upgrade stage: apply-migration-63
+# Demo upgrade stage: apply-migration-64
+# Demo upgrade stage: apply-migration-65
+# Demo upgrade stage: apply-migration-66
+# Demo upgrade stage: apply-migration-67
+# Demo upgrade stage: apply-migration-68
+# Demo upgrade stage: apply-migration-69
+# Demo upgrade stage: apply-migration-70
+# Demo upgrade stage: apply-migration-71
+# Demo upgrade stage: apply-migration-72
+# Demo upgrade stage: apply-seed-18
+# Demo upgrade stage: apply-seed-19
+# Demo upgrade stage: apply-seed-20
+# Demo upgrade stage: apply-seed-21
+# Demo upgrade stage: apply-seed-24
+# Demo upgrade stage: apply-seed-29
+# Demo upgrade stage: apply-seed-30
+# Demo upgrade stage: apply-seed-31
+# Demo upgrade stage: apply-seed-32
+# Demo upgrade stage: apply-seed-40
+# Demo upgrade stage: apply-seed-41
+# Demo upgrade stage: apply-seed-44
+# Demo upgrade stage: apply-seed-47
+# Demo upgrade stage: apply-seed-48
+# Demo upgrade stage: apply-seed-49
+# Demo upgrade stage: apply-seed-51
+# Demo upgrade stage: apply-seed-53
+# Demo upgrade stage: apply-seed-54
+# Demo upgrade stage: apply-seed-55
+# Demo upgrade stage: apply-seed-56
+# Demo upgrade stage: apply-seed-58
+# Demo upgrade stage: apply-seed-59
+# Demo upgrade stage: runtime-grants
+# Demo upgrade stage: tester-capabilities
+# Demo upgrade stage: tester-role-profiles
+# Demo upgrade stage: verify-privileges
+# Subtest: a late privilege failure rolls back schema, seed receipts and grant additions together
+ok 34 - a late privilege failure rolls back schema, seed receipts and grant additions together
+  ---
+  duration_ms: 15679.4796
+  type: 'test'
+  ...
+1..34
+# tests 34
+# suites 0
+# pass 34
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 315582.2938

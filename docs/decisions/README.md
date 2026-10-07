@@ -111,7 +111,8 @@ The [PPO Assistant direction and architecture decision](ppo-assistant-direction.
 
 - [ADR-0046 â€” Native Sales handovers and aftercare](ADR-0046-sales-native-workflows.md): frozen Sales submissions, exact receiving decisions, shared Activity obligations and bounded aftercare; owner acceptance and deployment remain separate.
 
-- [ADR-0049 â€” Native Supply Chain coordination](ADR-0049-native-supply-chain.md): SC-01â€“SC-10 synthetic/manual domain; current-authority recovery, conserved quantities and external-command boundaries.
+- [Native Maintenance and Warranty](maintenance-warranty-native.md): MA-01–MA-07 typed sources, bounded recurrence, exact Service receiving, independent customer and supplier outcomes; acceptance and deployment remain separate.
+- [ADR-0049 — Native Supply Chain coordination](ADR-0049-native-supply-chain.md): SC-01–SC-10 synthetic/manual domain; current-authority recovery, conserved quantities and external-command boundaries.
 - [Field readiness over CS-06](field-readiness-native.md): FI-05 assigned-visit review reuses CS snapshots/events with current assignment and receipt authority; induction remains unverified without a Person binding.
 
 The [27 September consolidation decision](repository-consolidation.md) authorises current-source reconciliation, ordered migration integration and the synthetic service-verification milestone. It preserves operational and owner-acceptance boundaries.

@@ -33,3 +33,7 @@ Main now contains migration 0072. Combined assertions retain both 0052 and 0072;
 Catalogue publication does not approve installation, release Engineering substitutions or reprice saved estimates/quotes. ES-03 owns costs and deliberate refresh; Engineering and Equipment own application/installed impact. MYOB, SharePoint and CAD retain their authority. Import supports bounded synthetic JSON only. Production imports, live supplier/stock connections, FX/landed-cost policies, pagination and a new product-to-estimate selection journey remain later work.
 
 No merge, deployment, business acceptance or physical-device acceptance is claimed by this contribution.
+
+## CI capacity follow-up — 7 October 2026
+
+Head `af9e26b` passed 49 checks, including the earlier failed Leads and CRM visual checks and complete native Products proof. Database-1 exceeded its 90-minute job limit after 510 passes; its dependent aggregate failed. The [capacity repair and retained evidence](../testing/evidence/products-native/ci-capacity/README.md) incorporate main `c228c4f`, its three isolated database shards and Maintenance/Warranty, preserving both modules and the reviewed migration-72 gate. Combined capabilities, migration/seed/grant expectations and live design bindings are reconciled. Fresh final-head CI remains distinct from the retained cancelled source and earlier proof.

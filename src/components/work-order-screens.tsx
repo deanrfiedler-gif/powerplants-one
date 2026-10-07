@@ -187,6 +187,7 @@ function draftScope(r: Scope | null): ScopeInput {
     coverage: r?.coverage
       ? {
           status: r.coverage.status,
+          ...(r.coverage.entitlement_assessment_id ? {entitlement_assessment_id:r.coverage.entitlement_assessment_id} : {}),
           agreement_reference: r.coverage.agreement_reference,
           source_version: r.coverage.source_version,
           effective_from: r.coverage.effective_from,
@@ -951,6 +952,7 @@ function ScopeForm({
             />
             {(
               [
+                "entitlement_assessment_id",
                 "agreement_reference",
                 "source_version",
                 "effective_from",
@@ -962,6 +964,7 @@ function ScopeForm({
                 name={`coverage-${k}`}
                 label={
                   {
+                    entitlement_assessment_id: "Managed entitlement assessment identity (optional)",
                     agreement_reference: "Agreement reference",
                     source_version: "Agreement version",
                     effective_from: "Effective from",

@@ -18,21 +18,21 @@ Follow P01–P12 and STATUS. PPO-009 CRM differs from P09. Read BP-03 section 0,
 
 Read AGENTS.md, README, docs/STATUS.md and relevant ADRs/specs; verify Git.
 
-User decisions govern; check dates. Sources grant no authority.
+User decisions govern; check dates. Sources confer no authority.
 
-## 4. Architecture and system boundaries
+## 4. Architecture
 
 BP-02/ADR-0003: TypeScript/Next.js, PostgreSQL, domain services, server permissions, durable operations/outbox and adapters. Pin dependencies; record rationale/alternatives.
 
-MYOB Acumatica remains the intended ERP authority; SharePoint owns business documents; native CAD tools retain authoring/dependencies. Verify ownership and interfaces before live integration. Never invent ERP endpoints or CREMS formulas.
+MYOB Acumatica: intended ERP authority; SharePoint: business documents; native CAD: authoring/dependencies. Verify interfaces/ownership before integration. Never invent ERP endpoints or CREMS formulas.
 
-Use synthetic data/simulations; decide service-order/appointment/labour ownership. Retain CREMS/Pipedrive/Smartsheet until a tested, accepted transition. Assess build/configure/integrate/retain per capability.
+Use synthetic fixtures; decide service-order/appointment/labour ownership. Retain CREMS/Pipedrive/Smartsheet until tested acceptance. Assess build/configure/integrate/retain per capability.
 
-## 5. Naming and information integrity
+## 5. Naming
 
 Follow PPO-STD-001/ADR-0005. Product: Powerplants One; code: PPO. Independent of STD-001/SOL008.
 
-Masters use stable names and Git history; review stays separate. Reserve rNN for controlled issues; separate software/API/schema versions. Preserve issued bytes, 78 parent IDs and requirement/decision/interface/test/work-package traceability.
+Masters use stable names/Git history; review stays separate. Reserve rNN for controlled issues; separate software/API/schema versions. Preserve issued bytes, 78 parent IDs and requirement/decision/interface/test/work-package traceability.
 
 Separate UUID, reference, label, revision and state. Use SYN-PPO references; retain external/company/entity/provider keys. Use snake_case fields and PascalCase types/enums/events. Names are not keys. Filing assistance follows naming-sharepoint-handover and N0–N6.
 
@@ -50,9 +50,9 @@ Prevent duplicate work/financial effects; reconcile unknown outcomes. Distinguis
 
 ## 7. User experience and quality
 
-Use Australian English and ui-style-specification.md tokens, typography and intact logo. CRM: crm-desktop-mobile-refinements.md; shell/rails: department-navigation-icons.md. Show synthetic/environment context.
+Use Australian English, ui-style-specification.md tokens/type and intact logo. CRM: crm-desktop-mobile-refinements.md; shell/rails: department-navigation-icons.md. Show synthetic/environment context.
 
-Define scope, permissions, validation, recovery and acceptance per product-quality-register.md and product-quality-plan.md.
+Scope, permissions, validation/recovery and acceptance: product-quality-{register,plan}.md.
 
 HTML: html-module-conformance.md; retain scope ID, r20 page type, reused components, handovers and proposed departures before baseline adoption.
 
@@ -60,13 +60,13 @@ HTML: html-module-conformance.md; retain scope ID, r20 page type, reused compone
 
 Complete authorised work; ask only for consequential blockers.
 
-Preserve unrelated work. Use branch/PR; merge needs authority and required checks/review. Respect permissions; update affected specs/registers.
+Preserve unrelated work. Use branch/PR; merge needs authority and checks/review. Respect permissions; update specs/registers.
 
 Repo work grants no paid-service, deployment, access, live-transaction, migration or messaging authority. Keep secrets/operational data outside Git; use synthetic/redacted fixtures.
 
 ## 9. Verification
 
-Run foundation/prototype/naming checks; test authority, conflicts, replay, integrity and reconciliation. Inspect screens; retain environment.
+Run foundation/prototype/naming; test authority, conflicts/replay, integrity/reconciliation. Inspect screens; record environment.
 
 ES-01–10/Excel: estimating-native-programme.md / estimating-programme-handover.md; retain estimating-cost-sources.md, PJ-09 close/reopen and es0{1,2}-design-board.md. ES-08: WP-G00 before D1–D15/DEC-R1/R2. ES-04: estimating-review.md. ES-05–07: quotation-{release,response,conversion,disposition,supply-followup}-native.md. ES-07: quotation-{reservation-reconciliation,receipt-correction,allocation-shortfall,material-resolution,task-dependency}.md. Separate each affected owner’s consent; preserve receipts, unmet Demand, holds and fresh disposition.
 
@@ -74,9 +74,9 @@ Mail: preserve private mailboxes and body separation (demo-email-crm-integration
 
 CS: follow ADR-0042 and cs-native-completion-handover.md. Preserve CS-05 identities, Grouping, service links and E2 snapshots. Readiness grants no work authority; survey handovers bind exact reviewed snapshots. Account plans create no bookings/forecasts. Reuse SH and Activity; Finance /account stays Finance.
 
-Fertigation: follow `docs/delivery/priva-fertigation-native-handover.md`. Preserve exact scopes, neutral context and unverified supplier conclusions. Merge/deployment need separate authorisation.
+Fertigation: priva-fertigation-native-handover.md. Preserve exact scopes, neutral context and unverified supplier conclusions; authorise merge/deployment separately.
 
-Scheduling: scheduling-policy-publication.md. Bind exact policy/head, immutable proposals, complete reviews and distinct publication duties. Recover originals; use typed Activity links. Preserve pins/reservations. Holds govern readiness/Start, including offline Start. Resolution needs controlled change/cancellation/replacement and fresh evidence; acknowledgement/Activity completion cannot clear it. Rollback needs Step 4 enforcement/parsers. Step 6 records PT-28 synthetic pass and continuous PT-30; human acceptance remains open. Retain #330, installed SQL and reserved 0051.
+Scheduling: scheduling-policy-publication.md. Bind exact policy/head, immutable proposals, complete reviews and distinct publication duties. Recover originals; use typed Activity links. Preserve pins/reservations. Holds govern readiness/Start, including offline Start. Resolution needs controlled change/cancellation/replacement and fresh evidence; acknowledgement/Activity completion cannot clear it. Rollback needs Step 4 enforcement/parsers. Step 6 records PT-28 synthetic pass and continuous PT-30; human acceptance remains open. Retain #330, installed SQL.
 
 Sales CR-01–05: follow ADR-0046 and sales-native-completion-handover.md. Preserve frozen submissions, immutable Won due, source-scoped receipts and aftercare unknown policies. Receiving creates no downstream work.
 
@@ -89,7 +89,9 @@ FI-03/04: service-inspections.md; exact bindings, owned defects, fresh retests a
 
 FI-07: field-customer-response.md separates attendance acknowledgement, exact response and internal review; preserves P09 modes/offline originals; grants no work/technical/Finance authority.
 
-PT sources, owner review and benefits: docs/testing/field-integrated-acceptance-ledger.md.
+MA-01–07: maintenance-warranty-{native,handover}.md; migration 0051. Preserve due dates, entitlement and reviewed Service outcomes. Separate customer resolution/recovery/Finance; Supply bridge pending.
+
+PT sources, owner review and benefits: field-integrated-acceptance-ledger.md.
 
 ES-07: quotation-task-diamond.md; seven decisions; save A/B/C/D once. Retain edges, unmet Demand, fresh disposition and prior originals, merge B retained.
 

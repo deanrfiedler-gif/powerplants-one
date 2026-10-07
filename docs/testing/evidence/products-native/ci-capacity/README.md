@@ -1,0 +1,17 @@
+# Products integration CI capacity repair
+
+<!-- versioning: git; committed history is authoritative -->
+
+Owner: Dean Fiedler. Review: implementation diagnosis and verification; owner/design acceptance and deployment remain separate.
+
+PR #358 head `af9e26b3b4aac5c009c45bad9f2f226b67c8f477` finished with **49 successful checks, one cancelled database job and one failed dependent aggregate**. The earlier Leads and CRM visual defects passed, as did native Products and its actual application/PostgreSQL restart proof. [Database-1](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37565047329/job/112610721304) exceeded its 90-minute job limit. Its database phase recorded **510 passing cases and no failed assertion**, with the last pass at 04:39:33.795 UTC and cancellation at 04:39:36.821. There is no completed database summary; the cancellation remains incomplete proof.
+
+[Observations](observations.json) retain all failed-head conclusions, exact source/job IDs, annotation, timestamps and the hash of [sanitised database results](cancelled-database-1.txt). Setup/environment lines are excluded. The full downloaded job log remains private under ignored `tmp/`.
+
+Main `c228c4f6bfd063e73fb11b67155ce0b1abf2749e` merged Maintenance/Warranty and the same measured capacity repair. Reuse its [three-shard isolation decision](../../../../decisions/ci-retained-suite-isolation.md#maintenance-and-es-07-combined-database-budget--7-october-2026), retaining all discovered files, serial execution within each disposable database, 120-second individual deadlines, the 90-minute job limit and the mandatory aggregate. Main's [independent failure and unchanged-main comparison](../../maintenance-warranty/integration/ci-capacity/README.md) remain separate evidence. No retries, assertion changes or test omissions are introduced.
+
+The merge retains both additive migrations/seeds 0051 and 0052, exact combined grants and ledger counts, both receipt-authority dispatches and all native navigation/design bindings. The generated AD-01 catalogue has 131 capabilities and retains the 31-capability hosted set. Existing Products installation-order tests now account for Maintenance's exact grants, while the late Maintenance test runs after Products is present. Installed SQL is unchanged. The reviewed hosted gate stays at 72. The combined live design register has 350 entries and 196 source routes; all existing acceptance states remain.
+
+Local verification and final repaired-head CI conclusions are recorded separately in observations and the PR. Pending checks are not passes. The original Products checkout and its 136 inventoried files remain preserved.
+
+Local checks pass: TypeScript, source-wide lint (excluding only local generated browser bundles), foundation/naming, the 350-entry design register, 15 focused units, 107 AD-01 model checks, 40 AD-01 browser checks and nine shell/design cases (18 retained skips). All 15 selected database/hosted-upgrade scenarios passed across the first run (14 passed; FI01 failed on stale 61 versus actual 83 grants) and the corrected isolated FI01 run (one passed). The final expected set contains both modules and preserves revoked/original grants. The initial full lint invocation reported 1,222 errors only in an ignored generated job-pack fixture bundle; source-wide lint passed with that output directory excluded. No repository lint rule changed. Full repaired-head CI is recorded on PR #358.

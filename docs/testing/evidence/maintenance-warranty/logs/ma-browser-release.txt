@@ -1,0 +1,18 @@
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.58"}
+
+Running 8 tests using 1 worker
+
+(node:4760) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop-chromium] › tests\browser\maintenance.spec.ts:247:1 › all fourteen native routes expose their exact guide and preserve shell focus (1.1m)
+  ok 2 [desktop-chromium] › tests\browser\maintenance.spec.ts:283:1 › native reviewed forms preserve draft through guidance and recover a lost accepted response (3.4s)
+  ok 3 [desktop-chromium] › tests\browser\maintenance.spec.ts:347:1 › paired original references and complete native shell reflow with overflow negative control (24.1s)
+  ok 4 [desktop-chromium] › tests\browser\maintenance.spec.ts:443:1 › filtered-empty, read-only, missing record and failed-read recovery are explicit (4.0s)
+(node:35056) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 5 [mobile-chromium] › tests\browser\maintenance.spec.ts:247:1 › all fourteen native routes expose their exact guide and preserve shell focus (60.0s)
+  ok 6 [mobile-chromium] › tests\browser\maintenance.spec.ts:283:1 › native reviewed forms preserve draft through guidance and recover a lost accepted response (3.9s)
+  ok 7 [mobile-chromium] › tests\browser\maintenance.spec.ts:347:1 › paired original references and complete native shell reflow with overflow negative control (26.7s)
+  ok 8 [mobile-chromium] › tests\browser\maintenance.spec.ts:443:1 › filtered-empty, read-only, missing record and failed-read recovery are explicit (3.8s)
+
+  8 passed (3.2m)

@@ -1,0 +1,242 @@
+.ma-workspace {
+  max-width: 1440px;
+  margin: auto;
+  padding: 24px;
+  min-width: 0;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+.ma-nav,
+.ma-context,
+.ma-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0;
+}
+.ma-nav a {
+  padding: 10px 6px;
+  min-height: 44px;
+  border-bottom: 2px solid transparent;
+}
+.ma-nav a[aria-current="page"] {
+  border-color: var(--green);
+  font-weight: 700;
+}
+.ma-filters {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 20px 0;
+}
+.ma-filters > .field {
+  flex: 1 1 260px;
+}
+.ma-filters label,
+.ma-select {
+  display: grid;
+  gap: 6px;
+}
+.ma-workspace select,
+.ma-workspace input,
+.ma-workspace textarea {
+  min-height: 44px;
+  max-width: 100%;
+  min-width: 0;
+  font: inherit;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius, 4px);
+  background: var(--surface, #fff);
+  color: var(--ink);
+}
+.ma-workspace select[multiple] {
+  min-height: 110px;
+}
+.ma-workspace button,
+.ma-workspace a,
+.ma-workspace summary {
+  touch-action: manipulation;
+}
+.ma-snapshot {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border: 1px solid var(--line);
+  margin: 20px 0;
+}
+.ma-snapshot > span {
+  padding: 16px;
+  border-right: 1px solid var(--line);
+}
+.ma-snapshot strong {
+  display: block;
+  font-size: 24px;
+}
+.ma-register {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.ma-register article {
+  border: 1px solid var(--line);
+  padding: 20px;
+  background: var(--surface, #fff);
+}
+.ma-register header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.ma-register h2 {
+  font-size: 18px;
+  line-height: 1.4;
+}
+.ma-register dl {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 6px;
+}
+.ma-register dd {
+  margin: 0;
+}
+.ma-source,
+.ma-action {
+  border: 1px solid var(--line);
+  margin: 16px 0;
+  background: var(--surface, #fff);
+}
+.ma-source > summary,
+.ma-action > summary {
+  padding: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 44px;
+}
+.ma-source > dl,
+.ma-source > ul,
+.ma-action > form {
+  padding: 16px;
+}
+.ma-action[open] > summary {
+  border-bottom: 1px solid var(--line);
+}
+.ma-facts {
+  margin: 0;
+  display: grid;
+  gap: 12px;
+}
+.ma-facts > div {
+  display: grid;
+  grid-template-columns: minmax(130px, 25%) minmax(0, 1fr);
+  gap: 12px;
+}
+.ma-facts dt {
+  font-weight: 500;
+}
+.ma-facts dd {
+  margin: 0;
+  white-space: pre-wrap;
+  min-width: 0;
+}
+.ma-evidence-list {
+  padding-left: 20px;
+}
+.ma-evidence-list > li {
+  margin: 16px 0;
+}
+.ma-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  border: 0;
+  padding: 0;
+  min-width: 0;
+}
+.ma-form-grid > .ma-subform {
+  grid-column: 1/-1;
+}
+.ma-subform {
+  display: grid;
+  gap: 16px;
+  border: 1px solid var(--line);
+  padding: 16px;
+  min-width: 0;
+}
+.ma-subform > fieldset {
+  display: grid;
+  gap: 12px;
+  border: 1px solid var(--line);
+  min-width: 0;
+}
+.ma-form-grid button[type="submit"] {
+  align-self: end;
+  justify-self: start;
+}
+.ma-notice {
+  padding: 12px;
+  border-left: 3px solid var(--green);
+  background: var(--surface, #fff);
+  line-height: 1.5;
+}
+.ma-workspace :focus-visible {
+  outline: 3px solid var(--green);
+  outline-offset: 3px;
+}
+.ma-workspace .record-tablist {
+  flex-wrap: wrap;
+  overflow: visible;
+}
+.ma-workspace .record-tablist button {
+  min-height: 44px;
+  white-space: normal;
+}
+@media (max-width: 780px) {
+  .ma-workspace {
+    padding: 16px;
+  }
+  .ma-register,
+  .ma-form-grid,
+  .ma-snapshot {
+    grid-template-columns: 1fr;
+  }
+  .ma-snapshot > span {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .ma-facts > div {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .ma-filters > * {
+    width: 100%;
+  }
+  .ma-workspace input,
+  .ma-workspace select,
+  .ma-workspace textarea {
+    font-size: 16px;
+  }
+  .ma-nav {
+    gap: 4px;
+  }
+  .ma-nav a {
+    flex: 1 1 130px;
+  }
+  .ma-context {
+    align-items: start;
+  }
+  .ma-source > dl,
+  .ma-source > ul,
+  .ma-action > form,
+  .ma-register article {
+    padding: 12px;
+  }
+  .ma-subform {
+    padding: 10px;
+  }
+  .ma-form-grid button[type="submit"] {
+    width: 100%;
+  }
+}

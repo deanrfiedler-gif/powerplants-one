@@ -27,7 +27,9 @@ jobs:
     runs-on: ubuntu-24.04
     # Each lane owns its disposable database; all original phases remain serial
     # within their lane. HTTP/restart proofs start at their original clean-reset
-    # boundary; each native database shard keeps serial file execution.
+    # boundary; all three native database shards keep serial file execution.
+    # A shard exhausted its budget with tests still passing; see the retained
+    # suite isolation decision. Keep every discovered file and test deadline.
     # The stable p01 gate requires every lane to pass within the same deadline.
     timeout-minutes: 90
     strategy:
@@ -36,9 +38,11 @@ jobs:
         suite: [browser, finance, reports, http]
         include:
           - suite: database-1
-            database_shard: 1/2
+            database_shard: 1/3
           - suite: database-2
-            database_shard: 2/2
+            database_shard: 2/3
+          - suite: database-3
+            database_shard: 3/3
     services:
       postgres:
         image: postgres:16.15

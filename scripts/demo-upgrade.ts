@@ -140,20 +140,25 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // offline factual recovery commands. It rewrites no existing evidence, identity,
   // seed or grant. Generic runtime privileges include the additive tables.
   // Existing reports without timers retain their original submission contract.
+  // 0051 uses the reserved Maintenance/Warranty slot, including an already-current database.
+  // It appends typed records and existing checks after flushing deferred identity events.
+  // Seed 51 adds 22 scoped duties to existing fictional principals only; no user or hosted
+  // invitation changes. Generic runtime table grants apply. Original rows, ledger hashes,
+  // outputs and revoked grants must survive both the ascending and late-slot upgrade.
   // 0053: additive scheduling family, immutable proposals/reviews/publications/impacts
   // and typed Activity companions. Only publication has an identity because the existing
   // receipt FK requires it; pending identity events are flushed before the additive CHECK.
   // Seed 53 binds the exact trusted root and never resets a head or adds users/grants.
   // Runtime grants cover the new tables; immutable triggers and deferred graph checks
   // remain in force. No policy command, tester duty, audit/outbox enum or dispatch change.
-  // 0051 remains reserved; the later 0052 gap addition is reviewed below.
+  // Former reserved gaps 0051/0052 are reviewed additive installations below.
   // 0054 adds internal-only command evidence and two distinct local synthetic duties.
   // Typed identities flush pending 0026 events; issued sources remain unchanged.
   // Seed replay preserves revoked grants and adds no hosted tester authority.
   // Commands stay unregistered until Step 4 enforcement is proved.
   // 0055 adds immutable Service template/binding/event/output tables only. Seed
   // 55 supplies fictional catalogue versions and an instrument, with no users or grants. Shared
-  // attempts and installed SQL/seed bytes remain intact; 0055 filled neither reserved gap.
+  // attempts and installed SQL/seed bytes remain intact; 0051 and 0052 now install their separate additive domains.
   // 0056 adds isolated incident storage. Seed 56 grants only the three named
   // local synthetic profiles, never hosted testers; existing rows and revoked
   // grants remain unchanged. Populated upgrade/reseed proof is required.

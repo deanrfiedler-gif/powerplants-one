@@ -102,7 +102,8 @@ export function assertOnlyEngineeringSeedGrantsAdded(original: Grant[], upgraded
   assert.equal(sourceReviewer.length,3);
   const technical = original.filter(g=>g.user_id===coordinator&&g.company_id===companyA&&g.scope_type==="Company"&&g.capability==="engineering.read").flatMap(g=>[[profiles.reviewer,"engineering.technical.review"],[profiles.release,"engineering.technical.issue"],[profiles.release,"engineering.technical.distribute"],[coordinator,"engineering.technical.source"]].map(([user_id,capability])=>({...g,user_id,capability})));
   assert.equal(technical.length,4);
-  const expected=[...earlier,...acceptanceSeedGrants(original,earlier),...customerReview,...technical,...sourceReviewer,...supplySeedGrants(original),...schedulingPolicySeedGrants(original),...incidentSeedGrants(original),...estimateReviewSeedGrants(original),...quotationReleaseSeedGrants(original),...productsSeedGrants(original)];
+  const maintenance=maintenanceSeedGrants(original);
+  const expected=[...maintenance,...productsSeedGrants(original),...earlier,...acceptanceSeedGrants(original,earlier),...customerReview,...technical,...sourceReviewer,...supplySeedGrants(original),...schedulingPolicySeedGrants(original),...incidentSeedGrants(original),...estimateReviewSeedGrants(original),...quotationReleaseSeedGrants(original)];
   assert.equal(materials.length, 31);
   assert.equal(changes.length, 21); // twelve reads for three profiles and nine duty grants
   assert.equal(commissioning.length, 18); // four reads for one profile, six duty grants and eight My Work action grants
@@ -157,4 +158,14 @@ export function productsSeedGrants(original: Grant[]): Grant[] {
     ["d0520000-0000-4000-8000-000000000004", ["shared.read", "products.read", "products.publish"]]
   ];
   return source.flatMap(g=>assignments.flatMap(([user_id,caps])=>caps.map(capability=>({...g,user_id,capability}))));
+}
+
+// Seed 51 copies only named fictional principals and their original scope/validity.
+export function maintenanceSeedGrants(original: Grant[]): Grant[] {
+  return original.filter(g=>g.capability==="shared.read").flatMap(g=>{
+    const id=String(g.user_id);
+    const caps=[coordinator,secondCompany].includes(id)?["maintenance.read","maintenance.manage","maintenance.assess","warranty.read","warranty.manage","warranty.assess","warranty.recovery"]:
+      ["30000000-0000-4000-8000-000000000002","30000000-0000-4000-8000-000000000012","30000000-0000-4000-8000-000000000014"].includes(id)?["maintenance.read","warranty.read",...(id.endsWith("012")?["maintenance.agreement.approve","warranty.goodwill"]:[])]:[];
+    return caps.map(capability=>({...g,capability}));
+  });
 }

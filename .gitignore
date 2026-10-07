@@ -19,7 +19,7 @@ __pycache__/
 node_modules/
 dist/
 build/
-coverage/
+/coverage/
 .pytest_cache/
 *.log
 # Operational data and local working material do not belong in source control.

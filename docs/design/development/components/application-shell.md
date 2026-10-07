@@ -84,6 +84,9 @@ The workload uses the inherited frame and global page-information control. A reg
 
 The source register, authored evidence form, independent review and estimate comparison use this family through `src/components/cost-sources.tsx`. Existing catalogue fixtures remain unchanged because the shared component implementation is unchanged. Source-specific unknown/stale/recovery compositions are verified in the host browser tests, not inferred from the catalogue. The read-state binding includes ErrorNotice and host loading/recovery text; it does not claim a new generic ReadState implementation. See the [cost-source handover](../../../delivery/estimating-cost-sources-handover.md) for executed evidence and open paired/owner/device review.
 
+## Maintenance and Warranty consumers
+
+MA-01–MA-07 now reuse this component through the native registers and record workspaces. Exact bindings are in components.json. Synthetic long labels, uncertain saves, stale versions and separate customer/recovery states are in docs/design/development/maintenance-fixtures.json and the Maintenance browser journeys. Review 1440/1024/390/320 px and guide draft retention before owner acceptance.
 ## PL-04 dedicated local duties
 
 The existing local identity selector includes the distinct fictional scheduling policy reviewer and publisher. Neither receives booking-edit authority. Host fixtures in `tests/scheduling-browser/publication.spec.ts` exercise Scheduling navigation, direct saved-record URLs and identity switches while a protected read is in flight. Session lock clears both PL-01 and PL-04 local journals and remounts the business view; another actor cannot inherit displayed evidence. Hosted identities and grants are unchanged. [Step 5 verification](../../../testing/evidence/scheduling-policy-interface/README.md) is implementation evidence; paired shell/device acceptance stays open.
