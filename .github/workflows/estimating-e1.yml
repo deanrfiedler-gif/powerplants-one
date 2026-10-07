@@ -7,8 +7,12 @@ on:
 permissions:
   contents: read
 jobs:
-  estimating:
-    name: E1 manual estimate, draft output and restart proof
+  estimating_suites:
+    name: E1 ${{ matrix.suite }} proof
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: [database, browser]
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     services:
@@ -37,18 +41,23 @@ jobs:
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
         run: bash scripts/configure-test-postgres.sh
-      - name: Pinned runtime and static checks
+      - name: Pinned runtime
         run: |
           npm install --global npm@11.19.0
           npm ci
           node --version
           npm --version
           npm ls --depth=0
+      - name: Static and unit proof
+        if: matrix.suite == 'database'
+        run: |
           npm run lint
           npm run typecheck
           npm run test:unit
-          npm run browser:install
-      - name: Disposable current schema and E1 PostgreSQL proof
+      - name: Browser runtime
+        if: matrix.suite == 'browser'
+        run: npm run browser:install
+      - name: Disposable database configuration
         run: |
           cp .env.example .env.local
           python3 - <<'PY'
@@ -56,10 +65,14 @@ jobs:
           p=Path('.env.local')
           p.write_text(p.read_text().replace('<local-password>','ppo_disposable_ci_only').replace('/ppo_synthetic','/ppo_synthetic_test'))
           PY
-          node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/estimating.test.ts tests/database/estimating-workspaces.test.ts tests/database/estimating-discovery-context.test.ts tests/database/estimating-workload.test.ts tests/database/estimating-sources.test.ts tests/database/estimating-review.test.ts tests/database/quotation-release.test.ts tests/database/estimating-configuration.test.ts tests/database/specialist.test.ts tests/database/fertigation.test.ts tests/database/fertigation-artifacts.test.ts tests/database/fertigation-import.test.ts
+      - name: E1 PostgreSQL proof
+        if: matrix.suite == 'database'
+        run: node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/estimating.test.ts tests/database/estimating-workspaces.test.ts tests/database/estimating-discovery-context.test.ts tests/database/estimating-workload.test.ts tests/database/estimating-sources.test.ts tests/database/estimating-review.test.ts tests/database/quotation-release.test.ts tests/database/estimating-configuration.test.ts tests/database/specialist.test.ts tests/database/fertigation.test.ts tests/database/fertigation-artifacts.test.ts tests/database/fertigation-import.test.ts
       - name: Compile the exact E1 E2 ES-02 application
+        if: matrix.suite == 'browser'
         run: npm run build
       - name: Record the actual compiled checkout and fertigation source hashes
+        if: matrix.suite == 'browser'
         run: |
           python3 - <<'PY'
           import hashlib,json,os,subprocess
@@ -71,6 +84,7 @@ jobs:
           (root/'source-manifest.json').write_text(json.dumps(data,indent=2)+'\n')
           PY
       - name: E1 real direct HTTP proof
+        if: matrix.suite == 'browser'
         run: |
           PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
           node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > "$RUNNER_TEMP/ppo-e1-http.log" 2>&1 &
@@ -86,6 +100,7 @@ jobs:
           PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/fertigation-restart-proof.ts write
           node --env-file=.env.local --import tsx scripts/fertigation-capacity-proof.mjs
       - name: E1 journey through three application and browser processes and two PostgreSQL restarts
+        if: matrix.suite == 'browser'
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
           PPO_PROOF_COMPILED: "1"
@@ -100,6 +115,7 @@ jobs:
             node --env-file=.env.local --import tsx scripts/estimating-restart-proof.ts "$phase"
           done
       - name: Native fertigation exact bytes after the application and PostgreSQL restarts
+        if: matrix.suite == 'browser'
         run: |
           node --env-file=.env.local --import tsx scripts/local-server.ts --compiled > "$RUNNER_TEMP/ppo-fertigation-reopen.log" 2>&1 &
           ppo_fertigation_server_pid=$!
@@ -112,25 +128,29 @@ jobs:
           PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/quotation-release-restart.ts verify
           PPO_REQUIRE_RESTART=1 PPO_TEST_ORIGIN=http://127.0.0.1:3000 node --env-file=.env.local --import tsx scripts/fertigation-restart-proof.ts verify
       - name: Compiled E1 desktop, phone, 320px, uncertain response and long output
+        if: matrix.suite == 'browser'
         # Reuse the build verified by HTTP/restart checks. The same assertions
         # also pass in the full compiled suite; a second dev compilation can
         # leave an otherwise permitted workbook loading past its 5s assertion.
         run: npx playwright test --config=playwright.compiled.config.ts tests/browser/estimating.spec.ts tests/browser/estimating-workload.spec.ts tests/browser/estimating-sources.spec.ts tests/browser/estimating-review.spec.ts tests/browser/quotation-release.spec.ts --output verification-evidence/estimating-e1-browser --reporter=list
       - name: Compiled ES-02, My Work, Engineering materials and shell regression
+        if: matrix.suite == 'browser'
         env:
           PPO_PORT: "3012"
           PPO_TEST_ORIGIN: http://127.0.0.1:3012
         run: npx playwright test --config=playwright.es02.config.ts --output verification-evidence/estimating-es02-browser --reporter=list
       - name: Compiled ES-08 specialist workbench and recovery
+        if: matrix.suite == 'browser'
         env:
           PPO_PORT: "3018"
         run: npx playwright test --config=playwright.es08.config.ts --output verification-evidence/estimating-es08-browser --reporter=list
       - name: Compiled native fertigation save, clean context, conflict and large registers
+        if: matrix.suite == 'browser'
         env:
           PPO_PORT: "3042"
         run: npx playwright test --config=playwright.fertigation.config.ts --output verification-evidence/fertigation-browser --reporter=list
       - name: Retain exact synthetic evidence
-        if: always()
+        if: always() && matrix.suite == 'browser'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: Estimating-E1-evidence
@@ -146,3 +166,14 @@ jobs:
             test-results/
             !**/trace.zip
           retention-days: 14
+  estimating:
+    name: E1 manual estimate, draft output and restart proof
+    if: always()
+    needs: estimating_suites
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Require every E1 proof lane
+        env:
+          PPO_E1_RESULT: ${{ needs.estimating_suites.result }}
+        run: test "$PPO_E1_RESULT" = success

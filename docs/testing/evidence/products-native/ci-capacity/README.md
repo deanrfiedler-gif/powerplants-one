@@ -29,3 +29,9 @@ Reproduce selection verification from the repository root:
 - [Parsed workflow comparison](headroom-validation.json) confirms only the intended matrix, full-browser project selection and unique immediate artifact names differ. All source/SQL/test/dependency and Playwright configuration bytes remain at the green checkpoint.
 
 The four-shard and separated-browser head must receive its own complete CI result. PR #358 records that exact final source and all checks when complete; the d686723 pass is not substituted for pending final-head CI.
+
+## E1 cleanup deadline follow-up
+
+Head `2e4a1d3` reached a separate [E1 30-minute job timeout](e1-cancellation.json) after all of its test and evidence phases passed: 616 units, 110 database cases, 16 HTTP cases and 93 compiled browser cases, plus the actual repeated restart and exact-byte proof. The job was cancelled at 30m09s; its passing phases do not make the overall check successful. [Sanitised timestamped results](cancelled-e1-results.txt) omit setup/environment and container logs.
+
+The [E1 isolation decision](../../../../decisions/ci-retained-suite-isolation.md#products-final-head-e1-cleanup-budget--7-october-2026) separates static/database proof from the complete compiled HTTP/restart/browser sequence, keeping both at the existing 30-minute limit. The original E1 check name becomes a mandatory aggregate over both jobs. The HTTP phase already resets its disposable database, while all original write/recovery/restart verification stays together. [Parsed workflow and gate comparison](e1-isolation-validation.json) confirms every original command, deadline and evidence field remains; the gate rejects failed, cancelled, skipped and missing results. Source, SQL, tests and dependencies remain unchanged. Final CI conclusions for the repaired head belong on PR #358, separately from the cancelled checkpoint.
