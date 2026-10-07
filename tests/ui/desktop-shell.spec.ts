@@ -188,12 +188,15 @@ test("runtime shell matches the retained r17 reference typography, panel geometr
       expect(await style(actualHelp, ["background-color", "color"])).toEqual(await style(referenceHelp, ["background-color", "color"]));
     }
     if (kind === "account") {
-      // NAV moves presentation-only preview into Development. The Account's
-      // remaining action retains the reference's secondary-button styling.
+      // NAV moves presentation-only preview into Development. Sign out is a
+      // secondary action; r17's transparent reset link has a different purpose.
+      await expect(actualPanel.getByLabel("Preview workspace", { exact: true })).toHaveCount(0);
+      await expect(actualPanel.getByRole("button", { name: "Reset preview preference" })).toHaveCount(0);
       const actualReset = actualPanel.getByRole("button", { name: "Sign out", exact: true });
       const referenceReset = referencePanel.getByRole("button", { name: "Reset preview preference" });
       await actualReset.hover(); await referenceReset.hover();
-      expect(await style(actualReset, ["background-color", "color"])).toEqual(await style(referenceReset, ["background-color", "color"]));
+      expect(await style(actualReset, ["color"])).toEqual(await style(referenceReset, ["color"]));
+      expect((await style(actualReset, ["background-color"]))["background-color"]).toBe("rgb(240, 242, 245)");
     }
     if (kind === "guide") {
       await actualPanel.getByRole("button", { name: "Read the application shell guide" }).click();
