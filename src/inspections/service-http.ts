@@ -8,6 +8,7 @@ import {
 } from "../platform/http";
 import { readRoute, type RouteContext } from "../shared/http";
 import { transaction } from "../platform/database";
+import { requireCapability } from "../platform/permissions";
 import { unavailable, AppError } from "../platform/errors";
 import { uuid, object } from "../shared/validation";
 import {
@@ -50,6 +51,8 @@ export const inspectionList = (mode: Mode) =>
   readRoute(async (p, _id, q) => {
     object(q, []);
     return transaction(async (c) => {
+      await requireCapability(c, p, mode === "capture" ? "field.read.own" : "report.read");
+      if (mode === "review") await requireCapability(c, p, "service.work_order.edit");
       // Bounded worklist. Every row is checked through the owning domain before
       // names, counts or links are disclosed.
       const candidates = (

@@ -12,7 +12,7 @@ import {
 } from "react";
 import { useShell } from "./shell-provider";
 import { ShellAccountProfile, accountInitials } from "./shell-account-profile";
-import { canOpen, destination, menuGroups, workspaces } from "../shell/navigation";
+import { canOpen, destination, departmentHref, menuGroups, workspaces } from "../shell/navigation";
 import { ShellPageGuide } from "./shell-page-guide";
 import { DevelopmentPageGuide } from "../development/page-guide";
 import { ShellIcon as ProductIcon } from "./shell-icon";
@@ -237,7 +237,7 @@ export function ShellControls({
   const suggested = [workspaces.find(w => w.id === preview)!.primary, "work", "customers", "equipment"].map(destination);
   const pageMatches = context ? (query.length >= 2 ? menuGroups(query).flatMap(group => group.items) : query ? [] : suggested).filter(item => canOpen(item, context.navigation, hosted)) : [];
   const searchItems = [
-    ...pageMatches.map(item => ({ id: `page:${item.id}`, label: workspaces.find(w => w.primary === item.id)?.label ?? item.menuLabel ?? item.label, reference: item.workspace ? "Workspaces" : ["home", "work", "mail"].includes(item.id) ? "My workspace" : "Shared records", href: item.href!, kind: "Page", icon: workspaces.find(w => w.primary === item.id)?.id ?? (item.id === "equipment" ? "equipment" : item.icon) })),
+    ...pageMatches.map(item => ({ id: `page:${item.id}`, label: item.menuLabel ?? item.label, reference: item.workspace ? `${workspaces.find(w => w.id === item.workspace)!.label} pages` : ["home", "work", "mail"].includes(item.id) ? "My workspace" : "Shared records", href: departmentHref(item.href!, preview), kind: "Page", icon: workspaces.find(w => w.primary === item.id)?.id ?? (item.id === "equipment" ? "equipment" : item.icon) })),
     ...(results?.items ?? []).map(item => ({ ...item, icon: "search" as const })),
   ];
   const onSearchKey = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -264,8 +264,7 @@ export function ShellControls({
       searchItems[selected]
     ) {
       event.preventDefault();
-      setPanel(null);
-      navigateWithReview(() => router.push(searchItems[selected].href));
+      navigateWithReview(() => { setPanel(null); router.push(searchItems[selected].href); });
     }
   };
   const searchField = (
@@ -464,8 +463,7 @@ export function ShellControls({
                 onMouseDown={(event) => event.preventDefault()}
                 onMouseMove={() => setSelected(index)}
                 onClick={() => {
-                  setPanel(null);
-                  router.push(item.href);
+                  navigateWithReview(() => { setPanel(null); router.push(item.href); });
                 }}
               >
                 <ProductIcon name={item.icon as Parameters<typeof ProductIcon>[0]["name"]} />
@@ -473,7 +471,7 @@ export function ShellControls({
                   <strong>{item.label}</strong>
                   <small>{item.reference}</small>
                 </span>
-                {item.kind !== "Page" && <small>{item.kind}</small>}
+                <small>{item.kind}</small>
               </div>
             ))}
           </div>
@@ -481,7 +479,7 @@ export function ShellControls({
         {q.trim().length >= 2 && <Link className="ppo-account-link" href={`/search?${new URLSearchParams({q:q.trim()})}`} onClick={() => setPanel(null)}>View all results</Link>}
         {results?.state === "partial" && <p role="alert">Some sources are unavailable. Open all results to retry.</p>}
         <div className="ppo-panel-footer">
-          <span className="ppo-preview-label">Powerplants One · r17</span><span>{query ? "Up to 5 per record type" : "Pages & records"}</span>
+          <span className="ppo-preview-label">Powerplants One</span><span>{query ? "Up to 5 per record type" : "Pages & records"}</span>
         </div>
       </section>
       <section

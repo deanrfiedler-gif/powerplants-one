@@ -441,10 +441,7 @@
     background: #f5f6f8;
   }
   body:has(.leads-workspace) .sidebar,
-  body:has(.leads-workspace) .workspace .topbar.ppo-shell-header,
-  body:has(.leads-workspace) .mobile-navigation,
-  body:has(.leads-workspace) .module-navigation,
-  body:has(.leads-workspace) .identity-strip {
+  body:has(.leads-workspace) .module-navigation {
     display: none;
   }
   body:has(.leads-workspace) .app-frame {

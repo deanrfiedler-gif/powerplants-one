@@ -1,7 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 import { ProductHeader, ProductNavigation } from "./product-navigation";
-import { ShellProvider } from "./shell-provider";
+import { ShellProvider, useShell } from "./shell-provider";
 import { SessionViewBoundary } from "./session-view-boundary";
 
 export function ApplicationFrame({
@@ -24,7 +24,13 @@ export function ApplicationFrame({
     );
   return (
     <ShellProvider hosted={hosted} development={development}>
-      <div className="app-frame">
+      <FrameContents>{children}</FrameContents>
+    </ShellProvider>
+  );
+}
+function FrameContents({ children }: { children: React.ReactNode }) {
+  const shell = useShell();
+  return <div className="app-frame" data-rail={shell.railExpanded ? "expanded" : "compact"}>
         <ProductNavigation />
         <div className="workspace">
           <ProductHeader />
@@ -32,7 +38,5 @@ export function ApplicationFrame({
             <SessionViewBoundary>{children}</SessionViewBoundary>
           </main>
         </div>
-      </div>
-    </ShellProvider>
-  );
+      </div>;
 }

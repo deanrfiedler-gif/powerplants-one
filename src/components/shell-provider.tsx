@@ -10,7 +10,7 @@ import {
 } from "react";
 import type { ShellContext } from "../shell/model";
 import {
-  preferenceKey,
+  preferenceKey, workspaceLanding,
   workspacePreference,
   type WorkspaceId,
 } from "../shell/navigation";
@@ -22,6 +22,13 @@ import {
 
 const preferenceEvent = "ppo-shell-workspace";
 const visitPreferences = new Map<string, WorkspaceId>();
+const railPreferences = new Map<string, boolean>();
+function railSnapshot(key: string | null) {
+  if (!key) return false;
+  if (railPreferences.has(key)) return railPreferences.get(key)!;
+  try { const value = JSON.parse(localStorage.getItem(`${key}:rail`) ?? "null"); return value?.schema_version === 1 && value.expanded === true; }
+  catch { return false; }
+}
 const subscribe = (notify: () => void) => {
   window.addEventListener(preferenceEvent, notify);
   window.addEventListener("storage", notify);
@@ -47,7 +54,10 @@ type State = {
   development: boolean;
   preview: WorkspaceId;
   selectPreview: (id: WorkspaceId) => boolean;
+  selectWorkspace: (id: WorkspaceId) => boolean;
   resetPreview: () => boolean;
+  railExpanded: boolean;
+  setRailExpanded: (expanded: boolean) => void;
 };
 const Shell = createContext<State | null>(null);
 export function useShell() {
@@ -74,6 +84,7 @@ export function ShellProvider({
     () => snapshot(userKey),
     () => "sales" as const,
   );
+  const railExpanded = useSyncExternalStore(subscribe, () => railSnapshot(userKey), () => false);
   useEffect(() => {
     let live = true,
       request: AbortController | undefined;
@@ -123,8 +134,8 @@ export function ShellProvider({
       channel.removeEventListener("message", remote);
     };
   }, [retry]);
-  function selectPreview(id: WorkspaceId) {
-    if (!context?.can_preview || !userKey) return false;
+  function saveWorkspace(id: WorkspaceId) {
+    if (!context || !userKey) return false;
     let saved = true;
     try {
       localStorage.setItem(
@@ -148,7 +159,15 @@ export function ShellProvider({
         hosted,
         development,
         preview,
-        selectPreview,
+        railExpanded,
+        setRailExpanded: expanded => {
+          if (!userKey) return;
+          try { localStorage.setItem(`${userKey}:rail`, JSON.stringify({ schema_version: 1, expanded })); railPreferences.delete(userKey); }
+          catch { railPreferences.set(userKey, expanded); }
+          window.dispatchEvent(new Event(preferenceEvent));
+        },
+        selectPreview: id => context?.can_preview ? saveWorkspace(id) : false,
+        selectWorkspace: id => context && workspaceLanding(id, context.navigation, hosted) ? saveWorkspace(id) : false,
         resetPreview: () => {
           if (!context?.can_preview || !userKey) return false;
           let saved = true;

@@ -1,4 +1,5 @@
 "use client";
+import { OfflineEntry } from "./offline-entry";
 import { visitArrivalGuidance } from "../field/visit-guidance";
 import Link from "next/link";
 import {
@@ -647,7 +648,7 @@ export function WorkTimer({
             <Link href={`/my-jobs/site-readiness?appointment_id=${job.id}`}>
               Site readiness
             </Link>
-            <a href="/offline/index.html">Saved offline jobs</a>
+            <OfflineEntry>Saved offline jobs</OfflineEntry>
           </div>
           {v?.currentness !== "Current" && (
             <div className="banner-row">

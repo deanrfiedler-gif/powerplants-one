@@ -9,7 +9,7 @@ export const canvas = "#f5f6f8";
 export const manifestPath = "/manifest.webmanifest";
 /** A stable relative identity and start that survive UI releases on this origin. */
 export const appIdentity = "/";
-export const appStart = "/work";
+export const appStart = "/";
 
 export const appleTouchIconPath = "/pwa/ppo-app-icon-180.png";
 

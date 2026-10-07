@@ -3,6 +3,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { Field, useFieldError, type Option } from "./business-ui";
 import { localDateTime, utcFromLocal } from "../scheduling/time";
 import { usePendingWork } from "./pending-work";
+import { guardBrowserNavigation } from "./navigation-intent";
 
 export function RecordTabs({ id, label, tabs, value, onChange }: {
   id: string; label: string; tabs: { id: string; label: string }[];
@@ -94,16 +95,8 @@ export function useUnsavedChanges(dirty: boolean, pending = false) {
   usePendingWork(dirty || pending);
   useEffect(() => {
     if (!dirty && !pending) return;
-    const unload = (event: BeforeUnloadEvent) => { event.preventDefault(); event.returnValue = ""; };
-    const click = (event: MouseEvent) => {
-      const link = (event.target as Element).closest?.("a[href]");
-      if (!(link instanceof HTMLAnchorElement) || link.target === "_blank" || link.download || link.hash && link.pathname === location.pathname) return;
-      if (pending || !window.confirm("Leave this page and discard unsaved changes?")) {
-        event.preventDefault(); event.stopPropagation();
-      }
-    };
-    window.addEventListener("beforeunload", unload);
-    document.addEventListener("click", click, true);
-    return () => { window.removeEventListener("beforeunload", unload); document.removeEventListener("click", click, true); };
+    return guardBrowserNavigation(run => {
+      if (!pending && window.confirm("Leave this page and discard unsaved changes?")) run();
+    }, pending ? 200 : 10);
   }, [dirty, pending]);
 }

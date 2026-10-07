@@ -80,7 +80,7 @@ test("the app head and manifest describe one installable identity", async ({ pag
   expect(manifest.status()).toBe(200);
   expect(manifest.headers()["content-type"]).toContain("application/manifest+json");
   const value = await manifest.json();
-  expect(value).toMatchObject({ id: "/", start_url: "/work", scope: "/", display: "standalone" });
+  expect(value).toMatchObject({ id: "/", start_url: "/", scope: "/", display: "standalone" });
   // Every declared icon is a real image of the size it claims.
   for (const icon of value.icons) {
     const response = await page.request.get(icon.src);

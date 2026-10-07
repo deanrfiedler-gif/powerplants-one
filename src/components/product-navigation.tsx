@@ -16,6 +16,7 @@ import {
   railDestinations,
   railDestinationForLocation,
   workspaceForLocation,
+  workspaceLanding,
   workspaceIcons,
   destination,
   menuGroups,
@@ -32,6 +33,8 @@ import {
   type ShellDestination,
 } from "../shell/navigation";
 import { localDay } from "../activities/work-view";
+import { WorkspacePicker } from "./shell-workspace-selector";
+import { useRecordIdentity } from "../shell/record-identity";
 
 const subscribe = (changed: () => void) => {
   const media = window.matchMedia("(min-width: 781px)");
@@ -90,7 +93,7 @@ function ProductNavigationView({
     if (active) reveal(active);
   }, [activeId, workspaceId, permittedKey]);
   useEffect(() => {
-    if (shell.context && workspaceId !== shell.preview) shell.selectPreview(workspaceId);
+    if (shell.context && workspaceId !== shell.preview) shell.selectWorkspace(workspaceId);
   }, [workspaceId, shell]);
   const [more, setMore] = useState(false),
     [query, setQuery] = useState("");
@@ -165,7 +168,7 @@ function ProductNavigationView({
         href={departmentHref(item.href!, root?.id ?? workspaceId)}
         aria-label={label}
         aria-current={current?.id === item.id || (!mobile && !!root && current?.workspace === root.id) ? "page" : undefined}
-        onClick={() => { if (root) shell.selectPreview(root.id); setMore(false); }}
+        onClick={() => setMore(false)}
       >
         {contents}
       </Link>
@@ -198,7 +201,7 @@ function ProductNavigationView({
     return allowed(item) ? (
       <Link
         key={entry.id}
-        href={entry.id === "calendar" ? `${item.href}?day=${localDay(new Date().toISOString())}` : item.href!}
+        href={departmentHref(entry.id === "calendar" ? `${item.href}?day=${new URLSearchParams(locationQuery).get("day") ?? localDay(new Date().toISOString())}` : item.href!, "sales")}
         aria-label={entry.label}
         title={entry.label}
         aria-current={current?.id === item.id ? "page" : undefined}
@@ -226,6 +229,7 @@ function ProductNavigationView({
         </button>
       </header>
       <div className="ppo-more-body">
+        <WorkspacePicker />
         <label className="ppo-menu-search">
           <ProductIcon name="search" />
           <input
@@ -308,7 +312,7 @@ function ProductNavigationView({
       </div>
       <footer>
         <span>
-          Powerplants One · r17
+          Powerplants One
         </span>
         <span>{count} destinations</span>
       </footer>
@@ -337,7 +341,10 @@ function ProductNavigationView({
             className="brand-logo"
           />
         </Link>
-        {wide && <nav className="ppo-primary-nav" aria-label={`${workspace.label} shortcuts`} ref={scroller} onScroll={() => {
+        {wide && <button className="ppo-rail-item ppo-rail-toggle" aria-label={shell.railExpanded ? "Collapse primary navigation" : "Expand primary navigation"} aria-expanded={shell.railExpanded} aria-controls="primary-navigation" onClick={() => shell.setRailExpanded(!shell.railExpanded)}>
+          <ProductIcon name="more" /><span className="ppo-rail-label">Collapse navigation</span>
+        </button>}
+        {wide && <nav id="primary-navigation" className="ppo-primary-nav" aria-label={`${workspace.label} shortcuts`} ref={scroller} onScroll={() => {
           const focused = document.activeElement;
           if (focused instanceof HTMLElement && scroller.current?.contains(focused)) tip(focused, focused.getAttribute("aria-label") ?? "");
           else setTooltip(null);
@@ -347,6 +354,7 @@ function ProductNavigationView({
             onMouseEnter={e => tip(e.currentTarget, item.label)} onMouseLeave={() => setTooltip(null)}
             onFocus={e => { reveal(e.currentTarget); tip(e.currentTarget, item.label); }} onBlur={() => setTooltip(null)}>
             <ProductIcon name={item.icon} active={activeId === item.id} />
+            <span className="ppo-rail-label">{item.label}</span>
           </Link>)}
         </nav>}
         {wide && tooltip && <span className="ppo-rail-tooltip" role="tooltip" style={{top: tooltip.top}}>{tooltip.label}</span>}
@@ -369,6 +377,7 @@ function ProductNavigationView({
               }}
             >
               <ProductIcon name="more" />
+              <span className="ppo-rail-label">More</span>
             </button>
           )}
         </div>
@@ -404,11 +413,10 @@ function ProductNavigationView({
       >
         {workspace.id === "sales"
           ? salesPhoneBar.map(phoneCell)
-          : [
-              destination("work"),
-              destination(workspace.primary),
-              destination(workspace.secondary),
-            ].map((item) => link(item, true))}
+          : [destination("work"), workspaceLanding(workspace.id, permitted, shell.hosted), destination(workspace.secondary)]
+              .filter((item): item is ShellDestination => !!item && allowed(item))
+              .filter((item, index, all) => all.findIndex(other => other.id === item.id) === index)
+              .map((item) => link(item, true))}
         {!wide && (
           <button
             ref={toggle}
@@ -431,6 +439,7 @@ function ProductNavigationView({
   );
 }
 export function ProductHeader() {
+  const record = useRecordIdentity();
   const path = usePathname(),
     page = pageForPath(path),
     shell = useShell();
@@ -442,7 +451,7 @@ export function ProductHeader() {
   const changes = page?.workspace === "engineering" ? changesPath(path) : undefined;
   // EN-08 likewise: "Engineering / Commissioning Basis & As-Built Release", then its destination while its menu is hidden.
   const commissioning = page?.workspace === "engineering" ? commissioningPath(path) : undefined;
-  const control = controlPath(path);
+  const control = materials || changes || commissioning ? undefined : controlPath(path);
   const acceptance = path.startsWith("/projects/acceptance");
   const crumb = materials ?? changes ?? commissioning ?? (control ? {view:{label:controlModules[control.module].views.find(([key])=>key===control.view)?.[1]}} : undefined) ?? (acceptance ? { view: undefined } : undefined);
   const view = page?.id === "work" ? workViewForPath(path)?.label : materials ? materialsModuleLabel : changes ? changesModuleLabel : commissioning ? commissioningModuleLabel : control ? control.title : acceptance ? "Staged Acceptance & Closeout" : undefined;
@@ -462,7 +471,7 @@ export function ProductHeader() {
   // shortened for the page guide, and the breadcrumb uses the same two names.
   const rootLabel =
     page?.workspace === "estimate" ? "Estimating" : page?.workspace === "service" ? "Service" : workspaceRoot?.label;
-  const crumbs: { key: string; label: string; href?: string; kind: "root" | "page" | "view" }[] = [];
+  const crumbs: { key: string; label: string; href?: string; kind: "root" | "page" | "view" | "record" }[] = [];
   if (label) {
     if (rootLabel && rootLabel !== label && !crumb)
       crumbs.push({
@@ -476,23 +485,16 @@ export function ProductHeader() {
     if (view) crumbs.push({ key: "view", label: view, kind: crumb ? "page" : "view" });
     if (subview) crumbs.push({ key: "subview", label: subview, kind: "view" });
   }
+  if (record && shell.context) crumbs.push({ key: "record", label: `${record.reference} · ${record.title}`, kind: "record" });
   const tabIds =
     page?.workspace === "service"
-      ? [
-          "planner",
-          "technicians",
-          "tickets",
-          "orders",
-          "packs",
-          "reports",
-          "jobs",
-        ]
+      ? []
       : page?.workspace === "sales"
         ? ["deals", "leads"]
         : page?.workspace === "estimate"
           ? ["estimates", "wizard", ...(page.id === "pricing" ? ["pricing"] : [])]
           : page?.id === "mail" || page?.id === "calendar"
-            ? ["mail", "calendar"]
+            ? []
       : ["customers", "sites", "facilities", "equipment"].includes(page?.id ?? "")
         ? ["customers", "sites", "facilities", "equipment"]
         : [];

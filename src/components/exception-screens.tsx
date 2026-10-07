@@ -1,4 +1,5 @@
 "use client";
+import { OfflineEntry } from "./offline-entry";
 import Link from "next/link";
 import { useState } from "react";
 import { EnumField, ErrorNotice, Field, isDenied, PageHeader, ReadState, Stamp, Status, useCommand, useResource, ValidationFields } from "./business-ui";
@@ -21,7 +22,7 @@ export function ExceptionsScreen() {
     <div className="record-grid">
       <section className="record-card"><h2>Document preparation</h2><p>Inspect the original attempt, current source and available recovery action.</p><div className="related-links"><Link href="/service/packs">Job packs</Link><Link href="/service/reports">Service reports</Link></div></section>
       <section className="record-card"><h2>Finance follow-up</h2><p>Review returns, uncertain processing and reconciliation with current Finance access.</p><Link href="/finance/handoffs">Finance handoffs</Link></section>
-      <section className="record-card"><h2>Personal saved work</h2><p>Open your saved offline originals and check each local save or synchronisation result.</p><a href="/offline/index.html">Offline field workspace</a></section>
+      <section className="record-card"><h2>Personal saved work</h2><p>Open your saved offline originals and check each local save or synchronisation result.</p><OfflineEntry>Offline field workspace</OfflineEntry></section>
     </div>
     <section aria-labelledby="recovery-heading">
       <h2 id="recovery-heading">Retained field evidence</h2>

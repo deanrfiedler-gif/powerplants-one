@@ -1,0 +1,81 @@
+import { test, expect, type Page } from "@playwright/test";
+const origin = () => new URL(test.info().project.use.baseURL!).origin;
+async function login(page: Page, profile = "coordinator") {
+  const result = await page.request.post("/api/v1/local-session", { headers: { Origin: origin() }, data: { profile } });
+  expect(result.ok(), await result.text()).toBe(true);
+}
+async function dirtyPreferences(page: Page) {
+  await page.goto("/work/updates");
+  await page.getByRole("button", { name: "Preferences", exact: true }).click();
+  const time = page.getByLabel("Digest time", { exact: true });
+  await expect(time).toBeVisible();
+  await time.fill((await time.inputValue()) === "09:15" ? "10:15" : "09:15");
+  return time;
+}
+test("N03 CRM compatibility aliases retain supported list and record query state", async ({ page }) => {
+  await login(page);
+  for (const [from,to] of [["/crm/leads?view=Archived&q=SYN", "/sales/leads?view=Archived&q=SYN"], ["/crm/opportunities?view=list&q=SYN", "/sales/opportunities?view=list&q=SYN"]]) {
+    await page.goto(from); await expect(page).toHaveURL(origin()+to);
+  }
+});
+test("N04/N05/N10 Home and Workspace follow the current synthetic identity", async ({ page }) => {
+  await login(page,"technician"); await page.goto("/");
+  const context = await (await page.request.get("/api/v1/shell/context")).json();
+  expect(context.navigation).not.toContain("finance");
+  await expect(page).not.toHaveURL(origin()+"/");
+  await page.getByRole("button", { name:"More", exact:true }).click();
+  const picker = page.getByLabel("Workspace", {exact:true});
+  await expect(picker).toBeVisible();
+  expect(await picker.locator("option").allTextContents()).not.toContain("Finance");
+  await page.screenshot({path:test.info().outputPath("restricted-workspace.png")});
+  // Explicit no-grant presentation fixture. Server authorization is still real.
+  await page.route("**/api/v1/shell/context", route=>route.fulfill({json:{display_name:"SYN no grants",navigation:[],actions:[],can_preview:false,preference_scope:"nav:none"}}));
+  await page.goto("/");
+  await expect(page.getByText("No operational destinations are available for your current identity.", {exact:true})).toBeVisible();
+});
+test("N07/N08/N20 dirty preferences protect pointer, keyboard, touch and workspace intent", async ({ page, isMobile }) => {
+  await login(page); const time=await dirtyPreferences(page), value=await time.inputValue();
+  const preference=await page.evaluate(()=>Object.fromEntries(Object.entries(localStorage).filter(([key])=>key.startsWith("ppo.shell"))));
+  page.on("dialog",dialog=>dialog.dismiss());
+  await page.getByRole("button",{name:"More",exact:true}).click();
+  await page.getByLabel("Workspace",{exact:true}).selectOption("engineering");
+  await expect(page).toHaveURL(/\/work\/updates$/); await expect(time).toHaveValue(value);
+  expect(await page.evaluate(()=>Object.fromEntries(Object.entries(localStorage).filter(([key])=>key.startsWith("ppo.shell"))))).toEqual(preference);
+  await page.keyboard.press("Escape");
+  if(isMobile) await page.getByRole("button",{name:"Open global search",exact:true}).click();
+  const search=page.getByRole("combobox",{name:"Search Powerplants One",exact:true});
+  await search.fill("opportunity");
+  const option=page.getByRole("option").filter({has:page.getByText("Deals",{exact:true})}).first();
+  await expect(option).toBeVisible();
+  if(isMobile) await option.tap(); else await option.click();
+  await expect(page).toHaveURL(/\/work\/updates$/); await expect(time).toHaveValue(value);
+  await search.focus(); await page.keyboard.press("ArrowDown"); await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(/\/work\/updates$/); await expect(time).toHaveValue(value);
+  await page.keyboard.press("Escape");
+  // Native Chrome history traversal is separate from an anchor or beforeunload.
+  await page.goBack(); await expect(page).toHaveURL(/\/work\/updates$/); await expect(time).toHaveValue(value);
+});
+test("N18/N19 primary rail expands, persists and retains endpoints in a short window", async ({ page, isMobile }) => {
+  test.skip(isMobile,"Primary rail is a desktop control; mobile uses labelled More/Workspace.");
+  await login(page); await page.goto("/work?department=service");
+  await page.getByRole("button",{name:"Expand primary navigation",exact:true}).click();
+  await expect(page.getByRole("button",{name:"Collapse primary navigation",exact:true})).toHaveAttribute("aria-expanded","true");
+  expect(await page.locator(".ppo-rail").evaluate(el=>el.getBoundingClientRect().width)).toBe(232);
+  await page.screenshot({path:test.info().outputPath("expanded-desktop.png")});
+  await page.reload(); await expect(page.getByRole("button",{name:"Collapse primary navigation",exact:true})).toBeVisible();
+  await page.setViewportSize({width:1280,height:400});
+  await page.getByRole("button",{name:"More",exact:true}).click();
+  await expect(page.getByLabel("Workspace",{exact:true})).toBeVisible();
+  await page.screenshot({path:test.info().outputPath("expanded-short-more.png")});
+  await page.keyboard.press("Escape");
+  await page.getByRole("button",{name:"Collapse primary navigation",exact:true}).click();
+  expect(await page.locator(".ppo-rail").evaluate(el=>el.getBoundingClientRect().width)).toBe(76);
+});
+test("N18 blocked storage retains expansion for the current identity and visit", async ({page,isMobile})=>{
+  test.skip(isMobile,"Desktop primary rail persistence.");
+  await page.addInitScript(()=>{Storage.prototype.setItem=()=>{throw Error("SYN storage denied");};Storage.prototype.getItem=()=>{throw Error("SYN storage denied");};});
+  await login(page); await page.goto("/sales/opportunities");
+  await page.getByRole("button",{name:"Expand primary navigation",exact:true}).click();
+  await page.locator(".ppo-primary-nav").getByRole("link",{name:"Leads",exact:true}).click();
+  await expect(page.getByRole("button",{name:"Collapse primary navigation",exact:true})).toBeVisible();
+});

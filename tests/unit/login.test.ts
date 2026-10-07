@@ -126,7 +126,7 @@ test("native Microsoft handoff, callback and logout preserve fixed destinations 
   const callback = await f.call("/auth/callback?code=synthetic", "GET", { cookie: "__Host-ppo_login=attempt; __Host-ppo_session=previous", "sec-fetch-site": "cross-site" });
   assert.deepEqual(f.callback(), ["attempt", "previous"]);
   // Intentional: the default successful destination is My Work for browser and installed sign-ins alike.
-  assert.equal(callback.status, 303); assert.equal(callback.headers.location, origin + "/work");
+  assert.equal(callback.status, 303); assert.equal(callback.headers.location, origin + "/");
   assert.match(callback.headers["set-cookie"]![0], /Max-Age=0/); assert.match(callback.headers["set-cookie"]![1], /Max-Age=3600/);
   assert.equal((await f.call("/auth/logout", "POST", { origin: "https://attacker.invalid" })).status, 403);
   const logout = await f.call("/auth/logout", "POST", { origin, cookie: "__Host-ppo_session=valid" });
@@ -171,7 +171,7 @@ test("only state-validated provider cancellation receives cancelled presentation
 
 test("local entry keeps Microsoft disabled; query states cannot inject markup or authority", () => {
   const local = renderLoginPage("ready", true);
-  assert.match(local, /Local prototype · Fictional records/); assert.match(local, /href="\/work">Open local prototype/);
+  assert.match(local, /Local prototype · Fictional records/); assert.match(local, /href="\/">Open local prototype/);
   assert.match(local, /id="sign-in"[^>]+ disabled/); assert.doesNotMatch(local, /Design preview|{{[A-Z_]+}}/);
   for (const query of ["status=__proto__", "status=denied&status=ready", "status=%3Cscript%3E"])
     assert.equal(loginState(new URLSearchParams(query)), "ready");

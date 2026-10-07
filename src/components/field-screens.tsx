@@ -1,4 +1,5 @@
 "use client";
+import { OfflineEntry } from "./offline-entry";
 import { RunningTimerBanner, WorkTimer } from "./work-timer";
 import { FieldVisitEntry } from "./field-visit-entry";
 import { visitArrivalGuidance } from "../field/visit-guidance";
@@ -201,7 +202,7 @@ function PreviewLabel() {
     <div className="field-preview">
       <strong>Synthetic prototype — not for operational use</strong>
       <span>{message}</span>
-      <a href="/offline/index.html">Open offline field workspace</a>
+      <OfflineEntry>Open offline field workspace</OfflineEntry>
     </div>
   );
 }

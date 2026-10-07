@@ -1,3 +1,4 @@
+import { localDay } from "../activities/work-view";
 import { supplyPages } from "../supply/navigation";
 import { controlPath } from "../engineering/control/navigation";
 import type { Capability } from "../platform/permissions";
@@ -51,6 +52,7 @@ export type ShellDestination = {
   menuLabel?: string;
   href?: string;
   workspace?: WorkspaceId;
+  synonyms?: readonly string[];
   requires?: Capability[];
   localOnly?: boolean;
   readiness?: "ready" | "unavailable";
@@ -86,6 +88,7 @@ export const destinations: ShellDestination[] = [
   {"id": "engineering", "label": "Engineering workload", "icon": "nav-workload", "readiness": "ready", "href": "/engineering", "workspace": "engineering", "requires": ["engineering.read"]},
   {"id": "basis", "label": "Design basis & interfaces", "icon": "nav-interfaces", "readiness": "ready", "href": "/engineering/basis", "requires": ["engineering.read"], "workspace": "engineering"},
   {"id": "drawings", "label": "Drawings", "icon": "nav-drawings", "readiness": "ready", "href": "/engineering/drawings", "requires": ["engineering.read"], "workspace": "engineering"},
+  {"id": "technical-queries", "label": "Technical queries", "icon": "nav-interfaces", "readiness": "ready", "href": "/engineering/queries", "requiresAll": ["engineering.read"], "workspace": "engineering", "synonyms": ["submittals", "supplier questions"]},
   {"id": "materials", "label": "Materials & substitutions", "icon": "nav-materials", "readiness": "ready", "href": "/engineering/materials", "workspace": "engineering", "requires": ["engineering.read"]},
   {"id": "changes", "label": "Change review", "icon": "nav-changes", "readiness": "ready", "href": "/engineering/changes", "workspace": "engineering", "requires": ["engineering.read"]},
   {"id": "technical-reviews", "label": "Technical reviews", "icon": "nav-approval", "readiness": "ready", "href": "/engineering/reviews", "requires": ["engineering.read"], "workspace": "engineering"},
@@ -109,7 +112,7 @@ export const destinations: ShellDestination[] = [
   {"id": "jobs", "label": "My jobs", "icon": "nav-service", "readiness": "ready", "href": "/my-jobs", "workspace": "service", "requires": ["field.read.own"]},
   {"id": "inspection-capture", "label": "My inspections", "icon": "nav-service", "readiness": "ready", "href": "/my-jobs/inspections", "workspace": "service", "requires": ["field.read.own"]},
   {"id": "incidents", "label": "Incidents and actions", "icon": "nav-service-review", "readiness": "ready", "href": "/service/incidents", "workspace": "service", "requires": ["incident.read"]},
-  {"id": "inspection-review", "label": "Inspection review", "icon": "nav-service-review", "readiness": "ready", "href": "/service/inspections", "workspace": "service", "requires": ["report.read", "service.work_order.edit"]},
+  {"id": "inspection-review", "label": "Inspection review", "icon": "nav-service-review", "readiness": "ready", "href": "/service/inspections", "workspace": "service", "requiresAll": ["report.read", "service.work_order.edit"]},
   {"id": "supply", "label": "Material demand", "icon": "nav-demand", "href": "/supply/material-readiness", "requires": ["supply.read"], "readiness": "ready", "workspace": "supply"},
   {"id": "purchasing", "label": "Purchasing", "icon": "nav-purchasing", "href": "/supply/purchasing", "requires": ["supply.read"], "readiness": "ready", "workspace": "supply"},
   {"id": "inbound", "label": "Inbound shipments", "icon": "nav-inbound", "href": "/supply/shipments", "requires": ["supply.read"], "readiness": "ready", "workspace": "supply"},
@@ -237,6 +240,15 @@ export const destination = (id: string) =>
 export const matchesPath = (path: string, href: string) =>
   path === href || (href !== "/" && path.startsWith(href + "/"));
 export function pageForPath(path: string) {
+  if (/^\/customers\/[^/]+\/account$/.test(path)) return { ...destination("accounts"), label: "Customer Finance account" };
+  if (/^\/estimating\/estimates\/[^/]+\/review$/.test(path)) return { ...destination("estimates"), label: "Estimate review" };
+  if (/^\/estimating\/estimates\/[^/]+$/.test(path)) return { ...destination("estimates"), label: "Saved estimate" };
+  if (path === "/products/import") return { ...destination("products"), label: "Product import" };
+  const scheduleViews: Record<string,string> = { changes: "Scheduling change follow-up", "policy-impact": "Scheduling policy impact", travel: "Travel review", capacity: "Capacity review" };
+  const scheduleView = /^\/schedule\/([^/]+)$/.exec(path)?.[1];
+  if (scheduleView && scheduleViews[scheduleView]) return { ...destination("planner"), label: scheduleViews[scheduleView] };
+  if (path === "/my-jobs/site-readiness") return { ...destination("jobs"), label: "Field site readiness" };
+
   if (matchesPath(path, "/maintenance/coverage")) return { ...destination("agreements"), label: "Coverage & entitlement" };
   if (matchesPath(path, "/maintenance/renewals")) return { ...destination("agreements"), label: "Renewals & relationship review" };
   if (matchesPath(path, "/maintenance/plans")) return { ...destination("maintenance"), label: "Maintenance plans" };
@@ -295,11 +307,11 @@ export function workspacePreference(raw: string | null): WorkspaceId {
   return "sales";
 }
 export const departmentRails: Record<WorkspaceId, readonly string[]> = {
-  sales: ["pulse", "leads", "deals", "calendar", "tasks", "mail", "contacts", "products", "insights"],
-  estimate: ["work", "estimates", "wizard", "configurations", "pricing", "quotations", "estimate-reviews"],
-  engineering: ["work", "engineering", "basis", "drawings", "materials", "changes", "technical-reviews", "commissioning"],
+  sales: ["pulse", "leads", "deals", "calendar", "tasks", "mail", "sales-estimating", "sales-won", "sales-aftercare", "contacts", "products", "insights"],
+  estimate: ["work", "estimates", "intake", "wizard", "configurations", "pricing", "quotations", "estimate-reviews"],
+  engineering: ["work", "engineering", "basis", "drawings", "technical-queries", "materials", "changes", "technical-reviews", "commissioning"],
   projects: ["work", "projects", "programme", "readiness", "risks", "variations", "assurance", "acceptance"],
-  service: ["work", "tickets", "orders", "planner", "technicians", "packs", "reports", "equipment", "agreements", "maintenance", "warranty"],
+  service: ["work", "tickets", "orders", "planner", "technicians", "packs", "reports", "jobs", "inspection-capture", "incidents", "inspection-review", "equipment", "agreements", "maintenance", "warranty"],
   supply: ["work", "supply", "purchasing", "inbound", "receiving", "stock", "deliveries", "returns"],
   finance: ["work", "finance", "accounts", "performance", "claims", "cash", "reconciliation", "exceptions"],
 };
@@ -310,6 +322,21 @@ export const workspaceIcons: Record<WorkspaceId, ProductIconName> = {
 export function railDestinations(workspace: WorkspaceId, permitted: readonly string[], hosted: boolean) {
   return departmentRails[workspace].map(destination).filter(item => canOpen(item, permitted, hosted));
 }
+// Shared/personal shortcuts do not establish operational department availability.
+export function workspaceLanding(workspace: WorkspaceId, permitted: readonly string[], hosted: boolean) {
+  const primary = workspaces.find(w => w.id === workspace)!.primary;
+  return [destination(primary), ...departmentRails[workspace].map(destination), ...destinations]
+    .find(item => item.workspace === workspace && canOpen(item, permitted, hosted));
+}
+export function availableWorkspaces(permitted: readonly string[], hosted: boolean) {
+  return workspaces.filter(w => workspaceLanding(w.id, permitted, hosted));
+}
+export function homeHref(permitted: readonly string[], hosted: boolean) {
+  if (canOpen(destination("work"), permitted, hosted)) return "/work";
+  const workspace = availableWorkspaces(permitted, hosted)[0];
+  if (workspace) return workspaceLanding(workspace.id, permitted, hosted)!.href!;
+  return destinations.find(item => item.id !== "home" && !item.localOnly && canOpen(item, permitted, hosted))?.href ?? null;
+}
 export function railDestinationForLocation(path: string, query: URLSearchParams, workspace: WorkspaceId) {
   if (workspace === "sales") {
     if (matchesPath(path, "/contacts") || matchesPath(path, "/people") ||
@@ -319,11 +346,11 @@ export function railDestinationForLocation(path: string, query: URLSearchParams,
   }
   if (workspace === "finance" && /^\/customers\/[^/]+\/account$/.test(path)) return "accounts";
   if (workspace === "engineering") {
-    const native = controlPath(path);
-    if (native) return native.module === "reviews" ? "technical-reviews" : native.module === "queries" ? "engineering" : native.module;
     if (materialsPath(path)) return "materials";
     if (changesPath(path)) return "changes";
     if (commissioningPath(path)) return "commissioning";
+    const native = controlPath(path);
+    if (native) return native.module === "reviews" ? "technical-reviews" : native.module === "queries" ? "technical-queries" : native.module;
   }
   if (workspace === "estimate" && matchesPath(path, "/estimating/fertigation")) return "configurations";
   if (workspace === "projects" && /^\/projects\/[^/]+$/.test(path) && query.get("view") === "programme") return "programme";
@@ -336,15 +363,26 @@ export function workspaceForLocation(path: string, query: URLSearchParams, prefe
   if (owned) return owned;
   const requested = query.get("department");
   const candidate = workspaces.some(w => w.id === requested) ? requested as WorkspaceId : preference;
-  if (railDestinations(candidate, permitted, true).length) return candidate;
-  return workspaces.find(w => railDestinations(w.id, permitted, true).length)?.id ?? "sales";
+  if (workspaceLanding(candidate, permitted, true)) return candidate;
+  return availableWorkspaces(permitted, true)[0]?.id ?? candidate;
+}
+export function activitiesHref(day?: string | null, sales = true) {
+  const q = new URLSearchParams({ day: day && /^\d{4}-\d{2}-\d{2}$/.test(day) ? day : localDay(new Date().toISOString()) });
+  if (sales) { q.set("scope", "sales"); q.set("department", "sales"); }
+  return `/calendar?${q}`;
 }
 export function departmentHref(href: string, workspace: WorkspaceId) {
   const url = new URL(href, "http://ppo.local");
-  if (url.pathname === "/calendar" && workspace === "sales") url.searchParams.set("scope", "sales");
+  if (url.pathname === "/calendar" && workspace === "sales") return activitiesHref(url.searchParams.get("day"));
   if (!pageForPath(url.pathname)?.workspace) url.searchParams.set("department", workspace);
   return url.pathname + url.search + url.hash;
 }
+const synonyms: Record<string, readonly string[]> = {
+  deals: ["opportunity", "opportunities", "deal"], customers: ["customer", "organisation", "organization"],
+  contacts: ["customer", "organisation", "person", "people"], equipment: ["asset", "installed base"],
+  planner: ["planner", "calendar", "dispatch schedule"], quotations: ["quote", "quotation", "estimate"],
+  estimates: ["estimate", "estimation", "workload"], intake: ["receiving", "handover"],
+};
 export function menuGroups(query: string, workspace: WorkspaceId = "sales") {
   const q = query.trim().toLocaleLowerCase("en-AU").slice(0, 100);
   const groups = [
@@ -359,6 +397,6 @@ export function menuGroups(query: string, workspace: WorkspaceId = "sales") {
   return groups.map(g => ({ title: g.title, items: g.ids.map(destination).filter(d => {
     if (seen.has(d.id)) return false;
     seen.add(d.id);
-    return [d.label, d.menuLabel ?? "", g.title, workspaces.find(w => w.id === d.workspace)?.label ?? ""].join(" ").toLocaleLowerCase("en-AU").includes(q);
+    return [d.label, d.menuLabel ?? "", ...(d.synonyms ?? synonyms[d.id] ?? []), g.title, workspaces.find(w => w.id === d.workspace)?.label ?? ""].join(" ").toLocaleLowerCase("en-AU").includes(q);
   }) })).filter(g => g.items.length);
 }
