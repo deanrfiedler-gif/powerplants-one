@@ -17,6 +17,7 @@ export async function forecastPosition(
   branchSuccessorId?: string,
   mergePredecessorId?: string,
   mergeSuccessorId?: string,
+  diamondIds?: { b: string; c: string; d: string },
 ) {
   const project = await projectRow(c, p, projectId);
   const tasks = await tasksFor(c, p, projectId);
@@ -60,6 +61,44 @@ export async function forecastPosition(
       branchSuccessor)
   )
     throw unavailable();
+  const diamondTasks = diamondIds
+    ? [diamondIds.b, diamondIds.c, diamondIds.d].map((id) =>
+        tasks.find((t) => t.id === id),
+      )
+    : undefined;
+  if (
+    diamondTasks &&
+    (diamondTasks.some((t) => !t || t.owner_unavailable) ||
+      successor ||
+      chainEnd ||
+      branchSuccessor ||
+      mergePredecessor ||
+      mergeSuccessor)
+  )
+    throw unavailable();
+  const diamond = diamondTasks
+    ? {
+        b: diamondTasks[0]!,
+        c: diamondTasks[1]!,
+        d: diamondTasks[2]!,
+        nativeTasks: (
+          await c.query<{ value: Record<string, unknown> }>(
+            "SELECT to_jsonb(t) value FROM ppo.project_tasks t WHERE workspace_id=$1 AND project_id=$2 AND id=ANY($3::uuid[]) ORDER BY id",
+            [
+              p.workspace_id,
+              projectId,
+              [taskId, diamondIds!.b, diamondIds!.c, diamondIds!.d],
+            ],
+          )
+        ).rows.map((r) => r.value),
+        nativeProject: (
+          await c.query<{ value: Record<string, unknown> }>(
+            "SELECT to_jsonb(p) value FROM ppo.projects p WHERE workspace_id=$1 AND id=$2",
+            [p.workspace_id, projectId],
+          )
+        ).rows[0].value,
+      }
+    : undefined;
   // Read the exact retained native row only after current protected task/owner reads.
   const retainedPredecessor = mergePredecessor
     ? (
@@ -98,6 +137,7 @@ export async function forecastPosition(
     dependencies,
     engineering,
     stages,
+    ...(diamond ? { topology: "Diamond" as const, diamond } : {}),
     ...(mergePredecessor && mergeSuccessor
       ? {
           topology: "Merge" as const,
@@ -128,6 +168,7 @@ export function forecastHolds(
     dependencies,
     engineering,
     stages,
+    diamond,
   } = position;
   const holds: string[] = [];
   if (project.lifecycle !== "Active")
@@ -142,7 +183,50 @@ export function forecastHolds(
     holds.push("The task must have both forecast dates to withdraw.");
   if (!task.owner_id || task.external_owner_id)
     holds.push("An independently receiving internal task owner is required.");
-  if (mergePredecessor && mergeSuccessor) {
+  if (diamond) {
+    const selected = [task, diamond.b, diamond.c, diamond.d],
+      ids = selected.map((t) => t.id);
+    const touching = dependencies.filter(
+      (d) => ids.includes(d.task_id) || ids.includes(d.predecessor_id),
+    );
+    const edges = [
+      [task.id, diamond.b.id],
+      [task.id, diamond.c.id],
+      [diamond.b.id, diamond.d.id],
+      [diamond.c.id, diamond.d.id],
+    ];
+    if (
+      new Set(ids).size !== 4 ||
+      touching.length !== 4 ||
+      !edges.every(([from, to]) =>
+        touching.some(
+          (d) =>
+            d.predecessor_id === from &&
+            d.task_id === to &&
+            ["FS", "SS"].includes(d.kind),
+        ),
+      )
+    )
+      holds.push(
+        "Select exactly A → B, A → C, B → D and C → D; additional, missing or reversed dependencies require separate Projects receiving.",
+      );
+    if (
+      selected.some(
+        (t) =>
+          t.status !== "Planned" ||
+          t.progress !== 0 ||
+          t.milestone ||
+          !t.start_date ||
+          !t.finish_date ||
+          t.finish_date < t.start_date ||
+          !t.owner_id ||
+          t.external_owner_id,
+      )
+    )
+      holds.push(
+        "Each diamond task must be internally owned, dated, non-milestone and Planned at zero progress.",
+      );
+  } else if (mergePredecessor && mergeSuccessor) {
     const selected = [task, mergePredecessor, mergeSuccessor],
       ids = selected.map((t) => t.id);
     const touching = dependencies.filter(

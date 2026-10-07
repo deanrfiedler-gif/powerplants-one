@@ -11,10 +11,7 @@ import { factCommand } from "../../supply/validation";
 import { recordFactInTransaction } from "../../supply/commands";
 import { saveTaskInTransaction } from "../../projects/service";
 import { parseTask } from "../../projects/validation";
-import {
-  conversionAuthority,
-  conversionContext,
-} from "../conversion/context";
+import { conversionAuthority, conversionContext } from "../conversion/context";
 import { conversionReadClient } from "../conversion/source-authority";
 import { dispositionHash } from "../disposition/context";
 import { releaseHash } from "../release/context";
@@ -106,8 +103,8 @@ export async function executeMaterial(
         reviewHash: string | null = null;
       let deps: MaterialEvent["dependencies"],
         projectCommand: MaterialEvent["project_command"],
-        mergeSuccessorCommand: MaterialEvent["merge_successor_command"] =
-          null,
+        diamondCommands: MaterialEvent["diamond_commands"] = null,
+        mergeSuccessorCommand: MaterialEvent["merge_successor_command"] = null,
         branchSuccessorCommand: MaterialEvent["branch_successor_command"] =
           null,
         chainEndCommand: MaterialEvent["chain_end_command"] = null,
@@ -137,7 +134,7 @@ export async function executeMaterial(
         const competing = (
           await c.query(
             `SELECT 1 FROM ppo.quote_material_events p WHERE p.workspace_id=$1 AND p.target_id<>$2 AND p.action='MaterialPropose'
-         AND (p.impact_id=$3 OR p.task_id=ANY($4::uuid[]) OR (p.dependencies->'project'->'successor'->>'id')::uuid=ANY($4::uuid[]) OR (p.dependencies->'project'->'chainEnd'->>'id')::uuid=ANY($4::uuid[]) OR (p.dependencies->'project'->'branchSuccessor'->>'id')::uuid=ANY($4::uuid[]) OR (p.dependencies->'project'->'mergePredecessor'->>'id')::uuid=ANY($4::uuid[]) OR (p.dependencies->'project'->'mergeSuccessor'->>'id')::uuid=ANY($4::uuid[]))
+         AND (p.impact_id=$3 OR p.task_id=ANY($4::uuid[]) OR (p.dependencies->'project'->'successor'->>'id')::uuid=ANY($4::uuid[]) OR (p.dependencies->'project'->'chainEnd'->>'id')::uuid=ANY($4::uuid[]) OR (p.dependencies->'project'->'branchSuccessor'->>'id')::uuid=ANY($4::uuid[]) OR (p.dependencies->'project'->'mergePredecessor'->>'id')::uuid=ANY($4::uuid[]) OR (p.dependencies->'project'->'mergeSuccessor'->>'id')::uuid=ANY($4::uuid[]) OR EXISTS(SELECT 1 FROM jsonb_each(coalesce(nullif(to_jsonb(p)->'diamond_commands','null'::jsonb),'{}'::jsonb)) dc WHERE (dc.value->>'id')::uuid=ANY($4::uuid[])))
          AND p.id=(SELECT id FROM ppo.quote_material_events WHERE workspace_id=p.workspace_id AND target_id=p.target_id AND action='MaterialPropose' ORDER BY sequence DESC LIMIT 1)
          AND p.referral_id=(SELECT id FROM ppo.quote_supply_events WHERE workspace_id=p.workspace_id AND target_id=p.target_id AND action='Refer' ORDER BY sequence DESC LIMIT 1)
          AND 'Accepted'=(SELECT decision FROM ppo.quote_supply_events WHERE workspace_id=p.workspace_id AND referral_id=p.referral_id AND action='Receive' ORDER BY sequence DESC LIMIT 1)
@@ -148,6 +145,13 @@ export async function executeMaterial(
               input.impact_id,
               [
                 input.task_id,
+                ...(input.diamond_b_task_id
+                  ? [
+                      input.diamond_b_task_id,
+                      input.diamond_c_task_id!,
+                      input.diamond_d_task_id!,
+                    ]
+                  : []),
                 ...(input.merge_predecessor_task_id
                   ? [
                       input.merge_predecessor_task_id,
@@ -181,6 +185,13 @@ export async function executeMaterial(
           input.branch_successor_task_id,
           input.merge_predecessor_task_id,
           input.merge_successor_task_id,
+          input.diamond_b_task_id
+            ? {
+                b: input.diamond_b_task_id,
+                c: input.diamond_c_task_id!,
+                d: input.diamond_d_task_id!,
+              }
+            : undefined,
         );
         const task = deps.project.task;
         projectCommand = parseTask(deps.project.project.id, {
@@ -201,6 +212,33 @@ export async function executeMaterial(
           external_owner_id: task.external_owner_id,
           dependencies: task.dependencies,
         });
+        if (deps.project.diamond) {
+          const commands = (["b", "c", "d"] as const).map((key, index) => {
+            const next = deps.project.diamond![key];
+            const { project_id, ...first } = projectCommand;
+            return [
+              key,
+              parseTask(project_id, {
+                ...first,
+                operation_id: randomUUID(),
+                expected_version: deps.project.project.version + index + 1,
+                id: next.id,
+                title: next.title,
+                phase: next.phase,
+                status: next.status,
+                milestone: next.milestone,
+                progress: next.progress,
+                note: next.note,
+                owner_id: next.owner_id,
+                external_owner_id: next.external_owner_id,
+                dependencies: next.dependencies,
+              }),
+            ];
+          });
+          diamondCommands = Object.fromEntries(commands) as NonNullable<
+            MaterialEvent["diamond_commands"]
+          >;
+        }
         if (deps.project.successor) {
           const next = deps.project.successor;
           const { project_id: nativeProject, ...firstTask } = projectCommand;
@@ -290,16 +328,24 @@ export async function executeMaterial(
               ...deps.impact.data,
               state: "Reviewed",
               review_reference:
-                (mergeSuccessorCommand
-                  ? "SYN-ES07-11 merge A to C and B to C; retain B exact; forecast withdrawal SaveProjectTask original operation "
-                  : branchSuccessorCommand
-                    ? "SYN-ES07-10 three-task branch A to B and A to C forecast withdrawal; SaveProjectTask original operation "
-                    : chainEndCommand
-                      ? "SYN-ES07-09 three-task chain forecast withdrawal; SaveProjectTask original operation "
-                      : successorCommand
-                        ? "SYN-ES07-08 dependency forecast withdrawal; SaveProjectTask original operation "
-                        : "SYN-ES07-07 forecast withdrawal; SaveProjectTask original operation ") +
+                (diamondCommands
+                  ? "SYN-ES07-12 diamond A to B, A to C, B to D and C to D; four forecast withdrawals; D once; SaveProjectTask original operation "
+                  : mergeSuccessorCommand
+                    ? "SYN-ES07-11 merge A to C and B to C; retain B exact; forecast withdrawal SaveProjectTask original operation "
+                    : branchSuccessorCommand
+                      ? "SYN-ES07-10 three-task branch A to B and A to C forecast withdrawal; SaveProjectTask original operation "
+                      : chainEndCommand
+                        ? "SYN-ES07-09 three-task chain forecast withdrawal; SaveProjectTask original operation "
+                        : successorCommand
+                          ? "SYN-ES07-08 dependency forecast withdrawal; SaveProjectTask original operation "
+                          : "SYN-ES07-07 forecast withdrawal; SaveProjectTask original operation ") +
                 projectCommand.operation_id +
+                (diamondCommands
+                  ? "; diamond B/C/D operations " +
+                    [diamondCommands.b, diamondCommands.c, diamondCommands.d]
+                      .map((cmd) => cmd.operation_id)
+                      .join(", ")
+                  : "") +
                 (mergeSuccessorCommand
                   ? "; merge C SaveProjectTask original operation " +
                     mergeSuccessorCommand.operation_id
@@ -329,12 +375,11 @@ export async function executeMaterial(
           basis: t.basis,
           dependencies: deps,
           project_command: projectCommand,
+          ...(diamondCommands ? { diamond_commands: diamondCommands } : {}),
           ...(mergeSuccessorCommand
             ? { merge_successor_command: mergeSuccessorCommand }
             : {}),
-          ...(successorCommand
-            ? { successor_command: successorCommand }
-            : {}),
+          ...(successorCommand ? { successor_command: successorCommand } : {}),
           ...(chainEndCommand ? { chain_end_command: chainEndCommand } : {}),
           ...(branchSuccessorCommand
             ? { branch_successor_command: branchSuccessorCommand }
@@ -355,6 +400,7 @@ export async function executeMaterial(
         deps = s.dependencies!;
         proposalId = prop.id;
         projectCommand = prop.project_command;
+        diamondCommands = prop.diamond_commands;
         mergeSuccessorCommand = prop.merge_successor_command;
         successorCommand = prop.successor_command;
         chainEndCommand = prop.chain_end_command;
@@ -427,6 +473,9 @@ export async function executeMaterial(
             if (decision === "WithdrawForecast") {
               for (const native of [
                 projectCommand,
+                ...(diamondCommands
+                  ? [diamondCommands.b, diamondCommands.c, diamondCommands.d]
+                  : []),
                 ...(mergeSuccessorCommand ? [mergeSuccessorCommand] : []),
                 ...(successorCommand ? [successorCommand] : []),
                 ...(chainEndCommand ? [chainEndCommand] : []),
@@ -510,6 +559,13 @@ export async function executeMaterial(
               deps.project.branchSuccessor?.id,
               deps.project.mergePredecessor?.id,
               deps.project.mergeSuccessor?.id,
+              deps.project.diamond
+                ? {
+                    b: deps.project.diamond.b.id,
+                    c: deps.project.diamond.c.id,
+                    d: deps.project.diamond.d.id,
+                  }
+                : undefined,
             );
           }
         }
@@ -541,6 +597,7 @@ export async function executeMaterial(
         review_hash: reviewHash,
         effect_receiving_ids: receivingIds,
         project_command: projectCommand,
+        ...(diamondCommands ? { diamond_commands: diamondCommands } : {}),
         ...(mergeSuccessorCommand
           ? { merge_successor_command: mergeSuccessorCommand }
           : {}),

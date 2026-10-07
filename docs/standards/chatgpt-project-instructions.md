@@ -91,4 +91,4 @@ FI-07: field-customer-response.md separates attendance acknowledgement, exact re
 
 PT sources, owner review and benefits: docs/testing/field-integrated-acceptance-ledger.md.
 
-ES-07 merge: quotation-task-merge.md. Six decisions, A/C saves, B retained; preserve edges, unmet Demand, fresh disposition and earlier originals.
+ES-07: quotation-task-diamond.md; seven decisions; save A/B/C/D once. Retain edges, unmet Demand, fresh disposition and prior originals, merge B retained.
