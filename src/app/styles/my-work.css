@@ -136,7 +136,7 @@
 
 /* Content: the module's one scroll surface. Toggling the menu changes its width, never its contents. */
 :is(#ppo-my-work,#ppo-engineering-control,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-facilities,#ppo-estimate-wizard,#ppo-specialist,#ppo-fertigation) .mw-content{flex:1;min-width:0;min-height:0;overflow:auto;scroll-padding-top:16px}
-#ppo-my-work .mw-page{display:flex;flex-direction:column;gap:10px;min-height:100%;padding:10px 24px 0;max-width:1760px}
+#ppo-my-work .mw-page{display:flex;flex-direction:column;gap:10px;min-height:100%;padding:10px 24px 0;max-width:1760px;container:my-work-content / inline-size}
 #ppo-my-work .mw-intro{display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px;min-height:44px}
 #ppo-my-work .mw-intro h1{font-size:28px;line-height:36px;font-weight:700;letter-spacing:-.3px;overflow-wrap:anywhere}
 #ppo-my-work .mw-intro-view{align-items:flex-start}
@@ -337,6 +337,11 @@
 #ppo-my-work .mw-views .mw-button{min-height:34px;padding:5px 10px;font-size:13px}
 
 /* Narrower desktop and tablet: supporting panels move beneath the list before any title is squeezed. */
+/* Rail/menu expansion changes content width without changing the viewport. */
+@container my-work-content (max-width:1050px){
+ #ppo-my-work .mw-columns{grid-template-columns:minmax(0,1fr)}
+ #ppo-my-work .mw-side{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));align-items:start}
+}
 @media (max-width:1320px){
  #ppo-my-work .mw-columns{grid-template-columns:minmax(0,1fr)}
  #ppo-my-work .mw-side{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));align-items:start}

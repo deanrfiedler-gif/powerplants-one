@@ -78,12 +78,19 @@ test("N07/N08/N20 dirty preferences protect pointer, keyboard, touch and workspa
 test("N18/N19 primary rail expands, persists and retains endpoints in a short window", async ({ page, isMobile }) => {
   test.skip(isMobile,"Primary rail is a desktop control; mobile uses labelled More/Workspace.");
   await login(page);
+  const fixture=crmDiscovery();fixture.initial_action.summary="SYN NAV readable expanded activity context";
+  fixture.initial_action.due_at=new Date(Date.now()-3600000).toISOString();fixture.initial_action.due_needed=false;
+  const created=await page.request.post("/api/v1/crm/opportunities",{headers:{Origin:origin()},data:fixture});
+  expect(created.ok(),await created.text()).toBe(true);
   const overview=page.waitForResponse(r=>r.url().includes("/api/v1/work/overview?")&&r.request().method()==="GET"&&r.ok());
   await page.goto("/work?department=service"); await overview;
   await page.getByRole("button",{name:"Expand primary navigation",exact:true}).click();
   await expect(page.getByRole("button",{name:"Collapse primary navigation",exact:true})).toHaveAttribute("aria-expanded","true");
   expect(await page.locator(".ppo-rail").evaluate(el=>el.getBoundingClientRect().width)).toBe(232);
   await expect(page.getByText("Loading your work…", {exact:true})).not.toBeVisible();
+  const row=page.locator(`.mw-activities [data-activity='${fixture.initial_action.id}'] .mw-row-main`);
+  await expect(row).toBeVisible();expect((await row.boundingBox())!.width).toBeGreaterThanOrEqual(240);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
   await page.screenshot({path:test.info().outputPath("expanded-desktop.png")});
   await page.reload(); await expect(page.getByRole("button",{name:"Collapse primary navigation",exact:true})).toBeVisible();
   await login(page,"observer");await page.reload();
@@ -93,6 +100,7 @@ test("N18/N19 primary rail expands, persists and retains endpoints in a short wi
   await page.setViewportSize({width:1280,height:400});
   await page.getByRole("button",{name:"More",exact:true}).click();
   await expect(page.getByLabel("Workspace",{exact:true})).toBeVisible();
+  await expect(page.getByText("Loading your work…",{exact:true})).not.toBeVisible();
   await page.screenshot({path:test.info().outputPath("expanded-short-more.png")});
   await page.keyboard.press("Escape");
   await page.getByRole("button",{name:"Collapse primary navigation",exact:true}).click();
