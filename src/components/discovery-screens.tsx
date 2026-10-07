@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { CreatingFromSalesBrief } from "./sales-estimating-link";
 import { discoveryDefinition } from "../estimating/discovery-definition";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -333,6 +334,7 @@ export function NewDiscovery() {
       ),
     params = useSearchParams(),
     [selected, setSelected] = useState(params.get("opportunity") ?? ""),
+    salesHandover = /^[0-9a-f-]{36}$/i.test(params.get("sales_handover") ?? "") ? params.get("sales_handover")! : null,
     [pending, setPending] = useState(false);
   return (
     <div className="est-screen">
@@ -341,7 +343,7 @@ export function NewDiscovery() {
       <ResourceState {...choices} />
       {choices.data && (
         <>
-          <fieldset className="est-form" disabled={pending}>
+          <fieldset className="est-form" disabled={pending || !!salesHandover}>
             <SelectField
               label="Existing opportunity"
               name="opportunity_id"
@@ -363,6 +365,7 @@ export function NewDiscovery() {
             <NewDiscoveryContext
               key={selected}
               opportunityId={selected}
+              salesHandover={salesHandover}
               onPending={setPending}
             />
           )}
@@ -373,9 +376,11 @@ export function NewDiscovery() {
 }
 function NewDiscoveryContext({
   opportunityId,
+  salesHandover,
   onPending,
 }: {
   opportunityId: string;
+  salesHandover: string | null;
   onPending: (pending: boolean) => void;
 }) {
   const options = useCrmResource<FormOptions>(
@@ -383,13 +388,14 @@ function NewDiscoveryContext({
     ),
     router = useRouter(),
     command = useCrmCommand(
-      (r) => router.push(`/estimating/discovery/${r.record_id}`),
+      (r) => router.push(salesHandover ? `/sales/handoffs/estimating/${salesHandover}?created_workspace=${r.record_id}` : `/estimating/discovery/${r.record_id}`),
       "Unsaved",
       onPending,
     );
   if (denied(command.error)) return <ErrorNotice error={command.error} />;
   return (
     <>
+      {salesHandover && <CreatingFromSalesBrief id={salesHandover} opportunityId={opportunityId}/>}
       <ResourceState {...options} />
       {options.data && (
         <ProposalEditor

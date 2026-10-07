@@ -106,7 +106,9 @@
         "src/field/visit-guidance.ts",
         "src/components/field-visit-entry.tsx",
         "docs/decisions/field-closed-visit-guidance.md",
-        "docs/design/development/maintenance-fixtures.json"
+        "docs/design/development/maintenance-fixtures.json",
+        "src/components/sales-estimating-link.tsx",
+        "docs/design/development/lead-continuity-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -222,7 +224,10 @@
         "route:/warranty/cases/[id]",
         "scope:MA-07",
         "route:/warranty/supplier-recovery",
-        "route:/warranty/supplier-recovery/[id]"
+        "route:/warranty/supplier-recovery/[id]",
+        "route:/estimating/discovery/new",
+        "route:/estimating/discovery/[id]",
+        "scope:CR-02"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -306,6 +311,14 @@
           "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
           "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
           "action": "Review the MA handover and retained images before baseline adoption",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-accepted-sales-link",
+          "expected": "Keep saved-source comparison and original-result recovery visible through Sales-to-Estimating creation and linking.",
+          "actual": "LC-13 reuses native controls and journal; exact new-state mockup images are missing.",
+          "action": "Review desktop/phone create-return, fixed comparison, denied context and original recovery before adopting a baseline.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -896,7 +909,8 @@
         "src/app/styles/customers.css",
         "src/components/equipment-controls.tsx",
         "docs/design/development/maintenance-fixtures.json",
-        "docs/design/development/lead-continuity-fixtures.json"
+        "docs/design/development/lead-continuity-fixtures.json",
+        "src/components/sales-estimating-link.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -985,7 +999,10 @@
         "route:/warranty/supplier-recovery",
         "route:/warranty/supplier-recovery/[id]",
         "route:/sales/leads",
-        "route:/sales/leads/[id]"
+        "route:/sales/leads/[id]",
+        "route:/estimating/discovery/new",
+        "route:/estimating/discovery/[id]",
+        "scope:CR-02"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -1069,6 +1086,14 @@
           "expected": "Preserve explicit record selection, creation return and original recovery across Lead and shared capture forms.",
           "actual": "LC-12 hosts reuse existing controls; no exact new state mockup is available.",
           "action": "Review desktop/mobile creation return, typed-selection distinction, stale comparison and uncertain-original recovery.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fields-accepted-sales-link",
+          "expected": "Keep saved-source comparison and original-result recovery visible through Sales-to-Estimating creation and linking.",
+          "actual": "LC-13 reuses native controls and journal; exact new-state mockup images are missing.",
+          "action": "Review desktop/phone create-return, fixed comparison, denied context and original recovery before adopting a baseline.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1211,7 +1236,8 @@
         "src/development/component-fixtures.ts",
         "src/app/styles/customers.css",
         "docs/design/development/maintenance-fixtures.json",
-        "docs/design/development/lead-continuity-fixtures.json"
+        "docs/design/development/lead-continuity-fixtures.json",
+        "src/components/sales-estimating-link.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -1291,7 +1317,10 @@
         "route:/warranty/supplier-recovery",
         "route:/warranty/supplier-recovery/[id]",
         "route:/sales/leads",
-        "route:/sales/leads/[id]"
+        "route:/sales/leads/[id]",
+        "route:/estimating/discovery/new",
+        "route:/estimating/discovery/[id]",
+        "scope:CR-02"
       ],
       "desktop": "Submit an empty title to focus the summary, then follow its link to the field. Correct the title and save to clear the example error.",
       "mobile": "Summary and inline errors must remain visible at 320 px and 200% zoom.",
@@ -1367,6 +1396,14 @@
           "expected": "Preserve explicit record selection, creation return and original recovery across Lead and shared capture forms.",
           "actual": "LC-12 hosts reuse existing controls; no exact new state mockup is available.",
           "action": "Review desktop/mobile creation return, typed-selection distinction, stale comparison and uncertain-original recovery.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "validation-accepted-sales-link",
+          "expected": "Keep saved-source comparison and original-result recovery visible through Sales-to-Estimating creation and linking.",
+          "actual": "LC-13 reuses native controls and journal; exact new-state mockup images are missing.",
+          "action": "Review desktop/phone create-return, fixed comparison, denied context and original recovery before adopting a baseline.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

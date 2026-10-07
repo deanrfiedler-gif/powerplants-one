@@ -1,0 +1,5 @@
+
+> powerplants-one@0.1.0 db:reset
+> node --env-file=.env.local --import tsx scripts/database.ts reset
+
+Database reset: completed

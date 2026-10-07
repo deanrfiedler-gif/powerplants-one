@@ -1,0 +1,32 @@
+✔ LC-13 exact acceptance binding preserves independent native history and original recovery after successors (21116.3829ms)
+✖ LC-13 stale source/workspace, wrong Deal and receiver authority block new links without effects (17890.6251ms)
+✔ LC-13 identical concurrent linking has one original; competing intent cannot duplicate the association (12791.2258ms)
+✔ LC-13 late publication failure and missing direct SQL evidence roll back the entire link (12052.3667ms)
+✔ LC-13 revoked native access hides link identities and denies original recovery and replay (10941.2771ms)
+✔ LC-13 populated 0073 upgrade retains accepted brief bytes, native Discovery, grants and original receipts (21960.7802ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 108027.2704
+
+✖ failing tests:
+
+test at tests\database\sales-estimating-binding.test.ts:1:6307
+✖ LC-13 stale source/workspace, wrong Deal and receiver authority block new links without effects (17890.6251ms)
+  Error: Check the highlighted details.
+      at invalid (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\platform\validation.ts:3:9)
+      at object (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\platform\validation.ts:14:30)
+      at parseDealInformation (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\crm\refinement-validation.ts:33:13)
+      at editDealInformation (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\src\crm\refinements.ts:87:19)
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\database\sales-estimating-binding.test.ts:82:8)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    status: 422,
+    code: 'InvalidData',
+    field_errors: [ { field: 'need_summary', message: 'This field is not accepted.' } ]
+  }

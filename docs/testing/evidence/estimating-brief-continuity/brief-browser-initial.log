@@ -1,0 +1,102 @@
+[WebServer] (node:32964) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.98"}
+
+Running 8 tests using 1 worker
+
+(node:21220) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop-chromium] › tests\browser\estimating-discovery.spec.ts:190:1 › E2 browser creates scoped discovery and retains the original unknown creation through candidate refresh (8.7s)
+  x  2 [desktop-chromium] › tests\browser\sales-estimating-binding.spec.ts:89:1 › LC-13 create native Discovery from accepted Sales and return for an explicit link with independent recovery (13.8s)
+(node:33240) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [desktop-chromium] › tests\browser\sales-estimating-binding.spec.ts:249:1 › LC-13 stale reviewed link is refused and accepted lost-response link survives reload without a second POST (9.4s)
+  ok 4 [desktop-chromium] › tests\browser\sales-workflows.spec.ts:119:1 › CR02 frozen submission survives clarification, acceptance and reload (13.1s)
+(node:32324) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 5 [mobile-chromium] › tests\browser\estimating-discovery.spec.ts:190:1 › E2 browser creates scoped discovery and retains the original unknown creation through candidate refresh (7.9s)
+  x  6 [mobile-chromium] › tests\browser\sales-estimating-binding.spec.ts:89:1 › LC-13 create native Discovery from accepted Sales and return for an explicit link with independent recovery (12.7s)
+(node:28864) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 7 [mobile-chromium] › tests\browser\sales-estimating-binding.spec.ts:249:1 › LC-13 stale reviewed link is refused and accepted lost-response link survives reload without a second POST (6.7s)
+  ok 8 [mobile-chromium] › tests\browser\sales-workflows.spec.ts:119:1 › CR02 frozen submission survives clarification, acceptance and reload (8.4s)
+
+
+  1) [desktop-chromium] › tests\browser\sales-estimating-binding.spec.ts:89:1 › LC-13 create native Discovery from accepted Sales and return for an explicit link with independent recovery 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'Accepted Sales context', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'Accepted Sales context', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'Accepted Sales context', exact: true })
+
+
+      224 |   await expect(
+      225 |     page.getByRole("heading", { name: "Accepted Sales context", exact: true }),
+    > 226 |   ).toBeVisible();
+          |     ^
+      227 |   await expect(
+      228 |     page.getByText(f.content.problem, { exact: true }),
+      229 |   ).toBeVisible();
+        at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\sales-estimating-binding.spec.ts:226:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\sales-estimating-binding-L-6836f-k-with-independent-recovery-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\sales-estimating-binding-L-6836f-k-with-independent-recovery-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\sales-estimating-binding-L-6836f-k-with-independent-recovery-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\sales-estimating-binding-L-6836f-k-with-independent-recovery-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-chromium] › tests\browser\sales-estimating-binding.spec.ts:89:1 › LC-13 create native Discovery from accepted Sales and return for an explicit link with independent recovery 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'Accepted Sales context', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'Accepted Sales context', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'Accepted Sales context', exact: true })
+
+
+      224 |   await expect(
+      225 |     page.getByRole("heading", { name: "Accepted Sales context", exact: true }),
+    > 226 |   ).toBeVisible();
+          |     ^
+      227 |   await expect(
+      228 |     page.getByText(f.content.problem, { exact: true }),
+      229 |   ).toBeVisible();
+        at C:\Users\Dean.Fiedler\.codex\worktrees\lead-to-delivery\powerplants-one\tests\browser\sales-estimating-binding.spec.ts:226:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\sales-estimating-binding-L-6836f-k-with-independent-recovery-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\sales-estimating-binding-L-6836f-k-with-independent-recovery-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\sales-estimating-binding-L-6836f-k-with-independent-recovery-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\sales-estimating-binding-L-6836f-k-with-independent-recovery-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop-chromium] › tests\browser\sales-estimating-binding.spec.ts:89:1 › LC-13 create native Discovery from accepted Sales and return for an explicit link with independent recovery 
+    [mobile-chromium] › tests\browser\sales-estimating-binding.spec.ts:89:1 › LC-13 create native Discovery from accepted Sales and return for an explicit link with independent recovery 
+  6 passed (3.0m)

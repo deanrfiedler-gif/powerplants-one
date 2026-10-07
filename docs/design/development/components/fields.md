@@ -113,3 +113,7 @@ Host fixtures: `tests/browser/quotation-supply-followup.spec.ts` (receiving, rea
 ## LC-12 consumer alignment
 
 Leads customer resolution and transfer reuse this control family, with native shared creation as the return destination. Keep record selection explicit, reasons retained and uncertain-original recovery locked against a duplicate command. Host fixtures are in [lead continuity examples](../lead-continuity-fixtures.json); no exact new state mockup or paired acceptance is claimed. Check desktop/mobile reachability, disabled state and permission-filtered choices in the host.
+
+## Accepted Sales brief to native Estimating (LC-13)
+
+The Sales handover and native Discovery hosts reuse this control with explicit create-return, fixed source comparison and exact-original recovery. Consumer bindings and synthetic states are in the register and lead-continuity-fixtures.json. Compare desktop/phone scope wrapping, keyboard controls and denied-context removal; exact new-state mockups are missing and no accepted fingerprint is assigned.

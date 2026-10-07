@@ -1,0 +1,18 @@
+✔ LC-13 exact acceptance binding preserves independent native history and original recovery after successors (24293.621ms)
+✔ LC-13 stale source/workspace, wrong Deal and receiver authority block new links without effects (19302.5962ms)
+✔ LC-13 identical concurrent linking has one original; competing intent cannot duplicate the association (18477.09ms)
+✔ LC-13 late publication failure and missing direct SQL evidence roll back the entire link (13029.6607ms)
+✔ LC-13 revoked native access hides link identities and denies original recovery and replay (11421.1783ms)
+✔ LC-13 populated 0073 upgrade retains accepted brief bytes, native Discovery, grants and original receipts (28271.6913ms)
+✔ CR02 draft/submission/clarification/answer/resolution/acceptance/successor preserves immutable evidence and exact recovery (14156.6025ms)
+✔ CR03 returns and accepts an exact successor without mutating Won evidence or creating downstream work (12052.2675ms)
+✔ CR02/03 source drift and stale drafts are rejected without destroying accepted evidence (12545.2683ms)
+✔ Sales detail, queues, direct UUID, history and receipts enforce current workspace/company/site and revoked access (11374.5961ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 170694.7482

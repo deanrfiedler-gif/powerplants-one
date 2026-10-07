@@ -1,0 +1,315 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "implementation_parent": "2c2def7",
+  "execution_scope": "Working implementation before evidence packaging. Source hashes identify the locally checked changed implementation and tests. CI, paired review and deployment remain separate.",
+  "source_files": [
+    {
+      "path": "db/migrations/0074-sales-estimating-binding.sql",
+      "sha256": "cef4c16e126669a711a95385e87eea94b8a1778d85b5eb1a622b72b6e3118097",
+      "bytes": 4077
+    },
+    {
+      "path": "scripts/demo-upgrade.ts",
+      "sha256": "49b28060507a303c1cb444fd3c1c5e7994cb6771fac1a08bccdb92f8236bc006",
+      "bytes": 29539
+    },
+    {
+      "path": "scripts/migration-registry.ts",
+      "sha256": "646308ea42ece319df48ea6a43599b7b0140ce55017ad1ae36c57d348666b9f7",
+      "bytes": 6542
+    },
+    {
+      "path": "src/app/api/v1/estimating/workspaces/[id]/sales-briefs/route.ts",
+      "sha256": "86615b0074307ffcddf78cdf21d150e5c84e8ee28bab3dbfe031f7ad36b6389d",
+      "bytes": 259
+    },
+    {
+      "path": "src/app/api/v1/sales/handovers/[id]/estimating/route.ts",
+      "sha256": "90a3116b30372a229c3c38b0300fc1bdef25f5e905f1e771b213fa4560d2cc71",
+      "bytes": 366
+    },
+    {
+      "path": "src/components/discovery-screens.tsx",
+      "sha256": "439e02c697a9506ff20b22dd173efb8baaf96605d58a94fdab9b773d35f0aca7",
+      "bytes": 35733
+    },
+    {
+      "path": "src/components/estimation-wizard.tsx",
+      "sha256": "4e0d3a470b35ce68e3f91800a4bf65f249bd1c68366fbb515836b59dbf1773cb",
+      "bytes": 75501
+    },
+    {
+      "path": "src/components/sales-estimating-link.tsx",
+      "sha256": "1e238dc10d497f8283df89368f6e829abd665fef7a9328d0d177c13f9c8d807f",
+      "bytes": 11113
+    },
+    {
+      "path": "src/components/sales-handover.tsx",
+      "sha256": "64525ddf48d59179c75387582e7233353cf943f184e1fe4744a97a16edfbe020",
+      "bytes": 27634
+    },
+    {
+      "path": "src/sales/estimating-binding.ts",
+      "sha256": "f4263c76ba461ab0c507ca49955239a2babae75895a2de631cbf1f8c6fd0dc80",
+      "bytes": 12807
+    },
+    {
+      "path": "src/shared/receipts.ts",
+      "sha256": "bc075aa43853b100919392f7d47775857554a24ad0e275aced9c08b1f9f3c525",
+      "bytes": 23903
+    },
+    {
+      "path": "tests/browser/sales-estimating-binding.spec.ts",
+      "sha256": "0e458b117f11f7d3cd8688e6db2ecb27fab8e41cabc2a4e6b821fb528b19dfc4",
+      "bytes": 11345
+    },
+    {
+      "path": "tests/database/field-customer-response.test.ts",
+      "sha256": "4b8d3bc7d148f1ea80f4de72f00b70553460526eef4c8f42323cc3b1afa16031",
+      "bytes": 24350
+    },
+    {
+      "path": "tests/database/field-timer-boundaries.test.ts",
+      "sha256": "616513452e5d152f304846eb43b9261bee518ae9f723ffc40aeace01f287efd4",
+      "bytes": 10255
+    },
+    {
+      "path": "tests/database/field.test.ts",
+      "sha256": "be2dd8e2db5e7c2f2a68e6865bc79ad65a5ac998677fc0e22c3f2d9fe45790bc",
+      "bytes": 40541
+    },
+    {
+      "path": "tests/database/finance-upgrade.test.ts",
+      "sha256": "72181e94fe5f783b428ce9248e6dddfa4f491e0672859057f991e266d41e0aa0",
+      "bytes": 7568
+    },
+    {
+      "path": "tests/database/leads-amendments.test.ts",
+      "sha256": "1343e575343601c049fac100d7f18b6efd03c761c2c495da0f071c07987cbf0c",
+      "bytes": 12587
+    },
+    {
+      "path": "tests/database/leads-projects-integration.test.ts",
+      "sha256": "c35e890f69fc13636bb078105efc47363fef671c3df9caed009274004b68d187",
+      "bytes": 7832
+    },
+    {
+      "path": "tests/database/offline.test.ts",
+      "sha256": "cafd048bb6ca3b6f20966e4683c79cc6094a2ccdbd6438539f0e49a8e061f558",
+      "bytes": 30197
+    },
+    {
+      "path": "tests/database/packs.test.ts",
+      "sha256": "9117f274a0a1f42c626911cbee3fb20a80833c422438dc11328a4d1203ee01f6",
+      "bytes": 39675
+    },
+    {
+      "path": "tests/database/planner.test.ts",
+      "sha256": "f96b6189e28f2c6afb830150e5788daecd26ba8eeb3873ced138a9b7964cf2bb",
+      "bytes": 37030
+    },
+    {
+      "path": "tests/database/policy-persistence.test.ts",
+      "sha256": "9b579b0959a5e20902fd60754f91e1effc0ef109adb5d33a55e068e443a8f6fa",
+      "bytes": 24615
+    },
+    {
+      "path": "tests/database/quotation-allocation-shortfall.test.ts",
+      "sha256": "309b4b15a83a27f1306426c103b832f3eff6b70148ad5c97d11d197060472600",
+      "bytes": 31238
+    },
+    {
+      "path": "tests/database/quotation-conversion.test.ts",
+      "sha256": "1e34e9fc920267e5333f94ebf68b3a5f802bc7a505c864f4fbb967af1a83ade0",
+      "bytes": 19671
+    },
+    {
+      "path": "tests/database/quotation-disposition.test.ts",
+      "sha256": "9675c131538c7fb0a840c1467f60ec67dff6abf310262693b3d3669769a966ea",
+      "bytes": 27275
+    },
+    {
+      "path": "tests/database/quotation-material-resolution.test.ts",
+      "sha256": "72a7fe20c85f054ccc8f0bc5d51188fde53a95d1a1f5eba99dea9db19784985c",
+      "bytes": 31156
+    },
+    {
+      "path": "tests/database/quotation-receipt-correction.test.ts",
+      "sha256": "0ca3e530372fa47e0bb1f84401476e876a86df17b30220d0446c47f02e541327",
+      "bytes": 27572
+    },
+    {
+      "path": "tests/database/quotation-release.test.ts",
+      "sha256": "43f570ad4668e7ad4f2d3b443ed4efcdee4fb59582d5474a670d544070f291df",
+      "bytes": 19949
+    },
+    {
+      "path": "tests/database/quotation-reservation-reconciliation.test.ts",
+      "sha256": "dc29056c4882be664924d2769fd837eb6986ce6c82ca55d200e25007b3780fd9",
+      "bytes": 16851
+    },
+    {
+      "path": "tests/database/quotation-response.test.ts",
+      "sha256": "f92b8533eb6f77cdd6c6209543c338e4b7a4710e3ee124c568208b1917e9fe01",
+      "bytes": 17700
+    },
+    {
+      "path": "tests/database/quotation-supply-followup.test.ts",
+      "sha256": "c41aaf1eddf99fb75fa402fb554a8a3db09f8f1fc554d71227ae6deabcd89b10",
+      "bytes": 27709
+    },
+    {
+      "path": "tests/database/quotation-task-branch.test.ts",
+      "sha256": "fc0f05fc3b561573c84015c2aa68443afa940af98fb9b9ff0b8c9f57f19ae9de",
+      "bytes": 38178
+    },
+    {
+      "path": "tests/database/quotation-task-chain.test.ts",
+      "sha256": "f01523ecb213c5731f6d3794f425ecf446b1a576a629d1f253a395a769d7852f",
+      "bytes": 29567
+    },
+    {
+      "path": "tests/database/quotation-task-dependency.test.ts",
+      "sha256": "8f950dacc001711561202e66f24851bc5383b1f386c1f1d652d4dde744de93d2",
+      "bytes": 19552
+    },
+    {
+      "path": "tests/database/quotation-task-diamond.test.ts",
+      "sha256": "4c861358a734f8d4f0c0218cb607170fefa53dac95fc41896f0ef74f911e355f",
+      "bytes": 19196
+    },
+    {
+      "path": "tests/database/quotation-task-merge.test.ts",
+      "sha256": "3ae003c60b96f4fdbd32c6e0764b3189732a40ebb94c783dafcd77a12a3ec2b7",
+      "bytes": 46727
+    },
+    {
+      "path": "tests/database/reports.test.ts",
+      "sha256": "f321544d9f0461289c80db0195420f525c00ba03a624a410910331af937c4787",
+      "bytes": 40323
+    },
+    {
+      "path": "tests/database/sales-estimating-binding.test.ts",
+      "sha256": "7bb82c3b1b43b77b796c834cb4546821c22297192d1cbec340e730b82664b728",
+      "bytes": 13682
+    },
+    {
+      "path": "tests/demo/upgrade.test.ts",
+      "sha256": "d1b63829484ec0e6b4f91525ad14b40bb2c1aacdbaac1868c913fe8b210d2deb",
+      "bytes": 17257
+    }
+  ],
+  "evidence_files": [
+    {
+      "path": "docs/testing/evidence/estimating-brief-continuity/brief-browser-final.log",
+      "sha256": "df2d446f5aa9ee434836e997d040b25c551db98a2e2246c60d99be6ba2a11f14",
+      "bytes": 2150
+    },
+    {
+      "path": "docs/testing/evidence/estimating-brief-continuity/brief-browser-initial.log",
+      "sha256": "5ebe1a6c8f0b033da584600b5a9eed339616fccb18ff9aa5b47e5405b351f29b",
+      "bytes": 8018
+    },
+    {
+      "path": "docs/testing/evidence/estimating-brief-continuity/brief-browser-port-mismatch.log",
+      "sha256": "06548da93483582e5a1cca7b6188cfd4f1c77259087e59a38b31181160ab2f99",
+      "bytes": 19009
+    },
+    {
+      "path": "docs/testing/evidence/estimating-brief-continuity/brief-build-final.log",
+      "sha256": "0082d43beb1058568fbbed1e7c2f61549109493b00d4e48f3a7c58c24083a66b",
+      "bytes": 25740
+    },
+    {
+      "path": "docs/testing/evidence/estimating-brief-continuity/brief-db-final.log",
+      "sha256": "bade6a51966348b60d025f6805f89c47cd2bfe68b8a4c3e92f35f5bf5301d12e",
+      "bytes": 1323
+    },
+    {
+      "path": "docs/testing/evidence/estimating-brief-continuity/brief-db-initial.log",
+      "sha256": "c01f8ee16552c8d5a19ab3550af12ab17461971df1f97eb206ed086256b5ea2f",
+      "bytes": 2107
+    },
+    {
+      "path": "docs/testing/evidence/estimating-brief-continuity/brief-foundation-final.log",
+      "sha256": "35f571bd63f64ad67aca1e78ed6d67752969adddfce8fd2a7e451a86050d8048",
+      "bytes": 330
+    },
+    {
+      "path": "docs/testing/evidence/estimating-brief-continuity/brief-lint-final.log",
+      "sha256": "3d33f40c80d9aa3df343c357e43b00f214189513ba842430e562b5fbe75aefda",
+      "bytes": 42
+    },
+    {
+      "path": "docs/testing/evidence/estimating-brief-continuity/brief-naming-final.log",
+      "sha256": "11ec218649c897e9fec8b2368f7d30957e05931e7832817a77c010111707046b",
+      "bytes": 296
+    },
+    {
+      "path": "docs/testing/evidence/estimating-brief-continuity/brief-prototype-final.log",
+      "sha256": "9b7839c713adf06d51e41256fd2e991c6acc00fca36c33caff1ef7e02d55251b",
+      "bytes": 526
+    },
+    {
+      "path": "docs/testing/evidence/estimating-brief-continuity/brief-reset-browser-final-retry.log",
+      "sha256": "5ecc08c95e119a565fa33aea77aad8661cec38a3e2b844ca92b30af4ac4e2498",
+      "bytes": 129
+    },
+    {
+      "path": "docs/testing/evidence/estimating-brief-continuity/brief-reset-browser-final.log",
+      "sha256": "9247798cf36d08b793dbfc9d3a76fb5cd47b182f14701da623723c528498753d",
+      "bytes": 232
+    },
+    {
+      "path": "docs/testing/evidence/estimating-brief-continuity/brief-studio-final.log",
+      "sha256": "e54246ce6d663bbbc52e76eb1107b17246e348645643edd5d0a2c9d5e0c83c76",
+      "bytes": 429
+    },
+    {
+      "path": "docs/testing/evidence/estimating-brief-continuity/brief-typecheck-final.log",
+      "sha256": "bc8033ab9263f80d6936b509b40414d8d01fa804136bf8b2d00f7ac11abe7a2a",
+      "bytes": 51
+    },
+    {
+      "path": "docs/testing/evidence/estimating-brief-continuity/brief-upgrades.log",
+      "sha256": "cf6681628e674cf0a5a78562ead2fa13161cdd4c38881983247eafd9f5e8c5ee",
+      "bytes": 14565
+    },
+    {
+      "path": "docs/testing/evidence/estimating-brief-continuity/desktop-accepted-sales-context.png",
+      "sha256": "a5bc09f4b22ccb07fac731883631430f00f3efb96d6303b1f43070ce82dbff70",
+      "bytes": 151570
+    },
+    {
+      "path": "docs/testing/evidence/estimating-brief-continuity/desktop-estimating-link-recovery.png",
+      "sha256": "d9999c809f340fc1cd04205d02bbd93edb68347ce8c58d82ef3a147d65ce764b",
+      "bytes": 122374
+    },
+    {
+      "path": "docs/testing/evidence/estimating-brief-continuity/desktop-initial-wrong-host.png",
+      "sha256": "6a9a04ad9aac6f5cfa2e99459736b619707bc3bdf820557f89c392f8184200a1",
+      "bytes": 154636
+    },
+    {
+      "path": "docs/testing/evidence/estimating-brief-continuity/mobile-accepted-sales-context.png",
+      "sha256": "fe8df27cadf74be4878b81bff244710e1d320c1152c26118474c43190330b7af",
+      "bytes": 67291
+    },
+    {
+      "path": "docs/testing/evidence/estimating-brief-continuity/mobile-estimating-link-recovery.png",
+      "sha256": "78fa60540eefb3c8b150caf87bc00f1aba6a1c3b83ccaae0a849ef6ad3e100af",
+      "bytes": 78683
+    },
+    {
+      "path": "docs/testing/evidence/estimating-brief-continuity/mobile-initial-wrong-host.png",
+      "sha256": "a4f5e0e1fe234af5ff967ee646672acf6b6c17d0a958fe4962c3a121bea57ee0",
+      "bytes": 63273
+    },
+    {
+      "path": "docs/testing/evidence/estimating-brief-continuity/README.md",
+      "sha256": "f9232fbeb6eb534729e174142159896658466b14991a9a478cc9e9650a296534",
+      "bytes": 5788
+    }
+  ]
+}
