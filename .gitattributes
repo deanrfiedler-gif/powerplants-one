@@ -30,3 +30,4 @@ docs/testing/evidence/scheduling-policy-impact/*.txt text eol=lf
 docs/testing/evidence/cr05-reload/stack/*.txt text eol=lf
 # Maintenance integration logs are fingerprinted in their evidence manifest.
 docs/testing/evidence/maintenance-warranty/integration/logs/*.log text eol=lf
+docs/testing/evidence/lead-continuity/*.log text eol=lf

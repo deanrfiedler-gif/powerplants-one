@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "implementation_commit": "0a3f191",
+  "execution_scope": "Working implementation before formatting-only and evidence commits; final-head CI remains separate.",
+  "files": [
+    {
+      "path": "build.log",
+      "sha256": "1462b2e9515c4a0efacbe835a9b28d3e73e63ce759fd38e5ebe39fa991aff8eb",
+      "bytes": 25553
+    },
+    {
+      "path": "desktop-deal-retained-lead-follow-up.png",
+      "sha256": "c6408d0841029d17cb4a746c422998b9540d5bb9dd098fced947af081b3bdb69",
+      "bytes": 145189
+    },
+    {
+      "path": "desktop-lead-site-review.png",
+      "sha256": "79d519c929a1217001ab83585138c8f293d89bb2373c21be17dea8667125a43b",
+      "bytes": 102429
+    },
+    {
+      "path": "foundation.log",
+      "sha256": "6327c442228328b31dbc61d94bd92552e7634e10889f1f3284747f901353395e",
+      "bytes": 330
+    },
+    {
+      "path": "leads-browser-corrected.log",
+      "sha256": "f1d0387b68bc0bfe854afbec8a0731574a26bc47f2fafb85a710ce838ade5457",
+      "bytes": 2379
+    },
+    {
+      "path": "leads-browser.log",
+      "sha256": "682d29f0294eccc907539f3a567e63edfbb89af003ea9ddbd1140617c14cc03c",
+      "bytes": 11837
+    },
+    {
+      "path": "leads-db-configured.log",
+      "sha256": "b8031492358b8cfbc2cf5bb271d9610ad83028e2394e14b69961271ac3d538d6",
+      "bytes": 1535
+    },
+    {
+      "path": "leads-db.log",
+      "sha256": "a19043fe054115d41eecce7d7e104ab96032a1fd200d92e8aa7db15c42406ea2",
+      "bytes": 19784
+    },
+    {
+      "path": "leads-unit.log",
+      "sha256": "a5b576da25d8e2972a3f18baf86f911d7223fc5c76b35fd3096a366bceed7d8c",
+      "bytes": 394
+    },
+    {
+      "path": "lint.log",
+      "sha256": "3d33f40c80d9aa3df343c357e43b00f214189513ba842430e562b5fbe75aefda",
+      "bytes": 42
+    },
+    {
+      "path": "mobile-deal-retained-lead-follow-up.png",
+      "sha256": "71116192888943daef166d2a17c78ba824e78cea91fb7c7a75c05bea0e76a7c4",
+      "bytes": 70359
+    },
+    {
+      "path": "mobile-lead-site-review.png",
+      "sha256": "b6ad046719c7f6eec3e87602fc54d274103e81631041262eb86f21608c5dd36e",
+      "bytes": 51242
+    },
+    {
+      "path": "naming.log",
+      "sha256": "905b11cb3082b13ca16863144129ffa834ebd57057ead5364be533a83119fa20",
+      "bytes": 296
+    },
+    {
+      "path": "prototype.log",
+      "sha256": "9b7839c713adf06d51e41256fd2e991c6acc00fca36c33caff1ef7e02d55251b",
+      "bytes": 526
+    },
+    {
+      "path": "studio.log",
+      "sha256": "e54246ce6d663bbbc52e76eb1107b17246e348645643edd5d0a2c9d5e0c83c76",
+      "bytes": 429
+    },
+    {
+      "path": "typecheck.log",
+      "sha256": "bc8033ab9263f80d6936b509b40414d8d01fa804136bf8b2d00f7ac11abe7a2a",
+      "bytes": 51
+    }
+  ]
+}
