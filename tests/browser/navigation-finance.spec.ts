@@ -30,7 +30,13 @@ test("N14 exact permitted Finance account extends its module hierarchy",async({p
   await page.locator(`main a[href='/customers/${account.customer_id}/account?account_id=${account.id}&department=finance']`).click();
   const exact=await (await read).json();const breadcrumb=page.getByRole("navigation",{name:"Breadcrumb",exact:true});
   await expect(breadcrumb).toContainText(exact.account.fixture_key);
-  await expect(breadcrumb.getByRole("link",{name:"Customer accounts",exact:true})).toHaveAttribute("href","/finance/accounts");
+  await page.getByRole("button",{name:"Page hierarchy",exact:true}).click();
+  const hierarchy=page.locator("#page-hierarchy");
+  await expect(hierarchy.getByRole("link",{name:"Customer accounts",exact:true})).toHaveAttribute("href","/finance/accounts");
+  await hierarchy.getByRole("link",{name:"Customer accounts",exact:true}).focus();
+  await page.screenshot({path:test.info().outputPath("finance-account-hierarchy.png")});
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("button",{name:"Page hierarchy",exact:true})).toBeFocused();
   expect((await page.request.post("/api/v1/local-session",{headers:{Origin:baseURL!},data:{profile:"technician"}})).ok()).toBe(true);
   const denied=page.waitForResponse(r=>r.url().includes(`/api/v1/customers/${account.customer_id}/account-observations?account_id=${account.id}`)&&[403,404].includes(r.status()));
   await page.reload();await denied;await expect(breadcrumb).not.toContainText(exact.account.fixture_key);

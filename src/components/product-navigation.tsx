@@ -41,6 +41,28 @@ const subscribe = (changed: () => void) => {
   media.addEventListener("change", changed);
   return () => media.removeEventListener("change", changed);
 };
+type HierarchyCrumb = { key: string; label: string; href?: string; kind: "root" | "page" | "view" | "record" };
+function PageHierarchy({ crumbs, location }: { crumbs: HierarchyCrumb[]; location: string }) {
+  const panel = useRef<HTMLDivElement>(null), trigger = useRef<HTMLButtonElement>(null);
+  const [open, setOpen] = useState(false);
+  useEffect(() => { panel.current?.hidePopover(); }, [location]);
+  useEffect(() => {
+    const close = (event: Event) => { if ((event as CustomEvent).detail !== "hierarchy") panel.current?.hidePopover(); };
+    window.addEventListener(shellPanelEvent, close);
+    return () => window.removeEventListener(shellPanelEvent, close);
+  }, []);
+  return <>
+    <button ref={trigger} className="ppo-breadcrumb-trigger" aria-label="Page hierarchy" aria-expanded={open} aria-controls="page-hierarchy" onClick={() => {
+      openShellPanel("hierarchy"); panel.current?.togglePopover();
+    }}><ProductIcon name="more" /></button>
+    <div ref={panel} id="page-hierarchy" popover="auto" className="ppo-hierarchy-panel" aria-label="Page hierarchy" onToggle={event => setOpen(event.newState === "open")} onKeyDown={event => {
+      if (event.key === "Escape") { event.preventDefault(); panel.current?.hidePopover(); trigger.current?.focus(); }
+    }}>
+      <strong>Page hierarchy</strong>
+      <ol>{crumbs.map((crumb,index) => <li key={crumb.key}>{crumb.href ? <Link href={crumb.href}>{crumb.label}</Link> : <span aria-current={index === crumbs.length - 1 ? "page" : undefined}>{crumb.label}</span>}</li>)}</ol>
+    </div>
+  </>;
+}
 export function ProductNavigation() {
   return <Suspense><NavigationWithLocation /></Suspense>;
 }
@@ -472,7 +494,7 @@ export function ProductHeader() {
   // shortened for the page guide, and the breadcrumb uses the same two names.
   const rootLabel =
     page?.workspace === "estimate" ? "Estimating" : page?.workspace === "service" ? "Service" : workspaceRoot?.label;
-  const crumbs: { key: string; label: string; href?: string; kind: "root" | "page" | "view" | "record" }[] = [];
+  const crumbs: HierarchyCrumb[] = [];
   if (label) {
     if (rootLabel && rootLabel !== label && !crumb)
       crumbs.push({
@@ -530,6 +552,7 @@ export function ProductHeader() {
         <div id="header-menu" className="ppo-header-menu-slot" />
         {crumbs.length ? (
           <nav className="product-heading" aria-label="Breadcrumb">
+            {crumbs.length > 1 && <PageHierarchy crumbs={crumbs} location={`${path}?${query.toString()}`} />}
             <ol className="ppo-crumbs" title={crumbs.map((c) => c.label).join(" / ")}>
               {crumbs.map((crumb, index) => (
                 <li key={crumb.key} data-crumb={crumb.kind}>

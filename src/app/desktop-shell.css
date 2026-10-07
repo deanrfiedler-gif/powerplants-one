@@ -268,6 +268,16 @@
 }
 
 /* These must also win over legacy CRM identity-button rules. */
+.ppo-shell-header .product-heading:has(.ppo-breadcrumb-trigger) { display: flex; align-items: center; gap: 4px; }
+.ppo-breadcrumb-trigger { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; flex: 0 0 44px; border: 0; border-radius: 6px; background: transparent; color: var(--ppo-rail-navy); padding: 0; }
+.ppo-breadcrumb-trigger:focus-visible { outline: 3px solid #a8d8ff; outline-offset: -3px; }
+.ppo-breadcrumb-trigger .product-icon { width: 20px; height: 20px; }
+.ppo-hierarchy-panel { position: fixed; inset: 68px auto auto 10px; margin: 0; width: min(360px, calc(100vw - 20px)); max-height: calc(100dvh - 80px); overflow: auto; padding: 12px; border: 1px solid #dce3eb; border-radius: 10px; background: #fff; color: #242a37; box-shadow: 0 8px 24px #242a3730; }
+.ppo-hierarchy-panel ol { margin: 8px 0 0; padding: 0; list-style: none; }
+.ppo-hierarchy-panel li :is(a,span) { display: flex; align-items: center; min-height: 44px; padding: 8px; overflow-wrap: anywhere; }
+.ppo-hierarchy-panel a { color: #425d78; border-radius: 6px; }
+.ppo-hierarchy-panel a:focus-visible { outline: 3px solid #a8d8ff; }
+@media (min-width: 781px) { .ppo-hierarchy-panel { left: calc(var(--ppo-rail-width) + 10px); } }
 .header-account .identity-strip .ppo-account-close { padding: 0; min-height: 36px; }
 .ppo-guide-contents button, .ppo-guide-link { font-weight: 400; }
 @media (max-width: 780px) { .header-account .identity-strip .ppo-account-close { min-height: 44px; } }
@@ -277,9 +287,8 @@
 /* Phone Sales reaches Opportunities from the bottom bar, and Leads from My Work's Quick Actions and More.
    An extra desktop tab row would leave too little room for a focused card after a save. */
 @media (max-width: 780px) { .module-navigation.ppo-sales-navigation { display: none; } }
-/* Narrower desktops: with three or more crumbs the earliest ancestor gives way, never the current page.
-   The rail, the module tabs and the page's own heading still give the parent, and the full path stays in
-   the accessibility tree and in the breadcrumb's title. */
+/* Narrower desktops keep the last two inline crumbs. Page hierarchy exposes every authorized ancestor
+   as a usable link at every width; a title alone cannot provide navigation. */
 @media (min-width: 781px) and (max-width: 1560px) {
   .ppo-shell-header .ppo-crumbs li:nth-last-child(n+3) { display: none; }
   .ppo-shell-header .ppo-crumbs li:nth-last-child(2)::before { content: none; }
