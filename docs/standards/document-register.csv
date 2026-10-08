@@ -486,3 +486,5 @@ PPO-SALES-FOLLOWUP-CONTINUITY-DEC,Reviewed follow-up back to Sales,docs/decision
 PPO-NAV-DEC,Navigation consolidation,docs/decisions/navigation-consolidation.md,,Implementation; owner review pending,Dean Fiedler,4f883d145b18876840c5ce5522059c95448dc086,,,git,
 PPO-NAV-DEL,Navigation implementation,docs/delivery/navigation-implementation.md,,Implementation; owner review pending,Dean Fiedler,4f883d145b18876840c5ce5522059c95448dc086,,,git,
 PPO-NAV-EVID,Navigation verification ledger,docs/testing/evidence/navigation/README.md,,Implementation; owner review pending,Dean Fiedler,4f883d145b18876840c5ce5522059c95448dc086,,,git,
+PPO-INTEGRATED-JOURNEY-DEC,Current-main integrated journey verification,docs/decisions/integrated-journey-acceptance.md,,User-authorised synthetic verification; owner acceptance pending,Dean Fiedler,4f883d145b18876840c5ce5522059c95448dc086,,,git,
+PPO-INTEGRATED-JOURNEY-WALKTHROUGH,Connected customer journey owner walkthrough,docs/delivery/integrated-journey-owner-walkthrough.md,,Prepared review tasks; actual owner observations pending,Dean Fiedler,4f883d145b18876840c5ce5522059c95448dc086,,,git,

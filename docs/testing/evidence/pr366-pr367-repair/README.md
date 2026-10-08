@@ -1,6 +1,6 @@
 # PR #366 / #367 CI repair
 
-Dean requested repair on 8 October 2026. Remote main remains the audited `4f883d145b18876840c5ce5522059c95448dc086`. Existing PR heads are #366 `03f211eea8cae3708748f70338ecd096751ae7ea` and #367 `5fb31eb5cf54166c3c92875193fd229b3ea21e09`. Separate worktrees preserve the original user checkout. No dependency, migration, seed, capability or grant changes.
+Dean requested repair on 8 October 2026. At repair start, remote main was the audited `4f883d145b18876840c5ce5522059c95448dc086`. Initial PR heads were #366 `03f211eea8cae3708748f70338ecd096751ae7ea` and #367 `5fb31eb5cf54166c3c92875193fd229b3ea21e09`. Separate worktrees preserve the original user checkout. No dependency, migration, seed, capability or grant changes.
 
 ## Revalidation and plan
 
@@ -54,3 +54,9 @@ N18/N19 assumed its one-hour-overdue fixture would appear in a complete register
 Local final-package dev run: standard warm-up completed **670 routes / zero unreachable in 696 seconds**; nine repair cases pass, one desktop SA09 case fails while Sales records are loading (**ten passed including warm-up / one failed**). A replay could not run after the task-owned dev server exhausted its Node heap. This is a local runtime limit, not a proven application regression; both complete Linux desktop jobs at `c849b77` pass SA09. A fresh task-owned server runs the focused readiness correction with the ordinary desktop/mobile projects and warm-up dependency; its result is recorded below when complete. No test/startup deadline, dependency, database reset or migration is changed.
 
 The two edited working guides' review paragraphs now agree with their 8 October preparation dates and stable keys; they remain draft with no nominated business reviewer or article walkthrough. Issued references and other guides are untouched.
+
+## Main integration
+
+GitHub records #366's **external merge at 00:58 UTC on 8 October** as `6b030fe8c076af21fd75dc47d97079ead1b1ca2e`. Revalidation after that merge found two #367 conflicts: the compacted current `docs/STATUS.md` and adjacent new rows in the document register. Integration retains main's compact snapshot, all integrated-journey source/evidence and all five new stable register entries from the two contributions. NAV and CI repair facts are added to the current snapshot; old chronology is not restored. Main adds documentation, its integrated browser scenario and a reopen proof script, with **no application-code change**. The new journey scenario must be included in merged-head verification. This repair session performs no PR merge or deployment.
+
+Merged-source TypeScript, focused script/browser lint, naming and foundation assurance pass. The combined project guidance initially exceeded its 8,000-character limit; shortening duplicate wording retains the global merge/deployment authority controls and brings it to 7,983 characters. The first focused readiness run exceeded the unchanged 15-minute warm-up: **one warm-up failure / four cases not run**. A single bounded retry includes IJ-01, SA-09 and the two corrected scenarios with both standard projects and their warm-up dependency. That result and fresh merged-head CI remain separate obligations; see the PR's exact-head checks for subsequent results.

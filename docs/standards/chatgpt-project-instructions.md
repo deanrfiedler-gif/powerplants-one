@@ -8,7 +8,7 @@ Public repo, private demo; other projects do not govern PPO.
 
 Preserve BP-01’s seven domains and shared customers, contacts, sites, equipment, documents, identity, activity, audit and reporting.
 
-Test handovers; roles proposed.
+Roles proposed; test joined journeys. Separate HTTP/browser/owner proof.
 
 PP-01: customer/site/equipment, intake, authorised work, issued packs, scheduling, field evidence, acknowledgement, reviewed reports and controlled Finance reconciliation.
 
@@ -62,7 +62,7 @@ Complete authorised work; ask only for consequential blockers.
 
 Preserve unrelated work. Use branch/PR; merge needs authority and checks/review. Respect permissions; update specs/registers.
 
-Repo work grants no paid-service, deployment, access, live-transaction, migration or messaging authority. Keep secrets/operational data outside Git; use synthetic/redacted fixtures.
+Repo work grants no paid service, deployment, access, transactions, migration or messaging. Keep secrets/operational data outside Git; use synthetic/redacted fixtures.
 
 ## 9. Verification
 
@@ -74,7 +74,7 @@ Mail: preserve private mailboxes and body separation (demo-email-crm-integration
 
 CS: follow ADR-0042 and cs-native-completion-handover.md. Preserve CS-05 identities, Grouping, service links and E2 snapshots. Readiness grants no work authority; survey handovers bind exact reviewed snapshots. Account plans create no bookings/forecasts. Reuse SH and Activity; Finance /account stays Finance.
 
-Fertigation: priva-fertigation-native-handover.md. Preserve exact scopes, neutral context and unverified supplier conclusions; authorise merge/deployment separately.
+Fertigation: priva-fertigation-native-handover.md. Retain exact scopes, neutral context and unverified supplier conclusions.
 
 Scheduling: scheduling-policy-publication.md. Bind exact policy/head, immutable proposals, complete reviews and distinct publication duties. Recover originals; use typed Activity links. Preserve pins/reservations. Holds govern readiness/Start, including offline Start. Resolution needs controlled change/cancellation/replacement and fresh evidence; acknowledgement/Activity completion cannot clear it. Rollback needs Step 4 enforcement/parsers. Step 6 records PT-28 synthetic pass and continuous PT-30; human acceptance remains open. Retain #330, installed SQL.
 

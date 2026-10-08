@@ -1,17 +1,16 @@
 # Powerplants One
 
-Current ES-07 continuation: [owned four-task Project diamond](docs/delivery/quotation-task-diamond-handover.md). #354 is merged; its final-head proof and failed post-merge assurance are separately recorded. The diamond withdraws A/B/C/D forecasts with D saved once, preserving all four relationships, unmet Demand and independent holds. Validation, visual review, owner acceptance and deployment remain separate.
-
+Current work: [navigation implementation and CI repair](docs/delivery/navigation-implementation.md) in draft PR #367, integrated with main `6b030fe` after #366 was merged externally. The [joined customer journey evidence](docs/testing/evidence/integrated-journey/README.md) retains its actual `4f883d1` baseline and desktop/phone results; the [owner walkthrough](docs/delivery/integrated-journey-owner-walkthrough.md) awaits actual observations. Verification, owner acceptance and deployment remain separate.
 
 Personal prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance. The repository is public; the application, data and hosted demo remain private and synthetic.
 
-**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P01–P12 code merged; PT-22 synthetic recovery passed; integrated acceptance incomplete · **Deployment:** separate manual Azure run 37094645952 completed for `6e8b898` on 3 October; fresh signed-in journey, actual worker execution and managed PostgreSQL minor unverified · **Current state:** [docs/STATUS.md](docs/STATUS.md)
+**Owner:** Dean Fiedler (`deanrfiedler-gif`) · **Stage:** P01–P12 and Lead-to-delivery code merged; PT-22/PT-28 bounded synthetic procedures passed; full owner acceptance incomplete · **Deployment:** externally initiated [Azure run 37677805712](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37677805712) deployed `4f883d1` on 8 October Brisbane time; fresh invited sign-in, retained Deal/estimate/Draft and exact PDF hash verified; actual worker execution and managed PostgreSQL minor remain separate · **Current state:** [docs/STATUS.md](docs/STATUS.md)
 
 This repository is Dean's personal prototype. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application with customer, contact, site, equipment, intake, owned follow-up and controlled work-order screens. P12 isolated recovery is merged with reviewed source and actual-main evidence. The written PT-22 synthetic restore procedure passed; Step 6's bounded written PT-28 synthetic procedure has passed; full PT-30/PP-01 and independent owner/device acceptance remain outstanding. Company ownership, production approval and external-system write authority are not implied.
 
 ## Start here
 
-Current acceptance work: [Field Work prerequisite ledger](docs/testing/field-integrated-acceptance-ledger.md), [runnable owner walkthrough](docs/delivery/field-integrated-owner-walkthrough.md) and [benefit measurement](docs/testing/field-benefit-measurement.md). #337 is merged; fresh verification, human observations and benefits remain separately recorded.
+Current acceptance work: [connected customer journey walkthrough](docs/delivery/integrated-journey-owner-walkthrough.md), [Field Work prerequisite ledger](docs/testing/field-integrated-acceptance-ledger.md), [Field owner walkthrough](docs/delivery/field-integrated-owner-walkthrough.md) and [benefit measurement](docs/testing/field-benefit-measurement.md). Fresh verification, human observations and benefits remain separately recorded.
 
 | Document | Purpose |
 |---|---|
@@ -68,7 +67,7 @@ Application code is in `src/`, explicit SQL migrations and fixtures are in `db/`
 
 ## Private hosted demo preparation
 
-The [Azure demo runbook](docs/delivery/azure-private-demo.md) defines the separate hosted runtime, tester access and image updates. The latest observed [deployment run 37094645952](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37094645952), manually dispatched on 3 October against main `6e8b898`, completed its database gate and web/worker image update. This acceptance task only read that separate run; it performed no deployment. The 26 September deployment of `80b2f41` remains historical evidence. This audit did not repeat the signed-in record/output journey or verify actual worker execution or the managed PostgreSQL minor. The 14 September signed-in Draft evidence remains valid for its earlier source only. [Current consolidation and verification](docs/delivery/repository-consolidation.md) separates these facts from full service-journey, physical-device and owner acceptance.
+The [Azure demo runbook](docs/delivery/azure-private-demo.md) defines the separate hosted runtime, tester access and image updates. Externally initiated [deployment run 37677805712](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37677805712) updated main `4f883d1` and completed its database gate and web/worker image update. This task observed that update and did not dispatch a duplicate. After Dean signed in with the invited account, the retained Deal, estimate version 2 and Draft quotation revision 1 reopened. Its saved HTML rendered and the downloaded PDF matched the app's recorded SHA-256. [Exact execution evidence](docs/testing/evidence/integrated-journey/README.md#hosted-observation) separates these observations from actual worker execution, managed PostgreSQL minor, the complete local journey and owner/device acceptance. Earlier deployment evidence retains its original source.
 
 ## Run the local application
 

@@ -1,0 +1,92 @@
+{
+  "scope": "Local synthetic IJ-01; owner acceptance pending",
+  "application_baseline": "4f883d145b18876840c5ce5522059c95448dc086",
+  "before_at": "2026-10-07T20:28:24.381Z",
+  "after_at": "2026-10-07T20:29:25.081Z",
+  "application_pids": [
+    19540,
+    38688
+  ],
+  "database_process_starts": [
+    "2026-10-07T19:48:05.089Z",
+    "2026-10-07T20:29:20.389Z"
+  ],
+  "same_retained_cluster": true,
+  "reset_restore_or_reseed": false,
+  "exact_tables": 367,
+  "excluded": "sessions and Session audit events",
+  "exact_migration_entries": 75,
+  "latest_migration": 76,
+  "exact_files": 19,
+  "changes": [],
+  "journeys": [
+    {
+      "project": "desktop-chromium",
+      "quote": "3ef94a4f-dceb-4f0e-8b65-99a6eccff60e",
+      "hashes": {
+        "html": "392fc2e1911a42ae5e550908c45a8a83c7740d3e0fb2d2de1440501d32acb99d",
+        "pdf": "cdd995f6567889fa74af671911973edb015a3d6f43b43bb7d5955189f9d81414"
+      },
+      "receipts": [
+        {
+          "state": "Won",
+          "task_ids": [
+            "c8fb7416-86b9-48da-bc86-ad72fc83bca2"
+          ],
+          "warnings": [],
+          "record_id": "1d8fa0f6-db4d-4b52-b4a6-ba1f86f42ad2",
+          "receipt_id": "dcd3c12b-959f-43bc-99ca-55858225b954",
+          "accepted_at": "2026-10-07T20:16:18.392Z",
+          "operation_id": "43cc31f8-045a-434b-9d21-70bc6b044e67",
+          "record_version": 6
+        }
+      ],
+      "reopened": [
+        "/sales/leads/ca556a31-23f6-44b1-962b-2b1ca0b899a8",
+        "/sales/opportunities/1d8fa0f6-db4d-4b52-b4a6-ba1f86f42ad2",
+        "/sales/handoffs/estimating/b8279e92-70d4-475b-80b1-801a6a9ea286",
+        "/estimating/discovery/a3ae5d97-f10d-44e7-ba86-e69b56f9d497",
+        "/estimating/estimates/d5b08e49-08c8-494b-967c-2f1510791513",
+        "/estimating/quotes/3ef94a4f-dceb-4f0e-8b65-99a6eccff60e",
+        "/sales/handoffs/won/76c18ecd-0b9a-4415-96f9-e66e12f315e1",
+        "/projects/339ecc22-77c9-4a88-b7c9-57f0375c1213",
+        "/work/72c53cec-b826-44bc-b053-0a0af79c9614",
+        "/sales/leads/b1c53cd1-30d2-4c41-a5cf-e1e36e9c3162"
+      ]
+    },
+    {
+      "project": "mobile-chromium",
+      "quote": "266f0c23-e60e-4657-9916-313182437a6f",
+      "hashes": {
+        "html": "b35242a69b207640e7e68d8130165245b3d4e64127bd6869a3cbabe47937512a",
+        "pdf": "79fb1d05f83f44fb724932f581503b30773790633556319037b3b6d901d03bd1"
+      },
+      "receipts": [
+        {
+          "state": "Won",
+          "task_ids": [
+            "fca93451-388c-4c57-b053-e7ccb5d39a0c"
+          ],
+          "warnings": [],
+          "record_id": "d3866a59-e5fa-41a9-8341-b1c72982360a",
+          "receipt_id": "e492b699-3a20-48be-b571-49886fc2d76e",
+          "accepted_at": "2026-10-07T20:16:55.882Z",
+          "operation_id": "9c0ef181-d177-4f35-9cb1-01d720daf121",
+          "record_version": 6
+        }
+      ],
+      "reopened": [
+        "/sales/leads/147e56b2-fc10-47ca-b84c-4a28f914c160",
+        "/sales/opportunities/d3866a59-e5fa-41a9-8341-b1c72982360a",
+        "/sales/handoffs/estimating/bfd9e9e5-15a4-4eeb-b818-aefaa793d634",
+        "/estimating/discovery/c8cf2a13-56e8-4129-97fa-2b8203f2bdd9",
+        "/estimating/estimates/3cf49ef3-15a0-48dd-be36-99c311dc0cfb",
+        "/estimating/quotes/266f0c23-e60e-4657-9916-313182437a6f",
+        "/sales/handoffs/won/49fadb69-253e-4dfc-9a8f-1e73312c0ed9",
+        "/projects/cf592d11-0543-449e-ba97-72987180adad",
+        "/work/fb725c90-cf53-4bcd-8589-ad98083ee0b0",
+        "/sales/leads/3e7d6832-5d6c-4c7b-9d68-7e7b4b04749f"
+      ]
+    }
+  ]
+}
