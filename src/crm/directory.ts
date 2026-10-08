@@ -125,19 +125,25 @@ export async function readDirectory(p: Principal, input: unknown) {
   const current =
     "rel.valid_from<=CURRENT_DATE AND (rel.valid_to IS NULL OR rel.valid_to>CURRENT_DATE)";
   const sites = `SELECT DISTINCT s.id FROM ppo.sites s JOIN ppo.site_parties sp ON (sp.workspace_id,sp.site_id)=(s.workspace_id,s.id) WHERE sp.organisation_id=r.id AND s.workspace_id=$1 AND sp.valid_from<=CURRENT_DATE AND (sp.valid_to IS NULL OR sp.valid_to>CURRENT_DATE) AND ${visibility("Site", "s")}`;
+  // Text filters and non-count sorts do not depend on relationship counts.
+  // Keep the complete permitted total, then calculate counts for the selected
+  // organisation page only. Count sorts still evaluate the full population.
+  const deferCounts = org && !["sites", "facilities", "deals"].includes(f.sort);
+  const siteCounts = `(SELECT count(*)::int FROM (${sites}) s) AS sites,
+ (SELECT count(*)::int FROM ppo.facilities fa WHERE fa.workspace_id=$1 AND fa.site_id IN (${sites}) AND ${visibility("Facility", "fa")}) AS facilities`;
+  const dealCount = `(SELECT count(*)::int FROM ppo.opportunities o WHERE o.workspace_id=$1 AND o.${org ? "organisation_id" : "primary_person_id"}=r.id AND ${opportunityVisibility()}) AS deals`;
   const projection = org
     ? `r.display_number,r.relationship_status AS status,r.sector,r.owner_id,u.display_name AS owner_name,NULL::text AS email,NULL::text AS phone,NULL::text AS contact_preference,'[]'::jsonb AS organisations,
- (SELECT count(*)::int FROM (${sites}) s) AS sites,
- (SELECT count(*)::int FROM ppo.facilities fa WHERE fa.workspace_id=$1 AND fa.site_id IN (${sites}) AND ${visibility("Facility", "fa")}) AS facilities`
+ ${deferCounts ? "0 AS sites,0 AS facilities" : siteCounts}`
     : `NULL::text AS display_number,CASE WHEN r.active THEN 'Active' ELSE 'Inactive' END AS status,NULL::text AS sector,NULL::uuid AS owner_id,NULL::text AS owner_name,r.email,r.phone,r.contact_preference,
  coalesce((SELECT jsonb_agg(jsonb_build_object('id',org.id,'name',org.display_name,'role',rel.role_label) ORDER BY org.display_name,rel.role_label) FROM ppo.relationships rel JOIN ppo.organisations org ON (org.workspace_id,org.id)=(rel.workspace_id,rel.organisation_id) WHERE rel.workspace_id=$1 AND rel.person_id=r.id AND ${current} AND ${scopeSql("rel.company_id")} AND ${visibility("Organisation", "org")}), '[]'::jsonb) AS organisations,0 AS sites,0 AS facilities`;
   const { rows } = await c.query<{ total: number; items: DirectoryRow[] }>(
     `WITH permitted AS MATERIALIZED (
- SELECT r.id,r.display_name,r.updated_at,${projection},(SELECT count(*)::int FROM ppo.opportunities o WHERE o.workspace_id=$1 AND o.${org ? "organisation_id" : "primary_person_id"}=r.id AND ${opportunityVisibility()}) AS deals
+ SELECT r.id,r.display_name,r.updated_at,${projection},${deferCounts ? "0 AS deals" : dealCount}
  FROM ppo.${org ? "organisations" : "people"} r ${org ? "LEFT JOIN ppo.users u ON (u.workspace_id,u.id)=(r.workspace_id,r.owner_id)" : ""}
  WHERE r.workspace_id=$1 AND ${visibility(org ? "Organisation" : "Person")}), filtered AS MATERIALIZED (
  SELECT * FROM permitted WHERE ($3='' OR position(lower($3) in lower(concat_ws(' ',display_name,display_number,email,phone,sector,owner_name,organisations::text)))>0) AND ($4='' OR status=$4) AND (NOT $5 OR owner_id=$2))
- SELECT (SELECT count(*)::int FROM filtered) AS total,coalesce((SELECT jsonb_agg(page_rows) FROM (SELECT id,display_name,display_number,status,email,phone,contact_preference,sector,owner_name,organisations,sites,facilities,deals,updated_at FROM filtered ORDER BY ${sortSql[f.sort]} ${f.direction},id ${f.direction} LIMIT $6 OFFSET $7) page_rows),'[]'::jsonb) AS items`,
+ SELECT (SELECT count(*)::int FROM filtered) AS total,coalesce((SELECT jsonb_agg(page_rows) FROM (SELECT r.id,r.display_name,r.display_number,r.status,r.email,r.phone,r.contact_preference,r.sector,r.owner_name,r.organisations,${deferCounts ? `${siteCounts},${dealCount}` : "r.sites,r.facilities,r.deals"},r.updated_at FROM (SELECT * FROM filtered ORDER BY ${sortSql[f.sort]} ${f.direction},id ${f.direction} LIMIT $6 OFFSET $7) r ORDER BY ${sortSql[f.sort]} ${f.direction},r.id ${f.direction}) page_rows),'[]'::jsonb) AS items`,
     [
       p.workspace_id,
       p.actor_id,

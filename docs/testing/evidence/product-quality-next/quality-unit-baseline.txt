@@ -1,0 +1,66 @@
+✖ P06 private adapter is write-once by original operation and verifies exact retrieved hashes (17.1536ms)
+✖ P06 source lookup never substitutes a latest version; symlink and in-repository stores are refused (9.4426ms)
+✔ P12 refuses live/remote/ambiguous recovery targets and missing stopped acknowledgement before database access (4.7223ms)
+✖ P12 separates checkpoint/source/destination and refuses Git paths, symlinks, hardlinks and non-private roots (32.019ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 1
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1475.2218
+
+✖ failing tests:
+
+test at tests\unit\document-store.test.ts:1:302
+✖ P06 private adapter is write-once by original operation and verifies exact retrieved hashes (17.1536ms)
+  Error: The exact document version is unavailable. Its original reference is retained; ask the preparation owner to recover it.
+      at missing (<checkout>\src\documents\store.ts:19:3)
+      at LocalSyntheticDocumentStore.folder (<checkout>\src\documents\store.ts:49:13)
+      at async LocalSyntheticDocumentStore.store (<checkout>\src\documents\store.ts:117:20)
+      at async TestContext.<anonymous> (<checkout>\tests\unit\document-store.test.ts:18:17)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    status: 503,
+    code: 'ExactDocumentUnavailable',
+    field_errors: []
+  }
+
+test at tests\unit\document-store.test.ts:1:1128
+✖ P06 source lookup never substitutes a latest version; symlink and in-repository stores are refused (9.4426ms)
+  Error: The exact document version is unavailable. Its original reference is retained; ask the preparation owner to recover it.
+      at missing (<checkout>\src\documents\store.ts:19:3)
+      at LocalSyntheticDocumentStore.folder (<checkout>\src\documents\store.ts:49:13)
+      at async LocalSyntheticDocumentStore.store (<checkout>\src\documents\store.ts:117:20)
+      at async TestContext.<anonymous> (<checkout>\tests\unit\document-store.test.ts:45:17)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    status: 503,
+    code: 'ExactDocumentUnavailable',
+    field_errors: []
+  }
+
+test at tests\unit\recovery.test.ts:1:1298
+✖ P12 separates checkpoint/source/destination and refuses Git paths, symlinks, hardlinks and non-private roots (32.019ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /outside Git/. Input:
+
+  'Error: Unsafe recovery directory.'
+
+      at async TestContext.<anonymous> (<checkout>\tests\unit\recovery.test.ts:77:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Unsafe recovery directory.
+        at fail (<checkout>\scripts\recovery.ts:28:9)
+        at privatePath (<checkout>\scripts\recovery.ts:120:9)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (<checkout>\tests\unit\recovery.test.ts:77:5)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: /outside Git/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

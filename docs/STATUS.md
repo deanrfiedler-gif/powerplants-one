@@ -4,9 +4,13 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
-## Current recovery verification — 8 October 2026
+## Current product-quality increment — 8 October 2026
 
-Current repository-writing session: offline recovery acceptance on `codex/offline-recovery-acceptance`, based on main `11e8298e6270c085d3ed149208a524ddeb52395c`. Dean requested proceeding with the audit roadmap: reconcile the release record and join PT-11/PT-12/PT-24's recovery procedures. [Decision](decisions/offline-recovery-acceptance.md) and [execution record](testing/evidence/offline-recovery-acceptance/README.md). The 35-case selected offline regression passed on desktop and phone. Strengthened exact-100 replay passed 3/3 including warm-up; authorised-scope/issued-pack successor checks passed 5/5 including warm-up. The live ledger records combined synthetic proof; the 30-dependency form handoff, owner/device acceptance, PR CI, merge and deployment remain separate.
+Current repository-writing session: `codex/product-quality-next`, based on main `f0953c5f9f5a0c5e1c5179ef933fd87c9e37b00e`. Dean adopted [independent PPO product direction](decisions/product-direction-quality.md) and authorised the large-queue completion handoff, measured performance work and connected usability walkthrough. CREMS parity and hidden-formula reconstruction are no longer prerequisites. Original references and all 78 parent IDs remain unchanged. Execution is in the [quality evidence](testing/evidence/product-quality-next/README.md); no independent or owner acceptance is inferred.
+
+## Merged recovery verification — 8 October 2026
+
+Completed recovery verification: PR #369 at `723613d` passed all 51 checks and merged at 09:30 UTC on 8 October into main `f0953c5`. Its source baseline was `11e8298e6270c085d3ed149208a524ddeb52395c`. Dean requested proceeding with the audit roadmap: reconcile the release record and join PT-11/PT-12/PT-24's recovery procedures. [Decision](decisions/offline-recovery-acceptance.md) and [execution record](testing/evidence/offline-recovery-acceptance/README.md). The 35-case selected offline regression passed on desktop and phone. Strengthened exact-100 replay passed 3/3 including warm-up; authorised-scope/issued-pack successor checks passed 5/5 including warm-up. The live ledger records combined synthetic proof; the later large-queue UI handoff belongs to the current increment. Owner/device acceptance and deployment remain separate from #369’s completed CI and merge.
 
 ## Merged navigation and correction
 
@@ -28,8 +32,8 @@ The root checkout and pre-existing worktrees/databases remain unchanged. Excel i
 
 | Area | Current observation | Limit |
 |---|---|---|
-| Main | `11e8298`, merging #368 after the #366/#367 deliveries. All 50 main checks passed. The integrated journey retains its original `4f883d1` baseline; Maintenance/Warranty #357, Products #358 and Lead-to-delivery #359–#365 remain integrated. | A merge does not grant owner acceptance or update the private demo. |
-| PR assurance | #368 head `31d8fe0` passed 51 checks. Its source tree equals main `11e8298`; compiled desktop has 385 passes/17 skips and mobile 329 passes/73 skips. | Earlier and current contribution checks retain their own source identities. |
+| Main | `f0953c5`, merging #369 after the #366–#368 deliveries. At the current connector observation, 41 of 48 discovered main checks succeeded and seven were still running; none failed. The integrated journey retains its original `4f883d1` baseline; Maintenance/Warranty #357, Products #358 and Lead-to-delivery #359–#365 remain integrated. | A merge does not grant owner acceptance or update the private demo. |
+| PR assurance | #369 head `723613d` passed 51 checks before merge. Historical #368 head `31d8fe0` also passed 51 checks. The #368 source tree equals its historical main `11e8298`; compiled desktop has 385 passes/17 skips and mobile 329 passes/73 skips. | Earlier and current contribution checks retain their own source identities. |
 | Private demo | Externally initiated [current-main update 37677805712](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37677805712) successfully deployed `4f883d1` on 8 October Brisbane time. Fresh invited sign-in reopened the retained Deal/estimate/Draft; saved HTML rendered and downloaded PDF matched its stored SHA-256. | No duplicate update or permission change. Actual worker execution, managed PostgreSQL minor and owner acceptance remain separate. |
 | Database | Main registry ends at **0076**. Former reserved slots **0051 Maintenance/Warranty** and **0052 Products** are implemented and merged. Fresh isolated installation/seed completed for this task. | Preserve applied bytes and exact upgrade/reseed ledgers; this task adds no migration or grant. |
 | Complete PP-01 acceptance | P01–P12 code and written PT-22 recovery are delivered; Scheduling Step 6 records the bounded PT-28 local synthetic procedure pass. | Full PT-30/PP-01, owner/device/accessibility acceptance and benefit measurement remain open. |
@@ -61,7 +65,7 @@ The protected-main required contexts were read on 8 October: **Check documentati
 
 - Preserve migration/seed/grant assertions through 0076, including installation of earlier reserved slots after later applied versions and hosted upgrade preservation. Main's 0051/0052 supersede old unfinished 0049 proposals. [Consolidation decision](decisions/repository-consolidation.md).
 - #120/#121 and older delivery records need evidence reconciliation, not automatic reimplementation or blanket closure. #145/#167 retain acceptance boundaries; #160 retains the managed PostgreSQL minor obligation. Source/policy work in #2/#10/#12/#13/#15/#16/#66/#76 remains separately scoped.
-- The [decision register](decisions/decision-register.csv), current domain decisions and [quality plan](delivery/product-quality-plan.md) retain their authority. Operational policy, CREMS formulas, MYOB evidence and role/source gaps are not resolved by synthetic fixtures.
+- The [decision register](decisions/decision-register.csv), current domain decisions and [quality plan](delivery/product-quality-plan.md) retain their authority. Operational policy, MYOB evidence and role/source gaps are not resolved by synthetic fixtures. CREMS reconstruction is superseded by the current independent PPO direction; source-bound operational claims remain separate.
 - [Field owner walkthrough](delivery/field-integrated-owner-walkthrough.md), [benefit instrument](testing/field-benefit-measurement.md) and the joined journey retain their own source and review boundaries. A test pass is not a participant observation.
 - Maintain the [project instructions](standards/chatgpt-project-instructions.md), [blueprint](blueprints/BP-01-master-blueprint.md) and [design workflow](design/development/README.md). Pending visual reviews stay visible; no review fingerprint is invented.
 

@@ -1,0 +1,1430 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: offline-completion-handoff.spec.ts >> large offline queue continues through online completion with all 100 original captures
+- Location: tests\browser\offline-completion-handoff.spec.ts:8:1
+
+# Error details
+
+```
+Test timeout of 240000ms exceeded.
+```
+
+```
+Error: locator.click: Test timeout of 240000ms exceeded.
+Call log:
+  - waiting for getByRole('button', { name: 'Continue completion online', exact: true })
+
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]: Powerplants One PPO · Field
+    - paragraph [ref=e4]: Synthetic prototype — not for operational use
+    - paragraph [ref=e5]: Offline field preview — Finance work incomplete
+  - main [ref=e6]:
+    - navigation [ref=e7]:
+      - link "Online My Jobs" [ref=e8] [cursor=pointer]:
+        - /url: /my-jobs
+      - link "Online My Work" [ref=e9] [cursor=pointer]:
+        - /url: /work
+    - heading "Offline field workspace" [level=1] [ref=e10]
+    - paragraph [ref=e11]: Save assigned context and original evidence on this browser. A local save is provisional; only the server can accept a start or capture.
+    - generic [ref=e12]:
+      - heading "Workspace ownership" [level=2] [ref=e13]
+      - paragraph [ref=e14]: SYN Riley Technician · identity verified online
+      - generic [ref=e15]:
+        - button "Verify identity online" [ref=e16] [cursor=pointer]
+        - button "Lock saved workspace" [ref=e17] [cursor=pointer]
+      - status [ref=e18]: "Browser network hint: online. Only an actual server response proves acceptance."
+    - status [ref=e19]: A field shell update is downloading. Close other field tabs after saving; updates do not delete originals.
+    - status [ref=e20]: Job context and exact pack saved on this device. Last verified time is shown; offline context is not current authority.
+    - alert [active] [ref=e21]: This bounded draft has more than 30 local dependencies. Synchronise and download current context before preparing it.
+    - generic [ref=e22]:
+      - generic [ref=e23]:
+        - heading "Downloaded jobs" [level=2] [ref=e24]
+        - paragraph [ref=e25]: At most two jobs. Context expires after 24 hours; unsent originals remain retained. The exact cached pack and history are stale reference only.
+        - generic [ref=e26]:
+          - combobox "Assigned job to download" [ref=e27]:
+            - option "SYN-PPO-APT-000017 · SYN Q01 Demonstration Site"
+            - option "SYN-PPO-APT-000018 · SYN Q01 Demonstration Site"
+            - option "SYN-PPO-APT-000014 · SYN Q01 Demonstration Site"
+            - option "SYN-PPO-APT-000015 · SYN Q01 Demonstration Site"
+            - option "SYN-PPO-APT-000020 · SYN Q01 Demonstration Site" [selected]
+            - option "SYN-PPO-APT-000004 · SYN Q01 Demonstration Site"
+            - option "SYN-PPO-APT-000019 · SYN Q01 Demonstration Site"
+            - option "SYN-PPO-APT-000016 · SYN Q01 Demonstration Site"
+          - button "Download selected job" [ref=e28] [cursor=pointer]
+        - article [ref=e30]:
+          - heading "SYN-PPO-APT-000020 · SYN Q01 Demonstration Site" [level=3] [ref=e31]
+          - paragraph [ref=e32]: Last verified 2026-10-08T09:41:30.552Z · stale reference when offline
+          - button "Open saved field job" [ref=e33] [cursor=pointer]
+          - button "Remove cached job context" [ref=e34] [cursor=pointer]
+      - generic [ref=e35]:
+        - heading "SYN-PPO-APT-000020 · SYN Greenhouse Demonstration" [level=2] [ref=e36]
+        - paragraph [ref=e37]: SYN Q01 Demonstration Site · Fictional site; booking address unverified
+        - paragraph [ref=e38]: Scheduled 2030-08-05T00:00:00.000Z to 2030-08-05T02:00:00.000Z · Australia/Brisbane
+        - paragraph [ref=e39]: Context last verified 2026-10-08T09:41:30.552Z. Expires 2026-10-09T09:41:30.552Z.
+        - paragraph [ref=e40]: SYN Planned controller inspection — coordination and customer date review
+        - paragraph [ref=e41]: "Exclusions: No shutdown, replacement, energised access, repair or financial approval."
+        - paragraph [ref=e42]: "Site access: SYN access to be confirmed · Biosecurity: SYN controls require review"
+        - paragraph [ref=e43]: Scope r1 · assigned version 2 · pack hash 3823ec5a3c62ade32a7b4e973af6c37f6282bf5a4255e56f975b3b3c0ad4dce8
+        - list [ref=e44]:
+          - listitem [ref=e45]: "Observe controller display and external sensor identity · SYN-PPO-AST-000001: Verified"
+        - group [ref=e46]:
+          - generic "Read exact cached issued pack and history" [ref=e47] [cursor=pointer]
+        - paragraph [ref=e48]: "Cached visit state: InProgress. Your actual start is server-saved. This is your retained attendance."
+        - generic [ref=e49]:
+          - button "Save provisional start intent" [ref=e50] [cursor=pointer]
+          - button "Save my pack acknowledgement intent" [ref=e51] [cursor=pointer]
+        - paragraph [ref=e52]: Server-recorded attendance 2026-10-08T09:41:17.273Z
+        - generic [ref=e53]:
+          - heading "Work timer saved on this device" [level=3] [ref=e54]
+          - paragraph [ref=e55]: Last downloaded 2026-10-08T09:41:30.552Z. This is the last downloaded or receipted state, not current authority.
+          - paragraph [ref=e56]: "Timer intent: Idle"
+          - generic [ref=e57]:
+            - generic [ref=e58]:
+              - text: Authorised task
+              - combobox "Authorised task" [ref=e59]:
+                - option "1. Observe controller display and external sensor identity" [selected]
+            - generic [ref=e60]:
+              - text: Affected equipment
+              - combobox "Affected equipment" [ref=e61]:
+                - option "No equipment selected" [selected]
+                - option "SYN-PPO-AST-000001 · SYN irrigation controller"
+            - generic [ref=e62]:
+              - text: Pause reason
+              - combobox "Pause reason" [ref=e63]:
+                - option "Break" [selected]
+                - option "Travel · collecting parts"
+                - option "Waiting for parts"
+                - option "Waiting for access or the customer"
+                - option "Waiting for approval"
+                - option "Unsafe to continue"
+                - option "Something else"
+            - generic [ref=e64]:
+              - text: Short note (required for waiting, unsafe work or something else)
+              - textbox "Short note (required for waiting, unsafe work or something else)" [ref=e65]
+            - status [ref=e66]: Local draft — no timer action saved
+            - button "Save start timer locally" [ref=e68] [cursor=pointer]
+            - paragraph [ref=e69]: Offline timer changes preserve their original times and dependencies. Undo and forgotten-finish correction require the current online timer. They never grant work permission, payroll approval or billability.
+        - generic [ref=e70]:
+          - heading "Site readiness review" [level=3] [ref=e71]
+          - paragraph [ref=e72]: Download an explicit activity and location selection while online. Saved instructions are a reference; only the server can confirm whether the original review still matches current sources.
+          - generic [ref=e73]:
+            - generic [ref=e74]:
+              - text: Activity to review
+              - textbox "Activity to review" [ref=e75]
+            - button "Load Site location choices online" [ref=e76] [cursor=pointer]
+            - button "Download this readiness selection" [ref=e77] [cursor=pointer]
+          - paragraph [ref=e78]: No readiness selection has been saved. No acknowledgement can be queued.
+        - generic [ref=e79]:
+          - heading "Capture factual evidence" [level=3] [ref=e80]
+          - generic [ref=e81]:
+            - generic [ref=e82]:
+              - generic [ref=e83]: Evidence type
+              - combobox "Evidence type" [ref=e84]:
+                - option "Time"
+                - option "Material"
+                - option "Observation" [selected]
+                - option "Reading"
+                - option "Checklist"
+                - option "Photo"
+            - generic [ref=e85]:
+              - generic [ref=e86]: Original authorised task
+              - combobox "Original authorised task" [ref=e87]:
+                - option "Observe controller display and external sensor identity" [selected]
+            - generic [ref=e88]:
+              - generic [ref=e89]: Affected asset
+              - combobox "Affected asset" [ref=e90]:
+                - option "No asset attribution (only permitted task types)"
+                - option "SYN-PPO-AST-000001" [selected]
+            - generic [ref=e91]:
+              - generic [ref=e92]: Capture context
+              - textbox "Capture context" [ref=e93]
+            - generic [ref=e94]:
+              - generic [ref=e95]:
+                - generic [ref=e96]: Finding
+                - textbox "Finding" [ref=e97]
+              - generic [ref=e98]:
+                - generic [ref=e99]: Diagnostic confidence
+                - combobox "Diagnostic confidence" [ref=e100]:
+                  - option "Reported"
+                  - option "Suspected" [selected]
+                  - option "Verified"
+              - generic [ref=e101]:
+                - generic [ref=e102]: Attempted fix
+                - textbox "Attempted fix" [ref=e103]
+              - generic [ref=e104]:
+                - generic [ref=e105]: Result, including unsuccessful work
+                - textbox "Result, including unsuccessful work" [ref=e106]
+              - generic [ref=e107]:
+                - generic [ref=e108]: Follow-up required
+                - combobox "Follow-up required" [ref=e109]:
+                  - option "true" [selected]
+                  - option "false"
+            - paragraph [ref=e110]: No unsaved changes.
+            - button "Save evidence on this device" [ref=e111] [cursor=pointer]
+        - generic [ref=e112]:
+          - heading "Completion draft" [level=3] [ref=e113]
+          - generic [ref=e114]:
+            - generic [ref=e115]:
+              - generic [ref=e116]: Draft scope outcome
+              - combobox "Draft scope outcome" [ref=e117]:
+                - option "Complete"
+                - option "Partial" [selected]
+                - option "UnableToProceed"
+            - generic [ref=e118]:
+              - generic [ref=e119]: Work performed
+              - textbox "Work performed" [ref=e120]
+            - generic [ref=e121]:
+              - generic [ref=e122]: Draft exclusions
+              - textbox "Draft exclusions" [ref=e123]: No shutdown, replacement, energised access, repair or financial approval.
+            - generic [ref=e124]:
+              - generic [ref=e125]: Remaining work and next action
+              - textbox "Remaining work and next action" [ref=e126]
+            - generic [ref=e127]:
+              - generic [ref=e128]: Personal time declaration
+              - combobox "Personal time declaration" [ref=e129]:
+                - option "AllRecorded"
+                - option "None"
+                - option "Incomplete" [selected]
+            - generic [ref=e130]:
+              - generic [ref=e131]: Personal material declaration
+              - combobox "Personal material declaration" [ref=e132]:
+                - option "AllRecorded"
+                - option "None"
+                - option "Incomplete" [selected]
+            - generic [ref=e133]:
+              - generic [ref=e134]: Declaration and draft reason
+              - textbox "Declaration and draft reason" [ref=e135]
+            - generic [ref=e136]:
+              - generic [ref=e137]: "Task outcome: Observe controller display and external sensor identity"
+              - 'combobox "Task outcome: Observe controller display and external sensor identity" [ref=e138]':
+                - option "Complete"
+                - option "Partial" [selected]
+                - option "UnableToProceed"
+            - generic [ref=e139]:
+              - generic [ref=e140]: "Task reason: Observe controller display and external sensor identity"
+              - 'textbox "Task reason: Observe controller display and external sensor identity" [ref=e141]'
+            - paragraph [ref=e142]: No unsaved changes.
+            - button "Save completion draft on this device" [ref=e143] [cursor=pointer]
+        - generic [ref=e144]:
+          - heading "Completion submission and customer response" [level=3] [ref=e145]
+          - paragraph [ref=e146]: Offline actions remain local intents. Review and issue require the server. The cached content and versions may be stale; conflicting originals are retained without rewriting.
+          - generic [ref=e147]:
+            - generic [ref=e148]:
+              - generic [ref=e149]: Submission attendance end (ISO timezone)
+              - textbox "Submission attendance end (ISO timezone)" [ref=e150]: 2026-10-08T09:41:30.753Z
+            - generic [ref=e151]:
+              - generic [ref=e152]: Submission reason
+              - textbox "Submission reason" [ref=e153]
+            - button "Save completion submission on this device" [ref=e154] [cursor=pointer]
+          - paragraph [ref=e155]: No reviewed or issued presentation was downloaded. Complete online review and download its exact bytes before capturing an offline customer response.
+      - generic [ref=e156]:
+        - heading "Originals and recovery" [level=2] [ref=e157]
+        - paragraph [ref=e158]: Each row keeps its original identity. Local saved, sending, server saved and review required are separate states. Retrying a batch does not edit its contents.
+        - generic [ref=e159]:
+          - button "Send next batch / retry originals" [ref=e160] [cursor=pointer]
+          - button "Export my retained originals" [ref=e161] [cursor=pointer]
+          - button "Refresh local status" [ref=e162] [cursor=pointer]
+        - generic [ref=e163]:
+          - paragraph [ref=e164]: 0 pending originals · 0 pending photos · 0 need attention · 104 retained originals
+          - paragraph [ref=e165]: Local saved means queued on this device. Send explicitly, then check the exact server receipt. Failed or conflicted originals remain retained for recovery.
+          - article [ref=e166]:
+            - generic [ref=e167]:
+              - strong [ref=e168]: Start
+              - generic [ref=e169]: Server accepted and saved
+            - paragraph [ref=e170]: Server receipt · InProgress
+            - paragraph [ref=e171]: Exact receipt 40414a57-8b86-416b-b42a-4349819b0436 · 2026-10-08T09:41:17.313Z · InProgress
+            - group [ref=e172]:
+              - generic "Original payload and authority" [ref=e173] [cursor=pointer]
+          - article [ref=e174]:
+            - generic [ref=e175]:
+              - strong [ref=e176]: Capture · Observation
+              - generic [ref=e177]: Server accepted and saved
+            - paragraph [ref=e178]: Server receipt · Captured
+            - paragraph [ref=e179]: Exact receipt f821f83f-3dfc-4abc-876f-a870610ee72e · 2026-10-08T09:41:17.418Z · Captured
+            - generic [ref=e180]: 1 causal dependencies retained.
+            - group [ref=e181]:
+              - generic "Original payload and authority" [ref=e182] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e183] [cursor=pointer]
+          - article [ref=e184]:
+            - generic [ref=e185]:
+              - strong [ref=e186]: Capture · Observation
+              - generic [ref=e187]: Server accepted and saved
+            - paragraph [ref=e188]: Server receipt · Captured
+            - paragraph [ref=e189]: Exact receipt 01e0bd0d-7404-46b1-965b-9fe6c1937ace · 2026-10-08T09:41:17.571Z · Captured
+            - generic [ref=e190]: 1 causal dependencies retained.
+            - group [ref=e191]:
+              - generic "Original payload and authority" [ref=e192] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e193] [cursor=pointer]
+          - article [ref=e194]:
+            - generic [ref=e195]:
+              - strong [ref=e196]: Capture · Observation
+              - generic [ref=e197]: Server accepted and saved
+            - paragraph [ref=e198]: Server receipt · Captured
+            - paragraph [ref=e199]: Exact receipt 9db19245-a38a-447f-a01e-abfcbe6f0148 · 2026-10-08T09:41:17.675Z · Captured
+            - generic [ref=e200]: 1 causal dependencies retained.
+            - group [ref=e201]:
+              - generic "Original payload and authority" [ref=e202] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e203] [cursor=pointer]
+          - article [ref=e204]:
+            - generic [ref=e205]:
+              - strong [ref=e206]: Capture · Observation
+              - generic [ref=e207]: Server accepted and saved
+            - paragraph [ref=e208]: Server receipt · Captured
+            - paragraph [ref=e209]: Exact receipt 770f31ce-d5e9-4971-a0c0-83e7146a7fb2 · 2026-10-08T09:41:17.790Z · Captured
+            - generic [ref=e210]: 1 causal dependencies retained.
+            - group [ref=e211]:
+              - generic "Original payload and authority" [ref=e212] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e213] [cursor=pointer]
+          - article [ref=e214]:
+            - generic [ref=e215]:
+              - strong [ref=e216]: Capture · Observation
+              - generic [ref=e217]: Server accepted and saved
+            - paragraph [ref=e218]: Server receipt · Captured
+            - paragraph [ref=e219]: Exact receipt 11d06111-4df5-42e2-9b06-24a16389979a · 2026-10-08T09:41:17.902Z · Captured
+            - generic [ref=e220]: 1 causal dependencies retained.
+            - group [ref=e221]:
+              - generic "Original payload and authority" [ref=e222] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e223] [cursor=pointer]
+          - article [ref=e224]:
+            - generic [ref=e225]:
+              - strong [ref=e226]: Capture · Observation
+              - generic [ref=e227]: Server accepted and saved
+            - paragraph [ref=e228]: Server receipt · Captured
+            - paragraph [ref=e229]: Exact receipt a5bc223b-0d52-48ab-9542-efa6ace19a27 · 2026-10-08T09:41:18.019Z · Captured
+            - generic [ref=e230]: 1 causal dependencies retained.
+            - group [ref=e231]:
+              - generic "Original payload and authority" [ref=e232] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e233] [cursor=pointer]
+          - article [ref=e234]:
+            - generic [ref=e235]:
+              - strong [ref=e236]: Capture · Observation
+              - generic [ref=e237]: Server accepted and saved
+            - paragraph [ref=e238]: Server receipt · Captured
+            - paragraph [ref=e239]: Exact receipt 248bfef4-204b-44ad-b691-5fbe394b2c6f · 2026-10-08T09:41:18.126Z · Captured
+            - generic [ref=e240]: 1 causal dependencies retained.
+            - group [ref=e241]:
+              - generic "Original payload and authority" [ref=e242] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e243] [cursor=pointer]
+          - article [ref=e244]:
+            - generic [ref=e245]:
+              - strong [ref=e246]: Capture · Observation
+              - generic [ref=e247]: Server accepted and saved
+            - paragraph [ref=e248]: Server receipt · Captured
+            - paragraph [ref=e249]: Exact receipt c0b177b5-19c8-4fe9-9750-2b0c98effc2a · 2026-10-08T09:41:18.222Z · Captured
+            - generic [ref=e250]: 1 causal dependencies retained.
+            - group [ref=e251]:
+              - generic "Original payload and authority" [ref=e252] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e253] [cursor=pointer]
+          - article [ref=e254]:
+            - generic [ref=e255]:
+              - strong [ref=e256]: Capture · Observation
+              - generic [ref=e257]: Server accepted and saved
+            - paragraph [ref=e258]: Server receipt · Captured
+            - paragraph [ref=e259]: Exact receipt ee55bf4b-5d3e-49e6-b99d-85f7959f9d9d · 2026-10-08T09:41:18.328Z · Captured
+            - generic [ref=e260]: 1 causal dependencies retained.
+            - group [ref=e261]:
+              - generic "Original payload and authority" [ref=e262] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e263] [cursor=pointer]
+          - article [ref=e264]:
+            - generic [ref=e265]:
+              - strong [ref=e266]: Capture · Observation
+              - generic [ref=e267]: Server accepted and saved
+            - paragraph [ref=e268]: Server receipt · Captured
+            - paragraph [ref=e269]: Exact receipt 7a6bf65e-40db-4ed0-8b55-14d7a07307d6 · 2026-10-08T09:41:18.434Z · Captured
+            - generic [ref=e270]: 1 causal dependencies retained.
+            - group [ref=e271]:
+              - generic "Original payload and authority" [ref=e272] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e273] [cursor=pointer]
+          - article [ref=e274]:
+            - generic [ref=e275]:
+              - strong [ref=e276]: Capture · Observation
+              - generic [ref=e277]: Server accepted and saved
+            - paragraph [ref=e278]: Server receipt · Captured
+            - paragraph [ref=e279]: Exact receipt 39ee9212-076f-4b03-99dc-a7dd42e804f8 · 2026-10-08T09:41:18.545Z · Captured
+            - generic [ref=e280]: 1 causal dependencies retained.
+            - group [ref=e281]:
+              - generic "Original payload and authority" [ref=e282] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e283] [cursor=pointer]
+          - article [ref=e284]:
+            - generic [ref=e285]:
+              - strong [ref=e286]: Capture · Observation
+              - generic [ref=e287]: Server accepted and saved
+            - paragraph [ref=e288]: Server receipt · Captured
+            - paragraph [ref=e289]: Exact receipt 3f5364d8-76cd-401d-a13d-a04004d8e048 · 2026-10-08T09:41:18.659Z · Captured
+            - generic [ref=e290]: 1 causal dependencies retained.
+            - group [ref=e291]:
+              - generic "Original payload and authority" [ref=e292] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e293] [cursor=pointer]
+          - article [ref=e294]:
+            - generic [ref=e295]:
+              - strong [ref=e296]: Capture · Observation
+              - generic [ref=e297]: Server accepted and saved
+            - paragraph [ref=e298]: Server receipt · Captured
+            - paragraph [ref=e299]: Exact receipt 63a40417-be28-4ede-9c4c-9d6c9cf0bfb5 · 2026-10-08T09:41:18.765Z · Captured
+            - generic [ref=e300]: 1 causal dependencies retained.
+            - group [ref=e301]:
+              - generic "Original payload and authority" [ref=e302] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e303] [cursor=pointer]
+          - article [ref=e304]:
+            - generic [ref=e305]:
+              - strong [ref=e306]: Capture · Observation
+              - generic [ref=e307]: Server accepted and saved
+            - paragraph [ref=e308]: Server receipt · Captured
+            - paragraph [ref=e309]: Exact receipt 026c2387-3830-4cec-a9bb-ef5bb93e5aaf · 2026-10-08T09:41:18.861Z · Captured
+            - generic [ref=e310]: 1 causal dependencies retained.
+            - group [ref=e311]:
+              - generic "Original payload and authority" [ref=e312] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e313] [cursor=pointer]
+          - article [ref=e314]:
+            - generic [ref=e315]:
+              - strong [ref=e316]: Capture · Observation
+              - generic [ref=e317]: Server accepted and saved
+            - paragraph [ref=e318]: Server receipt · Captured
+            - paragraph [ref=e319]: Exact receipt 57d21fae-d106-4ef7-b10c-904a0ff5d7b4 · 2026-10-08T09:41:18.965Z · Captured
+            - generic [ref=e320]: 1 causal dependencies retained.
+            - group [ref=e321]:
+              - generic "Original payload and authority" [ref=e322] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e323] [cursor=pointer]
+          - article [ref=e324]:
+            - generic [ref=e325]:
+              - strong [ref=e326]: Capture · Observation
+              - generic [ref=e327]: Server accepted and saved
+            - paragraph [ref=e328]: Server receipt · Captured
+            - paragraph [ref=e329]: Exact receipt 7ae6316a-a788-435e-8ca9-5c360ce06b4b · 2026-10-08T09:41:19.062Z · Captured
+            - generic [ref=e330]: 1 causal dependencies retained.
+            - group [ref=e331]:
+              - generic "Original payload and authority" [ref=e332] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e333] [cursor=pointer]
+          - article [ref=e334]:
+            - generic [ref=e335]:
+              - strong [ref=e336]: Capture · Observation
+              - generic [ref=e337]: Server accepted and saved
+            - paragraph [ref=e338]: Server receipt · Captured
+            - paragraph [ref=e339]: Exact receipt 22aeed00-63d6-4e55-b0d7-1e52648b55e3 · 2026-10-08T09:41:19.155Z · Captured
+            - generic [ref=e340]: 1 causal dependencies retained.
+            - group [ref=e341]:
+              - generic "Original payload and authority" [ref=e342] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e343] [cursor=pointer]
+          - article [ref=e344]:
+            - generic [ref=e345]:
+              - strong [ref=e346]: Capture · Observation
+              - generic [ref=e347]: Server accepted and saved
+            - paragraph [ref=e348]: Server receipt · Captured
+            - paragraph [ref=e349]: Exact receipt a9b60522-e6e7-4385-86c4-fa3b1d14950f · 2026-10-08T09:41:19.261Z · Captured
+            - generic [ref=e350]: 1 causal dependencies retained.
+            - group [ref=e351]:
+              - generic "Original payload and authority" [ref=e352] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e353] [cursor=pointer]
+          - article [ref=e354]:
+            - generic [ref=e355]:
+              - strong [ref=e356]: Capture · Observation
+              - generic [ref=e357]: Server accepted and saved
+            - paragraph [ref=e358]: Server receipt · Captured
+            - paragraph [ref=e359]: Exact receipt 213c432b-503c-4049-8ce8-d25eeee6f678 · 2026-10-08T09:41:19.352Z · Captured
+            - generic [ref=e360]: 1 causal dependencies retained.
+            - group [ref=e361]:
+              - generic "Original payload and authority" [ref=e362] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e363] [cursor=pointer]
+          - article [ref=e364]:
+            - generic [ref=e365]:
+              - strong [ref=e366]: Capture · Observation
+              - generic [ref=e367]: Server accepted and saved
+            - paragraph [ref=e368]: Server receipt · Captured
+            - paragraph [ref=e369]: Exact receipt 172a3efd-e611-4b9f-99cf-682f1c424621 · 2026-10-08T09:41:19.807Z · Captured
+            - generic [ref=e370]: 1 causal dependencies retained.
+            - group [ref=e371]:
+              - generic "Original payload and authority" [ref=e372] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e373] [cursor=pointer]
+          - article [ref=e374]:
+            - generic [ref=e375]:
+              - strong [ref=e376]: Capture · Observation
+              - generic [ref=e377]: Server accepted and saved
+            - paragraph [ref=e378]: Server receipt · Captured
+            - paragraph [ref=e379]: Exact receipt 056111a1-83d7-4ddd-9d32-0d0cf9406f93 · 2026-10-08T09:41:19.916Z · Captured
+            - generic [ref=e380]: 1 causal dependencies retained.
+            - group [ref=e381]:
+              - generic "Original payload and authority" [ref=e382] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e383] [cursor=pointer]
+          - article [ref=e384]:
+            - generic [ref=e385]:
+              - strong [ref=e386]: Capture · Observation
+              - generic [ref=e387]: Server accepted and saved
+            - paragraph [ref=e388]: Server receipt · Captured
+            - paragraph [ref=e389]: Exact receipt 8dc8658c-bc34-4ffc-8060-ff19219b499c · 2026-10-08T09:41:19.999Z · Captured
+            - generic [ref=e390]: 1 causal dependencies retained.
+            - group [ref=e391]:
+              - generic "Original payload and authority" [ref=e392] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e393] [cursor=pointer]
+          - article [ref=e394]:
+            - generic [ref=e395]:
+              - strong [ref=e396]: Capture · Observation
+              - generic [ref=e397]: Server accepted and saved
+            - paragraph [ref=e398]: Server receipt · Captured
+            - paragraph [ref=e399]: Exact receipt fe1c73ef-e117-4f3c-91bd-bc94169f8dc9 · 2026-10-08T09:41:20.100Z · Captured
+            - generic [ref=e400]: 1 causal dependencies retained.
+            - group [ref=e401]:
+              - generic "Original payload and authority" [ref=e402] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e403] [cursor=pointer]
+          - article [ref=e404]:
+            - generic [ref=e405]:
+              - strong [ref=e406]: Capture · Observation
+              - generic [ref=e407]: Server accepted and saved
+            - paragraph [ref=e408]: Server receipt · Captured
+            - paragraph [ref=e409]: Exact receipt d38ec15e-68fd-4bfe-a800-decae6817290 · 2026-10-08T09:41:20.189Z · Captured
+            - generic [ref=e410]: 1 causal dependencies retained.
+            - group [ref=e411]:
+              - generic "Original payload and authority" [ref=e412] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e413] [cursor=pointer]
+          - article [ref=e414]:
+            - generic [ref=e415]:
+              - strong [ref=e416]: Capture · Observation
+              - generic [ref=e417]: Server accepted and saved
+            - paragraph [ref=e418]: Server receipt · Captured
+            - paragraph [ref=e419]: Exact receipt e2e3ac69-9692-4334-8bd8-e96913e7f8e1 · 2026-10-08T09:41:20.274Z · Captured
+            - generic [ref=e420]: 1 causal dependencies retained.
+            - group [ref=e421]:
+              - generic "Original payload and authority" [ref=e422] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e423] [cursor=pointer]
+          - article [ref=e424]:
+            - generic [ref=e425]:
+              - strong [ref=e426]: Capture · Observation
+              - generic [ref=e427]: Server accepted and saved
+            - paragraph [ref=e428]: Server receipt · Captured
+            - paragraph [ref=e429]: Exact receipt ead89e53-3d86-41e2-bc0b-00d96c663d6d · 2026-10-08T09:41:20.359Z · Captured
+            - generic [ref=e430]: 1 causal dependencies retained.
+            - group [ref=e431]:
+              - generic "Original payload and authority" [ref=e432] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e433] [cursor=pointer]
+          - article [ref=e434]:
+            - generic [ref=e435]:
+              - strong [ref=e436]: Capture · Observation
+              - generic [ref=e437]: Server accepted and saved
+            - paragraph [ref=e438]: Server receipt · Captured
+            - paragraph [ref=e439]: Exact receipt 482e2060-4186-4950-adf2-bce4f9a3f174 · 2026-10-08T09:41:20.440Z · Captured
+            - generic [ref=e440]: 1 causal dependencies retained.
+            - group [ref=e441]:
+              - generic "Original payload and authority" [ref=e442] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e443] [cursor=pointer]
+          - article [ref=e444]:
+            - generic [ref=e445]:
+              - strong [ref=e446]: Capture · Observation
+              - generic [ref=e447]: Server accepted and saved
+            - paragraph [ref=e448]: Server receipt · Captured
+            - paragraph [ref=e449]: Exact receipt 0ebd44aa-bcdb-4b09-8185-22c2c558924f · 2026-10-08T09:41:20.523Z · Captured
+            - generic [ref=e450]: 1 causal dependencies retained.
+            - group [ref=e451]:
+              - generic "Original payload and authority" [ref=e452] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e453] [cursor=pointer]
+          - article [ref=e454]:
+            - generic [ref=e455]:
+              - strong [ref=e456]: Capture · Observation
+              - generic [ref=e457]: Server accepted and saved
+            - paragraph [ref=e458]: Server receipt · Captured
+            - paragraph [ref=e459]: Exact receipt bf1ed981-73e8-42f4-93e0-efdfd0cdc6a6 · 2026-10-08T09:41:20.603Z · Captured
+            - generic [ref=e460]: 1 causal dependencies retained.
+            - group [ref=e461]:
+              - generic "Original payload and authority" [ref=e462] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e463] [cursor=pointer]
+          - article [ref=e464]:
+            - generic [ref=e465]:
+              - strong [ref=e466]: Capture · Observation
+              - generic [ref=e467]: Server accepted and saved
+            - paragraph [ref=e468]: Server receipt · Captured
+            - paragraph [ref=e469]: Exact receipt 68446d32-bdbd-47a2-a5f3-def3e9d26a6d · 2026-10-08T09:41:20.687Z · Captured
+            - generic [ref=e470]: 1 causal dependencies retained.
+            - group [ref=e471]:
+              - generic "Original payload and authority" [ref=e472] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e473] [cursor=pointer]
+          - article [ref=e474]:
+            - generic [ref=e475]:
+              - strong [ref=e476]: Capture · Observation
+              - generic [ref=e477]: Server accepted and saved
+            - paragraph [ref=e478]: Server receipt · Captured
+            - paragraph [ref=e479]: Exact receipt 86dc640f-a42d-405d-a43e-860d1c721120 · 2026-10-08T09:41:20.788Z · Captured
+            - generic [ref=e480]: 1 causal dependencies retained.
+            - group [ref=e481]:
+              - generic "Original payload and authority" [ref=e482] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e483] [cursor=pointer]
+          - article [ref=e484]:
+            - generic [ref=e485]:
+              - strong [ref=e486]: Capture · Observation
+              - generic [ref=e487]: Server accepted and saved
+            - paragraph [ref=e488]: Server receipt · Captured
+            - paragraph [ref=e489]: Exact receipt c66efc0c-7f73-4f07-a8da-d717f8621b2a · 2026-10-08T09:41:20.887Z · Captured
+            - generic [ref=e490]: 1 causal dependencies retained.
+            - group [ref=e491]:
+              - generic "Original payload and authority" [ref=e492] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e493] [cursor=pointer]
+          - article [ref=e494]:
+            - generic [ref=e495]:
+              - strong [ref=e496]: Capture · Observation
+              - generic [ref=e497]: Server accepted and saved
+            - paragraph [ref=e498]: Server receipt · Captured
+            - paragraph [ref=e499]: Exact receipt ee81bcc7-980f-483d-ba86-73126e6997fa · 2026-10-08T09:41:20.970Z · Captured
+            - generic [ref=e500]: 1 causal dependencies retained.
+            - group [ref=e501]:
+              - generic "Original payload and authority" [ref=e502] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e503] [cursor=pointer]
+          - article [ref=e504]:
+            - generic [ref=e505]:
+              - strong [ref=e506]: Capture · Observation
+              - generic [ref=e507]: Server accepted and saved
+            - paragraph [ref=e508]: Server receipt · Captured
+            - paragraph [ref=e509]: Exact receipt 8607c381-c287-4160-a7aa-a8713a43ae95 · 2026-10-08T09:41:21.049Z · Captured
+            - generic [ref=e510]: 1 causal dependencies retained.
+            - group [ref=e511]:
+              - generic "Original payload and authority" [ref=e512] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e513] [cursor=pointer]
+          - article [ref=e514]:
+            - generic [ref=e515]:
+              - strong [ref=e516]: Capture · Observation
+              - generic [ref=e517]: Server accepted and saved
+            - paragraph [ref=e518]: Server receipt · Captured
+            - paragraph [ref=e519]: Exact receipt 4e44be77-56ba-4a87-bf9b-dcb1dd3cd7e8 · 2026-10-08T09:41:21.133Z · Captured
+            - generic [ref=e520]: 1 causal dependencies retained.
+            - group [ref=e521]:
+              - generic "Original payload and authority" [ref=e522] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e523] [cursor=pointer]
+          - article [ref=e524]:
+            - generic [ref=e525]:
+              - strong [ref=e526]: Capture · Observation
+              - generic [ref=e527]: Server accepted and saved
+            - paragraph [ref=e528]: Server receipt · Captured
+            - paragraph [ref=e529]: Exact receipt 34efdbe7-5086-4843-9df1-3e711385c44b · 2026-10-08T09:41:21.224Z · Captured
+            - generic [ref=e530]: 1 causal dependencies retained.
+            - group [ref=e531]:
+              - generic "Original payload and authority" [ref=e532] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e533] [cursor=pointer]
+          - article [ref=e534]:
+            - generic [ref=e535]:
+              - strong [ref=e536]: Capture · Observation
+              - generic [ref=e537]: Server accepted and saved
+            - paragraph [ref=e538]: Server receipt · Captured
+            - paragraph [ref=e539]: Exact receipt 059f8cb6-2ad4-4306-a8eb-d9dd32866340 · 2026-10-08T09:41:21.312Z · Captured
+            - generic [ref=e540]: 1 causal dependencies retained.
+            - group [ref=e541]:
+              - generic "Original payload and authority" [ref=e542] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e543] [cursor=pointer]
+          - article [ref=e544]:
+            - generic [ref=e545]:
+              - strong [ref=e546]: Capture · Observation
+              - generic [ref=e547]: Server accepted and saved
+            - paragraph [ref=e548]: Server receipt · Captured
+            - paragraph [ref=e549]: Exact receipt 6268ffea-73b8-4a3b-8e9f-147cadc3af85 · 2026-10-08T09:41:21.410Z · Captured
+            - generic [ref=e550]: 1 causal dependencies retained.
+            - group [ref=e551]:
+              - generic "Original payload and authority" [ref=e552] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e553] [cursor=pointer]
+          - article [ref=e554]:
+            - generic [ref=e555]:
+              - strong [ref=e556]: Capture · Observation
+              - generic [ref=e557]: Server accepted and saved
+            - paragraph [ref=e558]: Server receipt · Captured
+            - paragraph [ref=e559]: Exact receipt 48875e30-d61a-4257-8727-11439206e778 · 2026-10-08T09:41:21.503Z · Captured
+            - generic [ref=e560]: 1 causal dependencies retained.
+            - group [ref=e561]:
+              - generic "Original payload and authority" [ref=e562] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e563] [cursor=pointer]
+          - article [ref=e564]:
+            - generic [ref=e565]:
+              - strong [ref=e566]: Capture · Observation
+              - generic [ref=e567]: Server accepted and saved
+            - paragraph [ref=e568]: Server receipt · Captured
+            - paragraph [ref=e569]: Exact receipt e7d9ed8a-a25a-4c75-875f-8b9ccf0c6666 · 2026-10-08T09:41:22.137Z · Captured
+            - generic [ref=e570]: 1 causal dependencies retained.
+            - group [ref=e571]:
+              - generic "Original payload and authority" [ref=e572] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e573] [cursor=pointer]
+          - article [ref=e574]:
+            - generic [ref=e575]:
+              - strong [ref=e576]: Capture · Observation
+              - generic [ref=e577]: Server accepted and saved
+            - paragraph [ref=e578]: Server receipt · Captured
+            - paragraph [ref=e579]: Exact receipt d8863f76-1ca5-4c98-8f75-2977b39d3038 · 2026-10-08T09:41:22.244Z · Captured
+            - generic [ref=e580]: 1 causal dependencies retained.
+            - group [ref=e581]:
+              - generic "Original payload and authority" [ref=e582] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e583] [cursor=pointer]
+          - article [ref=e584]:
+            - generic [ref=e585]:
+              - strong [ref=e586]: Capture · Observation
+              - generic [ref=e587]: Server accepted and saved
+            - paragraph [ref=e588]: Server receipt · Captured
+            - paragraph [ref=e589]: Exact receipt 890197b1-feaf-438f-a555-5959ee75b588 · 2026-10-08T09:41:22.352Z · Captured
+            - generic [ref=e590]: 1 causal dependencies retained.
+            - group [ref=e591]:
+              - generic "Original payload and authority" [ref=e592] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e593] [cursor=pointer]
+          - article [ref=e594]:
+            - generic [ref=e595]:
+              - strong [ref=e596]: Capture · Observation
+              - generic [ref=e597]: Server accepted and saved
+            - paragraph [ref=e598]: Server receipt · Captured
+            - paragraph [ref=e599]: Exact receipt 8b975554-f04d-4a81-b54c-44435a353e4a · 2026-10-08T09:41:22.473Z · Captured
+            - generic [ref=e600]: 1 causal dependencies retained.
+            - group [ref=e601]:
+              - generic "Original payload and authority" [ref=e602] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e603] [cursor=pointer]
+          - article [ref=e604]:
+            - generic [ref=e605]:
+              - strong [ref=e606]: Capture · Observation
+              - generic [ref=e607]: Server accepted and saved
+            - paragraph [ref=e608]: Server receipt · Captured
+            - paragraph [ref=e609]: Exact receipt 331e5afa-0777-4e45-94ea-b0d3d8631ce5 · 2026-10-08T09:41:22.572Z · Captured
+            - generic [ref=e610]: 1 causal dependencies retained.
+            - group [ref=e611]:
+              - generic "Original payload and authority" [ref=e612] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e613] [cursor=pointer]
+          - article [ref=e614]:
+            - generic [ref=e615]:
+              - strong [ref=e616]: Capture · Observation
+              - generic [ref=e617]: Server accepted and saved
+            - paragraph [ref=e618]: Server receipt · Captured
+            - paragraph [ref=e619]: Exact receipt 21a095fb-c43d-4ea7-9e4a-3a17dcf02ebd · 2026-10-08T09:41:22.677Z · Captured
+            - generic [ref=e620]: 1 causal dependencies retained.
+            - group [ref=e621]:
+              - generic "Original payload and authority" [ref=e622] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e623] [cursor=pointer]
+          - article [ref=e624]:
+            - generic [ref=e625]:
+              - strong [ref=e626]: Capture · Observation
+              - generic [ref=e627]: Server accepted and saved
+            - paragraph [ref=e628]: Server receipt · Captured
+            - paragraph [ref=e629]: Exact receipt dc0dee5c-b4b5-44f8-beb9-73fe0516b25f · 2026-10-08T09:41:22.792Z · Captured
+            - generic [ref=e630]: 1 causal dependencies retained.
+            - group [ref=e631]:
+              - generic "Original payload and authority" [ref=e632] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e633] [cursor=pointer]
+          - article [ref=e634]:
+            - generic [ref=e635]:
+              - strong [ref=e636]: Capture · Observation
+              - generic [ref=e637]: Server accepted and saved
+            - paragraph [ref=e638]: Server receipt · Captured
+            - paragraph [ref=e639]: Exact receipt 92964a43-94bb-49b2-abc4-19fde2c52d24 · 2026-10-08T09:41:22.936Z · Captured
+            - generic [ref=e640]: 1 causal dependencies retained.
+            - group [ref=e641]:
+              - generic "Original payload and authority" [ref=e642] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e643] [cursor=pointer]
+          - article [ref=e644]:
+            - generic [ref=e645]:
+              - strong [ref=e646]: Capture · Observation
+              - generic [ref=e647]: Server accepted and saved
+            - paragraph [ref=e648]: Server receipt · Captured
+            - paragraph [ref=e649]: Exact receipt 6678f41f-f1e7-45b1-89d0-2ae10f78aa75 · 2026-10-08T09:41:23.069Z · Captured
+            - generic [ref=e650]: 1 causal dependencies retained.
+            - group [ref=e651]:
+              - generic "Original payload and authority" [ref=e652] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e653] [cursor=pointer]
+          - article [ref=e654]:
+            - generic [ref=e655]:
+              - strong [ref=e656]: Capture · Observation
+              - generic [ref=e657]: Server accepted and saved
+            - paragraph [ref=e658]: Server receipt · Captured
+            - paragraph [ref=e659]: Exact receipt 5d11896b-a5cf-416b-aa21-95746aa8e8ca · 2026-10-08T09:41:23.170Z · Captured
+            - generic [ref=e660]: 1 causal dependencies retained.
+            - group [ref=e661]:
+              - generic "Original payload and authority" [ref=e662] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e663] [cursor=pointer]
+          - article [ref=e664]:
+            - generic [ref=e665]:
+              - strong [ref=e666]: Capture · Observation
+              - generic [ref=e667]: Server accepted and saved
+            - paragraph [ref=e668]: Server receipt · Captured
+            - paragraph [ref=e669]: Exact receipt 5a1d446f-ec8a-404b-b74c-3fa2feb0117d · 2026-10-08T09:41:23.266Z · Captured
+            - generic [ref=e670]: 1 causal dependencies retained.
+            - group [ref=e671]:
+              - generic "Original payload and authority" [ref=e672] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e673] [cursor=pointer]
+          - article [ref=e674]:
+            - generic [ref=e675]:
+              - strong [ref=e676]: Capture · Observation
+              - generic [ref=e677]: Server accepted and saved
+            - paragraph [ref=e678]: Server receipt · Captured
+            - paragraph [ref=e679]: Exact receipt 63ac6b21-075d-4407-bd9a-f1ce919618a5 · 2026-10-08T09:41:23.351Z · Captured
+            - generic [ref=e680]: 1 causal dependencies retained.
+            - group [ref=e681]:
+              - generic "Original payload and authority" [ref=e682] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e683] [cursor=pointer]
+          - article [ref=e684]:
+            - generic [ref=e685]:
+              - strong [ref=e686]: Capture · Observation
+              - generic [ref=e687]: Server accepted and saved
+            - paragraph [ref=e688]: Server receipt · Captured
+            - paragraph [ref=e689]: Exact receipt 684e78f9-9e11-4d86-a940-6eea93cb516d · 2026-10-08T09:41:23.434Z · Captured
+            - generic [ref=e690]: 1 causal dependencies retained.
+            - group [ref=e691]:
+              - generic "Original payload and authority" [ref=e692] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e693] [cursor=pointer]
+          - article [ref=e694]:
+            - generic [ref=e695]:
+              - strong [ref=e696]: Capture · Observation
+              - generic [ref=e697]: Server accepted and saved
+            - paragraph [ref=e698]: Server receipt · Captured
+            - paragraph [ref=e699]: Exact receipt 07862857-5604-4e77-85fb-8ee069eeae79 · 2026-10-08T09:41:23.519Z · Captured
+            - generic [ref=e700]: 1 causal dependencies retained.
+            - group [ref=e701]:
+              - generic "Original payload and authority" [ref=e702] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e703] [cursor=pointer]
+          - article [ref=e704]:
+            - generic [ref=e705]:
+              - strong [ref=e706]: Capture · Observation
+              - generic [ref=e707]: Server accepted and saved
+            - paragraph [ref=e708]: Server receipt · Captured
+            - paragraph [ref=e709]: Exact receipt 0aac7af7-4d74-48d8-920e-3acec600f2e7 · 2026-10-08T09:41:23.603Z · Captured
+            - generic [ref=e710]: 1 causal dependencies retained.
+            - group [ref=e711]:
+              - generic "Original payload and authority" [ref=e712] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e713] [cursor=pointer]
+          - article [ref=e714]:
+            - generic [ref=e715]:
+              - strong [ref=e716]: Capture · Observation
+              - generic [ref=e717]: Server accepted and saved
+            - paragraph [ref=e718]: Server receipt · Captured
+            - paragraph [ref=e719]: Exact receipt 276bdf5b-3a42-4b1f-baaf-5ea770c960b9 · 2026-10-08T09:41:23.694Z · Captured
+            - generic [ref=e720]: 1 causal dependencies retained.
+            - group [ref=e721]:
+              - generic "Original payload and authority" [ref=e722] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e723] [cursor=pointer]
+          - article [ref=e724]:
+            - generic [ref=e725]:
+              - strong [ref=e726]: Capture · Observation
+              - generic [ref=e727]: Server accepted and saved
+            - paragraph [ref=e728]: Server receipt · Captured
+            - paragraph [ref=e729]: Exact receipt 43423f18-1c1f-4213-bc8e-01920c0a9a2a · 2026-10-08T09:41:23.791Z · Captured
+            - generic [ref=e730]: 1 causal dependencies retained.
+            - group [ref=e731]:
+              - generic "Original payload and authority" [ref=e732] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e733] [cursor=pointer]
+          - article [ref=e734]:
+            - generic [ref=e735]:
+              - strong [ref=e736]: Capture · Observation
+              - generic [ref=e737]: Server accepted and saved
+            - paragraph [ref=e738]: Server receipt · Captured
+            - paragraph [ref=e739]: Exact receipt add81e67-f245-429b-ae8e-a2e3a1328d71 · 2026-10-08T09:41:23.872Z · Captured
+            - generic [ref=e740]: 1 causal dependencies retained.
+            - group [ref=e741]:
+              - generic "Original payload and authority" [ref=e742] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e743] [cursor=pointer]
+          - article [ref=e744]:
+            - generic [ref=e745]:
+              - strong [ref=e746]: Capture · Observation
+              - generic [ref=e747]: Server accepted and saved
+            - paragraph [ref=e748]: Server receipt · Captured
+            - paragraph [ref=e749]: Exact receipt 5f04586c-51c6-486d-a01f-459924481fe0 · 2026-10-08T09:41:23.959Z · Captured
+            - generic [ref=e750]: 1 causal dependencies retained.
+            - group [ref=e751]:
+              - generic "Original payload and authority" [ref=e752] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e753] [cursor=pointer]
+          - article [ref=e754]:
+            - generic [ref=e755]:
+              - strong [ref=e756]: Capture · Observation
+              - generic [ref=e757]: Server accepted and saved
+            - paragraph [ref=e758]: Server receipt · Captured
+            - paragraph [ref=e759]: Exact receipt 2dfc42e4-0de8-4aeb-ab44-0346ff86492e · 2026-10-08T09:41:24.047Z · Captured
+            - generic [ref=e760]: 1 causal dependencies retained.
+            - group [ref=e761]:
+              - generic "Original payload and authority" [ref=e762] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e763] [cursor=pointer]
+          - article [ref=e764]:
+            - generic [ref=e765]:
+              - strong [ref=e766]: Capture · Observation
+              - generic [ref=e767]: Server accepted and saved
+            - paragraph [ref=e768]: Server receipt · Captured
+            - paragraph [ref=e769]: Exact receipt 18fa34e5-01b1-4dbc-934c-fe9310a98005 · 2026-10-08T09:41:24.467Z · Captured
+            - generic [ref=e770]: 1 causal dependencies retained.
+            - group [ref=e771]:
+              - generic "Original payload and authority" [ref=e772] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e773] [cursor=pointer]
+          - article [ref=e774]:
+            - generic [ref=e775]:
+              - strong [ref=e776]: Capture · Observation
+              - generic [ref=e777]: Server accepted and saved
+            - paragraph [ref=e778]: Server receipt · Captured
+            - paragraph [ref=e779]: Exact receipt fa2e1e2c-d326-43c4-8483-13a1dd730a75 · 2026-10-08T09:41:24.559Z · Captured
+            - generic [ref=e780]: 1 causal dependencies retained.
+            - group [ref=e781]:
+              - generic "Original payload and authority" [ref=e782] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e783] [cursor=pointer]
+          - article [ref=e784]:
+            - generic [ref=e785]:
+              - strong [ref=e786]: Capture · Observation
+              - generic [ref=e787]: Server accepted and saved
+            - paragraph [ref=e788]: Server receipt · Captured
+            - paragraph [ref=e789]: Exact receipt 9ac7a085-d201-43d6-b7bf-88f12e1114cb · 2026-10-08T09:41:24.654Z · Captured
+            - generic [ref=e790]: 1 causal dependencies retained.
+            - group [ref=e791]:
+              - generic "Original payload and authority" [ref=e792] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e793] [cursor=pointer]
+          - article [ref=e794]:
+            - generic [ref=e795]:
+              - strong [ref=e796]: Capture · Observation
+              - generic [ref=e797]: Server accepted and saved
+            - paragraph [ref=e798]: Server receipt · Captured
+            - paragraph [ref=e799]: Exact receipt e754b63b-6450-43b8-a987-4c24e3b824f1 · 2026-10-08T09:41:24.767Z · Captured
+            - generic [ref=e800]: 1 causal dependencies retained.
+            - group [ref=e801]:
+              - generic "Original payload and authority" [ref=e802] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e803] [cursor=pointer]
+          - article [ref=e804]:
+            - generic [ref=e805]:
+              - strong [ref=e806]: Capture · Observation
+              - generic [ref=e807]: Server accepted and saved
+            - paragraph [ref=e808]: Server receipt · Captured
+            - paragraph [ref=e809]: Exact receipt 3a4af1bf-85ec-4396-81f1-345d84923389 · 2026-10-08T09:41:24.864Z · Captured
+            - generic [ref=e810]: 1 causal dependencies retained.
+            - group [ref=e811]:
+              - generic "Original payload and authority" [ref=e812] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e813] [cursor=pointer]
+          - article [ref=e814]:
+            - generic [ref=e815]:
+              - strong [ref=e816]: Capture · Observation
+              - generic [ref=e817]: Server accepted and saved
+            - paragraph [ref=e818]: Server receipt · Captured
+            - paragraph [ref=e819]: Exact receipt b87f213a-cf0f-4d08-be57-f4940668396f · 2026-10-08T09:41:24.969Z · Captured
+            - generic [ref=e820]: 1 causal dependencies retained.
+            - group [ref=e821]:
+              - generic "Original payload and authority" [ref=e822] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e823] [cursor=pointer]
+          - article [ref=e824]:
+            - generic [ref=e825]:
+              - strong [ref=e826]: Capture · Observation
+              - generic [ref=e827]: Server accepted and saved
+            - paragraph [ref=e828]: Server receipt · Captured
+            - paragraph [ref=e829]: Exact receipt 04a4d5ef-2dbe-48e3-ad61-1ef669676ff3 · 2026-10-08T09:41:25.088Z · Captured
+            - generic [ref=e830]: 1 causal dependencies retained.
+            - group [ref=e831]:
+              - generic "Original payload and authority" [ref=e832] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e833] [cursor=pointer]
+          - article [ref=e834]:
+            - generic [ref=e835]:
+              - strong [ref=e836]: Capture · Observation
+              - generic [ref=e837]: Server accepted and saved
+            - paragraph [ref=e838]: Server receipt · Captured
+            - paragraph [ref=e839]: Exact receipt f08193d2-8d3f-497d-aeb5-8614f0c222eb · 2026-10-08T09:41:25.198Z · Captured
+            - generic [ref=e840]: 1 causal dependencies retained.
+            - group [ref=e841]:
+              - generic "Original payload and authority" [ref=e842] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e843] [cursor=pointer]
+          - article [ref=e844]:
+            - generic [ref=e845]:
+              - strong [ref=e846]: Capture · Observation
+              - generic [ref=e847]: Server accepted and saved
+            - paragraph [ref=e848]: Server receipt · Captured
+            - paragraph [ref=e849]: Exact receipt ee7fd215-b9bc-4591-9d2b-fce383b93285 · 2026-10-08T09:41:25.298Z · Captured
+            - generic [ref=e850]: 1 causal dependencies retained.
+            - group [ref=e851]:
+              - generic "Original payload and authority" [ref=e852] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e853] [cursor=pointer]
+          - article [ref=e854]:
+            - generic [ref=e855]:
+              - strong [ref=e856]: Capture · Observation
+              - generic [ref=e857]: Server accepted and saved
+            - paragraph [ref=e858]: Server receipt · Captured
+            - paragraph [ref=e859]: Exact receipt 8f312f07-1592-4475-877d-42476ce23d45 · 2026-10-08T09:41:25.399Z · Captured
+            - generic [ref=e860]: 1 causal dependencies retained.
+            - group [ref=e861]:
+              - generic "Original payload and authority" [ref=e862] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e863] [cursor=pointer]
+          - article [ref=e864]:
+            - generic [ref=e865]:
+              - strong [ref=e866]: Capture · Observation
+              - generic [ref=e867]: Server accepted and saved
+            - paragraph [ref=e868]: Server receipt · Captured
+            - paragraph [ref=e869]: Exact receipt a7fb6281-363a-453d-a7b8-02720d1962e9 · 2026-10-08T09:41:25.482Z · Captured
+            - generic [ref=e870]: 1 causal dependencies retained.
+            - group [ref=e871]:
+              - generic "Original payload and authority" [ref=e872] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e873] [cursor=pointer]
+          - article [ref=e874]:
+            - generic [ref=e875]:
+              - strong [ref=e876]: Capture · Observation
+              - generic [ref=e877]: Server accepted and saved
+            - paragraph [ref=e878]: Server receipt · Captured
+            - paragraph [ref=e879]: Exact receipt a0911f64-4c2a-4688-ae89-ded62ae2b1f3 · 2026-10-08T09:41:25.564Z · Captured
+            - generic [ref=e880]: 1 causal dependencies retained.
+            - group [ref=e881]:
+              - generic "Original payload and authority" [ref=e882] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e883] [cursor=pointer]
+          - article [ref=e884]:
+            - generic [ref=e885]:
+              - strong [ref=e886]: Capture · Observation
+              - generic [ref=e887]: Server accepted and saved
+            - paragraph [ref=e888]: Server receipt · Captured
+            - paragraph [ref=e889]: Exact receipt 1fd91b6b-7e57-4765-adae-b09100a91c6c · 2026-10-08T09:41:25.657Z · Captured
+            - generic [ref=e890]: 1 causal dependencies retained.
+            - group [ref=e891]:
+              - generic "Original payload and authority" [ref=e892] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e893] [cursor=pointer]
+          - article [ref=e894]:
+            - generic [ref=e895]:
+              - strong [ref=e896]: Capture · Observation
+              - generic [ref=e897]: Server accepted and saved
+            - paragraph [ref=e898]: Server receipt · Captured
+            - paragraph [ref=e899]: Exact receipt 80800490-a4b8-4a56-b590-38e4f0c26d59 · 2026-10-08T09:41:25.770Z · Captured
+            - generic [ref=e900]: 1 causal dependencies retained.
+            - group [ref=e901]:
+              - generic "Original payload and authority" [ref=e902] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e903] [cursor=pointer]
+          - article [ref=e904]:
+            - generic [ref=e905]:
+              - strong [ref=e906]: Capture · Observation
+              - generic [ref=e907]: Server accepted and saved
+            - paragraph [ref=e908]: Server receipt · Captured
+            - paragraph [ref=e909]: Exact receipt 76c5bf8f-acd3-4f89-b99d-08f33a69919d · 2026-10-08T09:41:25.865Z · Captured
+            - generic [ref=e910]: 1 causal dependencies retained.
+            - group [ref=e911]:
+              - generic "Original payload and authority" [ref=e912] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e913] [cursor=pointer]
+          - article [ref=e914]:
+            - generic [ref=e915]:
+              - strong [ref=e916]: Capture · Observation
+              - generic [ref=e917]: Server accepted and saved
+            - paragraph [ref=e918]: Server receipt · Captured
+            - paragraph [ref=e919]: Exact receipt 873e48a3-634c-402d-910a-2f617f92d03a · 2026-10-08T09:41:25.956Z · Captured
+            - generic [ref=e920]: 1 causal dependencies retained.
+            - group [ref=e921]:
+              - generic "Original payload and authority" [ref=e922] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e923] [cursor=pointer]
+          - article [ref=e924]:
+            - generic [ref=e925]:
+              - strong [ref=e926]: Capture · Observation
+              - generic [ref=e927]: Server accepted and saved
+            - paragraph [ref=e928]: Server receipt · Captured
+            - paragraph [ref=e929]: Exact receipt 736c52b6-b2db-4ec7-9a0e-7c4c83a6b499 · 2026-10-08T09:41:26.047Z · Captured
+            - generic [ref=e930]: 1 causal dependencies retained.
+            - group [ref=e931]:
+              - generic "Original payload and authority" [ref=e932] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e933] [cursor=pointer]
+          - article [ref=e934]:
+            - generic [ref=e935]:
+              - strong [ref=e936]: Capture · Observation
+              - generic [ref=e937]: Server accepted and saved
+            - paragraph [ref=e938]: Server receipt · Captured
+            - paragraph [ref=e939]: Exact receipt 084f9366-a1e0-4eaa-a0c1-b5d41d8e975b · 2026-10-08T09:41:26.142Z · Captured
+            - generic [ref=e940]: 1 causal dependencies retained.
+            - group [ref=e941]:
+              - generic "Original payload and authority" [ref=e942] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e943] [cursor=pointer]
+          - article [ref=e944]:
+            - generic [ref=e945]:
+              - strong [ref=e946]: Capture · Observation
+              - generic [ref=e947]: Server accepted and saved
+            - paragraph [ref=e948]: Server receipt · Captured
+            - paragraph [ref=e949]: Exact receipt 65b59d32-2db4-45fa-a24e-47056836ad2a · 2026-10-08T09:41:26.238Z · Captured
+            - generic [ref=e950]: 1 causal dependencies retained.
+            - group [ref=e951]:
+              - generic "Original payload and authority" [ref=e952] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e953] [cursor=pointer]
+          - article [ref=e954]:
+            - generic [ref=e955]:
+              - strong [ref=e956]: Capture · Observation
+              - generic [ref=e957]: Server accepted and saved
+            - paragraph [ref=e958]: Server receipt · Captured
+            - paragraph [ref=e959]: Exact receipt 1f174808-2ddd-4f5d-a51f-fa83e73fc1d7 · 2026-10-08T09:41:26.370Z · Captured
+            - generic [ref=e960]: 1 causal dependencies retained.
+            - group [ref=e961]:
+              - generic "Original payload and authority" [ref=e962] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e963] [cursor=pointer]
+          - article [ref=e964]:
+            - generic [ref=e965]:
+              - strong [ref=e966]: Capture · Observation
+              - generic [ref=e967]: Server accepted and saved
+            - paragraph [ref=e968]: Server receipt · Captured
+            - paragraph [ref=e969]: Exact receipt e4be1f12-c0f7-44ba-a42d-75a2074b39af · 2026-10-08T09:41:27.057Z · Captured
+            - generic [ref=e970]: 1 causal dependencies retained.
+            - group [ref=e971]:
+              - generic "Original payload and authority" [ref=e972] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e973] [cursor=pointer]
+          - article [ref=e974]:
+            - generic [ref=e975]:
+              - strong [ref=e976]: Capture · Observation
+              - generic [ref=e977]: Server accepted and saved
+            - paragraph [ref=e978]: Server receipt · Captured
+            - paragraph [ref=e979]: Exact receipt 9f95a232-0558-4110-b6a1-1212125c5b9f · 2026-10-08T09:41:27.152Z · Captured
+            - generic [ref=e980]: 1 causal dependencies retained.
+            - group [ref=e981]:
+              - generic "Original payload and authority" [ref=e982] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e983] [cursor=pointer]
+          - article [ref=e984]:
+            - generic [ref=e985]:
+              - strong [ref=e986]: Capture · Observation
+              - generic [ref=e987]: Server accepted and saved
+            - paragraph [ref=e988]: Server receipt · Captured
+            - paragraph [ref=e989]: Exact receipt 9fa6c32a-9ac5-41f5-b7c5-dadebfcbc120 · 2026-10-08T09:41:27.232Z · Captured
+            - generic [ref=e990]: 1 causal dependencies retained.
+            - group [ref=e991]:
+              - generic "Original payload and authority" [ref=e992] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e993] [cursor=pointer]
+          - article [ref=e994]:
+            - generic [ref=e995]:
+              - strong [ref=e996]: Capture · Observation
+              - generic [ref=e997]: Server accepted and saved
+            - paragraph [ref=e998]: Server receipt · Captured
+            - paragraph [ref=e999]: Exact receipt d0f63f69-2a90-4aaf-9f5f-2fb89b0a5e58 · 2026-10-08T09:41:27.314Z · Captured
+            - generic [ref=e1000]: 1 causal dependencies retained.
+            - group [ref=e1001]:
+              - generic "Original payload and authority" [ref=e1002] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e1003] [cursor=pointer]
+          - article [ref=e1004]:
+            - generic [ref=e1005]:
+              - strong [ref=e1006]: Capture · Observation
+              - generic [ref=e1007]: Server accepted and saved
+            - paragraph [ref=e1008]: Server receipt · Captured
+            - paragraph [ref=e1009]: Exact receipt e4505a8e-b7f2-44d0-8c4c-07e9930b800d · 2026-10-08T09:41:27.403Z · Captured
+            - generic [ref=e1010]: 1 causal dependencies retained.
+            - group [ref=e1011]:
+              - generic "Original payload and authority" [ref=e1012] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e1013] [cursor=pointer]
+          - article [ref=e1014]:
+            - generic [ref=e1015]:
+              - strong [ref=e1016]: Capture · Observation
+              - generic [ref=e1017]: Server accepted and saved
+            - paragraph [ref=e1018]: Server receipt · Captured
+            - paragraph [ref=e1019]: Exact receipt d924bcbd-96ea-411b-83de-9105e24631fc · 2026-10-08T09:41:27.494Z · Captured
+            - generic [ref=e1020]: 1 causal dependencies retained.
+            - group [ref=e1021]:
+              - generic "Original payload and authority" [ref=e1022] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e1023] [cursor=pointer]
+          - article [ref=e1024]:
+            - generic [ref=e1025]:
+              - strong [ref=e1026]: Capture · Observation
+              - generic [ref=e1027]: Server accepted and saved
+            - paragraph [ref=e1028]: Server receipt · Captured
+            - paragraph [ref=e1029]: Exact receipt 3bc3b724-e669-4960-987d-02020cd1d2da · 2026-10-08T09:41:27.588Z · Captured
+            - generic [ref=e1030]: 1 causal dependencies retained.
+            - group [ref=e1031]:
+              - generic "Original payload and authority" [ref=e1032] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e1033] [cursor=pointer]
+          - article [ref=e1034]:
+            - generic [ref=e1035]:
+              - strong [ref=e1036]: Capture · Observation
+              - generic [ref=e1037]: Server accepted and saved
+            - paragraph [ref=e1038]: Server receipt · Captured
+            - paragraph [ref=e1039]: Exact receipt c4ed3866-e988-4dc6-9c73-9cdcd688cf20 · 2026-10-08T09:41:27.679Z · Captured
+            - generic [ref=e1040]: 1 causal dependencies retained.
+            - group [ref=e1041]:
+              - generic "Original payload and authority" [ref=e1042] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e1043] [cursor=pointer]
+          - article [ref=e1044]:
+            - generic [ref=e1045]:
+              - strong [ref=e1046]: Capture · Observation
+              - generic [ref=e1047]: Server accepted and saved
+            - paragraph [ref=e1048]: Server receipt · Captured
+            - paragraph [ref=e1049]: Exact receipt d89b00c3-9290-4e60-946c-41973e42f513 · 2026-10-08T09:41:27.778Z · Captured
+            - generic [ref=e1050]: 1 causal dependencies retained.
+            - group [ref=e1051]:
+              - generic "Original payload and authority" [ref=e1052] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e1053] [cursor=pointer]
+          - article [ref=e1054]:
+            - generic [ref=e1055]:
+              - strong [ref=e1056]: Capture · Observation
+              - generic [ref=e1057]: Server accepted and saved
+            - paragraph [ref=e1058]: Server receipt · Captured
+            - paragraph [ref=e1059]: Exact receipt 406b77da-012e-4359-a187-5f7dc988d06c · 2026-10-08T09:41:27.877Z · Captured
+            - generic [ref=e1060]: 1 causal dependencies retained.
+            - group [ref=e1061]:
+              - generic "Original payload and authority" [ref=e1062] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e1063] [cursor=pointer]
+          - article [ref=e1064]:
+            - generic [ref=e1065]:
+              - strong [ref=e1066]: Capture · Observation
+              - generic [ref=e1067]: Server accepted and saved
+            - paragraph [ref=e1068]: Server receipt · Captured
+            - paragraph [ref=e1069]: Exact receipt d7d3a27e-0f11-404e-b5c9-9d5d8fd7d223 · 2026-10-08T09:41:27.989Z · Captured
+            - generic [ref=e1070]: 1 causal dependencies retained.
+            - group [ref=e1071]:
+              - generic "Original payload and authority" [ref=e1072] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e1073] [cursor=pointer]
+          - article [ref=e1074]:
+            - generic [ref=e1075]:
+              - strong [ref=e1076]: Capture · Observation
+              - generic [ref=e1077]: Server accepted and saved
+            - paragraph [ref=e1078]: Server receipt · Captured
+            - paragraph [ref=e1079]: Exact receipt 808231e7-8afe-42d3-b13e-2de626316cf3 · 2026-10-08T09:41:28.087Z · Captured
+            - generic [ref=e1080]: 1 causal dependencies retained.
+            - group [ref=e1081]:
+              - generic "Original payload and authority" [ref=e1082] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e1083] [cursor=pointer]
+          - article [ref=e1084]:
+            - generic [ref=e1085]:
+              - strong [ref=e1086]: Capture · Observation
+              - generic [ref=e1087]: Server accepted and saved
+            - paragraph [ref=e1088]: Server receipt · Captured
+            - paragraph [ref=e1089]: Exact receipt 75e471ba-b165-4c21-87c1-f2fd4bd24d5e · 2026-10-08T09:41:28.197Z · Captured
+            - generic [ref=e1090]: 1 causal dependencies retained.
+            - group [ref=e1091]:
+              - generic "Original payload and authority" [ref=e1092] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e1093] [cursor=pointer]
+          - article [ref=e1094]:
+            - generic [ref=e1095]:
+              - strong [ref=e1096]: Capture · Observation
+              - generic [ref=e1097]: Server accepted and saved
+            - paragraph [ref=e1098]: Server receipt · Captured
+            - paragraph [ref=e1099]: Exact receipt a48c88f1-58d5-48a7-93da-b8bfc175369f · 2026-10-08T09:41:28.313Z · Captured
+            - generic [ref=e1100]: 1 causal dependencies retained.
+            - group [ref=e1101]:
+              - generic "Original payload and authority" [ref=e1102] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e1103] [cursor=pointer]
+          - article [ref=e1104]:
+            - generic [ref=e1105]:
+              - strong [ref=e1106]: Capture · Observation
+              - generic [ref=e1107]: Server accepted and saved
+            - paragraph [ref=e1108]: Server receipt · Captured
+            - paragraph [ref=e1109]: Exact receipt 88e30ff1-2ee8-4128-9fda-0b8a3f48a07a · 2026-10-08T09:41:28.419Z · Captured
+            - generic [ref=e1110]: 1 causal dependencies retained.
+            - group [ref=e1111]:
+              - generic "Original payload and authority" [ref=e1112] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e1113] [cursor=pointer]
+          - article [ref=e1114]:
+            - generic [ref=e1115]:
+              - strong [ref=e1116]: Capture · Observation
+              - generic [ref=e1117]: Server accepted and saved
+            - paragraph [ref=e1118]: Server receipt · Captured
+            - paragraph [ref=e1119]: Exact receipt 8f9c4efb-e32d-470d-b968-060e595b12df · 2026-10-08T09:41:28.538Z · Captured
+            - generic [ref=e1120]: 1 causal dependencies retained.
+            - group [ref=e1121]:
+              - generic "Original payload and authority" [ref=e1122] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e1123] [cursor=pointer]
+          - article [ref=e1124]:
+            - generic [ref=e1125]:
+              - strong [ref=e1126]: Capture · Observation
+              - generic [ref=e1127]: Server accepted and saved
+            - paragraph [ref=e1128]: Server receipt · Captured
+            - paragraph [ref=e1129]: Exact receipt 31f714b4-4305-4695-bb13-405d801a9aa3 · 2026-10-08T09:41:28.644Z · Captured
+            - generic [ref=e1130]: 1 causal dependencies retained.
+            - group [ref=e1131]:
+              - generic "Original payload and authority" [ref=e1132] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e1133] [cursor=pointer]
+          - article [ref=e1134]:
+            - generic [ref=e1135]:
+              - strong [ref=e1136]: Capture · Observation
+              - generic [ref=e1137]: Server accepted and saved
+            - paragraph [ref=e1138]: Server receipt · Captured
+            - paragraph [ref=e1139]: Exact receipt 76eec9c3-b9b7-4ebb-94fa-f92d6505cc8f · 2026-10-08T09:41:28.731Z · Captured
+            - generic [ref=e1140]: 1 causal dependencies retained.
+            - group [ref=e1141]:
+              - generic "Original payload and authority" [ref=e1142] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e1143] [cursor=pointer]
+          - article [ref=e1144]:
+            - generic [ref=e1145]:
+              - strong [ref=e1146]: Capture · Observation
+              - generic [ref=e1147]: Server accepted and saved
+            - paragraph [ref=e1148]: Server receipt · Captured
+            - paragraph [ref=e1149]: Exact receipt 47d301fa-b1cd-4c05-aaef-bd2b09998734 · 2026-10-08T09:41:28.824Z · Captured
+            - generic [ref=e1150]: 1 causal dependencies retained.
+            - group [ref=e1151]:
+              - generic "Original payload and authority" [ref=e1152] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e1153] [cursor=pointer]
+          - article [ref=e1154]:
+            - generic [ref=e1155]:
+              - strong [ref=e1156]: Capture · Observation
+              - generic [ref=e1157]: Server accepted and saved
+            - paragraph [ref=e1158]: Server receipt · Captured
+            - paragraph [ref=e1159]: Exact receipt cbea9773-69db-4349-8995-79984a1e9c91 · 2026-10-08T09:41:28.923Z · Captured
+            - generic [ref=e1160]: 1 causal dependencies retained.
+            - group [ref=e1161]:
+              - generic "Original payload and authority" [ref=e1162] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e1163] [cursor=pointer]
+          - article [ref=e1164]:
+            - generic [ref=e1165]:
+              - strong [ref=e1166]: AttachmentInitiate
+              - generic [ref=e1167]: Server accepted and saved
+            - paragraph [ref=e1168]: Server receipt · Pending
+            - paragraph [ref=e1169]: Exact receipt dbcb26b4-0b30-46cf-b659-a4d6c63c7165 · 2026-10-08T09:41:29.337Z · Pending
+            - generic [ref=e1170]: 1 causal dependencies retained.
+            - group [ref=e1171]:
+              - generic "Original payload and authority" [ref=e1172] [cursor=pointer]
+          - article [ref=e1173]:
+            - generic [ref=e1174]:
+              - strong [ref=e1175]: AttachmentUpload
+              - generic [ref=e1176]: Server accepted and saved
+            - paragraph [ref=e1177]: Server receipt · Uploaded
+            - paragraph [ref=e1178]: Exact receipt ea99e4fd-094c-43bf-9cb0-f1129049f7c6 · 2026-10-08T09:41:29.393Z · Uploaded
+            - generic [ref=e1179]: 1 causal dependencies retained.
+            - img "Original PNG saved on this device" [ref=e1180]
+            - paragraph [ref=e1181]: "Local original bytes: 191 · SHA-256 8e0e39097d1e122a86d83ed2c236f3bc8de8b82c46a945fbe71b6bf0a059203e"
+            - group [ref=e1182]:
+              - generic "Original payload and authority" [ref=e1183] [cursor=pointer]
+          - article [ref=e1184]:
+            - generic [ref=e1185]:
+              - strong [ref=e1186]: AttachmentFinalise
+              - generic [ref=e1187]: Server accepted and saved
+            - paragraph [ref=e1188]: Server receipt · Available
+            - paragraph [ref=e1189]: Exact receipt ef67eccd-ab94-4685-88f9-2c4cf160fe06 · 2026-10-08T09:41:29.423Z · Available
+            - generic [ref=e1190]: 1 causal dependencies retained.
+            - group [ref=e1191]:
+              - generic "Original payload and authority" [ref=e1192] [cursor=pointer]
+          - article [ref=e1193]:
+            - generic [ref=e1194]:
+              - strong [ref=e1195]: Capture · Photo
+              - generic [ref=e1196]: Server accepted and saved
+            - paragraph [ref=e1197]: Server receipt · Captured
+            - paragraph [ref=e1198]: Exact receipt d0205ac3-a14e-433c-9764-a80f6f9a5733 · 2026-10-08T09:41:29.461Z · Captured
+            - generic [ref=e1199]: 2 causal dependencies retained.
+            - group [ref=e1200]:
+              - generic "Original payload and authority" [ref=e1201] [cursor=pointer]
+            - button "Create linked successor correction" [ref=e1202] [cursor=pointer]
+      - generic [ref=e1203]:
+        - heading "Service-owner recovery inbox" [level=2] [ref=e1204]
+        - paragraph [ref=e1205]: Available online to the recorded service owner with current scoped permissions. A disposition preserves evidence; it never approves a visit, report or charge.
+        - button "Load owned recovery cases" [ref=e1206] [cursor=pointer]
+    - generic [ref=e1207]: Browser storage can be cleared or evicted. This synthetic prototype does not claim managed-device encryption, operational retention or completed PP-01 acceptance.
+```
+
+# Test source
+
+```ts
+  1   | import { test, expect } from "@playwright/test";
+  2   | import { writeFile, readFile } from "node:fs/promises";
+  3   | import { createHash } from "node:crypto";
+  4   | import { execFileSync } from "node:child_process";
+  5   | import {
+  6   |   prepared,
+  7   |   open,
+  8   |   note,
+  9   |   save,
+  10  |   call,
+  11  |   localRows,
+  12  | } from "../helpers/offline-browser";
+  13  | import { png } from "../helpers/field";
+  14  | import type { WireOperation } from "../../src/offline/protocol";
+  15  | type Stored = {
+  16  |   original: WireOperation;
+  17  |   status: { state: string; code?: string };
+  18  | };
+  19  |
+  20  | test("large offline queue continues through online completion with all 100 original captures", async ({
+  21  |   page,
+  22  |   context,
+  23  | }, info) => {
+  24  |   test.setTimeout(240000);
+  25  |   const setup = await prepared(
+  26  |     page,
+  27  |     info.project.name.startsWith("mobile") ? "2030-08-06" : "2030-08-05",
+  28  |     true,
+  29  |   );
+  30  |   await open(page, setup.appointment_id);
+  31  |   await context.setOffline(true);
+  32  |   await page
+  33  |     .getByRole("button", { name: "Save provisional start intent", exact: true })
+  34  |     .click();
+  35  |   await expect(page.locator("#queue .queue-row")).toHaveCount(1);
+  36  |   for (let i = 1; i <= 99; i++) {
+  37  |     await note(page, `SYN online continuation original ${i}`);
+  38  |     await save(page);
+  39  |   }
+> 40  |   await page.getByLabel("Evidence type", { exact: true }).selectOption("Photo");
+      |                                                                                       ^ Error: locator.click: Test timeout of 240000ms exceeded.
+  41  |   await page
+  42  |     .getByLabel("Original synthetic PNG")
+  43  |     .setInputFiles({
+  44  |       name: "SYN-continuation.png",
+  45  |       mimeType: "image/png",
+  46  |       buffer: png(),
+  47  |     });
+  48  |   await page.getByLabel("Photo caption").fill("SYN retained original photo");
+  49  |   await page
+  50  |     .getByLabel("Capture context", { exact: true })
+  51  |     .fill("SYN visual inspection only");
+  52  |   await save(page);
+  53  |   const originals = ((await localRows(page)) as Stored[]).map(
+  54  |     (x) => x.original,
+  55  |   );
+  56  |   expect(originals).toHaveLength(104);
+  57  |   await context.setOffline(false);
+  58  |   await page
+  59  |     .getByRole("button", { name: "Continue completion online", exact: true })
+  60  |     .click();
+  61  |   await expect(page.locator("#error")).toContainText(
+  62  |     "Send or resolve every original",
+  63  |   );
+  64  |   await expect(page).toHaveURL(/\/offline\/index.html$/);
+  65  |   const send = async () => {
+  66  |     const sent = page.waitForRequest(
+  67  |       (r) => new URL(r.url()).pathname === "/api/v1/sync/operations",
+  68  |     );
+  69  |     await page
+  70  |       .getByRole("button", {
+  71  |         name: "Send next batch / retry originals",
+  72  |         exact: true,
+  73  |       })
+  74  |       .click();
+  75  |     await (await sent).response();
+  76  |     await expect(
+  77  |       page.getByRole("button", {
+  78  |         name: "Send next batch / retry originals",
+  79  |         exact: true,
+  80  |       }),
+  81  |     ).toBeEnabled();
+  82  |   };
+  83  |   await page.route("**/api/v1/sync/operations", async (route) => {
+  84  |     await route.fetch();
+  85  |     await route.abort("failed");
+  86  |   });
+  87  |   await send();
+  88  |   await page.unroute("**/api/v1/sync/operations");
+  89  |   expect(
+  90  |     ((await localRows(page)) as Stored[]).some(
+  91  |       (x) => x.status.code === "OutcomeUncertain",
+  92  |     ),
+  93  |   ).toBe(true);
+  94  |   await page
+  95  |     .getByRole("button", { name: "Continue completion online", exact: true })
+  96  |     .click();
+  97  |   await expect(page.locator("#error")).toContainText(
+  98  |     "Send or resolve every original",
+  99  |   );
+  100 |   for (let i = 0; i < 6; i++) await send();
+  101 |   expect(
+  102 |     ((await localRows(page)) as Stored[]).every(
+  103 |       (x) => x.status.state === "ServerSaved",
+  104 |     ),
+  105 |   ).toBe(true);
+  106 |   await page
+  107 |     .getByRole("button", { name: "Download selected job", exact: true })
+  108 |     .click();
+  109 |   await expect(
+  110 |     page.getByRole("button", { name: "Download selected job", exact: true }),
+  111 |   ).toBeEnabled({ timeout: 45000 });
+  112 |   await page
+  113 |     .getByRole("button", {
+  114 |       name: "Save completion draft on this device",
+  115 |       exact: true,
+  116 |     })
+  117 |     .click();
+  118 |   await expect(page.locator("#error")).toContainText("more than 30");
+  119 |   // This user-visible continuation must exist after following the old advice.
+  120 |   await expect(
+  121 |     page.getByRole("button", {
+  122 |       name: "Continue completion online",
+  123 |       exact: true,
+  124 |     }),
+  125 |   ).toBeVisible();
+  126 |   await page
+  127 |     .getByRole("button", { name: "Continue completion online", exact: true })
+  128 |     .click();
+  129 |   await expect(page).toHaveURL(new RegExp(`/my-jobs/${setup.appointment_id}$`));
+  130 |   await page.getByRole("button", { name: "Completion", exact: true }).click();
+  131 |   await page
+  132 |     .getByLabel("Actual work performed", { exact: true })
+  133 |     .fill("SYN visual inspection and 100 original observations/photo retained");
+  134 |   await page
+  135 |     .getByLabel("Remaining work and reasons", { exact: true })
+  136 |     .fill("SYN coordinator owns remaining identification work");
+  137 |   await page
+  138 |     .getByLabel("My time declaration", { exact: true })
+  139 |     .selectOption("None");
+  140 |   await page
+```

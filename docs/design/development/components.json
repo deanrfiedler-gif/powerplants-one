@@ -3480,7 +3480,7 @@
         {
           "id": "closed-own",
           "label": "Closed with my attendance",
-          "description": "Retained personal identity/times and frozen history; no reopening or new arrival."
+          "description": "Retained personal identity/times and frozen history; a submitted own report or accepted own attendance immediately disables fresh timer actions, including an open dialog, even while the independent timer read is older. Entered notes and uncertain original-command recovery remain available."
         },
         {
           "id": "closed-other",
@@ -3530,7 +3530,7 @@
       "desktop": "Padded host Record detail; one document scroll. Retain r05 record header, 96 px clock, readouts, visit track and time/activity lists.",
       "mobile": "64 px clock; labelled job menu; fixed timer dock above the existing 64 px navigation with 44 px minimum controls. Inspect 390/320 px and actual 200% browser zoom.",
       "keyboard": "Native labelled dialog focuses inside on open. Tab/Shift+Tab remain contained; Escape closes when no unresolved command prevents it and returns focus.",
-      "limitations": "Host fixture requires real permitted synthetic appointment/arrival and database. tests/browser/field-timer.spec.ts and tests/helpers/quality-return.ts provide reproducible states; this is not an isolated runnable catalogue example. Owner, physical-device and assistive-technology acceptance remain pending.",
+      "limitations": "Host fixture requires real permitted synthetic appointment/arrival and database. tests/browser/field-timer.spec.ts and tests/helpers/quality-return.ts and tests/browser/offline-completion-handoff.spec.ts provide reproducible states; this is not an isolated runnable catalogue example. Owner, physical-device and assistive-technology acceptance remain pending.",
       "gaps": [
         {
           "id": "field-timer-native-adaptations",

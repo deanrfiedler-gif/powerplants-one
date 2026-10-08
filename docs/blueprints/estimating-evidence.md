@@ -8,6 +8,8 @@ versioning: git
 
 # Estimating evidence and CREMS behaviour assessment
 
+> **Current interpretation — 8 October 2026:** [Independent PPO direction](../decisions/product-direction-quality.md) makes the CREMS observations and reconstruction gaps below historical. They do not block independently specified and tested PPO rules. Actual operating-policy and technical claims retain their own evidence requirements.
+
 ## 1. Evidence used
 
 This is targeted discovery under [BP-04](BP-04-estimating-quotation.md), not a repeat of the entire historical reconstruction audit. File hashes, byte counts and secure source identities are in the [source manifest](estimating-source-manifest.json). Original sources remain outside Git; synthetic design and source metadata are committed.
