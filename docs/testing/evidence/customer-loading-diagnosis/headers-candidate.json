@@ -1,0 +1,196 @@
+{
+  "captured_at": "2026-10-08T11:57:58.813Z",
+  "launcher_source": "904c449",
+  "compiled_source": "24d19b1",
+  "rows": [
+    {
+      "path": "/_next/static/chunks/33ore1af_a5ym.css",
+      "status": 200,
+      "cache_control": "public, max-age=31536000, immutable",
+      "content_type": "text/css; charset=UTF-8",
+      "bytes": 94576
+    },
+    {
+      "path": "/_next/static/chunks/2f9fqdpourpxf.css",
+      "status": 200,
+      "cache_control": "public, max-age=31536000, immutable",
+      "content_type": "text/css; charset=UTF-8",
+      "bytes": 84079
+    },
+    {
+      "path": "/_next/static/chunks/2gx7odfw5l45q.css",
+      "status": 200,
+      "cache_control": "public, max-age=31536000, immutable",
+      "content_type": "text/css; charset=UTF-8",
+      "bytes": 127298
+    },
+    {
+      "path": "/_next/static/chunks/2ewi5bnnuai4u.css",
+      "status": 200,
+      "cache_control": "public, max-age=31536000, immutable",
+      "content_type": "text/css; charset=UTF-8",
+      "bytes": 54949
+    },
+    {
+      "path": "/_next/static/chunks/35w7nycqgtaz9.css",
+      "status": 200,
+      "cache_control": "public, max-age=31536000, immutable",
+      "content_type": "text/css; charset=UTF-8",
+      "bytes": 3990
+    },
+    {
+      "path": "/_next/static/chunks/14fkgftd7u_z5.css",
+      "status": 200,
+      "cache_control": "public, max-age=31536000, immutable",
+      "content_type": "text/css; charset=UTF-8",
+      "bytes": 125385
+    },
+    {
+      "path": "/_next/static/chunks/2_c2192tpgm6h.css",
+      "status": 200,
+      "cache_control": "public, max-age=31536000, immutable",
+      "content_type": "text/css; charset=UTF-8",
+      "bytes": 93076
+    },
+    {
+      "path": "/_next/static/chunks/28flaeabfo316.js",
+      "status": 200,
+      "cache_control": "public, max-age=31536000, immutable",
+      "content_type": "application/javascript; charset=UTF-8",
+      "bytes": 5610
+    },
+    {
+      "path": "/_next/static/chunks/1ey0h8xsfa_wx.js",
+      "status": 200,
+      "cache_control": "public, max-age=31536000, immutable",
+      "content_type": "application/javascript; charset=UTF-8",
+      "bytes": 34825
+    },
+    {
+      "path": "/_next/static/chunks/0-_5q-bedv_lk.js",
+      "status": 200,
+      "cache_control": "public, max-age=31536000, immutable",
+      "content_type": "application/javascript; charset=UTF-8",
+      "bytes": 229044
+    },
+    {
+      "path": "/_next/static/chunks/3iubgmi2mrvio.js",
+      "status": 200,
+      "cache_control": "public, max-age=31536000, immutable",
+      "content_type": "application/javascript; charset=UTF-8",
+      "bytes": 160239
+    },
+    {
+      "path": "/_next/static/chunks/turbopack-0vi7yfmkw4gs5.js",
+      "status": 200,
+      "cache_control": "public, max-age=31536000, immutable",
+      "content_type": "application/javascript; charset=UTF-8",
+      "bytes": 10947
+    },
+    {
+      "path": "/_next/static/chunks/1f02-zweupik-.js",
+      "status": 200,
+      "cache_control": "public, max-age=31536000, immutable",
+      "content_type": "application/javascript; charset=UTF-8",
+      "bytes": 30208
+    },
+    {
+      "path": "/_next/static/chunks/09l8q3j8p1nfp.js",
+      "status": 200,
+      "cache_control": "public, max-age=31536000, immutable",
+      "content_type": "application/javascript; charset=UTF-8",
+      "bytes": 36791
+    },
+    {
+      "path": "/_next/static/chunks/2dutiite_8_mt.js",
+      "status": 200,
+      "cache_control": "public, max-age=31536000, immutable",
+      "content_type": "application/javascript; charset=UTF-8",
+      "bytes": 30682
+    },
+    {
+      "path": "/_next/static/chunks/1tlo7t_7-_go_.js",
+      "status": 200,
+      "cache_control": "public, max-age=31536000, immutable",
+      "content_type": "application/javascript; charset=UTF-8",
+      "bytes": 87690
+    },
+    {
+      "path": "/_next/static/chunks/0ceqv-5k090j7.js",
+      "status": 200,
+      "cache_control": "public, max-age=31536000, immutable",
+      "content_type": "application/javascript; charset=UTF-8",
+      "bytes": 38021
+    },
+    {
+      "path": "/_next/static/chunks/0e17lnxbjkry2.js",
+      "status": 200,
+      "cache_control": "public, max-age=31536000, immutable",
+      "content_type": "application/javascript; charset=UTF-8",
+      "bytes": 55383
+    },
+    {
+      "path": "/_next/static/chunks/1etdourpsy2sg.js",
+      "status": 200,
+      "cache_control": "public, max-age=31536000, immutable",
+      "content_type": "application/javascript; charset=UTF-8",
+      "bytes": 45121
+    },
+    {
+      "path": "/_next/static/chunks/28b535x4alvqs.js",
+      "status": 200,
+      "cache_control": "public, max-age=31536000, immutable",
+      "content_type": "application/javascript; charset=UTF-8",
+      "bytes": 34652
+    },
+    {
+      "path": "/_next/static/chunks/1664-92tbfgjq.js",
+      "status": 200,
+      "cache_control": "public, max-age=31536000, immutable",
+      "content_type": "application/javascript; charset=UTF-8",
+      "bytes": 42635
+    },
+    {
+      "path": "/_next/static/chunks/0yfs5n30vwac0.js",
+      "status": 200,
+      "cache_control": "public, max-age=31536000, immutable",
+      "content_type": "application/javascript; charset=UTF-8",
+      "bytes": 471
+    },
+    {
+      "path": "/_next/static/chunks/1v23svcawfcn4.css",
+      "status": 200,
+      "cache_control": "public, max-age=31536000, immutable",
+      "content_type": "text/css; charset=UTF-8",
+      "bytes": 2018
+    },
+    {
+      "path": "/brand/powerplants-logo-green-white.png",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "image/png",
+      "bytes": 315536
+    },
+    {
+      "path": "/api/v1/local-session",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "application/json",
+      "bytes": 138
+    },
+    {
+      "path": "/api/v1/crm/directory?kind=organisations",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "application/json",
+      "bytes": 8617
+    },
+    {
+      "path": "/api/v1/reports/a7776a61-e247-42d7-8524-d91ef412d3c3/photo?revision_id=2710175c-3d1b-4214-b81b-e3b84aa74f9c&attachment_id=35824165-ee85-4744-8856-fed3337975b8",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "image/png",
+      "bytes": 5213
+    }
+  ]
+}

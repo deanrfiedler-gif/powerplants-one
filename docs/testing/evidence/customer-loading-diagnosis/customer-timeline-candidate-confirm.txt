@@ -1,0 +1,11 @@
+✓ Running next.config.ts took 45ms
+Powerplants One — local synthetic only — http://127.0.0.1:3034 · compiled build
+{"mode":"candidate-confirm","viewport":"desktop","wave":0,"samples":10}
+{"mode":"candidate-confirm","viewport":"desktop","wave":1,"samples":20}
+{"mode":"candidate-confirm","viewport":"desktop","wave":2,"samples":30}
+{"mode":"candidate-confirm","viewport":"desktop","wave":3,"samples":40}
+{"mode":"candidate-confirm","viewport":"phone","wave":0,"samples":50}
+{"mode":"candidate-confirm","viewport":"phone","wave":1,"samples":60}
+{"mode":"candidate-confirm","viewport":"phone","wave":2,"samples":70}
+{"mode":"candidate-confirm","viewport":"phone","wave":3,"samples":80}
+[{"viewport":"desktop","count":40,"p95_ready_ms":4420.887500000001,"p95_core_ms":4270.017,"p95_core_response_ms":746.2685999999994},{"viewport":"phone","count":40,"p95_ready_ms":2469.364800000003,"p95_core_ms":2338.5882999999994,"p95_core_response_ms":548.7049000000006}]
