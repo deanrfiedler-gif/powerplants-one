@@ -65,18 +65,18 @@
     },
     {
       "path": "directory-explain.txt",
-      "bytes": 553,
-      "sha256": "12ecac9d94a070544f5ed1b68414924ec3afbb7e7799f3c11c04fca102ffceb5"
+      "bytes": 552,
+      "sha256": "77d0b4ff921f594e04de91c86141bc14bbaa18c3b0e554c8f959a1d414f79059"
     },
     {
       "path": "directory-preliminary.json",
-      "bytes": 811,
-      "sha256": "d8c1bc6a66a3bda8520434dfad9e69fa614b69042afdc7d9cee5959f14ab2231"
+      "bytes": 774,
+      "sha256": "600eb3ab172740d86929b46e4cebd63d35ec6180a7a02b4f3831e6387e06a157"
     },
     {
       "path": "handoff-baseline-error.txt",
-      "bytes": 89263,
-      "sha256": "058d5f678c7ce914abd7aa02ec303d9679d4f2eac276d155bfc363a43bf992f1"
+      "bytes": 87833,
+      "sha256": "4f7477737bf01b706120adb45df320936f22ce4e14343ffa41bcbc48dc0913b1"
     },
     {
       "path": "handoff-baseline.png",
@@ -84,14 +84,59 @@
       "sha256": "e3b7505a1232cee58216bff77745ec70fe4416ea8abe372c1f34d0ac8a5e3807"
     },
     {
+      "path": "quality-build-final.txt",
+      "bytes": 26625,
+      "sha256": "81d645d1083e1c90cec9f25269b4dcfdabec838911b6bd7610c8fb0ab3d0518f"
+    },
+    {
+      "path": "quality-db.txt",
+      "bytes": 5818,
+      "sha256": "9e181a735582fdc98938d21aa505e5de5d153eb87ab09e26603abe2e2edb9d6a"
+    },
+    {
+      "path": "quality-foundation.txt",
+      "bytes": 330,
+      "sha256": "97bc6984ae57cb4f3b6313e4e9ea492b4d86630e02edf157f818f60b91c4e114"
+    },
+    {
+      "path": "quality-lint.txt",
+      "bytes": 42,
+      "sha256": "3d33f40c80d9aa3df343c357e43b00f214189513ba842430e562b5fbe75aefda"
+    },
+    {
+      "path": "quality-naming-final2.txt",
+      "bytes": 296,
+      "sha256": "74910de3a470941d76e16b74d9fbdf0203c1c2ab7742cd6361bc498cf8ce5045"
+    },
+    {
+      "path": "quality-prototype.txt",
+      "bytes": 526,
+      "sha256": "9b7839c713adf06d51e41256fd2e991c6acc00fca36c33caff1ef7e02d55251b"
+    },
+    {
+      "path": "quality-studio-final.txt",
+      "bytes": 429,
+      "sha256": "5e0dc947931f80bc7381675977276ae374222dfc090594d3302bf4b4ac025dd9"
+    },
+    {
+      "path": "quality-typecheck-final.txt",
+      "bytes": 51,
+      "sha256": "bc8033ab9263f80d6936b509b40414d8d01fa804136bf8b2d00f7ac11abe7a2a"
+    },
+    {
       "path": "quality-unit-baseline.txt",
-      "bytes": 3544,
-      "sha256": "578a0b4b15be4e47b9f2410c1519f24a8c4c3cafa16a300d9219214d0fcbdcc5"
+      "bytes": 3478,
+      "sha256": "21e2ccbbb284ac93ed87827a807686b15404d4c278df4fd6b9240dac745990cb"
     },
     {
       "path": "quality-unit.txt",
-      "bytes": 67082,
-      "sha256": "902ffa4d61e689e79f95b65c215274ba4cbc61d3bf6c03972ffa03269f801854"
+      "bytes": 66383,
+      "sha256": "bebdb087941674b6aec4c085805bf3131fc51611386434051d350ad66f9e5f92"
+    },
+    {
+      "path": "release-checks.json",
+      "bytes": 13549,
+      "sha256": "703fab533d23c4ff2ac878d0c7b6662e3457a0c041cf6ee3f8b758defb0aac3e"
     },
     {
       "path": "timer-closure-baseline.json",
@@ -104,5 +149,25 @@
       "sha256": "7357e510885abff8bcb6687552fc2da02548485d2e8a2fd26b4246e76da9bed8"
     }
   ],
-  "runtime_results": "pending final publication"
+  "runtime_results": "pending final publication",
+  "tested_source_commit": "af34bbe5a36658b57d9749cba2212e26fb7de537",
+  "source_git_blob_ids": {
+    "src/offline/app.ts": "b0fe97bec6af4a42127ef085b6900527f4572c88",
+    "src/components/work-timer.tsx": "814fc049a7ee721d6131fbca6540ee82f7625ce4",
+    "src/crm/directory.ts": "60de06c5dc0b62ea1bf03d40fccfe798c96047fc",
+    "tests/browser/offline-completion-handoff.spec.ts": "ffb084deebc9285c36e96872a2cfe1341c6cf572",
+    "tests/database/directory-pagination.test.ts": "d4fbeb302ca85703275d1a3207256e5f6f5aeec2",
+    "scripts/quality-directory-proof.ts": "916f52d823253158d3fc54f201bc50fa29d0e783",
+    "scripts/quality-customer-browser-proof.ts": "cd3fa87450e4abc6cb37997a5743344f9a941cdb"
+  },
+  "source_git_content_sha256": {
+    "src/offline/app.ts": "34e4214a5c681011960df7b294dbbc423316f59e1c6a26babf366cff4a398c9e",
+    "src/components/work-timer.tsx": "d3c41893a09124582617ac259df55ff7bb36e8e346f228b460e5d879c229b563",
+    "src/crm/directory.ts": "f8431dba528005284ec8f4fb4143882c539a3bdf8408ca0345c6b3badf743576",
+    "tests/browser/offline-completion-handoff.spec.ts": "e28d0aea00761faa1da30d8b93a101cfaf2dd38f0b2254ac67383ad3c3784394",
+    "tests/database/directory-pagination.test.ts": "1b2d311b7b41752a78430d14e07e0f8b1fdd6f3282db65112ce6d8908fd43b1c",
+    "scripts/quality-directory-proof.ts": "6af63e53079b43596d131fe9e736b3b8ae2769fb5201d1ad86df1417be1474fd",
+    "scripts/quality-customer-browser-proof.ts": "0520e05a5089d93cf6224f27d562cafbc7b6be3a935d6177e4757c236218205b"
+  },
+  "source_hash_scope": "source_files hashes exact Windows working-copy bytes; Git blob IDs and Git content SHA256 identify committed normalized bytes. Performance raw files retain the then-current source head plus candidate file hash."
 }

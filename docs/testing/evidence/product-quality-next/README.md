@@ -42,13 +42,21 @@ Reproduce after preparing the private disposable app environment: run `quality-d
 
 ## Verification and review boundaries
 
-Final browser/database results and the artifact manifest are being completed before publication. Build, full lint, typecheck, studio, naming, foundation and prototype checks have passed at their recorded local stages. The copy-ready instruction block is 7,725 characters, below its 8,000-character limit; an earlier oversized draft is an authoring failure, not an application failure.
+The directory/CRM PostgreSQL run passed all **53** tests, including the new pagination/count case, scoped reads and retained concurrency/owner-transfer cases. [Database log](quality-db.txt). The selected compiled browser run at `af34bbe` completed with **21 passes and two failures** in the new exact-label note assertion. Both failure captures and the trace show the exact note retained and Start disabled. The controlled textarea acquired a child text node with its value, which made the exact wrapping-label selector fail; its accessible textbox name stayed Short note. The fixture now locates that textbox by role and selects the specific frozen status (the dialog also has an Unsaved status). The two affected cases are being rerun; no application change or assertion deadline change was made for this correction. Final results and artifact hashes are being completed before publication. Build, full lint, typecheck, studio, naming, foundation and prototype checks have passed at their recorded local stages. The copy-ready instruction block is 7,725 characters, below its 8,000-character limit; an earlier oversized draft is an authoring failure, not an application failure.
 
 The full local unit run has 626 passes and three failures. All three reproduce on a separate clean checkout of exact main `f0953c5`: two local document-store tests report ExactDocumentUnavailable and the recovery-path test expects a different refusal message on Windows. [Full candidate log](quality-unit.txt), [unchanged-main control](quality-unit-baseline.txt). The failures are retained, not suppressed or counted as passes. Linux PR CI remains separate.
 
 Other authoring/environment observations: the first private database reset failed transactionally at default lock capacity and passed after restarting only this test cluster with the existing CI-equivalent increased capacity. The first candidate measurement invocation correctly refused a missing explicit load-fixture environment flag before workload execution. The initial handoff proof predates its strengthened Service-review and stale-dialog assertions; its 3/3 result is not attributed to the final test source.
 
 An independently coordinated automated review of the source and retained proof objects found no remaining blocking source defect after the timer dialog guard and measurement postconditions were added. That review included output equality, permission predicates, pagination, source hashes, fixture preservation and the mixed browser result. Runtime outcomes are recorded separately. No owner or human visual acceptance is inferred.
+
+The [release snapshot](release-checks.json) records all 50 completed successful checks on baseline main `f0953c5`, separately from #369’s 51 successful PR-head checks and this increment’s future PR checks. Log text is normalised for trailing whitespace and private checkout paths; substantive error results are retained.
+
+## Connected walkthrough observations
+
+Both desktop and phone passed the maintained commercial chain (same Lead, Deal, estimate/quotation, Project receiving and owned returned Lead) and the separate Service-to-Finance journey (controlled booking, attributable originals, exact customer response, reconciled synthetic Finance outcome and separate return visit). These are two declared synthetic scenarios; no single cross-module business record is invented to join them. Native HTTP preparation remains separate from the browser handovers.
+
+The Customers captures show the same scoped total of 999 from 1,000 fixture organisations, readable references and counts, desktop table/pagination and phone cards. The phone first viewport devotes substantial space to navigation and filters; reducing that space is a candidate for owner usability review, not an accepted redesign. Timer-dialog inspection confirms retained note text and explicit frozen-state guidance. Final completion/Service-review captures will be inspected after the focused case passes.
 
 ## Next bounded work
 

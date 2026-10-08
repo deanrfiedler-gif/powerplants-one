@@ -20,6 +20,7 @@ type Stored = {
 test("large offline queue continues through online completion with all 100 original captures", async ({
   page,
   context,
+  request,
 }, info) => {
   test.setTimeout(240000);
   const setup = await prepared(
@@ -284,13 +285,27 @@ test("large offline queue continues through online completion with all 100 origi
   ).toEqual(
     job.draft_revisions[0].entries.map((e: { id: string }) => e.id).sort(),
   );
-  expect(
-    await (
-      await page.request.get(
-        `/api/v1/attachments/${job.attachments[0].id}/bytes`,
-      )
-    ).body(),
-  ).toEqual(png());
+  const photoReference = report.revisions[0].snapshot.attachments;
+  expect(photoReference).toEqual([
+    {
+      id: job.attachments[0].id,
+      version: job.attachments[0].version,
+      sha256: createHash("sha256").update(png()).digest("hex"),
+      byte_count: png().length,
+    },
+  ]);
+  // Report review sees immutable photo references. The existing field download
+  // remains technician-only; do not broaden access to satisfy this handoff proof.
+  const reviewerDownload = await page.request.get(
+    `/api/v1/attachments/${job.attachments[0].id}/bytes`,
+  );
+  expect(reviewerDownload.status()).toBe(403);
+  await call(request, "local-session", { profile: "assigned-technician" });
+  const originalPhoto = await request.get(
+    `/api/v1/attachments/${job.attachments[0].id}/bytes`,
+  );
+  expect(originalPhoto.ok()).toBe(true);
+  expect(await originalPhoto.body()).toEqual(png());
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,
@@ -324,6 +339,11 @@ test("large offline queue continues through online completion with all 100 origi
         attachment: {
           id: job.attachments[0].id,
           status: job.attachments[0].status,
+          report_reference: photoReference[0],
+          original_bytes_verified_as: "assigned-technician",
+          coordinator_direct_download_status: reviewerDownload.status(),
+          service_photo_preview:
+            "Not available in the current review UI; separate confirmed receiving gap",
         },
         report: { id: submitted.report.id, status: submitted.report.status },
         retained_originals: retained.length,

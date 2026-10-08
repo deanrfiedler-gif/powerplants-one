@@ -1,0 +1,17 @@
+
+> powerplants-one@0.1.0 studio:check
+> node --import tsx scripts/check-development-register.ts
+
+{
+  "entries": 350,
+  "component_entries": 39,
+  "runnable_components": 20,
+  "component_reviews_pending": 39,
+  "journeys": 30,
+  "current_journeys": 24,
+  "source_routes": 196,
+  "errors": [],
+  "unreviewed": 350,
+  "stale": 0,
+  "scope": "Coverage and reference integrity; visual/functional acceptance is separately recorded."
+}
