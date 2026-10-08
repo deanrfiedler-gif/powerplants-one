@@ -70,6 +70,15 @@ test("the phone overview is one page: header, five-cell bar, Quick Actions, atte
   await expect(banner.locator(".product-heading")).toHaveText("My Work", { useInnerText: true });
   await expect(banner.locator(".ppo-crumb-current")).toHaveAttribute("aria-current", "page");
   await expect(banner.locator(".brand-logo:visible")).toHaveCount(0);
+  await page.setViewportSize({ width: 320, height: 844 });
+  expect(await banner.locator(".ppo-crumb-current").evaluate(node => node.scrollWidth <= node.clientWidth)).toBe(true);
+  expect(await banner.locator("button:visible").evaluateAll(nodes => nodes.every(node => {
+    const box = node.getBoundingClientRect();
+    return box.width >= 44 && box.x >= 0 && box.right <= innerWidth && box.bottom <= 64;
+  }))).toBe(true);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.screenshot({ path: info.outputPath("overview-header-320.png") });
+  await page.setViewportSize({ width: 390, height: 844 });
 
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(/^Good (morning|afternoon|evening), /);
   await expect(page.locator(".mw-hello .mw-tag")).toHaveText("Sales");

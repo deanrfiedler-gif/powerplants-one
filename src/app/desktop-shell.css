@@ -323,6 +323,9 @@
   .mobile-navigation.ppo-phone-bar-r07 > :is(a,button,span) > span { max-width: 100%; font-size: 10px; }
   .mobile-navigation.ppo-phone-bar-r07 .product-icon { width: 25px; height: 25px; }
 }
+@media (max-width: 360px) {
+  .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .ppo-crumb-current { font-size: 16px; }
+}
 
 /* Installation entries and the manual instruction panel. Quiet secondary actions in the
    existing More surface, reusing its link, dialog and title treatments; no new top bar,
