@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. Direction: 8 October 2026. Implementation verification in progress; owner/device acceptance pending.
+Owner: Dean Fiedler. Direction: 8 October 2026. Bounded database and compiled browser verification is retained in the [execution record](../testing/evidence/report-photo-inspection/README.md); owner/device acceptance remains pending.
 
 Dean authorised continuing the bounded quality work and proceeding to its next step. The [quality increment](product-direction-quality.md), published in [draft PR #370](https://github.com/deanrfiedler-gif/powerplants-one/pull/370), proved the large offline submission reaches Service review with exact photo references. It also confirmed that the reviewer has no photo-inspection action. This implements the evidence-inspection task already described by the [Service review workspace](service-review-reports-workspace-design.md), within SV-06. It adopts no CREMS parity requirement.
 
