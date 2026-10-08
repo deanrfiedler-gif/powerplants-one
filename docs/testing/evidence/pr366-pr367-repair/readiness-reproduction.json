@@ -1,0 +1,48 @@
+{
+  "source_commit": "c849b770444a032049705fa8503b833d441afe6b",
+  "observed_at": "2026-10-08",
+  "environment": {
+    "host": "Windows",
+    "application": "local development",
+    "node": "24.21.0",
+    "playwright": "1.63.0",
+    "chrome": "154.0.8037.98",
+    "database": "ppo_synthetic_test",
+    "persona": "coordinator"
+  },
+  "service_return": {
+    "fixture": "Accepted synthetic Won Service handover; independently saved Service request",
+    "reproduction": "Withhold the real successful scoped WorkOrder owner GET on return to the native form. Fill the disposition and click Save draft work order while that required selector has no options.",
+    "before_read": {
+      "owner_missing": true,
+      "work_order_posts": 0,
+      "url_unchanged": true
+    },
+    "after_releasing_read": {
+      "owner_selected": true,
+      "work_order_posts": 1,
+      "receipt_status": 201,
+      "return_matches_exact_handover_and_receipt_id": true,
+      "native_status": "Draft",
+      "native_scope_revision_id": null
+    },
+    "repair": "Observe the returning form's exact successful owner GET and all required selected values before saving. Retain the original URL assertion deadline; compare the creation receipt's record_id to the returned query."
+  },
+  "rail_window": {
+    "fixture": "Nine earlier owned synthetic activities, then the former one-hour-overdue fixture",
+    "reproduction": "The due-ordered overview has eight rows and reports BoundedWindow; the newer fixture is absent despite a successful read.",
+    "before": {
+      "window_limit": 8,
+      "completeness": "BoundedWindow",
+      "fixture_missing": true
+    },
+    "after_placing_fixture_before_current_window": {
+      "exact_fixture_first": true,
+      "readable_expanded_row": true,
+      "rail_width": 232,
+      "row_minimum_width": 240
+    },
+    "repair": "Use the successful scoped overview's earliest time and observed clock to place the fresh fixture inside its bounded window; confirm its exact ID in the rendered read before unchanged geometry assertions."
+  },
+  "limits": "Bounded diagnostic reproduction, separate from standard Playwright project results, owner acceptance, real zoom/device review and deployment. No business authority, grant, application command or test deadline changed."
+}

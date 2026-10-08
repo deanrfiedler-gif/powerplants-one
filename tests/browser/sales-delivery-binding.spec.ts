@@ -251,14 +251,37 @@ test("LC-16 Service intake returns to a native work order and the explicit link 
   await page
     .getByLabel("Reason for saving", { exact: true })
     .fill("SYN independently captured intake");
+  // The returning form mounts fresh scoped selectors. A required select with
+  // no options blocks native submission even when its React value is retained.
+  const returningOwners = page.waitForResponse((r) => {
+    const url = new URL(r.url());
+    return r.request().method() === "GET" &&
+      url.pathname === "/api/v1/selectors/owners" &&
+      url.searchParams.get("company_id") === CRM.company &&
+      url.searchParams.get("site_id") === CRM.site &&
+      url.searchParams.get("purpose") === "WorkOrder";
+  });
   await page
     .getByRole("button", { name: "Save service request", exact: true })
     .click();
   await expect(page).toHaveURL(/\/service\/work-orders\/new\?.*ticket_id=/);
   const ticket = new URL(page.url()).searchParams.get("ticket_id")!;
+  const ownerRead = await returningOwners;
+  expect(ownerRead.status()).toBe(200);
+  expect(await ownerRead.finished()).toBeNull();
+  for (const [label, value] of [
+    ["Company context", CRM.company],
+    ["Service site", CRM.site],
+    ["Customer at this site", CRM.org],
+    ["Service owner", CRM.owner],
+  ]) await expect(page.getByLabel(label, { exact: true })).toHaveValue(value);
   await page
     .getByLabel("Purpose of these linked requests", { exact: true })
     .fill("SYN retained intake for independent scope review");
+  const creation = page.waitForResponse((r) =>
+    new URL(r.url()).pathname === "/api/v1/service/work-orders" &&
+    r.request().method() === "POST",
+  );
   await page
     .getByRole("button", { name: "Save draft work order", exact: true })
     .click();
@@ -266,6 +289,9 @@ test("LC-16 Service intake returns to a native work order and the explicit link 
     new RegExp(`/sales/handoffs/won/${f.id}\\?created_destination=`),
   );
   const target = new URL(page.url()).searchParams.get("created_destination")!;
+  const created = await creation;
+  expect(created.status()).toBe(201);
+  expect((await created.json()).record_id).toBe(target);
   await review(page);
   await page
     .getByRole("button", { name: "Link accepted Won handover", exact: true })

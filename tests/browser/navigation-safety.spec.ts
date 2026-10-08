@@ -78,12 +78,22 @@ test("N07/N08/N20 dirty preferences protect pointer, keyboard, touch and workspa
 test("N18/N19 primary rail expands, persists and retains endpoints in a short window", async ({ page, isMobile }) => {
   test.skip(isMobile,"Primary rail is a desktop control; mobile uses labelled More/Workspace.");
   await login(page);
+  // The overview is an eight-row due-ordered window, not a complete register.
+  // Place this owned synthetic fixture before its current earliest item.
+  const priorRead=await page.request.get("/api/v1/work/overview?owner=mine&sort=Due");
+  expect(priorRead.status()).toBe(200);
+  const prior=await priorRead.json();
+  const firstDue=Math.min(Date.parse(prior.observed_at),...prior.activities.items.map(
+    (a:{starts_at:string|null;due_at:string})=>Date.parse(a.starts_at??a.due_at),
+  ));
   const fixture=crmDiscovery();fixture.initial_action.summary="SYN NAV readable expanded activity context";
-  fixture.initial_action.due_at=new Date(Date.now()-3600000).toISOString();fixture.initial_action.due_needed=false;
+  fixture.initial_action.due_at=new Date(firstDue-3600000).toISOString();fixture.initial_action.due_needed=false;
   const created=await page.request.post("/api/v1/crm/opportunities",{headers:{Origin:origin()},data:fixture});
   expect(created.ok(),await created.text()).toBe(true);
-  const overview=page.waitForResponse(r=>r.url().includes("/api/v1/work/overview?")&&r.request().method()==="GET"&&r.ok());
-  await page.goto("/work?department=service"); await overview;
+  const overview=page.waitForResponse(r=>new URL(r.url()).pathname==="/api/v1/work/overview"&&r.request().method()==="GET");
+  await page.goto("/work?department=service"); const renderedRead=await overview;
+  expect(renderedRead.status()).toBe(200);expect(await renderedRead.finished()).toBeNull();
+  expect((await renderedRead.json()).activities.items.map((a:{id:string})=>a.id)).toContain(fixture.initial_action.id);
   await page.getByRole("button",{name:"Expand primary navigation",exact:true}).click();
   await expect(page.getByRole("button",{name:"Collapse primary navigation",exact:true})).toHaveAttribute("aria-expanded","true");
   expect(await page.locator(".ppo-rail").evaluate(el=>el.getBoundingClientRect().width)).toBe(232);
