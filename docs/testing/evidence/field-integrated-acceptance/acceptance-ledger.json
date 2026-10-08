@@ -86,6 +86,12 @@
       "head": "24d19b1f158efeb8ad97d62b50e516cbdac4d80e",
       "environment": "Compiled local synthetic Windows PostgreSQL16/Chrome154/Playwright1.63; exact run/source boundaries and artifacts in verification.json.",
       "review": "Independent automated source/evidence review; owner/device acceptance pending."
+    },
+    "TIMELINE": {
+      "path": "docs/testing/evidence/customer-loading-diagnosis/README.md",
+      "head": "c1519ba",
+      "environment": "Unchanged compiled24d19b1; local launcher cache exception; four complete80-navigation runs and one unresolved incomplete repeat retained.",
+      "review": "Independent automated source/evidence review; owner/device and full PT-27 acceptance open."
     }
   },
   "cases": [
@@ -1074,7 +1080,8 @@
         "CV",
         "FRESH",
         "OR",
-        "PQ"
+        "PQ",
+        "TIMELINE"
       ],
       "technical_disposition": "Open findings",
       "existing_evidence_scope": "Keyboard narrative and source-bound profiles; historical16 compiled p95 misses3.42–10.03s against3s.",
@@ -1085,7 +1092,14 @@
       "human_acceptance": "Pending actual observations",
       "benefit": "Unmeasured",
       "current_measurement": "PR #368 head 31d8fe0 (same application tree as main 11e8298): 320 samples/profile, zero failures. Development misses 16/16 groups at p95 5.392–12.702s; compiled misses 15/16 at 2.858–9.596s against unchanged 3s candidate. Source job and exact groups in offline-recovery-acceptance/release-checks.json; not Azure timing.",
-      "focused_current_measurement": "PQ retained-load comparison: 20 service outputs equal; final 40-call service p95 792.51 to 212.64 ms. 80 browser navigations: desktop ready p95 5185.87 to 6625.56 ms, phone 3297.61 to 3320.60 ms. Mixed page result; full target and accessibility acceptance remain open. Raw before/after and initial attempts retained."
+      "focused_current_measurement": "PQ retained-load comparison: 20 service outputs equal; final 40-call service p95 792.51 to 212.64 ms. 80 browser navigations: desktop ready p95 5185.87 to 6625.56 ms, phone 3297.61 to 3320.60 ms. Mixed page result; full target and accessibility acceptance remain open. Raw before/after and initial attempts retained.",
+      "customer_loading_execution": {
+        "manifest": "docs/testing/evidence/customer-loading-diagnosis/verification.json",
+        "result": "Repeat public static transfers eliminated; full performance/reliability acceptance remains open.",
+        "final_desktop_p95_ms": 4420.887500000001,
+        "final_phone_p95_ms": 2469.364800000003,
+        "unresolved_attempt": "An intervening candidate repeat timed out on a phone core response after40 completed desktop checks; no complete JSON or causal diagnosis for that attempt."
+      }
     },
     {
       "id": "PT-28",

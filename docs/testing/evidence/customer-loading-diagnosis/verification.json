@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "compiled_application": "24d19b1f158efeb8ad97d62b50e516cbdac4d80e",
+  "build_id": "bXz2zLSgUTZhicOrJw-F3",
+  "sources": [
+    {
+      "path": "scripts/local-server.ts",
+      "commit": "c1519ba134e2923a9380cf3639ddd6ea02c789ee",
+      "blob": "ad31ab86f4742bc2e3060811185c51ddf9740639",
+      "sha256": "fd78a5febf5f19b2e370ec272c61651dd8f6a30564beba1a9ec99eeb8d80f936",
+      "bytes": 5823
+    },
+    {
+      "path": "scripts/quality-customer-timeline.ts",
+      "commit": "c1519ba134e2923a9380cf3639ddd6ea02c789ee",
+      "blob": "84bc59a973e9ef554146f5862c9da3c7e1a09e3b",
+      "sha256": "cbf2e062df7eec04f32a7c7620c0ac6c09d11de69fe52b42329490433635776b",
+      "bytes": 16944
+    },
+    {
+      "path": "tests/http/compiled-cache.test.ts",
+      "commit": "c1519ba134e2923a9380cf3639ddd6ea02c789ee",
+      "blob": "128161b6f966329beba491ff512a06feb8172091",
+      "sha256": "3884ad12e26d539518c2b5f494cb493cebadd3c033f6647b4307823dbf5a921d",
+      "bytes": 3676
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "browser-candidate-confirm.json.gz",
+      "sha256": "82803274e14a4d15d735025d099bad611f436ba3c746c6f5b63431a012d5c55b",
+      "bytes": 653657
+    },
+    {
+      "path": "browser-candidate.json.gz",
+      "sha256": "a1983bad1aa03bc6064c9493b2169e646520324479d3c46f7566dcf7bdfcd145",
+      "bytes": 658305
+    },
+    {
+      "path": "browser-control.json.gz",
+      "sha256": "db335e4a6c642e87a55a215ca5132dfca547b3d5d6d9b8cdc580ec0fd9da0470",
+      "bytes": 687855
+    },
+    {
+      "path": "browser-measure.json.gz",
+      "sha256": "8e971759bf6d0f218790fe60967828ab0599e731114372ad8b1e5924cbf1a114",
+      "bytes": 693711
+    },
+    {
+      "path": "candidate-confirm-desktop.png",
+      "sha256": "6cae132a09a6348e6f3dcf54190d42f57a404e86a07dc2a302d6f0f4e653694c",
+      "bytes": 144592
+    },
+    {
+      "path": "candidate-confirm-phone.png",
+      "sha256": "fc32afeba939c99a09787df04b984d45e771e5d88e81e88a313a878c0462bf06",
+      "bytes": 59467
+    },
+    {
+      "path": "candidate-desktop.png",
+      "sha256": "42a5cd01230ce48a31508e0262f1ec7eadb60647115d0c17bc8338efd43d412a",
+      "bytes": 144995
+    },
+    {
+      "path": "candidate-phone.png",
+      "sha256": "3727bf4bbc597776fbed2f23f6c516f14177dd8146c23cdfdca157ab63387e87",
+      "bytes": 59730
+    },
+    {
+      "path": "candidate-repeat-desktop.png",
+      "sha256": "34275be7a6165f3f9357bc114b6cffb0052296e34061fb828a47a58022cf2352",
+      "bytes": 144911
+    },
+    {
+      "path": "customer-cache-http-final.txt",
+      "sha256": "fd621e49d00cc8022cce6c0db49c303b96da34c88084bfe07d0bf389b4c784c2",
+      "bytes": 925
+    },
+    {
+      "path": "customer-cache-http-initial.txt",
+      "sha256": "c865e151227eab635dcab47902e472269fa2eb128df765e3867a93934c0659e1",
+      "bytes": 216
+    },
+    {
+      "path": "customer-cache-http-verified.txt",
+      "sha256": "ee18413ee9e0eefd862170370b4a66933cb6ad9aa76bf9711cbeb656bfe70c9f",
+      "bytes": 217
+    },
+    {
+      "path": "customer-cache-typecheck.txt",
+      "sha256": "ba33a711c461001825075a9a3872deaa3e393e4cc3c15731565002c473e7ee5d",
+      "bytes": 50
+    },
+    {
+      "path": "customer-timeline-candidate-confirm.txt",
+      "sha256": "eb3ed5f54a5b0acb80ffcebdad1433f6ddd1a263b6f692bca7f43969aaa0039b",
+      "bytes": 962
+    },
+    {
+      "path": "customer-timeline-candidate-repeat.txt",
+      "sha256": "c8e3610a33e0a67d1e8a1454944ecf4aabac5d09f0ebe9dec47fe7be25f25347",
+      "bytes": 884
+    },
+    {
+      "path": "customer-timeline-candidate.txt",
+      "sha256": "75b36c54dfe00abe522e7049f21575c4db81152e828aee83ef09db3f35ded8ff",
+      "bytes": 890
+    },
+    {
+      "path": "customer-timeline-control.txt",
+      "sha256": "88cc1ecd7feeabe947f9d024ade6fac3012a34642445ae5ca812ff787383127a",
+      "bytes": 875
+    },
+    {
+      "path": "customer-timeline-foundation.txt",
+      "sha256": "e9aeeb4686e1dfe7a0901b8b731f14fa37b595265e5e5c8456ba80600ad27889",
+      "bytes": 330
+    },
+    {
+      "path": "customer-timeline-lint.txt",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "bytes": 1
+    },
+    {
+      "path": "customer-timeline-measure.txt",
+      "sha256": "766e12573918d64ec7f983d17b902a9b7fe6bd44507a0dfcc34e741f55558e31",
+      "bytes": 894
+    },
+    {
+      "path": "customer-timeline-naming.txt",
+      "sha256": "37a726d140214663f84c99d25d32bb4edb8077d6d4b6789a273b56fbeced70bd",
+      "bytes": 296
+    },
+    {
+      "path": "customer-timeline-prepare.txt",
+      "sha256": "5a47e3c92cf2d3bdaf2659bd4b12311963844f16f3a84d4133507cb3f329f8fb",
+      "bytes": 86
+    },
+    {
+      "path": "customer-timeline-retention-typecheck.txt",
+      "sha256": "ba33a711c461001825075a9a3872deaa3e393e4cc3c15731565002c473e7ee5d",
+      "bytes": 50
+    },
+    {
+      "path": "fixture.json",
+      "sha256": "0964eb983529aa20afc5f743728b9a4ef26c7e0ed1a279940524781bd92b4ef3",
+      "bytes": 2302
+    },
+    {
+      "path": "headers-candidate.json",
+      "sha256": "d7a5910ab99b3e22689dc58e665ea4c682c4da70c7bff088517037905ef7acef",
+      "bytes": 6315
+    },
+    {
+      "path": "headers.json",
+      "sha256": "fcc5fc699f0d5362f00038387271a80faf1a49f924246ccf5472ac8dac1b0e17",
+      "bytes": 6358
+    },
+    {
+      "path": "summary.json",
+      "sha256": "99f1cc71c19c9d66122846b00363fd8c97e4ab7a27a140f6093ca99342149090",
+      "bytes": 18930
+    },
+    {
+      "path": "waves.csv",
+      "sha256": "0207300d5541cf80a32d8d3b9ad64a882053135aad99b9400078b86594c53079",
+      "bytes": 3741
+    }
+  ],
+  "boundaries": [
+    "Same compiled app and seven-table fixture across all complete runs; source/run fingerprints are in summary and raw archives.",
+    "Original measurement has no observed launcher SHA field; its original launcher is bound by committed eccf98e source.",
+    "Control driver HEAD d3b5875 intentionally had the original eccf98e launcher Git bytes restored; actual SHA in raw control.",
+    "Four complete runs320samples; intervening failed candidate-repeat is retained separately and unresolved.",
+    "Final desktop misses3seconds; no full PT-27, hosted or reliability acceptance.",
+    "Local cache policy only; hosted gateway, private data/cache policy, application auth and compiled module source unchanged."
+  ]
+}

@@ -1,0 +1,19 @@
+✓ Running next.config.ts took 178ms
+Powerplants One — local synthetic only — http://127.0.0.1:3034 · compiled build
+{"mode":"candidate-repeat","viewport":"desktop","wave":0,"samples":10}
+{"mode":"candidate-repeat","viewport":"desktop","wave":1,"samples":20}
+{"mode":"candidate-repeat","viewport":"desktop","wave":2,"samples":30}
+{"mode":"candidate-repeat","viewport":"desktop","wave":3,"samples":40}
+node:internal/process/promises:394
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+page.waitForResponse: Timeout 120000ms exceeded while waiting for event "response"
+    at waitForSampleCoreResponse (<checkout>\scripts\quality-core-response.ts:11:23)
+    at <anonymous> (<checkout>\scripts\quality-customer-timeline.ts:264:35)
+    at <anonymous> (<checkout>\scripts\quality-customer-timeline.ts:182:15) {
+  log: [],
+  name: 'TimeoutError'
+}
+
+Node.js v24.21.0
