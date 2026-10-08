@@ -234,6 +234,21 @@
       "path": "units.txt",
       "sha256": "5e3dc310b12427659f51aff53aa36992b1cb21f744a4355ee16a8f6fa0e591fd",
       "bytes": 621
+    },
+    {
+      "path": "products-recovery-ci.json",
+      "sha256": "179becb88c64055f10251c928f16f36f21c59c2e7d2ef66c65881916de749bbf",
+      "bytes": 1844
+    },
+    {
+      "path": "products-recovery-results.json",
+      "sha256": "75840fc35abd05d1bb247a187fa41a1d22f5b6ff91a43ce653ec8f6ebf04efec",
+      "bytes": 1159
+    },
+    {
+      "path": "products-recovery.txt",
+      "sha256": "f6357d98ebcd6f2cf2df3e78d734426b94d24edc13f416088cb49a50fd0d400a",
+      "bytes": 1802
     }
   ],
   "limitations": [
@@ -242,5 +257,11 @@
     "No new permission grant, migration, customer output or general field-download access.",
     "No full-suite local pass inferred; CI checked separately against exact head.",
     "Owner/device/assistive-technology acceptance and full PT-30 remain open."
-  ]
+  ],
+  "ci_repair_source": {
+    "commit": "0e5fa24f5278e175c3123dde28750b936b9475ca",
+    "path": "tests/browser/products.spec.ts",
+    "blob": "5d1fdaa7f58e7ca91dc57d4335649ea9ff669743",
+    "sha256": "e53d45e18ca7f219608038b21fa9e61892911e5952ae9e69b92c8b07551feed8"
+  }
 }

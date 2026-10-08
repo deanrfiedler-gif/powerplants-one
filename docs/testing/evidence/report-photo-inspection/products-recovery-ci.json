@@ -1,0 +1,59 @@
+{
+  "job_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37772149234/job/113294085077",
+  "failed_head": "0de7ae76bd00287742a7434274966f087d0387df",
+  "original_browser_result": {
+    "passed": 11,
+    "failed": 1
+  },
+  "retained_trace_sha256": "3ce591f638e8140dca6bbe19d5f44d835b7df2968cb73584840726672b163a12",
+  "clock": "Playwright retained trace monotonic milliseconds, compared within this trace only.",
+  "chronology": [
+    {
+      "event": "Save click",
+      "at_ms": 21784.769
+    },
+    {
+      "event": "Intercepted backend POST starts",
+      "at_ms": 21836.138
+    },
+    {
+      "event": "Outcome unknown visibility passes",
+      "at_ms": 21875.813
+    },
+    {
+      "event": "Reload starts",
+      "at_ms": 21882.342
+    },
+    {
+      "event": "Reload completes",
+      "at_ms": 22062.842
+    },
+    {
+      "event": "Receipt lookup starts",
+      "at_ms": 22230.082
+    },
+    {
+      "event": "Receipt lookup404 completes",
+      "at_ms": 22245.967
+    },
+    {
+      "event": "Backend POST200 completes",
+      "at_ms": 22410.595
+    },
+    {
+      "event": "route.fetch returns",
+      "at_ms": 22411.457
+    },
+    {
+      "event": "Injected abort starts",
+      "at_ms": 22412.405
+    },
+    {
+      "event": "Injected abort completes",
+      "at_ms": 22413.967
+    }
+  ],
+  "finding": "The test reloaded and looked up the receipt before the injected backend POST had committed. Pending UI was not the intended committed-response-loss precondition. No reproduced-main failure or application recovery regression is claimed.",
+  "repair": "Await successful backend200 and completed injected abort before reload; retain existing receipt/revision2 assertions and deadlines.",
+  "redaction": "Raw trace/session headers remain outside Git. Only source binding and event chronology are published."
+}

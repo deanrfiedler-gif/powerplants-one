@@ -35,3 +35,9 @@ The full repository suite is delegated to CI; its eventual result must be read a
 ## Artifact integrity
 
 [verification.json](verification.json) records source Git blobs, SHA-256 hashes and byte counts for each evidence artifact other than this narrative and the manifest itself. Text logs are normalised to LF and private checkout paths replaced with `<checkout>`. Source hashes use Git LF bytes; browser records additionally preserve their originally observed working-file hashes. Initial and final run identities are kept separately. Synthetic IDs and photographs are fixtures; no credentials or operational records are included.
+
+## Products CI test precondition repair
+
+At photo head `0de7ae76`, the Products lane had 11 browser passes and one recovery-test failure. The [redacted trace chronology](products-recovery-ci.json) proves reload and receipt lookup occurred before the intercepted backend POST committed. The visible “Outcome unknown” heading represents pending state even while saving, so it did not prove the intended committed-response-loss condition. No application recovery change or baseline/environment attribution was made. Raw session-bearing traces remain outside Git.
+
+Test source `0e5fa24` now waits for backend HTTP 200 and the injected abort before reload, preserving the existing receipt/revision-2 assertions and deadlines. The focused compiled desktop/phone cases plus warm-up passed 3/3; [results](products-recovery-results.json) and [log](products-recovery.txt) retain that separate run. The original photo source and run identities above remain unchanged. CI for the updated published head remains a separate observation.

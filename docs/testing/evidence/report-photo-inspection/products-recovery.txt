@@ -1,0 +1,28 @@
+[WebServer] (node:6536) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.98"}
+
+Running 3 tests using 1 worker
+
+(node:15864) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[warm-up] 671 routes in 34166 ms, 0 unreachable. Slowest:
+  6575 ms  200  /development/design-system
+  1995 ms  200  /development/page-register
+  1934 ms  200  /api/development/catalog
+  1823 ms  404  /api/development/reference
+   614 ms  200  /calendar
+   191 ms  200  /service/work-orders
+   179 ms  200  /estimating/discovery/00000000-0000-4000-8000-000000000000/costing
+   154 ms  200  /sales/opportunities
+   149 ms  200  /engineering/commissioning/handovers
+   141 ms  200  /engineering/commissioning
+  ok 1 [warm-up] › tests\browser\warm-up.setup.ts:10:1 › warm every route once before the browser projects (34.2s)
+(node:14316) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 [desktop-chromium] › tests\browser\products.spec.ts:421:1 › PD authoring preserves stale inputs and recovers a committed response loss without duplicate revision (1.8s)
+(node:9320) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [mobile-chromium] › tests\browser\products.spec.ts:421:1 › PD authoring preserves stale inputs and recovers a committed response loss without duplicate revision (1.6s)
+
+  3 passed (2.1m)
