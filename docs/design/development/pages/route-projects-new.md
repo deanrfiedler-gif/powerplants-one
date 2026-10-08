@@ -31,6 +31,8 @@ Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared B
 
 Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
 
+NAV repair: after a confirmed ordinary Project creation, retain its exact receipt ID, disable the completed form and open that Project. A visible **Open saved project** continuation remains while navigation completes. The saved form is no longer an unsaved draft, so a subsequent React commit must not reinstall its leave guard. Failed/uncertain outcomes retain the draft and existing original-action recovery; Sales create-and-return keeps its independent receiving/binding controls. Fixtures: `tests/browser/projects-gantt.spec.ts`; paired owner/device acceptance remains pending.
+
 ## Visual references
 
 No exact image or HTML reference is linked. Keep this gap visible.
