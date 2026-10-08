@@ -1,0 +1,6 @@
+{
+  "stage": "After completed build, while printing the log to a Windows console",
+  "error": "UnicodeEncodeError: cp1252 could not encode box-drawing character",
+  "prior_build_exit": "Not recorded before wrapper exception; not counted as the passing build",
+  "verified_rerun_exit": 0
+}

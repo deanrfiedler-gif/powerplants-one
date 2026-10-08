@@ -1,0 +1,243 @@
+{
+  "schema_version": 1,
+  "compiled_source": "000181202854ce4a8318d2bc00d806c48183af17",
+  "build_id": "7g3uZISDiEjWT5TK2rgeB",
+  "test_source": "6dcea2e5100638b1d20fdaf4b689b47756e6e4d4",
+  "sources": [
+    {
+      "path": "src/components/crm-directory.tsx",
+      "commit": "000181202854ce4a8318d2bc00d806c48183af17",
+      "blob": "eb570bcd302d95387b05a9dffc8715f4952cfd34",
+      "sha256": "e151027cce1278928722f5310a03aa12e87e89f3dc6288da7344aa528797980f",
+      "bytes": 19430
+    },
+    {
+      "path": "scripts/quality-directory-prefetch.ts",
+      "commit": "000181202854ce4a8318d2bc00d806c48183af17",
+      "blob": "a24df894729ed1251c5585a68a2fd0ebc21d1b8e",
+      "sha256": "3115719f7781612229a3b522c93f020ea86fc0e07fa4cafa4c6dc44ecf881742",
+      "bytes": 7229
+    },
+    {
+      "path": "scripts/quality-performance-fixture.ts",
+      "commit": "000181202854ce4a8318d2bc00d806c48183af17",
+      "blob": "67a51b55dc680770ef5494c91070081e6475d4f6",
+      "sha256": "7fc604e53f815c064173b0d0c371a06aa99c6c20a92b62d3e2cd8d62d4500c9f",
+      "bytes": 1845
+    },
+    {
+      "path": "scripts/quality-core-response.ts",
+      "commit": "000181202854ce4a8318d2bc00d806c48183af17",
+      "blob": "9ee0ee83f251ace13e258a1af1314b7145453367",
+      "sha256": "2018eea3d1ec6cf91eb0c8e8c5fd1e9cadfbc09043b40700f3e226edc2a9cf7d",
+      "bytes": 628
+    },
+    {
+      "path": "tests/browser/directory-navigation.spec.ts",
+      "commit": "6dcea2e5100638b1d20fdaf4b689b47756e6e4d4",
+      "blob": "95c75b0ed562b3e75bab4b5969bfdb61f586a48d",
+      "sha256": "234162f7ce470084d27633e8f07e7bbb0eecbe18a7ce5cee9e50c16950296e12",
+      "bytes": 5737
+    },
+    {
+      "path": "tests/browser/crm-refinements.spec.ts",
+      "commit": "000181202854ce4a8318d2bc00d806c48183af17",
+      "blob": "8bcd8c629bbf7d69cc675a3a6e522c122d756444",
+      "sha256": "9b09796f7891ec532627fe5e922597477833fcf10f3fb7e432cb96cf885b95dc",
+      "bytes": 36780
+    },
+    {
+      "path": "tests/browser/department-navigation.spec.ts",
+      "commit": "000181202854ce4a8318d2bc00d806c48183af17",
+      "blob": "91604c51114b4c3e3f19d3773b59cc6deb407f17",
+      "sha256": "d3c81898e9ca1c0bd03081207f73d4d7c66b9bdde6c27d781050acbe57a7ca1d",
+      "bytes": 18157
+    },
+    {
+      "path": "tests/browser/navigation-safety.spec.ts",
+      "commit": "000181202854ce4a8318d2bc00d806c48183af17",
+      "blob": "c2e61ac3a9dc5d96e7b7a673efdfc0237c42a832",
+      "sha256": "3eb4a1f6a29e6b378c925926876e4f778adb5b5af55cb53b742aa056187e4df8",
+      "bytes": 15554
+    },
+    {
+      "path": "tests/helpers/crm-refinement-call.ts",
+      "commit": "000181202854ce4a8318d2bc00d806c48183af17",
+      "blob": "223706aa3e2f331e25647d0963263dc36479ada2",
+      "sha256": "b2afff319cf3c9308412463565671a9ab5856e8990ca5423ede8cb1659e15108",
+      "bytes": 693
+    },
+    {
+      "path": "playwright.compiled.config.ts",
+      "commit": "000181202854ce4a8318d2bc00d806c48183af17",
+      "blob": "f464f449427254aa92da889466a08bad1d014d7b",
+      "sha256": "68e65383845fa340942d4d9bb4a23172e714035e3b2a8cc9fabee635761902d9",
+      "bytes": 733
+    }
+  ],
+  "archives": [
+    {
+      "path": "directory-prefetch-results.json.gz",
+      "original_sha256": "29a6dff693fd1a34db6ade38ffeac11b5dfee81dbee36f5be76674adeb83feaf",
+      "uncompressed_sha256": "fecf05d493f3d8598d2a77d8968b2978b2362e82a0ae4c9a1a1e21661b205e86",
+      "uncompressed_bytes": 182764,
+      "transformation": "Checkout path redaction and final newline only; no outcome or error changes."
+    },
+    {
+      "path": "directory-prefetch-verified-results.json.gz",
+      "original_sha256": "311d17e064699297cc66053476d3b452a52b1a6d5d4188359431023cf0f19f69",
+      "uncompressed_sha256": "46477be30c74962febc5f2906a70d859bab7ee59672674eae5b70d7bf6a4e903",
+      "uncompressed_bytes": 159924,
+      "transformation": "Checkout path redaction and final newline only; no outcome or error changes."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "build-wrapper-failure.json",
+      "bytes": 289,
+      "sha256": "c03a168de97301e7f4af6463dfe399aaaf3ffa4f8541336fa4ad023d948f7dae"
+    },
+    {
+      "path": "classification.json",
+      "bytes": 42372,
+      "sha256": "5e2059fb8c752aa54a058ebbb5b4599829c6ada4eeac07ee83e39163c67aa222"
+    },
+    {
+      "path": "desktop-crm-organisations-directory.png",
+      "bytes": 144806,
+      "sha256": "0bde0bbcc5f61a4e44bd75dedf91ee1a96bb0db45ba8627d50d5e3ec49cf044a"
+    },
+    {
+      "path": "desktop-crm-people-directory.png",
+      "bytes": 68486,
+      "sha256": "4b7d9f6046f800455e1ce4d0867480aeceb6f9bbbb433d10d7c17d9eb7b75c2e"
+    },
+    {
+      "path": "desktop-directory-navigation.png",
+      "bytes": 144772,
+      "sha256": "66866c7addfb3d2af2c78676ab3c29fe874527e9a8300273853bc5ce194810a8"
+    },
+    {
+      "path": "desktop-directory-request-observation.json",
+      "bytes": 458,
+      "sha256": "dd5f8111d07fdc724ec47c983a4651ccf61a18b21ab432e470427597ee52c81d"
+    },
+    {
+      "path": "directory-prefetch-browser-verified.txt",
+      "bytes": 2043,
+      "sha256": "0816d5ec2a8c4f59e6f4f67aaecf9ae4bbb00a91123d611191af4d8d7fce3ae5"
+    },
+    {
+      "path": "directory-prefetch-browser.txt",
+      "bytes": 14904,
+      "sha256": "1987b697691058ae346461c79c1707dee6bf17c7728b5b8e9101ac182d88adf8"
+    },
+    {
+      "path": "directory-prefetch-build-result.json",
+      "bytes": 107,
+      "sha256": "7e5ae71ecd22145d3a14c367d55a97f4716b8e6cc7b015672a95aec6023d67ea"
+    },
+    {
+      "path": "directory-prefetch-build-verified.txt",
+      "bytes": 26567,
+      "sha256": "ba466b5e9f6ef32d59a90607ca3ec2296650c46c3f7c156f309f5f0053cb85f4"
+    },
+    {
+      "path": "directory-prefetch-build.txt",
+      "bytes": 26568,
+      "sha256": "22d7ac614acac7aa034cf50ff0d8d8f503ce0ad254a44273401520e5a5372232"
+    },
+    {
+      "path": "directory-prefetch-checks.json",
+      "bytes": 775,
+      "sha256": "541b5b7021a8cbeec9214b5f5b50d7bc4d5a2fca6577055e822381529b7453c9"
+    },
+    {
+      "path": "directory-prefetch-checks.txt",
+      "bytes": 1325,
+      "sha256": "74ff257be8c03beae8b2f0e5673098146abefe7f8b4f5199a061068a1838f64a"
+    },
+    {
+      "path": "directory-prefetch-classification-verified.txt",
+      "bytes": 296,
+      "sha256": "6a7ce2213dd87b013bd3b329ce4bbc38814aff0355b0df31aac5d7ed5cc2b4ec"
+    },
+    {
+      "path": "directory-prefetch-classification.txt",
+      "bytes": 542,
+      "sha256": "048c84249a1832056431d3319d0cae9ba7659308c746b9886f4b2ad6424d823b"
+    },
+    {
+      "path": "directory-prefetch-results.json.gz",
+      "bytes": 13081,
+      "sha256": "cb5387af2019c89970855b499fc82f7d790b46ed715aec3aafaa150bf9734801"
+    },
+    {
+      "path": "directory-prefetch-verified-results.json.gz",
+      "bytes": 11182,
+      "sha256": "75047740f54fc67e087d3004cab21d7da2f658a2eb37fde6f642b95416cde809"
+    },
+    {
+      "path": "phone-crm-organisations-directory.png",
+      "bytes": 35891,
+      "sha256": "ca8afe46ff4383c3f41d36a70e3eec7baffde34770537eb61b8a187dbc83f456"
+    },
+    {
+      "path": "phone-crm-people-directory.png",
+      "bytes": 34219,
+      "sha256": "bf9c6d9d7714a5ddc1e26f075d004b2aa026834d8fbc92dc57302656dc308e67"
+    },
+    {
+      "path": "phone-directory-navigation.png",
+      "bytes": 59629,
+      "sha256": "ce3343872cd2f2fcc8866b8da06f83252e728b3f35e3a16e7e0f5e3fb3d283ca"
+    },
+    {
+      "path": "phone-directory-request-observation.json",
+      "bytes": 456,
+      "sha256": "490b7b8aaee7abd57cd3b149edd388a39f91205621654e4c91a7d7538e983c48"
+    }
+  ],
+  "checks": {
+    "initial_run": {
+      "startTime": "2026-10-08T13:19:56.268Z",
+      "duration": 112585.277,
+      "expected": 4,
+      "skipped": 1,
+      "unexpected": 4,
+      "flaky": 0
+    },
+    "affected_rerun": {
+      "startTime": "2026-10-08T13:22:57.913Z",
+      "duration": 73586.59599999999,
+      "expected": 5,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "unique_passing_cases_including_warmup": 8,
+    "business_cases_passed": 7,
+    "existing_phone_department_skip": 1
+  },
+  "request_observation": [
+    {
+      "viewport": "desktop",
+      "requests": 67,
+      "declared_prefetch": 32,
+      "before_ready_prefetch": 32,
+      "customer_record_prefetch": 0
+    },
+    {
+      "viewport": "phone",
+      "requests": 54,
+      "declared_prefetch": 20,
+      "before_ready_prefetch": 18,
+      "customer_record_prefetch": 0
+    }
+  ],
+  "limits": [
+    "Separate earlier/candidate observations and builds; no causal whole-page or next-navigation speed claim.",
+    "Existing department reload/back/new-tab case deliberately skips phone.",
+    "CI and owner/device/accessibility acceptance pending; earlier local timing timeout unresolved."
+  ]
+}

@@ -1,0 +1,197 @@
+[WebServer] (node:42384) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.98"}
+
+Running 9 tests using 1 worker
+
+(node:16720) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[warm-up] 671 routes in 30979 ms, 0 unreachable. Slowest:
+  9425 ms  200  /development/design-system
+  5143 ms  200  /development/page-register
+  3373 ms  404  /api/development/reference
+  3360 ms  200  /api/development/catalog
+   368 ms  200  /calendar
+   202 ms  200  /engineering/00000000-0000-4000-8000-000000000000/changes
+   170 ms  200  /engineering/00000000-0000-4000-8000-000000000000/basis
+   157 ms  200  /engineering/commissioning
+   136 ms  200  /my-jobs
+   135 ms  200  /customers/00000000-0000-4000-8000-000000000000
+  ok 1 [warm-up] › tests\browser\warm-up.setup.ts:10:1 › warm every route once before the browser projects (31.1s)
+(node:46684) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [desktop-chromium] › tests\browser\crm-refinements.spec.ts:304:1 › desktop directory tables and mobile lists share saved, scoped queries (871ms)
+(node:42988) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [desktop-chromium] › tests\browser\department-navigation.spec.ts:137:1 › Engineering and Service retain shared Contacts view through records, reload, back and new tabs (5.1s)
+  x  4 [desktop-chromium] › tests\browser\directory-navigation.spec.ts:47:1 › directory record links avoid automatic reads and keep exact receiving navigation (30.6s)
+(node:9732) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 5 [desktop-chromium] › tests\browser\navigation-safety.spec.ts:51:1 › N07/N08/N20 dirty preferences protect pointer, keyboard, touch and workspace intent (3.7s)
+(node:27152) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  6 [mobile-chromium] › tests\browser\crm-refinements.spec.ts:304:1 › desktop directory tables and mobile lists share saved, scoped queries (1.2s)
+(node:45752) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  -  7 [mobile-chromium] › tests\browser\department-navigation.spec.ts:137:1 › Engineering and Service retain shared Contacts view through records, reload, back and new tabs
+  x  8 [mobile-chromium] › tests\browser\directory-navigation.spec.ts:47:1 › directory record links avoid automatic reads and keep exact receiving navigation (13.1s)
+(node:44244) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 9 [mobile-chromium] › tests\browser\navigation-safety.spec.ts:51:1 › N07/N08/N20 dirty preferences protect pointer, keyboard, touch and workspace intent (2.2s)
+
+
+  1) [desktop-chromium] › tests\browser\crm-refinements.spec.ts:304:1 › desktop directory tables and mobile lists share saved, scoped queries
+
+    Error: Local synthetic access only.
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+       at ..\helpers\crm-refinement-call.ts:14
+
+      12 |     data: body,
+      13 |   });
+    > 14 |   expect(r.ok(), await r.text()).toBe(true);
+         |                                  ^
+      15 |   return r.json();
+      16 | }
+      17 |
+        at crmRefinementCall (<checkout>\tests\helpers\crm-refinement-call.ts:14:34)
+        at <checkout>\tests\browser\crm-refinements.spec.ts:307:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    verification-evidence\customer-directory-prefetch\browser\crm-refinements-desktop-di-7e1ca--share-saved-scoped-queries-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: verification-evidence\customer-directory-prefetch\browser\crm-refinements-desktop-di-7e1ca--share-saved-scoped-queries-desktop-chromium\error-context.md
+
+    Error Context: verification-evidence\customer-directory-prefetch\browser\crm-refinements-desktop-di-7e1ca--share-saved-scoped-queries-desktop-chromium\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    verification-evidence\customer-directory-prefetch\browser\crm-refinements-desktop-di-7e1ca--share-saved-scoped-queries-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace verification-evidence\customer-directory-prefetch\browser\crm-refinements-desktop-di-7e1ca--share-saved-scoped-queries-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop-chromium] › tests\browser\directory-navigation.spec.ts:47:1 › directory record links avoid automatic reads and keep exact receiving navigation
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'Equipment', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'Equipment', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'Equipment', exact: true })
+
+
+      92 |     await activate(page, link, isMobile, !isMobile);
+      93 |     await expect(page).toHaveURL(new URL(path, page.url()).href);
+    > 94 |     await expect(page.getByRole("heading", { name: label, exact: true })).toBeVisible();
+         |                                                                           ^
+      95 |     if (path !== "/people") await directory(page, "/customers");
+      96 |   }
+      97 |   await page.screenshot({ path: info.outputPath("directory-navigation.png"), fullPage: false });
+        at <checkout>\tests\browser\directory-navigation.spec.ts:94:75
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    verification-evidence\customer-directory-prefetch\browser\directory-navigation-direc-c7a08--exact-receiving-navigation-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: verification-evidence\customer-directory-prefetch\browser\directory-navigation-direc-c7a08--exact-receiving-navigation-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    verification-evidence\customer-directory-prefetch\browser\directory-navigation-direc-c7a08--exact-receiving-navigation-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace verification-evidence\customer-directory-prefetch\browser\directory-navigation-direc-c7a08--exact-receiving-navigation-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [mobile-chromium] › tests\browser\crm-refinements.spec.ts:304:1 › desktop directory tables and mobile lists share saved, scoped queries
+
+    Error: Local synthetic access only.
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+       at ..\helpers\crm-refinement-call.ts:14
+
+      12 |     data: body,
+      13 |   });
+    > 14 |   expect(r.ok(), await r.text()).toBe(true);
+         |                                  ^
+      15 |   return r.json();
+      16 | }
+      17 |
+        at crmRefinementCall (<checkout>\tests\helpers\crm-refinement-call.ts:14:34)
+        at <checkout>\tests\browser\crm-refinements.spec.ts:307:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    verification-evidence\customer-directory-prefetch\browser\crm-refinements-desktop-di-7e1ca--share-saved-scoped-queries-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: verification-evidence\customer-directory-prefetch\browser\crm-refinements-desktop-di-7e1ca--share-saved-scoped-queries-mobile-chromium\error-context.md
+
+    Error Context: verification-evidence\customer-directory-prefetch\browser\crm-refinements-desktop-di-7e1ca--share-saved-scoped-queries-mobile-chromium\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    verification-evidence\customer-directory-prefetch\browser\crm-refinements-desktop-di-7e1ca--share-saved-scoped-queries-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace verification-evidence\customer-directory-prefetch\browser\crm-refinements-desktop-di-7e1ca--share-saved-scoped-queries-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile-chromium] › tests\browser\directory-navigation.spec.ts:47:1 › directory record links avoid automatic reads and keep exact receiving navigation
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'Equipment', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'Equipment', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'Equipment', exact: true })
+
+
+      92 |     await activate(page, link, isMobile, !isMobile);
+      93 |     await expect(page).toHaveURL(new URL(path, page.url()).href);
+    > 94 |     await expect(page.getByRole("heading", { name: label, exact: true })).toBeVisible();
+         |                                                                           ^
+      95 |     if (path !== "/people") await directory(page, "/customers");
+      96 |   }
+      97 |   await page.screenshot({ path: info.outputPath("directory-navigation.png"), fullPage: false });
+        at <checkout>\tests\browser\directory-navigation.spec.ts:94:75
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    verification-evidence\customer-directory-prefetch\browser\directory-navigation-direc-c7a08--exact-receiving-navigation-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: verification-evidence\customer-directory-prefetch\browser\directory-navigation-direc-c7a08--exact-receiving-navigation-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    verification-evidence\customer-directory-prefetch\browser\directory-navigation-direc-c7a08--exact-receiving-navigation-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace verification-evidence\customer-directory-prefetch\browser\directory-navigation-direc-c7a08--exact-receiving-navigation-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [desktop-chromium] › tests\browser\crm-refinements.spec.ts:304:1 › desktop directory tables and mobile lists share saved, scoped queries
+    [desktop-chromium] › tests\browser\directory-navigation.spec.ts:47:1 › directory record links avoid automatic reads and keep exact receiving navigation
+    [mobile-chromium] › tests\browser\crm-refinements.spec.ts:304:1 › desktop directory tables and mobile lists share saved, scoped queries
+    [mobile-chromium] › tests\browser\directory-navigation.spec.ts:47:1 › directory record links avoid automatic reads and keep exact receiving navigation
+  1 skipped
+  4 passed (1.9m)

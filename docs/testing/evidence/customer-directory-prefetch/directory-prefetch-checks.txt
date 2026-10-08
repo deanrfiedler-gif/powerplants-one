@@ -1,0 +1,41 @@
+CHECK node node_modules/eslint/bin/eslint.js src/components/crm-directory.tsx scripts/quality-directory-prefetch.ts tests/browser/directory-navigation.spec.ts
+CHECK node node_modules/typescript/bin/tsc --noEmit
+CHECK node --import tsx scripts/check-development-register.ts
+{
+  "entries": 350,
+  "component_entries": 41,
+  "runnable_components": 20,
+  "component_reviews_pending": 41,
+  "journeys": 30,
+  "current_journeys": 24,
+  "source_routes": 196,
+  "errors": [],
+  "unreviewed": 350,
+  "stale": 0,
+  "scope": "Coverage and reference integrity; visual/functional acceptance is separately recorded."
+}
+CHECK python -X utf8 scripts/check_foundation.py
+{
+  "status": "passed",
+  "issued_sources": 22,
+  "requirements": 78,
+  "decisions": 29,
+  "planned_acceptance": 38,
+  "backlog_items": 16,
+  "linked_issues": 16,
+  "local_links_checked": 7238,
+  "files_scanned_for_markers": 4750,
+  "errors": [],
+  "scope": "Documentation assurance only; no business acceptance tests executed"
+}
+CHECK python -X utf8 scripts/check_naming.py
+{
+  "status": "passed",
+  "document_records": 500,
+  "standing_exceptions": 9,
+  "metadata_documents_compared": 343,
+  "git_masters": 221,
+  "project_instruction_characters": 7725,
+  "errors": [],
+  "scope": "Naming and documentation consistency only; runtime behaviour is verified separately"
+}
