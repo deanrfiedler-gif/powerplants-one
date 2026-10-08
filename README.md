@@ -1,6 +1,6 @@
 # Powerplants One
 
-Current work: [unsaved-work correction](docs/testing/evidence/navigation-current-page/README.md) after independent review. #366 and NAV #367 were merged externally after 51 and 54 successful checks; this focused correction starts from main `f24e50b` and remains unmerged until verified. The [joined customer journey evidence](docs/testing/evidence/integrated-journey/README.md) retains its actual `4f883d1` baseline and desktop/phone results; the [owner walkthrough](docs/delivery/integrated-journey-owner-walkthrough.md) awaits actual observations. Verification, owner acceptance and deployment remain separate.
+Current work: join the written PT-11/PT-12/PT-24 offline recovery procedures and reconcile the release record, starting from main `11e8298`. #366, NAV #367 and the [unsaved-work correction #368](docs/testing/evidence/navigation-current-page/README.md) are merged; main has passed all 50 checks. The [joined customer journey evidence](docs/testing/evidence/integrated-journey/README.md) retains its actual `4f883d1` baseline and desktop/phone results; the [owner walkthrough](docs/delivery/integrated-journey-owner-walkthrough.md) awaits actual observations. Verification, owner acceptance and deployment remain separate.
 
 Personal prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance. The repository is public; the application, data and hosted demo remain private and synthetic.
 

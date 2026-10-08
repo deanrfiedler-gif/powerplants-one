@@ -68,6 +68,12 @@
       "environment": "Windows Node24.21.0/npm11.19.0/PostgreSQL16.15/Chrome154.0.8037.97; private task-owned clusters55810/55811, compiled3022; execution manifest supplies final proof checkpoints",
       "initial_runtime": "6e8b898aeb150b0a4b42c3087605556a057986ad",
       "initial_build": "NlpmlalVafLoVSRWWJdSP"
+    },
+    "OR": {
+      "path": "docs/testing/evidence/offline-recovery-acceptance/README.md",
+      "head": "11e8298e6270c085d3ed149208a524ddeb52395c",
+      "environment": "Unchanged compiled application; Windows PostgreSQL16/Chrome154.0.8037.98/Playwright1.63, desktop and mobile/touch. Test source hashes and three successive run identities are in verification.json.",
+      "review": "Implementation self-review; independent and owner/device acceptance pending."
     }
   },
   "cases": [
@@ -445,16 +451,22 @@
       "source_ids": [
         "P08",
         "S6",
-        "FRESH"
+        "FRESH",
+        "OR"
       ],
-      "technical_disposition": "Component",
-      "existing_evidence_scope": "Owner-bound note/photo originals, reload/process continuity, quota refusal components.",
+      "technical_disposition": "Combined synthetic pass",
+      "existing_evidence_scope": "Two cached jobs, exact note/time/photo originals, whole-browser persistent-profile restart and second-insert quota rollback passed on desktop and phone.",
       "current_applicability": "Applicable within selected synthetic PP-01 boundary; no enterprise parent promotion",
-      "continued_validity_and_gap": "Exact two-job note/time/photo close-browser/reopen plus failed second-write sequence remains uncombined.",
-      "fresh_verification_required": "Technical reviewer: run dedicated PT-11 persistent-profile/quota session; physical phone observation pending.",
-      "owner_next_action": "Technical reviewer: run dedicated PT-11 persistent-profile/quota session; physical phone observation pending.",
+      "continued_validity_and_gap": "Physical-device storage pressure and owner observation remain separate from the injected write failure.",
+      "fresh_verification_required": "Review retained manifests and observe the written procedure on the intended physical device.",
+      "owner_next_action": "Review retained manifests and observe the written procedure on the intended physical device.",
       "human_acceptance": "Pending actual observations",
-      "benefit": "Unmeasured"
+      "benefit": "Unmeasured",
+      "current_execution": {
+        "result": "Passed within declared synthetic boundary",
+        "manifest": "docs/testing/evidence/offline-recovery-acceptance/verification.json",
+        "application_baseline": "11e8298e6270c085d3ed149208a524ddeb52395c"
+      }
     },
     {
       "id": "PT-12",
@@ -479,16 +491,22 @@
       "source_ids": [
         "P08",
         "S6",
-        "FRESH"
+        "FRESH",
+        "OR"
       ],
-      "technical_disposition": "Component",
-      "existing_evidence_scope": "Original receipts/dependencies, changed-hash refusal, interrupted byte finalisation.",
+      "technical_disposition": "Combined synthetic pass",
+      "existing_evidence_scope": "Exactly 100 capture entries, 104 wire originals, lost acknowledgements including the photo, original receipt replay, changed-ID-payload refusal, interrupted finalisation and blocked-then-saved completion passed on both viewports.",
       "current_applicability": "Applicable within selected synthetic PP-01 boundary; no enterprise parent promotion",
-      "continued_validity_and_gap": "Current integrated journey has five originals, not the written 100-entry-plus-attachment case.",
-      "fresh_verification_required": "Technical reviewer: execute exact100 batch/lost-ack/conflicting reuse/finalisation procedure without changing IDs.",
-      "owner_next_action": "Technical reviewer: execute exact100 batch/lost-ack/conflicting reuse/finalisation procedure without changing IDs.",
+      "continued_validity_and_gap": "The offline form retains its 30-local-dependency limit. Native completion dependency proof does not prove the complete UI handoff for a 100-entry local queue.",
+      "fresh_verification_required": "Verify the explicit large-queue handoff to online completion, then obtain owner/device observation.",
+      "owner_next_action": "Verify the explicit large-queue handoff to online completion, then obtain owner/device observation.",
       "human_acceptance": "Pending actual observations",
-      "benefit": "Unmeasured"
+      "benefit": "Unmeasured",
+      "current_execution": {
+        "result": "Passed within declared synthetic boundary",
+        "manifest": "docs/testing/evidence/offline-recovery-acceptance/verification.json",
+        "application_baseline": "11e8298e6270c085d3ed149208a524ddeb52395c"
+      }
     },
     {
       "id": "PT-13",
@@ -920,16 +938,22 @@
         "P08",
         "S6",
         "CV",
-        "FRESH"
+        "FRESH",
+        "OR"
       ],
-      "technical_disposition": "Component",
-      "existing_evidence_scope": "Stale cache, changed permission/assignment/scope/pack/policy, restricted original recovery and delayed closed Start.",
+      "technical_disposition": "Combined synthetic pass",
+      "existing_evidence_scope": "Reassignment, cancellation, approved successor scope, newly issued replacement pack, revoked grants and post-Start withdrawal passed on both viewports. Missing/wrong/expired recovery capability refused; exact envelopes/PNG, restricted receipts, audit and visible contact activity retained.",
       "current_applicability": "Applicable within selected synthetic PP-01 boundary; no enterprise parent promotion",
-      "continued_validity_and_gap": "Fresh CV/FI02/FI05/FI07 negatives supplement; exact combined cancellation/reassignment/scope/revocation procedure still needs joined evidence.",
-      "fresh_verification_required": "Technical reviewer: retain old IDs/dependencies; owner recovery must not rebase old attendance into a return.",
-      "owner_next_action": "Technical reviewer: retain old IDs/dependencies; owner recovery must not rebase old attendance into a return.",
+      "continued_validity_and_gap": "Combined synthetic recovery is demonstrated; operational revocation, physical device and actual Service/technician observation remain unaccepted.",
+      "fresh_verification_required": "Review original-authority and receipt manifests with the Service owner; perform actual owner/device observation without rebasing old attendance.",
+      "owner_next_action": "Review original-authority and receipt manifests with the Service owner; perform actual owner/device observation without rebasing old attendance.",
       "human_acceptance": "Pending actual observations",
-      "benefit": "Unmeasured"
+      "benefit": "Unmeasured",
+      "current_execution": {
+        "result": "Passed within declared synthetic boundary",
+        "manifest": "docs/testing/evidence/offline-recovery-acceptance/verification.json",
+        "application_baseline": "11e8298e6270c085d3ed149208a524ddeb52395c"
+      }
     },
     {
       "id": "PT-25",
@@ -1022,7 +1046,8 @@
         "P11",
         "S6",
         "CV",
-        "FRESH"
+        "FRESH",
+        "OR"
       ],
       "technical_disposition": "Open findings",
       "existing_evidence_scope": "Keyboard narrative and source-bound profiles; historical16 compiled p95 misses3.42–10.03s against3s.",
@@ -1032,7 +1057,7 @@
       "owner_next_action": "Dean: desktop keyboard session; technical owner: inspect unchanged final CI samples; obtain representative assistive-technology/device reviewers.",
       "human_acceptance": "Pending actual observations",
       "benefit": "Unmeasured",
-      "current_measurement": "Post-merge main 6e8b898: 320 compiled samples, 0 errors, all 16 groups miss 3000ms; p95 3.864–10.029s. Exact source/profile/raw hashes in performance-main.json. No target changed."
+      "current_measurement": "PR #368 head 31d8fe0 (same application tree as main 11e8298): 320 samples/profile, zero failures. Development misses 16/16 groups at p95 5.392–12.702s; compiled misses 15/16 at 2.858–9.596s against unchanged 3s candidate. Source job and exact groups in offline-recovery-acceptance/release-checks.json; not Azure timing."
     },
     {
       "id": "PT-28",

@@ -1,0 +1,729 @@
+{
+  "baseline": "11e8298e6270c085d3ed149208a524ddeb52395c",
+  "application_source_changed": false,
+  "boundary": "Full regression preceded the PT-12 lost-photo-acknowledgement strengthening and PT-24 authorised/issued-successor strengthening. Each changed procedure was repeated on both viewports. Exact source hashes remain per procedure. No owner/physical-device acceptance or full repository CI is inferred.",
+  "runs": [
+    {
+      "label": "Full offline regression",
+      "stats": {
+        "startTime": "2026-10-08T07:33:03.500Z",
+        "duration": 449858.457,
+        "expected": 35,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "tests": [
+        {
+          "title": "warm every route once before the browser projects",
+          "project": "warm-up",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 30783
+            }
+          ]
+        },
+        {
+          "title": "PT-11 two jobs retain note, time and PNG through browser restart and a later partial write failure",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 22449
+            }
+          ]
+        },
+        {
+          "title": "PT-12 exactly 100 captures replay original receipts and recover interrupted photo finalisation before completion",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 75368
+            }
+          ]
+        },
+        {
+          "title": "PT-24 reassign retains old browser originals and separates restricted recovery from normal acceptance",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 8975
+            }
+          ]
+        },
+        {
+          "title": "PT-24 cancel retains old browser originals and separates restricted recovery from normal acceptance",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 7934
+            }
+          ]
+        },
+        {
+          "title": "PT-24 scope retains old browser originals and separates restricted recovery from normal acceptance",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 9562
+            }
+          ]
+        },
+        {
+          "title": "PT-24 pack retains old browser originals and separates restricted recovery from normal acceptance",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 7438
+            }
+          ]
+        },
+        {
+          "title": "PT-24 revoke retains old browser originals and separates restricted recovery from normal acceptance",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 8076
+            }
+          ]
+        },
+        {
+          "title": "PT-24 withdraw-started retains old browser originals and separates restricted recovery from normal acceptance",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 8955
+            }
+          ]
+        },
+        {
+          "title": "PT-11 two jobs retain note, time and PNG through browser restart and a later partial write failure",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 16097
+            }
+          ]
+        },
+        {
+          "title": "PT-12 exactly 100 captures replay original receipts and recover interrupted photo finalisation before completion",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 71508
+            }
+          ]
+        },
+        {
+          "title": "PT-24 reassign retains old browser originals and separates restricted recovery from normal acceptance",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 9008
+            }
+          ]
+        },
+        {
+          "title": "PT-24 cancel retains old browser originals and separates restricted recovery from normal acceptance",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 7430
+            }
+          ]
+        },
+        {
+          "title": "PT-24 scope retains old browser originals and separates restricted recovery from normal acceptance",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 8463
+            }
+          ]
+        },
+        {
+          "title": "PT-24 pack retains old browser originals and separates restricted recovery from normal acceptance",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 9560
+            }
+          ]
+        },
+        {
+          "title": "PT-24 revoke retains old browser originals and separates restricted recovery from normal acceptance",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 9779
+            }
+          ]
+        },
+        {
+          "title": "PT-24 withdraw-started retains old browser originals and separates restricted recovery from normal acceptance",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 8567
+            }
+          ]
+        },
+        {
+          "title": "P08 identity controls expose startup, pending verification and denied recovery",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 1294
+            }
+          ]
+        },
+        {
+          "title": "P08 identity controls expose startup, pending verification and denied recovery",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 1074
+            }
+          ]
+        },
+        {
+          "title": "P08 compatible IndexedDB upgrade preserves pending originals and exact Blob; abort and blocked upgrade retain evidence",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 689
+            }
+          ]
+        },
+        {
+          "title": "P08 unavailable IndexedDB and detected eviction refuse persistence claims",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 595
+            }
+          ]
+        },
+        {
+          "title": "P08 retained ownership locks deny cross-actor context, originals, bytes and receipts",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 677
+            }
+          ]
+        },
+        {
+          "title": "P08 partial browser storage clearing is detected without a false receipt or recovery claim",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 833
+            }
+          ]
+        },
+        {
+          "title": "P08 compatible IndexedDB upgrade preserves pending originals and exact Blob; abort and blocked upgrade retain evidence",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 569
+            }
+          ]
+        },
+        {
+          "title": "P08 unavailable IndexedDB and detected eviction refuse persistence claims",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 522
+            }
+          ]
+        },
+        {
+          "title": "P08 retained ownership locks deny cross-actor context, originals, bytes and receipts",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 630
+            }
+          ]
+        },
+        {
+          "title": "P08 partial browser storage clearing is detected without a false receipt or recovery claim",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 752
+            }
+          ]
+        },
+        {
+          "title": "P08 real offline UI interruption retains typed evidence and exact PNG, retries original receipt and saves draft",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 14303
+            }
+          ]
+        },
+        {
+          "title": "P08 real IndexedDB quota/abort, multi-tab claim, identity lock and schema retention",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 6718
+            }
+          ]
+        },
+        {
+          "title": "P08 persistent browser process restart retains two jobs and original evidence during actual offline navigation",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 14504
+            }
+          ]
+        },
+        {
+          "title": "P08 UI time conflict keeps original local evidence and keyboard recovery controls",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 9601
+            }
+          ]
+        },
+        {
+          "title": "P08 real offline UI interruption retains typed evidence and exact PNG, retries original receipt and saves draft",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 13445
+            }
+          ]
+        },
+        {
+          "title": "P08 real IndexedDB quota/abort, multi-tab claim, identity lock and schema retention",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 6776
+            }
+          ]
+        },
+        {
+          "title": "P08 persistent browser process restart retains two jobs and original evidence during actual offline navigation",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 13797
+            }
+          ]
+        },
+        {
+          "title": "P08 UI time conflict keeps original local evidence and keyboard recovery controls",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 10614
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Strengthened PT-12 exact receipt replay",
+      "stats": {
+        "startTime": "2026-10-08T07:42:15.183Z",
+        "duration": 187228.87699999998,
+        "expected": 3,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "tests": [
+        {
+          "title": "warm every route once before the browser projects",
+          "project": "warm-up",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 17697
+            }
+          ]
+        },
+        {
+          "title": "PT-12 exactly 100 captures replay original receipts and recover interrupted photo finalisation before completion",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 63469
+            }
+          ]
+        },
+        {
+          "title": "PT-12 exactly 100 captures replay original receipts and recover interrupted photo finalisation before completion",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 64585
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "PT-24 approved scope and issued pack successors",
+      "stats": {
+        "startTime": "2026-10-08T07:48:06.702Z",
+        "duration": 140907.99000000002,
+        "expected": 5,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "tests": [
+        {
+          "title": "warm every route once before the browser projects",
+          "project": "warm-up",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 24773
+            }
+          ]
+        },
+        {
+          "title": "PT-24 scope retains old browser originals and separates restricted recovery from normal acceptance",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 6993
+            }
+          ]
+        },
+        {
+          "title": "PT-24 pack retains old browser originals and separates restricted recovery from normal acceptance",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 8149
+            }
+          ]
+        },
+        {
+          "title": "PT-24 scope retains old browser originals and separates restricted recovery from normal acceptance",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 6721
+            }
+          ]
+        },
+        {
+          "title": "PT-24 pack retains old browser originals and separates restricted recovery from normal acceptance",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "duration_ms": 8201
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "desktop-PT-11.json",
+      "sha256": "85a39cb5cfba608db0aefa71d7220171aa1b0b21d1b16ad23ae15cc02fe008c9",
+      "bytes": 53505,
+      "procedure": "PT-11",
+      "project": "desktop-chromium",
+      "source_files": {
+        "tests/browser/offline-acceptance.spec.ts": "e9e9f9752869f1b919932bf20aae7599db42005ec2e0c5aa6e3955d83cd2d574",
+        "tests/helpers/offline-browser.ts": "daed11b0f66c7240423898bd9b85c30baf160c605548302c6149d19f8ccf3f7b",
+        "tests/helpers/offline-authority.ts": "c67a0ba5292709907a7abfba7dc79e21208814a157a562d6ff470c1e12d56f16"
+      }
+    },
+    {
+      "file": "mobile-PT-11.json",
+      "sha256": "23e4cf07dd857c8fa63c9bdb30dc8e6226a57827f5291a7176cd729347278ed2",
+      "bytes": 53502,
+      "procedure": "PT-11",
+      "project": "mobile-chromium",
+      "source_files": {
+        "tests/browser/offline-acceptance.spec.ts": "e9e9f9752869f1b919932bf20aae7599db42005ec2e0c5aa6e3955d83cd2d574",
+        "tests/helpers/offline-browser.ts": "daed11b0f66c7240423898bd9b85c30baf160c605548302c6149d19f8ccf3f7b",
+        "tests/helpers/offline-authority.ts": "c67a0ba5292709907a7abfba7dc79e21208814a157a562d6ff470c1e12d56f16"
+      }
+    },
+    {
+      "file": "desktop-PT-24-cancel.json",
+      "sha256": "bf79def724fadf9ee996f20e3299ba6c76383d400d94ec75dc26be86c554635a",
+      "bytes": 51709,
+      "procedure": "PT-24-cancel",
+      "project": "desktop-chromium",
+      "source_files": {
+        "tests/browser/offline-acceptance.spec.ts": "e9e9f9752869f1b919932bf20aae7599db42005ec2e0c5aa6e3955d83cd2d574",
+        "tests/helpers/offline-browser.ts": "daed11b0f66c7240423898bd9b85c30baf160c605548302c6149d19f8ccf3f7b",
+        "tests/helpers/offline-authority.ts": "c67a0ba5292709907a7abfba7dc79e21208814a157a562d6ff470c1e12d56f16"
+      }
+    },
+    {
+      "file": "mobile-PT-24-cancel.json",
+      "sha256": "d4967073ebe8be9cb5b0b3831f938bafddaaf3f33118a986d7b1f91a3dc3a3e5",
+      "bytes": 51706,
+      "procedure": "PT-24-cancel",
+      "project": "mobile-chromium",
+      "source_files": {
+        "tests/browser/offline-acceptance.spec.ts": "e9e9f9752869f1b919932bf20aae7599db42005ec2e0c5aa6e3955d83cd2d574",
+        "tests/helpers/offline-browser.ts": "daed11b0f66c7240423898bd9b85c30baf160c605548302c6149d19f8ccf3f7b",
+        "tests/helpers/offline-authority.ts": "c67a0ba5292709907a7abfba7dc79e21208814a157a562d6ff470c1e12d56f16"
+      }
+    },
+    {
+      "file": "desktop-PT-24-revoke.json",
+      "sha256": "7ff040223e72145fe62f5e42bd91ac09facf5a969b1286dc7af147c0d924a54d",
+      "bytes": 51791,
+      "procedure": "PT-24-revoke",
+      "project": "desktop-chromium",
+      "source_files": {
+        "tests/browser/offline-acceptance.spec.ts": "e9e9f9752869f1b919932bf20aae7599db42005ec2e0c5aa6e3955d83cd2d574",
+        "tests/helpers/offline-browser.ts": "daed11b0f66c7240423898bd9b85c30baf160c605548302c6149d19f8ccf3f7b",
+        "tests/helpers/offline-authority.ts": "c67a0ba5292709907a7abfba7dc79e21208814a157a562d6ff470c1e12d56f16"
+      }
+    },
+    {
+      "file": "mobile-PT-24-revoke.json",
+      "sha256": "35dd6be09ea05b0ee526acc393110b2b12a57cb7ff6beb79eb2dfc409b69d5bf",
+      "bytes": 51788,
+      "procedure": "PT-24-revoke",
+      "project": "mobile-chromium",
+      "source_files": {
+        "tests/browser/offline-acceptance.spec.ts": "e9e9f9752869f1b919932bf20aae7599db42005ec2e0c5aa6e3955d83cd2d574",
+        "tests/helpers/offline-browser.ts": "daed11b0f66c7240423898bd9b85c30baf160c605548302c6149d19f8ccf3f7b",
+        "tests/helpers/offline-authority.ts": "c67a0ba5292709907a7abfba7dc79e21208814a157a562d6ff470c1e12d56f16"
+      }
+    },
+    {
+      "file": "desktop-PT-24-reassign.json",
+      "sha256": "eb058776eb6b9e28f8a45081afb1b3d8a8e9d822bec2908076dbbb354a940f88",
+      "bytes": 51717,
+      "procedure": "PT-24-reassign",
+      "project": "desktop-chromium",
+      "source_files": {
+        "tests/browser/offline-acceptance.spec.ts": "e9e9f9752869f1b919932bf20aae7599db42005ec2e0c5aa6e3955d83cd2d574",
+        "tests/helpers/offline-browser.ts": "daed11b0f66c7240423898bd9b85c30baf160c605548302c6149d19f8ccf3f7b",
+        "tests/helpers/offline-authority.ts": "c67a0ba5292709907a7abfba7dc79e21208814a157a562d6ff470c1e12d56f16"
+      }
+    },
+    {
+      "file": "mobile-PT-24-reassign.json",
+      "sha256": "4b9742ea1c8b96dbeb0a0ab914839e50328463ac24bce8a3621bb650b0f0113d",
+      "bytes": 51714,
+      "procedure": "PT-24-reassign",
+      "project": "mobile-chromium",
+      "source_files": {
+        "tests/browser/offline-acceptance.spec.ts": "e9e9f9752869f1b919932bf20aae7599db42005ec2e0c5aa6e3955d83cd2d574",
+        "tests/helpers/offline-browser.ts": "daed11b0f66c7240423898bd9b85c30baf160c605548302c6149d19f8ccf3f7b",
+        "tests/helpers/offline-authority.ts": "c67a0ba5292709907a7abfba7dc79e21208814a157a562d6ff470c1e12d56f16"
+      }
+    },
+    {
+      "file": "desktop-PT-24-withdraw-started.json",
+      "sha256": "db7283ac443838f63cb1d3dc17dd9e3af2f980136d9facf32a76f6a287c31960",
+      "bytes": 48877,
+      "procedure": "PT-24-withdraw-started",
+      "project": "desktop-chromium",
+      "source_files": {
+        "tests/browser/offline-acceptance.spec.ts": "e9e9f9752869f1b919932bf20aae7599db42005ec2e0c5aa6e3955d83cd2d574",
+        "tests/helpers/offline-browser.ts": "daed11b0f66c7240423898bd9b85c30baf160c605548302c6149d19f8ccf3f7b",
+        "tests/helpers/offline-authority.ts": "c67a0ba5292709907a7abfba7dc79e21208814a157a562d6ff470c1e12d56f16"
+      }
+    },
+    {
+      "file": "mobile-PT-24-withdraw-started.json",
+      "sha256": "687f50a41a6100e312e812f8b1a3572ef600ead70ca1e495db3b030af2c92ddf",
+      "bytes": 48874,
+      "procedure": "PT-24-withdraw-started",
+      "project": "mobile-chromium",
+      "source_files": {
+        "tests/browser/offline-acceptance.spec.ts": "e9e9f9752869f1b919932bf20aae7599db42005ec2e0c5aa6e3955d83cd2d574",
+        "tests/helpers/offline-browser.ts": "daed11b0f66c7240423898bd9b85c30baf160c605548302c6149d19f8ccf3f7b",
+        "tests/helpers/offline-authority.ts": "c67a0ba5292709907a7abfba7dc79e21208814a157a562d6ff470c1e12d56f16"
+      }
+    },
+    {
+      "file": "desktop-PT-12.json",
+      "sha256": "3fb0151a8d34445a4eb4a95e3f28ad4de0aeca8da3bd17b35501a2238bfa3a4d",
+      "bytes": 279779,
+      "procedure": "PT-12",
+      "project": "desktop-chromium",
+      "source_files": {
+        "tests/browser/offline-acceptance.spec.ts": "1db98f14c5209d70d6c5921d9d619b9adf14ba94e2f8e5b16b8f246911c564a2",
+        "tests/helpers/offline-browser.ts": "daed11b0f66c7240423898bd9b85c30baf160c605548302c6149d19f8ccf3f7b",
+        "tests/helpers/offline-authority.ts": "c67a0ba5292709907a7abfba7dc79e21208814a157a562d6ff470c1e12d56f16"
+      }
+    },
+    {
+      "file": "mobile-PT-12.json",
+      "sha256": "670c81bc53896790a81d0b90de66386e245cf964a8db0359b2360db575b72712",
+      "bytes": 279776,
+      "procedure": "PT-12",
+      "project": "mobile-chromium",
+      "source_files": {
+        "tests/browser/offline-acceptance.spec.ts": "1db98f14c5209d70d6c5921d9d619b9adf14ba94e2f8e5b16b8f246911c564a2",
+        "tests/helpers/offline-browser.ts": "daed11b0f66c7240423898bd9b85c30baf160c605548302c6149d19f8ccf3f7b",
+        "tests/helpers/offline-authority.ts": "c67a0ba5292709907a7abfba7dc79e21208814a157a562d6ff470c1e12d56f16"
+      }
+    },
+    {
+      "file": "desktop-PT-24-pack.json",
+      "sha256": "2f1b21b8c0169da5472ac9a3931ddfb71b8bbb751bd250710d3f38abd2973db4",
+      "bytes": 52195,
+      "procedure": "PT-24-pack",
+      "project": "desktop-chromium",
+      "source_files": {
+        "tests/browser/offline-acceptance.spec.ts": "f8eae9b5862556033daf459a8f2c3a4fe44ba2575bb8d98d4c2fd83210ad6ab7",
+        "tests/helpers/offline-browser.ts": "daed11b0f66c7240423898bd9b85c30baf160c605548302c6149d19f8ccf3f7b",
+        "tests/helpers/offline-authority.ts": "0214809fa7498b51d92115dea29cce099e40cbd3844ac29876641fac49f3fa92"
+      }
+    },
+    {
+      "file": "mobile-PT-24-pack.json",
+      "sha256": "2cd7afdbb318d288a78a744ed8744691dc52d1e9b7b01b80962d002b23fe4410",
+      "bytes": 52192,
+      "procedure": "PT-24-pack",
+      "project": "mobile-chromium",
+      "source_files": {
+        "tests/browser/offline-acceptance.spec.ts": "f8eae9b5862556033daf459a8f2c3a4fe44ba2575bb8d98d4c2fd83210ad6ab7",
+        "tests/helpers/offline-browser.ts": "daed11b0f66c7240423898bd9b85c30baf160c605548302c6149d19f8ccf3f7b",
+        "tests/helpers/offline-authority.ts": "0214809fa7498b51d92115dea29cce099e40cbd3844ac29876641fac49f3fa92"
+      }
+    },
+    {
+      "file": "desktop-PT-24-scope.json",
+      "sha256": "1243c31fa2e0b18673ac38f4e226385dd6f9ef91625c4cd1b0592f2810c832c3",
+      "bytes": 52147,
+      "procedure": "PT-24-scope",
+      "project": "desktop-chromium",
+      "source_files": {
+        "tests/browser/offline-acceptance.spec.ts": "f8eae9b5862556033daf459a8f2c3a4fe44ba2575bb8d98d4c2fd83210ad6ab7",
+        "tests/helpers/offline-browser.ts": "daed11b0f66c7240423898bd9b85c30baf160c605548302c6149d19f8ccf3f7b",
+        "tests/helpers/offline-authority.ts": "0214809fa7498b51d92115dea29cce099e40cbd3844ac29876641fac49f3fa92"
+      }
+    },
+    {
+      "file": "mobile-PT-24-scope.json",
+      "sha256": "bd988c512ead1fa83e205fb13a0a3ce9d3f5c02599df7ff7a8a98179e51b8453",
+      "bytes": 52144,
+      "procedure": "PT-24-scope",
+      "project": "mobile-chromium",
+      "source_files": {
+        "tests/browser/offline-acceptance.spec.ts": "f8eae9b5862556033daf459a8f2c3a4fe44ba2575bb8d98d4c2fd83210ad6ab7",
+        "tests/helpers/offline-browser.ts": "daed11b0f66c7240423898bd9b85c30baf160c605548302c6149d19f8ccf3f7b",
+        "tests/helpers/offline-authority.ts": "0214809fa7498b51d92115dea29cce099e40cbd3844ac29876641fac49f3fa92"
+      }
+    },
+    {
+      "file": "desktop-PT-11.png",
+      "sha256": "06dd6302db1aa51f479250fe2df8dacfa5317c21615f0e1d113f822aa14410fe",
+      "bytes": 687352
+    },
+    {
+      "file": "mobile-PT-11.png",
+      "sha256": "3fbe9b9fa4e1a86e0a41988aa046d0bd0265691060fef1cdddf3e2e6c2965d77",
+      "bytes": 666450
+    }
+  ],
+  "current_test_files": {
+    "tests/browser/offline-acceptance.spec.ts": "f8eae9b5862556033daf459a8f2c3a4fe44ba2575bb8d98d4c2fd83210ad6ab7",
+    "tests/helpers/offline-browser.ts": "daed11b0f66c7240423898bd9b85c30baf160c605548302c6149d19f8ccf3f7b",
+    "tests/helpers/offline-authority.ts": "0214809fa7498b51d92115dea29cce099e40cbd3844ac29876641fac49f3fa92",
+    "tests/browser/offline.spec.ts": "8da3fd6d2732411b3f8a85b509d54438a314c6933bd9dce4c645b4b327085826"
+  }
+}

@@ -1,0 +1,19 @@
+# Combined offline recovery verification
+
+<!-- versioning: git; committed history is authoritative -->
+
+Owner: Dean Fiedler. Decision recorded 8 October 2026 after the repository audit and Dean's instruction to proceed with the next work. Independent review and owner acceptance remain pending.
+
+The next bounded increment joins the written PT-11, PT-12 and PT-24 procedures against the existing application. It starts from main `11e8298e6270c085d3ed149208a524ddeb52395c`. The corresponding parent acceptance IDs are AT-10, AT-11 and AT-34; SVC-07, NFR-07 and NFR-09 retain their existing scope. No parent requirement or issued source is promoted to complete.
+
+Use the existing real browser, IndexedDB, HTTP, PostgreSQL, document renderer and synthetic command fixtures. Every mutating authority scenario owns its work order and scope. Permission revocation is a temporary, guarded fixture operation in `ppo_synthetic_test`; its exact prior grant expiry values are restored in `finally`. Application code changes require a reproduced defect. No new dependency, migration, grant, hosted deployment or source integration is part of this increment.
+
+PT-11 combines two cached jobs, original note/time/photo capture, an actual whole-browser close and reopen using the same profile, and a later multi-operation write that fails after its first insert. Compare the complete original envelopes and PNG bytes before and after restart and transaction rollback. A saved local original is not a server receipt or review approval.
+
+PT-12's catalogue says both “100 saved operations” and “exactly 100 evidence records.” The actual photo protocol uses four commands: initiate, upload, finalise and capture. Preserve the stricter evidence count: 99 observation captures plus one photo capture, three attachment transport commands and one Start produce 104 queued wire operations. Completion is one further command. Report these counts separately rather than reducing the capture count. Real server commits followed by dropped acknowledgements exercise uncertain outcomes; replays include the original photo bytes. The catalogue's VAL-12 conflict intent maps to the implementation's `OperationConflict` response, with the original operation ID retained.
+
+The offline completion form has a bounded 30-dependency limit. The 100-entry proof therefore distinguishes the native completion command's exact dependency guard from the offline form: completion is refused while the original photo dependencies are unavailable and succeeds only after their receipts exist. This does not claim that 100 local dependencies can be submitted through that form. A complete user-facing handoff from that limit to online completion remains a separate runtime check.
+
+PT-24 uses separate reassignment, cancellation, approved successor-scope, newly issued replacement-pack and revoked-grant fixtures, plus withdrawal after an accepted Start. Successor scope completes actual readiness and authorisation commands; the replacement pack completes check, issue and document rendering. Their new source identities are recorded while old cached originals retain their prior authority. Unstarted stale intent must never create attendance. Restricted recovery uses the exact prior capability and keeps the original authority, IDs, dependencies and photo bytes; missing, wrong and expired capabilities must fail. Factual capture after an accepted Start can receive a review-required receipt without becoming approved evidence. The service owner's contact activity, audit and normal-access denial are inspected separately.
+
+Synthetic desktop and phone-sized Chrome execution, human/device observation, independent review, code publication, merge and deployment are separate evidence claims. [Execution record](../testing/evidence/offline-recovery-acceptance/README.md) records the actual outcome and limitations. Existing historical evidence is retained.

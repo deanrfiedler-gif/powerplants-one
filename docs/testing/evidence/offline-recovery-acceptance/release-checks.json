@@ -1,0 +1,901 @@
+{
+  "recorded_at": "2026-10-08 07:37:36 UTC",
+  "repository": "deanrfiedler-gif/powerplants-one",
+  "source": "User-selected GitHub connector read-only repository metadata",
+  "default_branch": "main",
+  "main": {
+    "sha": "11e8298e6270c085d3ed149208a524ddeb52395c",
+    "tree": "2db3f8524e854d6ebb96a409fce10afa3f0a2a7b",
+    "checks": [
+      {
+        "name": "P01–P11 and CRM I1–I2 local application and PostgreSQL proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900379/job/113192571389"
+      },
+      {
+        "name": "Desktop and mobile browser suite against the compiled application",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900334/job/113187593105"
+      },
+      {
+        "name": "ES-07 owned Supply follow-up and original recovery",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900397/job/113180486841"
+      },
+      {
+        "name": "E1 manual estimate, draft output and restart proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900380/job/113180006172"
+      },
+      {
+        "name": "ES-07 Supply diamond-runtime proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900397/job/113175213332"
+      },
+      {
+        "name": "ES-07 Supply shortfall-runtime proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900397/job/113175213331"
+      },
+      {
+        "name": "ES-07 Supply database proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900397/job/113175213306"
+      },
+      {
+        "name": "ES-07 Supply material-runtime proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900397/job/113175213283"
+      },
+      {
+        "name": "ES-07 Supply chain-runtime proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900397/job/113175213269"
+      },
+      {
+        "name": "ES-07 Supply merge-runtime proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900397/job/113175213250"
+      },
+      {
+        "name": "ES-07 Supply runtime proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900397/job/113175213246"
+      },
+      {
+        "name": "ES-07 Supply diamond-boundaries proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900397/job/113175213245"
+      },
+      {
+        "name": "ES-07 Supply merge-database proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900397/job/113175213239"
+      },
+      {
+        "name": "ES-07 Supply dependency-database proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900397/job/113175213212"
+      },
+      {
+        "name": "ES-07 Supply branch-database proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900397/job/113175213207"
+      },
+      {
+        "name": "ES-07 Supply dependency-runtime proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900397/job/113175213205"
+      },
+      {
+        "name": "ES-07 Supply diamond-receiving proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900397/job/113175213188"
+      },
+      {
+        "name": "CRM desktop and mobile persistence and interaction proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900475/job/113175213172"
+      },
+      {
+        "name": "ES-07 Supply chain-database proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900397/job/113175213171"
+      },
+      {
+        "name": "ES-07 Supply shortfall-database proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900397/job/113175213169"
+      },
+      {
+        "name": "ES-07 Supply branch-runtime proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900397/job/113175213165"
+      },
+      {
+        "name": "ES-07 Supply material-database proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900397/job/113175213164"
+      },
+      {
+        "name": "P01–P11 database-3 proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900379/job/113175213144"
+      },
+      {
+        "name": "ES-07 Supply diamond-database proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900397/job/113175213141"
+      },
+      {
+        "name": "register",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900405/job/113175213113"
+      },
+      {
+        "name": "ES-07 Supply receipt-database proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900397/job/113175213086"
+      },
+      {
+        "name": "P01–P11 finance proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900379/job/113175213017"
+      },
+      {
+        "name": "P01–P11 http proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900379/job/113175213012"
+      },
+      {
+        "name": "P01–P11 reports proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900379/job/113175213009"
+      },
+      {
+        "name": "P01–P11 database-1 proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900379/job/113175212981"
+      },
+      {
+        "name": "P01–P11 database-4 proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900379/job/113175212965"
+      },
+      {
+        "name": "CRM header and board visual checks",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900475/job/113175212961"
+      },
+      {
+        "name": "E1 database proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900380/job/113175212928"
+      },
+      {
+        "name": "P01–P11 browser-mobile proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900379/job/113175212920"
+      },
+      {
+        "name": "P01–P11 database-2 proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900379/job/113175212900"
+      },
+      {
+        "name": "P01–P11 browser proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900379/job/113175212868"
+      },
+      {
+        "name": "P11 declared load and raw core-read performance proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900379/job/113175212853"
+      },
+      {
+        "name": "P11 focused integrated quality and access proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900379/job/113175212808"
+      },
+      {
+        "name": "P11 three original browser failures diagnostic replay",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900379/job/113175212777"
+      },
+      {
+        "name": "Compiled application retained proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900334/job/113175212702"
+      },
+      {
+        "name": "Email Calendar persisted journey and server permissions",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900417/job/113175212647"
+      },
+      {
+        "name": "ES-07 exact receiving, native conversion and recovery",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900406/job/113175212608"
+      },
+      {
+        "name": "P11 focused original HTTP and output isolation proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900379/job/113175212585"
+      },
+      {
+        "name": "E1 browser proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900380/job/113175212568"
+      },
+      {
+        "name": "Compiled application browser-mobile proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900334/job/113175212561"
+      },
+      {
+        "name": "ES-07 completed conversion disposition and recovery",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900382/job/113175212438"
+      },
+      {
+        "name": "PD catalogue, publication, source context, compatibility and import",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900362/job/113175212373"
+      },
+      {
+        "name": "Compiled application browser-desktop proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900334/job/113175212290"
+      },
+      {
+        "name": "ES-06 exact response, recovery and receiving boundary",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900318/job/113175212269"
+      },
+      {
+        "name": "Check documentation foundation",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37735900359/job/113175212251"
+      }
+    ]
+  },
+  "merged_correction": {
+    "pr": 368,
+    "head": "31d8fe0f19be2decca99432d3336cda4fcd3e6da",
+    "same_tree_as_main": true,
+    "checks": [
+      {
+        "name": "P01–P11 and CRM I1–I2 local application and PostgreSQL proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951308/job/113161712350"
+      },
+      {
+        "name": "Desktop and mobile browser suite against the compiled application",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951313/job/113155585746"
+      },
+      {
+        "name": "E1 manual estimate, draft output and restart proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951368/job/113152524732"
+      },
+      {
+        "name": "ES-07 owned Supply follow-up and original recovery",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951331/job/113151752742"
+      },
+      {
+        "name": "ES-07 Supply branch-runtime proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951331/job/113147193138"
+      },
+      {
+        "name": "ES-07 Supply receipt-database proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951331/job/113147193098"
+      },
+      {
+        "name": "ES-07 Supply material-runtime proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951331/job/113147193090"
+      },
+      {
+        "name": "ES-07 Supply chain-database proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951331/job/113147193088"
+      },
+      {
+        "name": "ES-07 Supply database proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951331/job/113147193072"
+      },
+      {
+        "name": "ES-07 Supply merge-runtime proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951331/job/113147193066"
+      },
+      {
+        "name": "ES-07 Supply dependency-runtime proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951331/job/113147193056"
+      },
+      {
+        "name": "ES-07 Supply chain-runtime proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951331/job/113147193051"
+      },
+      {
+        "name": "ES-07 Supply diamond-boundaries proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951331/job/113147193050"
+      },
+      {
+        "name": "ES-07 Supply shortfall-runtime proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951331/job/113147193040"
+      },
+      {
+        "name": "ES-07 Supply runtime proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951331/job/113147193031"
+      },
+      {
+        "name": "ES-07 Supply material-database proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951331/job/113147193029"
+      },
+      {
+        "name": "ES-07 Supply shortfall-database proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951331/job/113147193019"
+      },
+      {
+        "name": "ES-07 Supply diamond-receiving proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951331/job/113147193014"
+      },
+      {
+        "name": "ES-07 Supply diamond-database proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951331/job/113147193007"
+      },
+      {
+        "name": "ES-07 Supply diamond-runtime proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951331/job/113147192986"
+      },
+      {
+        "name": "E1 database proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951368/job/113147192983"
+      },
+      {
+        "name": "ES-07 Supply merge-database proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951331/job/113147192973"
+      },
+      {
+        "name": "ES-07 Supply branch-database proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951331/job/113147192972"
+      },
+      {
+        "name": "ES-07 Supply dependency-database proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951331/job/113147192782"
+      },
+      {
+        "name": "P01–P11 reports proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951308/job/113147192756"
+      },
+      {
+        "name": "P01–P11 browser proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951308/job/113147192744"
+      },
+      {
+        "name": "register",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951399/job/113147192738"
+      },
+      {
+        "name": "Check documentation foundation",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951392/job/113147192726"
+      },
+      {
+        "name": "P01–P11 http proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951308/job/113147192695"
+      },
+      {
+        "name": "P01–P11 database-2 proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951308/job/113147192661"
+      },
+      {
+        "name": "E1 browser proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951368/job/113147192654"
+      },
+      {
+        "name": "P11 focused integrated quality and access proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951308/job/113147192632"
+      },
+      {
+        "name": "P01–P11 finance proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951308/job/113147192623"
+      },
+      {
+        "name": "P01–P11 database-1 proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951308/job/113147192611"
+      },
+      {
+        "name": "P01–P11 database-3 proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951308/job/113147192590"
+      },
+      {
+        "name": "P01–P11 browser-mobile proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951308/job/113147192583"
+      },
+      {
+        "name": "P11 three original browser failures diagnostic replay",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951308/job/113147192553"
+      },
+      {
+        "name": "P01–P11 database-4 proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951308/job/113147192550"
+      },
+      {
+        "name": "ES-07 exact receiving, native conversion and recovery",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951395/job/113147192527"
+      },
+      {
+        "name": "P11 declared load and raw core-read performance proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951308/job/113147192506"
+      },
+      {
+        "name": "ES-07 completed conversion disposition and recovery",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951316/job/113147192501"
+      },
+      {
+        "name": "Compiled application browser-mobile proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951313/job/113147192468"
+      },
+      {
+        "name": "P11 focused original HTTP and output isolation proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951308/job/113147192432"
+      },
+      {
+        "name": "leads",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951341/job/113147192404"
+      },
+      {
+        "name": "Compiled application browser-desktop proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951313/job/113147192367"
+      },
+      {
+        "name": "Email Calendar persisted journey and server permissions",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951297/job/113147192349"
+      },
+      {
+        "name": "ES-06 exact response, recovery and receiving boundary",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951318/job/113147192277"
+      },
+      {
+        "name": "Compiled application retained proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951313/job/113147192273"
+      },
+      {
+        "name": "CRM desktop and mobile persistence and interaction proof",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951248/job/113147192261"
+      },
+      {
+        "name": "PD catalogue, publication, source context, compatibility and import",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951290/job/113147192177"
+      },
+      {
+        "name": "CRM header and board visual checks",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951248/job/113147192127"
+      }
+    ]
+  },
+  "benchmark": {
+    "source_job": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37726951308/job/113147192506",
+    "results": [
+      {
+        "benchmark": "PT-27",
+        "server_profile": "development",
+        "groups": [
+          {
+            "group": "desktop|Customers|cold browser context / first view wave",
+            "count": 10,
+            "failures": 0,
+            "p95_ms": 12702.265828,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "desktop|Customers|warm repeat navigation",
+            "count": 30,
+            "failures": 0,
+            "p95_ms": 8402.309319,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "desktop|Work order|cold browser context / first view wave",
+            "count": 10,
+            "failures": 0,
+            "p95_ms": 11114.125903000007,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "desktop|Work order|warm repeat navigation",
+            "count": 30,
+            "failures": 0,
+            "p95_ms": 8474.689581999992,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "desktop|Planner|cold browser context / first view wave",
+            "count": 10,
+            "failures": 0,
+            "p95_ms": 8913.066599999991,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "desktop|Planner|warm repeat navigation",
+            "count": 30,
+            "failures": 0,
+            "p95_ms": 6198.905943999998,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "desktop|My Jobs|cold browser context / first view wave",
+            "count": 10,
+            "failures": 0,
+            "p95_ms": 8132.050719999999,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "desktop|My Jobs|warm repeat navigation",
+            "count": 30,
+            "failures": 0,
+            "p95_ms": 5519.415424000006,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "phone|Customers|cold browser context / first view wave",
+            "count": 10,
+            "failures": 0,
+            "p95_ms": 9571.178910999995,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "phone|Customers|warm repeat navigation",
+            "count": 30,
+            "failures": 0,
+            "p95_ms": 7920.790685999993,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "phone|Work order|cold browser context / first view wave",
+            "count": 10,
+            "failures": 0,
+            "p95_ms": 8458.973337000003,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "phone|Work order|warm repeat navigation",
+            "count": 30,
+            "failures": 0,
+            "p95_ms": 7755.536831000005,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "phone|Planner|cold browser context / first view wave",
+            "count": 10,
+            "failures": 0,
+            "p95_ms": 8097.870586000005,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "phone|Planner|warm repeat navigation",
+            "count": 30,
+            "failures": 0,
+            "p95_ms": 6247.078147000022,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "phone|My Jobs|cold browser context / first view wave",
+            "count": 10,
+            "failures": 0,
+            "p95_ms": 6766.115850000031,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "phone|My Jobs|warm repeat navigation",
+            "count": 30,
+            "failures": 0,
+            "p95_ms": 5392.367223999987,
+            "target_ms": 3000,
+            "meets_candidate": false
+          }
+        ],
+        "candidate_only": true
+      },
+      {
+        "benchmark": "PT-27",
+        "server_profile": "compiled",
+        "groups": [
+          {
+            "group": "desktop|Customers|cold browser context / first view wave",
+            "count": 10,
+            "failures": 0,
+            "p95_ms": 9595.676551,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "desktop|Customers|warm repeat navigation",
+            "count": 30,
+            "failures": 0,
+            "p95_ms": 6351.623363999999,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "desktop|Work order|cold browser context / first view wave",
+            "count": 10,
+            "failures": 0,
+            "p95_ms": 5099.417147,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "desktop|Work order|warm repeat navigation",
+            "count": 30,
+            "failures": 0,
+            "p95_ms": 4816.902001000002,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "desktop|Planner|cold browser context / first view wave",
+            "count": 10,
+            "failures": 0,
+            "p95_ms": 4535.289833999996,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "desktop|Planner|warm repeat navigation",
+            "count": 30,
+            "failures": 0,
+            "p95_ms": 4166.506171000001,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "desktop|My Jobs|cold browser context / first view wave",
+            "count": 10,
+            "failures": 0,
+            "p95_ms": 3933.5286849999975,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "desktop|My Jobs|warm repeat navigation",
+            "count": 30,
+            "failures": 0,
+            "p95_ms": 3479.990087000013,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "phone|Customers|cold browser context / first view wave",
+            "count": 10,
+            "failures": 0,
+            "p95_ms": 6092.291928000006,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "phone|Customers|warm repeat navigation",
+            "count": 30,
+            "failures": 0,
+            "p95_ms": 5003.214252999998,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "phone|Work order|cold browser context / first view wave",
+            "count": 10,
+            "failures": 0,
+            "p95_ms": 4420.503762000008,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "phone|Work order|warm repeat navigation",
+            "count": 30,
+            "failures": 0,
+            "p95_ms": 3692.814290999988,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "phone|Planner|cold browser context / first view wave",
+            "count": 10,
+            "failures": 0,
+            "p95_ms": 4421.6096279999765,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "phone|Planner|warm repeat navigation",
+            "count": 30,
+            "failures": 0,
+            "p95_ms": 3913.0362139999925,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "phone|My Jobs|cold browser context / first view wave",
+            "count": 10,
+            "failures": 0,
+            "p95_ms": 3190.604801999987,
+            "target_ms": 3000,
+            "meets_candidate": false
+          },
+          {
+            "group": "phone|My Jobs|warm repeat navigation",
+            "count": 30,
+            "failures": 0,
+            "p95_ms": 2857.527298000001,
+            "target_ms": 3000,
+            "meets_candidate": true
+          }
+        ],
+        "candidate_only": true
+      }
+    ],
+    "boundary": "Synthetic CI candidate measurements; no Azure measurement or causal claim."
+  }
+}
