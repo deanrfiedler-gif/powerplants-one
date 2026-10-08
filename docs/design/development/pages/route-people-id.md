@@ -31,3 +31,5 @@ Reference: docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationshi
 ## Verification and acceptance
 
 The detailed page guide is `guide.page.people.id`. [CS receiving handover](../../../delivery/cs-native-completion-handover.md) records executed behaviour, visual inspection, source hashes and open business definitions. Owner/device acceptance and deployment remain separate.
+
+The shared shell's `nav-current-page-reload` fixture also consumes this record: an unsaved correction survives approved same-record search, a later edit and cancelled native reload on desktop/phone. No UI correction is posted. See [current-page correction evidence](../../../testing/evidence/navigation-current-page/README.md); the existing stable route and scope are retained.
