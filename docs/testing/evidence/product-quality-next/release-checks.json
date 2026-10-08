@@ -1,0 +1,363 @@
+{
+  "observed_at": "2026-10-08 10:27:32 UTC",
+  "repository": "deanrfiedler-gif/powerplants-one",
+  "baseline": "f0953c5f9f5a0c5e1c5179ef933fd87c9e37b00e",
+  "main_checks": [
+    {
+      "id": 113265233212,
+      "name": "P01–P11 and CRM I1–I2 local application and PostgreSQL proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160952/job/113265233212"
+    },
+    {
+      "id": 113262584844,
+      "name": "Desktop and mobile browser suite against the compiled application",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160976/job/113262584844"
+    },
+    {
+      "id": 113252249960,
+      "name": "ES-07 owned Supply follow-up and original recovery",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160999/job/113252249960"
+    },
+    {
+      "id": 113251590130,
+      "name": "E1 manual estimate, draft output and restart proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160928/job/113251590130"
+    },
+    {
+      "id": 113244432280,
+      "name": "ES-07 Supply chain-runtime proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160999/job/113244432280"
+    },
+    {
+      "id": 113244431997,
+      "name": "ES-07 Supply runtime proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160999/job/113244431997"
+    },
+    {
+      "id": 113244431985,
+      "name": "ES-07 Supply material-runtime proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160999/job/113244431985"
+    },
+    {
+      "id": 113244431971,
+      "name": "ES-07 Supply shortfall-runtime proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160999/job/113244431971"
+    },
+    {
+      "id": 113244431952,
+      "name": "ES-07 Supply diamond-boundaries proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160999/job/113244431952"
+    },
+    {
+      "id": 113244431950,
+      "name": "ES-07 Supply merge-database proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160999/job/113244431950"
+    },
+    {
+      "id": 113244431929,
+      "name": "ES-07 Supply receipt-database proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160999/job/113244431929"
+    },
+    {
+      "id": 113244431878,
+      "name": "ES-07 Supply merge-runtime proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160999/job/113244431878"
+    },
+    {
+      "id": 113244431860,
+      "name": "ES-07 Supply diamond-runtime proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160999/job/113244431860"
+    },
+    {
+      "id": 113244431846,
+      "name": "ES-07 Supply branch-runtime proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160999/job/113244431846"
+    },
+    {
+      "id": 113244431836,
+      "name": "ES-07 Supply diamond-database proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160999/job/113244431836"
+    },
+    {
+      "id": 113244431823,
+      "name": "ES-07 Supply material-database proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160999/job/113244431823"
+    },
+    {
+      "id": 113244431810,
+      "name": "ES-07 Supply dependency-runtime proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160999/job/113244431810"
+    },
+    {
+      "id": 113244431729,
+      "name": "ES-07 Supply chain-database proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160999/job/113244431729"
+    },
+    {
+      "id": 113244431722,
+      "name": "ES-07 Supply shortfall-database proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160999/job/113244431722"
+    },
+    {
+      "id": 113244431697,
+      "name": "ES-07 Supply dependency-database proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160999/job/113244431697"
+    },
+    {
+      "id": 113244431621,
+      "name": "ES-07 Supply branch-database proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160999/job/113244431621"
+    },
+    {
+      "id": 113244431615,
+      "name": "ES-07 Supply diamond-receiving proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160999/job/113244431615"
+    },
+    {
+      "id": 113244431408,
+      "name": "ES-07 Supply database proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160999/job/113244431408"
+    },
+    {
+      "id": 113244431281,
+      "name": "Compiled application retained proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160976/job/113244431281"
+    },
+    {
+      "id": 113244431174,
+      "name": "E1 database proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160928/job/113244431174"
+    },
+    {
+      "id": 113244431124,
+      "name": "Compiled application browser-mobile proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160976/job/113244431124"
+    },
+    {
+      "id": 113244430848,
+      "name": "E1 browser proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160928/job/113244430848"
+    },
+    {
+      "id": 113244430785,
+      "name": "PD catalogue, publication, source context, compatibility and import",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160994/job/113244430785"
+    },
+    {
+      "id": 113244430696,
+      "name": "Compiled application browser-desktop proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160976/job/113244430696"
+    },
+    {
+      "id": 113244430565,
+      "name": "ES-07 completed conversion disposition and recovery",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160955/job/113244430565"
+    },
+    {
+      "id": 113244430355,
+      "name": "P01–P11 database-4 proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160952/job/113244430355"
+    },
+    {
+      "id": 113244430272,
+      "name": "P01–P11 database-2 proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160952/job/113244430272"
+    },
+    {
+      "id": 113244430220,
+      "name": "P01–P11 database-3 proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160952/job/113244430220"
+    },
+    {
+      "id": 113244430163,
+      "name": "ES-07 exact receiving, native conversion and recovery",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160874/job/113244430163"
+    },
+    {
+      "id": 113244430157,
+      "name": "P01–P11 browser proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160952/job/113244430157"
+    },
+    {
+      "id": 113244430154,
+      "name": "P01–P11 http proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160952/job/113244430154"
+    },
+    {
+      "id": 113244430145,
+      "name": "P01–P11 reports proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160952/job/113244430145"
+    },
+    {
+      "id": 113244430129,
+      "name": "P01–P11 finance proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160952/job/113244430129"
+    },
+    {
+      "id": 113244430099,
+      "name": "ES-06 exact response, recovery and receiving boundary",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160978/job/113244430099"
+    },
+    {
+      "id": 113244430098,
+      "name": "P11 focused original HTTP and output isolation proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160952/job/113244430098"
+    },
+    {
+      "id": 113244430089,
+      "name": "P01–P11 database-1 proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160952/job/113244430089"
+    },
+    {
+      "id": 113244430003,
+      "name": "P11 focused integrated quality and access proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160952/job/113244430003"
+    },
+    {
+      "id": 113244429979,
+      "name": "P01–P11 browser-mobile proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160952/job/113244429979"
+    },
+    {
+      "id": 113244429975,
+      "name": "P11 declared load and raw core-read performance proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160952/job/113244429975"
+    },
+    {
+      "id": 113244429684,
+      "name": "CRM desktop and mobile persistence and interaction proof",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160900/job/113244429684"
+    },
+    {
+      "id": 113244429662,
+      "name": "P11 three original browser failures diagnostic replay",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160952/job/113244429662"
+    },
+    {
+      "id": 113244429336,
+      "name": "register",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160960/job/113244429336"
+    },
+    {
+      "id": 113244429266,
+      "name": "CRM header and board visual checks",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160900/job/113244429266"
+    },
+    {
+      "id": 113244428336,
+      "name": "Email Calendar persisted journey and server permissions",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160808/job/113244428336"
+    },
+    {
+      "id": 113244428236,
+      "name": "Check documentation foundation",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37757160810/job/113244428236"
+    }
+  ],
+  "pr369": {
+    "head": "723613d",
+    "successful_checks": 51,
+    "merged_at": "2026-10-08T09:30:43Z"
+  },
+  "scope": "Exact main snapshot and retained PR369 observation; neither is this new branch's CI"
+}

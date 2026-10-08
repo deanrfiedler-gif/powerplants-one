@@ -1,5 +1,7 @@
 # Powerplants One — Business Operations Platform
 
+> **Current product direction — 8 October 2026:** [Dean's decision](../decisions/product-direction-quality.md) supersedes CREMS-led design and reconstruction prerequisites. CREMS is retained historical background. Current business needs, explicit PPO decisions, independently tested rules and verified user journeys guide development. Historical authoring-basis and source discussions below retain their provenance; all 78 parent IDs remain stable.
+
 <!-- versioning: git; committed history is authoritative -->
 
 ## Master Business & Build Blueprint

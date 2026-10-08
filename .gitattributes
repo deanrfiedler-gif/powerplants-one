@@ -45,3 +45,5 @@ docs/testing/evidence/won-delivery-continuity/*.log text eol=lf
 docs/testing/evidence/sales-followup-continuity/*.log text eol=lf
 # Products capacity evidence retains timestamped results with exact text hashes.
 docs/testing/evidence/products-native/ci-capacity/*.txt text eol=lf
+# Product quality proof text retains identical manifest bytes on every platform.
+docs/testing/evidence/product-quality-next/*.txt text eol=lf

@@ -1,0 +1,363 @@
+{
+  "run": "selected-regression",
+  "source_head": "af34bbe5a36658b57d9749cba2212e26fb7de537",
+  "stats": {
+    "startTime": "2026-10-08T10:26:09.888Z",
+    "duration": 840938.871,
+    "expected": 21,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "title": "warm every route once before the browser projects",
+      "file": "warm-up.setup.ts",
+      "project": "warm-up",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 31844,
+          "retry": 0,
+          "start_time": "2026-10-08T10:27:20.321Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "FI01 accepted timer presentation, actual saved intervals and original-action recovery",
+      "file": "field-timer.spec.ts",
+      "project": "desktop-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 25889,
+          "retry": 0,
+          "start_time": "2026-10-08T10:27:52.992Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "FI02 retained offline timer sequence survives reload and a lost server response",
+      "file": "field-timer.spec.ts",
+      "project": "desktop-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 10183,
+          "retry": 0,
+          "start_time": "2026-10-08T10:28:19.158Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "FI01 accepted timer presentation, actual saved intervals and original-action recovery",
+      "file": "field-timer.spec.ts",
+      "project": "mobile-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 26011,
+          "retry": 0,
+          "start_time": "2026-10-08T10:34:08.846Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "FI02 retained offline timer sequence survives reload and a lost server response",
+      "file": "field-timer.spec.ts",
+      "project": "mobile-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 10016,
+          "retry": 0,
+          "start_time": "2026-10-08T10:34:35.164Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "IJ-01 one Lead continues through exact quotation, Project receiving and an owned returned Lead",
+      "file": "integrated-journey.spec.ts",
+      "project": "desktop-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 32086,
+          "retry": 0,
+          "start_time": "2026-10-08T10:28:29.509Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "IJ-01 one Lead continues through exact quotation, Project receiving and an owned returned Lead",
+      "file": "integrated-journey.spec.ts",
+      "project": "mobile-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 33229,
+          "retry": 0,
+          "start_time": "2026-10-08T10:34:46.395Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "large offline queue continues through online completion with all 100 original captures",
+      "file": "offline-completion-handoff.spec.ts",
+      "project": "desktop-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "failed",
+          "duration_ms": 58708,
+          "retry": 0,
+          "start_time": "2026-10-08T10:29:01.630Z",
+          "errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveValue\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Start work', exact: true }).getByLabel('Short note', { exact: true })\nExpected: \u001b[32m\"SYN retain my note when the submitted report arrives\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toHaveValue\" getByRole('dialog', { name: 'Start work', exact: true }).getByLabel('Short note', { exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Start work', exact: true }).getByLabel('Short note', { exact: true })\u001b[22m\n\n\n  221 |       dialog.getByRole(\"button\", { name: \"Start work\", exact: true }),\n  222 |     ).toBeDisabled();\n> 223 |     await expect(dialog.getByLabel(\"Short note\", { exact: true })).toHaveValue(\n      |                                                                    ^\n  224 |       \"SYN retain my note when the submitted report arrives\",\n  225 |     );\n  226 |     await expect(dialog.getByRole(\"status\")).toContainText(\n    at <checkout>\\tests\\browser\\offline-completion-handoff.spec.ts:223:68"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "online completion handoff preserves originals and unsaved text when current access or navigation fails",
+      "file": "offline-completion-handoff.spec.ts",
+      "project": "desktop-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 12453,
+          "retry": 0,
+          "start_time": "2026-10-08T10:30:03.864Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "large offline queue continues through online completion with all 100 original captures",
+      "file": "offline-completion-handoff.spec.ts",
+      "project": "mobile-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "failed",
+          "duration_ms": 62576,
+          "retry": 0,
+          "start_time": "2026-10-08T10:35:19.727Z",
+          "errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveValue\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Start work', exact: true }).getByLabel('Short note', { exact: true })\nExpected: \u001b[32m\"SYN retain my note when the submitted report arrives\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toHaveValue\" getByRole('dialog', { name: 'Start work', exact: true }).getByLabel('Short note', { exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Start work', exact: true }).getByLabel('Short note', { exact: true })\u001b[22m\n\n\n  221 |       dialog.getByRole(\"button\", { name: \"Start work\", exact: true }),\n  222 |     ).toBeDisabled();\n> 223 |     await expect(dialog.getByLabel(\"Short note\", { exact: true })).toHaveValue(\n      |                                                                    ^\n  224 |       \"SYN retain my note when the submitted report arrives\",\n  225 |     );\n  226 |     await expect(dialog.getByRole(\"status\")).toContainText(\n    at <checkout>\\tests\\browser\\offline-completion-handoff.spec.ts:223:68"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "online completion handoff preserves originals and unsaved text when current access or navigation fails",
+      "file": "offline-completion-handoff.spec.ts",
+      "project": "mobile-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 8966,
+          "retry": 0,
+          "start_time": "2026-10-08T10:36:25.627Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "P08 identity controls expose startup, pending verification and denied recovery",
+      "file": "offline-identity.spec.ts",
+      "project": "desktop-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 2610,
+          "retry": 0,
+          "start_time": "2026-10-08T10:30:16.841Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "P08 identity controls expose startup, pending verification and denied recovery",
+      "file": "offline-identity.spec.ts",
+      "project": "mobile-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 988,
+          "retry": 0,
+          "start_time": "2026-10-08T10:36:35.006Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "P08 real offline UI interruption retains typed evidence and exact PNG, retries original receipt and saves draft",
+      "file": "offline.spec.ts",
+      "project": "desktop-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 18176,
+          "retry": 0,
+          "start_time": "2026-10-08T10:30:19.524Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "P08 real IndexedDB quota/abort, multi-tab claim, identity lock and schema retention",
+      "file": "offline.spec.ts",
+      "project": "desktop-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 7019,
+          "retry": 0,
+          "start_time": "2026-10-08T10:30:37.730Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "P08 persistent browser process restart retains two jobs and original evidence during actual offline navigation",
+      "file": "offline.spec.ts",
+      "project": "desktop-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 15873,
+          "retry": 0,
+          "start_time": "2026-10-08T10:30:44.761Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "P08 UI time conflict keeps original local evidence and keyboard recovery controls",
+      "file": "offline.spec.ts",
+      "project": "desktop-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 7141,
+          "retry": 0,
+          "start_time": "2026-10-08T10:31:00.646Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "P08 real offline UI interruption retains typed evidence and exact PNG, retries original receipt and saves draft",
+      "file": "offline.spec.ts",
+      "project": "mobile-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 16636,
+          "retry": 0,
+          "start_time": "2026-10-08T10:36:36.058Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "P08 real IndexedDB quota/abort, multi-tab claim, identity lock and schema retention",
+      "file": "offline.spec.ts",
+      "project": "mobile-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 7553,
+          "retry": 0,
+          "start_time": "2026-10-08T10:36:52.705Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "P08 persistent browser process restart retains two jobs and original evidence during actual offline navigation",
+      "file": "offline.spec.ts",
+      "project": "mobile-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 17220,
+          "retry": 0,
+          "start_time": "2026-10-08T10:37:00.272Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "P08 UI time conflict keeps original local evidence and keyboard recovery controls",
+      "file": "offline.spec.ts",
+      "project": "mobile-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 7310,
+          "retry": 0,
+          "start_time": "2026-10-08T10:37:17.510Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "P11 selected UI service-to-Finance journey preserves controlled booking, personal originals, exact response and reconciled Travel no-posting",
+      "file": "quality-journey.spec.ts",
+      "project": "desktop-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 166460,
+          "retry": 0,
+          "start_time": "2026-10-08T10:31:08.109Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "P11 selected UI service-to-Finance journey preserves controlled booking, personal originals, exact response and reconciled Travel no-posting",
+      "file": "quality-journey.spec.ts",
+      "project": "mobile-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 163437,
+          "retry": 0,
+          "start_time": "2026-10-08T10:37:24.880Z",
+          "errors": []
+        }
+      ]
+    }
+  ]
+}

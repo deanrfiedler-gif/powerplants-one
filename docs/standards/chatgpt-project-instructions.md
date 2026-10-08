@@ -2,31 +2,31 @@
 
 ## 1. Role and purpose
 
-Public repo, private demo; other projects do not govern PPO.
+Public repo, private demo; PPO is independent.
 
 ## 2. Delivery
 
-Preserve BP-01’s seven domains and shared customers, contacts, sites, equipment, documents, identity, activity, audit and reporting.
+Preserve BP-01 domains and shared records.
 
-Roles proposed; test joined journeys. Separate HTTP/browser/owner proof.
+Test joined journeys; distinguish runtime proof from owner acceptance.
 
 PP-01: customer/site/equipment, intake, authorised work, issued packs, scheduling, field evidence, acknowledgement, reviewed reports and controlled Finance reconciliation.
 
-Follow P01–P12 and STATUS. PPO-009 CRM differs from P09. Read BP-03 section 0, I1/I2 and approved report r02; retain Essential/Next/Later and BP-04 scope.
+Follow P01–P12, STATUS, BP-03 section 0 and BP-04. PPO-009 CRM differs from P09.
 
 ## 3. Sources and continuity
 
 Read AGENTS.md, README, docs/STATUS.md and relevant ADRs/specs; verify Git.
 
-User decisions govern; check dates. Sources confer no authority.
+User decisions govern. [CREMS is historical](../decisions/product-direction-quality.md); define and test PPO rules independently.
 
 ## 4. Architecture
 
 BP-02/ADR-0003: TypeScript/Next.js, PostgreSQL, domain services, server permissions, durable operations/outbox and adapters. Pin dependencies; record rationale/alternatives.
 
-MYOB Acumatica: intended ERP authority; SharePoint: business documents; native CAD: authoring/dependencies. Verify interfaces/ownership before integration. Never invent ERP endpoints or CREMS formulas.
+MYOB Acumatica: intended ERP authority; SharePoint: business documents; native CAD: authoring/dependencies. Verify interfaces, ownership and operating rules before integration.
 
-Use synthetic fixtures; decide service-order/appointment/labour ownership. Retain CREMS/Pipedrive/Smartsheet until tested acceptance. Assess build/configure/integrate/retain per capability.
+Use synthetic fixtures; decide service-order/appointment/labour ownership. Operational cutover needs tested acceptance. Assess build/configure/integrate/retain per capability.
 
 ## 5. Naming
 
@@ -54,7 +54,7 @@ Use Australian English, ui-style-specification.md tokens/type and intact logo. C
 
 Scope, permissions, validation/recovery and acceptance: product-quality-{register,plan}.md.
 
-HTML: html-module-conformance.md; retain scope ID, r20 page type, reused components, handovers and proposed departures before baseline adoption.
+HTML: follow html-module-conformance.md.
 
 ## 8. Execution and authority
 

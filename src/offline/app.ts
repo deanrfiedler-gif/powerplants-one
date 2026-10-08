@@ -912,6 +912,59 @@ function renderCompletion() {
   const box = $("completion-form"),
     j = safeJob().job;
   box.replaceChildren(element("h3", "Completion draft"));
+  box.append(
+    element(
+      "p",
+      "For a large evidence set, send every original, then continue completion online. Your saved originals stay on this device.",
+    ),
+    button(
+      "Continue completion online",
+      async () => {
+        const p = requireOwner(),
+          id = safeJob().job.id;
+        const settled = async () => {
+          const originals = (await queue(p)).filter(
+            (x) => x.original.appointment_id === id,
+          );
+          if (
+            originals.some(
+              (x) =>
+                x.status.state !== "ServerSaved" ||
+                !x.status.receipt ||
+                x.status.recovery,
+            )
+          )
+            throw new Error(
+              "Send or resolve every original for this job before continuing online. Pending, uncertain and review-required evidence stays on this device.",
+            );
+          return originals;
+        };
+        await settled();
+        await verifyOwner(p);
+        // The ordinary scoped read rechecks current access; a connection icon or
+        // a cached identity cannot establish permission to continue this visit.
+        const current = (
+          await api<{ items: CachedJob["job"][] }>(`my-jobs/${id}`)
+        ).items[0];
+        const originals = await settled();
+        if (
+          !current?.attendance ||
+          originals.some(
+            (x) =>
+              ["Capture", "Correct"].includes(x.original.command) &&
+              !current.entries.some(
+                (entry) => entry.id === x.original.payload.id,
+              ),
+          )
+        )
+          throw new Error(
+            "Current attendance or saved evidence could not be verified. Keep your originals and refresh the job before continuing.",
+          );
+        window.location.assign(`/my-jobs/${encodeURIComponent(id)}`);
+      },
+      true,
+    ),
+  );
   const form = element("form");
   const outcome = field(form, "Draft scope outcome", "Partial", "text", [
       "Complete",
@@ -1009,7 +1062,7 @@ function renderCompletion() {
         ];
         if (deps.length > 30)
           throw new Error(
-            "This bounded draft has more than 30 local dependencies. Synchronise and download current context before preparing it.",
+            "This draft has more than 30 local dependencies. Send every original, then choose Continue completion online. Your saved evidence remains retained.",
           );
         const previous = rows
             .filter((x) => x.original.command === "CompletionDraft")
@@ -1688,14 +1741,17 @@ function renderReports(box: HTMLElement) {
         const presentedAt = new Date().toISOString(),
           f = element("form"),
           fields = element("fieldset"),
-          subject = field(fields, "Response concerns", "Report content", "text", ["Report content", "Attendance facts only"]),
-          choice = field(
+          subject = field(
             fields,
-            "Customer response",
-            "",
+            "Response concerns",
+            "Report content",
             "text",
-            ["", ...responseChoices],
+            ["Report content", "Attendance facts only"],
           ),
+          choice = field(fields, "Customer response", "", "text", [
+            "",
+            ...responseChoices,
+          ]),
           name = field(fields, "Stated respondent name (synthetic)"),
           role = field(fields, "Stated respondent role"),
           remarks = field(
@@ -1713,9 +1769,17 @@ function renderReports(box: HTMLElement) {
           ) as HTMLInputElement,
           save = element("button", "Save customer response on this device");
         signature.accept = "image/png";
-        subject.onchange = () => { signature.value = ""; };
-        (choice as HTMLSelectElement).options[0].text = "Choose an explicit response";
-        f.prepend(element("p", "Attendance acknowledgement concerns only the named technician’s attendance facts in this exact cached presentation. Neither subject grants technical clearance, work authority or Finance approval. Current source, audience, evidence and permission are rechecked on explicit replay. Corrections to saved responses are made online from their original history."));
+        subject.onchange = () => {
+          signature.value = "";
+        };
+        (choice as HTMLSelectElement).options[0].text =
+          "Choose an explicit response";
+        f.prepend(
+          element(
+            "p",
+            "Attendance acknowledgement concerns only the named technician’s attendance facts in this exact cached presentation. Neither subject grants technical clearance, work authority or Finance approval. Current source, audience, evidence and permission are rechecked on explicit replay. Corrections to saved responses are made online from their original history.",
+          ),
+        );
         save.type = "submit";
         fields.append(save);
         f.append(fields);
@@ -1743,7 +1807,10 @@ function renderReports(box: HTMLElement) {
               }
               const body = {
                 id: crypto.randomUUID(),
-                subject: subject.value === "Attendance facts only" ? "AttendanceFacts" : "ReportContent",
+                subject:
+                  subject.value === "Attendance facts only"
+                    ? "AttendanceFacts"
+                    : "ReportContent",
                 presentation_id: v.id,
                 revision_id: v.revision_id,
                 presentation_kind: v.kind,

@@ -338,9 +338,16 @@ export function WorkTimer({
       (t?.state === "Paused" ? openSeconds : 0);
   const closedWithoutAttendance =
     !job.attendance && visitArrivalGuidance(job.status, false).closed;
+  // The job can confirm closure before the independent timer read refreshes.
+  // Preserve uncertain originals, but never offer fresh actions on frozen evidence.
+  const captureClosed =
+    !!v?.capture_closed ||
+    !!job.accepted_end_at ||
+    (job.report?.revision ?? 0) > 0 ||
+    ["Submitted", "Reviewed", "Issued"].includes(job.report?.status ?? "");
   const label = closedWithoutAttendance
     ? "Visit closed"
-    : v?.capture_closed
+    : captureClosed
       ? "Timer closed"
       : t?.state === "Running"
         ? openSeconds > 43200
@@ -354,7 +361,7 @@ export function WorkTimer({
               ? "Ready to start"
               : "Can't start yet";
   const state =
-    closedWithoutAttendance || v?.capture_closed
+    closedWithoutAttendance || captureClosed
       ? "closed"
       : t?.state === "Running"
         ? openSeconds > 43200
@@ -373,20 +380,20 @@ export function WorkTimer({
     !r.loading &&
     !r.error &&
     v.currentness === "Current" &&
-    !v.capture_closed;
+    !captureClosed;
   const canFinish =
     jobCurrent &&
     !!v &&
     !r.loading &&
     !r.error &&
-    !v.capture_closed &&
+    !captureClosed &&
     !!t &&
     t.state !== "Stopped";
   const undoSeconds = v?.undo
     ? Math.max(0, Math.ceil((Date.parse(v.undo.expires_at) - now) / 1000))
     : 0;
   const begin = (action: DialogState["action"]) => {
-    if (blocked) return;
+    if (blocked || (captureClosed && action !== "Menu")) return;
     command.discard();
     setTask(t?.scope_item_id ?? job.scope.items[0]?.id ?? "");
     setAsset(t?.asset_id ?? "");
@@ -409,7 +416,7 @@ export function WorkTimer({
     action: TimerAction,
     extra: Record<string, unknown> = {},
   ) {
-    if (!job.attendance) return;
+    if (!job.attendance || captureClosed || blocked) return;
     await command.send(`my-jobs/${job.id}/timer`, {
       attendance_id: job.attendance.id,
       expected_version: dialog?.version ?? t?.version ?? 0,
@@ -533,9 +540,9 @@ export function WorkTimer({
   );
   const controls = (phone = false) => (
     <>
-      {closedWithoutAttendance ? (
+      {closedWithoutAttendance || captureClosed ? (
         <Button variant="primary" className="primary" disabled>
-          Visit closed
+          {closedWithoutAttendance ? "Visit closed" : "Timer closed"}
         </Button>
       ) : !t || t.state === "Stopped" ? (
         <Button
@@ -612,7 +619,7 @@ export function WorkTimer({
             <div className="title-row">
               <h1>{job.scope.summary}</h1>
               <p className="tag" data-state={state}>
-                {t?.state === "Running" && (
+                {!captureClosed && t?.state === "Running" && (
                   <span className="live" aria-hidden="true" />
                 )}
                 {label}
@@ -650,10 +657,10 @@ export function WorkTimer({
             </Link>
             <OfflineEntry>Saved offline jobs</OfflineEntry>
           </div>
-          {v?.currentness !== "Current" && (
+          {(captureClosed || v?.currentness !== "Current") && (
             <div className="banner-row">
               <p>
-                {v?.capture_closed
+                {captureClosed
                   ? "This attendance's evidence is frozen. Timer history remains; further physical work needs a separate visit."
                   : visitArrivalGuidance(job.status, !!job.attendance).closed
                     ? visitArrivalGuidance(job.status, !!job.attendance).visit +
@@ -776,7 +783,7 @@ export function WorkTimer({
                 is retained.
               </p>
               <Button
-                disabled={blocked}
+                disabled={blocked || captureClosed}
                 onClick={() =>
                   void send("Undo", { undo_event_id: v.undo!.event_id })
                 }
@@ -964,6 +971,13 @@ export function WorkTimer({
               }}
             >
               <div className="sheet-body">
+                {captureClosed && (
+                  <p role="status">
+                    This attendance's evidence is frozen. Your entered text
+                    remains; cancel this dialog or reconcile an unresolved
+                    original action.
+                  </p>
+                )}
                 <p>
                   {dialog.action === "Start"
                     ? "Starting creates a retained timer event for this task. It does not record arrival or approve payment."
@@ -1028,7 +1042,7 @@ export function WorkTimer({
                         <Button
                           key={x}
                           aria-pressed={pause === x}
-                          disabled={blocked}
+                          disabled={blocked || captureClosed}
                           onClick={() => {
                             setPause(x);
                             if (!pauseNeedsNote(x))
@@ -1092,6 +1106,7 @@ export function WorkTimer({
                     variant="primary"
                     className="primary"
                     busy={command.busy}
+                    disabled={captureClosed}
                   >
                     {dialog.action === "Finish"
                       ? "Save actual finish"

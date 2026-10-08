@@ -1,0 +1,906 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: offline-completion-handoff.spec.ts >> large offline queue continues through online completion with all 100 original captures
+- Location: tests\browser\offline-completion-handoff.spec.ts:20:1
+
+# Error details
+
+```
+Error: expect(locator).toHaveValue(expected) failed
+
+Locator: getByRole('dialog', { name: 'Start work', exact: true }).getByLabel('Short note', { exact: true })
+Expected: "SYN retain my note when the submitted report arrives"
+Timeout: 5000ms
+Error: element(s) not found
+
+Call log:
+  - Expect "toHaveValue" getByRole('dialog', { name: 'Start work', exact: true }).getByLabel('Short note', { exact: true }) with timeout 5000ms
+  - waiting for getByRole('dialog', { name: 'Start work', exact: true }).getByLabel('Short note', { exact: true })
+
+```
+
+```yaml
+- link "Skip to main content":
+  - /url: "#main"
+- complementary "Application navigation":
+  - link "Powerplants One home":
+    - /url: /
+    - img "Powerplants Australia"
+  - button "Expand primary navigation"
+  - navigation "Service operations shortcuts":
+    - link "My Work":
+      - /url: /work?department=service
+    - link "Service requests":
+      - /url: /service/tickets
+    - link "Work orders":
+      - /url: /service/work-orders
+    - link "Schedule":
+      - /url: /schedule
+    - link "Field team":
+      - /url: /service/technicians
+    - link "Job packs":
+      - /url: /service/packs
+    - link "Service review":
+      - /url: /service/reports
+    - link "My jobs":
+      - /url: /my-jobs
+    - link "My inspections":
+      - /url: /my-jobs/inspections
+    - link "Incidents and actions":
+      - /url: /service/incidents
+    - link "Equipment":
+      - /url: /equipment?department=service
+  - button "More"
+- banner:
+  - navigation "Breadcrumb":
+    - button "Page hierarchy"
+    - list "Service / My jobs":
+      - listitem:
+        - link "Service":
+          - /url: /service/tickets
+      - listitem: / My jobs
+  - combobox "Search Powerplants One"
+  - button "Quick add"
+  - button "Design and build workspace"
+  - button "Page guide"
+  - button "Quick Help"
+  - button "Notifications"
+  - region "Local demonstration identity":
+    - button "Change identity"
+- main:
+  - strong: Synthetic prototype — not for operational use
+  - text: Field workflow preview — integrated acceptance incomplete
+  - link "Open offline field workspace":
+    - /url: /offline/index.html
+  - complementary:
+    - strong: Job
+    - text: SYN-PPO-APT-000016
+    - navigation "Job sections":
+      - list:
+        - listitem:
+          - link "Overview":
+            - /url: "#timer-overview"
+        - listitem:
+          - link "Job pack":
+            - /url: /documents/7637c46f-1bf3-43ab-8d66-0c7cf3814cd2
+        - listitem:
+          - link "Field notes and parts":
+            - /url: "#field-execution"
+        - listitem:
+          - link "Scope and limits":
+            - /url: "#field-context"
+        - listitem:
+          - link "Equipment":
+            - /url: "#field-equipment"
+        - listitem:
+          - link "Customer contact":
+            - /url: "#field-contact"
+        - listitem:
+          - link "Completion Submitted":
+            - /url: "#field-execution"
+    - heading "Job details" [level=2]
+    - term: Work order
+    - definition: SYN-PPO-WO-000013
+    - term: Site
+    - definition: SYN Q01 Demonstration Site
+    - term: Visit
+    - definition: 5 Aug 2030, 10:00 am
+    - term: Job labour allowance
+    - definition: Not established
+  - heading "SYN Planned controller inspection — coordination and customer date review" [level=1]
+  - paragraph: Timer closed
+  - button "Timer closed" [disabled]
+  - paragraph: Work timer records attributable job-cost time. Arrival, customer agreement, payroll and billability are separate.
+  - link "Site readiness":
+    - /url: /my-jobs/site-readiness?appointment_id=2384a495-2038-450a-b01e-8ff1dd408132
+  - link "Saved offline jobs":
+    - /url: /offline/index.html
+  - paragraph: This attendance's evidence is frozen. Timer history remains; further physical work needs a separate visit.
+  - region "Work timer":
+    - text: Labour on this visit 00:00 :00
+    - term: This stretch
+    - definition: 00:00
+    - definition: Not running
+    - term: Booking
+    - definition: 02:00
+    - definition: Scheduled visit
+    - term: Not counted as labour
+    - definition: 00:00
+    - definition: Travel, breaks and waiting
+    - 'img "Visit track: booked 10:00 to 12:00; 0 saved intervals. Exact times are listed below."': Booked visit 10:00 10:40 11:20 12:00
+    - status: No timer started
+    - button "Refresh timer"
+  - region "Time recorded":
+    - heading "Time recorded" [level=2]
+    - paragraph: Captured on this visit · Service review and charging remain separate
+    - button "Add time manually"
+    - paragraph: No time recorded yet. Start work or record an attributable manual interval.
+    - list
+    - text: Corrections need a reason and keep the original.
+  - region "Activity":
+    - heading "Activity" [level=2]
+    - list
+    - paragraph: No timer activity has been saved.
+  - text: Completed Pending Review SYN Riley Technician · Technician SYN-PPO-WO-000013 · Authorised
+  - paragraph:
+    - link "Review Site induction, risk and biosecurity":
+      - /url: /my-jobs/site-readiness?appointment_id=2384a495-2038-450a-b01e-8ff1dd408132
+  - paragraph:
+    - link "Capture Service inspections and retained retests":
+      - /url: /my-jobs/inspections?appointment_id=2384a495-2038-450a-b01e-8ff1dd408132
+    - text: ·
+    - link "Report incident":
+      - /url: /service/incidents/new?appointment_id=2384a495-2038-450a-b01e-8ff1dd408132
+  - heading "Current work context" [level=2]
+  - paragraph:
+    - strong: "Scheduled:"
+    - text: 5 Aug 2030, 10:00 am – 5 Aug 2030, 12:00 pm · Australia/Brisbane
+  - paragraph:
+    - strong: "Customer date agreement:"
+    - text: Confirmed. Pack acknowledgement is recorded separately.
+  - paragraph:
+    - strong: "Location:"
+    - text: Fictional site; booking address unverified
+  - paragraph:
+    - strong: "Contact:"
+    - text: SYN Avery Contact · Phone unknown · avery@example.invalid
+  - paragraph:
+    - strong: "Site access:"
+    - text: SYN access to be confirmed
+  - paragraph:
+    - strong: "Biosecurity:"
+    - text: SYN controls require review
+  - heading "Authorised scope r01" [level=3]
+  - paragraph: SYN Planned controller inspection — coordination and customer date review
+  - paragraph:
+    - strong: "Exclusions:"
+    - text: No shutdown, replacement, energised access, repair or financial approval.
+  - heading "1. Observe controller display and external sensor identity" [level=3]
+  - paragraph: Inspection
+  - list:
+    - listitem: Record observations
+    - listitem: Stop before intervention
+  - paragraph:
+    - text: "SYN-PPO-AST-000001 · SYN irrigation controller · Identity:"
+    - strong: Verified
+    - text: "· Serial: 000Ab-C.01"
+  - group: Source versions and exact pack
+  - heading "Retained visit — current restrictions" [level=2]
+  - list:
+    - listitem: A confirmed, unstarted appointment is required.
+  - paragraph: Retain observations of what happened against your original authority. New work needs service-owner review.
+  - heading "Your attendance" [level=2]
+  - paragraph: This visit is closed to new arrivals. Submitted evidence awaits internal Service review.
+  - paragraph: Your actual start is server-saved.
+  - paragraph: "Your retained attendance: 8be6ffbe-8ef2-4182-b00e-11336eef877e"
+  - paragraph: Received 8 Oct 2026, 8:29 pm. Captured 8 Oct 2026, 8:29 pm.
+  - paragraph: "Your evidence report: Submitted · revision 1. Report correction does not reopen attendance."
+  - text: Booking duration and crew acknowledgement have created no labour entries.
+  - paragraph: Further attendance requires a separate visit with its own assignment, current scope, readiness, exact pack and personal acknowledgement.
+  - status: No unsaved changes.
+  - region "Further attendance":
+    - heading "Further attendance" [level=2]
+    - paragraph: Service must review outstanding work and choose an appropriate separate visit. Earlier attendance, customer responses and pack acknowledgements stay with their original records.
+    - link "Review work-order visits":
+      - /url: /service/work-orders/b7c54545-e5ae-4918-b500-cd57e7abca9c#planned-visits
+    - paragraph: You can review permitted records. Ask the Service owner to prepare further attendance; this view grants no preparation or scheduling authority.
+    - heading "Other visits on this work order" [level=3]
+    - paragraph: Recent permitted records only. A shared work order does not establish a return or replacement relationship. Confirm suitability with Service before using an existing proposal.
+    - paragraph: No other accessible visit is shown. Use the permitted work-order record or ask the Service owner; do not record another arrival here.
+    - paragraph: Opening a record does not authorise work. Preparation, booking, customer agreement, assignment, competency, readiness, pack issue, personal acknowledgement and actual arrival remain separate.
+  - navigation "Field workspace sections":
+    - button "Capture"
+    - button "Photos"
+    - button "History"
+    - button "Completion" [pressed]
+  - heading "Submit exact completion" [level=2]
+  - paragraph: Saving a draft does not submit it. Submission freezes your current evidence and declarations for review. Resolve all unsent local evidence in the offline workspace before submitting here.
+  - paragraph:
+    - link "Open report review and revision history":
+      - /url: /service/reports/2e87f056-0aac-4a61-b6a5-627b3663c503
+    - text: · Submitted
+  - paragraph: This submitted set is frozen. A reviewer can return it; an accepted report needs an explicit correction cycle.
+  - heading "Prepare completion draft" [level=2]
+  - paragraph: Declare your own time and materials. Record outcomes for the authorised scope and remaining work. This saves a draft. Use the separate submission action for review; Finance remains outside this workflow.
+  - group:
+    - text: Overall scope outcome
+    - combobox "Overall scope outcome":
+      - option "Choose…"
+      - option "Complete"
+      - option "Partial" [selected]
+      - option "Unable To Proceed"
+    - text: Actual work performed
+    - textbox "Actual work performed": SYN visual inspection and 100 original observations/photo retained
+    - text: Exclusions and limits
+    - textbox "Exclusions and limits": No shutdown, replacement, energised access, repair or financial approval.
+    - text: Remaining work and reasons
+    - textbox "Remaining work and reasons": SYN coordinator owns remaining identification work
+    - text: My time declaration
+    - combobox "My time declaration":
+      - option "Choose…"
+      - option "All Recorded"
+      - option "None" [selected]
+      - option "Incomplete"
+    - text: My material declaration
+    - combobox "My material declaration":
+      - option "Choose…"
+      - option "All Recorded"
+      - option "None" [selected]
+      - option "Incomplete"
+    - text: Declaration explanation
+    - textbox "Declaration explanation": SYN no time or materials claimed
+    - heading "Observe controller display and external sensor identity" [level=3]
+    - text: Task 1 outcome
+    - combobox "Task 1 outcome":
+      - option "Choose…"
+      - option "Complete"
+      - option "Partial" [selected]
+      - option "Unable To Proceed"
+    - text: Task 1 explanation
+    - textbox "Task 1 explanation": SYN partial visual observation; coordinator owns follow-up
+    - paragraph: 100 current evidence versions will be referenced exactly. Unavailable photos remain visible blockers. Partial work creates a service-owner follow-up with its due date needing resolution.
+    - button "Save completion draft"
+  - status: Server-saved · Draft v1
+  - heading "Saved completion draft v1 · Partial" [level=2]
+  - paragraph: Server-saved 8 Oct 2026, 8:29 pm. Submission is a separate action above.
+  - paragraph: SYN visual inspection and 100 original observations/photo retained
+  - paragraph:
+    - strong: "Remaining work:"
+    - text: SYN coordinator owns remaining identification work
+  - list:
+    - listitem: Unresolved finding requires follow-up.
+    - listitem: An authorised task remains incomplete.
+    - listitem: A task result has not passed the synthetic completion check.
+    - listitem: The synthetic site-controls completion check has not passed.
+  - link "Owned remaining-work follow-up":
+    - /url: /work/a1129816-8bb4-44e6-afc6-e72546d55202
+  - heading "Unresolved work and ownership" [level=2]
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 1"':
+      - /url: /work/9251cafb-9e26-42be-ade9-d5b3863d22ef
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 2"':
+      - /url: /work/85beb0ae-be6e-4a22-a5f6-d38e503d207e
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 3"':
+      - /url: /work/16269b97-054d-4855-a0f7-022c2734d074
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 4"':
+      - /url: /work/e087f8df-c001-49a9-b6dd-b3e4c54b16cf
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 5"':
+      - /url: /work/9571c636-2a32-4783-866d-79b0588a7047
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 6"':
+      - /url: /work/e16466c7-b949-476f-a07f-e88240e63b4b
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 7"':
+      - /url: /work/68fffb51-c139-4d68-9195-28301b25ecd0
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 8"':
+      - /url: /work/490df5a2-4c78-4191-8764-ff92548164a9
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 9"':
+      - /url: /work/af4b3e49-9d6b-4c53-af5b-89ca2b57884d
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 10"':
+      - /url: /work/35d4c8eb-c894-4a7e-a342-d0414962f5ab
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 11"':
+      - /url: /work/b465dd4f-d9f0-4840-b532-d3d23d0e174d
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 12"':
+      - /url: /work/73efd5bb-7b32-43c4-83d7-521f2f3dd80d
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 13"':
+      - /url: /work/3477c706-f6ca-4c38-ac27-eaca93e74b1d
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 14"':
+      - /url: /work/01f6a310-185b-412b-a3b6-54db3321db59
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 15"':
+      - /url: /work/1e9d46e7-f79c-4ba7-becf-d6fb8ea3dbe1
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 16"':
+      - /url: /work/5121de8a-0661-44c4-adc3-5485fcc251da
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 17"':
+      - /url: /work/3c9ce3ac-39ec-450e-ad29-e260cebb066d
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 18"':
+      - /url: /work/cf3d6414-ece9-4cf8-bfd8-a1005c4f978a
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 19"':
+      - /url: /work/a43a0cca-742f-4939-a866-b1299b388b7e
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 20"':
+      - /url: /work/08650b05-a3f2-41a8-979e-1cc758a57f33
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 21"':
+      - /url: /work/f0f066bb-bb9e-40af-9286-a1b91e8f7f4a
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 22"':
+      - /url: /work/5cc15d68-f85e-49a2-8a04-564de69ea323
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 23"':
+      - /url: /work/9a71ff7d-101e-4593-9556-52f1b1c54536
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 24"':
+      - /url: /work/088891ca-ccca-4590-9b72-fbbad7e42da8
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 25"':
+      - /url: /work/1896959f-1d6f-4f95-91a1-b6aacec80860
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 26"':
+      - /url: /work/0030a606-124a-4370-b7ba-051de3d206e5
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 27"':
+      - /url: /work/bd7bacca-3c00-4165-9a9a-68c770ed4cd6
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 28"':
+      - /url: /work/c13e9c49-ddfb-4380-afad-72f7ffb0943b
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 29"':
+      - /url: /work/5658af5f-3857-49cf-9d36-47d126202ca8
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 30"':
+      - /url: /work/2cf5f358-77d9-4689-9028-ca373d931d0b
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 31"':
+      - /url: /work/25d93103-4045-4f75-989a-ec956480075e
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 32"':
+      - /url: /work/ac4ed262-d55f-4972-8226-8fccb1ba6824
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 33"':
+      - /url: /work/3b92cdc5-6ba3-4267-bcea-8e91ed0c8841
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 34"':
+      - /url: /work/3828ca48-cbd3-45b5-934a-d681da486698
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 35"':
+      - /url: /work/cb1f7469-5ab9-44cd-8598-e1ac0bc6e59e
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 36"':
+      - /url: /work/2e091bba-f44e-41eb-883a-602851031778
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 37"':
+      - /url: /work/f008be8e-fd28-40d1-b6b0-1001eb778ff3
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 38"':
+      - /url: /work/ebd656d6-cc3a-4f5b-957f-e5a6d3e641f9
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 39"':
+      - /url: /work/33ca1f24-c446-4bcd-8f6e-b3a124a6e1e7
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 40"':
+      - /url: /work/6f1e9f68-2405-4ab3-a01e-636efdb12885
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 41"':
+      - /url: /work/406221d6-f396-497f-89a5-29802a318c8e
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 42"':
+      - /url: /work/6acbd619-e435-46e9-a817-6d339bc0b2c7
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 43"':
+      - /url: /work/2d0af9ec-e59f-481e-a856-d8b6fd64bff0
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 44"':
+      - /url: /work/da97317e-b5e3-4d93-8319-deeb96ef3859
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 45"':
+      - /url: /work/315567d6-e8e9-4f4c-b9b9-456e7aec88ee
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 46"':
+      - /url: /work/9dfc9b8c-104d-42e6-a1c6-1d242481d6e1
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 47"':
+      - /url: /work/76fc9bbd-f8c5-47e8-87e3-034954b77d2e
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 48"':
+      - /url: /work/4862ac74-6ec8-4290-9eb1-e16dfc8ba5a1
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 49"':
+      - /url: /work/8f842582-0af9-4c18-80de-ae575e0b8f16
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 50"':
+      - /url: /work/85a41862-ad9d-4117-b254-597159817db6
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 51"':
+      - /url: /work/c115aab3-c9cc-4504-859f-baec685fe541
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 52"':
+      - /url: /work/70be81c3-1b82-4b71-91d6-d3926044b80e
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 53"':
+      - /url: /work/64f99730-ba01-4d0f-b5c4-f71b53e67516
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 54"':
+      - /url: /work/4973155b-3d5c-40a2-8103-e265f2883c00
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 55"':
+      - /url: /work/e8abb65e-528d-4976-b7b0-2da4a7198df1
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 56"':
+      - /url: /work/44b56958-e855-4fba-8c53-a8c140fae917
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 57"':
+      - /url: /work/ca5d5818-1a21-4559-94ad-6d9626a4cc39
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 58"':
+      - /url: /work/194e81bf-9a2d-45d9-b7ca-660ffb6ed9aa
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 59"':
+      - /url: /work/e0004211-2672-47ed-8d69-5aed72863f91
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 60"':
+      - /url: /work/da8af0d5-da4a-4046-afd1-6f8842661483
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 61"':
+      - /url: /work/55096ad7-9711-4c76-82a3-2a1000009ba8
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 62"':
+      - /url: /work/afcc278d-0aca-4db8-9bd1-0f656eb25424
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 63"':
+      - /url: /work/ea817866-ca8c-419e-934b-4aeb740923e8
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 64"':
+      - /url: /work/fe6a8a06-b14a-4249-bfde-f60147c4b18a
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 65"':
+      - /url: /work/aabdf181-5b50-4fb3-960d-baf819989f02
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 66"':
+      - /url: /work/cc93e99e-a44d-4c5f-b9ef-611ad4b9469b
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 67"':
+      - /url: /work/795fbbdf-290a-45b3-ab7e-12953ff97398
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 68"':
+      - /url: /work/247668fc-697a-4e21-b7f0-5e7efc3b61ef
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 69"':
+      - /url: /work/ec92731b-28f7-4115-997e-27f7437bdc1e
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 70"':
+      - /url: /work/c1c61d82-84c8-4de1-b1ee-24d0858f30e6
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 71"':
+      - /url: /work/6da06b44-6050-4746-9468-34c41c5387cb
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 72"':
+      - /url: /work/1a8c3049-b188-4098-9dfd-75a8eae489bb
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 73"':
+      - /url: /work/a7c9f8f3-c6a8-44a7-a08b-ec020b738771
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 74"':
+      - /url: /work/86939a46-0b28-4bd7-89f6-853a4eb62405
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 75"':
+      - /url: /work/0e1fb7a6-2da8-4885-ba89-838a0651692d
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 76"':
+      - /url: /work/e3bebb50-7f68-4d8c-bae4-0a0c6b8952b0
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 77"':
+      - /url: /work/6187c270-c408-4d6d-a6be-676e9f36bc92
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 78"':
+      - /url: /work/6e62a666-bf97-4d6f-9322-4d594995305d
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 79"':
+      - /url: /work/11ba43b9-2d78-4510-8045-47f8e93387e9
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 80"':
+      - /url: /work/97ad15fd-eb5c-4b5b-b0ea-bc479bdcfe9d
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 81"':
+      - /url: /work/0a89ccd6-e374-483c-aeb6-a689e971586d
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 82"':
+      - /url: /work/f5639a72-e952-41f2-acbd-f605ce9c72f2
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 83"':
+      - /url: /work/297112fd-ea28-4186-81d2-5f0a009b1470
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 84"':
+      - /url: /work/8f960e3f-b305-4be0-b118-2a21d8168337
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 85"':
+      - /url: /work/2d118d9e-a4ee-468b-bbc2-fde212e68c3d
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 86"':
+      - /url: /work/0f2c994d-6e20-46bf-8250-6b3585f08f10
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 87"':
+      - /url: /work/c73f6d92-362d-474c-b6f3-5c0c4668013f
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 88"':
+      - /url: /work/66f0f052-4cfe-4288-bb53-368eb9712d3d
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 89"':
+      - /url: /work/4b52aeb0-b0fa-485c-bdb8-67c9523f84a2
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 90"':
+      - /url: /work/f13ac078-5659-4452-8775-e748bac3a006
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 91"':
+      - /url: /work/a6610e7e-e79f-455f-b153-3f2be95720cd
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 92"':
+      - /url: /work/99306cfb-477a-432c-a4fb-60ca0f24e054
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 93"':
+      - /url: /work/3855f06b-fa1e-414a-8058-8cd81ea966de
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 94"':
+      - /url: /work/0c1ce084-e2f3-4719-95da-7af123a1a4c6
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 95"':
+      - /url: /work/939c6caf-89da-409a-b4dc-c95f12c1c8e0
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 96"':
+      - /url: /work/e2fd732f-0a7e-4b9c-8d40-16a2b8a8c5a9
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 97"':
+      - /url: /work/d392f801-314f-45d2-a994-671e49dcdd09
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 98"':
+      - /url: /work/48e2d871-0142-4bc5-8eba-efc194d74511
+    - text: SYN Coordinator · Open
+  - paragraph:
+    - 'link "SYN-PPO-APT-000016 · Review observation: SYN online continuation original 99"':
+      - /url: /work/55a16d58-7c33-4b46-a79f-23c633d151b6
+    - text: SYN Coordinator · Open
+  - paragraph: Current view read 8 Oct 2026, 8:29 pm. Refresh after another crew member saves. Leaving this page loses unsaved form contents.
+  - dialog "Start work":
+    - heading "Start work" [level=2]
+    - button "Close timer dialog": Close
+    - status: This attendance's evidence is frozen. Your entered text remains; cancel this dialog or reconcile an unresolved original action.
+    - paragraph: Starting creates a retained timer event for this task. It does not record arrival or approve payment.
+    - text: Authorised task
+    - combobox "Authorised task":
+      - option "1. Observe controller display and external sensor identity" [selected]
+    - text: Affected equipment
+    - combobox "Affected equipment":
+      - option "Choose equipment where required" [selected]
+      - option "SYN-PPO-AST-000001 · SYN irrigation controller"
+    - text: Short note
+    - textbox "Short note": SYN retain my note when the submitted report arrives
+    - status: Unsaved
+    - button "Cancel"
+    - button "Start work" [disabled]
+- alert
+```
+
+# Test source
+
+```ts
+  123 |   ).toBeVisible();
+  124 |   await page
+  125 |     .getByRole("button", { name: "Continue completion online", exact: true })
+  126 |     .click();
+  127 |   await expect(page).toHaveURL(new RegExp(`/my-jobs/${setup.appointment_id}$`));
+  128 |   await page.getByRole("button", { name: "Completion", exact: true }).click();
+  129 |   await page
+  130 |     .getByLabel("Actual work performed", { exact: true })
+  131 |     .fill("SYN visual inspection and 100 original observations/photo retained");
+  132 |   await page
+  133 |     .getByLabel("Remaining work and reasons", { exact: true })
+  134 |     .fill("SYN coordinator owns remaining identification work");
+  135 |   await page
+  136 |     .getByLabel("My time declaration", { exact: true })
+  137 |     .selectOption("None");
+  138 |   await page
+  139 |     .getByLabel("My material declaration", { exact: true })
+  140 |     .selectOption("None");
+  141 |   await page
+  142 |     .getByLabel("Declaration explanation", { exact: true })
+  143 |     .fill("SYN no time or materials claimed");
+  144 |   const tasks = page.getByLabel(/Task \d+ explanation/);
+  145 |   for (let i = 0; i < (await tasks.count()); i++)
+  146 |     await tasks
+  147 |       .nth(i)
+  148 |       .fill("SYN partial visual observation; coordinator owns follow-up");
+  149 |   await page
+  150 |     .getByRole("button", { name: "Save completion draft", exact: true })
+  151 |     .click();
+  152 |   await expect(
+  153 |     page.getByRole("heading", { name: "Saved completion draft v1 · Partial" }),
+  154 |   ).toBeVisible();
+  155 |   const job = (await call(page.request, `my-jobs/${setup.appointment_id}`))
+  156 |     .items[0];
+  157 |   expect(job.entries).toHaveLength(100);
+  158 |   expect(job.draft_revisions).toHaveLength(1);
+  159 |   expect(
+  160 |     job.draft_revisions[0].entries.map((x: { id: string }) => x.id).sort(),
+  161 |   ).toEqual(
+  162 |     originals
+  163 |       .filter((x) => x.command === "Capture")
+  164 |       .map((x) => x.payload.id)
+  165 |       .sort(),
+  166 |   );
+  167 |   expect(job.attachments).toHaveLength(1);
+  168 |   expect(job.attachments[0].status).toBe("Available");
+  169 |   expect(
+  170 |     await (
+  171 |       await page.request.get(
+  172 |         `/api/v1/attachments/${job.attachments[0].id}/bytes`,
+  173 |       )
+  174 |     ).body(),
+  175 |   ).toEqual(png());
+  176 |   await page
+  177 |     .getByLabel("Submission reason", { exact: true })
+  178 |     .fill("SYN submit exact 100-entry evidence for independent review");
+  179 |   const timerPath = `**/api/v1/my-jobs/${setup.appointment_id}/timer`;
+  180 |   const staleTimer = await call(
+  181 |     page.request,
+  182 |     `my-jobs/${setup.appointment_id}/timer`,
+  183 |   );
+  184 |   expect(staleTimer.capture_closed).toBe(false);
+  185 |   // Delay the independent timer's fresh result beyond the submitted job read.
+  186 |   await page.route(timerPath, (route) => route.fulfill({ json: staleTimer }));
+  187 |   const submitPath = `**/api/v1/appointments/${setup.appointment_id}/submit-completion`;
+  188 |   let releaseSubmission: () => void = () => {};
+  189 |   const release = new Promise<void>((resolve) => {
+  190 |     releaseSubmission = resolve;
+  191 |   });
+  192 |   let savedSubmission: () => void = () => {};
+  193 |   const saved = new Promise<void>((resolve) => {
+  194 |     savedSubmission = resolve;
+  195 |   });
+  196 |   await page.route(submitPath, async (route) => {
+  197 |     const response = await route.fetch();
+  198 |     expect(response.ok()).toBe(true);
+  199 |     savedSubmission();
+  200 |     await release;
+  201 |     await route.fulfill({ response });
+  202 |   });
+  203 |   await page
+  204 |     .getByRole("button", {
+  205 |       name: "Submit exact evidence for review",
+  206 |       exact: true,
+  207 |     })
+  208 |     .click();
+  209 |   await saved;
+  210 |   try {
+  211 |     await page.getByRole("button", { name: "Start work", exact: true }).click();
+  212 |     const dialog = page.getByRole("dialog", {
+  213 |       name: "Start work",
+  214 |       exact: true,
+  215 |     });
+  216 |     await dialog
+  217 |       .getByLabel("Short note", { exact: true })
+  218 |       .fill("SYN retain my note when the submitted report arrives");
+  219 |     releaseSubmission();
+  220 |     await expect(
+  221 |       dialog.getByRole("button", { name: "Start work", exact: true }),
+  222 |     ).toBeDisabled();
+> 223 |     await expect(dialog.getByLabel("Short note", { exact: true })).toHaveValue(
+      |                                                                    ^ Error: expect(locator).toHaveValue(expected) failed
+  224 |       "SYN retain my note when the submitted report arrives",
+  225 |     );
+  226 |     await expect(dialog.getByRole("status")).toContainText(
+  227 |       "evidence is frozen",
+  228 |     );
+  229 |     page.once("dialog", (warning) => warning.accept());
+  230 |     await dialog.getByRole("button", { name: "Cancel", exact: true }).click();
+  231 |     await expect(dialog).toHaveCount(0);
+  232 |   } finally {
+  233 |     releaseSubmission();
+  234 |   }
+  235 |   await page.unroute(submitPath);
+  236 |   await expect(
+  237 |     page
+  238 |       .getByRole("link", { name: "Open report review and revision history" })
+  239 |       .locator(".."),
+  240 |   ).toContainText("Submitted");
+  241 |   const submitted = (
+  242 |     await call(page.request, `my-jobs/${setup.appointment_id}`)
+  243 |   ).items[0];
+  244 |   expect(submitted.report.status).toBe("Submitted");
+  245 |   await expect(page.locator("#ppo-work-timer .tag")).toHaveText("Timer closed");
+  246 |   await expect(
+  247 |     page.getByRole("button", { name: "Timer closed", exact: true }),
+  248 |   ).toBeDisabled();
+  249 |   await page.unroute(timerPath);
+  250 |   await page.screenshot({ path: info.outputPath("completion-online.png") });
+  251 |   const reportLink = page.getByRole("link", {
+  252 |     name: "Open report review and revision history",
+  253 |   });
+  254 |   const reportHref = (await reportLink.getAttribute("href"))!;
+  255 |   await reportLink.click();
+  256 |   await expect(
+  257 |     page.getByRole("heading", { name: /Revision \d+ · Submitted/ }),
+  258 |   ).toBeVisible();
+  259 |   await page.goto("/offline/index.html");
+  260 |   await expect(page.locator("#workspace")).toBeVisible();
+  261 |   await page.reload();
+  262 |   await expect(page.locator("#workspace")).toBeVisible();
+  263 |   const retained = (await localRows(page)) as Stored[];
+  264 |   expect(retained.map((x) => x.original)).toEqual(originals);
+  265 |   expect(retained.every((x) => x.status.state === "ServerSaved")).toBe(true);
+  266 |   await call(page.request, "local-session", { profile: "coordinator" });
+  267 |   await page.goto(reportHref);
+  268 |   await expect(
+  269 |     page.getByRole("heading", {
+  270 |       name: "Review exact submitted entries",
+  271 |       exact: true,
+  272 |     }),
+  273 |   ).toBeVisible();
+  274 |   await expect(page.getByLabel(/Entry \d+ review reason/)).toHaveCount(100);
+  275 |   const report = (await call(page.request, `reports/${submitted.report.id}`))
+  276 |     .items[0];
+  277 |   expect(report.can_review).toBe(true);
+  278 |   expect(
+  279 |     report.revisions[0].snapshot.entries
+  280 |       .map((e: { id: string }) => e.id)
+  281 |       .sort(),
+  282 |   ).toEqual(
+  283 |     job.draft_revisions[0].entries.map((e: { id: string }) => e.id).sort(),
+  284 |   );
+  285 |   expect(
+  286 |     await (
+  287 |       await page.request.get(
+  288 |         `/api/v1/attachments/${job.attachments[0].id}/bytes`,
+  289 |       )
+  290 |     ).body(),
+  291 |   ).toEqual(png());
+  292 |   expect(
+  293 |     await page.evaluate(
+  294 |       () => document.documentElement.scrollWidth <= innerWidth,
+  295 |     ),
+  296 |   ).toBe(true);
+  297 |   await page.screenshot({ path: info.outputPath("service-review.png") });
+  298 |   await writeFile(
+  299 |     info.outputPath("completion-handoff.json"),
+  300 |     JSON.stringify(
+  301 |       {
+  302 |         source_head: execFileSync("git", ["rev-parse", "HEAD"], {
+  303 |           encoding: "utf8",
+  304 |         }).trim(),
+  305 |         app_sha256: createHash("sha256")
+  306 |           .update(await readFile("src/offline/app.ts"))
+  307 |           .digest("hex"),
+  308 |         timer_sha256: createHash("sha256")
+  309 |           .update(await readFile("src/components/work-timer.tsx"))
+  310 |           .digest("hex"),
+  311 |         test_sha256: createHash("sha256")
+  312 |           .update(
+  313 |             await readFile("tests/browser/offline-completion-handoff.spec.ts"),
+  314 |           )
+  315 |           .digest("hex"),
+  316 |         captured_at: new Date().toISOString(),
+  317 |         viewport: page.viewportSize(),
+  318 |         project: info.project.name,
+  319 |         appointment_id: setup.appointment_id,
+  320 |         capture_ids: job.draft_revisions[0].entries,
+  321 |         original_operation_ids: originals.map((x) => x.operation_id),
+  322 |         attachment: {
+  323 |           id: job.attachments[0].id,
+```

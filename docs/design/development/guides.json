@@ -50750,7 +50750,7 @@
       "prepared_at": "2026-10-03",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "docs/testing/evidence/field-closed-visit/README.md; cached context remains distinct from server authority.",
+      "runtime_evidence": "docs/testing/evidence/field-closed-visit/README.md; cached context remains distinct from server authority; docs/testing/evidence/product-quality-next/README.md: large evidence-set completion continuation",
       "sections": [
         {
           "section_id": "purpose",
@@ -50816,7 +50816,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Stop the timer, inspect saved intervals and resolve outstanding evidence. Report submission, Service acceptance and Finance handling remain separate actions."
+            "Stop the timer, inspect saved intervals and resolve outstanding evidence. Report submission, Service acceptance and Finance handling remain separate actions.",
+            "For a large evidence set, send or resolve every original, then choose Continue completion online. It checks your current identity, job access and saved evidence before opening this appointment in My Jobs. Open Completion, save the draft and submit the exact evidence for review. Originals and photo bytes stay on this device. Pending or uncertain outcomes must be resolved first; restricted recovery stays separate."
           ],
           "steps": [],
           "rows": [],

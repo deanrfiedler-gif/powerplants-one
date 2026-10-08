@@ -1,0 +1,10 @@
+{
+  "appointment_id": "0082bd4a-a96e-4b81-937f-6f21a34128ee",
+  "report": {
+    "id": "e5e1befc-8019-4344-b451-4980ea294386",
+    "status": "Submitted"
+  },
+  "stale_timer_label": "Ready to start",
+  "start_enabled": true,
+  "boundary": "Fresh submitted job with deliberately delayed earlier timer authority; no timer mutation attempted"
+}

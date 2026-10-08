@@ -11,6 +11,8 @@ versioning: git
 
 # BP-04 — Estimating and quotation
 
+> **Current product direction — 8 October 2026:** [Dean's decision](../decisions/product-direction-quality.md) removes CREMS parity and reconstruction as development prerequisites. Define and test PPO estimating calculations and workflows independently. Retain the historical CREMS evidence below, EST-01–EST-09 and independently adopted PPO decisions. Unverified operational pricing, technical facts and approval authority still need their own evidence.
+
 ## 1. Outcome and boundary
 
 Convert a permitted customer's requirement into an owned, traceable estimate and a controlled commercial offer. Preserve the cost basis, offered scope and exact customer response through revision and downstream handover. This is Dean's private synthetic PPO prototype, under [PPO-010 / issue #10](https://github.com/deanrfiedler-gif/powerplants-one/issues/10).

@@ -1,0 +1,70 @@
+{
+  "groups": 62,
+  "passed": 62,
+  "failed": 0,
+  "browser_channel": "chrome",
+  "pinned_runtime_evidence": true,
+  "page_errors": 0
+}
+  Passed Six views, the synthetic banner and the authority boundary render without errors
+  Passed Exactly one scope container and no duplicated application shell
+  Passed Every icon-only control renders a visible icon, not just an aria-label
+  Passed The dialog and panel close controls carry their icon
+  Passed The register renders the board List: grey header, 52 px rows, pinned identity
+  Passed The register scrolls inside its own region and pins identity while it does
+  Passed The view tabs render as the board underline row, not folder tabs
+  Passed The fixed clock is stated and never drifts to the real time
+  Passed The six attention queues render with counts and toggle the register
+  Passed Non-sortable columns carry no sort control, as parseDirectory refuses them
+  Passed Sorting by a permitted column reorders the register and announces aria-sort
+  Passed Search matches an organisation name and a role label through the affiliation JSON
+  Passed An empty result offers recovery and never reads as a permission problem
+  Passed The status filter offers exactly the contract statuses
+  Passed The page size offers exactly 25, 50 and 100
+  Passed An inactive contact is marked and states that no command can change it
+  Passed The site technician sees exactly one contact and nine withheld
+  Passed Restricted renders as restricted, never as empty
+  Passed The restricted explanation names the failing clause without naming the person
+  Passed A stakeholder list shows restricted rows beside a permitted one
+  Passed The visibility explanation traces both clauses for the site technician
+  Passed A company reader satisfies both clauses, and the basis names the first
+  Passed The contact record states the absent reference and the absent command
+  Passed Affiliation concurrency is stated as belonging to the organisation
+  Passed A stale organisation version produces a conflict, not a silent write
+  Passed An ended affiliation shows its period and whether a successor is recorded
+  Passed The reliance view lists every binding with its owning module
+  Passed An inactive primary contact shows a blocked approval owned by SV-06
+  Passed A finance-held binding is restricted for a non-finance reader and shown for finance
+  Passed Authority basis renders one of three values and explains itself
+  Passed Coverage gaps name a site without a primary contact and its consequence
+  Passed An organisation with history but no current affiliation is a stated gap
+  Passed A proposal refuses a short reason and keeps what was entered
+  Passed A proposal cannot be reviewed by its proposer
+  Passed Every apply is confirmed, labelled Simulated, and changes no record
+  Passed A returned proposal produces a successor that inherits no review
+  Passed Duplicate resolution proposes a pointer and merges nothing
+  Passed A duplicate candidate set the reader cannot reach is withheld, not hidden
+  Passed Two people who share a name are listed separately and never auto-merged
+  Passed A role without shared.edit cannot raise a proposal, and says why
+  Passed Loading, failed, partial and denied states are distinct and never read as zero
+  Passed A failed save keeps entries and changes nothing
+  Passed A competing tab raises a conflict that overwrites nothing
+  Passed The assistant refuses to answer from a stale copy
+  Passed The assistant answers only from the rendered record
+  Passed A refused restore changes nothing and says why
+  Passed Reset returns to the built-in fixture and discards local proposals
+  Passed A dialog returns focus to the control that opened it
+  Passed A panel returns focus and closes on Escape
+  Passed A proposal can be completed with the keyboard alone
+  Passed A duplicate review can be completed with the keyboard alone
+  Passed Cancelling a changed form asks before discarding
+  Passed The skip link reaches the workspace content
+  Passed No horizontal overflow at 1440x960
+  Passed No horizontal overflow at 1024x768
+  Passed No horizontal overflow at 820x800
+  Passed No horizontal overflow at 390x844
+  Passed Phone targets meet the 44 px minimum
+  Passed The register becomes cards on the phone viewport with labelled fields
+  Passed The inspection panel is full width on the phone viewport
+  Passed A dialog fits the phone viewport without overflow
+  Passed No page error, console error or failed request occurred during the run

@@ -12,6 +12,8 @@ The one-second elapsed display does not restart the 15-second server refresh sub
 
 Saving actual arrival in the FI-01 host immediately refreshes the timer authority read. The `quality-return.ts` host fixture asserts Start is enabled within the ordinary five-second browser assertion budget, before the 15-second polling cadence. This affects only `/my-jobs/[id]`; the My Jobs banner binding is unchanged. Review status remains pending.
 
+A fresh own report with a submitted revision, or accepted own attendance, immediately closes fresh timer controls even if the independent timer read still says Current. The completion handoff fixture retains the older timer response across submission and asserts Timer closed on desktop and phone. Original uncertain commands retain their reconciliation controls; this does not reopen evidence or change server rules.
+
 The outgoing Service review handover uses the shared desktop Service operations rail or the phone More menu. It retains the current actor and server-side report permissions.
 
 ## Desktop

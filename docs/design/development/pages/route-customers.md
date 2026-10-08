@@ -39,3 +39,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 The draft User Guide `guide.page.customers` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## Bounded read performance
+
+The organisation directory calculates relationship counts after selecting a page for text/reference/status/owner sorts. Numeric count sorts still use counts across the complete permitted population. Search, total rows, permissions, page order and visible counts retain their existing meaning. The focused retained-fixture comparison is in `scripts/quality-directory-proof.ts` and `scripts/quality-customer-browser-proof.ts`; see `docs/testing/evidence/product-quality-next/README.md` for measured results and limits. This query correction grants no visual or production acceptance.
