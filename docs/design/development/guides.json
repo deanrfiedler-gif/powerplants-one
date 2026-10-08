@@ -41485,10 +41485,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-08",
       "source_commit": "25170bf83008727f005e36b5603841a7b9359027",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "CS native synthetic database, compiled HTTP and desktop/mobile browser proofs executed on 23 September 2026; see docs/testing/evidence/cs-native-completion/README.md. Owner acceptance pending.",
+      "runtime_evidence": "CS native synthetic database, compiled HTTP and desktop/mobile browser proofs executed on 23 September 2026; see docs/testing/evidence/cs-native-completion/README.md. Owner acceptance pending. Main f24e50b current-page approval/reload defect reproduced on 8 October 2026; corrected-head proof remains in docs/testing/evidence/navigation-current-page/README.md. This does not grant owner/device acceptance.",
       "sections": [
         {
           "section_id": "purpose",
@@ -41594,7 +41594,8 @@
             "Validation appears beside the relevant field and in the error summary. Correct the highlighted value and retry.",
             "A stale version is refused. Retain your intended correction, reload the current record and reconcile it deliberately.",
             "If the save outcome is uncertain, use Confirm original save; the original operation is retried without creating a second effect.",
-            "If permissions or source availability change, the page clears inaccessible content. Reopen the canonical source or ask its owner to resolve the context."
+            "If permissions or source availability change, the page clears inaccessible content. Reopen the canonical source or ask its owner to resolve the context.",
+            "Returning to this same Contact through search does not save or discard your correction. Further edits still require saving; if you cancel the browser reload warning, the current unsaved draft stays available."
           ],
           "steps": [],
           "headers": [],
@@ -41643,9 +41644,11 @@
       "source_paths": [
         "src/app/(business)/people/[id]/page.tsx",
         "docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "src/components/navigation-intent.ts",
+        "tests/browser/navigation-safety.spec.ts"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Clarify unsaved correction retention after returning to the same Contact and cancelling reload; no command or authority change.",
       "document_id": "PPO-GUIDE-PAGE-PEOPLE-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,

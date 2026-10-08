@@ -51,8 +51,14 @@ export function guardBrowserNavigation(review: (run: () => void) => void, priori
   };
   const navigate = (raw: Event) => {
     const event = raw as Event & { hashChange: boolean; destination: { url: string; key: string }; navigationType: "push" | "replace" | "traverse" | "reload" };
-    if (!owns() || event.hashChange || event.destination.url === location.href || retained(event.destination.url)) return;
-    if (approved) { approved = false; return; }
+    if (!owns()) return;
+    // A same-URL push/replace still consumes its approval. Otherwise a no-op
+    // leaves this mounted dirty owner exempt from its next native unload.
+    if (approved) {
+      if (event.navigationType !== "reload") approved = false;
+      return;
+    }
+    if (event.hashChange || event.destination.url === location.href || retained(event.destination.url)) return;
     if (!event.cancelable) return;
     event.preventDefault();
     guarded(() => {
@@ -62,7 +68,10 @@ export function guardBrowserNavigation(review: (run: () => void) => void, priori
     });
   };
   const unload = (event: BeforeUnloadEvent) => {
-    if (!owns() || approved) return;
+    if (!owns()) return;
+    // Explicit reload approval covers this unload only, even if another owner
+    // cancels it and the current document remains mounted.
+    if (approved) { approved = false; return; }
     event.preventDefault(); event.returnValue = "";
   };
   document.addEventListener("click", click, true);

@@ -1,6 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
-import { crmDiscovery } from "../helpers/crm";
+import { CRM, crmBase, crmDiscovery } from "../helpers/crm";
 import { leadCreate } from "../helpers/leads";
+import { randomUUID } from "node:crypto";
 const origin = () => new URL(test.info().project.use.baseURL!).origin;
 async function login(page: Page, profile = "coordinator") {
   const result = await page.request.post("/api/v1/local-session", { headers: { Origin: origin() }, data: { profile } });
@@ -75,6 +76,63 @@ test("N07/N08/N20 dirty preferences protect pointer, keyboard, touch and workspa
   await search.click();await search.fill("opportunity");await expect(option).toBeVisible();await option.click();
   await expect(page).toHaveURL(/\/sales\/opportunities/);
 });
+for (const selection of ["pointer", "keyboard"] as const) {
+  test(`N07 approving current-page search by ${selection} keeps later edits protected on reload`, async ({ page, isMobile }) => {
+    await login(page);
+    const id = randomUUID(), title = `SYN current-page Contact ${id}`;
+    const created = await page.request.post("/api/v1/people", {
+      headers: { Origin: origin() }, data: { ...crmBase(), id, company_ids: [CRM.company], display_name: title },
+    });
+    expect(created.status()).toBe(201);
+    const read = page.waitForResponse(response => new URL(response.url()).pathname === `/api/v1/people/${id}/workspace` && response.request().method() === "GET");
+    await page.goto(`/people/${id}`);
+    const loaded = await read;
+    expect(loaded.status()).toBe(200); await loaded.finished();
+    const contact = await loaded.json();
+    expect(contact.id).toBe(id); expect(contact.display_name).toBe(title);
+    await page.getByRole("button", { name: "Correct contact", exact: true }).click();
+    const name = page.getByLabel("Name", { exact: true }), draft = "SYN unsaved current-page correction";
+    await name.fill(draft);
+    let confirmations = 0, unloadWarnings = 0, saves = 0;
+    page.on("request", request => {
+      if (request.method() === "POST" && new URL(request.url()).pathname === `/api/v1/people/${id}/revise`) saves++;
+    });
+    page.on("dialog", dialog => {
+      if (dialog.type() === "beforeunload") { unloadWarnings++; void dialog.dismiss(); }
+      else { confirmations++; void dialog.accept(); }
+    });
+    if (isMobile) await page.getByRole("button", { name: "Open global search", exact: true }).click();
+    const search = page.getByRole("combobox", { name: "Search Powerplants One", exact: true });
+    await search.fill(contact.display_name);
+    const option = page.getByRole("option").filter({ has: page.getByText(contact.display_name, { exact: true }) });
+    await expect(option).toBeVisible();
+    if (selection === "keyboard") {
+      await search.press("ArrowDown"); await search.press("Enter");
+    } else if (isMobile) await option.tap();
+    else await option.click();
+    expect(confirmations).toBe(1);
+    await expect(page).toHaveURL(origin() + `/people/${id}`);
+    await expect(name).toHaveValue(draft);
+    // Dirty stays true: no remount or clean/dirty effect cycle may rearm the guard.
+    const laterDraft = "SYN later correction still needs protection";
+    await name.fill(laterDraft);
+    // A dismissed beforeunload has no new document to await with page.reload().
+    await page.evaluate(() => window.location.reload()).catch(() => {});
+    await expect.poll(() => unloadWarnings, { message: "Chrome must still warn before discarding the later draft" }).toBe(1);
+    await expect(page).toHaveURL(origin() + `/people/${id}`);
+    await expect(name).toHaveValue(laterDraft);
+    expect(saves).toBe(0);
+    // Approval remains available for a real departure, with one review only.
+    if (isMobile) await page.getByRole("button", { name: "Open global search", exact: true }).click();
+    await search.fill("opportunity");
+    const deals = page.getByRole("option").filter({ has: page.getByText("Deals", { exact: true }) }).first();
+    await expect(deals).toBeVisible(); await deals.click();
+    await expect(page).toHaveURL(origin() + "/sales/opportunities");
+    expect(confirmations).toBe(2);
+    expect(saves).toBe(0);
+  });
+}
+
 test("N18/N19 primary rail expands, persists and retains endpoints in a short window", async ({ page, isMobile }) => {
   test.skip(isMobile,"Primary rail is a desktop control; mobile uses labelled More/Workspace.");
   await login(page);

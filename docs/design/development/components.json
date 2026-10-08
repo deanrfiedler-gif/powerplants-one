@@ -2693,6 +2693,11 @@
           "id": "nav-phone-current-heading",
           "label": "NAV CI repair host",
           "description": "At 320/390 px the current page fits beside the hierarchy disclosure; Add Lead remains above the phone bar. More has ordinary Workspace and the full hierarchy remains available. Fixture: tests/ui/crm-board.spec.ts; tests/ui/desktop-shell.spec.ts; tests/browser/leads.spec.ts My Work overview is current and readable; phone bar labels and Sales Activities scope are verified in tests/browser/my-work-mobile.spec.ts."
+        },
+        {
+          "id": "nav-current-page-reload",
+          "label": "Same-page approval and reload",
+          "description": "Real permitted Contact correction: approve exact current-record search by mouse/touch/keyboard, edit again while dirty remains true, cancel Chrome reload and retain that later draft. An actual departure still receives one review. Fixtures: tests/browser/navigation-safety.spec.ts; tests/unit/navigation-intent.test.ts."
         }
       ],
       "implementation": [
@@ -2924,6 +2929,14 @@
           "actual": "Repair host fixtures and checks are recorded separately; owner/device acceptance remains pending.",
           "action": "Review PR #367 repair evidence, exact consumer journeys and 320/390 px screenshots before owner acceptance.",
           "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "nav-current-page-reload-review",
+          "expected": "A current-page approval never exempts later unsaved edits from native reload protection; pending/unknown and stronger Discovery recovery stay protected.",
+          "actual": "Full application on main f24e50b reproduces missing reload warning on desktop and phone. The shared guard now consumes the next non-reload navigation approval before no-op checks and consumes explicit reload permission at its unload.",
+          "action": "Review exact-head regression and retained navigation/recovery CI in docs/testing/evidence/navigation-current-page/README.md; owner/device acceptance remains pending.",
+          "priority": "High",
           "owner": "Dean Fiedler"
         }
       ],

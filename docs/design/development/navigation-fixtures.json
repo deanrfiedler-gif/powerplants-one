@@ -53,6 +53,11 @@
       "id": "nav-phone-current-heading",
       "fixture": "tests/ui/crm-board.spec.ts; tests/ui/desktop-shell.spec.ts; tests/browser/leads.spec.ts; tests/browser/my-work-mobile.spec.ts",
       "description": "At 320/390 px the current page fits beside the hierarchy disclosure; Add Lead remains above the phone bar. More has ordinary Workspace and the full hierarchy remains available. My Work overview has a readable current breadcrumb; subviews keep the hierarchy control in the phone row, with labelled Sales Activities scope."
+    },
+    {
+      "id": "nav-current-page-reload",
+      "fixture": "tests/browser/navigation-safety.spec.ts; tests/unit/navigation-intent.test.ts",
+      "description": "Real permitted Contact correction: approve exact current-record search by mouse/touch/keyboard, edit again while dirty remains true, cancel Chrome reload and retain that later draft. An actual departure still receives one review. Fixtures: tests/browser/navigation-safety.spec.ts; tests/unit/navigation-intent.test.ts."
     }
   ]
 }
