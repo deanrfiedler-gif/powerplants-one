@@ -1,0 +1,19 @@
+{
+  "application_baseline": "af34bbe5a36658b57d9749cba2212e26fb7de537",
+  "project": "mobile-chromium",
+  "lead": "84cd410f-7b62-4293-8b19-cad7ad0c31cd",
+  "deal": "df028e11-be45-4d68-86e3-c1f2d9d27def",
+  "estimatingHandover": "5741c05c-9377-4215-b152-d21492eb1b16",
+  "workspace": "34dc0f70-da20-4cc5-afba-1365dd1af8f6",
+  "revision": "43ec96c2-a95d-4a0f-8073-251981acbfe8",
+  "estimate": "e503531b-5e12-4f71-9cbf-c695852763e4",
+  "quote": "1f732b0c-308e-4b0a-9053-dd102d143ec1",
+  "wonHandover": "9e5551e5-c606-4e15-a2ef-c186e86da93a",
+  "deliveryProject": "3fb40a63-3aa8-439c-9d91-ad5639bdb4ce",
+  "followup": "c317905b-eb7a-4b51-8aea-b3f95339e9c9",
+  "returnedLead": "0b4225a2-fc66-4971-a6ee-dbd4042a82b2",
+  "operations": [
+    "8b4c151a-cf64-488c-bcd4-d1e4287c03bb"
+  ],
+  "scope": "Synthetic HTTP preparation plus browser handovers; human acceptance pending"
+}

@@ -1,12 +1,12 @@
 {
-  "captured_at": "2026-10-08T10:20:22.889256+00:00",
+  "captured_at": "2026-10-08T10:58:59.745410+00:00",
   "baseline": "f0953c5f9f5a0c5e1c5179ef933fd87c9e37b00e",
   "compiled_build_id": "--NZtepu7PK_POJKvIEbW",
   "source_files": {
     "src/offline/app.ts": "34e4214a5c681011960df7b294dbbc423316f59e1c6a26babf366cff4a398c9e",
     "src/components/work-timer.tsx": "d3c41893a09124582617ac259df55ff7bb36e8e346f228b460e5d879c229b563",
     "src/crm/directory.ts": "f8431dba528005284ec8f4fb4143882c539a3bdf8408ca0345c6b3badf743576",
-    "tests/browser/offline-completion-handoff.spec.ts": "e28d0aea00761faa1da30d8b93a101cfaf2dd38f0b2254ac67383ad3c3784394",
+    "tests/browser/offline-completion-handoff.spec.ts": "25f47a705def404b59313b4a3290ad508797516d742bec4e1d702438f96dc22e",
     "tests/database/directory-pagination.test.ts": "1b2d311b7b41752a78430d14e07e0f8b1fdd6f3282db65112ce6d8908fd43b1c",
     "scripts/quality-directory-proof.ts": "6af63e53079b43596d131fe9e736b3b8ae2769fb5201d1ad86df1417be1474fd",
     "scripts/quality-customer-browser-proof.ts": "0520e05a5089d93cf6224f27d562cafbc7b6be3a935d6177e4757c236218205b"
@@ -17,6 +17,11 @@
       "path": "baseline-desktop.png",
       "bytes": 144888,
       "sha256": "b771840ba3e34bcdd44eaddea7259c7d1ccbdbe7c705ac9271f33cb98331f977"
+    },
+    {
+      "path": "baseline-handoff-results.json",
+      "bytes": 1789,
+      "sha256": "ed17227071410505bf69f8ae4b72882ffa86159ada5519eb839919029afb03e4"
     },
     {
       "path": "baseline-phone.png",
@@ -64,6 +69,61 @@
       "sha256": "022899bdc4a3647e635afabf5c5d9c4526487cd646ba0d4f1eb81552360bdf2c"
     },
     {
+      "path": "desktop-completion-handoff.json",
+      "bytes": 16893,
+      "sha256": "88fa95e28977401341545d58cd3557763d1707c16c863138f419262da736e236"
+    },
+    {
+      "path": "desktop-completion-online.png",
+      "bytes": 148927,
+      "sha256": "d59d0938c15f88adc6abc14923eba8f20c480cbc16faac0a7062eef1ddb3d099"
+    },
+    {
+      "path": "desktop-entry-records.json",
+      "bytes": 869,
+      "sha256": "40d25dfee575ccfd763a4c209a9cfacee07cab984434b11d2d8cfcc20ac02f66"
+    },
+    {
+      "path": "desktop-locator-failure.png",
+      "bytes": 170093,
+      "sha256": "bbf128d9461fc7182ba547df17654f005ec115f5e93ff4d8b22966766a4c8c12"
+    },
+    {
+      "path": "desktop-locator-failure.txt",
+      "bytes": 43022,
+      "sha256": "8c15c660eb959163f7de6c5fd3b733f6f6ce93f8ff50fb8770b53d7edd545123"
+    },
+    {
+      "path": "desktop-P11-recorded-original-target.png",
+      "bytes": 178229,
+      "sha256": "248ea88ad6503e2b44adb527b0b026352c6179c460777d866d00c54a09ac3ce4"
+    },
+    {
+      "path": "desktop-P11-return-next-technician-history.png",
+      "bytes": 117108,
+      "sha256": "45052ce9de56c4b2dcd5d655a7448ab65bb6707a09e948bc28e7605163840d39"
+    },
+    {
+      "path": "desktop-P11-return-visit.json",
+      "bytes": 4411,
+      "sha256": "8b7aeb61663f002b94cf1ce59f3c15395e3b8c1651984be7226a4c0f78c98ea1"
+    },
+    {
+      "path": "desktop-photo-boundary.png",
+      "bytes": 126270,
+      "sha256": "a14e0e641def058f054aea5d664813e9eece0ca520ad104927a68c07a976dcf6"
+    },
+    {
+      "path": "desktop-photo-boundary.txt",
+      "bytes": 156957,
+      "sha256": "7cacc4c76904464e65cf9629477fc5998c302d4d5f56ddfeea04301655443bf2"
+    },
+    {
+      "path": "desktop-service-review.png",
+      "bytes": 126714,
+      "sha256": "e327df24130d3cc616b6f2336cbacc6d28841be70bf387da0ee912629d7a4100"
+    },
+    {
       "path": "directory-explain.txt",
       "bytes": 552,
       "sha256": "77d0b4ff921f594e04de91c86141bc14bbaa18c3b0e554c8f959a1d414f79059"
@@ -74,6 +134,11 @@
       "sha256": "600eb3ab172740d86929b46e4cebd63d35ec6180a7a02b4f3831e6387e06a157"
     },
     {
+      "path": "final-handoff-results.json",
+      "bytes": 1550,
+      "sha256": "c72d5ff8e3b5e6776e7fd17a224e321a31f9dc649d270811ea3ea6b3203585ef"
+    },
+    {
       "path": "handoff-baseline-error.txt",
       "bytes": 87833,
       "sha256": "4f7477737bf01b706120adb45df320936f22ce4e14343ffa41bcbc48dc0913b1"
@@ -82,6 +147,71 @@
       "path": "handoff-baseline.png",
       "bytes": 100808,
       "sha256": "e3b7505a1232cee58216bff77745ec70fe4416ea8abe372c1f34d0ac8a5e3807"
+    },
+    {
+      "path": "initial-handoff-results.json",
+      "bytes": 1552,
+      "sha256": "fc589097a368b6adbfc9c4d73271ae5e6fb52407b5adabd5e049b720ad93a33f"
+    },
+    {
+      "path": "phone-completion-handoff.json",
+      "bytes": 16890,
+      "sha256": "31c7a1156fa8d82c6ff868546d51be3196217e4b28e7f7e9c083bad95cee1015"
+    },
+    {
+      "path": "phone-completion-online.png",
+      "bytes": 64021,
+      "sha256": "300e15ed338b148c7ee61cb7938971576f36f371b6df2160d539c056658b1c6a"
+    },
+    {
+      "path": "phone-entry-records.json",
+      "bytes": 868,
+      "sha256": "f1e6d21d8f618d9bdb3162e5021840e486009e9dc12d85184207f94f3f2705ac"
+    },
+    {
+      "path": "phone-locator-failure.png",
+      "bytes": 55856,
+      "sha256": "915411af37102f3560ce4fd47b1b2f4d7ebdebbfc11462d6f5312384740da94e"
+    },
+    {
+      "path": "phone-locator-failure.txt",
+      "bytes": 41218,
+      "sha256": "5992bcc4134be4d9f142ab8892a6122d2818e73309ceae2f0cdb7289c19779f0"
+    },
+    {
+      "path": "phone-P11-recorded-original-target.png",
+      "bytes": 82688,
+      "sha256": "a5f3d7f134e6876329631b75e01391b9eb6bfb718686dec66780e65c61342858"
+    },
+    {
+      "path": "phone-P11-return-next-technician-history.png",
+      "bytes": 61195,
+      "sha256": "203574ab321d517b022ac6b67f607240a2c2c83743cf1309e3ee2c1d06f2f1be"
+    },
+    {
+      "path": "phone-P11-return-visit.json",
+      "bytes": 4411,
+      "sha256": "689dc200787fb0a34f3106d4c860ba7eb6ec6197ec187ada7f06fee2cfb6d672"
+    },
+    {
+      "path": "phone-photo-boundary.png",
+      "bytes": 68512,
+      "sha256": "0c1847e92d7e4e9f5230fc683c4890ac9e36ee33f9d6656c7893b09483b58d83"
+    },
+    {
+      "path": "phone-photo-boundary.txt",
+      "bytes": 155249,
+      "sha256": "bff07553e93301b4503748de8c20c1b54235c6841d64285ba34500eca03b34c6"
+    },
+    {
+      "path": "phone-service-review.png",
+      "bytes": 68512,
+      "sha256": "0c1847e92d7e4e9f5230fc683c4890ac9e36ee33f9d6656c7893b09483b58d83"
+    },
+    {
+      "path": "photo-boundary-results.json",
+      "bytes": 26232,
+      "sha256": "e2f9b831712d01e4c10b72051a45b61ba8d717ac0a764c3b28eb4352b5d919cc"
     },
     {
       "path": "quality-build-final.txt",
@@ -96,7 +226,7 @@
     {
       "path": "quality-foundation.txt",
       "bytes": 330,
-      "sha256": "97bc6984ae57cb4f3b6313e4e9ea492b4d86630e02edf157f818f60b91c4e114"
+      "sha256": "c50b507c4fc825a02c0ea2b642b6753c704c08c42956a95388a73dc4f9ae4807"
     },
     {
       "path": "quality-lint.txt",
@@ -139,6 +269,11 @@
       "sha256": "703fab533d23c4ff2ac878d0c7b6662e3457a0c041cf6ee3f8b758defb0aac3e"
     },
     {
+      "path": "selected-regression-results.json",
+      "bytes": 12993,
+      "sha256": "b060e0ad2eaf207eb66ce03ef559bb4a36ab23cf19cbbc0843663af48cb2c7be"
+    },
+    {
       "path": "timer-closure-baseline.json",
       "bytes": 339,
       "sha256": "ff60ceb6de8cdf3fdf0a64d592ebc83bd664c4b035c84c15340cedc3c2a0c5eb"
@@ -149,13 +284,69 @@
       "sha256": "7357e510885abff8bcb6687552fc2da02548485d2e8a2fd26b4246e76da9bed8"
     }
   ],
-  "runtime_results": "pending final publication",
-  "tested_source_commit": "af34bbe5a36658b57d9749cba2212e26fb7de537",
+  "runtime_results": [
+    {
+      "run": "baseline-handoff",
+      "stats": {
+        "startTime": "2026-10-08T09:39:15.121Z",
+        "duration": 339352.021,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 1,
+        "flaky": 0
+      }
+    },
+    {
+      "run": "initial-handoff",
+      "stats": {
+        "startTime": "2026-10-08T09:47:43.693Z",
+        "duration": 175985.751,
+        "expected": 3,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "run": "selected-regression",
+      "stats": {
+        "startTime": "2026-10-08T10:26:09.888Z",
+        "duration": 840938.871,
+        "expected": 21,
+        "skipped": 0,
+        "unexpected": 2,
+        "flaky": 0
+      }
+    },
+    {
+      "run": "photo-boundary",
+      "stats": {
+        "startTime": "2026-10-08T10:41:14.597Z",
+        "duration": 273985.794,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 2,
+        "flaky": 0
+      }
+    },
+    {
+      "run": "final-handoff",
+      "stats": {
+        "startTime": "2026-10-08T10:47:49.735Z",
+        "duration": 179112.772,
+        "expected": 3,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    }
+  ],
+  "tested_source_commit": "b3462c0ba8d4cbbfe17d1861c5b42fa8e863800f",
   "source_git_blob_ids": {
     "src/offline/app.ts": "b0fe97bec6af4a42127ef085b6900527f4572c88",
     "src/components/work-timer.tsx": "814fc049a7ee721d6131fbca6540ee82f7625ce4",
     "src/crm/directory.ts": "60de06c5dc0b62ea1bf03d40fccfe798c96047fc",
-    "tests/browser/offline-completion-handoff.spec.ts": "ffb084deebc9285c36e96872a2cfe1341c6cf572",
+    "tests/browser/offline-completion-handoff.spec.ts": "ef75117440c31ac1980908c696e42eddec7daeb2",
     "tests/database/directory-pagination.test.ts": "d4fbeb302ca85703275d1a3207256e5f6f5aeec2",
     "scripts/quality-directory-proof.ts": "916f52d823253158d3fc54f201bc50fa29d0e783",
     "scripts/quality-customer-browser-proof.ts": "cd3fa87450e4abc6cb37997a5743344f9a941cdb"
@@ -164,10 +355,46 @@
     "src/offline/app.ts": "34e4214a5c681011960df7b294dbbc423316f59e1c6a26babf366cff4a398c9e",
     "src/components/work-timer.tsx": "d3c41893a09124582617ac259df55ff7bb36e8e346f228b460e5d879c229b563",
     "src/crm/directory.ts": "f8431dba528005284ec8f4fb4143882c539a3bdf8408ca0345c6b3badf743576",
-    "tests/browser/offline-completion-handoff.spec.ts": "e28d0aea00761faa1da30d8b93a101cfaf2dd38f0b2254ac67383ad3c3784394",
+    "tests/browser/offline-completion-handoff.spec.ts": "25f47a705def404b59313b4a3290ad508797516d742bec4e1d702438f96dc22e",
     "tests/database/directory-pagination.test.ts": "1b2d311b7b41752a78430d14e07e0f8b1fdd6f3282db65112ce6d8908fd43b1c",
     "scripts/quality-directory-proof.ts": "6af63e53079b43596d131fe9e736b3b8ae2769fb5201d1ad86df1417be1474fd",
     "scripts/quality-customer-browser-proof.ts": "0520e05a5089d93cf6224f27d562cafbc7b6be3a935d6177e4757c236218205b"
   },
-  "source_hash_scope": "source_files hashes exact Windows working-copy bytes; Git blob IDs and Git content SHA256 identify committed normalized bytes. Performance raw files retain the then-current source head plus candidate file hash."
+  "source_hash_scope": "source_files hashes exact Windows working-copy bytes; Git blob IDs and Git content SHA256 identify committed normalized bytes. Performance raw files retain the then-current source head plus candidate file hash.",
+  "database": {
+    "tests": 53,
+    "passed": 53,
+    "failed": 0,
+    "log": "quality-db.txt"
+  },
+  "units": {
+    "tests": 629,
+    "passed": 626,
+    "failed": 3,
+    "baseline_control": {
+      "commit": "f0953c5f9f5a0c5e1c5179ef933fd87c9e37b00e",
+      "clean_before_run": true,
+      "tests": 4,
+      "passed": 1,
+      "failed": 3,
+      "log": "quality-unit-baseline.txt"
+    }
+  },
+  "selected_regression_commit": "af34bbe5a36658b57d9749cba2212e26fb7de537",
+  "final_handoff_commit": "b3462c0ba8d4cbbfe17d1861c5b42fa8e863800f",
+  "final_static_checks": {
+    "source_commit": "b3462c0ba8d4cbbfe17d1861c5b42fa8e863800f",
+    "scope": "Final working documentation plus unchanged committed application and tests before evidence commit",
+    "checks": {
+      "full lint": "passed",
+      "typecheck": "passed",
+      "foundation": "passed",
+      "prototype": "passed",
+      "naming": "passed",
+      "studio": "passed"
+    },
+    "foundation_parent_ids": 78,
+    "studio_reviews_pending": 350,
+    "studio_stale": 0
+  }
 }

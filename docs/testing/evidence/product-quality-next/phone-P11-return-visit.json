@@ -1,0 +1,55 @@
+{
+  "original_appointment_id": "2fd4d93d-7a59-4b99-97cf-fdd22f37b724",
+  "cancelled_proposal_id": "a70ab433-e9e3-4bb2-b644-79e34a15e7c2",
+  "work_order_id": "b961ce79-b3cc-4b35-8756-3fbf9bcfc3f6",
+  "appointment_id": "e768dec1-a4c9-4fb4-8ec5-72f0cf461a12",
+  "attendance_id": "62019219-bee3-454a-af90-2929671429b8",
+  "actor_id": "30000000-0000-4000-8000-000000000011",
+  "pack_id": "09e6d2fb-7b9f-4f9d-8b0f-6aa8f740480f",
+  "issue_id": "0ebe54bd-bdb5-4231-a418-a1deefe5e999",
+  "report_id": "6f9ad4a8-4a3f-465b-b617-5eb3fb24bd7c",
+  "timer_interval": {
+    "entry_id": "aa0aa48d-383a-4f2a-bd4e-172fb63bfb7f",
+    "start_at": "2026-10-08T10:39:48.000Z",
+    "end_at": "2026-10-08T10:39:52.000Z",
+    "elapsed_seconds": 4
+  },
+  "presentation": {
+    "id": "3e139ef1-82cc-4a51-9da7-a57f6a0ef284",
+    "revision_id": "ddf4c293-c884-4abb-b4ea-041873a9f69c",
+    "issue_id": "4eb9c3aa-c3fc-4467-bf41-410ae33a45f8",
+    "kind": "IssuedReport",
+    "content_hash": "ba133769a1b25300c5df60d06433e495f054165fe128b8f197c6c177dea71901",
+    "html_hash": "ba133769a1b25300c5df60d06433e495f054165fe128b8f197c6c177dea71901",
+    "created_at": "2026-10-08T10:40:01.954Z"
+  },
+  "appointment_status": "Completed",
+  "scope_outcome": "Complete",
+  "preserved_outputs": {
+    "pack-issues/edd1a9b1-70f5-4570-a538-612d8685619b/html": "2cb4912760351bc60d91c3f3fd0cb2b925390126807cd758c17f18242529dfc5",
+    "pack-issues/edd1a9b1-70f5-4570-a538-612d8685619b/pdf": "b66af239f473d82f1074301d13cc3d44a5b141bdb50611db3645ad2c81a7677c",
+    "pack-issues/edd1a9b1-70f5-4570-a538-612d8685619b/manifest": "834028a29c5957434d72f0f7d109bbf8acfb01f79e1773f9cdc19510ee0fb8eb",
+    "pack-issues/5b78d6c2-0ada-4760-81c8-f81b882875e9/html": "419180d5cf3fdcbb8c7eb5a8035e8b6edfb3c26e042a13ecfc690658619a8f06",
+    "pack-issues/5b78d6c2-0ada-4760-81c8-f81b882875e9/pdf": "fd6541665f300b3532c1fef38d820fc6f2914c639719040b2541aa66aa362909",
+    "pack-issues/5b78d6c2-0ada-4760-81c8-f81b882875e9/manifest": "b6ced39bf47b8086abb8ac25dd7ccd9b994578dd810a55b087de6216892d583e",
+    "reports/6330b656-b6fe-473c-b849-24586b2bb194/html?presentation_id=74aa51db-a99f-4b53-9dab-d9d52d94f293": "9ecc8957405b37b5f42debbfeaf623a162a3e3d6b4c50fcdfe77155a2bdd61ab",
+    "reports/6330b656-b6fe-473c-b849-24586b2bb194/pdf?presentation_id=74aa51db-a99f-4b53-9dab-d9d52d94f293": "77ebfb94ae707aa396cc0c564880c6f60ee908f5d5b5d31bb4104197d94dcd45",
+    "reports/6330b656-b6fe-473c-b849-24586b2bb194/manifest?presentation_id=74aa51db-a99f-4b53-9dab-d9d52d94f293": "f3ba7b0b8919e415e8cf7e99c17b4885f074e49121132f0c1096e102ef2700f8",
+    "finance/issues/ad294939-a5ba-4e43-a2e8-32a913913bb3/bytes?format=html": "75fe16803902a40301f15484f665daa934d5ec58efb791f8d02ec4d8ae20fc68",
+    "finance/issues/ad294939-a5ba-4e43-a2e8-32a913913bb3/bytes?format=pdf": "e1ba21f9d47277f4bf01311393bed13eee58d1648b1f0d7aeda7c49b3af49a30"
+  },
+  "return_outputs": {
+    "pack-issues/0ebe54bd-bdb5-4231-a418-a1deefe5e999/html": "42dd0e76062626fc482121c65b3dff456ab30bd1551023ee11aa7c5e85146912",
+    "pack-issues/0ebe54bd-bdb5-4231-a418-a1deefe5e999/pdf": "a2ade198f399ec32835a3131416924a314a62f4ad756d91941a3d71da4994ef3",
+    "pack-issues/0ebe54bd-bdb5-4231-a418-a1deefe5e999/manifest": "2a295af8c2f50f20f6f93d5f977a01f2f5e2b5a4777a3c3916c60d0b5f004efe",
+    "reports/6f9ad4a8-4a3f-465b-b617-5eb3fb24bd7c/html?presentation_id=3e139ef1-82cc-4a51-9da7-a57f6a0ef284": "ba133769a1b25300c5df60d06433e495f054165fe128b8f197c6c177dea71901",
+    "reports/6f9ad4a8-4a3f-465b-b617-5eb3fb24bd7c/pdf?presentation_id=3e139ef1-82cc-4a51-9da7-a57f6a0ef284": "0686c88e76e64b79a676c4884a5a66921207ddc555d714fc43230b3568a4d284",
+    "reports/6f9ad4a8-4a3f-465b-b617-5eb3fb24bd7c/manifest?presentation_id=3e139ef1-82cc-4a51-9da7-a57f6a0ef284": "7ec93e8a44a014b5e179c99842bb39d22af075091b318278aefd2fee255d7d70"
+  },
+  "return_photo": {
+    "attachments/68f40442-f402-4bb7-90fa-51302bb0484b/bytes": "8e0e39097d1e122a86d83ed2c236f3bc8de8b82c46a945fbe71b6bf0a059203e"
+  },
+  "original_customer_response": "AcceptedWithReservations",
+  "original_finance_status": "Reconciled",
+  "limits": "Synthetic return attendance completed and reviewed, with a separately issued report and no inherited customer response or financial outcome. Existing follow-up activities are not automatically closed. No policy/application update, backup restore, hosted deployment, owner/device acceptance or complete PT-28/PT-30 claim."
+}

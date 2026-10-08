@@ -1,0 +1,59 @@
+{
+  "run": "initial-handoff",
+  "source_head": "f0953c5f9f5a0c5e1c5179ef933fd87c9e37b00e",
+  "stats": {
+    "startTime": "2026-10-08T09:47:43.693Z",
+    "duration": 175985.751,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "title": "warm every route once before the browser projects",
+      "file": "warm-up.setup.ts",
+      "project": "warm-up",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 24582,
+          "retry": 0,
+          "start_time": "2026-10-08T09:48:45.111Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "large offline queue continues through online completion with all 100 original captures",
+      "file": "offline-completion-handoff.spec.ts",
+      "project": "desktop-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 45904,
+          "retry": 0,
+          "start_time": "2026-10-08T09:49:10.427Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "large offline queue continues through online completion with all 100 original captures",
+      "file": "offline-completion-handoff.spec.ts",
+      "project": "mobile-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 40014,
+          "retry": 0,
+          "start_time": "2026-10-08T09:49:58.441Z",
+          "errors": []
+        }
+      ]
+    }
+  ]
+}

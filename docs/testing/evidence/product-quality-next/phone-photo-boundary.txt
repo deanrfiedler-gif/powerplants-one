@@ -1,0 +1,3231 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: offline-completion-handoff.spec.ts >> large offline queue continues through online completion with all 100 original captures
+- Location: tests\browser\offline-completion-handoff.spec.ts:20:1
+
+# Error details
+
+```
+Error: expect(received).toEqual(expected) // deep equality
+
+- Expected  - 182
++ Received  + 180
+
+  Object {
+    "data": Array [
+-     137,
+-     80,
+-     78,
+-     71,
+-     13,
+-     10,
+-     26,
+-     10,
+-     0,
+-     0,
+-     0,
+-     13,
+-     73,
+-     72,
+-     68,
+-     82,
+-     0,
+-     0,
+-     0,
+-     96,
+-     0,
+-     0,
+-     0,
+-     64,
+-     8,
+-     2,
+-     0,
+-     0,
+-     0,
+-     106,
+-     86,
+-     229,
+-     89,
+-     0,
+-     0,
+-     0,
+-     134,
+-     73,
+-     68,
+-     65,
++     123,
++     34,
++     99,
++     111,
++     100,
++     101,
++     34,
++     58,
++     34,
++     70,
++     111,
++     114,
++     98,
++     105,
++     100,
++     100,
++     101,
++     110,
++     34,
++     44,
++     34,
++     109,
++     101,
++     115,
++     115,
++     97,
++     103,
++     101,
++     34,
++     58,
++     34,
+      84,
+-     120,
+-     156,
+-     237,
+-     208,
+-     49,
+-     17,
+-     128,
+-     48,
+-     20,
+-     64,
+-     177,
+-     186,
+-     192,
+-     8,
+-     107,
+-     61,
+-     212,
+-     1,
+-     86,
+-     144,
+-     142,
+-     8,
+-     134,
+-     255,
+-     134,
+-     220,
+-     69,
+-     65,
+-     214,
+-     181,
+-     79,
+-     202,
+-     253,
+-     62,
+-     41,
+-     107,
+-     124,
+-     68,
+-     144,
++     104,
++     105,
++     115,
++     32,
++     105,
++     100,
++     101,
++     110,
++     116,
++     105,
++     116,
++     121,
++     32,
++     100,
++     111,
++     101,
++     115,
++     32,
++     110,
++     111,
++     116,
+      32,
+-     65,
+-     130,
+-     66,
+-     198,
+-     71,
+-     4,
+-     9,
+-     18,
+-     36,
+-     40,
+-     68,
+-     144,
++     104,
++     97,
++     118,
++     101,
+      32,
+-     65,
+-     130,
+-     4,
+-     9,
+-     18,
+-     36,
+-     72,
+-     80,
+-     196,
+-     248,
+-     136,
++     116,
++     104,
++     101,
+      32,
+-     65,
+-     130,
+-     4,
+-     133,
+-     8,
+-     18,
+-     36,
+-     72,
+-     144,
++     114,
++     101,
++     113,
++     117,
++     105,
++     114,
++     101,
++     100,
+      32,
+-     65,
+-     130,
+-     4,
+-     9,
+-     138,
+-     24,
+-     31,
+-     17,
+-     36,
+-     72,
+-     144,
+-     160,
+-     16,
+-     65,
+-     130,
+-     4,
+-     9,
+-     18,
+-     36,
+-     72,
+-     144,
++     115,
++     104,
++     97,
++     114,
++     101,
++     100,
++     45,
++     100,
++     97,
++     116,
++     97,
+      32,
+-     65,
+-     17,
+-     227,
+-     35,
+-     130,
+-     4,
+-     9,
+-     18,
+-     20,
++     112,
++     101,
++     114,
++     109,
++     105,
++     115,
++     115,
++     105,
++     111,
++     110,
++     46,
+      34,
+-     72,
+-     144,
+-     32,
+-     65,
+-     130,
+-     4,
+-     9,
+-     18,
+-     36,
+-     40,
++     44,
++     34,
++     102,
++     105,
++     101,
++     108,
++     100,
++     95,
++     101,
++     114,
++     114,
++     111,
++     114,
++     115,
++     34,
++     58,
++     91,
++     93,
++     44,
++     34,
++     99,
++     111,
++     114,
++     114,
++     101,
++     108,
++     97,
++     116,
++     105,
++     111,
++     110,
++     95,
++     105,
++     100,
++     34,
++     58,
++     34,
++     102,
++     101,
+      98,
+-     124,
+-     68,
+-     144,
+-     32,
+-     65,
+-     130,
+-     66,
+-     4,
+-     9,
+-     250,
+-     231,
+-     3,
+-     243,
+-     78,
+-     149,
++     98,
++     97,
++     52,
++     101,
++     50,
++     45,
++     57,
++     100,
++     100,
++     55,
+      45,
+-     72,
+-     113,
+-     151,
+-     59,
+-     0,
+-     0,
+-     0,
+-     0,
+-     73,
+-     69,
+-     78,
+-     68,
+-     174,
+-     66,
+-     96,
+-     130,
++     52,
++     55,
++     52,
++     53,
++     45,
++     56,
++     99,
++     100,
++     49,
++     45,
++     53,
++     54,
++     48,
++     57,
++     55,
++     97,
++     102,
++     100,
++     54,
++     57,
++     102,
++     98,
++     34,
++     44,
++     34,
++     114,
++     101,
++     116,
++     114,
++     121,
++     97,
++     98,
++     108,
++     101,
++     34,
++     58,
++     102,
++     97,
++     108,
++     115,
++     101,
++     125,
+    ],
+    "type": "Buffer",
+  }
+```
+
+# Page snapshot
+
+```yaml
+- generic [active] [ref=f6e1]:
+  - link "Skip to main content":
+    - /url: "#main"
+  - generic [ref=f6e2]:
+    - navigation "Mobile navigation" [ref=f6e3]:
+      - link "My Work" [ref=f6e4] [cursor=pointer]:
+        - /url: /work?department=service
+      - link "Service" [ref=f6e13] [cursor=pointer]:
+        - /url: /service/tickets
+      - link "Schedule" [ref=f6e21] [cursor=pointer]:
+        - /url: /schedule
+      - button "More" [ref=f6e30] [cursor=pointer]
+    - generic [ref=f6e36]:
+      - banner [ref=f6e37]:
+        - link "Powerplants One home" [ref=f6e38] [cursor=pointer]:
+          - /url: /
+          - img "Powerplants Australia" [ref=f6e39]
+        - navigation "Breadcrumb" [ref=f6e40]:
+          - button "Page hierarchy" [ref=f6e41] [cursor=pointer]
+          - list "Service / Service review / SYN-PPO-RPT-000002 · Revision 1 · Service report" [ref=f6e46]:
+            - text: /
+            - listitem [ref=f6e47]:
+              - generic [ref=f6e48]: SYN-PPO-RPT-000002 · Revision 1 · Service report
+        - generic [ref=f6e50]:
+          - button "Design and build workspace" [ref=f6e51] [cursor=pointer]
+          - button "Open global search" [ref=f6e54] [cursor=pointer]
+          - button "Page guide" [ref=f6e58] [cursor=pointer]
+        - region "Local demonstration identity" [ref=f6e64]:
+          - button "Change identity" [ref=f6e66] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f6e67]: SC
+      - main [ref=f6e68]:
+        - generic [ref=f6e70]:
+          - link "All service reports" [ref=f6e71] [cursor=pointer]:
+            - /url: /service/reports
+          - heading "SYN-PPO-RPT-000002" [level=1] [ref=f6e72]
+          - paragraph [ref=f6e73]:
+            - strong [ref=f6e74]: Synthetic service review — private prototype
+            - text: Attendance, remaining work, report issue and customer response are separate facts. Customer response does not approve billing.
+          - button "Refresh exact report" [ref=f6e75] [cursor=pointer]
+          - generic [ref=f6e76]:
+            - heading "Revision 1 · Submitted" [level=2] [ref=f6e77]
+            - paragraph [ref=f6e78]:
+              - text: "Visit:"
+              - strong [ref=f6e79]: Completed Pending Review
+              - text: "· This technician’s attendance:"
+              - strong [ref=f6e80]: Awaiting internal Service acceptance
+              - text: "· Work order: Authorised · Finance: Separate Finance authority required"
+            - paragraph [ref=f6e81]:
+              - link "Technician evidence and correction" [ref=f6e82] [cursor=pointer]:
+                - /url: /my-jobs/5dccf046-96e3-43b9-a738-6a58795a982d
+              - text: ·
+              - link "Remaining work and return proposal" [ref=f6e83] [cursor=pointer]:
+                - /url: /service/work-orders/492cad57-705a-4c14-9c7b-b2e34537fa2c
+            - paragraph [ref=f6e84]: A proposed return requires the existing scope and booking checks. It is not a confirmed booking.
+          - region "Attendance and current response context" [ref=f6e85]:
+            - heading "Attendance, customer response and current restrictions" [level=2] [ref=f6e86]
+            - paragraph [ref=f6e87]: SYN Greenhouse Demonstration · SYN Q01 Demonstration Site · SYN Riley Technician
+            - paragraph [ref=f6e88]:
+              - text: Actual attendance
+              - code [ref=f6e89]: 3449ce4e-285e-4676-9f57-7ef19874c956
+              - text: · 8 Oct 2026, 8:45 pm to 8 Oct 2026, 8:45 pm
+            - paragraph [ref=f6e90]:
+              - text: Exact scope
+              - code [ref=f6e91]: 8ecc4422-ef59-40ef-8f51-fbeccfc3bab3
+              - text: . Customer acknowledgement is separate from internal acceptance and report-content response.
+            - paragraph [ref=f6e92]:
+              - strong [ref=f6e93]: No Current Presentation
+              - text: · A current reviewed presentation is required. Historical responses remain exact.
+            - paragraph [ref=f6e94]: Current technical context is not established here.
+            - paragraph [ref=f6e95]: Recording a factual response never clears a hold or defect, permits work, completes another record or approves Finance. Independent scheduling, inspection and incident controls remain in force.
+            - paragraph [ref=f6e96]: No customer attendance acknowledgement recorded.
+            - paragraph [ref=f6e97]: No report-content response recorded.
+          - region "Customer response recovery" [ref=f6e98]:
+            - status [ref=f6e99]: No unresolved online response
+            - paragraph [ref=f6e100]: Unsaved input stays on this page. An uncertain online operation survives reload in this tab; closing the tab removes that recovery copy. Existing offline response capture uses the separate owner-bound offline workspace.
+          - generic [ref=f6e101]:
+            - heading "Exact submitted completion" [level=2] [ref=f6e102]
+            - paragraph [ref=f6e103]:
+              - text: "Outcome:"
+              - strong [ref=f6e104]: Partial
+              - text: "· Time: None · Materials: None"
+            - paragraph [ref=f6e105]: SYN visual inspection and 100 original observations/photo retained
+            - paragraph [ref=f6e106]:
+              - strong [ref=f6e107]: "Exclusions:"
+              - text: No shutdown, replacement, energised access, repair or financial approval.
+            - paragraph [ref=f6e108]:
+              - strong [ref=f6e109]: "Remaining work:"
+              - text: SYN coordinator owns remaining identification work
+            - paragraph [ref=f6e110]:
+              - strong [ref=f6e111]: Partial
+              - text: · SYN partial visual observation; coordinator owns follow-up
+            - paragraph [ref=f6e112]: Unresolved finding requires follow-up.
+            - paragraph [ref=f6e113]: An authorised task remains incomplete.
+            - paragraph [ref=f6e114]: A task result has not passed the synthetic completion check.
+            - paragraph [ref=f6e115]: The synthetic site-controls completion check has not passed.
+          - generic [ref=f6e116]:
+            - heading "Review exact submitted entries" [level=2] [ref=f6e117]
+            - paragraph [ref=f6e118]: Reviewing preserves every technician original. Return factual corrections to the technician. Quantities shown here remain captured quantities; approval records the exact same reviewed quantity, without financial treatment.
+            - group "Observation · v1" [ref=f6e119]:
+              - generic [ref=f6e121]:
+                - generic [ref=f6e122]:
+                  - term [ref=f6e123]: result
+                  - definition [ref=f6e124]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e125]:
+                  - term [ref=f6e126]: finding
+                  - definition [ref=f6e127]: SYN online continuation original 66
+                - generic [ref=f6e128]:
+                  - term [ref=f6e129]: confidence
+                  - definition [ref=f6e130]: Suspected
+                - generic [ref=f6e131]:
+                  - term [ref=f6e132]: attempted fix
+                  - definition [ref=f6e133]: SYN visual-only check; no intervention
+                - generic [ref=f6e134]:
+                  - term [ref=f6e135]: follow up required
+                  - definition [ref=f6e136]: "true"
+              - generic [ref=f6e137]:
+                - generic [ref=f6e138]: Entry 1 decision
+                - combobox "Entry 1 decision" [ref=f6e139]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e140]:
+                - generic [ref=f6e141]: Entry 1 review reason
+                - textbox "Entry 1 review reason" [ref=f6e142]
+            - group "Observation · v1" [ref=f6e143]:
+              - generic [ref=f6e145]:
+                - generic [ref=f6e146]:
+                  - term [ref=f6e147]: result
+                  - definition [ref=f6e148]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e149]:
+                  - term [ref=f6e150]: finding
+                  - definition [ref=f6e151]: SYN online continuation original 76
+                - generic [ref=f6e152]:
+                  - term [ref=f6e153]: confidence
+                  - definition [ref=f6e154]: Suspected
+                - generic [ref=f6e155]:
+                  - term [ref=f6e156]: attempted fix
+                  - definition [ref=f6e157]: SYN visual-only check; no intervention
+                - generic [ref=f6e158]:
+                  - term [ref=f6e159]: follow up required
+                  - definition [ref=f6e160]: "true"
+              - generic [ref=f6e161]:
+                - generic [ref=f6e162]: Entry 2 decision
+                - combobox "Entry 2 decision" [ref=f6e163]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e164]:
+                - generic [ref=f6e165]: Entry 2 review reason
+                - textbox "Entry 2 review reason" [ref=f6e166]
+            - group "Observation · v1" [ref=f6e167]:
+              - generic [ref=f6e169]:
+                - generic [ref=f6e170]:
+                  - term [ref=f6e171]: result
+                  - definition [ref=f6e172]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e173]:
+                  - term [ref=f6e174]: finding
+                  - definition [ref=f6e175]: SYN online continuation original 60
+                - generic [ref=f6e176]:
+                  - term [ref=f6e177]: confidence
+                  - definition [ref=f6e178]: Suspected
+                - generic [ref=f6e179]:
+                  - term [ref=f6e180]: attempted fix
+                  - definition [ref=f6e181]: SYN visual-only check; no intervention
+                - generic [ref=f6e182]:
+                  - term [ref=f6e183]: follow up required
+                  - definition [ref=f6e184]: "true"
+              - generic [ref=f6e185]:
+                - generic [ref=f6e186]: Entry 3 decision
+                - combobox "Entry 3 decision" [ref=f6e187]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e188]:
+                - generic [ref=f6e189]: Entry 3 review reason
+                - textbox "Entry 3 review reason" [ref=f6e190]
+            - group "Observation · v1" [ref=f6e191]:
+              - generic [ref=f6e193]:
+                - generic [ref=f6e194]:
+                  - term [ref=f6e195]: result
+                  - definition [ref=f6e196]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e197]:
+                  - term [ref=f6e198]: finding
+                  - definition [ref=f6e199]: SYN online continuation original 75
+                - generic [ref=f6e200]:
+                  - term [ref=f6e201]: confidence
+                  - definition [ref=f6e202]: Suspected
+                - generic [ref=f6e203]:
+                  - term [ref=f6e204]: attempted fix
+                  - definition [ref=f6e205]: SYN visual-only check; no intervention
+                - generic [ref=f6e206]:
+                  - term [ref=f6e207]: follow up required
+                  - definition [ref=f6e208]: "true"
+              - generic [ref=f6e209]:
+                - generic [ref=f6e210]: Entry 4 decision
+                - combobox "Entry 4 decision" [ref=f6e211]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e212]:
+                - generic [ref=f6e213]: Entry 4 review reason
+                - textbox "Entry 4 review reason" [ref=f6e214]
+            - group "Observation · v1" [ref=f6e215]:
+              - generic [ref=f6e217]:
+                - generic [ref=f6e218]:
+                  - term [ref=f6e219]: result
+                  - definition [ref=f6e220]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e221]:
+                  - term [ref=f6e222]: finding
+                  - definition [ref=f6e223]: SYN online continuation original 85
+                - generic [ref=f6e224]:
+                  - term [ref=f6e225]: confidence
+                  - definition [ref=f6e226]: Suspected
+                - generic [ref=f6e227]:
+                  - term [ref=f6e228]: attempted fix
+                  - definition [ref=f6e229]: SYN visual-only check; no intervention
+                - generic [ref=f6e230]:
+                  - term [ref=f6e231]: follow up required
+                  - definition [ref=f6e232]: "true"
+              - generic [ref=f6e233]:
+                - generic [ref=f6e234]: Entry 5 decision
+                - combobox "Entry 5 decision" [ref=f6e235]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e236]:
+                - generic [ref=f6e237]: Entry 5 review reason
+                - textbox "Entry 5 review reason" [ref=f6e238]
+            - group "Observation · v1" [ref=f6e239]:
+              - generic [ref=f6e241]:
+                - generic [ref=f6e242]:
+                  - term [ref=f6e243]: result
+                  - definition [ref=f6e244]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e245]:
+                  - term [ref=f6e246]: finding
+                  - definition [ref=f6e247]: SYN online continuation original 30
+                - generic [ref=f6e248]:
+                  - term [ref=f6e249]: confidence
+                  - definition [ref=f6e250]: Suspected
+                - generic [ref=f6e251]:
+                  - term [ref=f6e252]: attempted fix
+                  - definition [ref=f6e253]: SYN visual-only check; no intervention
+                - generic [ref=f6e254]:
+                  - term [ref=f6e255]: follow up required
+                  - definition [ref=f6e256]: "true"
+              - generic [ref=f6e257]:
+                - generic [ref=f6e258]: Entry 6 decision
+                - combobox "Entry 6 decision" [ref=f6e259]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e260]:
+                - generic [ref=f6e261]: Entry 6 review reason
+                - textbox "Entry 6 review reason" [ref=f6e262]
+            - group "Observation · v1" [ref=f6e263]:
+              - generic [ref=f6e265]:
+                - generic [ref=f6e266]:
+                  - term [ref=f6e267]: result
+                  - definition [ref=f6e268]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e269]:
+                  - term [ref=f6e270]: finding
+                  - definition [ref=f6e271]: SYN online continuation original 61
+                - generic [ref=f6e272]:
+                  - term [ref=f6e273]: confidence
+                  - definition [ref=f6e274]: Suspected
+                - generic [ref=f6e275]:
+                  - term [ref=f6e276]: attempted fix
+                  - definition [ref=f6e277]: SYN visual-only check; no intervention
+                - generic [ref=f6e278]:
+                  - term [ref=f6e279]: follow up required
+                  - definition [ref=f6e280]: "true"
+              - generic [ref=f6e281]:
+                - generic [ref=f6e282]: Entry 7 decision
+                - combobox "Entry 7 decision" [ref=f6e283]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e284]:
+                - generic [ref=f6e285]: Entry 7 review reason
+                - textbox "Entry 7 review reason" [ref=f6e286]
+            - group "Observation · v1" [ref=f6e287]:
+              - generic [ref=f6e289]:
+                - generic [ref=f6e290]:
+                  - term [ref=f6e291]: result
+                  - definition [ref=f6e292]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e293]:
+                  - term [ref=f6e294]: finding
+                  - definition [ref=f6e295]: SYN online continuation original 20
+                - generic [ref=f6e296]:
+                  - term [ref=f6e297]: confidence
+                  - definition [ref=f6e298]: Suspected
+                - generic [ref=f6e299]:
+                  - term [ref=f6e300]: attempted fix
+                  - definition [ref=f6e301]: SYN visual-only check; no intervention
+                - generic [ref=f6e302]:
+                  - term [ref=f6e303]: follow up required
+                  - definition [ref=f6e304]: "true"
+              - generic [ref=f6e305]:
+                - generic [ref=f6e306]: Entry 8 decision
+                - combobox "Entry 8 decision" [ref=f6e307]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e308]:
+                - generic [ref=f6e309]: Entry 8 review reason
+                - textbox "Entry 8 review reason" [ref=f6e310]
+            - group "Observation · v1" [ref=f6e311]:
+              - generic [ref=f6e313]:
+                - generic [ref=f6e314]:
+                  - term [ref=f6e315]: result
+                  - definition [ref=f6e316]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e317]:
+                  - term [ref=f6e318]: finding
+                  - definition [ref=f6e319]: SYN online continuation original 92
+                - generic [ref=f6e320]:
+                  - term [ref=f6e321]: confidence
+                  - definition [ref=f6e322]: Suspected
+                - generic [ref=f6e323]:
+                  - term [ref=f6e324]: attempted fix
+                  - definition [ref=f6e325]: SYN visual-only check; no intervention
+                - generic [ref=f6e326]:
+                  - term [ref=f6e327]: follow up required
+                  - definition [ref=f6e328]: "true"
+              - generic [ref=f6e329]:
+                - generic [ref=f6e330]: Entry 9 decision
+                - combobox "Entry 9 decision" [ref=f6e331]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e332]:
+                - generic [ref=f6e333]: Entry 9 review reason
+                - textbox "Entry 9 review reason" [ref=f6e334]
+            - group "Observation · v1" [ref=f6e335]:
+              - generic [ref=f6e337]:
+                - generic [ref=f6e338]:
+                  - term [ref=f6e339]: result
+                  - definition [ref=f6e340]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e341]:
+                  - term [ref=f6e342]: finding
+                  - definition [ref=f6e343]: SYN online continuation original 49
+                - generic [ref=f6e344]:
+                  - term [ref=f6e345]: confidence
+                  - definition [ref=f6e346]: Suspected
+                - generic [ref=f6e347]:
+                  - term [ref=f6e348]: attempted fix
+                  - definition [ref=f6e349]: SYN visual-only check; no intervention
+                - generic [ref=f6e350]:
+                  - term [ref=f6e351]: follow up required
+                  - definition [ref=f6e352]: "true"
+              - generic [ref=f6e353]:
+                - generic [ref=f6e354]: Entry 10 decision
+                - combobox "Entry 10 decision" [ref=f6e355]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e356]:
+                - generic [ref=f6e357]: Entry 10 review reason
+                - textbox "Entry 10 review reason" [ref=f6e358]
+            - group "Observation · v1" [ref=f6e359]:
+              - generic [ref=f6e361]:
+                - generic [ref=f6e362]:
+                  - term [ref=f6e363]: result
+                  - definition [ref=f6e364]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e365]:
+                  - term [ref=f6e366]: finding
+                  - definition [ref=f6e367]: SYN online continuation original 23
+                - generic [ref=f6e368]:
+                  - term [ref=f6e369]: confidence
+                  - definition [ref=f6e370]: Suspected
+                - generic [ref=f6e371]:
+                  - term [ref=f6e372]: attempted fix
+                  - definition [ref=f6e373]: SYN visual-only check; no intervention
+                - generic [ref=f6e374]:
+                  - term [ref=f6e375]: follow up required
+                  - definition [ref=f6e376]: "true"
+              - generic [ref=f6e377]:
+                - generic [ref=f6e378]: Entry 11 decision
+                - combobox "Entry 11 decision" [ref=f6e379]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e380]:
+                - generic [ref=f6e381]: Entry 11 review reason
+                - textbox "Entry 11 review reason" [ref=f6e382]
+            - group "Observation · v1" [ref=f6e383]:
+              - generic [ref=f6e385]:
+                - generic [ref=f6e386]:
+                  - term [ref=f6e387]: result
+                  - definition [ref=f6e388]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e389]:
+                  - term [ref=f6e390]: finding
+                  - definition [ref=f6e391]: SYN online continuation original 10
+                - generic [ref=f6e392]:
+                  - term [ref=f6e393]: confidence
+                  - definition [ref=f6e394]: Suspected
+                - generic [ref=f6e395]:
+                  - term [ref=f6e396]: attempted fix
+                  - definition [ref=f6e397]: SYN visual-only check; no intervention
+                - generic [ref=f6e398]:
+                  - term [ref=f6e399]: follow up required
+                  - definition [ref=f6e400]: "true"
+              - generic [ref=f6e401]:
+                - generic [ref=f6e402]: Entry 12 decision
+                - combobox "Entry 12 decision" [ref=f6e403]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e404]:
+                - generic [ref=f6e405]: Entry 12 review reason
+                - textbox "Entry 12 review reason" [ref=f6e406]
+            - group "Observation · v1" [ref=f6e407]:
+              - generic [ref=f6e409]:
+                - generic [ref=f6e410]:
+                  - term [ref=f6e411]: result
+                  - definition [ref=f6e412]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e413]:
+                  - term [ref=f6e414]: finding
+                  - definition [ref=f6e415]: SYN online continuation original 70
+                - generic [ref=f6e416]:
+                  - term [ref=f6e417]: confidence
+                  - definition [ref=f6e418]: Suspected
+                - generic [ref=f6e419]:
+                  - term [ref=f6e420]: attempted fix
+                  - definition [ref=f6e421]: SYN visual-only check; no intervention
+                - generic [ref=f6e422]:
+                  - term [ref=f6e423]: follow up required
+                  - definition [ref=f6e424]: "true"
+              - generic [ref=f6e425]:
+                - generic [ref=f6e426]: Entry 13 decision
+                - combobox "Entry 13 decision" [ref=f6e427]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e428]:
+                - generic [ref=f6e429]: Entry 13 review reason
+                - textbox "Entry 13 review reason" [ref=f6e430]
+            - group "Observation · v1" [ref=f6e431]:
+              - generic [ref=f6e433]:
+                - generic [ref=f6e434]:
+                  - term [ref=f6e435]: result
+                  - definition [ref=f6e436]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e437]:
+                  - term [ref=f6e438]: finding
+                  - definition [ref=f6e439]: SYN online continuation original 46
+                - generic [ref=f6e440]:
+                  - term [ref=f6e441]: confidence
+                  - definition [ref=f6e442]: Suspected
+                - generic [ref=f6e443]:
+                  - term [ref=f6e444]: attempted fix
+                  - definition [ref=f6e445]: SYN visual-only check; no intervention
+                - generic [ref=f6e446]:
+                  - term [ref=f6e447]: follow up required
+                  - definition [ref=f6e448]: "true"
+              - generic [ref=f6e449]:
+                - generic [ref=f6e450]: Entry 14 decision
+                - combobox "Entry 14 decision" [ref=f6e451]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e452]:
+                - generic [ref=f6e453]: Entry 14 review reason
+                - textbox "Entry 14 review reason" [ref=f6e454]
+            - group "Observation · v1" [ref=f6e455]:
+              - generic [ref=f6e457]:
+                - generic [ref=f6e458]:
+                  - term [ref=f6e459]: result
+                  - definition [ref=f6e460]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e461]:
+                  - term [ref=f6e462]: finding
+                  - definition [ref=f6e463]: SYN online continuation original 13
+                - generic [ref=f6e464]:
+                  - term [ref=f6e465]: confidence
+                  - definition [ref=f6e466]: Suspected
+                - generic [ref=f6e467]:
+                  - term [ref=f6e468]: attempted fix
+                  - definition [ref=f6e469]: SYN visual-only check; no intervention
+                - generic [ref=f6e470]:
+                  - term [ref=f6e471]: follow up required
+                  - definition [ref=f6e472]: "true"
+              - generic [ref=f6e473]:
+                - generic [ref=f6e474]: Entry 15 decision
+                - combobox "Entry 15 decision" [ref=f6e475]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e476]:
+                - generic [ref=f6e477]: Entry 15 review reason
+                - textbox "Entry 15 review reason" [ref=f6e478]
+            - group "Observation · v1" [ref=f6e479]:
+              - generic [ref=f6e481]:
+                - generic [ref=f6e482]:
+                  - term [ref=f6e483]: result
+                  - definition [ref=f6e484]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e485]:
+                  - term [ref=f6e486]: finding
+                  - definition [ref=f6e487]: SYN online continuation original 15
+                - generic [ref=f6e488]:
+                  - term [ref=f6e489]: confidence
+                  - definition [ref=f6e490]: Suspected
+                - generic [ref=f6e491]:
+                  - term [ref=f6e492]: attempted fix
+                  - definition [ref=f6e493]: SYN visual-only check; no intervention
+                - generic [ref=f6e494]:
+                  - term [ref=f6e495]: follow up required
+                  - definition [ref=f6e496]: "true"
+              - generic [ref=f6e497]:
+                - generic [ref=f6e498]: Entry 16 decision
+                - combobox "Entry 16 decision" [ref=f6e499]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e500]:
+                - generic [ref=f6e501]: Entry 16 review reason
+                - textbox "Entry 16 review reason" [ref=f6e502]
+            - group "Observation · v1" [ref=f6e503]:
+              - generic [ref=f6e505]:
+                - generic [ref=f6e506]:
+                  - term [ref=f6e507]: result
+                  - definition [ref=f6e508]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e509]:
+                  - term [ref=f6e510]: finding
+                  - definition [ref=f6e511]: SYN online continuation original 19
+                - generic [ref=f6e512]:
+                  - term [ref=f6e513]: confidence
+                  - definition [ref=f6e514]: Suspected
+                - generic [ref=f6e515]:
+                  - term [ref=f6e516]: attempted fix
+                  - definition [ref=f6e517]: SYN visual-only check; no intervention
+                - generic [ref=f6e518]:
+                  - term [ref=f6e519]: follow up required
+                  - definition [ref=f6e520]: "true"
+              - generic [ref=f6e521]:
+                - generic [ref=f6e522]: Entry 17 decision
+                - combobox "Entry 17 decision" [ref=f6e523]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e524]:
+                - generic [ref=f6e525]: Entry 17 review reason
+                - textbox "Entry 17 review reason" [ref=f6e526]
+            - group "Observation · v1" [ref=f6e527]:
+              - generic [ref=f6e529]:
+                - generic [ref=f6e530]:
+                  - term [ref=f6e531]: result
+                  - definition [ref=f6e532]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e533]:
+                  - term [ref=f6e534]: finding
+                  - definition [ref=f6e535]: SYN online continuation original 95
+                - generic [ref=f6e536]:
+                  - term [ref=f6e537]: confidence
+                  - definition [ref=f6e538]: Suspected
+                - generic [ref=f6e539]:
+                  - term [ref=f6e540]: attempted fix
+                  - definition [ref=f6e541]: SYN visual-only check; no intervention
+                - generic [ref=f6e542]:
+                  - term [ref=f6e543]: follow up required
+                  - definition [ref=f6e544]: "true"
+              - generic [ref=f6e545]:
+                - generic [ref=f6e546]: Entry 18 decision
+                - combobox "Entry 18 decision" [ref=f6e547]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e548]:
+                - generic [ref=f6e549]: Entry 18 review reason
+                - textbox "Entry 18 review reason" [ref=f6e550]
+            - group "Observation · v1" [ref=f6e551]:
+              - generic [ref=f6e553]:
+                - generic [ref=f6e554]:
+                  - term [ref=f6e555]: result
+                  - definition [ref=f6e556]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e557]:
+                  - term [ref=f6e558]: finding
+                  - definition [ref=f6e559]: SYN online continuation original 68
+                - generic [ref=f6e560]:
+                  - term [ref=f6e561]: confidence
+                  - definition [ref=f6e562]: Suspected
+                - generic [ref=f6e563]:
+                  - term [ref=f6e564]: attempted fix
+                  - definition [ref=f6e565]: SYN visual-only check; no intervention
+                - generic [ref=f6e566]:
+                  - term [ref=f6e567]: follow up required
+                  - definition [ref=f6e568]: "true"
+              - generic [ref=f6e569]:
+                - generic [ref=f6e570]: Entry 19 decision
+                - combobox "Entry 19 decision" [ref=f6e571]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e572]:
+                - generic [ref=f6e573]: Entry 19 review reason
+                - textbox "Entry 19 review reason" [ref=f6e574]
+            - group "Photo · v1" [ref=f6e575]:
+              - generic [ref=f6e577]:
+                - generic [ref=f6e578]:
+                  - term [ref=f6e579]: caption
+                  - definition [ref=f6e580]: SYN retained original photo
+                - generic [ref=f6e581]:
+                  - term [ref=f6e582]: attachment id
+                  - definition [ref=f6e583]: daf1a796-0e08-4c15-aaa5-457a6c338902
+              - generic [ref=f6e584]:
+                - generic [ref=f6e585]: Entry 20 decision
+                - combobox "Entry 20 decision" [ref=f6e586]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e587]:
+                - generic [ref=f6e588]: Entry 20 review reason
+                - textbox "Entry 20 review reason" [ref=f6e589]
+            - group "Observation · v1" [ref=f6e590]:
+              - generic [ref=f6e592]:
+                - generic [ref=f6e593]:
+                  - term [ref=f6e594]: result
+                  - definition [ref=f6e595]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e596]:
+                  - term [ref=f6e597]: finding
+                  - definition [ref=f6e598]: SYN online continuation original 29
+                - generic [ref=f6e599]:
+                  - term [ref=f6e600]: confidence
+                  - definition [ref=f6e601]: Suspected
+                - generic [ref=f6e602]:
+                  - term [ref=f6e603]: attempted fix
+                  - definition [ref=f6e604]: SYN visual-only check; no intervention
+                - generic [ref=f6e605]:
+                  - term [ref=f6e606]: follow up required
+                  - definition [ref=f6e607]: "true"
+              - generic [ref=f6e608]:
+                - generic [ref=f6e609]: Entry 21 decision
+                - combobox "Entry 21 decision" [ref=f6e610]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e611]:
+                - generic [ref=f6e612]: Entry 21 review reason
+                - textbox "Entry 21 review reason" [ref=f6e613]
+            - group "Observation · v1" [ref=f6e614]:
+              - generic [ref=f6e616]:
+                - generic [ref=f6e617]:
+                  - term [ref=f6e618]: result
+                  - definition [ref=f6e619]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e620]:
+                  - term [ref=f6e621]: finding
+                  - definition [ref=f6e622]: SYN online continuation original 8
+                - generic [ref=f6e623]:
+                  - term [ref=f6e624]: confidence
+                  - definition [ref=f6e625]: Suspected
+                - generic [ref=f6e626]:
+                  - term [ref=f6e627]: attempted fix
+                  - definition [ref=f6e628]: SYN visual-only check; no intervention
+                - generic [ref=f6e629]:
+                  - term [ref=f6e630]: follow up required
+                  - definition [ref=f6e631]: "true"
+              - generic [ref=f6e632]:
+                - generic [ref=f6e633]: Entry 22 decision
+                - combobox "Entry 22 decision" [ref=f6e634]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e635]:
+                - generic [ref=f6e636]: Entry 22 review reason
+                - textbox "Entry 22 review reason" [ref=f6e637]
+            - group "Observation · v1" [ref=f6e638]:
+              - generic [ref=f6e640]:
+                - generic [ref=f6e641]:
+                  - term [ref=f6e642]: result
+                  - definition [ref=f6e643]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e644]:
+                  - term [ref=f6e645]: finding
+                  - definition [ref=f6e646]: SYN online continuation original 28
+                - generic [ref=f6e647]:
+                  - term [ref=f6e648]: confidence
+                  - definition [ref=f6e649]: Suspected
+                - generic [ref=f6e650]:
+                  - term [ref=f6e651]: attempted fix
+                  - definition [ref=f6e652]: SYN visual-only check; no intervention
+                - generic [ref=f6e653]:
+                  - term [ref=f6e654]: follow up required
+                  - definition [ref=f6e655]: "true"
+              - generic [ref=f6e656]:
+                - generic [ref=f6e657]: Entry 23 decision
+                - combobox "Entry 23 decision" [ref=f6e658]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e659]:
+                - generic [ref=f6e660]: Entry 23 review reason
+                - textbox "Entry 23 review reason" [ref=f6e661]
+            - group "Observation · v1" [ref=f6e662]:
+              - generic [ref=f6e664]:
+                - generic [ref=f6e665]:
+                  - term [ref=f6e666]: result
+                  - definition [ref=f6e667]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e668]:
+                  - term [ref=f6e669]: finding
+                  - definition [ref=f6e670]: SYN online continuation original 17
+                - generic [ref=f6e671]:
+                  - term [ref=f6e672]: confidence
+                  - definition [ref=f6e673]: Suspected
+                - generic [ref=f6e674]:
+                  - term [ref=f6e675]: attempted fix
+                  - definition [ref=f6e676]: SYN visual-only check; no intervention
+                - generic [ref=f6e677]:
+                  - term [ref=f6e678]: follow up required
+                  - definition [ref=f6e679]: "true"
+              - generic [ref=f6e680]:
+                - generic [ref=f6e681]: Entry 24 decision
+                - combobox "Entry 24 decision" [ref=f6e682]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e683]:
+                - generic [ref=f6e684]: Entry 24 review reason
+                - textbox "Entry 24 review reason" [ref=f6e685]
+            - group "Observation · v1" [ref=f6e686]:
+              - generic [ref=f6e688]:
+                - generic [ref=f6e689]:
+                  - term [ref=f6e690]: result
+                  - definition [ref=f6e691]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e692]:
+                  - term [ref=f6e693]: finding
+                  - definition [ref=f6e694]: SYN online continuation original 79
+                - generic [ref=f6e695]:
+                  - term [ref=f6e696]: confidence
+                  - definition [ref=f6e697]: Suspected
+                - generic [ref=f6e698]:
+                  - term [ref=f6e699]: attempted fix
+                  - definition [ref=f6e700]: SYN visual-only check; no intervention
+                - generic [ref=f6e701]:
+                  - term [ref=f6e702]: follow up required
+                  - definition [ref=f6e703]: "true"
+              - generic [ref=f6e704]:
+                - generic [ref=f6e705]: Entry 25 decision
+                - combobox "Entry 25 decision" [ref=f6e706]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e707]:
+                - generic [ref=f6e708]: Entry 25 review reason
+                - textbox "Entry 25 review reason" [ref=f6e709]
+            - group "Observation · v1" [ref=f6e710]:
+              - generic [ref=f6e712]:
+                - generic [ref=f6e713]:
+                  - term [ref=f6e714]: result
+                  - definition [ref=f6e715]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e716]:
+                  - term [ref=f6e717]: finding
+                  - definition [ref=f6e718]: SYN online continuation original 1
+                - generic [ref=f6e719]:
+                  - term [ref=f6e720]: confidence
+                  - definition [ref=f6e721]: Suspected
+                - generic [ref=f6e722]:
+                  - term [ref=f6e723]: attempted fix
+                  - definition [ref=f6e724]: SYN visual-only check; no intervention
+                - generic [ref=f6e725]:
+                  - term [ref=f6e726]: follow up required
+                  - definition [ref=f6e727]: "true"
+              - generic [ref=f6e728]:
+                - generic [ref=f6e729]: Entry 26 decision
+                - combobox "Entry 26 decision" [ref=f6e730]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e731]:
+                - generic [ref=f6e732]: Entry 26 review reason
+                - textbox "Entry 26 review reason" [ref=f6e733]
+            - group "Observation · v1" [ref=f6e734]:
+              - generic [ref=f6e736]:
+                - generic [ref=f6e737]:
+                  - term [ref=f6e738]: result
+                  - definition [ref=f6e739]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e740]:
+                  - term [ref=f6e741]: finding
+                  - definition [ref=f6e742]: SYN online continuation original 57
+                - generic [ref=f6e743]:
+                  - term [ref=f6e744]: confidence
+                  - definition [ref=f6e745]: Suspected
+                - generic [ref=f6e746]:
+                  - term [ref=f6e747]: attempted fix
+                  - definition [ref=f6e748]: SYN visual-only check; no intervention
+                - generic [ref=f6e749]:
+                  - term [ref=f6e750]: follow up required
+                  - definition [ref=f6e751]: "true"
+              - generic [ref=f6e752]:
+                - generic [ref=f6e753]: Entry 27 decision
+                - combobox "Entry 27 decision" [ref=f6e754]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e755]:
+                - generic [ref=f6e756]: Entry 27 review reason
+                - textbox "Entry 27 review reason" [ref=f6e757]
+            - group "Observation · v1" [ref=f6e758]:
+              - generic [ref=f6e760]:
+                - generic [ref=f6e761]:
+                  - term [ref=f6e762]: result
+                  - definition [ref=f6e763]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e764]:
+                  - term [ref=f6e765]: finding
+                  - definition [ref=f6e766]: SYN online continuation original 54
+                - generic [ref=f6e767]:
+                  - term [ref=f6e768]: confidence
+                  - definition [ref=f6e769]: Suspected
+                - generic [ref=f6e770]:
+                  - term [ref=f6e771]: attempted fix
+                  - definition [ref=f6e772]: SYN visual-only check; no intervention
+                - generic [ref=f6e773]:
+                  - term [ref=f6e774]: follow up required
+                  - definition [ref=f6e775]: "true"
+              - generic [ref=f6e776]:
+                - generic [ref=f6e777]: Entry 28 decision
+                - combobox "Entry 28 decision" [ref=f6e778]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e779]:
+                - generic [ref=f6e780]: Entry 28 review reason
+                - textbox "Entry 28 review reason" [ref=f6e781]
+            - group "Observation · v1" [ref=f6e782]:
+              - generic [ref=f6e784]:
+                - generic [ref=f6e785]:
+                  - term [ref=f6e786]: result
+                  - definition [ref=f6e787]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e788]:
+                  - term [ref=f6e789]: finding
+                  - definition [ref=f6e790]: SYN online continuation original 31
+                - generic [ref=f6e791]:
+                  - term [ref=f6e792]: confidence
+                  - definition [ref=f6e793]: Suspected
+                - generic [ref=f6e794]:
+                  - term [ref=f6e795]: attempted fix
+                  - definition [ref=f6e796]: SYN visual-only check; no intervention
+                - generic [ref=f6e797]:
+                  - term [ref=f6e798]: follow up required
+                  - definition [ref=f6e799]: "true"
+              - generic [ref=f6e800]:
+                - generic [ref=f6e801]: Entry 29 decision
+                - combobox "Entry 29 decision" [ref=f6e802]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e803]:
+                - generic [ref=f6e804]: Entry 29 review reason
+                - textbox "Entry 29 review reason" [ref=f6e805]
+            - group "Observation · v1" [ref=f6e806]:
+              - generic [ref=f6e808]:
+                - generic [ref=f6e809]:
+                  - term [ref=f6e810]: result
+                  - definition [ref=f6e811]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e812]:
+                  - term [ref=f6e813]: finding
+                  - definition [ref=f6e814]: SYN online continuation original 12
+                - generic [ref=f6e815]:
+                  - term [ref=f6e816]: confidence
+                  - definition [ref=f6e817]: Suspected
+                - generic [ref=f6e818]:
+                  - term [ref=f6e819]: attempted fix
+                  - definition [ref=f6e820]: SYN visual-only check; no intervention
+                - generic [ref=f6e821]:
+                  - term [ref=f6e822]: follow up required
+                  - definition [ref=f6e823]: "true"
+              - generic [ref=f6e824]:
+                - generic [ref=f6e825]: Entry 30 decision
+                - combobox "Entry 30 decision" [ref=f6e826]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e827]:
+                - generic [ref=f6e828]: Entry 30 review reason
+                - textbox "Entry 30 review reason" [ref=f6e829]
+            - group "Observation · v1" [ref=f6e830]:
+              - generic [ref=f6e832]:
+                - generic [ref=f6e833]:
+                  - term [ref=f6e834]: result
+                  - definition [ref=f6e835]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e836]:
+                  - term [ref=f6e837]: finding
+                  - definition [ref=f6e838]: SYN online continuation original 14
+                - generic [ref=f6e839]:
+                  - term [ref=f6e840]: confidence
+                  - definition [ref=f6e841]: Suspected
+                - generic [ref=f6e842]:
+                  - term [ref=f6e843]: attempted fix
+                  - definition [ref=f6e844]: SYN visual-only check; no intervention
+                - generic [ref=f6e845]:
+                  - term [ref=f6e846]: follow up required
+                  - definition [ref=f6e847]: "true"
+              - generic [ref=f6e848]:
+                - generic [ref=f6e849]: Entry 31 decision
+                - combobox "Entry 31 decision" [ref=f6e850]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e851]:
+                - generic [ref=f6e852]: Entry 31 review reason
+                - textbox "Entry 31 review reason" [ref=f6e853]
+            - group "Observation · v1" [ref=f6e854]:
+              - generic [ref=f6e856]:
+                - generic [ref=f6e857]:
+                  - term [ref=f6e858]: result
+                  - definition [ref=f6e859]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e860]:
+                  - term [ref=f6e861]: finding
+                  - definition [ref=f6e862]: SYN online continuation original 50
+                - generic [ref=f6e863]:
+                  - term [ref=f6e864]: confidence
+                  - definition [ref=f6e865]: Suspected
+                - generic [ref=f6e866]:
+                  - term [ref=f6e867]: attempted fix
+                  - definition [ref=f6e868]: SYN visual-only check; no intervention
+                - generic [ref=f6e869]:
+                  - term [ref=f6e870]: follow up required
+                  - definition [ref=f6e871]: "true"
+              - generic [ref=f6e872]:
+                - generic [ref=f6e873]: Entry 32 decision
+                - combobox "Entry 32 decision" [ref=f6e874]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e875]:
+                - generic [ref=f6e876]: Entry 32 review reason
+                - textbox "Entry 32 review reason" [ref=f6e877]
+            - group "Observation · v1" [ref=f6e878]:
+              - generic [ref=f6e880]:
+                - generic [ref=f6e881]:
+                  - term [ref=f6e882]: result
+                  - definition [ref=f6e883]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e884]:
+                  - term [ref=f6e885]: finding
+                  - definition [ref=f6e886]: SYN online continuation original 35
+                - generic [ref=f6e887]:
+                  - term [ref=f6e888]: confidence
+                  - definition [ref=f6e889]: Suspected
+                - generic [ref=f6e890]:
+                  - term [ref=f6e891]: attempted fix
+                  - definition [ref=f6e892]: SYN visual-only check; no intervention
+                - generic [ref=f6e893]:
+                  - term [ref=f6e894]: follow up required
+                  - definition [ref=f6e895]: "true"
+              - generic [ref=f6e896]:
+                - generic [ref=f6e897]: Entry 33 decision
+                - combobox "Entry 33 decision" [ref=f6e898]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e899]:
+                - generic [ref=f6e900]: Entry 33 review reason
+                - textbox "Entry 33 review reason" [ref=f6e901]
+            - group "Observation · v1" [ref=f6e902]:
+              - generic [ref=f6e904]:
+                - generic [ref=f6e905]:
+                  - term [ref=f6e906]: result
+                  - definition [ref=f6e907]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e908]:
+                  - term [ref=f6e909]: finding
+                  - definition [ref=f6e910]: SYN online continuation original 73
+                - generic [ref=f6e911]:
+                  - term [ref=f6e912]: confidence
+                  - definition [ref=f6e913]: Suspected
+                - generic [ref=f6e914]:
+                  - term [ref=f6e915]: attempted fix
+                  - definition [ref=f6e916]: SYN visual-only check; no intervention
+                - generic [ref=f6e917]:
+                  - term [ref=f6e918]: follow up required
+                  - definition [ref=f6e919]: "true"
+              - generic [ref=f6e920]:
+                - generic [ref=f6e921]: Entry 34 decision
+                - combobox "Entry 34 decision" [ref=f6e922]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e923]:
+                - generic [ref=f6e924]: Entry 34 review reason
+                - textbox "Entry 34 review reason" [ref=f6e925]
+            - group "Observation · v1" [ref=f6e926]:
+              - generic [ref=f6e928]:
+                - generic [ref=f6e929]:
+                  - term [ref=f6e930]: result
+                  - definition [ref=f6e931]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e932]:
+                  - term [ref=f6e933]: finding
+                  - definition [ref=f6e934]: SYN online continuation original 93
+                - generic [ref=f6e935]:
+                  - term [ref=f6e936]: confidence
+                  - definition [ref=f6e937]: Suspected
+                - generic [ref=f6e938]:
+                  - term [ref=f6e939]: attempted fix
+                  - definition [ref=f6e940]: SYN visual-only check; no intervention
+                - generic [ref=f6e941]:
+                  - term [ref=f6e942]: follow up required
+                  - definition [ref=f6e943]: "true"
+              - generic [ref=f6e944]:
+                - generic [ref=f6e945]: Entry 35 decision
+                - combobox "Entry 35 decision" [ref=f6e946]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e947]:
+                - generic [ref=f6e948]: Entry 35 review reason
+                - textbox "Entry 35 review reason" [ref=f6e949]
+            - group "Observation · v1" [ref=f6e950]:
+              - generic [ref=f6e952]:
+                - generic [ref=f6e953]:
+                  - term [ref=f6e954]: result
+                  - definition [ref=f6e955]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e956]:
+                  - term [ref=f6e957]: finding
+                  - definition [ref=f6e958]: SYN online continuation original 36
+                - generic [ref=f6e959]:
+                  - term [ref=f6e960]: confidence
+                  - definition [ref=f6e961]: Suspected
+                - generic [ref=f6e962]:
+                  - term [ref=f6e963]: attempted fix
+                  - definition [ref=f6e964]: SYN visual-only check; no intervention
+                - generic [ref=f6e965]:
+                  - term [ref=f6e966]: follow up required
+                  - definition [ref=f6e967]: "true"
+              - generic [ref=f6e968]:
+                - generic [ref=f6e969]: Entry 36 decision
+                - combobox "Entry 36 decision" [ref=f6e970]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e971]:
+                - generic [ref=f6e972]: Entry 36 review reason
+                - textbox "Entry 36 review reason" [ref=f6e973]
+            - group "Observation · v1" [ref=f6e974]:
+              - generic [ref=f6e976]:
+                - generic [ref=f6e977]:
+                  - term [ref=f6e978]: result
+                  - definition [ref=f6e979]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e980]:
+                  - term [ref=f6e981]: finding
+                  - definition [ref=f6e982]: SYN online continuation original 42
+                - generic [ref=f6e983]:
+                  - term [ref=f6e984]: confidence
+                  - definition [ref=f6e985]: Suspected
+                - generic [ref=f6e986]:
+                  - term [ref=f6e987]: attempted fix
+                  - definition [ref=f6e988]: SYN visual-only check; no intervention
+                - generic [ref=f6e989]:
+                  - term [ref=f6e990]: follow up required
+                  - definition [ref=f6e991]: "true"
+              - generic [ref=f6e992]:
+                - generic [ref=f6e993]: Entry 37 decision
+                - combobox "Entry 37 decision" [ref=f6e994]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e995]:
+                - generic [ref=f6e996]: Entry 37 review reason
+                - textbox "Entry 37 review reason" [ref=f6e997]
+            - group "Observation · v1" [ref=f6e998]:
+              - generic [ref=f6e1000]:
+                - generic [ref=f6e1001]:
+                  - term [ref=f6e1002]: result
+                  - definition [ref=f6e1003]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1004]:
+                  - term [ref=f6e1005]: finding
+                  - definition [ref=f6e1006]: SYN online continuation original 97
+                - generic [ref=f6e1007]:
+                  - term [ref=f6e1008]: confidence
+                  - definition [ref=f6e1009]: Suspected
+                - generic [ref=f6e1010]:
+                  - term [ref=f6e1011]: attempted fix
+                  - definition [ref=f6e1012]: SYN visual-only check; no intervention
+                - generic [ref=f6e1013]:
+                  - term [ref=f6e1014]: follow up required
+                  - definition [ref=f6e1015]: "true"
+              - generic [ref=f6e1016]:
+                - generic [ref=f6e1017]: Entry 38 decision
+                - combobox "Entry 38 decision" [ref=f6e1018]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1019]:
+                - generic [ref=f6e1020]: Entry 38 review reason
+                - textbox "Entry 38 review reason" [ref=f6e1021]
+            - group "Observation · v1" [ref=f6e1022]:
+              - generic [ref=f6e1024]:
+                - generic [ref=f6e1025]:
+                  - term [ref=f6e1026]: result
+                  - definition [ref=f6e1027]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1028]:
+                  - term [ref=f6e1029]: finding
+                  - definition [ref=f6e1030]: SYN online continuation original 7
+                - generic [ref=f6e1031]:
+                  - term [ref=f6e1032]: confidence
+                  - definition [ref=f6e1033]: Suspected
+                - generic [ref=f6e1034]:
+                  - term [ref=f6e1035]: attempted fix
+                  - definition [ref=f6e1036]: SYN visual-only check; no intervention
+                - generic [ref=f6e1037]:
+                  - term [ref=f6e1038]: follow up required
+                  - definition [ref=f6e1039]: "true"
+              - generic [ref=f6e1040]:
+                - generic [ref=f6e1041]: Entry 39 decision
+                - combobox "Entry 39 decision" [ref=f6e1042]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1043]:
+                - generic [ref=f6e1044]: Entry 39 review reason
+                - textbox "Entry 39 review reason" [ref=f6e1045]
+            - group "Observation · v1" [ref=f6e1046]:
+              - generic [ref=f6e1048]:
+                - generic [ref=f6e1049]:
+                  - term [ref=f6e1050]: result
+                  - definition [ref=f6e1051]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1052]:
+                  - term [ref=f6e1053]: finding
+                  - definition [ref=f6e1054]: SYN online continuation original 26
+                - generic [ref=f6e1055]:
+                  - term [ref=f6e1056]: confidence
+                  - definition [ref=f6e1057]: Suspected
+                - generic [ref=f6e1058]:
+                  - term [ref=f6e1059]: attempted fix
+                  - definition [ref=f6e1060]: SYN visual-only check; no intervention
+                - generic [ref=f6e1061]:
+                  - term [ref=f6e1062]: follow up required
+                  - definition [ref=f6e1063]: "true"
+              - generic [ref=f6e1064]:
+                - generic [ref=f6e1065]: Entry 40 decision
+                - combobox "Entry 40 decision" [ref=f6e1066]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1067]:
+                - generic [ref=f6e1068]: Entry 40 review reason
+                - textbox "Entry 40 review reason" [ref=f6e1069]
+            - group "Observation · v1" [ref=f6e1070]:
+              - generic [ref=f6e1072]:
+                - generic [ref=f6e1073]:
+                  - term [ref=f6e1074]: result
+                  - definition [ref=f6e1075]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1076]:
+                  - term [ref=f6e1077]: finding
+                  - definition [ref=f6e1078]: SYN online continuation original 47
+                - generic [ref=f6e1079]:
+                  - term [ref=f6e1080]: confidence
+                  - definition [ref=f6e1081]: Suspected
+                - generic [ref=f6e1082]:
+                  - term [ref=f6e1083]: attempted fix
+                  - definition [ref=f6e1084]: SYN visual-only check; no intervention
+                - generic [ref=f6e1085]:
+                  - term [ref=f6e1086]: follow up required
+                  - definition [ref=f6e1087]: "true"
+              - generic [ref=f6e1088]:
+                - generic [ref=f6e1089]: Entry 41 decision
+                - combobox "Entry 41 decision" [ref=f6e1090]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1091]:
+                - generic [ref=f6e1092]: Entry 41 review reason
+                - textbox "Entry 41 review reason" [ref=f6e1093]
+            - group "Observation · v1" [ref=f6e1094]:
+              - generic [ref=f6e1096]:
+                - generic [ref=f6e1097]:
+                  - term [ref=f6e1098]: result
+                  - definition [ref=f6e1099]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1100]:
+                  - term [ref=f6e1101]: finding
+                  - definition [ref=f6e1102]: SYN online continuation original 21
+                - generic [ref=f6e1103]:
+                  - term [ref=f6e1104]: confidence
+                  - definition [ref=f6e1105]: Suspected
+                - generic [ref=f6e1106]:
+                  - term [ref=f6e1107]: attempted fix
+                  - definition [ref=f6e1108]: SYN visual-only check; no intervention
+                - generic [ref=f6e1109]:
+                  - term [ref=f6e1110]: follow up required
+                  - definition [ref=f6e1111]: "true"
+              - generic [ref=f6e1112]:
+                - generic [ref=f6e1113]: Entry 42 decision
+                - combobox "Entry 42 decision" [ref=f6e1114]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1115]:
+                - generic [ref=f6e1116]: Entry 42 review reason
+                - textbox "Entry 42 review reason" [ref=f6e1117]
+            - group "Observation · v1" [ref=f6e1118]:
+              - generic [ref=f6e1120]:
+                - generic [ref=f6e1121]:
+                  - term [ref=f6e1122]: result
+                  - definition [ref=f6e1123]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1124]:
+                  - term [ref=f6e1125]: finding
+                  - definition [ref=f6e1126]: SYN online continuation original 87
+                - generic [ref=f6e1127]:
+                  - term [ref=f6e1128]: confidence
+                  - definition [ref=f6e1129]: Suspected
+                - generic [ref=f6e1130]:
+                  - term [ref=f6e1131]: attempted fix
+                  - definition [ref=f6e1132]: SYN visual-only check; no intervention
+                - generic [ref=f6e1133]:
+                  - term [ref=f6e1134]: follow up required
+                  - definition [ref=f6e1135]: "true"
+              - generic [ref=f6e1136]:
+                - generic [ref=f6e1137]: Entry 43 decision
+                - combobox "Entry 43 decision" [ref=f6e1138]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1139]:
+                - generic [ref=f6e1140]: Entry 43 review reason
+                - textbox "Entry 43 review reason" [ref=f6e1141]
+            - group "Observation · v1" [ref=f6e1142]:
+              - generic [ref=f6e1144]:
+                - generic [ref=f6e1145]:
+                  - term [ref=f6e1146]: result
+                  - definition [ref=f6e1147]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1148]:
+                  - term [ref=f6e1149]: finding
+                  - definition [ref=f6e1150]: SYN online continuation original 51
+                - generic [ref=f6e1151]:
+                  - term [ref=f6e1152]: confidence
+                  - definition [ref=f6e1153]: Suspected
+                - generic [ref=f6e1154]:
+                  - term [ref=f6e1155]: attempted fix
+                  - definition [ref=f6e1156]: SYN visual-only check; no intervention
+                - generic [ref=f6e1157]:
+                  - term [ref=f6e1158]: follow up required
+                  - definition [ref=f6e1159]: "true"
+              - generic [ref=f6e1160]:
+                - generic [ref=f6e1161]: Entry 44 decision
+                - combobox "Entry 44 decision" [ref=f6e1162]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1163]:
+                - generic [ref=f6e1164]: Entry 44 review reason
+                - textbox "Entry 44 review reason" [ref=f6e1165]
+            - group "Observation · v1" [ref=f6e1166]:
+              - generic [ref=f6e1168]:
+                - generic [ref=f6e1169]:
+                  - term [ref=f6e1170]: result
+                  - definition [ref=f6e1171]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1172]:
+                  - term [ref=f6e1173]: finding
+                  - definition [ref=f6e1174]: SYN online continuation original 99
+                - generic [ref=f6e1175]:
+                  - term [ref=f6e1176]: confidence
+                  - definition [ref=f6e1177]: Suspected
+                - generic [ref=f6e1178]:
+                  - term [ref=f6e1179]: attempted fix
+                  - definition [ref=f6e1180]: SYN visual-only check; no intervention
+                - generic [ref=f6e1181]:
+                  - term [ref=f6e1182]: follow up required
+                  - definition [ref=f6e1183]: "true"
+              - generic [ref=f6e1184]:
+                - generic [ref=f6e1185]: Entry 45 decision
+                - combobox "Entry 45 decision" [ref=f6e1186]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1187]:
+                - generic [ref=f6e1188]: Entry 45 review reason
+                - textbox "Entry 45 review reason" [ref=f6e1189]
+            - group "Observation · v1" [ref=f6e1190]:
+              - generic [ref=f6e1192]:
+                - generic [ref=f6e1193]:
+                  - term [ref=f6e1194]: result
+                  - definition [ref=f6e1195]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1196]:
+                  - term [ref=f6e1197]: finding
+                  - definition [ref=f6e1198]: SYN online continuation original 6
+                - generic [ref=f6e1199]:
+                  - term [ref=f6e1200]: confidence
+                  - definition [ref=f6e1201]: Suspected
+                - generic [ref=f6e1202]:
+                  - term [ref=f6e1203]: attempted fix
+                  - definition [ref=f6e1204]: SYN visual-only check; no intervention
+                - generic [ref=f6e1205]:
+                  - term [ref=f6e1206]: follow up required
+                  - definition [ref=f6e1207]: "true"
+              - generic [ref=f6e1208]:
+                - generic [ref=f6e1209]: Entry 46 decision
+                - combobox "Entry 46 decision" [ref=f6e1210]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1211]:
+                - generic [ref=f6e1212]: Entry 46 review reason
+                - textbox "Entry 46 review reason" [ref=f6e1213]
+            - group "Observation · v1" [ref=f6e1214]:
+              - generic [ref=f6e1216]:
+                - generic [ref=f6e1217]:
+                  - term [ref=f6e1218]: result
+                  - definition [ref=f6e1219]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1220]:
+                  - term [ref=f6e1221]: finding
+                  - definition [ref=f6e1222]: SYN online continuation original 63
+                - generic [ref=f6e1223]:
+                  - term [ref=f6e1224]: confidence
+                  - definition [ref=f6e1225]: Suspected
+                - generic [ref=f6e1226]:
+                  - term [ref=f6e1227]: attempted fix
+                  - definition [ref=f6e1228]: SYN visual-only check; no intervention
+                - generic [ref=f6e1229]:
+                  - term [ref=f6e1230]: follow up required
+                  - definition [ref=f6e1231]: "true"
+              - generic [ref=f6e1232]:
+                - generic [ref=f6e1233]: Entry 47 decision
+                - combobox "Entry 47 decision" [ref=f6e1234]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1235]:
+                - generic [ref=f6e1236]: Entry 47 review reason
+                - textbox "Entry 47 review reason" [ref=f6e1237]
+            - group "Observation · v1" [ref=f6e1238]:
+              - generic [ref=f6e1240]:
+                - generic [ref=f6e1241]:
+                  - term [ref=f6e1242]: result
+                  - definition [ref=f6e1243]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1244]:
+                  - term [ref=f6e1245]: finding
+                  - definition [ref=f6e1246]: SYN online continuation original 64
+                - generic [ref=f6e1247]:
+                  - term [ref=f6e1248]: confidence
+                  - definition [ref=f6e1249]: Suspected
+                - generic [ref=f6e1250]:
+                  - term [ref=f6e1251]: attempted fix
+                  - definition [ref=f6e1252]: SYN visual-only check; no intervention
+                - generic [ref=f6e1253]:
+                  - term [ref=f6e1254]: follow up required
+                  - definition [ref=f6e1255]: "true"
+              - generic [ref=f6e1256]:
+                - generic [ref=f6e1257]: Entry 48 decision
+                - combobox "Entry 48 decision" [ref=f6e1258]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1259]:
+                - generic [ref=f6e1260]: Entry 48 review reason
+                - textbox "Entry 48 review reason" [ref=f6e1261]
+            - group "Observation · v1" [ref=f6e1262]:
+              - generic [ref=f6e1264]:
+                - generic [ref=f6e1265]:
+                  - term [ref=f6e1266]: result
+                  - definition [ref=f6e1267]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1268]:
+                  - term [ref=f6e1269]: finding
+                  - definition [ref=f6e1270]: SYN online continuation original 77
+                - generic [ref=f6e1271]:
+                  - term [ref=f6e1272]: confidence
+                  - definition [ref=f6e1273]: Suspected
+                - generic [ref=f6e1274]:
+                  - term [ref=f6e1275]: attempted fix
+                  - definition [ref=f6e1276]: SYN visual-only check; no intervention
+                - generic [ref=f6e1277]:
+                  - term [ref=f6e1278]: follow up required
+                  - definition [ref=f6e1279]: "true"
+              - generic [ref=f6e1280]:
+                - generic [ref=f6e1281]: Entry 49 decision
+                - combobox "Entry 49 decision" [ref=f6e1282]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1283]:
+                - generic [ref=f6e1284]: Entry 49 review reason
+                - textbox "Entry 49 review reason" [ref=f6e1285]
+            - group "Observation · v1" [ref=f6e1286]:
+              - generic [ref=f6e1288]:
+                - generic [ref=f6e1289]:
+                  - term [ref=f6e1290]: result
+                  - definition [ref=f6e1291]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1292]:
+                  - term [ref=f6e1293]: finding
+                  - definition [ref=f6e1294]: SYN online continuation original 45
+                - generic [ref=f6e1295]:
+                  - term [ref=f6e1296]: confidence
+                  - definition [ref=f6e1297]: Suspected
+                - generic [ref=f6e1298]:
+                  - term [ref=f6e1299]: attempted fix
+                  - definition [ref=f6e1300]: SYN visual-only check; no intervention
+                - generic [ref=f6e1301]:
+                  - term [ref=f6e1302]: follow up required
+                  - definition [ref=f6e1303]: "true"
+              - generic [ref=f6e1304]:
+                - generic [ref=f6e1305]: Entry 50 decision
+                - combobox "Entry 50 decision" [ref=f6e1306]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1307]:
+                - generic [ref=f6e1308]: Entry 50 review reason
+                - textbox "Entry 50 review reason" [ref=f6e1309]
+            - group "Observation · v1" [ref=f6e1310]:
+              - generic [ref=f6e1312]:
+                - generic [ref=f6e1313]:
+                  - term [ref=f6e1314]: result
+                  - definition [ref=f6e1315]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1316]:
+                  - term [ref=f6e1317]: finding
+                  - definition [ref=f6e1318]: SYN online continuation original 5
+                - generic [ref=f6e1319]:
+                  - term [ref=f6e1320]: confidence
+                  - definition [ref=f6e1321]: Suspected
+                - generic [ref=f6e1322]:
+                  - term [ref=f6e1323]: attempted fix
+                  - definition [ref=f6e1324]: SYN visual-only check; no intervention
+                - generic [ref=f6e1325]:
+                  - term [ref=f6e1326]: follow up required
+                  - definition [ref=f6e1327]: "true"
+              - generic [ref=f6e1328]:
+                - generic [ref=f6e1329]: Entry 51 decision
+                - combobox "Entry 51 decision" [ref=f6e1330]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1331]:
+                - generic [ref=f6e1332]: Entry 51 review reason
+                - textbox "Entry 51 review reason" [ref=f6e1333]
+            - group "Observation · v1" [ref=f6e1334]:
+              - generic [ref=f6e1336]:
+                - generic [ref=f6e1337]:
+                  - term [ref=f6e1338]: result
+                  - definition [ref=f6e1339]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1340]:
+                  - term [ref=f6e1341]: finding
+                  - definition [ref=f6e1342]: SYN online continuation original 58
+                - generic [ref=f6e1343]:
+                  - term [ref=f6e1344]: confidence
+                  - definition [ref=f6e1345]: Suspected
+                - generic [ref=f6e1346]:
+                  - term [ref=f6e1347]: attempted fix
+                  - definition [ref=f6e1348]: SYN visual-only check; no intervention
+                - generic [ref=f6e1349]:
+                  - term [ref=f6e1350]: follow up required
+                  - definition [ref=f6e1351]: "true"
+              - generic [ref=f6e1352]:
+                - generic [ref=f6e1353]: Entry 52 decision
+                - combobox "Entry 52 decision" [ref=f6e1354]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1355]:
+                - generic [ref=f6e1356]: Entry 52 review reason
+                - textbox "Entry 52 review reason" [ref=f6e1357]
+            - group "Observation · v1" [ref=f6e1358]:
+              - generic [ref=f6e1360]:
+                - generic [ref=f6e1361]:
+                  - term [ref=f6e1362]: result
+                  - definition [ref=f6e1363]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1364]:
+                  - term [ref=f6e1365]: finding
+                  - definition [ref=f6e1366]: SYN online continuation original 55
+                - generic [ref=f6e1367]:
+                  - term [ref=f6e1368]: confidence
+                  - definition [ref=f6e1369]: Suspected
+                - generic [ref=f6e1370]:
+                  - term [ref=f6e1371]: attempted fix
+                  - definition [ref=f6e1372]: SYN visual-only check; no intervention
+                - generic [ref=f6e1373]:
+                  - term [ref=f6e1374]: follow up required
+                  - definition [ref=f6e1375]: "true"
+              - generic [ref=f6e1376]:
+                - generic [ref=f6e1377]: Entry 53 decision
+                - combobox "Entry 53 decision" [ref=f6e1378]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1379]:
+                - generic [ref=f6e1380]: Entry 53 review reason
+                - textbox "Entry 53 review reason" [ref=f6e1381]
+            - group "Observation · v1" [ref=f6e1382]:
+              - generic [ref=f6e1384]:
+                - generic [ref=f6e1385]:
+                  - term [ref=f6e1386]: result
+                  - definition [ref=f6e1387]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1388]:
+                  - term [ref=f6e1389]: finding
+                  - definition [ref=f6e1390]: SYN online continuation original 52
+                - generic [ref=f6e1391]:
+                  - term [ref=f6e1392]: confidence
+                  - definition [ref=f6e1393]: Suspected
+                - generic [ref=f6e1394]:
+                  - term [ref=f6e1395]: attempted fix
+                  - definition [ref=f6e1396]: SYN visual-only check; no intervention
+                - generic [ref=f6e1397]:
+                  - term [ref=f6e1398]: follow up required
+                  - definition [ref=f6e1399]: "true"
+              - generic [ref=f6e1400]:
+                - generic [ref=f6e1401]: Entry 54 decision
+                - combobox "Entry 54 decision" [ref=f6e1402]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1403]:
+                - generic [ref=f6e1404]: Entry 54 review reason
+                - textbox "Entry 54 review reason" [ref=f6e1405]
+            - group "Observation · v1" [ref=f6e1406]:
+              - generic [ref=f6e1408]:
+                - generic [ref=f6e1409]:
+                  - term [ref=f6e1410]: result
+                  - definition [ref=f6e1411]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1412]:
+                  - term [ref=f6e1413]: finding
+                  - definition [ref=f6e1414]: SYN online continuation original 89
+                - generic [ref=f6e1415]:
+                  - term [ref=f6e1416]: confidence
+                  - definition [ref=f6e1417]: Suspected
+                - generic [ref=f6e1418]:
+                  - term [ref=f6e1419]: attempted fix
+                  - definition [ref=f6e1420]: SYN visual-only check; no intervention
+                - generic [ref=f6e1421]:
+                  - term [ref=f6e1422]: follow up required
+                  - definition [ref=f6e1423]: "true"
+              - generic [ref=f6e1424]:
+                - generic [ref=f6e1425]: Entry 55 decision
+                - combobox "Entry 55 decision" [ref=f6e1426]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1427]:
+                - generic [ref=f6e1428]: Entry 55 review reason
+                - textbox "Entry 55 review reason" [ref=f6e1429]
+            - group "Observation · v1" [ref=f6e1430]:
+              - generic [ref=f6e1432]:
+                - generic [ref=f6e1433]:
+                  - term [ref=f6e1434]: result
+                  - definition [ref=f6e1435]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1436]:
+                  - term [ref=f6e1437]: finding
+                  - definition [ref=f6e1438]: SYN online continuation original 59
+                - generic [ref=f6e1439]:
+                  - term [ref=f6e1440]: confidence
+                  - definition [ref=f6e1441]: Suspected
+                - generic [ref=f6e1442]:
+                  - term [ref=f6e1443]: attempted fix
+                  - definition [ref=f6e1444]: SYN visual-only check; no intervention
+                - generic [ref=f6e1445]:
+                  - term [ref=f6e1446]: follow up required
+                  - definition [ref=f6e1447]: "true"
+              - generic [ref=f6e1448]:
+                - generic [ref=f6e1449]: Entry 56 decision
+                - combobox "Entry 56 decision" [ref=f6e1450]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1451]:
+                - generic [ref=f6e1452]: Entry 56 review reason
+                - textbox "Entry 56 review reason" [ref=f6e1453]
+            - group "Observation · v1" [ref=f6e1454]:
+              - generic [ref=f6e1456]:
+                - generic [ref=f6e1457]:
+                  - term [ref=f6e1458]: result
+                  - definition [ref=f6e1459]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1460]:
+                  - term [ref=f6e1461]: finding
+                  - definition [ref=f6e1462]: SYN online continuation original 69
+                - generic [ref=f6e1463]:
+                  - term [ref=f6e1464]: confidence
+                  - definition [ref=f6e1465]: Suspected
+                - generic [ref=f6e1466]:
+                  - term [ref=f6e1467]: attempted fix
+                  - definition [ref=f6e1468]: SYN visual-only check; no intervention
+                - generic [ref=f6e1469]:
+                  - term [ref=f6e1470]: follow up required
+                  - definition [ref=f6e1471]: "true"
+              - generic [ref=f6e1472]:
+                - generic [ref=f6e1473]: Entry 57 decision
+                - combobox "Entry 57 decision" [ref=f6e1474]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1475]:
+                - generic [ref=f6e1476]: Entry 57 review reason
+                - textbox "Entry 57 review reason" [ref=f6e1477]
+            - group "Observation · v1" [ref=f6e1478]:
+              - generic [ref=f6e1480]:
+                - generic [ref=f6e1481]:
+                  - term [ref=f6e1482]: result
+                  - definition [ref=f6e1483]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1484]:
+                  - term [ref=f6e1485]: finding
+                  - definition [ref=f6e1486]: SYN online continuation original 9
+                - generic [ref=f6e1487]:
+                  - term [ref=f6e1488]: confidence
+                  - definition [ref=f6e1489]: Suspected
+                - generic [ref=f6e1490]:
+                  - term [ref=f6e1491]: attempted fix
+                  - definition [ref=f6e1492]: SYN visual-only check; no intervention
+                - generic [ref=f6e1493]:
+                  - term [ref=f6e1494]: follow up required
+                  - definition [ref=f6e1495]: "true"
+              - generic [ref=f6e1496]:
+                - generic [ref=f6e1497]: Entry 58 decision
+                - combobox "Entry 58 decision" [ref=f6e1498]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1499]:
+                - generic [ref=f6e1500]: Entry 58 review reason
+                - textbox "Entry 58 review reason" [ref=f6e1501]
+            - group "Observation · v1" [ref=f6e1502]:
+              - generic [ref=f6e1504]:
+                - generic [ref=f6e1505]:
+                  - term [ref=f6e1506]: result
+                  - definition [ref=f6e1507]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1508]:
+                  - term [ref=f6e1509]: finding
+                  - definition [ref=f6e1510]: SYN online continuation original 33
+                - generic [ref=f6e1511]:
+                  - term [ref=f6e1512]: confidence
+                  - definition [ref=f6e1513]: Suspected
+                - generic [ref=f6e1514]:
+                  - term [ref=f6e1515]: attempted fix
+                  - definition [ref=f6e1516]: SYN visual-only check; no intervention
+                - generic [ref=f6e1517]:
+                  - term [ref=f6e1518]: follow up required
+                  - definition [ref=f6e1519]: "true"
+              - generic [ref=f6e1520]:
+                - generic [ref=f6e1521]: Entry 59 decision
+                - combobox "Entry 59 decision" [ref=f6e1522]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1523]:
+                - generic [ref=f6e1524]: Entry 59 review reason
+                - textbox "Entry 59 review reason" [ref=f6e1525]
+            - group "Observation · v1" [ref=f6e1526]:
+              - generic [ref=f6e1528]:
+                - generic [ref=f6e1529]:
+                  - term [ref=f6e1530]: result
+                  - definition [ref=f6e1531]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1532]:
+                  - term [ref=f6e1533]: finding
+                  - definition [ref=f6e1534]: SYN online continuation original 67
+                - generic [ref=f6e1535]:
+                  - term [ref=f6e1536]: confidence
+                  - definition [ref=f6e1537]: Suspected
+                - generic [ref=f6e1538]:
+                  - term [ref=f6e1539]: attempted fix
+                  - definition [ref=f6e1540]: SYN visual-only check; no intervention
+                - generic [ref=f6e1541]:
+                  - term [ref=f6e1542]: follow up required
+                  - definition [ref=f6e1543]: "true"
+              - generic [ref=f6e1544]:
+                - generic [ref=f6e1545]: Entry 60 decision
+                - combobox "Entry 60 decision" [ref=f6e1546]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1547]:
+                - generic [ref=f6e1548]: Entry 60 review reason
+                - textbox "Entry 60 review reason" [ref=f6e1549]
+            - group "Observation · v1" [ref=f6e1550]:
+              - generic [ref=f6e1552]:
+                - generic [ref=f6e1553]:
+                  - term [ref=f6e1554]: result
+                  - definition [ref=f6e1555]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1556]:
+                  - term [ref=f6e1557]: finding
+                  - definition [ref=f6e1558]: SYN online continuation original 78
+                - generic [ref=f6e1559]:
+                  - term [ref=f6e1560]: confidence
+                  - definition [ref=f6e1561]: Suspected
+                - generic [ref=f6e1562]:
+                  - term [ref=f6e1563]: attempted fix
+                  - definition [ref=f6e1564]: SYN visual-only check; no intervention
+                - generic [ref=f6e1565]:
+                  - term [ref=f6e1566]: follow up required
+                  - definition [ref=f6e1567]: "true"
+              - generic [ref=f6e1568]:
+                - generic [ref=f6e1569]: Entry 61 decision
+                - combobox "Entry 61 decision" [ref=f6e1570]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1571]:
+                - generic [ref=f6e1572]: Entry 61 review reason
+                - textbox "Entry 61 review reason" [ref=f6e1573]
+            - group "Observation · v1" [ref=f6e1574]:
+              - generic [ref=f6e1576]:
+                - generic [ref=f6e1577]:
+                  - term [ref=f6e1578]: result
+                  - definition [ref=f6e1579]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1580]:
+                  - term [ref=f6e1581]: finding
+                  - definition [ref=f6e1582]: SYN online continuation original 82
+                - generic [ref=f6e1583]:
+                  - term [ref=f6e1584]: confidence
+                  - definition [ref=f6e1585]: Suspected
+                - generic [ref=f6e1586]:
+                  - term [ref=f6e1587]: attempted fix
+                  - definition [ref=f6e1588]: SYN visual-only check; no intervention
+                - generic [ref=f6e1589]:
+                  - term [ref=f6e1590]: follow up required
+                  - definition [ref=f6e1591]: "true"
+              - generic [ref=f6e1592]:
+                - generic [ref=f6e1593]: Entry 62 decision
+                - combobox "Entry 62 decision" [ref=f6e1594]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1595]:
+                - generic [ref=f6e1596]: Entry 62 review reason
+                - textbox "Entry 62 review reason" [ref=f6e1597]
+            - group "Observation · v1" [ref=f6e1598]:
+              - generic [ref=f6e1600]:
+                - generic [ref=f6e1601]:
+                  - term [ref=f6e1602]: result
+                  - definition [ref=f6e1603]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1604]:
+                  - term [ref=f6e1605]: finding
+                  - definition [ref=f6e1606]: SYN online continuation original 91
+                - generic [ref=f6e1607]:
+                  - term [ref=f6e1608]: confidence
+                  - definition [ref=f6e1609]: Suspected
+                - generic [ref=f6e1610]:
+                  - term [ref=f6e1611]: attempted fix
+                  - definition [ref=f6e1612]: SYN visual-only check; no intervention
+                - generic [ref=f6e1613]:
+                  - term [ref=f6e1614]: follow up required
+                  - definition [ref=f6e1615]: "true"
+              - generic [ref=f6e1616]:
+                - generic [ref=f6e1617]: Entry 63 decision
+                - combobox "Entry 63 decision" [ref=f6e1618]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1619]:
+                - generic [ref=f6e1620]: Entry 63 review reason
+                - textbox "Entry 63 review reason" [ref=f6e1621]
+            - group "Observation · v1" [ref=f6e1622]:
+              - generic [ref=f6e1624]:
+                - generic [ref=f6e1625]:
+                  - term [ref=f6e1626]: result
+                  - definition [ref=f6e1627]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1628]:
+                  - term [ref=f6e1629]: finding
+                  - definition [ref=f6e1630]: SYN online continuation original 39
+                - generic [ref=f6e1631]:
+                  - term [ref=f6e1632]: confidence
+                  - definition [ref=f6e1633]: Suspected
+                - generic [ref=f6e1634]:
+                  - term [ref=f6e1635]: attempted fix
+                  - definition [ref=f6e1636]: SYN visual-only check; no intervention
+                - generic [ref=f6e1637]:
+                  - term [ref=f6e1638]: follow up required
+                  - definition [ref=f6e1639]: "true"
+              - generic [ref=f6e1640]:
+                - generic [ref=f6e1641]: Entry 64 decision
+                - combobox "Entry 64 decision" [ref=f6e1642]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1643]:
+                - generic [ref=f6e1644]: Entry 64 review reason
+                - textbox "Entry 64 review reason" [ref=f6e1645]
+            - group "Observation · v1" [ref=f6e1646]:
+              - generic [ref=f6e1648]:
+                - generic [ref=f6e1649]:
+                  - term [ref=f6e1650]: result
+                  - definition [ref=f6e1651]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1652]:
+                  - term [ref=f6e1653]: finding
+                  - definition [ref=f6e1654]: SYN online continuation original 38
+                - generic [ref=f6e1655]:
+                  - term [ref=f6e1656]: confidence
+                  - definition [ref=f6e1657]: Suspected
+                - generic [ref=f6e1658]:
+                  - term [ref=f6e1659]: attempted fix
+                  - definition [ref=f6e1660]: SYN visual-only check; no intervention
+                - generic [ref=f6e1661]:
+                  - term [ref=f6e1662]: follow up required
+                  - definition [ref=f6e1663]: "true"
+              - generic [ref=f6e1664]:
+                - generic [ref=f6e1665]: Entry 65 decision
+                - combobox "Entry 65 decision" [ref=f6e1666]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1667]:
+                - generic [ref=f6e1668]: Entry 65 review reason
+                - textbox "Entry 65 review reason" [ref=f6e1669]
+            - group "Observation · v1" [ref=f6e1670]:
+              - generic [ref=f6e1672]:
+                - generic [ref=f6e1673]:
+                  - term [ref=f6e1674]: result
+                  - definition [ref=f6e1675]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1676]:
+                  - term [ref=f6e1677]: finding
+                  - definition [ref=f6e1678]: SYN online continuation original 98
+                - generic [ref=f6e1679]:
+                  - term [ref=f6e1680]: confidence
+                  - definition [ref=f6e1681]: Suspected
+                - generic [ref=f6e1682]:
+                  - term [ref=f6e1683]: attempted fix
+                  - definition [ref=f6e1684]: SYN visual-only check; no intervention
+                - generic [ref=f6e1685]:
+                  - term [ref=f6e1686]: follow up required
+                  - definition [ref=f6e1687]: "true"
+              - generic [ref=f6e1688]:
+                - generic [ref=f6e1689]: Entry 66 decision
+                - combobox "Entry 66 decision" [ref=f6e1690]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1691]:
+                - generic [ref=f6e1692]: Entry 66 review reason
+                - textbox "Entry 66 review reason" [ref=f6e1693]
+            - group "Observation · v1" [ref=f6e1694]:
+              - generic [ref=f6e1696]:
+                - generic [ref=f6e1697]:
+                  - term [ref=f6e1698]: result
+                  - definition [ref=f6e1699]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1700]:
+                  - term [ref=f6e1701]: finding
+                  - definition [ref=f6e1702]: SYN online continuation original 34
+                - generic [ref=f6e1703]:
+                  - term [ref=f6e1704]: confidence
+                  - definition [ref=f6e1705]: Suspected
+                - generic [ref=f6e1706]:
+                  - term [ref=f6e1707]: attempted fix
+                  - definition [ref=f6e1708]: SYN visual-only check; no intervention
+                - generic [ref=f6e1709]:
+                  - term [ref=f6e1710]: follow up required
+                  - definition [ref=f6e1711]: "true"
+              - generic [ref=f6e1712]:
+                - generic [ref=f6e1713]: Entry 67 decision
+                - combobox "Entry 67 decision" [ref=f6e1714]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1715]:
+                - generic [ref=f6e1716]: Entry 67 review reason
+                - textbox "Entry 67 review reason" [ref=f6e1717]
+            - group "Observation · v1" [ref=f6e1718]:
+              - generic [ref=f6e1720]:
+                - generic [ref=f6e1721]:
+                  - term [ref=f6e1722]: result
+                  - definition [ref=f6e1723]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1724]:
+                  - term [ref=f6e1725]: finding
+                  - definition [ref=f6e1726]: SYN online continuation original 72
+                - generic [ref=f6e1727]:
+                  - term [ref=f6e1728]: confidence
+                  - definition [ref=f6e1729]: Suspected
+                - generic [ref=f6e1730]:
+                  - term [ref=f6e1731]: attempted fix
+                  - definition [ref=f6e1732]: SYN visual-only check; no intervention
+                - generic [ref=f6e1733]:
+                  - term [ref=f6e1734]: follow up required
+                  - definition [ref=f6e1735]: "true"
+              - generic [ref=f6e1736]:
+                - generic [ref=f6e1737]: Entry 68 decision
+                - combobox "Entry 68 decision" [ref=f6e1738]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1739]:
+                - generic [ref=f6e1740]: Entry 68 review reason
+                - textbox "Entry 68 review reason" [ref=f6e1741]
+            - group "Observation · v1" [ref=f6e1742]:
+              - generic [ref=f6e1744]:
+                - generic [ref=f6e1745]:
+                  - term [ref=f6e1746]: result
+                  - definition [ref=f6e1747]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1748]:
+                  - term [ref=f6e1749]: finding
+                  - definition [ref=f6e1750]: SYN online continuation original 40
+                - generic [ref=f6e1751]:
+                  - term [ref=f6e1752]: confidence
+                  - definition [ref=f6e1753]: Suspected
+                - generic [ref=f6e1754]:
+                  - term [ref=f6e1755]: attempted fix
+                  - definition [ref=f6e1756]: SYN visual-only check; no intervention
+                - generic [ref=f6e1757]:
+                  - term [ref=f6e1758]: follow up required
+                  - definition [ref=f6e1759]: "true"
+              - generic [ref=f6e1760]:
+                - generic [ref=f6e1761]: Entry 69 decision
+                - combobox "Entry 69 decision" [ref=f6e1762]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1763]:
+                - generic [ref=f6e1764]: Entry 69 review reason
+                - textbox "Entry 69 review reason" [ref=f6e1765]
+            - group "Observation · v1" [ref=f6e1766]:
+              - generic [ref=f6e1768]:
+                - generic [ref=f6e1769]:
+                  - term [ref=f6e1770]: result
+                  - definition [ref=f6e1771]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1772]:
+                  - term [ref=f6e1773]: finding
+                  - definition [ref=f6e1774]: SYN online continuation original 2
+                - generic [ref=f6e1775]:
+                  - term [ref=f6e1776]: confidence
+                  - definition [ref=f6e1777]: Suspected
+                - generic [ref=f6e1778]:
+                  - term [ref=f6e1779]: attempted fix
+                  - definition [ref=f6e1780]: SYN visual-only check; no intervention
+                - generic [ref=f6e1781]:
+                  - term [ref=f6e1782]: follow up required
+                  - definition [ref=f6e1783]: "true"
+              - generic [ref=f6e1784]:
+                - generic [ref=f6e1785]: Entry 70 decision
+                - combobox "Entry 70 decision" [ref=f6e1786]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1787]:
+                - generic [ref=f6e1788]: Entry 70 review reason
+                - textbox "Entry 70 review reason" [ref=f6e1789]
+            - group "Observation · v1" [ref=f6e1790]:
+              - generic [ref=f6e1792]:
+                - generic [ref=f6e1793]:
+                  - term [ref=f6e1794]: result
+                  - definition [ref=f6e1795]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1796]:
+                  - term [ref=f6e1797]: finding
+                  - definition [ref=f6e1798]: SYN online continuation original 16
+                - generic [ref=f6e1799]:
+                  - term [ref=f6e1800]: confidence
+                  - definition [ref=f6e1801]: Suspected
+                - generic [ref=f6e1802]:
+                  - term [ref=f6e1803]: attempted fix
+                  - definition [ref=f6e1804]: SYN visual-only check; no intervention
+                - generic [ref=f6e1805]:
+                  - term [ref=f6e1806]: follow up required
+                  - definition [ref=f6e1807]: "true"
+              - generic [ref=f6e1808]:
+                - generic [ref=f6e1809]: Entry 71 decision
+                - combobox "Entry 71 decision" [ref=f6e1810]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1811]:
+                - generic [ref=f6e1812]: Entry 71 review reason
+                - textbox "Entry 71 review reason" [ref=f6e1813]
+            - group "Observation · v1" [ref=f6e1814]:
+              - generic [ref=f6e1816]:
+                - generic [ref=f6e1817]:
+                  - term [ref=f6e1818]: result
+                  - definition [ref=f6e1819]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1820]:
+                  - term [ref=f6e1821]: finding
+                  - definition [ref=f6e1822]: SYN online continuation original 53
+                - generic [ref=f6e1823]:
+                  - term [ref=f6e1824]: confidence
+                  - definition [ref=f6e1825]: Suspected
+                - generic [ref=f6e1826]:
+                  - term [ref=f6e1827]: attempted fix
+                  - definition [ref=f6e1828]: SYN visual-only check; no intervention
+                - generic [ref=f6e1829]:
+                  - term [ref=f6e1830]: follow up required
+                  - definition [ref=f6e1831]: "true"
+              - generic [ref=f6e1832]:
+                - generic [ref=f6e1833]: Entry 72 decision
+                - combobox "Entry 72 decision" [ref=f6e1834]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1835]:
+                - generic [ref=f6e1836]: Entry 72 review reason
+                - textbox "Entry 72 review reason" [ref=f6e1837]
+            - group "Observation · v1" [ref=f6e1838]:
+              - generic [ref=f6e1840]:
+                - generic [ref=f6e1841]:
+                  - term [ref=f6e1842]: result
+                  - definition [ref=f6e1843]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1844]:
+                  - term [ref=f6e1845]: finding
+                  - definition [ref=f6e1846]: SYN online continuation original 90
+                - generic [ref=f6e1847]:
+                  - term [ref=f6e1848]: confidence
+                  - definition [ref=f6e1849]: Suspected
+                - generic [ref=f6e1850]:
+                  - term [ref=f6e1851]: attempted fix
+                  - definition [ref=f6e1852]: SYN visual-only check; no intervention
+                - generic [ref=f6e1853]:
+                  - term [ref=f6e1854]: follow up required
+                  - definition [ref=f6e1855]: "true"
+              - generic [ref=f6e1856]:
+                - generic [ref=f6e1857]: Entry 73 decision
+                - combobox "Entry 73 decision" [ref=f6e1858]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1859]:
+                - generic [ref=f6e1860]: Entry 73 review reason
+                - textbox "Entry 73 review reason" [ref=f6e1861]
+            - group "Observation · v1" [ref=f6e1862]:
+              - generic [ref=f6e1864]:
+                - generic [ref=f6e1865]:
+                  - term [ref=f6e1866]: result
+                  - definition [ref=f6e1867]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1868]:
+                  - term [ref=f6e1869]: finding
+                  - definition [ref=f6e1870]: SYN online continuation original 4
+                - generic [ref=f6e1871]:
+                  - term [ref=f6e1872]: confidence
+                  - definition [ref=f6e1873]: Suspected
+                - generic [ref=f6e1874]:
+                  - term [ref=f6e1875]: attempted fix
+                  - definition [ref=f6e1876]: SYN visual-only check; no intervention
+                - generic [ref=f6e1877]:
+                  - term [ref=f6e1878]: follow up required
+                  - definition [ref=f6e1879]: "true"
+              - generic [ref=f6e1880]:
+                - generic [ref=f6e1881]: Entry 74 decision
+                - combobox "Entry 74 decision" [ref=f6e1882]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1883]:
+                - generic [ref=f6e1884]: Entry 74 review reason
+                - textbox "Entry 74 review reason" [ref=f6e1885]
+            - group "Observation · v1" [ref=f6e1886]:
+              - generic [ref=f6e1888]:
+                - generic [ref=f6e1889]:
+                  - term [ref=f6e1890]: result
+                  - definition [ref=f6e1891]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1892]:
+                  - term [ref=f6e1893]: finding
+                  - definition [ref=f6e1894]: SYN online continuation original 27
+                - generic [ref=f6e1895]:
+                  - term [ref=f6e1896]: confidence
+                  - definition [ref=f6e1897]: Suspected
+                - generic [ref=f6e1898]:
+                  - term [ref=f6e1899]: attempted fix
+                  - definition [ref=f6e1900]: SYN visual-only check; no intervention
+                - generic [ref=f6e1901]:
+                  - term [ref=f6e1902]: follow up required
+                  - definition [ref=f6e1903]: "true"
+              - generic [ref=f6e1904]:
+                - generic [ref=f6e1905]: Entry 75 decision
+                - combobox "Entry 75 decision" [ref=f6e1906]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1907]:
+                - generic [ref=f6e1908]: Entry 75 review reason
+                - textbox "Entry 75 review reason" [ref=f6e1909]
+            - group "Observation · v1" [ref=f6e1910]:
+              - generic [ref=f6e1912]:
+                - generic [ref=f6e1913]:
+                  - term [ref=f6e1914]: result
+                  - definition [ref=f6e1915]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1916]:
+                  - term [ref=f6e1917]: finding
+                  - definition [ref=f6e1918]: SYN online continuation original 62
+                - generic [ref=f6e1919]:
+                  - term [ref=f6e1920]: confidence
+                  - definition [ref=f6e1921]: Suspected
+                - generic [ref=f6e1922]:
+                  - term [ref=f6e1923]: attempted fix
+                  - definition [ref=f6e1924]: SYN visual-only check; no intervention
+                - generic [ref=f6e1925]:
+                  - term [ref=f6e1926]: follow up required
+                  - definition [ref=f6e1927]: "true"
+              - generic [ref=f6e1928]:
+                - generic [ref=f6e1929]: Entry 76 decision
+                - combobox "Entry 76 decision" [ref=f6e1930]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1931]:
+                - generic [ref=f6e1932]: Entry 76 review reason
+                - textbox "Entry 76 review reason" [ref=f6e1933]
+            - group "Observation · v1" [ref=f6e1934]:
+              - generic [ref=f6e1936]:
+                - generic [ref=f6e1937]:
+                  - term [ref=f6e1938]: result
+                  - definition [ref=f6e1939]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1940]:
+                  - term [ref=f6e1941]: finding
+                  - definition [ref=f6e1942]: SYN online continuation original 56
+                - generic [ref=f6e1943]:
+                  - term [ref=f6e1944]: confidence
+                  - definition [ref=f6e1945]: Suspected
+                - generic [ref=f6e1946]:
+                  - term [ref=f6e1947]: attempted fix
+                  - definition [ref=f6e1948]: SYN visual-only check; no intervention
+                - generic [ref=f6e1949]:
+                  - term [ref=f6e1950]: follow up required
+                  - definition [ref=f6e1951]: "true"
+              - generic [ref=f6e1952]:
+                - generic [ref=f6e1953]: Entry 77 decision
+                - combobox "Entry 77 decision" [ref=f6e1954]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1955]:
+                - generic [ref=f6e1956]: Entry 77 review reason
+                - textbox "Entry 77 review reason" [ref=f6e1957]
+            - group "Observation · v1" [ref=f6e1958]:
+              - generic [ref=f6e1960]:
+                - generic [ref=f6e1961]:
+                  - term [ref=f6e1962]: result
+                  - definition [ref=f6e1963]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1964]:
+                  - term [ref=f6e1965]: finding
+                  - definition [ref=f6e1966]: SYN online continuation original 88
+                - generic [ref=f6e1967]:
+                  - term [ref=f6e1968]: confidence
+                  - definition [ref=f6e1969]: Suspected
+                - generic [ref=f6e1970]:
+                  - term [ref=f6e1971]: attempted fix
+                  - definition [ref=f6e1972]: SYN visual-only check; no intervention
+                - generic [ref=f6e1973]:
+                  - term [ref=f6e1974]: follow up required
+                  - definition [ref=f6e1975]: "true"
+              - generic [ref=f6e1976]:
+                - generic [ref=f6e1977]: Entry 78 decision
+                - combobox "Entry 78 decision" [ref=f6e1978]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e1979]:
+                - generic [ref=f6e1980]: Entry 78 review reason
+                - textbox "Entry 78 review reason" [ref=f6e1981]
+            - group "Observation · v1" [ref=f6e1982]:
+              - generic [ref=f6e1984]:
+                - generic [ref=f6e1985]:
+                  - term [ref=f6e1986]: result
+                  - definition [ref=f6e1987]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e1988]:
+                  - term [ref=f6e1989]: finding
+                  - definition [ref=f6e1990]: SYN online continuation original 80
+                - generic [ref=f6e1991]:
+                  - term [ref=f6e1992]: confidence
+                  - definition [ref=f6e1993]: Suspected
+                - generic [ref=f6e1994]:
+                  - term [ref=f6e1995]: attempted fix
+                  - definition [ref=f6e1996]: SYN visual-only check; no intervention
+                - generic [ref=f6e1997]:
+                  - term [ref=f6e1998]: follow up required
+                  - definition [ref=f6e1999]: "true"
+              - generic [ref=f6e2000]:
+                - generic [ref=f6e2001]: Entry 79 decision
+                - combobox "Entry 79 decision" [ref=f6e2002]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e2003]:
+                - generic [ref=f6e2004]: Entry 79 review reason
+                - textbox "Entry 79 review reason" [ref=f6e2005]
+            - group "Observation · v1" [ref=f6e2006]:
+              - generic [ref=f6e2008]:
+                - generic [ref=f6e2009]:
+                  - term [ref=f6e2010]: result
+                  - definition [ref=f6e2011]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e2012]:
+                  - term [ref=f6e2013]: finding
+                  - definition [ref=f6e2014]: SYN online continuation original 86
+                - generic [ref=f6e2015]:
+                  - term [ref=f6e2016]: confidence
+                  - definition [ref=f6e2017]: Suspected
+                - generic [ref=f6e2018]:
+                  - term [ref=f6e2019]: attempted fix
+                  - definition [ref=f6e2020]: SYN visual-only check; no intervention
+                - generic [ref=f6e2021]:
+                  - term [ref=f6e2022]: follow up required
+                  - definition [ref=f6e2023]: "true"
+              - generic [ref=f6e2024]:
+                - generic [ref=f6e2025]: Entry 80 decision
+                - combobox "Entry 80 decision" [ref=f6e2026]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e2027]:
+                - generic [ref=f6e2028]: Entry 80 review reason
+                - textbox "Entry 80 review reason" [ref=f6e2029]
+            - group "Observation · v1" [ref=f6e2030]:
+              - generic [ref=f6e2032]:
+                - generic [ref=f6e2033]:
+                  - term [ref=f6e2034]: result
+                  - definition [ref=f6e2035]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e2036]:
+                  - term [ref=f6e2037]: finding
+                  - definition [ref=f6e2038]: SYN online continuation original 84
+                - generic [ref=f6e2039]:
+                  - term [ref=f6e2040]: confidence
+                  - definition [ref=f6e2041]: Suspected
+                - generic [ref=f6e2042]:
+                  - term [ref=f6e2043]: attempted fix
+                  - definition [ref=f6e2044]: SYN visual-only check; no intervention
+                - generic [ref=f6e2045]:
+                  - term [ref=f6e2046]: follow up required
+                  - definition [ref=f6e2047]: "true"
+              - generic [ref=f6e2048]:
+                - generic [ref=f6e2049]: Entry 81 decision
+                - combobox "Entry 81 decision" [ref=f6e2050]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e2051]:
+                - generic [ref=f6e2052]: Entry 81 review reason
+                - textbox "Entry 81 review reason" [ref=f6e2053]
+            - group "Observation · v1" [ref=f6e2054]:
+              - generic [ref=f6e2056]:
+                - generic [ref=f6e2057]:
+                  - term [ref=f6e2058]: result
+                  - definition [ref=f6e2059]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e2060]:
+                  - term [ref=f6e2061]: finding
+                  - definition [ref=f6e2062]: SYN online continuation original 32
+                - generic [ref=f6e2063]:
+                  - term [ref=f6e2064]: confidence
+                  - definition [ref=f6e2065]: Suspected
+                - generic [ref=f6e2066]:
+                  - term [ref=f6e2067]: attempted fix
+                  - definition [ref=f6e2068]: SYN visual-only check; no intervention
+                - generic [ref=f6e2069]:
+                  - term [ref=f6e2070]: follow up required
+                  - definition [ref=f6e2071]: "true"
+              - generic [ref=f6e2072]:
+                - generic [ref=f6e2073]: Entry 82 decision
+                - combobox "Entry 82 decision" [ref=f6e2074]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e2075]:
+                - generic [ref=f6e2076]: Entry 82 review reason
+                - textbox "Entry 82 review reason" [ref=f6e2077]
+            - group "Observation · v1" [ref=f6e2078]:
+              - generic [ref=f6e2080]:
+                - generic [ref=f6e2081]:
+                  - term [ref=f6e2082]: result
+                  - definition [ref=f6e2083]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e2084]:
+                  - term [ref=f6e2085]: finding
+                  - definition [ref=f6e2086]: SYN online continuation original 83
+                - generic [ref=f6e2087]:
+                  - term [ref=f6e2088]: confidence
+                  - definition [ref=f6e2089]: Suspected
+                - generic [ref=f6e2090]:
+                  - term [ref=f6e2091]: attempted fix
+                  - definition [ref=f6e2092]: SYN visual-only check; no intervention
+                - generic [ref=f6e2093]:
+                  - term [ref=f6e2094]: follow up required
+                  - definition [ref=f6e2095]: "true"
+              - generic [ref=f6e2096]:
+                - generic [ref=f6e2097]: Entry 83 decision
+                - combobox "Entry 83 decision" [ref=f6e2098]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e2099]:
+                - generic [ref=f6e2100]: Entry 83 review reason
+                - textbox "Entry 83 review reason" [ref=f6e2101]
+            - group "Observation · v1" [ref=f6e2102]:
+              - generic [ref=f6e2104]:
+                - generic [ref=f6e2105]:
+                  - term [ref=f6e2106]: result
+                  - definition [ref=f6e2107]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e2108]:
+                  - term [ref=f6e2109]: finding
+                  - definition [ref=f6e2110]: SYN online continuation original 94
+                - generic [ref=f6e2111]:
+                  - term [ref=f6e2112]: confidence
+                  - definition [ref=f6e2113]: Suspected
+                - generic [ref=f6e2114]:
+                  - term [ref=f6e2115]: attempted fix
+                  - definition [ref=f6e2116]: SYN visual-only check; no intervention
+                - generic [ref=f6e2117]:
+                  - term [ref=f6e2118]: follow up required
+                  - definition [ref=f6e2119]: "true"
+              - generic [ref=f6e2120]:
+                - generic [ref=f6e2121]: Entry 84 decision
+                - combobox "Entry 84 decision" [ref=f6e2122]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e2123]:
+                - generic [ref=f6e2124]: Entry 84 review reason
+                - textbox "Entry 84 review reason" [ref=f6e2125]
+            - group "Observation · v1" [ref=f6e2126]:
+              - generic [ref=f6e2128]:
+                - generic [ref=f6e2129]:
+                  - term [ref=f6e2130]: result
+                  - definition [ref=f6e2131]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e2132]:
+                  - term [ref=f6e2133]: finding
+                  - definition [ref=f6e2134]: SYN online continuation original 3
+                - generic [ref=f6e2135]:
+                  - term [ref=f6e2136]: confidence
+                  - definition [ref=f6e2137]: Suspected
+                - generic [ref=f6e2138]:
+                  - term [ref=f6e2139]: attempted fix
+                  - definition [ref=f6e2140]: SYN visual-only check; no intervention
+                - generic [ref=f6e2141]:
+                  - term [ref=f6e2142]: follow up required
+                  - definition [ref=f6e2143]: "true"
+              - generic [ref=f6e2144]:
+                - generic [ref=f6e2145]: Entry 85 decision
+                - combobox "Entry 85 decision" [ref=f6e2146]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e2147]:
+                - generic [ref=f6e2148]: Entry 85 review reason
+                - textbox "Entry 85 review reason" [ref=f6e2149]
+            - group "Observation · v1" [ref=f6e2150]:
+              - generic [ref=f6e2152]:
+                - generic [ref=f6e2153]:
+                  - term [ref=f6e2154]: result
+                  - definition [ref=f6e2155]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e2156]:
+                  - term [ref=f6e2157]: finding
+                  - definition [ref=f6e2158]: SYN online continuation original 65
+                - generic [ref=f6e2159]:
+                  - term [ref=f6e2160]: confidence
+                  - definition [ref=f6e2161]: Suspected
+                - generic [ref=f6e2162]:
+                  - term [ref=f6e2163]: attempted fix
+                  - definition [ref=f6e2164]: SYN visual-only check; no intervention
+                - generic [ref=f6e2165]:
+                  - term [ref=f6e2166]: follow up required
+                  - definition [ref=f6e2167]: "true"
+              - generic [ref=f6e2168]:
+                - generic [ref=f6e2169]: Entry 86 decision
+                - combobox "Entry 86 decision" [ref=f6e2170]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e2171]:
+                - generic [ref=f6e2172]: Entry 86 review reason
+                - textbox "Entry 86 review reason" [ref=f6e2173]
+            - group "Observation · v1" [ref=f6e2174]:
+              - generic [ref=f6e2176]:
+                - generic [ref=f6e2177]:
+                  - term [ref=f6e2178]: result
+                  - definition [ref=f6e2179]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e2180]:
+                  - term [ref=f6e2181]: finding
+                  - definition [ref=f6e2182]: SYN online continuation original 22
+                - generic [ref=f6e2183]:
+                  - term [ref=f6e2184]: confidence
+                  - definition [ref=f6e2185]: Suspected
+                - generic [ref=f6e2186]:
+                  - term [ref=f6e2187]: attempted fix
+                  - definition [ref=f6e2188]: SYN visual-only check; no intervention
+                - generic [ref=f6e2189]:
+                  - term [ref=f6e2190]: follow up required
+                  - definition [ref=f6e2191]: "true"
+              - generic [ref=f6e2192]:
+                - generic [ref=f6e2193]: Entry 87 decision
+                - combobox "Entry 87 decision" [ref=f6e2194]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e2195]:
+                - generic [ref=f6e2196]: Entry 87 review reason
+                - textbox "Entry 87 review reason" [ref=f6e2197]
+            - group "Observation · v1" [ref=f6e2198]:
+              - generic [ref=f6e2200]:
+                - generic [ref=f6e2201]:
+                  - term [ref=f6e2202]: result
+                  - definition [ref=f6e2203]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e2204]:
+                  - term [ref=f6e2205]: finding
+                  - definition [ref=f6e2206]: SYN online continuation original 25
+                - generic [ref=f6e2207]:
+                  - term [ref=f6e2208]: confidence
+                  - definition [ref=f6e2209]: Suspected
+                - generic [ref=f6e2210]:
+                  - term [ref=f6e2211]: attempted fix
+                  - definition [ref=f6e2212]: SYN visual-only check; no intervention
+                - generic [ref=f6e2213]:
+                  - term [ref=f6e2214]: follow up required
+                  - definition [ref=f6e2215]: "true"
+              - generic [ref=f6e2216]:
+                - generic [ref=f6e2217]: Entry 88 decision
+                - combobox "Entry 88 decision" [ref=f6e2218]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e2219]:
+                - generic [ref=f6e2220]: Entry 88 review reason
+                - textbox "Entry 88 review reason" [ref=f6e2221]
+            - group "Observation · v1" [ref=f6e2222]:
+              - generic [ref=f6e2224]:
+                - generic [ref=f6e2225]:
+                  - term [ref=f6e2226]: result
+                  - definition [ref=f6e2227]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e2228]:
+                  - term [ref=f6e2229]: finding
+                  - definition [ref=f6e2230]: SYN online continuation original 18
+                - generic [ref=f6e2231]:
+                  - term [ref=f6e2232]: confidence
+                  - definition [ref=f6e2233]: Suspected
+                - generic [ref=f6e2234]:
+                  - term [ref=f6e2235]: attempted fix
+                  - definition [ref=f6e2236]: SYN visual-only check; no intervention
+                - generic [ref=f6e2237]:
+                  - term [ref=f6e2238]: follow up required
+                  - definition [ref=f6e2239]: "true"
+              - generic [ref=f6e2240]:
+                - generic [ref=f6e2241]: Entry 89 decision
+                - combobox "Entry 89 decision" [ref=f6e2242]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e2243]:
+                - generic [ref=f6e2244]: Entry 89 review reason
+                - textbox "Entry 89 review reason" [ref=f6e2245]
+            - group "Observation · v1" [ref=f6e2246]:
+              - generic [ref=f6e2248]:
+                - generic [ref=f6e2249]:
+                  - term [ref=f6e2250]: result
+                  - definition [ref=f6e2251]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e2252]:
+                  - term [ref=f6e2253]: finding
+                  - definition [ref=f6e2254]: SYN online continuation original 24
+                - generic [ref=f6e2255]:
+                  - term [ref=f6e2256]: confidence
+                  - definition [ref=f6e2257]: Suspected
+                - generic [ref=f6e2258]:
+                  - term [ref=f6e2259]: attempted fix
+                  - definition [ref=f6e2260]: SYN visual-only check; no intervention
+                - generic [ref=f6e2261]:
+                  - term [ref=f6e2262]: follow up required
+                  - definition [ref=f6e2263]: "true"
+              - generic [ref=f6e2264]:
+                - generic [ref=f6e2265]: Entry 90 decision
+                - combobox "Entry 90 decision" [ref=f6e2266]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e2267]:
+                - generic [ref=f6e2268]: Entry 90 review reason
+                - textbox "Entry 90 review reason" [ref=f6e2269]
+            - group "Observation · v1" [ref=f6e2270]:
+              - generic [ref=f6e2272]:
+                - generic [ref=f6e2273]:
+                  - term [ref=f6e2274]: result
+                  - definition [ref=f6e2275]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e2276]:
+                  - term [ref=f6e2277]: finding
+                  - definition [ref=f6e2278]: SYN online continuation original 71
+                - generic [ref=f6e2279]:
+                  - term [ref=f6e2280]: confidence
+                  - definition [ref=f6e2281]: Suspected
+                - generic [ref=f6e2282]:
+                  - term [ref=f6e2283]: attempted fix
+                  - definition [ref=f6e2284]: SYN visual-only check; no intervention
+                - generic [ref=f6e2285]:
+                  - term [ref=f6e2286]: follow up required
+                  - definition [ref=f6e2287]: "true"
+              - generic [ref=f6e2288]:
+                - generic [ref=f6e2289]: Entry 91 decision
+                - combobox "Entry 91 decision" [ref=f6e2290]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e2291]:
+                - generic [ref=f6e2292]: Entry 91 review reason
+                - textbox "Entry 91 review reason" [ref=f6e2293]
+            - group "Observation · v1" [ref=f6e2294]:
+              - generic [ref=f6e2296]:
+                - generic [ref=f6e2297]:
+                  - term [ref=f6e2298]: result
+                  - definition [ref=f6e2299]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e2300]:
+                  - term [ref=f6e2301]: finding
+                  - definition [ref=f6e2302]: SYN online continuation original 43
+                - generic [ref=f6e2303]:
+                  - term [ref=f6e2304]: confidence
+                  - definition [ref=f6e2305]: Suspected
+                - generic [ref=f6e2306]:
+                  - term [ref=f6e2307]: attempted fix
+                  - definition [ref=f6e2308]: SYN visual-only check; no intervention
+                - generic [ref=f6e2309]:
+                  - term [ref=f6e2310]: follow up required
+                  - definition [ref=f6e2311]: "true"
+              - generic [ref=f6e2312]:
+                - generic [ref=f6e2313]: Entry 92 decision
+                - combobox "Entry 92 decision" [ref=f6e2314]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e2315]:
+                - generic [ref=f6e2316]: Entry 92 review reason
+                - textbox "Entry 92 review reason" [ref=f6e2317]
+            - group "Observation · v1" [ref=f6e2318]:
+              - generic [ref=f6e2320]:
+                - generic [ref=f6e2321]:
+                  - term [ref=f6e2322]: result
+                  - definition [ref=f6e2323]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e2324]:
+                  - term [ref=f6e2325]: finding
+                  - definition [ref=f6e2326]: SYN online continuation original 48
+                - generic [ref=f6e2327]:
+                  - term [ref=f6e2328]: confidence
+                  - definition [ref=f6e2329]: Suspected
+                - generic [ref=f6e2330]:
+                  - term [ref=f6e2331]: attempted fix
+                  - definition [ref=f6e2332]: SYN visual-only check; no intervention
+                - generic [ref=f6e2333]:
+                  - term [ref=f6e2334]: follow up required
+                  - definition [ref=f6e2335]: "true"
+              - generic [ref=f6e2336]:
+                - generic [ref=f6e2337]: Entry 93 decision
+                - combobox "Entry 93 decision" [ref=f6e2338]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e2339]:
+                - generic [ref=f6e2340]: Entry 93 review reason
+                - textbox "Entry 93 review reason" [ref=f6e2341]
+            - group "Observation · v1" [ref=f6e2342]:
+              - generic [ref=f6e2344]:
+                - generic [ref=f6e2345]:
+                  - term [ref=f6e2346]: result
+                  - definition [ref=f6e2347]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e2348]:
+                  - term [ref=f6e2349]: finding
+                  - definition [ref=f6e2350]: SYN online continuation original 44
+                - generic [ref=f6e2351]:
+                  - term [ref=f6e2352]: confidence
+                  - definition [ref=f6e2353]: Suspected
+                - generic [ref=f6e2354]:
+                  - term [ref=f6e2355]: attempted fix
+                  - definition [ref=f6e2356]: SYN visual-only check; no intervention
+                - generic [ref=f6e2357]:
+                  - term [ref=f6e2358]: follow up required
+                  - definition [ref=f6e2359]: "true"
+              - generic [ref=f6e2360]:
+                - generic [ref=f6e2361]: Entry 94 decision
+                - combobox "Entry 94 decision" [ref=f6e2362]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e2363]:
+                - generic [ref=f6e2364]: Entry 94 review reason
+                - textbox "Entry 94 review reason" [ref=f6e2365]
+            - group "Observation · v1" [ref=f6e2366]:
+              - generic [ref=f6e2368]:
+                - generic [ref=f6e2369]:
+                  - term [ref=f6e2370]: result
+                  - definition [ref=f6e2371]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e2372]:
+                  - term [ref=f6e2373]: finding
+                  - definition [ref=f6e2374]: SYN online continuation original 81
+                - generic [ref=f6e2375]:
+                  - term [ref=f6e2376]: confidence
+                  - definition [ref=f6e2377]: Suspected
+                - generic [ref=f6e2378]:
+                  - term [ref=f6e2379]: attempted fix
+                  - definition [ref=f6e2380]: SYN visual-only check; no intervention
+                - generic [ref=f6e2381]:
+                  - term [ref=f6e2382]: follow up required
+                  - definition [ref=f6e2383]: "true"
+              - generic [ref=f6e2384]:
+                - generic [ref=f6e2385]: Entry 95 decision
+                - combobox "Entry 95 decision" [ref=f6e2386]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e2387]:
+                - generic [ref=f6e2388]: Entry 95 review reason
+                - textbox "Entry 95 review reason" [ref=f6e2389]
+            - group "Observation · v1" [ref=f6e2390]:
+              - generic [ref=f6e2392]:
+                - generic [ref=f6e2393]:
+                  - term [ref=f6e2394]: result
+                  - definition [ref=f6e2395]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e2396]:
+                  - term [ref=f6e2397]: finding
+                  - definition [ref=f6e2398]: SYN online continuation original 96
+                - generic [ref=f6e2399]:
+                  - term [ref=f6e2400]: confidence
+                  - definition [ref=f6e2401]: Suspected
+                - generic [ref=f6e2402]:
+                  - term [ref=f6e2403]: attempted fix
+                  - definition [ref=f6e2404]: SYN visual-only check; no intervention
+                - generic [ref=f6e2405]:
+                  - term [ref=f6e2406]: follow up required
+                  - definition [ref=f6e2407]: "true"
+              - generic [ref=f6e2408]:
+                - generic [ref=f6e2409]: Entry 96 decision
+                - combobox "Entry 96 decision" [ref=f6e2410]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e2411]:
+                - generic [ref=f6e2412]: Entry 96 review reason
+                - textbox "Entry 96 review reason" [ref=f6e2413]
+            - group "Observation · v1" [ref=f6e2414]:
+              - generic [ref=f6e2416]:
+                - generic [ref=f6e2417]:
+                  - term [ref=f6e2418]: result
+                  - definition [ref=f6e2419]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e2420]:
+                  - term [ref=f6e2421]: finding
+                  - definition [ref=f6e2422]: SYN online continuation original 41
+                - generic [ref=f6e2423]:
+                  - term [ref=f6e2424]: confidence
+                  - definition [ref=f6e2425]: Suspected
+                - generic [ref=f6e2426]:
+                  - term [ref=f6e2427]: attempted fix
+                  - definition [ref=f6e2428]: SYN visual-only check; no intervention
+                - generic [ref=f6e2429]:
+                  - term [ref=f6e2430]: follow up required
+                  - definition [ref=f6e2431]: "true"
+              - generic [ref=f6e2432]:
+                - generic [ref=f6e2433]: Entry 97 decision
+                - combobox "Entry 97 decision" [ref=f6e2434]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e2435]:
+                - generic [ref=f6e2436]: Entry 97 review reason
+                - textbox "Entry 97 review reason" [ref=f6e2437]
+            - group "Observation · v1" [ref=f6e2438]:
+              - generic [ref=f6e2440]:
+                - generic [ref=f6e2441]:
+                  - term [ref=f6e2442]: result
+                  - definition [ref=f6e2443]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e2444]:
+                  - term [ref=f6e2445]: finding
+                  - definition [ref=f6e2446]: SYN online continuation original 11
+                - generic [ref=f6e2447]:
+                  - term [ref=f6e2448]: confidence
+                  - definition [ref=f6e2449]: Suspected
+                - generic [ref=f6e2450]:
+                  - term [ref=f6e2451]: attempted fix
+                  - definition [ref=f6e2452]: SYN visual-only check; no intervention
+                - generic [ref=f6e2453]:
+                  - term [ref=f6e2454]: follow up required
+                  - definition [ref=f6e2455]: "true"
+              - generic [ref=f6e2456]:
+                - generic [ref=f6e2457]: Entry 98 decision
+                - combobox "Entry 98 decision" [ref=f6e2458]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e2459]:
+                - generic [ref=f6e2460]: Entry 98 review reason
+                - textbox "Entry 98 review reason" [ref=f6e2461]
+            - group "Observation · v1" [ref=f6e2462]:
+              - generic [ref=f6e2464]:
+                - generic [ref=f6e2465]:
+                  - term [ref=f6e2466]: result
+                  - definition [ref=f6e2467]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e2468]:
+                  - term [ref=f6e2469]: finding
+                  - definition [ref=f6e2470]: SYN online continuation original 37
+                - generic [ref=f6e2471]:
+                  - term [ref=f6e2472]: confidence
+                  - definition [ref=f6e2473]: Suspected
+                - generic [ref=f6e2474]:
+                  - term [ref=f6e2475]: attempted fix
+                  - definition [ref=f6e2476]: SYN visual-only check; no intervention
+                - generic [ref=f6e2477]:
+                  - term [ref=f6e2478]: follow up required
+                  - definition [ref=f6e2479]: "true"
+              - generic [ref=f6e2480]:
+                - generic [ref=f6e2481]: Entry 99 decision
+                - combobox "Entry 99 decision" [ref=f6e2482]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e2483]:
+                - generic [ref=f6e2484]: Entry 99 review reason
+                - textbox "Entry 99 review reason" [ref=f6e2485]
+            - group "Observation · v1" [ref=f6e2486]:
+              - generic [ref=f6e2488]:
+                - generic [ref=f6e2489]:
+                  - term [ref=f6e2490]: result
+                  - definition [ref=f6e2491]: SYN label remains unclear; technical follow-up required
+                - generic [ref=f6e2492]:
+                  - term [ref=f6e2493]: finding
+                  - definition [ref=f6e2494]: SYN online continuation original 74
+                - generic [ref=f6e2495]:
+                  - term [ref=f6e2496]: confidence
+                  - definition [ref=f6e2497]: Suspected
+                - generic [ref=f6e2498]:
+                  - term [ref=f6e2499]: attempted fix
+                  - definition [ref=f6e2500]: SYN visual-only check; no intervention
+                - generic [ref=f6e2501]:
+                  - term [ref=f6e2502]: follow up required
+                  - definition [ref=f6e2503]: "true"
+              - generic [ref=f6e2504]:
+                - generic [ref=f6e2505]: Entry 100 decision
+                - combobox "Entry 100 decision" [ref=f6e2506]:
+                  - option "Approved" [selected]
+                  - option "Returned"
+              - generic [ref=f6e2507]:
+                - generic [ref=f6e2508]: Entry 100 review reason
+                - textbox "Entry 100 review reason" [ref=f6e2509]
+            - generic [ref=f6e2510]:
+              - generic [ref=f6e2511]: Review decision
+              - combobox "Review decision" [ref=f6e2512]:
+                - option "Approved" [selected]
+                - option "Returned"
+            - generic [ref=f6e2513]:
+              - generic [ref=f6e2514]: Authority disposition
+              - combobox "Authority disposition" [ref=f6e2515]:
+                - option "Current" [selected]
+                - option "Original Attendance Only"
+            - paragraph [ref=f6e2516]: Original attendance only records changed scope or pack context; it grants no new physical work authority.
+            - generic [ref=f6e2517]:
+              - generic [ref=f6e2518]: Review remarks (internal)
+              - textbox "Review remarks (internal)" [ref=f6e2519]
+            - generic [ref=f6e2520]:
+              - generic [ref=f6e2521]: Customer audience
+              - combobox "Customer audience" [ref=f6e2522]:
+                - option "Select the permitted site contact" [selected]
+                - option "SYN Avery Contact · Site primary contact"
+              - paragraph [ref=f6e2523]: The exact reviewed report is prepared for this named contact. This selection does not send or deliver it.
+            - button "Commit exact review" [ref=f6e2524] [cursor=pointer]
+          - generic [ref=f6e2525]:
+            - heading "Immutable report presentations" [level=2] [ref=f6e2526]
+            - paragraph [ref=f6e2527]: No reviewed presentation is available.
+          - generic [ref=f6e2528]:
+            - heading "Response history" [level=2] [ref=f6e2529]
+            - paragraph [ref=f6e2530]: No response has been accepted by the server.
+          - generic [ref=f6e2531]:
+            - heading "Owned actions" [level=2] [ref=f6e2532]
+            - paragraph [ref=f6e2533]:
+              - link "SYN-PPO-RPT-000002 · Review exact completion submission and owned remaining work." [ref=f6e2534] [cursor=pointer]:
+                - /url: /work/2398235e-a665-4433-9913-5163943f2b53
+              - text: SYN Coordinator · Open · Due date needed
+  - alert [ref=f6e2535]
+```
+
+# Test source
+
+```ts
+  193 |   const saved = new Promise<void>((resolve) => {
+  194 |     savedSubmission = resolve;
+  195 |   });
+  196 |   await page.route(submitPath, async (route) => {
+  197 |     const response = await route.fetch();
+  198 |     expect(response.ok()).toBe(true);
+  199 |     savedSubmission();
+  200 |     await release;
+  201 |     await route.fulfill({ response });
+  202 |   });
+  203 |   await page
+  204 |     .getByRole("button", {
+  205 |       name: "Submit exact evidence for review",
+  206 |       exact: true,
+  207 |     })
+  208 |     .click();
+  209 |   await saved;
+  210 |   try {
+  211 |     await page.getByRole("button", { name: "Start work", exact: true }).click();
+  212 |     const dialog = page.getByRole("dialog", {
+  213 |       name: "Start work",
+  214 |       exact: true,
+  215 |     });
+  216 |     await dialog
+  217 |       .getByRole("textbox", { name: "Short note", exact: true })
+  218 |       .fill("SYN retain my note when the submitted report arrives");
+  219 |     releaseSubmission();
+  220 |     await expect(
+  221 |       dialog.getByRole("button", { name: "Start work", exact: true }),
+  222 |     ).toBeDisabled();
+  223 |     await expect(
+  224 |       dialog.getByRole("textbox", { name: "Short note", exact: true }),
+  225 |     ).toHaveValue("SYN retain my note when the submitted report arrives");
+  226 |     await expect(
+  227 |       dialog
+  228 |         .getByRole("status")
+  229 |         .filter({ hasText: "This attendance's evidence is frozen." }),
+  230 |     ).toContainText("evidence is frozen");
+  231 |     page.once("dialog", (warning) => warning.accept());
+  232 |     await dialog.getByRole("button", { name: "Cancel", exact: true }).click();
+  233 |     await expect(dialog).toHaveCount(0);
+  234 |   } finally {
+  235 |     releaseSubmission();
+  236 |   }
+  237 |   await page.unroute(submitPath);
+  238 |   await expect(
+  239 |     page
+  240 |       .getByRole("link", { name: "Open report review and revision history" })
+  241 |       .locator(".."),
+  242 |   ).toContainText("Submitted");
+  243 |   const submitted = (
+  244 |     await call(page.request, `my-jobs/${setup.appointment_id}`)
+  245 |   ).items[0];
+  246 |   expect(submitted.report.status).toBe("Submitted");
+  247 |   await expect(page.locator("#ppo-work-timer .tag")).toHaveText("Timer closed");
+  248 |   await expect(
+  249 |     page.getByRole("button", { name: "Timer closed", exact: true }),
+  250 |   ).toBeDisabled();
+  251 |   await page.unroute(timerPath);
+  252 |   await page.screenshot({ path: info.outputPath("completion-online.png") });
+  253 |   const reportLink = page.getByRole("link", {
+  254 |     name: "Open report review and revision history",
+  255 |   });
+  256 |   const reportHref = (await reportLink.getAttribute("href"))!;
+  257 |   await reportLink.click();
+  258 |   await expect(
+  259 |     page.getByRole("heading", { name: /Revision \d+ · Submitted/ }),
+  260 |   ).toBeVisible();
+  261 |   await page.goto("/offline/index.html");
+  262 |   await expect(page.locator("#workspace")).toBeVisible();
+  263 |   await page.reload();
+  264 |   await expect(page.locator("#workspace")).toBeVisible();
+  265 |   const retained = (await localRows(page)) as Stored[];
+  266 |   expect(retained.map((x) => x.original)).toEqual(originals);
+  267 |   expect(retained.every((x) => x.status.state === "ServerSaved")).toBe(true);
+  268 |   await call(page.request, "local-session", { profile: "coordinator" });
+  269 |   await page.goto(reportHref);
+  270 |   await expect(
+  271 |     page.getByRole("heading", {
+  272 |       name: "Review exact submitted entries",
+  273 |       exact: true,
+  274 |     }),
+  275 |   ).toBeVisible();
+  276 |   await expect(page.getByLabel(/Entry \d+ review reason/)).toHaveCount(100);
+  277 |   const report = (await call(page.request, `reports/${submitted.report.id}`))
+  278 |     .items[0];
+  279 |   expect(report.can_review).toBe(true);
+  280 |   expect(
+  281 |     report.revisions[0].snapshot.entries
+  282 |       .map((e: { id: string }) => e.id)
+  283 |       .sort(),
+  284 |   ).toEqual(
+  285 |     job.draft_revisions[0].entries.map((e: { id: string }) => e.id).sort(),
+  286 |   );
+  287 |   expect(
+  288 |     await (
+  289 |       await page.request.get(
+  290 |         `/api/v1/attachments/${job.attachments[0].id}/bytes`,
+  291 |       )
+  292 |     ).body(),
+> 293 |   ).toEqual(png());
+      |     ^ Error: expect(received).toEqual(expected) // deep equality
+  294 |   expect(
+  295 |     await page.evaluate(
+  296 |       () => document.documentElement.scrollWidth <= innerWidth,
+  297 |     ),
+  298 |   ).toBe(true);
+  299 |   await page.screenshot({ path: info.outputPath("service-review.png") });
+  300 |   await writeFile(
+  301 |     info.outputPath("completion-handoff.json"),
+  302 |     JSON.stringify(
+  303 |       {
+  304 |         source_head: execFileSync("git", ["rev-parse", "HEAD"], {
+  305 |           encoding: "utf8",
+  306 |         }).trim(),
+  307 |         app_sha256: createHash("sha256")
+  308 |           .update(await readFile("src/offline/app.ts"))
+  309 |           .digest("hex"),
+  310 |         timer_sha256: createHash("sha256")
+  311 |           .update(await readFile("src/components/work-timer.tsx"))
+  312 |           .digest("hex"),
+  313 |         test_sha256: createHash("sha256")
+  314 |           .update(
+  315 |             await readFile("tests/browser/offline-completion-handoff.spec.ts"),
+  316 |           )
+  317 |           .digest("hex"),
+  318 |         captured_at: new Date().toISOString(),
+  319 |         viewport: page.viewportSize(),
+  320 |         project: info.project.name,
+  321 |         appointment_id: setup.appointment_id,
+  322 |         capture_ids: job.draft_revisions[0].entries,
+  323 |         original_operation_ids: originals.map((x) => x.operation_id),
+  324 |         attachment: {
+  325 |           id: job.attachments[0].id,
+  326 |           status: job.attachments[0].status,
+  327 |         },
+  328 |         report: { id: submitted.report.id, status: submitted.report.status },
+  329 |         retained_originals: retained.length,
+  330 |       },
+  331 |       null,
+  332 |       2,
+  333 |     ),
+  334 |   );
+  335 | });
+  336 |
+  337 | test("online completion handoff preserves originals and unsaved text when current access or navigation fails", async ({
+  338 |   page,
+  339 | }, info) => {
+  340 |   test.setTimeout(120000);
+  341 |   const setup = await prepared(
+  342 |     page,
+  343 |     info.project.name.startsWith("mobile") ? "2030-08-08" : "2030-08-07",
+  344 |     true,
+  345 |   );
+  346 |   await open(page, setup.appointment_id);
+  347 |   await page
+  348 |     .getByRole("button", { name: "Save provisional start intent", exact: true })
+  349 |     .click();
+  350 |   await expect(page.locator("#queue .queue-row")).toHaveCount(1);
+  351 |   await note(page);
+  352 |   await save(page);
+  353 |   const sent = page.waitForResponse(
+  354 |     (r) => new URL(r.url()).pathname === "/api/v1/sync/operations",
+  355 |   );
+  356 |   await page
+  357 |     .getByRole("button", {
+  358 |       name: "Send next batch / retry originals",
+  359 |       exact: true,
+  360 |     })
+  361 |     .click();
+  362 |   expect((await sent).ok()).toBe(true);
+  363 |   await expect(
+  364 |     page.getByRole("button", {
+  365 |       name: "Send next batch / retry originals",
+  366 |       exact: true,
+  367 |     }),
+  368 |   ).toBeEnabled();
+  369 |   const original = await localRows(page);
+  370 |   const handoff = page.getByRole("button", {
+  371 |     name: "Continue completion online",
+  372 |     exact: true,
+  373 |   });
+  374 |   for (const status of [503, 403]) {
+  375 |     await page.route(`**/api/v1/my-jobs/${setup.appointment_id}`, (route) =>
+  376 |       route.fulfill({
+  377 |         status,
+  378 |         json: {
+  379 |           code: "SYNCurrentReadRefused",
+  380 |           message: "SYN current job unavailable",
+  381 |         },
+  382 |       }),
+  383 |     );
+  384 |     await handoff.click();
+  385 |     await expect(page.locator("#error")).toContainText(
+  386 |       "SYN current job unavailable",
+  387 |     );
+  388 |     await expect(page).toHaveURL(/\/offline\/index.html$/);
+  389 |     expect(await localRows(page)).toEqual(original);
+  390 |     await page.unroute(`**/api/v1/my-jobs/${setup.appointment_id}`);
+  391 |   }
+  392 |   await page
+  393 |     .getByLabel("Work performed", { exact: true })
+```

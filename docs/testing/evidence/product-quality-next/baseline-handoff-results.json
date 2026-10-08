@@ -1,0 +1,47 @@
+{
+  "run": "baseline-handoff",
+  "source_head": "f0953c5f9f5a0c5e1c5179ef933fd87c9e37b00e",
+  "stats": {
+    "startTime": "2026-10-08T09:39:15.121Z",
+    "duration": 339352.021,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "title": "warm every route once before the browser projects",
+      "file": "warm-up.setup.ts",
+      "project": "warm-up",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 24757,
+          "retry": 0,
+          "start_time": "2026-10-08T09:40:22.795Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "large offline queue continues through online completion with all 100 original captures",
+      "file": "offline-completion-handoff.spec.ts",
+      "project": "desktop-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "timedOut",
+          "duration_ms": 243070,
+          "retry": 0,
+          "start_time": "2026-10-08T09:40:48.274Z",
+          "errors": [
+            "\u001b[31mTest timeout of 240000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 240000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Continue completion online', exact: true })\u001b[22m\n\n\n  38 |     await save(page);\n  39 |   }\n> 40 |   await page.getByLabel(\"Evidence type\", { exact: true }).selectOption(\"Photo\");\n     |                                                                                 ^\n  41 |   await page\n  42 |     .getByLabel(\"Original synthetic PNG\")\n  43 |     .setInputFiles({\n    at <checkout>\\tests\\browser\\offline-completion-handoff.spec.ts:40:87"
+          ]
+        }
+      ]
+    }
+  ]
+}
