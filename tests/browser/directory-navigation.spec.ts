@@ -91,7 +91,7 @@ test("directory record links avoid automatic reads and keep exact receiving navi
     const link = page.getByRole("navigation", { name: "Customer context sections", exact: true }).getByRole("link", { name: label, exact: true });
     await activate(page, link, isMobile, !isMobile);
     await expect(page).toHaveURL(new URL(path, page.url()).href);
-    await expect(page.getByRole("heading", { name: label, exact: true })).toBeVisible();
+    await expect(page.getByRole("heading", { name: path === "/equipment" ? "Installed base" : label, exact: true })).toBeVisible();
     if (path !== "/people") await directory(page, "/customers");
   }
   await page.screenshot({ path: info.outputPath("directory-navigation.png"), fullPage: false });
