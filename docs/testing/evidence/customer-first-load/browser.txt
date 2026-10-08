@@ -1,0 +1,30 @@
+[WebServer] (node:46956) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.98"}
+
+Running 5 tests using 1 worker
+
+(node:35296) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[warm-up] 671 routes in 19348 ms, 0 unreachable. Slowest:
+  6621 ms  200  /development/design-system
+  2286 ms  200  /api/development/catalog
+  2104 ms  200  /development/page-register
+  2070 ms  404  /api/development/reference
+   302 ms  200  /calendar
+    79 ms  200  /service/work-orders
+    73 ms  401  /api/v1/activities
+    64 ms  200  /api/v1/health
+    30 ms  200  /engineering/00000000-0000-4000-8000-000000000000/basis
+    29 ms  200  /engineering/commissioning/handovers
+  ok 1 [warm-up] › tests\browser\warm-up.setup.ts:10:1 › warm every route once before the browser projects (19.4s)
+(node:31860) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 [desktop-chromium] › tests\browser\sh-platform.spec.ts:36:1 › SH notification event, explicit read, source guard, grouped state and preferences persist (4.0s)
+  ok 3 [desktop-chromium] › tests\browser\shell.spec.ts:137:1 › Workspace selection preserves permissions, contextual navigation and page guidance (5.1s)
+(node:18344) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 4 [mobile-chromium] › tests\browser\sh-platform.spec.ts:36:1 › SH notification event, explicit read, source guard, grouped state and preferences persist (3.0s)
+  ok 5 [mobile-chromium] › tests\browser\shell.spec.ts:137:1 › Workspace selection preserves permissions, contextual navigation and page guidance (6.7s)
+
+  5 passed (48.2s)

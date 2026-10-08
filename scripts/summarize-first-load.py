@@ -57,9 +57,12 @@ for label in ("baseline", "candidate"):
                     received = [r for r in gateway if r.get("request_id") == proof_id and r["event"] == "http-received"]
                     finished = [r for r in gateway if r.get("request_id") == proof_id and r["event"] == "http-finished"]
                     assert len(received) == len(finished) == 1
-                    assert received[0]["path"] == finished[0]["path"] == request["path"]
+                    # Gateway privacy masking groups CRM subpaths; the exact response
+                    # header binds this browser path to its numeric request identity.
+                    gateway_path = "/api/v1/crm/:other" if request["path"] == "/api/v1/crm/directory" else request["path"]
+                    assert received[0]["path"] == finished[0]["path"] == gateway_path
                     assert received[0]["method"] == "GET" and finished[0]["status"] == 200
-                    summary["core_matches"].append({"viewport": viewport, "wave": wave, "cycle": sample["cycle"], "request_id": proof_id, "path": request["path"], "gateway_elapsed_ms": finished[0]["elapsed_ms"]})
+                    summary["core_matches"].append({"viewport": viewport, "wave": wave, "cycle": sample["cycle"], "request_id": proof_id, "path": request["path"], "gateway_path": gateway_path, "gateway_elapsed_ms": finished[0]["elapsed_ms"]})
                 last_asset = max(n["finish_ms"] for n in assets)
                 rows.append({"cycle": sample["cycle"], "ready_ms": sample["ready_ms"], "last_asset_ms": last_asset,
                              "session_start_ms": session["start_ms"], "session_finish_ms": session["finish_ms"],
@@ -90,4 +93,12 @@ for artifact in artifacts:
     data = (destination / artifact["path"]).read_bytes()
     artifact.update(bytes=len(data), sha256=hashlib.sha256(data).hexdigest())
 save(destination / "artifacts.json", artifacts)
-print(json.dumps([{ "label": s["label"], "groups": [{"viewport": g["viewport"], "wave": g["wave"], "ready_ms": g["statistics"]["ready_ms"], "js_bytes": g["statistics"]["js_encoded_bytes"], "js_count": g["statistics"]["js_count"]} for g in s["groups"]], "record_ms": {v: span([x["ready_ms"] for x in s["record_visits"] if x["viewport"] == v]) for v in ("desktop", "phone")} for s in summaries], indent=2))
+print(json.dumps([{
+    "label": s["label"],
+    "groups": [{"viewport": g["viewport"], "wave": g["wave"],
+                "ready_ms": g["statistics"]["ready_ms"],
+                "js_bytes": g["statistics"]["js_encoded_bytes"],
+                "js_count": g["statistics"]["js_count"]} for g in s["groups"]],
+    "record_ms": {v: span([x["ready_ms"] for x in s["record_visits"] if x["viewport"] == v])
+                  for v in ("desktop", "phone")}
+} for s in summaries], indent=2))

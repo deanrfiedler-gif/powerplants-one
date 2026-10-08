@@ -1,0 +1,212 @@
+{
+  "compiled_source": "bc49ca3839e50ab61511197cac4b429f48e415b5",
+  "build_id": "wOCpjtaYTkKZUZ_-zmwQW",
+  "test_source": "edb486f40c4bf53f57c5fd26c62da82b48c66d13",
+  "browser_runs": [
+    {
+      "name": "browser",
+      "stats": {
+        "startTime": "2026-10-08T21:12:07.313Z",
+        "duration": 48243.528000000006,
+        "expected": 5,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "cases": [
+        {
+          "file": "warm-up.setup.ts",
+          "title": "warm every route once before the browser projects",
+          "project": "warm-up",
+          "outcome": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 19447,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "file": "sh-platform.spec.ts",
+          "title": "SH notification event, explicit read, source guard, grouped state and preferences persist",
+          "project": "desktop-chromium",
+          "outcome": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 3951,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "file": "sh-platform.spec.ts",
+          "title": "SH notification event, explicit read, source guard, grouped state and preferences persist",
+          "project": "mobile-chromium",
+          "outcome": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 2956,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "file": "shell.spec.ts",
+          "title": "Workspace selection preserves permissions, contextual navigation and page guidance",
+          "project": "desktop-chromium",
+          "outcome": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 5145,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "file": "shell.spec.ts",
+          "title": "Workspace selection preserves permissions, contextual navigation and page guidance",
+          "project": "mobile-chromium",
+          "outcome": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 6669,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ],
+      "original_report_sha256": "d98aee85adafbf07c1166fae4ac1b411a2059c8ab36d6f20a9b34b343592e5a2",
+      "retention": "Selected statuses/durations/errors retained; raw traces and machine-specific config are not published."
+    },
+    {
+      "name": "navigation",
+      "stats": {
+        "startTime": "2026-10-08T21:13:10.637Z",
+        "duration": 34520.474,
+        "expected": 5,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "cases": [
+        {
+          "file": "warm-up.setup.ts",
+          "title": "warm every route once before the browser projects",
+          "project": "warm-up",
+          "outcome": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 17601,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "file": "navigation-safety.spec.ts",
+          "title": "N04/N05/N10 Home and Workspace follow the current synthetic identity",
+          "project": "desktop-chromium",
+          "outcome": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 1697,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "file": "navigation-safety.spec.ts",
+          "title": "N07/N08/N20 dirty preferences protect pointer, keyboard, touch and workspace intent",
+          "project": "desktop-chromium",
+          "outcome": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 1695,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "file": "navigation-safety.spec.ts",
+          "title": "N04/N05/N10 Home and Workspace follow the current synthetic identity",
+          "project": "mobile-chromium",
+          "outcome": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 1815,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "file": "navigation-safety.spec.ts",
+          "title": "N07/N08/N20 dirty preferences protect pointer, keyboard, touch and workspace intent",
+          "project": "mobile-chromium",
+          "outcome": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "duration_ms": 1608,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ],
+      "original_report_sha256": "d27dde7e3f88338715ce2455e017ae9f46fb82a381ccb94fd4397f371d0014bb",
+      "retention": "Selected statuses/durations/errors retained; raw traces and machine-specific config are not published."
+    }
+  ],
+  "command_exits": {
+    "baseline": {
+      "exit_code": 0
+    },
+    "build": {
+      "command": [
+        "cmd.exe",
+        "/d",
+        "/c",
+        "npm run build"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 61.37939953804016,
+      "source_head": "bc49ca3839e50ab61511197cac4b429f48e415b5"
+    },
+    "candidate": {
+      "command": [
+        "node",
+        "--env-file=.env.local",
+        "--import",
+        "tsx",
+        "scripts/quality-first-load.ts",
+        "candidate"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 27.22643256187439,
+      "source_head": "edb486f40c4bf53f57c5fd26c62da82b48c66d13"
+    },
+    "browser": {
+      "exit_code": 0
+    },
+    "navigation": {
+      "exit_code": 0
+    }
+  }
+}

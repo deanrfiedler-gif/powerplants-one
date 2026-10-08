@@ -1,0 +1,39 @@
+[
+  {
+    "path": "baseline-results.json.gz",
+    "uncompressed_sha256": "966e079207af9d04e3662a6dbdaaa5240d7ae57d3e65314fcc77f7034938b2e7",
+    "bytes": 921342,
+    "sha256": "3255ee9a359fb4726c1fe74dee1965a75ce4ccef7d42675592b908e7f527f695"
+  },
+  {
+    "path": "baseline-gateway.jsonl",
+    "bytes": 195086,
+    "sha256": "3651fedd0726ab325b9f84abf927951deddee2a33757db703ec78c797ef9531d"
+  },
+  {
+    "path": "baseline-customer-client-manifest.json",
+    "bytes": 33382,
+    "sha256": "084a2c0231179015d20d168fbca304d564928f27f1bf77f8441a044a0c1c4e9f"
+  },
+  {
+    "path": "candidate-results.json.gz",
+    "uncompressed_sha256": "03345f3d2f94825f2fa35eed7e58f23a5e847d643ae9c0d91d703fe9c1058f6b",
+    "bytes": 903460,
+    "sha256": "6a48aff72fe91e5d526f6b19d073c394aeb6b2642af1fcd99aa2e3cbdb298343"
+  },
+  {
+    "path": "candidate-gateway.jsonl",
+    "bytes": 192235,
+    "sha256": "78a3a5ed242adae26acf79b5d40c35d67d05639cd97c3f8577b1d9b14850bf7a"
+  },
+  {
+    "path": "candidate-customer-client-manifest.json",
+    "bytes": 24670,
+    "sha256": "56d543a64315b06874a345dab90d703a7dcaf8e71e99fae2f28cdc504972e6e5"
+  },
+  {
+    "path": "summary.json",
+    "bytes": 59518,
+    "sha256": "88afab07ae076f741f9f4c2296ffbdae2f07251cd14d55058d2f7f88903ff786"
+  }
+]
