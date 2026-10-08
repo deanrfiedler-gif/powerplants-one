@@ -70,7 +70,12 @@ const server = createServer((req, res) => {
   res.once("finish", () => proofEvent("http-finished", { request_id: requestId, path, elapsed_ms: performance.now() - received, status: res.statusCode }));
   res.once("close", () => { if (!res.writableFinished) proofEvent("http-closed-incomplete", { request_id: requestId, path, elapsed_ms: performance.now() - received }); });
   req.headers["x-ppo-local-gateway"] = process.env.PPO_LOCAL_GATEWAY;
-  res.setHeader("Cache-Control", "private, no-store");
+  // Compiled, fingerprinted JS/CSS contain public application code. Let Next
+  // supply its immutable policy for these files; never cache business responses
+  // or development chunks. Missing assets retain Next's own error policy.
+  const compiledChunk = compiled && ["GET", "HEAD"].includes(req.method ?? "") &&
+    /^\/_next\/static\/chunks\/[A-Za-z0-9._-]+\.(?:js|css)$/.test(loginPath);
+  if (!compiledChunk) res.setHeader("Cache-Control", "private, no-store");
   res.setHeader("X-Content-Type-Options", "nosniff");
   res.setHeader("X-Frame-Options", developmentFramePolicy(loginPath));
   if (developmentFramePolicy(loginPath) === "SAMEORIGIN") res.setHeader("Content-Security-Policy", "frame-ancestors 'self'");

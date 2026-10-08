@@ -10,7 +10,7 @@ import { createSession } from "../src/platform/identity";
 import { readDirectory } from "../src/crm/directory";
 import { waitForSampleCoreResponse } from "./quality-core-response";
 const mode = process.argv[2];
-assert.ok(mode === "prepare" || mode === "measure");
+assert.ok(mode === "prepare" || mode === "measure" || mode === "candidate");
 const root = "verification-evidence/customer-loading-diagnosis";
 await mkdir(root, { recursive: true });
 if (mode === "prepare") {
@@ -400,6 +400,9 @@ try {
           encoding: "utf8",
         }).trim(),
         compiled_source: compiledSource,
+        launcher_sha256: createHash("sha256")
+          .update(await readFile("scripts/local-server.ts"))
+          .digest("hex"),
         source_sha256: createHash("sha256")
           .update(await readFile("src/crm/directory.ts"))
           .digest("hex"),
