@@ -43,3 +43,7 @@ Acceptance evidence is pending. Capture matching original-reference and applicat
 ## Bounded read performance
 
 The organisation directory calculates relationship counts after selecting a page for text/reference/status/owner sorts. Numeric count sorts still use counts across the complete permitted population. Search, total rows, permissions, page order and visible counts retain their existing meaning. The focused retained-fixture comparison is in `scripts/quality-directory-proof.ts` and `scripts/quality-customer-browser-proof.ts`; see `docs/testing/evidence/product-quality-next/README.md` for measured results and limits. This query correction grants no visual or production acceptance.
+
+## Directory link loading
+
+The current directory consumer is `CrmDirectory`: CS-01/CS-02 Register/worklist with the existing desktop table and phone cards. Its record names, affiliation/count links, New and local context sections load destinations on activation. Shared shell and Contacts hub view links retain their separate behaviour. Exact hrefs, department context, permission checks and unsaved-work handling are unchanged. See [component contract](../components/crm-directory.md) and `tests/browser/directory-navigation.spec.ts`; source presence and automated proof do not grant visual or device acceptance.

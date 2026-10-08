@@ -1,0 +1,19 @@
+{
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "observations": [
+    {
+      "path": "/customers",
+      "observed_requests": 55,
+      "record_prefetch": []
+    },
+    {
+      "path": "/people",
+      "observed_requests": 49,
+      "record_prefetch": []
+    }
+  ],
+  "boundary": "One-second observation before activation; exact directory record paths only. Shared shell duplicates some tab destinations and remains outside this assertion."
+}

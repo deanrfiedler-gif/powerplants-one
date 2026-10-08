@@ -4890,6 +4890,70 @@
         }
       ],
       "review": null
+    },
+    {
+      "id": "crm-directory",
+      "title": "Customer and contact directory",
+      "category": "Tables & grids",
+      "module": "CS",
+      "purpose": "Find scoped organisations or people, then open the selected record or create the required shared record.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "organisation-links",
+          "label": "Organisation links",
+          "description": "Real permitted /customers directory, record names, numeric Site/Facility links, New and context sections; tests/browser/directory-navigation.spec.ts."
+        },
+        {
+          "id": "people-links",
+          "label": "People links",
+          "description": "Real /people affiliation and contact links, plus /contacts department continuation; desktop pointer/keyboard and phone taps."
+        },
+        {
+          "id": "automatic-prefetch",
+          "label": "Explicit record navigation",
+          "description": "Compiled /customers then /people in one context per viewport, bounded request observation before each activation; no automatic directory record prefetch. Separate single-browser Customers probe uses fresh contexts per viewport. Existing saved/scoped views and navigation-safety fixtures remain separate."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/crm-directory.tsx",
+          "symbol": "CrmDirectory"
+        }
+      ],
+      "dependencies": [
+        "src/components/context-screens.tsx",
+        "src/components/contacts-navigation.tsx",
+        "src/components/crm-state.ts"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
+        "anchor": "",
+        "status": "Retained reference; register/worklist adaptation and paired acceptance pending"
+      },
+      "specification": "docs/design/development/components/crm-directory.md",
+      "used_on": [
+        "route:/customers",
+        "route:/people",
+        "route:/contacts"
+      ],
+      "desktop": "Retain the existing register table, columns, real links and scoped content; activation loads the chosen destination.",
+      "mobile": "Retain existing readable cards and touch activation at 390/320 CSS px.",
+      "keyboard": "Real Tab/Shift+Tab and Enter activate ordinary links; existing leave-intent protection remains in force.",
+      "limitations": "Real host with synthetic data; no isolated renderer, hosted speed claim or owner/device acceptance. Shared-shell prefetch is outside this change.",
+      "gaps": [
+        {
+          "id": "crm-directory-prefetch-review",
+          "expected": "Avoid speculative record reads while preserving exact navigation and acceptable first/next-page responsiveness.",
+          "actual": "Six local Link sites disable automatic prefetch; functional and request observations are recorded separately from the unresolved whole-page target.",
+          "action": "Review the retained directory experiment, CI and next-navigation tradeoff before broader rollout.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
     }
   ]
 }

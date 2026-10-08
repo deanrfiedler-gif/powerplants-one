@@ -1,0 +1,30 @@
+[WebServer] (node:36152) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.98"}
+
+Running 5 tests using 1 worker
+
+(node:35276) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[warm-up] 671 routes in 22241 ms, 0 unreachable. Slowest:
+  5055 ms  200  /development/design-system
+  4098 ms  404  /api/development/reference
+  3761 ms  200  /api/development/catalog
+  3468 ms  200  /development/page-register
+   256 ms  200  /calendar
+    74 ms  401  /api/v1/activities
+    71 ms  200  /api/v1/health
+    43 ms  200  /service/work-orders
+    41 ms  200  /contacts
+    28 ms  200  /engineering/00000000-0000-4000-8000-000000000000/changes
+  ok 1 [warm-up] › tests\browser\warm-up.setup.ts:10:1 › warm every route once before the browser projects (22.3s)
+(node:4828) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 [desktop-chromium] › tests\browser\crm-refinements.spec.ts:304:1 › desktop directory tables and mobile lists share saved, scoped queries (3.4s)
+  ok 3 [desktop-chromium] › tests\browser\directory-navigation.spec.ts:47:1 › directory record links avoid automatic reads and keep exact receiving navigation (24.6s)
+(node:39844) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 4 [mobile-chromium] › tests\browser\crm-refinements.spec.ts:304:1 › desktop directory tables and mobile lists share saved, scoped queries (3.0s)
+  ok 5 [mobile-chromium] › tests\browser\directory-navigation.spec.ts:47:1 › directory record links avoid automatic reads and keep exact receiving navigation (7.6s)
+
+  5 passed (1.2m)

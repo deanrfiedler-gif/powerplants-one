@@ -4,6 +4,10 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## Current directory navigation experiment — 8 October 2026
+
+Final bounded step: draft [PR #373](https://github.com/deanrfiedler-gif/powerplants-one/pull/373), `codex/customer-directory-prefetch`, based on #372 at `5f4119f`. Six directory Link sites now load destinations on activation. The [decision](decisions/customer-directory-prefetch.md) and [evidence](testing/evidence/customer-directory-prefetch/README.md) retain zero customer-record prefetch on both viewport probes, exact receiving checks, saved-view regression and unchanged unsaved-navigation behaviour. Initial selected run: four passes/four failures/one existing phone department skip; corrected affected run: five passes including warm-up, with no application change. Tests use compiled `0001812` and test-only correction `6dcea2e`. Whole-page/next-navigation latency, CI and owner/device acceptance remain pending. Dean requested stopping after this step; no further experiment, merge or deployment is included.
+
 ## Current Customers loading experiment — 8 October 2026
 
 Current repository-writing branch: `codex/customer-loading-diagnosis`, based on draft photo PR #371. The [decision](decisions/customer-loading-diagnosis.md) and [evidence](testing/evidence/customer-loading-diagnosis/README.md) retain four complete 80-navigation runs on the same compiled app/fixture. A narrow local-launcher cache correction eliminates repeat JS/CSS transfers while business pages/APIs/photos remain private/no-store. Final desktop/phone p95 is 4.421/2.469 seconds; desktop still misses the candidate target. An intervening repeat hit a 120-second phone core-response timeout after 40 desktop checks; its cause remains unresolved. No overall desktop improvement, hosted speedup, full reliability/performance pass, merge or deployment is inferred. Cold/pre-directory delay and actual owner/device acceptance remain open.

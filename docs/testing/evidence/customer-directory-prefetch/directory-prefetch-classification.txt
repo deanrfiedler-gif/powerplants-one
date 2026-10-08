@@ -1,0 +1,21 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ undefined
+- 'add-synthetic-load'
+
+    at performanceFixtureFingerprint (<checkout>\scripts\quality-performance-fixture.ts:10:10)
+    at <anonymous> (<checkout>\scripts\quality-directory-prefetch.ts:22:24) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: 'add-synthetic-load',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

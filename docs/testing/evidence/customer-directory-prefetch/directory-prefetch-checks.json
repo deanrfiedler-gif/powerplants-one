@@ -1,0 +1,47 @@
+[
+  {
+    "command": [
+      "node",
+      "node_modules/eslint/bin/eslint.js",
+      "src/components/crm-directory.tsx",
+      "scripts/quality-directory-prefetch.ts",
+      "tests/browser/directory-navigation.spec.ts"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "node",
+      "--import",
+      "tsx",
+      "scripts/check-development-register.ts"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "python",
+      "-X",
+      "utf8",
+      "scripts/check_foundation.py"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "python",
+      "-X",
+      "utf8",
+      "scripts/check_naming.py"
+    ],
+    "exit_code": 0
+  }
+]
