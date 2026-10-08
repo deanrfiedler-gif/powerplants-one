@@ -10,7 +10,7 @@ import { createSession } from "../src/platform/identity";
 import { readDirectory } from "../src/crm/directory";
 import { waitForSampleCoreResponse } from "./quality-core-response";
 const mode = process.argv[2];
-assert.ok(mode === "prepare" || mode === "measure" || mode === "candidate");
+assert.ok(["prepare", "measure", "candidate", "control", "candidate-repeat"].includes(mode));
 const root = "verification-evidence/customer-loading-diagnosis";
 await mkdir(root, { recursive: true });
 if (mode === "prepare") {
