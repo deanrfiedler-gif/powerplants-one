@@ -1,0 +1,24 @@
+✖ optional proof correlation is numeric and confined to private API responses (19.0422ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 143.453
+
+✖ failing tests:
+
+test at tests\http\proof-correlation.test.ts:1:119
+✖ optional proof correlation is numeric and confined to private API responses (19.0422ms)
+  [TypeError: fetch failed] {
+    [cause]: Error: connect ECONNREFUSED 127.0.0.1:3034
+        at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2021:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 3034
+    }
+  }

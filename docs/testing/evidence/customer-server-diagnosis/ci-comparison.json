@@ -1,0 +1,425 @@
+{
+  "runs": [
+    {
+      "pr": 371,
+      "source_head": "8b1a389d75c3aaaef9bfb0067c43b42181be76bd",
+      "executed_checkout": "0926205445c1b65914604d6e0553ba4ec450d467",
+      "executed_tree": "09be277a7e80a2455df692877579f13ff0ae9195",
+      "compiled_build_id": "7JNw8BlHZCIjO3Wgq2LYA",
+      "comparison_id": "fd70c7bf-7873-4bd6-94be-9328543ae0bc",
+      "run_id": "37776394285",
+      "run_attempt": "1",
+      "job_id": "113308229590",
+      "artifact_id": "11551416625",
+      "source_job": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37776394285/job/113308229590",
+      "profiles": [
+        {
+          "profile": "development",
+          "samples": 320,
+          "request_failures": 0,
+          "missed_groups": 16,
+          "total_groups": 16,
+          "customer_groups": [
+            {
+              "group": "desktop|Customers|cold browser context / first view wave",
+              "count": 10,
+              "failures": 0,
+              "p95_ms": 12056.557050000003,
+              "target_ms": 3000,
+              "meets_candidate": false
+            },
+            {
+              "group": "desktop|Customers|warm repeat navigation",
+              "count": 30,
+              "failures": 0,
+              "p95_ms": 7980.392481999996,
+              "target_ms": 3000,
+              "meets_candidate": false
+            },
+            {
+              "group": "phone|Customers|cold browser context / first view wave",
+              "count": 10,
+              "failures": 0,
+              "p95_ms": 8918.360766000027,
+              "target_ms": 3000,
+              "meets_candidate": false
+            },
+            {
+              "group": "phone|Customers|warm repeat navigation",
+              "count": 30,
+              "failures": 0,
+              "p95_ms": 7308.268289,
+              "target_ms": 3000,
+              "meets_candidate": false
+            }
+          ]
+        },
+        {
+          "profile": "compiled",
+          "samples": 320,
+          "request_failures": 0,
+          "missed_groups": 16,
+          "total_groups": 16,
+          "customer_groups": [
+            {
+              "group": "desktop|Customers|cold browser context / first view wave",
+              "count": 10,
+              "failures": 0,
+              "p95_ms": 6249.6248289999985,
+              "target_ms": 3000,
+              "meets_candidate": false
+            },
+            {
+              "group": "desktop|Customers|warm repeat navigation",
+              "count": 30,
+              "failures": 0,
+              "p95_ms": 4784.9740679999995,
+              "target_ms": 3000,
+              "meets_candidate": false
+            },
+            {
+              "group": "phone|Customers|cold browser context / first view wave",
+              "count": 10,
+              "failures": 0,
+              "p95_ms": 4191.867249000003,
+              "target_ms": 3000,
+              "meets_candidate": false
+            },
+            {
+              "group": "phone|Customers|warm repeat navigation",
+              "count": 30,
+              "failures": 0,
+              "p95_ms": 3976.8397029999905,
+              "target_ms": 3000,
+              "meets_candidate": false
+            }
+          ]
+        }
+      ],
+      "static_transfers": [
+        {
+          "viewport": "desktop",
+          "wave": 0,
+          "count": 10,
+          "chunks_per_sample": 23,
+          "static_cdp_encoded_bytes_each": 359067
+        },
+        {
+          "viewport": "desktop",
+          "wave": 1,
+          "count": 10,
+          "chunks_per_sample": 23,
+          "static_cdp_encoded_bytes_each": 359067
+        },
+        {
+          "viewport": "desktop",
+          "wave": 2,
+          "count": 10,
+          "chunks_per_sample": 23,
+          "static_cdp_encoded_bytes_each": 359067
+        },
+        {
+          "viewport": "desktop",
+          "wave": 3,
+          "count": 10,
+          "chunks_per_sample": 23,
+          "static_cdp_encoded_bytes_each": 359067
+        },
+        {
+          "viewport": "phone",
+          "wave": 0,
+          "count": 10,
+          "chunks_per_sample": 23,
+          "static_cdp_encoded_bytes_each": 359067
+        },
+        {
+          "viewport": "phone",
+          "wave": 1,
+          "count": 10,
+          "chunks_per_sample": 23,
+          "static_cdp_encoded_bytes_each": 359067
+        },
+        {
+          "viewport": "phone",
+          "wave": 2,
+          "count": 10,
+          "chunks_per_sample": 23,
+          "static_cdp_encoded_bytes_each": 359067
+        },
+        {
+          "viewport": "phone",
+          "wave": 3,
+          "count": 10,
+          "chunks_per_sample": 23,
+          "static_cdp_encoded_bytes_each": 359067
+        }
+      ],
+      "compiled_runtime": {
+        "application_pid": 14284,
+        "samples": 88,
+        "minimum_free_gib": 9.844913482666016,
+        "median_free_gib": 10.67544174194336
+      }
+    },
+    {
+      "pr": 372,
+      "source_head": "4885fb75cea836cdde468851dc52fe23e5ba9685",
+      "executed_checkout": "18a0a1d4e5156d887fe42db11db945e6ebde7d70",
+      "executed_tree": "afb33ae7495b7b968fbb0b1e3e15a3e6d51776bf",
+      "compiled_build_id": "blw74IAgqJb6nLNp5Mv3t",
+      "comparison_id": "86971deb-3d9a-4ae0-8fda-157e1e0c936d",
+      "run_id": "37777246810",
+      "run_attempt": "1",
+      "job_id": "113311103736",
+      "artifact_id": "11551920024",
+      "source_job": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/37777246810/job/113311103736",
+      "profiles": [
+        {
+          "profile": "development",
+          "samples": 320,
+          "request_failures": 0,
+          "missed_groups": 16,
+          "total_groups": 16,
+          "customer_groups": [
+            {
+              "group": "desktop|Customers|cold browser context / first view wave",
+              "count": 10,
+              "failures": 0,
+              "p95_ms": 12523.447956999997,
+              "target_ms": 3000,
+              "meets_candidate": false
+            },
+            {
+              "group": "desktop|Customers|warm repeat navigation",
+              "count": 30,
+              "failures": 0,
+              "p95_ms": 8108.5199649999995,
+              "target_ms": 3000,
+              "meets_candidate": false
+            },
+            {
+              "group": "phone|Customers|cold browser context / first view wave",
+              "count": 10,
+              "failures": 0,
+              "p95_ms": 8116.254658999998,
+              "target_ms": 3000,
+              "meets_candidate": false
+            },
+            {
+              "group": "phone|Customers|warm repeat navigation",
+              "count": 30,
+              "failures": 0,
+              "p95_ms": 7232.558414999978,
+              "target_ms": 3000,
+              "meets_candidate": false
+            }
+          ]
+        },
+        {
+          "profile": "compiled",
+          "samples": 320,
+          "request_failures": 0,
+          "missed_groups": 13,
+          "total_groups": 16,
+          "customer_groups": [
+            {
+              "group": "desktop|Customers|cold browser context / first view wave",
+              "count": 10,
+              "failures": 0,
+              "p95_ms": 6429.885351000001,
+              "target_ms": 3000,
+              "meets_candidate": false
+            },
+            {
+              "group": "desktop|Customers|warm repeat navigation",
+              "count": 30,
+              "failures": 0,
+              "p95_ms": 3254.3808040000004,
+              "target_ms": 3000,
+              "meets_candidate": false
+            },
+            {
+              "group": "phone|Customers|cold browser context / first view wave",
+              "count": 10,
+              "failures": 0,
+              "p95_ms": 4448.271227999998,
+              "target_ms": 3000,
+              "meets_candidate": false
+            },
+            {
+              "group": "phone|Customers|warm repeat navigation",
+              "count": 30,
+              "failures": 0,
+              "p95_ms": 2677.054873999994,
+              "target_ms": 3000,
+              "meets_candidate": true
+            }
+          ]
+        }
+      ],
+      "static_transfers": [
+        {
+          "viewport": "desktop",
+          "wave": 0,
+          "count": 10,
+          "chunks_per_sample": 23,
+          "static_cdp_encoded_bytes_each": 359481
+        },
+        {
+          "viewport": "desktop",
+          "wave": 1,
+          "count": 10,
+          "chunks_per_sample": 23,
+          "static_cdp_encoded_bytes_each": 0
+        },
+        {
+          "viewport": "desktop",
+          "wave": 2,
+          "count": 10,
+          "chunks_per_sample": 23,
+          "static_cdp_encoded_bytes_each": 0
+        },
+        {
+          "viewport": "desktop",
+          "wave": 3,
+          "count": 10,
+          "chunks_per_sample": 23,
+          "static_cdp_encoded_bytes_each": 0
+        },
+        {
+          "viewport": "phone",
+          "wave": 0,
+          "count": 10,
+          "chunks_per_sample": 23,
+          "static_cdp_encoded_bytes_each": 359481
+        },
+        {
+          "viewport": "phone",
+          "wave": 1,
+          "count": 10,
+          "chunks_per_sample": 23,
+          "static_cdp_encoded_bytes_each": 0
+        },
+        {
+          "viewport": "phone",
+          "wave": 2,
+          "count": 10,
+          "chunks_per_sample": 23,
+          "static_cdp_encoded_bytes_each": 0
+        },
+        {
+          "viewport": "phone",
+          "wave": 3,
+          "count": 10,
+          "chunks_per_sample": 23,
+          "static_cdp_encoded_bytes_each": 0
+        }
+      ],
+      "compiled_runtime": {
+        "application_pid": 14334,
+        "samples": 72,
+        "minimum_free_gib": 9.783946990966797,
+        "median_free_gib": 10.719470977783203
+      }
+    }
+  ],
+  "retained": [
+    {
+      "path": "ci-371-profile-comparison.json.gz",
+      "original_artifact_path": "p11-performance/profile-comparison.json",
+      "uncompressed_sha256": "a3e57c3ea108eb385ddc72ab2d0299b6d515e1dccd9c8bd668e1f753d05a9f9d",
+      "uncompressed_bytes": 8582,
+      "source_head": "8b1a389d75c3aaaef9bfb0067c43b42181be76bd",
+      "run_id": "37776394285",
+      "artifact_id": "11551416625"
+    },
+    {
+      "path": "ci-371-server-profile.json.gz",
+      "original_artifact_path": "p11-performance/compiled/server-profile.json",
+      "uncompressed_sha256": "ae09284c20a6d8e15db6febda1fc07eb0107400f42030137b499d6f465f9379d",
+      "uncompressed_bytes": 481,
+      "source_head": "8b1a389d75c3aaaef9bfb0067c43b42181be76bd",
+      "run_id": "37776394285",
+      "artifact_id": "11551416625"
+    },
+    {
+      "path": "ci-371-PT-27-proof.json.gz",
+      "original_artifact_path": "p11-performance/compiled/PT-27-proof.json",
+      "uncompressed_sha256": "b25b8d812f6c20938f0cdb9a07e36b016b5d03b505f9cc6ecdfde45091e1128d",
+      "uncompressed_bytes": 106062,
+      "source_head": "8b1a389d75c3aaaef9bfb0067c43b42181be76bd",
+      "run_id": "37776394285",
+      "artifact_id": "11551416625"
+    },
+    {
+      "path": "ci-371-sample-observations.json.gz",
+      "original_artifact_path": "p11-performance/compiled/sample-observations.json",
+      "uncompressed_sha256": "460f5b74ebe8f70f0bb0c9cbab6d7cf0c8444ce9b6e0d26cc33a069200e86216",
+      "uncompressed_bytes": 6743015,
+      "source_head": "8b1a389d75c3aaaef9bfb0067c43b42181be76bd",
+      "run_id": "37776394285",
+      "artifact_id": "11551416625"
+    },
+    {
+      "path": "ci-371-process-14284.jsonl.gz",
+      "original_artifact_path": "transport-diagnostics/process-14284.jsonl",
+      "uncompressed_sha256": "77d0b6c0f5de45ea6541da019e6c16939f46b173bcc9178c0507524782d4a93e",
+      "uncompressed_bytes": 6349266,
+      "source_head": "8b1a389d75c3aaaef9bfb0067c43b42181be76bd",
+      "run_id": "37776394285",
+      "artifact_id": "11551416625"
+    },
+    {
+      "path": "ci-372-profile-comparison.json.gz",
+      "original_artifact_path": "p11-performance/profile-comparison.json",
+      "uncompressed_sha256": "d22f0d5325a84fb1011e354fe3985f0b5d05d323106953d753a05c4bc5f0fbe4",
+      "uncompressed_bytes": 8604,
+      "source_head": "4885fb75cea836cdde468851dc52fe23e5ba9685",
+      "run_id": "37777246810",
+      "artifact_id": "11551920024"
+    },
+    {
+      "path": "ci-372-server-profile.json.gz",
+      "original_artifact_path": "p11-performance/compiled/server-profile.json",
+      "uncompressed_sha256": "5e168edcf5124465eb9156c4d068c64ab21e808e07c80ee06d36d7bbfaae6810",
+      "uncompressed_bytes": 481,
+      "source_head": "4885fb75cea836cdde468851dc52fe23e5ba9685",
+      "run_id": "37777246810",
+      "artifact_id": "11551920024"
+    },
+    {
+      "path": "ci-372-PT-27-proof.json.gz",
+      "original_artifact_path": "p11-performance/compiled/PT-27-proof.json",
+      "uncompressed_sha256": "cb2c9137552648e98c42a2ea924324e714b758e0043aed95e2c864ba6778c681",
+      "uncompressed_bytes": 106166,
+      "source_head": "4885fb75cea836cdde468851dc52fe23e5ba9685",
+      "run_id": "37777246810",
+      "artifact_id": "11551920024"
+    },
+    {
+      "path": "ci-372-sample-observations.json.gz",
+      "original_artifact_path": "p11-performance/compiled/sample-observations.json",
+      "uncompressed_sha256": "9023d740f38ac0eacd22332e03ed46e0c91d336a00ac72138c99353044d3cf93",
+      "uncompressed_bytes": 6207376,
+      "source_head": "4885fb75cea836cdde468851dc52fe23e5ba9685",
+      "run_id": "37777246810",
+      "artifact_id": "11551920024"
+    },
+    {
+      "path": "ci-372-process-14334.jsonl.gz",
+      "original_artifact_path": "transport-diagnostics/process-14334.jsonl",
+      "uncompressed_sha256": "cc1e2e22af38b803332052b18186f3a4f7696d5af5a38f20e9997ebde4a3e378",
+      "uncompressed_bytes": 4212117,
+      "source_head": "4885fb75cea836cdde468851dc52fe23e5ba9685",
+      "run_id": "37777246810",
+      "artifact_id": "11551920024"
+    }
+  ],
+  "limits": [
+    "Separate CI jobs and runners, with development then compiled inside each job; not a controlled causal whole-page speed comparison.",
+    "Each profile has 320 samples across four views; each Customers profile has 80. A green measurement job does not mean its timing targets passed.",
+    "Local and CI compiled build identities are distinct and are retained explicitly. No hosted or physical-device performance inference.",
+    "The static transfer conclusion is verified for all 23 JS/CSS resources in every Customers sample; it is not all network traffic.",
+    "Ample free memory in CI does not explain the cause of the earlier uninstrumented local phone timeout."
+  ]
+}
