@@ -56,7 +56,7 @@ test("compiled public chunks cache while business, error and gateway responses s
   const cookie = login.headers.get("set-cookie")!.split(";")[0];
   for (const path of [
     "/api/v1/local-session",
-    "/api/v1/crm/directory",
+    "/api/v1/crm/directory?kind=organisations",
     "/api/v1/shell/context",
     "/customers",
   ]) {
@@ -73,7 +73,7 @@ test("compiled public chunks cache while business, error and gateway responses s
   }
   for (const path of [
     "/api/v1/local-session",
-    "/api/v1/crm/directory",
+    "/api/v1/crm/directory?kind=organisations",
     "/brand/powerplants-logo-green-white.png",
     "/_next/static/chunks/absent-synthetic-test.js",
     "/_next/static/chunks/absent-synthetic-test.css",
