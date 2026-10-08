@@ -44,3 +44,5 @@ Remaining work: diagnose cold/pre-directory delay and the timeout with retained 
 ## Integrity
 
 [verification.json](verification.json) records committed source blobs and artifact hashes/byte counts. Raw gzip archives preserve every original complete-run JSON, including source identities and before/after fingerprints; [summary.json](summary.json) also records uncompressed hashes. Evidence logs normalise LF and redact the private checkout path. The application baseline and original issued sources remain unchanged.
+
+The original measurement commits through `0fbffd5` are preserved on `codex/customer-loading-measurements`. The review branch was replayed onto photo repair `8b1a389` to resolve its document-register overlap; its resulting tree was verified equal to the pre-replay tree before this provenance note. No measured source/run identity was rewritten, and no PR or main branch was merged.
