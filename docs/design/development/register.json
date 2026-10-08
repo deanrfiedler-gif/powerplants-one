@@ -5751,7 +5751,10 @@
       "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
       "path": "/customers",
       "source_paths": [
-        "src/app/(business)/customers/page.tsx"
+        "src/app/(business)/customers/page.tsx",
+        "src/components/crm-directory.tsx",
+        "src/components/context-screens.tsx",
+        "src/crm/directory.ts"
       ],
       "guide_key": "guide.page.customers",
       "design_path": "docs/design/development/pages/route-customers.md",
@@ -5769,7 +5772,8 @@
       "related_keys": [
         "scope:CS-01"
       ],
-      "reviewer": null
+      "reviewer": null,
+      "notes": "Directory host uses deliberate link activation with automatic prefetch disabled; exact receiving and timing evidence remain separate from visual/owner acceptance."
     },
     {
       "key": "route:/documents/[id]",
@@ -6505,9 +6509,9 @@
       "path": "/people",
       "source_paths": [
         "src/app/(business)/people/page.tsx",
-        "src/components/contact-workspace.tsx",
-        "src/shared/contacts/reads.ts",
-        "src/shared/contacts/commands.ts"
+        "src/components/crm-directory.tsx",
+        "src/components/context-screens.tsx",
+        "src/crm/directory.ts"
       ],
       "guide_key": "guide.page.people",
       "design_path": "docs/design/development/pages/route-people.md",
@@ -6527,7 +6531,8 @@
         "route:/people/[id]",
         "route:/contacts"
       ],
-      "reviewer": null
+      "reviewer": null,
+      "notes": "Directory host uses deliberate link activation with automatic prefetch disabled; exact receiving and timing evidence remain separate from visual/owner acceptance."
     },
     {
       "key": "route:/projects/[id]",
@@ -7825,9 +7830,9 @@
       "path": "/contacts",
       "source_paths": [
         "src/app/(business)/contacts/page.tsx",
-        "src/components/contact-workspace.tsx",
-        "src/shared/contacts/reads.ts",
-        "src/shared/contacts/commands.ts"
+        "src/components/crm-directory.tsx",
+        "src/components/contacts-navigation.tsx",
+        "src/crm/directory.ts"
       ],
       "guide_key": "guide.page.contacts",
       "design_path": "docs/design/development/pages/route-contacts.md",
@@ -7847,7 +7852,8 @@
         "route:/people/[id]",
         "route:/people"
       ],
-      "reviewer": null
+      "reviewer": null,
+      "notes": "Directory host uses deliberate link activation with automatic prefetch disabled; exact receiving and timing evidence remain separate from visual/owner acceptance."
     },
     {
       "key": "route:/engineering/[id]/changes",

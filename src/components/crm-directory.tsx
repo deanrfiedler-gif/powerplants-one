@@ -143,7 +143,7 @@ export function CrmDirectory({ kind, contactsHub = false }: { kind: DirectoryKin
     switch (key) {
       case "name":
         return (
-          <Link
+          <Link prefetch={false}
             href={departmentHref(`/${kind === "people" ? "people" : "customers"}/${row.id}`, shell.preview)}
           >
             {row.display_name}
@@ -158,7 +158,7 @@ export function CrmDirectory({ kind, contactsHub = false }: { kind: DirectoryKin
           <ul className="crm-affiliation-list">
             {row.organisations.map((o, i) => (
               <li key={`${o.id}-${i}`}>
-                <Link href={`/customers/${o.id}`}>{o.name}</Link>
+                <Link prefetch={false} href={`/customers/${o.id}`}>{o.name}</Link>
                 <small>{o.role}</small>
               </li>
             ))}
@@ -182,7 +182,7 @@ export function CrmDirectory({ kind, contactsHub = false }: { kind: DirectoryKin
         return row.contact_preference || "Not recorded";
       case "sites":
       case "facilities":
-        return <Link href={`/customers/${row.id}`}>{row[key]}</Link>;
+        return <Link prefetch={false} href={`/customers/${row.id}`}>{row[key]}</Link>;
       case "deals":
         return row.deals;
       case "sector":
@@ -213,7 +213,7 @@ export function CrmDirectory({ kind, contactsHub = false }: { kind: DirectoryKin
             : "Customer relationships, sites and facilities."
         }
         action={
-          <Link
+          <Link prefetch={false}
             className="primary-link"
             href={`/customers/new?kind=${kind === "people" ? "person" : "customer"}`}
           >
@@ -228,7 +228,7 @@ export function CrmDirectory({ kind, contactsHub = false }: { kind: DirectoryKin
           ["sites", "Sites"],
           ["equipment", "Equipment"],
         ].map(([path, label]) => (
-          <Link
+          <Link prefetch={false}
             key={path}
             href={`/${path}`}
             aria-current={
@@ -477,7 +477,7 @@ export function CrmDirectory({ kind, contactsHub = false }: { kind: DirectoryKin
                   <ul className="crm-directory-mobile">
                     {result.data.items.map((row) => (
                       <li key={row.id}>
-                        <Link
+                        <Link prefetch={false}
                           className="crm-directory-mobile-main"
                           aria-label={row.display_name}
                           href={departmentHref(`/${kind === "people" ? "people" : "customers"}/${row.id}`, shell.preview)}

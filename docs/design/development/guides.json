@@ -36451,7 +36451,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Task sequence for review against the applicable running release.",
+            "Select a record name to open its details. On desktop, organisation and Site/Facility count links also open the related organisation. Use Tab and Enter or a phone tap; wait for the selected page to finish loading before acting."
           ],
           "steps": [
             "Search for an existing organisation before creating another",
@@ -41733,7 +41734,9 @@
         {
           "section_id": "tasks",
           "title": "Workflow",
-          "paragraphs": [],
+          "paragraphs": [
+            "Select a record name to open its details. On desktop, organisation and Site/Facility count links also open the related organisation. Use Tab and Enter or a phone tap; wait for the selected page to finish loading before acting."
+          ],
           "steps": [
             "Find the Person in Contacts and open the detail.",
             "Read identity, channels and the recorded contact preference; preference is not consent.",
@@ -50990,7 +50993,9 @@
         {
           "section_id": "tasks",
           "title": "Workflow",
-          "paragraphs": [],
+          "paragraphs": [
+            "Select a record name to open its details. On desktop, organisation and Site/Facility count links also open the related organisation. Use Tab and Enter or a phone tap; wait for the selected page to finish loading before acting."
+          ],
           "steps": [
             "Find the Person in Contacts and open the detail.",
             "Read identity, channels and the recorded contact preference; preference is not consent.",
