@@ -228,6 +228,14 @@ test("LC-16 Service intake returns to a native work order and the explicit link 
   await expect(
     page.getByLabel("Customer at this site", { exact: true }),
   ).toHaveValue(CRM.org);
+  const intakeOwners = page.waitForResponse((r) => {
+    const url = new URL(r.url());
+    return r.request().method() === "GET" &&
+      url.pathname === "/api/v1/selectors/owners" &&
+      url.searchParams.get("company_id") === CRM.company &&
+      url.searchParams.get("site_id") === CRM.site &&
+      url.searchParams.get("purpose") === "Ticket";
+  });
   await page
     .getByRole("link", {
       name: "Record a new Service request and return",
@@ -251,6 +259,14 @@ test("LC-16 Service intake returns to a native work order and the explicit link 
   await page
     .getByLabel("Reason for saving", { exact: true })
     .fill("SYN independently captured intake");
+  const intakeRead = await intakeOwners;
+  expect(intakeRead.status()).toBe(200);
+  expect(await intakeRead.finished()).toBeNull();
+  for (const [label, value] of [
+    ["Company visibility context", CRM.company],
+    ["Known site", CRM.site],
+    ["Triage and next-action owner", CRM.owner],
+  ]) await expect(page.getByLabel(label, { exact: true })).toHaveValue(value);
   // The returning form mounts fresh scoped selectors. A required select with
   // no options blocks native submission even when its React value is retained.
   const returningOwners = page.waitForResponse((r) => {
