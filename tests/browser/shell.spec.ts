@@ -130,16 +130,16 @@ test("unavailable dependency and missing page show useful recoverable states", a
     page.getByRole("heading", { name: "This page is unavailable" }),
   ).toBeVisible();
   await expect(
-    page.getByRole("link", { name: "Return to overview" }),
+    page.getByRole("link", { name: "Return to Home" }),
   ).toBeVisible();
 });
 
-test("r17 preview preserves permissions, contextual navigation and page guidance", async ({ page }, info) => {
+test("Workspace selection preserves permissions, contextual navigation and page guidance", async ({ page }, info) => {
   const response = await page.request.post("/api/v1/local-session", { headers: { Origin: new URL(test.info().project.use.baseURL ?? "http://127.0.0.1:3000").origin }, data: { profile: "coordinator" } });
   expect(response.ok()).toBe(true);
   await page.goto("/sales/opportunities");
-  await page.getByRole("button", { name: "Change identity", exact: true }).click();
-  await page.getByLabel("Preview workspace", { exact: true }).selectOption("engineering");
+  await page.getByRole("button", { name: "More", exact: true }).click();
+  await page.getByLabel("Workspace", { exact: true }).selectOption("engineering");
   await expect(page).toHaveURL(/\/engineering$/);
   // The rail carries the product identity; the breadcrumb names only the module and the current page.
   await expect(page.locator(".product-heading")).toHaveText("Engineering");
@@ -157,12 +157,12 @@ test("r17 preview preserves permissions, contextual navigation and page guidance
   await expect(page.getByRole("dialog", { name: "Page guide", exact: true }).getByRole("heading", { name: "Engineering workload & deliverables", exact: true })).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(page.getByRole("button", { name: "Page guide", exact: true })).toBeFocused();
-  await page.getByRole("button", { name: "Change identity", exact: true }).click();
-  await page.getByLabel("Preview workspace", { exact: true }).selectOption("supply");
+  await page.getByRole("button", { name: "More", exact: true }).click();
+  await page.getByLabel("Workspace", { exact: true }).selectOption("supply");
   await expect(page).toHaveURL(/\/supply\/material-readiness$/);
   await page.reload();
-  await page.getByRole("button", { name: "Change identity", exact: true }).click();
-  await expect(page.getByLabel("Preview workspace", { exact: true })).toHaveValue("supply");
+  await page.getByRole("button", { name: "More", exact: true }).click();
+  await expect(page.getByLabel("Workspace", { exact: true })).toHaveValue("supply");
   await page.keyboard.press("Escape");
   const navButton = page.getByRole("button", { name: "More", exact: true });
   await navButton.click();

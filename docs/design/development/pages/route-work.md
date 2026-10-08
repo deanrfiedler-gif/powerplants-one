@@ -24,6 +24,8 @@ At 390 × 844 and 320 CSS px, retain the same task and record context. Stack rel
 
 The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
 
+NAV repair: the overview header reads **My Work** and marks it current, without a redundant hidden Overview crumb. Subviews retain their identity and Page hierarchy disclosure. The Sales phone bar keeps five labelled cells and scoped Activities on the current local day; personal agenda links retain their separate meaning. The existing native phone fixture checks header geometry and the source-backed overview. [Screenshot inspection](../../../testing/evidence/pr366-pr367-repair/screenshot-review.md) records an actual 390 px synthetic read; it does not grant owner, device or zoom acceptance. No new issued mockup is available.
+
 ## Shared components and states
 
 Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared Button component for new controls; preserve documented existing page-specific exceptions until deliberately migrated. Use consistent primary/secondary/quiet/danger meanings. Include hover, visible focus, disabled and loading states.

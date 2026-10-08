@@ -289,16 +289,30 @@ test("IJ-01 one Lead continues through exact quotation, Project receiving and an
     await page
       .getByRole("tab", { name: "Estimates & quotations", exact: true })
       .click();
+    const releaseEvidence = page.waitForResponse((r) =>
+      r.request().method() === "GET" &&
+      new URL(r.url()).pathname === `/api/v1/${releasePath(quote)}`,
+    );
+    const responseEvidence = page.waitForResponse((r) =>
+      r.request().method() === "GET" &&
+      new URL(r.url()).pathname === `/api/v1/${responsePath(quote)}`,
+    );
     await page
       .getByText("Issue, reported response and conversion evidence", {
         exact: true,
       })
       .click();
+    const released = await releaseEvidence;
+    expect(released.status()).toBe(200);
+    expect(await released.finished()).toBeNull();
     await expect(
       page.getByText("Independent approval: Approved. Issue: Recorded.", {
         exact: true,
       }),
     ).toBeVisible();
+    const reported = await responseEvidence;
+    expect(reported.status()).toBe(200);
+    expect(await reported.finished()).toBeNull();
     await expect(
       page.getByText("Staff-recorded response: Accepted.", { exact: true }),
     ).toBeVisible();

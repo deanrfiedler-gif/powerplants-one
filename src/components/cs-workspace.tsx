@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import { equipmentHref } from "../shell/context-links";
 import { SavedViewControls } from "./saved-view-controls";
 import { useRouter } from "next/navigation";
 import {
@@ -325,12 +326,14 @@ function ContentView({
   view,
   options,
   evidenceStatus = {},
+  sourceId,
 }: {
   content: CsContent;
   kind: CsKind;
   view: string;
   options: CsOptions;
   evidenceStatus?: Record<string, string>;
+  sourceId?: string;
 }) {
   if (kind === "Readiness") {
     const r = content as ReadinessContent;
@@ -472,7 +475,7 @@ function ContentView({
             {s.asset_ids.length ? (
               s.asset_ids.map((id) => (
                 <p key={id}>
-                  <Link href={`/assets/${id}`}>{name(options.assets, id)}</Link>
+                  {options.assets.some(asset => asset.id === id) ? <Link href={equipmentHref(id, sourceId)}>{name(options.assets, id)}</Link> : <span>Equipment unavailable in current scope</span>}
                 </p>
               ))
             ) : (
@@ -723,6 +726,7 @@ function LoadedWorkspace({
                 view={view}
                 options={options.data}
                 evidenceStatus={data.evidence_status}
+                sourceId={row.id}
               />
               {kind === "Survey" && view === "photos" && (
                 <PhotoEvidence

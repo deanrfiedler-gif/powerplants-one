@@ -163,7 +163,7 @@ test("help wraps keyboard focus and preserves close actions with expanded phone 
 test("local entry is explicit; JavaScript-free Microsoft navigation and help remain usable", async ({ page, browser }, info) => {
   await serve(page, true); await page.goto(origin + "/login"); await loaded(page);
   await expect(page.getByRole("button", { name: "Sign in with Microsoft", exact: true })).toBeDisabled();
-  await expect(page.getByRole("link", { name: "Open local prototype" })).toHaveAttribute("href", "/work");
+  await expect(page.getByRole("link", { name: "Open local prototype" })).toHaveAttribute("href", "/");
   const context = await browser.newContext({ javaScriptEnabled: false, viewport: info.project.use.viewport });
   try {
     const plain = await context.newPage(); await serve(plain); await plain.goto(origin + "/login");

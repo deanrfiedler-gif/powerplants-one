@@ -55,7 +55,7 @@ export function renderLoginPage(state: LoginState = "ready", local = false, rate
     MANIFEST: manifestPath, APPLE_ICON: appleTouchIconPath, THEME: navy,
     ICON: installationIcons.find(icon => icon.sizes === "192x192")!.path,
     HANDOFF: local ? "Microsoft sign-in is available in the hosted private prototype." : "You’ll continue to Microsoft to sign in.",
-    LOCAL_ENTRY: local ? '<a class="secondary local-entry" href="/work">Open local prototype</a>' : "",
+    LOCAL_ENTRY: local ? '<a class="secondary local-entry" href="/">Open local prototype</a>' : "",
     YEAR: String(new Date().getFullYear()),
   };
   return template.replace(/\{\{([A-Z_]+)\}\}/g, (_match, key: string) => {

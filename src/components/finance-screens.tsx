@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
+import { RecordIdentity } from "../shell/record-identity";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   api,
   ErrorNotice,
@@ -389,9 +390,12 @@ export function FinanceForm({
   initial?: Detail;
   onSaved?: () => void;
 }) {
+  const params = useSearchParams(), candidateWork = params.get("work_order_id"), candidateReport = params.get("report_id");
+  const validId = (value:string|null) => value && /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value) ? value : "";
+  const sourceWork = validId(candidateWork), sourceReport = validId(candidateReport);
   const router = useRouter(),
     options = useResource<Options>("finance/options"),
-    [work, setWork] = useState(initial?.handoff.work_order_id ?? ""),
+    [work, setWork] = useState(initial?.handoff.work_order_id ?? sourceWork),
     [account, setAccount] = useState(initial?.handoff.account_id ?? ""),
     [mode, setMode] = useState(initial?.handoff.mode ?? "SyntheticManual"),
     sources = useResource<Sources>(
@@ -495,6 +499,9 @@ export function FinanceForm({
       subtitle="Keep captured and reviewed quantities intact. Give every selected source quantity an explicit disposition and reason."
     >
       <Link href="/finance/handoffs">← Finance queue</Link>
+      {sourceReport && <p><Link href={`/service/reports/${sourceReport}`}>Return to source report</Link>. Source context is rechecked; no quantities or account are selected automatically.</p>}
+      {sourceWork && options.data && !options.data.works.some(w => w.id === sourceWork) && <p role="alert">Source work order unavailable in current Finance scope. Choose permitted work explicitly.</p>}
+      {sourceReport && sources.data && <section aria-label="Source report selection">{(() => { const report = sources.data.items.find(s => s.id === sourceReport); return report?.ready ? <button type="button" disabled={selected.includes(report.id)} onClick={() => choose(report.id,true)}>Select this reviewed source report</button> : <p role="alert">Source report unavailable or not eligible for this handoff. Review current source blockers before selecting work.</p>; })()}</section>}
       <ReadState
         loading={options.loading || sources.loading}
         error={options.error || sources.error}
@@ -833,6 +840,7 @@ export function FinanceDetail({ id }: { id: string }) {
       {cmd.notice}
       {d && h && (
         <>
+          {!r.error && <RecordIdentity reference={h.display_number} title={`Finance handoff · ${d.work.customer}`} />}
           <div className={styles.row}>
             <p>
               {d.work.customer} · {d.work.site} · {d.work.reference}
@@ -1242,6 +1250,7 @@ export function AccountScreen({
       )}
       {d && (
         <>
+          {!r.error && <RecordIdentity reference={d.account.fixture_key} title={`Customer account · ${d.account.currency}`} />}
           <p>
             {d.account.status} · {d.account.currency} · legal company{" "}
             {d.account.company_id}

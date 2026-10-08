@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { departmentRails, destination, destinations, navigationForCapabilities, railDestinationForLocation, railDestinations, workspaceForLocation, departmentHref, menuGroups, pageForPath } from "../../src/shell/navigation";
+import { departmentRails, destination, destinations, navigationForCapabilities, railDestinationForLocation, railDestinations, workspaceForLocation, departmentHref, activitiesHref, menuGroups, pageForPath } from "../../src/shell/navigation";
 import { NavigationIcon, navigationDrawings, type NavigationIconName } from "../../src/components/navigation-icons";
 import { moduleWorkspaceForPath } from "../../src/shell/module-workspaces";
 test("all Maintenance and Warranty routes retain their Service shell parent", () => {
@@ -17,11 +17,11 @@ test("all Maintenance and Warranty routes retain their Service shell parent", ()
 
 test("seven full ordered compositions retain withheld positions and My Work placement", () => {
   const expected = {
-    sales: "Pulse|Leads|Deals|Activities|Tasks|Sales Inbox|Contacts|Products|Insights",
-    estimate: "My Work|Intake & workload|Estimation wizard|Specialist configurations|Cost sources|Quotations|Reviews & approvals",
-    engineering: "My Work|Engineering workload|Design basis & interfaces|Drawings|Materials & substitutions|Change review|Technical reviews|Commissioning & as-built",
+    sales: "Pulse|Leads|Deals|Activities|Tasks|Sales Inbox|Sales-to-Estimating handovers|Won-deal receiving|Aftercare & renewal|Contacts|Products|Insights",
+    estimate: "My Work|Intake & workload|Intake|Estimation wizard|Specialist configurations|Cost sources|Quotations|Reviews & approvals",
+    engineering: "My Work|Engineering workload|Design basis & interfaces|Drawings|Technical queries|Materials & substitutions|Change review|Technical reviews|Commissioning & as-built",
     projects: "My Work|Projects|Programme|Delivery readiness|Risks & issues|Variations & obligations|Site assurance|Acceptance & closeout",
-    service: "My Work|Service requests|Work orders|Schedule|Field team|Job packs|Service review|Equipment|Service agreements|Maintenance|Warranty",
+    service: "My Work|Service requests|Work orders|Schedule|Field team|Job packs|Service review|My jobs|My inspections|Incidents and actions|Inspection review|Equipment|Service agreements|Maintenance|Warranty",
     supply: "My Work|Material demand|Purchasing|Inbound shipments|Receiving|Stock & reservations|Dispatch & delivery|Returns & claims",
     finance: "My Work|Finance handoffs|Customer accounts|Project performance|Claims & obligations|Cash outlook|Reconciliation|Exceptions",
   };
@@ -30,7 +30,7 @@ test("seven full ordered compositions retain withheld positions and My Work plac
 });
 test("permission and readiness filters retain relative order and never manufacture links", () => {
   const permitted = navigationForCapabilities(new Set(["activity.read", "crm.opportunity.read", "shared.read", "email.read"]), true);
-  assert.deepEqual(railDestinations("sales", permitted, true).map(d => d.id), ["pulse", "deals", "calendar", "tasks", "mail", "contacts"]);
+  assert.deepEqual(railDestinations("sales", permitted, true).map(d => d.id), ["pulse", "deals", "calendar", "tasks", "mail", "sales-estimating", "sales-won", "contacts"]);
   assert.deepEqual(railDestinations("sales", [], true), []);
   assert.deepEqual(railDestinations("supply", ["work", "supply", "stock"], true).map(d => d.id), ["work", "supply", "stock"]);
   assert.deepEqual(railDestinations("supply", permitted, true).map(d => d.id), ["work"]);
@@ -73,7 +73,7 @@ test("shared context is explicit or remembered, independent of customer route sp
   assert.equal(workspaceForLocation("/customers/a", new URLSearchParams("department=service"), "sales", ["work", "tickets"]), "service");
   assert.equal(workspaceForLocation("/people", new URLSearchParams("department=invalid"), "engineering", ["engineering"]), "engineering");
   assert.equal(departmentHref("/contacts?view=people", "engineering"), "/contacts?view=people&department=engineering");
-  assert.equal(departmentHref("/calendar", "sales"), "/calendar?scope=sales&department=sales");
+  assert.equal(departmentHref("/calendar", "sales"), activitiesHref());
   const ids = menuGroups("", "estimate").flatMap(g => g.items.map(d => d.id));
   assert.equal(new Set(ids).size, ids.length); assert.ok(ids.includes("fertigation")); assert.ok(ids.includes("work"));
 });

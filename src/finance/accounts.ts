@@ -197,6 +197,7 @@ export async function readAccount(
     synthetic: true,
     account: {
       id: a.id,
+      fixture_key: a.fixture_key,
       version: a.version,
       company_id: a.company_id,
       customer_id: a.organisation_id,

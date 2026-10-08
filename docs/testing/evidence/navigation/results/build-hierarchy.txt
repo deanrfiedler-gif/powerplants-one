@@ -1,0 +1,6 @@
+Source commit: f1f04ba12c49003398652917b16d9c47e45edf8a
+Result: Passed; generated offline outputs unchanged.
+Bounded excerpt; private original SHA-256: 9917beac25c45ef780f66c60607c5355b33c55c779e614642e47852c0378a6d5
+
+> powerplants-one@0.1.0 build
+> node --import tsx scripts/build-offline.ts && next build

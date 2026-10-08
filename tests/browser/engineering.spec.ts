@@ -57,6 +57,7 @@ test("accepted container creates a real request; an uncertain note retries once 
   const list = await call(page, `engineering?q=${encodeURIComponent(title)}`);
   expect(list.items).toHaveLength(1);
   const id = list.items[0].id;
+  await expect(page).toHaveURL(new RegExp(`package_id=${id}`));
   await packageDialog
     .getByRole("tab", { name: "Review & history", exact: true })
     .click();
@@ -96,6 +97,10 @@ test("accepted container creates a real request; an uncertain note retries once 
   await expect(
     packageDialog.getByText("Note saved.", { exact: true }),
   ).toBeVisible();
+  await expect(page).toHaveURL(/section=review/);
+  await page.reload();
+  await expect(packageDialog.getByRole("tab",{name:"Review & history",exact:true})).toHaveAttribute("aria-selected","true");
+  await expect(packageDialog.getByText(note,{exact:true})).toBeVisible();
   await page.goto(`/engineering/${id}`);
   await expect(packageDialog.getByRole("heading").first()).toHaveText(title);
   const saved = await call(page, `engineering/${id}`);

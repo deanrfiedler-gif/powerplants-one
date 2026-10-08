@@ -3,6 +3,7 @@ import "../app/styles/customers.css";
 import Link from "next/link";
 import { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { navigateWithReview } from "./navigation-intent";
 import {
   ErrorNotice,
   Field,
@@ -23,18 +24,19 @@ import type {
   Stakeholders,
 } from "../shared/contacts/reads";
 
-export function useContactView(allowed: string[], fallback: string) {
+export function useContactView(allowed: readonly string[], fallback: string, parameter = "view") {
   const params = useSearchParams(),
     router = useRouter(),
     path = usePathname();
-  const selected = params.get("view") ?? fallback;
+  const selected = params.get(parameter) ?? fallback;
   const value = allowed.includes(selected) ? selected : fallback;
   return [
     value,
     (next: string) => {
       const query = new URLSearchParams(params);
-      query.set("view", next);
-      router.push(`${path}?${query}`, { scroll: false });
+      query.set(parameter, allowed.includes(next) ? next : fallback);
+      const href = `${path}?${query}`;
+      navigateWithReview(() => router.push(href, { scroll: false }), { href });
     },
   ] as const;
 }

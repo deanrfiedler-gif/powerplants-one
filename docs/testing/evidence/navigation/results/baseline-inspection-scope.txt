@@ -1,0 +1,46 @@
+Source commit: 4f883d145b18876840c5ce5522059c95448dc086
+Result: PostgreSQL 53200 lock-limit failure also occurs on untouched audited main with the initial private cluster configuration.
+Private original SHA-256: 1da9cb30fa1a140048fe8b6a20f7e2d3ff80f5de7b56c8992b55955cdc80e29e
+
+✖ FI03 missing criteria and unknown applicability remain incomplete owned obligations; source/permission changes deny new work and receipts (265.0764ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2326.3441
+
+✖ failing tests:
+
+test at tests\database\service-inspections.test.ts:1:12219
+✖ FI03 missing criteria and unknown applicability remain incomplete owned obligations; source/permission changes deny new work and receipts (265.0764ms)
+  error: out of shared memory
+      at [task-worktree]\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> ([audited-main-checkout]\scripts\database.ts:112:5)
+      at async transaction ([audited-main-checkout]\src\platform\database.ts:44:20)
+      at async TestContext.reset ([audited-main-checkout]\scripts\database.ts:108:3)
+      at async TestHook.run (node:internal/test_runner/test:1409:7)
+      at async Test.runHook (node:internal/test_runner/test:1289:9)
+      at async Test.run (node:internal/test_runner/test:1362:9)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    length: 138,
+    severity: 'ERROR',
+    code: '53200',
+    detail: undefined,
+    hint: 'You might need to increase max_locks_per_transaction.',
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'lock.c',
+    line: '1036',
+    routine: 'LockAcquireExtended'
+  }

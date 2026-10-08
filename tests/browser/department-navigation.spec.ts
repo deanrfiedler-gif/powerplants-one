@@ -36,11 +36,11 @@ async function revealSalesAction(page: Page, id: string, tasks: boolean) {
   await expect(row).toBeVisible();
 }
 const rails = {
-  sales: ["Pulse", "Leads", "Deals", "Activities", "Tasks", "Sales Inbox", "Contacts"],
-  estimate: ["My Work", "Intake & workload", "Estimation wizard", "Specialist configurations", "Cost sources", "Quotations"],
-  engineering: ["My Work", "Engineering workload", "Design basis & interfaces", "Drawings", "Materials & substitutions", "Change review", "Technical reviews", "Commissioning & as-built"],
+  sales: ["Pulse", "Leads", "Deals", "Activities", "Tasks", "Sales Inbox", "Sales-to-Estimating handovers", "Won-deal receiving", "Aftercare & renewal", "Contacts"],
+  estimate: ["My Work", "Intake & workload", "Intake", "Estimation wizard", "Specialist configurations", "Cost sources", "Quotations"],
+  engineering: ["My Work", "Engineering workload", "Design basis & interfaces", "Drawings", "Technical queries", "Materials & substitutions", "Change review", "Technical reviews", "Commissioning & as-built"],
   projects: ["My Work", "Projects", "Programme", "Acceptance & closeout"],
-  service: ["My Work", "Service requests", "Work orders", "Schedule", "Field team", "Job packs", "Service review", "Equipment", "Service agreements", "Maintenance", "Warranty"],
+  service: ["My Work", "Service requests", "Work orders", "Schedule", "Field team", "Job packs", "Service review", "Incidents and actions", "Inspection review", "Equipment", "Service agreements", "Maintenance", "Warranty"],
   supply: ["My Work", "Material demand", "Purchasing", "Inbound shipments", "Receiving", "Stock & reservations", "Dispatch & delivery", "Returns & claims"],
   finance: ["My Work", "Finance handoffs", "Customer accounts"],
 };
@@ -151,9 +151,9 @@ test("Engineering and Service retain shared Contacts view through records, reloa
   await expect(page.getByRole("heading", { name: "Organisations", exact: true })).toBeVisible();
   await page.goto("/contacts?department=engineering");
   await expect(page).toHaveURL(/view=organisations/);
-  await page.getByRole("button", { name: "Change identity", exact: true }).click();
-  await page.getByLabel("Preview workspace", { exact: true }).selectOption("service");
-  await expect(page).toHaveURL(/department=service/);
+  await page.getByRole("button", { name: "More", exact: true }).click();
+  await page.getByLabel("Workspace", { exact: true }).selectOption("service");
+  await expect(page).toHaveURL(/\/service\/tickets$/);
   await expect(page.getByRole("navigation", { name: "Service operations shortcuts" })).toBeVisible();
 });
 test("Finance chooser preserves the exact permitted account and its rail after reload", async ({ page }) => {
@@ -229,8 +229,9 @@ test("phone and 200 percent equivalent reflow keep the established navigation", 
   await expect(page.getByRole("navigation", { name: "Mobile navigation", exact: true })).toBeVisible();
   await expect(page.getByRole("navigation", { name: "Mobile navigation", exact: true }).getByRole("link", { name: "Deals", exact: true })).toBeVisible();
   await capture(page, "mobile-deals-390x844");
-  await page.goto("/sales/leads"); await expect(page.getByRole("navigation", { name: "Mobile navigation", exact: true })).toBeHidden();
-  await capture(page, "mobile-leads-exception");
+  await page.goto("/sales/leads"); await expect(page.getByRole("navigation", { name: "Mobile navigation", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "More", exact: true })).toBeVisible();
+  await capture(page, "mobile-leads-global-navigation");
   await page.setViewportSize({ width: 720, height: 450 }); await page.goto("/contacts?view=people&department=sales");
   await expect(page.getByRole("heading", { name: "People", exact: true })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);

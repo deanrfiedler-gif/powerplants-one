@@ -1,4 +1,5 @@
 "use client";
+import { useContactView } from "./contact-workspace";
 import Link from "next/link";
 import { SalesDeliveryLink } from "./sales-delivery-link";
 import { SalesEstimatingLink } from "./sales-estimating-link";
@@ -246,9 +247,9 @@ function HandoverContentView({
     [returnActivity, setReturnActivity] = useState(
       row.content.next_activity_id ?? "",
     ),
-    [tab, setTab] = useState("brief"),
     [dirty, setDirty] = useState(false),
     [baseVersion, setBaseVersion] = useState(row.version);
+  const [tab, setTab] = useContactView(["brief", "review", "history"], "brief");
   const command = useHandoverCommand(row.id, reload),
     deal = useCrmResource<
       Envelope<Awaited<ReturnType<typeof readOpportunity>>>
@@ -286,7 +287,7 @@ function HandoverContentView({
     !!command.accepted && row.version < command.accepted.receipt.record_version;
   const blocked =
     command.busy || !!command.pending || !command.ready || refreshing;
-  useUnsavedChanges(dirty, !!command.pending);
+  useUnsavedChanges(dirty, !!command.pending, ["view"]);
   const set = <K extends keyof HandoverContent>(
     key: K,
     value: HandoverContent[K],

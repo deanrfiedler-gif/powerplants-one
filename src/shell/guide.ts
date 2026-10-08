@@ -6,11 +6,11 @@ export const shellGuide = {
   "features": [
     [
       "Find your way",
-      "Open More for the seven business workspaces and shared pages. Search the menu when you know the destination name."
+      "Open More for your permitted business workspaces and shared pages. Search the menu by page name or a synonym such as Opportunity or Customer."
     ],
     [
       "Know where you are",
-      "The template starts with Powerplants One. Opening a page adds its name to the heading, such as Leads or Projects."
+      "The labelled breadcrumb names the owning module and view. Loaded records add their permitted exact reference and title; it does not guess identity from a URL."
     ],
     [
       "Get the right help",
@@ -28,7 +28,7 @@ export const shellGuide = {
     ],
     [
       "Review a workspace",
-      "Open your account, then Development → Preview workspace. Select a domain to open its available workspace. Your preference is remembered on this browser; it does not change your identity or permissions."
+      "Open More and choose Workspace. Each offered department has an eligible operational destination. Expand primary navigation on desktop for readable labels. Preferences are remembered per identity/browser and never change permissions."
     ],
     [
       "Create when connected",
@@ -42,7 +42,7 @@ export const shellGuide = {
   "journey": [
     [
       "Start",
-      "Powerplants One opens My Work with your permitted activities and the shared application frame."
+      "Home opens My Work when permitted, otherwise an eligible operational landing. An identity without destinations sees a clear access state."
     ],
     [
       "Find a page",
@@ -57,8 +57,8 @@ export const shellGuide = {
       "Open the information icon for that page’s guide, then return to the same page. Business work takes place in the connected module."
     ]
   ],
-  "mobile": "On a phone, use My Work, the two workspace-specific destinations and More in the bottom bar. Information, search and your account remain in the header. Quick add, Quick Help and Notifications are also available from More.",
-  "recovery": "If search finds no pages, clear it and try a shorter name. If browser storage is unavailable, the selected workspace applies to this visit. Reset preview preference in your account restores Sales without changing the current user or access rights.",
+  "mobile": "On a phone, open More and choose the labelled Workspace picker. The Sales bar offers four destinations and More; other workspaces offer three destinations and More, filtered by current access. Information, search and your account remain in the header. Quick add, Quick Help and Notifications are also available from More.",
+  "recovery": "If search finds no pages, clear it and try a shorter name. If browser storage is unavailable, the selected workspace applies to this visit. Workspace selection opens an eligible department page. A cancelled leave review keeps your current page and preference. Development Shell preview is separate from operational selection and never changes access rights.",
   "shortcuts": [
     [
       "Ctrl / Cmd K",

@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { activityHref } from "../../shell/context-links";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   useCallback,
@@ -864,7 +865,7 @@ export function AcceptanceWorkspace({ recordId }: { recordId?: string }) {
                         </div>
                         {selected.obligations.length ? (
                           selected.obligations.map((o) => (
-                            <section className="ac-section" key={o.id}>
+                            <section className="ac-section" key={o.id} id={`obligation-${o.id}`}>
                               <h3>{o.title}</h3>
                               <Tag>{o.state}</Tag>
                               <p>{o.conditions}</p>
@@ -888,7 +889,7 @@ export function AcceptanceWorkspace({ recordId }: { recordId?: string }) {
                                 <dd>{o.review_rule}</dd>
                               </dl>
                               <div className="ac-actions">
-                                <Link href={`/activities/${o.activity_id}`}>
+                                <Link href={activityHref(o.activity_id, selected.stage.id, o.id)}>
                                   Open owned Activity →
                                 </Link>
                                 {!o.transfer_accepted &&

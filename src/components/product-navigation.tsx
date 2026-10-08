@@ -16,6 +16,7 @@ import {
   railDestinations,
   railDestinationForLocation,
   workspaceForLocation,
+  workspaceLanding,
   workspaceIcons,
   destination,
   menuGroups,
@@ -32,12 +33,36 @@ import {
   type ShellDestination,
 } from "../shell/navigation";
 import { localDay } from "../activities/work-view";
+import { WorkspacePicker } from "./shell-workspace-selector";
+import { useRecordIdentity } from "../shell/record-identity";
 
 const subscribe = (changed: () => void) => {
   const media = window.matchMedia("(min-width: 781px)");
   media.addEventListener("change", changed);
   return () => media.removeEventListener("change", changed);
 };
+type HierarchyCrumb = { key: string; label: string; href?: string; kind: "root" | "page" | "view" | "record" };
+function PageHierarchy({ crumbs, location }: { crumbs: HierarchyCrumb[]; location: string }) {
+  const panel = useRef<HTMLDivElement>(null), trigger = useRef<HTMLButtonElement>(null);
+  const [open, setOpen] = useState(false);
+  useEffect(() => { panel.current?.hidePopover(); }, [location]);
+  useEffect(() => {
+    const close = (event: Event) => { if ((event as CustomEvent).detail !== "hierarchy") panel.current?.hidePopover(); };
+    window.addEventListener(shellPanelEvent, close);
+    return () => window.removeEventListener(shellPanelEvent, close);
+  }, []);
+  return <>
+    <button ref={trigger} className="ppo-breadcrumb-trigger" aria-label="Page hierarchy" aria-expanded={open} aria-controls="page-hierarchy" onClick={() => {
+      openShellPanel("hierarchy"); panel.current?.togglePopover();
+    }}><ProductIcon name="more" /></button>
+    <div ref={panel} id="page-hierarchy" popover="auto" className="ppo-hierarchy-panel" aria-label="Page hierarchy" onToggle={event => setOpen(event.newState === "open")} onKeyDown={event => {
+      if (event.key === "Escape") { event.preventDefault(); panel.current?.hidePopover(); trigger.current?.focus(); }
+    }}>
+      <strong>Page hierarchy</strong>
+      <ol>{crumbs.map((crumb,index) => <li key={crumb.key}>{crumb.href ? <Link href={crumb.href}>{crumb.label}</Link> : <span aria-current={index === crumbs.length - 1 ? "page" : undefined}>{crumb.label}</span>}</li>)}</ol>
+    </div>
+  </>;
+}
 export function ProductNavigation() {
   return <Suspense><NavigationWithLocation /></Suspense>;
 }
@@ -90,7 +115,7 @@ function ProductNavigationView({
     if (active) reveal(active);
   }, [activeId, workspaceId, permittedKey]);
   useEffect(() => {
-    if (shell.context && workspaceId !== shell.preview) shell.selectPreview(workspaceId);
+    if (shell.context && workspaceId !== shell.preview) shell.selectWorkspace(workspaceId);
   }, [workspaceId, shell]);
   const [more, setMore] = useState(false),
     [query, setQuery] = useState("");
@@ -162,10 +187,10 @@ function ProductNavigationView({
       <Link
         key={item.id}
         className={mobile ? undefined : "ppo-more-link"}
-        href={departmentHref(item.href!, root?.id ?? workspaceId)}
+        href={departmentHref(item.href!, root?.id ?? workspaceId, new URLSearchParams(locationQuery).get("day"))}
         aria-label={label}
         aria-current={current?.id === item.id || (!mobile && !!root && current?.workspace === root.id) ? "page" : undefined}
-        onClick={() => { if (root) shell.selectPreview(root.id); setMore(false); }}
+        onClick={() => setMore(false)}
       >
         {contents}
       </Link>
@@ -185,8 +210,8 @@ function ProductNavigationView({
       </span>
     );
   };
-  // Mobile r07, Sales: icon-only cells. The name stays in the link for assistive technology and
-  // as a tooltip; the calendar opens on the reader's current local day, as My Work links to it.
+  // Sales phone cells keep visible names and accessible labels. Activities uses
+  // the same Sales scope and local day policy as the desktop destination.
   const phoneCell = (entry: (typeof salesPhoneBar)[number]) => {
     const item = destination(entry.id);
     const contents = (
@@ -198,7 +223,7 @@ function ProductNavigationView({
     return allowed(item) ? (
       <Link
         key={entry.id}
-        href={entry.id === "calendar" ? `${item.href}?day=${localDay(new Date().toISOString())}` : item.href!}
+        href={departmentHref(entry.id === "calendar" ? `${item.href}?day=${new URLSearchParams(locationQuery).get("day") ?? localDay(new Date().toISOString())}` : item.href!, "sales")}
         aria-label={entry.label}
         title={entry.label}
         aria-current={current?.id === item.id ? "page" : undefined}
@@ -226,6 +251,7 @@ function ProductNavigationView({
         </button>
       </header>
       <div className="ppo-more-body">
+        <WorkspacePicker />
         <label className="ppo-menu-search">
           <ProductIcon name="search" />
           <input
@@ -308,7 +334,7 @@ function ProductNavigationView({
       </div>
       <footer>
         <span>
-          Powerplants One · r17
+          Powerplants One
         </span>
         <span>{count} destinations</span>
       </footer>
@@ -337,16 +363,20 @@ function ProductNavigationView({
             className="brand-logo"
           />
         </Link>
-        {wide && <nav className="ppo-primary-nav" aria-label={`${workspace.label} shortcuts`} ref={scroller} onScroll={() => {
+        {wide && <button className="ppo-rail-item ppo-rail-toggle" disabled={!shell.context?.preference_scope} aria-label={shell.railExpanded ? "Collapse primary navigation" : "Expand primary navigation"} aria-expanded={shell.railExpanded} aria-controls="primary-navigation" onClick={() => shell.setRailExpanded(!shell.railExpanded)}>
+          <ProductIcon name="more" /><span className="ppo-rail-label">Collapse navigation</span>
+        </button>}
+        {wide && <nav id="primary-navigation" className="ppo-primary-nav" aria-label={`${workspace.label} shortcuts`} ref={scroller} onScroll={() => {
           const focused = document.activeElement;
           if (focused instanceof HTMLElement && scroller.current?.contains(focused)) tip(focused, focused.getAttribute("aria-label") ?? "");
           else setTooltip(null);
         }}>
-          {rail.map(item => <Link key={item.id} href={departmentHref(item.href!, workspaceId)}
+          {rail.map(item => <Link key={item.id} href={departmentHref(item.href!, workspaceId, new URLSearchParams(locationQuery).get("day"))}
             className="ppo-rail-item" aria-label={item.label} aria-current={activeId === item.id ? "page" : undefined}
             onMouseEnter={e => tip(e.currentTarget, item.label)} onMouseLeave={() => setTooltip(null)}
             onFocus={e => { reveal(e.currentTarget); tip(e.currentTarget, item.label); }} onBlur={() => setTooltip(null)}>
             <ProductIcon name={item.icon} active={activeId === item.id} />
+            <span className="ppo-rail-label">{item.label}</span>
           </Link>)}
         </nav>}
         {wide && tooltip && <span className="ppo-rail-tooltip" role="tooltip" style={{top: tooltip.top}}>{tooltip.label}</span>}
@@ -369,6 +399,7 @@ function ProductNavigationView({
               }}
             >
               <ProductIcon name="more" />
+              <span className="ppo-rail-label">More</span>
             </button>
           )}
         </div>
@@ -404,11 +435,10 @@ function ProductNavigationView({
       >
         {workspace.id === "sales"
           ? salesPhoneBar.map(phoneCell)
-          : [
-              destination("work"),
-              destination(workspace.primary),
-              destination(workspace.secondary),
-            ].map((item) => link(item, true))}
+          : [destination("work"), workspaceLanding(workspace.id, permitted, shell.hosted), destination(workspace.secondary)]
+              .filter((item): item is ShellDestination => !!item && allowed(item))
+              .filter((item, index, all) => all.findIndex(other => other.id === item.id) === index)
+              .map((item) => link(item, true))}
         {!wide && (
           <button
             ref={toggle}
@@ -431,21 +461,24 @@ function ProductNavigationView({
   );
 }
 export function ProductHeader() {
+  const record = useRecordIdentity();
+  const query = useSearchParams();
   const path = usePathname(),
     page = pageForPath(path),
     shell = useShell();
-  const label = path === "/" ? "" : path === "/development/page-register" ? "Design & build" : path === "/development/design-system" ? "Component catalogue" : path.startsWith("/estimating/configurations") ? "Specialist configurations" : /^\/estimating\/discovery\/[^/]+$/.test(path) && !path.endsWith("/new") ? "Estimation Wizard" : (page?.id === "engineering" ? "Engineering" : page?.label ?? "Page unavailable");
-  // My Work names its current view beside the module, as its secondary menu does. EN-06 names its module
+  const label = path === "/" ? "" : path === "/calendar" ? (query.get("scope") === "sales" ? "Sales Activities" : "Personal Calendar") : path === "/development/page-register" ? "Design & build" : path === "/development/design-system" ? "Component catalogue" : path.startsWith("/estimating/configurations") ? "Specialist configurations" : /^\/estimating\/discovery\/[^/]+$/.test(path) && !path.endsWith("/new") ? "Estimation Wizard" : (page?.id === "engineering" ? "Engineering" : page?.label ?? "Page unavailable");
+  // My Work names its subview beside the module. The overview is its index, so
+  // My Work itself is current rather than a redundant, hidden Overview crumb. EN-06 names its module
   // there, and its destination after it for as long as its own menu is hidden (desktop-shell.css).
   const materials = page?.workspace === "engineering" ? materialsPath(path) : undefined;
   // EN-07 does the same: "Engineering / Engineering Change-Impact Review", then its destination while its menu is hidden.
   const changes = page?.workspace === "engineering" ? changesPath(path) : undefined;
   // EN-08 likewise: "Engineering / Commissioning Basis & As-Built Release", then its destination while its menu is hidden.
   const commissioning = page?.workspace === "engineering" ? commissioningPath(path) : undefined;
-  const control = controlPath(path);
+  const control = materials || changes || commissioning ? undefined : controlPath(path);
   const acceptance = path.startsWith("/projects/acceptance");
   const crumb = materials ?? changes ?? commissioning ?? (control ? {view:{label:controlModules[control.module].views.find(([key])=>key===control.view)?.[1]}} : undefined) ?? (acceptance ? { view: undefined } : undefined);
-  const view = page?.id === "work" ? workViewForPath(path)?.label : materials ? materialsModuleLabel : changes ? changesModuleLabel : commissioning ? commissioningModuleLabel : control ? control.title : acceptance ? "Staged Acceptance & Closeout" : undefined;
+  const view = page?.id === "work" ? (path === "/work" ? undefined : workViewForPath(path)?.label) : materials ? materialsModuleLabel : changes ? changesModuleLabel : commissioning ? commissioningModuleLabel : control ? control.title : acceptance ? "Staged Acceptance & Closeout" : undefined;
   const subview = crumb?.view?.label;
   const workspaceRoot = page?.workspace ? workspaces.find((w) => w.id === page.workspace) : undefined;
   const currentModule =
@@ -462,7 +495,7 @@ export function ProductHeader() {
   // shortened for the page guide, and the breadcrumb uses the same two names.
   const rootLabel =
     page?.workspace === "estimate" ? "Estimating" : page?.workspace === "service" ? "Service" : workspaceRoot?.label;
-  const crumbs: { key: string; label: string; href?: string; kind: "root" | "page" | "view" }[] = [];
+  const crumbs: HierarchyCrumb[] = [];
   if (label) {
     if (rootLabel && rootLabel !== label && !crumb)
       crumbs.push({
@@ -471,28 +504,25 @@ export function ProductHeader() {
         href: rootDestination && canOpen(rootDestination, shell.context?.navigation ?? [], shell.hosted) ? rootDestination.href : undefined,
         kind: "root",
       });
+    if (page && !crumb && destination(page.id)?.label !== page.label && page.id !== "search") {
+      const parent = destination(page.id);
+      if (parent) crumbs.push({key:"module",label:parent.label,kind:"page",href:canOpen(parent,shell.context?.navigation ?? [],shell.hosted) ? parent.href : undefined});
+    }
     crumbs.push({ key: "page", label, kind: crumb ? "root" : "page", href: crumb && page && canOpen(page, shell.context?.navigation ?? [], shell.hosted) ? page.href : undefined });
     // Each bounded module keeps its identity between the domain and the destination its menu names.
     if (view) crumbs.push({ key: "view", label: view, kind: crumb ? "page" : "view" });
     if (subview) crumbs.push({ key: "subview", label: subview, kind: "view" });
   }
+  if (record && shell.context) crumbs.push({ key: "record", label: `${record.reference} · ${record.title}`, kind: "record" });
   const tabIds =
     page?.workspace === "service"
-      ? [
-          "planner",
-          "technicians",
-          "tickets",
-          "orders",
-          "packs",
-          "reports",
-          "jobs",
-        ]
+      ? []
       : page?.workspace === "sales"
         ? ["deals", "leads"]
         : page?.workspace === "estimate"
           ? ["estimates", "wizard", ...(page.id === "pricing" ? ["pricing"] : [])]
           : page?.id === "mail" || page?.id === "calendar"
-            ? ["mail", "calendar"]
+            ? []
       : ["customers", "sites", "facilities", "equipment"].includes(page?.id ?? "")
         ? ["customers", "sites", "facilities", "equipment"]
         : [];
@@ -523,6 +553,7 @@ export function ProductHeader() {
         <div id="header-menu" className="ppo-header-menu-slot" />
         {crumbs.length ? (
           <nav className="product-heading" aria-label="Breadcrumb">
+            {crumbs.length > 1 && <PageHierarchy crumbs={crumbs} location={`${path}?${query.toString()}`} />}
             <ol className="ppo-crumbs" title={crumbs.map((c) => c.label).join(" / ")}>
               {crumbs.map((crumb, index) => (
                 <li key={crumb.key} data-crumb={crumb.kind}>

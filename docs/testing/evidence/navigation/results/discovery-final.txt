@@ -1,0 +1,20 @@
+Source commit: 6e6e91ae95696aab3db92e75be0fc19db569085a
+Result: 13 passed including warm-up; N11 and all five SH cases on both projects.
+Bounded excerpt; private original SHA-256: 6eda7b0e8603682668df065b8c438e57b3f724802514359a578722250991b14c
+
+> powerplants-one@0.1.0 test:browser
+> playwright test --config=playwright.compiled.config.ts tests/browser/navigation-safety.spec.ts tests/browser/sh-platform.spec.ts --grep N11|SH
+  ok  1 [warm-up] › tests\browser\warm-up.setup.ts:10:1 › warm every route once before the browser projects (16.3s)
+  ok  2 [desktop-chromium] › tests\browser\navigation-safety.spec.ts:134:1 › N11 blank workspace More opens each permitted operational entry (6.4s)
+  ok  3 [desktop-chromium] › tests\browser\sh-platform.spec.ts:36:1 › SH notification event, explicit read, source guard, grouped state and preferences persist (6.0s)
+  ok  4 [desktop-chromium] › tests\browser\sh-platform.spec.ts:153:1 › SH search keyboard entry, full results, authorised preview and personal saved view (6.2s)
+  ok  5 [desktop-chromium] › tests\browser\sh-platform.spec.ts:232:1 › SH review perspectives, responsive geometry and current My Work interiors (23.5s)
+  ok  6 [desktop-chromium] › tests\browser\sh-platform.spec.ts:328:1 › SH real review detail keeps source authority and return navigation for reviewer, author and receiver (18.1s)
+  ok  7 [desktop-chromium] › tests\browser\sh-platform.spec.ts:449:1 › SH failure, partial and successful empty presentations retain retry and clear revoked previews (5.4s)
+  ok  8 [mobile-chromium] › tests\browser\navigation-safety.spec.ts:134:1 › N11 blank workspace More opens each permitted operational entry (6.2s)
+  ok  9 [mobile-chromium] › tests\browser\sh-platform.spec.ts:36:1 › SH notification event, explicit read, source guard, grouped state and preferences persist (4.8s)
+  ok 10 [mobile-chromium] › tests\browser\sh-platform.spec.ts:153:1 › SH search keyboard entry, full results, authorised preview and personal saved view (7.0s)
+  ok 11 [mobile-chromium] › tests\browser\sh-platform.spec.ts:232:1 › SH review perspectives, responsive geometry and current My Work interiors (22.8s)
+  ok 12 [mobile-chromium] › tests\browser\sh-platform.spec.ts:328:1 › SH real review detail keeps source authority and return navigation for reviewer, author and receiver (17.0s)
+  ok 13 [mobile-chromium] › tests\browser\sh-platform.spec.ts:449:1 › SH failure, partial and successful empty presentations retain retry and clear revoked previews (4.9s)
+  13 passed (2.6m)

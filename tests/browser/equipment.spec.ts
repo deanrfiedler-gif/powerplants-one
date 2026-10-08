@@ -234,6 +234,14 @@ test("EQ03 native proposal, uncertain response recovery and exact successor surv
   await expect(
     page.getByRole("button", { name: "Recover original operation" }),
   ).toBeVisible();
+  const pendingUrl = page.url();
+  await page.getByRole("link", { name: "Powerplants One home", exact: true }).click();
+  await expect(page).toHaveURL(pendingUrl);
+  await page.getByRole("tab", { name: "Movement & retirement", exact: true }).click();
+  await expect(page).toHaveURL(url => url.pathname === `/equipment/${id}` && url.searchParams.get("view") === "lifecycle");
+  await page.getByRole("tab", { name: "Configuration", exact: true }).click();
+  await expect(form.getByLabel("Exact source revision")).toHaveValue("r02");
+  await expect(page.getByRole("button", { name: "Recover original operation" })).toBeVisible();
   await page
     .getByRole("button", { name: "Recover original operation" })
     .click();

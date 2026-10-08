@@ -17,7 +17,7 @@
 /* Shared layout coordinates. The rail width and the expanded secondary-menu width are the two numbers that
    the centred header group, the More panel's right edge and every workspace menu are measured against, so
    they are declared once here rather than repeated as literals in each module stylesheet. */
-:root { --ppo-rail-width: 76px; --ppo-secondary-menu-width: 240px; --ppo-rail-navy: #242a37; --ppo-rail-hover: #343c4c; --ppo-rail-selected: #f0f6ed; --ppo-rail-ink: #315e43; --ppo-icon-cutout: #f0f6ed; }
+:root { --ppo-rail-width: 76px; --ppo-secondary-menu-width: 240px; --ppo-rail-navy: #242a37; --ppo-rail-hover: #343c4c; --ppo-rail-selected: #f0f6ed; --ppo-rail-ink: #242a37; --ppo-icon-cutout: #f0f6ed; }
 .ppo-shell-header .product-heading { display: flex; align-items: center; align-self: center; min-width: 0; margin: 0; font-size: 16px; line-height: 1.3; white-space: nowrap; }
 .ppo-shell-header .ppo-product-name { display: block; font-size: 16px; line-height: 1.3; color: #242a37; font-weight: 700; letter-spacing: -.15px; }
 /* Breadcrumb: [Module] / [Current page]. The rail's logo is the product identity, so the product name is
@@ -175,8 +175,8 @@
 .ppo-guide-link{display:flex;align-items:center;gap:10px;min-height:44px;width:100%;padding:10px 12px;border:1px solid #dce3eb;border-radius:7px;background:#fff;color:#425d78;text-align:left;font-size:12px}
 .ppo-guide-link:hover:not(:disabled){background:#f4f7fa;color:#425d78}.ppo-guide-link span{flex:1}.ppo-guide-link .product-icon{width:18px;height:18px}
 @media (min-width: 781px) {
-  .app-frame { grid-template-columns: 76px minmax(0, 1fr); }
-  .sidebar.ppo-rail { width: 76px; padding: 0; height: 100dvh; min-height: 0; overflow: visible; display: flex; flex-direction: column; align-items: center; background: #242a37; z-index: 70; }
+  .app-frame { grid-template-columns: var(--ppo-rail-width) minmax(0, 1fr); }
+  .sidebar.ppo-rail { width: var(--ppo-rail-width); padding: 0; height: 100dvh; min-height: 0; overflow: visible; display: flex; flex-direction: column; align-items: center; background: #242a37; z-index: 70; }
   .ppo-rail .brand { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 76px; height: 64px; margin: 0; padding: 0; }
   .ppo-rail .brand .brand-logo { width: 54px; height: 54px; max-width: none; object-fit: contain; }
   .ppo-rail .ppo-rail-item { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; min-height: 44px; margin: 0; padding: 0; border: 0; border-radius: 10px; background: transparent; color: white; }
@@ -268,6 +268,23 @@
 }
 
 /* These must also win over legacy CRM identity-button rules. */
+.ppo-shell-header .product-heading:has(.ppo-breadcrumb-trigger) { display: flex; align-items: center; gap: 4px; }
+.ppo-breadcrumb-trigger { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; flex: 0 0 44px; border: 0; border-radius: 6px; background: transparent; color: var(--ppo-rail-navy); padding: 0; }
+.ppo-breadcrumb-trigger:focus-visible { outline: 3px solid #a8d8ff; outline-offset: -3px; }
+.ppo-breadcrumb-trigger .product-icon { width: 20px; height: 20px; }
+@media (max-width: 780px) {
+  /* The full hierarchy remains in the labelled disclosure. Reserve the small
+     phone heading for the current page, alongside the 44px disclosure button. */
+  .ppo-shell-header .ppo-crumbs li:not(:last-child) { display: none; }
+  .ppo-shell-header .ppo-crumbs li:last-child { min-width: 0; }
+  .ppo-shell-header .ppo-crumbs li:last-child::before { content: none; }
+}
+.ppo-hierarchy-panel { position: fixed; inset: 68px auto auto 10px; margin: 0; width: min(360px, calc(100vw - 20px)); max-height: calc(100dvh - 80px); overflow: auto; padding: 12px; border: 1px solid #dce3eb; border-radius: 10px; background: #fff; color: #242a37; box-shadow: 0 8px 24px #242a3730; }
+.ppo-hierarchy-panel ol { margin: 8px 0 0; padding: 0; list-style: none; }
+.ppo-hierarchy-panel li :is(a,span) { display: flex; align-items: center; min-height: 44px; padding: 8px; overflow-wrap: anywhere; }
+.ppo-hierarchy-panel a { color: #425d78; border-radius: 6px; }
+.ppo-hierarchy-panel a:focus-visible { outline: 3px solid #a8d8ff; }
+@media (min-width: 781px) { .ppo-hierarchy-panel { left: calc(var(--ppo-rail-width) + 10px); } }
 .header-account .identity-strip .ppo-account-close { padding: 0; min-height: 36px; }
 .ppo-guide-contents button, .ppo-guide-link { font-weight: 400; }
 @media (max-width: 780px) { .header-account .identity-strip .ppo-account-close { min-height: 44px; } }
@@ -277,9 +294,8 @@
 /* Phone Sales reaches Opportunities from the bottom bar, and Leads from My Work's Quick Actions and More.
    An extra desktop tab row would leave too little room for a focused card after a save. */
 @media (max-width: 780px) { .module-navigation.ppo-sales-navigation { display: none; } }
-/* Narrower desktops: with three or more crumbs the earliest ancestor gives way, never the current page.
-   The rail, the module tabs and the page's own heading still give the parent, and the full path stays in
-   the accessibility tree and in the breadcrumb's title. */
+/* Narrower desktops keep the last two inline crumbs. Page hierarchy exposes every authorized ancestor
+   as a usable link at every width; a title alone cannot provide navigation. */
 @media (min-width: 781px) and (max-width: 1560px) {
   .ppo-shell-header .ppo-crumbs li:nth-last-child(n+3) { display: none; }
   .ppo-shell-header .ppo-crumbs li:nth-last-child(2)::before { content: none; }
@@ -296,18 +312,19 @@
   .ppo-header-menu-slot .ppo-menu-toggle { width: 44px; height: 44px; min-height: 44px; margin: 0; padding: 0; justify-content: center; border-color: transparent; background: transparent; }
   .ppo-header-menu-slot .ppo-menu-toggle svg { width: 24px; height: 24px; }
   .ppo-header-menu-slot .ppo-menu-toggle span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .product-heading { display: block; flex: 1; min-width: 0; margin: 0 0 0 6px; align-self: center; grid-column: auto; grid-row: auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .product-heading { display: flex; flex: 1; min-width: 0; margin: 0 0 0 6px; align-self: center; grid-column: auto; grid-row: auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .ppo-crumb { font-size: 20px; line-height: 28px; font-weight: 500; color: #242a37; }
   .workspace .ppo-shell-header:has(#header-menu:not(:empty)) li[data-crumb=view] .ppo-crumb { font-size: 14px; font-weight: 400; color: #596779; }
-  /* The overview is the workspace's front page, so its header reads "My Work" alone, as in r07. */
-  .workspace:has(#ppo-my-work[data-view=overview]) .ppo-shell-header .ppo-crumbs li[data-crumb=view] { display: none; }
   .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .header-account { grid-column: auto; grid-row: auto; }
-  /* The Sales phone bar, mobile r07: five equal cells, icons only. Each name stays in the link for assistive
-     technology; the current cell keeps the lighter surface and green top stripe of the labelled bar. */
+  /* The Sales phone bar keeps five equal, labelled cells. The current cell has
+     the lighter surface and green top stripe, with aria-current as well. */
   .mobile-navigation.ppo-phone-bar-r07 { grid-template-columns: repeat(5, minmax(0,1fr)); padding-left: 0; padding-right: 0; }
   .mobile-navigation.ppo-phone-bar-r07 > :is(a,button,span) { position: relative; }
-  .mobile-navigation.ppo-phone-bar-r07 > :is(a,button,span) > span { position: absolute; width: 1px; height: 1px; max-width: none; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .mobile-navigation.ppo-phone-bar-r07 > :is(a,button,span) > span { max-width: 100%; font-size: 10px; }
   .mobile-navigation.ppo-phone-bar-r07 .product-icon { width: 25px; height: 25px; }
+}
+@media (max-width: 360px) {
+  .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .ppo-crumb-current { font-size: 16px; }
 }
 
 /* Installation entries and the manual instruction panel. Quiet secondary actions in the
@@ -351,4 +368,27 @@
 .ppo-header-menu-slot .ppo-menu-toggle[data-menu-presentation=baseline]:hover:not(:disabled) { background: #f0f2f5; color: #242a37; }
 .ppo-header-menu-slot .ppo-menu-toggle[data-menu-presentation=baseline]:focus-visible { outline: 2px solid #365d8b; outline-offset: 2px; box-shadow: none; }
 .ppo-header-menu-slot .ppo-menu-toggle[data-menu-presentation=baseline] svg { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+}
+
+/* NAV-04: primary rail preference; secondary-menu docking stays at 1200 px. */
+.ppo-rail-label { display: none; }
+.ppo-workspace-picker { padding: 12px; display: grid; gap: 6px; }
+.ppo-workspace-picker select { min-height: 44px; width: 100%; min-width: 0; font: inherit; }
+.ppo-workspace-picker label { font-weight: 700; }
+@media (min-width: 781px) {
+  .app-frame[data-rail=expanded] { --ppo-rail-width: 232px; }
+  .ppo-rail .ppo-rail-toggle { flex: 0 0 44px; margin: 4px 0; }
+  .app-frame[data-rail=expanded] .ppo-rail .brand { width: 100%; justify-content: flex-start; padding-left: 14px; }
+  .app-frame[data-rail=expanded] .ppo-rail .ppo-primary-nav { width: 100%; padding: 10px 12px; }
+  .app-frame[data-rail=expanded] .ppo-rail .ppo-rail-item { width: 100%; justify-content: flex-start; padding: 0 12px; gap: 12px; }
+  .app-frame[data-rail=expanded] .ppo-rail .ppo-rail-toggle { width: calc(100% - 24px); }
+  .app-frame[data-rail=expanded] .ppo-rail-label { display: block; white-space: normal; font: 13px/1.3 PPOShellRoboto, Roboto, sans-serif; text-align: left; }
+  .app-frame[data-rail=expanded] .ppo-rail .product-icon { flex: 0 0 25px; }
+  .app-frame[data-rail=expanded] .ppo-rail-tooltip { display: none; }
+  .app-frame[data-rail=expanded] .ppo-rail-bottom { padding: 12px; }
+  .app-frame[data-rail=expanded] .ppo-more-panel { left: calc(var(--ppo-rail-width) + 10px); width: min(400px, calc(100vw - 248px)); }
+}
+@media (min-width: 781px) and (max-width: 1200px) {
+  .app-frame[data-rail=expanded] .ppo-header-centre { position: static; transform: none; width: 220px; margin-left: auto; }
+  .app-frame[data-rail=expanded] .ppo-shell-header .product-heading { max-width: 140px; }
 }

@@ -1,0 +1,5107 @@
+{
+  "source_commit": "f1f04ba12c49003398652917b16d9c47e45edf8a",
+  "evidence_kind": "Static current source map; browser results separate",
+  "routes": [
+    {
+      "key": "route:/admin",
+      "pattern": "/admin",
+      "canonical_pattern": "/admin",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "recovery",
+      "breadcrumb_fallback": "Integrations & recovery",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "shared.read",
+          "finance.read",
+          "service.work_order.read",
+          "field.read.own"
+        ]
+      },
+      "source": [
+        "src/app/(business)/admin/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/admin/recovery/[id]",
+      "pattern": "/admin/recovery/[id]",
+      "canonical_pattern": "/admin/recovery/[id]",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "recovery",
+      "breadcrumb_fallback": "Integrations & recovery",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "shared.read",
+          "finance.read",
+          "service.work_order.read",
+          "field.read.own"
+        ]
+      },
+      "source": [
+        "src/app/(business)/admin/recovery/[id]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/calendar",
+      "pattern": "/calendar",
+      "canonical_pattern": "/calendar",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "calendar",
+      "breadcrumb_fallback": "Activities",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "activity.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/calendar/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/customers/[id]/account",
+      "pattern": "/customers/[id]/account",
+      "canonical_pattern": "/customers/[id]/account",
+      "workspace": "finance",
+      "parent_destination": "accounts",
+      "breadcrumb_fallback": "Customer Finance account",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [
+          "shared.finance.read",
+          "finance.read"
+        ],
+        "any": [
+          "finance.account.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/customers/[id]/account/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/customers/[id]",
+      "pattern": "/customers/[id]",
+      "canonical_pattern": "/customers/[id]",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "customers",
+      "breadcrumb_fallback": "Organisations",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "shared.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/customers/[id]/page.tsx",
+        "src/components/customer-workspace.tsx",
+        "src/shared/customer-360.ts"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/customers/new",
+      "pattern": "/customers/new",
+      "canonical_pattern": "/customers/new",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "customers",
+      "breadcrumb_fallback": "Organisations",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "shared.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/customers/new/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/customers",
+      "pattern": "/customers",
+      "canonical_pattern": "/customers",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "customers",
+      "breadcrumb_fallback": "Organisations",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "shared.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/customers/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/documents/[id]",
+      "pattern": "/documents/[id]",
+      "canonical_pattern": "/documents/[id]",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "documents",
+      "breadcrumb_fallback": "Documents",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "unavailable",
+      "capabilities": {
+        "all": [],
+        "any": []
+      },
+      "source": [
+        "src/app/(business)/documents/[id]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/email/[id]",
+      "pattern": "/email/[id]",
+      "canonical_pattern": "/email/[id]",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "mail",
+      "breadcrumb_fallback": "Sales Inbox",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "email.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/email/[id]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/email",
+      "pattern": "/email",
+      "canonical_pattern": "/email",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "mail",
+      "breadcrumb_fallback": "Sales Inbox",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "email.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/email/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/[id]",
+      "pattern": "/engineering/[id]",
+      "canonical_pattern": "/engineering/[id]",
+      "workspace": "engineering",
+      "parent_destination": "engineering",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/[id]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering",
+      "pattern": "/engineering",
+      "canonical_pattern": "/engineering",
+      "workspace": "engineering",
+      "parent_destination": "engineering",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "engineering: engineering rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/equipment/[id]",
+      "pattern": "/equipment/[id]",
+      "canonical_pattern": "/equipment/[id]",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "equipment",
+      "breadcrumb_fallback": "Equipment",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "shared.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/equipment/[id]/page.tsx",
+        "src/components/equipment-workspace.tsx",
+        "src/components/equipment-forms.tsx",
+        "src/components/equipment-evidence.tsx",
+        "src/components/equipment-instruments.tsx",
+        "src/components/equipment-lookup.tsx",
+        "src/components/equipment-timeline.tsx",
+        "src/equipment/reads.ts",
+        "src/app/styles/equipment.css"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/equipment",
+      "pattern": "/equipment",
+      "canonical_pattern": "/equipment",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "equipment",
+      "breadcrumb_fallback": "Equipment",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "shared.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/equipment/page.tsx",
+        "src/components/equipment-workspace.tsx",
+        "src/components/equipment-forms.tsx",
+        "src/components/equipment-evidence.tsx",
+        "src/components/equipment-instruments.tsx",
+        "src/components/equipment-lookup.tsx",
+        "src/components/equipment-timeline.tsx",
+        "src/equipment/reads.ts",
+        "src/app/styles/equipment.css"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/estimating/discovery/[id]/costing",
+      "pattern": "/estimating/discovery/[id]/costing",
+      "canonical_pattern": "/estimating/discovery/[id]/costing",
+      "workspace": "estimate",
+      "parent_destination": "wizard",
+      "breadcrumb_fallback": "Estimation wizard",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "estimating.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/estimating/discovery/[id]/costing/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/estimating/discovery/[id]",
+      "pattern": "/estimating/discovery/[id]",
+      "canonical_pattern": "/estimating/discovery/[id]",
+      "workspace": "estimate",
+      "parent_destination": "wizard",
+      "breadcrumb_fallback": "Estimation wizard",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "estimating.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/estimating/discovery/[id]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/estimating/discovery/new",
+      "pattern": "/estimating/discovery/new",
+      "canonical_pattern": "/estimating/discovery/new",
+      "workspace": "estimate",
+      "parent_destination": "wizard",
+      "breadcrumb_fallback": "Estimation wizard",
+      "discovery": "estimate: wizard rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "estimating.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/estimating/discovery/new/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/estimating/discovery",
+      "pattern": "/estimating/discovery",
+      "canonical_pattern": "/estimating/discovery",
+      "workspace": "estimate",
+      "parent_destination": "wizard",
+      "breadcrumb_fallback": "Estimation wizard",
+      "discovery": "estimate: wizard rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "estimating.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/estimating/discovery/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/estimating/estimates/[id]",
+      "pattern": "/estimating/estimates/[id]",
+      "canonical_pattern": "/estimating/estimates/[id]",
+      "workspace": "estimate",
+      "parent_destination": "estimates",
+      "breadcrumb_fallback": "Saved estimate",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "estimating.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/estimating/estimates/[id]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/estimating/new",
+      "pattern": "/estimating/new",
+      "canonical_pattern": "/estimating/new",
+      "workspace": "estimate",
+      "parent_destination": "estimates",
+      "breadcrumb_fallback": "Intake & workload",
+      "discovery": "estimate: estimates rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "estimating.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/estimating/new/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/estimating",
+      "pattern": "/estimating",
+      "canonical_pattern": "/estimating",
+      "workspace": "estimate",
+      "parent_destination": "estimates",
+      "breadcrumb_fallback": "Intake & workload",
+      "discovery": "estimate: estimates rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "estimating.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/estimating/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/estimating/quotes/[id]",
+      "pattern": "/estimating/quotes/[id]",
+      "canonical_pattern": "/estimating/quotes/[id]",
+      "workspace": "estimate",
+      "parent_destination": "quotations",
+      "breadcrumb_fallback": "Quotations",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [
+          "estimating.read"
+        ],
+        "any": [
+          "estimating.quote.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/estimating/quotes/[id]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/finance/handoffs/[id]",
+      "pattern": "/finance/handoffs/[id]",
+      "canonical_pattern": "/finance/handoffs/[id]",
+      "workspace": "finance",
+      "parent_destination": "finance",
+      "breadcrumb_fallback": "Finance handoffs",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "finance.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/finance/handoffs/[id]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/finance/handoffs/new",
+      "pattern": "/finance/handoffs/new",
+      "canonical_pattern": "/finance/handoffs/new",
+      "workspace": "finance",
+      "parent_destination": "finance",
+      "breadcrumb_fallback": "Finance handoffs",
+      "discovery": "finance: finance rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "finance.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/finance/handoffs/new/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/finance/handoffs",
+      "pattern": "/finance/handoffs",
+      "canonical_pattern": "/finance/handoffs",
+      "workspace": "finance",
+      "parent_destination": "finance",
+      "breadcrumb_fallback": "Finance handoffs",
+      "discovery": "finance: finance rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "finance.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/finance/handoffs/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/my-jobs/[id]",
+      "pattern": "/my-jobs/[id]",
+      "canonical_pattern": "/my-jobs/[id]",
+      "workspace": "service",
+      "parent_destination": "jobs",
+      "breadcrumb_fallback": "My jobs",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "field.read.own"
+        ]
+      },
+      "source": [
+        "src/app/(business)/my-jobs/[id]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/my-jobs",
+      "pattern": "/my-jobs",
+      "canonical_pattern": "/my-jobs",
+      "workspace": "service",
+      "parent_destination": "jobs",
+      "breadcrumb_fallback": "My jobs",
+      "discovery": "service: jobs rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "field.read.own"
+        ]
+      },
+      "source": [
+        "src/app/(business)/my-jobs/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/people/[id]",
+      "pattern": "/people/[id]",
+      "canonical_pattern": "/people/[id]",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "people",
+      "breadcrumb_fallback": "People",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "shared.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/people/[id]/page.tsx",
+        "src/components/contact-workspace.tsx",
+        "src/shared/contacts/reads.ts",
+        "src/shared/contacts/commands.ts"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/people",
+      "pattern": "/people",
+      "canonical_pattern": "/people",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "people",
+      "breadcrumb_fallback": "People",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "shared.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/people/page.tsx",
+        "src/components/contact-workspace.tsx",
+        "src/shared/contacts/reads.ts",
+        "src/shared/contacts/commands.ts"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/projects/[id]",
+      "pattern": "/projects/[id]",
+      "canonical_pattern": "/projects/[id]",
+      "workspace": "projects",
+      "parent_destination": "projects",
+      "breadcrumb_fallback": "Projects",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "project.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/projects/[id]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/projects/new",
+      "pattern": "/projects/new",
+      "canonical_pattern": "/projects/new",
+      "workspace": "projects",
+      "parent_destination": "projects",
+      "breadcrumb_fallback": "Projects",
+      "discovery": "projects: projects rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "project.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/projects/new/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/projects",
+      "pattern": "/projects",
+      "canonical_pattern": "/projects",
+      "workspace": "projects",
+      "parent_destination": "projects",
+      "breadcrumb_fallback": "Projects",
+      "discovery": "projects: projects rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "project.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/projects/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/sales/leads/[id]",
+      "pattern": "/sales/leads/[id]",
+      "canonical_pattern": "/sales/leads/[id]",
+      "workspace": "sales",
+      "parent_destination": "leads",
+      "breadcrumb_fallback": "Leads",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "crm.lead.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/sales/leads/[id]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/sales/leads",
+      "pattern": "/sales/leads",
+      "canonical_pattern": "/sales/leads",
+      "workspace": "sales",
+      "parent_destination": "leads",
+      "breadcrumb_fallback": "Leads",
+      "discovery": "sales: leads rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "crm.lead.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/sales/leads/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/sales/opportunities/[id]",
+      "pattern": "/sales/opportunities/[id]",
+      "canonical_pattern": "/sales/opportunities/[id]",
+      "workspace": "sales",
+      "parent_destination": "deals",
+      "breadcrumb_fallback": "Deals",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "crm.opportunity.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/sales/opportunities/[id]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/sales/opportunities/new",
+      "pattern": "/sales/opportunities/new",
+      "canonical_pattern": "/sales/opportunities/new",
+      "workspace": "sales",
+      "parent_destination": "deals",
+      "breadcrumb_fallback": "Deals",
+      "discovery": "sales: deals rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "crm.opportunity.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/sales/opportunities/new/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/sales/opportunities",
+      "pattern": "/sales/opportunities",
+      "canonical_pattern": "/sales/opportunities",
+      "workspace": "sales",
+      "parent_destination": "deals",
+      "breadcrumb_fallback": "Deals",
+      "discovery": "sales: deals rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "crm.opportunity.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/sales/opportunities/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/schedule",
+      "pattern": "/schedule",
+      "canonical_pattern": "/schedule",
+      "workspace": "service",
+      "parent_destination": "planner",
+      "breadcrumb_fallback": "Schedule",
+      "discovery": "service: planner rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "schedule.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/schedule/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/service/appointments/[id]",
+      "pattern": "/service/appointments/[id]",
+      "canonical_pattern": "/service/appointments/[id]",
+      "workspace": "service",
+      "parent_destination": "planner",
+      "breadcrumb_fallback": "Schedule",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "schedule.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/service/appointments/[id]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/service/packs/[id]",
+      "pattern": "/service/packs/[id]",
+      "canonical_pattern": "/service/packs/[id]",
+      "workspace": "service",
+      "parent_destination": "packs",
+      "breadcrumb_fallback": "Job packs",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "pack.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/service/packs/[id]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/service/packs/new",
+      "pattern": "/service/packs/new",
+      "canonical_pattern": "/service/packs/new",
+      "workspace": "service",
+      "parent_destination": "packs",
+      "breadcrumb_fallback": "Job packs",
+      "discovery": "service: packs rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "pack.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/service/packs/new/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/service/packs",
+      "pattern": "/service/packs",
+      "canonical_pattern": "/service/packs",
+      "workspace": "service",
+      "parent_destination": "packs",
+      "breadcrumb_fallback": "Job packs",
+      "discovery": "service: packs rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "pack.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/service/packs/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/service/reports/[id]",
+      "pattern": "/service/reports/[id]",
+      "canonical_pattern": "/service/reports/[id]",
+      "workspace": "service",
+      "parent_destination": "reports",
+      "breadcrumb_fallback": "Service review",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "report.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/service/reports/[id]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/service/reports",
+      "pattern": "/service/reports",
+      "canonical_pattern": "/service/reports",
+      "workspace": "service",
+      "parent_destination": "reports",
+      "breadcrumb_fallback": "Service review",
+      "discovery": "service: reports rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "report.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/service/reports/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/service/technicians",
+      "pattern": "/service/technicians",
+      "canonical_pattern": "/service/technicians",
+      "workspace": "service",
+      "parent_destination": "technicians",
+      "breadcrumb_fallback": "Field team",
+      "discovery": "service: technicians rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "schedule.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/service/technicians/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/service/tickets/[id]",
+      "pattern": "/service/tickets/[id]",
+      "canonical_pattern": "/service/tickets/[id]",
+      "workspace": "service",
+      "parent_destination": "tickets",
+      "breadcrumb_fallback": "Service requests",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "service.ticket.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/service/tickets/[id]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/service/tickets/new",
+      "pattern": "/service/tickets/new",
+      "canonical_pattern": "/service/tickets/new",
+      "workspace": "service",
+      "parent_destination": "tickets",
+      "breadcrumb_fallback": "Service requests",
+      "discovery": "service: tickets rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "service.ticket.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/service/tickets/new/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/service/tickets",
+      "pattern": "/service/tickets",
+      "canonical_pattern": "/service/tickets",
+      "workspace": "service",
+      "parent_destination": "tickets",
+      "breadcrumb_fallback": "Service requests",
+      "discovery": "service: tickets rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "service.ticket.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/service/tickets/page.tsx",
+        "src/service/components/client/ticket-register.tsx",
+        "src/service/components/client/ticket-register-parts.tsx",
+        "src/app/styles/service-requests.css"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/service/work-orders/[id]",
+      "pattern": "/service/work-orders/[id]",
+      "canonical_pattern": "/service/work-orders/[id]",
+      "workspace": "service",
+      "parent_destination": "orders",
+      "breadcrumb_fallback": "Work orders",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "service.work_order.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/service/work-orders/[id]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/service/work-orders/new",
+      "pattern": "/service/work-orders/new",
+      "canonical_pattern": "/service/work-orders/new",
+      "workspace": "service",
+      "parent_destination": "orders",
+      "breadcrumb_fallback": "Work orders",
+      "discovery": "service: orders rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "service.work_order.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/service/work-orders/new/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/service/work-orders",
+      "pattern": "/service/work-orders",
+      "canonical_pattern": "/service/work-orders",
+      "workspace": "service",
+      "parent_destination": "orders",
+      "breadcrumb_fallback": "Work orders",
+      "discovery": "service: orders rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "service.work_order.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/service/work-orders/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/sites/[id]",
+      "pattern": "/sites/[id]",
+      "canonical_pattern": "/sites/[id]",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "sites",
+      "breadcrumb_fallback": "Sites",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "shared.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/sites/[id]/page.tsx",
+        "src/components/context-screens.tsx",
+        "src/components/site-primary-contact.tsx",
+        "src/shared/contacts/commands.ts"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/sites",
+      "pattern": "/sites",
+      "canonical_pattern": "/sites",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "sites",
+      "breadcrumb_fallback": "Sites",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "shared.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/sites/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/work/actions",
+      "pattern": "/work/actions",
+      "canonical_pattern": "/work/actions",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "work",
+      "breadcrumb_fallback": "My Work",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "activity.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/work/(workspace)/actions/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/work",
+      "pattern": "/work",
+      "canonical_pattern": "/work",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "work",
+      "breadcrumb_fallback": "My Work",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "activity.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/work/(workspace)/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/work/reviews",
+      "pattern": "/work/reviews",
+      "canonical_pattern": "/work/reviews",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "approvals",
+      "breadcrumb_fallback": "Approvals & handovers",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "activity.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/work/(workspace)/reviews/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/work/team",
+      "pattern": "/work/team",
+      "canonical_pattern": "/work/team",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "work",
+      "breadcrumb_fallback": "My Work",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "activity.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/work/(workspace)/team/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/work/updates",
+      "pattern": "/work/updates",
+      "canonical_pattern": "/work/updates",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "work",
+      "breadcrumb_fallback": "My Work",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "activity.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/work/(workspace)/updates/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/work/waiting",
+      "pattern": "/work/waiting",
+      "canonical_pattern": "/work/waiting",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "work",
+      "breadcrumb_fallback": "My Work",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "activity.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/work/(workspace)/waiting/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/work/[id]",
+      "pattern": "/work/[id]",
+      "canonical_pattern": "/work/[id]",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "work",
+      "breadcrumb_fallback": "My Work",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "activity.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/work/[id]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/work/new",
+      "pattern": "/work/new",
+      "canonical_pattern": "/work/new",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "work",
+      "breadcrumb_fallback": "My Work",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "activity.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/work/new/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/foundation",
+      "pattern": "/foundation",
+      "canonical_pattern": "/foundation",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "foundation",
+      "breadcrumb_fallback": "Foundation checks",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": []
+      },
+      "source": [
+        "src/app/foundation/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/",
+      "pattern": "/",
+      "canonical_pattern": "/",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "home",
+      "breadcrumb_fallback": "Home",
+      "discovery": "Home / logo / fixed post-login start",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": []
+      },
+      "source": [
+        "src/app/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/login",
+      "pattern": "/login",
+      "canonical_pattern": "/login",
+      "workspace": "Shared/personal/support",
+      "parent_destination": null,
+      "breadcrumb_fallback": "Boundary / unavailable",
+      "discovery": "Authentication boundary",
+      "availability": "Boundary",
+      "capabilities": {
+        "all": [],
+        "any": []
+      },
+      "source": [
+        "scripts/local-server.ts"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/offline/index.html",
+      "pattern": "/offline/index.html",
+      "canonical_pattern": "/offline/index.html",
+      "workspace": "Shared/personal/support",
+      "parent_destination": null,
+      "breadcrumb_fallback": "Boundary / unavailable",
+      "discovery": "Local field originals/recovery only",
+      "availability": "Boundary",
+      "capabilities": {
+        "all": [],
+        "any": []
+      },
+      "source": [
+        "public/offline/index.html"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/contacts",
+      "pattern": "/contacts",
+      "canonical_pattern": "/contacts",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "contacts",
+      "breadcrumb_fallback": "Contacts",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "shared.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/contacts/page.tsx",
+        "src/components/contact-workspace.tsx",
+        "src/shared/contacts/reads.ts",
+        "src/shared/contacts/commands.ts"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/[id]/changes",
+      "pattern": "/engineering/[id]/changes",
+      "canonical_pattern": "/engineering/[id]/changes",
+      "workspace": "engineering",
+      "parent_destination": "changes",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/[id]/changes/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/[id]/changes/handovers",
+      "pattern": "/engineering/[id]/changes/handovers",
+      "canonical_pattern": "/engineering/[id]/changes/handovers",
+      "workspace": "engineering",
+      "parent_destination": "changes",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/[id]/changes/handovers/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/[id]/changes/history",
+      "pattern": "/engineering/[id]/changes/history",
+      "canonical_pattern": "/engineering/[id]/changes/history",
+      "workspace": "engineering",
+      "parent_destination": "changes",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/[id]/changes/history/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/[id]/changes/impact",
+      "pattern": "/engineering/[id]/changes/impact",
+      "canonical_pattern": "/engineering/[id]/changes/impact",
+      "workspace": "engineering",
+      "parent_destination": "changes",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/[id]/changes/impact/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/[id]/changes/reviews",
+      "pattern": "/engineering/[id]/changes/reviews",
+      "canonical_pattern": "/engineering/[id]/changes/reviews",
+      "workspace": "engineering",
+      "parent_destination": "changes",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/[id]/changes/reviews/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/[id]/changes/verification",
+      "pattern": "/engineering/[id]/changes/verification",
+      "canonical_pattern": "/engineering/[id]/changes/verification",
+      "workspace": "engineering",
+      "parent_destination": "changes",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/[id]/changes/verification/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/[id]/materials",
+      "pattern": "/engineering/[id]/materials",
+      "canonical_pattern": "/engineering/[id]/materials",
+      "workspace": "engineering",
+      "parent_destination": "materials",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/[id]/materials/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/[id]/materials/handover",
+      "pattern": "/engineering/[id]/materials/handover",
+      "canonical_pattern": "/engineering/[id]/materials/handover",
+      "workspace": "engineering",
+      "parent_destination": "materials",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/[id]/materials/handover/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/[id]/materials/history",
+      "pattern": "/engineering/[id]/materials/history",
+      "canonical_pattern": "/engineering/[id]/materials/history",
+      "workspace": "engineering",
+      "parent_destination": "materials",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/[id]/materials/history/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/[id]/materials/mapping",
+      "pattern": "/engineering/[id]/materials/mapping",
+      "canonical_pattern": "/engineering/[id]/materials/mapping",
+      "workspace": "engineering",
+      "parent_destination": "materials",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/[id]/materials/mapping/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/[id]/materials/releases",
+      "pattern": "/engineering/[id]/materials/releases",
+      "canonical_pattern": "/engineering/[id]/materials/releases",
+      "workspace": "engineering",
+      "parent_destination": "materials",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/[id]/materials/releases/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/[id]/materials/substitutions",
+      "pattern": "/engineering/[id]/materials/substitutions",
+      "canonical_pattern": "/engineering/[id]/materials/substitutions",
+      "workspace": "engineering",
+      "parent_destination": "materials",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/[id]/materials/substitutions/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/changes",
+      "pattern": "/engineering/changes",
+      "canonical_pattern": "/engineering/changes",
+      "workspace": "engineering",
+      "parent_destination": "changes",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "engineering: changes rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/changes/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/commissioning",
+      "pattern": "/engineering/commissioning",
+      "canonical_pattern": "/engineering/commissioning",
+      "workspace": "engineering",
+      "parent_destination": "commissioning",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "engineering: commissioning rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/commissioning/(views)/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/commissioning/basis",
+      "pattern": "/engineering/commissioning/basis",
+      "canonical_pattern": "/engineering/commissioning/basis",
+      "workspace": "engineering",
+      "parent_destination": "commissioning",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "engineering: commissioning rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/commissioning/(views)/basis/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/commissioning/configuration",
+      "pattern": "/engineering/commissioning/configuration",
+      "canonical_pattern": "/engineering/commissioning/configuration",
+      "workspace": "engineering",
+      "parent_destination": "commissioning",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "engineering: commissioning rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/commissioning/(views)/configuration/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/commissioning/handovers",
+      "pattern": "/engineering/commissioning/handovers",
+      "canonical_pattern": "/engineering/commissioning/handovers",
+      "workspace": "engineering",
+      "parent_destination": "commissioning",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "engineering: commissioning rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/commissioning/(views)/handovers/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/commissioning/packages/[id]",
+      "pattern": "/engineering/commissioning/packages/[id]",
+      "canonical_pattern": "/engineering/commissioning/packages/[id]",
+      "workspace": "engineering",
+      "parent_destination": "commissioning",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/commissioning/packages/[id]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/commissioning/releases",
+      "pattern": "/engineering/commissioning/releases",
+      "canonical_pattern": "/engineering/commissioning/releases",
+      "workspace": "engineering",
+      "parent_destination": "commissioning",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "engineering: commissioning rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/commissioning/(views)/releases/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/commissioning/results",
+      "pattern": "/engineering/commissioning/results",
+      "canonical_pattern": "/engineering/commissioning/results",
+      "workspace": "engineering",
+      "parent_destination": "commissioning",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "engineering: commissioning rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/commissioning/(views)/results/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/materials",
+      "pattern": "/engineering/materials",
+      "canonical_pattern": "/engineering/materials",
+      "workspace": "engineering",
+      "parent_destination": "materials",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "engineering: materials rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/materials/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/estimating/configurations",
+      "pattern": "/estimating/configurations",
+      "canonical_pattern": "/estimating/configurations",
+      "workspace": "estimate",
+      "parent_destination": "configurations",
+      "breadcrumb_fallback": "Specialist configurations",
+      "discovery": "estimate: configurations rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "estimating.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/estimating/configurations/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/estimating/configurations/[id]",
+      "pattern": "/estimating/configurations/[id]",
+      "canonical_pattern": "/estimating/configurations/[id]",
+      "workspace": "estimate",
+      "parent_destination": "configurations",
+      "breadcrumb_fallback": "Specialist configurations",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "estimating.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/estimating/configurations/[id]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/estimating/configurations/[id]/[view]",
+      "pattern": "/estimating/configurations/[id]/[view]",
+      "canonical_pattern": "/estimating/configurations/[id]/[view]",
+      "workspace": "estimate",
+      "parent_destination": "configurations",
+      "breadcrumb_fallback": "Specialist configurations",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "estimating.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/estimating/configurations/[id]/[view]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/estimating/configurations/new",
+      "pattern": "/estimating/configurations/new",
+      "canonical_pattern": "/estimating/configurations/new",
+      "workspace": "estimate",
+      "parent_destination": "configurations",
+      "breadcrumb_fallback": "Specialist configurations",
+      "discovery": "estimate: configurations rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "estimating.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/estimating/configurations/new/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/estimating/fertigation",
+      "pattern": "/estimating/fertigation",
+      "canonical_pattern": "/estimating/fertigation",
+      "workspace": "estimate",
+      "parent_destination": "configurations",
+      "breadcrumb_fallback": "Priva Fertigation Configurator",
+      "discovery": "estimate: configurations rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "estimating.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/estimating/fertigation/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/estimating/fertigation/[id]",
+      "pattern": "/estimating/fertigation/[id]",
+      "canonical_pattern": "/estimating/fertigation/[id]",
+      "workspace": "estimate",
+      "parent_destination": "configurations",
+      "breadcrumb_fallback": "Priva Fertigation Configurator",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "estimating.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/estimating/fertigation/[id]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/estimating/fertigation/new",
+      "pattern": "/estimating/fertigation/new",
+      "canonical_pattern": "/estimating/fertigation/new",
+      "workspace": "estimate",
+      "parent_destination": "configurations",
+      "breadcrumb_fallback": "Priva Fertigation Configurator",
+      "discovery": "estimate: configurations rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "estimating.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/estimating/fertigation/new/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/estimating/quotes",
+      "pattern": "/estimating/quotes",
+      "canonical_pattern": "/estimating/quotes",
+      "workspace": "estimate",
+      "parent_destination": "quotations",
+      "breadcrumb_fallback": "Quotations",
+      "discovery": "estimate: quotations rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [
+          "estimating.read"
+        ],
+        "any": [
+          "estimating.quote.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/estimating/quotes/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/facilities",
+      "pattern": "/facilities",
+      "canonical_pattern": "/facilities",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "facilities",
+      "breadcrumb_fallback": "Facilities & growing areas",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "shared.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/facilities/page.tsx",
+        "src/components/facility-register.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/facilities/[id]",
+      "pattern": "/facilities/[id]",
+      "canonical_pattern": "/facilities/[id]",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "facilities",
+      "breadcrumb_fallback": "Facilities & growing areas",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "shared.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/facilities/[id]/page.tsx",
+        "src/components/facility-detail.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/facilities/[id]/edit",
+      "pattern": "/facilities/[id]/edit",
+      "canonical_pattern": "/facilities/[id]/edit",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "facilities",
+      "breadcrumb_fallback": "Facilities & growing areas",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "shared.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/facilities/[id]/edit/page.tsx",
+        "src/components/facility-form.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/facilities/new",
+      "pattern": "/facilities/new",
+      "canonical_pattern": "/facilities/new",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "facilities",
+      "breadcrumb_fallback": "Facilities & growing areas",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "shared.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/facilities/new/page.tsx",
+        "src/components/facility-form.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/finance/accounts",
+      "pattern": "/finance/accounts",
+      "canonical_pattern": "/finance/accounts",
+      "workspace": "finance",
+      "parent_destination": "accounts",
+      "breadcrumb_fallback": "Customer accounts",
+      "discovery": "finance: accounts rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [
+          "shared.finance.read",
+          "finance.read"
+        ],
+        "any": [
+          "finance.account.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/finance/accounts/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/projects/acceptance",
+      "pattern": "/projects/acceptance",
+      "canonical_pattern": "/projects/acceptance",
+      "workspace": "projects",
+      "parent_destination": "acceptance",
+      "breadcrumb_fallback": "Acceptance & closeout",
+      "discovery": "projects: acceptance rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "project.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/projects/acceptance/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/projects/acceptance/closeout",
+      "pattern": "/projects/acceptance/closeout",
+      "canonical_pattern": "/projects/acceptance/closeout",
+      "workspace": "projects",
+      "parent_destination": "acceptance",
+      "breadcrumb_fallback": "Acceptance & closeout",
+      "discovery": "projects: acceptance rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "project.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/projects/acceptance/closeout/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/projects/acceptance/handover",
+      "pattern": "/projects/acceptance/handover",
+      "canonical_pattern": "/projects/acceptance/handover",
+      "workspace": "projects",
+      "parent_destination": "acceptance",
+      "breadcrumb_fallback": "Acceptance & closeout",
+      "discovery": "projects: acceptance rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "project.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/projects/acceptance/handover/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/projects/acceptance/history",
+      "pattern": "/projects/acceptance/history",
+      "canonical_pattern": "/projects/acceptance/history",
+      "workspace": "projects",
+      "parent_destination": "acceptance",
+      "breadcrumb_fallback": "Acceptance & closeout",
+      "discovery": "projects: acceptance rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "project.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/projects/acceptance/history/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/projects/acceptance/outstanding",
+      "pattern": "/projects/acceptance/outstanding",
+      "canonical_pattern": "/projects/acceptance/outstanding",
+      "workspace": "projects",
+      "parent_destination": "acceptance",
+      "breadcrumb_fallback": "Acceptance & closeout",
+      "discovery": "projects: acceptance rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "project.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/projects/acceptance/outstanding/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/projects/acceptance/readiness",
+      "pattern": "/projects/acceptance/readiness",
+      "canonical_pattern": "/projects/acceptance/readiness",
+      "workspace": "projects",
+      "parent_destination": "acceptance",
+      "breadcrumb_fallback": "Acceptance & closeout",
+      "discovery": "projects: acceptance rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "project.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/projects/acceptance/readiness/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/projects/acceptance/stages/[id]",
+      "pattern": "/projects/acceptance/stages/[id]",
+      "canonical_pattern": "/projects/acceptance/stages/[id]",
+      "workspace": "projects",
+      "parent_destination": "acceptance",
+      "breadcrumb_fallback": "Acceptance & closeout",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "project.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/projects/acceptance/stages/[id]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/projects/programme",
+      "pattern": "/projects/programme",
+      "canonical_pattern": "/projects/programme",
+      "workspace": "projects",
+      "parent_destination": "programme",
+      "breadcrumb_fallback": "Programme",
+      "discovery": "projects: programme rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "project.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/projects/programme/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/sales/pulse",
+      "pattern": "/sales/pulse",
+      "canonical_pattern": "/sales/pulse",
+      "workspace": "sales",
+      "parent_destination": "pulse",
+      "breadcrumb_fallback": "Pulse",
+      "discovery": "sales: pulse rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "crm.opportunity.read",
+          "crm.lead.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/sales/pulse/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/sales/tasks",
+      "pattern": "/sales/tasks",
+      "canonical_pattern": "/sales/tasks",
+      "workspace": "sales",
+      "parent_destination": "tasks",
+      "breadcrumb_fallback": "Tasks",
+      "discovery": "sales: tasks rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "crm.opportunity.read",
+          "crm.lead.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/sales/tasks/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/development/design-system",
+      "pattern": "/development/design-system",
+      "canonical_pattern": "/development/design-system",
+      "workspace": "Shared/personal/support",
+      "parent_destination": null,
+      "breadcrumb_fallback": "Boundary / unavailable",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "Boundary",
+      "capabilities": {
+        "all": [],
+        "any": []
+      },
+      "source": [
+        "src/app/development/design-system/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/development/page-register",
+      "pattern": "/development/page-register",
+      "canonical_pattern": "/development/page-register",
+      "workspace": "Shared/personal/support",
+      "parent_destination": null,
+      "breadcrumb_fallback": "Boundary / unavailable",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "Boundary",
+      "capabilities": {
+        "all": [],
+        "any": []
+      },
+      "source": [
+        "src/app/development/page-register/page.tsx",
+        "src/development/catalog.ts",
+        "src/development/runtime.ts",
+        "src/development/page-guide.tsx",
+        "src/app/api/development/catalog/route.ts"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/development/component-preview",
+      "pattern": "/development/component-preview",
+      "canonical_pattern": "/development/component-preview",
+      "workspace": "Shared/personal/support",
+      "parent_destination": null,
+      "breadcrumb_fallback": "Boundary / unavailable",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "Boundary",
+      "capabilities": {
+        "all": [],
+        "any": []
+      },
+      "source": [
+        "src/app/development/component-preview/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/search",
+      "pattern": "/search",
+      "canonical_pattern": "/search",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "search",
+      "breadcrumb_fallback": "Search",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "activity.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/search/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/customers/[id]/development",
+      "pattern": "/customers/[id]/development",
+      "canonical_pattern": "/customers/[id]/development",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "customers",
+      "breadcrumb_fallback": "Organisations",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "shared.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/customers/[id]/development/page.tsx",
+        "src/components/cs-workspace.tsx",
+        "src/components/cs-forms.tsx",
+        "src/shared/cs/service.ts",
+        "docs/blueprints/crm-parity.md"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/customers/[id]/stakeholders",
+      "pattern": "/customers/[id]/stakeholders",
+      "canonical_pattern": "/customers/[id]/stakeholders",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "customers",
+      "breadcrumb_fallback": "Organisations",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "shared.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/customers/[id]/stakeholders/page.tsx",
+        "src/components/contact-workspace.tsx",
+        "src/shared/contacts/reads.ts",
+        "src/shared/contacts/commands.ts"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/sites/[id]/readiness",
+      "pattern": "/sites/[id]/readiness",
+      "canonical_pattern": "/sites/[id]/readiness",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "sites",
+      "breadcrumb_fallback": "Sites",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "shared.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/sites/[id]/readiness/page.tsx",
+        "src/components/cs-workspace.tsx",
+        "src/components/cs-forms.tsx",
+        "src/shared/cs/service.ts",
+        "src/shared/cs/readiness.ts"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/surveys/[id]",
+      "pattern": "/surveys/[id]",
+      "canonical_pattern": "/surveys/[id]",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "surveys",
+      "breadcrumb_fallback": "Site surveys & as-found",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "shared.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/surveys/[id]/page.tsx",
+        "src/components/cs-workspace.tsx",
+        "src/components/cs-forms.tsx",
+        "src/shared/cs/service.ts",
+        "src/shared/cs/photos.ts"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/surveys",
+      "pattern": "/surveys",
+      "canonical_pattern": "/surveys",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "surveys",
+      "breadcrumb_fallback": "Site surveys & as-found",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "shared.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/surveys/page.tsx",
+        "src/components/cs-workspace.tsx",
+        "src/components/cs-forms.tsx",
+        "src/shared/cs/service.ts",
+        "src/shared/cs/photos.ts"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/schedule/capacity",
+      "pattern": "/schedule/capacity",
+      "canonical_pattern": "/schedule/capacity",
+      "workspace": "service",
+      "parent_destination": "planner",
+      "breadcrumb_fallback": "Capacity review",
+      "discovery": "service: planner rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "schedule.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/schedule/capacity/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/schedule/changes",
+      "pattern": "/schedule/changes",
+      "canonical_pattern": "/schedule/changes",
+      "workspace": "service",
+      "parent_destination": "planner",
+      "breadcrumb_fallback": "Scheduling change follow-up",
+      "discovery": "service: planner rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "schedule.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/schedule/changes/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/schedule/travel",
+      "pattern": "/schedule/travel",
+      "canonical_pattern": "/schedule/travel",
+      "workspace": "service",
+      "parent_destination": "planner",
+      "breadcrumb_fallback": "Travel review",
+      "discovery": "service: planner rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "schedule.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/schedule/travel/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/service/technicians/[id]",
+      "pattern": "/service/technicians/[id]",
+      "canonical_pattern": "/service/technicians/[id]",
+      "workspace": "service",
+      "parent_destination": "technicians",
+      "breadcrumb_fallback": "Field team",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "schedule.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/service/technicians/[id]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/estimating/cost-sources/[id]",
+      "pattern": "/estimating/cost-sources/[id]",
+      "canonical_pattern": "/estimating/cost-sources/[id]",
+      "workspace": "estimate",
+      "parent_destination": "pricing",
+      "breadcrumb_fallback": "Cost sources",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "estimating.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/estimating/cost-sources/[id]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/estimating/cost-sources/new",
+      "pattern": "/estimating/cost-sources/new",
+      "canonical_pattern": "/estimating/cost-sources/new",
+      "workspace": "estimate",
+      "parent_destination": "pricing",
+      "breadcrumb_fallback": "Cost sources",
+      "discovery": "estimate: pricing rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "estimating.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/estimating/cost-sources/new/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/estimating/cost-sources",
+      "pattern": "/estimating/cost-sources",
+      "canonical_pattern": "/estimating/cost-sources",
+      "workspace": "estimate",
+      "parent_destination": "pricing",
+      "breadcrumb_fallback": "Cost sources",
+      "discovery": "estimate: pricing rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "estimating.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/estimating/cost-sources/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/estimating/estimates/[id]/sources",
+      "pattern": "/estimating/estimates/[id]/sources",
+      "canonical_pattern": "/estimating/estimates/[id]/sources",
+      "workspace": "estimate",
+      "parent_destination": "pricing",
+      "breadcrumb_fallback": "Compare source costs",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "estimating.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/estimating/estimates/[id]/sources/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/[id]/basis/assumptions",
+      "pattern": "/engineering/[id]/basis/assumptions",
+      "canonical_pattern": "/engineering/[id]/basis/assumptions",
+      "workspace": "engineering",
+      "parent_destination": "basis",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/[id]/basis/assumptions/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/[id]/basis/interfaces",
+      "pattern": "/engineering/[id]/basis/interfaces",
+      "canonical_pattern": "/engineering/[id]/basis/interfaces",
+      "workspace": "engineering",
+      "parent_destination": "basis",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/[id]/basis/interfaces/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/[id]/basis",
+      "pattern": "/engineering/[id]/basis",
+      "canonical_pattern": "/engineering/[id]/basis",
+      "workspace": "engineering",
+      "parent_destination": "basis",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/[id]/basis/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/[id]/basis/requirements",
+      "pattern": "/engineering/[id]/basis/requirements",
+      "canonical_pattern": "/engineering/[id]/basis/requirements",
+      "workspace": "engineering",
+      "parent_destination": "basis",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/[id]/basis/requirements/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/[id]/basis/review",
+      "pattern": "/engineering/[id]/basis/review",
+      "canonical_pattern": "/engineering/[id]/basis/review",
+      "workspace": "engineering",
+      "parent_destination": "basis",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/[id]/basis/review/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/[id]/basis/sources",
+      "pattern": "/engineering/[id]/basis/sources",
+      "canonical_pattern": "/engineering/[id]/basis/sources",
+      "workspace": "engineering",
+      "parent_destination": "basis",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/[id]/basis/sources/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/[id]/drawings/deliverables",
+      "pattern": "/engineering/[id]/drawings/deliverables",
+      "canonical_pattern": "/engineering/[id]/drawings/deliverables",
+      "workspace": "engineering",
+      "parent_destination": "drawings",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/[id]/drawings/deliverables/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/[id]/drawings",
+      "pattern": "/engineering/[id]/drawings",
+      "canonical_pattern": "/engineering/[id]/drawings",
+      "workspace": "engineering",
+      "parent_destination": "drawings",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/[id]/drawings/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/[id]/queries",
+      "pattern": "/engineering/[id]/queries",
+      "canonical_pattern": "/engineering/[id]/queries",
+      "workspace": "engineering",
+      "parent_destination": "technical-queries",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/[id]/queries/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/[id]/queries/submittals",
+      "pattern": "/engineering/[id]/queries/submittals",
+      "canonical_pattern": "/engineering/[id]/queries/submittals",
+      "workspace": "engineering",
+      "parent_destination": "technical-queries",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/[id]/queries/submittals/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/[id]/reviews/issues",
+      "pattern": "/engineering/[id]/reviews/issues",
+      "canonical_pattern": "/engineering/[id]/reviews/issues",
+      "workspace": "engineering",
+      "parent_destination": "technical-reviews",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/[id]/reviews/issues/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/[id]/reviews",
+      "pattern": "/engineering/[id]/reviews",
+      "canonical_pattern": "/engineering/[id]/reviews",
+      "workspace": "engineering",
+      "parent_destination": "technical-reviews",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/[id]/reviews/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/basis",
+      "pattern": "/engineering/basis",
+      "canonical_pattern": "/engineering/basis",
+      "workspace": "engineering",
+      "parent_destination": "basis",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "engineering: basis rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/basis/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/drawings",
+      "pattern": "/engineering/drawings",
+      "canonical_pattern": "/engineering/drawings",
+      "workspace": "engineering",
+      "parent_destination": "drawings",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "engineering: drawings rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/drawings/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/queries",
+      "pattern": "/engineering/queries",
+      "canonical_pattern": "/engineering/queries",
+      "workspace": "engineering",
+      "parent_destination": "technical-queries",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "engineering: technical-queries rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/queries/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/engineering/reviews",
+      "pattern": "/engineering/reviews",
+      "canonical_pattern": "/engineering/reviews",
+      "workspace": "engineering",
+      "parent_destination": "technical-reviews",
+      "breadcrumb_fallback": "Engineering workload",
+      "discovery": "engineering: technical-reviews rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "engineering.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/engineering/reviews/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/estimating/intake",
+      "pattern": "/estimating/intake",
+      "canonical_pattern": "/estimating/intake",
+      "workspace": "estimate",
+      "parent_destination": "intake",
+      "breadcrumb_fallback": "Intake",
+      "discovery": "estimate: intake rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [
+          "crm.opportunity.read",
+          "estimating.edit"
+        ],
+        "any": []
+      },
+      "source": [
+        "src/app/(business)/estimating/intake/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/sales/aftercare/[id]",
+      "pattern": "/sales/aftercare/[id]",
+      "canonical_pattern": "/sales/aftercare/[id]",
+      "workspace": "sales",
+      "parent_destination": "sales-aftercare",
+      "breadcrumb_fallback": "Aftercare & renewal",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [
+          "shared.internal.read",
+          "report.read"
+        ],
+        "any": []
+      },
+      "source": [
+        "src/app/(business)/sales/aftercare/[id]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/sales/aftercare",
+      "pattern": "/sales/aftercare",
+      "canonical_pattern": "/sales/aftercare",
+      "workspace": "sales",
+      "parent_destination": "sales-aftercare",
+      "breadcrumb_fallback": "Aftercare & renewal",
+      "discovery": "sales: sales-aftercare rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [
+          "shared.internal.read",
+          "report.read"
+        ],
+        "any": []
+      },
+      "source": [
+        "src/app/(business)/sales/aftercare/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/sales/handoffs/estimating/[id]",
+      "pattern": "/sales/handoffs/estimating/[id]",
+      "canonical_pattern": "/sales/handoffs/estimating/[id]",
+      "workspace": "sales",
+      "parent_destination": "sales-estimating",
+      "breadcrumb_fallback": "Sales-to-Estimating handovers",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "crm.opportunity.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/sales/handoffs/estimating/[id]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/sales/handoffs/estimating",
+      "pattern": "/sales/handoffs/estimating",
+      "canonical_pattern": "/sales/handoffs/estimating",
+      "workspace": "sales",
+      "parent_destination": "sales-estimating",
+      "breadcrumb_fallback": "Sales-to-Estimating handovers",
+      "discovery": "sales: sales-estimating rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "crm.opportunity.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/sales/handoffs/estimating/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/sales/handoffs/won/[id]",
+      "pattern": "/sales/handoffs/won/[id]",
+      "canonical_pattern": "/sales/handoffs/won/[id]",
+      "workspace": "sales",
+      "parent_destination": "sales-won",
+      "breadcrumb_fallback": "Won-deal receiving",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "crm.opportunity.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/sales/handoffs/won/[id]/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/sales/handoffs/won",
+      "pattern": "/sales/handoffs/won",
+      "canonical_pattern": "/sales/handoffs/won",
+      "workspace": "sales",
+      "parent_destination": "sales-won",
+      "breadcrumb_fallback": "Won-deal receiving",
+      "discovery": "sales: sales-won rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "crm.opportunity.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/sales/handoffs/won/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/equipment/backups",
+      "pattern": "/equipment/backups",
+      "canonical_pattern": "/equipment/backups",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "equipment",
+      "breadcrumb_fallback": "Equipment",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "shared.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/equipment/backups/page.tsx",
+        "src/components/equipment-workspace.tsx",
+        "src/components/equipment-forms.tsx",
+        "src/components/equipment-evidence.tsx",
+        "src/components/equipment-instruments.tsx",
+        "src/components/equipment-lookup.tsx",
+        "src/components/equipment-timeline.tsx",
+        "src/equipment/reads.ts",
+        "src/app/styles/equipment.css"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/equipment/bulletins",
+      "pattern": "/equipment/bulletins",
+      "canonical_pattern": "/equipment/bulletins",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "equipment",
+      "breadcrumb_fallback": "Equipment",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "shared.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/equipment/bulletins/page.tsx",
+        "src/components/equipment-workspace.tsx",
+        "src/components/equipment-forms.tsx",
+        "src/components/equipment-evidence.tsx",
+        "src/components/equipment-instruments.tsx",
+        "src/components/equipment-lookup.tsx",
+        "src/components/equipment-timeline.tsx",
+        "src/equipment/reads.ts",
+        "src/app/styles/equipment.css"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/equipment/instruments",
+      "pattern": "/equipment/instruments",
+      "canonical_pattern": "/equipment/instruments",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "equipment",
+      "breadcrumb_fallback": "Equipment",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "shared.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/equipment/instruments/page.tsx",
+        "src/components/equipment-workspace.tsx",
+        "src/components/equipment-forms.tsx",
+        "src/components/equipment-evidence.tsx",
+        "src/components/equipment-instruments.tsx",
+        "src/components/equipment-lookup.tsx",
+        "src/components/equipment-timeline.tsx",
+        "src/equipment/reads.ts",
+        "src/app/styles/equipment.css"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/equipment/lifecycle",
+      "pattern": "/equipment/lifecycle",
+      "canonical_pattern": "/equipment/lifecycle",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "equipment",
+      "breadcrumb_fallback": "Equipment",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "shared.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/equipment/lifecycle/page.tsx",
+        "src/components/equipment-workspace.tsx",
+        "src/components/equipment-forms.tsx",
+        "src/components/equipment-evidence.tsx",
+        "src/components/equipment-instruments.tsx",
+        "src/components/equipment-lookup.tsx",
+        "src/components/equipment-timeline.tsx",
+        "src/equipment/reads.ts",
+        "src/app/styles/equipment.css"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/equipment/lookup",
+      "pattern": "/equipment/lookup",
+      "canonical_pattern": "/equipment/lookup",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "equipment",
+      "breadcrumb_fallback": "Equipment",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "shared.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/equipment/lookup/page.tsx",
+        "src/components/equipment-workspace.tsx",
+        "src/components/equipment-forms.tsx",
+        "src/components/equipment-evidence.tsx",
+        "src/components/equipment-instruments.tsx",
+        "src/components/equipment-lookup.tsx",
+        "src/components/equipment-timeline.tsx",
+        "src/equipment/reads.ts",
+        "src/app/styles/equipment.css"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/supply/changes",
+      "pattern": "/supply/changes",
+      "canonical_pattern": "/supply/changes",
+      "workspace": "supply",
+      "parent_destination": "supply",
+      "breadcrumb_fallback": "Material change-impact review",
+      "discovery": "supply: supply rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "supply.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/supply/changes/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/supply/deliveries",
+      "pattern": "/supply/deliveries",
+      "canonical_pattern": "/supply/deliveries",
+      "workspace": "supply",
+      "parent_destination": "deliveries",
+      "breadcrumb_fallback": "Customer deliveries",
+      "discovery": "supply: deliveries rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "supply.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/supply/deliveries/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/supply/dispatch",
+      "pattern": "/supply/dispatch",
+      "canonical_pattern": "/supply/dispatch",
+      "workspace": "supply",
+      "parent_destination": "deliveries",
+      "breadcrumb_fallback": "Picking & dispatch",
+      "discovery": "supply: deliveries rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "supply.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/supply/dispatch/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/supply/material-readiness",
+      "pattern": "/supply/material-readiness",
+      "canonical_pattern": "/supply/material-readiness",
+      "workspace": "supply",
+      "parent_destination": "supply",
+      "breadcrumb_fallback": "Material demand & readiness",
+      "discovery": "supply: supply rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "supply.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/supply/material-readiness/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/supply/purchasing",
+      "pattern": "/supply/purchasing",
+      "canonical_pattern": "/supply/purchasing",
+      "workspace": "supply",
+      "parent_destination": "purchasing",
+      "breadcrumb_fallback": "Purchasing & supplier commitments",
+      "discovery": "supply: purchasing rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "supply.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/supply/purchasing/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/supply/receipts",
+      "pattern": "/supply/receipts",
+      "canonical_pattern": "/supply/receipts",
+      "workspace": "supply",
+      "parent_destination": "receiving",
+      "breadcrumb_fallback": "Receiving & inspection",
+      "discovery": "supply: receiving rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "supply.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/supply/receipts/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/supply/returns",
+      "pattern": "/supply/returns",
+      "canonical_pattern": "/supply/returns",
+      "workspace": "supply",
+      "parent_destination": "returns",
+      "breadcrumb_fallback": "Returns & claims",
+      "discovery": "supply: returns rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "supply.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/supply/returns/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/supply/service-stock",
+      "pattern": "/supply/service-stock",
+      "canonical_pattern": "/supply/service-stock",
+      "workspace": "supply",
+      "parent_destination": "stock",
+      "breadcrumb_fallback": "Service stock custody",
+      "discovery": "supply: stock rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "supply.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/supply/service-stock/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/supply/shipments",
+      "pattern": "/supply/shipments",
+      "canonical_pattern": "/supply/shipments",
+      "workspace": "supply",
+      "parent_destination": "inbound",
+      "breadcrumb_fallback": "Inbound shipments",
+      "discovery": "supply: inbound rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "supply.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/supply/shipments/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/supply/stock",
+      "pattern": "/supply/stock",
+      "canonical_pattern": "/supply/stock",
+      "workspace": "supply",
+      "parent_destination": "stock",
+      "breadcrumb_fallback": "Stock & reservations",
+      "discovery": "supply: stock rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "supply.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/supply/stock/page.tsx",
+        "src/supply/components/workspace.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/my-jobs/site-readiness",
+      "pattern": "/my-jobs/site-readiness",
+      "canonical_pattern": "/my-jobs/site-readiness",
+      "workspace": "service",
+      "parent_destination": "jobs",
+      "breadcrumb_fallback": "Field site readiness",
+      "discovery": "service: jobs rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "field.read.own"
+        ]
+      },
+      "source": [
+        "src/app/(business)/my-jobs/site-readiness/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/schedule/policy-impact",
+      "pattern": "/schedule/policy-impact",
+      "canonical_pattern": "/schedule/policy-impact",
+      "workspace": "service",
+      "parent_destination": "planner",
+      "breadcrumb_fallback": "Scheduling policy impact",
+      "discovery": "service: planner rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "schedule.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/schedule/policy-impact/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/my-jobs/inspections",
+      "pattern": "/my-jobs/inspections",
+      "canonical_pattern": "/my-jobs/inspections",
+      "workspace": "service",
+      "parent_destination": "inspection-capture",
+      "breadcrumb_fallback": "My inspections",
+      "discovery": "service: inspection-capture rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "field.read.own"
+        ]
+      },
+      "source": [
+        "src/app/(business)/my-jobs/inspections/page.tsx",
+        "src/inspections/service-screen.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/service/inspections",
+      "pattern": "/service/inspections",
+      "canonical_pattern": "/service/inspections",
+      "workspace": "service",
+      "parent_destination": "inspection-review",
+      "breadcrumb_fallback": "Inspection review",
+      "discovery": "service: inspection-review rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [
+          "report.read",
+          "service.work_order.edit"
+        ],
+        "any": []
+      },
+      "source": [
+        "src/app/(business)/service/inspections/page.tsx",
+        "src/inspections/service-screen.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/service/incidents/[id]",
+      "pattern": "/service/incidents/[id]",
+      "canonical_pattern": "/service/incidents/[id]",
+      "workspace": "service",
+      "parent_destination": "incidents",
+      "breadcrumb_fallback": "Incidents and actions",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "incident.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/service/incidents/[id]/page.tsx",
+        "src/incidents/screen.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/service/incidents/new",
+      "pattern": "/service/incidents/new",
+      "canonical_pattern": "/service/incidents/new",
+      "workspace": "service",
+      "parent_destination": "incidents",
+      "breadcrumb_fallback": "Incidents and actions",
+      "discovery": "service: incidents rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "incident.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/service/incidents/new/page.tsx",
+        "src/incidents/screen.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/service/incidents",
+      "pattern": "/service/incidents",
+      "canonical_pattern": "/service/incidents",
+      "workspace": "service",
+      "parent_destination": "incidents",
+      "breadcrumb_fallback": "Incidents and actions",
+      "discovery": "service: incidents rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "incident.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/service/incidents/page.tsx",
+        "src/incidents/screen.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/estimating/estimates/[id]/review",
+      "pattern": "/estimating/estimates/[id]/review",
+      "canonical_pattern": "/estimating/estimates/[id]/review",
+      "workspace": "estimate",
+      "parent_destination": "estimates",
+      "breadcrumb_fallback": "Estimate review",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "estimating.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/estimating/estimates/[id]/review/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/estimating/quotes/[id]/release",
+      "pattern": "/estimating/quotes/[id]/release",
+      "canonical_pattern": "/estimating/quotes/[id]/release",
+      "workspace": "estimate",
+      "parent_destination": "quotations",
+      "breadcrumb_fallback": "Quotations",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [
+          "estimating.read"
+        ],
+        "any": [
+          "estimating.quote.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/estimating/quotes/[id]/release/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/estimating/quotes/[id]/response",
+      "pattern": "/estimating/quotes/[id]/response",
+      "canonical_pattern": "/estimating/quotes/[id]/response",
+      "workspace": "estimate",
+      "parent_destination": "quotations",
+      "breadcrumb_fallback": "Quotations",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [
+          "estimating.read"
+        ],
+        "any": [
+          "estimating.quote.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/estimating/quotes/[id]/response/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/estimating/quotes/[id]/conversion",
+      "pattern": "/estimating/quotes/[id]/conversion",
+      "canonical_pattern": "/estimating/quotes/[id]/conversion",
+      "workspace": "estimate",
+      "parent_destination": "quotations",
+      "breadcrumb_fallback": "Quotations",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [
+          "estimating.read"
+        ],
+        "any": [
+          "estimating.quote.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/estimating/quotes/[id]/conversion/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/products/[id]",
+      "pattern": "/products/[id]",
+      "canonical_pattern": "/products/[id]",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "products",
+      "breadcrumb_fallback": "Products",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "products.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/products/[id]/page.tsx",
+        "src/app/(business)/products/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/products/compatibility",
+      "pattern": "/products/compatibility",
+      "canonical_pattern": "/products/compatibility",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "products",
+      "breadcrumb_fallback": "Products",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "products.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/products/compatibility/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/products/import",
+      "pattern": "/products/import",
+      "canonical_pattern": "/products/import",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "products",
+      "breadcrumb_fallback": "Product import",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "products.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/products/import/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/products",
+      "pattern": "/products",
+      "canonical_pattern": "/products",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "products",
+      "breadcrumb_fallback": "Products",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "products.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/products/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/products/pricing",
+      "pattern": "/products/pricing",
+      "canonical_pattern": "/products/pricing",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "products",
+      "breadcrumb_fallback": "Products",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "products.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/products/pricing/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/products/publication",
+      "pattern": "/products/publication",
+      "canonical_pattern": "/products/publication",
+      "workspace": "Shared/personal/support",
+      "parent_destination": "products",
+      "breadcrumb_fallback": "Products",
+      "discovery": "Shared/personal More or exact contextual source",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "products.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/products/publication/page.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/maintenance/agreements/[id]",
+      "pattern": "/maintenance/agreements/[id]",
+      "canonical_pattern": "/maintenance/agreements/[id]",
+      "workspace": "service",
+      "parent_destination": "agreements",
+      "breadcrumb_fallback": "Service agreements",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "maintenance.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/maintenance/agreements/[id]/page.tsx",
+        "src/maintenance/agreements.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/maintenance/agreements",
+      "pattern": "/maintenance/agreements",
+      "canonical_pattern": "/maintenance/agreements",
+      "workspace": "service",
+      "parent_destination": "agreements",
+      "breadcrumb_fallback": "Service agreements",
+      "discovery": "service: agreements rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "maintenance.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/maintenance/agreements/page.tsx",
+        "src/maintenance/agreements.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/maintenance/coverage/[id]",
+      "pattern": "/maintenance/coverage/[id]",
+      "canonical_pattern": "/maintenance/coverage/[id]",
+      "workspace": "service",
+      "parent_destination": "agreements",
+      "breadcrumb_fallback": "Coverage & entitlement",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "maintenance.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/maintenance/coverage/[id]/page.tsx",
+        "src/maintenance/assessments.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/maintenance/coverage",
+      "pattern": "/maintenance/coverage",
+      "canonical_pattern": "/maintenance/coverage",
+      "workspace": "service",
+      "parent_destination": "agreements",
+      "breadcrumb_fallback": "Coverage & entitlement",
+      "discovery": "service: agreements rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "maintenance.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/maintenance/coverage/page.tsx",
+        "src/maintenance/assessments.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/maintenance/due/[id]",
+      "pattern": "/maintenance/due/[id]",
+      "canonical_pattern": "/maintenance/due/[id]",
+      "workspace": "service",
+      "parent_destination": "maintenance",
+      "breadcrumb_fallback": "Maintenance",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "maintenance.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/maintenance/due/[id]/page.tsx",
+        "src/maintenance/receiving.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/maintenance/due",
+      "pattern": "/maintenance/due",
+      "canonical_pattern": "/maintenance/due",
+      "workspace": "service",
+      "parent_destination": "maintenance",
+      "breadcrumb_fallback": "Maintenance",
+      "discovery": "service: maintenance rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "maintenance.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/maintenance/due/page.tsx",
+        "src/maintenance/receiving.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/maintenance/plans/[id]",
+      "pattern": "/maintenance/plans/[id]",
+      "canonical_pattern": "/maintenance/plans/[id]",
+      "workspace": "service",
+      "parent_destination": "maintenance",
+      "breadcrumb_fallback": "Maintenance plans",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "maintenance.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/maintenance/plans/[id]/page.tsx",
+        "src/maintenance/plans.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/maintenance/plans",
+      "pattern": "/maintenance/plans",
+      "canonical_pattern": "/maintenance/plans",
+      "workspace": "service",
+      "parent_destination": "maintenance",
+      "breadcrumb_fallback": "Maintenance plans",
+      "discovery": "service: maintenance rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "maintenance.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/maintenance/plans/page.tsx",
+        "src/maintenance/plans.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/maintenance/renewals/[id]",
+      "pattern": "/maintenance/renewals/[id]",
+      "canonical_pattern": "/maintenance/renewals/[id]",
+      "workspace": "service",
+      "parent_destination": "agreements",
+      "breadcrumb_fallback": "Renewals & relationship review",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "maintenance.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/maintenance/renewals/[id]/page.tsx",
+        "src/maintenance/renewals.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/maintenance/renewals",
+      "pattern": "/maintenance/renewals",
+      "canonical_pattern": "/maintenance/renewals",
+      "workspace": "service",
+      "parent_destination": "agreements",
+      "breadcrumb_fallback": "Renewals & relationship review",
+      "discovery": "service: agreements rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "maintenance.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/maintenance/renewals/page.tsx",
+        "src/maintenance/renewals.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/warranty/cases/[id]",
+      "pattern": "/warranty/cases/[id]",
+      "canonical_pattern": "/warranty/cases/[id]",
+      "workspace": "service",
+      "parent_destination": "warranty",
+      "breadcrumb_fallback": "Warranty",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "warranty.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/warranty/cases/[id]/page.tsx",
+        "src/maintenance/warranty.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/warranty/cases",
+      "pattern": "/warranty/cases",
+      "canonical_pattern": "/warranty/cases",
+      "workspace": "service",
+      "parent_destination": "warranty",
+      "breadcrumb_fallback": "Warranty",
+      "discovery": "service: warranty rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "warranty.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/warranty/cases/page.tsx",
+        "src/maintenance/warranty.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/warranty/supplier-recovery/[id]",
+      "pattern": "/warranty/supplier-recovery/[id]",
+      "canonical_pattern": "/warranty/supplier-recovery/[id]",
+      "workspace": "service",
+      "parent_destination": "warranty",
+      "breadcrumb_fallback": "Supplier recovery",
+      "discovery": "Owning register / module view / contextual source action",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "warranty.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/warranty/supplier-recovery/[id]/page.tsx",
+        "src/maintenance/recovery.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    },
+    {
+      "key": "route:/warranty/supplier-recovery",
+      "pattern": "/warranty/supplier-recovery",
+      "canonical_pattern": "/warranty/supplier-recovery",
+      "workspace": "service",
+      "parent_destination": "warranty",
+      "breadcrumb_fallback": "Supplier recovery",
+      "discovery": "service: warranty rail or module view; More > Workspace",
+      "availability": "ready",
+      "capabilities": {
+        "all": [],
+        "any": [
+          "warranty.read"
+        ]
+      },
+      "source": [
+        "src/app/(business)/warranty/supplier-recovery/page.tsx",
+        "src/maintenance/recovery.ts",
+        "src/app/(business)/layout.tsx",
+        "src/app/layout.tsx"
+      ],
+      "server_authorization": "Owning scoped reader/command; discovery is not authority"
+    }
+  ],
+  "compatibility_aliases": [
+    {
+      "pattern": "/crm/leads",
+      "canonical_pattern": "/sales/leads",
+      "contract": "Existing redirect preserves its supported query state; no Equipment/Activity alias added"
+    },
+    {
+      "pattern": "/crm/leads/[id]",
+      "canonical_pattern": "/sales/leads/[id]",
+      "contract": "Existing redirect preserves its supported query state; no Equipment/Activity alias added"
+    },
+    {
+      "pattern": "/crm/opportunities",
+      "canonical_pattern": "/sales/opportunities",
+      "contract": "Existing redirect preserves its supported query state; no Equipment/Activity alias added"
+    },
+    {
+      "pattern": "/crm/opportunities/[id]",
+      "canonical_pattern": "/sales/opportunities/[id]",
+      "contract": "Existing redirect preserves its supported query state; no Equipment/Activity alias added"
+    },
+    {
+      "pattern": "/crm/opportunities/new",
+      "canonical_pattern": "/sales/opportunities/new",
+      "contract": "Existing redirect preserves its supported query state; no Equipment/Activity alias added"
+    }
+  ],
+  "destinations": [
+    {
+      "id": "sales-estimating",
+      "label": "Sales-to-Estimating handovers",
+      "icon": "nav-inbox",
+      "readiness": "ready",
+      "workspace": "sales",
+      "href": "/sales/handoffs/estimating",
+      "requires": [
+        "crm.opportunity.read"
+      ],
+      "rail_consumers": [
+        "sales"
+      ]
+    },
+    {
+      "id": "sales-won",
+      "label": "Won-deal receiving",
+      "icon": "nav-approval",
+      "readiness": "ready",
+      "workspace": "sales",
+      "href": "/sales/handoffs/won",
+      "requires": [
+        "crm.opportunity.read"
+      ],
+      "rail_consumers": [
+        "sales"
+      ]
+    },
+    {
+      "id": "sales-aftercare",
+      "label": "Aftercare & renewal",
+      "icon": "nav-activities",
+      "readiness": "ready",
+      "workspace": "sales",
+      "href": "/sales/aftercare",
+      "requiresAll": [
+        "shared.internal.read",
+        "report.read"
+      ],
+      "rail_consumers": [
+        "sales"
+      ]
+    },
+    {
+      "id": "settings",
+      "label": "Settings",
+      "icon": "settings",
+      "readiness": "unavailable",
+      "rail_consumers": []
+    },
+    {
+      "id": "home",
+      "label": "Home",
+      "icon": "home",
+      "readiness": "ready",
+      "href": "/",
+      "rail_consumers": []
+    },
+    {
+      "id": "work",
+      "label": "My Work",
+      "icon": "nav-work",
+      "readiness": "ready",
+      "href": "/work",
+      "requires": [
+        "activity.read"
+      ],
+      "rail_consumers": [
+        "estimate",
+        "engineering",
+        "projects",
+        "service",
+        "supply",
+        "finance"
+      ]
+    },
+    {
+      "id": "mail",
+      "label": "Sales Inbox",
+      "icon": "nav-mail",
+      "readiness": "ready",
+      "href": "/email",
+      "requires": [
+        "email.read"
+      ],
+      "rail_consumers": [
+        "sales"
+      ]
+    },
+    {
+      "id": "calendar",
+      "label": "Activities",
+      "icon": "nav-activities",
+      "readiness": "ready",
+      "href": "/calendar",
+      "requires": [
+        "activity.read"
+      ],
+      "rail_consumers": [
+        "sales"
+      ]
+    },
+    {
+      "id": "pulse",
+      "label": "Pulse",
+      "icon": "nav-pulse",
+      "readiness": "ready",
+      "href": "/sales/pulse",
+      "workspace": "sales",
+      "requires": [
+        "activity.read"
+      ],
+      "requiresAny": [
+        "crm.opportunity.read",
+        "crm.lead.read"
+      ],
+      "rail_consumers": [
+        "sales"
+      ]
+    },
+    {
+      "id": "leads",
+      "label": "Leads",
+      "icon": "nav-leads",
+      "readiness": "ready",
+      "href": "/sales/leads",
+      "workspace": "sales",
+      "requires": [
+        "crm.lead.read"
+      ],
+      "rail_consumers": [
+        "sales"
+      ]
+    },
+    {
+      "id": "deals",
+      "label": "Deals",
+      "icon": "nav-deals",
+      "readiness": "ready",
+      "href": "/sales/opportunities",
+      "workspace": "sales",
+      "requires": [
+        "crm.opportunity.read"
+      ],
+      "rail_consumers": [
+        "sales"
+      ]
+    },
+    {
+      "id": "tasks",
+      "label": "Tasks",
+      "icon": "nav-tasks",
+      "readiness": "ready",
+      "href": "/sales/tasks",
+      "workspace": "sales",
+      "requires": [
+        "activity.read"
+      ],
+      "requiresAny": [
+        "crm.opportunity.read",
+        "crm.lead.read"
+      ],
+      "rail_consumers": [
+        "sales"
+      ]
+    },
+    {
+      "id": "contacts",
+      "label": "Contacts",
+      "icon": "nav-contacts",
+      "readiness": "ready",
+      "href": "/contacts",
+      "requires": [
+        "shared.read"
+      ],
+      "rail_consumers": [
+        "sales"
+      ]
+    },
+    {
+      "id": "people",
+      "label": "People",
+      "icon": "nav-people",
+      "readiness": "ready",
+      "href": "/people",
+      "requires": [
+        "shared.read"
+      ],
+      "rail_consumers": []
+    },
+    {
+      "id": "customers",
+      "label": "Organisations",
+      "icon": "nav-organisations",
+      "readiness": "ready",
+      "href": "/customers",
+      "requires": [
+        "shared.read"
+      ],
+      "rail_consumers": []
+    },
+    {
+      "id": "products",
+      "label": "Products",
+      "icon": "nav-products",
+      "readiness": "ready",
+      "href": "/products",
+      "requires": [
+        "products.read"
+      ],
+      "rail_consumers": [
+        "sales"
+      ]
+    },
+    {
+      "id": "insights",
+      "label": "Insights",
+      "icon": "nav-insights",
+      "readiness": "unavailable",
+      "workspace": "sales",
+      "rail_consumers": [
+        "sales"
+      ]
+    },
+    {
+      "id": "intake",
+      "label": "Intake",
+      "icon": "nav-inbox",
+      "readiness": "ready",
+      "workspace": "estimate",
+      "href": "/estimating/intake",
+      "requiresAll": [
+        "crm.opportunity.read",
+        "estimating.edit"
+      ],
+      "rail_consumers": [
+        "estimate"
+      ]
+    },
+    {
+      "id": "wizard",
+      "label": "Estimation wizard",
+      "icon": "nav-wizard",
+      "readiness": "ready",
+      "href": "/estimating/discovery",
+      "workspace": "estimate",
+      "requires": [
+        "estimating.read"
+      ],
+      "rail_consumers": [
+        "estimate"
+      ]
+    },
+    {
+      "id": "estimates",
+      "label": "Intake & workload",
+      "icon": "nav-estimates",
+      "readiness": "ready",
+      "href": "/estimating",
+      "workspace": "estimate",
+      "requires": [
+        "estimating.read"
+      ],
+      "rail_consumers": [
+        "estimate"
+      ]
+    },
+    {
+      "id": "configurations",
+      "label": "Specialist configurations",
+      "icon": "nav-configurations",
+      "readiness": "ready",
+      "href": "/estimating/configurations",
+      "workspace": "estimate",
+      "requires": [
+        "estimating.read"
+      ],
+      "rail_consumers": [
+        "estimate"
+      ]
+    },
+    {
+      "id": "pricing",
+      "label": "Cost sources",
+      "icon": "nav-pricing",
+      "readiness": "ready",
+      "href": "/estimating/cost-sources",
+      "workspace": "estimate",
+      "requires": [
+        "estimating.read"
+      ],
+      "rail_consumers": [
+        "estimate"
+      ]
+    },
+    {
+      "id": "quotations",
+      "label": "Quotations",
+      "icon": "nav-quotation",
+      "readiness": "ready",
+      "href": "/estimating/quotes",
+      "workspace": "estimate",
+      "requires": [
+        "estimating.quote.read"
+      ],
+      "requiresAll": [
+        "estimating.read"
+      ],
+      "rail_consumers": [
+        "estimate"
+      ]
+    },
+    {
+      "id": "estimate-reviews",
+      "label": "Reviews & approvals",
+      "icon": "nav-approval",
+      "readiness": "unavailable",
+      "workspace": "estimate",
+      "rail_consumers": [
+        "estimate"
+      ]
+    },
+    {
+      "id": "fertigation",
+      "label": "Priva Fertigation Configurator",
+      "icon": "nav-fertigation",
+      "readiness": "ready",
+      "href": "/estimating/fertigation",
+      "workspace": "estimate",
+      "requires": [
+        "estimating.read"
+      ],
+      "rail_consumers": []
+    },
+    {
+      "id": "engineering",
+      "label": "Engineering workload",
+      "icon": "nav-workload",
+      "readiness": "ready",
+      "href": "/engineering",
+      "workspace": "engineering",
+      "requires": [
+        "engineering.read"
+      ],
+      "rail_consumers": [
+        "engineering"
+      ]
+    },
+    {
+      "id": "basis",
+      "label": "Design basis & interfaces",
+      "icon": "nav-interfaces",
+      "readiness": "ready",
+      "href": "/engineering/basis",
+      "requires": [
+        "engineering.read"
+      ],
+      "workspace": "engineering",
+      "rail_consumers": [
+        "engineering"
+      ]
+    },
+    {
+      "id": "drawings",
+      "label": "Drawings",
+      "icon": "nav-drawings",
+      "readiness": "ready",
+      "href": "/engineering/drawings",
+      "requires": [
+        "engineering.read"
+      ],
+      "workspace": "engineering",
+      "rail_consumers": [
+        "engineering"
+      ]
+    },
+    {
+      "id": "technical-queries",
+      "label": "Technical queries",
+      "icon": "nav-interfaces",
+      "readiness": "ready",
+      "href": "/engineering/queries",
+      "requiresAll": [
+        "engineering.read"
+      ],
+      "workspace": "engineering",
+      "synonyms": [
+        "submittals",
+        "supplier questions"
+      ],
+      "rail_consumers": [
+        "engineering"
+      ]
+    },
+    {
+      "id": "materials",
+      "label": "Materials & substitutions",
+      "icon": "nav-materials",
+      "readiness": "ready",
+      "href": "/engineering/materials",
+      "workspace": "engineering",
+      "requires": [
+        "engineering.read"
+      ],
+      "rail_consumers": [
+        "engineering"
+      ]
+    },
+    {
+      "id": "changes",
+      "label": "Change review",
+      "icon": "nav-changes",
+      "readiness": "ready",
+      "href": "/engineering/changes",
+      "workspace": "engineering",
+      "requires": [
+        "engineering.read"
+      ],
+      "rail_consumers": [
+        "engineering"
+      ]
+    },
+    {
+      "id": "technical-reviews",
+      "label": "Technical reviews",
+      "icon": "nav-approval",
+      "readiness": "ready",
+      "href": "/engineering/reviews",
+      "requires": [
+        "engineering.read"
+      ],
+      "workspace": "engineering",
+      "rail_consumers": [
+        "engineering"
+      ]
+    },
+    {
+      "id": "commissioning",
+      "label": "Commissioning & as-built",
+      "icon": "nav-commissioning",
+      "readiness": "ready",
+      "href": "/engineering/commissioning",
+      "workspace": "engineering",
+      "requires": [
+        "engineering.read"
+      ],
+      "rail_consumers": [
+        "engineering"
+      ]
+    },
+    {
+      "id": "projects",
+      "label": "Projects",
+      "icon": "nav-projects",
+      "readiness": "ready",
+      "href": "/projects",
+      "workspace": "projects",
+      "requires": [
+        "project.read"
+      ],
+      "rail_consumers": [
+        "projects"
+      ]
+    },
+    {
+      "id": "programme",
+      "label": "Programme",
+      "icon": "nav-programme",
+      "readiness": "ready",
+      "href": "/projects/programme",
+      "workspace": "projects",
+      "requires": [
+        "project.read"
+      ],
+      "rail_consumers": [
+        "projects"
+      ]
+    },
+    {
+      "id": "readiness",
+      "label": "Delivery readiness",
+      "icon": "nav-readiness",
+      "readiness": "unavailable",
+      "workspace": "projects",
+      "rail_consumers": [
+        "projects"
+      ]
+    },
+    {
+      "id": "risks",
+      "label": "Risks & issues",
+      "icon": "nav-risks",
+      "readiness": "unavailable",
+      "workspace": "projects",
+      "rail_consumers": [
+        "projects"
+      ]
+    },
+    {
+      "id": "variations",
+      "label": "Variations & obligations",
+      "icon": "nav-variations",
+      "readiness": "unavailable",
+      "workspace": "projects",
+      "rail_consumers": [
+        "projects"
+      ]
+    },
+    {
+      "id": "assurance",
+      "label": "Site assurance",
+      "icon": "nav-assurance",
+      "readiness": "unavailable",
+      "workspace": "projects",
+      "rail_consumers": [
+        "projects"
+      ]
+    },
+    {
+      "id": "acceptance",
+      "label": "Acceptance & closeout",
+      "icon": "nav-acceptance",
+      "readiness": "ready",
+      "href": "/projects/acceptance",
+      "workspace": "projects",
+      "requires": [
+        "project.read"
+      ],
+      "rail_consumers": [
+        "projects"
+      ]
+    },
+    {
+      "id": "agreements",
+      "label": "Service agreements",
+      "icon": "nav-orders",
+      "readiness": "ready",
+      "href": "/maintenance/agreements",
+      "workspace": "service",
+      "requires": [
+        "maintenance.read"
+      ],
+      "rail_consumers": [
+        "service"
+      ]
+    },
+    {
+      "id": "maintenance",
+      "label": "Maintenance",
+      "icon": "nav-schedule",
+      "readiness": "ready",
+      "href": "/maintenance/due",
+      "workspace": "service",
+      "requires": [
+        "maintenance.read"
+      ],
+      "rail_consumers": [
+        "service"
+      ]
+    },
+    {
+      "id": "warranty",
+      "label": "Warranty",
+      "icon": "nav-service-review",
+      "readiness": "ready",
+      "href": "/warranty/cases",
+      "workspace": "service",
+      "requires": [
+        "warranty.read"
+      ],
+      "rail_consumers": [
+        "service"
+      ]
+    },
+    {
+      "id": "tickets",
+      "label": "Service requests",
+      "icon": "nav-requests",
+      "readiness": "ready",
+      "href": "/service/tickets",
+      "workspace": "service",
+      "requires": [
+        "service.ticket.read"
+      ],
+      "rail_consumers": [
+        "service"
+      ]
+    },
+    {
+      "id": "orders",
+      "label": "Work orders",
+      "icon": "nav-orders",
+      "readiness": "ready",
+      "href": "/service/work-orders",
+      "workspace": "service",
+      "requires": [
+        "service.work_order.read"
+      ],
+      "rail_consumers": [
+        "service"
+      ]
+    },
+    {
+      "id": "planner",
+      "label": "Schedule",
+      "icon": "nav-schedule",
+      "readiness": "ready",
+      "href": "/schedule",
+      "workspace": "service",
+      "requires": [
+        "schedule.read"
+      ],
+      "rail_consumers": [
+        "service"
+      ]
+    },
+    {
+      "id": "technicians",
+      "label": "Field team",
+      "icon": "nav-team",
+      "readiness": "ready",
+      "href": "/service/technicians",
+      "workspace": "service",
+      "requires": [
+        "schedule.read"
+      ],
+      "rail_consumers": [
+        "service"
+      ]
+    },
+    {
+      "id": "packs",
+      "label": "Job packs",
+      "icon": "nav-packs",
+      "readiness": "ready",
+      "href": "/service/packs",
+      "workspace": "service",
+      "requires": [
+        "pack.read"
+      ],
+      "rail_consumers": [
+        "service"
+      ]
+    },
+    {
+      "id": "reports",
+      "label": "Service review",
+      "icon": "nav-service-review",
+      "readiness": "ready",
+      "href": "/service/reports",
+      "workspace": "service",
+      "requires": [
+        "report.read"
+      ],
+      "rail_consumers": [
+        "service"
+      ]
+    },
+    {
+      "id": "jobs",
+      "label": "My jobs",
+      "icon": "nav-service",
+      "readiness": "ready",
+      "href": "/my-jobs",
+      "workspace": "service",
+      "requires": [
+        "field.read.own"
+      ],
+      "rail_consumers": [
+        "service"
+      ]
+    },
+    {
+      "id": "inspection-capture",
+      "label": "My inspections",
+      "icon": "nav-service",
+      "readiness": "ready",
+      "href": "/my-jobs/inspections",
+      "workspace": "service",
+      "requires": [
+        "field.read.own"
+      ],
+      "rail_consumers": [
+        "service"
+      ]
+    },
+    {
+      "id": "incidents",
+      "label": "Incidents and actions",
+      "icon": "nav-service-review",
+      "readiness": "ready",
+      "href": "/service/incidents",
+      "workspace": "service",
+      "requires": [
+        "incident.read"
+      ],
+      "rail_consumers": [
+        "service"
+      ]
+    },
+    {
+      "id": "inspection-review",
+      "label": "Inspection review",
+      "icon": "nav-service-review",
+      "readiness": "ready",
+      "href": "/service/inspections",
+      "workspace": "service",
+      "requiresAll": [
+        "report.read",
+        "service.work_order.edit"
+      ],
+      "rail_consumers": [
+        "service"
+      ]
+    },
+    {
+      "id": "supply",
+      "label": "Material demand",
+      "icon": "nav-demand",
+      "href": "/supply/material-readiness",
+      "requires": [
+        "supply.read"
+      ],
+      "readiness": "ready",
+      "workspace": "supply",
+      "rail_consumers": [
+        "supply"
+      ]
+    },
+    {
+      "id": "purchasing",
+      "label": "Purchasing",
+      "icon": "nav-purchasing",
+      "href": "/supply/purchasing",
+      "requires": [
+        "supply.read"
+      ],
+      "readiness": "ready",
+      "workspace": "supply",
+      "rail_consumers": [
+        "supply"
+      ]
+    },
+    {
+      "id": "inbound",
+      "label": "Inbound shipments",
+      "icon": "nav-inbound",
+      "href": "/supply/shipments",
+      "requires": [
+        "supply.read"
+      ],
+      "readiness": "ready",
+      "workspace": "supply",
+      "rail_consumers": [
+        "supply"
+      ]
+    },
+    {
+      "id": "receiving",
+      "label": "Receiving",
+      "icon": "nav-receiving",
+      "href": "/supply/receipts",
+      "requires": [
+        "supply.read"
+      ],
+      "readiness": "ready",
+      "workspace": "supply",
+      "rail_consumers": [
+        "supply"
+      ]
+    },
+    {
+      "id": "stock",
+      "label": "Stock & reservations",
+      "icon": "nav-stock",
+      "href": "/supply/stock",
+      "requires": [
+        "supply.read"
+      ],
+      "readiness": "ready",
+      "workspace": "supply",
+      "rail_consumers": [
+        "supply"
+      ]
+    },
+    {
+      "id": "deliveries",
+      "label": "Dispatch & delivery",
+      "icon": "nav-dispatch",
+      "href": "/supply/dispatch",
+      "requires": [
+        "supply.read"
+      ],
+      "readiness": "ready",
+      "workspace": "supply",
+      "rail_consumers": [
+        "supply"
+      ]
+    },
+    {
+      "id": "returns",
+      "label": "Returns & claims",
+      "icon": "nav-returns",
+      "href": "/supply/returns",
+      "requires": [
+        "supply.read"
+      ],
+      "readiness": "ready",
+      "workspace": "supply",
+      "rail_consumers": [
+        "supply"
+      ]
+    },
+    {
+      "id": "finance",
+      "label": "Finance handoffs",
+      "icon": "nav-inbox",
+      "readiness": "ready",
+      "href": "/finance/handoffs",
+      "workspace": "finance",
+      "requires": [
+        "finance.read"
+      ],
+      "rail_consumers": [
+        "finance"
+      ]
+    },
+    {
+      "id": "accounts",
+      "label": "Customer accounts",
+      "icon": "nav-accounts",
+      "readiness": "ready",
+      "href": "/finance/accounts",
+      "workspace": "finance",
+      "requires": [
+        "finance.account.read"
+      ],
+      "requiresAll": [
+        "shared.finance.read",
+        "finance.read"
+      ],
+      "rail_consumers": [
+        "finance"
+      ]
+    },
+    {
+      "id": "performance",
+      "label": "Project performance",
+      "icon": "nav-performance",
+      "readiness": "unavailable",
+      "workspace": "finance",
+      "rail_consumers": [
+        "finance"
+      ]
+    },
+    {
+      "id": "claims",
+      "label": "Claims & obligations",
+      "icon": "nav-claims",
+      "readiness": "unavailable",
+      "workspace": "finance",
+      "rail_consumers": [
+        "finance"
+      ]
+    },
+    {
+      "id": "cash",
+      "label": "Cash outlook",
+      "icon": "nav-cash",
+      "readiness": "unavailable",
+      "workspace": "finance",
+      "rail_consumers": [
+        "finance"
+      ]
+    },
+    {
+      "id": "reconciliation",
+      "label": "Reconciliation",
+      "icon": "nav-reconciliation",
+      "readiness": "unavailable",
+      "workspace": "finance",
+      "rail_consumers": [
+        "finance"
+      ]
+    },
+    {
+      "id": "exceptions",
+      "label": "Exceptions",
+      "icon": "nav-exceptions",
+      "readiness": "unavailable",
+      "workspace": "finance",
+      "rail_consumers": [
+        "finance"
+      ]
+    },
+    {
+      "id": "sites",
+      "label": "Sites",
+      "icon": "nav-sites",
+      "readiness": "ready",
+      "href": "/sites",
+      "requires": [
+        "shared.read"
+      ],
+      "rail_consumers": []
+    },
+    {
+      "id": "facilities",
+      "label": "Facilities & growing areas",
+      "icon": "nav-facilities",
+      "readiness": "ready",
+      "href": "/facilities",
+      "requires": [
+        "shared.read"
+      ],
+      "rail_consumers": []
+    },
+    {
+      "id": "surveys",
+      "label": "Site surveys & as-found",
+      "icon": "nav-sites",
+      "readiness": "ready",
+      "href": "/surveys",
+      "requires": [
+        "shared.read"
+      ],
+      "rail_consumers": []
+    },
+    {
+      "id": "equipment",
+      "label": "Equipment",
+      "icon": "nav-equipment",
+      "readiness": "ready",
+      "href": "/equipment",
+      "requires": [
+        "shared.read"
+      ],
+      "rail_consumers": [
+        "service"
+      ]
+    },
+    {
+      "id": "documents",
+      "label": "Documents",
+      "icon": "nav-documents",
+      "readiness": "unavailable",
+      "rail_consumers": []
+    },
+    {
+      "id": "approvals",
+      "label": "Approvals & handovers",
+      "icon": "nav-approval",
+      "readiness": "ready",
+      "href": "/work/reviews",
+      "requires": [
+        "activity.read"
+      ],
+      "rail_consumers": []
+    },
+    {
+      "id": "recovery",
+      "label": "Integrations & recovery",
+      "icon": "nav-recovery",
+      "readiness": "ready",
+      "href": "/admin",
+      "requires": [
+        "shared.read",
+        "finance.read",
+        "service.work_order.read",
+        "field.read.own"
+      ],
+      "rail_consumers": []
+    },
+    {
+      "id": "foundation",
+      "label": "Foundation checks",
+      "icon": "settings",
+      "readiness": "ready",
+      "href": "/foundation",
+      "localOnly": true,
+      "rail_consumers": []
+    }
+  ]
+}

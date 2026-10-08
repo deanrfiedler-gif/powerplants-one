@@ -3,6 +3,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { Field, useFieldError, type Option } from "./business-ui";
 import { localDateTime, utcFromLocal } from "../scheduling/time";
 import { usePendingWork } from "./pending-work";
+import { guardBrowserNavigation } from "./navigation-intent";
 
 export function RecordTabs({ id, label, tabs, value, onChange }: {
   id: string; label: string; tabs: { id: string; label: string }[];
@@ -90,20 +91,22 @@ export function LocalDateTimeField({ name, validationField, label = "Due date an
 
 // Native unload warning, in-app links and the installed app's Reload action share the
 // same dirty state. Tabs retain mounted drafts.
-export function useUnsavedChanges(dirty: boolean, pending = false) {
+export function useUnsavedChanges(dirty: boolean, pending = false, retainedQuery: readonly string[] = []) {
   usePendingWork(dirty || pending);
+  const guard = useRef<(() => void) | null>(null);
+  const retainedKeys = retainedQuery.join(",");
   useEffect(() => {
     if (!dirty && !pending) return;
-    const unload = (event: BeforeUnloadEvent) => { event.preventDefault(); event.returnValue = ""; };
-    const click = (event: MouseEvent) => {
-      const link = (event.target as Element).closest?.("a[href]");
-      if (!(link instanceof HTMLAnchorElement) || link.target === "_blank" || link.download || link.hash && link.pathname === location.pathname) return;
-      if (pending || !window.confirm("Leave this page and discard unsaved changes?")) {
-        event.preventDefault(); event.stopPropagation();
-      }
-    };
-    window.addEventListener("beforeunload", unload);
-    document.addEventListener("click", click, true);
-    return () => { window.removeEventListener("beforeunload", unload); document.removeEventListener("click", click, true); };
-  }, [dirty, pending]);
+    // Declared view keys retain the same mounted record and command owner even
+    // while its outcome is pending. Every other query/path/unload stays guarded.
+    const release = guardBrowserNavigation(run => {
+      if (!pending && window.confirm("Leave this page and discard unsaved changes?")) run();
+    }, pending ? 200 : retainedKeys ? 5 : 10, retainedKeys.split(",").filter(Boolean));
+    guard.current = release;
+    return () => { release(); if (guard.current === release) guard.current = null; };
+  }, [dirty, pending, retainedKeys]);
+  // A confirmed receipt can navigate before React commits the cleared dirty/
+  // pending state. Release only this form's guard; other owners still review.
+  // Never call this for an uncertain or failed command.
+  return () => { guard.current?.(); guard.current = null; };
 }

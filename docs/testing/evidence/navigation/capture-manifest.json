@@ -1,0 +1,102 @@
+[
+  {
+    "path": "captures/compact-sales.png",
+    "source_commit": "6284b34f6dfe2e73703cebb999fff2045e9a2081",
+    "fixture_role": "Coordinator; filtered synthetic Deal board",
+    "viewport": "1440x900",
+    "image_pixels": "1440x900",
+    "sha256": "4a6eb38d0660483f364f0224b2458a796faf643bcd4e5d385cf6b2700bccde31",
+    "inspection": "Codex visual inspection; owner/device acceptance pending",
+    "observation": "Navy compact rail and intact logo; active Deal has inset marker plus contrasting background; full board headings readable."
+  },
+  {
+    "path": "captures/expanded-my-work.png",
+    "source_commit": "0c9d1387fefe2e7ac12c7f3d8f96613f0fcfd6a8",
+    "fixture_role": "Coordinator; actual synthetic overdue activities",
+    "viewport": "1440x1000",
+    "image_pixels": "1440x1000",
+    "sha256": "31ea32927827b96ae90afa70a3ed39f15a253a17d2ecf816df9284e57489823d",
+    "inspection": "Codex visual inspection; owner/device acceptance pending",
+    "observation": "232 px labels and My Work secondary menu coexist; repaired content width keeps actual Activity titles and action buttons readable."
+  },
+  {
+    "path": "captures/short-service-more.png",
+    "source_commit": "0c9d1387fefe2e7ac12c7f3d8f96613f0fcfd6a8",
+    "fixture_role": "Coordinator; Service long rail and More",
+    "viewport": "1280x400",
+    "image_pixels": "1280x400",
+    "sha256": "c4e9ba57e865bc0ea9dba697cda4853b4e21a880776793e6f1f5357ba1cb9d9d",
+    "inspection": "Codex visual inspection; owner/device acceptance pending",
+    "observation": "Logo and More remain anchored; rail and menu scroll instead of clipping endpoints. Popover stays inside short window."
+  },
+  {
+    "path": "captures/mobile-320-more.png",
+    "source_commit": "0c9d1387fefe2e7ac12c7f3d8f96613f0fcfd6a8",
+    "fixture_role": "Coordinator; Sales More",
+    "viewport": "320x900",
+    "image_pixels": "320x900",
+    "sha256": "edf4dd51f3790dafa7cc4889e653686c079bba82dee6a4580f29cae6c6e18346",
+    "inspection": "Codex visual inspection; owner/device acceptance pending",
+    "observation": "Labelled Workspace and destinations fit; menu search focus visible; body contained within viewport. This is reflow, not zoom."
+  },
+  {
+    "path": "captures/restricted-mobile.png",
+    "source_commit": "6284b34f6dfe2e73703cebb999fff2045e9a2081",
+    "fixture_role": "Riley assigned technician; permitted Service/Supply",
+    "viewport": "390x844",
+    "image_pixels": "390x844",
+    "sha256": "a7b36d7f638a4b25560a7a973e17ef413af13e6136fbc0897ab90de13299d560",
+    "inspection": "Codex visual inspection; owner/device acceptance pending",
+    "observation": "Restricted destinations and ordinary Workspace are labelled; Finance/Engineering are absent; My inspections remains reachable."
+  },
+  {
+    "path": "captures/expanded-781-more.png",
+    "source_commit": "0c9d1387fefe2e7ac12c7f3d8f96613f0fcfd6a8",
+    "fixture_role": "Coordinator; Sales More",
+    "viewport": "781x900",
+    "image_pixels": "781x900",
+    "sha256": "e24dcfc70855eeda004b11e44c8c589904eabe4cafc6bcf8a8731077b76822a4",
+    "inspection": "Codex visual inspection; owner/device acceptance pending",
+    "observation": "Desktop transition retains expanded rail and bounded More; underlying board uses its existing internal view width."
+  },
+  {
+    "path": "captures/expanded-1200-more.png",
+    "source_commit": "0c9d1387fefe2e7ac12c7f3d8f96613f0fcfd6a8",
+    "fixture_role": "Coordinator; Sales More",
+    "viewport": "1200x900",
+    "image_pixels": "1200x900",
+    "sha256": "80a5326509b9e9c6c2e8da8e90c06b3489d87c23b8294f37ea80b9e0ee979908",
+    "inspection": "Codex visual inspection; owner/device acceptance pending",
+    "observation": "Expanded labels wrap without clipping; menu fits next to rail with visible selected Sales context."
+  },
+  {
+    "path": "captures/finance-desktop-hierarchy.png",
+    "source_commit": "f1f04ba12c49003398652917b16d9c47e45edf8a",
+    "fixture_role": "Finance; exact SYN-ACCOUNT-1 source; no automatic extraction",
+    "viewport": "1440x1000 CSS px (scale 1)",
+    "image_pixels": "1440x1000",
+    "sha256": "c55c5909600461dfc87b98ddcecc93d84147bc1a10f0d8a094996df831d020eb",
+    "inspection": "Codex actual visual inspection; owner/device acceptance pending",
+    "observation": "All authorized ancestors and exact account reference are usable in the disclosed path; explicit 44 px trigger retains compact-header space."
+  },
+  {
+    "path": "captures/finance-mobile-hierarchy.png",
+    "source_commit": "f1f04ba12c49003398652917b16d9c47e45edf8a",
+    "fixture_role": "Finance; exact SYN-ACCOUNT-1 source",
+    "viewport": "390x844 CSS px (scale 1)",
+    "image_pixels": "390x844",
+    "sha256": "63937e09c341d9db6303b9c87c3c3ff82143c477f8a4a3c55e79d71fc4a0ece2",
+    "inspection": "Codex actual visual inspection; owner/device acceptance pending",
+    "observation": "Phone inline text is shortened; labelled hierarchy exposes the complete readable path and exact reference. Native popover stays inside viewport; keyboard Escape focus test passed."
+  },
+  {
+    "path": "captures/final-mobile-320-more.png",
+    "source_commit": "f1f04ba12c49003398652917b16d9c47e45edf8a",
+    "fixture_role": "Coordinator; Sales More",
+    "viewport": "320x900 CSS px (scale 1)",
+    "image_pixels": "320x900",
+    "sha256": "99ea243e22703f8687eac65b642432bdb54326ba56f4d590969a85bdfd47757d",
+    "inspection": "Codex actual visual inspection; owner/device acceptance pending",
+    "observation": "Final source still fits labelled Workspace and More at 320 CSS px; search focus visible and destinations readable. Reflow only."
+  }
+]

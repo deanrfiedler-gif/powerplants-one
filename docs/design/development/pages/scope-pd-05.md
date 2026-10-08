@@ -43,3 +43,9 @@ Proposed adaptation: native cards, semantic shared controls and stacked comparis
 ## Completion review scope — 7 October 2026
 
 The completion branch preserves the exact selected revision when handing detail to pricing and on reload. Published catalogue basis links to its immutable revision. Internal UUID detail is disclosed on demand while catalogue/technical revision, source basis and lifecycle remain visible. Four named local synthetic identities separate read, author, review and publication. Existing/hosted users gain no Products authority. The [completion evidence](../../../testing/evidence/products-native/README.md) records paired captures and verification; owner baseline, physical-device and screen-reader acceptance remain pending. Catalogue pagination and wider estimating selection are later work.
+
+## NAV contextual navigation
+
+Product import has its own breadcrumb label; it retains synthetic source preparation and existing validation. The Products parent remains current for nested catalogue records.
+
+Desktop uses the existing shell with a 76 px compact or 232 px labelled primary rail. Mobile uses labelled destinations and More > Workspace; Home/search/help remain reachable. Check 320/390/780/781/1199/1200 px where applicable, long labels, visible focus and Escape/return focus. Missing accepted images remain explicit; no new accepted image or review fingerprint is recorded. Functional results and screenshot observations are in the NAV ledger; owner/device review and deployment remain separate.

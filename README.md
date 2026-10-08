@@ -1,6 +1,6 @@
 # Powerplants One
 
-Current work: [integrated customer journey verification](docs/testing/evidence/integrated-journey/README.md) on main `4f883d1`, after Maintenance/Warranty #357, Products #358 and the full Lead-to-delivery stack #359–#365 merged. The joined desktop/phone journey passes; the [owner walkthrough](docs/delivery/integrated-journey-owner-walkthrough.md) is ready for actual observations. Verification, owner acceptance and deployment remain separate.
+Current work: [navigation implementation and CI repair](docs/delivery/navigation-implementation.md) in draft PR #367, integrated with main `6b030fe` after #366 was merged externally. The [joined customer journey evidence](docs/testing/evidence/integrated-journey/README.md) retains its actual `4f883d1` baseline and desktop/phone results; the [owner walkthrough](docs/delivery/integrated-journey-owner-walkthrough.md) awaits actual observations. Verification, owner acceptance and deployment remain separate.
 
 Personal prototype of an integrated business operations platform for Powerplants Australia, covering CRM, estimating, engineering, projects, service, supply chain and finance. The repository is public; the application, data and hosted demo remain private and synthetic.
 

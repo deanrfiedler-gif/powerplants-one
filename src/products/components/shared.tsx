@@ -111,7 +111,7 @@ export function ProductsFrame({
           <Link
             key={url}
             href={url}
-            aria-current={path === url ? "page" : undefined}
+            aria-current={path === url || (url === "/products" && /^\/products\/[0-9a-f-]{36}$/.test(path)) ? "page" : undefined}
           >
             {name}
           </Link>

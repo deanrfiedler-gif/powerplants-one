@@ -3,7 +3,8 @@ import { SalesFollowupPanel } from "./sales-followup";
 import { IncidentActivityHandover } from "../incidents/activity-handover";
 import { PolicyHolds } from "../scheduling/components/client/policy-holds.client";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { acceptanceReturn } from "../shell/context-links";
 import { useState } from "react";
 import { LocalDateTimeField, useUnsavedChanges } from "./record-ui";
 import type { readActivity } from "../activities/activities";
@@ -34,6 +35,7 @@ const kinds = [
   "RelationshipReview",
 ];
 export function ActivityDetail({ id }: { id: string }) {
+  const source = acceptanceReturn(useSearchParams().get("returnTo"));
   const r = useResource<Envelope<Activity>>(`activities/${id}`);
   return (
     <>
@@ -41,7 +43,7 @@ export function ActivityDetail({ id }: { id: string }) {
       <Link href="/work">← My Work</Link>
       <ReadState loading={r.loading} error={r.error} retry={r.reload} />
       {!isDenied(r.error) && r.data?.items[0] && (
-        <ActivityEditor key={id} activity={r.data.items[0]} reload={r.reload} />
+        <>{source && <Link href={source}>Return to acceptance obligation</Link>}<ActivityEditor key={id} activity={r.data.items[0]} reload={r.reload} /></>
       )}
     </>
   );

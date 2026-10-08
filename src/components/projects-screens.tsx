@@ -156,6 +156,7 @@ function NewProjectForm({ sales }: { sales?: SalesCreation }) {
       sales?.source.receiving_owner_id ?? "",
     ),
     [target, setTarget] = useState("");
+  const [savedProject, setSavedProject] = useState<string | null>(null);
   const [customerQuery, setCustomerQuery] = useState(""),
     [siteQuery, setSiteQuery] = useState(""),
     [ownerQuery, setOwnerQuery] = useState("");
@@ -173,8 +174,8 @@ function NewProjectForm({ sales }: { sales?: SalesCreation }) {
         : null,
     );
   const uncertain = !!(command.error as Failure | null)?.retryable;
-  useUnsavedChanges(
-    !!(title || customer || site || coordinator || target),
+  const releaseAcceptedNavigation = useUnsavedChanges(
+    !savedProject && !!(title || customer || site || coordinator || target),
     command.busy || uncertain,
   );
   return (
@@ -191,7 +192,7 @@ function NewProjectForm({ sales }: { sales?: SalesCreation }) {
         className="business-card"
         onSubmit={async (e) => {
           e.preventDefault();
-          if (command.busy || sales?.blocked) return;
+          if (command.busy || sales?.blocked || savedProject) return;
           const fields = {
             id,
             title,
@@ -205,17 +206,22 @@ function NewProjectForm({ sales }: { sales?: SalesCreation }) {
           const receipt = sales
             ? await sales.send(fields)
             : await command.send<{ record_id: string }>("projects", fields);
-          if (receipt && !sales) router.push(`/projects/${receipt.record_id}`);
+          if (receipt && !sales) {
+            setSavedProject(receipt.record_id);
+            releaseAcceptedNavigation();
+            router.push(`/projects/${receipt.record_id}`);
+          }
         }}
       >
         <ValidationFields error={sales?.error ?? command.error}>
           <ErrorNotice error={sales?.error ?? command.error} />
+          {savedProject && <p role="status">Project saved. <Link href={`/projects/${savedProject}`}>Open saved project</Link></p>}
           {uncertain && (
             <p role="status">
               Retry the unchanged action to confirm the original save.
             </p>
           )}
-          <fieldset disabled={command.busy || uncertain || sales?.blocked}>
+          <fieldset disabled={command.busy || uncertain || sales?.blocked || !!savedProject}>
             <Field
               name="title"
               label="Project name"
@@ -294,6 +300,7 @@ function NewProjectForm({ sales }: { sales?: SalesCreation }) {
             className="project-primary"
             disabled={
               command.busy ||
+              !!savedProject ||
               sales?.blocked ||
               !customer ||
               !site ||

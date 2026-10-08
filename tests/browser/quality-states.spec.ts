@@ -220,12 +220,15 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
       await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
       await expect(screenLoading).toHaveCount(0);
       if (s.id === "SC-08") {
-        await expect(page.getByRole("banner").getByText("Schedule", { exact: true })).toBeVisible();
-        await expect(page.getByRole("navigation", { name: "Service navigation", exact: true })
-          .getByRole("link", { name: "Schedule", exact: true })).toHaveAttribute("aria-current", "page");
+        await expect(page.getByRole("banner").locator(".ppo-crumb-current")).toHaveText("Schedule");
+        await expect(page.getByRole("banner").locator(".ppo-crumb-current")).toBeVisible();
+        // The workspace rail/phone destinations replace the duplicate Service
+        // header tabs. Schedule keeps its current breadcrumb and owned page.
+        await expect(page.getByRole("banner").locator(".module-navigation")).toHaveCount(0);
       }
       if (s.id === "SC-14") {
-        await expect(page.getByRole("banner").getByText("Documents", { exact: true })).toBeVisible();
+        await expect(page.getByRole("banner").locator(".ppo-crumb-current")).toHaveText("Documents");
+        await expect(page.getByRole("banner").locator(".ppo-crumb-current")).toBeVisible();
       }
       await capture(page, info, `${s.id}-loaded`);
       const match = (url: URL) => url.pathname === `/api/v1/${s.api}`;

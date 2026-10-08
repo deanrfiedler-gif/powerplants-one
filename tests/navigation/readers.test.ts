@@ -1,0 +1,31 @@
+import assert from "node:assert/strict";
+import { after, test } from "node:test";
+import { readFile } from "node:fs/promises";
+import { localConfig } from "../../src/platform/config";
+import { createSession } from "../../src/platform/identity";
+import { database, closeDatabase } from "../../src/platform/database";
+import { quotationLanding } from "../../src/shell/landing-reads";
+import { reportFinanceNavigation } from "../../src/finance/report-navigation";
+if(localConfig().database_name!=="ppo_synthetic_test")throw Error("NAV readers require ppo_synthetic_test");
+after(closeDatabase);
+test("N13 real scoped windows expose the older exact quotation, never a complete-register claim",async()=>{
+  const fixture=JSON.parse(await readFile("verification-evidence/navigation/commercial-fixture.json","utf8"));
+  const p=(await createSession("coordinator")).principal;
+  const first=await quotationLanding(p,{q:fixture.batch}),older=await quotationLanding(p,{q:fixture.batch,offset:"100"});
+  assert.equal(first.items.some(q=>q.id===fixture.older.quote),false);assert.equal(first.next_offset,100);
+  assert.equal(older.items.some(q=>q.id===fixture.older.quote),true);assert.match(older.basis,/not a complete quotation register/);
+  await assert.rejects(quotationLanding(p,{offset:"-1"}));
+  const denied=(await createSession("second-company")).principal;
+  assert.equal((await quotationLanding(denied,{q:fixture.batch,offset:"100"})).items.length,0);
+});
+test("N29 real Finance navigation uses exact current source revision and authoritative handoff scope",async()=>{
+  const f=JSON.parse(await readFile("verification-evidence/navigation/finance-fixture.json","utf8")),c=database();
+  const report=(await c.query("SELECT id,company_id,site_id,status,current_revision_id FROM ppo.service_reports WHERE id=$1",[f.report])).rows[0];
+  const p=(await createSession("finance")).principal,result=await reportFinanceNavigation(c,p,report,f.work);
+  assert.ok(result?.existing.some(row=>row.href===`/finance/handoffs/${f.handoff}`));
+  assert.equal(new URL(result!.prepare_href!,"https://ppo.invalid").searchParams.get("report_id"),f.report);
+  const stale=await reportFinanceNavigation(c,p,{...report,current_revision_id:"10000000-0000-4000-8000-000000000099"},f.work);
+  assert.equal(stale?.existing.length,0);
+  assert.equal((await reportFinanceNavigation(c,p,{...report,status:"Reviewed"},f.work))?.prepare_href,null);
+  assert.equal(await reportFinanceNavigation(c,(await createSession("coordinator")).principal,report,f.work),null);
+});

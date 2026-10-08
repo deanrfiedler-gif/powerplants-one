@@ -44,3 +44,9 @@ Acceptance evidence is pending. Capture matching original-reference and applicat
 ## Exact review integration
 
 Review exact saved estimate opens the ES-04 native record. A `version_id` entry link now selects that original saved cost version and shows the current version separately. Existing E1 cost editing and Draft output remain unchanged. Reuse the shared link and preserve the original template/bytes. See [native review](route-estimating-estimates-id-review.md).
+
+## NAV contextual navigation
+
+Saved version selection uses version_id URL state. The reader validates exact estimate/version membership. Invalid or unavailable revisions recheck current access and display a truthful fallback notice; dirty/uncertain work must be reviewed before changing revision.
+
+Desktop uses the existing shell with a 76 px compact or 232 px labelled primary rail. Mobile uses labelled destinations and More > Workspace; Home/search/help remain reachable. Check 320/390/780/781/1199/1200 px where applicable, long labels, visible focus and Escape/return focus. Missing accepted images remain explicit; no new accepted image or review fingerprint is recorded. Functional results and screenshot observations are in the NAV ledger; owner/device review and deployment remain separate.

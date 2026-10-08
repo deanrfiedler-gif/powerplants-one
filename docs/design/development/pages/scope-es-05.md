@@ -47,3 +47,9 @@ The native `/estimating/quotes/[id]/release` workflow extends the existing quota
 ## ES-06 receiving link
 
 An exact issued revision now links to the staff response page. Reported acceptance, corrections and negotiation remain separate from ES-05 approval/issue; the link passes this exact revision. See [response contract](../../../contracts/quotation-response.md). The shared panel stylesheet also serves ES-06; its controls and tokens are unchanged.
+
+## NAV contextual navigation
+
+Filter by estimate reference/title and continue through older windows of up to 100 scoped estimates. offset and q are shareable state; each quotation receives an exact access check. Missing or restricted sources are partial, not an empty complete register.
+
+Desktop uses the existing shell with a 76 px compact or 232 px labelled primary rail. Mobile uses labelled destinations and More > Workspace; Home/search/help remain reachable. Check 320/390/780/781/1199/1200 px where applicable, long labels, visible focus and Escape/return focus. Missing accepted images remain explicit; no new accepted image or review fingerprint is recorded. Functional results and screenshot observations are in the NAV ledger; owner/device review and deployment remain separate.

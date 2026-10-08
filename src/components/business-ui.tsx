@@ -2,6 +2,7 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePublishPageDescription } from "../shell/page-description";
+import { usePublishRecordIdentity } from "../shell/record-identity";
 export type Envelope<T> = {
   items: T[];
   next_cursor: string | null;
@@ -257,6 +258,7 @@ export function PageHeader({
   variant?: "record" | "register";
 }) {
   const register = variant === "register";
+  usePublishRecordIdentity(!register && /SYN-PPO-|PPO-/.test(eyebrow) ? eyebrow : null, title);
   usePublishPageDescription(register ? title : null, description);
   return (
     <div className={register ? "business-heading business-heading-register" : "business-heading"}>

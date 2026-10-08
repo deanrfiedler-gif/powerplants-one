@@ -13,3 +13,9 @@ Stack the same sections at 390 × 844 and 320 CSS px. Preserve all blockers, lab
 ## Evidence and boundaries
 
 Source: src/app/(business)/my-jobs/site-readiness/page.tsx. Proposed presentation reference: [Quality/Site Assurance r01](../../../reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html). [Hashed exact reference/native captures](../../../testing/evidence/field-readiness-native/README.md) retain the implementation agent's comparison. Native adaptation uses vertically ordered cards within the existing shell, without copying the standalone fixture's release/hold policy. [Programme evidence](../../../delivery/field-quality-native-handover.md) records checks as executed. Actual 200% browser zoom and physical-device acceptance remain pending. Source presence, visual review, functional proof, owner/device acceptance and deployment remain separate.
+
+## NAV contextual navigation
+
+Field site readiness has a specific breadcrumb. Hosted offline recovery explains unavailability; local originals retain their existing supported offline routes.
+
+Desktop uses the existing shell with a 76 px compact or 232 px labelled primary rail. Mobile uses labelled destinations and More > Workspace; Home/search/help remain reachable. Check 320/390/780/781/1199/1200 px where applicable, long labels, visible focus and Escape/return focus. Missing accepted images remain explicit; no new accepted image or review fingerprint is recorded. Functional results and screenshot observations are in the NAV ledger; owner/device review and deployment remain separate.

@@ -1,0 +1,17 @@
+Source commit: f1f04ba12c49003398652917b16d9c47e45edf8a
+Result: Passed; 78 parent requirements and 22 unchanged issued references.
+Private original SHA-256: a944aa3e018983c96710cc0102cad13b8808a258ab9dc880531d9c6384945e5e
+
+{
+  "status": "passed",
+  "issued_sources": 22,
+  "requirements": 78,
+  "decisions": 29,
+  "planned_acceptance": 38,
+  "backlog_items": 16,
+  "linked_issues": 16,
+  "local_links_checked": 7155,
+  "files_scanned_for_markers": 4566,
+  "errors": [],
+  "scope": "Documentation assurance only; no business acceptance tests executed"
+}

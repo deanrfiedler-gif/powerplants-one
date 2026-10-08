@@ -26,7 +26,7 @@ test("the manifest declares one stable, record-free identity that survives relea
   const value = manifest();
   assert.equal(value.id, appIdentity);
   assert.equal(value.start_url, appStart);
-  assert.equal(value.start_url, "/work");
+  assert.equal(value.start_url, "/");
   assert.equal(value.scope, "/");
   assert.equal(value.display, "standalone");
   assert.equal(value.name, "Powerplants One");

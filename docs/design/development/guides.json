@@ -4452,7 +4452,7 @@
       "prepared_at": "2026-10-07",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/delivery/sales-native-completion-handover.md for executed evidence; not owner acceptance.",
+      "runtime_evidence": "See docs/delivery/sales-native-completion-handover.md for executed evidence; not owner acceptance. NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
       "sections": [
         {
           "section_id": "purpose",
@@ -4494,7 +4494,8 @@
             "Overview: deal information, next action and linked Sales workflows.",
             "Scope & sites: customer, location, contact, qualification and scope.",
             "Activities and Tasks: existing shared work, with its independent owners.",
-            "Estimates & quotations, Correspondence, Documents and History: source records and evidence."
+            "Estimates & quotations, Correspondence, Documents and History: source records and evidence.",
+            "Deal sections use validated section URL state, retaining all existing query/filter context and owned source actions. Reload and Back restore the selected section; invalid sections fall back to Overview."
           ],
           "steps": [],
           "rows": [],
@@ -4570,7 +4571,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Use Tab/Shift+Tab, Enter and Space with labelled native controls. Tabs remain reachable on narrow screens; form fields stack. Board moves retain menu/keyboard alternatives. Tables scroll within their own regions. Unsaved handover/review forms warn before leaving. These online Sales commands do not gain offline authority from the Offline workspace."
+            "Use Tab/Shift+Tab, Enter and Space with labelled native controls. Tabs remain reachable on narrow screens; form fields stack. Board moves retain menu/keyboard alternatives. Tables scroll within their own regions. Unsaved handover/review forms warn before leaving. These online Sales commands do not gain offline authority from the Offline workspace.",
+            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
           ],
           "steps": [],
           "rows": [],
@@ -6349,7 +6351,7 @@
       "prepared_at": "2026-10-03",
       "source_commit": "0e3e54f",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Verification in progress; see quotation-release-handover.md",
+      "runtime_evidence": "Verification in progress; see quotation-release-handover.md NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
       "sections": [
         {
           "section_id": "purpose",
@@ -6386,7 +6388,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Four cards keep preparation, approval, issue and simulation separate. Source details show exact bindings; document links open retained output. Controlled steps precede immutable history and original-operation recovery."
+            "Four cards keep preparation, approval, issue and simulation separate. Source details show exact bindings; document links open retained output. Controlled steps precede immutable history and original-operation recovery.",
+            "Filter by estimate reference/title and continue through older windows of up to 100 scoped estimates. offset and q are shareable state; each quotation receives an exact access check. Missing or restricted sources are partial, not an empty complete register."
           ],
           "steps": [],
           "rows": [],
@@ -6456,7 +6459,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Stacked cards and wrapped identities retain every action at narrow widths. Use native labels, disclosures and keyboard focus. There is no offline release queue. Physical-device, screen-reader and 200% zoom acceptance are separate."
+            "Stacked cards and wrapped identities retain every action at narrow widths. Use native labels, disclosures and keyboard focus. There is no offline release queue. Physical-device, screen-reader and 200% zoom acceptance are separate.",
+            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
           ],
           "steps": [],
           "rows": [],
@@ -14569,7 +14573,7 @@
       "prepared_at": "2026-09-24",
       "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits.",
+      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits. NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
       "sections": [
         {
           "section_id": "purpose",
@@ -14609,7 +14613,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Review / comparison in the native PPO shell. The secondary Scheduling navigation connects Planner, Resources, Changes & follow-up, Travel review and Demand & capacity."
+            "Review / comparison in the native PPO shell. The secondary Scheduling navigation connects Planner, Resources, Changes & follow-up, Travel review and Demand & capacity.",
+            "Demand and capacity has a specific breadcrumb. Preserve unknown demand and exact scoped source evidence."
           ],
           "steps": [],
           "rows": [],
@@ -14688,7 +14693,8 @@
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
             "Use labelled controls and Tab/Shift+Tab; Enter or Space activates buttons. Travel order has Earlier/Later alternatives without dragging. Cards and comparisons stack on phones.",
-            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations."
+            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations.",
+            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
           ],
           "steps": [],
           "rows": [],
@@ -14755,7 +14761,7 @@
       "prepared_at": "2026-09-24",
       "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Step 6 integrated update/restart/compatible rollback and service-return evidence: docs/testing/evidence/scheduling-step6/README.md. Independent visual/owner/device acceptance remains pending.",
+      "runtime_evidence": "Step 6 integrated update/restart/compatible rollback and service-return evidence: docs/testing/evidence/scheduling-step6/README.md. Independent visual/owner/device acceptance remains pending. NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
       "sections": [
         {
           "section_id": "purpose",
@@ -14795,7 +14801,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Work queue + persistent detail in the native PPO shell. The secondary Scheduling navigation connects Planner, Resources, Changes & follow-up, Travel review and Demand & capacity."
+            "Work queue + persistent detail in the native PPO shell. The secondary Scheduling navigation connects Planner, Resources, Changes & follow-up, Travel review and Demand & capacity.",
+            "Scheduling change follow-up has its own breadcrumb and retains the shared secondary-menu view, day/timezone/site/resource query contract."
           ],
           "steps": [],
           "rows": [],
@@ -14875,7 +14882,8 @@
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
             "Use labelled controls and Tab/Shift+Tab; Enter or Space activates buttons. Travel order has Earlier/Later alternatives without dragging. Cards and comparisons stack on phones.",
-            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations."
+            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations.",
+            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
           ],
           "steps": [],
           "rows": [],
@@ -14943,7 +14951,7 @@
       "prepared_at": "2026-09-24",
       "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits.",
+      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits. NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
       "sections": [
         {
           "section_id": "purpose",
@@ -14983,7 +14991,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Review / comparison in the native PPO shell. The secondary Scheduling navigation connects Planner, Resources, Changes & follow-up, Travel review and Demand & capacity."
+            "Review / comparison in the native PPO shell. The secondary Scheduling navigation connects Planner, Resources, Changes & follow-up, Travel review and Demand & capacity.",
+            "Travel review has a specific breadcrumb. Retain existing day/timezone/site/resource context and source checks."
           ],
           "steps": [],
           "rows": [],
@@ -15062,7 +15071,8 @@
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
             "Use labelled controls and Tab/Shift+Tab; Enter or Space activates buttons. Travel order has Earlier/Later alternatives without dragging. Cards and comparisons stack on phones.",
-            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations."
+            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations.",
+            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
           ],
           "steps": [],
           "rows": [],
@@ -15533,7 +15543,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Visit context links to My Jobs and Preparation. Exact procedure sources, attempt history, evidence, owned defects and retained outputs remain distinct. Every record is checked against current server authority."
+            "Visit context links to My Jobs and Preparation. Exact procedure sources, attempt history, evidence, owned defects and retained outputs remain distinct. Every record is checked against current server authority.",
+            "My inspections is a permitted Service destination; assigned-visit capture and contextual source paths remain authoritative."
           ],
           "steps": [],
           "rows": [],
@@ -15720,7 +15731,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Visit context links to My Jobs and Preparation. Exact procedure sources, attempt history, evidence, owned defects and retained outputs remain distinct. Every record is checked against current server authority."
+            "Visit context links to My Jobs and Preparation. Exact procedure sources, attempt history, evidence, owned defects and retained outputs remain distinct. Every record is checked against current server authority.",
+            "Inspection review discovery requires report.read and service.work_order.edit together. Existing scoped per-visit checks remain; incompatible scopes reveal no record identity."
           ],
           "steps": [],
           "rows": [],
@@ -15867,7 +15879,7 @@
       "prepared_at": "2026-10-03",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "docs/testing/evidence/field-closed-visit/README.md separates fresh proof, retained regressions and unperformed human acceptance. Current integrated source-bound proof and actual human-status record: docs/testing/evidence/field-integrated-acceptance/README.md.",
+      "runtime_evidence": "docs/testing/evidence/field-closed-visit/README.md separates fresh proof, retained regressions and unperformed human acceptance. Current integrated source-bound proof and actual human-status record: docs/testing/evidence/field-integrated-acceptance/README.md. NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
       "sections": [
         {
           "section_id": "purpose",
@@ -15909,7 +15921,8 @@
           "paragraphs": [
             "The visit header retains the exact appointment, Work Order, scheduled interval, Site and arrival/biosecurity notes. The source link returns to CS-06.",
             "The context form does not change authorised scope. Requirements apply only to an explicit Site-wide source or an exact selected location and matching activity. A parent Facility never stands in for its children.",
-            "Retained reviews show whether they match the displayed source and context. Different or changed context requires re-review."
+            "Retained reviews show whether they match the displayed source and context. Different or changed context requires re-review.",
+            "Field site readiness has a specific breadcrumb. Hosted offline recovery explains unavailability; local originals retain their existing supported offline routes."
           ],
           "steps": [],
           "rows": [],
@@ -15993,7 +16006,8 @@
           "paragraphs": [
             "The same labelled sections stack on a phone. Use Tab/Shift+Tab, Space for checkboxes and Enter for form submission; focus stays visible. No page-specific drawer or dialog is required.",
             "This increment requires an online server response. FI-02 offline extension remains programme work; a cached page or network indicator is not evidence of current authority or a successful save.",
-            "Current receiving actions are online only. Downloaded visit context remains visibly cached; pending originals stay bound to that visit and are adjudicated on replay. Never move an old arrival, timer event or acknowledgement to a later visit."
+            "Current receiving actions are online only. Downloaded visit context remains visibly cached; pending originals stay bound to that visit and are adjudicated on replay. Never move an old arrival, timer event or acknowledgement to a later visit.",
+            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
           ],
           "steps": [],
           "rows": [],
@@ -16075,7 +16089,7 @@
       "prepared_at": "2026-10-02",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "docs/testing/evidence/field-incidents/README.md",
+      "runtime_evidence": "docs/testing/evidence/field-incidents/README.md NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
       "sections": [
         {
           "section_id": "purpose",
@@ -16111,7 +16125,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "The register lists permitted operational summaries. Capture binds the original source. The record shows facts, current source assessment, corrective Activities, evidence, review commands and retained issued outcomes. Read access grants no write or sensitive authority."
+            "The register lists permitted operational summaries. Capture binds the original source. The record shows facts, current source assessment, corrective Activities, evidence, review commands and retained issued outcomes. Read access grants no write or sensitive authority.",
+            "Incidents and actions is a permitted Service destination; exact incident/source and original recovery remain."
           ],
           "steps": [],
           "rows": [],
@@ -16181,7 +16196,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Use Tab/Shift+Tab, native selects and labelled buttons. The global guide opens without discarding input; Escape returns focus. Incident operations are online only. Last-known disconnected context cannot authorise work. Existing P08 delayed Start revalidates holds; factual capture can be retained as ReviewRequired."
+            "Use Tab/Shift+Tab, native selects and labelled buttons. The global guide opens without discarding input; Escape returns focus. Incident operations are online only. Last-known disconnected context cannot authorise work. Existing P08 delayed Start revalidates holds; factual capture can be retained as ReviewRequired.",
+            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
           ],
           "steps": [],
           "rows": [],
@@ -20592,7 +20608,7 @@
       "prepared_at": "2026-09-25",
       "source_commit": "cad98aca42cb233f142029d11601a78d7d4b521e",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/testing/evidence/products-native/README.md; checks and visual review are separate.",
+      "runtime_evidence": "See docs/testing/evidence/products-native/README.md; checks and visual review are separate. NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
       "sections": [
         {
           "section_id": "purpose",
@@ -20630,7 +20646,9 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
+          "paragraphs": [
+            "Product import has its own breadcrumb label; it retains synthetic source preparation and existing validation. The Products parent remains current for nested catalogue records."
+          ],
           "steps": [],
           "rows": [
             [
@@ -20750,7 +20768,8 @@
           "paragraphs": [
             "At 390/320 px, cards and before/after sections stack in reading order. Labels and evidence wrap; actions remain available by keyboard.",
             "Unsaved forms use the shared leave warning. No Products offline command queue is implemented. Reconnect and recover a pending original result.",
-            "Use Tab/Shift+Tab, Enter for controls and the shell information panel; these Product workspaces add no bespoke modal or drag interaction."
+            "Use Tab/Shift+Tab, Enter for controls and the shell information panel; these Product workspaces add no bespoke modal or drag interaction.",
+            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
           ],
           "steps": [],
           "rows": [],
@@ -35610,7 +35629,7 @@
       "prepared_at": "2026-09-23",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Not run for this guide NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
       "sections": [
         {
           "section_id": "purpose",
@@ -35653,7 +35672,9 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
+          "paragraphs": [
+            "The breadcrumb names Customer Finance account and its Finance parent. Preserve exact account_id query selection and authoritative customer/account membership checks."
+          ],
           "steps": [],
           "rows": [
             [
@@ -35809,7 +35830,8 @@
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
             "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable.",
+            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
           ],
           "steps": [],
           "rows": [],
@@ -37865,7 +37887,7 @@
       "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending.",
+      "runtime_evidence": "Executed synthetic database (559 cases), Equipment HTTP, Equipment browser (38 passed; ten intentional duplicate skips) and actual app/PostgreSQL restart evidence on 24 September 2026; exact source checkpoints, 39 inspected images and limitations: docs/testing/evidence/equipment-native/README.md. Owner acceptance pending. NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
       "sections": [
         {
           "section_id": "purpose",
@@ -37904,7 +37926,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Register and record workspace: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon opens the registered draft route guide; the nine EQ scope guides are also available in Design & Development."
+            "Register and record workspace: shared Equipment navigation, context title, source/evidence content and the page's explicit actions. The global information icon opens the registered draft route guide; the nine EQ scope guides are also available in Design & Development.",
+            "A loaded permitted Equipment record may return to its exact source Survey. Invalid returnTo is ignored. Installed-base navigation stays current for exact record routes; no /assets alias is introduced."
           ],
           "steps": [],
           "rows": [],
@@ -37978,7 +38001,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Use labelled stacked cards and forms. Camera lookup retains a manual path. Keyboard focus is visible and tabs use the shared navigation pattern. These Equipment commands require a network connection; no offline write queue is claimed."
+            "Use labelled stacked cards and forms. Camera lookup retains a manual path. Keyboard focus is visible and tabs use the shared navigation pattern. These Equipment commands require a network connection; no offline write queue is claimed.",
+            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
           ],
           "steps": [],
           "rows": [],
@@ -39335,7 +39359,7 @@
       "prepared_at": "2026-09-23",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Not run for this guide NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
       "sections": [
         {
           "section_id": "purpose",
@@ -39379,7 +39403,9 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
+          "paragraphs": [
+            "Saved version selection uses version_id URL state. The reader validates exact estimate/version membership. Invalid or unavailable revisions recheck current access and display a truthful fallback notice; dirty/uncertain work must be reviewed before changing revision."
+          ],
           "steps": [],
           "rows": [
             [
@@ -39535,7 +39561,8 @@
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
             "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable.",
+            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
           ],
           "steps": [],
           "rows": [],
@@ -40566,7 +40593,7 @@
       "prepared_at": "2026-09-23",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Not run for this guide NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
       "sections": [
         {
           "section_id": "purpose",
@@ -40609,7 +40636,9 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
+          "paragraphs": [
+            "An issued Report may supply validated work_order_id and report_id. Read current source membership/readiness, deliberately select the report, and retain account/allocation/recipient controls. Opening the form neither saves nor posts a handoff."
+          ],
           "steps": [],
           "rows": [
             [
@@ -40765,7 +40794,8 @@
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
             "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable.",
+            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
           ],
           "steps": [],
           "rows": [],
@@ -42158,8 +42188,8 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-10-08",
+      "source_commit": "bab3d8a569a54f33b79ea6b9e0d0c71daacba4a4",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "Not run for this guide",
       "sections": [
@@ -42252,10 +42282,10 @@
             "Task sequence for review against the applicable running release."
           ],
           "steps": [
-            "Search the related register for an existing record before creating another.",
-            "Complete the information requested by the creation form; keep unknown values explicit.",
-            "Review the entered context, save through the page action and inspect the resulting record/confirmation.",
-            "Then continue the wider workflow: Create or accept the bounded project context through permitted controls"
+            "Search Projects for an existing record before creating another.",
+            "Enter the Project name, select the existing Customer and Site, then select the Project coordinator. Target handover is optional.",
+            "Choose Create project and check the confirmed saved record or the explicit error/uncertain state.",
+            "Open the saved Project. A confirmed ordinary creation disables the completed form and provides Open saved project while navigation completes."
           ],
           "rows": [],
           "headers": []
@@ -42266,7 +42296,8 @@
           "paragraphs": [
             "A project has a receiving owner and defined scope.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Creating a project does not resolve open contractual or technical assumptions."
+            "Creating a project does not resolve open contractual or technical assumptions.",
+            "Sales create-and-return retains a separate receiving comparison and binding decision. Creating a Project does not accept or bind a Sales handover automatically."
           ],
           "steps": [],
           "rows": [],
@@ -42301,6 +42332,10 @@
             [
               "Planned / not available",
               "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
+            ],
+            [
+              "Project saved / opening",
+              "The ordinary creation is confirmed. Open saved project continues to the exact record; do not submit the completed form again."
             ]
           ],
           "headers": [
@@ -42381,7 +42416,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
+            "Draft for review · Prepared 8 October 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
             "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
             "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
           ],
@@ -43272,7 +43307,7 @@
       "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/delivery/sales-native-completion-handover.md for executed evidence; not owner acceptance.",
+      "runtime_evidence": "See docs/delivery/sales-native-completion-handover.md for executed evidence; not owner acceptance. NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
       "sections": [
         {
           "section_id": "purpose",
@@ -43314,7 +43349,8 @@
             "Overview: deal information, next action and linked Sales workflows.",
             "Scope & sites: customer, location, contact, qualification and scope.",
             "Activities and Tasks: existing shared work, with its independent owners.",
-            "Estimates & quotations, Correspondence, Documents and History: source records and evidence."
+            "Estimates & quotations, Correspondence, Documents and History: source records and evidence.",
+            "Deal sections use validated section URL state, retaining all existing query/filter context and owned source actions. Reload and Back restore the selected section; invalid sections fall back to Overview."
           ],
           "steps": [],
           "rows": [],
@@ -43392,7 +43428,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Use Tab/Shift+Tab, Enter and Space with labelled native controls. Tabs remain reachable on narrow screens; form fields stack. Board moves retain menu/keyboard alternatives. Tables scroll within their own regions. Unsaved handover/review forms warn before leaving. These online Sales commands do not gain offline authority from the Offline workspace."
+            "Use Tab/Shift+Tab, Enter and Space with labelled native controls. Tabs remain reachable on narrow screens; form fields stack. Board moves retain menu/keyboard alternatives. Tables scroll within their own regions. Unsaved handover/review forms warn before leaving. These online Sales commands do not gain offline authority from the Offline workspace.",
+            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
           ],
           "steps": [],
           "rows": [],
@@ -48221,10 +48258,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-10-08",
+      "source_commit": "bab3d8a569a54f33b79ea6b9e0d0c71daacba4a4",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Scheduling Step 4: docs/testing/evidence/scheduling-policy-enforcement/README.md records exact executed checks; visual and owner/device review pending.",
+      "runtime_evidence": "Scheduling Step 4: docs/testing/evidence/scheduling-policy-enforcement/README.md records exact executed checks; visual and owner/device review pending. NAV repair evidence: docs/testing/evidence/pr366-pr367-repair/README.md; source-read header reproduction and screenshot inspection are separate from full scenario and owner/device acceptance.",
       "sections": [
         {
           "section_id": "purpose",
@@ -48289,6 +48326,10 @@
             [
               "Guide and design",
               "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
+            ],
+            [
+              "Navigation",
+              "My Work is the current overview heading. Use My Work menu for its personal views. More contains ordinary permitted Workspace selection."
             ]
           ],
           "headers": [
@@ -48424,8 +48465,9 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "On a phone, My Work menu opens personal views. The Sales bar has labelled My Work, Deals, Activities, Contacts and More destinations. Activities opens the selected local day within Sales; personal agenda links retain their stated personal selection.",
+            "Use Tab and Shift+Tab for controls, Enter or Space for buttons, and Escape to close menus or the guide and return focus. My Work subviews expose the full authorized path through Page hierarchy.",
+            "The guide fills the phone screen and closes back to the current page. Hosted mode does not offer local Offline entry; the local Offline workspace retains its supported originals and recovery. A portable guide does not grant offline business authority."
           ],
           "steps": [],
           "rows": [],
@@ -48446,7 +48488,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
+            "Draft for review · Prepared 8 October 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
             "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
             "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
           ],
@@ -48462,9 +48504,10 @@
       "source_paths": [
         "src/app/(business)/work/(workspace)/page.tsx",
         "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "src/components/product-navigation.tsx"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "NAV repair: current My Work overview identity, labelled Sales phone destinations and scoped Activities; retained personal overview and source authority.",
       "document_id": "PPO-GUIDE-PAGE-WORK",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -48474,7 +48517,8 @@
       "workflow_basis": [
         "src/app/(business)/work/(workspace)/page.tsx",
         "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "src/components/product-navigation.tsx"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -49376,7 +49420,7 @@
       "prepared_at": "2026-09-23",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Scheduling Step 4: docs/testing/evidence/scheduling-policy-enforcement/README.md records exact executed checks; visual and owner/device review pending.",
+      "runtime_evidence": "Scheduling Step 4: docs/testing/evidence/scheduling-policy-enforcement/README.md records exact executed checks; visual and owner/device review pending. NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
       "sections": [
         {
           "section_id": "purpose",
@@ -49420,7 +49464,9 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
+          "paragraphs": [
+            "A loaded permitted Activity can return to the exact Acceptance stage and obligation fragment through bounded returnTo. Missing/denied targets do not expose the original identity."
+          ],
           "steps": [],
           "rows": [
             [
@@ -49581,7 +49627,8 @@
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
             "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable.",
+            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
           ],
           "steps": [],
           "rows": [],
@@ -58578,7 +58625,7 @@
       "prepared_at": "2026-09-23",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Not run for this guide NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
       "sections": [
         {
           "section_id": "purpose",
@@ -58621,7 +58668,9 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
+          "paragraphs": [
+            "Filter by estimate reference/title and continue through older windows of up to 100 scoped estimates. offset and q are shareable state; each quotation receives an exact access check. Missing or restricted sources are partial, not an empty complete register."
+          ],
           "steps": [],
           "rows": [
             [
@@ -58776,7 +58825,8 @@
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
             "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable.",
+            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
           ],
           "steps": [],
           "rows": [],
@@ -61835,7 +61885,7 @@
       "prepared_at": "2026-09-23",
       "source_commit": "ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Prior executed component evidence: docs/testing/evidence/project-acceptance-r01/README.md. A0 source inspection only; no new native walkthrough.",
+      "runtime_evidence": "Prior executed component evidence: docs/testing/evidence/project-acceptance-r01/README.md. A0 source inspection only; no new native walkthrough. NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
       "sections": [
         {
           "section_id": "purpose",
@@ -61878,7 +61928,9 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
+          "paragraphs": [
+            "Open owned Activity targets /work/[id] and returns to the same stage/obligation anchor. Receiving, owner/date, closeout and original-operation recovery remain independent."
+          ],
           "steps": [],
           "rows": [
             [
@@ -62038,7 +62090,8 @@
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
             "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable.",
+            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
           ],
           "steps": [],
           "rows": [],
@@ -64070,7 +64123,8 @@
           "section_id": "page-tour",
           "title": "Controls and views",
           "paragraphs": [
-            "Survey register, Survey scope, Measurements & observations, Photos & evidence, Missing information & follow-up, Review & handover and History."
+            "Survey register, Survey scope, Measurements & observations, Photos & evidence, Missing information & follow-up, Review & handover and History.",
+            "Saved Equipment entries use canonical /equipment/[id] with an exact bounded Survey source return. Missing or revoked option identities display Equipment unavailable in current scope, without the retained ID/name."
           ],
           "steps": [],
           "headers": [],
@@ -64152,7 +64206,8 @@
           "paragraphs": [
             "Tabs keep their selected view in the URL. Use arrow keys, Home and End within tab lists.",
             "Fields and source cards stack on narrow screens. Scroll the local tab strip where needed; the application retains one page scroll owner.",
-            "An open draft retains its original version. Save or deliberately discard it before navigating."
+            "An open draft retains its original version. Save or deliberately discard it before navigating.",
+            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
           ],
           "steps": [],
           "headers": [],
@@ -64181,7 +64236,7 @@
           "rows": []
         }
       ],
-      "runtime_evidence": "CS native synthetic database, compiled HTTP and desktop/mobile browser proofs executed on 23 September 2026; see docs/testing/evidence/cs-native-completion/README.md. Owner acceptance pending."
+      "runtime_evidence": "CS native synthetic database, compiled HTTP and desktop/mobile browser proofs executed on 23 September 2026; see docs/testing/evidence/cs-native-completion/README.md. Owner acceptance pending. NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed."
     },
     {
       "guide_key": "guide.route-surveys",
@@ -64401,7 +64456,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Review / comparison in the native PPO shell. The secondary Scheduling navigation connects Planner, Resources, Changes & follow-up, Travel review and Demand & capacity."
+            "Review / comparison in the native PPO shell. The secondary Scheduling navigation connects Planner, Resources, Changes & follow-up, Travel review and Demand & capacity.",
+            "Demand and capacity has a specific breadcrumb. Preserve unknown demand and exact scoped source evidence."
           ],
           "steps": [],
           "rows": [],
@@ -64480,7 +64536,8 @@
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
             "Use labelled controls and Tab/Shift+Tab; Enter or Space activates buttons. Travel order has Earlier/Later alternatives without dragging. Cards and comparisons stack on phones.",
-            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations."
+            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations.",
+            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
           ],
           "steps": [],
           "rows": [],
@@ -64509,7 +64566,7 @@
       ],
       "prepared_at": "2026-09-24",
       "change_summary": "S1–S5 Scheduling & Resources implementation and source-owned review boundaries.",
-      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits.",
+      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits. NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
       "source_paths": [
         "src/app/(business)/schedule/capacity/page.tsx",
         "docs/decisions/scheduling-resources-architecture.md",
@@ -64569,7 +64626,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Work queue + persistent detail in the native PPO shell. The secondary Scheduling navigation connects Planner, Resources, Changes & follow-up, Travel review and Demand & capacity."
+            "Work queue + persistent detail in the native PPO shell. The secondary Scheduling navigation connects Planner, Resources, Changes & follow-up, Travel review and Demand & capacity.",
+            "Scheduling change follow-up has its own breadcrumb and retains the shared secondary-menu view, day/timezone/site/resource query contract."
           ],
           "steps": [],
           "rows": [],
@@ -64648,7 +64706,8 @@
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
             "Use labelled controls and Tab/Shift+Tab; Enter or Space activates buttons. Travel order has Earlier/Later alternatives without dragging. Cards and comparisons stack on phones.",
-            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations."
+            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations.",
+            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
           ],
           "steps": [],
           "rows": [],
@@ -64677,7 +64736,7 @@
       ],
       "prepared_at": "2026-09-24",
       "change_summary": "S1–S5 Scheduling & Resources implementation and source-owned review boundaries.",
-      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits.",
+      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits. NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
       "source_paths": [
         "src/app/(business)/schedule/changes/page.tsx",
         "docs/decisions/scheduling-resources-architecture.md",
@@ -64737,7 +64796,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Review / comparison in the native PPO shell. The secondary Scheduling navigation connects Planner, Resources, Changes & follow-up, Travel review and Demand & capacity."
+            "Review / comparison in the native PPO shell. The secondary Scheduling navigation connects Planner, Resources, Changes & follow-up, Travel review and Demand & capacity.",
+            "Travel review has a specific breadcrumb. Retain existing day/timezone/site/resource context and source checks."
           ],
           "steps": [],
           "rows": [],
@@ -64816,7 +64876,8 @@
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
             "Use labelled controls and Tab/Shift+Tab; Enter or Space activates buttons. Travel order has Earlier/Later alternatives without dragging. Cards and comparisons stack on phones.",
-            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations."
+            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations.",
+            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
           ],
           "steps": [],
           "rows": [],
@@ -64845,7 +64906,7 @@
       ],
       "prepared_at": "2026-09-24",
       "change_summary": "S1–S5 Scheduling & Resources implementation and source-owned review boundaries.",
-      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits.",
+      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits. NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
       "source_paths": [
         "src/app/(business)/schedule/travel/page.tsx",
         "docs/decisions/scheduling-resources-architecture.md",
@@ -67052,7 +67113,8 @@
             "Sales preparation worklist: select a permitted deal and create its draft.",
             "Brief: problem/outcome, included scope, exclusions, assumptions, unknowns, date, locations/equipment and exact evidence.",
             "Review: Submit, Clarify, Answer, Resolve, Return and Accept remain separate.",
-            "History and comparison: source basis and immutable revisions. Estimating Intake shows submitted briefs."
+            "History and comparison: source basis and immutable revisions. Estimating Intake shows submitted briefs.",
+            "Receiving Intake is a separate permitted Estimating destination from Intake & workload; receiving ownership and contextual Sales handovers remain distinct."
           ],
           "steps": [],
           "rows": [],
@@ -67128,7 +67190,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Use Tab/Shift+Tab, Enter and Space with labelled native controls. Tabs remain reachable on narrow screens; form fields stack. Board moves retain menu/keyboard alternatives. Tables scroll within their own regions. Unsaved handover/review forms warn before leaving. These online Sales commands do not gain offline authority from the Offline workspace."
+            "Use Tab/Shift+Tab, Enter and Space with labelled native controls. Tabs remain reachable on narrow screens; form fields stack. Board moves retain menu/keyboard alternatives. Tables scroll within their own regions. Unsaved handover/review forms warn before leaving. These online Sales commands do not gain offline authority from the Offline workspace.",
+            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
           ],
           "steps": [],
           "rows": [],
@@ -67172,7 +67235,7 @@
         }
       ],
       "prepared_at": "2026-09-24",
-      "runtime_evidence": "See docs/delivery/sales-native-completion-handover.md for executed evidence; not owner acceptance.",
+      "runtime_evidence": "See docs/delivery/sales-native-completion-handover.md for executed evidence; not owner acceptance. NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
       "change_summary": "Native Sales workflow, authority, source ownership, recovery and boundaries.",
       "source_paths": [
         "src/components/sales-handover.tsx",
@@ -69135,7 +69198,8 @@
           "paragraphs": [
             "The visit header retains the exact appointment, Work Order, scheduled interval, Site and arrival/biosecurity notes. The source link returns to CS-06.",
             "The context form does not change authorised scope. Requirements apply only to an explicit Site-wide source or an exact selected location and matching activity. A parent Facility never stands in for its children.",
-            "Retained reviews show whether they match the displayed source and context. Different or changed context requires re-review."
+            "Retained reviews show whether they match the displayed source and context. Different or changed context requires re-review.",
+            "Field site readiness has a specific breadcrumb. Hosted offline recovery explains unavailability; local originals retain their existing supported offline routes."
           ],
           "steps": [],
           "rows": [],
@@ -69215,7 +69279,8 @@
           "title": "Mobile, keyboard and offline",
           "paragraphs": [
             "The same labelled sections stack on a phone. Use Tab/Shift+Tab, Space for checkboxes and Enter for form submission; focus stays visible. No page-specific drawer or dialog is required.",
-            "This increment requires an online server response. FI-02 offline extension remains programme work; a cached page or network indicator is not evidence of current authority or a successful save."
+            "This increment requires an online server response. FI-02 offline extension remains programme work; a cached page or network indicator is not evidence of current authority or a successful save.",
+            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
           ],
           "steps": [],
           "rows": [],
@@ -69245,7 +69310,7 @@
         }
       ],
       "prepared_at": "2026-09-24",
-      "runtime_evidence": "See docs/delivery/field-quality-native-handover.md",
+      "runtime_evidence": "See docs/delivery/field-quality-native-handover.md NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
       "change_summary": "Exact assigned CS-06 source review, original-operation recovery and explicit authority boundaries.",
       "source_paths": [
         "src/field/readiness.ts",
@@ -69310,7 +69375,8 @@
           "section_id": "page-tour",
           "title": "Page tour",
           "paragraphs": [
-            "Saved workflow contains the current publication head, exact source/fixed terms, editable unsaved proposal, saved evidence and action controls. Reopen saved records pages proposals, reviews and publications. Temporary scoped comparison and published holds remain separate sections."
+            "Saved workflow contains the current publication head, exact source/fixed terms, editable unsaved proposal, saved evidence and action controls. Reopen saved records pages proposals, reviews and publications. Temporary scoped comparison and published holds remain separate sections.",
+            "Scheduling policy impact has its own breadcrumb; review and publication duties remain separate."
           ],
           "steps": [],
           "headers": [],
@@ -69387,7 +69453,8 @@
           "title": "Mobile, keyboard and offline",
           "paragraphs": [
             "At 1440/1024/390/320 CSS px, fields/cards and actions wrap within the shell scroll owner. Native controls, labelled validation and visible focus support keyboard use. Record opening focuses the saved heading; successor editing focuses its form heading. Emulation is separate from physical-device/assistive-technology acceptance.",
-            "If the saved proposal opens before the current publication head finishes loading, Edit still selects successor editing. The form opens with focus on its heading when that read completes. Typing keeps focus in the field; selecting Edit again returns focus to the existing heading."
+            "If the saved proposal opens before the current publication head finishes loading, Edit still selects successor editing. The form opens with focus on its heading when that read completes. Typing keeps focus in the field; selecting Edit again returns focus to the existing heading.",
+            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
           ],
           "steps": [],
           "headers": [],
@@ -69415,7 +69482,7 @@
           "rows": []
         }
       ],
-      "runtime_evidence": "Step 6 integrated update/restart/compatible rollback and service-return evidence: docs/testing/evidence/scheduling-step6/README.md. Independent visual/owner/device acceptance remains pending."
+      "runtime_evidence": "Step 6 integrated update/restart/compatible rollback and service-return evidence: docs/testing/evidence/scheduling-step6/README.md. Independent visual/owner/device acceptance remains pending. NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed."
     },
     {
       "guide_key": "guide.route-my-jobs-inspections",
@@ -69465,7 +69532,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Visit context links to My Jobs and Preparation. Exact procedure sources, attempt history, evidence, owned defects and retained outputs remain distinct. Every record is checked against current server authority."
+            "Visit context links to My Jobs and Preparation. Exact procedure sources, attempt history, evidence, owned defects and retained outputs remain distinct. Every record is checked against current server authority.",
+            "My inspections is a permitted Service destination; assigned-visit capture and contextual source paths remain authoritative."
           ],
           "steps": [],
           "rows": [],
@@ -69632,7 +69700,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Visit context links to My Jobs and Preparation. Exact procedure sources, attempt history, evidence, owned defects and retained outputs remain distinct. Every record is checked against current server authority."
+            "Visit context links to My Jobs and Preparation. Exact procedure sources, attempt history, evidence, owned defects and retained outputs remain distinct. Every record is checked against current server authority.",
+            "Inspection review discovery requires report.read and service.work_order.edit together. Existing scoped per-visit checks remain; incompatible scopes reveal no record identity."
           ],
           "steps": [],
           "rows": [],
@@ -69934,7 +70003,7 @@
         }
       ],
       "prepared_at": "2026-10-02",
-      "runtime_evidence": "docs/testing/evidence/field-incidents/README.md",
+      "runtime_evidence": "docs/testing/evidence/field-incidents/README.md NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
       "source_paths": [
         "src/app/(business)/service/incidents/page.tsx",
         "src/incidents/screen.tsx",
@@ -69997,7 +70066,8 @@
           "section_id": "page-tour",
           "title": "Page tour",
           "paragraphs": [
-            "The source panel names the saved revision and review sequence. Expand submitted scope and cost evidence. Three review cards distinguish applicable decisions from changed facts. Correction and decision forms precede immutable history; exact history links open their original saved cost version."
+            "The source panel names the saved revision and review sequence. Expand submitted scope and cost evidence. Three review cards distinguish applicable decisions from changed facts. Correction and decision forms precede immutable history; exact history links open their original saved cost version.",
+            "Breadcrumb identity names Estimate review. The loaded exact reference/version/title is retained separately from approval and quotation issue. Parent navigation and source record links retain their distinct purposes."
           ],
           "steps": [],
           "headers": [],
@@ -70067,7 +70137,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline",
           "paragraphs": [
-            "Cards stack below 900 CSS px; UUIDs and reasons wrap at 390/320 px. Use labelled native fields, shared buttons and keyboard focus. The command journal is same-tab recovery only; there is no offline submission or review."
+            "Cards stack below 900 CSS px; UUIDs and reasons wrap at 390/320 px. Use labelled native fields, shared buttons and keyboard focus. The command journal is same-tab recovery only; there is no offline submission or review.",
+            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
           ],
           "steps": [],
           "headers": [],
@@ -70094,7 +70165,8 @@
           "rows": []
         }
       ],
-      "prepared_at": "2026-10-03"
+      "prepared_at": "2026-10-03",
+      "runtime_evidence": "Not run for this guide NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed."
     },
     {
       "guide_key": "guide.route-estimating-quotes-id-release",
@@ -71141,7 +71213,9 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
+          "paragraphs": [
+            "Product import has its own breadcrumb label; it retains synthetic source preparation and existing validation. The Products parent remains current for nested catalogue records."
+          ],
           "steps": [],
           "rows": [
             [
@@ -71261,7 +71335,8 @@
           "paragraphs": [
             "At 390/320 px, cards and before/after sections stack in reading order. Labels and evidence wrap; actions remain available by keyboard.",
             "Unsaved forms use the shared leave warning. No Products offline command queue is implemented. Reconnect and recover a pending original result.",
-            "Use Tab/Shift+Tab, Enter for controls and the shell information panel; these Product workspaces add no bespoke modal or drag interaction."
+            "Use Tab/Shift+Tab, Enter for controls and the shell information panel; these Product workspaces add no bespoke modal or drag interaction.",
+            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
           ],
           "steps": [],
           "rows": [],
@@ -71294,7 +71369,7 @@
       ],
       "locale": "en-AU",
       "prepared_at": "2026-09-25",
-      "runtime_evidence": "See docs/testing/evidence/products-native/README.md; checks and visual review are separate.",
+      "runtime_evidence": "See docs/testing/evidence/products-native/README.md; checks and visual review are separate. NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
       "change_summary": "7 October completion: named synthetic duties, exact historical pricing handoff and published-basis navigation; owner guide review remains pending."
     },
     {

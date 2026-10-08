@@ -52,3 +52,9 @@ The inspector's Overview links exact basis and issues. Deliverables lists accoun
 Incoming: existing packages and permitted Project/Opportunity/customer/site context. Outgoing: package-scoped EN-02–EN-05 records and existing EN-06–EN-08 handovers. The r02 HTML remains an issued design source; new compositions require owner review. Browser evidence and current validation are recorded in `docs/delivery/engineering-native-control-handover.md`; no design/business/deployment approval is inferred.
 
 Native destinations use the department rail; contextual query and retained handover links wrap inside the EN-01 heading. The phone page must not overflow horizontally or shift its modal drawer outside the viewport. Existing intake/review-note browser journeys prove this boundary.
+
+## NAV contextual navigation
+
+Engineering record sections retain validated view URL state and exact package context. Special Materials, Changes and Commissioning parents take precedence over generic Engineering routes. Module menus and receiving authority remain intact.
+
+Desktop uses the existing shell with a 76 px compact or 232 px labelled primary rail. Mobile uses labelled destinations and More > Workspace; Home/search/help remain reachable. Check 320/390/780/781/1199/1200 px where applicable, long labels, visible focus and Escape/return focus. Missing accepted images remain explicit; no new accepted image or review fingerprint is recorded. Functional results and screenshot observations are in the NAV ledger; owner/device review and deployment remain separate.

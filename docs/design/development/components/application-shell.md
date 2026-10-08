@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-ES-01 retains the existing `estimates` navigation identity and `/estimating` route with the label Intake & workload. Remove the duplicate unavailable Intake item from the Estimating menu order; Saved estimates is a local register destination. This changes neither shell capability checks nor its information icon. Native workload and existing wizard/specialist browser suites cover the consumer integration.
+ES-01 retains the existing `estimates` navigation identity and `/estimating` route with the label Intake & workload. Receiving Intake is the separate implemented `/estimating/intake` destination; Saved estimates is a local workload register destination. This changes neither shell capability checks nor its information icon. Native workload and existing wizard/specialist browser suites cover the consumer integration.
 
 **Owner:** Dean Fiedler · **Catalogue key:** `application-shell` · **Review:** Pending
 
@@ -102,3 +102,17 @@ The existing development guide retains desktop/mobile content, focus, loading an
 ## Products navigation and design bindings
 
 The permitted Sales fixture includes Products as its eighth primary destination and in More. Keep the 25 px semantic icons, fixed rail endpoints, header geometry and department-preserving Products link. Six native Products workspace routes bind their corresponding `products-native-*` records in `ui-baselines.json`; those records remain proposed compositions. The shell/conformance fixtures test exact links, source hashes and owning proof files without changing issued r17 or granting owner acceptance. The Products capability and existing permission filter continue to decide visibility. See the [Products evidence ledger](../../../testing/evidence/products-native/README.md) for the failed head and repair results.
+
+## NAV primary rail and discovery
+
+Compact 76 px and labelled 232 px are real primary-rail modes. The accessible button exposes aria-expanded and persists per identity/browser, falling back to visit memory. Navy is primary with restrained green brand accents. More contains ordinary Workspace selection on both devices; Development preview is distinct. Service/Email duplicate header tabs are removed where the module already owns those same views. Receiving Intake remains distinct from workload. Sales phone labels and Leads global shell are visible. Preserve 780/781 and 1200 px boundaries, all canonical destinations, source IDs and command recovery.
+
+New host fixtures, consumer bindings and the pending NAV alignment item are in components.json/navigation-fixtures.json. Proposed departures are recorded before baseline adoption; the issued r17 shell and r22 theme sources remain unchanged. No accepted new mockup images exist for expansion; inspect actual captures in the NAV ledger and keep owner/device/real-zoom review separate.
+
+NAV hierarchy: use the labelled **Page hierarchy** disclosure for the full authorized parent path when compact header sizing hides ancestors. It supports mouse, keyboard and touch, links remain scoped, Escape restores trigger focus, and the exact record reference is published only after an authorized read. The 44 px control and bounded popover require desktop/mobile review; owner acceptance remains pending.
+
+NAV CI repair: phone inline breadcrumbs show the current page, reserving width beside the 44 px disclosure. The disclosure still contains the full authorized path. Add Lead remains above the persistent phone bar and safe area, including short-height phones. Static UI keeps heading-fit/overflow/focus checks and eleven permitted Sales rail destinations; ordinary Workspace selection is tested in More, distinct from Development preview. Reference r17 is retained unchanged; owner acceptance is pending.
+
+My Work overview uses the module itself as its current breadcrumb. A redundant Overview crumb combined with the old phone override hid both labels; the synthetic successful-read fixture reproduced that empty heading. Subviews still name their view and expose the full hierarchy, with the disclosure in the same flex row as the title. The phone bar has visible labels, equal cells and the canonical Sales Activities day/scope contract. `tests/browser/my-work-mobile.spec.ts` retains the header geometry, current-location, agenda and business assertions; only the superseded icon-only/unscoped bar expectations change. See the [repair screenshot inspection](../../../testing/evidence/pr366-pr367-repair/screenshot-review.md); owner/device/real-zoom acceptance remains pending.
+
+At 320 px, the current title in a header with its own module menu uses 16 px below 361 px so My Work fits beside the existing five 44 px controls. The native phone fixture checks the title's actual scroll/client width, utility bounds and page overflow before returning to its 390 px business scenario. The 780/781 and 1200 px shell/menu transitions remain.

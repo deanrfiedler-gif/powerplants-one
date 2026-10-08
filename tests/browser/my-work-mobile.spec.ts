@@ -68,7 +68,17 @@ test("the phone overview is one page: header, five-cell bar, Quick Actions, atte
   for (let i = 1; i < boxes.length; i++) expect(boxes[i].x).toBeGreaterThanOrEqual(boxes[i - 1].x + boxes[i - 1].width - 1);
   for (const b of boxes) expect(b.y + b.height).toBeLessThanOrEqual(64);
   await expect(banner.locator(".product-heading")).toHaveText("My Work", { useInnerText: true });
+  await expect(banner.locator(".ppo-crumb-current")).toHaveAttribute("aria-current", "page");
   await expect(banner.locator(".brand-logo:visible")).toHaveCount(0);
+  await page.setViewportSize({ width: 320, height: 844 });
+  expect(await banner.locator(".ppo-crumb-current").evaluate(node => node.scrollWidth <= node.clientWidth)).toBe(true);
+  expect(await banner.locator("button:visible").evaluateAll(nodes => nodes.every(node => {
+    const box = node.getBoundingClientRect();
+    return box.width >= 44 && box.x >= 0 && box.right <= innerWidth && box.bottom <= 64;
+  }))).toBe(true);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.screenshot({ path: info.outputPath("overview-header-320.png") });
+  await page.setViewportSize({ width: 390, height: 844 });
 
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(/^Good (morning|afternoon|evening), /);
   await expect(page.locator(".mw-hello .mw-tag")).toHaveText("Sales");
@@ -76,10 +86,12 @@ test("the phone overview is one page: header, five-cell bar, Quick Actions, atte
   expect(await style(page, ".mw-hello .mw-tag", "background-color")).toBe("rgb(234, 241, 229)");
   expect(await style(page, ".mw-hello .mw-tag", "color")).toBe("rgb(69, 98, 59)");
 
-  // The bar: five cells in order, names for assistive technology, nothing to read on screen.
+  // NAV: five labelled cells in order, with the same accessible names and Sales
+  // Activities scope as desktop. Keep equal geometry and visible touch targets.
   const bar = page.getByRole("navigation", { name: "Mobile navigation", exact: true });
   expect(await bar.locator(":scope > *").evaluateAll((cells) => cells.map((c) => `${c.tagName}:${c.getAttribute("aria-label")}`))).toEqual(["A:My Work", "A:Deals", "A:Activities", "A:Contacts", "BUTTON:More"]);
-  expect(await bar.locator(":scope > * > span").evaluateAll((labels) => labels.every((l) => l.getBoundingClientRect().width <= 1))).toBe(true);
+  expect(await bar.locator(":scope > * > span").evaluateAll((labels) => labels.every((l) => l.getBoundingClientRect().width > 1))).toBe(true);
+  expect(await bar.locator(":scope > *").evaluateAll((cells) => cells.every((c) => c.getBoundingClientRect().height >= 44))).toBe(true);
   const cells = await bar.locator(":scope > *").evaluateAll((all) => all.map((c) => Math.round(c.getBoundingClientRect().width)));
   expect(Math.max(...cells) - Math.min(...cells)).toBeLessThanOrEqual(1);
   const current = bar.getByRole("link", { name: "My Work", exact: true });
@@ -87,8 +99,8 @@ test("the phone overview is one page: header, five-cell bar, Quick Actions, atte
   expect(await current.evaluate((n) => getComputedStyle(n).backgroundColor)).toBe("rgb(52, 60, 76)");
   expect(await current.evaluate((n) => getComputedStyle(n).boxShadow)).toContain("rgb(98, 187, 70)");
   await expect(bar.getByRole("link", { name: "Deals", exact: true })).toHaveAttribute("href", "/sales/opportunities");
-  await expect(bar.getByRole("link", { name: "Activities", exact: true })).toHaveAttribute("href", `/calendar?day=${scenario.slots.day}`);
-  await expect(bar.getByRole("link", { name: "Contacts", exact: true })).toHaveAttribute("href", "/contacts");
+  await expect(bar.getByRole("link", { name: "Activities", exact: true })).toHaveAttribute("href", `/calendar?day=${scenario.slots.day}&scope=sales&department=sales`);
+  await expect(bar.getByRole("link", { name: "Contacts", exact: true })).toHaveAttribute("href", "/contacts?department=sales");
 
   // Quick Actions: four icon tiles in order, each named for assistive technology and nothing to read on
   // screen. This identity holds no mail access, so that tile is a locked image, not a link; no unread

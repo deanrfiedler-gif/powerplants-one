@@ -1,8 +1,11 @@
 "use client";
+import { useContactView } from "./contact-workspace";
+import { RecordIdentity } from "../shell/record-identity";
 import { ControlSummary } from "../engineering/control/components/summary";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { navigateWithReview } from "./navigation-intent";
 import { useIdentity } from "./business-session";
 import {
   ErrorNotice,
@@ -184,7 +187,9 @@ function Modal({
 export function EngineeringWorkspace({ initialId }: { initialId?: string }) {
   const identity = useIdentity(),
     params = useSearchParams(),
-    root = useRef<HTMLElement>(null);
+    path = usePathname(), router = useRouter(),
+    root = useRef<HTMLElement>(null),
+    createdSelection = useRef<string | null>(null);
   const [view, setView] = useState("all"),
     [search, setSearch] = useState(""),
     [discipline, setDiscipline] = useState(""),
@@ -192,9 +197,26 @@ export function EngineeringWorkspace({ initialId }: { initialId?: string }) {
     [attention, setAttention] = useState(false),
     [sort, setSort] = useState("ref"),
     [cursors, setCursors] = useState<(string | null)[]>([null]);
-  const [selected, setSelected] = useState<string | null>(initialId ?? null),
-    [request, setRequest] = useState(params.get("create") === "1"),
+  const selected = initialId ?? params.get("package_id");
+  const setSelected = (id: string | null) => {
+    const q = new URLSearchParams(params);
+    if (id) q.set("package_id", id); else { q.delete("package_id"); q.delete("section"); }
+    const href = `${initialId && !id ? "/engineering" : path}?${q}`;
+    navigateWithReview(() => router.push(href, {scroll:false}), {href});
+  };
+  const [request, setRequest] = useState(params.get("create") === "1"),
     [notes, setNotes] = useState<Record<string, string>>({});
+  // The accepted command clears/closes its form first. Navigate after those
+  // mounted guards release, retaining any unrelated package notes.
+  useEffect(() => {
+    const created = createdSelection.current;
+    if (request || !created) return;
+    createdSelection.current = null;
+    const q = new URLSearchParams(params);
+    q.delete("create"); q.set("package_id", created);
+    const href = `${path}?${q}`;
+    navigateWithReview(() => router.push(href, {scroll:false}), {href});
+  }, [request, params, path, router]);
   const query = new URLSearchParams({
     q: search,
     view,
@@ -291,7 +313,7 @@ export function EngineeringWorkspace({ initialId }: { initialId?: string }) {
       setAttention(false);
     });
   const filtered = !!(search || discipline || mine || attention);
-  useUnsavedChanges(Object.values(notes).some(Boolean));
+  useUnsavedChanges(Object.values(notes).some(Boolean), false, ["section", "package_id"]);
   const nextAction = (p: EngineeringPackage) => (
     <div className="eng-next">
       {p.next_action}
@@ -693,11 +715,11 @@ export function EngineeringWorkspace({ initialId }: { initialId?: string }) {
         open={request}
         onClose={() => setRequest(false)}
         onCreated={(id) => {
+          createdSelection.current = id;
           setRequest(false);
           clear();
           setView("all");
           records.reload();
-          setSelected(id);
         }}
       />
       {selected && (
@@ -753,8 +775,8 @@ function RequestDialog({
   const blocked =
     command.busy || !!(command.error as Failure | null)?.retryable;
   useUnsavedChanges(
-    !!(form.title || form.brief || form.context_id || form.owner_id),
-    blocked,
+    open && !!(form.title || form.brief || form.context_id || form.owner_id),
+    open && blocked,
   );
   return (
     <Modal
@@ -948,8 +970,8 @@ function PackageDrawer({
 }) {
   const resource = useResource<EngineeringDetail>("engineering/" + id),
     command = useCommand();
-  const [tab, setTab] = useState("overview"),
-    [edit, setEdit] = useState(false),
+  const [tab, setTab] = useContactView(tabs.map(([key]) => key), "overview", "section");
+  const [edit, setEdit] = useState(false),
     [editBlocked, setEditBlocked] = useState(false),
     [editDirty, setEditDirty] = useState(false),
     [notice, setNotice] = useState("");
@@ -959,7 +981,7 @@ function PackageDrawer({
       !!(command.error as Failure | null)?.retryable ||
       editBlocked;
   const noteVersion = useRef<number | null>(null);
-  useUnsavedChanges(!!draft, blocked);
+  useUnsavedChanges(!!draft, blocked, ["section"]);
   const close = () => {
     if (
       !blocked &&
@@ -1004,6 +1026,7 @@ function PackageDrawer({
       />
       {p && !resource.error && (
         <>
+          <RecordIdentity reference={p.display_number} title={p.title} />
           <div className="eng-dialog-head" style={{ paddingTop: 0 }}>
             <p>
               {p.customer_name} · {p.context_title}

@@ -1,0 +1,38 @@
+Source commit: f1f04ba12c49003398652917b16d9c47e45edf8a
+Result: 27 passed; 12 explicit skips. All final selected core/account/layout tests passed on configured projects.
+Private original SHA-256: 82b42fe30b941fcf6b7aa4365bc6e500e1707481459166bb2ca82523ed33b72e
+
+> powerplants-one@0.1.0 test:browser
+> playwright test --config=playwright.compiled.config.ts tests/browser/navigation-finance.spec.ts tests/browser/navigation-layout.spec.ts tests/browser/department-navigation.spec.ts tests/browser/shell.spec.ts tests/browser/search-navigation.spec.ts
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.98"}
+  ok  1 [warm-up] › tests\browser\warm-up.setup.ts:10:1 › warm every route once before the browser projects (22.0s)
+  ok  2 [desktop-chromium] › tests\browser\department-navigation.spec.ts:47:1 › Sales Tasks uses the same saved action as My Work and completes that action once (4.6s)
+  ok  3 [desktop-chromium] › tests\browser\department-navigation.spec.ts:94:1 › all seven actual department rails retain canonical order and dimensions (5.2s)
+  ok  4 [desktop-chromium] › tests\browser\department-navigation.spec.ts:115:1 › Sales active drawings, real landing pages and More keyboard state (3.9s)
+  ok  5 [desktop-chromium] › tests\browser\department-navigation.spec.ts:137:1 › Engineering and Service retain shared Contacts view through records, reload, back and new tabs (2.5s)
+  ok  6 [desktop-chromium] › tests\browser\department-navigation.spec.ts:159:1 › Finance chooser preserves the exact permitted account and its rail after reload (1.1s)
+  ok  7 [desktop-chromium] › tests\browser\department-navigation.spec.ts:170:1 › Programme chooser opens a supported schedule context and returns to the chooser (1.6s)
+  ok  8 [desktop-chromium] › tests\browser\department-navigation.spec.ts:188:1 › shared URL context survives unavailable browser storage (1.2s)
+  ok  9 [desktop-chromium] › tests\browser\department-navigation.spec.ts:199:1 › specific Engineering, Projects and Fertigation destinations preserve their active parent (4.0s)
+  ok 10 [desktop-chromium] › tests\browser\department-navigation.spec.ts:211:1 › short desktop keeps More and logo anchored while shortcuts scroll (1.1s)
+  ok 11 [desktop-chromium] › tests\browser\department-navigation.spec.ts:225:1 › phone and 200 percent equivalent reflow keep the established navigation (1.5s)
+  ok 12 [desktop-chromium] › tests\browser\department-navigation.spec.ts:245:1 › restricted and empty access omit links; server guards still refuse account access (1.3s)
+  ok 13 [desktop-chromium] › tests\browser\navigation-finance.spec.ts:3:1 › N29 Finance entry rechecks exact sources without creating a handoff (1.4s)
+  ok 14 [desktop-chromium] › tests\browser\navigation-finance.spec.ts:24:1 › N14 exact permitted Finance account extends its module hierarchy (1.3s)
+  ok 15 [desktop-chromium] › tests\browser\navigation-layout.spec.ts:2:1 › N19/N31 labelled destinations and shell controls retain all established breakpoints (6.2s)
+  ok 16 [desktop-chromium] › tests\browser\search-navigation.spec.ts:9:1 › search geometry waits for its exact initial read before the render assertion (7.4s)
+  ok 17 [desktop-chromium] › tests\browser\search-navigation.spec.ts:20:1 › search readiness rejects an unsuccessful initial read (595ms)
+{"viewport":{"width":1440,"height":1000},"storage_evidence":"Synthetic marker committed. Previous marker recovered. Persistent storage: not granted. Reported quota: 10737491968 bytes. This does not prove offline or mobile readiness."}
+  ok 18 [desktop-chromium] › tests\browser\shell.spec.ts:13:1 › responsive shell, keyboard focus, server save, read-only refusal and storage feasibility (2.4s)
+  ok 19 [desktop-chromium] › tests\browser\shell.spec.ts:112:1 › unavailable dependency and missing page show useful recoverable states (982ms)
+  ok 20 [desktop-chromium] › tests\browser\shell.spec.ts:137:1 › Workspace selection preserves permissions, contextual navigation and page guidance (2.8s)
+  ok 32 [mobile-chromium] › tests\browser\navigation-finance.spec.ts:3:1 › N29 Finance entry rechecks exact sources without creating a handoff (2.5s)
+  ok 33 [mobile-chromium] › tests\browser\navigation-finance.spec.ts:24:1 › N14 exact permitted Finance account extends its module hierarchy (1.5s)
+  ok 35 [mobile-chromium] › tests\browser\search-navigation.spec.ts:9:1 › search geometry waits for its exact initial read before the render assertion (12.2s)
+  ok 36 [mobile-chromium] › tests\browser\search-navigation.spec.ts:20:1 › search readiness rejects an unsuccessful initial read (2.0s)
+{"viewport":{"width":390,"height":844},"storage_evidence":"Synthetic marker committed. Previous marker recovered. Persistent storage: not granted. Reported quota: 10737491968 bytes. This does not prove offline or mobile readiness."}
+  ok 37 [mobile-chromium] › tests\browser\shell.spec.ts:13:1 › responsive shell, keyboard focus, server save, read-only refusal and storage feasibility (8.1s)
+  ok 38 [mobile-chromium] › tests\browser\shell.spec.ts:112:1 › unavailable dependency and missing page show useful recoverable states (3.6s)
+  ok 39 [mobile-chromium] › tests\browser\shell.spec.ts:137:1 › Workspace selection preserves permissions, contextual navigation and page guidance (7.8s)
+  12 skipped
+  27 passed (2.2m)

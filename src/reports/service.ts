@@ -1,3 +1,4 @@
+import { reportFinanceNavigation } from "../finance/report-navigation";
 import { assertTimerFinished } from "../field/timer";
 import { leadsAvailable } from "../crm/leads/context";
 import { randomUUID } from "node:crypto";
@@ -1005,6 +1006,7 @@ export async function readReport(
           r.site_id,
         ),
         finance_state: "Separate Finance authority required",
+        finance_navigation: await reportFinanceNavigation(c, p, r, ctx.w.id),
       },
     ]);
   });

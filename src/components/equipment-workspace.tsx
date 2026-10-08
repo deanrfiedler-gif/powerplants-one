@@ -1,7 +1,8 @@
 "use client";
 import { EqField as Field } from "./equipment-controls";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { surveyReturn } from "../shell/context-links";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { PageHeader, ReadState, Status } from "./business-ui";
 import { Button, ButtonLink } from "./ui/button";
@@ -16,14 +17,15 @@ import type { equipmentRegister, equipmentWorkspace } from "../equipment/reads";
 import "../app/styles/equipment.css";
 
 export function EquipmentNav() {
+  const path = usePathname();
   return (
     <nav className="eq-nav" aria-label="Equipment workspaces">
-      <Link href="/equipment">Installed base</Link>
-      <Link href="/equipment/lookup">Identify equipment</Link>
-      <Link href="/equipment/instruments">Instruments</Link>
-      <Link href="/equipment/backups">Backups</Link>
-      <Link href="/equipment/bulletins">Bulletins</Link>
-      <Link href="/equipment/lifecycle">Support lifecycle</Link>
+      <Link href="/equipment" aria-current={(path === "/equipment" || /^\/equipment\/[0-9a-f-]{36}$/.test(path)) ? "page" : undefined}>Installed base</Link>
+      <Link href="/equipment/lookup" aria-current={(path === "/equipment/lookup") ? "page" : undefined}>Identify equipment</Link>
+      <Link href="/equipment/instruments" aria-current={(path === "/equipment/instruments") ? "page" : undefined}>Instruments</Link>
+      <Link href="/equipment/backups" aria-current={(path === "/equipment/backups") ? "page" : undefined}>Backups</Link>
+      <Link href="/equipment/bulletins" aria-current={(path === "/equipment/bulletins") ? "page" : undefined}>Bulletins</Link>
+      <Link href="/equipment/lifecycle" aria-current={(path === "/equipment/lifecycle") ? "page" : undefined}>Support lifecycle</Link>
     </nav>
   );
 }
@@ -311,6 +313,7 @@ const tabLabels = {
   support: "Bulletins & support",
 };
 export function EquipmentWorkspace({ id }: { id: string }) {
+  const source = surveyReturn(useSearchParams().get("returnTo"));
   const r = useCrmResource<Awaited<ReturnType<typeof equipmentWorkspace>>>(
     `equipment/${id}`,
     true,
@@ -324,6 +327,7 @@ export function EquipmentWorkspace({ id }: { id: string }) {
       <ReadState loading={r.loading} error={r.error} retry={r.reload} />
       {r.data && (
         <>
+          {source && <Link href={source}>Return to source survey</Link>}
           <PageHeader
             eyebrow={r.data.context.display_number}
             title={r.data.context.description}

@@ -1,0 +1,6 @@
+Source commit: f1f04ba12c49003398652917b16d9c47e45edf8a
+Result: Passed.
+Bounded excerpt; private original SHA-256: 4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28
+
+> powerplants-one@0.1.0 typecheck
+> tsc --noEmit

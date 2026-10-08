@@ -1,0 +1,16 @@
+Source: earlier candidate working tree; exact snapshot not retained; final committed-head unit run supersedes this diagnostic.
+Result: 9 passed.
+Bounded excerpt; private original SHA-256: b19bac4255fc1bbda5b780b57be5250366e878a78d44c005d05f0e022a0b255e
+
+✔ login rate boundary still limits provider attempts and offers honest recovery (13.0515ms)
+✔ only state-validated provider cancellation receives cancelled presentation (1.4443ms)
+✔ local entry keeps Microsoft disabled; query states cannot inject markup or authority (1.2643ms)
+✔ N09 hosted recovery is explanatory and local originals retain their exact entry (6.1508ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 778.7392

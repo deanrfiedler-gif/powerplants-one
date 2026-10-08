@@ -58,3 +58,13 @@ EQ-01 through EQ-09 reuse the shared control in their applicable register, recor
 ## Maintenance and Warranty consumers
 
 MA-01–MA-07 now reuse this component through the native registers and record workspaces. Exact bindings are in components.json. Synthetic long labels, uncertain saves, stale versions and separate customer/recovery states are in docs/design/development/maintenance-fixtures.json and the Maintenance browser journeys. Review 1440/1024/390/320 px and guide draft retention before owner acceptance.
+
+## NAV URL-state consumers
+
+Deal section, Sales handover view and Engineering record view reuse validated existing URL selection. Invalid values fall back to the declared initial view and preserve unrelated query context. Estimate revision selection uses version_id with exact reader membership/access checks. Dirty and unknown-outcome work uses the shared navigation intent; Discovery retains its stronger guard. Existing RecordTabs/RecordPanel keyboard semantics remain. Inspect rendered deep links, reload and Back in the real host; catalogue snapshots do not prove server authority.
+
+NAV CI repair: a Sales handover's validated `view` changes retain mounted dirty Brief/Review/History panels. Different records and unrelated query changes still require leave review; pending/unknown commands still prevent leaving. Receipt-owned release removes only the confirmed saving form's guard before post-save routing, without approving another form or changing server authority. Host fixtures are the existing CRM stage, Project creation and CR03 exact-successor journeys; owner/device acceptance remains pending.
+
+Equipment's mounted Configuration/Movement/identity panels declare the same narrow retained `view` contract through useCrmCommand. The exact equipment ID, other query state and unknown-command lock remain. EQ03 browser proof checks retained r02 fields, preview, original recovery and successor identity across view changes and reload.
+
+Pending and unknown commands may switch only these explicitly declared mounted views. The command owner, original body and draft remain mounted; a different record, unrelated query, reload or unload stays guarded at pending priority. Discovery keeps its independent stronger contract. EQ03 checks a refused Home transition, mounted view switching and original recovery together; CR03 checks an immediate successor-to-Brief transition while the command settles.
