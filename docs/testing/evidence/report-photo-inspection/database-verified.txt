@@ -1,0 +1,13 @@
+✔ report photo requires current review authority and exact report/revision/photo membership without writes (37831.2387ms)
+✔ report photo refuses an actual other technician report revision and photo on the same appointment (33746.9649ms)
+✔ report photo retains historical membership instead of substituting a successor photo (20555.0469ms)
+✔ report photo rechecks actual owner, scoped grants and active actor on every retrieval (18671.4377ms)
+✔ report photo refuses missing/corrupt bytes and authority revoked while storage is being read (24555.2784ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 147982.4451

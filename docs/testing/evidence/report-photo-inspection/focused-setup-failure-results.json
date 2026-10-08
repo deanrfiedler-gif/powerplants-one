@@ -1,0 +1,62 @@
+{
+  "source_commit": "24d19b1f158efeb8ad97d62b50e516cbdac4d80e",
+  "stats": {
+    "startTime": "2026-10-08T11:34:05.164Z",
+    "duration": 40295.67,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "title": "warm every route once before the browser projects",
+      "file": "warm-up.setup.ts",
+      "project": "warm-up",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 18875,
+          "retry": 0,
+          "start_time": "2026-10-08T11:34:18.713Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "Service photo inspection verifies exact bytes, preserves review input and clears protected previews",
+      "file": "report-photo.spec.ts",
+      "project": "desktop-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "failed",
+          "duration_ms": 2445,
+          "retry": 0,
+          "start_time": "2026-10-08T11:34:38.430Z",
+          "errors": [
+            "Error: {\"code\":\"ResourceConflict\",\"message\":\"SYN Riley Technician: reserved 2030-09-11T00:00:00.000Z to 2030-09-11T02:00:00.000Z (UTC). Original booking retained.\",\"field_errors\":[{\"field\":\"crew\",\"message\":\"SYN Riley Technician: reserved 2030-09-11T00:00:00.000Z to 2030-09-11T02:00:00.000Z (UTC). Original booking retained.\"}],\"correlation_id\":\"a9fc1c54-dd26-4426-a723-d557e59172d3\",\"retryable\":false}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n\n   at ..\\helpers\\offline-browser.ts:28\n\n  26 |   });\n  27 |   const data = await r.json();\n> 28 |   expect(r.ok(), JSON.stringify(data)).toBeTruthy();\n     |                                        ^\n  29 |   return data;\n  30 | }\n  31 | export async function login(request: APIRequestContext, profile: string) {\n    at call (<checkout>\\tests\\helpers\\offline-browser.ts:28:40)\n    at prepareFieldAppointment (<checkout>\\tests\\helpers\\field-http.ts:59:3)\n    at prepareIsolatedFieldAppointment (<checkout>\\tests\\helpers\\isolated-field-http.ts:103:15)\n    at prepared (<checkout>\\tests\\helpers\\offline-browser.ts:36:17)\n    at <checkout>\\tests\\browser\\report-photo.spec.ts:13:17"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Service photo inspection verifies exact bytes, preserves review input and clears protected previews",
+      "file": "report-photo.spec.ts",
+      "project": "mobile-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "failed",
+          "duration_ms": 1972,
+          "retry": 0,
+          "start_time": "2026-10-08T11:34:42.163Z",
+          "errors": [
+            "Error: {\"code\":\"ResourceConflict\",\"message\":\"SYN Riley Technician: reserved 2030-09-12T00:00:00.000Z to 2030-09-12T02:00:00.000Z (UTC). Original booking retained.\",\"field_errors\":[{\"field\":\"crew\",\"message\":\"SYN Riley Technician: reserved 2030-09-12T00:00:00.000Z to 2030-09-12T02:00:00.000Z (UTC). Original booking retained.\"}],\"correlation_id\":\"cda08389-610a-4445-88d2-603c4367b308\",\"retryable\":false}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n\n   at ..\\helpers\\offline-browser.ts:28\n\n  26 |   });\n  27 |   const data = await r.json();\n> 28 |   expect(r.ok(), JSON.stringify(data)).toBeTruthy();\n     |                                        ^\n  29 |   return data;\n  30 | }\n  31 | export async function login(request: APIRequestContext, profile: string) {\n    at call (<checkout>\\tests\\helpers\\offline-browser.ts:28:40)\n    at prepareFieldAppointment (<checkout>\\tests\\helpers\\field-http.ts:59:3)\n    at prepareIsolatedFieldAppointment (<checkout>\\tests\\helpers\\isolated-field-http.ts:103:15)\n    at prepared (<checkout>\\tests\\helpers\\offline-browser.ts:36:17)\n    at <checkout>\\tests\\browser\\report-photo.spec.ts:13:17"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,238 @@
+{
+  "source_commit": "4102fc235beec194f4495ef82870b99f84510431",
+  "stats": {
+    "startTime": "2026-10-08T11:25:30.777Z",
+    "duration": 346779.188,
+    "expected": 15,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "title": "warm every route once before the browser projects",
+      "file": "warm-up.setup.ts",
+      "project": "warm-up",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 24771,
+          "retry": 0,
+          "start_time": "2026-10-08T11:25:59.519Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "large offline queue continues through online completion with all 100 original captures",
+      "file": "offline-completion-handoff.spec.ts",
+      "project": "desktop-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 57822,
+          "retry": 0,
+          "start_time": "2026-10-08T11:26:25.182Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "online completion handoff preserves originals and unsaved text when current access or navigation fails",
+      "file": "offline-completion-handoff.spec.ts",
+      "project": "desktop-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 6208,
+          "retry": 0,
+          "start_time": "2026-10-08T11:27:23.289Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "large offline queue continues through online completion with all 100 original captures",
+      "file": "offline-completion-handoff.spec.ts",
+      "project": "mobile-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 56590,
+          "retry": 0,
+          "start_time": "2026-10-08T11:28:50.580Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "online completion handoff preserves originals and unsaved text when current access or navigation fails",
+      "file": "offline-completion-handoff.spec.ts",
+      "project": "mobile-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 6434,
+          "retry": 0,
+          "start_time": "2026-10-08T11:29:47.585Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "Service photo inspection verifies exact bytes, preserves review input and clears protected previews",
+      "file": "report-photo.spec.ts",
+      "project": "desktop-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 6936,
+          "retry": 0,
+          "start_time": "2026-10-08T11:27:29.526Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "Service photo inspection verifies exact bytes, preserves review input and clears protected previews",
+      "file": "report-photo.spec.ts",
+      "project": "mobile-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 7215,
+          "retry": 0,
+          "start_time": "2026-10-08T11:29:54.047Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "P09 complete UI return, correction, partial acceptance, return proposal, controlled revisions and five exact responses",
+      "file": "reports.spec.ts",
+      "project": "desktop-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 36961,
+          "retry": 0,
+          "start_time": "2026-10-08T11:27:36.831Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "P09 online submission refuses retained offline originals and recovers the same original through explicit sync",
+      "file": "reports.spec.ts",
+      "project": "desktop-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 8576,
+          "retry": 0,
+          "start_time": "2026-10-08T11:28:13.804Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "FI07 native attendance acknowledgement, lost receipt, report reservation and owned clarification",
+      "file": "reports.spec.ts",
+      "project": "desktop-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 21659,
+          "retry": 0,
+          "start_time": "2026-10-08T11:28:22.400Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "FI07 proposed Service reference and native report register comparison",
+      "file": "reports.spec.ts",
+      "project": "desktop-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 4086,
+          "retry": 0,
+          "start_time": "2026-10-08T11:28:44.073Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "P09 complete UI return, correction, partial acceptance, return proposal, controlled revisions and five exact responses",
+      "file": "reports.spec.ts",
+      "project": "mobile-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 40491,
+          "retry": 0,
+          "start_time": "2026-10-08T11:30:01.903Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "P09 online submission refuses retained offline originals and recovers the same original through explicit sync",
+      "file": "reports.spec.ts",
+      "project": "mobile-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 7559,
+          "retry": 0,
+          "start_time": "2026-10-08T11:30:42.406Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "FI07 native attendance acknowledgement, lost receipt, report reservation and owned clarification",
+      "file": "reports.spec.ts",
+      "project": "mobile-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 22028,
+          "retry": 0,
+          "start_time": "2026-10-08T11:30:49.978Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "FI07 proposed Service reference and native report register comparison",
+      "file": "reports.spec.ts",
+      "project": "mobile-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 3938,
+          "retry": 0,
+          "start_time": "2026-10-08T11:31:12.027Z",
+          "errors": []
+        }
+      ]
+    }
+  ]
+}

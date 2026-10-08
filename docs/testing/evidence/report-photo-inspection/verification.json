@@ -1,0 +1,246 @@
+{
+  "schema_version": 1,
+  "baseline": "476dd0598c4aa92b572a03ce3b172d351d1b07a3",
+  "application_source": "24d19b1f158efeb8ad97d62b50e516cbdac4d80e",
+  "selected_browser_source": "4102fc235beec194f4495ef82870b99f84510431",
+  "final_build_id": "bXz2zLSgUTZhicOrJw-F3",
+  "database_source_note": "Executed before source commit; final server and database test bytes equal the subsequently committed 4102fc2 and 24d19b1 blobs. Initial test authoring failures retained separately.",
+  "checks": {
+    "database": {
+      "passed": 5,
+      "failed": 0
+    },
+    "selected_units": {
+      "passed": 5,
+      "failed": 0
+    },
+    "selected_browser": {
+      "passed": 15,
+      "failed": 0,
+      "skipped": 0
+    },
+    "final_focused_browser": {
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0
+    },
+    "initial_width_rerun": {
+      "passed": 1,
+      "setup_failed": 2,
+      "cause": "Synthetic reservation dates reused; reset isolated test database; unchanged source passed."
+    }
+  },
+  "sources": [
+    {
+      "path": "src/reports/photos.ts",
+      "git_blob": "b81d0e06c6fd3f07cf79b7e548d6f8dff6044047",
+      "sha256": "ea517aed423afe9ec0840ae8294238ba1a8355da8873ed44f422ec440202e0cb",
+      "bytes": 4656
+    },
+    {
+      "path": "src/app/api/v1/reports/[id]/photo/route.ts",
+      "git_blob": "5f96d107b4a5c5dd9078709b85f1c6a8310ef6a8",
+      "sha256": "6ce66b52eb241c9aec6b8da1a6aeaa882bb9ef365d689b22c8df18059279e5a2",
+      "bytes": 1128
+    },
+    {
+      "path": "src/components/report-photo.tsx",
+      "git_blob": "5a027b47be530c2e537ca113d91dfc8926629c79",
+      "sha256": "243b931015363728654ac8b9abbec542fc004ad551a75fbbcbce5a99aac72c91",
+      "bytes": 4931
+    },
+    {
+      "path": "src/components/report-screens.tsx",
+      "git_blob": "1d2fede49270d6325725050e1a6631047fd9e84c",
+      "sha256": "955e7082d0d6b5fd460d599bb06e42cb6e15c77b9bb031d73c4f8f664f041b71",
+      "bytes": 48558
+    },
+    {
+      "path": "tests/database/report-photo.test.ts",
+      "git_blob": "26ee8e8c3b5adbb59c58c75c712f95ae0be5f4b3",
+      "sha256": "d1521eed2e0c927b56f0a3c824b2802606ffa87d625ac78c154fcb992bda65dc",
+      "bytes": 12427
+    },
+    {
+      "path": "tests/browser/report-photo.spec.ts",
+      "git_blob": "b5b3fb353a064361d212df8d9c11b6e5b64e0740",
+      "sha256": "0a6d822c0ca5dce0b17e2eb40bd18aae0db2bc7d0482dcfb553620ccac26f34c",
+      "bytes": 9945
+    },
+    {
+      "path": "tests/browser/offline-completion-handoff.spec.ts",
+      "git_blob": "06eb8f17246ab4bfe5066aeffd34722055c98a70",
+      "sha256": "9a690a9cc33b560ab18d10ded1fd0437d2fbe5df52159aba08956e9b2c3a8816",
+      "bytes": 15724
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "build-final.txt",
+      "sha256": "e6d26054049852452668d0a9ea081112b8952d73f7ce47d901481a724849e0cd",
+      "bytes": 26658
+    },
+    {
+      "path": "build-initial.txt",
+      "sha256": "3d339c6502a851c61059a943a0f20e0511de8e8c56fb14ac245430ac3b05fbf8",
+      "bytes": 26659
+    },
+    {
+      "path": "database-initial.txt",
+      "sha256": "4fac8d8c7b822847b76efbf7d19e3e7dc69928566c64413fa8fc21360100218f",
+      "bytes": 1926
+    },
+    {
+      "path": "database-peer-initial.txt",
+      "sha256": "9cc22c637950534c4adea8bba23b4cee4f20e5b21cf0807d53143edf27207f55",
+      "bytes": 3044
+    },
+    {
+      "path": "database-verified.txt",
+      "sha256": "3fae1b12ea6959fb89d1c814bab3f7ac6d412fea3fd68c38768d79b93eaf8fc5",
+      "bytes": 678
+    },
+    {
+      "path": "desktop-completion-handoff.json",
+      "sha256": "cae0c8e4e69f650d0a30283cf2361b5f9acf032fb90f78b401d7080d9bc68002",
+      "bytes": 16920
+    },
+    {
+      "path": "desktop-initial-photo-inspection.json",
+      "sha256": "a4c27c4fdc9c6dd17e88c7a4b88eb2931d5be63661787b309e5fbd955267dd65",
+      "bytes": 1265
+    },
+    {
+      "path": "desktop-initial-submitted-photo.png",
+      "sha256": "7bd57f2b1003636ea738f3b32034d1804a4ea1166d918ab17ee047e066c09878",
+      "bytes": 60375
+    },
+    {
+      "path": "desktop-photo-inspection.json",
+      "sha256": "b3f1116644a24b6874fce01f33a5ae6be5894804a528c25a73e8af29a6364fee",
+      "bytes": 1266
+    },
+    {
+      "path": "desktop-submitted-photo.png",
+      "sha256": "f274c1119176297a7f68e6d5befec39e7d70114bb73f65080b1373088b91748b",
+      "bytes": 60142
+    },
+    {
+      "path": "focused-reset.txt",
+      "sha256": "117718da4f554c3c9400d5a894d236dad7b891973df4b44ff222913cec77d9a0",
+      "bytes": 26
+    },
+    {
+      "path": "focused-setup-failure-results.json",
+      "sha256": "fc79f4e41c245c6a289536121e11de87b4ec4441cf9050fcf8bbc8ce170143c9",
+      "bytes": 4140
+    },
+    {
+      "path": "focused-setup-failure.txt",
+      "sha256": "51a6f3b079b858b95f41736df06e9d62f9d21ac5bb25b72e43becc7e2565b17b",
+      "bytes": 7881
+    },
+    {
+      "path": "focused-verified-results.json",
+      "sha256": "ca12dc2dfe791f4a552312e0148f88c97aba801b07b66b613a4f137f81276fbb",
+      "bytes": 1530
+    },
+    {
+      "path": "focused-verified.txt",
+      "sha256": "b6010826f1d5252a18a4b9562fb04a018d656ab89b234dd109102edf0ccbe768",
+      "bytes": 1795
+    },
+    {
+      "path": "foundation-final.txt",
+      "sha256": "ceb91989c5e543333a505f53663745c51eb0614482e1c4c794be1f490d1e1e52",
+      "bytes": 330
+    },
+    {
+      "path": "foundation-initial.txt",
+      "sha256": "05a146c5dedc6a5ab7e86b92a83b3bce35ad46658f539554cc2e903301896870",
+      "bytes": 542
+    },
+    {
+      "path": "lint.txt",
+      "sha256": "8f0118f13844c97d75efd81d7b64eea1d158ee3bdca218bf56f7625ccce6edc6",
+      "bytes": 41
+    },
+    {
+      "path": "naming-final.txt",
+      "sha256": "3eb585abfd5368af8229fd681f2cc6ae9ca40b5ccaa47c51b677fa09523c6e62",
+      "bytes": 296
+    },
+    {
+      "path": "naming.txt",
+      "sha256": "3eb585abfd5368af8229fd681f2cc6ae9ca40b5ccaa47c51b677fa09523c6e62",
+      "bytes": 296
+    },
+    {
+      "path": "phone-completion-handoff.json",
+      "sha256": "fa9dfd491c5d19ea3a17f4ffff86cfdb67888d79e21a4fbce25f70fcf0090e1a",
+      "bytes": 16917
+    },
+    {
+      "path": "phone-initial-photo-inspection.json",
+      "sha256": "61ee95ae945807bed4eff0230748eb6a05152d85d52c53c24e0da94ff9a70548",
+      "bytes": 1262
+    },
+    {
+      "path": "phone-initial-submitted-photo.png",
+      "sha256": "25f3aa2e154cc7e64a1c1c5f2b48606ff85468916298a9afc7ebfba007771096",
+      "bytes": 44940
+    },
+    {
+      "path": "phone-photo-inspection.json",
+      "sha256": "5b87ecd45ec2e3b872c29efb19e02f7ffb21363e6cba4c59a3d3330cbb5b81f2",
+      "bytes": 1263
+    },
+    {
+      "path": "phone-submitted-photo-320.png",
+      "sha256": "ad7e75a176a399b2629e0328dc6e16495c237bf01ac4f76d1ddbaf7a22eb13c6",
+      "bytes": 41510
+    },
+    {
+      "path": "phone-submitted-photo.png",
+      "sha256": "c558caac577c47c30f21d40f878ff3627e16cafce271f5ffbfd4ed2a38341942",
+      "bytes": 42663
+    },
+    {
+      "path": "selected-browser-results.json",
+      "sha256": "1572e8bb07605ab0f499f8b3211dab1ab22368bebb85b26887c4dc4752e9dcf4",
+      "bytes": 6863
+    },
+    {
+      "path": "selected-browser.txt",
+      "sha256": "94d7cd37296d38af275e335adc4b790160a49210c52b3ed9f5b94fc29d6a4d97",
+      "bytes": 4015
+    },
+    {
+      "path": "studio-initial.txt",
+      "sha256": "1ea9615668266647ac70730691953994737b82e32101a05fad78e4682855e1ae",
+      "bytes": 572
+    },
+    {
+      "path": "studio.txt",
+      "sha256": "bded5106f2f41a1a6666eee9938b39b32e66d408d4bd129855043c8eca6cc1dd",
+      "bytes": 429
+    },
+    {
+      "path": "typecheck.txt",
+      "sha256": "ba33a711c461001825075a9a3872deaa3e393e4cc3c15731565002c473e7ee5d",
+      "bytes": 50
+    },
+    {
+      "path": "units.txt",
+      "sha256": "5e3dc310b12427659f51aff53aa36992b1cb21f744a4355ee16a8f6fa0e591fd",
+      "bytes": 621
+    }
+  ],
+  "limitations": [
+    "Local synthetic compiled application; not hosted runtime or physical device acceptance.",
+    "Final focused run verifies width change; full selected run retains earlier exact source.",
+    "No new permission grant, migration, customer output or general field-download access.",
+    "No full-suite local pass inferred; CI checked separately against exact head.",
+    "Owner/device/assistive-technology acceptance and full PT-30 remain open."
+  ]
+}

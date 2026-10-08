@@ -1,0 +1,16 @@
+{
+  "status": "failed",
+  "issued_sources": 22,
+  "requirements": 78,
+  "decisions": 29,
+  "planned_acceptance": 38,
+  "backlog_items": 16,
+  "linked_issues": 16,
+  "local_links_checked": 7198,
+  "files_scanned_for_markers": 4686,
+  "errors": [
+    "docs\\testing\\evidence\\report-photo-inspection\\README.md: broken local link: verification.json",
+    "docs\\testing\\evidence\\report-photo-inspection\\README.md: broken local link: verification.json"
+  ],
+  "scope": "Documentation assurance only; no business acceptance tests executed"
+}
