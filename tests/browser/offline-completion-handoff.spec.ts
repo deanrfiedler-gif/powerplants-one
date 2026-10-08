@@ -300,6 +300,7 @@ test("large offline queue continues through online completion with all 100 origi
     `/api/v1/attachments/${job.attachments[0].id}/bytes`,
   );
   expect(reviewerDownload.status()).toBe(403);
+  await expect(page.getByRole("button", { name: "Inspect submitted photo", exact: true })).toHaveCount(1);
   await call(request, "local-session", { profile: "assigned-technician" });
   const originalPhoto = await request.get(
     `/api/v1/attachments/${job.attachments[0].id}/bytes`,
@@ -343,7 +344,7 @@ test("large offline queue continues through online completion with all 100 origi
           original_bytes_verified_as: "assigned-technician",
           coordinator_direct_download_status: reviewerDownload.status(),
           service_photo_preview:
-            "Not available in the current review UI; separate confirmed receiving gap",
+            "Inspection action available; exact preview and recovery verified separately in report-photo.spec.ts",
         },
         report: { id: submitted.report.id, status: submitted.report.status },
         retained_originals: retained.length,

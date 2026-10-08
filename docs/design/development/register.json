@@ -7009,7 +7009,7 @@
       "title": "Service report detail",
       "kind": "route",
       "module": "SV",
-      "summary": "FI-07 uses the existing P07/P09 report destinations: customer attendance acknowledgement, exact report response, retained corrections and owned follow-up; internal Service acceptance remains separate.",
+      "summary": "FI-07 uses the existing P07/P09 report destinations: customer attendance acknowledgement, exact report response, retained corrections and owned follow-up; internal Service acceptance remains separate. Submitted Photo entries support exact original inspection by the current Service review owner; customer output remains separate.",
       "path": "/service/reports/[id]",
       "source_paths": [
         "src/app/(business)/service/reports/[id]/page.tsx"
@@ -7028,7 +7028,10 @@
         "docs/decisions/field-customer-response.md",
         "docs/testing/evidence/field-customer-response/README.md",
         "docs/design/development/navigation-fixtures.json",
-        "docs/decisions/navigation-consolidation.md"
+        "docs/decisions/navigation-consolidation.md",
+        "src/components/report-photo.tsx",
+        "src/reports/photos.ts",
+        "docs/decisions/report-photo-inspection.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",

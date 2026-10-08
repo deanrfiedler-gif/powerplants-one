@@ -61,3 +61,9 @@ See [decision](../../../decisions/field-customer-response.md), [acceptance matri
 A permitted reviewed/issued Report can open an existing exact scoped Finance handoff. Only issued sources with preparation authority offer the rechecked form. Hosted offline recovery is explanatory; local recovery retains original operations.
 
 Desktop uses the existing shell with a 76 px compact or 232 px labelled primary rail. Mobile uses labelled destinations and More > Workspace; Home/search/help remain reachable. Check 320/390/780/781/1199/1200 px where applicable, long labels, visible focus and Escape/return focus. Missing accepted images remain explicit; no new accepted image or review fingerprint is recorded. Functional results and screenshot observations are in the NAV ledger; owner/device review and deployment remain separate.
+
+## Submitted photo inspection — working adaptation
+
+SV-06 review now offers ReportPhoto beside each submitted Photo entry to the current permitted Service owner. Inspect/Hide/Retry reuse Button; loading and errors use explicit text. The inline original is bound to the exact report revision, photo version, hash and byte count. It fits the host width and 70vh, retaining one scroll owner and surrounding decision/reason input. Refresh, hide, identity changes and replacement content dispose of its temporary URL. Current read failure suppresses inspection. Customer-safe presentations remain separate.
+
+See the [component specification](../components/report-photo.md), [decision](../../../decisions/report-photo-inspection.md) and [execution record](../../../testing/evidence/report-photo-inspection/README.md). Native desktop/phone owner acceptance and physical-device/screen-reader review remain pending; no fingerprint is assigned.

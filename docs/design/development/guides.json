@@ -45357,7 +45357,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm your current identity, permitted company/site, named technician attendance, appointment/work order, exact scope and current report revision. A reviewed DraftEvidence or IssuedReport presentation is required. Read access does not grant response, review or issue authority."
+            "Confirm your current identity, permitted company/site, named technician attendance, appointment/work order, exact scope and current report revision. Customer responses require a reviewed DraftEvidence or IssuedReport presentation. Inspecting submitted photos requires the current Service owner with review authority. Read access does not grant response, review or issue authority."
           ],
           "steps": [],
           "rows": [],
@@ -45399,7 +45399,8 @@
           "title": "Complete the main task",
           "paragraphs": [
             "Non-Accepted choices require meaningful remarks and an owned next action. Follow-up belongs to the current Service owner with Due date needed until explicitly set through the Activity.",
-            "Use Correct or clarify this response to append a reasoned successor on the same subject/presentation. Original facts and marks remain. Changed report facts require the existing correction, submission, review, issue and fresh response cycle. Never move a mark to changed content or another subject."
+            "Use Correct or clarify this response to append a reasoned successor on the same subject/presentation. Original facts and marks remain. Changed report facts require the existing correction, submission, review, issue and fresh response cycle. Never move a mark to changed content or another subject.",
+            "In a Submitted report, use Inspect submitted photo beside the Photo entry. Check the original image and its caption before choosing your entry decision and reason. Hide submitted photo closes the preview. Inspection does not approve the entry or share the photo with the customer."
           ],
           "steps": [],
           "rows": [],
@@ -45442,7 +45443,8 @@
           "title": "Troubleshooting",
           "paragraphs": [
             "Correct rejected fields without losing other input. For an uncertain online result, retain the tab and use Check original response receipt or Retry unchanged response. Reload first checks the original receipt; it never invents a replacement operation. Closing the tab removes that online recovery copy.",
-            "If source or audience changed, retain the factual input and obtain a fresh reviewed presentation. Historical files remain exact. PDF retrieval does not capture a response."
+            "If source or audience changed, retain the factual input and obtain a fresh reviewed presentation. Historical files remain exact. PDF retrieval does not capture a response.",
+            "If a submitted photo is unavailable, denied or different from its retained reference, the image is withheld. Retry photo checks the original again while preserving your review reason and decision. A report refresh removes the preview and checks current access before reopening it. Resolve a missing original before accepting that evidence."
           ],
           "steps": [],
           "rows": [],
@@ -45453,7 +45455,8 @@
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
             "Use labelled controls by keyboard with visible focus; guidance preserves input and returns focus. The exact HTML expands in the native page scroll at 1440/1024/390/320 widths and browser zoom. Physical-device and screen-reader acceptance remain open.",
-            "The existing owner-bound offline workspace supports exact cached draft/issued response capture and explicit replay, including new attendance acknowledgements. It rechecks current permission/source/audience/evidence. Old queued originals retain their original hashes. Corrections use the online history. No offline review, issue, incident operation or background sending is supported."
+            "The existing owner-bound offline workspace supports exact cached draft/issued response capture and explicit replay, including new attendance acknowledgements. It rechecks current permission/source/audience/evidence. Old queued originals retain their original hashes. Corrections use the online history. No offline review, issue, incident operation or background sending is supported.",
+            "Photo inspection needs a connection. Inspect, Hide and Retry support keyboard activation. The image fits the available page width; no offline review or cached photo-inspection copy is created."
           ],
           "steps": [],
           "rows": [],
@@ -45492,9 +45495,12 @@
         "docs/blueprints/BP-07-service-operations.md",
         "docs/delivery/field-integrated-owner-walkthrough.md",
         "docs/testing/field-integrated-acceptance-ledger.md",
-        "docs/testing/field-benefit-measurement.md"
+        "docs/testing/field-benefit-measurement.md",
+        "src/components/report-photo.tsx",
+        "src/reports/photos.ts",
+        "docs/decisions/report-photo-inspection.md"
       ],
-      "change_summary": "Add current integrated owner-session and benefit-measurement references; prior source provenance and review state retained.",
+      "change_summary": "Add on-demand submitted photo inspection, exact original verification and retry/cleanup guidance; owner review remains pending.",
       "document_id": "PPO-GUIDE-PAGE-SERVICE-REPORTS-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
