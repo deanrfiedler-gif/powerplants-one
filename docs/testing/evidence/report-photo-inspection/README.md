@@ -6,7 +6,7 @@ Owner: Dean Fiedler. Executed 8 October 2026. Baseline: draft PR #370, `476dd059
 
 ## Verified result
 
-The current Service owner can inspect the exact original PNG referenced by a submitted report revision. Inspection preserves unfinished review decisions/reasons; it creates no approval or customer publication. Current permission, assignment, immutable snapshot membership, attachment identity and original bytes are checked. Review authority is rechecked after storage access. Existing technician downloads and coordinator field-download refusal remain unchanged.
+The current Service owner can inspect the exact original PNG referenced by a submitted report revision. Inspection preserves unfinished review decisions/reasons; it creates no approval or customer publication. Current permission, Service owner and scope, immutable snapshot membership, attachment identity and original bytes are checked. Review authority is rechecked after storage access. Existing technician downloads and coordinator field-download refusal remain unchanged.
 
 | Check | Observed result | Source boundary |
 |---|---|---|
