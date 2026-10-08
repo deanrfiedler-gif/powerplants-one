@@ -10,7 +10,16 @@ import { createSession } from "../src/platform/identity";
 import { readDirectory } from "../src/crm/directory";
 import { waitForSampleCoreResponse } from "./quality-core-response";
 const mode = process.argv[2];
-assert.ok(["prepare", "measure", "candidate", "control", "candidate-repeat"].includes(mode));
+assert.ok(
+  [
+    "prepare",
+    "measure",
+    "candidate",
+    "control",
+    "candidate-repeat",
+    "candidate-confirm",
+  ].includes(mode),
+);
 const root = "verification-evidence/customer-loading-diagnosis";
 await mkdir(root, { recursive: true });
 if (mode === "prepare") {
@@ -261,99 +270,138 @@ try {
             }
           };
           page.on("request", listener);
-          const responsePromise = waitForSampleCoreResponse(
-            page,
-            "/api/v1/crm/directory",
-          );
-          await page.goto(origin + "/customers", {
-            waitUntil: "domcontentloaded",
-            timeout: 120000,
-          });
-          const response = await responsePromise;
-          assert.ok(response.ok());
-          const { observed_at: observedAt, ...result } = await response.json();
-          void observedAt;
-          const received = performance.now();
-          await expect(
-            page.getByRole("region", {
-              name: "Local demonstration identity",
-              exact: true,
-            }),
-          ).toHaveAttribute("aria-busy", "false", { timeout: 120000 });
-          await expect(
-            page.getByRole("button", { name: "Change identity", exact: true }),
-          ).toBeEnabled({ timeout: 120000 });
-          await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0, {
-            timeout: 120000,
-          });
-          await expect(
-            page.locator('.business-error[role="alert"]'),
-          ).toHaveCount(0);
-          await page.evaluate(
-            () =>
-              new Promise<void>((r) =>
-                requestAnimationFrame(() =>
-                  requestAnimationFrame(() => {
-                    performance.mark("ppo:ready");
-                    r();
-                  }),
+          try {
+            const responsePromise = waitForSampleCoreResponse(
+              page,
+              "/api/v1/crm/directory",
+            );
+            // Attach rejection handling immediately while navigation is pending.
+            void responsePromise.catch(() => undefined);
+            await page.goto(origin + "/customers", {
+              waitUntil: "domcontentloaded",
+              timeout: 120000,
+            });
+            const response = await responsePromise;
+            assert.ok(response.ok());
+            const { observed_at: observedAt, ...result } =
+              await response.json();
+            void observedAt;
+            const received = performance.now();
+            await expect(
+              page.getByRole("region", {
+                name: "Local demonstration identity",
+                exact: true,
+              }),
+            ).toHaveAttribute("aria-busy", "false", { timeout: 120000 });
+            await expect(
+              page.getByRole("button", {
+                name: "Change identity",
+                exact: true,
+              }),
+            ).toBeEnabled({ timeout: 120000 });
+            await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0, {
+              timeout: 120000,
+            });
+            await expect(
+              page.locator('.business-error[role="alert"]'),
+            ).toHaveCount(0);
+            await page.evaluate(
+              () =>
+                new Promise<void>((r) =>
+                  requestAnimationFrame(() =>
+                    requestAnimationFrame(() => {
+                      performance.mark("ppo:ready");
+                      r();
+                    }),
+                  ),
                 ),
+            );
+            const settledAt = performance.now();
+            const timeline = await page.evaluate(() => ({
+              clock:
+                "Browser Performance Timeline milliseconds from this navigation; CDP rows are relative to its Document request, Node readiness is measured separately.",
+              captured_ms: performance.now(),
+              navigation: performance
+                .getEntriesByType("navigation")
+                .map((e) => e.toJSON()),
+              resources: performance.getEntriesByType("resource").map((e) => {
+                const resource = e.toJSON();
+                resource.name = new URL(e.name).pathname;
+                return resource;
+              }),
+              paint: performance
+                .getEntriesByType("paint")
+                .map((e) => e.toJSON()),
+              ready_ms: performance.getEntriesByName("ppo:ready").at(-1)!
+                .startTime,
+              long_tasks: (
+                window as typeof window & {
+                  __ppoLongTasks: { start_ms: number; duration_ms: number }[];
+                }
+              ).__ppoLongTasks,
+            }));
+            cdp.off("Network.requestWillBeSent", sent);
+            cdp.off("Network.responseReceived", receivedEvent);
+            cdp.off("Network.loadingFinished", finishedEvent);
+            cdp.off("Network.loadingFailed", failedEvent);
+            assert.equal(
+              createHash("sha256").update(JSON.stringify(result)).digest("hex"),
+              baseline.expected_sha256,
+              "Every browser response must match the retained authorised page",
+            );
+            const renderedNames = page.locator(
+              viewport.name === "phone"
+                ? ".crm-directory-mobile-main strong"
+                : ".crm-directory-table tbody th a",
+            );
+            assert.deepEqual(
+              await renderedNames.allTextContents(),
+              result.items.map((r: { display_name: string }) => r.display_name),
+            );
+            assert.ok(await renderedNames.first().isVisible());
+            samples.push({
+              viewport: viewport.name,
+              wave,
+              user,
+              ready_ms: settledAt - begin,
+              core_ms: received - begin,
+              core_response_ms: received - requestAt,
+              core_requests: requested,
+              timeline,
+              network: [...network.values()],
+            });
+          } catch (error) {
+            await writeFile(
+              `${root}/${mode}-failure-${viewport.name}-${wave}-${user}.json`,
+              JSON.stringify(
+                {
+                  viewport: viewport.name,
+                  wave,
+                  user,
+                  core_requests: requested,
+                  message:
+                    error instanceof Error ? error.message : String(error),
+                  network: [...network.values()],
+                },
+                null,
+                2,
               ),
-          );
-          const settledAt = performance.now();
-          const timeline = await page.evaluate(() => ({
-            clock:
-              "Browser Performance Timeline milliseconds from this navigation; CDP rows are relative to its Document request, Node readiness is measured separately.",
-            captured_ms: performance.now(),
-            navigation: performance
-              .getEntriesByType("navigation")
-              .map((e) => e.toJSON()),
-            resources: performance.getEntriesByType("resource").map((e) => {
-              const resource = e.toJSON();
-              resource.name = new URL(e.name).pathname;
-              return resource;
-            }),
-            paint: performance.getEntriesByType("paint").map((e) => e.toJSON()),
-            ready_ms: performance.getEntriesByName("ppo:ready").at(-1)!
-              .startTime,
-            long_tasks: (
-              window as typeof window & {
-                __ppoLongTasks: { start_ms: number; duration_ms: number }[];
-              }
-            ).__ppoLongTasks,
-          }));
-          cdp.off("Network.requestWillBeSent", sent);
-          cdp.off("Network.responseReceived", receivedEvent);
-          cdp.off("Network.loadingFinished", finishedEvent);
-          cdp.off("Network.loadingFailed", failedEvent);
-          assert.equal(
-            createHash("sha256").update(JSON.stringify(result)).digest("hex"),
-            baseline.expected_sha256,
-            "Every browser response must match the retained authorised page",
-          );
-          const renderedNames = page.locator(
-            viewport.name === "phone"
-              ? ".crm-directory-mobile-main strong"
-              : ".crm-directory-table tbody th a",
-          );
-          assert.deepEqual(
-            await renderedNames.allTextContents(),
-            result.items.map((r: { display_name: string }) => r.display_name),
-          );
-          assert.ok(await renderedNames.first().isVisible());
-          samples.push({
-            viewport: viewport.name,
-            wave,
-            user,
-            ready_ms: settledAt - begin,
-            core_ms: received - begin,
-            core_response_ms: received - requestAt,
-            core_requests: requested,
-            timeline,
-            network: [...network.values()],
-          });
-          page.off("request", listener);
+            );
+            await page
+              .screenshot({
+                path: `${root}/${mode}-failure-${viewport.name}-${wave}-${user}.png`,
+                timeout: 10000,
+              })
+              .catch(() => undefined);
+            throw error;
+          } finally {
+            page.off("request", listener);
+          }
         }),
+      );
+      await writeFile(
+        `${root}/${mode}-completed-samples.json`,
+        JSON.stringify({ complete: false, samples }, null, 2),
       );
       console.log(
         JSON.stringify({
@@ -364,7 +412,10 @@ try {
         }),
       );
     }
-    await pages[0].screenshot({ path: `${root}/${mode}-${viewport.name}.png` });
+    await pages[0].screenshot({
+      path: `${root}/${mode}-${viewport.name}.png`,
+      timeout: 30000,
+    });
     await Promise.all(contexts.map((c) => c.close()));
   }
   const groups = ["desktop", "phone"].map((viewport) => {
