@@ -1,0 +1,1336 @@
+{
+  "procedure": "PT-24-cancel",
+  "captured_at": "2026-10-08T07:39:06.485Z",
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "project": "mobile-chromium",
+  "source_head": "11e8298e6270c085d3ed149208a524ddeb52395c",
+  "source_patch_sha256": "f109025e880be6f212eeb823b6652169ab10086c618849bfd3b3ec668eb8a342",
+  "source_files": {
+    "tests/browser/offline-acceptance.spec.ts": "e9e9f9752869f1b919932bf20aae7599db42005ec2e0c5aa6e3955d83cd2d574",
+    "tests/helpers/offline-browser.ts": "daed11b0f66c7240423898bd9b85c30baf160c605548302c6149d19f8ccf3f7b",
+    "tests/helpers/offline-authority.ts": "c67a0ba5292709907a7abfba7dc79e21208814a157a562d6ff470c1e12d56f16"
+  },
+  "result": {
+    "before": {
+      "jobs": [
+        {
+          "id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+          "authority": {
+            "assignment_id": "f01eea31-6393-4112-8cae-e3ce07a542fe",
+            "assignment_version": 2,
+            "schedule_version": 2,
+            "scope_revision_id": "4ac9b0d4-e9a5-4510-b703-0f6cfe0e551b",
+            "scope_version": 2,
+            "scope_hash": "d93f3272deaaa7427b35cf0db3517f4020b794c413bf3155f326b031bd61ad11",
+            "issue_id": "1aa8d345-b371-4265-bb30-53fb7189a50e",
+            "issue_hash": "d1135eb939a8ebceab0bfce50dc61d457c11deca6a890a1d6ba601158b708a05"
+          },
+          "verified_at": "2026-10-08T07:39:04.979Z",
+          "locked": false
+        }
+      ],
+      "originals": [
+        {
+          "schema_version": 1,
+          "operation_id": "04b78c6e-d7e3-4d99-80f9-1d32282413d5",
+          "actor_id": "30000000-0000-4000-8000-000000000010",
+          "workspace_id": "10000000-0000-4000-8000-000000000001",
+          "appointment_id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+          "command": "Start",
+          "target_id": null,
+          "authority": {
+            "assignment_id": "f01eea31-6393-4112-8cae-e3ce07a542fe",
+            "assignment_version": 2,
+            "schedule_version": 2,
+            "scope_revision_id": "4ac9b0d4-e9a5-4510-b703-0f6cfe0e551b",
+            "scope_version": 2,
+            "scope_hash": "d93f3272deaaa7427b35cf0db3517f4020b794c413bf3155f326b031bd61ad11",
+            "issue_id": "1aa8d345-b371-4265-bb30-53fb7189a50e",
+            "issue_hash": "d1135eb939a8ebceab0bfce50dc61d457c11deca6a890a1d6ba601158b708a05"
+          },
+          "depends_on": [],
+          "supersedes_operation_id": null,
+          "payload": {
+            "operation_id": "04b78c6e-d7e3-4d99-80f9-1d32282413d5",
+            "schema_version": 1,
+            "reason": "Synthetic offline personal start intent",
+            "expected_version": 6,
+            "schedule_version": 2,
+            "assignment_id": "f01eea31-6393-4112-8cae-e3ce07a542fe",
+            "assignment_version": 2,
+            "issue_id": "1aa8d345-b371-4265-bb30-53fb7189a50e",
+            "issue_hash": "d1135eb939a8ebceab0bfce50dc61d457c11deca6a890a1d6ba601158b708a05",
+            "scope_revision_id": "4ac9b0d4-e9a5-4510-b703-0f6cfe0e551b",
+            "scope_version": 2,
+            "captured_at": "2026-10-08T07:39:05.228Z"
+          },
+          "payload_hash": "c1ab9ae80a12521c35878725662c0aa8436dbca923ac81f5803cca0f2f002462"
+        },
+        {
+          "schema_version": 1,
+          "operation_id": "f69ab4f3-d55e-4009-8ca5-c655c74ea651",
+          "actor_id": "30000000-0000-4000-8000-000000000010",
+          "workspace_id": "10000000-0000-4000-8000-000000000001",
+          "appointment_id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+          "command": "Capture",
+          "target_id": null,
+          "authority": {
+            "assignment_id": "f01eea31-6393-4112-8cae-e3ce07a542fe",
+            "assignment_version": 2,
+            "schedule_version": 2,
+            "scope_revision_id": "4ac9b0d4-e9a5-4510-b703-0f6cfe0e551b",
+            "scope_version": 2,
+            "scope_hash": "d93f3272deaaa7427b35cf0db3517f4020b794c413bf3155f326b031bd61ad11",
+            "issue_id": "1aa8d345-b371-4265-bb30-53fb7189a50e",
+            "issue_hash": "d1135eb939a8ebceab0bfce50dc61d457c11deca6a890a1d6ba601158b708a05"
+          },
+          "depends_on": [
+            "04b78c6e-d7e3-4d99-80f9-1d32282413d5"
+          ],
+          "supersedes_operation_id": null,
+          "payload": {
+            "operation_id": "f69ab4f3-d55e-4009-8ca5-c655c74ea651",
+            "schema_version": 1,
+            "reason": "SYN original offline evidence within inspection scope",
+            "id": "6f5ba0f5-76dc-40ba-97b4-c1ef6a3216c2",
+            "appointment_id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+            "attendance_id": {
+              "operation_id": "04b78c6e-d7e3-4d99-80f9-1d32282413d5"
+            },
+            "kind": "Observation",
+            "scope_item_id": "c463f773-98a3-4667-b78e-a2a43add7d59",
+            "asset_id": "80000000-0000-4000-8000-000000000001",
+            "captured_at": "2026-10-08T07:39:05.396Z",
+            "payload": {
+              "finding": "SYN PT-24 cancel: factual evidence keeps its original authority",
+              "confidence": "Suspected",
+              "attempted_fix": "SYN visual-only check; no intervention",
+              "result": "SYN label remains unclear; technical follow-up required",
+              "follow_up_required": true
+            }
+          },
+          "payload_hash": "0cbd52811adbd6cbb35d14b05c3ca7ed5ba515b8d5ddf95b1e1ef77caec03ee1"
+        },
+        {
+          "schema_version": 1,
+          "operation_id": "3aff3bf7-0940-45c3-9b79-19e339427397",
+          "actor_id": "30000000-0000-4000-8000-000000000010",
+          "workspace_id": "10000000-0000-4000-8000-000000000001",
+          "appointment_id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+          "command": "AttachmentInitiate",
+          "target_id": null,
+          "authority": {
+            "assignment_id": "f01eea31-6393-4112-8cae-e3ce07a542fe",
+            "assignment_version": 2,
+            "schedule_version": 2,
+            "scope_revision_id": "4ac9b0d4-e9a5-4510-b703-0f6cfe0e551b",
+            "scope_version": 2,
+            "scope_hash": "d93f3272deaaa7427b35cf0db3517f4020b794c413bf3155f326b031bd61ad11",
+            "issue_id": "1aa8d345-b371-4265-bb30-53fb7189a50e",
+            "issue_hash": "d1135eb939a8ebceab0bfce50dc61d457c11deca6a890a1d6ba601158b708a05"
+          },
+          "depends_on": [
+            "04b78c6e-d7e3-4d99-80f9-1d32282413d5"
+          ],
+          "supersedes_operation_id": null,
+          "payload": {
+            "operation_id": "3aff3bf7-0940-45c3-9b79-19e339427397",
+            "schema_version": 1,
+            "reason": "SYN PT acceptance within the original downloaded inspection scope",
+            "id": "b770e793-312b-467a-9c3f-12187966124b",
+            "appointment_id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+            "attendance_id": {
+              "operation_id": "04b78c6e-d7e3-4d99-80f9-1d32282413d5"
+            },
+            "filename": "SYN-acceptance.png",
+            "media_type": "image/png",
+            "byte_count": 191,
+            "sha256": "8e0e39097d1e122a86d83ed2c236f3bc8de8b82c46a945fbe71b6bf0a059203e"
+          },
+          "payload_hash": "a25df1a6ca0f4c69769f0c3bbd067616311c0ba05221b5d64961e7e815f25327"
+        },
+        {
+          "schema_version": 1,
+          "operation_id": "3b24ce03-585c-46b0-a493-5d310d189f5e",
+          "actor_id": "30000000-0000-4000-8000-000000000010",
+          "workspace_id": "10000000-0000-4000-8000-000000000001",
+          "appointment_id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+          "command": "AttachmentUpload",
+          "target_id": "b770e793-312b-467a-9c3f-12187966124b",
+          "authority": {
+            "assignment_id": "f01eea31-6393-4112-8cae-e3ce07a542fe",
+            "assignment_version": 2,
+            "schedule_version": 2,
+            "scope_revision_id": "4ac9b0d4-e9a5-4510-b703-0f6cfe0e551b",
+            "scope_version": 2,
+            "scope_hash": "d93f3272deaaa7427b35cf0db3517f4020b794c413bf3155f326b031bd61ad11",
+            "issue_id": "1aa8d345-b371-4265-bb30-53fb7189a50e",
+            "issue_hash": "d1135eb939a8ebceab0bfce50dc61d457c11deca6a890a1d6ba601158b708a05"
+          },
+          "depends_on": [
+            "3aff3bf7-0940-45c3-9b79-19e339427397"
+          ],
+          "supersedes_operation_id": null,
+          "payload": {
+            "operation_id": "3b24ce03-585c-46b0-a493-5d310d189f5e",
+            "schema_version": 1,
+            "reason": "SYN PT acceptance within the original downloaded inspection scope",
+            "expected_version": 1,
+            "sha256": "8e0e39097d1e122a86d83ed2c236f3bc8de8b82c46a945fbe71b6bf0a059203e",
+            "byte_count": 191
+          },
+          "payload_hash": "0be2fedf1d62608cfeef6cca7b849cbb6eacf1aa4b4be116c839ed11284ca4da"
+        },
+        {
+          "schema_version": 1,
+          "operation_id": "65afe11f-c075-4a0b-a16b-ef7c6d449b81",
+          "actor_id": "30000000-0000-4000-8000-000000000010",
+          "workspace_id": "10000000-0000-4000-8000-000000000001",
+          "appointment_id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+          "command": "AttachmentFinalise",
+          "target_id": "b770e793-312b-467a-9c3f-12187966124b",
+          "authority": {
+            "assignment_id": "f01eea31-6393-4112-8cae-e3ce07a542fe",
+            "assignment_version": 2,
+            "schedule_version": 2,
+            "scope_revision_id": "4ac9b0d4-e9a5-4510-b703-0f6cfe0e551b",
+            "scope_version": 2,
+            "scope_hash": "d93f3272deaaa7427b35cf0db3517f4020b794c413bf3155f326b031bd61ad11",
+            "issue_id": "1aa8d345-b371-4265-bb30-53fb7189a50e",
+            "issue_hash": "d1135eb939a8ebceab0bfce50dc61d457c11deca6a890a1d6ba601158b708a05"
+          },
+          "depends_on": [
+            "3b24ce03-585c-46b0-a493-5d310d189f5e"
+          ],
+          "supersedes_operation_id": null,
+          "payload": {
+            "operation_id": "65afe11f-c075-4a0b-a16b-ef7c6d449b81",
+            "schema_version": 1,
+            "reason": "SYN PT acceptance within the original downloaded inspection scope",
+            "expected_version": 2
+          },
+          "payload_hash": "26d00ffbb72651872ce607f67542c9b114e4684ccf386877c448a14fef565939"
+        },
+        {
+          "schema_version": 1,
+          "operation_id": "850f6344-3066-46f3-bfa2-329dfad3e666",
+          "actor_id": "30000000-0000-4000-8000-000000000010",
+          "workspace_id": "10000000-0000-4000-8000-000000000001",
+          "appointment_id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+          "command": "Capture",
+          "target_id": null,
+          "authority": {
+            "assignment_id": "f01eea31-6393-4112-8cae-e3ce07a542fe",
+            "assignment_version": 2,
+            "schedule_version": 2,
+            "scope_revision_id": "4ac9b0d4-e9a5-4510-b703-0f6cfe0e551b",
+            "scope_version": 2,
+            "scope_hash": "d93f3272deaaa7427b35cf0db3517f4020b794c413bf3155f326b031bd61ad11",
+            "issue_id": "1aa8d345-b371-4265-bb30-53fb7189a50e",
+            "issue_hash": "d1135eb939a8ebceab0bfce50dc61d457c11deca6a890a1d6ba601158b708a05"
+          },
+          "depends_on": [
+            "04b78c6e-d7e3-4d99-80f9-1d32282413d5",
+            "65afe11f-c075-4a0b-a16b-ef7c6d449b81"
+          ],
+          "supersedes_operation_id": null,
+          "payload": {
+            "operation_id": "850f6344-3066-46f3-bfa2-329dfad3e666",
+            "schema_version": 1,
+            "reason": "SYN PT acceptance within the original downloaded inspection scope",
+            "id": "8640d34f-7403-48c7-97d1-74b7c4a6451d",
+            "appointment_id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+            "attendance_id": {
+              "operation_id": "04b78c6e-d7e3-4d99-80f9-1d32282413d5"
+            },
+            "kind": "Photo",
+            "scope_item_id": "c463f773-98a3-4667-b78e-a2a43add7d59",
+            "asset_id": "80000000-0000-4000-8000-000000000001",
+            "captured_at": "2026-10-08T07:39:05.549Z",
+            "payload": {
+              "caption": "SYN original acceptance fixture; no operational image",
+              "attachment_id": "b770e793-312b-467a-9c3f-12187966124b"
+            }
+          },
+          "payload_hash": "20562d1cc3ccddbbdd422808fcdfd36f2459a9eb40369395620b13532282bfd0"
+        }
+      ],
+      "files": [
+        {
+          "operation_id": "3b24ce03-585c-46b0-a493-5d310d189f5e",
+          "sha256": "8e0e39097d1e122a86d83ed2c236f3bc8de8b82c46a945fbe71b6bf0a059203e",
+          "byte_count": 191,
+          "bytes": [
+            137,
+            80,
+            78,
+            71,
+            13,
+            10,
+            26,
+            10,
+            0,
+            0,
+            0,
+            13,
+            73,
+            72,
+            68,
+            82,
+            0,
+            0,
+            0,
+            96,
+            0,
+            0,
+            0,
+            64,
+            8,
+            2,
+            0,
+            0,
+            0,
+            106,
+            86,
+            229,
+            89,
+            0,
+            0,
+            0,
+            134,
+            73,
+            68,
+            65,
+            84,
+            120,
+            156,
+            237,
+            208,
+            49,
+            17,
+            128,
+            48,
+            20,
+            64,
+            177,
+            186,
+            192,
+            8,
+            107,
+            61,
+            212,
+            1,
+            86,
+            144,
+            142,
+            8,
+            134,
+            255,
+            134,
+            220,
+            69,
+            65,
+            214,
+            181,
+            79,
+            202,
+            253,
+            62,
+            41,
+            107,
+            124,
+            68,
+            144,
+            32,
+            65,
+            130,
+            66,
+            198,
+            71,
+            4,
+            9,
+            18,
+            36,
+            40,
+            68,
+            144,
+            32,
+            65,
+            130,
+            4,
+            9,
+            18,
+            36,
+            72,
+            80,
+            196,
+            248,
+            136,
+            32,
+            65,
+            130,
+            4,
+            133,
+            8,
+            18,
+            36,
+            72,
+            144,
+            32,
+            65,
+            130,
+            4,
+            9,
+            138,
+            24,
+            31,
+            17,
+            36,
+            72,
+            144,
+            160,
+            16,
+            65,
+            130,
+            4,
+            9,
+            18,
+            36,
+            72,
+            144,
+            32,
+            65,
+            17,
+            227,
+            35,
+            130,
+            4,
+            9,
+            18,
+            20,
+            34,
+            72,
+            144,
+            32,
+            65,
+            130,
+            4,
+            9,
+            18,
+            36,
+            40,
+            98,
+            124,
+            68,
+            144,
+            32,
+            65,
+            130,
+            66,
+            4,
+            9,
+            250,
+            231,
+            3,
+            243,
+            78,
+            149,
+            45,
+            72,
+            113,
+            151,
+            59,
+            0,
+            0,
+            0,
+            0,
+            73,
+            69,
+            78,
+            68,
+            174,
+            66,
+            96,
+            130
+          ]
+        }
+      ]
+    },
+    "retained": {
+      "jobs": [
+        {
+          "id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+          "authority": {
+            "assignment_id": "f01eea31-6393-4112-8cae-e3ce07a542fe",
+            "assignment_version": 2,
+            "schedule_version": 2,
+            "scope_revision_id": "4ac9b0d4-e9a5-4510-b703-0f6cfe0e551b",
+            "scope_version": 2,
+            "scope_hash": "d93f3272deaaa7427b35cf0db3517f4020b794c413bf3155f326b031bd61ad11",
+            "issue_id": "1aa8d345-b371-4265-bb30-53fb7189a50e",
+            "issue_hash": "d1135eb939a8ebceab0bfce50dc61d457c11deca6a890a1d6ba601158b708a05"
+          },
+          "verified_at": "2026-10-08T07:39:04.979Z",
+          "locked": true
+        }
+      ],
+      "originals": [
+        {
+          "schema_version": 1,
+          "operation_id": "04b78c6e-d7e3-4d99-80f9-1d32282413d5",
+          "actor_id": "30000000-0000-4000-8000-000000000010",
+          "workspace_id": "10000000-0000-4000-8000-000000000001",
+          "appointment_id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+          "command": "Start",
+          "target_id": null,
+          "authority": {
+            "assignment_id": "f01eea31-6393-4112-8cae-e3ce07a542fe",
+            "assignment_version": 2,
+            "schedule_version": 2,
+            "scope_revision_id": "4ac9b0d4-e9a5-4510-b703-0f6cfe0e551b",
+            "scope_version": 2,
+            "scope_hash": "d93f3272deaaa7427b35cf0db3517f4020b794c413bf3155f326b031bd61ad11",
+            "issue_id": "1aa8d345-b371-4265-bb30-53fb7189a50e",
+            "issue_hash": "d1135eb939a8ebceab0bfce50dc61d457c11deca6a890a1d6ba601158b708a05"
+          },
+          "depends_on": [],
+          "supersedes_operation_id": null,
+          "payload": {
+            "operation_id": "04b78c6e-d7e3-4d99-80f9-1d32282413d5",
+            "schema_version": 1,
+            "reason": "Synthetic offline personal start intent",
+            "expected_version": 6,
+            "schedule_version": 2,
+            "assignment_id": "f01eea31-6393-4112-8cae-e3ce07a542fe",
+            "assignment_version": 2,
+            "issue_id": "1aa8d345-b371-4265-bb30-53fb7189a50e",
+            "issue_hash": "d1135eb939a8ebceab0bfce50dc61d457c11deca6a890a1d6ba601158b708a05",
+            "scope_revision_id": "4ac9b0d4-e9a5-4510-b703-0f6cfe0e551b",
+            "scope_version": 2,
+            "captured_at": "2026-10-08T07:39:05.228Z"
+          },
+          "payload_hash": "c1ab9ae80a12521c35878725662c0aa8436dbca923ac81f5803cca0f2f002462"
+        },
+        {
+          "schema_version": 1,
+          "operation_id": "f69ab4f3-d55e-4009-8ca5-c655c74ea651",
+          "actor_id": "30000000-0000-4000-8000-000000000010",
+          "workspace_id": "10000000-0000-4000-8000-000000000001",
+          "appointment_id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+          "command": "Capture",
+          "target_id": null,
+          "authority": {
+            "assignment_id": "f01eea31-6393-4112-8cae-e3ce07a542fe",
+            "assignment_version": 2,
+            "schedule_version": 2,
+            "scope_revision_id": "4ac9b0d4-e9a5-4510-b703-0f6cfe0e551b",
+            "scope_version": 2,
+            "scope_hash": "d93f3272deaaa7427b35cf0db3517f4020b794c413bf3155f326b031bd61ad11",
+            "issue_id": "1aa8d345-b371-4265-bb30-53fb7189a50e",
+            "issue_hash": "d1135eb939a8ebceab0bfce50dc61d457c11deca6a890a1d6ba601158b708a05"
+          },
+          "depends_on": [
+            "04b78c6e-d7e3-4d99-80f9-1d32282413d5"
+          ],
+          "supersedes_operation_id": null,
+          "payload": {
+            "operation_id": "f69ab4f3-d55e-4009-8ca5-c655c74ea651",
+            "schema_version": 1,
+            "reason": "SYN original offline evidence within inspection scope",
+            "id": "6f5ba0f5-76dc-40ba-97b4-c1ef6a3216c2",
+            "appointment_id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+            "attendance_id": {
+              "operation_id": "04b78c6e-d7e3-4d99-80f9-1d32282413d5"
+            },
+            "kind": "Observation",
+            "scope_item_id": "c463f773-98a3-4667-b78e-a2a43add7d59",
+            "asset_id": "80000000-0000-4000-8000-000000000001",
+            "captured_at": "2026-10-08T07:39:05.396Z",
+            "payload": {
+              "finding": "SYN PT-24 cancel: factual evidence keeps its original authority",
+              "confidence": "Suspected",
+              "attempted_fix": "SYN visual-only check; no intervention",
+              "result": "SYN label remains unclear; technical follow-up required",
+              "follow_up_required": true
+            }
+          },
+          "payload_hash": "0cbd52811adbd6cbb35d14b05c3ca7ed5ba515b8d5ddf95b1e1ef77caec03ee1"
+        },
+        {
+          "schema_version": 1,
+          "operation_id": "3aff3bf7-0940-45c3-9b79-19e339427397",
+          "actor_id": "30000000-0000-4000-8000-000000000010",
+          "workspace_id": "10000000-0000-4000-8000-000000000001",
+          "appointment_id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+          "command": "AttachmentInitiate",
+          "target_id": null,
+          "authority": {
+            "assignment_id": "f01eea31-6393-4112-8cae-e3ce07a542fe",
+            "assignment_version": 2,
+            "schedule_version": 2,
+            "scope_revision_id": "4ac9b0d4-e9a5-4510-b703-0f6cfe0e551b",
+            "scope_version": 2,
+            "scope_hash": "d93f3272deaaa7427b35cf0db3517f4020b794c413bf3155f326b031bd61ad11",
+            "issue_id": "1aa8d345-b371-4265-bb30-53fb7189a50e",
+            "issue_hash": "d1135eb939a8ebceab0bfce50dc61d457c11deca6a890a1d6ba601158b708a05"
+          },
+          "depends_on": [
+            "04b78c6e-d7e3-4d99-80f9-1d32282413d5"
+          ],
+          "supersedes_operation_id": null,
+          "payload": {
+            "operation_id": "3aff3bf7-0940-45c3-9b79-19e339427397",
+            "schema_version": 1,
+            "reason": "SYN PT acceptance within the original downloaded inspection scope",
+            "id": "b770e793-312b-467a-9c3f-12187966124b",
+            "appointment_id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+            "attendance_id": {
+              "operation_id": "04b78c6e-d7e3-4d99-80f9-1d32282413d5"
+            },
+            "filename": "SYN-acceptance.png",
+            "media_type": "image/png",
+            "byte_count": 191,
+            "sha256": "8e0e39097d1e122a86d83ed2c236f3bc8de8b82c46a945fbe71b6bf0a059203e"
+          },
+          "payload_hash": "a25df1a6ca0f4c69769f0c3bbd067616311c0ba05221b5d64961e7e815f25327"
+        },
+        {
+          "schema_version": 1,
+          "operation_id": "3b24ce03-585c-46b0-a493-5d310d189f5e",
+          "actor_id": "30000000-0000-4000-8000-000000000010",
+          "workspace_id": "10000000-0000-4000-8000-000000000001",
+          "appointment_id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+          "command": "AttachmentUpload",
+          "target_id": "b770e793-312b-467a-9c3f-12187966124b",
+          "authority": {
+            "assignment_id": "f01eea31-6393-4112-8cae-e3ce07a542fe",
+            "assignment_version": 2,
+            "schedule_version": 2,
+            "scope_revision_id": "4ac9b0d4-e9a5-4510-b703-0f6cfe0e551b",
+            "scope_version": 2,
+            "scope_hash": "d93f3272deaaa7427b35cf0db3517f4020b794c413bf3155f326b031bd61ad11",
+            "issue_id": "1aa8d345-b371-4265-bb30-53fb7189a50e",
+            "issue_hash": "d1135eb939a8ebceab0bfce50dc61d457c11deca6a890a1d6ba601158b708a05"
+          },
+          "depends_on": [
+            "3aff3bf7-0940-45c3-9b79-19e339427397"
+          ],
+          "supersedes_operation_id": null,
+          "payload": {
+            "operation_id": "3b24ce03-585c-46b0-a493-5d310d189f5e",
+            "schema_version": 1,
+            "reason": "SYN PT acceptance within the original downloaded inspection scope",
+            "expected_version": 1,
+            "sha256": "8e0e39097d1e122a86d83ed2c236f3bc8de8b82c46a945fbe71b6bf0a059203e",
+            "byte_count": 191
+          },
+          "payload_hash": "0be2fedf1d62608cfeef6cca7b849cbb6eacf1aa4b4be116c839ed11284ca4da"
+        },
+        {
+          "schema_version": 1,
+          "operation_id": "65afe11f-c075-4a0b-a16b-ef7c6d449b81",
+          "actor_id": "30000000-0000-4000-8000-000000000010",
+          "workspace_id": "10000000-0000-4000-8000-000000000001",
+          "appointment_id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+          "command": "AttachmentFinalise",
+          "target_id": "b770e793-312b-467a-9c3f-12187966124b",
+          "authority": {
+            "assignment_id": "f01eea31-6393-4112-8cae-e3ce07a542fe",
+            "assignment_version": 2,
+            "schedule_version": 2,
+            "scope_revision_id": "4ac9b0d4-e9a5-4510-b703-0f6cfe0e551b",
+            "scope_version": 2,
+            "scope_hash": "d93f3272deaaa7427b35cf0db3517f4020b794c413bf3155f326b031bd61ad11",
+            "issue_id": "1aa8d345-b371-4265-bb30-53fb7189a50e",
+            "issue_hash": "d1135eb939a8ebceab0bfce50dc61d457c11deca6a890a1d6ba601158b708a05"
+          },
+          "depends_on": [
+            "3b24ce03-585c-46b0-a493-5d310d189f5e"
+          ],
+          "supersedes_operation_id": null,
+          "payload": {
+            "operation_id": "65afe11f-c075-4a0b-a16b-ef7c6d449b81",
+            "schema_version": 1,
+            "reason": "SYN PT acceptance within the original downloaded inspection scope",
+            "expected_version": 2
+          },
+          "payload_hash": "26d00ffbb72651872ce607f67542c9b114e4684ccf386877c448a14fef565939"
+        },
+        {
+          "schema_version": 1,
+          "operation_id": "850f6344-3066-46f3-bfa2-329dfad3e666",
+          "actor_id": "30000000-0000-4000-8000-000000000010",
+          "workspace_id": "10000000-0000-4000-8000-000000000001",
+          "appointment_id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+          "command": "Capture",
+          "target_id": null,
+          "authority": {
+            "assignment_id": "f01eea31-6393-4112-8cae-e3ce07a542fe",
+            "assignment_version": 2,
+            "schedule_version": 2,
+            "scope_revision_id": "4ac9b0d4-e9a5-4510-b703-0f6cfe0e551b",
+            "scope_version": 2,
+            "scope_hash": "d93f3272deaaa7427b35cf0db3517f4020b794c413bf3155f326b031bd61ad11",
+            "issue_id": "1aa8d345-b371-4265-bb30-53fb7189a50e",
+            "issue_hash": "d1135eb939a8ebceab0bfce50dc61d457c11deca6a890a1d6ba601158b708a05"
+          },
+          "depends_on": [
+            "04b78c6e-d7e3-4d99-80f9-1d32282413d5",
+            "65afe11f-c075-4a0b-a16b-ef7c6d449b81"
+          ],
+          "supersedes_operation_id": null,
+          "payload": {
+            "operation_id": "850f6344-3066-46f3-bfa2-329dfad3e666",
+            "schema_version": 1,
+            "reason": "SYN PT acceptance within the original downloaded inspection scope",
+            "id": "8640d34f-7403-48c7-97d1-74b7c4a6451d",
+            "appointment_id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+            "attendance_id": {
+              "operation_id": "04b78c6e-d7e3-4d99-80f9-1d32282413d5"
+            },
+            "kind": "Photo",
+            "scope_item_id": "c463f773-98a3-4667-b78e-a2a43add7d59",
+            "asset_id": "80000000-0000-4000-8000-000000000001",
+            "captured_at": "2026-10-08T07:39:05.549Z",
+            "payload": {
+              "caption": "SYN original acceptance fixture; no operational image",
+              "attachment_id": "b770e793-312b-467a-9c3f-12187966124b"
+            }
+          },
+          "payload_hash": "20562d1cc3ccddbbdd422808fcdfd36f2459a9eb40369395620b13532282bfd0"
+        }
+      ],
+      "files": [
+        {
+          "operation_id": "3b24ce03-585c-46b0-a493-5d310d189f5e",
+          "sha256": "8e0e39097d1e122a86d83ed2c236f3bc8de8b82c46a945fbe71b6bf0a059203e",
+          "byte_count": 191,
+          "bytes": [
+            137,
+            80,
+            78,
+            71,
+            13,
+            10,
+            26,
+            10,
+            0,
+            0,
+            0,
+            13,
+            73,
+            72,
+            68,
+            82,
+            0,
+            0,
+            0,
+            96,
+            0,
+            0,
+            0,
+            64,
+            8,
+            2,
+            0,
+            0,
+            0,
+            106,
+            86,
+            229,
+            89,
+            0,
+            0,
+            0,
+            134,
+            73,
+            68,
+            65,
+            84,
+            120,
+            156,
+            237,
+            208,
+            49,
+            17,
+            128,
+            48,
+            20,
+            64,
+            177,
+            186,
+            192,
+            8,
+            107,
+            61,
+            212,
+            1,
+            86,
+            144,
+            142,
+            8,
+            134,
+            255,
+            134,
+            220,
+            69,
+            65,
+            214,
+            181,
+            79,
+            202,
+            253,
+            62,
+            41,
+            107,
+            124,
+            68,
+            144,
+            32,
+            65,
+            130,
+            66,
+            198,
+            71,
+            4,
+            9,
+            18,
+            36,
+            40,
+            68,
+            144,
+            32,
+            65,
+            130,
+            4,
+            9,
+            18,
+            36,
+            72,
+            80,
+            196,
+            248,
+            136,
+            32,
+            65,
+            130,
+            4,
+            133,
+            8,
+            18,
+            36,
+            72,
+            144,
+            32,
+            65,
+            130,
+            4,
+            9,
+            138,
+            24,
+            31,
+            17,
+            36,
+            72,
+            144,
+            160,
+            16,
+            65,
+            130,
+            4,
+            9,
+            18,
+            36,
+            72,
+            144,
+            32,
+            65,
+            17,
+            227,
+            35,
+            130,
+            4,
+            9,
+            18,
+            20,
+            34,
+            72,
+            144,
+            32,
+            65,
+            130,
+            4,
+            9,
+            18,
+            36,
+            40,
+            98,
+            124,
+            68,
+            144,
+            32,
+            65,
+            130,
+            66,
+            4,
+            9,
+            250,
+            231,
+            3,
+            243,
+            78,
+            149,
+            45,
+            72,
+            113,
+            151,
+            59,
+            0,
+            0,
+            0,
+            0,
+            73,
+            69,
+            78,
+            68,
+            174,
+            66,
+            96,
+            130
+          ]
+        }
+      ]
+    },
+    "outcomes": [
+      {
+        "key": "10000000-0000-4000-8000-000000000001:30000000-0000-4000-8000-000000000010:04b78c6e-d7e3-4d99-80f9-1d32282413d5",
+        "owner": "10000000-0000-4000-8000-000000000001:30000000-0000-4000-8000-000000000010",
+        "original": {
+          "schema_version": 1,
+          "operation_id": "04b78c6e-d7e3-4d99-80f9-1d32282413d5",
+          "actor_id": "30000000-0000-4000-8000-000000000010",
+          "workspace_id": "10000000-0000-4000-8000-000000000001",
+          "appointment_id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+          "command": "Start",
+          "target_id": null,
+          "authority": {
+            "assignment_id": "f01eea31-6393-4112-8cae-e3ce07a542fe",
+            "assignment_version": 2,
+            "schedule_version": 2,
+            "scope_revision_id": "4ac9b0d4-e9a5-4510-b703-0f6cfe0e551b",
+            "scope_version": 2,
+            "scope_hash": "d93f3272deaaa7427b35cf0db3517f4020b794c413bf3155f326b031bd61ad11",
+            "issue_id": "1aa8d345-b371-4265-bb30-53fb7189a50e",
+            "issue_hash": "d1135eb939a8ebceab0bfce50dc61d457c11deca6a890a1d6ba601158b708a05"
+          },
+          "depends_on": [],
+          "supersedes_operation_id": null,
+          "payload": {
+            "operation_id": "04b78c6e-d7e3-4d99-80f9-1d32282413d5",
+            "schema_version": 1,
+            "reason": "Synthetic offline personal start intent",
+            "expected_version": 6,
+            "schedule_version": 2,
+            "assignment_id": "f01eea31-6393-4112-8cae-e3ce07a542fe",
+            "assignment_version": 2,
+            "issue_id": "1aa8d345-b371-4265-bb30-53fb7189a50e",
+            "issue_hash": "d1135eb939a8ebceab0bfce50dc61d457c11deca6a890a1d6ba601158b708a05",
+            "scope_revision_id": "4ac9b0d4-e9a5-4510-b703-0f6cfe0e551b",
+            "scope_version": 2,
+            "captured_at": "2026-10-08T07:39:05.228Z"
+          },
+          "payload_hash": "c1ab9ae80a12521c35878725662c0aa8436dbca923ac81f5803cca0f2f002462"
+        },
+        "created_at": 1791445145234,
+        "status": {
+          "key": "10000000-0000-4000-8000-000000000001:30000000-0000-4000-8000-000000000010:04b78c6e-d7e3-4d99-80f9-1d32282413d5",
+          "owner": "10000000-0000-4000-8000-000000000001:30000000-0000-4000-8000-000000000010",
+          "state": "ReviewRequired",
+          "attempts": 1,
+          "next_attempt_at": 0,
+          "message": "This record is unavailable.",
+          "operation_id": "04b78c6e-d7e3-4d99-80f9-1d32282413d5",
+          "code": "RecordUnavailable",
+          "retryable": false
+        }
+      },
+      {
+        "key": "10000000-0000-4000-8000-000000000001:30000000-0000-4000-8000-000000000010:f69ab4f3-d55e-4009-8ca5-c655c74ea651",
+        "owner": "10000000-0000-4000-8000-000000000001:30000000-0000-4000-8000-000000000010",
+        "original": {
+          "schema_version": 1,
+          "operation_id": "f69ab4f3-d55e-4009-8ca5-c655c74ea651",
+          "actor_id": "30000000-0000-4000-8000-000000000010",
+          "workspace_id": "10000000-0000-4000-8000-000000000001",
+          "appointment_id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+          "command": "Capture",
+          "target_id": null,
+          "authority": {
+            "assignment_id": "f01eea31-6393-4112-8cae-e3ce07a542fe",
+            "assignment_version": 2,
+            "schedule_version": 2,
+            "scope_revision_id": "4ac9b0d4-e9a5-4510-b703-0f6cfe0e551b",
+            "scope_version": 2,
+            "scope_hash": "d93f3272deaaa7427b35cf0db3517f4020b794c413bf3155f326b031bd61ad11",
+            "issue_id": "1aa8d345-b371-4265-bb30-53fb7189a50e",
+            "issue_hash": "d1135eb939a8ebceab0bfce50dc61d457c11deca6a890a1d6ba601158b708a05"
+          },
+          "depends_on": [
+            "04b78c6e-d7e3-4d99-80f9-1d32282413d5"
+          ],
+          "supersedes_operation_id": null,
+          "payload": {
+            "operation_id": "f69ab4f3-d55e-4009-8ca5-c655c74ea651",
+            "schema_version": 1,
+            "reason": "SYN original offline evidence within inspection scope",
+            "id": "6f5ba0f5-76dc-40ba-97b4-c1ef6a3216c2",
+            "appointment_id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+            "attendance_id": {
+              "operation_id": "04b78c6e-d7e3-4d99-80f9-1d32282413d5"
+            },
+            "kind": "Observation",
+            "scope_item_id": "c463f773-98a3-4667-b78e-a2a43add7d59",
+            "asset_id": "80000000-0000-4000-8000-000000000001",
+            "captured_at": "2026-10-08T07:39:05.396Z",
+            "payload": {
+              "finding": "SYN PT-24 cancel: factual evidence keeps its original authority",
+              "confidence": "Suspected",
+              "attempted_fix": "SYN visual-only check; no intervention",
+              "result": "SYN label remains unclear; technical follow-up required",
+              "follow_up_required": true
+            }
+          },
+          "payload_hash": "0cbd52811adbd6cbb35d14b05c3ca7ed5ba515b8d5ddf95b1e1ef77caec03ee1"
+        },
+        "created_at": 1791445145397,
+        "status": {
+          "key": "10000000-0000-4000-8000-000000000001:30000000-0000-4000-8000-000000000010:f69ab4f3-d55e-4009-8ca5-c655c74ea651",
+          "owner": "10000000-0000-4000-8000-000000000001:30000000-0000-4000-8000-000000000010",
+          "state": "ReviewRequired",
+          "attempts": 1,
+          "next_attempt_at": 0,
+          "message": "Original retained in restricted recovery. Service owner disposition is required; this is not normal field acceptance.",
+          "operation_id": "f69ab4f3-d55e-4009-8ca5-c655c74ea651",
+          "code": "DependencyPending",
+          "retryable": false,
+          "recovery": {
+            "case_id": "65061815-9f15-47ad-af48-6671e7248269",
+            "operation_id": "f69ab4f3-d55e-4009-8ca5-c655c74ea651",
+            "payload_hash": "0cbd52811adbd6cbb35d14b05c3ca7ed5ba515b8d5ddf95b1e1ef77caec03ee1",
+            "recovery_receipt_id": "b0ac745c-12e4-4108-8482-fa1bc9049a1c",
+            "received_at": "2026-10-08T07:39:05.957Z",
+            "disposition": "ReviewRequired",
+            "normal_acceptance": false
+          }
+        }
+      },
+      {
+        "key": "10000000-0000-4000-8000-000000000001:30000000-0000-4000-8000-000000000010:3aff3bf7-0940-45c3-9b79-19e339427397",
+        "owner": "10000000-0000-4000-8000-000000000001:30000000-0000-4000-8000-000000000010",
+        "original": {
+          "schema_version": 1,
+          "operation_id": "3aff3bf7-0940-45c3-9b79-19e339427397",
+          "actor_id": "30000000-0000-4000-8000-000000000010",
+          "workspace_id": "10000000-0000-4000-8000-000000000001",
+          "appointment_id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+          "command": "AttachmentInitiate",
+          "target_id": null,
+          "authority": {
+            "assignment_id": "f01eea31-6393-4112-8cae-e3ce07a542fe",
+            "assignment_version": 2,
+            "schedule_version": 2,
+            "scope_revision_id": "4ac9b0d4-e9a5-4510-b703-0f6cfe0e551b",
+            "scope_version": 2,
+            "scope_hash": "d93f3272deaaa7427b35cf0db3517f4020b794c413bf3155f326b031bd61ad11",
+            "issue_id": "1aa8d345-b371-4265-bb30-53fb7189a50e",
+            "issue_hash": "d1135eb939a8ebceab0bfce50dc61d457c11deca6a890a1d6ba601158b708a05"
+          },
+          "depends_on": [
+            "04b78c6e-d7e3-4d99-80f9-1d32282413d5"
+          ],
+          "supersedes_operation_id": null,
+          "payload": {
+            "operation_id": "3aff3bf7-0940-45c3-9b79-19e339427397",
+            "schema_version": 1,
+            "reason": "SYN PT acceptance within the original downloaded inspection scope",
+            "id": "b770e793-312b-467a-9c3f-12187966124b",
+            "appointment_id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+            "attendance_id": {
+              "operation_id": "04b78c6e-d7e3-4d99-80f9-1d32282413d5"
+            },
+            "filename": "SYN-acceptance.png",
+            "media_type": "image/png",
+            "byte_count": 191,
+            "sha256": "8e0e39097d1e122a86d83ed2c236f3bc8de8b82c46a945fbe71b6bf0a059203e"
+          },
+          "payload_hash": "a25df1a6ca0f4c69769f0c3bbd067616311c0ba05221b5d64961e7e815f25327"
+        },
+        "created_at": 1791445145550,
+        "status": {
+          "key": "10000000-0000-4000-8000-000000000001:30000000-0000-4000-8000-000000000010:3aff3bf7-0940-45c3-9b79-19e339427397",
+          "owner": "10000000-0000-4000-8000-000000000001:30000000-0000-4000-8000-000000000010",
+          "state": "ReviewRequired",
+          "attempts": 1,
+          "next_attempt_at": 0,
+          "message": "Original retained in restricted recovery. Service owner disposition is required; this is not normal field acceptance.",
+          "operation_id": "3aff3bf7-0940-45c3-9b79-19e339427397",
+          "code": "DependencyPending",
+          "retryable": false,
+          "recovery": {
+            "case_id": "50fc3456-4f7b-46d4-b55d-18dc3fc509bd",
+            "operation_id": "3aff3bf7-0940-45c3-9b79-19e339427397",
+            "payload_hash": "a25df1a6ca0f4c69769f0c3bbd067616311c0ba05221b5d64961e7e815f25327",
+            "recovery_receipt_id": "4b38ccc6-172b-4505-804f-6b17871ba3ae",
+            "received_at": "2026-10-08T07:39:06.088Z",
+            "disposition": "ReviewRequired",
+            "normal_acceptance": false
+          }
+        }
+      },
+      {
+        "key": "10000000-0000-4000-8000-000000000001:30000000-0000-4000-8000-000000000010:3b24ce03-585c-46b0-a493-5d310d189f5e",
+        "owner": "10000000-0000-4000-8000-000000000001:30000000-0000-4000-8000-000000000010",
+        "original": {
+          "schema_version": 1,
+          "operation_id": "3b24ce03-585c-46b0-a493-5d310d189f5e",
+          "actor_id": "30000000-0000-4000-8000-000000000010",
+          "workspace_id": "10000000-0000-4000-8000-000000000001",
+          "appointment_id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+          "command": "AttachmentUpload",
+          "target_id": "b770e793-312b-467a-9c3f-12187966124b",
+          "authority": {
+            "assignment_id": "f01eea31-6393-4112-8cae-e3ce07a542fe",
+            "assignment_version": 2,
+            "schedule_version": 2,
+            "scope_revision_id": "4ac9b0d4-e9a5-4510-b703-0f6cfe0e551b",
+            "scope_version": 2,
+            "scope_hash": "d93f3272deaaa7427b35cf0db3517f4020b794c413bf3155f326b031bd61ad11",
+            "issue_id": "1aa8d345-b371-4265-bb30-53fb7189a50e",
+            "issue_hash": "d1135eb939a8ebceab0bfce50dc61d457c11deca6a890a1d6ba601158b708a05"
+          },
+          "depends_on": [
+            "3aff3bf7-0940-45c3-9b79-19e339427397"
+          ],
+          "supersedes_operation_id": null,
+          "payload": {
+            "operation_id": "3b24ce03-585c-46b0-a493-5d310d189f5e",
+            "schema_version": 1,
+            "reason": "SYN PT acceptance within the original downloaded inspection scope",
+            "expected_version": 1,
+            "sha256": "8e0e39097d1e122a86d83ed2c236f3bc8de8b82c46a945fbe71b6bf0a059203e",
+            "byte_count": 191
+          },
+          "payload_hash": "0be2fedf1d62608cfeef6cca7b849cbb6eacf1aa4b4be116c839ed11284ca4da"
+        },
+        "created_at": 1791445145550,
+        "status": {
+          "key": "10000000-0000-4000-8000-000000000001:30000000-0000-4000-8000-000000000010:3b24ce03-585c-46b0-a493-5d310d189f5e",
+          "owner": "10000000-0000-4000-8000-000000000001:30000000-0000-4000-8000-000000000010",
+          "state": "ReviewRequired",
+          "attempts": 1,
+          "next_attempt_at": 0,
+          "message": "Original retained in restricted recovery. Service owner disposition is required; this is not normal field acceptance.",
+          "operation_id": "3b24ce03-585c-46b0-a493-5d310d189f5e",
+          "code": "DependencyPending",
+          "retryable": false,
+          "recovery": {
+            "case_id": "405f4ee0-7c9e-4fd2-bcc8-edddb94e5c21",
+            "operation_id": "3b24ce03-585c-46b0-a493-5d310d189f5e",
+            "payload_hash": "0be2fedf1d62608cfeef6cca7b849cbb6eacf1aa4b4be116c839ed11284ca4da",
+            "recovery_receipt_id": "95ff3efd-bae0-4597-8945-29afde74d7e6",
+            "received_at": "2026-10-08T07:39:06.235Z",
+            "disposition": "ReviewRequired",
+            "normal_acceptance": false
+          }
+        }
+      },
+      {
+        "key": "10000000-0000-4000-8000-000000000001:30000000-0000-4000-8000-000000000010:65afe11f-c075-4a0b-a16b-ef7c6d449b81",
+        "owner": "10000000-0000-4000-8000-000000000001:30000000-0000-4000-8000-000000000010",
+        "original": {
+          "schema_version": 1,
+          "operation_id": "65afe11f-c075-4a0b-a16b-ef7c6d449b81",
+          "actor_id": "30000000-0000-4000-8000-000000000010",
+          "workspace_id": "10000000-0000-4000-8000-000000000001",
+          "appointment_id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+          "command": "AttachmentFinalise",
+          "target_id": "b770e793-312b-467a-9c3f-12187966124b",
+          "authority": {
+            "assignment_id": "f01eea31-6393-4112-8cae-e3ce07a542fe",
+            "assignment_version": 2,
+            "schedule_version": 2,
+            "scope_revision_id": "4ac9b0d4-e9a5-4510-b703-0f6cfe0e551b",
+            "scope_version": 2,
+            "scope_hash": "d93f3272deaaa7427b35cf0db3517f4020b794c413bf3155f326b031bd61ad11",
+            "issue_id": "1aa8d345-b371-4265-bb30-53fb7189a50e",
+            "issue_hash": "d1135eb939a8ebceab0bfce50dc61d457c11deca6a890a1d6ba601158b708a05"
+          },
+          "depends_on": [
+            "3b24ce03-585c-46b0-a493-5d310d189f5e"
+          ],
+          "supersedes_operation_id": null,
+          "payload": {
+            "operation_id": "65afe11f-c075-4a0b-a16b-ef7c6d449b81",
+            "schema_version": 1,
+            "reason": "SYN PT acceptance within the original downloaded inspection scope",
+            "expected_version": 2
+          },
+          "payload_hash": "26d00ffbb72651872ce607f67542c9b114e4684ccf386877c448a14fef565939"
+        },
+        "created_at": 1791445145551,
+        "status": {
+          "key": "10000000-0000-4000-8000-000000000001:30000000-0000-4000-8000-000000000010:65afe11f-c075-4a0b-a16b-ef7c6d449b81",
+          "owner": "10000000-0000-4000-8000-000000000001:30000000-0000-4000-8000-000000000010",
+          "state": "ReviewRequired",
+          "attempts": 1,
+          "next_attempt_at": 0,
+          "message": "Original retained in restricted recovery. Service owner disposition is required; this is not normal field acceptance.",
+          "operation_id": "65afe11f-c075-4a0b-a16b-ef7c6d449b81",
+          "code": "DependencyPending",
+          "retryable": false,
+          "recovery": {
+            "case_id": "cccb1235-09a7-491d-8d5e-f23a495476cd",
+            "operation_id": "65afe11f-c075-4a0b-a16b-ef7c6d449b81",
+            "payload_hash": "26d00ffbb72651872ce607f67542c9b114e4684ccf386877c448a14fef565939",
+            "recovery_receipt_id": "2a408b77-c382-4f50-a64a-3cc2e5430807",
+            "received_at": "2026-10-08T07:39:06.338Z",
+            "disposition": "ReviewRequired",
+            "normal_acceptance": false
+          }
+        }
+      },
+      {
+        "key": "10000000-0000-4000-8000-000000000001:30000000-0000-4000-8000-000000000010:850f6344-3066-46f3-bfa2-329dfad3e666",
+        "owner": "10000000-0000-4000-8000-000000000001:30000000-0000-4000-8000-000000000010",
+        "original": {
+          "schema_version": 1,
+          "operation_id": "850f6344-3066-46f3-bfa2-329dfad3e666",
+          "actor_id": "30000000-0000-4000-8000-000000000010",
+          "workspace_id": "10000000-0000-4000-8000-000000000001",
+          "appointment_id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+          "command": "Capture",
+          "target_id": null,
+          "authority": {
+            "assignment_id": "f01eea31-6393-4112-8cae-e3ce07a542fe",
+            "assignment_version": 2,
+            "schedule_version": 2,
+            "scope_revision_id": "4ac9b0d4-e9a5-4510-b703-0f6cfe0e551b",
+            "scope_version": 2,
+            "scope_hash": "d93f3272deaaa7427b35cf0db3517f4020b794c413bf3155f326b031bd61ad11",
+            "issue_id": "1aa8d345-b371-4265-bb30-53fb7189a50e",
+            "issue_hash": "d1135eb939a8ebceab0bfce50dc61d457c11deca6a890a1d6ba601158b708a05"
+          },
+          "depends_on": [
+            "04b78c6e-d7e3-4d99-80f9-1d32282413d5",
+            "65afe11f-c075-4a0b-a16b-ef7c6d449b81"
+          ],
+          "supersedes_operation_id": null,
+          "payload": {
+            "operation_id": "850f6344-3066-46f3-bfa2-329dfad3e666",
+            "schema_version": 1,
+            "reason": "SYN PT acceptance within the original downloaded inspection scope",
+            "id": "8640d34f-7403-48c7-97d1-74b7c4a6451d",
+            "appointment_id": "9f7c477d-bd62-42a6-9fa2-789f3ca0b89e",
+            "attendance_id": {
+              "operation_id": "04b78c6e-d7e3-4d99-80f9-1d32282413d5"
+            },
+            "kind": "Photo",
+            "scope_item_id": "c463f773-98a3-4667-b78e-a2a43add7d59",
+            "asset_id": "80000000-0000-4000-8000-000000000001",
+            "captured_at": "2026-10-08T07:39:05.549Z",
+            "payload": {
+              "caption": "SYN original acceptance fixture; no operational image",
+              "attachment_id": "b770e793-312b-467a-9c3f-12187966124b"
+            }
+          },
+          "payload_hash": "20562d1cc3ccddbbdd422808fcdfd36f2459a9eb40369395620b13532282bfd0"
+        },
+        "created_at": 1791445145551,
+        "status": {
+          "key": "10000000-0000-4000-8000-000000000001:30000000-0000-4000-8000-000000000010:850f6344-3066-46f3-bfa2-329dfad3e666",
+          "owner": "10000000-0000-4000-8000-000000000001:30000000-0000-4000-8000-000000000010",
+          "state": "ReviewRequired",
+          "attempts": 1,
+          "next_attempt_at": 0,
+          "message": "Original retained in restricted recovery. Service owner disposition is required; this is not normal field acceptance.",
+          "operation_id": "850f6344-3066-46f3-bfa2-329dfad3e666",
+          "code": "DependencyPending",
+          "retryable": false,
+          "recovery": {
+            "case_id": "8ff7ab7d-47fd-4f0c-81a8-c1a9e4d29e66",
+            "operation_id": "850f6344-3066-46f3-bfa2-329dfad3e666",
+            "payload_hash": "20562d1cc3ccddbbdd422808fcdfd36f2459a9eb40369395620b13532282bfd0",
+            "recovery_receipt_id": "8842cf1a-3e64-4f73-adb2-a449da9d2ba2",
+            "received_at": "2026-10-08T07:39:06.422Z",
+            "disposition": "ReviewRequired",
+            "normal_acceptance": false
+          }
+        }
+      }
+    ],
+    "attendances": [],
+    "entries": [],
+    "audit": [
+      {
+        "object_type": "Activity",
+        "object_id": "be642911-a082-4057-a137-4791495cb531",
+        "outcome": "Accepted",
+        "reason": "Preserve original synthetic offline evidence for owned review",
+        "details": {
+          "command": "PreserveOfflineRecovery",
+          "grant_id": "45c6f972-63c1-4374-bf6a-d32301ae3ed6",
+          "original_operation_id": "f69ab4f3-d55e-4009-8ca5-c655c74ea651"
+        }
+      },
+      {
+        "object_type": "Activity",
+        "object_id": "a3cbb6de-861d-40b7-9300-af0ad41b108e",
+        "outcome": "Accepted",
+        "reason": "Preserve original synthetic offline evidence for owned review",
+        "details": {
+          "command": "PreserveOfflineRecovery",
+          "grant_id": "45c6f972-63c1-4374-bf6a-d32301ae3ed6",
+          "original_operation_id": "3aff3bf7-0940-45c3-9b79-19e339427397"
+        }
+      },
+      {
+        "object_type": "Activity",
+        "object_id": "51d2923b-3e6d-477b-a26c-708d5702f283",
+        "outcome": "Accepted",
+        "reason": "Preserve original synthetic offline evidence for owned review",
+        "details": {
+          "command": "PreserveOfflineRecovery",
+          "grant_id": "45c6f972-63c1-4374-bf6a-d32301ae3ed6",
+          "original_operation_id": "3b24ce03-585c-46b0-a493-5d310d189f5e"
+        }
+      },
+      {
+        "object_type": "Activity",
+        "object_id": "e5adfda7-44b6-47c7-9688-e08979e08a73",
+        "outcome": "Accepted",
+        "reason": "Preserve original synthetic offline evidence for owned review",
+        "details": {
+          "command": "PreserveOfflineRecovery",
+          "grant_id": "45c6f972-63c1-4374-bf6a-d32301ae3ed6",
+          "original_operation_id": "65afe11f-c075-4a0b-a16b-ef7c6d449b81"
+        }
+      },
+      {
+        "object_type": "Activity",
+        "object_id": "dff984ac-e5db-4ea6-8557-1480533d79d6",
+        "outcome": "Accepted",
+        "reason": "Preserve original synthetic offline evidence for owned review",
+        "details": {
+          "command": "PreserveOfflineRecovery",
+          "grant_id": "45c6f972-63c1-4374-bf6a-d32301ae3ed6",
+          "original_operation_id": "850f6344-3066-46f3-bfa2-329dfad3e666"
+        }
+      }
+    ],
+    "refused_capabilities": []
+  }
+}
