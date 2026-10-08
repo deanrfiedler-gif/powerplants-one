@@ -147,8 +147,8 @@ export const workViews = [
   { id: "updates", label: "Updates & preferences", href: "/work/updates", icon: "settings" },
 ] as const;
 export type WorkViewId = (typeof workViews)[number]["id"];
-// The Sales phone bar of mobile r07: four destinations and More, icons only. Each entry is an
-// existing destination under the name a salesperson uses for it; the name is the accessible
+// The Sales phone bar: four labelled destinations and More. Each entry is an
+// existing destination under the name a salesperson uses for it; the name is also the accessible
 // label, and the destination keeps its own route and permission. Other workspaces keep the
 // labelled three-and-More bar.
 export const salesPhoneBar = [

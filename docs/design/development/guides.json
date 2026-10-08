@@ -42188,8 +42188,8 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-10-08",
+      "source_commit": "bab3d8a569a54f33b79ea6b9e0d0c71daacba4a4",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "Not run for this guide",
       "sections": [
@@ -42282,10 +42282,10 @@
             "Task sequence for review against the applicable running release."
           ],
           "steps": [
-            "Search the related register for an existing record before creating another.",
-            "Complete the information requested by the creation form; keep unknown values explicit.",
-            "Review the entered context, save through the page action and inspect the resulting record/confirmation.",
-            "Then continue the wider workflow: Create or accept the bounded project context through permitted controls"
+            "Search Projects for an existing record before creating another.",
+            "Enter the Project name, select the existing Customer and Site, then select the Project coordinator. Target handover is optional.",
+            "Choose Create project and check the confirmed saved record or the explicit error/uncertain state.",
+            "Open the saved Project. A confirmed ordinary creation disables the completed form and provides Open saved project while navigation completes."
           ],
           "rows": [],
           "headers": []
@@ -42296,7 +42296,8 @@
           "paragraphs": [
             "A project has a receiving owner and defined scope.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Creating a project does not resolve open contractual or technical assumptions."
+            "Creating a project does not resolve open contractual or technical assumptions.",
+            "Sales create-and-return retains a separate receiving comparison and binding decision. Creating a Project does not accept or bind a Sales handover automatically."
           ],
           "steps": [],
           "rows": [],
@@ -42331,6 +42332,10 @@
             [
               "Planned / not available",
               "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
+            ],
+            [
+              "Project saved / opening",
+              "The ordinary creation is confirmed. Open saved project continues to the exact record; do not submit the completed form again."
             ]
           ],
           "headers": [
@@ -48253,10 +48258,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-10-08",
+      "source_commit": "bab3d8a569a54f33b79ea6b9e0d0c71daacba4a4",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Scheduling Step 4: docs/testing/evidence/scheduling-policy-enforcement/README.md records exact executed checks; visual and owner/device review pending.",
+      "runtime_evidence": "Scheduling Step 4: docs/testing/evidence/scheduling-policy-enforcement/README.md records exact executed checks; visual and owner/device review pending. NAV repair evidence: docs/testing/evidence/pr366-pr367-repair/README.md; source-read header reproduction and screenshot inspection are separate from full scenario and owner/device acceptance.",
       "sections": [
         {
           "section_id": "purpose",
@@ -48321,6 +48326,10 @@
             [
               "Guide and design",
               "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
+            ],
+            [
+              "Navigation",
+              "My Work is the current overview heading. Use My Work menu for its personal views. More contains ordinary permitted Workspace selection."
             ]
           ],
           "headers": [
@@ -48456,8 +48465,9 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "On a phone, My Work menu opens personal views. The Sales bar has labelled My Work, Deals, Activities, Contacts and More destinations. Activities opens the selected local day within Sales; personal agenda links retain their stated personal selection.",
+            "Use Tab and Shift+Tab for controls, Enter or Space for buttons, and Escape to close menus or the guide and return focus. My Work subviews expose the full authorized path through Page hierarchy.",
+            "The guide fills the phone screen and closes back to the current page. Hosted mode does not offer local Offline entry; the local Offline workspace retains its supported originals and recovery. A portable guide does not grant offline business authority."
           ],
           "steps": [],
           "rows": [],
@@ -48494,9 +48504,10 @@
       "source_paths": [
         "src/app/(business)/work/(workspace)/page.tsx",
         "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "src/components/product-navigation.tsx"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "NAV repair: current My Work overview identity, labelled Sales phone destinations and scoped Activities; retained personal overview and source authority.",
       "document_id": "PPO-GUIDE-PAGE-WORK",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -48506,7 +48517,8 @@
       "workflow_basis": [
         "src/app/(business)/work/(workspace)/page.tsx",
         "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "src/components/product-navigation.tsx"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null

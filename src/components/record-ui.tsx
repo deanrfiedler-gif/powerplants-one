@@ -97,9 +97,11 @@ export function useUnsavedChanges(dirty: boolean, pending = false, retainedQuery
   const retainedKeys = retainedQuery.join(",");
   useEffect(() => {
     if (!dirty && !pending) return;
+    // Declared view keys retain the same mounted record and command owner even
+    // while its outcome is pending. Every other query/path/unload stays guarded.
     const release = guardBrowserNavigation(run => {
       if (!pending && window.confirm("Leave this page and discard unsaved changes?")) run();
-    }, pending ? 200 : retainedKeys ? 5 : 10, pending ? [] : retainedKeys.split(",").filter(Boolean));
+    }, pending ? 200 : retainedKeys ? 5 : 10, retainedKeys.split(",").filter(Boolean));
     guard.current = release;
     return () => { release(); if (guard.current === release) guard.current = null; };
   }, [dirty, pending, retainedKeys]);

@@ -46,13 +46,13 @@
     },
     {
       "id": "nav-accepted-routing",
-      "fixture": "tests/browser/projects-gantt.spec.ts; tests/browser/crm-refinements.spec.ts; tests/browser/sales-workflows.spec.ts",
-      "description": "Confirmed receipt follows exact created Project and CRM selection; dirty mounted handover view changes retain the draft. Failed/uncertain saves keep original recovery."
+      "fixture": "tests/browser/projects-gantt.spec.ts; tests/browser/crm-refinements.spec.ts; tests/browser/sales-workflows.spec.ts; tests/browser/equipment.spec.ts",
+      "description": "Confirmed receipt follows exact created Project and CRM selection; dirty mounted handover view changes retain the draft. Failed/uncertain saves keep original recovery. Pending/unknown commands retain explicitly declared same-record mounted views while Home, different records and unrelated query changes remain guarded."
     },
     {
       "id": "nav-phone-current-heading",
-      "fixture": "tests/ui/crm-board.spec.ts; tests/ui/desktop-shell.spec.ts; tests/browser/leads.spec.ts",
-      "description": "At 320/390 px the current page fits beside the hierarchy disclosure; Add Lead remains above the phone bar. More has ordinary Workspace and the full hierarchy remains available."
+      "fixture": "tests/ui/crm-board.spec.ts; tests/ui/desktop-shell.spec.ts; tests/browser/leads.spec.ts; tests/browser/my-work-mobile.spec.ts",
+      "description": "At 320/390 px the current page fits beside the hierarchy disclosure; Add Lead remains above the phone bar. More has ordinary Workspace and the full hierarchy remains available. My Work overview has a readable current breadcrumb; subviews keep the hierarchy control in the phone row, with labelled Sales Activities scope."
     }
   ]
 }

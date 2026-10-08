@@ -2,7 +2,7 @@
 
 ## PR #366 / #367 CI repair — 8 October 2026
 
-Repository-writing session: Dean requested repair of both failed PRs. The existing NAV branch owns application/test changes; the integrated-journey branch remains isolated. [Repair evidence](testing/evidence/pr366-pr367-repair/README.md) separates Ubuntu setup cancellations on #366 from reproduced NAV defects and superseded shell assertions on #367. Receipt-owned guard release, retained mounted handover views and mobile layout corrections preserve pending/unknown recovery, permissions and original commands. Checks and fresh-head CI are in progress; no merge, deployment or owner acceptance is implied.
+Repository-writing session: Dean requested repair of both failed PRs. #366 at unchanged `03f211e` passes all 51 checks after failed-only environment-setup retries. The existing NAV branch owns application/test changes; the integrated-journey branch remains isolated. [Repair evidence](testing/evidence/pr366-pr367-repair/README.md) separates setup cancellations, reproduced NAV defects and superseded shell assertions. #367's confirmed Project/CRM routing, mounted handover/Equipment views, mobile Lead reachability and current My Work heading preserve pending/unknown recovery, permissions and original commands. Final-package lint, TypeScript, eight focused units, studio and naming pass; fresh-head CI remains pending. [Actual screenshot inspection](testing/evidence/pr366-pr367-repair/screenshot-review.md) remains separate from owner/device/zoom acceptance. No merge or deployment.
 
 ## NAV navigation implementation — 8 October 2026
 

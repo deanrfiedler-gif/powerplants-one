@@ -210,8 +210,8 @@ function ProductNavigationView({
       </span>
     );
   };
-  // Mobile r07, Sales: icon-only cells. The name stays in the link for assistive technology and
-  // as a tooltip; the calendar opens on the reader's current local day, as My Work links to it.
+  // Sales phone cells keep visible names and accessible labels. Activities uses
+  // the same Sales scope and local day policy as the desktop destination.
   const phoneCell = (entry: (typeof salesPhoneBar)[number]) => {
     const item = destination(entry.id);
     const contents = (
@@ -467,7 +467,8 @@ export function ProductHeader() {
     page = pageForPath(path),
     shell = useShell();
   const label = path === "/" ? "" : path === "/calendar" ? (query.get("scope") === "sales" ? "Sales Activities" : "Personal Calendar") : path === "/development/page-register" ? "Design & build" : path === "/development/design-system" ? "Component catalogue" : path.startsWith("/estimating/configurations") ? "Specialist configurations" : /^\/estimating\/discovery\/[^/]+$/.test(path) && !path.endsWith("/new") ? "Estimation Wizard" : (page?.id === "engineering" ? "Engineering" : page?.label ?? "Page unavailable");
-  // My Work names its current view beside the module, as its secondary menu does. EN-06 names its module
+  // My Work names its subview beside the module. The overview is its index, so
+  // My Work itself is current rather than a redundant, hidden Overview crumb. EN-06 names its module
   // there, and its destination after it for as long as its own menu is hidden (desktop-shell.css).
   const materials = page?.workspace === "engineering" ? materialsPath(path) : undefined;
   // EN-07 does the same: "Engineering / Engineering Change-Impact Review", then its destination while its menu is hidden.
@@ -477,7 +478,7 @@ export function ProductHeader() {
   const control = materials || changes || commissioning ? undefined : controlPath(path);
   const acceptance = path.startsWith("/projects/acceptance");
   const crumb = materials ?? changes ?? commissioning ?? (control ? {view:{label:controlModules[control.module].views.find(([key])=>key===control.view)?.[1]}} : undefined) ?? (acceptance ? { view: undefined } : undefined);
-  const view = page?.id === "work" ? workViewForPath(path)?.label : materials ? materialsModuleLabel : changes ? changesModuleLabel : commissioning ? commissioningModuleLabel : control ? control.title : acceptance ? "Staged Acceptance & Closeout" : undefined;
+  const view = page?.id === "work" ? (path === "/work" ? undefined : workViewForPath(path)?.label) : materials ? materialsModuleLabel : changes ? changesModuleLabel : commissioning ? commissioningModuleLabel : control ? control.title : acceptance ? "Staged Acceptance & Closeout" : undefined;
   const subview = crumb?.view?.label;
   const workspaceRoot = page?.workspace ? workspaces.find((w) => w.id === page.workspace) : undefined;
   const currentModule =

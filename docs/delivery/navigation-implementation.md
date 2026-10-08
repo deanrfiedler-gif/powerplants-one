@@ -8,6 +8,8 @@ This session implements NAV-02A through NAV-06 under the current user instructio
 
 The supplied report, route inventory, 34-scenario matrix and static JSON were read from the user's 8 October Codex outputs. They contain static evidence, not executed browser acceptance. Issued references remain unchanged.
 
+The subsequent authorised [PR #366/#367 repair](../testing/evidence/pr366-pr367-repair/README.md) records further application corrections and fresh CI separately from the original NAV checkpoints below. It preserves the scenario ledger's exact commits and unverified criteria; passing retained CI does not turn partial N01–N34 scenarios into complete acceptance.
+
 ## Ordered work
 
 | Package | Files and dependencies | Acceptance |

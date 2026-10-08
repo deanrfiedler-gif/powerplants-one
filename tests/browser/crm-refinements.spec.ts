@@ -435,7 +435,7 @@ test("SA-09 board stage change uses native keyboard controls on desktop and phon
   await call(page, "crm/opportunities", input);
   await page.goto("/sales/opportunities?pipeline=I1");
   await keyOpportunitySearch(page, input.title);
-  const action = page.getByRole("button", {
+  const action = page.locator(`.crm-card[data-opportunity-id="${input.id}"]`).getByRole("button", {
     name: `Change stage for ${input.title}`,
     exact: true,
   });

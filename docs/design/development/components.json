@@ -1682,7 +1682,7 @@
         {
           "id": "nav-accepted-routing",
           "label": "NAV CI repair host",
-          "description": "Confirmed receipt follows exact created Project and CRM selection; dirty mounted handover view changes retain the draft. Failed/uncertain saves keep original recovery. Fixture: tests/browser/projects-gantt.spec.ts; tests/browser/crm-refinements.spec.ts; tests/browser/sales-workflows.spec.ts"
+          "description": "Confirmed receipt follows exact created Project and CRM selection; dirty mounted handover view changes retain the draft. Failed/uncertain saves keep original recovery. Fixture: tests/browser/projects-gantt.spec.ts; tests/browser/crm-refinements.spec.ts; tests/browser/sales-workflows.spec.ts Pending/unknown mounted view switching and refused Home recovery: tests/browser/equipment.spec.ts."
         }
       ],
       "implementation": [
@@ -2493,7 +2493,7 @@
         {
           "id": "nav-phone-current-heading",
           "label": "NAV CI repair host",
-          "description": "At 320/390 px the current page fits beside the hierarchy disclosure; Add Lead remains above the phone bar. More has ordinary Workspace and the full hierarchy remains available. Fixture: tests/ui/crm-board.spec.ts; tests/ui/desktop-shell.spec.ts; tests/browser/leads.spec.ts"
+          "description": "At 320/390 px the current page fits beside the hierarchy disclosure; Add Lead remains above the phone bar. More has ordinary Workspace and the full hierarchy remains available. Fixture: tests/ui/crm-board.spec.ts; tests/ui/desktop-shell.spec.ts; tests/browser/leads.spec.ts My Work overview is current and readable; phone bar labels and Sales Activities scope are verified in tests/browser/my-work-mobile.spec.ts."
         }
       ],
       "implementation": [
@@ -2692,7 +2692,7 @@
         {
           "id": "nav-phone-current-heading",
           "label": "NAV CI repair host",
-          "description": "At 320/390 px the current page fits beside the hierarchy disclosure; Add Lead remains above the phone bar. More has ordinary Workspace and the full hierarchy remains available. Fixture: tests/ui/crm-board.spec.ts; tests/ui/desktop-shell.spec.ts; tests/browser/leads.spec.ts"
+          "description": "At 320/390 px the current page fits beside the hierarchy disclosure; Add Lead remains above the phone bar. More has ordinary Workspace and the full hierarchy remains available. Fixture: tests/ui/crm-board.spec.ts; tests/ui/desktop-shell.spec.ts; tests/browser/leads.spec.ts My Work overview is current and readable; phone bar labels and Sales Activities scope are verified in tests/browser/my-work-mobile.spec.ts."
         }
       ],
       "implementation": [

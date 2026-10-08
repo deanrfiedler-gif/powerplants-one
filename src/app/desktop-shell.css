@@ -312,14 +312,12 @@
   .ppo-header-menu-slot .ppo-menu-toggle { width: 44px; height: 44px; min-height: 44px; margin: 0; padding: 0; justify-content: center; border-color: transparent; background: transparent; }
   .ppo-header-menu-slot .ppo-menu-toggle svg { width: 24px; height: 24px; }
   .ppo-header-menu-slot .ppo-menu-toggle span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .product-heading { display: block; flex: 1; min-width: 0; margin: 0 0 0 6px; align-self: center; grid-column: auto; grid-row: auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .product-heading { display: flex; flex: 1; min-width: 0; margin: 0 0 0 6px; align-self: center; grid-column: auto; grid-row: auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .ppo-crumb { font-size: 20px; line-height: 28px; font-weight: 500; color: #242a37; }
   .workspace .ppo-shell-header:has(#header-menu:not(:empty)) li[data-crumb=view] .ppo-crumb { font-size: 14px; font-weight: 400; color: #596779; }
-  /* The overview is the workspace's front page, so its header reads "My Work" alone, as in r07. */
-  .workspace:has(#ppo-my-work[data-view=overview]) .ppo-shell-header .ppo-crumbs li[data-crumb=view] { display: none; }
   .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .header-account { grid-column: auto; grid-row: auto; }
-  /* The Sales phone bar, mobile r07: five equal cells, icons only. Each name stays in the link for assistive
-     technology; the current cell keeps the lighter surface and green top stripe of the labelled bar. */
+  /* The Sales phone bar keeps five equal, labelled cells. The current cell has
+     the lighter surface and green top stripe, with aria-current as well. */
   .mobile-navigation.ppo-phone-bar-r07 { grid-template-columns: repeat(5, minmax(0,1fr)); padding-left: 0; padding-right: 0; }
   .mobile-navigation.ppo-phone-bar-r07 > :is(a,button,span) { position: relative; }
   .mobile-navigation.ppo-phone-bar-r07 > :is(a,button,span) > span { max-width: 100%; font-size: 10px; }
