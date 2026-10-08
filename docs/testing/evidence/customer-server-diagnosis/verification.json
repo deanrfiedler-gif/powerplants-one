@@ -1,0 +1,209 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "path": "scripts/local-server.ts",
+      "commit": "f9246e51c59d17b17171bf747a2c0473abcfc74d",
+      "blob": "c11adafafa0a9b8d529fe15f01d08c55ce6aa791",
+      "sha256": "0dc31eb64bc9f5817a6c734245d2aed69965d61efa5400cf1e659dfbba209fa8",
+      "bytes": 6111
+    },
+    {
+      "path": "scripts/quality-customer-timeline.ts",
+      "commit": "f9246e51c59d17b17171bf747a2c0473abcfc74d",
+      "blob": "bb994bda29512deb448012f02a790a3ba0880076",
+      "sha256": "d28f5237f64a5f18e847577bf07bd4675f617c4911d4cda3a36bad25d7a8b910",
+      "bytes": 18048
+    },
+    {
+      "path": "src/platform/proof-diagnostics.ts",
+      "commit": "f9246e51c59d17b17171bf747a2c0473abcfc74d",
+      "blob": "5cfc80bd22ca7eafbb40c99ccf1c600941d73414",
+      "sha256": "0e2437c58afd6b2a00bc66a0f5dc83a621eaebb065b8c2d15eb52f817001eb2c",
+      "bytes": 3415
+    },
+    {
+      "path": "src/platform/proof-runtime.ts",
+      "commit": "f9246e51c59d17b17171bf747a2c0473abcfc74d",
+      "blob": "a4a89c4e4f21e20e7908a7b07f9a9ee74c31f331",
+      "sha256": "0ca7b67a0e2c7d8461363f7a8f2268447b93522e912452823a05e2f1b32a4122",
+      "bytes": 968
+    },
+    {
+      "path": "tests/http/proof-correlation.test.ts",
+      "commit": "f9246e51c59d17b17171bf747a2c0473abcfc74d",
+      "blob": "2d84b667a07124cb8174724ea8948ba59284360e",
+      "sha256": "f3e2f834f0369c34315169b8b2811f317a910aee14ffcf113d05fb150479dd42",
+      "bytes": 1405
+    },
+    {
+      "path": "scripts/quality-prefetch-classification.ts",
+      "commit": "77d91b6480e1dc0fcb39e1ee66ae0e798465e82e",
+      "blob": "18163acd4e6c85534613ad29a4db58af0e51f001",
+      "sha256": "556bd154dc5c4c34df9053f66f3edf027bfc3d2c6603837b74e53d544fc1e2d6",
+      "bytes": 6922
+    }
+  ],
+  "archives": [
+    {
+      "path": "browser-server.json.gz",
+      "uncompressed_sha256": "8d5c06e079a59e86c3401fc48345778734031f815e8b96e9f2d7be7075872d79",
+      "uncompressed_bytes": 8185632
+    },
+    {
+      "path": "gateway.jsonl.gz",
+      "uncompressed_sha256": "a76f7a086d43ca0b7f85ab8e80049b542990b97819a2e410fff9d0a30fe32498",
+      "uncompressed_bytes": 791184
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "browser-server.json.gz",
+      "sha256": "6b6feea23a935d0d7633439c069693b9623b38ad03690ed3b349edf71512c05b",
+      "bytes": 622826
+    },
+    {
+      "path": "ci-371-process-14284.jsonl.gz",
+      "sha256": "45c55b305e5f5c7bdc2b707dc0f353c84472fd2790e37c3fbe1d1f9af9a6ee26",
+      "bytes": 598818
+    },
+    {
+      "path": "ci-371-profile-comparison.json.gz",
+      "sha256": "882e3c1dadadb162bed27f6078786685480abc113223a1e915b28d362c5362cf",
+      "bytes": 1102
+    },
+    {
+      "path": "ci-371-PT-27-proof.json.gz",
+      "sha256": "ec63adbea679d56844d90725c4316952c520ee783e88f5e4e8017e41eaf2f54c",
+      "bytes": 7085
+    },
+    {
+      "path": "ci-371-sample-observations.json.gz",
+      "sha256": "1119aba8cd640b607b3e3241b8d70af4af1b5cc42c57507c4d19be8971aee348",
+      "bytes": 684832
+    },
+    {
+      "path": "ci-371-server-profile.json.gz",
+      "sha256": "9a5d8bd792c45d50046f4f58cdc70384e11eaba2679766818eb1ce97cd9b84cc",
+      "bytes": 333
+    },
+    {
+      "path": "ci-372-process-14334.jsonl.gz",
+      "sha256": "12e3a9e3e6cfb9cd8179030aecf44c4e70142ac79d8b9ae8d02219ccb7837355",
+      "bytes": 405248
+    },
+    {
+      "path": "ci-372-profile-comparison.json.gz",
+      "sha256": "9019e7581fe28f21d52c321d84e050eee39d114e11025d639705727ab7a18112",
+      "bytes": 1115
+    },
+    {
+      "path": "ci-372-PT-27-proof.json.gz",
+      "sha256": "9438bc87d84a1aa39825baf90d41bf536e266378b99dce27878c8cbe6f1f76e8",
+      "bytes": 7178
+    },
+    {
+      "path": "ci-372-sample-observations.json.gz",
+      "sha256": "32f64c2f06cc503bfe248573b12d9706b19e104bf638544b1b182fdae48c21da",
+      "bytes": 602470
+    },
+    {
+      "path": "ci-372-server-profile.json.gz",
+      "sha256": "0c2646816ad5a99768dcb56b479c165b70f20138d6be08e7bc55d0eca0775699",
+      "bytes": 325
+    },
+    {
+      "path": "ci-comparison.json",
+      "sha256": "23b13d5873ec070106bd527043cab170a08b412192965de2c352c102ecfcdcc3",
+      "bytes": 14580
+    },
+    {
+      "path": "customer-server-foundation.txt",
+      "sha256": "e5549f0723d2f1b189960b1f3cd07bb1d73a447d146954da422dd65ebd219ae2",
+      "bytes": 330
+    },
+    {
+      "path": "customer-server-http-off.txt",
+      "sha256": "2600536158528142aa2f099b8ab3c08722d05982e6d4c1177b4d5c21e7ef38b5",
+      "bytes": 208
+    },
+    {
+      "path": "customer-server-http-on-verified.txt",
+      "sha256": "2399855f5de7a1e6ca059f3d03a623caf40afc882f34f563cbbccae39c02f239",
+      "bytes": 206
+    },
+    {
+      "path": "customer-server-http-on.txt",
+      "sha256": "b26793fe13887ad3f98a20efee66f4352c8b29ca434a0cacd378a82aa0a0685f",
+      "bytes": 659
+    },
+    {
+      "path": "customer-server-naming.txt",
+      "sha256": "0ea2f6706e0775e9d54876e443f5d188582aacb73dcaa5c73e21e0dab96c2c47",
+      "bytes": 296
+    },
+    {
+      "path": "customer-server-timeline.txt",
+      "sha256": "512960bacce8d9681e242f2e00d745c938b6b65ce70ebfb2cb8637aba43a53de",
+      "bytes": 882
+    },
+    {
+      "path": "customer-server-typecheck.txt",
+      "sha256": "ba33a711c461001825075a9a3872deaa3e393e4cc3c15731565002c473e7ee5d",
+      "bytes": 50
+    },
+    {
+      "path": "gateway.jsonl.gz",
+      "sha256": "8cf4cb529ab1dc2fb23346b3840c93029399f329d2b4d1cc9d5be49b72528b26",
+      "bytes": 76906
+    },
+    {
+      "path": "matched-requests.csv",
+      "sha256": "ef8e4ee8f232eb85f08088503c517d130d28902a9bf3218fc66708d5819db43e",
+      "bytes": 17316
+    },
+    {
+      "path": "prefetch-classification.json",
+      "sha256": "83f358d67f21f0a163a452eef6d2383f43882153bb987d27be9c8f413eab7426",
+      "bytes": 58656
+    },
+    {
+      "path": "prefetch-classification.txt",
+      "sha256": "83f0ffa84bcfe329122b7e07e6638627076c37dba3d1755c4707ab130b349896",
+      "bytes": 298
+    },
+    {
+      "path": "summary.json",
+      "sha256": "be005fc757e500ac01e2216eb5da6281d61d5e386e3eef18a00c7fc6a4f33897",
+      "bytes": 5928
+    }
+  ],
+  "compiled_application": "24d19b1f158efeb8ad97d62b50e516cbdac4d80e",
+  "checks": {
+    "browser_navigation": {
+      "passed": 80,
+      "failed": 0
+    },
+    "matched_requests": 160,
+    "http_diagnostics_off": {
+      "passed": 1,
+      "failed": 0
+    },
+    "http_diagnostics_on_verified": {
+      "passed": 1,
+      "failed": 0
+    },
+    "http_initial_on": {
+      "passed": 0,
+      "failed": 1,
+      "cause": "Preflight issued before server listen; ECONNREFUSED. Explicit readiness followed by unchanged test passed."
+    }
+  },
+  "boundaries": [
+    "Gateway duration is callback-to-finish, not SQL time or total browser response time.",
+    "High event-loop-active time is not equivalent to CPU saturation; synchronous diagnostic IO and host scheduling affect this run.",
+    "All closed-incomplete events are outside the matched session/core requests; they are not classified as user-visible request failures.",
+    "Low free memory describes this run only; cause of the earlier uninstrumented timeout remains unresolved.",
+    "No further local ten-browser iteration is inferred; inspect separate CI performance evidence."
+  ]
+}

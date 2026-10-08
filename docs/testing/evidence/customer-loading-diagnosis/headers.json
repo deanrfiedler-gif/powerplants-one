@@ -1,0 +1,206 @@
+{
+  "captured_at": "2026-10-08T11:54:02.334Z",
+  "source": "unchanged compiled 24d19b1",
+  "rows": [
+    {
+      "path": "/_next/static/chunks/33ore1af_a5ym.css",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "text/css; charset=UTF-8",
+      "etag": "W/\"17170-1a11b4a089c\"",
+      "bytes": 94576
+    },
+    {
+      "path": "/_next/static/chunks/2f9fqdpourpxf.css",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "text/css; charset=UTF-8",
+      "etag": "W/\"1486f-1a11b4a4105\"",
+      "bytes": 84079
+    },
+    {
+      "path": "/_next/static/chunks/2gx7odfw5l45q.css",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "text/css; charset=UTF-8",
+      "etag": "W/\"1f142-1a11b49f073\"",
+      "bytes": 127298
+    },
+    {
+      "path": "/_next/static/chunks/2ewi5bnnuai4u.css",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "text/css; charset=UTF-8",
+      "etag": "W/\"d6a5-1a11b4a2bb9\"",
+      "bytes": 54949
+    },
+    {
+      "path": "/_next/static/chunks/35w7nycqgtaz9.css",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "text/css; charset=UTF-8",
+      "etag": "W/\"f96-1a11b4a344e\"",
+      "bytes": 3990
+    },
+    {
+      "path": "/_next/static/chunks/14fkgftd7u_z5.css",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "text/css; charset=UTF-8",
+      "etag": "W/\"1e9c9-1a11b49eff7\"",
+      "bytes": 125385
+    },
+    {
+      "path": "/_next/static/chunks/2_c2192tpgm6h.css",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "text/css; charset=UTF-8",
+      "etag": "W/\"16b94-1a11b4a49ac\"",
+      "bytes": 93076
+    },
+    {
+      "path": "/_next/static/chunks/28flaeabfo316.js",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "application/javascript; charset=UTF-8",
+      "etag": "W/\"15ea-1a11b4a381a\"",
+      "bytes": 5610
+    },
+    {
+      "path": "/_next/static/chunks/1ey0h8xsfa_wx.js",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "application/javascript; charset=UTF-8",
+      "etag": "W/\"8809-1a11b49fb99\"",
+      "bytes": 34825
+    },
+    {
+      "path": "/_next/static/chunks/0-_5q-bedv_lk.js",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "application/javascript; charset=UTF-8",
+      "etag": "W/\"37eb4-1a11b4a3097\"",
+      "bytes": 229044
+    },
+    {
+      "path": "/_next/static/chunks/3iubgmi2mrvio.js",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "application/javascript; charset=UTF-8",
+      "etag": "W/\"271ef-1a11b4a1427\"",
+      "bytes": 160239
+    },
+    {
+      "path": "/_next/static/chunks/turbopack-0vi7yfmkw4gs5.js",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "application/javascript; charset=UTF-8",
+      "etag": "W/\"2ac3-1a11b4a219a\"",
+      "bytes": 10947
+    },
+    {
+      "path": "/_next/static/chunks/1f02-zweupik-.js",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "application/javascript; charset=UTF-8",
+      "etag": "W/\"7600-1a11b4a30f6\"",
+      "bytes": 30208
+    },
+    {
+      "path": "/_next/static/chunks/09l8q3j8p1nfp.js",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "application/javascript; charset=UTF-8",
+      "etag": "W/\"8fb7-1a11b4a18c9\"",
+      "bytes": 36791
+    },
+    {
+      "path": "/_next/static/chunks/2dutiite_8_mt.js",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "application/javascript; charset=UTF-8",
+      "etag": "W/\"77da-1a11b4a11b7\"",
+      "bytes": 30682
+    },
+    {
+      "path": "/_next/static/chunks/1tlo7t_7-_go_.js",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "application/javascript; charset=UTF-8",
+      "etag": "W/\"1568a-1a11b4a3086\"",
+      "bytes": 87690
+    },
+    {
+      "path": "/_next/static/chunks/0ceqv-5k090j7.js",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "application/javascript; charset=UTF-8",
+      "etag": "W/\"9485-1a11b4a41e9\"",
+      "bytes": 38021
+    },
+    {
+      "path": "/_next/static/chunks/0e17lnxbjkry2.js",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "application/javascript; charset=UTF-8",
+      "etag": "W/\"d857-1a11b4a473f\"",
+      "bytes": 55383
+    },
+    {
+      "path": "/_next/static/chunks/1etdourpsy2sg.js",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "application/javascript; charset=UTF-8",
+      "etag": "W/\"b041-1a11b4a2650\"",
+      "bytes": 45121
+    },
+    {
+      "path": "/_next/static/chunks/28b535x4alvqs.js",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "application/javascript; charset=UTF-8",
+      "etag": "W/\"875c-1a11b4a105d\"",
+      "bytes": 34652
+    },
+    {
+      "path": "/_next/static/chunks/1664-92tbfgjq.js",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "application/javascript; charset=UTF-8",
+      "etag": "W/\"a68b-1a11b49fcf8\"",
+      "bytes": 42635
+    },
+    {
+      "path": "/_next/static/chunks/0yfs5n30vwac0.js",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "application/javascript; charset=UTF-8",
+      "etag": "W/\"1d7-1a11b4a2e52\"",
+      "bytes": 471
+    },
+    {
+      "path": "/_next/static/chunks/1v23svcawfcn4.css",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "text/css; charset=UTF-8",
+      "etag": "W/\"7e2-1a11b4a476d\"",
+      "bytes": 2018
+    },
+    {
+      "path": "/brand/powerplants-logo-green-white.png",
+      "status": 200,
+      "cache_control": "private, no-store",
+      "content_type": "image/png",
+      "etag": "W/\"4d090-1a11a508d91\"",
+      "bytes": 315536
+    },
+    {
+      "path": "/api/v1/local-session",
+      "status": 401,
+      "cache_control": "private, no-store",
+      "content_type": "application/json",
+      "etag": null,
+      "bytes": 176
+    }
+  ]
+}

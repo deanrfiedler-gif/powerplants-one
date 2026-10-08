@@ -1,0 +1,191 @@
+{
+  "source_head": "f9246e51c59d17b17171bf747a2c0473abcfc74d",
+  "compiled_source": "24d19b1f158efeb8ad97d62b50e516cbdac4d80e",
+  "build_id": "bXz2zLSgUTZhicOrJw-F3",
+  "samples": 80,
+  "matched_core_and_session": 160,
+  "gateway": {
+    "received": 2651,
+    "finished": 2293,
+    "closed_incomplete": 358,
+    "unmatched_received": 0,
+    "core_or_session_incomplete": 0
+  },
+  "groups": [
+    {
+      "viewport": "desktop",
+      "wave": 0,
+      "request": "session",
+      "count": 10,
+      "median_request_start_ms": 3767.368999993778,
+      "median_browser_response_ms": 1730.5814999999711,
+      "median_gateway_elapsed_ms": 632.5128499999992
+    },
+    {
+      "viewport": "desktop",
+      "wave": 0,
+      "request": "directory",
+      "count": 10,
+      "median_request_start_ms": 5516.950499993982,
+      "median_browser_response_ms": 813.6754999868572,
+      "median_gateway_elapsed_ms": 571.2858999999999
+    },
+    {
+      "viewport": "desktop",
+      "wave": 1,
+      "request": "session",
+      "count": 10,
+      "median_request_start_ms": 823.8839999976335,
+      "median_browser_response_ms": 237.16350000177044,
+      "median_gateway_elapsed_ms": 66.95184999999947
+    },
+    {
+      "viewport": "desktop",
+      "wave": 1,
+      "request": "directory",
+      "count": 10,
+      "median_request_start_ms": 1075.8514999906765,
+      "median_browser_response_ms": 626.5784999995958,
+      "median_gateway_elapsed_ms": 520.9379499999977
+    },
+    {
+      "viewport": "desktop",
+      "wave": 2,
+      "request": "session",
+      "count": 10,
+      "median_request_start_ms": 697.7330000081565,
+      "median_browser_response_ms": 213.19899999070913,
+      "median_gateway_elapsed_ms": 76.8323500000024
+    },
+    {
+      "viewport": "desktop",
+      "wave": 2,
+      "request": "directory",
+      "count": 10,
+      "median_request_start_ms": 934.8180000088178,
+      "median_browser_response_ms": 455.46500000637025,
+      "median_gateway_elapsed_ms": 328.7991000000002
+    },
+    {
+      "viewport": "desktop",
+      "wave": 3,
+      "request": "session",
+      "count": 10,
+      "median_request_start_ms": 570.6294999981765,
+      "median_browser_response_ms": 216.74950000306126,
+      "median_gateway_elapsed_ms": 94.68865000000005
+    },
+    {
+      "viewport": "desktop",
+      "wave": 3,
+      "request": "directory",
+      "count": 10,
+      "median_request_start_ms": 803.1444999942323,
+      "median_browser_response_ms": 589.1059999994468,
+      "median_gateway_elapsed_ms": 486.41949999999815
+    },
+    {
+      "viewport": "phone",
+      "wave": 0,
+      "request": "session",
+      "count": 10,
+      "median_request_start_ms": 1944.9150000000373,
+      "median_browser_response_ms": 292.9009999934351,
+      "median_gateway_elapsed_ms": 109.96270000000004
+    },
+    {
+      "viewport": "phone",
+      "wave": 0,
+      "request": "directory",
+      "count": 10,
+      "median_request_start_ms": 2284.266500006197,
+      "median_browser_response_ms": 497.5085000041872,
+      "median_gateway_elapsed_ms": 390.16640000000007
+    },
+    {
+      "viewport": "phone",
+      "wave": 1,
+      "request": "session",
+      "count": 10,
+      "median_request_start_ms": 648.6195000034058,
+      "median_browser_response_ms": 231.140999996569,
+      "median_gateway_elapsed_ms": 57.756750000002285
+    },
+    {
+      "viewport": "phone",
+      "wave": 1,
+      "request": "directory",
+      "count": 10,
+      "median_request_start_ms": 891.1990000051446,
+      "median_browser_response_ms": 421.12849999102764,
+      "median_gateway_elapsed_ms": 332.5332500000004
+    },
+    {
+      "viewport": "phone",
+      "wave": 2,
+      "request": "session",
+      "count": 10,
+      "median_request_start_ms": 683.3314999967115,
+      "median_browser_response_ms": 256.79549999767914,
+      "median_gateway_elapsed_ms": 89.04279999999926
+    },
+    {
+      "viewport": "phone",
+      "wave": 2,
+      "request": "directory",
+      "count": 10,
+      "median_request_start_ms": 946.2475000036648,
+      "median_browser_response_ms": 528.5560000047553,
+      "median_gateway_elapsed_ms": 413.9679500000002
+    },
+    {
+      "viewport": "phone",
+      "wave": 3,
+      "request": "session",
+      "count": 10,
+      "median_request_start_ms": 1829.0469999919878,
+      "median_browser_response_ms": 393.85399999446236,
+      "median_gateway_elapsed_ms": 197.87485000000015
+    },
+    {
+      "viewport": "phone",
+      "wave": 3,
+      "request": "directory",
+      "count": 10,
+      "median_request_start_ms": 2318.352499991306,
+      "median_browser_response_ms": 923.0559999996331,
+      "median_gateway_elapsed_ms": 786.3964500000002
+    }
+  ],
+  "browser_groups": [
+    {
+      "viewport": "desktop",
+      "count": 40,
+      "p95_ready_ms": 7236.704499999998,
+      "p95_core_ms": 6421.010299999998,
+      "p95_core_response_ms": 1025.063399999999
+    },
+    {
+      "viewport": "phone",
+      "count": 40,
+      "p95_ready_ms": 4288.265400000004,
+      "p95_core_ms": 4062.516300000003,
+      "p95_core_response_ms": 1045.834600000002
+    }
+  ],
+  "runtime": {
+    "samples": 16,
+    "minimum_free_gib": 0.08539199829101562,
+    "median_free_gib": 0.5661201477050781,
+    "samples_below_0_3_gib": 4,
+    "median_process_cpu_percent": 69.15357296715278,
+    "median_event_loop_active_percent": 100.0
+  },
+  "limits": [
+    "Gateway duration is callback-to-finish, not SQL time or total browser response time.",
+    "High event-loop-active time is not equivalent to CPU saturation; synchronous diagnostic IO and host scheduling affect this run.",
+    "All closed-incomplete events are outside the matched session/core requests; they are not classified as user-visible request failures.",
+    "Low free memory describes this run only; cause of the earlier uninstrumented timeout remains unresolved.",
+    "No further local ten-browser iteration is inferred; inspect separate CI performance evidence."
+  ]
+}
