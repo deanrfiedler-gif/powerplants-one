@@ -192,7 +192,7 @@ function NewProjectForm({ sales }: { sales?: SalesCreation }) {
         className="business-card"
         onSubmit={async (e) => {
           e.preventDefault();
-          if (command.busy || sales?.blocked) return;
+          if (command.busy || sales?.blocked || savedProject) return;
           const fields = {
             id,
             title,
@@ -300,6 +300,7 @@ function NewProjectForm({ sales }: { sales?: SalesCreation }) {
             className="project-primary"
             disabled={
               command.busy ||
+              !!savedProject ||
               sales?.blocked ||
               !customer ||
               !site ||
