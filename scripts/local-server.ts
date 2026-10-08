@@ -64,6 +64,10 @@ const server = createServer((req, res) => {
     sendLoginPage(res, "ready", 200, true); return;
   }
   const requestId = ++proofRequest;
+  // Numeric correlation only in opt-in loopback diagnostics, on uncached API
+  // responses. Never include credentials, identity, payloads or cached assets.
+  if (proofDiagnosticsEnabled() && loginPath.startsWith("/api/v1/"))
+    res.setHeader("X-PPO-Proof-Request", String(requestId));
   const received = performance.now();
   const path = proofPath(req.url ?? "/other");
   proofEvent("http-received", { request_id: requestId, path, method: req.method === "GET" ? "GET" : req.method === "POST" ? "POST" : "other" });

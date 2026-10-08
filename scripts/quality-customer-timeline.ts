@@ -18,9 +18,15 @@ assert.ok(
     "control",
     "candidate-repeat",
     "candidate-confirm",
+    "server",
   ].includes(mode),
 );
-const root = "verification-evidence/customer-loading-diagnosis";
+const fixtureRoot = "verification-evidence/customer-loading-diagnosis";
+const root =
+  mode === "server"
+    ? "verification-evidence/customer-server-diagnosis"
+    : fixtureRoot;
+if (mode === "server") assert.equal(process.env.PPO_PROOF_DIAGNOSTICS, "1");
 await mkdir(root, { recursive: true });
 if (mode === "prepare") {
   const preparation = await qualityLoadFixture();
@@ -51,7 +57,9 @@ if (mode === "prepare") {
   );
   process.exit(0);
 }
-const baseline = JSON.parse(await readFile(`${root}/fixture.json`, "utf8"));
+const baseline = JSON.parse(
+  await readFile(`${fixtureRoot}/fixture.json`, "utf8"),
+);
 // This run diagnoses the retained build; it must not silently measure edited source.
 const compiledSource = "24d19b1f158efeb8ad97d62b50e516cbdac4d80e";
 assert.equal(
@@ -90,6 +98,7 @@ type NetworkRow = {
   method: string;
   type: string;
   start_ms: number;
+  proof_request_id?: number;
   response_ms?: number;
   finished_ms?: number;
   status?: number;
@@ -219,9 +228,13 @@ try {
               fromDiskCache?: boolean;
               fromServiceWorker?: boolean;
               timing?: unknown;
+              headers?: Record<string, string>;
             };
           }) => {
             const row = network.get(event.requestId);
+            const proofId = Object.entries(event.response.headers ?? {}).find(
+              ([name]) => name.toLowerCase() === "x-ppo-proof-request",
+            )?.[1];
             if (row)
               Object.assign(row, {
                 response_ms: (event.timestamp - navigationStart) * 1000,
@@ -229,6 +242,9 @@ try {
                 disk_cache: event.response.fromDiskCache ?? false,
                 service_worker: event.response.fromServiceWorker ?? false,
                 timing: event.response.timing,
+                ...(proofId && /^\d+$/.test(proofId)
+                  ? { proof_request_id: Number(proofId) }
+                  : {}),
               });
           };
           const finishedEvent = (event: {
@@ -318,6 +334,7 @@ try {
             );
             const settledAt = performance.now();
             const timeline = await page.evaluate(() => ({
+              time_origin_ms: performance.timeOrigin,
               clock:
                 "Browser Performance Timeline milliseconds from this navigation; CDP rows are relative to its Document request, Node readiness is measured separately.",
               captured_ms: performance.now(),
@@ -451,6 +468,8 @@ try {
           encoding: "utf8",
         }).trim(),
         compiled_source: compiledSource,
+        server_process_id: server.pid,
+        gateway_diagnostics: mode === "server",
         launcher_sha256: createHash("sha256")
           .update(await readFile("scripts/local-server.ts"))
           .digest("hex"),
@@ -476,6 +495,19 @@ try {
   );
   console.log(JSON.stringify(groups));
 } finally {
+  if (mode === "server") {
+    await writeFile(
+      `${root}/gateway.jsonl`,
+      await readFile(
+        `verification-evidence/transport-diagnostics/process-${server.pid}.jsonl`,
+      ),
+    ).catch((error) =>
+      console.error(
+        "Gateway diagnostic retention failed",
+        error instanceof Error ? error.name : "Unknown",
+      ),
+    );
+  }
   await Promise.all(browsers.map((b) => b.close()));
   server.kill();
   await closeDatabase();
