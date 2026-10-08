@@ -1,6 +1,7 @@
 import { test, expect, type Page, type Locator, type Request } from "@playwright/test";
 import { writeFile } from "node:fs/promises";
 import { keyActivate } from "../helpers/quality-keyboard";
+import { waitForSampleCoreResponse } from "../../scripts/quality-core-response";
 
 test.describe.configure({ timeout: 180000 });
 async function login(page: Page) {
@@ -11,11 +12,13 @@ async function login(page: Page) {
   expect(result.status()).toBe(200);
 }
 async function directory(page: Page, path: "/customers" | "/people") {
-  const pending = page.waitForResponse(r => new URL(r.url()).pathname === "/api/v1/crm/directory" && r.request().method() === "GET");
+  const pending = waitForSampleCoreResponse(page, "/api/v1/crm/directory");
+  void pending.catch(() => undefined);
   await page.goto(path);
   const response = await pending;
   expect(response.status()).toBe(200);
   const data = await response.json();
+  expect(new URL(response.url()).searchParams.get("kind")).toBe(path === "/customers" ? "organisations" : "people");
   await expect(page.getByRole("heading", { name: path === "/customers" ? "Organisations" : "People", exact: true })).toBeVisible();
   await expect(page.locator(".crm-directory-table tbody th a").first()).toBeAttached();
   return data as { items: { id: string; display_name: string }[] };
@@ -29,7 +32,8 @@ async function receive(page: Page, link: Locator, touch: boolean, keyboard = fal
   const href = await link.getAttribute("href");
   expect(href).toBeTruthy();
   const target = new URL(href!, page.url());
-  const pending = page.waitForResponse(r => new URL(r.url()).pathname === `/api/v1${target.pathname}/workspace` && r.request().method() === "GET");
+  const pending = waitForSampleCoreResponse(page, `/api/v1${target.pathname}/workspace`);
+  void pending.catch(() => undefined);
   await activate(page, link, touch, keyboard);
   const response = await pending;
   expect(response.status()).toBe(200);

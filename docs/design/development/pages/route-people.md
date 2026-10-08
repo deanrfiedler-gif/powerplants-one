@@ -1,4 +1,4 @@
-# Contact directory and detail — native receiving reference
+# Contact directory — native working reference
 
 Stable entry: `route:/people`. Scope: **CS-02**. Owner: Dean Fiedler.
 Source main: `25170bf83008727f005e36b5603841a7b9359027`. Route: `/people`.
@@ -6,25 +6,23 @@ Native implementation and adaptations are proposed for owner review; this is not
 
 ## Purpose and page type
 
-Find a canonical Person and maintain accurate contact information without inventing customer authority or consent.
+Find a permitted canonical Person or organisation, review its directory summary and open the selected record. Detailed corrections and reliance checks belong to the separate record workspace.
 
-r20 page type: **Register / worklist; Record detail**. Identity & channels, Relationships, Downstream reliance and Correction history. The Contacts directory continues to switch between People and Organisations.
+r20 page type: **Register / worklist**. `/people` shows People; the `/contacts` hub switches between People and Organisations. Identity, relationships, reliance and correction history belong to [Person detail](route-people-id.md).
 
 ## Desktop
 
-Use the current native PPO shell and padded content composition. Reuse PageHeader, RecordTabs/RecordPanel, Field/SelectField, ReadState, ErrorNotice and the existing command recovery controls. Keep source ownership, unknown/restricted states and exact record links visible. The shared shell retains header, search and global navigation; no standalone demo shell is copied.
-
-The native proposal receives the business views rather than the standalone drawer geometry. The owning page scrolls; horizontal scrolling is confined to the tab strip. Paired retained-source/native inspection and actual viewport evidence are recorded in the CS handover.
+Use the existing full-bleed CrmDirectory register with PageHeader, scoped search, saved views, columns, sortable table and pagination. Names open exact records; People affiliations open the related organisation. New opens the corresponding shared-record form. Keep shell navigation and Contacts hub view selection separately owned.
 
 ## Mobile
 
-Stack fields and record facts; let long names and unknown values wrap. Keep labelled save/recovery controls, visible focus and keyboard-operable tabs. Inspect 430, 390 and 320 CSS px and intermediate 768/1024 layouts. No information or required decision is hidden to make a screenshot fit.
+Use the existing readable record cards, labelled directory controls and phone taps. Preserve keyboard access, loading/error recovery and the same scoped query across 390/320 CSS px. Person correction controls belong to the receiving detail page.
 
 ## Sources, handovers and authority
 
 Person has no invented display reference, structured role taxonomy or purchasing authority. Interaction history is explicitly derived from permitted linked workflows because Activities do not link directly to Person. Restricted contacts and affiliations are not presented as absent.
 
-Incoming: exact canonical customer/Site/Person and permitted source records. Outgoing: exact source links, owned Activity follow-up and, for surveys, an immutable Reviewed receiving snapshot. Preserve canonical Facilities and their installed-versus-served equipment distinction.
+Incoming: the current permitted directory kind and optional department context. Outgoing: the exact selected Person or organisation and the appropriate New form. Downstream Activity, survey and correction handovers are owned by the receiving record pages.
 
 Reference: docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html
 

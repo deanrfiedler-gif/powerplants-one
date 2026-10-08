@@ -4914,7 +4914,7 @@
         {
           "id": "automatic-prefetch",
           "label": "Explicit record navigation",
-          "description": "Fresh compiled /customers and /people contexts, bounded request observation before activation; no automatic record prefetch. Existing saved/scoped views and navigation-safety fixtures remain separate."
+          "description": "Compiled /customers then /people in one context per viewport, bounded request observation before each activation; no automatic directory record prefetch. Separate single-browser Customers probe uses fresh contexts per viewport. Existing saved/scoped views and navigation-safety fixtures remain separate."
         }
       ],
       "implementation": [

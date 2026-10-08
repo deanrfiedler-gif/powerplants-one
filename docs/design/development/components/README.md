@@ -4,7 +4,7 @@
 
 **Owner:** Dean Fiedler · **Schema:** 1 · **Review:** Paired visual and device acceptance pending.
 
-The component catalogue extends the existing local development workspace at `/development/design-system`. It is backed by `../components.json`, these Markdown specifications and the actual runtime components. It contains 20 runnable examples, eleven host entries and nine reference-only patterns across ten categories, including the FI-07 exact-response, ES-04 estimate-review, ES-05 quotation-release, ES-06 response and ES-07 receiving/conversion hosts. These are coverage counts, not approval or proof that every application-specific variant has been migrated.
+The component catalogue extends the existing local development workspace at `/development/design-system`. It is backed by `../components.json`, these Markdown specifications and the actual runtime components. It contains 20 runnable examples, twelve host entries and nine reference-only patterns across ten categories, including the FI-07 exact-response, ES-04 estimate-review, ES-05 quotation-release, ES-06 response and ES-07 receiving/conversion hosts. These are coverage counts, not approval or proof that every application-specific variant has been migrated.
 
 ## Browsing and comparison
 
@@ -21,7 +21,7 @@ Runnable requires a code-owned renderer ID, declared states, a real application 
 | Family | Current real examples | Explicit limits |
 |---|---|---|
 | Foundations | Runtime tokens; Button and ButtonLink | Legacy scope overrides and tokens remain visible migration work |
-| Tables and grids | CRM Grid; estimating AreasEditor selection/edit table | No universal bulk-select or spreadsheet-cell editor is adopted |
+| Tables and grids | CRM Grid; estimating AreasEditor selection/edit table; real customer/contact directory host | No universal bulk-select or spreadsheet-cell editor is adopted |
 | Boards and cards | CRM Board; ForecastWorklist | Host permissions, pagination and saved commands remain integration concerns |
 | Gantt | ProjectsGantt, including List, programme, undated and loading cases | Editing/history callbacks are presentation-only; fixed catalogue clock |
 | Scheduling | PlannerBoard, AppointmentCard and the published-impact/resolution host | Readiness, concurrency and confirmation remain server/host checks |
@@ -55,7 +55,7 @@ The entire r22 board remains a retained source, including proposed future patter
 ## Adding or changing a component
 
 1. Identify the existing application implementation and source reference. Preserve scoped variants where their purpose differs.
-2. Add a stable record to `../components.json`, an entry in the code-owned example ID union and its renderer in `src/development/component-examples.tsx`. Fixtures belong in `component-fixtures.ts`; never use operational exports or guessed permissions.
+2. Add a stable record to `../components.json`. Runnable entries need a code-owned example ID and renderer in `src/development/component-examples.tsx`; Host examples instead bind actual implementations, owning pages and real host fixtures. Isolated fixtures belong in `component-fixtures.ts`; never use operational exports or guessed permissions.
 3. Provide component-specific states, keyboard rules, desktop/mobile behaviour, explicit limitations and current page-register keys. Do not infer a consumer merely because it is in the same module.
 4. Update the Markdown specification and the owning page guide in the same pull request. Keep filenames stable. Record proposed departures as gaps with expected/actual, action, priority and owner.
 5. Run `npm run studio:check`, type/lint/build, component tests and relevant existing application tests. Review a representative owning page when extracting presentation code. Run the browser catalogue checks in the repository's supported browser environment.

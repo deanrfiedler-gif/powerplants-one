@@ -41735,7 +41735,7 @@
           "section_id": "tasks",
           "title": "Workflow",
           "paragraphs": [
-            "Select a record name to open its details. On desktop, organisation and Site/Facility count links also open the related organisation. Use Tab and Enter or a phone tap; wait for the selected page to finish loading before acting."
+            "Select a record name to open its details. On desktop, a Person's organisation link opens that organisation. Use Tab and Enter or a phone tap; wait for the selected page to finish loading before acting."
           ],
           "steps": [
             "Find the Person in Contacts and open the detail.",
@@ -50994,7 +50994,7 @@
           "section_id": "tasks",
           "title": "Workflow",
           "paragraphs": [
-            "Select a record name to open its details. On desktop, organisation and Site/Facility count links also open the related organisation. Use Tab and Enter or a phone tap; wait for the selected page to finish loading before acting."
+            "Select a record name to open its details. On desktop, a Person's organisation link opens that organisation. In the Organisations view, Site/Facility count links also open the organisation. Use Tab and Enter or a phone tap; wait for the selected page to finish loading before acting."
           ],
           "steps": [
             "Find the Person in Contacts and open the detail.",
