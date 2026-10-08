@@ -80,6 +80,12 @@
       "head": "b3462c0ba8d4cbbfe17d1861c5b42fa8e863800f",
       "environment": "Compiled local synthetic app, Windows PostgreSQL16/Chrome154.0.8037.98/Playwright1.63; desktop 1440x1000 and phone 390x844. Exact source/run boundaries and artifact hashes in verification.json.",
       "review": "Independent automated source/evidence review; owner/device/visual acceptance pending."
+    },
+    "PHOTO": {
+      "path": "docs/testing/evidence/report-photo-inspection/README.md",
+      "head": "24d19b1f158efeb8ad97d62b50e516cbdac4d80e",
+      "environment": "Compiled local synthetic Windows PostgreSQL16/Chrome154/Playwright1.63; exact run/source boundaries and artifacts in verification.json.",
+      "review": "Independent automated source/evidence review; owner/device acceptance pending."
     }
   },
   "cases": [
@@ -499,14 +505,15 @@
         "S6",
         "FRESH",
         "OR",
-        "PQ"
+        "PQ",
+        "PHOTO"
       ],
       "technical_disposition": "Combined synthetic pass",
       "existing_evidence_scope": "Exactly 100 capture entries, 104 wire originals, lost acknowledgements including the photo, original receipt replay, changed-ID-payload refusal, interrupted finalisation and blocked-then-saved completion passed on both viewports.",
       "current_applicability": "Applicable within selected synthetic PP-01 boundary; no enterprise parent promotion",
-      "continued_validity_and_gap": "Later PQ UI continuation saves/submits all 100 captures, retains 104 originals after reload and reaches Service review with exact photo references on both viewports. The 30-local-dependency bound stays. Coordinator visual photo inspection is not implemented; current field download refusal is preserved.",
-      "fresh_verification_required": "Implement a scoped report-revision photo inspection action, then obtain actual owner/device observations; no general field access grant.",
-      "owner_next_action": "Implement a scoped report-revision photo inspection action, then obtain actual owner/device observations; no general field access grant.",
+      "continued_validity_and_gap": "Later PQ UI continuation saves/submits all 100 captures and retains 104 originals after reload. PHOTO adds exact revision photo inspection under current Service review authority; current field-download refusal and the 30-local-dependency bound remain. Actual owner/device observations remain open.",
+      "fresh_verification_required": "Obtain actual owner/device observations of the joined handoff and exact submitted-photo inspection; no general field access grant.",
+      "owner_next_action": "Obtain actual owner/device observations of the joined handoff and exact submitted-photo inspection; no general field access grant.",
       "human_acceptance": "Pending actual observations",
       "benefit": "Unmeasured",
       "current_execution": {
@@ -519,6 +526,12 @@
         "manifest": "docs/testing/evidence/product-quality-next/verification.json",
         "test_source": "b3462c0ba8d4cbbfe17d1861c5b42fa8e863800f",
         "application_source": "af34bbe5a36658b57d9749cba2212e26fb7de537"
+      },
+      "photo_inspection_execution": {
+        "result": "Passed within declared synthetic boundary",
+        "manifest": "docs/testing/evidence/report-photo-inspection/verification.json",
+        "source": "24d19b1f158efeb8ad97d62b50e516cbdac4d80e",
+        "selected_browser_source": "4102fc235beec194f4495ef82870b99f84510431"
       }
     },
     {

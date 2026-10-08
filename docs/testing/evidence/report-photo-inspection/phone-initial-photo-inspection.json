@@ -1,0 +1,27 @@
+{
+  "source_head": "4102fc235beec194f4495ef82870b99f84510431",
+  "captured_at": "2026-10-08T11:30:01.202Z",
+  "project": "mobile-chromium",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "report_id": "e734d4af-d35b-44ae-a533-0d12f5bf489f",
+  "revision_id": "37448507-7c42-4752-b96c-65dd954bad6b",
+  "attachment_id": "f471b10c-ed58-4887-9f09-ae19dfa70045",
+  "sha256": "5592bbfef6bb666a704e160b11a8418349fc90b3a3cb6683f01e6465674988a8",
+  "byte_count": 5213,
+  "current_reviewer_status": 200,
+  "technician_report_photo_status": 403,
+  "coordinator_field_photo_status": 403,
+  "review_state_unchanged": true,
+  "retained_review_input": true,
+  "identity_switch_cleared_preview": true,
+  "source_hashes": {
+    "src/reports/photos.ts": "ea517aed423afe9ec0840ae8294238ba1a8355da8873ed44f422ec440202e0cb",
+    "src/app/api/v1/reports/[id]/photo/route.ts": "6ce66b52eb241c9aec6b8da1a6aeaa882bb9ef365d689b22c8df18059279e5a2",
+    "src/components/report-photo.tsx": "4a06261dc80f7a3a1f56621d2ac9b1398bc04fbba680a216b81e89bc44171176",
+    "src/components/report-screens.tsx": "955e7082d0d6b5fd460d599bb06e42cb6e15c77b9bb031d73c4f8f664f041b71",
+    "tests/browser/report-photo.spec.ts": "1a6bd060e55b9396a670ab8daea7bd3219f1686b35a4f465cfedff2a51785690"
+  }
+}

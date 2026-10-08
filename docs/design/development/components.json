@@ -4809,6 +4809,87 @@
         }
       ],
       "review": null
+    },
+    {
+      "id": "report-photo",
+      "title": "Submitted report photo inspection",
+      "category": "Forms",
+      "module": "SV",
+      "purpose": "Inspect the exact submitted original under current Service review authority without changing review input or customer distribution.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "closed",
+          "label": "Closed",
+          "description": "No photo fetched until requested."
+        },
+        {
+          "id": "loading",
+          "label": "Opening original",
+          "description": "Bounded on-demand retrieval with status."
+        },
+        {
+          "id": "verified",
+          "label": "Verified original",
+          "description": "Exact snapshot hash and byte count; revision identified."
+        },
+        {
+          "id": "refused",
+          "label": "Unavailable or denied",
+          "description": "No retained image; retry preserves review wording."
+        },
+        {
+          "id": "mismatch",
+          "label": "Changed bytes",
+          "description": "Refuse a body different from the submitted snapshot."
+        },
+        {
+          "id": "cleanup",
+          "label": "Hide, refresh or identity change",
+          "description": "Abort retrieval and revoke temporary URL; keep surrounding review state."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/report-photo.tsx",
+          "symbol": "ReportPhoto"
+        }
+      ],
+      "dependencies": [
+        "src/components/report-photo.tsx",
+        "src/components/report-screens.tsx",
+        "src/reports/photos.ts",
+        "src/reports/context.ts",
+        "src/field/attachments.ts",
+        "docs/decisions/report-photo-inspection.md"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html",
+        "anchor": "",
+        "status": "Retained task reference; native visual acceptance pending"
+      },
+      "specification": "docs/design/development/components/report-photo.md",
+      "used_on": [
+        "route:/service/reports/[id]",
+        "scope:SV-06"
+      ],
+      "desktop": "Inline original preserves proportions; max available width and 70vh; one host scroll owner.",
+      "mobile": "Same labelled task at 390/320 CSS px; controls and caption wrap.",
+      "keyboard": "Native shared Inspect/Hide/Retry buttons and expanded state. Successful opening keeps focus; errors focus the alert. Keyboard retry returns focus to the still-mounted Hide control.",
+      "limitations": "Authenticated host fixture only; current Submitted revision UI. Historical endpoint retrieval is explicit but has no history inspector in this increment.",
+      "gaps": [
+        {
+          "id": "report-photo-native-acceptance",
+          "expected": "Owner-accepted desktop/phone composition and assistive-technology observations.",
+          "actual": "No accepted native paired images; synthetic execution is separate.",
+          "action": "Owner/device and screen-reader walkthrough.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
     }
   ]
 }

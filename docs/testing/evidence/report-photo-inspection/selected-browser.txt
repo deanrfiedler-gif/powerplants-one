@@ -1,0 +1,40 @@
+[WebServer] (node:41392) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.98"}
+
+Running 15 tests using 1 worker
+
+(node:43868) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[warm-up] 671 routes in 24685 ms, 0 unreachable. Slowest:
+  6541 ms  200  /development/design-system
+  2781 ms  200  /api/development/catalog
+  2521 ms  404  /api/development/reference
+  2257 ms  200  /development/page-register
+   329 ms  200  /calendar
+   111 ms  200  /customers
+   101 ms  200  /engineering/00000000-0000-4000-8000-000000000000/changes
+   101 ms  200  /service/work-orders
+    91 ms  200  /estimating/discovery/00000000-0000-4000-8000-000000000000
+    88 ms  200  /customers/00000000-0000-4000-8000-000000000000
+  ok  1 [warm-up] › tests\browser\warm-up.setup.ts:10:1 › warm every route once before the browser projects (24.8s)
+(node:43272) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  2 [desktop-chromium] › tests\browser\offline-completion-handoff.spec.ts:20:1 › large offline queue continues through online completion with all 100 original captures (57.8s)
+  ok  3 [desktop-chromium] › tests\browser\offline-completion-handoff.spec.ts:358:1 › online completion handoff preserves originals and unsaved text when current access or navigation fails (6.2s)
+  ok  4 [desktop-chromium] › tests\browser\report-photo.spec.ts:8:1 › Service photo inspection verifies exact bytes, preserves review input and clears protected previews (6.9s)
+  ok  5 [desktop-chromium] › tests\browser\reports.spec.ts:337:1 › P09 complete UI return, correction, partial acceptance, return proposal, controlled revisions and five exact responses (37.0s)
+  ok  6 [desktop-chromium] › tests\browser\reports.spec.ts:729:1 › P09 online submission refuses retained offline originals and recovers the same original through explicit sync (8.6s)
+  ok  7 [desktop-chromium] › tests\browser\reports.spec.ts:807:1 › FI07 native attendance acknowledgement, lost receipt, report reservation and owned clarification (21.7s)
+  ok  8 [desktop-chromium] › tests\browser\reports.spec.ts:975:1 › FI07 proposed Service reference and native report register comparison (4.1s)
+(node:20536) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  9 [mobile-chromium] › tests\browser\offline-completion-handoff.spec.ts:20:1 › large offline queue continues through online completion with all 100 original captures (56.6s)
+  ok 10 [mobile-chromium] › tests\browser\offline-completion-handoff.spec.ts:358:1 › online completion handoff preserves originals and unsaved text when current access or navigation fails (6.4s)
+  ok 11 [mobile-chromium] › tests\browser\report-photo.spec.ts:8:1 › Service photo inspection verifies exact bytes, preserves review input and clears protected previews (7.2s)
+  ok 12 [mobile-chromium] › tests\browser\reports.spec.ts:337:1 › P09 complete UI return, correction, partial acceptance, return proposal, controlled revisions and five exact responses (40.5s)
+  ok 13 [mobile-chromium] › tests\browser\reports.spec.ts:729:1 › P09 online submission refuses retained offline originals and recovers the same original through explicit sync (7.6s)
+  ok 14 [mobile-chromium] › tests\browser\reports.spec.ts:807:1 › FI07 native attendance acknowledgement, lost receipt, report reservation and owned clarification (22.0s)
+  ok 15 [mobile-chromium] › tests\browser\reports.spec.ts:975:1 › FI07 proposed Service reference and native report register comparison (3.9s)
+
+  15 passed (5.8m)

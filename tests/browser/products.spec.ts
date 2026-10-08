@@ -432,16 +432,33 @@ test("PD authoring preserves stale inputs and recovers a committed response loss
     .first()
     .fill("SYN browser recovery proof");
   let lost = false;
+  let confirmResponseLoss!: () => void;
+  let rejectResponseLoss!: (error: unknown) => void;
+  const responseLost = new Promise<void>((resolve, reject) => {
+    confirmResponseLoss = resolve;
+    rejectResponseLoss = reject;
+  });
+  void responseLost.catch(() => undefined);
   await page.route(`**/api/v1/products/${f.variant.id}`, async (route) => {
     if (route.request().method() === "POST" && !lost) {
       lost = true;
-      await route.fetch();
-      await route.abort("connectionreset");
+      try {
+        const committed = await route.fetch();
+        expect(committed.status()).toBe(200);
+        await route.abort("connectionreset");
+        confirmResponseLoss();
+      } catch (error) {
+        rejectResponseLoss(error);
+        throw error;
+      }
     } else await route.continue();
   });
   await page
     .getByRole("button", { name: "Save draft successor", exact: true })
     .click();
+  // Pending recovery UI also renders while saving. Reload only after the
+  // intended committed-response-loss precondition has actually happened.
+  await responseLost;
   await expect(
     page.getByRole("heading", { name: "Outcome unknown" }),
   ).toBeVisible();

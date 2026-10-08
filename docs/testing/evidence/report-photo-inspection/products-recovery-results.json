@@ -1,0 +1,47 @@
+{
+  "source_head": "0e5fa24f5278e175c3123dde28750b936b9475ca",
+  "compiled_application": "24d19b1f158efeb8ad97d62b50e516cbdac4d80e",
+  "stats": {
+    "startTime": "2026-10-08T12:18:47.362Z",
+    "duration": 123812.15400000001,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "title": "warm every route once before the browser projects",
+      "project": "warm-up",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 34230,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "title": "PD authoring preserves stale inputs and recovers a committed response loss without duplicate revision",
+      "project": "desktop-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 1787,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "title": "PD authoring preserves stale inputs and recovers a committed response loss without duplicate revision",
+      "project": "mobile-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 1592,
+          "retry": 0
+        }
+      ]
+    }
+  ]
+}

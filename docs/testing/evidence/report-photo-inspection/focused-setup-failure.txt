@@ -1,0 +1,106 @@
+[WebServer] (node:41508) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.98"}
+
+Running 3 tests using 1 worker
+
+(node:44140) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[warm-up] 671 routes in 18788 ms, 0 unreachable. Slowest:
+  6587 ms  200  /development/design-system
+  2795 ms  200  /development/page-register
+  2197 ms  200  /api/development/catalog
+  2149 ms  404  /api/development/reference
+   343 ms  200  /calendar
+    73 ms  200  /api/v1/health
+    48 ms  401  /api/v1/activities
+    38 ms  200  /service/work-orders
+    35 ms  200  /
+    27 ms  200  /customers/00000000-0000-4000-8000-000000000000
+  ok 1 [warm-up] › tests\browser\warm-up.setup.ts:10:1 › warm every route once before the browser projects (18.9s)
+(node:16352) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [desktop-chromium] › tests\browser\report-photo.spec.ts:8:1 › Service photo inspection verifies exact bytes, preserves review input and clears protected previews (2.4s)
+(node:44216) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 [mobile-chromium] › tests\browser\report-photo.spec.ts:8:1 › Service photo inspection verifies exact bytes, preserves review input and clears protected previews (2.0s)
+
+
+  1) [desktop-chromium] › tests\browser\report-photo.spec.ts:8:1 › Service photo inspection verifies exact bytes, preserves review input and clears protected previews
+
+    Error: {"code":"ResourceConflict","message":"SYN Riley Technician: reserved 2030-09-11T00:00:00.000Z to 2030-09-11T02:00:00.000Z (UTC). Original booking retained.","field_errors":[{"field":"crew","message":"SYN Riley Technician: reserved 2030-09-11T00:00:00.000Z to 2030-09-11T02:00:00.000Z (UTC). Original booking retained."}],"correlation_id":"a9fc1c54-dd26-4426-a723-d557e59172d3","retryable":false}
+
+    expect(received).toBeTruthy()
+
+    Received: false
+
+       at ..\helpers\offline-browser.ts:28
+
+      26 |   });
+      27 |   const data = await r.json();
+    > 28 |   expect(r.ok(), JSON.stringify(data)).toBeTruthy();
+         |                                        ^
+      29 |   return data;
+      30 | }
+      31 | export async function login(request: APIRequestContext, profile: string) {
+        at call (<checkout>\tests\helpers\offline-browser.ts:28:40)
+        at prepareFieldAppointment (<checkout>\tests\helpers\field-http.ts:59:3)
+        at prepareIsolatedFieldAppointment (<checkout>\tests\helpers\isolated-field-http.ts:103:15)
+        at prepared (<checkout>\tests\helpers\offline-browser.ts:36:17)
+        at <checkout>\tests\browser\report-photo.spec.ts:13:17
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\photo-focused\report-photo-Service-photo-0e1d1-d-clears-protected-previews-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\photo-focused\report-photo-Service-photo-0e1d1-d-clears-protected-previews-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    tmp\photo-focused\report-photo-Service-photo-0e1d1-d-clears-protected-previews-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\photo-focused\report-photo-Service-photo-0e1d1-d-clears-protected-previews-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-chromium] › tests\browser\report-photo.spec.ts:8:1 › Service photo inspection verifies exact bytes, preserves review input and clears protected previews
+
+    Error: {"code":"ResourceConflict","message":"SYN Riley Technician: reserved 2030-09-12T00:00:00.000Z to 2030-09-12T02:00:00.000Z (UTC). Original booking retained.","field_errors":[{"field":"crew","message":"SYN Riley Technician: reserved 2030-09-12T00:00:00.000Z to 2030-09-12T02:00:00.000Z (UTC). Original booking retained."}],"correlation_id":"cda08389-610a-4445-88d2-603c4367b308","retryable":false}
+
+    expect(received).toBeTruthy()
+
+    Received: false
+
+       at ..\helpers\offline-browser.ts:28
+
+      26 |   });
+      27 |   const data = await r.json();
+    > 28 |   expect(r.ok(), JSON.stringify(data)).toBeTruthy();
+         |                                        ^
+      29 |   return data;
+      30 | }
+      31 | export async function login(request: APIRequestContext, profile: string) {
+        at call (<checkout>\tests\helpers\offline-browser.ts:28:40)
+        at prepareFieldAppointment (<checkout>\tests\helpers\field-http.ts:59:3)
+        at prepareIsolatedFieldAppointment (<checkout>\tests\helpers\isolated-field-http.ts:103:15)
+        at prepared (<checkout>\tests\helpers\offline-browser.ts:36:17)
+        at <checkout>\tests\browser\report-photo.spec.ts:13:17
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\photo-focused\report-photo-Service-photo-0e1d1-d-clears-protected-previews-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\photo-focused\report-photo-Service-photo-0e1d1-d-clears-protected-previews-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    tmp\photo-focused\report-photo-Service-photo-0e1d1-d-clears-protected-previews-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\photo-focused\report-photo-Service-photo-0e1d1-d-clears-protected-previews-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop-chromium] › tests\browser\report-photo.spec.ts:8:1 › Service photo inspection verifies exact bytes, preserves review input and clears protected previews
+    [mobile-chromium] › tests\browser\report-photo.spec.ts:8:1 › Service photo inspection verifies exact bytes, preserves review input and clears protected previews
+  1 passed (40.3s)

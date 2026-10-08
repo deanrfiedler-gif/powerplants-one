@@ -8,6 +8,8 @@ Personal prototype of an integrated business operations platform for Powerplants
 
 This repository is Dean's personal prototype. It contains the planning foundation, source references and development backlog. It now contains a local synthetic application with customer, contact, site, equipment, intake, owned follow-up and controlled work-order screens. P12 isolated recovery is merged with reviewed source and actual-main evidence. The written PT-22 synthetic restore procedure passed; Step 6's bounded written PT-28 synthetic procedure has passed; full PT-30/PP-01 and independent owner/device acceptance remain outstanding. Company ownership, production approval and external-system write authority are not implied.
 
+The separate [Service photo inspection increment](docs/testing/evidence/report-photo-inspection/README.md) proves exact submitted-photo review on desktop and phone while preserving unfinished decisions, original download permissions and private output boundaries. Customers page performance and actual owner/device acceptance remain open.
+
 ## Start here
 
 Current acceptance work: [connected customer journey walkthrough](docs/delivery/integrated-journey-owner-walkthrough.md), [Field Work prerequisite ledger](docs/testing/field-integrated-acceptance-ledger.md), [Field owner walkthrough](docs/delivery/field-integrated-owner-walkthrough.md) and [benefit measurement](docs/testing/field-benefit-measurement.md). Fresh verification, human observations and benefits remain separately recorded.

@@ -1,0 +1,28 @@
+[WebServer] (node:26424) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.98"}
+
+Running 3 tests using 1 worker
+
+(node:21100) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[warm-up] 671 routes in 19039 ms, 0 unreachable. Slowest:
+  4876 ms  200  /development/design-system
+  3382 ms  200  /api/development/catalog
+  2609 ms  404  /api/development/reference
+  2507 ms  200  /development/page-register
+   366 ms  200  /calendar
+    63 ms  401  /api/v1/activities
+    59 ms  200  /api/v1/health
+    43 ms  200  /service/work-orders
+    35 ms  200  /engineering/commissioning/results
+    34 ms  200  /engineering/commissioning/packages/00000000-0000-4000-8000-000000000000
+  ok 1 [warm-up] › tests\browser\warm-up.setup.ts:10:1 › warm every route once before the browser projects (19.1s)
+(node:32016) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 [desktop-chromium] › tests\browser\report-photo.spec.ts:8:1 › Service photo inspection verifies exact bytes, preserves review input and clears protected previews (9.6s)
+(node:23276) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [mobile-chromium] › tests\browser\report-photo.spec.ts:8:1 › Service photo inspection verifies exact bytes, preserves review input and clears protected previews (9.5s)
+
+  3 passed (52.7s)

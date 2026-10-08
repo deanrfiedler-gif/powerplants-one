@@ -25,6 +25,7 @@ import { Button } from "./ui/button";
 import { useRecoverableCommand } from "../shared/ui/use-recoverable-command";
 import type { JournalEntry } from "../shared/lib/command-journal";
 import { useUnsavedChanges } from "./record-ui";
+import { ReportPhoto } from "./report-photo";
 type Report = Awaited<ReturnType<typeof readReport>>["items"][number];
 type Presentation = {
   id: string;
@@ -291,7 +292,7 @@ export function ReportListScreen() {
     </div>
   );
 }
-function ReviewForm({ r, reload }: { r: Report; reload: () => void }) {
+function ReviewForm({ r, reload, available }: { r: Report; reload: () => void; available: boolean }) {
   const c = useCommand(),
     v = r.revisions[0],
     [decision, setDecision] = useState("Approved"),
@@ -355,6 +356,10 @@ function ReviewForm({ r, reload }: { r: Report; reload: () => void }) {
               </div>
             ))}
           </dl>
+          {x.kind === "Photo" && (() => {
+            const attachment = v.snapshot.attachments.find((a: { id: string }) => a.id === x.payload.attachment_id);
+            return attachment ? <ReportPhoto available={available} reportId={r.id} revisionId={v.id} revision={v.revision} attachment={attachment} caption={String(x.payload.caption ?? "")} /> : <p>The submitted photo reference is unavailable. Retain this entry and resolve it before review.</p>;
+          })()}
           <Input
             label={`Entry ${i + 1} decision`}
             value={x.decision}
@@ -1013,7 +1018,7 @@ export function ReportScreen({ id }: { id: string }) {
             )}
           </section>
           {r.status === "Submitted" && r.can_review && (
-            <ReviewForm key={r.version} r={r} reload={reload} />
+            <ReviewForm key={r.version} r={r} reload={reload} available={!resource.loading && !resource.error} />
           )}
           {r.reviews.map(
             (v: {

@@ -1,0 +1,58 @@
+{
+  "source_commit": "24d19b1f158efeb8ad97d62b50e516cbdac4d80e",
+  "stats": {
+    "startTime": "2026-10-08T11:35:41.285Z",
+    "duration": 52727.172999999995,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "title": "warm every route once before the browser projects",
+      "file": "warm-up.setup.ts",
+      "project": "warm-up",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 19143,
+          "retry": 0,
+          "start_time": "2026-10-08T11:35:51.172Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "Service photo inspection verifies exact bytes, preserves review input and clears protected previews",
+      "file": "report-photo.spec.ts",
+      "project": "desktop-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 9636,
+          "retry": 0,
+          "start_time": "2026-10-08T11:36:11.614Z",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "Service photo inspection verifies exact bytes, preserves review input and clears protected previews",
+      "file": "report-photo.spec.ts",
+      "project": "mobile-chromium",
+      "expected_status": "passed",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 9487,
+          "retry": 0,
+          "start_time": "2026-10-08T11:36:23.192Z",
+          "errors": []
+        }
+      ]
+    }
+  ]
+}
