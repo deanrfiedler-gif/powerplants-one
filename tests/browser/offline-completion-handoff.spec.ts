@@ -214,18 +214,20 @@ test("large offline queue continues through online completion with all 100 origi
       exact: true,
     });
     await dialog
-      .getByLabel("Short note", { exact: true })
+      .getByRole("textbox", { name: "Short note", exact: true })
       .fill("SYN retain my note when the submitted report arrives");
     releaseSubmission();
     await expect(
       dialog.getByRole("button", { name: "Start work", exact: true }),
     ).toBeDisabled();
-    await expect(dialog.getByLabel("Short note", { exact: true })).toHaveValue(
-      "SYN retain my note when the submitted report arrives",
-    );
-    await expect(dialog.getByRole("status")).toContainText(
-      "evidence is frozen",
-    );
+    await expect(
+      dialog.getByRole("textbox", { name: "Short note", exact: true }),
+    ).toHaveValue("SYN retain my note when the submitted report arrives");
+    await expect(
+      dialog
+        .getByRole("status")
+        .filter({ hasText: "This attendance's evidence is frozen." }),
+    ).toContainText("evidence is frozen");
     page.once("dialog", (warning) => warning.accept());
     await dialog.getByRole("button", { name: "Cancel", exact: true }).click();
     await expect(dialog).toHaveCount(0);
