@@ -69,6 +69,11 @@
       "sha256": "022899bdc4a3647e635afabf5c5d9c4526487cd646ba0d4f1eb81552360bdf2c"
     },
     {
+      "path": "contacts-browser-results.json",
+      "bytes": 8294,
+      "sha256": "12f227b5b48ccfb0fc0dc44231ea70b2efbf277b0b9944cc24a68115df6a3810"
+    },
+    {
       "path": "desktop-completion-handoff.json",
       "bytes": 16893,
       "sha256": "88fa95e28977401341545d58cd3557763d1707c16c863138f419262da736e236"
@@ -217,6 +222,21 @@
       "path": "quality-build-final.txt",
       "bytes": 26625,
       "sha256": "81d645d1083e1c90cec9f25269b4dcfdabec838911b6bd7610c8fb0ab3d0518f"
+    },
+    {
+      "path": "quality-contacts-browser.txt",
+      "bytes": 4516,
+      "sha256": "d2a98efa6b2aae9febf23db5d73d69e2cd434f19b61a9f8149cfc5d760ddda5f"
+    },
+    {
+      "path": "quality-contacts-build.txt",
+      "bytes": 180,
+      "sha256": "505bac6e1a89761938e227dd0b6c74fc211282af8554f57ed87c4b84f3b14f9f"
+    },
+    {
+      "path": "quality-contacts-model.txt",
+      "bytes": 8126,
+      "sha256": "1c85cd66221f968dc10f18acfd7eb95e61d2bbba1d3ed5a0423170bb02c3e5c6"
     },
     {
       "path": "quality-db.txt",
@@ -396,5 +416,13 @@
     "foundation_parent_ids": 78,
     "studio_reviews_pending": 350,
     "studio_stale": 0
+  },
+  "contacts_contract_check": {
+    "source_application_commit": "cd8714c52257952acb3bf1264b2db34330b25b72",
+    "scope": "Two reviewed living pins; issued HTML and historical evidence unchanged",
+    "html_sha256": "aa97680dadf459aa6fbeaf39c761df124adf6737fb68c62b106589c38eac9a52",
+    "model_groups_passed": 103,
+    "browser_groups_passed": 62,
+    "browser_groups_failed": 0
   }
 }
