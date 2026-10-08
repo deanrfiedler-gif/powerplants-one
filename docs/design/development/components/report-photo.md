@@ -10,7 +10,7 @@ States: closed without a fetch; opening with a spoken status; verified original 
 
 ## Desktop
 
-Desktop and phone retain one page scroll owner. The image preserves its proportions, fits the available width and is bounded to 70vh; caption and controls wrap. Inspect/Hide/Retry are shared secondary buttons with native keyboard activation. The button declares expanded state and controls the inline region, which introduces no modal focus trap. A successful opening keeps focus on the control; an error focuses the shared alert. Keyboard retry returns focus to the still-mounted Hide control as Retry is removed. The host browser test is the runnable fixture; there is no isolated business-session-free catalogue example.
+Desktop and phone retain one page scroll owner. The image preserves its proportions, fits the available width without browser-default inline figure gutters and is bounded to 70vh; caption and controls wrap. Inspect/Hide/Retry are shared secondary buttons with native keyboard activation. The button declares expanded state and controls the inline region, which introduces no modal focus trap. A successful opening keeps focus on the control; an error focuses the shared alert. Keyboard retry returns focus to the still-mounted Hide control as Retry is removed. The host browser test is the runnable fixture; there is no isolated business-session-free catalogue example.
 
 ## Mobile
 

@@ -98,7 +98,7 @@ function PhotoImage({
         </>
       )}
       {state.kind === "ready" && (
-        <figure>
+        <figure style={{ marginInline: 0 }}>
           {/* Exact protected original: keep it out of the public image optimiser. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img

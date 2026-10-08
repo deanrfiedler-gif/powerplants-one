@@ -150,6 +150,18 @@ test("Service photo inspection verifies exact bytes, preserves review input and 
     ),
   ).toBe(true);
   await page.screenshot({ path: info.outputPath("submitted-photo.png") });
+  if (info.project.name.startsWith("mobile")) {
+    await page.setViewportSize({ width: 320, height: 844 });
+    await expect(image).toBeVisible();
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
+    await photo.scrollIntoViewIfNeeded();
+    await page.screenshot({ path: info.outputPath("submitted-photo-320.png") });
+    await page.setViewportSize({ width: 390, height: 844 });
+  }
   await photo
     .getByRole("button", { name: "Hide submitted photo", exact: true })
     .click();
