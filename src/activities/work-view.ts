@@ -1,6 +1,7 @@
 // Presentation rules for My Work. Pure: no I/O and no authority. The server read
 // decides what is visible; these functions only classify and label what it returned.
 import { addDays, localDateTime, utcFromLocal } from "../scheduling/time";
+import { formatCivilDay, formatDate, formatDateTime, formatRange, formatTime } from "../shell/date-format";
 
 export const WORK_TIMEZONE = "Australia/Brisbane";
 export const activityTypes = [
@@ -61,18 +62,11 @@ export function dayDifference(from: string, to: string) {
       86400000,
   );
 }
-// Built from the civil time rather than a locale pattern, so Node and every browser agree.
-const clock = (iso: string, zone = WORK_TIMEZONE) => {
-  const [hour, minute] = localDateTime(iso, zone).slice(11).split(":");
-  const h = Number(hour);
-  return `${h % 12 || 12}:${minute} ${h < 12 ? "am" : "pm"}`;
-};
-// Fixed month names: ICU versions disagree on "Sep" and "Sept" for en-AU.
+// S6: 24-hour times and dates with the year, from the shared formatter. A dense list states the
+// zone once in its header, so these two carry none.
+const clock = (iso: string, zone = WORK_TIMEZONE) => formatTime(iso, zone);
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const shortDay = (iso: string, zone = WORK_TIMEZONE) => {
-  const [, month, day] = localDateTime(iso, zone).slice(0, 10).split("-");
-  return `${Number(day)} ${months[Number(month) - 1]}`;
-};
+const shortDay = (iso: string, zone = WORK_TIMEZONE) => formatDate(iso, zone);
 export const clockTime = clock;
 export const shortDate = shortDay;
 
@@ -80,6 +74,8 @@ export type Timing = {
   tone: "overdue" | "attention" | "normal";
   caption: string | null;
   value: string;
+  // Relative urgency keeps the actual date beside it: "35 days overdue · due 4 Sep 2026".
+  detail?: string;
 };
 // "Due by" is a task deadline and "Starts at" an appointment start. A date-only task shows its
 // day and never an invented time.
@@ -98,6 +94,7 @@ export function timing(a: Timed, now: string, zone = WORK_TIMEZONE): Timing {
         tone: "overdue",
         caption: null,
         value: `${days} day${days === 1 ? "" : "s"} overdue`,
+        detail: `due ${shortDay(due, zone)}`,
       };
     return a.starts_at
       ? { tone: "overdue", caption: "Overdue · ended", value: clock(due, zone) }
@@ -130,18 +127,18 @@ export function timing(a: Timed, now: string, zone = WORK_TIMEZONE): Timing {
   };
 }
 
-// One sentence for when an activity happens, for details and editors.
+// One sentence for when an activity happens, for details and editors. It stands alone, so a
+// time carries its zone and offset (S6).
 export function whenText(
   a: Pick<Timed, "due_at" | "due_needed" | "due_date_only" | "starts_at">,
   zone = WORK_TIMEZONE,
 ) {
   if (a.due_needed || !a.due_at) return "Date needed";
-  const stamp = (iso: string) => `${shortDay(iso, zone)}, ${clock(iso, zone)}`;
   if (a.starts_at)
-    return `${stamp(a.starts_at)} to ${clock(a.due_at, zone)} (${durationLabel(durationMinutes(a))})`;
+    return `${formatRange(a.starts_at, a.due_at, zone)} (${durationLabel(durationMinutes(a))})`;
   return a.due_date_only
     ? `Due ${shortDay(a.due_at, zone)} (no set time)`
-    : `Due by ${stamp(a.due_at)}`;
+    : `Due ${formatDateTime(a.due_at, zone)}`;
 }
 export function durationMinutes(a: Pick<Timed, "starts_at" | "due_at">) {
   return a.starts_at && a.due_at
@@ -195,21 +192,24 @@ export const dayParts = (day: string) => ({
   date: Number(day.slice(8)),
   month: months[Number(day.slice(5, 7)) - 1],
 });
-// "21 – 27 Sep", or "28 Sep – 4 Oct" when the week crosses a month.
+// "21–27 Sep 2026", "28 Sep – 4 Oct 2026", or both years when the week crosses one (S6). The
+// agenda's short day chips rely on this header for their month and year.
 export function weekLabel(week: string[]) {
   const a = dayParts(week[0]),
-    b = dayParts(week[6]);
-  return a.month === b.month ? `${a.date} – ${b.date} ${b.month}` : `${a.date} ${a.month} – ${b.date} ${b.month}`;
+    b = dayParts(week[6]),
+    yearA = week[0].slice(0, 4),
+    yearB = week[6].slice(0, 4);
+  if (yearA !== yearB) return `${formatCivilDay(week[0])} – ${formatCivilDay(week[6])}`;
+  return a.month === b.month
+    ? `${a.date}–${b.date} ${b.month} ${yearB}`
+    : `${a.date} ${a.month} – ${b.date} ${b.month} ${yearB}`;
 }
 export function agendaDayLabel(day: string, today: string) {
   const p = dayParts(day);
   return day === today ? "Today" : `${p.weekday} ${p.date} ${p.month}`;
 }
-// The agenda's narrow time column uses the 24-hour clock of mockup r07 ("9:30", "14:30").
-const clock24 = (iso: string, zone = WORK_TIMEZONE) => {
-  const [hour, minute] = localDateTime(iso, zone).slice(11).split(":");
-  return `${Number(hour)}:${minute}`;
-};
+// The agenda's narrow time column uses the same 24-hour clock ("09:30", "14:30").
+const clock24 = clock;
 export type AgendaSlot = { kind: "appointment" | "deadline" | "anytime"; label: string; spoken: string };
 // "By" marks a deadline, a bare time a booked appointment, and a date-only task has no time at
 // all: it is never given an invented midnight.
@@ -228,18 +228,8 @@ export function greeting(now: string, zone = WORK_TIMEZONE) {
   const hour = Number(localDateTime(now, zone).slice(11, 13));
   return hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
 }
-// Assembled from parts: ICU versions differ on whether en-AU puts a comma after the weekday.
-export function longDate(now: string, zone = WORK_TIMEZONE) {
-  const parts = new Intl.DateTimeFormat("en-AU", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    timeZone: zone,
-  }).formatToParts(new Date(now));
-  const get = (type: string) => parts.find((p) => p.type === type)!.value;
-  return `${get("weekday")}, ${get("day")} ${get("month")} ${get("year")}`;
-}
+// "Fri 9 Oct 2026": the S6 date with its weekday, for page headings where people plan by day.
+export const longDate = (now: string, zone = WORK_TIMEZONE) => formatDate(now, zone, { weekday: true });
 export const firstName = (displayName: string) => {
   const parts = displayName.trim().split(/\s+/);
   // Synthetic identities are named "SYN Coordinator"; greet by the distinguishing word.

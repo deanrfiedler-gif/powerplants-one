@@ -80,7 +80,7 @@ export function BusinessSession({ children, hosted = false }: { children: React.
   const initials = accountInitials(p?.display_name);
   const closeAccount = () => { setShowIdentity(false); document.getElementById(hosted ? "hosted-account-toggle" : "identity-toggle")?.focus(); };
   const accountTitle = <div className="ppo-panel-titlebar"><h2>Account</h2><button className="ppo-top-action ppo-account-close" aria-label="Close account" onClick={closeAccount}><ShellIcon name="close" /></button></div>;
-  const accountFooter = <footer className="ppo-panel-footer"><span className="ppo-preview-label">Powerplants One · r17</span></footer>;
+  const accountFooter = <footer className="ppo-panel-footer"><span className="ppo-preview-label">{shell.development ? "Powerplants One · r17" : "Powerplants One"}</span></footer>;
   async function select() {
     if (hosted) return;
     lockOtherBusinessViews();

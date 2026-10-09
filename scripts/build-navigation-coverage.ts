@@ -103,7 +103,7 @@ await writeFile(
     "",
     "Specific child routes take precedence. Fertigation selects Specialist configurations; Engineering materials, changes and commissioning retain their own destination. Programme view is consumed by the project schedule and supplies a return to its chooser. Sales task drawers keep Tasks selected; People/Organisation details select Contacts in Sales.",
     "",
-    "More retains My Work for Sales, People, Organisations, Sites, Facilities, Equipment, My jobs, Priva Fertigation, Approvals & handovers, Integrations & recovery and local Foundation checks when permitted. Documents and Settings remain withheld without general landings. The catalogue includes Blinds for existing Screen Systems context; no geometry route, calculation or schema is added. Context-only symbols do not manufacture More entries.",
+    "More retains My Work for Sales, People, Organisations, Sites, Facilities, Equipment, My jobs, Priva Fertigation, Reviews & handovers, Integrations & recovery and local Foundation checks when permitted. Documents and Settings remain withheld without general landings. The catalogue includes Blinds for existing Screen Systems context; no geometry route, calculation or schema is added. Context-only symbols do not manufacture More entries.",
     "",
     "Full departments: Sales; Estimating & Quotation; Engineering & Design Control; Projects & Commercial Delivery; Service Operations; Supply Chain Management; Finance & Commercial Controls.",
     "",

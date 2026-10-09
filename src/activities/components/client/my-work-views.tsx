@@ -1,11 +1,12 @@
 "use client";
 import Link from "next/link";
+import { formatTimestamp } from "../../../shell/date-format";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { api, ErrorNotice, isDenied, type Failure } from "../../../components/business-ui";
 import { actionsQuery, criteriaSearch, defaultCriteria } from "../../work-criteria";
 import type { listWork, readWorkWaiting, WorkRow } from "../../work-overview";
-import { activityTypeLabels, activityTypes, clockTime, shortDate, WORK_TIMEZONE } from "../../work-view";
+import { activityTypeLabels, activityTypes, shortDate, WORK_TIMEZONE } from "../../work-view";
 import type { WorkViewCriteria } from "../../work-views";
 import { ActivityRow, PanelState, useWorkDialogs } from "./my-work-list";
 import { followUpLabel, useCriteria } from "./my-work-overview";
@@ -16,7 +17,7 @@ import { Icon, Menu, Tag, useWorkResource } from "./my-work-ui";
 type Work = Awaited<ReturnType<typeof listWork>>;
 type Waiting = Awaited<ReturnType<typeof readWorkWaiting>>;
 
-function PageHead({ title, lede, children }: { title: string; lede: string; children?: React.ReactNode }) {
+export function PageHead({ title, lede, children }: { title: string; lede: string; children?: React.ReactNode }) {
   return (
     <header className="mw-intro mw-intro-view">
       <div>
@@ -28,11 +29,11 @@ function PageHead({ title, lede, children }: { title: string; lede: string; chil
     </header>
   );
 }
-function Foot({ observed, stale, note }: { observed?: string; stale: boolean; note: string }) {
+export function Foot({ observed, stale, note }: { observed?: string; stale: boolean; note: React.ReactNode }) {
   return (
     <footer className="mw-foot">
       <span>
-        Synthetic demo data{observed && ` · Updated ${clockTime(observed, WORK_TIMEZONE)}${stale ? " (not current)" : ""}`}
+        Synthetic demo data{observed && ` · Updated ${formatTimestamp(observed, WORK_TIMEZONE)}${stale ? " (not current)" : ""}`}
       </span>
       <span>{note}</span>
     </footer>
@@ -367,8 +368,8 @@ export function MyWorkWaiting() {
       )}
       <section className="mw-panel mw-panel-quiet" aria-label="Sources">
         <p className="mw-panel-note">
-          Shown here: Service requests waiting for information, with their owned follow-up, and Engineering packages with a recorded blocker. Sales records no waiting request of its own
-          yet, so supplier and customer chases appear as ordinary activities under My actions.
+          Service requests waiting for information and engineering packages with a blocker appear here. Waiting on a customer or supplier in Sales? Track it as an activity in{" "}
+          <Link href="/work/actions">My actions</Link>.
         </p>
       </section>
       <Foot observed={read.data?.observed_at} stale={read.stale || !!read.error} note={c.criteria.owner === "mine" ? "My follow-ups" : "Everyone I can see"} />

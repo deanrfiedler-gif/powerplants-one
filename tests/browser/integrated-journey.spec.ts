@@ -442,9 +442,9 @@ test("IJ-01 one Lead continues through exact quotation, Project receiving and an
       project,
     );
     await page
-      .getByLabel("Purpose / summary", { exact: true })
+      .getByLabel("What needs doing?", { exact: true })
       .fill("SYN Review an additional growing area after delivery receiving");
-    await page.getByLabel("Due date still needed", { exact: true }).uncheck();
+    await page.getByLabel("No due date yet", { exact: true }).uncheck();
     await page
       .getByLabel("Due date and time", { exact: true })
       .fill("2031-10-09T09:00");

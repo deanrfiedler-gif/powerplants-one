@@ -7655,7 +7655,7 @@
       "summary": "This page address exists in the inspected application source. Open it from a running app using an identity with the required access.",
       "path": "/work/[id]",
       "source_paths": [
-        "src/app/(business)/work/[id]/page.tsx"
+        "src/app/(business)/work/(workspace)/[id]/page.tsx"
       ],
       "guide_key": "guide.page.work.id",
       "design_path": "docs/design/development/pages/route-work-id.md",
@@ -7694,7 +7694,7 @@
       "summary": "This page address exists in the inspected application source. Open it from a running app using an identity with the required access.",
       "path": "/work/new",
       "source_paths": [
-        "src/app/(business)/work/new/page.tsx"
+        "src/app/(business)/work/(workspace)/new/page.tsx"
       ],
       "guide_key": "guide.page.work.new",
       "design_path": "docs/design/development/pages/route-work-new.md",

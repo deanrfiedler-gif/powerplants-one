@@ -102,11 +102,12 @@ test("the phone overview is one page: header, five-cell bar, Quick Actions, atte
   await expect(bar.getByRole("link", { name: "Activities", exact: true })).toHaveAttribute("href", `/calendar?day=${scenario.slots.day}&scope=sales&department=sales`);
   await expect(bar.getByRole("link", { name: "Contacts", exact: true })).toHaveAttribute("href", "/contacts?department=sales");
 
-  // Quick Actions: four icon tiles in order, each named for assistive technology and nothing to read on
-  // screen. This identity holds no mail access, so that tile is a locked image, not a link; no unread
-  // number is shown to anyone, because the mailbox records no read state.
-  expect(await page.locator(".mw-tile").evaluateAll((tiles) => tiles.map((t) => t.getAttribute("aria-label")))).toEqual(["Emails: outside your current access", "Leads", "Map", "Insights", "Tasks"]);
-  expect((await page.locator(".mw-tiles").innerText()).trim()).toBe("");
+  // Quick Actions: five tiles in order, each with a visible label (phase 00 batch 2). This identity holds
+  // no mail access, so that tile is a locked image, not a link, named for its access; no unread number is
+  // shown to anyone, because the mailbox records no read state.
+  expect(await page.locator(".mw-tile-label").allInnerTexts()).toEqual(["Emails", "Leads", "Map", "Insights", "Tasks"]);
+  expect(await page.locator(".mw-tile").first().getAttribute("aria-label")).toBe("Emails: outside your current access");
+  expect(await page.locator(".mw-tiles").innerText()).not.toMatch(/\d/);
   await expect(page.getByRole("img", { name: "Emails: outside your current access" })).toBeVisible();
   expect(new Set(await page.locator(".mw-tile").evaluateAll((tiles) => tiles.map((t) => Math.round(t.getBoundingClientRect().top)))).size).toBe(1);
   await expect(page.getByRole("link", { name: "Leads", exact: true })).toHaveAttribute("href", `/sales/leads?owner_id=${MY_WORK.owner}`);
@@ -296,7 +297,8 @@ test("a row opens details; Complete saves through the source command and every a
   const details = page.getByRole("dialog", { name: "Make first contact with new lead" });
   // A lead link says Lead; an opportunity link says Opportunity.
   await expect(details.locator("dt").filter({ hasText: /^Lead$/ })).toBeVisible();
-  await expect(details.getByText("Brisbane time")).toBeVisible();
+  // S6: a scheduled time carries its zone and offset rather than a city name.
+  await expect(details.getByText(/^Due \d{1,2} [A-Z][a-z]{2} \d{4}, \d{2}:\d{2} AEST \(UTC\+10\)/)).toBeVisible();
   await page.screenshot({ path: info.outputPath("activity-detail.png") });
   await details.getByRole("button", { name: "Complete", exact: true }).click();
   const outcome = page.getByRole("dialog", { name: "Record outcome" });
@@ -431,12 +433,13 @@ test("an overdue opportunity is raised by the Deals worklist's own rule, and lea
   await expect(attention(page).locator(".mw-attention-row").first()).toHaveText(/^1\s*overdue activity$/);
 });
 
-test("weather is honest: not connected by default, a provider's answer renders, hiding frees the space, and failure blocks nothing", async ({ page }, info) => {
+test("weather is honest: hidden until a provider is connected, a provider's answer renders, hiding frees the space, and failure blocks nothing", async ({ page }, info) => {
   await signIn(page);
   await open(page);
   const card = page.getByRole("region", { name: "Local weather" });
-  await expect(card).toContainText("Weather is not connected");
-  await expect(card).not.toContainText("°");
+  // Phase 00 batch 2: with no provider the card takes no space at all, rather than say so first.
+  await expect(page.getByRole("heading", { name: "Quick Actions" })).toBeVisible();
+  await expect(card).toHaveCount(0);
 
   // Only a stubbed read can show a forecast: the application itself has no provider.
   await page.route("**/api/v1/work/weather**", (route) => route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(WEATHER_SAMPLE) }));
@@ -537,5 +540,5 @@ test("an unread source is never zero, the Create control never covers a focused 
   await open(page);
   const emails = page.getByRole("link", { name: "Emails", exact: true });
   await expect(emails).toHaveAttribute("href", "/email");
-  await expect(emails).toHaveText("");
+  await expect(emails).toHaveText("Emails"); // its label only: no unread number
 });

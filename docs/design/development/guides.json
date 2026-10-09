@@ -49675,7 +49675,7 @@
         "scope:FI-06"
       ],
       "source_paths": [
-        "src/app/(business)/work/[id]/page.tsx",
+        "src/app/(business)/work/(workspace)/[id]/page.tsx",
         "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md",
         "src/incidents/activity-handover.tsx",
@@ -49689,7 +49689,7 @@
       "supersedes": null,
       "section_aliases": {},
       "workflow_basis": [
-        "src/app/(business)/work/[id]/page.tsx",
+        "src/app/(business)/work/(workspace)/[id]/page.tsx",
         "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
@@ -49945,7 +49945,7 @@
         "scope:SH-02"
       ],
       "source_paths": [
-        "src/app/(business)/work/new/page.tsx",
+        "src/app/(business)/work/(workspace)/new/page.tsx",
         "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],
@@ -49957,7 +49957,7 @@
       "supersedes": null,
       "section_aliases": {},
       "workflow_basis": [
-        "src/app/(business)/work/new/page.tsx",
+        "src/app/(business)/work/(workspace)/new/page.tsx",
         "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
         "docs/blueprints/BP-01-master-blueprint.md"
       ],

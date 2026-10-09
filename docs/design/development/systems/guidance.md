@@ -27,3 +27,14 @@ Restore an unwanted working-source change through a reviewed successor in Git. P
 - **Evidence:** [phase 00 review, session 1](../../../testing/evidence/ui-review-phase-00-r01/README.md). Synthetic data; compiled build at `a52cb01`; 1440 × 900 and 390 × 844 headless Chromium, captures for this entry.
 - **Findings:** S9: write the Home and My Work guides now. The panel itself works on desktop and phone.
 - **Scope of this record:** visual review of the captured state only. Device, screen-reader, zoom and operational acceptance remain separate. A later source change marks this review stale.
+
+## Refinement batch 2 — 9 October 2026
+
+- **My Work guide (S9):** the information icon on My Work opens the drafted guide (`src/activities/work-guide.ts`, registered in `src/components/shell-page-guide.tsx`). It covers:
+  - what you see;
+  - common tasks;
+  - views and filters;
+  - the phone;
+  - what to do when something looks wrong.
+- **Development-only detail:** the "Development draft guide" disclosure was already shown only in the development workspace. The panel footer's revision label ("Powerplants One · r17") is now shown only there too. Users see "Powerplants One" and "User guide and journeys".
+- **Status:** the guide is a draft until Dean reviews it in the running app. Other phase 00 pages get their guides the same way in later batches.

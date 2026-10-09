@@ -80,3 +80,19 @@ Desktop uses the existing shell with a 76 px compact or 232 px labelled primary 
 - **Evidence:** [phase 00 review, session 1](../../../testing/evidence/ui-review-phase-00-r01/README.md). Synthetic data; compiled build at `a52cb01`; 1440 × 900 and 390 × 844 headless Chromium, captures for this entry.
 - **Findings:** S8 and S6. An overdue activity does not say it is overdue. Linked records show as raw numbers first, names second.
 - **Scope of this record:** visual review of the captured state only. Device, screen-reader, zoom and operational acceptance remain separate. A later source change marks this review stale.
+
+## Refinement batch 2 — 9 October 2026
+
+Rebuilt on the record page pattern from the accepted canvas proposal ([decision](../../../decisions/ui-build-sequence.md#owner-decisions-9-october-2026)).
+
+- **Inside My Work:** the route moved into the `(workspace)` group. The My Work menu stays, with My actions current, and the header breadcrumb replaces the back link.
+- **Identity header:**
+  - an "Activity · Task" eyebrow and the purpose as the heading;
+  - an overdue chip ("35 days overdue"), the status, the owner and who can read the details;
+  - Complete and Reschedule buttons. They take the person to the existing outcome and due-date fields; the commands, reasons and version checks are unchanged.
+- **One date format (S6):** "Due 4 Sep 2026, 10:00 AEST (UTC+10)". Appointments show one range.
+- **Linked records:** names come before numbers ("SYN irrigation controller · Equipment, SYN-PPO-AST-000001").
+- **Hidden (S5):** "Version 1" is no longer shown. The version stays in the record's history and still guards every save.
+- **Continue in Sales:** the panel uses plain words. Its readiness rule keeps all of its conditions.
+- **Unchanged:** the actions form keeps its labels and behaviour.
+- **Review state:** the 9 October review is stale until Dean looks at the built page again.

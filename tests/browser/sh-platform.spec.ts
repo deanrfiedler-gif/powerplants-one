@@ -313,7 +313,7 @@ test("SH review perspectives, responsive geometry and current My Work interiors"
   await page.goto("/work/reviews");
   for (const label of [
     "My reviews",
-    "All permitted",
+    "All I can see",
     "Returned to me",
     "Handovers",
     "Sent by me",

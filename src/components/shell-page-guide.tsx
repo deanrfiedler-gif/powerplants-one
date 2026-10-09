@@ -9,8 +9,9 @@ import { usePathname } from "next/navigation";
 import { estimatingWorkloadGuide } from "./estimating-workload-guide";
 import { costSourcesGuide } from "./cost-sources-guide";
 import { supplyGuide } from "../supply/guide";
+import { myWorkGuide } from "../activities/work-guide";
 
-const pageGuides: Record<string, PageGuide> = { Leads: leadsGuide };
+const pageGuides: Record<string, PageGuide> = { Leads: leadsGuide, "My Work": myWorkGuide };
 export function ShellPageGuide({ page }: { page: string }) {
   const pathname = usePathname();
   const pageGuide = supplyGuide(pathname) ?? engineeringControlGuide(pathname) ?? (pathname.startsWith("/estimating/cost-sources") || /^\/estimating\/estimates\/[^/]+\/sources$/.test(pathname) ? costSourcesGuide : pathname === "/estimating" ? estimatingWorkloadGuide : pageGuides[page]);
