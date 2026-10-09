@@ -99,6 +99,13 @@ Dean replied: "24-hour; accept S5, S9 and all My Work proposals".
 
 **Build order.** Batch 2 builds the shared S6 formatter, S9 and the My Work pages, with the S5 and S6 instances on those pages. The S5 and S6 instances on Sales, Planner, Appointment, Field and Offline pages are built with those pages' own refinements in later batches, so each page changes once and is recaptured once. An acceptance here is a design decision; each built page still needs Dean's fresh visual review in the register before phase 00 closes (SD-05).
 
+**Batch 2 built (9 October 2026).** The shared S6 formatter, the four My Work pages, the Blocked & waiting wording and the My Work guide are built ([evidence](../testing/evidence/ui-refinement-batch-2/README.md)). Two points differ from the drawings:
+
+- **Access labels:** the canvas said "Service team only". The real rule is "Anyone who can see the linked record" (RestrictedService). The boards and the app use the accurate wording.
+- **Company prefill:** if the person has no working company but can reach only one company, that company is filled in, as the header already shows it.
+
+Every affected entry's owner review stays stale until Dean looks at the built page.
+
 ## Where it is shown
 
 The navigation architecture canvas gains a **UI build sequence** board drawn from the generated data. The repository files remain the authority. The board was added after the r02 capture set, so no capture of it is retained.

@@ -58,3 +58,17 @@ Phone: stack fields and recovery controls, wrap names/references, retain readabl
 - **Evidence:** [phase 00 review, session 1](../../../testing/evidence/ui-review-phase-00-r01/README.md). Synthetic data; compiled build at `a52cb01`; 1440 × 900 and 390 × 844 headless Chromium, captures for this entry.
 - **Findings:** S8. The My Work side navigation disappears on this page, unlike its siblings. Lead with the purpose and owner; move company and access class later with plain labels.
 - **Scope of this record:** visual review of the captured state only. Device, screen-reader, zoom and operational acceptance remain separate. A later source change marks this review stale.
+
+## Refinement batch 2 — 9 October 2026
+
+Rebuilt on the record page pattern from the accepted canvas proposal ([decision](../../../decisions/ui-build-sequence.md#owner-decisions-9-october-2026)).
+
+- **Inside My Work:** the route moved into the `(workspace)` group, so the My Work menu stays, with My actions current. The URL is unchanged.
+- **Field order:** What needs doing?, then Category, Owner, No due date yet / Due date and time. Linked to (Record type, Linked record) and Who can see it (Company, Who can read the details) come after.
+- **Plain labels (S5):** stored values are unchanged.
+  - Access classes read: "Anyone who can see the linked record" (RestrictedService), "Internal staff only" (Internal) and "Finance only" (RestrictedFinance). These follow `classVisibility` in `src/activities/activities.ts`. The canvas drawing's "Service team only" was not accurate and was not used.
+  - Categories and record types have plain names.
+- **Working company:** filled in from the person's working company until they choose another company. "Your working company is filled in for you" says so. It never widens access, and the server rechecks the company, link, owner and access class on save. With no working company, the field starts empty as before.
+- **Controls and actions:** controls take the My Work treatment. A navy primary "Create activity" and a Cancel that returns to where the person came from.
+- **Date field hint (S6):** reads "Times in Brisbane · AEST (UTC+10)" through the shared `LocalDateTimeField`.
+- **Review state:** the 9 October review is stale until Dean looks at the built page again.
