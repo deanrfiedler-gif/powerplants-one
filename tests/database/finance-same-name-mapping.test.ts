@@ -182,8 +182,8 @@ test(
         a.mapping_snapshot.customer_id,
       ]),
       [
-        ["PPO-SIM", "SYN-A", "000Ab-C.01"],
-        ["PPO-SIM", "SYN-B", "000ab-C.01"],
+        [id("21"), "SYN-A", "000Ab-C.01"],
+        [id("21"), "SYN-B", "000ab-C.01"],
       ],
     );
     assert.equal(originalMapping.mapping_status, "Proposed");
@@ -504,7 +504,7 @@ test(
           expected_version: h.version,
           outcome_id: outcome.id,
           basis:
-            "SYN PT-02 exact PPO-SIM / SYN-A / 000Ab-C.01 retained; 60 MIN plus 2 EA target and 30 MIN non-billable checked independently.",
+          "SYN PT-02 exact connection UUID / SYN-A / 000Ab-C.01 retained; 60 MIN plus 2 EA target and 30 MIN non-billable checked independently.",
         });
         assert.equal((await handoff(key)).status, "Reconciled");
         const reconciliation = (
