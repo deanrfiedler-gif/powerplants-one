@@ -125,3 +125,7 @@ No production integration, operational migration, business transaction or custom
 All 78 parent IDs and issued reference bytes remain unchanged. The 24 Core, 25 Partial and 29 Deferred dispositions classify scope; they do not record completion.
 
 Earlier snapshots remain in [STATUS-log.md](STATUS-log.md) and Git history. This current snapshot replaces accumulated pre-merge chronology; earlier failures, repairs and source-specific evidence remain in their original handovers and ledgers. Historical branch, migration reservation, deployment and writing-slot statements do not override current source or GitHub observations.
+
+## Document identity and recovery — 10 October 2026
+
+The authorised PT-18 continuation adds regression proof on unchanged main `184b933`, independently of PRs #378/#379 and Claude's UI work. Actual synthetic source movement, missing/changed versions, explicit reviewed successor selection and exact retained pack/report/Finance recovery are exercised. [Decision](decisions/document-identity-recovery.md), [evidence](testing/evidence/document-identity-recovery/README.md). The tested runtime already enforces these boundaries; this contribution changes tests/evidence only. Authenticated customer-channel, live SharePoint and independent owner/device acceptance remain open; no merge or deployment is included.
