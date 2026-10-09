@@ -876,7 +876,7 @@ test("ES07 material: populated 0066 upgrade preserves every prior table, grant, 
   );
   assert.deepEqual(
     updated.filter((r) => r.version > 66).map((r) => r.version),
-    [67, 68, 69, 70, 71, 72, 73, 74, 75, 76],
+    [67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77],
   );
   assert.deepEqual(await draftBytes(f.owner, f.id), bytes);
   assert.deepEqual(await draftBytes(f.owner, f.draft.id), draft);

@@ -32,7 +32,13 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-No exact image or HTML reference is linked. Keep this gap visible.
+- [26-rp05-exceptions-desktop.png](../../../reference/ui/application-shell/navigation-architecture-board-r02/26-rp05-exceptions-desktop.png) · 1440 × 1084 · Proposed
+- [27-rp05-exceptions-phone.png](../../../reference/ui/application-shell/navigation-architecture-board-r02/27-rp05-exceptions-phone.png) · 390 × 1007 · Proposed
+- [28-rp05-exceptions-320.png](../../../reference/ui/application-shell/navigation-architecture-board-r02/28-rp05-exceptions-320.png) · 320 × 1061 · Proposed
+
+These are renders of the private claude.ai design canvas "PPO Navigation Architecture", version 26 (capture set r02), recorded in [Navigation architecture board](../../../decisions/navigation-architecture-board.md). They are a proposed composition on synthetic data, not an approved mockup: page type Work queue + persistent detail. Under NAD-08 (adopted 9 October 2026, design only) the desk is the Reports workspace's secondary page; the desktop render shows the expanded 232 px rail. Widening this scope from Supply and Finance to every department is still open (NAD-02). Finance's Reconciliation and Exceptions stay Finance working queues that the desk links to. The desk assigns and escalates; it never edits the source record.
+
+- **Missing:** a 1024 px composition and any native capture; no route exists yet.
 
 ## Behaviour, handovers and verification
 

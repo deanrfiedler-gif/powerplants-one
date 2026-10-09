@@ -47,3 +47,61 @@ Ordinary Workspace lives in More and uses an eligible operational landing; Devel
 ## Bell startup boundary
 
 The header imports the standalone `NotificationBell`; the full Notifications workspace keeps its My Work layout and preferences dependencies at its own route. Rendering, current-authority reads, loading/error/partial states and navigation are preserved. The real desktop host opens the bell from Customers before any Notifications visit, verifies its current notice, Escape/focus return and inbox handover. The phone retains its existing hidden header bell and direct inbox entry. Compiled transfer measurements and the desktop/phone inbox regression are recorded in [first-load evidence](../../../testing/evidence/customer-first-load/README.md); owner/device and paired visual acceptance remain pending.
+
+## Navigation architecture board (proposed)
+
+The private claude.ai design canvas "PPO Navigation Architecture", version 26, maps the six capability domains of the 8 October 2026 brief onto the seven built department rails. It also records:
+
+- navigation rules NR-01 to NR-20 and accessibility rules NR-A1 to NR-A7;
+- cross-domain handovers HO-01 to HO-23;
+- a record page pattern and a record relationship map;
+- landing, attention routing and access scope tables;
+- a navigation audit, AU-01 to AU-23, with its resolution record.
+
+Current captures and Mermaid sources: [navigation-architecture-board-r02](../../../reference/ui/application-shell/navigation-architecture-board-r02/README.md). The earlier [r01](../../../reference/ui/application-shell/navigation-architecture-board-r01/README.md) set is retained unchanged. Record and decisions NAD-01 to NAD-08: [Navigation architecture board](../../../decisions/navigation-architecture-board.md).
+
+Dean adopted NAD-08 on 9 October 2026 as a design decision. It adds an eighth workspace, Reports (proposed id `reporting`), for the governed management reports RP-01 to RP-06. Reports owns no records and edits nothing (NR-20). Adding it to the registry needs separate approval.
+
+Everything else on the board is a proposal. The registry in `src/shell/navigation.ts` and [Navigation consolidation](../../../decisions/navigation-consolidation.md) remain the authority.
+
+Built on 9 October 2026, under Dean's approval of professional refinements:
+
+- **Page titles (NR-17).** Each shell page renders its own `<title>` from the breadcrumb's route metadata: record, then page or view, then department, then "Powerplants One"; for example "SYN-PPO-WO-000001 · SYN Ready for scope review · Work orders · Service — Powerplants One". A create page reads "New record · …". The business layout clears the root default title so the shell's is the only one. React updates the title in the route's commit, so the route announcer reads the new name on client navigation.
+- **Sales phone bar (NR-02).** A cell the identity cannot open is hidden, as on every other surface. The bar keeps equal cells for whatever remains.
+- **Number search (NR-10).** Global search also finds work orders and estimates by number, through their existing visibility-checked readers.
+- **Routing note (NR-04).** `application-shell-integration.md` now carries a dated routing note: canonical routes are /sales/…, and /crm/… redirects.
+
+- **Working company (NR-18, AU-02).** A person whose grants reach more than one company can choose a working company in the account panel, or All companies.
+  - **Storage:** the choice is kept per person in `ppo.working_companies` (migration 0077).
+  - **Scope:** the choice is loaded when each request resolves the signed-in identity and held for that request only. The shared access checks `scopeSql` and record-level `hasPermission` then narrow every page, search and command to the chosen company. Capability checks without a record company are unchanged, so navigation does not change. Code without a request (jobs, seeds, upgrades) is not narrowed.
+  - **Safety:** the choice can only narrow access; a grant is still required. The narrowing condition names its own actor, so it cannot affect anyone else's check. A choice the grants no longer reach is ignored on every request and lapses on the next shell read.
+  - **Display:** the header shows the working company beside the account name from 1200 px. Narrower screens show it in the account panel, so the fitted header geometry is unchanged. Names lead with the ERP company code because two companies may share a display name.
+  - **Switching:** it reviews unsaved work, remounts the pages and locks other open tabs.
+- **Grouped Service rail (AU-08).** The Service operations rail is grouped as Requests and scheduling, Field and inspections, and Assets and aftercare. Order and permissions are unchanged. A hairline separates the groups in the 76 px rail, and the expanded 232 px rail shows their headings. Each group is a labelled `role="group"`. A group with nothing the identity can open is not shown.
+
+Still open:
+
+- number search for quotations and purchase orders: no reader matches their own numbers yet;
+- owner visual review of the header indicator, account-panel switcher and grouped rail at 1024, 1440 and 390 px.
+
+No owner visual review is recorded for the board.
+
+## Owner visual review — 9 October 2026
+
+- **Reviewer:** Dean Fiedler. He accepted Claude's proposed verdicts from the phase 00 review boards (navigation canvas version 29).
+- **Result:** Refine.
+- **Evidence:** [phase 00 review, session 1](../../../testing/evidence/ui-review-phase-00-r01/README.md). Synthetic data; compiled build at `a52cb01`; 1440 × 900 and 390 × 844 headless Chromium, captures for this entry.
+- **Findings:** S1, S2, S4 and S7 are all fixed here once and carry to every page. The new working-company pill and grouped Service rail render as intended.
+- **Scope of this record:** visual review of the captured state only. Device, screen-reader, zoom and operational acceptance remain separate. A later source change marks this review stale.
+
+## Phase 00 refinement batch 1 — 9 October 2026
+
+Shared findings from the [phase 00 review](../../../testing/evidence/ui-review-phase-00-r01/README.md), fixed once in the shell (SD-02). Evidence: [batch 1 recapture](../../../testing/evidence/ui-refinement-batch-1/README.md).
+
+- **S1 contrast:** the search shortcut hint, the panel footer and the lead empty state use `--text-secondary` (about 5.6:1 on white). The axe contrast failure that 18 desktop pages shared is gone.
+- **S2 phone title:** every phone header shows the current page at 17 px, weight 500, in the ink colour. Pages with their own section menu keep r07's 20 px title and the menu button. Other pages keep the home tile and the page-hierarchy button. The left control differs because only some workspaces have a section menu; that is a stated rule, not drift.
+- **S3 floating button:** no change. The My Work phone page already reserves 88 px at the foot. At the end of the scroll, the last content ends above the button (692 px against 708 px). The finding came from a mid-scroll capture and is withdrawn.
+- **S4 back links:** the shared `ppo-back-link` class gives back links a target of at least 24 px, or 44 px on touch screens. It is applied to My Work, the activity record, site readiness and both Sales back links. Record links inside pages are refined with those pages.
+- **S7 icons:** the rail toggle shows a left or right chevron and the page-hierarchy button a list icon, so the ellipsis now only means More. The page guide and help tooltips say what each opens; their accessible names are unchanged.
+- **Reviews:** these source changes mark the 28 phase 00 reviews stale. The pages need a fresh owner look before phase 00 can close (SD-05).
+- **Raised, not changed:** the technician timer's idle seconds digits fail contrast (axe). They are faint by design under the accepted work timer baseline, so this is a proposed departure for the FI-01 refinement.

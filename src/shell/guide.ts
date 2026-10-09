@@ -13,6 +13,10 @@ export const shellGuide = {
       "The labelled breadcrumb names the owning module and view. Loaded records add their permitted exact reference and title; it does not guess identity from a URL."
     ],
     [
+      "Work in one company",
+      "If your access reaches more than one company, open your account and choose a working company. Pages, search and actions then show only that company's records. Your permissions are unchanged; choose All companies to see everything you can access again."
+    ],
+    [
       "Get the right help",
       "Use the information icon for the current page’s detailed guide and journey. Quick Help provides short shell tips and keyboard shortcuts."
     ]
@@ -28,7 +32,7 @@ export const shellGuide = {
     ],
     [
       "Review a workspace",
-      "Open More and choose Workspace. Each offered department has an eligible operational destination. Expand primary navigation on desktop for readable labels. Preferences are remembered per identity/browser and never change permissions."
+      "Open More and choose Workspace. Each offered department has an eligible operational destination. Expand primary navigation on desktop for readable labels; longer rails, such as Service operations, are grouped under headings. Preferences are remembered per identity/browser and never change permissions."
     ],
     [
       "Create when connected",
@@ -57,8 +61,8 @@ export const shellGuide = {
       "Open the information icon for that page’s guide, then return to the same page. Business work takes place in the connected module."
     ]
   ],
-  "mobile": "On a phone, open More and choose the labelled Workspace picker. The Sales bar offers four destinations and More; other workspaces offer three destinations and More, filtered by current access. Information, search and your account remain in the header. Quick add, Quick Help and Notifications are also available from More.",
-  "recovery": "If search finds no pages, clear it and try a shorter name. If browser storage is unavailable, the selected workspace applies to this visit. Workspace selection opens an eligible department page. A cancelled leave review keeps your current page and preference. Development Shell preview is separate from operational selection and never changes access rights.",
+  "mobile": "On a phone, open More and choose the labelled Workspace picker. The Sales bar offers up to four destinations and More; other workspaces offer up to three destinations and More, filtered by current access. Your working company is in the account panel. Information, search and your account remain in the header. Quick add, Quick Help and Notifications are also available from More.",
+  "recovery": "If search finds no pages, clear it and try a shorter name. If browser storage is unavailable, the selected workspace applies to this visit. Workspace selection opens an eligible department page. A cancelled leave review keeps your current page and preference. Changing the working company also reviews unsaved work first; if a record seems missing, check the working company in your account. Development Shell preview is separate from operational selection and never changes access rights.",
   "shortcuts": [
     [
       "Ctrl / Cmd K",

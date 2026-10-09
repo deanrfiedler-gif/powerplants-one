@@ -1,0 +1,4423 @@
+{
+ "title": "Powerplants One UI build and review sequence",
+ "status": "Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register; phase 00 owner-reviewed 9 October 2026, reviews stale after refinement batch 1",
+ "sources": {
+  "register": "docs/design/development/register.json",
+  "register_sha256": "b61192739fa29ad37c90471b8c305b2c9e56278d5aad6e4e130a38789d23ccfb",
+  "build_plan": "docs/reference/ui/app-page-register/PPO-App-Page-Register-r05.html",
+  "build_plan_revision": "r02",
+  "build_plan_sha256": "b07890f2cec602847af41bb4a790407ff3a6456a1842846520e0aede61233b93",
+  "build_plan_basis": "Recommended dependency-led implementation sequence based on the 20 September 2026 source snapshot; not an approved schedule or an estimate of effort."
+ },
+ "states": {
+  "build": "To build",
+  "refine": "To refine",
+  "review": "Built; owner review pending",
+  "decide": "Scope decision first"
+ },
+ "cursors": {
+  "review": "00",
+  "build": "01"
+ },
+ "totals": {
+  "entries": 350,
+  "placed": 347,
+  "excluded": 3,
+  "build": 46,
+  "refine": 105,
+  "review": 190,
+  "decide": 6,
+  "owner_reviewed": 28
+ },
+ "phases": [
+  {
+   "id": "00",
+   "title": "Verify the existing baseline",
+   "reason": "Confirm current navigation, My Work, booking, field execution and offline behaviour before extending the app. These are verification tasks, not rebuilds. Recheck affected flows after every later phase.",
+   "ranks": [
+    1,
+    7
+   ],
+   "depends_on": [],
+   "counts": {
+    "build": 0,
+    "refine": 1,
+    "review": 29,
+    "decide": 0
+   },
+   "scopes": 7,
+   "routes": 19,
+   "systems": 4,
+   "entries": [
+    {
+     "key": "system:guidance",
+     "title": "Contextual guidance",
+     "kind": "system",
+     "module": "Shared",
+     "path": "",
+     "rank": null,
+     "state": "review",
+     "visual_review": "Owner review recorded",
+     "placement": "Shared system: verified with the existing baseline"
+    },
+    {
+     "key": "system:offline",
+     "title": "Offline and recovery",
+     "kind": "system",
+     "module": "Shared",
+     "path": "",
+     "rank": null,
+     "state": "review",
+     "visual_review": "Owner review recorded",
+     "placement": "Shared system: verified with the existing baseline"
+    },
+    {
+     "key": "system:shell",
+     "title": "Application shell",
+     "kind": "system",
+     "module": "Shared",
+     "path": "",
+     "rank": null,
+     "state": "review",
+     "visual_review": "Owner review recorded",
+     "placement": "Shared system: verified with the existing baseline"
+    },
+    {
+     "key": "system:theme",
+     "title": "Theme and shared controls",
+     "kind": "system",
+     "module": "Shared",
+     "path": "",
+     "rank": null,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Shared system: verified with the existing baseline"
+    },
+    {
+     "key": "scope:SH-01",
+     "title": "Role-based home overview",
+     "kind": "scope",
+     "module": "SH",
+     "path": "/work",
+     "rank": 1,
+     "state": "review",
+     "visual_review": "Owner review recorded",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/",
+     "title": "Home → permitted work",
+     "kind": "route",
+     "module": "SH",
+     "path": "/",
+     "rank": 1,
+     "state": "review",
+     "visual_review": "Owner review recorded",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/login",
+     "title": "Login",
+     "kind": "route",
+     "module": "SH",
+     "path": "/login",
+     "rank": 1,
+     "state": "review",
+     "visual_review": "Owner review recorded",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/sales/leads",
+     "title": "Leads",
+     "kind": "route",
+     "module": "CR",
+     "path": "/sales/leads",
+     "rank": 1,
+     "state": "review",
+     "visual_review": "Owner review recorded",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/sales/leads/[id]",
+     "title": "Lead detail",
+     "kind": "route",
+     "module": "CR",
+     "path": "/sales/leads/[id]",
+     "rank": 1,
+     "state": "review",
+     "visual_review": "Owner review recorded",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/sales/opportunities/new",
+     "title": "Create opportunity",
+     "kind": "route",
+     "module": "CR",
+     "path": "/sales/opportunities/new",
+     "rank": 1,
+     "state": "review",
+     "visual_review": "Owner review recorded",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/work",
+     "title": "My Work · Overview",
+     "kind": "route",
+     "module": "SH",
+     "path": "/work",
+     "rank": 1,
+     "state": "review",
+     "visual_review": "Owner review recorded",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:SH-02",
+     "title": "My Work action centre",
+     "kind": "scope",
+     "module": "SH",
+     "path": "/work/actions",
+     "rank": 2,
+     "state": "review",
+     "visual_review": "Owner review recorded",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/sales/tasks",
+     "title": "Sales Tasks",
+     "kind": "route",
+     "module": "SH",
+     "path": "/sales/tasks",
+     "rank": 2,
+     "state": "refine",
+     "visual_review": "Owner review recorded",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/work/[id]",
+     "title": "Activity detail",
+     "kind": "route",
+     "module": "SH",
+     "path": "/work/[id]",
+     "rank": 2,
+     "state": "review",
+     "visual_review": "Owner review recorded",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/work/actions",
+     "title": "My actions",
+     "kind": "route",
+     "module": "SH",
+     "path": "/work/actions",
+     "rank": 2,
+     "state": "review",
+     "visual_review": "Owner review recorded",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/work/new",
+     "title": "Create activity",
+     "kind": "route",
+     "module": "SH",
+     "path": "/work/new",
+     "rank": 2,
+     "state": "review",
+     "visual_review": "Owner review recorded",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/work/reviews",
+     "title": "Reviews and handovers",
+     "kind": "route",
+     "module": "SH",
+     "path": "/work/reviews",
+     "rank": 2,
+     "state": "review",
+     "visual_review": "Owner review recorded",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/work/team",
+     "title": "Team queue",
+     "kind": "route",
+     "module": "SH",
+     "path": "/work/team",
+     "rank": 2,
+     "state": "review",
+     "visual_review": "Owner review recorded",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/work/waiting",
+     "title": "Blocked & waiting",
+     "kind": "route",
+     "module": "SH",
+     "path": "/work/waiting",
+     "rank": 2,
+     "state": "review",
+     "visual_review": "Owner review recorded",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:SV-04",
+     "title": "Appointment coordination detail",
+     "kind": "scope",
+     "module": "SV",
+     "path": "/schedule",
+     "rank": 3,
+     "state": "review",
+     "visual_review": "Owner review recorded",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/service/appointments/[id]",
+     "title": "Appointment detail",
+     "kind": "route",
+     "module": "SV",
+     "path": "/service/appointments/[id]",
+     "rank": 3,
+     "state": "review",
+     "visual_review": "Owner review recorded",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:PL-01",
+     "title": "Service planner and unassigned demand",
+     "kind": "scope",
+     "module": "PL",
+     "path": "/schedule",
+     "rank": 4,
+     "state": "review",
+     "visual_review": "Owner review recorded",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/schedule",
+     "title": "Service planner",
+     "kind": "route",
+     "module": "PL",
+     "path": "/schedule",
+     "rank": 4,
+     "state": "review",
+     "visual_review": "Owner review recorded",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:FI-01",
+     "title": "Technician Today and job execution",
+     "kind": "scope",
+     "module": "FI",
+     "path": "/my-jobs",
+     "rank": 5,
+     "state": "review",
+     "visual_review": "Owner review recorded",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/my-jobs",
+     "title": "My Jobs",
+     "kind": "route",
+     "module": "FI",
+     "path": "/my-jobs",
+     "rank": 5,
+     "state": "review",
+     "visual_review": "Owner review recorded",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/my-jobs/[id]",
+     "title": "Technician job detail",
+     "kind": "route",
+     "module": "FI",
+     "path": "/my-jobs/[id]",
+     "rank": 5,
+     "state": "review",
+     "visual_review": "Owner review recorded",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/my-jobs/site-readiness",
+     "title": "Site induction, risk and biosecurity review",
+     "kind": "route",
+     "module": "FI",
+     "path": "/my-jobs/site-readiness",
+     "rank": 5,
+     "state": "review",
+     "visual_review": "Owner review recorded",
+     "placement": "Added after r05; placed with FI-01"
+    },
+    {
+     "key": "scope:FI-02",
+     "title": "Offline downloads, queue and conflict recovery",
+     "kind": "scope",
+     "module": "FI",
+     "path": "/offline/index.html",
+     "rank": 6,
+     "state": "review",
+     "visual_review": "Owner review recorded",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/offline/index.html",
+     "title": "Offline workspace",
+     "kind": "route",
+     "module": "FI",
+     "path": "/offline/index.html",
+     "rank": 6,
+     "state": "review",
+     "visual_review": "Owner review recorded",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:FI-07",
+     "title": "Customer attendance and report response",
+     "kind": "scope",
+     "module": "FI",
+     "path": "/service/reports",
+     "rank": 7,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    }
+   ]
+  },
+  {
+   "id": "01",
+   "title": "Shared controls and core records",
+   "reason": "Put access, recovery, data quality, customer/site identity and controlled documents in place. Shared search, saved views, notifications and approvals then serve later workflows.",
+   "ranks": [
+    8,
+    27
+   ],
+   "depends_on": [],
+   "counts": {
+    "build": 6,
+    "refine": 16,
+    "review": 17,
+    "decide": 0
+   },
+   "scopes": 20,
+   "routes": 19,
+   "systems": 0,
+   "entries": [
+    {
+     "key": "scope:AD-01",
+     "title": "Users, roles, teams and access review",
+     "kind": "scope",
+     "module": "AD",
+     "path": "/admin/access",
+     "rank": 8,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:AD-07",
+     "title": "Audit history and controlled export",
+     "kind": "scope",
+     "module": "AD",
+     "path": "/admin/audit",
+     "rank": 9,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:AD-09",
+     "title": "Operational health, recovery and release readiness",
+     "kind": "scope",
+     "module": "AD",
+     "path": "/foundation",
+     "rank": 10,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/foundation",
+     "title": "Foundation checks",
+     "kind": "route",
+     "module": "AD",
+     "path": "/foundation",
+     "rank": 10,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:AD-02",
+     "title": "Business configuration and policy publication",
+     "kind": "scope",
+     "module": "AD",
+     "path": "/admin/policies",
+     "rank": 11,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:AD-03",
+     "title": "Data-quality workbench",
+     "kind": "scope",
+     "module": "AD",
+     "path": "/admin/data-quality",
+     "rank": 12,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:AD-04",
+     "title": "Integration health and exception recovery",
+     "kind": "scope",
+     "module": "AD",
+     "path": "/admin",
+     "rank": 13,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/admin",
+     "title": "Exceptions & recovery",
+     "kind": "route",
+     "module": "AD",
+     "path": "/admin",
+     "rank": 13,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/admin/recovery/[id]",
+     "title": "Recovery case",
+     "kind": "route",
+     "module": "AD",
+     "path": "/admin/recovery/[id]",
+     "rank": 13,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:AD-05",
+     "title": "External mapping and reconciliation detail",
+     "kind": "scope",
+     "module": "AD",
+     "path": "/admin/mappings",
+     "rank": 14,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:CS-01",
+     "title": "Customer register and customer 360",
+     "kind": "scope",
+     "module": "CS",
+     "path": "/customers/[id]",
+     "rank": 15,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/customers",
+     "title": "Customer register",
+     "kind": "route",
+     "module": "CS",
+     "path": "/customers",
+     "rank": 15,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/customers/[id]",
+     "title": "Customer detail",
+     "kind": "route",
+     "module": "CS",
+     "path": "/customers/[id]",
+     "rank": 15,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/customers/new",
+     "title": "Create customer / shared record",
+     "kind": "route",
+     "module": "CS",
+     "path": "/customers/new",
+     "rank": 15,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:CS-02",
+     "title": "Contact directory and contact detail",
+     "kind": "scope",
+     "module": "CS",
+     "path": "/people/[id]",
+     "rank": 16,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/contacts",
+     "title": "Contacts",
+     "kind": "route",
+     "module": "CS",
+     "path": "/contacts",
+     "rank": 16,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/people",
+     "title": "Contact directory",
+     "kind": "route",
+     "module": "CS",
+     "path": "/people",
+     "rank": 16,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/people/[id]",
+     "title": "Contact detail",
+     "kind": "route",
+     "module": "CS",
+     "path": "/people/[id]",
+     "rank": 16,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:CS-04",
+     "title": "Site register and site workspace",
+     "kind": "scope",
+     "module": "CS",
+     "path": "/sites/[id]",
+     "rank": 17,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/sites",
+     "title": "Site register",
+     "kind": "route",
+     "module": "CS",
+     "path": "/sites",
+     "rank": 17,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/sites/[id]",
+     "title": "Site detail",
+     "kind": "route",
+     "module": "CS",
+     "path": "/sites/[id]",
+     "rank": 17,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:CS-05",
+     "title": "Facilities and growing areas: registers, detail and forms",
+     "kind": "scope",
+     "module": "CS",
+     "path": "/facilities",
+     "rank": 18,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/facilities",
+     "title": "Facilities & growing areas",
+     "kind": "route",
+     "module": "CS",
+     "path": "/facilities",
+     "rank": 18,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/facilities/[id]",
+     "title": "Facilities & growing areas · detail",
+     "kind": "route",
+     "module": "CS",
+     "path": "/facilities/[id]",
+     "rank": 18,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/facilities/[id]/edit",
+     "title": "Facilities & growing areas · edit",
+     "kind": "route",
+     "module": "CS",
+     "path": "/facilities/[id]/edit",
+     "rank": 18,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/facilities/new",
+     "title": "Facilities & growing areas · create",
+     "kind": "route",
+     "module": "CS",
+     "path": "/facilities/new",
+     "rank": 18,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:CS-06",
+     "title": "Site access and horticultural readiness",
+     "kind": "scope",
+     "module": "CS",
+     "path": "/sites/[id]/readiness",
+     "rank": 19,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/sites/[id]/readiness",
+     "title": "sites /  id  / readiness",
+     "kind": "route",
+     "module": "CS",
+     "path": "/sites/[id]/readiness",
+     "rank": 19,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with CS-06"
+    },
+    {
+     "key": "scope:DK-01",
+     "title": "Document register and linked library",
+     "kind": "scope",
+     "module": "DK",
+     "path": "/documents",
+     "rank": 20,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:DK-02",
+     "title": "Document viewer, revision and review workspace",
+     "kind": "scope",
+     "module": "DK",
+     "path": "/documents",
+     "rank": 21,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/documents/[id]",
+     "title": "Issued job-pack document",
+     "kind": "route",
+     "module": "DK",
+     "path": "/documents/[id]",
+     "rank": 21,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:DK-03",
+     "title": "Output, issue and distribution centre",
+     "kind": "scope",
+     "module": "DK",
+     "path": "/documents/issues",
+     "rank": 22,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:DK-06",
+     "title": "Document and form template management",
+     "kind": "scope",
+     "module": "DK",
+     "path": "/documents/templates",
+     "rank": 23,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:SH-04",
+     "title": "Search",
+     "kind": "scope",
+     "module": "SH",
+     "path": "/search",
+     "rank": 24,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/search",
+     "title": "Search",
+     "kind": "route",
+     "module": "SH",
+     "path": "/search",
+     "rank": 24,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with SH-04"
+    },
+    {
+     "key": "scope:SH-05",
+     "title": "Personal saved views",
+     "kind": "scope",
+     "module": "SH",
+     "path": "/work/actions?view=saved",
+     "rank": 25,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:SH-03",
+     "title": "Notifications and preferences",
+     "kind": "scope",
+     "module": "SH",
+     "path": "/work/updates",
+     "rank": 26,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/work/updates",
+     "title": "Notifications and preferences",
+     "kind": "route",
+     "module": "SH",
+     "path": "/work/updates",
+     "rank": 26,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:SH-06",
+     "title": "Reviews and handovers",
+     "kind": "scope",
+     "module": "SH",
+     "path": "/work/reviews",
+     "rank": 27,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    }
+   ]
+  },
+  {
+   "id": "02",
+   "title": "Products, equipment and survey evidence",
+   "reason": "Establish product and supplier identities, installed equipment, calibration evidence and survey inputs before estimating and field-work expansion. Agree financial measures before commercial reporting.",
+   "ranks": [
+    28,
+    42
+   ],
+   "depends_on": [
+    "01"
+   ],
+   "counts": {
+    "build": 1,
+    "refine": 0,
+    "review": 28,
+    "decide": 0
+   },
+   "scopes": 15,
+   "routes": 14,
+   "systems": 0,
+   "entries": [
+    {
+     "key": "scope:PD-01",
+     "title": "Catalogue and product technical workspace",
+     "kind": "scope",
+     "module": "PD",
+     "path": "/products",
+     "rank": 28,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/products",
+     "title": "Catalogue and product technical workspace",
+     "kind": "route",
+     "module": "PD",
+     "path": "/products",
+     "rank": 28,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with PD-01"
+    },
+    {
+     "key": "route:/products/[id]",
+     "title": "Exact product technical record",
+     "kind": "route",
+     "module": "PD",
+     "path": "/products/[id]",
+     "rank": 28,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with PD-01"
+    },
+    {
+     "key": "scope:PD-02",
+     "title": "Catalogue authoring and publication",
+     "kind": "scope",
+     "module": "PD",
+     "path": "/products/publication",
+     "rank": 29,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/products/publication",
+     "title": "Catalogue authoring and publication",
+     "kind": "route",
+     "module": "PD",
+     "path": "/products/publication",
+     "rank": 29,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with PD-02"
+    },
+    {
+     "key": "scope:PD-03",
+     "title": "Product supplier-source context",
+     "kind": "scope",
+     "module": "PD",
+     "path": "/products/pricing",
+     "rank": 30,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/products/pricing",
+     "title": "Product supplier-source context",
+     "kind": "route",
+     "module": "PD",
+     "path": "/products/pricing",
+     "rank": 30,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with PD-03"
+    },
+    {
+     "key": "scope:PD-04",
+     "title": "Compatibility, replacements and lifecycle",
+     "kind": "scope",
+     "module": "PD",
+     "path": "/products/compatibility",
+     "rank": 31,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/products/compatibility",
+     "title": "Compatibility, replacements and lifecycle",
+     "kind": "route",
+     "module": "PD",
+     "path": "/products/compatibility",
+     "rank": 31,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with PD-04"
+    },
+    {
+     "key": "scope:PD-05",
+     "title": "Catalogue import and exception review",
+     "kind": "scope",
+     "module": "PD",
+     "path": "/products/import",
+     "rank": 32,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/products/import",
+     "title": "Catalogue import and exception review",
+     "kind": "route",
+     "module": "PD",
+     "path": "/products/import",
+     "rank": 32,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with PD-05"
+    },
+    {
+     "key": "scope:EQ-01",
+     "title": "Installed base and Equipment workspace",
+     "kind": "scope",
+     "module": "EQ",
+     "path": "/equipment",
+     "rank": 33,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/equipment",
+     "title": "Installed base and Equipment workspace - native route",
+     "kind": "route",
+     "module": "EQ",
+     "path": "/equipment",
+     "rank": 33,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/equipment/[id]",
+     "title": "Installed base and Equipment workspace - native route",
+     "kind": "route",
+     "module": "EQ",
+     "path": "/equipment/[id]",
+     "rank": 33,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:EQ-02",
+     "title": "Identify equipment",
+     "kind": "scope",
+     "module": "EQ",
+     "path": "/equipment/lookup",
+     "rank": 34,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/equipment/lookup",
+     "title": "Identify equipment - native route",
+     "kind": "route",
+     "module": "EQ",
+     "path": "/equipment/lookup",
+     "rank": 34,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with EQ-02"
+    },
+    {
+     "key": "scope:EQ-03",
+     "title": "Configuration succession",
+     "kind": "scope",
+     "module": "EQ",
+     "path": "/equipment/[id]?view=configuration",
+     "rank": 35,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:EQ-04",
+     "title": "Movement, replacement and retirement",
+     "kind": "scope",
+     "module": "EQ",
+     "path": "/equipment/[id]?view=lifecycle",
+     "rank": 36,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:EQ-05",
+     "title": "Documents and Service timeline",
+     "kind": "scope",
+     "module": "EQ",
+     "path": "/equipment/[id]?view=history",
+     "rank": 37,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:EQ-08",
+     "title": "Configuration backups and recovery evidence",
+     "kind": "scope",
+     "module": "EQ",
+     "path": "/equipment/backups",
+     "rank": 38,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/equipment/backups",
+     "title": "Configuration backups and recovery evidence - native route",
+     "kind": "route",
+     "module": "EQ",
+     "path": "/equipment/backups",
+     "rank": 38,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with EQ-08"
+    },
+    {
+     "key": "scope:EQ-09",
+     "title": "Test instruments and calibration",
+     "kind": "scope",
+     "module": "EQ",
+     "path": "/equipment/instruments",
+     "rank": 39,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/equipment/instruments",
+     "title": "Test instruments and calibration - native route",
+     "kind": "route",
+     "module": "EQ",
+     "path": "/equipment/instruments",
+     "rank": 39,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with EQ-09"
+    },
+    {
+     "key": "scope:CS-03",
+     "title": "Stakeholder and relationship view",
+     "kind": "scope",
+     "module": "CS",
+     "path": "/customers/[id]/stakeholders",
+     "rank": 40,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/customers/[id]/stakeholders",
+     "title": "customers /  id  / stakeholders",
+     "kind": "route",
+     "module": "CS",
+     "path": "/customers/[id]/stakeholders",
+     "rank": 40,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with CS-03"
+    },
+    {
+     "key": "scope:CS-08",
+     "title": "Site survey and as-found brief",
+     "kind": "scope",
+     "module": "CS",
+     "path": "/surveys",
+     "rank": 41,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/surveys",
+     "title": "surveys",
+     "kind": "route",
+     "module": "CS",
+     "path": "/surveys",
+     "rank": 41,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with CS-08"
+    },
+    {
+     "key": "route:/surveys/[id]",
+     "title": "surveys /  id ",
+     "kind": "route",
+     "module": "CS",
+     "path": "/surveys/[id]",
+     "rank": 41,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with CS-08"
+    },
+    {
+     "key": "scope:FN-06",
+     "title": "Financial measure definitions and reconciliation review",
+     "kind": "scope",
+     "module": "FN",
+     "path": "/finance/definitions",
+     "rank": 42,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    }
+   ]
+  },
+  {
+   "id": "03",
+   "title": "Sales through quotation and handover",
+   "reason": "Refine the existing sales journey, connect survey-backed estimating, then complete review, quotation issue, negotiation and receiving handover in one end-to-end sequence.",
+   "ranks": [
+    43,
+    55
+   ],
+   "depends_on": [
+    "01",
+    "02"
+   ],
+   "counts": {
+    "build": 2,
+    "refine": 19,
+    "review": 24,
+    "decide": 0
+   },
+   "scopes": 13,
+   "routes": 32,
+   "systems": 0,
+   "entries": [
+    {
+     "key": "scope:CR-01",
+     "title": "Opportunity detail and internal work",
+     "kind": "scope",
+     "module": "CR",
+     "path": "/sales/opportunities/[id]",
+     "rank": 43,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/sales/opportunities/[id]",
+     "title": "Opportunity detail",
+     "kind": "route",
+     "module": "CR",
+     "path": "/sales/opportunities/[id]",
+     "rank": 43,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:CR-04",
+     "title": "Pipeline insights and forecast review",
+     "kind": "scope",
+     "module": "CR",
+     "path": "/sales/opportunities",
+     "rank": 44,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/sales/opportunities",
+     "title": "Opportunities · Board / List / Forecast / Archive",
+     "kind": "route",
+     "module": "CR",
+     "path": "/sales/opportunities",
+     "rank": 44,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/sales/pulse",
+     "title": "Sales Pulse",
+     "kind": "route",
+     "module": "CR",
+     "path": "/sales/pulse",
+     "rank": 44,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:CR-02",
+     "title": "Sales-to-estimating handover",
+     "kind": "scope",
+     "module": "CR",
+     "path": "/sales/handoffs/estimating",
+     "rank": 45,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/estimating/intake",
+     "title": "Estimating Intake",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/intake",
+     "rank": 45,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with CR-02"
+    },
+    {
+     "key": "route:/sales/handoffs/estimating",
+     "title": "Sales-to-estimating handover worklist",
+     "kind": "route",
+     "module": "CR",
+     "path": "/sales/handoffs/estimating",
+     "rank": 45,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with CR-02"
+    },
+    {
+     "key": "route:/sales/handoffs/estimating/[id]",
+     "title": "Sales-to-estimating handover record",
+     "kind": "route",
+     "module": "CR",
+     "path": "/sales/handoffs/estimating/[id]",
+     "rank": 45,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with CR-02"
+    },
+    {
+     "key": "scope:ES-01",
+     "title": "Estimating intake and workload",
+     "kind": "scope",
+     "module": "ES",
+     "path": "/estimating",
+     "rank": 46,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/estimating",
+     "title": "Estimating intake and workload",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating",
+     "rank": 46,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/estimating/estimates/[id]",
+     "title": "Estimate detail",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/estimates/[id]",
+     "rank": 46,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/estimating/new",
+     "title": "Create estimate",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/new",
+     "rank": 46,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/estimating/quotes/[id]",
+     "title": "Quotation detail",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/quotes/[id]",
+     "rank": 46,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:ES-02",
+     "title": "Estimation Wizard · discovery, alternatives & revisions",
+     "kind": "scope",
+     "module": "ES",
+     "path": "/estimating/discovery",
+     "rank": 47,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/estimating/discovery",
+     "title": "Discovery register",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/discovery",
+     "rank": 47,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/estimating/discovery/[id]",
+     "title": "Discovery workspace",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/discovery/[id]",
+     "rank": 47,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/estimating/discovery/[id]/costing",
+     "title": "Discovery costing",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/discovery/[id]/costing",
+     "rank": 47,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/estimating/discovery/new",
+     "title": "Create discovery workspace",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/discovery/new",
+     "rank": 47,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/estimating/fertigation",
+     "title": "Priva Fertigation Configurator",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/fertigation",
+     "rank": 47,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/estimating/fertigation/[id]",
+     "title": "Priva Fertigation Configurator · detail",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/fertigation/[id]",
+     "rank": 47,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/estimating/fertigation/new",
+     "title": "Priva Fertigation Configurator · create",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/fertigation/new",
+     "rank": 47,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:ES-08",
+     "title": "Specialist configuration workbench",
+     "kind": "scope",
+     "module": "ES",
+     "path": "/estimating/configurations",
+     "rank": 48,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/estimating/configurations",
+     "title": "Screen Systems configurations",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/configurations",
+     "rank": 48,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/estimating/configurations/[id]",
+     "title": "Screen Systems configurations · detail",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/configurations/[id]",
+     "rank": 48,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/estimating/configurations/[id]/[view]",
+     "title": "Screen Systems configurations · selected view",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/configurations/[id]/[view]",
+     "rank": 48,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/estimating/configurations/new",
+     "title": "Screen Systems configurations · create",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/configurations/new",
+     "rank": 48,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:ES-03",
+     "title": "Cost-source and supplier-price review",
+     "kind": "scope",
+     "module": "ES",
+     "path": "/estimating/cost-sources",
+     "rank": 49,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/estimating/cost-sources",
+     "title": "Cost-source register",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/cost-sources",
+     "rank": 49,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with ES-03"
+    },
+    {
+     "key": "route:/estimating/cost-sources/[id]",
+     "title": "Cost-source evidence and review",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/cost-sources/[id]",
+     "rank": 49,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with ES-03"
+    },
+    {
+     "key": "route:/estimating/cost-sources/new",
+     "title": "New synthetic cost source",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/cost-sources/new",
+     "rank": 49,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with ES-03"
+    },
+    {
+     "key": "route:/estimating/estimates/[id]/sources",
+     "title": "Compare reviewed source costs",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/estimates/[id]/sources",
+     "rank": 49,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with ES-03"
+    },
+    {
+     "key": "scope:ES-04",
+     "title": "Estimate review and pricing exceptions",
+     "kind": "scope",
+     "module": "ES",
+     "path": "/estimating/reviews",
+     "rank": 50,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/estimating/estimates/[id]/review",
+     "title": "Saved estimate review",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/estimates/[id]/review",
+     "rank": 50,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:excel-import",
+     "title": "Excel estimate import and review",
+     "kind": "scope",
+     "module": "ES",
+     "path": "/estimating/import",
+     "rank": 51,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:ES-05",
+     "title": "Quotation approval, issue and distribution",
+     "kind": "scope",
+     "module": "ES",
+     "path": "/estimating/quotes",
+     "rank": 52,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/estimating/quotes",
+     "title": "Quotations",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/quotes",
+     "rank": 52,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/estimating/quotes/[id]/release",
+     "title": "Synthetic quotation release",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/quotes/[id]/release",
+     "rank": 52,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:ES-06",
+     "title": "Quotation response and negotiation",
+     "kind": "scope",
+     "module": "ES",
+     "path": "/estimating/quotes?tab=responses",
+     "rank": 53,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/estimating/quotes/[id]/response",
+     "title": "Quotation response and negotiation",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/quotes/[id]/response",
+     "rank": 53,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:ES-07",
+     "title": "Receiving, one-off resolution and controlled conversion",
+     "kind": "scope",
+     "module": "ES",
+     "path": "/estimating/quotes/[id]/conversion",
+     "rank": 54,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/estimating/quotes/[id]/conversion",
+     "title": "Receiving, one-off resolution and controlled conversion",
+     "kind": "route",
+     "module": "ES",
+     "path": "/estimating/quotes/[id]/conversion",
+     "rank": 54,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:CR-03",
+     "title": "Won-deal receiving handover",
+     "kind": "scope",
+     "module": "CR",
+     "path": "/sales/handoffs/won",
+     "rank": 55,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/sales/handoffs/won",
+     "title": "Won-deal receiving handover worklist",
+     "kind": "route",
+     "module": "CR",
+     "path": "/sales/handoffs/won",
+     "rank": 55,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with CR-03"
+    },
+    {
+     "key": "route:/sales/handoffs/won/[id]",
+     "title": "Won-deal receiving handover record",
+     "kind": "route",
+     "module": "CR",
+     "path": "/sales/handoffs/won/[id]",
+     "rank": 55,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with CR-03"
+    }
+   ]
+  },
+  {
+   "id": "04",
+   "title": "Service, job packs and field quality",
+   "reason": "Extend the existing service spine. Finish job-pack preparation and controlled forms, then inspections, report review, follow-up and remote diagnosis. Retain the existing planner and field execution.",
+   "ranks": [
+    56,
+    69
+   ],
+   "depends_on": [
+    "00",
+    "01",
+    "02"
+   ],
+   "counts": {
+    "build": 1,
+    "refine": 17,
+    "review": 17,
+    "decide": 0
+   },
+   "scopes": 14,
+   "routes": 21,
+   "systems": 0,
+   "entries": [
+    {
+     "key": "scope:SV-01",
+     "title": "Service desk and triage worklist",
+     "kind": "scope",
+     "module": "SV",
+     "path": "/service/tickets",
+     "rank": 56,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/service/tickets",
+     "title": "Service request register",
+     "kind": "route",
+     "module": "SV",
+     "path": "/service/tickets",
+     "rank": 56,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/service/tickets/new",
+     "title": "Create service request",
+     "kind": "route",
+     "module": "SV",
+     "path": "/service/tickets/new",
+     "rank": 56,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:SV-02",
+     "title": "Request detail and communication timeline",
+     "kind": "scope",
+     "module": "SV",
+     "path": "/service/tickets",
+     "rank": 57,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/service/tickets/[id]",
+     "title": "Service request detail",
+     "kind": "route",
+     "module": "SV",
+     "path": "/service/tickets/[id]",
+     "rank": 57,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:SV-03",
+     "title": "Work-order register and scope workspace",
+     "kind": "scope",
+     "module": "SV",
+     "path": "/service/work-orders",
+     "rank": 58,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/service/work-orders",
+     "title": "Work order register",
+     "kind": "route",
+     "module": "SV",
+     "path": "/service/work-orders",
+     "rank": 58,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/service/work-orders/[id]",
+     "title": "Work order detail",
+     "kind": "route",
+     "module": "SV",
+     "path": "/service/work-orders/[id]",
+     "rank": 58,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/service/work-orders/new",
+     "title": "Create work order",
+     "kind": "route",
+     "module": "SV",
+     "path": "/service/work-orders/new",
+     "rank": 58,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:PL-02",
+     "title": "Resource availability and competence",
+     "kind": "scope",
+     "module": "PL",
+     "path": "/service/technicians",
+     "rank": 59,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/service/technicians",
+     "title": "Field technicians",
+     "kind": "route",
+     "module": "PL",
+     "path": "/service/technicians",
+     "rank": 59,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/service/technicians/[id]",
+     "title": "Resource detail",
+     "kind": "route",
+     "module": "PL",
+     "path": "/service/technicians/[id]",
+     "rank": 59,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with PL-02"
+    },
+    {
+     "key": "scope:PL-04",
+     "title": "Rescheduling and acknowledgement centre",
+     "kind": "scope",
+     "module": "PL",
+     "path": "/schedule/changes",
+     "rank": 60,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/schedule/changes",
+     "title": "Rescheduling and acknowledgement centre",
+     "kind": "route",
+     "module": "PL",
+     "path": "/schedule/changes",
+     "rank": 60,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with PL-04"
+    },
+    {
+     "key": "route:/schedule/policy-impact",
+     "title": "Scheduling policy impact review",
+     "kind": "route",
+     "module": "PL",
+     "path": "/schedule/policy-impact",
+     "rank": 60,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with PL-04"
+    },
+    {
+     "key": "scope:SV-05",
+     "title": "Job-pack preparation and issue follow-through",
+     "kind": "scope",
+     "module": "SV",
+     "path": "/service/packs",
+     "rank": 61,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/service/packs",
+     "title": "Job pack register",
+     "kind": "route",
+     "module": "SV",
+     "path": "/service/packs",
+     "rank": 61,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/service/packs/[id]",
+     "title": "Job pack detail",
+     "kind": "route",
+     "module": "SV",
+     "path": "/service/packs/[id]",
+     "rank": 61,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/service/packs/new",
+     "title": "Create job pack",
+     "kind": "route",
+     "module": "SV",
+     "path": "/service/packs/new",
+     "rank": 61,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:FI-05",
+     "title": "Site induction, risk and biosecurity review",
+     "kind": "scope",
+     "module": "FI",
+     "path": "/my-jobs/site-readiness",
+     "rank": 62,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:FI-03",
+     "title": "Inspection and commissioning form runner",
+     "kind": "scope",
+     "module": "FI",
+     "path": "/my-jobs/inspections",
+     "rank": 63,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/my-jobs/inspections",
+     "title": "my jobs / inspections",
+     "kind": "route",
+     "module": "FI",
+     "path": "/my-jobs/inspections",
+     "rank": 63,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with FI-03"
+    },
+    {
+     "key": "route:/service/inspections",
+     "title": "service / inspections",
+     "kind": "route",
+     "module": "FI",
+     "path": "/service/inspections",
+     "rank": 63,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with FI-03"
+    },
+    {
+     "key": "scope:FI-04",
+     "title": "Inspection review, defects and retests",
+     "kind": "scope",
+     "module": "FI",
+     "path": "/service/inspections",
+     "rank": 64,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:FI-06",
+     "title": "Incident and corrective-action record",
+     "kind": "scope",
+     "module": "FI",
+     "path": "/service/incidents",
+     "rank": 65,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/service/incidents",
+     "title": "service / incidents",
+     "kind": "route",
+     "module": "FI",
+     "path": "/service/incidents",
+     "rank": 65,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with FI-06"
+    },
+    {
+     "key": "route:/service/incidents/[id]",
+     "title": "service / incidents /  id ",
+     "kind": "route",
+     "module": "FI",
+     "path": "/service/incidents/[id]",
+     "rank": 65,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with FI-06"
+    },
+    {
+     "key": "route:/service/incidents/new",
+     "title": "service / incidents / new",
+     "kind": "route",
+     "module": "FI",
+     "path": "/service/incidents/new",
+     "rank": 65,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with FI-06"
+    },
+    {
+     "key": "scope:SV-06",
+     "title": "Service review and controlled report workspace",
+     "kind": "scope",
+     "module": "SV",
+     "path": "/service/reports",
+     "rank": 66,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/service/reports",
+     "title": "Service review & reports",
+     "kind": "route",
+     "module": "SV",
+     "path": "/service/reports",
+     "rank": 66,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/service/reports/[id]",
+     "title": "Service report detail",
+     "kind": "route",
+     "module": "SV",
+     "path": "/service/reports/[id]",
+     "rank": 66,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:SV-07",
+     "title": "Unresolved findings and follow-up worklist",
+     "kind": "scope",
+     "module": "SV",
+     "path": "/service/findings",
+     "rank": 67,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:SV-08",
+     "title": "Remote diagnosis and OEM escalation",
+     "kind": "scope",
+     "module": "SV",
+     "path": "/service/escalations",
+     "rank": 68,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:PL-05",
+     "title": "Visit route and travel review",
+     "kind": "scope",
+     "module": "PL",
+     "path": "/schedule/travel",
+     "rank": 69,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/schedule/travel",
+     "title": "Visit route and travel review",
+     "kind": "route",
+     "module": "PL",
+     "path": "/schedule/travel",
+     "rank": 69,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with PL-05"
+    }
+   ]
+  },
+  {
+   "id": "05",
+   "title": "Engineering, project delivery and supply",
+   "reason": "Turn accepted scope into controlled design, project baselines, material fulfilment and delivery readiness. Finish with commissioning, customer updates and staged acceptance.",
+   "ranks": [
+    70,
+    96
+   ],
+   "depends_on": [
+    "00",
+    "01",
+    "02",
+    "03",
+    "04"
+   ],
+   "counts": {
+    "build": 5,
+    "refine": 39,
+    "review": 43,
+    "decide": 0
+   },
+   "scopes": 27,
+   "routes": 60,
+   "systems": 0,
+   "entries": [
+    {
+     "key": "scope:EN-01",
+     "title": "Engineering workload and deliverables",
+     "kind": "scope",
+     "module": "EN",
+     "path": "/engineering",
+     "rank": 70,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/engineering",
+     "title": "Engineering workspace",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering",
+     "rank": 70,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/engineering/[id]",
+     "title": "Engineering package",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/[id]",
+     "rank": 70,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:EN-02",
+     "title": "Design basis & interfaces",
+     "kind": "scope",
+     "module": "EN",
+     "path": "/engineering/basis",
+     "rank": 71,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/engineering/[id]/basis",
+     "title": "Design basis & interfaces",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/[id]/basis",
+     "rank": 71,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with EN-02"
+    },
+    {
+     "key": "route:/engineering/[id]/basis/assumptions",
+     "title": "Design basis & interfaces",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/[id]/basis/assumptions",
+     "rank": 71,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with EN-02"
+    },
+    {
+     "key": "route:/engineering/[id]/basis/interfaces",
+     "title": "Design basis & interfaces",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/[id]/basis/interfaces",
+     "rank": 71,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with EN-02"
+    },
+    {
+     "key": "route:/engineering/[id]/basis/requirements",
+     "title": "Design basis & interfaces",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/[id]/basis/requirements",
+     "rank": 71,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with EN-02"
+    },
+    {
+     "key": "route:/engineering/[id]/basis/review",
+     "title": "Design basis & interfaces",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/[id]/basis/review",
+     "rank": 71,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with EN-02"
+    },
+    {
+     "key": "route:/engineering/[id]/basis/sources",
+     "title": "Design basis & interfaces",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/[id]/basis/sources",
+     "rank": 71,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with EN-02"
+    },
+    {
+     "key": "route:/engineering/basis",
+     "title": "Design basis & interfaces",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/basis",
+     "rank": 71,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with EN-02"
+    },
+    {
+     "key": "scope:EN-03",
+     "title": "Drawings & controlled documents",
+     "kind": "scope",
+     "module": "EN",
+     "path": "/engineering/drawings",
+     "rank": 72,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/engineering/[id]/drawings",
+     "title": "Drawings & controlled documents",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/[id]/drawings",
+     "rank": 72,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with EN-03"
+    },
+    {
+     "key": "route:/engineering/[id]/drawings/deliverables",
+     "title": "Drawings & controlled documents",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/[id]/drawings/deliverables",
+     "rank": 72,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with EN-03"
+    },
+    {
+     "key": "route:/engineering/drawings",
+     "title": "Drawings & controlled documents",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/drawings",
+     "rank": 72,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with EN-03"
+    },
+    {
+     "key": "scope:EN-04",
+     "title": "Technical queries & supplier submittals",
+     "kind": "scope",
+     "module": "EN",
+     "path": "/engineering/queries",
+     "rank": 73,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/engineering/[id]/queries",
+     "title": "Technical queries & supplier submittals",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/[id]/queries",
+     "rank": 73,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with EN-04"
+    },
+    {
+     "key": "route:/engineering/[id]/queries/submittals",
+     "title": "Technical queries & supplier submittals",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/[id]/queries/submittals",
+     "rank": 73,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with EN-04"
+    },
+    {
+     "key": "route:/engineering/queries",
+     "title": "Technical queries & supplier submittals",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/queries",
+     "rank": 73,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with EN-04"
+    },
+    {
+     "key": "scope:EN-05",
+     "title": "Technical reviews, issues & transmittals",
+     "kind": "scope",
+     "module": "EN",
+     "path": "/engineering/reviews",
+     "rank": 74,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/engineering/[id]/reviews",
+     "title": "Technical reviews, issues & transmittals",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/[id]/reviews",
+     "rank": 74,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with EN-05"
+    },
+    {
+     "key": "route:/engineering/[id]/reviews/issues",
+     "title": "Technical reviews, issues & transmittals",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/[id]/reviews/issues",
+     "rank": 74,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with EN-05"
+    },
+    {
+     "key": "route:/engineering/reviews",
+     "title": "Technical reviews, issues & transmittals",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/reviews",
+     "rank": 74,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with EN-05"
+    },
+    {
+     "key": "scope:EN-06",
+     "title": "Released materials and substitutions",
+     "kind": "scope",
+     "module": "EN",
+     "path": "/engineering/materials",
+     "rank": 75,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/engineering/[id]/materials",
+     "title": "Materials & substitutions",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/[id]/materials",
+     "rank": 75,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/engineering/[id]/materials/handover",
+     "title": "Materials & substitutions · handover",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/[id]/materials/handover",
+     "rank": 75,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/engineering/[id]/materials/history",
+     "title": "Materials & substitutions · history",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/[id]/materials/history",
+     "rank": 75,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/engineering/[id]/materials/mapping",
+     "title": "Materials & substitutions · mapping",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/[id]/materials/mapping",
+     "rank": 75,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/engineering/[id]/materials/releases",
+     "title": "Materials & substitutions · releases",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/[id]/materials/releases",
+     "rank": 75,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/engineering/[id]/materials/substitutions",
+     "title": "Materials & substitutions · substitutions",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/[id]/materials/substitutions",
+     "rank": 75,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/engineering/materials",
+     "title": "Materials & substitutions",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/materials",
+     "rank": 75,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:EN-07",
+     "title": "Engineering change-impact review",
+     "kind": "scope",
+     "module": "EN",
+     "path": "/engineering/changes",
+     "rank": 76,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/engineering/[id]/changes",
+     "title": "Engineering change review",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/[id]/changes",
+     "rank": 76,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/engineering/[id]/changes/handovers",
+     "title": "Engineering change review · handovers",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/[id]/changes/handovers",
+     "rank": 76,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/engineering/[id]/changes/history",
+     "title": "Engineering change review · history",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/[id]/changes/history",
+     "rank": 76,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/engineering/[id]/changes/impact",
+     "title": "Engineering change review · impact",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/[id]/changes/impact",
+     "rank": 76,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/engineering/[id]/changes/reviews",
+     "title": "Engineering change review · reviews",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/[id]/changes/reviews",
+     "rank": 76,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/engineering/[id]/changes/verification",
+     "title": "Engineering change review · verification",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/[id]/changes/verification",
+     "rank": 76,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/engineering/changes",
+     "title": "Engineering change review",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/changes",
+     "rank": 76,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:PJ-01",
+     "title": "Project initiation and receiving review",
+     "kind": "scope",
+     "module": "PJ",
+     "path": "/projects/new",
+     "rank": 77,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/projects/new",
+     "title": "Create project",
+     "kind": "route",
+     "module": "PJ",
+     "path": "/projects/new",
+     "rank": 77,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:PJ-02",
+     "title": "Project overview and portfolio health",
+     "kind": "scope",
+     "module": "PJ",
+     "path": "/projects",
+     "rank": 78,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/projects",
+     "title": "Project register",
+     "kind": "route",
+     "module": "PJ",
+     "path": "/projects",
+     "rank": 78,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/projects/[id]",
+     "title": "Project detail & Gantt",
+     "kind": "route",
+     "module": "PJ",
+     "path": "/projects/[id]",
+     "rank": 78,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:PJ-03",
+     "title": "Baseline, forecast and dependency review",
+     "kind": "scope",
+     "module": "PJ",
+     "path": "/projects/programme",
+     "rank": 79,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/projects/programme",
+     "title": "Programme",
+     "kind": "route",
+     "module": "PJ",
+     "path": "/projects/programme",
+     "rank": 79,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:PJ-04",
+     "title": "RAID, decisions and project actions",
+     "kind": "scope",
+     "module": "PJ",
+     "path": "/projects/risks",
+     "rank": 80,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:PJ-05",
+     "title": "Contract obligations, notices and variations",
+     "kind": "scope",
+     "module": "PJ",
+     "path": "/projects/commercial",
+     "rank": 81,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:PJ-06",
+     "title": "Subcontractor and specialist packages",
+     "kind": "scope",
+     "module": "PJ",
+     "path": "/projects/subcontracts",
+     "rank": 82,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:SC-01",
+     "title": "Demand and material-readiness workspace",
+     "kind": "scope",
+     "module": "SC",
+     "path": "/supply/material-readiness",
+     "rank": 83,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/supply/material-readiness",
+     "title": "supply / material readiness",
+     "kind": "route",
+     "module": "Unassigned",
+     "path": "/supply/material-readiness",
+     "rank": 83,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with SC-01"
+    },
+    {
+     "key": "scope:SC-02",
+     "title": "Purchasing and supplier commitments",
+     "kind": "scope",
+     "module": "SC",
+     "path": "/supply/purchasing",
+     "rank": 84,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/supply/purchasing",
+     "title": "supply / purchasing",
+     "kind": "route",
+     "module": "Unassigned",
+     "path": "/supply/purchasing",
+     "rank": 84,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with SC-02"
+    },
+    {
+     "key": "scope:SC-03",
+     "title": "Inbound shipments and line allocations",
+     "kind": "scope",
+     "module": "SC",
+     "path": "/supply/shipments",
+     "rank": 85,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/supply/shipments",
+     "title": "supply / shipments",
+     "kind": "route",
+     "module": "Unassigned",
+     "path": "/supply/shipments",
+     "rank": 85,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with SC-03"
+    },
+    {
+     "key": "scope:SC-04",
+     "title": "Receipt, inspection and quarantine",
+     "kind": "scope",
+     "module": "SC",
+     "path": "/supply/receipts",
+     "rank": 86,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/supply/receipts",
+     "title": "supply / receipts",
+     "kind": "route",
+     "module": "Unassigned",
+     "path": "/supply/receipts",
+     "rank": 86,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with SC-04"
+    },
+    {
+     "key": "scope:SC-05",
+     "title": "Stock availability and reservations",
+     "kind": "scope",
+     "module": "SC",
+     "path": "/supply/stock",
+     "rank": 87,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/supply/stock",
+     "title": "supply / stock",
+     "kind": "route",
+     "module": "Unassigned",
+     "path": "/supply/stock",
+     "rank": 87,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with SC-05"
+    },
+    {
+     "key": "scope:SC-06",
+     "title": "Picking and dispatch preparation",
+     "kind": "scope",
+     "module": "SC",
+     "path": "/supply/dispatch",
+     "rank": 88,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/supply/dispatch",
+     "title": "supply / dispatch",
+     "kind": "route",
+     "module": "Unassigned",
+     "path": "/supply/dispatch",
+     "rank": 88,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with SC-06"
+    },
+    {
+     "key": "scope:SC-07",
+     "title": "Customer delivery and proof of delivery",
+     "kind": "scope",
+     "module": "SC",
+     "path": "/supply/deliveries",
+     "rank": 89,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/supply/deliveries",
+     "title": "supply / deliveries",
+     "kind": "route",
+     "module": "Unassigned",
+     "path": "/supply/deliveries",
+     "rank": 89,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with SC-07"
+    },
+    {
+     "key": "scope:SC-08",
+     "title": "Returns, supplier claims and credit tracking",
+     "kind": "scope",
+     "module": "SC",
+     "path": "/supply/returns",
+     "rank": 90,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/supply/returns",
+     "title": "supply / returns",
+     "kind": "route",
+     "module": "Unassigned",
+     "path": "/supply/returns",
+     "rank": 90,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with SC-08"
+    },
+    {
+     "key": "scope:SC-09",
+     "title": "Material change-impact review",
+     "kind": "scope",
+     "module": "SC",
+     "path": "/supply/changes",
+     "rank": 91,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/supply/changes",
+     "title": "supply / changes",
+     "kind": "route",
+     "module": "Unassigned",
+     "path": "/supply/changes",
+     "rank": 91,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with SC-09"
+    },
+    {
+     "key": "scope:SC-10",
+     "title": "Service stock custody and job reconciliation",
+     "kind": "scope",
+     "module": "SC",
+     "path": "/supply/service-stock",
+     "rank": 92,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/supply/service-stock",
+     "title": "supply / service stock",
+     "kind": "route",
+     "module": "Unassigned",
+     "path": "/supply/service-stock",
+     "rank": 92,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with SC-10"
+    },
+    {
+     "key": "scope:PJ-07",
+     "title": "Readiness and change-impact review",
+     "kind": "scope",
+     "module": "PJ",
+     "path": "/projects/readiness",
+     "rank": 93,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:EN-08",
+     "title": "Commissioning basis and as-built release",
+     "kind": "scope",
+     "module": "EN",
+     "path": "/engineering/commissioning",
+     "rank": 94,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/engineering/commissioning",
+     "title": "Commissioning & as-built",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/commissioning",
+     "rank": 94,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/engineering/commissioning/basis",
+     "title": "Commissioning & as-built · basis",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/commissioning/basis",
+     "rank": 94,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/engineering/commissioning/configuration",
+     "title": "Commissioning & as-built · configuration",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/commissioning/configuration",
+     "rank": 94,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/engineering/commissioning/handovers",
+     "title": "Commissioning & as-built · handovers",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/commissioning/handovers",
+     "rank": 94,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/engineering/commissioning/packages/[id]",
+     "title": "Commissioning & as-built · packages / [id]",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/commissioning/packages/[id]",
+     "rank": 94,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/engineering/commissioning/releases",
+     "title": "Commissioning & as-built · releases",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/commissioning/releases",
+     "rank": 94,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/engineering/commissioning/results",
+     "title": "Commissioning & as-built · results",
+     "kind": "route",
+     "module": "EN",
+     "path": "/engineering/commissioning/results",
+     "rank": 94,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:PJ-08",
+     "title": "Stakeholder update preparation and publication",
+     "kind": "scope",
+     "module": "PJ",
+     "path": "/projects/updates",
+     "rank": 95,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:PJ-09",
+     "title": "Staged acceptance and closeout",
+     "kind": "scope",
+     "module": "PJ",
+     "path": "/projects/acceptance",
+     "rank": 96,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/projects/acceptance",
+     "title": "Project acceptance & closeout",
+     "kind": "route",
+     "module": "PJ",
+     "path": "/projects/acceptance",
+     "rank": 96,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/projects/acceptance/closeout",
+     "title": "Project acceptance & closeout · closeout",
+     "kind": "route",
+     "module": "PJ",
+     "path": "/projects/acceptance/closeout",
+     "rank": 96,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/projects/acceptance/handover",
+     "title": "Project acceptance & closeout · handover",
+     "kind": "route",
+     "module": "PJ",
+     "path": "/projects/acceptance/handover",
+     "rank": 96,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/projects/acceptance/history",
+     "title": "Project acceptance & closeout · history",
+     "kind": "route",
+     "module": "PJ",
+     "path": "/projects/acceptance/history",
+     "rank": 96,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/projects/acceptance/outstanding",
+     "title": "Project acceptance & closeout · outstanding",
+     "kind": "route",
+     "module": "PJ",
+     "path": "/projects/acceptance/outstanding",
+     "rank": 96,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/projects/acceptance/readiness",
+     "title": "Project acceptance & closeout · readiness",
+     "kind": "route",
+     "module": "PJ",
+     "path": "/projects/acceptance/readiness",
+     "rank": 96,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/projects/acceptance/stages/[id]",
+     "title": "Project acceptance & closeout · stages / [id]",
+     "kind": "route",
+     "module": "PJ",
+     "path": "/projects/acceptance/stages/[id]",
+     "rank": 96,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    }
+   ]
+  },
+  {
+   "id": "06",
+   "title": "Finance, maintenance and customer lifecycle",
+   "reason": "Connect trustworthy delivery evidence to Finance, agreement coverage, recurring maintenance, warranty, renewals and whole-business resource capacity.",
+   "ranks": [
+    97,
+    115
+   ],
+   "depends_on": [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05"
+   ],
+   "counts": {
+    "build": 5,
+    "refine": 7,
+    "review": 32,
+    "decide": 0
+   },
+   "scopes": 19,
+   "routes": 25,
+   "systems": 0,
+   "entries": [
+    {
+     "key": "scope:FN-01",
+     "title": "Finance workspace and service-handoff follow-through",
+     "kind": "scope",
+     "module": "FN",
+     "path": "/finance/handoffs",
+     "rank": 97,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/finance/handoffs",
+     "title": "Finance handoff queue",
+     "kind": "route",
+     "module": "FN",
+     "path": "/finance/handoffs",
+     "rank": 97,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/finance/handoffs/[id]",
+     "title": "Finance handoff detail",
+     "kind": "route",
+     "module": "FN",
+     "path": "/finance/handoffs/[id]",
+     "rank": 97,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/finance/handoffs/new",
+     "title": "Create Finance handoff",
+     "kind": "route",
+     "module": "FN",
+     "path": "/finance/handoffs/new",
+     "rank": 97,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:FN-02",
+     "title": "Customer accounts, applications and exceptions",
+     "kind": "scope",
+     "module": "FN",
+     "path": "/finance/accounts",
+     "rank": 98,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/customers/[id]/account",
+     "title": "Customer Finance account",
+     "kind": "route",
+     "module": "FN",
+     "path": "/customers/[id]/account",
+     "rank": 98,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/finance/accounts",
+     "title": "Customer accounts",
+     "kind": "route",
+     "module": "FN",
+     "path": "/finance/accounts",
+     "rank": 98,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:FN-03",
+     "title": "Project financial performance",
+     "kind": "scope",
+     "module": "FN",
+     "path": "/finance/projects",
+     "rank": 99,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:FN-04",
+     "title": "Milestone claims and commercial obligations",
+     "kind": "scope",
+     "module": "FN",
+     "path": "/finance/claims",
+     "rank": 100,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:FN-05",
+     "title": "Cash timing and commercial outlook",
+     "kind": "scope",
+     "module": "FN",
+     "path": "/finance/outlook",
+     "rank": 101,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:ES-09",
+     "title": "Estimate-to-actual outcome review",
+     "kind": "scope",
+     "module": "ES",
+     "path": "/estimating/outcomes",
+     "rank": 102,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:ES-10",
+     "title": "Reference cases and calibration proposals",
+     "kind": "scope",
+     "module": "ES",
+     "path": "/estimating/reference-cases",
+     "rank": 103,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:MA-01",
+     "title": "Service agreements",
+     "kind": "scope",
+     "module": "MA",
+     "path": "/maintenance/agreements",
+     "rank": 104,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/maintenance/agreements",
+     "title": "Service agreements",
+     "kind": "route",
+     "module": "MA",
+     "path": "/maintenance/agreements",
+     "rank": 104,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with MA-01"
+    },
+    {
+     "key": "route:/maintenance/agreements/[id]",
+     "title": "Service agreements detail",
+     "kind": "route",
+     "module": "MA",
+     "path": "/maintenance/agreements/[id]",
+     "rank": 104,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with MA-01"
+    },
+    {
+     "key": "scope:MA-02",
+     "title": "Coverage and entitlement",
+     "kind": "scope",
+     "module": "MA",
+     "path": "/maintenance/coverage",
+     "rank": 105,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/maintenance/coverage",
+     "title": "Coverage and entitlement",
+     "kind": "route",
+     "module": "MA",
+     "path": "/maintenance/coverage",
+     "rank": 105,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with MA-02"
+    },
+    {
+     "key": "route:/maintenance/coverage/[id]",
+     "title": "Coverage and entitlement detail",
+     "kind": "route",
+     "module": "MA",
+     "path": "/maintenance/coverage/[id]",
+     "rank": 105,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with MA-02"
+    },
+    {
+     "key": "scope:MA-03",
+     "title": "Maintenance plans",
+     "kind": "scope",
+     "module": "MA",
+     "path": "/maintenance/plans",
+     "rank": 106,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/maintenance/plans",
+     "title": "Maintenance plans",
+     "kind": "route",
+     "module": "MA",
+     "path": "/maintenance/plans",
+     "rank": 106,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with MA-03"
+    },
+    {
+     "key": "route:/maintenance/plans/[id]",
+     "title": "Maintenance plans detail",
+     "kind": "route",
+     "module": "MA",
+     "path": "/maintenance/plans/[id]",
+     "rank": 106,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with MA-03"
+    },
+    {
+     "key": "scope:MA-04",
+     "title": "Due maintenance",
+     "kind": "scope",
+     "module": "MA",
+     "path": "/maintenance/due",
+     "rank": 107,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/maintenance/due",
+     "title": "Due maintenance",
+     "kind": "route",
+     "module": "MA",
+     "path": "/maintenance/due",
+     "rank": 107,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with MA-04"
+    },
+    {
+     "key": "route:/maintenance/due/[id]",
+     "title": "Due maintenance detail",
+     "kind": "route",
+     "module": "MA",
+     "path": "/maintenance/due/[id]",
+     "rank": 107,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with MA-04"
+    },
+    {
+     "key": "scope:MA-05",
+     "title": "Renewals and relationship review",
+     "kind": "scope",
+     "module": "MA",
+     "path": "/maintenance/renewals",
+     "rank": 108,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/maintenance/renewals",
+     "title": "Renewals and relationship review",
+     "kind": "route",
+     "module": "MA",
+     "path": "/maintenance/renewals",
+     "rank": 108,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with MA-05"
+    },
+    {
+     "key": "route:/maintenance/renewals/[id]",
+     "title": "Renewals and relationship review detail",
+     "kind": "route",
+     "module": "MA",
+     "path": "/maintenance/renewals/[id]",
+     "rank": 108,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with MA-05"
+    },
+    {
+     "key": "scope:MA-06",
+     "title": "Warranty cases",
+     "kind": "scope",
+     "module": "MA",
+     "path": "/warranty/cases",
+     "rank": 109,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/warranty/cases",
+     "title": "Warranty cases",
+     "kind": "route",
+     "module": "MA",
+     "path": "/warranty/cases",
+     "rank": 109,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with MA-06"
+    },
+    {
+     "key": "route:/warranty/cases/[id]",
+     "title": "Warranty cases detail",
+     "kind": "route",
+     "module": "MA",
+     "path": "/warranty/cases/[id]",
+     "rank": 109,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with MA-06"
+    },
+    {
+     "key": "scope:MA-07",
+     "title": "Supplier recovery",
+     "kind": "scope",
+     "module": "MA",
+     "path": "/warranty/supplier-recovery",
+     "rank": 110,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/warranty/supplier-recovery",
+     "title": "Supplier recovery",
+     "kind": "route",
+     "module": "MA",
+     "path": "/warranty/supplier-recovery",
+     "rank": 110,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with MA-07"
+    },
+    {
+     "key": "route:/warranty/supplier-recovery/[id]",
+     "title": "Supplier recovery detail",
+     "kind": "route",
+     "module": "MA",
+     "path": "/warranty/supplier-recovery/[id]",
+     "rank": 110,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with MA-07"
+    },
+    {
+     "key": "scope:CR-05",
+     "title": "Sales aftercare and renewal worklist",
+     "kind": "scope",
+     "module": "CR",
+     "path": "/sales/aftercare",
+     "rank": 111,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/sales/aftercare",
+     "title": "Sales aftercare and renewal worklist worklist",
+     "kind": "route",
+     "module": "CR",
+     "path": "/sales/aftercare",
+     "rank": 111,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with CR-05"
+    },
+    {
+     "key": "route:/sales/aftercare/[id]",
+     "title": "Sales aftercare and renewal worklist record",
+     "kind": "route",
+     "module": "CR",
+     "path": "/sales/aftercare/[id]",
+     "rank": 111,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with CR-05"
+    },
+    {
+     "key": "scope:CS-07",
+     "title": "Account development and visit plan",
+     "kind": "scope",
+     "module": "CS",
+     "path": "/customers/[id]/development",
+     "rank": 112,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/customers/[id]/development",
+     "title": "customers /  id  / development",
+     "kind": "route",
+     "module": "CS",
+     "path": "/customers/[id]/development",
+     "rank": 112,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with CS-07"
+    },
+    {
+     "key": "scope:EQ-06",
+     "title": "Service bulletin applicability",
+     "kind": "scope",
+     "module": "EQ",
+     "path": "/equipment/bulletins",
+     "rank": 113,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/equipment/bulletins",
+     "title": "Service bulletin applicability - native route",
+     "kind": "route",
+     "module": "EQ",
+     "path": "/equipment/bulletins",
+     "rank": 113,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with EQ-06"
+    },
+    {
+     "key": "scope:EQ-07",
+     "title": "Support lifecycle and obsolescence",
+     "kind": "scope",
+     "module": "EQ",
+     "path": "/equipment/lifecycle",
+     "rank": 114,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/equipment/lifecycle",
+     "title": "Support lifecycle and obsolescence - native route",
+     "kind": "route",
+     "module": "EQ",
+     "path": "/equipment/lifecycle",
+     "rank": 114,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with EQ-07"
+    },
+    {
+     "key": "scope:PL-03",
+     "title": "Cross-domain resource demand and capacity",
+     "kind": "scope",
+     "module": "PL",
+     "path": "/schedule/capacity",
+     "rank": 115,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/schedule/capacity",
+     "title": "Cross-domain resource demand and capacity",
+     "kind": "route",
+     "module": "PL",
+     "path": "/schedule/capacity",
+     "rank": 115,
+     "state": "review",
+     "visual_review": "Pending",
+     "placement": "Added after r05; placed with PL-03"
+    }
+   ]
+  },
+  {
+   "id": "07",
+   "title": "Connected communications and knowledge",
+   "reason": "Add live mailbox/calendar connection and controlled communication workflows, then publish reusable knowledge from established operational records.",
+   "ranks": [
+    116,
+    121
+   ],
+   "depends_on": [
+    "00",
+    "01"
+   ],
+   "counts": {
+    "build": 4,
+    "refine": 5,
+    "review": 0,
+    "decide": 0
+   },
+   "scopes": 6,
+   "routes": 3,
+   "systems": 0,
+   "entries": [
+    {
+     "key": "scope:EC-02",
+     "title": "Mailbox connection and synchronisation status",
+     "kind": "scope",
+     "module": "EC",
+     "path": "/email/connections",
+     "rank": 116,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:EC-01",
+     "title": "Connected inbox and record-linking review",
+     "kind": "scope",
+     "module": "EC",
+     "path": "/email",
+     "rank": 117,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/email",
+     "title": "Email inbox",
+     "kind": "route",
+     "module": "EC",
+     "path": "/email",
+     "rank": 117,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/email/[id]",
+     "title": "Email detail",
+     "kind": "route",
+     "module": "EC",
+     "path": "/email/[id]",
+     "rank": 117,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:EC-03",
+     "title": "Calendar and activity coordination",
+     "kind": "scope",
+     "module": "EC",
+     "path": "/calendar",
+     "rank": 118,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "route:/calendar",
+     "title": "Calendar",
+     "kind": "route",
+     "module": "EC",
+     "path": "/calendar",
+     "rank": 118,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:EC-04",
+     "title": "Communication draft, approval and delivery review",
+     "kind": "scope",
+     "module": "EC",
+     "path": "/email/drafts",
+     "rank": 119,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:DK-04",
+     "title": "Knowledge search and article detail",
+     "kind": "scope",
+     "module": "DK",
+     "path": "/knowledge",
+     "rank": 120,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:DK-05",
+     "title": "Knowledge authoring, review and learning intake",
+     "kind": "scope",
+     "module": "DK",
+     "path": "/knowledge/review",
+     "rank": 121,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    }
+   ]
+  },
+  {
+   "id": "08",
+   "title": "Reporting and customer access",
+   "reason": "Define governed reporting on established data and expose reviewed information through the customer portal with organisation/site access boundaries.",
+   "ranks": [
+    122,
+    133
+   ],
+   "depends_on": [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07"
+   ],
+   "counts": {
+    "build": 12,
+    "refine": 0,
+    "review": 0,
+    "decide": 0
+   },
+   "scopes": 12,
+   "routes": 0,
+   "systems": 0,
+   "entries": [
+    {
+     "key": "scope:RP-06",
+     "title": "Report definition, saved views and scheduled review",
+     "kind": "scope",
+     "module": "RP",
+     "path": "/reports/definitions",
+     "rank": 122,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:RP-01",
+     "title": "Management overview and report catalogue",
+     "kind": "scope",
+     "module": "RP",
+     "path": "/reports",
+     "rank": 123,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:RP-02",
+     "title": "Sales and quotation performance",
+     "kind": "scope",
+     "module": "RP",
+     "path": "/reports/sales",
+     "rank": 124,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:RP-03",
+     "title": "Engineering and project delivery performance",
+     "kind": "scope",
+     "module": "RP",
+     "path": "/reports/delivery",
+     "rank": 125,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:RP-04",
+     "title": "Service, maintenance and resource performance",
+     "kind": "scope",
+     "module": "RP",
+     "path": "/reports/service",
+     "rank": 126,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:RP-05",
+     "title": "Supply and Finance trust/exceptions",
+     "kind": "scope",
+     "module": "RP",
+     "path": "/reports/reconciliation",
+     "rank": 127,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:CP-01",
+     "title": "Portal home, organisation/site selection and access",
+     "kind": "scope",
+     "module": "CP",
+     "path": "/portal",
+     "rank": 128,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:CP-02",
+     "title": "Customer support request and conversation",
+     "kind": "scope",
+     "module": "CP",
+     "path": "/portal/support",
+     "rank": 129,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:CP-03",
+     "title": "Published project updates and customer actions",
+     "kind": "scope",
+     "module": "CP",
+     "path": "/portal/projects",
+     "rank": 130,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:CP-04",
+     "title": "Customer equipment, documents and service reports",
+     "kind": "scope",
+     "module": "CP",
+     "path": "/portal/equipment",
+     "rank": 131,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:CP-05",
+     "title": "Customer knowledge and guided support",
+     "kind": "scope",
+     "module": "CP",
+     "path": "/portal/knowledge",
+     "rank": 132,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:CP-06",
+     "title": "Customer quotation, variation and account views",
+     "kind": "scope",
+     "module": "CP",
+     "path": "/portal/commercial",
+     "rank": 133,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    }
+   ]
+  },
+  {
+   "id": "09",
+   "title": "Evidence-based assistance",
+   "reason": "Build answer evidence and permissions before assistant proposals, drafting, voice and recurring checks. Reuse the established approval and notification paths.",
+   "ranks": [
+    134,
+    140
+   ],
+   "depends_on": [
+    "01",
+    "07"
+   ],
+   "counts": {
+    "build": 7,
+    "refine": 0,
+    "review": 0,
+    "decide": 0
+   },
+   "scopes": 7,
+   "routes": 0,
+   "systems": 0,
+   "entries": [
+    {
+     "key": "scope:AI-03",
+     "title": "Source and answer evidence inspection",
+     "kind": "scope",
+     "module": "AI",
+     "path": "/assistant/evidence",
+     "rank": 134,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:AI-01",
+     "title": "Assistant workspace and docked/mobile conversation",
+     "kind": "scope",
+     "module": "AI",
+     "path": "/assistant",
+     "rank": 135,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:AI-02",
+     "title": "AI proposal review and saved outcomes",
+     "kind": "scope",
+     "module": "AI",
+     "path": "/assistant/proposals",
+     "rank": 136,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:AI-04",
+     "title": "Domain assistance and drafting flows",
+     "kind": "scope",
+     "module": "AI",
+     "path": "/assistant/drafts",
+     "rank": 137,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:AI-05",
+     "title": "Voice capture and transcript review",
+     "kind": "scope",
+     "module": "AI",
+     "path": "/assistant/voice",
+     "rank": 138,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:AI-06",
+     "title": "AI assistance settings and quality review",
+     "kind": "scope",
+     "module": "AI",
+     "path": "/assistant/settings",
+     "rank": 139,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:AI-07",
+     "title": "Recurring checks and automation review",
+     "kind": "scope",
+     "module": "AI",
+     "path": "/assistant/automations",
+     "rank": 140,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    }
+   ]
+  },
+  {
+   "id": "10",
+   "title": "Cutover and full-app adoption",
+   "reason": "Consolidate retention, migration rehearsal, onboarding and complete help coverage. Apply relevant access, retention, testing and page-help requirements during every earlier phase; this is the final cross-app consolidation.",
+   "ranks": [
+    141,
+    144
+   ],
+   "depends_on": [
+    "01",
+    "07",
+    "08"
+   ],
+   "counts": {
+    "build": 3,
+    "refine": 1,
+    "review": 0,
+    "decide": 0
+   },
+   "scopes": 4,
+   "routes": 0,
+   "systems": 0,
+   "entries": [
+    {
+     "key": "scope:AD-08",
+     "title": "Retention and information lifecycle",
+     "kind": "scope",
+     "module": "AD",
+     "path": "/admin/retention",
+     "rank": 141,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:AD-06",
+     "title": "Migration, coexistence and cutover workbench",
+     "kind": "scope",
+     "module": "AD",
+     "path": "/admin/migration",
+     "rank": 142,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:AD-10",
+     "title": "User onboarding, learning and support",
+     "kind": "scope",
+     "module": "AD",
+     "path": "/help/onboarding",
+     "rank": 143,
+     "state": "build",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:DK-07",
+     "title": "Page guides and contextual help coverage",
+     "kind": "scope",
+     "module": "DK",
+     "path": "/help",
+     "rank": 144,
+     "state": "refine",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    }
+   ]
+  },
+  {
+   "id": "11",
+   "title": "Conditional future options",
+   "reason": "Provisional order only. Start these ideas after a separate scope decision and confirmation that their prerequisites are available.",
+   "ranks": [
+    145,
+    150
+   ],
+   "depends_on": [
+    "01",
+    "02",
+    "04",
+    "05",
+    "07",
+    "08"
+   ],
+   "counts": {
+    "build": 0,
+    "refine": 0,
+    "review": 0,
+    "decide": 6
+   },
+   "scopes": 6,
+   "routes": 0,
+   "systems": 0,
+   "entries": [
+    {
+     "key": "scope:CX-01",
+     "title": "Company tools, loan units and calibration",
+     "kind": "scope",
+     "module": "CX",
+     "path": "/assets/tools",
+     "rank": 145,
+     "state": "decide",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:CX-02",
+     "title": "Workshop assembly, testing and rework",
+     "kind": "scope",
+     "module": "CX",
+     "path": "/workshop",
+     "rank": 146,
+     "state": "decide",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:CX-03",
+     "title": "Remote monitoring and alarm review",
+     "kind": "scope",
+     "module": "CX",
+     "path": "/monitoring",
+     "rank": 147,
+     "state": "decide",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:CX-04",
+     "title": "Advanced customer training and subscription coordination",
+     "kind": "scope",
+     "module": "CX",
+     "path": "/training",
+     "rank": 148,
+     "state": "decide",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:CX-05",
+     "title": "Grower production and traceability integration",
+     "kind": "scope",
+     "module": "CX",
+     "path": "/integrations/grower-production",
+     "rank": 149,
+     "state": "decide",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    },
+    {
+     "key": "scope:CX-06",
+     "title": "Water and energy improvement review",
+     "kind": "scope",
+     "module": "CX",
+     "path": "/improvement",
+     "rank": 150,
+     "state": "decide",
+     "visual_review": "Pending",
+     "placement": "Issued r02 rank"
+    }
+   ]
+  }
+ ],
+ "excluded": [
+  {
+   "key": "route:/development/design-system",
+   "title": "Component catalogue",
+   "reason": "Development tooling, not a business page"
+  },
+  {
+   "key": "route:/development/page-register",
+   "title": "Design & build register",
+   "reason": "Development tooling, not a business page"
+  },
+  {
+   "key": "route:/development/component-preview",
+   "title": "Component preview",
+   "reason": "Development tooling, not a business page"
+  }
+ ],
+ "journey": [
+  {
+   "step": "Customer, contacts and site recorded",
+   "scopes": [
+    {
+     "key": "scope:CS-01",
+     "phase": "01",
+     "state": "review"
+    },
+    {
+     "key": "scope:CS-02",
+     "phase": "01",
+     "state": "review"
+    },
+    {
+     "key": "scope:CS-04",
+     "phase": "01",
+     "state": "review"
+    }
+   ]
+  },
+  {
+   "step": "Site survey and as-found brief",
+   "scopes": [
+    {
+     "key": "scope:CS-08",
+     "phase": "02",
+     "state": "review"
+    }
+   ]
+  },
+  {
+   "step": "Lead qualified into a deal",
+   "scopes": [
+    {
+     "key": "scope:CR-01",
+     "phase": "03",
+     "state": "review"
+    }
+   ]
+  },
+  {
+   "step": "Handover to estimating and estimate prepared",
+   "scopes": [
+    {
+     "key": "scope:CR-02",
+     "phase": "03",
+     "state": "review"
+    },
+    {
+     "key": "scope:ES-01",
+     "phase": "03",
+     "state": "refine"
+    },
+    {
+     "key": "scope:ES-02",
+     "phase": "03",
+     "state": "refine"
+    },
+    {
+     "key": "scope:ES-03",
+     "phase": "03",
+     "state": "review"
+    }
+   ]
+  },
+  {
+   "step": "Estimate reviewed; quotation issued and answered",
+   "scopes": [
+    {
+     "key": "scope:ES-04",
+     "phase": "03",
+     "state": "review"
+    },
+    {
+     "key": "scope:ES-05",
+     "phase": "03",
+     "state": "review"
+    },
+    {
+     "key": "scope:ES-06",
+     "phase": "03",
+     "state": "review"
+    }
+   ]
+  },
+  {
+   "step": "Deal won and received for delivery",
+   "scopes": [
+    {
+     "key": "scope:CR-03",
+     "phase": "03",
+     "state": "review"
+    },
+    {
+     "key": "scope:ES-07",
+     "phase": "03",
+     "state": "review"
+    }
+   ]
+  },
+  {
+   "step": "Project initiated and baselined",
+   "scopes": [
+    {
+     "key": "scope:PJ-01",
+     "phase": "05",
+     "state": "refine"
+    },
+    {
+     "key": "scope:PJ-03",
+     "phase": "05",
+     "state": "refine"
+    }
+   ]
+  },
+  {
+   "step": "Design basis and released materials",
+   "scopes": [
+    {
+     "key": "scope:EN-02",
+     "phase": "05",
+     "state": "review"
+    },
+    {
+     "key": "scope:EN-06",
+     "phase": "05",
+     "state": "review"
+    }
+   ]
+  },
+  {
+   "step": "Materials purchased, received and delivered",
+   "scopes": [
+    {
+     "key": "scope:SC-02",
+     "phase": "05",
+     "state": "review"
+    },
+    {
+     "key": "scope:SC-04",
+     "phase": "05",
+     "state": "review"
+    },
+    {
+     "key": "scope:SC-06",
+     "phase": "05",
+     "state": "review"
+    },
+    {
+     "key": "scope:SC-07",
+     "phase": "05",
+     "state": "review"
+    }
+   ]
+  },
+  {
+   "step": "Installed, commissioned and accepted",
+   "scopes": [
+    {
+     "key": "scope:EN-08",
+     "phase": "05",
+     "state": "review"
+    },
+    {
+     "key": "scope:FI-03",
+     "phase": "04",
+     "state": "review"
+    },
+    {
+     "key": "scope:PJ-09",
+     "phase": "05",
+     "state": "refine"
+    }
+   ]
+  },
+  {
+   "step": "Service agreement and maintenance plan",
+   "scopes": [
+    {
+     "key": "scope:MA-01",
+     "phase": "06",
+     "state": "review"
+    },
+    {
+     "key": "scope:MA-03",
+     "phase": "06",
+     "state": "review"
+    }
+   ]
+  },
+  {
+   "step": "Service request to scheduled field visit",
+   "scopes": [
+    {
+     "key": "scope:SV-01",
+     "phase": "04",
+     "state": "refine"
+    },
+    {
+     "key": "scope:SV-03",
+     "phase": "04",
+     "state": "refine"
+    },
+    {
+     "key": "scope:PL-01",
+     "phase": "00",
+     "state": "review"
+    },
+    {
+     "key": "scope:FI-01",
+     "phase": "00",
+     "state": "review"
+    }
+   ]
+  },
+  {
+   "step": "Service report reviewed and answered",
+   "scopes": [
+    {
+     "key": "scope:SV-06",
+     "phase": "04",
+     "state": "refine"
+    },
+    {
+     "key": "scope:FI-07",
+     "phase": "00",
+     "state": "review"
+    }
+   ]
+  },
+  {
+   "step": "Finance handoff and customer account",
+   "scopes": [
+    {
+     "key": "scope:FN-01",
+     "phase": "06",
+     "state": "refine"
+    },
+    {
+     "key": "scope:FN-02",
+     "phase": "06",
+     "state": "refine"
+    }
+   ]
+  },
+  {
+   "step": "Management reporting",
+   "scopes": [
+    {
+     "key": "scope:RP-01",
+     "phase": "08",
+     "state": "build"
+    }
+   ]
+  }
+ ]
+}

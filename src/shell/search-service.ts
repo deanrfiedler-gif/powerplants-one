@@ -1,5 +1,7 @@
 import type { Principal } from "../platform/identity";
 import { AppError, unavailable } from "../platform/errors";
+import { database } from "../platform/database";
+import { requireCapability } from "../platform/permissions";
 import { object, uuid, invalid } from "../shared/validation";
 import { listShared, readShared, siteContext } from "../shared/reads";
 import {
@@ -13,6 +15,8 @@ import { listOpportunities } from "../crm/worklist";
 import { readOpportunity } from "../crm/reads";
 import { listActivities, readActivity } from "../activities/activities";
 import { listTickets, readIntake } from "../service/intake";
+import { listWorkOrders, readWorkOrder } from "../service/work-orders";
+import { listEstimates, readEstimate } from "../estimating/reads";
 import { searchQuery } from "./search";
 import type { SearchItem } from "./model";
 import { listCs, readCs } from "../shared/cs/service";
@@ -48,6 +52,13 @@ export type ApplicationSearch = {
 };
 
 // Registry entries always use domain readers. No stored result, cursor or preview ID is authority.
+// Every record number contains a digit; the estimate register accepts at most 100 search characters.
+export const numberSearch = (q: string, longest = Infinity) => /\d/.test(q) && q.length <= longest;
+// A source with nothing to read for this query still reports denied to someone without access.
+async function none(p: Principal, capability: Parameters<typeof requireCapability>[2]) {
+  await requireCapability(database(), p, capability);
+  return { items: [], next_cursor: null };
+}
 export function searchAdapters(p: Principal): SearchAdapter[] {
   return [
     ...([['Survey','Site survey'],['Readiness','Site readiness'],['AccountPlan','Account development']] as const).map(([kind,label])=>({
@@ -118,6 +129,36 @@ export function searchAdapters(p: Principal): SearchAdapter[] {
       label: "summary",
       list: (q) => listTickets(p, q),
       detail: (id) => readIntake(p, id),
+    },
+    // NR-10: find a record by its number. Both readers match display_number and keep their own
+    // visibility checks. Every record number contains a digit, so a query without one only confirms
+    // access and reads nothing: these sources add no cost to a word search across every source.
+    {
+      kind: "Work order",
+      path: "/service/work-orders",
+      label: "summary",
+      list: async (q) => (numberSearch(q.q) ? listWorkOrders(p, q) : none(p, "service.work_order.read")),
+      detail: async (id) => {
+        const order = (await readWorkOrder(p, id)).items[0] as Row & { scopes: Row[]; scope_revision_id: unknown };
+        const scope = order.scopes.find((r) => r.id === order.scope_revision_id) ?? order.scopes[0];
+        return { ...order, summary: scope?.summary ?? order.display_number };
+      },
+    },
+    {
+      kind: "Estimate",
+      path: "/estimating/estimates",
+      label: "title",
+      // A longer query than the register accepts finds no estimates instead of failing the whole search.
+      // Search reads one row beyond its limit, which marks more results, rather than the register's 100
+      // rows each checked for visibility.
+      list: async (q) =>
+        numberSearch(q.q, 100)
+          ? { items: (await listEstimates(p, { q: q.q }, Number(q.limit) + 1)).items, next_cursor: null }
+          : none(p, "estimating.read"),
+      detail: async (id) => {
+        const estimate = (await readEstimate(p, id)) as Row & { saved: Row; context: Row };
+        return { ...estimate, title: estimate.saved.title, customer_name: estimate.context.customer, site_name: estimate.context.site };
+      },
     },
     {
       kind: "Facility / growing area",

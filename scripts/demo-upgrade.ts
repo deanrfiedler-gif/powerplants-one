@@ -229,7 +229,11 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // remain unchanged. There is no seed, user or grant addition; generic runtime
   // table/function privileges cover it. Preserve original receiving and native
   // creation receipts in populated and restricted-role upgrade proofs.
-  if (latestMigrationVersion !== 76) throw Error("Review the existing-demo upgrade for this release.");
+  // 0077 adds an empty per-person working-company table (NR-18). No seed, user, grant,
+  // identity type or existing row changes. Generic runtime table privileges cover it, and
+  // users/permission_grants stay read-only to the runtime role. A row only narrows record
+  // access to a company the person's grants already reach; it never widens access.
+  if (latestMigrationVersion !== 77) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

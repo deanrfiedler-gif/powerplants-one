@@ -58,7 +58,7 @@
 .ppo-global-search:hover, .ppo-menu-search:hover { background: #fff; border-color: #a9b4c1; }
 .ppo-global-search:focus-within, .ppo-menu-search:focus-within { background: #fff; border-color: #397eb6; outline: 2px solid #397eb633; outline-offset: 2px; }
 .ppo-global-search input::placeholder, .ppo-menu-search input::placeholder { color: #667181; opacity: 1; }
-.ppo-global-search kbd { padding: 2px 4px; border: 1px solid #dde3ea; background: #fff; border-radius: 4px; color: #758091; white-space: nowrap; font: 10px/1.4 PPOShellRoboto, Roboto, Verdana, sans-serif; }
+.ppo-global-search kbd { padding: 2px 4px; border: 1px solid #dde3ea; background: #fff; border-radius: 4px; color: var(--text-secondary, #596779); white-space: nowrap; font: 10px/1.4 PPOShellRoboto, Roboto, Verdana, sans-serif; }
 .ppo-more-panel, .ppo-header-panel, .header-account .identity-strip .ppo-account-panel { position: fixed; z-index: 80; display: flex; flex-direction: column; flex-wrap: nowrap; overflow: hidden; border: 1px solid #dce1e8; border-radius: 14px; background: white; color: #242a37; box-shadow: 0 8px 32px #242a3720, 0 2px 5px #242a370a; font-size: 14px; overflow-wrap: anywhere; }
 .ppo-more-panel { top: 12px; bottom: 12px; left: 86px; width: 344px; max-width: calc(100vw - 100px); }
 /* On a page that has secondary navigation, More's right edge is the right edge the secondary menu has when
@@ -88,7 +88,7 @@
 .ppo-more-link[aria-current=page] { background: #f0f6ed; color: #315e43; font-weight: 500; }
 .ppo-more-link[aria-current=page] .product-icon { color: #315e43; }
 .ppo-help-link { background: transparent; width: 100%; text-align: left; }
-.ppo-more-panel > footer, .ppo-panel-footer { flex: 0 0 auto; min-height: 42px; padding: 11px 20px; border-top: 1px solid #e9edf2; background: #fafbfc; font-size: 11px; color: #7b8491; display: flex; justify-content: space-between; align-items: center; gap: 18px; }
+.ppo-more-panel > footer, .ppo-panel-footer { flex: 0 0 auto; min-height: 42px; padding: 11px 20px; border-top: 1px solid #e9edf2; background: #fafbfc; font-size: 11px; color: var(--text-secondary, #596779); display: flex; justify-content: space-between; align-items: center; gap: 18px; }
 .ppo-preview-label::before { content: ''; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: #8b98a9; margin-right: 6px; vertical-align: middle; }
 .ppo-menu-notice { margin: 8px 12px; font-size: 12px; }
 .ppo-panel-hint { padding: 3px 8px 5px; margin: 0 0 12px; color: #778292; font-size: 11px; line-height: 1.55; }
@@ -186,6 +186,9 @@
   .ppo-rail-bottom { margin-top: auto; padding: 12px 0; width: 100%; display: flex; justify-content: center; }
   .ppo-rail .ppo-primary-nav { flex: 1 1 auto; min-height: 0; width: 76px; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 0; margin: 0; overflow-y: auto; overflow-x: hidden; scrollbar-width: thin; scrollbar-color: #8995a8 transparent; }
   .ppo-primary-nav .ppo-rail-item { flex: 0 0 48px; text-decoration: none; }
+  /* AU-08: grouped rails keep every link at its compact position; a hairline separates groups. */
+  .ppo-rail .ppo-rail-group { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 4px; margin-top: 4px; padding-top: 8px; border-top: 1px solid #4a5366; }
+  .ppo-rail-group-label { display: none; }
   .ppo-rail-bottom { flex: 0 0 auto; }
   .ppo-rail .ppo-rail-item[aria-current=page], .ppo-rail .ppo-rail-item[aria-current=page]:hover { background: var(--ppo-rail-selected); color: var(--ppo-rail-ink); box-shadow: inset 3px 0 var(--ppo-rail-ink); }
   .ppo-rail .ppo-rail-item[aria-expanded=true] { box-shadow: inset 0 -3px #a8d8ff; }
@@ -316,15 +319,22 @@
   .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .ppo-crumb { font-size: 20px; line-height: 28px; font-weight: 500; color: #242a37; }
   .workspace .ppo-shell-header:has(#header-menu:not(:empty)) li[data-crumb=view] .ppo-crumb { font-size: 14px; font-weight: 400; color: #596779; }
   .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .header-account { grid-column: auto; grid-row: auto; }
-  /* The Sales phone bar keeps five equal, labelled cells. The current cell has
-     the lighter surface and green top stripe, with aria-current as well. */
-  .mobile-navigation.ppo-phone-bar-r07 { grid-template-columns: repeat(5, minmax(0,1fr)); padding-left: 0; padding-right: 0; }
+  /* The Sales phone bar keeps equal, labelled cells: five for a full Sales identity, and a
+     hidden cell (NR-02) leaves no empty column. The current cell has the lighter surface
+     and green top stripe, with aria-current as well. */
+  .mobile-navigation.ppo-phone-bar-r07 { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(0,1fr); padding-left: 0; padding-right: 0; }
   .mobile-navigation.ppo-phone-bar-r07 > :is(a,button,span) { position: relative; }
   .mobile-navigation.ppo-phone-bar-r07 > :is(a,button,span) > span { max-width: 100%; font-size: 10px; }
   .mobile-navigation.ppo-phone-bar-r07 .product-icon { width: 25px; height: 25px; }
 }
 @media (max-width: 360px) {
   .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .ppo-crumb-current { font-size: 16px; }
+}
+/* S2 (phase 00 review): every phone header names the current page the same way. Pages without their own
+   menu keep the home tile and the page-hierarchy button, so the title is a little smaller than r07's 20px to
+   leave room for them; weight and colour match. */
+@media (max-width: 780px) {
+  .ppo-shell-header:not(:has(#header-menu:not(:empty))) .ppo-crumb-current, .ppo-shell-header:not(:has(#header-menu:not(:empty))) .ppo-product-name { font-size: 17px; line-height: 24px; font-weight: 500; color: #242a37; }
 }
 
 /* Installation entries and the manual instruction panel. Quiet secondary actions in the
@@ -381,6 +391,7 @@
   .app-frame[data-rail=expanded] .ppo-rail .brand { width: 100%; justify-content: flex-start; padding-left: 14px; }
   .app-frame[data-rail=expanded] .ppo-rail .ppo-primary-nav { width: 100%; padding: 10px 12px; }
   .app-frame[data-rail=expanded] .ppo-rail .ppo-rail-item { width: 100%; justify-content: flex-start; padding: 0 12px; gap: 12px; }
+  .app-frame[data-rail=expanded] .ppo-rail-group-label { display: block; align-self: stretch; padding: 2px 12px 2px; color: #c9ced8; font: 600 11px/1.3 PPOShellRoboto, Roboto, sans-serif; letter-spacing: 0.04em; text-transform: uppercase; }
   .app-frame[data-rail=expanded] .ppo-rail .ppo-rail-toggle { width: calc(100% - 24px); }
   .app-frame[data-rail=expanded] .ppo-rail-label { display: block; white-space: normal; font: 13px/1.3 PPOShellRoboto, Roboto, sans-serif; text-align: left; }
   .app-frame[data-rail=expanded] .ppo-rail .product-icon { flex: 0 0 25px; }

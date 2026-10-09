@@ -28,7 +28,7 @@ export function FieldReadinessScreen() {
         description="Review the instructions and unresolved conditions for your exact visit."
       />
       <p>
-        <Link href="/my-jobs">← My Jobs</Link>
+        <Link className="ppo-back-link" href="/my-jobs">← My Jobs</Link>
       </p>
       {appointment ? (
         <VisitReadiness key={appointment} appointment={appointment} />

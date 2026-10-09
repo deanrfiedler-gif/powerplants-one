@@ -315,6 +315,28 @@ export const departmentRails: Record<WorkspaceId, readonly string[]> = {
   supply: ["work", "supply", "purchasing", "inbound", "receiving", "stock", "deliveries", "returns"],
   finance: ["work", "finance", "accounts", "performance", "claims", "cash", "reconciliation", "exceptions"],
 };
+// AU-08: a long rail is scanned in labelled groups. Grouping never reorders the rail above; an
+// unlisted destination (My Work) stays ungrouped at the top, and a group with nothing the
+// identity can open is not shown.
+export const railGroups: Partial<Record<WorkspaceId, readonly { label: string; ids: readonly string[] }[]>> = {
+  service: [
+    { label: "Requests and scheduling", ids: ["tickets", "orders", "planner", "technicians", "packs", "reports"] },
+    { label: "Field and inspections", ids: ["jobs", "inspection-capture", "incidents", "inspection-review"] },
+    { label: "Assets and aftercare", ids: ["equipment", "agreements", "maintenance", "warranty"] },
+  ],
+};
+export function groupedRail<T extends { id: string }>(workspace: WorkspaceId, items: readonly T[]) {
+  const groups = railGroups[workspace];
+  if (!groups) return [{ label: undefined, items: [...items] }];
+  const sections: { label?: string; items: T[] }[] = [];
+  for (const item of items) {
+    const label = groups.find((g) => g.ids.includes(item.id))?.label;
+    const last = sections.at(-1);
+    if (last && last.label === label) last.items.push(item);
+    else sections.push({ label, items: [item] });
+  }
+  return sections;
+}
 export const workspaceIcons: Record<WorkspaceId, ProductIconName> = {
   sales: "nav-sales", estimate: "nav-estimates", engineering: "nav-engineering", projects: "nav-projects",
   service: "nav-service", supply: "nav-products", finance: "nav-claims",

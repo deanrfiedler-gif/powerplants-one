@@ -19,3 +19,11 @@ The live component gallery consumes runtime tokens and the shared Button compone
 ## Recovery and review
 
 Restore an unwanted working-source change through a reviewed successor in Git. Preserve issued references and past acceptance evidence. Verify keyboard navigation, focus, long content, loading, read-only and error states in the owning workflow. No complete visual review is recorded for this new development surface yet.
+
+## Owner visual review — 9 October 2026
+
+- **Reviewer:** Dean Fiedler. He accepted Claude's proposed verdicts from the phase 00 review boards (navigation canvas version 29).
+- **Result:** Deferred to its own component-catalogue session.
+- **Evidence:** [phase 00 review, session 1](../../../testing/evidence/ui-review-phase-00-r01/README.md). Synthetic data; compiled build at `a52cb01`; 1440 × 900 and 390 × 844 headless Chromium.
+- **Findings:** The component catalogue lists 41 components with reviews pending or stale. A theme verdict needs its own catalogue session rather than one capture. S6 (one date and time formatter) belongs here.
+- **Scope of this record:** no visual review is recorded; the verdict defers it.

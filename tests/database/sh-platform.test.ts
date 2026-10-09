@@ -3,6 +3,7 @@ import { after, beforeEach, test } from "node:test";
 import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { database, closeDatabase } from "../../src/platform/database";
+import { hasPermission } from "../../src/platform/permissions";
 import { localConfig } from "../../src/platform/config";
 import { createSession } from "../../src/platform/identity";
 import { reset, migrate, seed } from "../../scripts/database";
@@ -631,4 +632,38 @@ test("SH06 Engineering retains independent reviewer, returned author and receivi
       await reviewInbox(receiver, { view: "mine", module: "Engineering" })
     ).items.some((t) => t.id === correction.id),
   );
+});
+
+test("NR-10 number sources read only number queries and still report access for word queries", async () => {
+  const sources = [
+    ["Work order", "service.work_order.read"],
+    ["Estimate", "estimating.read"],
+  ] as const;
+  const expected = async (p: Awaited<ReturnType<typeof principal>>) =>
+    Object.fromEntries(
+      await Promise.all(
+        sources.map(async ([kind, capability]) => [kind, (await hasPermission(database(), p, capability)) ? "available" : "denied"]),
+      ),
+    );
+  const p = await principal("coordinator");
+  const word = await applicationSearch(p, { q: "SYN" });
+  assert.deepEqual(
+    Object.fromEntries(sources.map(([kind]) => [kind, word.sources.find((s) => s.kind === kind)?.state])),
+    await expected(p),
+  );
+  assert.equal(word.items.some((i) => i.kind === "Work order" || i.kind === "Estimate"), false);
+  assert.ok((await applicationSearch(p, { q: "SYN-PPO-WO-000001", kind: "Work order" })).items.some((i) => i.reference === "SYN-PPO-WO-000001"));
+  // Someone without either capability is still told so, though a word query reads neither register.
+  for (const profile of ["technician", "observer", "finance", "site-observer"]) {
+    const r = await principal(profile);
+    const states = await expected(r);
+    if (!Object.values(states).includes("denied")) continue;
+    const result = await applicationSearch(r, { q: "SYN" });
+    assert.deepEqual(
+      Object.fromEntries(sources.map(([kind]) => [kind, result.sources.find((s) => s.kind === kind)?.state])),
+      states,
+    );
+    return;
+  }
+  assert.fail("No local profile lacks a number-search capability");
 });

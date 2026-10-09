@@ -1,0 +1,105 @@
+%%{init: {"theme": "base", "themeVariables": {"fontSize": "14px", "primaryColor": "#ffffff", "primaryBorderColor": "#828e9f", "primaryTextColor": "#242a37", "lineColor": "#606977", "clusterBkg": "#f5f6f8", "clusterBorder": "#dce0e5", "edgeLabelBackground": "#ffffff", "titleColor": "#242a37"}, "flowchart": {"htmlLabels": false, "curve": "basis"}}}%%
+graph TD
+  accTitle: Powerplants One navigation overview, proposed
+  accDescr: The shell opens seven department rails and the Reports workspace. Six capability domains group their working areas by owning rail, joined by dotted handovers HO-02 to HO-23 and by links to MYOB and SharePoint.
+  %% Powerplants One - navigation overview, proposed, revised 9 October 2026 (NAD-08 Reports workspace adopted)
+  %% Levels 1 and 2 only: shell, domains and working areas with their owning department rail, and the handovers between them.
+  %% Page-level detail is in navigation.mmd. HO-nn keys to the interaction register; IF-nn to the BP-01 interface catalogue.
+
+  classDef shell fill:#242a37,stroke:#242a37,color:#ffffff,font-weight:bold
+  classDef hub fill:#242a37,stroke:#242a37,color:#ffffff
+  classDef area fill:#ffffff,stroke:#242a37,stroke-width:2px,color:#242a37
+  classDef proposed fill:#fff5df,stroke:#865900,color:#865900,stroke-dasharray:5 3
+  classDef external fill:#eef0f3,stroke:#606977,color:#4a5260
+
+  SHELL(["Powerplants One shell: seven department rails, Reports, My workspace, Search, Notifications"]):::shell
+
+  subgraph D1["1 Commercial capability hub"]
+    D1HUB(["Sales: Deals"]):::hub
+    D1A["1.1 Deal pipeline - Sales"]:::area
+    D1B["1.2 Accounts and entities - Shared records"]:::area
+    D1C["1.3 Configurator and estimating - Estimating"]:::area
+    D1HUB --> D1A
+    D1HUB --> D1B
+    D1HUB --> D1C
+  end
+
+  subgraph D2["2 Project deliverables"]
+    D2HUB(["Projects"]):::hub
+    D2A["2.1 Portfolio overview - Projects"]:::proposed
+    D2B["2.2 Programme and dependencies - Projects"]:::area
+    D2C["2.3 Engineering control - Engineering"]:::area
+    D2HUB --> D2A
+    D2HUB --> D2B
+    D2HUB --> D2C
+  end
+
+  subgraph D3["3 Resources, supply and project controls"]
+    D3HUB(["Supply chain: Material demand"]):::hub
+    D3A["3.1 Capacity planner - Service"]:::area
+    D3B["3.2 Procurement and logistics - Supply chain"]:::area
+    D3C["3.3 Project controls - Finance"]:::area
+    D3HUB --> D3A
+    D3HUB --> D3B
+    D3HUB --> D3C
+  end
+
+  subgraph D4["4 Field services and dispatch"]
+    D4HUB(["Service operations: Service requests"]):::hub
+    D4A["4.1 Dispatch board - Service"]:::area
+    D4B["4.2 Field work - Service"]:::area
+    D4C["4.3 Work order close-out - Service"]:::area
+    D4HUB --> D4A
+    D4HUB --> D4B
+    D4HUB --> D4C
+  end
+
+  subgraph D5["5 Executive overview"]
+    D5HUB(["Reports: Management overview RP-01"]):::proposed
+    D5A["5.1 Cross-domain indicators - Reports"]:::proposed
+    D5B["5.2 Exceptions and escalation - My workspace, Reports"]:::area
+    D5HUB --> D5A
+    D5HUB --> D5B
+  end
+
+  subgraph D6["6 Access, compliance and integration"]
+    D6HUB(["Integrations and recovery"]):::hub
+    D6A["6.1 Access governance - Administration"]:::area
+    D6B["6.2 Integration and data - Administration"]:::area
+    D6HUB --> D6A
+    D6HUB --> D6B
+  end
+
+  MYOB[("MYOB - ERP authority")]:::external
+  SHAREPOINT[("SharePoint - document authority")]:::external
+
+  SHELL --> D1HUB
+  SHELL --> D2HUB
+  SHELL --> D3HUB
+  SHELL --> D4HUB
+  SHELL --> D5HUB
+  SHELL --> D6HUB
+
+  D1A -.->|HO-02 estimate| D1C
+  D1A -.->|HO-05 Won delivery| D2B
+  D1A -.->|HO-06 Won service| D4A
+  D1C -.->|HO-07 conversion| D3B
+  D2B -.->|HO-08 design| D2C
+  D2C -.->|HO-09 released BOM| D3B
+  D2B -.->|HO-10 technicians| D4A
+  D4A -.->|HO-11 job pack| D4B
+  D4B -.->|HO-12 report| D4C
+  D4C -.->|HO-13 time and parts| D3C
+  D2B -.->|HO-14 support handover| D4C
+  D4C -.->|HO-15 supplier return| D3B
+  D4B -.->|HO-16 aftercare| D1A
+  D5B -.->|HO-17 escalation| SHELL
+  D1C -.->|IF-06 issued quotation| SHAREPOINT
+  D3B -.->|IF-12 purchase orders| MYOB
+  D3C -.->|IF-04 IF-05 posting| MYOB
+  D6B -.->|HO-18 reconcile| MYOB
+  D3B -.->|HO-19 parts short| D4A
+  D3B -.->|HO-20 material delay| D2B
+  MYOB -.->|HO-21 credit hold| D1C
+  D4B -.->|HO-22 technical query| D2C
+  D2B -.->|HO-23 claims and variations| D3C

@@ -10,10 +10,12 @@ import { useShell } from "./shell-provider";
 import { openShellPanel, shellPanelEvent } from "./shell-events";
 import { InstallationActions, InstallationHelp } from "./app-installation";
 import { moduleWorkspaceForPath } from "../shell/module-workspaces";
+import { documentTitle, recordTitle } from "../shell/page-title";
 import {
   canOpen,
   departmentHref,
   railDestinations,
+  groupedRail,
   railDestinationForLocation,
   workspaceForLocation,
   workspaceLanding,
@@ -54,7 +56,7 @@ function PageHierarchy({ crumbs, location }: { crumbs: HierarchyCrumb[]; locatio
   return <>
     <button ref={trigger} className="ppo-breadcrumb-trigger" aria-label="Page hierarchy" aria-expanded={open} aria-controls="page-hierarchy" onClick={() => {
       openShellPanel("hierarchy"); panel.current?.togglePopover();
-    }}><ProductIcon name="more" /></button>
+    }}><ProductIcon name="list" /></button>
     <div ref={panel} id="page-hierarchy" popover="auto" className="ppo-hierarchy-panel" aria-label="Page hierarchy" onToggle={event => setOpen(event.newState === "open")} onKeyDown={event => {
       if (event.key === "Escape") { event.preventDefault(); panel.current?.hidePopover(); trigger.current?.focus(); }
     }}>
@@ -211,16 +213,11 @@ function ProductNavigationView({
     );
   };
   // Sales phone cells keep visible names and accessible labels. Activities uses
-  // the same Sales scope and local day policy as the desktop destination.
+  // the same Sales scope and local day policy as the desktop destination. A cell
+  // this identity cannot open is hidden, as on every other surface (NR-02).
   const phoneCell = (entry: (typeof salesPhoneBar)[number]) => {
     const item = destination(entry.id);
-    const contents = (
-      <>
-        <ProductIcon name={entry.icon} />
-        <span>{entry.label}</span>
-      </>
-    );
-    return allowed(item) ? (
+    return (
       <Link
         key={entry.id}
         href={departmentHref(entry.id === "calendar" ? `${item.href}?day=${new URLSearchParams(locationQuery).get("day") ?? localDay(new Date().toISOString())}` : item.href!, "sales")}
@@ -230,12 +227,9 @@ function ProductNavigationView({
         onClick={() => setMore(false)}
         suppressHydrationWarning
       >
-        {contents}
+        <ProductIcon name={entry.icon} />
+        <span>{entry.label}</span>
       </Link>
-    ) : (
-      <span key={entry.id} className="ppo-planned-tab" aria-disabled="true" title={`${entry.label} — Unavailable for this identity`}>
-        {contents}
-      </span>
     );
   };
   const menu = (
@@ -364,20 +358,26 @@ function ProductNavigationView({
           />
         </Link>
         {wide && <button className="ppo-rail-item ppo-rail-toggle" disabled={!shell.context?.preference_scope} aria-label={shell.railExpanded ? "Collapse primary navigation" : "Expand primary navigation"} aria-expanded={shell.railExpanded} aria-controls="primary-navigation" onClick={() => shell.setRailExpanded(!shell.railExpanded)}>
-          <ProductIcon name="more" /><span className="ppo-rail-label">Collapse navigation</span>
+          <ProductIcon name={shell.railExpanded ? "collapse" : "expand"} /><span className="ppo-rail-label">Collapse navigation</span>
         </button>}
         {wide && <nav id="primary-navigation" className="ppo-primary-nav" aria-label={`${workspace.label} shortcuts`} ref={scroller} onScroll={() => {
           const focused = document.activeElement;
           if (focused instanceof HTMLElement && scroller.current?.contains(focused)) tip(focused, focused.getAttribute("aria-label") ?? "");
           else setTooltip(null);
         }}>
-          {rail.map(item => <Link key={item.id} href={departmentHref(item.href!, workspaceId, new URLSearchParams(locationQuery).get("day"))}
-            className="ppo-rail-item" aria-label={item.label} aria-current={activeId === item.id ? "page" : undefined}
-            onMouseEnter={e => tip(e.currentTarget, item.label)} onMouseLeave={() => setTooltip(null)}
-            onFocus={e => { reveal(e.currentTarget); tip(e.currentTarget, item.label); }} onBlur={() => setTooltip(null)}>
-            <ProductIcon name={item.icon} active={activeId === item.id} />
-            <span className="ppo-rail-label">{item.label}</span>
-          </Link>)}
+          {groupedRail(workspaceId, rail).map(section => {
+            const links = section.items.map(item => <Link key={item.id} href={departmentHref(item.href!, workspaceId, new URLSearchParams(locationQuery).get("day"))}
+              className="ppo-rail-item" aria-label={item.label} aria-current={activeId === item.id ? "page" : undefined}
+              onMouseEnter={e => tip(e.currentTarget, item.label)} onMouseLeave={() => setTooltip(null)}
+              onFocus={e => { reveal(e.currentTarget); tip(e.currentTarget, item.label); }} onBlur={() => setTooltip(null)}>
+              <ProductIcon name={item.icon} active={activeId === item.id} />
+              <span className="ppo-rail-label">{item.label}</span>
+            </Link>);
+            // AU-08: a labelled group is announced by name; the visible heading shows in the expanded rail.
+            return section.label ? <div key={section.label} role="group" aria-label={section.label} className="ppo-rail-group">
+              <span className="ppo-rail-group-label" aria-hidden="true">{section.label}</span>{links}
+            </div> : links;
+          })}
         </nav>}
         {wide && tooltip && <span className="ppo-rail-tooltip" role="tooltip" style={{top: tooltip.top}}>{tooltip.label}</span>}
         <div className="ppo-rail-bottom">
@@ -434,7 +434,7 @@ function ProductNavigationView({
         aria-label="Mobile navigation"
       >
         {workspace.id === "sales"
-          ? salesPhoneBar.map(phoneCell)
+          ? salesPhoneBar.filter((entry) => allowed(destination(entry.id))).map(phoneCell)
           : [destination("work"), workspaceLanding(workspace.id, permitted, shell.hosted), destination(workspace.secondary)]
               .filter((item): item is ShellDestination => !!item && allowed(item))
               .filter((item, index, all) => all.findIndex(other => other.id === item.id) === index)
@@ -514,6 +514,13 @@ export function ProductHeader() {
     if (subview) crumbs.push({ key: "subview", label: subview, kind: "view" });
   }
   if (record && shell.context) crumbs.push({ key: "record", label: `${record.reference} · ${record.title}`, kind: "record" });
+  // NR-17: the same route metadata names the browser tab. React hoists this <title> into the head
+  // and updates it in the same commit as the route, before the route announcer reads document.title.
+  const title = documentTitle({
+    record: record && shell.context ? recordTitle(record.reference, record.title) : /\/new$/.test(path) ? "New record" : undefined,
+    page: subview ?? view ?? (label || "Home"),
+    department: rootLabel,
+  });
   const tabIds =
     page?.workspace === "service"
       ? []
@@ -533,6 +540,7 @@ export function ProductHeader() {
     );
   return (
     <>
+      <title>{title}</title>
       <header className="topbar ppo-shell-header">
         <Link
           className="mobile-brand"

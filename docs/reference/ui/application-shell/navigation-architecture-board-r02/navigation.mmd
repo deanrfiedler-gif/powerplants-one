@@ -1,0 +1,300 @@
+%%{init: {"theme": "base", "themeVariables": {"fontSize": "14px", "primaryColor": "#ffffff", "primaryBorderColor": "#828e9f", "primaryTextColor": "#242a37", "lineColor": "#606977", "clusterBkg": "#f5f6f8", "clusterBorder": "#dce0e5", "edgeLabelBackground": "#ffffff", "titleColor": "#242a37"}, "flowchart": {"htmlLabels": false, "curve": "basis"}}}%%
+graph TD
+  accTitle: Powerplants One navigation architecture, page level, proposed
+  accDescr: Six capability domains, each a subgraph of hubs, pages, actions and reserved slots under its owning rail, including the Reports workspace for domain 5. Dotted arrows are cross-domain handovers HO-02 to HO-23 and interfaces to MYOB and SharePoint.
+  %% Powerplants One - navigation architecture, page level, proposed, revised 9 October 2026 (NAD-08 Reports workspace adopted)
+  %% Theme: the init line pins colours. The font is left to the renderer: Mermaid directives reject font lists.
+  %% Labels follow the built registry src/shell/navigation.ts; each working area names its owning department rail.
+  %% Shapes: stadium = hub or working area, rectangle = page, double-edged rectangle = modal or action, cylinder = external authority
+  %% Classes: page = route in the synthetic prototype, proposed = needs a decision, reserved = registry slot withheld today,
+  %% external = MYOB or SharePoint, excluded = out of scope
+  %% Solid arrows = primary navigation. Dotted arrows = cross-domain handover HO-nn or interface IF-nn.
+
+  classDef shell fill:#242a37,stroke:#242a37,color:#ffffff,font-weight:bold
+  classDef hub fill:#ffffff,stroke:#242a37,stroke-width:2px,color:#242a37,font-weight:bold
+  classDef page fill:#ffffff,stroke:#828e9f,color:#242a37
+  classDef proposed fill:#fff5df,stroke:#865900,color:#865900,stroke-dasharray:5 3
+  classDef reserved fill:#f5f6f8,stroke:#606977,color:#4a5260,stroke-dasharray:3 3
+  classDef action fill:#edf3f8,stroke:#365875,color:#365875
+  classDef external fill:#eef0f3,stroke:#606977,color:#4a5260
+  classDef excluded fill:#fef3f2,stroke:#b42318,color:#b42318,stroke-dasharray:2 2
+
+  SHELL(["Powerplants One shell"]):::shell
+  MYWORK["My Work /work"]:::page
+  SEARCH["Search /search"]:::page
+  NOTIFY["Notifications /work/updates"]:::page
+  SHELL --> MYWORK
+  SHELL --> SEARCH
+  SHELL --> NOTIFY
+
+  subgraph D1["1 Commercial capability hub"]
+    D1HUB(["Sales: Deals /sales/opportunities"]):::hub
+    D1A(["1.1 Deal pipeline - Sales rail"]):::hub
+    D1B(["1.2 Accounts and entities - Shared records"]):::hub
+    D1C(["1.3 Configurator and estimating - Estimating rail"]):::hub
+    PULSE1["Pulse /sales/pulse"]:::page
+    LEADS["Leads /sales/leads"]:::page
+    DEALS["Deals /sales/opportunities"]:::page
+    DEAL["Deal record /sales/opportunities/[id]"]:::page
+    FORECAST["Weighted forecast in the Deals Forecast view"]:::proposed
+    STASKS["Tasks /sales/tasks"]:::page
+    AFTERCARE["Aftercare and renewal /sales/aftercare"]:::page
+    INSIGHTS["Insights - filled by Reports RP-02"]:::reserved
+    ACONVERT[["Convert lead"]]:::action
+    ASTAGE[["Change stage"]]:::action
+    AOUTCOME[["Record Won or Lost"]]:::action
+    CUSTREC["Organisations /customers/[id]"]:::page
+    CONTACTS["Contacts and People /contacts /people"]:::page
+    SITES["Sites and facilities /sites /facilities"]:::page
+    EQUIP["Equipment /equipment"]:::page
+    DOCS["Documents"]:::reserved
+    INTAKE["Intake /estimating/intake"]:::page
+    DISCOVERY["Estimation wizard /estimating/discovery"]:::page
+    CONFIGS["Specialist configurations /estimating/configurations"]:::page
+    COSTSRC["Cost sources /estimating/cost-sources"]:::page
+    PRODUCTS["Products /products"]:::page
+    EREVIEW["Estimate review /estimating/estimates/[id]/review"]:::page
+    QUOTES["Quotations /estimating/quotes"]:::page
+    ARELEASE[["Approve and release quotation"]]:::action
+    ARESPONSE[["Record customer response"]]:::action
+    D1HUB --> D1A
+    D1HUB --> D1B
+    D1HUB --> D1C
+    D1A --> PULSE1
+    D1A --> LEADS --> ACONVERT --> DEALS
+    D1A --> STASKS
+    D1A --> AFTERCARE
+    D1A --> INSIGHTS
+    DEALS --> DEAL
+    DEALS --> ASTAGE
+    DEALS --> FORECAST
+    DEAL --> AOUTCOME
+    D1B --> CUSTREC
+    D1B --> CONTACTS
+    D1B --> DOCS
+    CUSTREC --> SITES --> EQUIP
+    D1C --> INTAKE --> DISCOVERY --> EREVIEW
+    D1C --> CONFIGS
+    D1C --> COSTSRC
+    D1C --> PRODUCTS
+    EREVIEW --> ARELEASE --> QUOTES --> ARESPONSE
+  end
+
+  subgraph D2["2 Project deliverables"]
+    D2HUB(["Projects /projects"]):::hub
+    D2A(["2.1 Portfolio overview - Projects rail"]):::hub
+    D2B(["2.2 Programme and dependencies - Projects rail"]):::hub
+    D2C(["2.3 Engineering control - Engineering rail"]):::hub
+    PHEALTH["Portfolio health view - PJ-02"]:::proposed
+    PRISK["Risks and issues - risk register"]:::proposed
+    PRANK["Priority ranking"]:::proposed
+    PROGRAMME["Programme /projects/programme"]:::page
+    PROJECT["Project record /projects/[id]"]:::page
+    ACCEPT["Acceptance and closeout /projects/acceptance"]:::page
+    PCONSTR["Inter-project constraints view"]:::proposed
+    READINESS2["Delivery readiness"]:::reserved
+    AREPLAN[["Propose re-plan"]]:::action
+    ABASELINE[["Confirm baseline"]]:::action
+    ATECHREQ[["Request technicians"]]:::action
+    ENGREG["Engineering workload /engineering"]:::page
+    ENGBASIS["Design basis and drawings /engineering/basis"]:::page
+    ENGMAT["Materials and substitutions /engineering/materials"]:::page
+    ENGCHG["Change review /engineering/changes"]:::page
+    COMMISSION["Commissioning and as-built /engineering/commissioning"]:::page
+    AISSUE[["Issue technical release"]]:::action
+    AMATREL[["Release materials"]]:::action
+    D2HUB --> D2A
+    D2HUB --> D2B
+    D2HUB --> D2C
+    D2A --> PHEALTH
+    D2A --> PRISK
+    D2A --> PRANK
+    D2B --> PROGRAMME --> PROJECT
+    PROGRAMME --> PCONSTR
+    D2B --> READINESS2
+    PROJECT --> AREPLAN --> ABASELINE
+    PROJECT --> ACCEPT
+    PROJECT --> ATECHREQ
+    D2C --> ENGREG --> ENGBASIS --> AISSUE
+    ENGREG --> ENGMAT --> AMATREL
+    ENGREG --> ENGCHG
+    ENGREG --> COMMISSION
+  end
+
+  subgraph D3["3 Resources, supply and project controls"]
+    D3HUB(["Supply chain: Material demand"]):::hub
+    D3A(["3.1 Capacity planner - Service rail"]):::hub
+    D3B(["3.2 Procurement and logistics - Supply chain rail"]):::hub
+    D3C(["3.3 Project controls - Finance rail"]):::hub
+    CAPACITY["Capacity /schedule/capacity"]:::page
+    PEOPLE["People and skills /people"]:::page
+    POLICY["Policy impact /schedule/policy-impact"]:::page
+    UTILWARN["Utilisation warnings"]:::proposed
+    MATREADY["Material demand /supply/material-readiness"]:::page
+    PURCHASING["Purchasing /supply/purchasing"]:::page
+    STOCK["Stock and reservations /supply/stock"]:::page
+    RECEIPTS["Receiving and returns /supply/receipts"]:::page
+    SHIPMENTS["Inbound shipments and dispatch /supply/shipments"]:::page
+    HANDOFFS["Finance handoffs /finance/handoffs"]:::page
+    ACCOUNTS["Customer accounts /finance/accounts"]:::page
+    BVA["Project performance - budget against actual"]:::proposed
+    RUNRATE["Cash outlook - run-rate forecast"]:::proposed
+    CLAIMS["Claims and obligations"]:::reserved
+    D3HUB --> D3A
+    D3HUB --> D3B
+    D3HUB --> D3C
+    D3A --> CAPACITY --> UTILWARN
+    D3A --> PEOPLE
+    D3A --> POLICY
+    D3B --> MATREADY --> PURCHASING --> RECEIPTS
+    D3B --> STOCK
+    D3B --> SHIPMENTS
+    D3C --> HANDOFFS
+    D3C --> ACCOUNTS
+    D3C --> BVA --> RUNRATE
+    D3C --> CLAIMS
+  end
+
+  subgraph D4["4 Field services and dispatch"]
+    D4HUB(["Service operations: Service requests"]):::hub
+    D4A(["4.1 Dispatch board - Service rail"]):::hub
+    D4B(["4.2 Field work - Service rail"]):::hub
+    D4C(["4.3 Work order close-out - Service rail"]):::hub
+    TICKETS["Service requests /service/tickets"]:::page
+    WORKORDERS["Work orders /service/work-orders"]:::page
+    SCHEDULE["Schedule /schedule"]:::page
+    TECHS["Field team /service/technicians"]:::page
+    JOBMAP["Job map view"]:::proposed
+    ROUTEOPT["Route optimisation"]:::proposed
+    ACONFIRM[["Confirm booking"]]:::action
+    AMOVE[["Move booking"]]:::action
+    MYJOBS["My jobs /my-jobs"]:::page
+    JOB["Job /my-jobs/[id]"]:::page
+    READINESS["Site readiness JSEA /my-jobs/site-readiness"]:::page
+    INSPECT["My inspections /my-jobs/inspections"]:::page
+    LOOKUP["Equipment lookup /equipment/lookup"]:::page
+    INCIDENT["Incidents and actions /service/incidents"]:::page
+    PARTSREQ["Parts request"]:::proposed
+    ACOMPLETE[["Complete visit with sign-off"]]:::action
+    PACKS["Job packs /service/packs"]:::page
+    REPORTS["Service review /service/reports"]:::page
+    INSPREV["Inspection review /service/inspections"]:::page
+    MAINT["Service agreements and maintenance /maintenance/agreements"]:::page
+    WARRANTY["Warranty /warranty/cases"]:::page
+    JOBCOST["Job costing section"]:::proposed
+    PAYGATE["Payment gateway"]:::excluded
+    D4HUB --> D4A
+    D4HUB --> D4B
+    D4HUB --> D4C
+    D4A --> TICKETS --> WORKORDERS
+    D4A --> SCHEDULE --> ACONFIRM
+    SCHEDULE --> AMOVE
+    SCHEDULE --> JOBMAP
+    SCHEDULE --> ROUTEOPT
+    D4A --> TECHS
+    D4B --> MYJOBS --> JOB
+    JOB --> READINESS
+    JOB --> INSPECT
+    JOB --> LOOKUP
+    JOB --> INCIDENT
+    JOB --> PARTSREQ
+    JOB --> ACOMPLETE
+    D4C --> PACKS
+    D4C --> REPORTS
+    D4C --> INSPREV
+    D4C --> MAINT
+    D4C --> WARRANTY
+    WORKORDERS --> JOBCOST
+    JOBCOST -.-> PAYGATE
+  end
+
+  subgraph D5["5 Executive overview"]
+    D5HUB(["Reports: Management overview RP-01 /reports"]):::proposed
+    D5A(["5.1 Cross-domain indicators - Reports rail"]):::hub
+    D5B(["5.2 Exceptions and escalation - My workspace and Reports rail"]):::hub
+    RPSALES["Sales performance RP-02 /reports/sales"]:::proposed
+    RPDELIV["Delivery performance RP-03 /reports/delivery"]:::proposed
+    RPSERV["Service performance RP-04 /reports/service"]:::proposed
+    KPIDEF["Report definitions RP-06 /reports/definitions"]:::proposed
+    ACTIONS["My actions /work/actions"]:::page
+    REVIEWS["Reviews and handovers /work/reviews"]:::page
+    WAITING["Blocked and waiting /work/waiting"]:::page
+    TEAM["Team queue /work/team"]:::page
+    EXDESK["Exception desk RP-05 /reports/reconciliation"]:::proposed
+    AESCALATE[["Assign or escalate"]]:::action
+    D5HUB --> D5A
+    D5HUB --> D5B
+    D5A --> RPSALES
+    D5A --> RPDELIV
+    D5A --> RPSERV
+    D5A --> KPIDEF
+    D5B --> ACTIONS
+    D5B --> REVIEWS
+    D5B --> WAITING
+    D5B --> TEAM
+    D5B --> EXDESK --> AESCALATE
+  end
+
+  subgraph D6["6 Access, compliance and integration"]
+    D6HUB(["Integrations and recovery /admin"]):::hub
+    D6A(["6.1 Access governance - Administration"]):::hub
+    D6B(["6.2 Integration and data - Administration"]):::hub
+    ROLES["Settings: access - role bundles"]:::proposed
+    GRANTLOG["Grant change log"]:::proposed
+    RECOVERY["Recovery operations /admin/recovery/[id]"]:::page
+    PIMPORT["Product import /products/import"]:::page
+    OPSLEDGER["Integration operations ledger - AD-04"]:::proposed
+    MDM["Master data stewardship"]:::proposed
+    LEGACY["Legacy archive reader"]:::proposed
+    D6HUB --> D6A
+    D6HUB --> D6B
+    D6A --> ROLES --> GRANTLOG
+    D6B --> RECOVERY
+    D6B --> PIMPORT
+    D6B --> OPSLEDGER
+    D6B --> MDM
+    D6B --> LEGACY
+  end
+
+  MYOB[("MYOB - ERP authority")]:::external
+  SHAREPOINT[("SharePoint - document authority")]:::external
+
+  SHELL --> D1HUB
+  SHELL --> D2HUB
+  SHELL --> D3HUB
+  SHELL --> D4HUB
+  SHELL --> D5HUB
+  SHELL --> D6HUB
+
+  %% Cross-domain handovers
+  DEAL -.->|HO-02 request estimate| INTAKE
+  AOUTCOME -.->|HO-05 Won delivery| PROJECT
+  AOUTCOME -.->|HO-06 Won service| TICKETS
+  QUOTES -.->|HO-07 conversion| MATREADY
+  PROJECT -.->|HO-08 design basis| ENGREG
+  AMATREL -.->|HO-09 released BOM| MATREADY
+  ATECHREQ -.->|HO-10 technician request| TICKETS
+  ACONFIRM -.->|HO-11 job pack| PACKS
+  PACKS -.->|HO-11 issued| MYJOBS
+  ACOMPLETE -.->|HO-12 report| REPORTS
+  REPORTS -.->|HO-13 time and parts| HANDOFFS
+  COMMISSION -.->|HO-14 acceptance| ACCEPT
+  ACCEPT -.->|HO-14 support handover| MAINT
+  INCIDENT -.->|HO-15 warranty| WARRANTY
+  WARRANTY -.->|HO-15 supplier return| RECEIPTS
+  JOB -.->|HO-16 aftercare need| LEADS
+  MYWORK --> ACTIONS
+  EXDESK -.->|HO-17 escalation| MYWORK
+  PARTSREQ -.-> STOCK
+  HANDOFFS -.->|IF-04 IF-05 posting| MYOB
+  ACCOUNTS -.->|IF-01 read| MYOB
+  PURCHASING -.->|IF-12 purchase orders| MYOB
+  ARELEASE -.->|IF-06 issued quotation| SHAREPOINT
+  OPSLEDGER -.->|HO-18 reconcile| MYOB
+  OPSLEDGER -.->|HO-18 reconcile| SHAREPOINT
+  STOCK -.->|HO-19 parts short| SCHEDULE
+  SHIPMENTS -.->|HO-20 material delay| PROGRAMME
+  MYOB -.->|HO-21 credit hold| ARELEASE
+  JOB -.->|HO-22 technical query| ENGREG
+  PROJECT -.->|HO-23 claims and variations| CLAIMS
+  INSIGHTS -.->|filled by| RPSALES

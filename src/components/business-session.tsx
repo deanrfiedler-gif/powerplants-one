@@ -8,6 +8,8 @@ import { HeaderContent } from "./header-content";
 import { openShellPanel, shellPanelEvent } from "./shell-events";
 import { ShellAccountProfile, accountInitials } from "./shell-account-profile";
 import { ShellIcon } from "./shell-icon";
+import { useShell } from "./shell-provider";
+import { navigateWithReview } from "./navigation-intent";
 type Identity = {
   actor_id: string;
   workspace_id: string;
@@ -33,6 +35,15 @@ export function BusinessSession({ children, hosted = false }: { children: React.
     [epoch, setEpoch] = useState(0),
     [hostedRoles, setHostedRoles] = useState<HostedRoles | null>(null),
     [hostedRole, setHostedRole] = useState<HostedRole>("tester");
+  // NR-18: the company this person works in. It narrows what every page, search and command
+  // reaches; it never grants access. Switching reviews unsaved work and remounts the pages.
+  const shell = useShell();
+  const companies = shell.context?.companies ?? [];
+  const working = shell.context?.working_company_id ?? null;
+  const companyLabel = working ? companies.find((c) => c.id === working)?.name : companies.length === 1 ? companies[0].name : companies.length ? "All companies" : undefined;
+  // An untouched picker follows the current choice; an edit is kept until it is used or the switch succeeds.
+  const [companyDraft, setCompanyDraft] = useState<string | null>(null);
+  const companyChoice = companyDraft ?? working ?? "";
   useEffect(() => {
     let live = true;
     api<Identity>("local-session").then(
@@ -88,6 +99,39 @@ export function BusinessSession({ children, hosted = false }: { children: React.
       setBusy(false);
     }
   }
+  function chooseCompany() {
+    navigateWithReview(async () => {
+      lockOtherBusinessViews();
+      setBusy(true);
+      setError(null);
+      try {
+        await api("shell/company", { company_id: companyChoice || null });
+        setCompanyDraft(null);
+        shell.reload();
+        setEpoch((x) => x + 1);
+        setShowIdentity(false);
+      } catch (e) {
+        setError(e);
+      } finally {
+        lockOtherBusinessViews();
+        setBusy(false);
+      }
+    });
+  }
+  const companySummary = companyLabel ? <span className="ppo-working-company" title="Working company">{companyLabel}</span> : null;
+  const companyChoiceControl = companies.length > 1 ? (
+    <div className="identity-choice">
+      <label htmlFor="working-company">Working company</label>
+      <select id="working-company" value={companyChoice} onChange={(event) => setCompanyDraft(event.target.value)} disabled={busy}>
+        <option value="">All companies</option>
+        {companies.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+      </select>
+      <button type="button" onClick={chooseCompany} disabled={busy || companyChoice === (working ?? "")}>
+        {busy ? "Switching…" : "Work in this company"}
+      </button>
+      <p className="identity-explanation">Pages, search and actions show only the chosen company&apos;s records. Your permissions are unchanged.</p>
+    </div>
+  ) : companies.length === 1 ? <p className="identity-explanation">Company: <strong>{companies[0].name}</strong></p> : null;
   async function selectHostedRole() {
     if (!hosted || !hostedRoles || hostedRole === hostedRoles.current) return;
     lockOtherBusinessViews();
@@ -111,10 +155,11 @@ export function BusinessSession({ children, hosted = false }: { children: React.
     <>
       <HeaderContent slot="account">
       {hosted ? <section ref={account} className="identity-strip identity-compact identity-hosted" aria-label="Private demo account" onKeyDown={event => { if (event.key === "Escape") { setShowIdentity(false); document.getElementById("hosted-account-toggle")?.focus(); } }}>
-        <div className="hosted-account-summary"><strong title={p?.display_name}>{p?.display_name ?? "Private prototype"}</strong><button id="hosted-account-toggle" className="ppo-account-toggle" aria-label="Account" aria-expanded={showIdentity} aria-controls="hosted-account-controls" onClick={toggleAccount}><span className="account-avatar" aria-hidden="true">{initials}</span></button></div>
+        <div className="hosted-account-summary">{companySummary}<strong title={p?.display_name}>{p?.display_name ?? "Private prototype"}</strong><button id="hosted-account-toggle" className="ppo-account-toggle" aria-label="Account" aria-expanded={showIdentity} aria-controls="hosted-account-controls" onClick={toggleAccount}><span className="account-avatar" aria-hidden="true">{initials}</span></button></div>
         <div id="hosted-account-controls" className="ppo-hosted-account-controls ppo-account-panel" data-open={showIdentity} role="dialog" aria-label="Account">
           {accountTitle}<div className="ppo-panel-body">
           <ShellAccountProfile name={p?.display_name} />
+          {p && companyChoiceControl}
           {p && hostedRoles && <div className="identity-choice">
             <label htmlFor="hosted-role">Demo role</label>
             <select id="hosted-role" value={hostedRole} onChange={event => setHostedRole(event.target.value as HostedRole)} disabled={busy}>
@@ -137,6 +182,7 @@ export function BusinessSession({ children, hosted = false }: { children: React.
         onKeyDown={(e) => { if (e.key === "Escape" && showIdentity) { setShowIdentity(false); document.getElementById("identity-toggle")?.focus(); } }}
       >
         <div>
+          {p && companySummary}
           <strong>
             {p?.display_name ?? "Choose a demonstration identity"}
           </strong>
@@ -145,6 +191,7 @@ export function BusinessSession({ children, hosted = false }: { children: React.
         <div id="identity-controls" className="identity-controls ppo-account-panel" hidden={!!(p && !showIdentity)} role="dialog" aria-label="Account">
         {accountTitle}<div className="ppo-panel-body">
         <ShellAccountProfile name={p?.display_name} />
+        {p && companyChoiceControl}
         <p className="identity-explanation">Changing identity clears displayed records and unsaved forms. Saved offline originals stay locked to their original owner.</p>
         <div className="identity-choice">
           <label htmlFor="business-profile">Identity</label>

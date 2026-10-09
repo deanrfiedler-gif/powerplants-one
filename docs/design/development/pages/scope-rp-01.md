@@ -32,7 +32,13 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-No exact image or HTML reference is linked. Keep this gap visible.
+- [23-rp01-overview-desktop.png](../../../reference/ui/application-shell/navigation-architecture-board-r02/23-rp01-overview-desktop.png) · 1440 × 900 · Proposed
+- [24-rp01-overview-phone.png](../../../reference/ui/application-shell/navigation-architecture-board-r02/24-rp01-overview-phone.png) · 390 × 1330 · Proposed
+- [25-rp01-overview-320.png](../../../reference/ui/application-shell/navigation-architecture-board-r02/25-rp01-overview-320.png) · 320 × 1381 · Proposed
+
+These are renders of the private claude.ai design canvas "PPO Navigation Architecture", version 26 (capture set r02), recorded in [Navigation architecture board](../../../decisions/navigation-architecture-board.md). They are a proposed composition on synthetic data, not an approved mockup: page type Overview / dashboard, four indicator tiles that each show source and as-at time, an attention list and the report catalogue. Under NAD-08, adopted by Dean on 9 October 2026 as a design decision, this page is the landing page of a Reports workspace (breadcrumb Reports › Management overview) and Executive users land on it. New capability `reporting.overview.read` is proposed, not in the contract. The desktop render shows the compact rail with keyboard focus and its tooltip. The superseded r01 renders stay in the retained r01 set.
+
+- **Missing:** a 1024 px composition and any native capture; no route exists yet.
 
 ## Behaviour, handovers and verification
 

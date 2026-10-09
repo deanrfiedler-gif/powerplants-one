@@ -4,6 +4,42 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## UI build and review sequence — 9 October 2026
+
+Dean asked for one page showing every UI page still to create or refine, in working order from the home page. The [record](decisions/ui-build-sequence.md) derives the [sequence](design/development/ui-build-sequence.md) from the live register and the issued r02 build plan using `scripts/build-ui-sequence.py`. No rank, scope ID or issued byte changes.
+
+- **Coverage:** all 350 register entries are accounted for: 347 placed in phases 00 to 11 and 3 development-tool routes excluded.
+- **Workload:** 190 entries are built and awaiting owner review, 105 are to refine, 46 to build and 6 await a scope decision. 28 phase 00 entries have an owner visual review, stale after refinement batch 1.
+- **Adopted rules:** Dean adopted SD-01 to SD-05 on 9 October and started the phase 00 review. The review track starts at phase 00, which contains the home page, My Work and the existing service and field baseline. The build track starts at phase 01 with AD-01.
+- **Phase 00 review, session 1:** Dean accepted the proposed verdicts on 9 October. 28 owner visual reviews are recorded and 2 are deferred. Refinement batch 1 fixed shared findings S1, S2, S4 and S7 in the shell and withdrew S3 after verification ([evidence](testing/evidence/ui-refinement-batch-1/README.md)). The 28 reviews are now stale, as intended. The [evidence](testing/evidence/ui-review-phase-00-r01/README.md) holds 42 captures, automated checks and shared findings S1 to S9. The verdicts are 7 accept, 5 minor, 16 refine, 1 own session and 1 later phase.
+- **Phase 00 refinement canvas:** proposed shared rules S5, S6 and S9 and My Work layouts are on a [separate canvas](https://claude.ai/artifact/E5wdx1FiF3ZUVb86oXps2E). It is a proposal awaiting Dean's mark-up ([record](decisions/ui-build-sequence.md#phase-00-refinement-canvas-9-october-2026)). Sales and Service pages follow.
+- **Display:** shown as the UI build sequence board on the navigation canvas. The repository is the authority, and the board has no retained capture.
+
+## Navigation architecture proposal — 9 October 2026
+
+Dean requested a six-domain navigation architecture, seven improvements and then an audit. The [record](decisions/navigation-architecture-board.md) retains a private claude.ai board as [r02 captures](reference/ui/application-shell/navigation-architecture-board-r02/README.md): 33 hashed images and two Mermaid sources. The earlier r01 set is retained unchanged. The board:
+
+- maps the six domains onto the seven built department rails and a Reports workspace;
+- proposes rules NR-01 to NR-20 and NR-A1 to NR-A7, and handovers HO-01 to HO-23;
+- adds a record page pattern, a record relationship map, and landing, routing and access-scope tables;
+- wireframes existing scopes RP-01, RP-05 and PJ-02 at 1440, 390 and 320 px;
+- records audit findings AU-01 to AU-23 with their resolution.
+
+Dean adopted NAD-08, the Reports workspace, as a design decision, then approved professional refinements generally. Under that approval:
+
+- **Adopted:** NAD-01, NAD-02 (design), NAD-03, NAD-05 and NAD-06. NAD-04 and NAD-07 remain open.
+- **Built in the shell:**
+  - per-page browser titles (AU-01);
+  - the Sales phone bar hides unavailable destinations (AU-23), and a dated /crm routing note is added;
+  - number search for work orders and estimates (AU-13, partly);
+  - a working company chosen in the account panel, which narrows every access check that names a company (shared record scope and company-level permission checks) and never widens access; migration 0077 (AU-02);
+  - a grouped Service operations rail (AU-08).
+- **Still open:** quotation and purchase-order number search, AU-07 speed, AU-14 tree test, and owner visual review of the new shell controls.
+
+The captures are linked from `system:shell` and those scopes.
+
+The board itself is design reference only. The shell increments add migration 0077 (`ppo.working_companies`) and one API route (`POST /api/v1/shell/company`). They add no capability, grant, seed, user or scope. No owner visual review is recorded.
+
 ## Current bounded step — Customers first load
 
 Repository writer: **Audit powerplants-one repository**, branch `codex/customer-first-load`, based on merged main `dcec2cf05e82e1eaf2c7f90f136701d080cb6248`; **Find the next project step** reviews read-only. Dean authorised verification of merged main/the already-running demo update and one bounded first-load correction. [Decision](decisions/customer-first-load.md) and [evidence](testing/evidence/customer-first-load/README.md).
@@ -78,7 +114,7 @@ The protected-main required contexts were read on 8 October: **Check documentati
 
 - Preserve migration/seed/grant assertions through 0076, including installation of earlier reserved slots after later applied versions and hosted upgrade preservation. Main's 0051/0052 supersede old unfinished 0049 proposals. [Consolidation decision](decisions/repository-consolidation.md).
 - #120/#121 and older delivery records need evidence reconciliation, not automatic reimplementation or blanket closure. #145/#167 retain acceptance boundaries; #160 retains the managed PostgreSQL minor obligation. Source/policy work in #2/#10/#12/#13/#15/#16/#66/#76 remains separately scoped.
-- The [decision register](decisions/decision-register.csv), current domain decisions and [quality plan](delivery/product-quality-plan.md) retain their authority. Operational policy, MYOB evidence and role/source gaps are not resolved by synthetic fixtures. CREMS reconstruction is superseded by the current independent PPO direction; source-bound operational claims remain separate.
+- The [decision register](decisions/decision-register.csv), current domain decisions and [quality plan](delivery/product-quality-plan.md) retain their authority. Operational policy, MYOB evidence and role/source gaps are not resolved by synthetic fixtures. CREMS reconstruction is superseded by the current independent PPO direction; source-bound operational claims remain separate. Items still held back or shaped by CREMS are recorded for later uplift in the [CREMS constraint uplift backlog](delivery/crems-constraint-uplift-backlog.md) (CU-01–CU-21; register only, no work authorised).
 - [Field owner walkthrough](delivery/field-integrated-owner-walkthrough.md), [benefit instrument](testing/field-benefit-measurement.md) and the joined journey retain their own source and review boundaries. A test pass is not a participant observation.
 - Maintain the [project instructions](standards/chatgpt-project-instructions.md), [blueprint](blueprints/BP-01-master-blueprint.md) and [design workflow](design/development/README.md). Pending visual reviews stay visible; no review fingerprint is invented.
 

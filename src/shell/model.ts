@@ -23,6 +23,10 @@ export function actionsForCapabilities(grants: ReadonlySet<string>): QuickAction
 export function contextualActions(actions: QuickAction[], module: string) {
   return actions.toSorted((a, b) => Number(b.module === module) - Number(a.module === module));
 }
-export type ShellContext = { display_name: string; preference_scope?: string; actions: QuickAction[]; navigation: string[]; can_preview: boolean };
+export type ShellContext = {
+  display_name: string; preference_scope?: string; actions: QuickAction[]; navigation: string[]; can_preview: boolean;
+  // NR-18: the companies this person can work in, and the one chosen; null means all of them.
+  companies?: { id: string; name: string }[]; working_company_id?: string | null;
+};
 export type SearchItem = { id: string; label: string; reference: string; kind: string; href: string; context?: string };
 export type SearchResults = { items: SearchItem[]; has_more: boolean; limit_per_type: number; state?: string; sources?: { kind: string; state: string }[] };

@@ -4,6 +4,7 @@ import { database } from "../platform/database";
 import { object } from "../shared/validation";
 import { actionsForCapabilities, type ShellContext } from "./model";
 import { navigationForCapabilities } from "./navigation";
+import { workingCompanies } from "./company";
 
 export async function shellContext(p: Principal, input: unknown): Promise<ShellContext> {
   object(input, []);
@@ -15,7 +16,8 @@ export async function shellContext(p: Principal, input: unknown): Promise<ShellC
     [p.workspace_id, p.actor_id],
   );
   const capabilities = new Set(grants.rows.map(g => g.capability));
-  return { display_name: p.display_name, preference_scope: `${p.workspace_id}:${p.actor_id}`, actions: actionsForCapabilities(capabilities),
+  const { companies, working_company_id } = await workingCompanies(p);
+  return { display_name: p.display_name, companies, working_company_id, preference_scope: `${p.workspace_id}:${p.actor_id}`, actions: actionsForCapabilities(capabilities),
     navigation: navigationForCapabilities(capabilities, process.env.PPO_ENV === "azure-demo"),
     // This is a presentation preference for authenticated synthetic/demo users,
     // never an impersonation or permission switch. No production mode is enabled.

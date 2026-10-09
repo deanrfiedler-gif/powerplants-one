@@ -187,7 +187,7 @@
 .lead-empty {
   padding: 70px 20px;
   text-align: center;
-  color: #727c89;
+  color: var(--text-secondary, #596779);
 }
 .lead-empty .product-icon {
   width: 36px;
@@ -1437,7 +1437,7 @@
   }
   .lead-empty p {
     margin: 0 0 17px;
-    color: #667181;
+    color: var(--text-secondary, #596779);
   }
   .lead-empty button {
     min-height: 36px;

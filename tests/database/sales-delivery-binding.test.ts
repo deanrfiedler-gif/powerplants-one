@@ -369,8 +369,8 @@ test("LC-16 populated 0075 upgrade preserves exact accepted Sales, native record
   const after = await rows(
     "SELECT * FROM public.ppo_migrations ORDER BY version",
   );
-  assert.deepEqual(after.slice(0, -1), ledger);
-  assert.equal(after.at(-1).version, 76);
+  assert.deepEqual(after.slice(0, -2), ledger);
+  assert.deepEqual(after.slice(-2).map((r: { version: number }) => r.version), [76, 77]);
   assert.deepEqual(
     await readOperation(f.p, f.create.operation_id),
     f.created.receipt,

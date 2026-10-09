@@ -33,6 +33,11 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 ## Visual references
 
 - [projects-register-desktop.png](../../../blueprints/projects-visuals/projects-register-desktop.png)
+- [29-pj02-portfolio-desktop.png](../../../reference/ui/application-shell/navigation-architecture-board-r02/29-pj02-portfolio-desktop.png) · 1440 × 900 · Proposed Health view
+- [30-pj02-portfolio-phone.png](../../../reference/ui/application-shell/navigation-architecture-board-r02/30-pj02-portfolio-phone.png) · 390 × 969 · Proposed Health view
+- [31-pj02-portfolio-320.png](../../../reference/ui/application-shell/navigation-architecture-board-r02/31-pj02-portfolio-320.png) · 320 × 1013 · Proposed Health view
+
+The three portfolio-health renders come from the private claude.ai design canvas "PPO Navigation Architecture", version 26 (capture set r02), recorded in [Navigation architecture board](../../../decisions/navigation-architecture-board.md). They propose a List / Health view switch on the existing register, shared at `/projects?view=health` with the breadcrumb Projects › Projects register › Health view. Schedule, cost and risk status are explained, and each measure is labelled: forecast finish against baseline, and milestone lateness. Unknown is shown whenever an input is missing. The thresholds shown are synthetic placeholders pending decision NAD-04 and D-017; they are not adopted rules.
 
 ## Behaviour, handovers and verification
 

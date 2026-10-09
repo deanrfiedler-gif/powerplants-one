@@ -21,6 +21,10 @@ Current ES-07 contribution: 330 entries, 176 source routes and 37 component reco
 
 The imported baseline has 150 scopes and 110 source destinations from r05. Two new development pages and four shared systems extend it to 266 entries, 262 draft articles and 266 design references. Eight existing images are linked across fifteen baseline entries. Their provenance distinguishes design references from implementation captures. Missing images are visible work, not broken placeholder links. The standalone r05 is a retained portable issue; routine changes belong here rather than in a new HTML revision.
 
+## Build and review sequence
+
+[ui-build-sequence.md](ui-build-sequence.md) and its JSON data are generated from this register and the issued r02 build plan by `python3 scripts/build-ui-sequence.py`. Do not edit them by hand. Each row shows its placement basis; to move an entry, change its register record and regenerate. Use `--check` to confirm the committed outputs are current. The sequence and its adopted rules (SD-01 to SD-05) are recorded in [the decision](../../decisions/ui-build-sequence.md). The sequence is not an approved schedule or an effort estimate.
+
 ## Daily change workflow
 
 1. Find the stable entry and inspect its exact source, accepted baseline, guide, desktop/mobile contract and shared dependencies before changing a page.
