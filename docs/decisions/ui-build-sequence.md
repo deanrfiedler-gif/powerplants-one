@@ -63,6 +63,16 @@ The first review phase is the existing baseline. It contains:
 
 Starting here matches Dean's suggestion to begin with the home page.
 
+## Phase 00 review, session 1 (9 October 2026)
+
+Claude prepared the first review session; the verdicts remain Dean's.
+
+- **Material:** [the evidence set](../testing/evidence/ui-review-phase-00-r01/README.md) holds 42 hashed captures of all 30 phase 00 entries at 1440 and 390 px from the running app, plus the automated checks and the findings.
+- **Automated checks:** every page answered 200 in about 2 s, with no horizontal overflow, console errors or failed API calls. One shared contrast failure, the search shortcut hint, appears on 18 desktop pages.
+- **Shared findings:** S1 to S9. Under SD-02 these are fixed first in the shell, theme and guidance, because each one fixes many pages.
+- **Claude's proposed verdicts:** 7 accept, 5 accept with minor fixes, 16 refine, 1 own session (theme, through the component catalogue) and 1 later phase (FI-07, with SV-06).
+- **Register:** each phase 00 entry notes that the pre-review is prepared and the owner verdict is pending. No owner review, reviewer or fingerprint is recorded.
+
 ## Where it is shown
 
 The navigation architecture canvas gains a **UI build sequence** board drawn from the generated data. The repository files remain the authority. The board was added after the r02 capture set, so no capture of it is retained.
