@@ -177,9 +177,16 @@ test("N18/N19 primary rail expands, persists and retains endpoints in a short wi
 test("N18 blocked storage retains expansion for the current identity and visit", async ({page,isMobile})=>{
   test.skip(isMobile,"Desktop primary rail persistence.");
   await page.addInitScript(()=>{Storage.prototype.setItem=()=>{throw Error("SYN storage denied");};Storage.prototype.getItem=()=>{throw Error("SYN storage denied");};});
-  await login(page); await page.goto("/sales/opportunities");
+  await login(page);
+  // The session check reloads the shell context once after the first read and
+  // disables the toggle meanwhile; a click in that window does nothing.
+  const settled=page.waitForResponse(r=>new URL(r.url()).pathname==="/api/v1/local-session"&&r.request().method()==="GET")
+    .then(()=>page.waitForResponse(r=>new URL(r.url()).pathname==="/api/v1/shell/context"));
+  await page.goto("/sales/opportunities"); await settled;
   await page.getByRole("button",{name:"Expand primary navigation",exact:true}).click();
+  await expect(page.getByRole("button",{name:"Collapse primary navigation",exact:true})).toBeVisible();
   await page.locator(".ppo-primary-nav").getByRole("link",{name:"Leads",exact:true}).click();
+  await expect(page).toHaveURL(/\/sales\/leads$/);
   await expect(page.getByRole("button",{name:"Collapse primary navigation",exact:true})).toBeVisible();
 });
 
