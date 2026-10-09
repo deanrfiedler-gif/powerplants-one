@@ -421,6 +421,7 @@ for (const processed of [false, true]) {
         ).items.find((s) => s.id === oldReport.id)!;
         const cmd = {
           ...q.cmd,
+          id: undefined,
           ...base(),
           expected_version: (await handoff(q.id)).version,
           reports: [
