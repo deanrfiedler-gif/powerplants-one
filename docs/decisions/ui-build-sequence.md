@@ -86,6 +86,19 @@ Dean asked for refinements to be worked on a separate board. Each phase gets its
 
 The canvas is a proposal. Nothing on it is adopted until Dean marks it up or accepts it, and nothing changes in the app until a later batch builds it with fresh evidence. The repository remains the authority. The canvas has no retained capture.
 
+### Owner decisions (9 October 2026)
+
+Dean replied: "24-hour; accept S5, S9 and all My Work proposals".
+
+| ID | Decision | Applies |
+|---|---|---|
+| S6 | Adopted, with **24-hour** times: year always shown; every scheduled time carries its zone and offset, e.g. "4 Sep 2026, 10:00 AEST (UTC+10)"; dense lists state the zone once; relative urgency keeps the actual date beside it; internal zone names such as Australia/Brisbane are never shown. Built as one shared formatter with its own tests. | Every phase 00 instance on the board |
+| S5 | Adopted: each listed instance is rewritten in plain words, moved to the page guide or hidden. Statements that protect people stay visible in plain words; synthetic and fictional-data labels stay. | Every phase 00 instance on the board |
+| S9 | Adopted: the drafted My Work guide becomes the page guide, and the development draft disclosure and revision label are shown only in the development workspace. The guide stays a draft in the register until Dean reviews it in the running app. | My Work, then each phase 00 page |
+| My Work | All four proposals accepted: the overview, activity record, Create activity and Reviews & handovers. This includes the new Create activity behaviour: the person's working company is filled in for them and can still be changed. | `route:/work`, `/work/[id]`, `/work/new`, `/work/reviews`, `/work/waiting` |
+
+**Build order.** Batch 2 builds the shared S6 formatter, S9 and the My Work pages, with the S5 and S6 instances on those pages. The S5 and S6 instances on Sales, Planner, Appointment, Field and Offline pages are built with those pages' own refinements in later batches, so each page changes once and is recaptured once. An acceptance here is a design decision; each built page still needs Dean's fresh visual review in the register before phase 00 closes (SD-05).
+
 ## Where it is shown
 
 The navigation architecture canvas gains a **UI build sequence** board drawn from the generated data. The repository files remain the authority. The board was added after the r02 capture set, so no capture of it is retained.
