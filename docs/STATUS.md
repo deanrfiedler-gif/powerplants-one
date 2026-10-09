@@ -4,6 +4,12 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## Same-name customer mapping and backend integration — 10 October 2026
+
+Dean authorised sequential review/merge of #379, #380 and #381, combined verification and the next PT-02 proof alongside Claude's UI work. The later branches now contain the earlier reviewed backend changes with all evidence/register appends retained. Current-head CI and merge remain in progress at this checkpoint; no deployment is included.
+
+PT-02 now has a [joined synthetic backend proof](testing/evidence/same-name-finance-mapping/README.md): new Q01 work, issued Service evidence, wrong-company and absent/ambiguous account refusal, stale mapping blocks through dispatch, and exact immutable debtor identity through target/reconciliation and later mapping changes. Six nested checks pass on test source `ffbe9a8`; existing runtime satisfies the exercised contract. [Decision](decisions/same-name-finance-mapping.md). The acceptance ledgers retain the distinction between this technical pass, conceptual VAL-01 versus actual runtime codes, SyntheticVerified context, and independent/owner/operational acceptance. No UI or production integration changes.
+
 ## Parallel backend access and recovery — 9 October 2026
 
 10 October continuation: Dean authorised reconciliation of #379/#380 and PT-13 approved time/material correction proof in the isolated `codex/approved-evidence-corrections` session alongside Claude's UI work. #378 is merged. #380's document-register conflict is resolved with both contributions retained; its nine scenarios pass on the integrated branch. #379's 16 download scenarios pass after its existing main integration; the blocked Copilot-triggered checks have been restarted under the owner account. Current-head CI remains separate from local verification. Neither PR is merged or deployed by this continuation.

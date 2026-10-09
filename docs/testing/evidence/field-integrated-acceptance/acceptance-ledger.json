@@ -92,6 +92,24 @@
       "head": "c1519ba",
       "environment": "Unchanged compiled24d19b1; local launcher cache exception; four complete80-navigation runs and one unresolved incomplete repeat retained.",
       "review": "Independent automated source/evidence review; owner/device and full PT-27 acceptance open."
+    },
+    "MAPPING": {
+      "path": "docs/testing/evidence/same-name-finance-mapping/README.md",
+      "head": "ffbe9a8dc39386b01416bb98c52cab77d6a7744f",
+      "environment": "Windows Node24.21.0/PostgreSQL16.15; private synthetic database and real document renderer/storage. Six joined synthetic PT-02 checks; real Q01 work, Service issue, Finance release and immutable target mapping.",
+      "review": "Source self-review; independent review and owner acceptance pending."
+    },
+    "CORRECTION": {
+      "path": "docs/testing/evidence/approved-evidence-corrections/README.md",
+      "head": "9dae751c4db4de2e94ebaba0043950af537071f0",
+      "environment": "Windows Node24.21.0/PostgreSQL16.15; private synthetic database and real document renderer/storage. Eight joined synthetic PT-13 checks; unprocessed and reconciled handoffs retain approved originals and reasoned successors.",
+      "review": "Source self-review; independent review and owner acceptance pending."
+    },
+    "IDENTITY": {
+      "path": "docs/testing/evidence/document-identity-recovery/README.md",
+      "head": "472df7eb4e8f064fb37eb232e67c0da6a4842927",
+      "environment": "Windows Node24.21.0/PostgreSQL16.15; private synthetic database and real document renderer/storage. Nine synthetic source movement/version loss and retained pack/report/Finance recovery checks; customer/provider channel remains open.",
+      "review": "Source self-review; independent review and owner acceptance pending."
     }
   },
   "cases": [
@@ -154,14 +172,15 @@
         "SVC-06"
       ],
       "source_ids": [
-        "P10"
+        "P10",
+        "MAPPING"
       ],
-      "technical_disposition": "Component",
-      "existing_evidence_scope": "Exact company/debtor mapping refusals and Finance conservation.",
+      "technical_disposition": "Combined synthetic pass",
+      "existing_evidence_scope": "New Q01 work through Service issue, wrong-company refusal even with both accounts visible, missing/ambiguous/stale mapping blocks, exact immutable account tuple through processing and reconciliation. Runtime 422/404/409 codes evidence the conceptual VAL-01 rule; live verification remains disabled.",
       "current_applicability": "Applicable within selected synthetic PP-01 boundary; no enterprise parent promotion",
-      "continued_validity_and_gap": "Need a single evidence record covering same-name selection, wrong company, absent mapping and correct tuple.",
-      "fresh_verification_required": "Technical reviewer: assemble the existing mapping assertions and current fixture outputs into the complete PT-02 record.",
-      "owner_next_action": "Technical reviewer: assemble the existing mapping assertions and current fixture outputs into the complete PT-02 record.",
+      "continued_validity_and_gap": "Technical reviewer: review the joined source/target record. Owner observation and operational mapping acceptance remain separate.",
+      "fresh_verification_required": "Technical reviewer: review the joined source/target record. Owner observation and operational mapping acceptance remain separate.",
+      "owner_next_action": "Technical reviewer: review the joined source/target record. Owner observation and operational mapping acceptance remain separate.",
       "human_acceptance": "Pending actual observations",
       "benefit": "Unmeasured"
     },
@@ -569,14 +588,15 @@
       "source_ids": [
         "P09",
         "P10",
-        "FRESH"
+        "FRESH",
+        "CORRECTION"
       ],
-      "technical_disposition": "Component",
-      "existing_evidence_scope": "Original correction lineage, exact Service review and independent Finance allocation.",
+      "technical_disposition": "Combined synthetic pass",
+      "existing_evidence_scope": "Exact approved 90 MIN / 2 EA originals resist overwrite; reasoned time/material successors require fresh Service review and invalidate Finance readiness. Both unprocessed allocation re-review and reconciled-history preservation with a linked correction request are exercised.",
       "current_applicability": "Applicable within selected synthetic PP-01 boundary; no enterprise parent promotion",
-      "continued_validity_and_gap": "Current selected observation correction is not the written approved time/material correction with downstream invalidation.",
-      "fresh_verification_required": "Technical reviewer: run exact90 MIN/2 EA approved successor case and verify dependent readiness/processed-history preservation.",
-      "owner_next_action": "Technical reviewer: run exact90 MIN/2 EA approved successor case and verify dependent readiness/processed-history preservation.",
+      "continued_validity_and_gap": "Technical reviewer: review retained command/evidence lineage. Service/Finance owners: observe the workflow separately; no operational billing or ERP correction policy is granted.",
+      "fresh_verification_required": "Technical reviewer: review retained command/evidence lineage. Service/Finance owners: observe the workflow separately; no operational billing or ERP correction policy is granted.",
+      "owner_next_action": "Technical reviewer: review retained command/evidence lineage. Service/Finance owners: observe the workflow separately; no operational billing or ERP correction policy is granted.",
       "human_acceptance": "Pending actual observations",
       "benefit": "Unmeasured"
     },
@@ -752,14 +772,15 @@
       ],
       "source_ids": [
         "P11",
-        "FRESH"
+        "FRESH",
+        "IDENTITY"
       ],
       "technical_disposition": "Component",
-      "existing_evidence_scope": "Exact pack/report/Finance bytes, scoped downloads and original-operation recovery.",
+      "existing_evidence_scope": "Exact pack/report/Finance bytes, scoped downloads and original-operation recovery. IDENTITY adds real synthetic rename/move/version-removal, explicit reviewed successor and retained three-output recovery; authenticated customer/provider proof remains open.",
       "current_applicability": "Applicable within selected synthetic PP-01 boundary; no enterprise parent promotion",
-      "continued_validity_and_gap": "Full simulated rename/identity-changing move/missing-version chain remains a separate source-adapter proof.",
-      "fresh_verification_required": "Technical reviewer: execute each movement outcome; SharePoint live evidence remains outside scope.",
-      "owner_next_action": "Technical reviewer: execute each movement outcome; SharePoint live evidence remains outside scope.",
+      "continued_validity_and_gap": "Technical reviewer: review the bounded synthetic identity evidence and complete the applicable customer-channel/provider mapping; SharePoint live evidence remains outside scope.",
+      "fresh_verification_required": "Technical reviewer: review the bounded synthetic identity evidence and complete the applicable customer-channel/provider mapping; SharePoint live evidence remains outside scope.",
+      "owner_next_action": "Technical reviewer: review the bounded synthetic identity evidence and complete the applicable customer-channel/provider mapping; SharePoint live evidence remains outside scope.",
       "human_acceptance": "Pending actual observations",
       "benefit": "Unmeasured"
     },
