@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { formatDateTime } from "../shell/date-format";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { readSalesFollowup, SalesTargetKind } from "../sales/followup";
@@ -30,9 +31,9 @@ function FollowupContext({ data: d }: { data: Followup }) {
       <p>{d.activity.summary}</p>
       <p>
         {d.customer_name ?? "Customer must be selected and reviewed"} ·{" "}
-        {d.site_name ?? "No captured site"} · {d.activity.status} · Activity
-        version {d.activity.version} · Owner: {d.owner_name} · Due:{" "}
-        <Stamp value={d.activity.due_at} />
+        {d.site_name ?? "No captured site"} · {d.activity.status} · Owner:{" "}
+        {d.owner_name} · Due{" "}
+        {d.activity.due_at ? formatDateTime(d.activity.due_at) : "date needed"}
       </p>
       <div className="related-links">
         {d.sources.map((s) =>
@@ -129,10 +130,10 @@ export function SalesFollowupPanel({
     );
   return (
     <section className="crm-panel">
-      <h2>Continue a customer need in Sales</h2>
+      <h2>Continue in Sales</h2>
       <p>
-        Review existing Sales records first. Native capture and this link save
-        separately; the original follow-up remains owned and dated.
+        Check Sales for an existing deal before you start a new one. This
+        activity stays open with its owner and due date.
       </p>
       <ErrorNotice error={error} />
       <Button onClick={data.reload}>Refresh Sales follow-up context</Button>
@@ -177,9 +178,10 @@ export function SalesFollowupPanel({
           ))}
           {!d.ready && (
             <p>
-              An unlinked, active Internal Customer contact or Relationship
-              review Activity must have a date and be owned by you. Prepare a
-              separate review for a different need or restricted original.
+              To prepare a Sales review from this activity, it must be an open
+              customer contact or relationship review that only internal staff
+              can read, not yet linked to Sales, with a due date and you as its
+              owner. For a different need, prepare a separate review.
             </p>
           )}
           {d.ready && (

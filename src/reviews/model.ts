@@ -8,7 +8,7 @@ export const reviewViews = [
 ] as const;
 export const reviewViewLabels = {
   mine: "My reviews",
-  all: "All permitted",
+  all: "All I can see",
   returned: "Returned to me",
   handovers: "Handovers",
   sent: "Sent by me",

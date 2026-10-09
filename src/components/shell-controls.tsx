@@ -591,8 +591,9 @@ export function ShellControls({
 
         </div>
         <div className="ppo-panel-footer">
-          <span className="ppo-preview-label">Powerplants One · r17</span>
-          {panel === "guide" && <span>User guide & journey</span>}
+          {/* S9: the revision label is drafting detail, shown only in the development workspace. */}
+          <span className="ppo-preview-label">{development ? "Powerplants One · r17" : "Powerplants One"}</span>
+          {panel === "guide" && <span>User guide and journeys</span>}
           {panel === "notifications" && <span>In-app updates</span>}
         </div>
       </section>

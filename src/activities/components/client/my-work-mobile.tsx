@@ -405,16 +405,19 @@ function Tile({ icon, label, href, onOpen }: { icon: IconName; label: string; hr
   return (
     <li>
       {href ? (
-        <Link className="mw-tile" href={href} aria-label={label} title={label}>
+        <Link className="mw-tile" href={href}>
           <Icon name={icon} />
+          <span className="mw-tile-label">{label}</span>
         </Link>
       ) : onOpen ? (
-        <button type="button" className="mw-tile" aria-haspopup="dialog" aria-label={label} title={label} onClick={onOpen}>
+        <button type="button" className="mw-tile" aria-haspopup="dialog" onClick={onOpen}>
           <Icon name={icon} />
+          <span className="mw-tile-label">{label}</span>
         </button>
       ) : (
         <span className="mw-tile" role="img" aria-label={`${label}: outside your current access`} title={`${label}: outside your current access`}>
           <Icon name={icon} />
+          <span className="mw-tile-label" aria-hidden="true">{label}</span>
           <span className="mw-tile-lock">
             <Icon name="lock" />
           </span>
@@ -619,6 +622,8 @@ function WeatherCard() {
   const read = useWorkResource<WeatherReport>(prefs.hidden ? null : `work/weather${query.size ? `?${query}` : ""}`, 900000);
   if (prefs.hidden) return null;
   const w = read.data;
+  // No provider is connected yet, so the card stays out of the way rather than fill the first slot.
+  if (w?.status === "not_configured") return null;
   const hide = () => {
     work.saveLayout({ ...work.layout, weather: { ...prefs, hidden: true } });
     work.announce("Weather hidden. Customise overview in the My Work menu brings it back.");
@@ -631,7 +636,7 @@ function WeatherCard() {
       iconOnly
       quiet
       align="end"
-      items={[...(w && w.status !== "not_configured" ? [{ id: "location", label: "Change location", onSelect: () => setSheet("location") }] : []), { id: "hide", label: "Hide weather", onSelect: hide }]}
+      items={[...(w ? [{ id: "location", label: "Change location", onSelect: () => setSheet("location") }] : []), { id: "hide", label: "Hide weather", onSelect: hide }]}
     />
   );
   return (
@@ -646,15 +651,6 @@ function WeatherCard() {
                 Try again
               </button>
             )}
-          </p>
-          {menu}
-        </div>
-      ) : w.status === "not_configured" ? (
-        <div className="mw-weather-quiet">
-          <Icon name="cloud-off" />
-          <p>
-            <strong>Weather is not connected</strong>
-            <span>Powerplants One has no weather provider yet, so no forecast is shown.</span>
           </p>
           {menu}
         </div>
@@ -730,7 +726,7 @@ function WeatherCard() {
           </p>
         </WorkDialog>
       )}
-      {sheet === "location" && w && w.status !== "not_configured" && (
+      {sheet === "location" && w && (
         <LocationSheet
           current={w.location}
           offered={w.status === "ok" ? w.locations : []}

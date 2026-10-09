@@ -432,12 +432,13 @@ test("an overdue opportunity is raised by the Deals worklist's own rule, and lea
   await expect(attention(page).locator(".mw-attention-row").first()).toHaveText(/^1\s*overdue activity$/);
 });
 
-test("weather is honest: not connected by default, a provider's answer renders, hiding frees the space, and failure blocks nothing", async ({ page }, info) => {
+test("weather is honest: hidden until a provider is connected, a provider's answer renders, hiding frees the space, and failure blocks nothing", async ({ page }, info) => {
   await signIn(page);
   await open(page);
   const card = page.getByRole("region", { name: "Local weather" });
-  await expect(card).toContainText("Weather is not connected");
-  await expect(card).not.toContainText("°");
+  // Phase 00 batch 2: with no provider the card takes no space at all, rather than say so first.
+  await expect(page.getByRole("heading", { name: "Quick Actions" })).toBeVisible();
+  await expect(card).toHaveCount(0);
 
   // Only a stubbed read can show a forecast: the application itself has no provider.
   await page.route("**/api/v1/work/weather**", (route) => route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(WEATHER_SAMPLE) }));

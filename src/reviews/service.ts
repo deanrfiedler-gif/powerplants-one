@@ -28,7 +28,7 @@ export async function reviewSources(
     try {
       if (domain === "Service") {
         const page = await listReports(p);
-        bounded = true; // Source reader declares a bounded window.
+        bounded = page.completeness === "BoundedWindow"; // Only a full source window can hide older reports.
         for (const r of page.items)
           selected.push(await reportReviewTask(p, r.id));
       } else if (domain === "Finance") {

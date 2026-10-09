@@ -1,4 +1,4 @@
-import { ActivityCreate } from "../../../../components/activity-screens";
+import { ActivityCreate } from "../../../../../components/activity-screens";
 export default async function Page({
   searchParams,
 }: {

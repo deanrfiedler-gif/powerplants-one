@@ -207,7 +207,7 @@ export function MyWorkOverview() {
           </span>
           <div>
             <h2 id="mw-waiting-title">
-              Waiting on others {data.waiting.status === "ok" && <span className="mw-count">{data.waiting.total}</span>}
+              Waiting on <span className="mw-nowrap">others{data.waiting.status === "ok" && <span className="mw-count">{data.waiting.total}</span>}</span>
             </h2>
           </div>
           <Link className="mw-link mw-panel-link" href={`/work/waiting${criteriaSearch({ ...defaultCriteria, owner: c.criteria.owner, company_id: c.criteria.company_id })}`}>
@@ -257,7 +257,7 @@ export function MyWorkOverview() {
             </span>
             <div>
               <h2 id="mw-gaps-title">
-                Needs a next activity {data.gaps.status === "ok" && <span className="mw-count">{data.gaps.total}</span>}
+                Needs a next <span className="mw-nowrap">activity{data.gaps.status === "ok" && <span className="mw-count">{data.gaps.total}</span>}</span>
               </h2>
               <p>Open opportunities with no active next action</p>
             </div>

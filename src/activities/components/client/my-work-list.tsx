@@ -104,11 +104,12 @@ export function ActivityRow({
               <button
                 type="button"
                 className="mw-button mw-button-quiet"
+                title={ownerAction ? "Change owner or date" : row.due_needed ? "Set a date" : "Reschedule"}
                 onClick={() => open({ kind: ownerAction ? "owner" : row.due_needed ? "date" : "reschedule", row })}
                 aria-label={`${ownerAction ? "Change owner or date" : row.due_needed ? "Set a date" : "Reschedule"}: ${row.summary}`}
               >
                 <Icon name="calendar" />
-                <span>{ownerAction ? "Owner / date" : row.due_needed ? "Set date" : "Reschedule"}</span>
+                <span className="mw-row-action-label">{ownerAction ? "Owner / date" : row.due_needed ? "Set date" : "Reschedule"}</span>
               </button>
             )}
           </>

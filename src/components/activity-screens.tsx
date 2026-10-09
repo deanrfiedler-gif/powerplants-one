@@ -8,19 +8,18 @@ import { acceptanceReturn } from "../shell/context-links";
 import { useState } from "react";
 import { LocalDateTimeField, useUnsavedChanges } from "./record-ui";
 import type { readActivity } from "../activities/activities";
-import { activityTypeLabels, whenText } from "../activities/work-view";
+import { activityTypeLabels, timing, whenText } from "../activities/work-view";
+import { Tag } from "../activities/components/client/my-work-ui";
 import { useIdentity } from "./business-session";
+import { useShell } from "./shell-provider";
 import {
-  EnumField,
   ErrorNotice,
   isDenied,
   Field,
-  PageHeader,
   ReadState,
   RecordLink,
   SelectField,
   Status,
-  SummaryPair,
   useCommand,
   useResource,
   type Envelope,
@@ -34,18 +33,35 @@ const kinds = [
   "FinanceQuery",
   "RelationshipReview",
 ];
+// S5: plain names for stored values; the values themselves are unchanged.
+const kindLabels: Record<string, string> = {
+  TechnicalFollowUp: "Technical follow-up",
+  CustomerContact: "Customer contact",
+  MaterialAction: "Materials action",
+  FinanceQuery: "Finance query",
+  RelationshipReview: "Relationship review",
+};
+const linkTypes = ["Organisation", "Site", "Asset", "Ticket", "Project"] as const;
+const linkTypeLabels: Record<string, string> = { Organisation: "Customer", Site: "Site", Asset: "Equipment", Ticket: "Service request", Project: "Project" };
+// Who can read an activity's purpose and notes: anyone who can see the linked record, or only
+// people who also hold internal or Finance access (classVisibility in src/activities/activities.ts).
+const accessClasses = ["RestrictedService", "Internal", "RestrictedFinance"] as const;
+const accessLabels: Record<string, string> = {
+  RestrictedService: "Anyone who can see the linked record",
+  Internal: "Internal staff only",
+  RestrictedFinance: "Finance only",
+};
 export function ActivityDetail({ id }: { id: string }) {
   const source = acceptanceReturn(useSearchParams().get("returnTo"));
   const r = useResource<Envelope<Activity>>(`activities/${id}`);
   return (
-    <>
+    <div className="mw-page mw-record-page">
       <PolicyHolds activityId={id} />
-      <Link className="ppo-back-link" href="/work">← My Work</Link>
       <ReadState loading={r.loading} error={r.error} retry={r.reload} />
       {!isDenied(r.error) && r.data?.items[0] && (
-        <>{source && <Link href={source}>Return to acceptance obligation</Link>}<ActivityEditor key={id} activity={r.data.items[0]} reload={r.reload} /></>
+        <>{source && <Link className="ppo-back-link" href={source}>Return to acceptance obligation</Link>}<ActivityEditor key={id} activity={r.data.items[0]} reload={r.reload} /></>
       )}
-    </>
+    </div>
   );
 }
 function ActivityEditor({
@@ -67,6 +83,22 @@ function ActivityEditor({
       `selectors/owners?${new URLSearchParams({ company_id: a.company_id, ...(a.site_id ? { site_id: a.site_id } : {}), purpose: "Activity", access_class: a.access_class, activity_id: a.id })}`,
     );
   useUnsavedChanges(summary !== a.summary || owner !== a.owner_id || due !== (a.due_at ?? "") || needed !== a.due_needed || !!outcome || !!reason, cmd.busy);
+  const active = a.status === "Open" || a.status === "InProgress",
+    t = timing(a, new Date().toISOString());
+  // The header's Complete and Reschedule take the person to the fields that do the work; the
+  // commands, their reasons and their version checks are unchanged.
+  const jump = (field: string, openUpdate = false) => {
+    if (openUpdate) {
+      const details = document.querySelector<HTMLDetailsElement>("details.activity-update");
+      if (details) details.open = true;
+      if (needed) setNeeded(false);
+    }
+    requestAnimationFrame(() => {
+      const el = document.getElementById(field);
+      el?.scrollIntoView({ block: "center" });
+      el?.focus();
+    });
+  };
   async function act(action: string) {
     const fields =
       action === "update"
@@ -100,36 +132,66 @@ function ActivityEditor({
     );
   return (
     <>
-      <PageHeader eyebrow="SC-01 / Activity" title={a.summary} />
-      <div className="record-banner">
-        <Status value={a.status} />
-        <span>Owner: {a.owner_name}</span>
-        <span>Version {a.version}</span>
-      </div>
-      <dl className="context-grid">
-        <SummaryPair label="Purpose">
-          {a.kind.replace(/([a-z])([A-Z])/g, "$1 $2")}
-        </SummaryPair>
-        <SummaryPair label="Type">{activityTypeLabels[a.activity_type]}</SummaryPair>
-        {/* An appointment keeps its planned end in due_at, so it is described as a start and an end, never as a due time. */}
-        <SummaryPair label={a.starts_at ? "Appointment" : "Due"}>
-          {a.due_needed ? "Due date needed" : whenText(a)}
-        </SummaryPair>
-        <SummaryPair label="Outcome">
-          <span className="narrative">
-            {a.outcome ?? a.cancellation_reason ?? "Not completed"}
-          </span>
-        </SummaryPair>
-      </dl>
+      <section className="mw-panel mw-record" aria-labelledby="activity-title">
+        <div className="mw-record-identity">
+          <div className="mw-record-heading">
+            <p className="mw-record-eyebrow">Activity · {activityTypeLabels[a.activity_type]}</p>
+            <h1 id="activity-title">{a.summary}</h1>
+            <div className="mw-record-meta">
+              {active && t.tone === "overdue" && <Tag tone="overdue">{t.detail ? t.value : "Overdue"}</Tag>}
+              <Status value={a.status} />
+              <span>Owner: {a.owner_name}</span>
+              <span>Details readable by: {accessLabels[a.access_class] ?? a.access_class}</span>
+            </div>
+          </div>
+          {a.can_edit && active && (
+            <div className="mw-record-actions">
+              {a.can_complete && (
+                <button type="button" className="mw-button mw-button-primary" onClick={() => jump("activity-outcome")}>
+                  Complete
+                </button>
+              )}
+              <button type="button" className="mw-button" onClick={() => jump("activity-due", true)}>
+                Reschedule
+              </button>
+            </div>
+          )}
+        </div>
+        <dl className="mw-record-facts">
+          {/* An appointment keeps its planned end in due_at, so it is described as a start and an end, never as a due time. */}
+          <dt>{a.starts_at ? "Appointment" : "Due"}</dt>
+          <dd>
+            {a.due_needed ? "Due date needed" : whenText(a).replace(/^Due /, "")}
+          </dd>
+          <dt>Purpose</dt>
+          <dd>{kindLabels[a.kind] ?? a.kind}</dd>
+          <dt>Outcome</dt>
+          <dd className="narrative">{a.outcome ?? a.cancellation_reason ?? "Not completed yet"}</dd>
+          <dt>Linked to</dt>
+          <dd>
+            {a.links.length ? (
+              <ul className="mw-record-links">
+                {a.links.map((l) => (
+                  <li key={l.object_id}>
+                    <RecordLink type={l.object_type} id={l.object_id}>
+                      {l.label ?? l.display_number}
+                    </RecordLink>
+                    <span className="mw-muted">
+                      {" "}
+                      · {linkTypeLabels[l.object_type] ?? l.object_type}
+                      {l.label && l.display_number ? `, ${l.display_number}` : ""}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              "No linked record"
+            )}
+          </dd>
+        </dl>
+      </section>
       {a.incident_source && <IncidentActivityHandover href={a.incident_source.href} />}
       {a.report_source && <p><Link href={a.report_source.href}>Return to original service report and response</Link>. Completing this Activity does not change a customer response, internal attendance acceptance, incident or inspection defect.</p>}
-      <div className="related-links">
-        {a.links.map((l) => (
-          <RecordLink key={l.object_id} type={l.object_type} id={l.object_id}>
-            {l.display_number ?? l.label}
-          </RecordLink>
-        ))}
-      </div>
       <SalesFollowupPanel id={a.id} onLinked={reload} />
       {a.kind === "CustomerContact" && (
         <p className="scope-note">
@@ -141,14 +203,14 @@ function ActivityEditor({
       <p role="status">{cmd.saved}</p>
       {a.can_edit && (
         <form
-          className="form-panel"
+          className="mw-panel mw-record-form mw-record-actions-form"
           onSubmit={(e) => {
             e.preventDefault();
             void act("update");
           }}
         >
           <h2>Activity actions</h2>
-          <fieldset disabled={cmd.busy}>
+          <fieldset disabled={cmd.busy} className="mw-record-body">
             <details className="activity-update"><summary>Update follow-up</summary>
             <div className="form-grid">
               <Field
@@ -279,7 +341,14 @@ export function ActivityCreate({
   const p = useIdentity(),
     router = useRouter(),
     cmd = useCommand();
-  const [company, setCompany] = useState(initial.company ?? ""),
+  // The working company is filled in until the person chooses one; it never widens access, and the
+  // server rechecks every link, owner and access class on save.
+  // As in the header: the chosen working company, or the only company the person's grants reach.
+  const shellContext = useShell().context,
+    working = shellContext?.working_company_id ?? (shellContext?.companies?.length === 1 ? shellContext.companies[0].id : null);
+  const [chosenCompany, setCompany] = useState<string | null>(initial.company ?? null),
+    company = chosenCompany ?? working ?? "",
+    prefilled = chosenCompany === null && !!working,
     [kind, setKind] = useState(kinds.includes(initial.kind) ? initial.kind : "TechnicalFollowUp"),
     [type, setType] = useState(initial.type ?? "Site"),
     [target, setTarget] = useState(initial.id ?? ""),
@@ -329,117 +398,111 @@ export function ActivityCreate({
     if (result) router.push(`/work/${result.record_id}`);
   }
   return (
-    <>
-      <Link className="ppo-back-link" href="/work">← My Work</Link>
-      <PageHeader
-        eyebrow="SC-01 / New activity"
-        title="Give the next action an owner"
-      />
-      <ErrorNotice error={cmd.error} />
-      <form className="form-panel" onSubmit={submit}>
-        <fieldset disabled={cmd.busy}>
-          <div className="form-grid">
+    <div className="mw-page mw-record-page">
+      <form className="mw-panel mw-record-form" onSubmit={submit} aria-labelledby="new-activity-title">
+        <header className="mw-record-head">
+          <h1 id="new-activity-title">New activity</h1>
+          <p>
+            Give the next action an owner and a date. Fields marked <span aria-hidden="true">*</span>
+            <span className="mw-sr">with an asterisk</span> are required.
+          </p>
+        </header>
+        <ErrorNotice error={cmd.error} />
+        <fieldset disabled={cmd.busy} className="mw-record-body">
+          <Field name="follow-summary" label="What needs doing?" value={summary} onChange={setSummary} required multiline maxLength={2000} />
+          <div className="mw-form-grid">
             <SelectField
-              name="follow-company"
-              label="Company visibility context"
-              value={company}
-              onChange={(v) => {
-                setCompany(v);
-                setTarget("");
-              }}
-              options={companies.data?.items ?? []}
-              required
-            />
-            <EnumField
-              name="follow-type"
-              label="Linked record type"
-              value={type}
-              values={["Organisation", "Site", "Asset", "Ticket", "Project"]}
-              onChange={(v) => {
-                setType(v);
-                setTarget("");
-              }}
-            />
-            <SelectField
-              name="follow-target"
-              label="Linked record"
-              value={target}
-              onChange={setTarget}
-              options={(records.data?.items ?? []).filter(o => !o.company_id || o.company_id === company).map((o) => ({
-                ...o,
-                display_name: o.display_name ?? o.description ?? o.summary ?? o.title,
-              }))}
-              required
-            />
-            <EnumField
               name="follow-kind"
-              label="Activity category"
+              label="Category"
               value={kind}
-              values={kinds}
+              options={kinds.map((k) => ({ id: k, display_name: kindLabels[k] }))}
               onChange={(v) => {
                 setKind(v);
                 if (v === "FinanceQuery") setAccess("RestrictedFinance");
               }}
-            />
-            <EnumField
-              name="follow-access"
-              label="Content access"
-              value={access}
-              values={["RestrictedService", "Internal", "RestrictedFinance"]}
-              onChange={setAccess}
-            />
-            <SelectField
-              name="follow-owner"
-              label="Owner"
-              value={owner}
-              onChange={setOwner}
-              options={owners.data?.items ?? []}
               required
             />
-            <Field
-              name="follow-summary"
-              label="Purpose / summary"
-              value={summary}
-              onChange={setSummary}
-              required
-              multiline
-              maxLength={2000}
-            />
-            <label className="check-field">
-              <input
-                type="checkbox"
-                checked={needed}
-                onChange={(e) => setNeeded(e.target.checked)}
-              />{" "}
-              Due date still needed
-            </label>
-            {!needed && (
-              <LocalDateTimeField
-                name="follow-due"
-                label="Due date and time"
-                value={due}
-                onChange={setDue}
+            <SelectField name="follow-owner" label="Owner" value={owner} onChange={setOwner} options={(owners.data?.items ?? []).map((o) => (o.id === p.actor_id ? { ...o, display_name: `${o.display_name ?? o.id} (you)` } : o))} empty={company ? "Choose…" : "Choose a company first"} required />
+            <div className="mw-check mw-form-wide">
+              <input id="follow-due-needed" type="checkbox" checked={needed} onChange={(e) => setNeeded(e.target.checked)} aria-describedby="follow-due-needed-hint" />
+              <label htmlFor="follow-due-needed">No due date yet</label>
+              <small id="follow-due-needed-hint">It appears under &quot;Date needed&quot; until you set one.</small>
+            </div>
+            {!needed && <LocalDateTimeField name="follow-due" label="Due date and time" value={due} onChange={setDue} required />}
+          </div>
+          <fieldset className="mw-form-group">
+            <legend>Linked to</legend>
+            <div className="mw-form-grid">
+              <SelectField
+                name="follow-type"
+                label="Record type"
+                value={type}
+                options={linkTypes.map((t) => ({ id: t, display_name: linkTypeLabels[t] }))}
+                onChange={(v) => {
+                  setType(v);
+                  setTarget("");
+                }}
                 required
               />
-            )}
-          </div>
+              <SelectField
+                name="follow-target"
+                label="Linked record"
+                value={target}
+                onChange={setTarget}
+                options={(records.data?.items ?? []).filter((o) => !o.company_id || o.company_id === company).map((o) => ({
+                  ...o,
+                  display_name: o.display_name ?? o.description ?? o.summary ?? o.title,
+                }))}
+                empty={company ? "Choose…" : "Choose a company first"}
+                required
+              />
+            </div>
+            {records.data?.next_cursor && <p className="mw-form-note">Not listed? Open the record and add the activity from there.</p>}
+          </fieldset>
+          <fieldset className="mw-form-group">
+            <legend>Who can see it</legend>
+            <div className="mw-form-grid">
+              <div>
+                <SelectField
+                  name="follow-company"
+                  label="Company"
+                  value={company}
+                  onChange={(v) => {
+                    setCompany(v);
+                    setTarget("");
+                  }}
+                  options={companies.data?.items ?? []}
+                  required
+                />
+                {prefilled && <p className="mw-form-note">{shellContext?.working_company_id ? "Your working company is filled in for you." : "Your company is filled in for you."}</p>}
+              </div>
+              <div>
+                <SelectField
+                  name="follow-access"
+                  label="Who can read the details"
+                  value={access}
+                  options={accessClasses.map((a) => ({ id: a, display_name: accessLabels[a] }))}
+                  onChange={setAccess}
+                  required
+                />
+                <p className="mw-form-note">Choose who can read the purpose and notes.</p>
+              </div>
+            </div>
+          </fieldset>
           {[companies, records, owners].map((r, i) => (
-            <ReadState
-              key={i}
-              loading={r.loading}
-              error={r.error}
-              retry={r.reload}
-            />
+            <ReadState key={i} loading={r.loading} error={r.error} retry={r.reload} />
           ))}
-          {records.data?.next_cursor && (
-            <p>
-              Narrow the linked record through its detail page to find records
-              beyond this selector page.
-            </p>
-          )}
-          <button type="submit">Create activity</button>
+          <div className="mw-form-actions">
+            <button type="submit" className="mw-button mw-button-primary">
+              Create activity
+            </button>
+            {/* Cancel returns to where the person came from, such as a customer or equipment record. */}
+            <button type="button" className="mw-button" onClick={() => (window.history.length > 1 ? router.back() : router.push("/work/actions"))}>
+              Cancel
+            </button>
+          </div>
         </fieldset>
       </form>
-    </>
+    </div>
   );
 }
