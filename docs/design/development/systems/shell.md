@@ -43,3 +43,9 @@ The primary rail defaults to its established compact 76 px mode and expands to l
 
 
 Ordinary Workspace lives in More and uses an eligible operational landing; Development Shell preview is presentation only. Search/page navigation reviews dirty work before changing location or preference. Exact loaded reference/title extends route breadcrumbs; denied and loading identity context clears it. Host states are maintained in navigation-fixtures.json. Screenshot inspection and owner/device acceptance are separate in the NAV ledger.
+
+## Navigation architecture board (proposed)
+
+The private claude.ai design canvas "PPO Navigation Architecture", version 24, maps the six capability domains of the 8 October 2026 brief onto the seven built department rails. It also records navigation rules NR-01 to NR-16 and a cross-domain handover register HO-01 to HO-18. Retained captures and Mermaid sources: [navigation-architecture-board-r01](../../../reference/ui/application-shell/navigation-architecture-board-r01/README.md). Record and open decisions NAD-01 to NAD-07: [Navigation architecture board](../../../decisions/navigation-architecture-board.md).
+
+These are proposals. The registry in `src/shell/navigation.ts` and [Navigation consolidation](../../../decisions/navigation-consolidation.md) remain the authority. The board found two inconsistencies to resolve: the Sales phone bar shows unavailable destinations as disabled where every other surface hides them, and `application-shell-integration.md` still describes /crm canonical routes. No owner visual review is recorded for the board.

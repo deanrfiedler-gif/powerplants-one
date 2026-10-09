@@ -32,7 +32,12 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-No exact image or HTML reference is linked. Keep this gap visible.
+- [16-rp05-exceptions-desktop.png](../../../reference/ui/application-shell/navigation-architecture-board-r01/16-rp05-exceptions-desktop.png) · 1440 × 1084 · Proposed
+- [17-rp05-exceptions-phone.png](../../../reference/ui/application-shell/navigation-architecture-board-r01/17-rp05-exceptions-phone.png) · 390 × 1007 · Proposed
+
+These are renders of the private claude.ai design canvas "PPO Navigation Architecture", version 24, recorded in [Navigation architecture board](../../../decisions/navigation-architecture-board.md). They are a proposed composition on synthetic data, not an approved mockup: page type Work queue + persistent detail. The board proposes widening this scope from Supply and Finance to exceptions from every department (decision NAD-02, open). The desk assigns and escalates; it never edits the source record.
+
+- **Missing:** 1024 px and 320 px compositions, and any native capture; no route exists yet.
 
 ## Behaviour, handovers and verification
 

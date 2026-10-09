@@ -33,6 +33,10 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 ## Visual references
 
 - [projects-register-desktop.png](../../../blueprints/projects-visuals/projects-register-desktop.png)
+- [18-pj02-portfolio-desktop.png](../../../reference/ui/application-shell/navigation-architecture-board-r01/18-pj02-portfolio-desktop.png) · 1440 × 900 · Proposed Health view
+- [19-pj02-portfolio-phone.png](../../../reference/ui/application-shell/navigation-architecture-board-r01/19-pj02-portfolio-phone.png) · 390 × 931 · Proposed Health view
+
+The two portfolio-health renders come from the private claude.ai design canvas "PPO Navigation Architecture", version 24, recorded in [Navigation architecture board](../../../decisions/navigation-architecture-board.md). They propose a List / Health view switch on the existing register, with explained schedule, cost and risk status. Unknown is shown whenever an input is missing. The thresholds shown are synthetic placeholders pending decision NAD-04 and D-017; they are not adopted rules.
 
 ## Behaviour, handovers and verification
 

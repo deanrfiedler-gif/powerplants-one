@@ -32,7 +32,12 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-No exact image or HTML reference is linked. Keep this gap visible.
+- [14-rp01-overview-desktop.png](../../../reference/ui/application-shell/navigation-architecture-board-r01/14-rp01-overview-desktop.png) · 1440 × 900 · Proposed
+- [15-rp01-overview-phone.png](../../../reference/ui/application-shell/navigation-architecture-board-r01/15-rp01-overview-phone.png) · 390 × 1330 · Proposed
+
+These are renders of the private claude.ai design canvas "PPO Navigation Architecture", version 24, recorded in [Navigation architecture board](../../../decisions/navigation-architecture-board.md). They are a proposed composition on synthetic data, not an approved mockup: page type Overview / dashboard, four indicator tiles that each show source and as-at time, an attention list and the report catalogue. New capability `reporting.overview.read` is proposed, not in the contract.
+
+- **Missing:** 1024 px and 320 px compositions, and any native capture; no route exists yet.
 
 ## Behaviour, handovers and verification
 

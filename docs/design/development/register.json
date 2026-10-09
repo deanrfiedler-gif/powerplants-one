@@ -1940,9 +1940,14 @@
       "design_path": "docs/design/development/pages/scope-pj-02.md",
       "html_path": null,
       "image_paths": [
-        "docs/blueprints/projects-visuals/projects-register-desktop.png"
+        "docs/blueprints/projects-visuals/projects-register-desktop.png",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r01/18-pj02-portfolio-desktop.png",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r01/19-pj02-portfolio-phone.png"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "docs/decisions/navigation-architecture-board.md",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r01/README.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -4900,8 +4905,14 @@
       "guide_key": "guide.rp.01",
       "design_path": "docs/design/development/pages/scope-rp-01.md",
       "html_path": null,
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/application-shell/navigation-architecture-board-r01/14-rp01-overview-desktop.png",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r01/15-rp01-overview-phone.png"
+      ],
+      "dependencies": [
+        "docs/decisions/navigation-architecture-board.md",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r01/README.md"
+      ],
       "scope_status": "unbuilt",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -5016,8 +5027,14 @@
       "guide_key": "guide.rp.05",
       "design_path": "docs/design/development/pages/scope-rp-05.md",
       "html_path": null,
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/application-shell/navigation-architecture-board-r01/16-rp05-exceptions-desktop.png",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r01/17-rp05-exceptions-phone.png"
+      ],
+      "dependencies": [
+        "docs/decisions/navigation-architecture-board.md",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r01/README.md"
+      ],
       "scope_status": "unbuilt",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -9182,7 +9199,12 @@
       "design_path": "docs/design/development/systems/shell.md",
       "html_path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
       "image_paths": [
-        "docs/testing/evidence/sh-platform/captures/rebased-notification-bell.png"
+        "docs/testing/evidence/sh-platform/captures/rebased-notification-bell.png",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r01/01-sitemap.png",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r01/02-navigation-reconciliation.png",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r01/03-handover-path.png",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r01/04-navigation-rules.png",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r01/13-graph-overview.png"
       ],
       "dependencies": [
         "src/components/shell-controls.tsx",
@@ -9197,7 +9219,11 @@
         "src/components/application-frame.tsx",
         "src/shell/record-identity.tsx",
         "docs/design/development/navigation-fixtures.json",
-        "docs/decisions/navigation-consolidation.md"
+        "docs/decisions/navigation-consolidation.md",
+        "docs/decisions/navigation-architecture-board.md",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r01/README.md",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r01/navigation.mmd",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r01/navigation-overview.mmd"
       ],
       "scope_status": "Shared source",
       "visual_status": "Needs review",
