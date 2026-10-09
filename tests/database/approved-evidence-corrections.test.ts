@@ -160,6 +160,13 @@ for (const processed of [false, true]) {
     await t.test(
       "approved originals and separate financial quantities cannot be edited in place",
       async () => {
+        assert.equal(originalFinance.readiness.ready, true);
+        assert.equal(originalHolds.length, 3);
+        assert.ok(
+          originalHolds.every(
+            (h) => h.state === (processed ? "Consumed" : "Held"),
+          ),
+        );
         assert.equal(
           (Date.parse(time.payload.end_at) -
             Date.parse(time.payload.start_at)) /
@@ -277,6 +284,7 @@ for (const processed of [false, true]) {
           processed ? "ReconciliationRequired" : "Returned",
         );
         assert.equal(state.needs_review, true);
+        assert.equal((await readFinance(q.p, q.id)).readiness.ready, false);
         assert.equal(
           state.current_revision_id,
           originalFinance.handoff.current_revision_id,
@@ -400,6 +408,7 @@ for (const processed of [false, true]) {
           true,
           "Service approval must not restore the old Finance approval",
         );
+        assert.equal((await readFinance(q.p, q.id)).readiness.ready, false);
         const bytes = await presentationBytes(
           q.q.p,
           oldReport.id,
@@ -537,6 +546,7 @@ for (const processed of [false, true]) {
           f = await readFinance(q.p, q.id);
           assert.equal(f.handoff.status, "Approved");
           assert.equal(f.handoff.needs_review, false);
+          assert.equal(f.readiness.ready, true);
           assert.equal(f.reviews.length, 2);
           assert.deepEqual(
             f.lines
