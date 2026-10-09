@@ -1,0 +1,29 @@
+✖ PT-18 source identity, reviewed reconciliation and retained output recovery (296.1121ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1642.0268
+
+✖ failing tests:
+
+test at tests\database\document-identity-recovery.test.ts:1:190
+✖ PT-18 source identity, reviewed reconciliation and retained output recovery (296.1121ms)
+  Error: Command failed: C:\Program Files\nodejs\node.exe --conditions=react-server --import tsx --test C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\document-identity-recovery.ts
+
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at ChildProcess.exithandler (node:child_process:417:12)
+      at ChildProcess.emit (node:events:514:28)
+      at maybeClose (node:internal/child_process:1141:16)
+      at ChildProcess._handle.onexit (node:internal/child_process:306:5) {
+    code: 1,
+    killed: false,
+    signal: null,
+    cmd: 'C:\\Program Files\\nodejs\\node.exe --conditions=react-server --import tsx --test C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\backend-access-recovery\\powerplants-one\\tests\\helpers\\document-identity-recovery.ts',
+    stdout: "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nError: Transform failed with 1 error:\nC:\\Users\\Dean.Fiedler\\.codex\\worktrees\\backend-access-recovery\\powerplants-one\\tests\\helpers\\document-identity-recovery.ts:288:0: ERROR: Unexpected end of file\n    at failureErrorWithLog (C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\backend-access-recovery\\powerplants-one\\node_modules\\esbuild\\lib\\main.js:1752:15)\n    at C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\backend-access-recovery\\powerplants-one\\node_modules\\esbuild\\lib\\main.js:1019:50\n    at responseCallbacks.<computed> (C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\backend-access-recovery\\powerplants-one\\node_modules\\esbuild\\lib\\main.js:886:9)\n    at handleIncomingPacket (C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\backend-access-recovery\\powerplants-one\\node_modules\\esbuild\\lib\\main.js:941:12)\n    at Socket.readFromStdout (C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\backend-access-recovery\\powerplants-one\\node_modules\\esbuild\\lib\\main.js:864:7)\n    at Socket.emit (node:events:514:28)\n    at addChunk (node:internal/streams/readable:568:12)\n    at readableAddChunkPushByteMode (node:internal/streams/readable:519:3)\n    at Readable.push (node:internal/streams/readable:399:5)\n    at Pipe.onStreamRead (node:internal/stream_base_commons:189:23) {\n  name: 'TransformError'\n}\n\nNode.js v24.21.0\n✖ C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\backend-access-recovery\\powerplants-one\\tests\\helpers\\document-identity-recovery.ts (215.1762ms)\nℹ tests 1\nℹ suites 0\nℹ pass 0\nℹ fail 1\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 223.3479\n\n✖ failing tests:\n\ntest at tests\\helpers\\document-identity-recovery.ts:1:1\n✖ C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\backend-access-recovery\\powerplants-one\\tests\\helpers\\document-identity-recovery.ts (215.1762ms)\n  'test failed'\n",
+    stderr: ''
+  }

@@ -1,0 +1,14 @@
+✔ P10 source creation and every direct read/receipt obey current Finance grants (29348.5134ms)
+✔ P10 OUT-14 storage-success/database-failure recovers original exact bytes and release identity (60816.4109ms)
+✔ P09 issued bytes and every customer projection exclude private fields and filenames (39212.2809ms)
+✔ P09 storage success then database failure reconciles original bundle and one issue (34562.6427ms)
+✔ P09 issued original byte removal or wrong hash is unavailable rather than regenerated (35803.3753ms)
+✔ P09 issue authority revoked after durable storage refuses release and original issue receipt recovery (27935.9763ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 235392.6254
