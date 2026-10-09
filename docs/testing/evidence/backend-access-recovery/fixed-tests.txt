@@ -1,0 +1,17 @@
+TAP version 13
+# Subtest: PT-01 backend access and original recovery through actual HTTP adapters
+ok 1 - PT-01 backend access and original recovery through actual HTTP adapters
+  ---
+  duration_ms: 31877.4334
+  type: 'test'
+  ...
+# ▶ PT-01 / PT-18 scoped projections, recovery and storage-time authority\\n  ✔ company/site/workspace isolation applies to direct reads, search, suggestions and Finance (842.6135ms)\\n  ✔ lost response, revoked authority and restored retry preserve one exact original (329.0557ms)\\n  ✔ notifications and previews recheck current source access without changing saved evidence (432.8369ms)\\n  ✔ issued previews, manifests and file exports retain recipient and company isolation (289.9448ms)\\n  ✔ issue-html refuses authority revoked during storage and recovers exact bytes (551.0162ms)\\n  ✔ generated-html refuses authority revoked during storage and recovers exact bytes (423.756ms)\\n  ✔ issue-pdf refuses authority revoked during storage and recovers exact bytes (445.7468ms)\\n  ✔ generated-pdf refuses authority revoked during storage and recovers exact bytes (361.8019ms)\\n✔ PT-01 / PT-18 scoped projections, recovery and storage-time authority (27855.4822ms)\\nℹ tests 9\\nℹ suites 0\\nℹ pass 9\\nℹ fail 0\\nℹ cancelled 0\\nℹ skipped 0\\nℹ todo 0\\nℹ duration_ms 31758.7004\\n
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 32207.2938

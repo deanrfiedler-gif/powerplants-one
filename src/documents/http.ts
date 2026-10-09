@@ -35,6 +35,9 @@ export function issueFile(kind: "pdf" | "html" | "manifest") {
       const { issue } = await issueContext(database(), p, uuid(id, "issue_id"));
       if (kind === "manifest") return reply(issue.manifest);
       const b = await readBundle(p, issue.manifest);
+      // Storage can outlive a grant or crew assignment. Recheck the exact issue
+      // before disclosing bytes or recording an opened/downloaded event.
+      await issueContext(database(), p, issue.id);
       const recipients = (
         await database().query(
           "SELECT id FROM ppo.pack_recipients WHERE workspace_id=$1 AND issue_id=$2 AND user_id=$3",
@@ -188,6 +191,8 @@ export function generatedFile(kind: "pdf" | "html") {
       const job = await readRenderJob(p, uuid(id, "job_id"));
       if (!job.output_manifest) throw unavailable();
       const bytes = await readBundle(p, job.output_manifest);
+      // A saved render result is not continuing authority to retrieve it.
+      await readRenderJob(p, job.id);
       return new NextResponse(
         kind === "pdf" ? new Uint8Array(bytes.pdf) : bytes.html,
         {
