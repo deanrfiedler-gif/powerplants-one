@@ -1,0 +1,36 @@
+✔ PT-01 / PT-18 Service and Finance download authority and exact recovery over HTTP (27482.2783ms)
+ℹ ▶ Service and Finance output checks current authority after private storage
+  ✔ current role, company and workspace refusals expose no original bytes or metadata (653.3932ms)
+  ✔ issued Service report html: revoke report.read during storage, then recover the same original (467.2655ms)
+  ✔ issued Service report pdf: revoke report.read during storage, then recover the same original (390.0656ms)
+  ✔ issued Service report html: revoke field.read.own during storage, then recover the same original (399.8438ms)
+  ✔ issued Service report pdf: revoke field.read.own during storage, then recover the same original (428.2472ms)
+  ✔ generated Service report html: revoke report.issue during storage, then recover the same original (187.9966ms)
+  ✔ generated Service report pdf: revoke report.issue during storage, then recover the same original (271.132ms)
+  ✔ generated Service report html: revoke report.read during storage, then recover the same original (239.9516ms)
+  ✔ generated Service report pdf: revoke report.read during storage, then recover the same original (311.7045ms)
+  ✔ Finance evidence html: revoke finance.read during storage, then recover the same original (183.2967ms)
+  ✔ Finance evidence pdf: revoke finance.read during storage, then recover the same original (170.9183ms)
+  ✔ Finance evidence html: revoke shared.finance.read during storage, then recover the same original (143.8551ms)
+  ✔ Finance evidence pdf: revoke shared.finance.read during storage, then recover the same original (188.5968ms)
+  ✔ issued report manifest also refuses authority lost during storage (274.158ms)
+  ✔ missing storage refuses output and recovers original without reissuing (462.3906ms)
+  ✔ corrupt storage refuses output and recovers original without reissuing (662.0001ms)
+✔ Service and Finance output checks current authority after private storage (25371.0922ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 27392.6866
+
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 27758.8986

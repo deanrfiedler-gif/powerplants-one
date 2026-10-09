@@ -1,0 +1,283 @@
+▶ Service and Finance output checks current authority after private storage
+  ✔ current role, company and workspace refusals expose no original bytes or metadata (406.8207ms)
+  ✖ issued Service report html: revoke report.read during storage, then recover the same original (141.1216ms)
+  ✖ issued Service report pdf: revoke report.read during storage, then recover the same original (71.6463ms)
+  ✖ issued Service report html: revoke field.read.own during storage, then recover the same original (90.9801ms)
+  ✖ issued Service report pdf: revoke field.read.own during storage, then recover the same original (80.0467ms)
+  ✖ generated Service report html: revoke report.issue during storage, then recover the same original (51.0199ms)
+  ✖ generated Service report pdf: revoke report.issue during storage, then recover the same original (49.8741ms)
+  ✖ generated Service report html: revoke report.read during storage, then recover the same original (68.2776ms)
+  ✖ generated Service report pdf: revoke report.read during storage, then recover the same original (51.5306ms)
+  ✖ Finance evidence html: revoke finance.read during storage, then recover the same original (56.7474ms)
+  ✖ Finance evidence pdf: revoke finance.read during storage, then recover the same original (56.2473ms)
+  ✖ Finance evidence html: revoke shared.finance.read during storage, then recover the same original (51.4733ms)
+  ✖ Finance evidence pdf: revoke shared.finance.read during storage, then recover the same original (37.881ms)
+  ✖ issued report manifest also refuses authority lost during storage (80.401ms)
+  ✔ missing storage refuses output and recovers original without reissuing (433.4261ms)
+{"correlation_id":"c348ea84-ca5f-4b91-a48a-e9636de7e4bb","code":"DependencyUnavailable","category":"UnexpectedFailure"}
+  ✖ corrupt storage refuses output and recovers original without reissuing (53.6456ms)
+✖ Service and Finance output checks current authority after private storage (16833.4564ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 2
+ℹ fail 15
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 28095.2497
+
+✖ failing tests:
+
+test at tests\helpers\report-finance-download-http.ts:1:7904
+✖ issued Service report html: revoke report.read during storage, then recover the same original (141.1216ms)
+  AssertionError [ERR_ASSERTION]: Expected 403/404; got 200
+      at refused (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:156:12)
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:330:21)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:302:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\helpers\report-finance-download-http.ts:1:7904
+✖ issued Service report pdf: revoke report.read during storage, then recover the same original (71.6463ms)
+  AssertionError [ERR_ASSERTION]: Expected 403/404; got 200
+      at refused (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:156:12)
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:330:21)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:302:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\helpers\report-finance-download-http.ts:1:7904
+✖ issued Service report html: revoke field.read.own during storage, then recover the same original (90.9801ms)
+  AssertionError [ERR_ASSERTION]: Expected 403/404; got 200
+      at refused (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:156:12)
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:330:21)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:302:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\helpers\report-finance-download-http.ts:1:7904
+✖ issued Service report pdf: revoke field.read.own during storage, then recover the same original (80.0467ms)
+  AssertionError [ERR_ASSERTION]: Expected 403/404; got 200
+      at refused (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:156:12)
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:330:21)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:302:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\helpers\report-finance-download-http.ts:1:7904
+✖ generated Service report html: revoke report.issue during storage, then recover the same original (51.0199ms)
+  AssertionError [ERR_ASSERTION]: Expected 403/404; got 200
+      at refused (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:156:12)
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:330:21)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:302:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\helpers\report-finance-download-http.ts:1:7904
+✖ generated Service report pdf: revoke report.issue during storage, then recover the same original (49.8741ms)
+  AssertionError [ERR_ASSERTION]: Expected 403/404; got 200
+      at refused (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:156:12)
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:330:21)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:302:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\helpers\report-finance-download-http.ts:1:7904
+✖ generated Service report html: revoke report.read during storage, then recover the same original (68.2776ms)
+  AssertionError [ERR_ASSERTION]: Expected 403/404; got 200
+      at refused (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:156:12)
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:330:21)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:302:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\helpers\report-finance-download-http.ts:1:7904
+✖ generated Service report pdf: revoke report.read during storage, then recover the same original (51.5306ms)
+  AssertionError [ERR_ASSERTION]: Expected 403/404; got 200
+      at refused (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:156:12)
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:330:21)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:302:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\helpers\report-finance-download-http.ts:1:7904
+✖ Finance evidence html: revoke finance.read during storage, then recover the same original (56.7474ms)
+  AssertionError [ERR_ASSERTION]: Expected 403/404; got 200
+      at refused (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:156:12)
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:330:21)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:302:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\helpers\report-finance-download-http.ts:1:7904
+✖ Finance evidence pdf: revoke finance.read during storage, then recover the same original (56.2473ms)
+  AssertionError [ERR_ASSERTION]: Expected 403/404; got 200
+      at refused (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:156:12)
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:330:21)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:302:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\helpers\report-finance-download-http.ts:1:7904
+✖ Finance evidence html: revoke shared.finance.read during storage, then recover the same original (51.4733ms)
+  AssertionError [ERR_ASSERTION]: Expected 403/404; got 200
+      at refused (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:156:12)
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:330:21)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:302:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\helpers\report-finance-download-http.ts:1:7904
+✖ Finance evidence pdf: revoke shared.finance.read during storage, then recover the same original (37.881ms)
+  AssertionError [ERR_ASSERTION]: Expected 403/404; got 200
+      at refused (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:156:12)
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:330:21)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:302:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\helpers\report-finance-download-http.ts:1:9197
+✖ issued report manifest also refuses authority lost during storage (80.401ms)
+  AssertionError [ERR_ASSERTION]: Expected 403/404; got 200
+      at refused (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:156:12)
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:386:17)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:356:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\helpers\report-finance-download-http.ts:1:10430
+✖ corrupt storage refuses output and recovers original without reissuing (53.6456ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+    assert.ok(
+
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:439:24)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\report-finance-download-http.ts:404:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
