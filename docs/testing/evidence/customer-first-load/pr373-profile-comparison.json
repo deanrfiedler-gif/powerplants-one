@@ -1,0 +1,282 @@
+{
+  "comparison_id": "98b0d929-1695-40aa-9f16-bdb229f64e7f",
+  "source_head": "473857209ba30cad05456b08ee1a3589ade22cbe",
+  "executed_tree": "1d5ccfbb6630925ca439f200ecb243289f61eb73",
+  "run_id": "37785243405",
+  "run_attempt": "1",
+  "outcomes": [
+    {
+      "profile": "development",
+      "exit_code": 0,
+      "signal": null,
+      "groups": [
+        {
+          "group": "desktop|Customers|cold browser context / first view wave",
+          "count": 10,
+          "failures": 0,
+          "p95_ms": 11943.626123000002,
+          "target_ms": 3000,
+          "meets_candidate": false
+        },
+        {
+          "group": "desktop|Customers|warm repeat navigation",
+          "count": 30,
+          "failures": 0,
+          "p95_ms": 8309.916415,
+          "target_ms": 3000,
+          "meets_candidate": false
+        },
+        {
+          "group": "desktop|Work order|cold browser context / first view wave",
+          "count": 10,
+          "failures": 0,
+          "p95_ms": 13244.478465000007,
+          "target_ms": 3000,
+          "meets_candidate": false
+        },
+        {
+          "group": "desktop|Work order|warm repeat navigation",
+          "count": 30,
+          "failures": 0,
+          "p95_ms": 10329.417092000003,
+          "target_ms": 3000,
+          "meets_candidate": false
+        },
+        {
+          "group": "desktop|Planner|cold browser context / first view wave",
+          "count": 10,
+          "failures": 0,
+          "p95_ms": 11125.882783999987,
+          "target_ms": 3000,
+          "meets_candidate": false
+        },
+        {
+          "group": "desktop|Planner|warm repeat navigation",
+          "count": 30,
+          "failures": 0,
+          "p95_ms": 7945.017814999999,
+          "target_ms": 3000,
+          "meets_candidate": false
+        },
+        {
+          "group": "desktop|My Jobs|cold browser context / first view wave",
+          "count": 10,
+          "failures": 0,
+          "p95_ms": 9674.03770299998,
+          "target_ms": 3000,
+          "meets_candidate": false
+        },
+        {
+          "group": "desktop|My Jobs|warm repeat navigation",
+          "count": 30,
+          "failures": 0,
+          "p95_ms": 6622.723573000025,
+          "target_ms": 3000,
+          "meets_candidate": false
+        },
+        {
+          "group": "phone|Customers|cold browser context / first view wave",
+          "count": 10,
+          "failures": 0,
+          "p95_ms": 8206.454179000022,
+          "target_ms": 3000,
+          "meets_candidate": false
+        },
+        {
+          "group": "phone|Customers|warm repeat navigation",
+          "count": 30,
+          "failures": 0,
+          "p95_ms": 7115.240774999984,
+          "target_ms": 3000,
+          "meets_candidate": false
+        },
+        {
+          "group": "phone|Work order|cold browser context / first view wave",
+          "count": 10,
+          "failures": 0,
+          "p95_ms": 10649.370339999994,
+          "target_ms": 3000,
+          "meets_candidate": false
+        },
+        {
+          "group": "phone|Work order|warm repeat navigation",
+          "count": 30,
+          "failures": 0,
+          "p95_ms": 8931.525340000022,
+          "target_ms": 3000,
+          "meets_candidate": false
+        },
+        {
+          "group": "phone|Planner|cold browser context / first view wave",
+          "count": 10,
+          "failures": 0,
+          "p95_ms": 9286.766889999999,
+          "target_ms": 3000,
+          "meets_candidate": false
+        },
+        {
+          "group": "phone|Planner|warm repeat navigation",
+          "count": 30,
+          "failures": 0,
+          "p95_ms": 7232.331816999998,
+          "target_ms": 3000,
+          "meets_candidate": false
+        },
+        {
+          "group": "phone|My Jobs|cold browser context / first view wave",
+          "count": 10,
+          "failures": 0,
+          "p95_ms": 7683.168349999993,
+          "target_ms": 3000,
+          "meets_candidate": false
+        },
+        {
+          "group": "phone|My Jobs|warm repeat navigation",
+          "count": 30,
+          "failures": 0,
+          "p95_ms": 6292.087544000009,
+          "target_ms": 3000,
+          "meets_candidate": false
+        }
+      ]
+    },
+    {
+      "profile": "compiled",
+      "exit_code": 0,
+      "signal": null,
+      "groups": [
+        {
+          "group": "desktop|Customers|cold browser context / first view wave",
+          "count": 10,
+          "failures": 0,
+          "p95_ms": 5908.618666,
+          "target_ms": 3000,
+          "meets_candidate": false
+        },
+        {
+          "group": "desktop|Customers|warm repeat navigation",
+          "count": 30,
+          "failures": 0,
+          "p95_ms": 2528.1792509999996,
+          "target_ms": 3000,
+          "meets_candidate": true
+        },
+        {
+          "group": "desktop|Work order|cold browser context / first view wave",
+          "count": 10,
+          "failures": 0,
+          "p95_ms": 5987.727986000002,
+          "target_ms": 3000,
+          "meets_candidate": false
+        },
+        {
+          "group": "desktop|Work order|warm repeat navigation",
+          "count": 30,
+          "failures": 0,
+          "p95_ms": 3802.633023999995,
+          "target_ms": 3000,
+          "meets_candidate": false
+        },
+        {
+          "group": "desktop|Planner|cold browser context / first view wave",
+          "count": 10,
+          "failures": 0,
+          "p95_ms": 5539.266011,
+          "target_ms": 3000,
+          "meets_candidate": false
+        },
+        {
+          "group": "desktop|Planner|warm repeat navigation",
+          "count": 30,
+          "failures": 0,
+          "p95_ms": 3330.728176000004,
+          "target_ms": 3000,
+          "meets_candidate": false
+        },
+        {
+          "group": "desktop|My Jobs|cold browser context / first view wave",
+          "count": 10,
+          "failures": 0,
+          "p95_ms": 4905.729019000006,
+          "target_ms": 3000,
+          "meets_candidate": false
+        },
+        {
+          "group": "desktop|My Jobs|warm repeat navigation",
+          "count": 30,
+          "failures": 0,
+          "p95_ms": 2638.793445999996,
+          "target_ms": 3000,
+          "meets_candidate": true
+        },
+        {
+          "group": "phone|Customers|cold browser context / first view wave",
+          "count": 10,
+          "failures": 0,
+          "p95_ms": 4134.178799000001,
+          "target_ms": 3000,
+          "meets_candidate": false
+        },
+        {
+          "group": "phone|Customers|warm repeat navigation",
+          "count": 30,
+          "failures": 0,
+          "p95_ms": 2500.220478000003,
+          "target_ms": 3000,
+          "meets_candidate": true
+        },
+        {
+          "group": "phone|Work order|cold browser context / first view wave",
+          "count": 10,
+          "failures": 0,
+          "p95_ms": 4857.529463999992,
+          "target_ms": 3000,
+          "meets_candidate": false
+        },
+        {
+          "group": "phone|Work order|warm repeat navigation",
+          "count": 30,
+          "failures": 0,
+          "p95_ms": 3136.4880269999994,
+          "target_ms": 3000,
+          "meets_candidate": false
+        },
+        {
+          "group": "phone|Planner|cold browser context / first view wave",
+          "count": 10,
+          "failures": 0,
+          "p95_ms": 5041.400032999998,
+          "target_ms": 3000,
+          "meets_candidate": false
+        },
+        {
+          "group": "phone|Planner|warm repeat navigation",
+          "count": 30,
+          "failures": 0,
+          "p95_ms": 3158.9326909999945,
+          "target_ms": 3000,
+          "meets_candidate": false
+        },
+        {
+          "group": "phone|My Jobs|cold browser context / first view wave",
+          "count": 10,
+          "failures": 0,
+          "p95_ms": 4083.8754180000105,
+          "target_ms": 3000,
+          "meets_candidate": false
+        },
+        {
+          "group": "phone|My Jobs|warm repeat navigation",
+          "count": 30,
+          "failures": 0,
+          "p95_ms": 2074.3429689999903,
+          "target_ms": 3000,
+          "meets_candidate": true
+        }
+      ]
+    }
+  ],
+  "candidate_ms": 3000,
+  "candidate_only": true,
+  "limits": "Ordered profiles on the same retained synthetic fixture and runner: development then compiled. Fresh application/browser processes and browser caches, retained database/OS caches. Every original result remains separate; no retries, warm-up substitution or causal production inference. Existing CI deadlines apply to the combined procedure."
+}

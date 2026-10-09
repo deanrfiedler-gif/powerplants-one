@@ -44,6 +44,10 @@ The primary rail defaults to its established compact 76 px mode and expands to l
 
 Ordinary Workspace lives in More and uses an eligible operational landing; Development Shell preview is presentation only. Search/page navigation reviews dirty work before changing location or preference. Exact loaded reference/title extends route breadcrumbs; denied and loading identity context clears it. Host states are maintained in navigation-fixtures.json. Screenshot inspection and owner/device acceptance are separate in the NAV ledger.
 
+## Bell startup boundary
+
+The header imports the standalone `NotificationBell`; the full Notifications workspace keeps its My Work layout and preferences dependencies at its own route. Rendering, current-authority reads, loading/error/partial states and navigation are preserved. The real desktop host opens the bell from Customers before any Notifications visit, verifies its current notice, Escape/focus return and inbox handover. The phone retains its existing hidden header bell and direct inbox entry. Compiled transfer measurements and the desktop/phone inbox regression are recorded in [first-load evidence](../../../testing/evidence/customer-first-load/README.md); owner/device and paired visual acceptance remain pending.
+
 ## Navigation architecture board (proposed)
 
 The private claude.ai design canvas "PPO Navigation Architecture", version 24, maps the six capability domains of the 8 October 2026 brief onto the seven built department rails. It also records navigation rules NR-01 to NR-16 and a cross-domain handover register HO-01 to HO-18. Retained captures and Mermaid sources: [navigation-architecture-board-r01](../../../reference/ui/application-shell/navigation-architecture-board-r01/README.md). Record and open decisions NAD-01 to NAD-07: [Navigation architecture board](../../../decisions/navigation-architecture-board.md).

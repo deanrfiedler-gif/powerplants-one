@@ -1,0 +1,182 @@
+{
+  "checks": [
+    {
+      "name": "studio",
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "scripts/check-development-register.ts"
+      ],
+      "source_head": "f4ffad7a93f10fc5832964eadb81e0ede5b8d9fd",
+      "exit_code": 0,
+      "elapsed_seconds": 9.264839887619019,
+      "original_log_sha256": "4d8f594408f63c77d2192fbc9b82491594d361a3dcefe417e7b783f116afec11",
+      "public_log": "check-studio.txt"
+    },
+    {
+      "name": "foundation",
+      "command": [
+        "python",
+        "-X",
+        "utf8",
+        "scripts/check_foundation.py"
+      ],
+      "source_head": "f4ffad7a93f10fc5832964eadb81e0ede5b8d9fd",
+      "exit_code": 0,
+      "elapsed_seconds": 102.73330283164978,
+      "original_log_sha256": "ef5cddbd3e26998bedb21f3338aa67adf6f0ca0bf62c6363002582ca227f6c84",
+      "public_log": "check-foundation.txt"
+    },
+    {
+      "name": "naming",
+      "command": [
+        "python",
+        "-X",
+        "utf8",
+        "scripts/check_naming.py"
+      ],
+      "source_head": "f4ffad7a93f10fc5832964eadb81e0ede5b8d9fd",
+      "exit_code": 0,
+      "elapsed_seconds": 6.809321641921997,
+      "original_log_sha256": "c43ac7718f9ef1e9e68fb8ff3fe69de85cd8e6daeef9d5631049c387d56d3dd5",
+      "public_log": "check-naming.txt"
+    },
+    {
+      "name": "lint",
+      "command": [
+        "node",
+        "node_modules/eslint/bin/eslint.js",
+        "src/components/notification-bell.tsx",
+        "src/components/notification-workspace.tsx",
+        "src/components/shell-controls.tsx",
+        "scripts/quality-first-load.ts",
+        "tests/browser/sh-platform.spec.ts"
+      ],
+      "source_head": "f4ffad7a93f10fc5832964eadb81e0ede5b8d9fd",
+      "exit_code": 0,
+      "elapsed_seconds": 28.575994968414307,
+      "original_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_log": "check-lint.txt"
+    },
+    {
+      "name": "typecheck",
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit"
+      ],
+      "source_head": "edb486f40c4bf53f57c5fd26c62da82b48c66d13",
+      "exit_code": 0,
+      "elapsed_seconds": 8.0477888,
+      "evidence": "exec output chunk 359c92: completed exit 0, no output. TypeScript source unchanged afterward; no fabricated terminal log."
+    }
+  ],
+  "reviewed_source": "f4ffad7a93f10fc5832964eadb81e0ede5b8d9fd",
+  "source_bindings": [
+    {
+      "commit": "75c33d56cb436a281872ab2a1087d9f2614bc78d",
+      "path": "scripts/quality-first-load.ts",
+      "blob": "3c756b5a0e17534ab394cf29a1964edf3454fd48",
+      "sha256": "4096538d4fe8ebc8fa84486d102c2e6ae7cad9cdb7405d15e8967b41ff54e8ea",
+      "bytes": 11130
+    },
+    {
+      "commit": "75c33d56cb436a281872ab2a1087d9f2614bc78d",
+      "path": "scripts/quality-core-response.ts",
+      "blob": "9ee0ee83f251ace13e258a1af1314b7145453367",
+      "sha256": "2018eea3d1ec6cf91eb0c8e8c5fd1e9cadfbc09043b40700f3e226edc2a9cf7d",
+      "bytes": 628
+    },
+    {
+      "commit": "75c33d56cb436a281872ab2a1087d9f2614bc78d",
+      "path": "scripts/quality-performance-fixture.ts",
+      "blob": "67a51b55dc680770ef5494c91070081e6475d4f6",
+      "sha256": "7fc604e53f815c064173b0d0c371a06aa99c6c20a92b62d3e2cd8d62d4500c9f",
+      "bytes": 1845
+    },
+    {
+      "commit": "75c33d56cb436a281872ab2a1087d9f2614bc78d",
+      "path": "scripts/local-server.ts",
+      "blob": "c11adafafa0a9b8d529fe15f01d08c55ce6aa791",
+      "sha256": "0dc31eb64bc9f5817a6c734245d2aed69965d61efa5400cf1e659dfbba209fa8",
+      "bytes": 6111
+    },
+    {
+      "commit": "75c33d56cb436a281872ab2a1087d9f2614bc78d",
+      "path": "src/platform/proof-diagnostics.ts",
+      "blob": "5cfc80bd22ca7eafbb40c99ccf1c600941d73414",
+      "sha256": "0e2437c58afd6b2a00bc66a0f5dc83a621eaebb065b8c2d15eb52f817001eb2c",
+      "bytes": 3415
+    },
+    {
+      "commit": "75c33d56cb436a281872ab2a1087d9f2614bc78d",
+      "path": "src/platform/proof-runtime.ts",
+      "blob": "a4a89c4e4f21e20e7908a7b07f9a9ee74c31f331",
+      "sha256": "0ca7b67a0e2c7d8461363f7a8f2268447b93522e912452823a05e2f1b32a4122",
+      "bytes": 968
+    },
+    {
+      "commit": "bc49ca3839e50ab61511197cac4b429f48e415b5",
+      "path": "src/components/notification-bell.tsx",
+      "blob": "37758af3d72a14486d38024c4b8fe269030c56d4",
+      "sha256": "18d903f1030aecfc934d60123f510f3afd5ab98f408437cca7240726131e5f29",
+      "bytes": 1899
+    },
+    {
+      "commit": "bc49ca3839e50ab61511197cac4b429f48e415b5",
+      "path": "src/components/notification-workspace.tsx",
+      "blob": "dee8c7841fbd8d2e5888288012323e35a21b5940",
+      "sha256": "d5d599d607b9586be7da9148b16a758ab0fa7dba3f3ebd2a21d3be76277dd669",
+      "bytes": 22336
+    },
+    {
+      "commit": "bc49ca3839e50ab61511197cac4b429f48e415b5",
+      "path": "src/components/shell-controls.tsx",
+      "blob": "42d53fc5f18a085f4bf05b22498c3dcb6e599e6b",
+      "sha256": "d49ea0ebe884d3d32fb0d3ff046ce611a2430fc5f9caeccf84eb0ca9b65fba5d",
+      "bytes": 23642
+    },
+    {
+      "commit": "edb486f40c4bf53f57c5fd26c62da82b48c66d13",
+      "path": "tests/browser/sh-platform.spec.ts",
+      "blob": "fb52cb002ec2096d5b3df0f04a62167a2e1ff059",
+      "sha256": "dee885edd0eacdef3c04b1791c2554c90abe5cbaf888e70399fdfc95571d7f27",
+      "bytes": 21673
+    },
+    {
+      "commit": "edb486f40c4bf53f57c5fd26c62da82b48c66d13",
+      "path": "tests/browser/shell.spec.ts",
+      "blob": "af302f07bc5c81bd7af88b98a4f3d659d627ccc6",
+      "sha256": "cef661ee33587a19384cca562985bec96c21d204372273b8d228039dd93f50c6",
+      "bytes": 8915
+    },
+    {
+      "commit": "edb486f40c4bf53f57c5fd26c62da82b48c66d13",
+      "path": "tests/browser/navigation-safety.spec.ts",
+      "blob": "c2e61ac3a9dc5d96e7b7a673efdfc0237c42a832",
+      "sha256": "3eb4a1f6a29e6b378c925926876e4f778adb5b5af55cb53b742aa056187e4df8",
+      "bytes": 15554
+    },
+    {
+      "commit": "edb486f40c4bf53f57c5fd26c62da82b48c66d13",
+      "path": "playwright.compiled.config.ts",
+      "blob": "f464f449427254aa92da889466a08bad1d014d7b",
+      "sha256": "68e65383845fa340942d4d9bb4a23172e714035e3b2a8cc9fabee635761902d9",
+      "bytes": 733
+    },
+    {
+      "commit": "f4ffad7a93f10fc5832964eadb81e0ede5b8d9fd",
+      "path": "scripts/summarize-first-load.py",
+      "blob": "b276c2e6873f0535a06d2259da02920dffde765a",
+      "sha256": "bd3296749e9b066ca685c97f65fc970678c195a8cd8447280c9fa66af1c14bd4",
+      "bytes": 7353
+    }
+  ],
+  "independent_review": {
+    "chat": "Find the next project step",
+    "source": "f4ffad7a93f10fc5832964eadb81e0ede5b8d9fd",
+    "result": "No actionable source/evidence finding; exact unchanged function, samples, source provenance, register and browser outcomes verified. Does not grant owner/device/performance acceptance."
+  },
+  "retention": "Public log line endings/trailing whitespace normalized; machine-specific workspace paths removed from browser/build logs. Original raw coverage is losslessly compressed. Full headers, credentials and raw browser traces omitted."
+}

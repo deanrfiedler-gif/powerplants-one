@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { NotificationBell } from "./notification-workspace";
+import { NotificationBell } from "./notification-bell";
 import { navigateWithReview } from "./navigation-intent";
 import {
   useEffect,
