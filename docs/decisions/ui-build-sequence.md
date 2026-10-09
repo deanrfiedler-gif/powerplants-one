@@ -2,7 +2,7 @@
 document_id: PPO-UI-SEQ-DEC
 date: 2026-10-09
 owner: Dean Fiedler
-status: Adopted sequence rules SD-01 to SD-05 (9 October 2026); placements and pages not owner-reviewed
+status: Adopted sequence rules SD-01 to SD-05 (9 October 2026); phase 00 owner verdicts recorded 9 October 2026; other placements and pages not owner-reviewed
 source_commit: 5005e7e1763bd53a28b47d6d48f3c87210f5cc1c
 versioning: git
 ---
@@ -73,6 +73,18 @@ Claude prepared the first review session; the verdicts remain Dean's.
 - **Claude's proposed verdicts:** 7 accept, 5 accept with minor fixes, 16 refine, 1 own session (theme, through the component catalogue) and 1 later phase (FI-07, with SV-06).
 - **Owner verdicts (9 October 2026):** Dean accepted the proposed verdicts. 28 entries now hold an owner visual review: a record in the page contract, then the reviewer, date and fingerprint in the register. Of these, 7 are accept, 5 accept with minor fixes and 16 refine. The theme review is deferred to a component-catalogue session, and FI-07 to phase 04. Phase 00 is not complete under SD-05 until the refinements have recorded outcomes.
 - **Refinement batch 1:** the shared shell findings S1, S2, S4 and S7 are fixed; S3 was withdrawn after verification ([evidence](../testing/evidence/ui-refinement-batch-1/README.md)). The 28 reviews are now stale and need a fresh owner look. S5, S6, S8, S9 and the page-level refinements follow in later batches.
+
+## Phase 00 refinement canvas (9 October 2026)
+
+Dean asked for refinements to be worked on a separate board. Each phase gets its own refinement canvas, so the navigation canvas stays an architecture record.
+
+- **Canvas:** [PPO UI refinement · Phase 00](https://claude.ai/artifact/E5wdx1FiF3ZUVb86oXps2E). It is private to Dean and is built with the Powerplants One design system.
+- **Shared rules:** three boards propose S6 (one date and time format), S5 (plain wording in place of specification text) and S9 (page guide content). S6 asks Dean to choose between 24-hour times, which are the current rule, and am/pm.
+- **Pages:** four pairs for My Work. Each pair has a "today" board with the batch 1 captures and a proposed desktop and phone layout. The pages are the overview, the activity record, Create activity and Reviews & handovers.
+- **Proposed new behaviour:** Create activity fills in the working company. Today the user chooses it. Reviews & handovers renames tab and filter labels (All I can see, Area, Type, Owner) and shows exact counts in place of "(0+)".
+- **Next on the canvas:** Sales and Service phase 00 pages.
+
+The canvas is a proposal. Nothing on it is adopted until Dean marks it up or accepts it, and nothing changes in the app until a later batch builds it with fresh evidence. The repository remains the authority. The canvas has no retained capture.
 
 ## Where it is shown
 

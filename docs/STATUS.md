@@ -9,9 +9,10 @@
 Dean asked for one page showing every UI page still to create or refine, in working order from the home page. The [record](decisions/ui-build-sequence.md) derives the [sequence](design/development/ui-build-sequence.md) from the live register and the issued r02 build plan using `scripts/build-ui-sequence.py`. No rank, scope ID or issued byte changes.
 
 - **Coverage:** all 350 register entries are accounted for: 347 placed in phases 00 to 11 and 3 development-tool routes excluded.
-- **Workload:** 190 entries are built and awaiting owner review, 105 are to refine, 46 to build and 6 await a scope decision. None has an owner visual review recorded yet.
+- **Workload:** 190 entries are built and awaiting owner review, 105 are to refine, 46 to build and 6 await a scope decision. 28 phase 00 entries have an owner visual review, stale after refinement batch 1.
 - **Adopted rules:** Dean adopted SD-01 to SD-05 on 9 October and started the phase 00 review. The review track starts at phase 00, which contains the home page, My Work and the existing service and field baseline. The build track starts at phase 01 with AD-01.
 - **Phase 00 review, session 1:** Dean accepted the proposed verdicts on 9 October. 28 owner visual reviews are recorded and 2 are deferred. Refinement batch 1 fixed shared findings S1, S2, S4 and S7 in the shell and withdrew S3 after verification ([evidence](testing/evidence/ui-refinement-batch-1/README.md)). The 28 reviews are now stale, as intended. The [evidence](testing/evidence/ui-review-phase-00-r01/README.md) holds 42 captures, automated checks and shared findings S1 to S9. The verdicts are 7 accept, 5 minor, 16 refine, 1 own session and 1 later phase.
+- **Phase 00 refinement canvas:** proposed shared rules S5, S6 and S9 and My Work layouts are on a [separate canvas](https://claude.ai/artifact/E5wdx1FiF3ZUVb86oXps2E). It is a proposal awaiting Dean's mark-up ([record](decisions/ui-build-sequence.md#phase-00-refinement-canvas-9-october-2026)). Sales and Service pages follow.
 - **Display:** shown as the UI build sequence board on the navigation canvas. The repository is the authority, and the board has no retained capture.
 
 ## Navigation architecture proposal — 9 October 2026
