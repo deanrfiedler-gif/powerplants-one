@@ -178,19 +178,38 @@ test("N18 blocked storage retains expansion for the current identity and visit",
   test.skip(isMobile,"Desktop primary rail persistence.");
   await page.addInitScript(()=>{Storage.prototype.setItem=()=>{throw Error("SYN storage denied");};Storage.prototype.getItem=()=>{throw Error("SYN storage denied");};});
   await login(page);
-  // The session check reloads the shell context once after the first read and
-  // disables the toggle meanwhile; a click in that window does nothing.
-  const settled=page.waitForResponse(r=>new URL(r.url()).pathname==="/api/v1/local-session"&&r.request().method()==="GET")
-    .then(()=>page.waitForResponse(r=>new URL(r.url()).pathname==="/api/v1/shell/context"));
-  await page.goto("/sales/opportunities"); await settled;
+  // The session check re-reads the shell context but keeps the current one meanwhile,
+  // so the first enabled toggle can be clicked straight away.
+  await page.goto("/sales/opportunities");
   await page.getByRole("button",{name:"Expand primary navigation",exact:true}).click();
   await expect(page.getByRole("button",{name:"Collapse primary navigation",exact:true})).toBeVisible();
   await page.locator(".ppo-primary-nav").getByRole("link",{name:"Leads",exact:true}).click();
   await expect(page).toHaveURL(/\/sales\/leads$/);
   await expect(page.getByRole("button",{name:"Collapse primary navigation",exact:true})).toBeVisible();
 });
+test("N18 rail toggle stays enabled through the session check after load", async ({page,isMobile})=>{
+  test.skip(isMobile,"Desktop primary rail.");
+  // Sample the toggle's disabled state every animation frame from the first paint.
+  await page.addInitScript(()=>{
+    const states:string[]=[];(window as unknown as {railStates:string[]}).railStates=states;
+    const sample=()=>{const button=document.querySelector<HTMLButtonElement>(".ppo-rail-toggle");
+      const state=!button?"absent":button.disabled?"disabled":"enabled";if(states.at(-1)!==state)states.push(state);requestAnimationFrame(sample);};
+    requestAnimationFrame(sample);
+  });
+  await login(page);
+  let started=0,settled=0;const shellRead=(r:{url():string})=>new URL(r.url()).pathname==="/api/v1/shell/context";
+  page.on("request",r=>{if(shellRead(r))started++;});
+  page.on("requestfinished",r=>{if(shellRead(r))settled++;});page.on("requestfailed",r=>{if(shellRead(r))settled++;});
+  await page.goto("/sales/opportunities");
+  // The first read, then the re-read after BusinessSession confirms the identity.
+  await expect.poll(()=>started>=2&&settled===started).toBe(true);
+  await page.evaluate(()=>new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done))));
+  const states=await page.evaluate(()=>(window as unknown as {railStates:string[]}).railStates);
+  expect(states,"the toggle must not disable again once enabled").toContain("enabled");
+  expect(states.slice(states.indexOf("enabled"))).toEqual(["enabled"]);
+});
 
-test("N12 Sales Activities preserves selected day in rail, phone, More and search",async({page,isMobile})=>{
+test("N12Sales Activities preserves selected day in rail, phone, More and search",async({page,isMobile})=>{
   await login(page);const day="2026-09-08",href=`/calendar?day=${day}&scope=sales&department=sales`;
   await page.goto(href);
   const nav=page.getByRole("navigation",{name:isMobile?"Mobile navigation":"Sales shortcuts",exact:true});

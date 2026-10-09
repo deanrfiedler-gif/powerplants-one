@@ -88,12 +88,16 @@ export function ShellProvider({
   useEffect(() => {
     let live = true,
       request: AbortController | undefined;
-    const load = () => {
+    // Every identity change dispatches sessionLockEvent first, and lock() clears the
+    // context. A later session-ready re-read therefore revalidates the identity already
+    // shown: it keeps that context until the response replaces it, so the shell does not
+    // blank for a re-read of the same identity. A failed re-read still clears it.
+    const load = (keep = false) => {
       const stamp = ++generation.current;
       request?.abort();
       request = new AbortController();
       const signal = request.signal;
-      setContext(null);
+      if (!keep) setContext(null);
       setError("");
       void fetch("/api/v1/shell/context", { cache: "no-store", signal })
         .then(async (response) => {
@@ -108,10 +112,13 @@ export function ShellProvider({
             setContext(value);
         })
         .catch((reason: Error) => {
-          if (live && !signal.aborted && stamp === generation.current)
+          if (live && !signal.aborted && stamp === generation.current) {
+            setContext(null);
             setError(reason.message);
+          }
         });
     };
+    const revalidate = () => load(true);
     const lock = () => {
       generation.current++;
       request?.abort();
@@ -123,14 +130,14 @@ export function ShellProvider({
         if (event.data === "Lock") lock();
       };
     window.addEventListener(sessionLockEvent, lock);
-    window.addEventListener(sessionReadyEvent, load);
+    window.addEventListener(sessionReadyEvent, revalidate);
     channel.addEventListener("message", remote);
     load();
     return () => {
       live = false;
       request?.abort();
       window.removeEventListener(sessionLockEvent, lock);
-      window.removeEventListener(sessionReadyEvent, load);
+      window.removeEventListener(sessionReadyEvent, revalidate);
       channel.removeEventListener("message", remote);
     };
   }, [retry]);
