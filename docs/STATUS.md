@@ -4,6 +4,15 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## UI build and review sequence proposal — 9 October 2026
+
+Dean asked for one page showing every UI page still to create or refine, in working order from the home page. The [proposal](decisions/ui-build-sequence.md) derives the [sequence](design/development/ui-build-sequence.md) from the live register and the issued r02 build plan using `scripts/build-ui-sequence.py`. No rank, scope ID or issued byte changes.
+
+- **Coverage:** all 350 register entries are accounted for: 347 placed in phases 00 to 11 and 3 development-tool routes excluded.
+- **Workload:** 190 entries are built and awaiting owner review, 105 are to refine, 46 to build and 6 await a scope decision. None has an owner visual review recorded yet.
+- **Proposed departures:** SD-01 to SD-05. The review track starts at phase 00, which contains the home page, My Work and the existing service and field baseline. The build track starts at phase 01 with AD-01.
+- **Display:** shown as the UI build sequence board on the navigation canvas. The repository is the authority, and the board has no retained capture.
+
 ## Navigation architecture proposal — 9 October 2026
 
 Dean requested a six-domain navigation architecture, seven improvements and then an audit. The [record](decisions/navigation-architecture-board.md) retains a private claude.ai board as [r02 captures](reference/ui/application-shell/navigation-architecture-board-r02/README.md): 33 hashed images and two Mermaid sources. The earlier r01 set is retained unchanged. The board:

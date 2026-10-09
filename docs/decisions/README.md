@@ -1,5 +1,7 @@
 # Decision control
 
+[UI build and review sequence](ui-build-sequence.md) is a **proposed** order for creating and refining every registered page, derived from the live register and the issued r02 build plan. It keeps every r02 rank and proposes departures SD-01 to SD-05: rule-based placement of later routes, shared systems verified first, separate review and build tracks, a synthetic job walk after each phase, and a register-visible finish line for each phase.
+
 [ADR-0047 â€” Native Engineering control](ADR-0047-engineering-native-control.md) records the authorised EN-01â€“EN-05 synthetic implementation and backwards-compatible EN-06â€“EN-08 source lineage. Narrow technical duties, exact revisions, immutable review/issue evidence and recipient stages are separate; operational authority and new visual compositions remain unaccepted.
 
 [Priva fertigation workbench refinement](fertigation-workbench-refinement.md) raised seven presentation departures (D1â€“D7), audit findings A1â€“A9 and twelve features (F1â€“F12) on 23 September 2026. Dean directed the same day that the improvements be applied; D1, D7, F1 (placement and declarations), F2â€“F7 and F9 are built, and the rest remain proposed. No calculation changes; visual review and acceptance are not yet recorded.
