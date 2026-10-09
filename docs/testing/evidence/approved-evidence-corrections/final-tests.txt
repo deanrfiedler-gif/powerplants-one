@@ -1,0 +1,22 @@
+▶ PT-13 approved 90 MIN / 2 EA corrections before processing
+  ✔ approved originals and separate financial quantities cannot be edited in place (609.3349ms)
+  ✔ reasoned successors invalidate downstream readiness and replay only their original receipts (1576.281ms)
+  ✔ corrected report requires a new exact submission, review and issue (7938.3272ms)
+  ✔ unprocessed handoff needs a new exact allocation and independent Finance review (919.3368ms)
+✔ PT-13 approved 90 MIN / 2 EA corrections before processing (48623.2832ms)
+ℹ {"phase":"new-independent-approval","report_id":"560786e9-55cf-42b5-95e1-6f098c4883e0","handoff_id":"ccb2da9b-6eef-4112-a4d4-34811cf4666c","original_finance_revision":"cd8bbff3-b984-4bf5-97f6-e0b9e49c07a7","successors":[{"original":"38f028b5-3e24-4ccc-ad1c-7b5aa0510dfe","successor":"87c4f0e6-842c-4165-9157-a7f906da0c04","operation_id":"2f23b341-6b2f-4063-8b06-a19354fa3cc7"},{"original":"3a0c64bb-fa09-4139-90ae-9fd631b22d16","successor":"9bd92044-a6ea-4df1-94de-3051db7a677d","operation_id":"a5ff509a-e9c7-4b3c-bfac-ac7359373337"}],"target_ids":[]}
+▶ PT-13 approved 90 MIN / 2 EA corrections after reconciled processing
+  ✔ approved originals and separate financial quantities cannot be edited in place (234.2383ms)
+  ✔ reasoned successors invalidate downstream readiness and replay only their original receipts (734.1949ms)
+  ✔ corrected report requires a new exact submission, review and issue (8027.4581ms)
+  ✔ processed originals stay consumed and a correction request links the original outcome (420.6976ms)
+✔ PT-13 approved 90 MIN / 2 EA corrections after reconciled processing (43475.2795ms)
+ℹ {"phase":"processed-original-preserved","report_id":"8a6cd382-b1d4-44d8-a01a-f13119b52778","handoff_id":"42d0de07-a277-4525-bf25-e6628e1fbc1d","original_finance_revision":"adca6eb4-7727-4fa2-90f7-fbb9a7fa9675","successors":[{"original":"59a25597-a911-4fb7-9055-2c45e43438af","successor":"d95635d0-2c9f-4b36-8881-929e5db2163b","operation_id":"fec7e1d0-c7db-4775-aa63-ee97b3dad183"},{"original":"872846cc-368e-46c6-be3a-2cc273eafcb2","successor":"bd0e7c89-4b7f-4809-b0f4-59ccd8ca444d","operation_id":"00e7f61b-9b7b-4122-ae36-ba8cb46303fd"}],"target_ids":["a9a64fb1-15a7-4fb8-9bee-4e9e9113a151"]}
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 96762.8949

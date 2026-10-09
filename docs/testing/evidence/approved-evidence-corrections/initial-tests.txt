@@ -1,0 +1,74 @@
+✖ PT-13 approved 90 MIN / 2 EA corrections before processing (31823.6289ms)
+✖ PT-13 approved 90 MIN / 2 EA corrections after reconciled processing (33621.4774ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 68009.6162
+
+✖ failing tests:
+
+test at tests\database\approved-evidence-corrections.test.ts:1:2090
+✖ PT-13 approved 90 MIN / 2 EA corrections before processing (31823.6289ms)
+  error: column "id" does not exist
+      at C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\node_modules\pg-pool\index.js:45:11
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async rows (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\packs.ts:26:4)
+      at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\database\approved-evidence-corrections.test.ts:57:13)
+      at async Promise.all (index 4)
+      at async preserve (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\database\approved-evidence-corrections.test.ts:54:21)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\database\approved-evidence-corrections.test.ts:108:22)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    length: 101,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '8',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3727',
+    routine: 'errorMissingColumn'
+  }
+
+test at tests\database\approved-evidence-corrections.test.ts:1:2090
+✖ PT-13 approved 90 MIN / 2 EA corrections after reconciled processing (33621.4774ms)
+  error: column "id" does not exist
+      at C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\node_modules\pg-pool\index.js:45:11
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async rows (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\packs.ts:26:4)
+      at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\database\approved-evidence-corrections.test.ts:57:13)
+      at async Promise.all (index 4)
+      at async preserve (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\database\approved-evidence-corrections.test.ts:54:21)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\database\approved-evidence-corrections.test.ts:108:22)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    length: 101,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '8',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3727',
+    routine: 'errorMissingColumn'
+  }

@@ -1,10 +1,14 @@
 # Current prototype status
 
-**Updated:** 9 October 2026 (Australia/Brisbane). **Owner:** Dean Fiedler. Public repository; private synthetic prototype and demo. Code delivery, automated verification, visual review, owner acceptance and deployment are separate facts.
+**Updated:** 10 October 2026 (Australia/Brisbane). **Owner:** Dean Fiedler. Public repository; private synthetic prototype and demo. Code delivery, automated verification, visual review, owner acceptance and deployment are separate facts.
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
 ## Parallel backend access and recovery — 9 October 2026
+
+10 October continuation: Dean authorised reconciliation of #379/#380 and PT-13 approved time/material correction proof in the isolated `codex/approved-evidence-corrections` session alongside Claude's UI work. #378 is merged. #380's document-register conflict is resolved with both contributions retained; its nine scenarios pass on the integrated branch. #379's 16 download scenarios pass after its existing main integration; the blocked Copilot-triggered checks have been restarted under the owner account. Current-head CI remains separate from local verification. Neither PR is merged or deployed by this continuation.
+
+The joined PT-13 proof exercises both approved unprocessed and reconciled synthetic handoffs: immutable 90 MIN / 2 EA originals, reasoned 75 MIN / 3 EA successors, fresh Service/Finance review and preservation of processed outcomes with a linked correction request. Existing runtime behaviour satisfies the exercised contract; this contribution adds tests and [evidence](testing/evidence/approved-evidence-corrections/README.md), with its [scope decision](decisions/approved-evidence-corrections.md). Independent review, owner/device observation, operational accounting policy and full PP-01 acceptance remain open.
 
 Dean authorised backend permissions and recovery work alongside his UI work in Claude. The isolated `codex/backend-access-recovery` contribution starts at main `184b933` and leaves UI files/worktrees untouched. Four actual HTTP job-pack download challenges reproduced a permission revocation gap during storage on unchanged main. The backend rechecks current exact-issue/render-job authority before returning HTML/PDF or recording retrieval. Eight focused scenarios now pass, including company/site/search/notification isolation and exact original recovery after a dropped successful response. [Decision](decisions/backend-access-recovery.md) and [evidence](testing/evidence/backend-access-recovery/README.md). Complete PT-01/PT-18/PT-30, independent/owner review, contribution CI, merge and deployment remain separate.
 
