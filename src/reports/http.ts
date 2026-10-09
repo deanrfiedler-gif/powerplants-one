@@ -147,6 +147,8 @@ export async function generatedReport(
       j = await readReportJob(p, id!);
     if (!j.output_manifest) throw unavailable();
     const b = await readReportBundle(p, j.output_manifest);
+    // Recheck the current issue authority after the potentially slow storage read.
+    await readReportJob(p, j.id);
     return new NextResponse(q.kind === "pdf" ? new Uint8Array(b.pdf) : b.html, {
       headers: {
         ...headers,

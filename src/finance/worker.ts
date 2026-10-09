@@ -514,6 +514,8 @@ export async function financeIssueBytes(
   if (!issue) throw unavailable();
   await financeContext(database(), p, issue.handoff_id, "finance.read");
   const b = await readFinanceBundle(p, issue.manifest);
+  // The Finance grant and account/work scope must still allow these exact bytes.
+  await financeContext(database(), p, issue.handoff_id, "finance.read");
   return {
     bytes: q.format === "pdf" ? b.pdf : Buffer.from(b.html),
     content_type:
