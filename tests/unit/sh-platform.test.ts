@@ -3,6 +3,7 @@ import { test } from "node:test";
 import { AppError } from "../../src/platform/errors";
 import {
   collectApplicationSearch,
+  numberSearch,
   searchAdapters,
   type SearchAdapter,
 } from "../../src/shell/search-service";
@@ -102,10 +103,13 @@ test("NR-10 search finds work orders and estimates by number, and every searchab
   assert.ok(kinds.includes("Work order") && kinds.includes("Estimate"));
   for (const kind of kinds) assert.deepEqual(parseViewCriteria("search", { kind }), { kind });
 });
-test("NR-10 a search longer than the estimate register accepts finds no estimates instead of failing", async () => {
-  const p = { workspace_id: "w", actor_id: "a", display_name: "SYN Reader" } as Parameters<typeof searchAdapters>[0];
-  const estimates = searchAdapters(p).find((source) => source.kind === "Estimate")!;
-  assert.deepEqual(await estimates.list({ q: "SYN ".repeat(40), limit: "5" }), { items: [], next_cursor: null });
+test("NR-10 only a query with a digit reads by number, and none longer than the estimate register accepts", () => {
+  assert.equal(numberSearch("SYN"), false);
+  assert.equal(numberSearch("Glasshouse controls"), false);
+  assert.equal(numberSearch("SYN-PPO-WO-000001"), true);
+  assert.equal(numberSearch("0031"), true);
+  assert.equal(numberSearch(`SYN-1 ${"x".repeat(100)}`, 100), false);
+  assert.equal(numberSearch(`SYN-1 ${"x".repeat(94)}`, 100), true);
 });
 test("SH06 perspectives preserve ownership, return, handover and closed source meanings", () => {
   const t = {

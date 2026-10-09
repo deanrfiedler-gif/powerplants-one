@@ -19,14 +19,16 @@ export async function estimatingOptions(p:Principal) {
   for(const row of rows) try {await relationshipContext(c,p,await visibleOpportunity(c,p,row.id),"estimating.edit");items.push(row);} catch(e) {if(!(e instanceof AppError)||e.status!==404)throw e;}
   return {items,owner_id:p.actor_id,owner_name:p.display_name,synthetic:true,limit:100};
 }
-export async function listEstimates(p:Principal,query:Record<string,string>) {
+// window is for internal readers such as global search, which need only their first few rows; each row still
+// passes its own visibility check. The register itself always reads 100.
+export async function listEstimates(p:Principal,query:Record<string,string>,window=100) {
   object(query,["offset","q"]);const c=database(); await requireCapability(c,p,"estimating.read");
   const offset=Number(query.offset??0),q=query.q??"";
   if(!Number.isSafeInteger(offset)||offset<0||offset>1000000||typeof q!=="string"||q.length>100)throw new AppError(422,"InvalidData","Use a valid estimate window and at most 100 search characters.");
-  const rows=(await c.query(`SELECT e.id,e.display_number,e.version,e.state,e.updated_at,v.title,v.cost_total,v.sell_total,r.display_name AS customer FROM ppo.estimates e JOIN ppo.estimate_versions v ON (v.workspace_id,v.id)=(e.workspace_id,e.current_version_id) JOIN ppo.opportunities o ON (o.workspace_id,o.id)=(e.workspace_id,e.opportunity_id) JOIN ppo.organisations r ON (r.workspace_id,r.id)=(o.workspace_id,o.organisation_id) WHERE e.workspace_id=$1 AND ${estimateVisibility("e","estimating.read",await costBasisAvailable(c))} AND ($4='' OR v.title ILIKE '%'||$4||'%' OR e.display_number ILIKE '%'||$4||'%') ORDER BY e.updated_at DESC,e.id LIMIT 100 OFFSET $3`,[p.workspace_id,p.actor_id,offset,q])).rows;
+  const rows=(await c.query(`SELECT e.id,e.display_number,e.version,e.state,e.updated_at,v.title,v.cost_total,v.sell_total,r.display_name AS customer FROM ppo.estimates e JOIN ppo.estimate_versions v ON (v.workspace_id,v.id)=(e.workspace_id,e.current_version_id) JOIN ppo.opportunities o ON (o.workspace_id,o.id)=(e.workspace_id,e.opportunity_id) JOIN ppo.organisations r ON (r.workspace_id,r.id)=(o.workspace_id,o.organisation_id) WHERE e.workspace_id=$1 AND ${estimateVisibility("e","estimating.read",await costBasisAvailable(c))} AND ($4='' OR v.title ILIKE '%'||$4||'%' OR e.display_number ILIKE '%'||$4||'%') ORDER BY e.updated_at DESC,e.id LIMIT $5 OFFSET $3`,[p.workspace_id,p.actor_id,offset,q,window])).rows;
   const items=[];
   for(const row of rows) try {await estimateContext(c,p,row.id);items.push(row);} catch(e) {if(!(e instanceof AppError)||e.status!==404)throw e;}
-  return {items,synthetic:true,limit:100,offset,next_offset:rows.length===100?offset+100:null,can_create:await hasPermission(c,p,"estimating.edit")};
+  return {items,synthetic:true,limit:window,offset,next_offset:rows.length===window?offset+window:null,can_create:await hasPermission(c,p,"estimating.edit")};
 }
 export async function readEstimate(p:Principal,id:string,query:Record<string,string>={}) {
   const input=object(query,["version_id"]),c=database(),e=await estimateContext(c,p,id),v=await versionContext(c,p,e,optionalId(input.version_id,"version_id")??e.current_version_id),o=await visibleOpportunity(c,p,e.opportunity_id);
