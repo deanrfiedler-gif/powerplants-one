@@ -161,7 +161,8 @@ export function MyWorkShell({ children }: { children: React.ReactNode }) {
     setCustomise,
   };
 
-  const current = workViews.find((v) => v.href === path)?.id ?? "overview";
+  // A single activity and New activity belong to My actions, where activities are listed.
+  const current = workViews.find((v) => v.href === path)?.id ?? (path === "/work" ? "overview" : "actions");
   const pinned = (views.data?.views ?? []).filter((v) => v.pinned);
   const reviewCount = navigation.data?.reviews.status === "ok" ? (navigation.data.reviews.total ?? 0) : 0;
   const teamOpen = navigation.data?.can_coordinate ?? false;

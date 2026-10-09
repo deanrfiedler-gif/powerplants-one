@@ -249,3 +249,71 @@
     transition: none;
   }
 }
+/* Reviews & handovers (phase 00 batch 2): tabs stay on one row and scroll sideways on narrow
+   screens; counts sit in the shared count badge; the empty state names what will appear. */
+#ppo-my-work .mw-review-tabs {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  margin: 0;
+}
+#ppo-my-work .mw-review-tabs button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  white-space: nowrap;
+  min-height: 44px;
+  color: var(--text-secondary, #596779);
+}
+#ppo-my-work .mw-review-tabs .mw-count {
+  margin-left: 0;
+  height: 22px;
+  min-width: 22px;
+  padding: 0 6px;
+  font-size: 12px;
+}
+#ppo-my-work .mw-reviews .sh-register {
+  margin: 0;
+  padding: 0 16px 8px;
+}
+#ppo-my-work .mw-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 36px 20px 40px;
+  text-align: center;
+}
+#ppo-my-work .mw-empty-state > svg {
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  border: 1.5px solid var(--text-secondary, #596779);
+  border-radius: 999px;
+  color: var(--text-secondary, #596779);
+}
+#ppo-my-work .mw-empty-state p {
+  max-width: 460px;
+  margin: 0;
+  color: var(--text-secondary, #596779);
+}
+#ppo-my-work .mw-review-note {
+  padding: 0;
+}
+#ppo-my-work .mw-sources summary {
+  cursor: pointer;
+  color: var(--link, #355b80);
+  min-height: 24px;
+}
+#ppo-my-work .mw-sources p {
+  max-width: 720px;
+  margin: 6px 0 0;
+}
+@media (pointer: coarse) {
+  #ppo-my-work .mw-sources summary {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+}

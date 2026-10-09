@@ -1,0 +1,41 @@
+✖ PT-01 / PT-18 scoped projections, recovery and storage-time authority (617.2187ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 28548.9548
+
+✖ failing tests:
+
+test at tests\helpers\backend-access-http.ts:1:1849
+✖ PT-01 / PT-18 scoped projections, recovery and storage-time authority (617.2187ms)
+  error: out of shared memory
+      at C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\node_modules\pg\lib\client.js:694:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async <anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\scripts\database.ts:112:5)
+      at async transaction (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\src\platform\database.ts:44:20)
+      at async reset (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\scripts\database.ts:108:3)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\backend-access-http.ts:41:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    length: 138,
+    severity: 'ERROR',
+    code: '53200',
+    detail: undefined,
+    hint: 'You might need to increase max_locks_per_transaction.',
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'lock.c',
+    line: '1036',
+    routine: 'LockAcquireExtended'
+  }

@@ -81,26 +81,28 @@ test("timing distinguishes overdue text, Due by and Starts at, and never invents
     tone: "overdue",
     caption: null,
     value: "2 days overdue",
+    detail: "due 19 Sep 2026",
   });
   assert.deepEqual(timing(quotation, NOW), {
     tone: "overdue",
     caption: null,
     value: "1 day overdue",
+    detail: "due 20 Sep 2026",
   });
   assert.deepEqual(timing(firstContact, NOW), {
     tone: "normal",
     caption: "Due by",
-    value: "9:00 am",
+    value: "09:00",
   });
   assert.deepEqual(timing(call, NOW), {
     tone: "normal",
     caption: "Starts at",
-    value: "9:30 am",
+    value: "09:30",
   });
   assert.deepEqual(timing(visit, NOW), {
     tone: "normal",
     caption: "Starts at",
-    value: "3:00 pm",
+    value: "15:00",
   });
   const dateOnlyToday = row("d", {
     due_at: endOfLocalDay("2026-09-21"),
@@ -123,7 +125,7 @@ test("crossing a due time: a meeting is not overdue because it started, only aft
   assert.deepEqual(timing(call, after), {
     tone: "overdue",
     caption: "Overdue · ended",
-    value: "9:50 am",
+    value: "09:50",
   });
   // A timed deadline is overdue the moment it passes; a date-only task only after its local day ends.
   assert.equal(attentionGroup(firstContact, brisbane("2026-09-21T09:01")), "Overdue");
@@ -154,9 +156,9 @@ test("the week is Monday first, crosses months and years, and refuses a malforme
   assert.deepEqual(weekOf("2026-09-21"), ["2026-09-21", "2026-09-22", "2026-09-23", "2026-09-24", "2026-09-25", "2026-09-26", "2026-09-27"]);
   // A Sunday belongs to the week that began the Monday before it.
   assert.deepEqual(weekOf("2026-09-27"), weekOf("2026-09-21"));
-  assert.equal(weekLabel(weekOf("2026-09-21")), "21 – 27 Sep");
-  assert.equal(weekLabel(weekOf("2026-09-30")), "28 Sep – 4 Oct");
-  assert.equal(weekLabel(weekOf("2027-01-01")), "28 Dec – 3 Jan");
+  assert.equal(weekLabel(weekOf("2026-09-21")), "21–27 Sep 2026");
+  assert.equal(weekLabel(weekOf("2026-09-30")), "28 Sep – 4 Oct 2026");
+  assert.equal(weekLabel(weekOf("2027-01-01")), "28 Dec 2026 – 3 Jan 2027");
   assert.deepEqual(dayParts("2026-09-21"), { weekday: "Mon", date: 21, month: "Sep" });
   assert.equal(agendaDayLabel("2026-09-21", "2026-09-21"), "Today");
   assert.equal(agendaDayLabel("2026-09-23", "2026-09-21"), "Wed 23 Sep");
@@ -165,8 +167,8 @@ test("the week is Monday first, crosses months and years, and refuses a malforme
 });
 
 test("an agenda slot says By for a deadline, a bare time for an appointment and never invents a time", () => {
-  assert.deepEqual(agendaSlot(firstContact), { kind: "deadline", label: "By 9:00", spoken: "Due by 9:00 am" });
-  assert.deepEqual(agendaSlot(call), { kind: "appointment", label: "9:30", spoken: "Starts at 9:30 am" });
+  assert.deepEqual(agendaSlot(firstContact), { kind: "deadline", label: "By 09:00", spoken: "Due by 09:00" });
+  assert.deepEqual(agendaSlot(call), { kind: "appointment", label: "09:30", spoken: "Starts at 09:30" });
   assert.equal(agendaSlot(row("p", { starts_at: brisbane("2026-09-21T14:30"), due_at: brisbane("2026-09-21T15:00") })).label, "14:30");
   const dateOnly = row("d", { due_at: endOfLocalDay("2026-09-21"), due_date_only: true });
   assert.deepEqual(agendaSlot(dateOnly), { kind: "anytime", label: "Any time", spoken: "Any time on this day" });
@@ -186,9 +188,9 @@ test("durations, greeting and civil-day helpers use the documented time zone", (
   assert.equal(greeting(NOW), "Good morning");
   assert.equal(greeting(brisbane("2026-09-21T12:00")), "Good afternoon");
   assert.equal(greeting(brisbane("2026-09-21T18:30")), "Good evening");
-  assert.equal(longDate(NOW), "Monday, 21 September 2026");
-  assert.equal(shortDate("2026-09-21T13:59:59.999Z"), "21 Sep");
-  assert.equal(shortDate("2026-09-21T14:00:00.000Z"), "22 Sep");
+  assert.equal(longDate(NOW), "Mon 21 Sep 2026");
+  assert.equal(shortDate("2026-09-21T13:59:59.999Z"), "21 Sep 2026");
+  assert.equal(shortDate("2026-09-21T14:00:00.000Z"), "22 Sep 2026");
   assert.equal(firstName("SYN Coordinator"), "Coordinator");
   assert.equal(firstName("Dean Fiedler"), "Dean");
   assert.equal(endOfLocalDay("2026-09-21"), "2026-09-21T13:59:59.999Z");

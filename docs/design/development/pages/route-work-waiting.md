@@ -51,3 +51,9 @@ Retain the existing desktop/phone My Work structure. Review and notification cou
 - **Evidence:** [phase 00 review, session 1](../../../testing/evidence/ui-review-phase-00-r01/README.md). Synthetic data; compiled build at `a52cb01`; 1440 × 900 and 390 × 844 headless Chromium, captures for this entry.
 - **Findings:** S5: the dashed note describes implementation coverage ('Sales records no waiting request of its own yet'). Rephrase or move to the guide.
 - **Scope of this record:** visual review of the captured state only. Device, screen-reader, zoom and operational acceptance remain separate. A later source change marks this review stale.
+
+## Refinement batch 2 — 9 October 2026
+
+- **Plain wording (S5):** the coverage note now reads: "Service requests waiting for information and engineering packages with a blocker appear here. Waiting on a customer or supplier in Sales? Track it as an activity in My actions." It links to My actions.
+- **One date format (S6):** the footer and dates follow the shared format.
+- **Review state:** the 9 October review is stale until Dean looks at the built page again.

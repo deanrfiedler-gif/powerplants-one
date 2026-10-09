@@ -837,7 +837,8 @@ export async function listReports(p: Principal, input: unknown = {}) {
       }
     return {
       ...envelope(items),
-      completeness: "BoundedWindow",
+      // The window is the 200 most recently updated reports; only a full window can hide older ones.
+      completeness: candidates.length === 200 ? ("BoundedWindow" as const) : ("Complete" as const),
     };
   });
 }

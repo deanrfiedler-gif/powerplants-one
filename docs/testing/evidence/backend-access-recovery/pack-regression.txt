@@ -1,0 +1,12 @@
+✔ P06 exact immutable output and two independent acknowledgements control component readiness (26950.7573ms)
+✔ P06 render failure remains owned and recoverable with no file or issued claim (31430.6731ms)
+✔ P06 missing historical source is never replaced by latest; existing issue remains retrievable (32012.0729ms)
+✔ P06 current recipient access is non-waivable and published competency remains immutable (45785.6578ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 140324.1617

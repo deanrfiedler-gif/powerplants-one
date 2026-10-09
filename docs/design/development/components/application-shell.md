@@ -133,3 +133,7 @@ The header imports the standalone `NotificationBell`; the full Notifications wor
 - The rail toggle shows chevrons and the page-hierarchy button a list icon; the ellipsis now means only More.
 - The page guide and help tooltips name what they open; the accessible names `Page guide` and `Quick Help` are unchanged for existing tests and shortcuts.
 - The search shortcut hint and panel footer use `--text-secondary`. See [the shell contract](../systems/shell.md).
+
+## Session check keeps the shell context
+
+`ShellProvider` keeps its current context while `ppo-session-ready` re-reads it, so the rail toggle and other context-dependent controls no longer blank for about 100 ms after load. Identity changes still clear it through `ppo-session-lock`. Reasoning, invariant and proof: [the shell contract](../systems/shell.md#shell-context-stays-through-the-session-check--9-october-2026).

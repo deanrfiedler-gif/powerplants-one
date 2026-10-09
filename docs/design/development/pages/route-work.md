@@ -61,3 +61,22 @@ At 390/320 px, stack fields/actions, wrap exact identifiers and keep hold/recove
 - **Evidence:** [phase 00 review, session 1](../../../testing/evidence/ui-review-phase-00-r01/README.md). Synthetic data; compiled build at `a52cb01`; 1440 × 900 and 390 × 844 headless Chromium, captures for this entry.
 - **Findings:** Desktop: activity titles wrap to three lines because the Complete and Reschedule buttons take the row width; give the title column priority. The count badge in 'Needs a next activity' drops to its own line, unlike the other cards. Phone: the 'Weather is not connected' card takes prime space for a feature that is not configured; hide it until connected. Phone: the five quick actions are icons without labels. S3.
 - **Scope of this record:** visual review of the captured state only. Device, screen-reader, zoom and operational acceptance remain separate. A later source change marks this review stale.
+
+## Refinement batch 2 — 9 October 2026
+
+Built from the accepted canvas proposal ([decision](../../../decisions/ui-build-sequence.md#owner-decisions-9-october-2026)).
+
+- **One date format (S6):**
+  - row times are 24-hour;
+  - dates carry the year;
+  - an overdue row keeps its date beside the count ("35 days overdue · due 4 Sep 2026");
+  - the heading date reads "Fri 9 Oct 2026";
+  - the schedule says "Times in AEST (UTC+10)";
+  - the footer reads "Updated 9 Oct 2026, 17:19 AEST".
+- **Count badges:** they stay on the same line as their panel heading.
+- **Phone:**
+  - the weather card is hidden until a weather provider is connected;
+  - the five quick actions show their names under the icons;
+  - the agenda header carries the year ("5–11 Oct 2026").
+- **Page guide (S9):** the information icon opens the My Work guide (`src/activities/work-guide.ts`). It stays a draft until Dean reviews it in the running app.
+- **Review state:** the 9 October review is stale until Dean looks at the built page again.
