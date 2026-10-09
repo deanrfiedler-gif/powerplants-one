@@ -218,6 +218,17 @@ test("PT-18 identity-changing source move requires an explicitly reviewed succes
             [s.id, movedItem],
           ),
         );
+        // Even if the old availability projection is stale, discovering a matching
+        // candidate must not make the original item resolve to that new identity.
+        await database().query(
+          "UPDATE ppo.pack_source_locations SET available=true,version=version+1 WHERE source_id=$1",
+          [s.id],
+        );
+        await failedAmendment(s.id, "ExactDocumentUnavailable");
+        await database().query(
+          "UPDATE ppo.pack_source_locations SET available=false,version=version+1 WHERE source_id=$1",
+          [s.id],
+        );
         await failedAmendment(s.id, "StaleSource");
         const pack = await packRow();
         await revisePack(q.p, q.pack.id, {
