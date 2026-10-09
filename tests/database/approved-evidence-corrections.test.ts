@@ -54,19 +54,17 @@ async function preserve(tables: string[]) {
   const originals = await Promise.all(
     tables.map(async (table) => ({
       table,
-      data: await rows(
-        `SELECT id,to_jsonb(r) AS row FROM ppo.${table} r ORDER BY id`,
-      ),
+      data: await rows(`SELECT to_jsonb(r) AS row FROM ppo.${table} r`),
     })),
   );
   return async () => {
     for (const { table, data } of originals)
       assert.deepEqual(
         await rows(
-          `SELECT id,to_jsonb(r) AS row FROM ppo.${table} r WHERE id=ANY($1::uuid[]) ORDER BY id`,
-          [data.map((r) => r.id)],
+          `SELECT original FROM unnest($1::jsonb[]) AS original WHERE NOT EXISTS (SELECT 1 FROM ppo.${table} r WHERE to_jsonb(r)=original)`,
+          [data.map((r) => JSON.stringify(r.row))],
         ),
-        data,
+        [],
         `${table}: retained originals`,
       );
   };
@@ -110,9 +108,12 @@ for (const processed of [false, true]) {
       "report_revisions",
       "report_reviews",
       "report_issues",
+      "report_entry_refs",
+      "report_presentations",
       "attendance_acceptances",
       "finance_revisions",
       "finance_lines",
+      "finance_sources",
       "finance_reviews",
       "finance_processing_attempts",
       "finance_outcomes",
@@ -386,7 +387,9 @@ for (const processed of [false, true]) {
         ).items.find((s) => s.id === oldReport.id)!;
         assert.ok(source.ready && "source" in source && source.source);
         assert.deepEqual(
-          source.source.entries.map((e: SourceEntry) => [e.uom, e.quantity]).sort(),
+          source.source.entries
+            .map((e: SourceEntry) => [e.uom, e.quantity])
+            .sort(),
           [
             ["EA", "3"],
             ["MIN", "75"],
