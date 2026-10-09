@@ -4,6 +4,10 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## Parallel backend access and recovery — 9 October 2026
+
+Dean authorised backend permissions and recovery work alongside his UI work in Claude. The isolated `codex/backend-access-recovery` contribution starts at main `184b933` and leaves UI files/worktrees untouched. Four actual HTTP job-pack download challenges reproduced a permission revocation gap during storage on unchanged main. The backend rechecks current exact-issue/render-job authority before returning HTML/PDF or recording retrieval. Eight focused scenarios now pass, including company/site/search/notification isolation and exact original recovery after a dropped successful response. [Decision](decisions/backend-access-recovery.md) and [evidence](testing/evidence/backend-access-recovery/README.md). Complete PT-01/PT-18/PT-30, independent/owner review, contribution CI, merge and deployment remain separate.
+
 ## UI build and review sequence — 9 October 2026
 
 Dean asked for one page showing every UI page still to create or refine, in working order from the home page. The [record](decisions/ui-build-sequence.md) derives the [sequence](design/development/ui-build-sequence.md) from the live register and the issued r02 build plan using `scripts/build-ui-sequence.py`. No rank, scope ID or issued byte changes.
