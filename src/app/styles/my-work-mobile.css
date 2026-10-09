@@ -77,6 +77,8 @@
  #ppo-my-work :is(a,button).mw-tile:hover:not(:disabled){background:var(--surface-white);color:var(--ink)}
  #ppo-my-work :is(a,button).mw-tile:active:not(:disabled){background:var(--surface-hover)}
  #ppo-my-work .mw-tile>.mw-icon{width:26px;height:26px;stroke-width:1.5}
+ #ppo-my-work .mw-tile{grid-template-rows:auto auto;align-content:center;gap:4px;padding:8px 2px}
+ #ppo-my-work .mw-tile-label{font-size:12px;line-height:16px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
  #ppo-my-work span.mw-tile{border-style:dashed;background:transparent;color:#98a1ae}
  #ppo-my-work .mw-tile-lock{position:absolute;top:5px;right:5px;display:grid;place-items:center;width:17px;height:17px;border-radius:50%;background:var(--neutral-surface);color:var(--neutral)}
  #ppo-my-work .mw-tile-lock .mw-icon{width:11px;height:11px;stroke-width:2.2}

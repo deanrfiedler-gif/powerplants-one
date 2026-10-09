@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useId, useRef, useState } from "react";
+import { zoneDisplayName } from "../shell/date-format";
 import { Field, useFieldError, type Option } from "./business-ui";
 import { localDateTime, utcFromLocal } from "../scheduling/time";
 import { usePendingWork } from "./pending-work";
@@ -80,7 +81,7 @@ export function LocalDateTimeField({ name, validationField, label = "Due date an
   const display = invalid?.raw ?? (value ? localDateTime(value, timezone) : "");
   return <div>
     <Field name={name} validationField={validationField} label={label} type="datetime-local" value={display} required={required}
-      hint={timezone.replaceAll("_", " ")}
+      hint={`Times in ${zoneDisplayName(timezone, value || undefined)}`}
       onChange={raw => {
         try { const iso = raw ? utcFromLocal(raw, timezone) : ""; setInvalid(null); onChange(iso); }
         catch (e) { setInvalid({ raw, message: (e as Error).message }); onChange(""); }

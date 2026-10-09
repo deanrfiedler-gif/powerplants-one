@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { formatTimestamp, zoneLabel } from "../../../shell/date-format";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useIdentity } from "../../../components/business-session";
@@ -148,7 +149,7 @@ export function MyWorkOverview() {
           </span>
           <div>
             <h2 id="mw-schedule-title">Today&apos;s schedule</h2>
-            <p>{WORK_TIMEZONE.split("/")[1].replace("_", " ")} time</p>
+            <p>Times in {zoneLabel(data.observed_at, WORK_TIMEZONE)}</p>
           </div>
           <Link className="mw-link mw-panel-link" href={`/calendar?day=${data.day}`}>
             Calendar <Icon name="arrow-right" />
@@ -206,7 +207,7 @@ export function MyWorkOverview() {
           </span>
           <div>
             <h2 id="mw-waiting-title">
-              Waiting on others {data.waiting.status === "ok" && <span className="mw-count">{data.waiting.total}</span>}
+              Waiting on <span className="mw-nowrap">others{data.waiting.status === "ok" && <span className="mw-count">{data.waiting.total}</span>}</span>
             </h2>
           </div>
           <Link className="mw-link mw-panel-link" href={`/work/waiting${criteriaSearch({ ...defaultCriteria, owner: c.criteria.owner, company_id: c.criteria.company_id })}`}>
@@ -256,7 +257,7 @@ export function MyWorkOverview() {
             </span>
             <div>
               <h2 id="mw-gaps-title">
-                Needs a next activity {data.gaps.status === "ok" && <span className="mw-count">{data.gaps.total}</span>}
+                Needs a next <span className="mw-nowrap">activity{data.gaps.status === "ok" && <span className="mw-count">{data.gaps.total}</span>}</span>
               </h2>
               <p>Open opportunities with no active next action</p>
             </div>
@@ -387,7 +388,7 @@ export function MyWorkOverview() {
           {!!read.error && (
             <div className="mw-notice mw-notice-attention" role="alert">
               <strong>{data ? "My Work could not be refreshed." : "My Work could not be loaded."}</strong> {(read.error as Failure).message}{" "}
-              {data ? `Showing what was read at ${clockTime(data.observed_at, WORK_TIMEZONE)}; it may be out of date.` : "No counts are shown, because an unread list is not an empty one."}{" "}
+              {data ? `Showing what was read at ${formatTimestamp(data.observed_at, WORK_TIMEZONE)}; it may be out of date.` : "No counts are shown, because an unread list is not an empty one."}{" "}
               <button type="button" className="mw-link" onClick={read.reload}>
                 Try again
               </button>
@@ -538,7 +539,7 @@ export function MyWorkOverview() {
       <footer className="mw-foot">
         <span>
           Synthetic demo data
-          {data && ` · Updated ${clockTime(data.observed_at, WORK_TIMEZONE)}${read.stale || read.error ? " (not current)" : ""}`}
+          {data && ` · Updated ${formatTimestamp(data.observed_at, WORK_TIMEZONE)}${read.stale || read.error ? " (not current)" : ""}`}
         </span>
         <span>
           {work.department} workspace · {c.criteria.owner === "mine" ? "My work" : "Everyone I can see"}

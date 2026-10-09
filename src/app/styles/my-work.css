@@ -400,3 +400,80 @@
  :is(#ppo-my-work,#ppo-engineering-control,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-estimate-wizard,#ppo-specialist,#ppo-fertigation) button.mw-icon-button{width:44px;height:44px}
 }
 @media (prefers-reduced-motion:reduce){:is(#ppo-my-work,#ppo-engineering-control,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-estimate-wizard,#ppo-specialist,#ppo-fertigation) *{transition:none!important}}
+/* Activity record and New activity on the record page pattern (phase 00 batch 2, S8). The shared
+   form fields keep their validation wiring; here they take the My Work control treatment. */
+#ppo-my-work .mw-record-page{padding-bottom:24px}
+#ppo-my-work .mw-record-form{max-width:880px;padding:24px;display:flex;flex-direction:column;gap:18px}
+#ppo-my-work .mw-record-head{display:flex;flex-direction:column;gap:4px}
+#ppo-my-work .mw-record-head h1{margin:0;font-size:24px;line-height:30px;font-weight:700}
+#ppo-my-work .mw-record-head p{margin:0;color:var(--text-secondary)}
+#ppo-my-work .mw-record-body{display:flex;flex-direction:column;gap:18px;min-width:0;margin:0;padding:0;border:0}
+#ppo-my-work .mw-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 20px}
+#ppo-my-work .mw-form-wide{grid-column:1/-1}
+#ppo-my-work .mw-form-group{display:flex;flex-direction:column;gap:10px;min-width:0;margin:0;padding:18px 0 0;border:0;border-top:1px solid var(--line-soft)}
+#ppo-my-work .mw-form-group legend{float:left;width:100%;padding:0 0 10px;font-size:16px;font-weight:700}
+#ppo-my-work .mw-form-note{margin:6px 0 0;color:var(--text-secondary);font-size:13px;line-height:18px}
+#ppo-my-work .mw-record-body .field{display:flex;flex-direction:column;gap:6px;min-width:0}
+#ppo-my-work .mw-record-body .field label{font-weight:600;font-size:14px}
+#ppo-my-work .mw-record-body .field small{color:var(--text-secondary);font-size:13px}
+#ppo-my-work .mw-record-body .field small.field-error{color:var(--danger,#993b2a)}
+#ppo-my-work .mw-record-body .field :is(input,select,textarea){width:100%;min-height:44px;padding:9px 12px;border:1px solid var(--control-border);border-radius:var(--radius-control);background:var(--surface-white);color:var(--ink);font:inherit;line-height:20px}
+#ppo-my-work .mw-record-body .field textarea{min-height:96px;resize:vertical}
+#ppo-my-work .mw-check{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:2px 10px;min-height:44px}
+#ppo-my-work .mw-check input{width:20px;height:20px;margin:0;accent-color:var(--navy)}
+#ppo-my-work .mw-check small{grid-column:2;color:var(--text-secondary);font-size:13px}
+#ppo-my-work .mw-form-actions{display:flex;flex-wrap:wrap;gap:10px;padding-top:16px;border-top:1px solid var(--line-soft)}
+#ppo-my-work .mw-form-actions .mw-button{min-height:44px}
+@media (max-width:640px){
+ #ppo-my-work .mw-record-form{padding:16px}
+ #ppo-my-work .mw-form-grid{grid-template-columns:1fr}
+ #ppo-my-work .mw-form-actions .mw-button{flex:1 1 auto}
+}
+#ppo-my-work .mw-record{padding:20px 24px;display:flex;flex-direction:column;gap:16px}
+#ppo-my-work .mw-record-identity{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:16px}
+#ppo-my-work .mw-record-heading{display:flex;flex-direction:column;gap:6px;flex:1 1 420px;min-width:0}
+#ppo-my-work .mw-record-eyebrow{margin:0;font-size:12px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--text-secondary)}
+#ppo-my-work .mw-record h1{margin:0;font-size:24px;line-height:30px;font-weight:700;overflow-wrap:anywhere}
+#ppo-my-work .mw-record-meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;color:var(--text-secondary);font-size:14px}
+#ppo-my-work .mw-record-meta .mw-tag{margin-left:0}
+#ppo-my-work .mw-record-actions{display:flex;flex-wrap:wrap;gap:8px}
+#ppo-my-work .mw-record-actions .mw-button{min-height:44px}
+#ppo-my-work .mw-record-facts{display:grid;grid-template-columns:160px minmax(0,1fr);gap:10px 16px;margin:0;padding-top:14px;border-top:1px solid var(--line-soft);font-size:14px;line-height:21px}
+#ppo-my-work .mw-record-facts dt{color:var(--text-secondary)}
+#ppo-my-work .mw-record-facts dd{margin:0;min-width:0}
+#ppo-my-work .mw-record-links{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+#ppo-my-work .mw-record-links a{display:inline-flex;align-items:center;min-height:24px}
+#ppo-my-work .mw-record-page>.crm-panel{margin:0;padding:20px 24px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--surface-white)}
+#ppo-my-work .mw-record-actions-form h2{margin:0;font-size:18px;line-height:24px}
+#ppo-my-work .mw-record-actions-form .actions{display:flex;flex-wrap:wrap;gap:10px}
+#ppo-my-work .mw-record-actions-form details summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:600}
+@media (pointer:coarse){#ppo-my-work .mw-record-links a{min-height:44px}}
+@media (max-width:640px){
+ #ppo-my-work .mw-record{padding:16px}
+ #ppo-my-work .mw-record-facts{grid-template-columns:1fr;gap:2px}
+ #ppo-my-work .mw-record-facts dd{margin-bottom:10px}
+ #ppo-my-work .mw-record-actions{width:100%}
+ #ppo-my-work .mw-record-actions .mw-button{flex:1 1 0}
+}
+#ppo-my-work .mw-panel-note a{text-decoration:underline}
+/* The record page hosts shared forms and panels written for the ordinary page frame; their plain
+   buttons take the My Work primary and secondary treatment here. */
+#ppo-my-work .mw-record-page button:not([class*="mw-"]):not([role=tab]):not([role=menuitem]){display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:8px 16px;border:1px solid var(--navy);border-radius:var(--radius-control);background:var(--navy);color:#fff;font-weight:500;line-height:20px;white-space:normal;text-align:center}
+#ppo-my-work .mw-record-page button:not([class*="mw-"]):not([role=tab]):not([role=menuitem]):is(.secondary,.ppo-button--secondary,.ppo-button--quiet){border-color:var(--control-border);background:var(--surface-white);color:var(--ink)}
+#ppo-my-work .mw-record-page button:not([class*="mw-"]):not([role=tab]):not([role=menuitem]):hover:not(:disabled){background:#3a4152;color:#fff}
+#ppo-my-work .mw-record-page button:not([class*="mw-"]):not([role=tab]):not([role=menuitem]):is(.secondary,.ppo-button--secondary,.ppo-button--quiet):hover:not(:disabled){background:var(--surface-hover);color:var(--ink)}
+#ppo-my-work .mw-record-page button:disabled{opacity:.6}
+#ppo-my-work .mw-record-page>.crm-panel{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+#ppo-my-work .mw-record-page>.crm-panel>*{margin:0}
+#ppo-my-work .mw-record-page>.crm-panel h2{font-size:18px;line-height:24px}
+#ppo-my-work .mw-record-page>.crm-panel details{align-self:stretch}
+#ppo-my-work .mw-record-actions-form{max-width:none}
+#ppo-my-work .mw-record-actions-form details summary{display:list-item;min-height:0;padding:10px 0}
+/* Overview rows give the title the width (batch 2): where the list is narrow, the quiet row action
+   shows its icon only; its accessible name and tooltip keep the words. */
+#ppo-my-work .mw-rows{container:mw-rows / inline-size}
+@container mw-rows (max-width: 760px){
+ #ppo-my-work .mw-row-actions .mw-button-quiet .mw-row-action-label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+ #ppo-my-work .mw-row-actions .mw-button-quiet{padding:8px 10px}
+}
+#ppo-my-work .mw-nowrap{white-space:nowrap}

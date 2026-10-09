@@ -113,7 +113,7 @@ test("P03 customer, shared contact, site/equipment attribution and My Work at de
     .getByRole("link", { name: "Create follow-up", exact: true })
     .click();
   await page
-    .getByLabel("Purpose / summary", { exact: true })
+    .getByLabel("What needs doing?", { exact: true })
     .fill("SYN inspect owned equipment follow-up form");
   await capture(page, info, "P03-create-activity.png");
   await page.goto("/equipment/80000000-0000-4000-8000-000000000002");

@@ -201,10 +201,8 @@ test("rescheduling moves the same appointment in the list and the schedule and k
   await signIn(page);
   await open(page);
   const moved = new Date(Date.parse(scenario.slots.meeting.starts_at) + 30 * 60000).toISOString();
-  const clock = (iso: string) => {
-    const [h, m] = local(iso).slice(11).split(":").map(Number);
-    return `${h % 12 || 12}:${String(m).padStart(2, "0")} ${h < 12 ? "am" : "pm"}`;
-  };
+  // S6: 24-hour, two-digit hours (src/shell/date-format.ts).
+  const clock = (iso: string) => local(iso).slice(11, 16);
   await row(page, "Discuss screen system scope").getByRole("button", { name: /^Reschedule: / }).click();
   const dialog = page.getByRole("dialog", { name: "Reschedule" });
   await expect(dialog.getByText(/No external calendar is connected/)).toBeVisible();

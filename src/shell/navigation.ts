@@ -132,7 +132,7 @@ export const destinations: ShellDestination[] = [
   {"id": "surveys", "label": "Site surveys & as-found", "icon": "nav-sites", "readiness": "ready", "href": "/surveys", "requires": ["shared.read"]},
   {"id": "equipment", "label": "Equipment", "icon": "nav-equipment", "readiness": "ready", "href": "/equipment", "requires": ["shared.read"]},
   {"id": "documents", "label": "Documents", "icon": "nav-documents", "readiness": "unavailable"},
-  {"id": "approvals", "label": "Approvals & handovers", "icon": "nav-approval", "readiness": "ready", "href": "/work/reviews", "requires": ["activity.read"]},
+  {"id": "approvals", "label": "Reviews & handovers", "icon": "nav-approval", "readiness": "ready", "href": "/work/reviews", "requires": ["activity.read"]},
   {"id": "recovery", "label": "Integrations & recovery", "icon": "nav-recovery", "readiness": "ready", "href": "/admin", "requires": ["shared.read", "finance.read", "service.work_order.read", "field.read.own"]},
   {"id": "foundation", "label": "Foundation checks", "icon": "settings", "readiness": "ready", "href": "/foundation", "localOnly": true},
 ];

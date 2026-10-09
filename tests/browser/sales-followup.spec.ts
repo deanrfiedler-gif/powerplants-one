@@ -86,15 +86,15 @@ test("LC-17 Project need creates and recovers a native Lead, then explicitly lin
     project.id,
   );
   await expect(
-    page.getByLabel("Activity category", { exact: true }),
+    page.getByLabel("Category", { exact: true }),
   ).toHaveValue("CustomerContact");
-  await expect(page.getByLabel("Content access", { exact: true })).toHaveValue(
+  await expect(page.getByLabel("Who can read the details", { exact: true })).toHaveValue(
     "Internal",
   );
   await page
-    .getByLabel("Purpose / summary", { exact: true })
+    .getByLabel("What needs doing?", { exact: true })
     .fill("SYN Customer asks about another growing area");
-  await page.getByLabel("Due date still needed", { exact: true }).uncheck();
+  await page.getByLabel("No due date yet", { exact: true }).uncheck();
   await page
     .getByLabel("Due date and time", { exact: true })
     .fill("2031-10-07T09:00");
@@ -270,7 +270,7 @@ test("LC-17 restricted follow-up creates a separate review and a qualified Deal;
   expect(after.next_activity.id).toBe(before.next_activity.id);
   expect(after.actions.some((x: { id: string }) => x.id === id)).toBe(true);
   await page
-    .getByRole("heading", { name: "Continue a customer need in Sales" })
+    .getByRole("heading", { name: "Continue in Sales" })
     .scrollIntoViewIfNeeded();
   expect(
     await page.evaluate(
@@ -341,6 +341,6 @@ test("LC-17 fixed comparison refuses stale context and a denied refresh clears p
     .getByRole("button", { name: "Retry Sales follow-up context" })
     .click();
   await expect(
-    page.getByRole("heading", { name: "Continue a customer need in Sales" }),
+    page.getByRole("heading", { name: "Continue in Sales" }),
   ).toBeVisible();
 });

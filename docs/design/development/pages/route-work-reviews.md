@@ -47,3 +47,16 @@ A missing due date says Date needed. Source slices are explicitly bounded: Servi
 - **Evidence:** [phase 00 review, session 1](../../../testing/evidence/ui-review-phase-00-r01/README.md). Synthetic data; compiled build at `a52cb01`; 1440 × 900 and 390 × 844 headless Chromium, captures for this entry.
 - **Findings:** The header says 'Approvals & handovers'; the page and navigation say 'Reviews & handovers'. Heading size, breadcrumb and filter control sizes differ from the other My Work pages. Tab counts read '(0+)'. Phone: tabs wrap over three rows. S5 and S6 in the footer note.
 - **Scope of this record:** visual review of the captured state only. Device, screen-reader, zoom and operational acceptance remain separate. A later source change marks this review stale.
+
+## Refinement batch 2 — 9 October 2026
+
+Built from the accepted canvas proposal ([decision](../../../decisions/ui-build-sequence.md#owner-decisions-9-october-2026)).
+
+- **One name:** the header, browser title, side menu and heading all read "Reviews & handovers" (`approvals` destination label in `src/shell/navigation.ts`).
+- **Same frame as the other My Work pages:** the shared page heading and plain intro, the My actions filter bar and panel, and the shared footer ("Synthetic demo data · Updated 9 Oct 2026, 17:19 AEST").
+- **Plain labels (S5):** the tabs read My reviews, All I can see, Returned to me, Handovers, Sent by me and History. The filters read Find, Area, Type and Owner. Each row says "Submitted 9 Oct 2026 · 3 days ago".
+- **Counts:** a tab shows its exact count in the shared count badge. A "+" appears only when a source window is full and the count is above zero. A partial read shows no counts and an alert. The Service source now reports a bounded window only when its 200-report window is full (`listReports` completeness).
+- **Notes:** the protective note stays visible in plain words ("Seeing a review here does not mean you can approve it…"). The source coverage moves behind "About these sources" in the footer.
+- **Empty state:** "Nothing is waiting for your review", with a link to All I can see.
+- **Phone:** the tabs stay on one row and scroll sideways.
+- **Review state:** the 9 October review is stale until Dean looks at the built page again.
