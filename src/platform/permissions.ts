@@ -1,6 +1,7 @@
 import type { PoolClient } from "pg";
 import type { Principal } from "./identity";
 import { AppError } from "./errors";
+import { workingCompanyCondition, workingCompanyFor } from "./working-company";
 
 export type QueryClient = Pick<PoolClient, "query">;
 export type Capability =
@@ -145,6 +146,9 @@ export async function hasPermission(
   company_id?: string,
   site_id?: string,
 ) {
+  // NR-18: a record outside the chosen working company is out of reach for this request.
+  const working = workingCompanyFor(p.actor_id);
+  if (working && company_id && company_id !== working) return false;
   const result = await client.query(
     `SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u ON (u.workspace_id,u.id)=(g.workspace_id,g.user_id)
     WHERE g.workspace_id=$1 AND g.user_id=$2 AND g.capability=$3 AND u.active
@@ -173,6 +177,7 @@ export async function requireCapability(
     );
 }
 // Parameters $1 workspace, $2 actor; aliases are internal constants, never request text.
+// NR-18: a chosen working company narrows record access to that company; it never widens it.
 export function scopeSql(
   company: string,
   site = "NULL::uuid",
@@ -181,5 +186,5 @@ export function scopeSql(
   return `EXISTS(SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u ON (u.workspace_id,u.id)=(g.workspace_id,g.user_id)
     WHERE g.workspace_id=$1 AND g.user_id=$2 AND u.active AND g.capability='${capability}'
     AND g.valid_from<=clock_timestamp() AND (g.valid_to IS NULL OR g.valid_to>clock_timestamp())
-    AND (g.scope_type='Workspace' OR (g.company_id=${company} AND (g.scope_type='Company' OR (g.scope_type='Site' AND g.site_id=${site})))))`;
+    AND (g.scope_type='Workspace' OR (g.company_id=${company} AND (g.scope_type='Company' OR (g.scope_type='Site' AND g.site_id=${site}))))${workingCompanyCondition(company)})`;
 }

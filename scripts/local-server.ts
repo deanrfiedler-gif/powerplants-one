@@ -8,6 +8,7 @@ import { localConfig } from "../src/platform/config";
 import { proofDiagnosticsEnabled, proofEvent, proofPath, proofRequest as withProofRequest } from "../src/platform/proof-diagnostics";
 import { runtimeSampler } from "../src/platform/proof-runtime";
 import { sendLoginPage } from "../src/login/login-page";
+import { withRequestScope } from "../src/platform/working-company";
 // `--compiled` serves the completed `npm run build` output instead of the
 // Turbopack development server. It is the same compiled application the hosted
 // image runs, but still the loopback synthetic-identity launcher: NODE_ENV
@@ -91,7 +92,7 @@ const server = createServer((req, res) => {
     // still gate capture. Microphone and geolocation remain unnecessary.
     "camera=(self), microphone=(), geolocation=()",
   );
-  void withProofRequest({ request_id: requestId, path }, () => handler(req, res)).catch(() => {
+  void withProofRequest({ request_id: requestId, path }, () => withRequestScope(() => handler(req, res))).catch(() => {
     proofEvent("http-handler-rejected", { request_id: requestId, path, elapsed_ms: performance.now() - received });
     if (!res.headersSent) res.writeHead(500);
     res.end("Unable to load this page.");

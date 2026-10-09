@@ -20,12 +20,14 @@ Dean adopted NAD-08, the Reports workspace, as a design decision, then approved 
 - **Built in the shell:**
   - per-page browser titles (AU-01);
   - the Sales phone bar hides unavailable destinations (AU-23), and a dated /crm routing note is added;
-  - number search for work orders and estimates (AU-13, partly).
-- **Still open:** AU-02 entity indicator, AU-08 grouped Service rail, quotation and purchase-order number search, AU-07 speed and AU-14 tree test.
+  - number search for work orders and estimates (AU-13, partly);
+  - a working company chosen in the account panel, which narrows every access check that names a company (shared record scope and company-level permission checks) and never widens access; migration 0077 (AU-02);
+  - a grouped Service operations rail (AU-08).
+- **Still open:** quotation and purchase-order number search, AU-07 speed, AU-14 tree test, and owner visual review of the new shell controls.
 
 The captures are linked from `system:shell` and those scopes.
 
-The board itself is design reference only. The shell increment adds no route, rail, capability, grant, migration or scope; no owner visual review is recorded.
+The board itself is design reference only. The shell increments add migration 0077 (`ppo.working_companies`) and one API route (`POST /api/v1/shell/company`). They add no capability, grant, seed, user or scope. No owner visual review is recorded.
 
 ## Current bounded step — Customers first load
 

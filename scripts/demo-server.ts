@@ -7,6 +7,7 @@ import { endSession, resolveIdentity, sessionCookie } from "../src/platform/iden
 import { closeDatabase, database } from "../src/platform/database";
 import { developmentAvailable, hostedDevelopmentAccess } from "../src/development/access";
 import { AppError } from "../src/platform/errors";
+import { withRequestScope } from "../src/platform/working-company";
 
 const config = demoConfig();
 process.env.PPO_LOCAL_GATEWAY = randomBytes(32).toString("hex");
@@ -17,7 +18,7 @@ const handler = app.getRequestHandler();
 const gateway = demoGateway({
   origin: config.origin, gatewayKey: process.env.PPO_LOCAL_GATEWAY,
   sessionCookie, loginCookie, beginLogin: beginDemoLogin, finishLogin: finishDemoLogin,
-  endSession, resolveIdentity, handleApplication: handler,
+  endSession, resolveIdentity, handleApplication: (req, res) => withRequestScope(() => handler(req, res)),
   authorizeDevelopment: async token => developmentAvailable() && hostedDevelopmentAccess(database(), token, config.tenant_id, process.env.PPO_DEVELOPMENT_OWNER_OBJECT_ID),
 });
 const server = createServer((req, res) => {

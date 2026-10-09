@@ -111,19 +111,30 @@ Dean then approved "any changes, improvements, and refinements" that would make 
 | NAD-06 | Adopted: the payment gateway stays excluded; invoices are released in MYOB |
 | NAD-04, NAD-07 | Still open: thresholds wait on D-017, and the Executive and Systems owner bundles need defining |
 
-Built in this PR (shell only; no grant, capability, migration or seed):
+Built in this PR first (shell only; no grant, capability, migration or seed):
 
 - **AU-01 page titles (NR-17).** Each shell page has its own title, taken from route metadata. Record pages lead with the record reference; create pages lead with "New record".
 - **AU-23.** The Sales phone-bar fix, and a dated routing note in [application-shell-integration.md](application-shell-integration.md).
 - **AU-13, partly.** Global search finds work orders and estimates by number.
 
+Then, at Dean's request on 9 October 2026:
+
+- **AU-02 working company (NR-18).** The working company narrows every access check that names a company at the shared access layer: record scope in `scopeSql` and company-level `hasPermission`. Capability checks that name no company, such as navigation, are unchanged. This settles the architectural question above in favour of filtering every read.
+  - **Storage:** migration 0077 adds `ppo.working_companies`, one optional row per person.
+  - **Safety:** no row means every company the grants reach. A row only narrows access; it never grants anything. Users, grants and the hosted runtime privileges are unchanged.
+  - **How it applies:** the choice is loaded when a request resolves the signed-in identity and held for that request only, so jobs, seeds and older-schema upgrade paths are unchanged. The narrowing condition names its actor and uses validated UUIDs only.
+  - **Rejected alternatives:**
+    - a browser-only filter, which would leave pages and search inconsistent;
+    - a column on `ppo.users`, which is read-only to the hosted runtime role;
+    - a table reference inside every access check, which breaks application code run against older schemas during upgrades.
+- **AU-08 grouped Service rail.** The Service rail is grouped under three headings, with order and permissions unchanged.
+
 Still open:
 
-- AU-02 entity indicator: whether the selected entity filters every read is an architectural decision.
-- AU-08 grouped Service rail: needs a design review.
 - Quotation and purchase-order number search: needs new readers.
 - AU-07 speed and AU-14 tree test: need evidence.
+- Owner visual review of the new shell controls.
 
 ## 7. Not authorised
 
-Beyond the shell increment in section 6, no application code, route, rail change, capability, grant, seed, migration, register scope or UI baseline change follows from this record. Adopting NAD-08 settles the design; adding the Reports workspace to `navigation.ts`, its capabilities and its pages needs separate approval. Owner visual review, device, accessibility and business acceptance remain separate.
+Beyond the shell increments and migration 0077 in section 6, no application code, route, rail change, capability, grant, seed, migration, register scope or UI baseline change follows from this record. Adopting NAD-08 settles the design; adding the Reports workspace to `navigation.ts`, its capabilities and its pages needs separate approval. Owner visual review, device, accessibility and business acceptance remain separate.

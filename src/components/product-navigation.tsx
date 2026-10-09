@@ -15,6 +15,7 @@ import {
   canOpen,
   departmentHref,
   railDestinations,
+  groupedRail,
   railDestinationForLocation,
   workspaceForLocation,
   workspaceLanding,
@@ -364,13 +365,19 @@ function ProductNavigationView({
           if (focused instanceof HTMLElement && scroller.current?.contains(focused)) tip(focused, focused.getAttribute("aria-label") ?? "");
           else setTooltip(null);
         }}>
-          {rail.map(item => <Link key={item.id} href={departmentHref(item.href!, workspaceId, new URLSearchParams(locationQuery).get("day"))}
-            className="ppo-rail-item" aria-label={item.label} aria-current={activeId === item.id ? "page" : undefined}
-            onMouseEnter={e => tip(e.currentTarget, item.label)} onMouseLeave={() => setTooltip(null)}
-            onFocus={e => { reveal(e.currentTarget); tip(e.currentTarget, item.label); }} onBlur={() => setTooltip(null)}>
-            <ProductIcon name={item.icon} active={activeId === item.id} />
-            <span className="ppo-rail-label">{item.label}</span>
-          </Link>)}
+          {groupedRail(workspaceId, rail).map(section => {
+            const links = section.items.map(item => <Link key={item.id} href={departmentHref(item.href!, workspaceId, new URLSearchParams(locationQuery).get("day"))}
+              className="ppo-rail-item" aria-label={item.label} aria-current={activeId === item.id ? "page" : undefined}
+              onMouseEnter={e => tip(e.currentTarget, item.label)} onMouseLeave={() => setTooltip(null)}
+              onFocus={e => { reveal(e.currentTarget); tip(e.currentTarget, item.label); }} onBlur={() => setTooltip(null)}>
+              <ProductIcon name={item.icon} active={activeId === item.id} />
+              <span className="ppo-rail-label">{item.label}</span>
+            </Link>);
+            // AU-08: a labelled group is announced by name; the visible heading shows in the expanded rail.
+            return section.label ? <div key={section.label} role="group" aria-label={section.label} className="ppo-rail-group">
+              <span className="ppo-rail-group-label" aria-hidden="true">{section.label}</span>{links}
+            </div> : links;
+          })}
         </nav>}
         {wide && tooltip && <span className="ppo-rail-tooltip" role="tooltip" style={{top: tooltip.top}}>{tooltip.label}</span>}
         <div className="ppo-rail-bottom">

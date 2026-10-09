@@ -4,6 +4,8 @@ import { NextResponse, type NextRequest } from "next/server";
 import { runtimeConfig } from "./config";
 import { AppError, unexpectedFailureCategory } from "./errors";
 import { resolveIdentity, sessionCookie } from "./identity";
+import { database } from "./database";
+import { enterWorkingCompany, loadWorkingCompany } from "./working-company";
 export function localRequest(request: NextRequest, mutation = false) {
   const config = runtimeConfig(),
     expected = process.env.PPO_LOCAL_GATEWAY,
@@ -31,8 +33,12 @@ export function localRequest(request: NextRequest, mutation = false) {
   )
     throw new AppError(422, "InvalidContentType", "JSON content is required.");
 }
-export const identity = (request: NextRequest) =>
-  resolveIdentity(request.cookies.get(sessionCookie)?.value);
+// NR-18: the signed-in person's chosen working company applies to the rest of this request.
+export const identity = async (request: NextRequest) => {
+  const p = await resolveIdentity(request.cookies.get(sessionCookie)?.value);
+  enterWorkingCompany(p.actor_id, await loadWorkingCompany(database(), p));
+  return p;
+};
 export async function jsonBody(request: NextRequest, maxBytes = 16384): Promise<unknown> {
   const reader = request.body?.getReader();
   if (!reader)

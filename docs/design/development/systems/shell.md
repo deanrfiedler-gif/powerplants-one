@@ -71,10 +71,17 @@ Built on 9 October 2026, under Dean's approval of professional refinements:
 - **Number search (NR-10).** Global search also finds work orders and estimates by number, through their existing visibility-checked readers.
 - **Routing note (NR-04).** `application-shell-integration.md` now carries a dated routing note: canonical routes are /sales/…, and /crm/… redirects.
 
+- **Working company (NR-18, AU-02).** A person whose grants reach more than one company can choose a working company in the account panel, or All companies.
+  - **Storage:** the choice is kept per person in `ppo.working_companies` (migration 0077).
+  - **Scope:** the choice is loaded when each request resolves the signed-in identity and held for that request only. The shared access checks `scopeSql` and record-level `hasPermission` then narrow every page, search and command to the chosen company. Capability checks without a record company are unchanged, so navigation does not change. Code without a request (jobs, seeds, upgrades) is not narrowed.
+  - **Safety:** the choice can only narrow access; a grant is still required. The narrowing condition names its own actor, so it cannot affect anyone else's check. A choice the grants no longer reach is ignored on every request and lapses on the next shell read.
+  - **Display:** the header shows the working company beside the account name from 1200 px. Narrower screens show it in the account panel, so the fitted header geometry is unchanged. Names lead with the ERP company code because two companies may share a display name.
+  - **Switching:** it reviews unsaved work, remounts the pages and locks other open tabs.
+- **Grouped Service rail (AU-08).** The Service operations rail is grouped as Requests and scheduling, Field and inspections, and Assets and aftercare. Order and permissions are unchanged. A hairline separates the groups in the 76 px rail, and the expanded 232 px rail shows their headings. Each group is a labelled `role="group"`. A group with nothing the identity can open is not shown.
+
 Still open:
 
-- the entity indicator and switcher (NR-18): it needs a decision on whether the selected entity filters every read;
-- a grouped Service rail: it needs a design review;
-- number search for quotations and purchase orders: no reader matches their own numbers yet.
+- number search for quotations and purchase orders: no reader matches their own numbers yet;
+- owner visual review of the header indicator, account-panel switcher and grouped rail at 1024, 1440 and 390 px.
 
 No owner visual review is recorded for the board.
