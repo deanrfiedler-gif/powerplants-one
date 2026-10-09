@@ -143,6 +143,17 @@ h3 {
   line-height: 1.4;
   letter-spacing: -0.5px;
 }
+/* S4 / WCAG 2.5.8: a back link stands alone, so it needs a target of its own: 24 px everywhere, 44 px on touch. */
+.ppo-back-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+}
+@media (pointer: coarse) {
+  .ppo-back-link {
+    min-height: 44px;
+  }
+}
 .skip-link {
   position: fixed;
   left: 12px;

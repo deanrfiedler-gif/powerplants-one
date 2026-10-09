@@ -72,7 +72,7 @@ Claude prepared the first review session; the verdicts remain Dean's.
 - **Shared findings:** S1 to S9. Under SD-02 these are fixed first in the shell, theme and guidance, because each one fixes many pages.
 - **Claude's proposed verdicts:** 7 accept, 5 accept with minor fixes, 16 refine, 1 own session (theme, through the component catalogue) and 1 later phase (FI-07, with SV-06).
 - **Owner verdicts (9 October 2026):** Dean accepted the proposed verdicts. 28 entries now hold an owner visual review: a record in the page contract, then the reviewer, date and fingerprint in the register. Of these, 7 are accept, 5 accept with minor fixes and 16 refine. The theme review is deferred to a component-catalogue session, and FI-07 to phase 04. Phase 00 is not complete under SD-05 until the refinements have recorded outcomes.
-- **Refinement batch 1:** started on the shared findings, as SD-02 and SD-03 require.
+- **Refinement batch 1:** the shared shell findings S1, S2, S4 and S7 are fixed; S3 was withdrawn after verification ([evidence](../testing/evidence/ui-refinement-batch-1/README.md)). The 28 reviews are now stale and need a fresh owner look. S5, S6, S8, S9 and the page-level refinements follow in later batches.
 
 ## Where it is shown
 

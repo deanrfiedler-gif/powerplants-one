@@ -40,7 +40,7 @@ export function ActivityDetail({ id }: { id: string }) {
   return (
     <>
       <PolicyHolds activityId={id} />
-      <Link href="/work">← My Work</Link>
+      <Link className="ppo-back-link" href="/work">← My Work</Link>
       <ReadState loading={r.loading} error={r.error} retry={r.reload} />
       {!isDenied(r.error) && r.data?.items[0] && (
         <>{source && <Link href={source}>Return to acceptance obligation</Link>}<ActivityEditor key={id} activity={r.data.items[0]} reload={r.reload} /></>
@@ -330,7 +330,7 @@ export function ActivityCreate({
   }
   return (
     <>
-      <Link href="/work">← My Work</Link>
+      <Link className="ppo-back-link" href="/work">← My Work</Link>
       <PageHeader
         eyebrow="SC-01 / New activity"
         title="Give the next action an owner"

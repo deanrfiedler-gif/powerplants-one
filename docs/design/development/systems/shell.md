@@ -93,3 +93,15 @@ No owner visual review is recorded for the board.
 - **Evidence:** [phase 00 review, session 1](../../../testing/evidence/ui-review-phase-00-r01/README.md). Synthetic data; compiled build at `a52cb01`; 1440 × 900 and 390 × 844 headless Chromium, captures for this entry.
 - **Findings:** S1, S2, S4 and S7 are all fixed here once and carry to every page. The new working-company pill and grouped Service rail render as intended.
 - **Scope of this record:** visual review of the captured state only. Device, screen-reader, zoom and operational acceptance remain separate. A later source change marks this review stale.
+
+## Phase 00 refinement batch 1 — 9 October 2026
+
+Shared findings from the [phase 00 review](../../../testing/evidence/ui-review-phase-00-r01/README.md), fixed once in the shell (SD-02). Evidence: [batch 1 recapture](../../../testing/evidence/ui-refinement-batch-1/README.md).
+
+- **S1 contrast:** the search shortcut hint, the panel footer and the lead empty state use `--text-secondary` (about 5.6:1 on white). The axe contrast failure that 18 desktop pages shared is gone.
+- **S2 phone title:** every phone header shows the current page at 17 px, weight 500, in the ink colour. Pages with their own section menu keep r07's 20 px title and the menu button. Other pages keep the home tile and the page-hierarchy button. The left control differs because only some workspaces have a section menu; that is a stated rule, not drift.
+- **S3 floating button:** no change. The My Work phone page already reserves 88 px at the foot. At the end of the scroll, the last content ends above the button (692 px against 708 px). The finding came from a mid-scroll capture and is withdrawn.
+- **S4 back links:** the shared `ppo-back-link` class gives back links a target of at least 24 px, or 44 px on touch screens. It is applied to My Work, the activity record, site readiness and both Sales back links. Record links inside pages are refined with those pages.
+- **S7 icons:** the rail toggle shows a left or right chevron and the page-hierarchy button a list icon, so the ellipsis now only means More. The page guide and help tooltips say what each opens; their accessible names are unchanged.
+- **Reviews:** these source changes mark the 28 phase 00 reviews stale. The pages need a fresh owner look before phase 00 can close (SD-05).
+- **Raised, not changed:** the technician timer's idle seconds digits fail contrast (axe). They are faint by design under the accepted work timer baseline, so this is a proposed departure for the FI-01 refinement.

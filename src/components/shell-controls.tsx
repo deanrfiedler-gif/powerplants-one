@@ -358,7 +358,7 @@ export function ShellControls({
         <button
           className="ppo-top-action"
           aria-label="Page guide"
-          title="Page guide"
+          title="Page guide: what this page is for and how to use it"
           aria-expanded={panel === "guide"}
           aria-controls="shell-utility-panel"
           onClick={(event) => show("guide", event.currentTarget)}
@@ -368,7 +368,7 @@ export function ShellControls({
         <button
           className="ppo-top-action ppo-desktop-utility"
           aria-label="Quick Help"
-          title="Quick Help"
+          title="Help: keyboard shortcuts and support"
           aria-expanded={panel === "help"}
           aria-controls="shell-utility-panel"
           onClick={(event) => show("help", event.currentTarget)}

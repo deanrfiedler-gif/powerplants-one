@@ -234,7 +234,7 @@ function NewOpportunityForm({sales}:{sales?:ActivitySalesCreation}) {
         title="Add deal"
         description="Select existing customer context. Creating saves one Open deal and its initial owned Activity together."
       />
-      <Link href="/sales/opportunities">Back to sales worklist</Link>
+      <Link className="ppo-back-link" href="/sales/opportunities">Back to sales worklist</Link>
       <ResourceState {...available} />
       {available.data && (
         <>
@@ -472,7 +472,7 @@ function OpportunityContent({
   return (
     <>
       <div className="crm-deal-page-heading">
-        <Link className="crm-back-link" href={back}>← Back to sales worklist</Link>
+        <Link className="crm-back-link ppo-back-link" href={back}>← Back to sales worklist</Link>
         <PageHeader eyebrow={`${o.display_number} · ${o.close_outcome}`} title={o.title}
           description={`${o.organisation_name} · ${o.site_name ?? "Site to be confirmed"}`}
           action={o.can_edit ? <button className="secondary crm-main-edit" aria-label="Edit deal information" onClick={() => setDialog("information")}><ProductIcon name="edit"/><span>Edit deal</span></button> : undefined} />

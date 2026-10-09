@@ -58,7 +58,7 @@
 .ppo-global-search:hover, .ppo-menu-search:hover { background: #fff; border-color: #a9b4c1; }
 .ppo-global-search:focus-within, .ppo-menu-search:focus-within { background: #fff; border-color: #397eb6; outline: 2px solid #397eb633; outline-offset: 2px; }
 .ppo-global-search input::placeholder, .ppo-menu-search input::placeholder { color: #667181; opacity: 1; }
-.ppo-global-search kbd { padding: 2px 4px; border: 1px solid #dde3ea; background: #fff; border-radius: 4px; color: #758091; white-space: nowrap; font: 10px/1.4 PPOShellRoboto, Roboto, Verdana, sans-serif; }
+.ppo-global-search kbd { padding: 2px 4px; border: 1px solid #dde3ea; background: #fff; border-radius: 4px; color: var(--text-secondary, #596779); white-space: nowrap; font: 10px/1.4 PPOShellRoboto, Roboto, Verdana, sans-serif; }
 .ppo-more-panel, .ppo-header-panel, .header-account .identity-strip .ppo-account-panel { position: fixed; z-index: 80; display: flex; flex-direction: column; flex-wrap: nowrap; overflow: hidden; border: 1px solid #dce1e8; border-radius: 14px; background: white; color: #242a37; box-shadow: 0 8px 32px #242a3720, 0 2px 5px #242a370a; font-size: 14px; overflow-wrap: anywhere; }
 .ppo-more-panel { top: 12px; bottom: 12px; left: 86px; width: 344px; max-width: calc(100vw - 100px); }
 /* On a page that has secondary navigation, More's right edge is the right edge the secondary menu has when
@@ -88,7 +88,7 @@
 .ppo-more-link[aria-current=page] { background: #f0f6ed; color: #315e43; font-weight: 500; }
 .ppo-more-link[aria-current=page] .product-icon { color: #315e43; }
 .ppo-help-link { background: transparent; width: 100%; text-align: left; }
-.ppo-more-panel > footer, .ppo-panel-footer { flex: 0 0 auto; min-height: 42px; padding: 11px 20px; border-top: 1px solid #e9edf2; background: #fafbfc; font-size: 11px; color: #7b8491; display: flex; justify-content: space-between; align-items: center; gap: 18px; }
+.ppo-more-panel > footer, .ppo-panel-footer { flex: 0 0 auto; min-height: 42px; padding: 11px 20px; border-top: 1px solid #e9edf2; background: #fafbfc; font-size: 11px; color: var(--text-secondary, #596779); display: flex; justify-content: space-between; align-items: center; gap: 18px; }
 .ppo-preview-label::before { content: ''; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: #8b98a9; margin-right: 6px; vertical-align: middle; }
 .ppo-menu-notice { margin: 8px 12px; font-size: 12px; }
 .ppo-panel-hint { padding: 3px 8px 5px; margin: 0 0 12px; color: #778292; font-size: 11px; line-height: 1.55; }
@@ -329,6 +329,12 @@
 }
 @media (max-width: 360px) {
   .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .ppo-crumb-current { font-size: 16px; }
+}
+/* S2 (phase 00 review): every phone header names the current page the same way. Pages without their own
+   menu keep the home tile and the page-hierarchy button, so the title is a little smaller than r07's 20px to
+   leave room for them; weight and colour match. */
+@media (max-width: 780px) {
+  .ppo-shell-header:not(:has(#header-menu:not(:empty))) .ppo-crumb-current, .ppo-shell-header:not(:has(#header-menu:not(:empty))) .ppo-product-name { font-size: 17px; line-height: 24px; font-weight: 500; color: #242a37; }
 }
 
 /* Installation entries and the manual instruction panel. Quiet secondary actions in the

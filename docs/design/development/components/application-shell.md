@@ -126,3 +126,10 @@ The shared guard consumes an approval before ignoring the same-URL navigation ev
 ## Bell startup boundary
 
 The header imports the standalone `NotificationBell`; the full Notifications workspace keeps its My Work layout and preferences dependencies at its own route. Rendering, current-authority reads, loading/error/partial states and navigation are preserved. The real desktop host opens the bell from Customers before any Notifications visit, verifies its current notice, Escape/focus return and inbox handover. The phone retains its existing hidden header bell and direct inbox entry. Compiled transfer measurements and the desktop/phone inbox regression are recorded in [first-load evidence](../../../testing/evidence/customer-first-load/README.md); owner/device and paired visual acceptance remain pending.
+
+## Phase 00 refinement batch 1
+
+- The phone header names the current page at 17 px / 500 on pages without a section menu; r07's 20 px title stays where a section menu replaces the home tile.
+- The rail toggle shows chevrons and the page-hierarchy button a list icon; the ellipsis now means only More.
+- The page guide and help tooltips name what they open; the accessible names `Page guide` and `Quick Help` are unchanged for existing tests and shortcuts.
+- The search shortcut hint and panel footer use `--text-secondary`. See [the shell contract](../systems/shell.md).
