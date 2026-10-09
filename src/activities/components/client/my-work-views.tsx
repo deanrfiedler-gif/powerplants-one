@@ -1,11 +1,12 @@
 "use client";
 import Link from "next/link";
+import { formatTimestamp } from "../../../shell/date-format";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { api, ErrorNotice, isDenied, type Failure } from "../../../components/business-ui";
 import { actionsQuery, criteriaSearch, defaultCriteria } from "../../work-criteria";
 import type { listWork, readWorkWaiting, WorkRow } from "../../work-overview";
-import { activityTypeLabels, activityTypes, clockTime, shortDate, WORK_TIMEZONE } from "../../work-view";
+import { activityTypeLabels, activityTypes, shortDate, WORK_TIMEZONE } from "../../work-view";
 import type { WorkViewCriteria } from "../../work-views";
 import { ActivityRow, PanelState, useWorkDialogs } from "./my-work-list";
 import { followUpLabel, useCriteria } from "./my-work-overview";
@@ -32,7 +33,7 @@ function Foot({ observed, stale, note }: { observed?: string; stale: boolean; no
   return (
     <footer className="mw-foot">
       <span>
-        Synthetic demo data{observed && ` · Updated ${clockTime(observed, WORK_TIMEZONE)}${stale ? " (not current)" : ""}`}
+        Synthetic demo data{observed && ` · Updated ${formatTimestamp(observed, WORK_TIMEZONE)}${stale ? " (not current)" : ""}`}
       </span>
       <span>{note}</span>
     </footer>

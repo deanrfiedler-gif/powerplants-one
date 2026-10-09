@@ -296,7 +296,8 @@ test("a row opens details; Complete saves through the source command and every a
   const details = page.getByRole("dialog", { name: "Make first contact with new lead" });
   // A lead link says Lead; an opportunity link says Opportunity.
   await expect(details.locator("dt").filter({ hasText: /^Lead$/ })).toBeVisible();
-  await expect(details.getByText("Brisbane time")).toBeVisible();
+  // S6: a scheduled time carries its zone and offset rather than a city name.
+  await expect(details.getByText(/^Due \d{1,2} [A-Z][a-z]{2} \d{4}, \d{2}:\d{2} AEST \(UTC\+10\)/)).toBeVisible();
   await page.screenshot({ path: info.outputPath("activity-detail.png") });
   await details.getByRole("button", { name: "Complete", exact: true }).click();
   const outcome = page.getByRole("dialog", { name: "Record outcome" });

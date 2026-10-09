@@ -113,7 +113,7 @@ function ActivityEditor({
         <SummaryPair label="Type">{activityTypeLabels[a.activity_type]}</SummaryPair>
         {/* An appointment keeps its planned end in due_at, so it is described as a start and an end, never as a due time. */}
         <SummaryPair label={a.starts_at ? "Appointment" : "Due"}>
-          {a.due_needed ? "Due date needed" : `${whenText(a)} (Australia/Brisbane)`}
+          {a.due_needed ? "Due date needed" : whenText(a)}
         </SummaryPair>
         <SummaryPair label="Outcome">
           <span className="narrative">

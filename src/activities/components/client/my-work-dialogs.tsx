@@ -127,7 +127,6 @@ export function ActivityDrawer({
           <dt>When</dt>
           <dd>
             {whenText(row)}
-            {!row.due_needed && <span className="mw-muted"> · {WORK_TIMEZONE.split("/")[1].replace("_", " ")} time</span>}
             {t.tone === "overdue" && <Tag tone="overdue">Overdue</Tag>}
           </dd>
         </div>

@@ -4,6 +4,7 @@
 // gap link, with one floating Create control. It is a second presentation of the same reads, dialogs
 // and commands as the desktop overview; it stores nothing and decides nothing of its own.
 import Link from "next/link";
+import { formatTimestamp } from "../../../shell/date-format";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { useIdentity } from "../../../components/business-session";
@@ -165,7 +166,7 @@ function MyWorkMobileOverview() {
         <div>
           <h1>{name === "there" ? greeting(now) : `${greeting(now)}, ${name}`}</h1>
           <time className="mw-date" dateTime={today}>
-            {longDate(now).replace(/ \d{4}$/, "")}
+            {longDate(now)}
           </time>
         </div>
         <Tag tone="context">{work.department}</Tag>
@@ -202,7 +203,7 @@ function MyWorkMobileOverview() {
           {!!read.error && (
             <div className="mw-notice mw-notice-attention" role="alert">
               <strong>{data ? "My Work could not be refreshed." : "My Work could not be loaded."}</strong> {(read.error as Failure).message}{" "}
-              {data ? `Showing what was read at ${clockTime(data.observed_at, WORK_TIMEZONE)}; it may be out of date.` : "No counts are shown, because an unread list is not an empty one."}{" "}
+              {data ? `Showing what was read at ${formatTimestamp(data.observed_at, WORK_TIMEZONE)}; it may be out of date.` : "No counts are shown, because an unread list is not an empty one."}{" "}
               <button type="button" className="mw-link" onClick={read.reload}>
                 Try again
               </button>
@@ -347,9 +348,8 @@ function MyWorkMobileOverview() {
       <footer className="mw-foot">
         <span>
           Synthetic demo data
-          {data && ` · Updated ${clockTime(data.observed_at, WORK_TIMEZONE)}${read.stale || read.error ? " (not current)" : ""}`}
+          {data && ` · Updated ${formatTimestamp(data.observed_at, WORK_TIMEZONE)}${read.stale || read.error ? " (not current)" : ""}`}
         </span>
-        <span>{WORK_TIMEZONE.split("/")[1].replace("_", " ")} time</span>
       </footer>
 
       {!denied && (
@@ -697,13 +697,13 @@ function WeatherCard() {
           </div>
           {w.stale && (
             <p className="mw-quiet-note">
-              Updated {shortDate(w.issued_at, WORK_TIMEZONE)}, {clockTime(w.issued_at, WORK_TIMEZONE)}; it may be out of date.
+              Updated {formatTimestamp(w.issued_at, WORK_TIMEZONE)}; it may be out of date.
             </p>
           )}
         </>
       )}
       {sheet === "forecast" && w?.status === "ok" && (
-        <WorkDialog sheet title={`Forecast for ${w.location}`} subtitle={`Updated ${shortDate(w.issued_at, WORK_TIMEZONE)}, ${clockTime(w.issued_at, WORK_TIMEZONE)}${w.stale ? " · may be out of date" : ""}`} onClose={() => setSheet(null)}>
+        <WorkDialog sheet title={`Forecast for ${w.location}`} subtitle={`Updated ${formatTimestamp(w.issued_at, WORK_TIMEZONE)}${w.stale ? " · may be out of date" : ""}`} onClose={() => setSheet(null)}>
           <ul className="mw-forecast">
             {[w.today, ...w.forecast].map((p) => (
               <li key={p.valid_from}>
@@ -974,7 +974,7 @@ function OverdueOpportunitiesSheet({ query, showOwner, fullHref, onClose }: { qu
   const list = read.data?.opportunities;
   const when = (o: OverdueOpportunity) => {
     const t = timing({ id: o.action_id, status: "Open", due_at: o.action_due_at, due_needed: false, due_date_only: o.action_due_date_only, starts_at: o.action_starts_at }, read.data!.observed_at);
-    return t.caption ? `${t.caption} ${t.value}` : t.value;
+    return [t.caption ? `${t.caption} ${t.value}` : t.value, t.detail].filter(Boolean).join(" · ");
   };
   return (
     <WorkDialog sheet title="Overdue opportunities" subtitle="Open opportunities whose planned next action is overdue" onClose={onClose}>

@@ -85,6 +85,7 @@ export function ActivityRow({
       <div className={`mw-row-when mw-when-${t.tone}`}>
         {t.caption && <span>{t.caption}</span>}
         <strong>{t.value}</strong>
+        {t.detail && <span>{t.detail}</span>}
       </div>
       <div className="mw-row-actions">
         {row.group === "Closed" ? (
