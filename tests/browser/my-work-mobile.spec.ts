@@ -102,11 +102,12 @@ test("the phone overview is one page: header, five-cell bar, Quick Actions, atte
   await expect(bar.getByRole("link", { name: "Activities", exact: true })).toHaveAttribute("href", `/calendar?day=${scenario.slots.day}&scope=sales&department=sales`);
   await expect(bar.getByRole("link", { name: "Contacts", exact: true })).toHaveAttribute("href", "/contacts?department=sales");
 
-  // Quick Actions: four icon tiles in order, each named for assistive technology and nothing to read on
-  // screen. This identity holds no mail access, so that tile is a locked image, not a link; no unread
-  // number is shown to anyone, because the mailbox records no read state.
-  expect(await page.locator(".mw-tile").evaluateAll((tiles) => tiles.map((t) => t.getAttribute("aria-label")))).toEqual(["Emails: outside your current access", "Leads", "Map", "Insights", "Tasks"]);
-  expect((await page.locator(".mw-tiles").innerText()).trim()).toBe("");
+  // Quick Actions: five tiles in order, each with a visible label (phase 00 batch 2). This identity holds
+  // no mail access, so that tile is a locked image, not a link, named for its access; no unread number is
+  // shown to anyone, because the mailbox records no read state.
+  expect(await page.locator(".mw-tile-label").allInnerTexts()).toEqual(["Emails", "Leads", "Map", "Insights", "Tasks"]);
+  expect(await page.locator(".mw-tile").first().getAttribute("aria-label")).toBe("Emails: outside your current access");
+  expect(await page.locator(".mw-tiles").innerText()).not.toMatch(/\d/);
   await expect(page.getByRole("img", { name: "Emails: outside your current access" })).toBeVisible();
   expect(new Set(await page.locator(".mw-tile").evaluateAll((tiles) => tiles.map((t) => Math.round(t.getBoundingClientRect().top)))).size).toBe(1);
   await expect(page.getByRole("link", { name: "Leads", exact: true })).toHaveAttribute("href", `/sales/leads?owner_id=${MY_WORK.owner}`);
@@ -539,5 +540,5 @@ test("an unread source is never zero, the Create control never covers a focused 
   await open(page);
   const emails = page.getByRole("link", { name: "Emails", exact: true });
   await expect(emails).toHaveAttribute("href", "/email");
-  await expect(emails).toHaveText("");
+  await expect(emails).toHaveText("Emails"); // its label only: no unread number
 });

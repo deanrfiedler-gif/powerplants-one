@@ -106,6 +106,25 @@ Dean replied: "24-hour; accept S5, S9 and all My Work proposals".
 
 Every affected entry's owner review stays stale until Dean looks at the built page.
 
+### Sales and Service pages on the canvas (9 October 2026)
+
+Dean asked for the Sales and Service phase 00 boards to be added. The canvas now has a **Sales pages** page and a **Service pages** page, with 14 boards. Each page is shown as a "today" board, with fresh captures from the compiled app after batch 2, beside proposed desktop and phone layouts. The pages are:
+
+- **Sales:** Add deal (`route:/sales/opportunities/new`, S8) and Sales tasks (`route:/sales/tasks`).
+- **Service:** the planner (`route:/schedule`, PL-01); appointment detail (`route:/service/appointments/[id]`, SV-04); My jobs, field job and site readiness (FI-01); and the offline field workspace (`route:/offline/index.html`, FI-02, `system:offline`).
+
+Each proposal applies the adopted S5, S6 and S8 rules to its page. These proposals need Dean's decision:
+
+| Page | Decision needed |
+|---|---|
+| Planner | Open on the current week. Today, the planner's coded default day (`src/scheduling/navigation.ts`) is 22 September 2031, and browser suites may rely on that default. |
+| Field job | Darker timer digits. This departs from the accepted timer baseline. |
+| Offline | Restyle with PPO tokens and type, in place of its own teal palette. It stays standalone so it works without the network, and its rules are kept: a local save is not a server receipt, downloads expire, and unsent originals are never deleted. |
+| Appointment | Restore the section gap under the action row, and move Cancel appointment to the foot of the page. |
+| Add deal | The deal title comes first and the customer before the visibility company. The working company is filled in, as on Create activity. The save state is visible. |
+
+Nothing on these boards is adopted until Dean accepts it. The main board lists their status as "Proposed".
+
 ## Where it is shown
 
 The navigation architecture canvas gains a **UI build sequence** board drawn from the generated data. The repository files remain the authority. The board was added after the r02 capture set, so no capture of it is retained.
