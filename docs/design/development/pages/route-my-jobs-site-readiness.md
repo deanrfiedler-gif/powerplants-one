@@ -19,3 +19,11 @@ Source: src/app/(business)/my-jobs/site-readiness/page.tsx. Proposed presentatio
 Field site readiness has a specific breadcrumb. Hosted offline recovery explains unavailability; local originals retain their existing supported offline routes.
 
 Desktop uses the existing shell with a 76 px compact or 232 px labelled primary rail. Mobile uses labelled destinations and More > Workspace; Home/search/help remain reachable. Check 320/390/780/781/1199/1200 px where applicable, long labels, visible focus and Escape/return focus. Missing accepted images remain explicit; no new accepted image or review fingerprint is recorded. Functional results and screenshot observations are in the NAV ledger; owner/device review and deployment remain separate.
+
+## Owner visual review — 9 October 2026
+
+- **Reviewer:** Dean Fiedler. He accepted Claude's proposed verdicts from the phase 00 review boards (navigation canvas version 29).
+- **Result:** Accept with minor fixes.
+- **Evidence:** [phase 00 review, session 1](../../../testing/evidence/ui-review-phase-00-r01/README.md). Synthetic data; compiled build at `a52cb01`; 1440 × 900 and 390 × 844 headless Chromium, captures for this entry.
+- **Findings:** The header says 'Field site readiness' (truncated); the page says 'Site readiness'. S4 back link.
+- **Scope of this record:** visual review of the captured state only. Device, screen-reader, zoom and operational acceptance remain separate. A later source change marks this review stale.

@@ -1,6 +1,6 @@
 # Reviews and handovers — design reference
 
-Stable entry: `route:/work/reviews`. Owner: Dean Fiedler. Status: **Draft for visual review**.
+Stable entry: `route:/work/reviews`. Owner: Dean Fiedler. Status: **Owner visual review 9 October 2026: Refine**.
 Source baseline and existing issued references remain recorded in the register. SH implementation is synthetic and bounded; guide, visual and owner acceptance remain separate.
 
 ## Purpose and task
@@ -39,3 +39,11 @@ Only the source command records the business decision. The coordination queue re
 A missing due date says Date needed. Source slices are explicitly bounded: Service 200, Finance 500 and Engineering 200 packages; queue pages show 30 rows. Counts describe the available slice, not all business work.
 
 [SH verification](../../../testing/evidence/sh-platform/README.md) records actual checks, inspected captures and CI repairs; [handover](../../../delivery/sh-platform-handover.md) records scope and dependencies. Images above predate the merged development-workspace shell controls and require a fresh paired review for that integration. No review fingerprint or owner acceptance is claimed. The article `guide.page.work.reviews` remains Draft.
+
+## Owner visual review — 9 October 2026
+
+- **Reviewer:** Dean Fiedler. He accepted Claude's proposed verdicts from the phase 00 review boards (navigation canvas version 29).
+- **Result:** Refine.
+- **Evidence:** [phase 00 review, session 1](../../../testing/evidence/ui-review-phase-00-r01/README.md). Synthetic data; compiled build at `a52cb01`; 1440 × 900 and 390 × 844 headless Chromium, captures for this entry.
+- **Findings:** The header says 'Approvals & handovers'; the page and navigation say 'Reviews & handovers'. Heading size, breadcrumb and filter control sizes differ from the other My Work pages. Tab counts read '(0+)'. Phone: tabs wrap over three rows. S5 and S6 in the footer note.
+- **Scope of this record:** visual review of the captured state only. Device, screen-reader, zoom and operational acceptance remain separate. A later source change marks this review stale.

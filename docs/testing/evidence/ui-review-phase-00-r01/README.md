@@ -4,7 +4,7 @@ title: Phase 00 UI review, session 1 — captures, automated checks and pre-revi
 revision: r01
 date: 2026-10-09
 owner: Dean Fiedler
-status: Pre-review prepared by Claude; owner verdicts pending; no owner review recorded
+status: Pre-review prepared by Claude; Dean accepted the proposed verdicts on 9 October 2026; 28 owner visual reviews recorded, 2 deferred
 source_commit: a52cb01c2249cc60bbf5a7d4f65c4899995bd8da
 ---
 
@@ -12,7 +12,7 @@ source_commit: a52cb01c2249cc60bbf5a7d4f65c4899995bd8da
 
 Dean adopted the [UI build and review sequence](../../../decisions/ui-build-sequence.md) rules SD-01 to SD-05 on 9 October 2026 and asked to start the phase 00 review. This record holds the pre-review material for that session: the captures, the automated checks and Claude's findings, with a proposed verdict for each entry.
 
-**These are proposals. The owner verdicts are Dean's to give.** No register entry records an owner review as a result of this file, and no review fingerprint is copied.
+**Owner verdicts.** On 9 October 2026 Dean accepted Claude's proposed verdicts. Each of the 28 reviewed entries records the review in its page contract, then carries his name, the date and the fingerprint at that time in the register. The theme and FI-07 reviews are deferred as proposed.
 
 The same material is shown on the navigation canvas (version 29): the *Phase 00 review · summary and verdicts* and *Phase 00 review · captures and findings* boards.
 
@@ -93,36 +93,36 @@ Full hashes, axe node targets and the small-target list are in [browser-results.
 
 | Rank | Entry | Title | Claude proposes | Findings | Owner verdict |
 |---:|---|---|---|---|---|
-| — | `system:guidance` | Contextual guidance | Refine | S9: write the Home and My Work guides now. The panel itself works on desktop and phone. | Pending |
-| — | `system:offline` | Offline and recovery | Refine | The offline workspace uses its own green palette and type, not the PPO tokens. Technical copy (byte counts, 'only an actual server response proves acceptance') needs plain language; keep the rules. | Pending |
-| — | `system:shell` | Application shell | Refine | S1, S2, S4 and S7 are all fixed here once and carry to every page. The new working-company pill and grouped Service rail render as intended. | Pending |
-| — | `system:theme` | Theme and shared controls | Own session (component catalogue) | The component catalogue lists 41 components with reviews pending or stale. A theme verdict needs its own catalogue session rather than one capture. S6 (one date and time formatter) belongs here. | Pending |
-| 1 | `scope:SH-01` | Role-based home overview | Accept | Home sends this identity to My Work as designed (navigation consolidation rule). Content findings sit under My Work. | Pending |
-| 1 | `route:/` | Home → permitted work | Accept | Redirects to /work for an identity with activity.read. | Pending |
-| 1 | `route:/login` | Login | Accept | Clear, branded and responsive. Microsoft sign-in is correctly shown as unavailable locally. | Pending |
-| 1 | `route:/sales/leads` | Leads | Accept | Empty and populated states are both clear. Phone: the warning triangle on a lead has no visible meaning; add a label. Phone empty-state text failed contrast in the empty run. | Pending |
-| 1 | `route:/sales/leads/[id]` | Lead detail | Accept | The drawer over the register keeps context; Convert to deal is clear. The close button's focus ring is a heavy square unlike the theme focus ring. | Pending |
-| 1 | `route:/sales/opportunities/new` | Create opportunity | Refine | S8. Deal title should come before Qualification outcome. 'Unsaved' and the pipeline line are plain text with no visual status. | Pending |
-| 1 | `route:/work` | My Work · Overview | Refine | Desktop: activity titles wrap to three lines because the Complete and Reschedule buttons take the row width; give the title column priority. The count badge in 'Needs a next activity' drops to its own line, unlike the other cards. Phone: the 'Weather is not connected' card takes prime space for a feature that is not configured; hide it until connected. Phone: the five quick actions are icons without labels. S3. | Pending |
-| 2 | `scope:SH-02` | My Work action centre | Refine | Follows its overview, reviews, new-activity and record pages below. | Pending |
-| 2 | `route:/sales/tasks` | Sales Tasks | Refine | Pagination buttons show with no tasks. The sub-tabs offer Deals and Leads but not Tasks, so no tab is active. S6: the zone name appears in each count line. | Pending |
-| 2 | `route:/work/[id]` | Activity detail | Refine | S8 and S6. An overdue activity does not say it is overdue. Linked records show as raw numbers first, names second. | Pending |
-| 2 | `route:/work/actions` | My actions | Accept | Clear grouping by Overdue and Date needed. Only S1 applies. Activity titles do not open the activity record; confirm the drawer or inline detail is the intended route to /work/[id]. | Pending |
-| 2 | `route:/work/new` | Create activity | Refine | S8. The My Work side navigation disappears on this page, unlike its siblings. Lead with the purpose and owner; move company and access class later with plain labels. | Pending |
-| 2 | `route:/work/reviews` | Reviews and handovers | Refine | The header says 'Approvals & handovers'; the page and navigation say 'Reviews & handovers'. Heading size, breadcrumb and filter control sizes differ from the other My Work pages. Tab counts read '(0+)'. Phone: tabs wrap over three rows. S5 and S6 in the footer note. | Pending |
-| 2 | `route:/work/team` | Team queue | Accept | Clear owner summary and consistent filters. | Pending |
-| 2 | `route:/work/waiting` | Blocked & waiting | Accept with minor fixes | S5: the dashed note describes implementation coverage ('Sales records no waiting request of its own yet'). Rephrase or move to the guide. | Pending |
-| 3 | `scope:SV-04` | Appointment coordination detail | Refine | Follows its appointment page. | Pending |
-| 3 | `route:/service/appointments/[id]` | Appointment detail | Refine | The action buttons touch the 'Current crew' heading; add the standard section gap. S5 and S6. | Pending |
-| 4 | `scope:PL-01` | Service planner and unassigned demand | Refine | Follows the planner. | Pending |
-| 4 | `route:/schedule` | Service planner | Refine | The planner opened on 22 Sept 2031 rather than the current week. Check whether this follows the seeded booking or a default. S5: each day cell repeats 'Server checks all reservations'. Phone: tabs and filters fill the first screen before any booking appears. The date field showed mm/dd/yyyy in the test browser; confirm on a real Australian device. | Pending |
-| 5 | `scope:FI-01` | Technician Today and job execution | Accept with minor fixes | Follows My jobs and the job page. | Pending |
-| 5 | `route:/my-jobs` | My Jobs | Accept with minor fixes | S6: the same-day visit repeats its date and wraps '12:00 pm' on phones. The Open field job button uses a teal outside the PPO primary colour. | Pending |
-| 5 | `route:/my-jobs/[id]` | Technician job detail | Accept with minor fixes | The sticky Start work bar works well. 'Can't start yet' appears twice (chip and bar). S5: the timer explanation is internal wording. | Pending |
-| 5 | `route:/my-jobs/site-readiness` | Site induction, risk and biosecurity review | Accept with minor fixes | The header says 'Field site readiness' (truncated); the page says 'Site readiness'. S4 back link. | Pending |
-| 6 | `scope:FI-02` | Offline downloads, queue and conflict recovery | Refine | Follows the offline workspace. | Pending |
-| 6 | `route:/offline/index.html` | Offline workspace | Refine | See system:offline. Deliberately standalone so it works without the network, but it should still use the PPO tokens. | Pending |
-| 7 | `scope:FI-07` | Customer attendance and report response | Later phase (with SV-06, phase 04) | Its pages (/service/reports) sit in phase 04 by their own rank. Review it with SV-06 there. | Pending |
+| — | `system:guidance` | Contextual guidance | Refine | S9: write the Home and My Work guides now. The panel itself works on desktop and phone. | Dean Fiedler, 9 Oct 2026: Refine |
+| — | `system:offline` | Offline and recovery | Refine | The offline workspace uses its own green palette and type, not the PPO tokens. Technical copy (byte counts, 'only an actual server response proves acceptance') needs plain language; keep the rules. | Dean Fiedler, 9 Oct 2026: Refine |
+| — | `system:shell` | Application shell | Refine | S1, S2, S4 and S7 are all fixed here once and carry to every page. The new working-company pill and grouped Service rail render as intended. | Dean Fiedler, 9 Oct 2026: Refine |
+| — | `system:theme` | Theme and shared controls | Own session (component catalogue) | The component catalogue lists 41 components with reviews pending or stale. A theme verdict needs its own catalogue session rather than one capture. S6 (one date and time formatter) belongs here. | Dean Fiedler, 9 Oct 2026: deferred — own session (component catalogue) |
+| 1 | `scope:SH-01` | Role-based home overview | Accept | Home sends this identity to My Work as designed (navigation consolidation rule). Content findings sit under My Work. | Dean Fiedler, 9 Oct 2026: Accept |
+| 1 | `route:/` | Home → permitted work | Accept | Redirects to /work for an identity with activity.read. | Dean Fiedler, 9 Oct 2026: Accept |
+| 1 | `route:/login` | Login | Accept | Clear, branded and responsive. Microsoft sign-in is correctly shown as unavailable locally. | Dean Fiedler, 9 Oct 2026: Accept |
+| 1 | `route:/sales/leads` | Leads | Accept | Empty and populated states are both clear. Phone: the warning triangle on a lead has no visible meaning; add a label. Phone empty-state text failed contrast in the empty run. | Dean Fiedler, 9 Oct 2026: Accept |
+| 1 | `route:/sales/leads/[id]` | Lead detail | Accept | The drawer over the register keeps context; Convert to deal is clear. The close button's focus ring is a heavy square unlike the theme focus ring. | Dean Fiedler, 9 Oct 2026: Accept |
+| 1 | `route:/sales/opportunities/new` | Create opportunity | Refine | S8. Deal title should come before Qualification outcome. 'Unsaved' and the pipeline line are plain text with no visual status. | Dean Fiedler, 9 Oct 2026: Refine |
+| 1 | `route:/work` | My Work · Overview | Refine | Desktop: activity titles wrap to three lines because the Complete and Reschedule buttons take the row width; give the title column priority. The count badge in 'Needs a next activity' drops to its own line, unlike the other cards. Phone: the 'Weather is not connected' card takes prime space for a feature that is not configured; hide it until connected. Phone: the five quick actions are icons without labels. S3. | Dean Fiedler, 9 Oct 2026: Refine |
+| 2 | `scope:SH-02` | My Work action centre | Refine | Follows its overview, reviews, new-activity and record pages below. | Dean Fiedler, 9 Oct 2026: Refine |
+| 2 | `route:/sales/tasks` | Sales Tasks | Refine | Pagination buttons show with no tasks. The sub-tabs offer Deals and Leads but not Tasks, so no tab is active. S6: the zone name appears in each count line. | Dean Fiedler, 9 Oct 2026: Refine |
+| 2 | `route:/work/[id]` | Activity detail | Refine | S8 and S6. An overdue activity does not say it is overdue. Linked records show as raw numbers first, names second. | Dean Fiedler, 9 Oct 2026: Refine |
+| 2 | `route:/work/actions` | My actions | Accept | Clear grouping by Overdue and Date needed. Only S1 applies. Activity titles do not open the activity record; confirm the drawer or inline detail is the intended route to /work/[id]. | Dean Fiedler, 9 Oct 2026: Accept |
+| 2 | `route:/work/new` | Create activity | Refine | S8. The My Work side navigation disappears on this page, unlike its siblings. Lead with the purpose and owner; move company and access class later with plain labels. | Dean Fiedler, 9 Oct 2026: Refine |
+| 2 | `route:/work/reviews` | Reviews and handovers | Refine | The header says 'Approvals & handovers'; the page and navigation say 'Reviews & handovers'. Heading size, breadcrumb and filter control sizes differ from the other My Work pages. Tab counts read '(0+)'. Phone: tabs wrap over three rows. S5 and S6 in the footer note. | Dean Fiedler, 9 Oct 2026: Refine |
+| 2 | `route:/work/team` | Team queue | Accept | Clear owner summary and consistent filters. | Dean Fiedler, 9 Oct 2026: Accept |
+| 2 | `route:/work/waiting` | Blocked & waiting | Accept with minor fixes | S5: the dashed note describes implementation coverage ('Sales records no waiting request of its own yet'). Rephrase or move to the guide. | Dean Fiedler, 9 Oct 2026: Accept with minor fixes |
+| 3 | `scope:SV-04` | Appointment coordination detail | Refine | Follows its appointment page. | Dean Fiedler, 9 Oct 2026: Refine |
+| 3 | `route:/service/appointments/[id]` | Appointment detail | Refine | The action buttons touch the 'Current crew' heading; add the standard section gap. S5 and S6. | Dean Fiedler, 9 Oct 2026: Refine |
+| 4 | `scope:PL-01` | Service planner and unassigned demand | Refine | Follows the planner. | Dean Fiedler, 9 Oct 2026: Refine |
+| 4 | `route:/schedule` | Service planner | Refine | The planner opened on 22 Sept 2031 rather than the current week. Check whether this follows the seeded booking or a default. S5: each day cell repeats 'Server checks all reservations'. Phone: tabs and filters fill the first screen before any booking appears. The date field showed mm/dd/yyyy in the test browser; confirm on a real Australian device. | Dean Fiedler, 9 Oct 2026: Refine |
+| 5 | `scope:FI-01` | Technician Today and job execution | Accept with minor fixes | Follows My jobs and the job page. | Dean Fiedler, 9 Oct 2026: Accept with minor fixes |
+| 5 | `route:/my-jobs` | My Jobs | Accept with minor fixes | S6: the same-day visit repeats its date and wraps '12:00 pm' on phones. The Open field job button uses a teal outside the PPO primary colour. | Dean Fiedler, 9 Oct 2026: Accept with minor fixes |
+| 5 | `route:/my-jobs/[id]` | Technician job detail | Accept with minor fixes | The sticky Start work bar works well. 'Can't start yet' appears twice (chip and bar). S5: the timer explanation is internal wording. | Dean Fiedler, 9 Oct 2026: Accept with minor fixes |
+| 5 | `route:/my-jobs/site-readiness` | Site induction, risk and biosecurity review | Accept with minor fixes | The header says 'Field site readiness' (truncated); the page says 'Site readiness'. S4 back link. | Dean Fiedler, 9 Oct 2026: Accept with minor fixes |
+| 6 | `scope:FI-02` | Offline downloads, queue and conflict recovery | Refine | Follows the offline workspace. | Dean Fiedler, 9 Oct 2026: Refine |
+| 6 | `route:/offline/index.html` | Offline workspace | Refine | See system:offline. Deliberately standalone so it works without the network, but it should still use the PPO tokens. | Dean Fiedler, 9 Oct 2026: Refine |
+| 7 | `scope:FI-07` | Customer attendance and report response | Later phase (with SV-06, phase 04) | Its pages (/service/reports) sit in phase 04 by their own rank. Review it with SV-06 there. | Dean Fiedler, 9 Oct 2026: deferred — later phase (with sv-06, phase 04) |
 
 ## Limits
 

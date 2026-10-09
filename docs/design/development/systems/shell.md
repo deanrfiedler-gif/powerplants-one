@@ -85,3 +85,11 @@ Still open:
 - owner visual review of the header indicator, account-panel switcher and grouped rail at 1024, 1440 and 390 px.
 
 No owner visual review is recorded for the board.
+
+## Owner visual review — 9 October 2026
+
+- **Reviewer:** Dean Fiedler. He accepted Claude's proposed verdicts from the phase 00 review boards (navigation canvas version 29).
+- **Result:** Refine.
+- **Evidence:** [phase 00 review, session 1](../../../testing/evidence/ui-review-phase-00-r01/README.md). Synthetic data; compiled build at `a52cb01`; 1440 × 900 and 390 × 844 headless Chromium, captures for this entry.
+- **Findings:** S1, S2, S4 and S7 are all fixed here once and carry to every page. The new working-company pill and grouped Service rail render as intended.
+- **Scope of this record:** visual review of the captured state only. Device, screen-reader, zoom and operational acceptance remain separate. A later source change marks this review stale.

@@ -1,6 +1,6 @@
 # Appointment detail — design reference
 
-Stable entry: `route:/service/appointments/[id]`. Owner: Dean Fiedler. Status: **Draft for visual review**.
+Stable entry: `route:/service/appointments/[id]`. Owner: Dean Fiedler. Status: **Owner visual review 9 October 2026: Refine**.
 Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/service/appointments/{id}`.
 This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
 
@@ -67,3 +67,11 @@ Reuse ButtonLink, ReadState, ErrorNotice, Stamp, the existing booking-operation 
 Desktop 1440/1024 and phone 390/320: retain one content scroll owner, readable wrapping identifiers/history and labelled actions. Keyboard users can follow the work-order/appointment links; recovery continuation is focusable. Inspect actual 200% browser zoom independently of narrow viewports. Accepted timer r05 remains unchanged; this contextual host addition is proposed for owner review. **No accepted native closed-visit mockup exists.** Implementation captures are functional/layout observations, not visual acceptance.
 
 See [state/action decision](../../../decisions/field-closed-visit-guidance.md), [acceptance matrix](../../../testing/field-closed-visit-acceptance.md) and [execution ledger](../../../testing/evidence/field-closed-visit/README.md). Owner, physical-device, screen-reader and independent visual reviews remain open.
+
+## Owner visual review — 9 October 2026
+
+- **Reviewer:** Dean Fiedler. He accepted Claude's proposed verdicts from the phase 00 review boards (navigation canvas version 29).
+- **Result:** Refine.
+- **Evidence:** [phase 00 review, session 1](../../../testing/evidence/ui-review-phase-00-r01/README.md). Synthetic data; compiled build at `a52cb01`; 1440 × 900 and 390 × 844 headless Chromium, captures for this entry.
+- **Findings:** The action buttons touch the 'Current crew' heading; add the standard section gap. S5 and S6.
+- **Scope of this record:** visual review of the captured state only. Device, screen-reader, zoom and operational acceptance remain separate. A later source change marks this review stale.

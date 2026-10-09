@@ -1,6 +1,6 @@
 # Offline workspace — design reference
 
-Stable entry: `route:/offline/index.html`. Owner: Dean Fiedler. Status: **Draft for visual review**.
+Stable entry: `route:/offline/index.html`. Owner: Dean Fiedler. Status: **Owner visual review 9 October 2026: Refine**.
 Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/offline/index.html`.
 This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
 
@@ -60,3 +60,11 @@ FI-02 retains its r20 Document & evidence workspace adaptation and original owne
 The completion section includes **Continue completion online**, using this standalone workspace's existing native secondary button style. On desktop and phone it remains beside its explanatory text in the normal document flow. Send/resolve every retained original first. Pending, uncertain, failed, conflicting or restricted-recovery originals block this continuation. It verifies the same owner, current scoped job access, accepted attendance and the presence of retained capture IDs before opening that appointment's normal My Jobs screen. Existing unsaved-input navigation protection remains active.
 
 The offline draft still has at most 30 causal dependencies. The error gives the real online continuation instead of repeatedly asking for a download that cannot remove retained originals. Nothing deletes, rewrites or moves the local queue or photo bytes. The online completion screen uses fresh evidence, current versions and ordinary server authority. Draft save, submission for review and approval remain distinct. Current evidence: [quality increment](../../../testing/evidence/product-quality-next/README.md). Independent visual, physical-device and screen-reader acceptance remain pending.
+
+## Owner visual review — 9 October 2026
+
+- **Reviewer:** Dean Fiedler. He accepted Claude's proposed verdicts from the phase 00 review boards (navigation canvas version 29).
+- **Result:** Refine.
+- **Evidence:** [phase 00 review, session 1](../../../testing/evidence/ui-review-phase-00-r01/README.md). Synthetic data; compiled build at `a52cb01`; 1440 × 900 and 390 × 844 headless Chromium, captures for this entry.
+- **Findings:** See system:offline. Deliberately standalone so it works without the network, but it should still use the PPO tokens.
+- **Scope of this record:** visual review of the captured state only. Device, screen-reader, zoom and operational acceptance remain separate. A later source change marks this review stale.

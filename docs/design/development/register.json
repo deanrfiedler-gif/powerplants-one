@@ -37,17 +37,17 @@
         "src/components/saved-view-controls.tsx"
       ],
       "scope_status": "built",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Accept (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "Prior My Work proof retained. PR #344 distinguishes the native overview read on crossing the phone breakpoint from subsequent rendering, using existing transport and render limits. Exact-head proof is in the Supply follow-up execution ledger; owner and visual acceptance remain separate.",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
+      "review_fingerprint": "3ec2727f8ae3d2996d099de09a20511f135eac21c83ba333a64321673dea59d9",
+      "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": 1,
       "related_keys": [
         "route:/work"
       ],
-      "reviewer": null,
+      "reviewer": "Dean Fiedler",
       "notes": "NAV expanded primary rail: populated My Work responds to available content width through a bounded container query. An actual screenshot exposed compressed titles; repair proof and owner/device review remain separate."
     },
     {
@@ -70,11 +70,11 @@
         "src/components/saved-view-controls.tsx"
       ],
       "scope_status": "built",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "Not recorded here",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
+      "review_fingerprint": "267e067bec7e250ce4d84eb84f9b57a938790db9c0768a986d8b7a04ec0acfa6",
+      "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": 2,
       "related_keys": [
@@ -88,7 +88,7 @@
         "route:/work/new",
         "route:/sales/tasks"
       ],
-      "reviewer": null
+      "reviewer": "Dean Fiedler"
     },
     {
       "key": "scope:SH-03",
@@ -2349,17 +2349,17 @@
       "image_paths": [],
       "dependencies": [],
       "scope_status": "built",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "Not recorded here",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
+      "review_fingerprint": "6b2abf9c34fb7d4ce918acce3e3416ff6c0d14e93dce2beab9cbc592f7711e2f",
+      "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": 3,
       "related_keys": [
         "route:/service/appointments/[id]"
       ],
-      "reviewer": null
+      "reviewer": "Dean Fiedler"
     },
     {
       "key": "scope:SV-05",
@@ -2534,17 +2534,17 @@
         "src/scheduling/components/client/policy-holds.client.tsx"
       ],
       "scope_status": "built",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "Scheduling Step 4: exact source and executed checks in docs/testing/evidence/scheduling-policy-enforcement/README.md; owner/device review pending.",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
+      "review_fingerprint": "38098ccc0a388a33826ec1fa480267e454ba4e2e5ca91068b02719301f09d3a8",
+      "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": 4,
       "related_keys": [
         "route:/schedule"
       ],
-      "reviewer": null
+      "reviewer": "Dean Fiedler"
     },
     {
       "key": "scope:PL-02",
@@ -2745,11 +2745,11 @@
         "docs/decisions/field-closed-visit-guidance.md"
       ],
       "scope_status": "Implemented; review pending",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Accept with minor fixes (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "Closed-visit guidance: execution and retained evidence in docs/testing/evidence/field-closed-visit/README.md; human review remains pending.",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
+      "review_fingerprint": "518f7f3c152c6e4260ea17f5120ed701f1b484b012b85acfa452477a501a79b2",
+      "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": 5,
       "related_keys": [
@@ -2758,7 +2758,7 @@
         "route:/service/appointments/[id]",
         "route:/service/work-orders/[id]"
       ],
-      "reviewer": null
+      "reviewer": "Dean Fiedler"
     },
     {
       "key": "scope:FI-02",
@@ -2791,11 +2791,11 @@
         "docs/decisions/field-closed-visit-guidance.md"
       ],
       "scope_status": "Implemented; review pending",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "Closed-visit guidance: execution and retained evidence in docs/testing/evidence/field-closed-visit/README.md; human review remains pending.",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
+      "review_fingerprint": "fd8fae2083ddd29e2844b3c425b15626aae7f8a30abd5403890daecb3eeeb776",
+      "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": 6,
       "related_keys": [
@@ -2803,7 +2803,7 @@
         "route:/service/appointments/[id]",
         "route:/service/work-orders/[id]"
       ],
-      "reviewer": null
+      "reviewer": "Dean Fiedler"
     },
     {
       "key": "scope:FI-03",
@@ -3007,7 +3007,7 @@
         "docs/testing/evidence/field-customer-response/README.md"
       ],
       "scope_status": "built",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Deferred to phase 04, with SV-06 (owner decision 9 Oct 2026; docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "FI-07 persisted synthetic verification is recorded separately in docs/testing/evidence/field-customer-response/README.md. Human acceptance pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
@@ -6430,11 +6430,11 @@
         "docs/decisions/field-closed-visit-guidance.md"
       ],
       "scope_status": "Implemented; review pending",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Accept with minor fixes (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "Closed-visit guidance: execution and retained evidence in docs/testing/evidence/field-closed-visit/README.md; human review remains pending.",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
+      "review_fingerprint": "ea8dfd0bb52892510fcf68768193668f3546ccb87b4deb5a411dc6c4e11269f5",
+      "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": 5,
       "related_keys": [
@@ -6442,7 +6442,7 @@
         "route:/service/appointments/[id]",
         "route:/service/work-orders/[id]"
       ],
-      "reviewer": null
+      "reviewer": "Dean Fiedler"
     },
     {
       "key": "route:/my-jobs",
@@ -6474,11 +6474,11 @@
         "docs/decisions/field-closed-visit-guidance.md"
       ],
       "scope_status": "Implemented; review pending",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Accept with minor fixes (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "Closed-visit guidance: execution and retained evidence in docs/testing/evidence/field-closed-visit/README.md; human review remains pending.",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
+      "review_fingerprint": "bd1cac9fe9a452b48149b83a3fb278da3579966053f7942cf2d64c926a2b3cbc",
+      "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": 5,
       "related_keys": [
@@ -6486,7 +6486,7 @@
         "route:/service/appointments/[id]",
         "route:/service/work-orders/[id]"
       ],
-      "reviewer": null
+      "reviewer": "Dean Fiedler"
     },
     {
       "key": "route:/people/[id]",
@@ -6693,15 +6693,15 @@
         "src/sales/followup.ts"
       ],
       "scope_status": "built",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Accept (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "LC-12 local functional proof: six database cases, selected populated upgrades and 15 compiled desktop/phone checks with one retained skip. See lead-context-resolution evidence; paired visual and owner acceptance remain pending.",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
+      "review_fingerprint": "c7009300a2ae315c7c8c42ce4b74736f7454a497e33ca358b91cff1991622927",
+      "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": 1,
       "related_keys": [],
-      "reviewer": null
+      "reviewer": "Dean Fiedler"
     },
     {
       "key": "route:/sales/leads",
@@ -6726,15 +6726,15 @@
         "src/sales/followup.ts"
       ],
       "scope_status": "built",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Accept (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "LC-12 local functional proof: six database cases, selected populated upgrades and 15 compiled desktop/phone checks with one retained skip. See lead-context-resolution evidence; paired visual and owner acceptance remain pending.",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
+      "review_fingerprint": "c771ae5477a010316c04870fba5bb3b53899016a0626c31867ef3c0636a74f8f",
+      "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": 1,
       "related_keys": [],
-      "reviewer": null
+      "reviewer": "Dean Fiedler"
     },
     {
       "key": "route:/sales/opportunities/[id]",
@@ -6805,15 +6805,15 @@
         "docs/design/development/lead-continuity-fixtures.json"
       ],
       "scope_status": "built",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "Not recorded here",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
+      "review_fingerprint": "d752b0db0cb0a48fc228c5e9a23f666b79acfb6009cf7571bfcd3adfecd45e64",
+      "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": 1,
       "related_keys": [],
-      "reviewer": null
+      "reviewer": "Dean Fiedler"
     },
     {
       "key": "route:/sales/opportunities",
@@ -6875,17 +6875,17 @@
         "src/scheduling/components/client/policy-holds.client.tsx"
       ],
       "scope_status": "built",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "Scheduling Step 4: exact source and executed checks in docs/testing/evidence/scheduling-policy-enforcement/README.md; owner/device review pending.",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
+      "review_fingerprint": "58cf3272ee8dbd9c26462bb8ebf7d2d7e4f0474df878e1f14bc08e009633c0a0",
+      "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": 4,
       "related_keys": [
         "scope:PL-01"
       ],
-      "reviewer": null
+      "reviewer": "Dean Fiedler"
     },
     {
       "key": "route:/service/appointments/[id]",
@@ -6910,18 +6910,18 @@
         "docs/decisions/field-closed-visit-guidance.md"
       ],
       "scope_status": "built",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "Closed-visit guidance: execution and retained evidence in docs/testing/evidence/field-closed-visit/README.md; human review remains pending.",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
+      "review_fingerprint": "3e0e3ea89dbd0f7d72dc95a9fa714aa54cfda627c1eb8102e37056beb7607740",
+      "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": 3,
       "related_keys": [
         "scope:SV-04",
         "route:/service/work-orders/[id]"
       ],
-      "reviewer": null
+      "reviewer": "Dean Fiedler"
     },
     {
       "key": "route:/service/packs/[id]",
@@ -7461,17 +7461,17 @@
         "src/components/saved-view-controls.tsx"
       ],
       "scope_status": "built",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Accept (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "Not recorded here",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
+      "review_fingerprint": "fd08c9eab2d7e14e7d4cb4990af47746e9902a3b47a3338044dcb3fd6c8acffa",
+      "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": 2,
       "related_keys": [
         "scope:SH-02"
       ],
-      "reviewer": null
+      "reviewer": "Dean Fiedler"
     },
     {
       "key": "route:/work",
@@ -7495,18 +7495,18 @@
         "src/scheduling/components/client/policy-holds.client.tsx"
       ],
       "scope_status": "built",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "Scheduling Step 4 proof remains in docs/testing/evidence/scheduling-policy-enforcement/README.md. PR #344 distinguishes the native overview read on crossing the phone breakpoint from subsequent rendering, using existing transport and render limits. Exact-head proof is in the Supply follow-up execution ledger; owner and visual acceptance remain separate.",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
+      "review_fingerprint": "a07a312d25a7b27462d1a1944d54d77936f3695e0682feccb750f7d7d6d22d9c",
+      "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": 1,
       "related_keys": [
         "scope:SH-01",
         "scope:SH-02"
       ],
-      "reviewer": null
+      "reviewer": "Dean Fiedler"
     },
     {
       "key": "route:/work/reviews",
@@ -7533,17 +7533,17 @@
         "docs/testing/evidence/sh-platform/README.md"
       ],
       "scope_status": "built",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "Bounded local and CI evidence: docs/testing/evidence/sh-platform/README.md",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
+      "review_fingerprint": "68c26c1c31ec21b007cb5654f339c860996235dfd584c9d9781bf81675d01886",
+      "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": 2,
       "related_keys": [
         "scope:SH-02"
       ],
-      "reviewer": null
+      "reviewer": "Dean Fiedler"
     },
     {
       "key": "route:/work/team",
@@ -7565,17 +7565,17 @@
         "src/components/saved-view-controls.tsx"
       ],
       "scope_status": "built",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Accept (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "Not recorded here",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
+      "review_fingerprint": "0cd26b0c524b1e0af89d8c9e7f63d465ce0b7fe63d1dbd265492e648a260d8a7",
+      "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": 2,
       "related_keys": [
         "scope:SH-02"
       ],
-      "reviewer": null
+      "reviewer": "Dean Fiedler"
     },
     {
       "key": "route:/work/updates",
@@ -7635,17 +7635,17 @@
         "src/components/saved-view-controls.tsx"
       ],
       "scope_status": "built",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Accept with minor fixes (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "Not recorded here",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
+      "review_fingerprint": "9a02720887c35584738ab6c05f2d3daba58eafadf6504fba7b1e30d1148a3009",
+      "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": 2,
       "related_keys": [
         "scope:SH-02"
       ],
-      "reviewer": null
+      "reviewer": "Dean Fiedler"
     },
     {
       "key": "route:/work/[id]",
@@ -7673,18 +7673,18 @@
         "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "built",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "Scheduling Step 4: exact source and executed checks in docs/testing/evidence/scheduling-policy-enforcement/README.md; owner/device review pending.",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
+      "review_fingerprint": "7dc85bb1ebddf4948a5921c08f47daa6d6434301ba2620f6ef222b68de1b064d",
+      "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": 2,
       "related_keys": [
         "scope:SH-02",
         "scope:FI-07"
       ],
-      "reviewer": null
+      "reviewer": "Dean Fiedler"
     },
     {
       "key": "route:/work/new",
@@ -7706,17 +7706,17 @@
         "docs/design/development/lead-continuity-fixtures.json"
       ],
       "scope_status": "built",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "Not recorded here",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
+      "review_fingerprint": "642c5d51babd591609e7972a8f2e29b3d4e94a29b1ce067a755219ace0e3d8c1",
+      "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": 2,
       "related_keys": [
         "scope:SH-02"
       ],
-      "reviewer": null
+      "reviewer": "Dean Fiedler"
     },
     {
       "key": "route:/foundation",
@@ -7762,15 +7762,15 @@
       "image_paths": [],
       "dependencies": [],
       "scope_status": "built",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Accept (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "Not recorded here",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
+      "review_fingerprint": "34eea0a7146b35796b19fb5ab3676737507540a51f6f8b1ec574370acb3c31d7",
+      "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": 1,
       "related_keys": [],
-      "reviewer": null
+      "reviewer": "Dean Fiedler"
     },
     {
       "key": "route:/login",
@@ -7788,15 +7788,15 @@
       "image_paths": [],
       "dependencies": [],
       "scope_status": "built",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Accept (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "Not recorded here",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
+      "review_fingerprint": "948c51c6cf2f9b43526fdb50b72de89420fec46bee694fd8fa7497c275112860",
+      "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": 1,
       "related_keys": [],
-      "reviewer": null
+      "reviewer": "Dean Fiedler"
     },
     {
       "key": "route:/offline/index.html",
@@ -7830,17 +7830,17 @@
         "docs/decisions/field-closed-visit-guidance.md"
       ],
       "scope_status": "Implemented; review pending",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "Closed cached-visit and delayed replay proof: docs/testing/evidence/field-closed-visit/README.md. Human review remains pending.",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
+      "review_fingerprint": "46faddfdbc37cfe0330081ed80e905b8e38133731eb77b81726ede13566bf077",
+      "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": 6,
       "related_keys": [
         "scope:FI-02"
       ],
-      "reviewer": null
+      "reviewer": "Dean Fiedler"
     },
     {
       "key": "route:/contacts",
@@ -9173,17 +9173,17 @@
       "image_paths": [],
       "dependencies": [],
       "scope_status": "refine",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "Not recorded here",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
+      "review_fingerprint": "04b92e699f4e9b663ee11ba1dcbb7091193ff9a19313d34a6f1d0aa22dd3eda1",
+      "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": 2,
       "related_keys": [
         "scope:SH-02"
       ],
-      "reviewer": null
+      "reviewer": "Dean Fiedler"
     },
     {
       "key": "system:shell",
@@ -9233,15 +9233,15 @@
         "docs/reference/ui/application-shell/navigation-architecture-board-r02/navigation-overview.mmd"
       ],
       "scope_status": "Shared source",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "See NAV implementation ledger; source, functional proof and acceptance remain separate",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
+      "review_fingerprint": "037a41e7f1e3966da4cef65d255af55d67613ddd2766367d942f84e755756e7c",
+      "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": null,
       "related_keys": [],
-      "reviewer": null
+      "reviewer": "Dean Fiedler"
     },
     {
       "key": "system:theme",
@@ -9259,7 +9259,7 @@
       "image_paths": [],
       "dependencies": [],
       "scope_status": "Shared source",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Deferred to its own component-catalogue session (owner decision 9 Oct 2026; docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "See linked source evidence",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
@@ -9285,17 +9285,17 @@
       "image_paths": [],
       "dependencies": [],
       "scope_status": "Shared source",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "See linked source evidence",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
+      "review_fingerprint": "21dffb8833356eeb9254b25c630727bd486f4e302c0b0748dfcbeb8227827de6",
+      "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": null,
       "related_keys": [
         "scope:DK-07"
       ],
-      "reviewer": null
+      "reviewer": "Dean Fiedler"
     },
     {
       "key": "system:offline",
@@ -9313,15 +9313,15 @@
       "image_paths": [],
       "dependencies": [],
       "scope_status": "Shared source",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "See linked source evidence",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
+      "review_fingerprint": "17c7e7ea7612681c34cc1b2eb6ba547fa3dfdb6d3a2c81e3af0a37b55d52b57b",
+      "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": null,
       "related_keys": [],
-      "reviewer": null
+      "reviewer": "Dean Fiedler"
     },
     {
       "key": "route:/development/design-system",
@@ -11573,12 +11573,12 @@
         "docs/decisions/navigation-consolidation.md"
       ],
       "scope_status": "Implemented; review pending",
-      "visual_status": "Needs review · Pre-review prepared 9 Oct 2026 (docs/testing/evidence/ui-review-phase-00-r01); owner verdict pending",
+      "visual_status": "Owner visual review 9 Oct 2026: Accept with minor fixes (docs/testing/evidence/ui-review-phase-00-r01)",
       "functional_status": "FI05 database 2/2 and desktop/phone browser 2/2 passed; programme handover records regression limits",
       "deployment_status": "Not verified",
-      "review_fingerprint": null,
-      "reviewed_at": null,
-      "reviewer": null,
+      "review_fingerprint": "a4ff851cea4e402ee565b7d4a6a477a35dd02db82d0a712e6d4debb0e6a66b11",
+      "reviewed_at": "2026-10-09",
+      "reviewer": "Dean Fiedler",
       "owner": "Dean Fiedler",
       "build_rank": null,
       "related_keys": [

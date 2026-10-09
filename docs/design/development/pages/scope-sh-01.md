@@ -1,6 +1,6 @@
 # Role-based home overview — design reference
 
-Stable entry: `scope:SH-01`. Owner: Dean Fiedler. Status: **Draft for visual review**.
+Stable entry: `scope:SH-01`. Owner: Dean Fiedler. Status: **Owner visual review 9 October 2026: Accept**.
 Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/work`.
 This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
 
@@ -51,3 +51,11 @@ When crossing the 780px phone boundary, the overview mounts its other presentati
 The overview uses its available content width to move supporting panels beneath Activities when both rails are expanded. Populated labels and actions must remain readable; page-level overflow alone is insufficient proof. Preserve the global 780/781 px transition and 1200 px secondary docking. NAV captures record this source change and inspection separately from owner/device acceptance.
 
 NAV hierarchy: use the labelled **Page hierarchy** disclosure for the full authorized parent path when compact header sizing hides ancestors. It supports mouse, keyboard and touch, links remain scoped, Escape restores trigger focus, and the exact record reference is published only after an authorized read. The 44 px control and bounded popover require desktop/mobile review; owner acceptance remains pending.
+
+## Owner visual review — 9 October 2026
+
+- **Reviewer:** Dean Fiedler. He accepted Claude's proposed verdicts from the phase 00 review boards (navigation canvas version 29).
+- **Result:** Accept.
+- **Evidence:** [phase 00 review, session 1](../../../testing/evidence/ui-review-phase-00-r01/README.md). Synthetic data; compiled build at `a52cb01`; 1440 × 900 and 390 × 844 headless Chromium.
+- **Findings:** Home sends this identity to My Work as designed (navigation consolidation rule). Content findings sit under My Work.
+- **Scope of this record:** visual review of the captured state only. Device, screen-reader, zoom and operational acceptance remain separate. A later source change marks this review stale.

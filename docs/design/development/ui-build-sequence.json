@@ -3,7 +3,7 @@
  "status": "Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register; pages not owner-reviewed",
  "sources": {
   "register": "docs/design/development/register.json",
-  "register_sha256": "5810faa6377d1b0f67ef08ad687868b1e6420d096d0fca86e5651a4d7da85373",
+  "register_sha256": "b61192739fa29ad37c90471b8c305b2c9e56278d5aad6e4e130a38789d23ccfb",
   "build_plan": "docs/reference/ui/app-page-register/PPO-App-Page-Register-r05.html",
   "build_plan_revision": "r02",
   "build_plan_sha256": "b07890f2cec602847af41bb4a790407ff3a6456a1842846520e0aede61233b93",
@@ -27,7 +27,7 @@
   "refine": 105,
   "review": 190,
   "decide": 6,
-  "owner_reviewed": 0
+  "owner_reviewed": 28
  },
  "phases": [
   {
@@ -57,7 +57,7 @@
      "path": "",
      "rank": null,
      "state": "review",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Shared system: verified with the existing baseline"
     },
     {
@@ -68,7 +68,7 @@
      "path": "",
      "rank": null,
      "state": "review",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Shared system: verified with the existing baseline"
     },
     {
@@ -79,7 +79,7 @@
      "path": "",
      "rank": null,
      "state": "review",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Shared system: verified with the existing baseline"
     },
     {
@@ -101,7 +101,7 @@
      "path": "/work",
      "rank": 1,
      "state": "review",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Issued r02 rank"
     },
     {
@@ -112,7 +112,7 @@
      "path": "/",
      "rank": 1,
      "state": "review",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Issued r02 rank"
     },
     {
@@ -123,7 +123,7 @@
      "path": "/login",
      "rank": 1,
      "state": "review",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Issued r02 rank"
     },
     {
@@ -134,7 +134,7 @@
      "path": "/sales/leads",
      "rank": 1,
      "state": "review",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Issued r02 rank"
     },
     {
@@ -145,7 +145,7 @@
      "path": "/sales/leads/[id]",
      "rank": 1,
      "state": "review",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Issued r02 rank"
     },
     {
@@ -156,7 +156,7 @@
      "path": "/sales/opportunities/new",
      "rank": 1,
      "state": "review",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Issued r02 rank"
     },
     {
@@ -167,7 +167,7 @@
      "path": "/work",
      "rank": 1,
      "state": "review",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Issued r02 rank"
     },
     {
@@ -178,7 +178,7 @@
      "path": "/work/actions",
      "rank": 2,
      "state": "review",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Issued r02 rank"
     },
     {
@@ -189,7 +189,7 @@
      "path": "/sales/tasks",
      "rank": 2,
      "state": "refine",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Issued r02 rank"
     },
     {
@@ -200,7 +200,7 @@
      "path": "/work/[id]",
      "rank": 2,
      "state": "review",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Issued r02 rank"
     },
     {
@@ -211,7 +211,7 @@
      "path": "/work/actions",
      "rank": 2,
      "state": "review",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Issued r02 rank"
     },
     {
@@ -222,7 +222,7 @@
      "path": "/work/new",
      "rank": 2,
      "state": "review",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Issued r02 rank"
     },
     {
@@ -233,7 +233,7 @@
      "path": "/work/reviews",
      "rank": 2,
      "state": "review",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Issued r02 rank"
     },
     {
@@ -244,7 +244,7 @@
      "path": "/work/team",
      "rank": 2,
      "state": "review",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Issued r02 rank"
     },
     {
@@ -255,7 +255,7 @@
      "path": "/work/waiting",
      "rank": 2,
      "state": "review",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Issued r02 rank"
     },
     {
@@ -266,7 +266,7 @@
      "path": "/schedule",
      "rank": 3,
      "state": "review",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Issued r02 rank"
     },
     {
@@ -277,7 +277,7 @@
      "path": "/service/appointments/[id]",
      "rank": 3,
      "state": "review",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Issued r02 rank"
     },
     {
@@ -288,7 +288,7 @@
      "path": "/schedule",
      "rank": 4,
      "state": "review",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Issued r02 rank"
     },
     {
@@ -299,7 +299,7 @@
      "path": "/schedule",
      "rank": 4,
      "state": "review",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Issued r02 rank"
     },
     {
@@ -310,7 +310,7 @@
      "path": "/my-jobs",
      "rank": 5,
      "state": "review",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Issued r02 rank"
     },
     {
@@ -321,7 +321,7 @@
      "path": "/my-jobs",
      "rank": 5,
      "state": "review",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Issued r02 rank"
     },
     {
@@ -332,7 +332,7 @@
      "path": "/my-jobs/[id]",
      "rank": 5,
      "state": "review",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Issued r02 rank"
     },
     {
@@ -343,7 +343,7 @@
      "path": "/my-jobs/site-readiness",
      "rank": 5,
      "state": "review",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Added after r05; placed with FI-01"
     },
     {
@@ -354,7 +354,7 @@
      "path": "/offline/index.html",
      "rank": 6,
      "state": "review",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Issued r02 rank"
     },
     {
@@ -365,7 +365,7 @@
      "path": "/offline/index.html",
      "rank": 6,
      "state": "review",
-     "visual_review": "Pending",
+     "visual_review": "Owner review recorded",
      "placement": "Issued r02 rank"
     },
     {

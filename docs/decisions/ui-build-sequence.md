@@ -71,7 +71,8 @@ Claude prepared the first review session; the verdicts remain Dean's.
 - **Automated checks:** every page answered 200 in about 2 s, with no horizontal overflow, console errors or failed API calls. One shared contrast failure, the search shortcut hint, appears on 18 desktop pages.
 - **Shared findings:** S1 to S9. Under SD-02 these are fixed first in the shell, theme and guidance, because each one fixes many pages.
 - **Claude's proposed verdicts:** 7 accept, 5 accept with minor fixes, 16 refine, 1 own session (theme, through the component catalogue) and 1 later phase (FI-07, with SV-06).
-- **Register:** each phase 00 entry notes that the pre-review is prepared and the owner verdict is pending. No owner review, reviewer or fingerprint is recorded.
+- **Owner verdicts (9 October 2026):** Dean accepted the proposed verdicts. 28 entries now hold an owner visual review: a record in the page contract, then the reviewer, date and fingerprint in the register. Of these, 7 are accept, 5 accept with minor fixes and 16 refine. The theme review is deferred to a component-catalogue session, and FI-07 to phase 04. Phase 00 is not complete under SD-05 until the refinements have recorded outcomes.
+- **Refinement batch 1:** started on the shared findings, as SD-02 and SD-03 require.
 
 ## Where it is shown
 
