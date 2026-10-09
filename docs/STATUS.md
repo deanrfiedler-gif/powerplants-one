@@ -125,3 +125,7 @@ No production integration, operational migration, business transaction or custom
 All 78 parent IDs and issued reference bytes remain unchanged. The 24 Core, 25 Partial and 29 Deferred dispositions classify scope; they do not record completion.
 
 Earlier snapshots remain in [STATUS-log.md](STATUS-log.md) and Git history. This current snapshot replaces accumulated pre-merge chronology; earlier failures, repairs and source-specific evidence remain in their original handovers and ledgers. Historical branch, migration reservation, deployment and writing-slot statements do not override current source or GitHub observations.
+
+## Service and Finance download access — 10 October 2026
+
+The authorised backend continuation runs independently from main `184b933` alongside Claude's UI work and the separate job-pack PR #378. Thirteen storage-time access failures were reproduced for Service issued/generated HTML/PDF, the issued manifest and Finance evidence; three existing context rechecks now pass all sixteen focused HTTP scenarios, including unchanged-original recovery. [Decision](decisions/report-finance-download-access.md), [execution evidence](testing/evidence/report-finance-download-access/README.md). No UI, schema, grant, dependency or integration change; code delivery and synthetic verification remain separate from merge/deployment, independent review, full PT-01/18/23/29 coverage and owner-led PT-30.
