@@ -353,6 +353,7 @@ test(
             [grants.map((g) => g.id)],
           );
         }
+        assert.deepEqual((await financeOptions(p)).accounts, options.accounts);
       },
     );
     await t.test(
@@ -504,7 +505,7 @@ test(
           expected_version: h.version,
           outcome_id: outcome.id,
           basis:
-          "SYN PT-02 exact connection UUID / SYN-A / 000Ab-C.01 retained; 60 MIN plus 2 EA target and 30 MIN non-billable checked independently.",
+            "SYN PT-02 exact connection UUID / SYN-A / 000Ab-C.01 retained; 60 MIN plus 2 EA target and 30 MIN non-billable checked independently.",
         });
         assert.equal((await handoff(key)).status, "Reconciled");
         const reconciliation = (
@@ -548,6 +549,13 @@ test(
             rows(sql, [correct.id]),
             (e: unknown) => (e as { code?: string }).code === "55000",
           );
+        await assert.rejects(
+          rows(
+            "UPDATE ppo.finance_simulator_targets SET status='Partial' WHERE handoff_id=$1",
+            [key],
+          ),
+          (e: unknown) => (e as { code?: string }).code === "55000",
+        );
         const before = await durableState();
         await rows(
           "UPDATE ppo.erp_account_mappings SET customer_id='SYN-CHANGED-DEBTOR',version=version+1 WHERE id=$1",
