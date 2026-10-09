@@ -57,10 +57,24 @@ test("SH notification event, explicit read, source guard, grouped state and pref
     },
   });
   expect(created.status()).toBe(201);
-  await page.goto("/work/updates");
-  // The page and bell independently load the same current-authority inbox.
-  // Finish the page's existing assertion before opening the second reader;
-  // the always-visible navigation link is not a loaded-bell signal.
+  if (!isMobile) {
+    // First open the shell bell on Customers, before its full workspace is loaded.
+    await page.goto("/customers");
+    await expect(page.locator(".crm-directory-table tbody th a").first()).toBeVisible();
+    const bell = page.getByRole("button", { name: "Notifications", exact: true });
+    await bell.click();
+    await expect(page.locator(".sh-bell-list a").filter({ hasText: title })).toBeVisible();
+    await page.screenshot({ path: info.outputPath("notification-bell.png") });
+    await page.keyboard.press("Escape");
+    await expect(bell).toBeFocused();
+    await bell.click();
+    await page.getByRole("link", { name: "Open Notifications", exact: true }).click();
+    await expect(page).toHaveURL(/\/work\/updates$/);
+  } else {
+    // The established phone shell does not display the notification bell.
+    await page.goto("/work/updates");
+  }
+  // Finish the workspace's own current-authority read before using its controls.
   await expect(
     page.getByRole("heading", { name: "Notifications", exact: true }),
   ).toBeVisible();
@@ -68,17 +82,6 @@ test("SH notification event, explicit read, source guard, grouped state and pref
   await expect(
     page.getByRole("button", { name: title, exact: true }),
   ).toBeVisible();
-  if (!isMobile) {
-    await page
-      .getByRole("button", { name: "Notifications", exact: true })
-      .click();
-    await expect(
-      page.getByRole("link", { name: "Open Notifications", exact: true }),
-    ).toBeVisible();
-    await expect(page.locator(".sh-bell-list a").filter({ hasText: title })).toBeVisible();
-    await page.screenshot({ path: info.outputPath("notification-bell.png") });
-    await page.keyboard.press("Escape");
-  }
   await page.getByRole("button", { name: title, exact: true }).click();
   const detail = page.getByRole("dialog", { name: "Notification detail" });
   await expect(detail.getByText("Date needed", { exact: true })).toBeVisible();

@@ -1,0 +1,1716 @@
+{
+  "runs": [
+    {
+      "label": "baseline",
+      "source_head": "75c33d56cb436a281872ab2a1087d9f2614bc78d",
+      "compiled_source": "000181202854ce4a8318d2bc00d806c48183af17",
+      "build_id": "7g3uZISDiEjWT5TK2rgeB",
+      "browser": "154.0.8037.98",
+      "server_pid": 7324,
+      "limits": "One Chrome process; three sequential fresh contexts per viewport with one cold and one warm Customers visit, then actual record navigation. 40ms latency, 1.25MB/s download and 625kB/s upload. Precise JS/CSS coverage, CDP and opt-in server diagnostics add overhead. Separate from ten-user CI, hosted/device acceptance and causal attribution of an entire loading delay. No credentials, request bodies or full headers retained.",
+      "groups": [
+        {
+          "viewport": "desktop",
+          "wave": 0,
+          "samples": [
+            {
+              "cycle": 0,
+              "ready_ms": 1734.728700000007,
+              "last_asset_ms": 834.8970000224654,
+              "session_start_ms": 861.4510000043083,
+              "session_finish_ms": 1447.706000006292,
+              "directory_start_ms": 1473.305999999866,
+              "directory_finish_ms": 1619.7520000278018,
+              "asset_to_session_ms": 26.553999981842935,
+              "session_body_ms": 586.2550000019837,
+              "session_to_directory_ms": 25.599999993573874,
+              "directory_body_ms": 146.44600002793595,
+              "js_count": 15,
+              "css_count": 8,
+              "js_encoded_bytes": 257595,
+              "css_encoded_bytes": 101910,
+              "js_source_utf16_chars": 842048
+            },
+            {
+              "cycle": 1,
+              "ready_ms": 1017.924800000008,
+              "last_asset_ms": 719.042000011541,
+              "session_start_ms": 729.8730000038631,
+              "session_finish_ms": 783.3579999860376,
+              "directory_start_ms": 819.4620000140276,
+              "directory_finish_ms": 893.5169999895152,
+              "asset_to_session_ms": 10.830999992322177,
+              "session_body_ms": 53.484999982174486,
+              "session_to_directory_ms": 36.10400002798997,
+              "directory_body_ms": 74.05499997548759,
+              "js_count": 15,
+              "css_count": 8,
+              "js_encoded_bytes": 257595,
+              "css_encoded_bytes": 101910,
+              "js_source_utf16_chars": 842048
+            },
+            {
+              "cycle": 2,
+              "ready_ms": 1039.1609000000026,
+              "last_asset_ms": 723.5089999740012,
+              "session_start_ms": 740.7200000016019,
+              "session_finish_ms": 799.5200000004843,
+              "directory_start_ms": 830.6329999759328,
+              "directory_finish_ms": 917.6250000018626,
+              "asset_to_session_ms": 17.211000027600676,
+              "session_body_ms": 58.79999999888241,
+              "session_to_directory_ms": 31.112999975448474,
+              "directory_body_ms": 86.99200002592988,
+              "js_count": 15,
+              "css_count": 8,
+              "js_encoded_bytes": 257595,
+              "css_encoded_bytes": 101910,
+              "js_source_utf16_chars": 842048
+            }
+          ],
+          "statistics": {
+            "ready_ms": {
+              "minimum": 1017.924800000008,
+              "median": 1039.1609000000026,
+              "maximum": 1734.728700000007
+            },
+            "last_asset_ms": {
+              "minimum": 719.042000011541,
+              "median": 723.5089999740012,
+              "maximum": 834.8970000224654
+            },
+            "session_start_ms": {
+              "minimum": 729.8730000038631,
+              "median": 740.7200000016019,
+              "maximum": 861.4510000043083
+            },
+            "session_finish_ms": {
+              "minimum": 783.3579999860376,
+              "median": 799.5200000004843,
+              "maximum": 1447.706000006292
+            },
+            "directory_start_ms": {
+              "minimum": 819.4620000140276,
+              "median": 830.6329999759328,
+              "maximum": 1473.305999999866
+            },
+            "directory_finish_ms": {
+              "minimum": 893.5169999895152,
+              "median": 917.6250000018626,
+              "maximum": 1619.7520000278018
+            },
+            "asset_to_session_ms": {
+              "minimum": 10.830999992322177,
+              "median": 17.211000027600676,
+              "maximum": 26.553999981842935
+            },
+            "session_body_ms": {
+              "minimum": 53.484999982174486,
+              "median": 58.79999999888241,
+              "maximum": 586.2550000019837
+            },
+            "session_to_directory_ms": {
+              "minimum": 25.599999993573874,
+              "median": 31.112999975448474,
+              "maximum": 36.10400002798997
+            },
+            "directory_body_ms": {
+              "minimum": 74.05499997548759,
+              "median": 86.99200002592988,
+              "maximum": 146.44600002793595
+            },
+            "js_count": {
+              "minimum": 15,
+              "median": 15,
+              "maximum": 15
+            },
+            "css_count": {
+              "minimum": 8,
+              "median": 8,
+              "maximum": 8
+            },
+            "js_encoded_bytes": {
+              "minimum": 257595,
+              "median": 257595,
+              "maximum": 257595
+            },
+            "css_encoded_bytes": {
+              "minimum": 101910,
+              "median": 101910,
+              "maximum": 101910
+            },
+            "js_source_utf16_chars": {
+              "minimum": 842048,
+              "median": 842048,
+              "maximum": 842048
+            }
+          }
+        },
+        {
+          "viewport": "desktop",
+          "wave": 1,
+          "samples": [
+            {
+              "cycle": 0,
+              "ready_ms": 426.0780999999988,
+              "last_asset_ms": 88.29499999410473,
+              "session_start_ms": 200.66100000985898,
+              "session_finish_ms": 258.9569999836385,
+              "directory_start_ms": 276.0009999910835,
+              "directory_finish_ms": 343.4070000075735,
+              "asset_to_session_ms": 112.36600001575425,
+              "session_body_ms": 58.295999973779544,
+              "session_to_directory_ms": 17.044000007444993,
+              "directory_body_ms": 67.40600001649,
+              "js_count": 15,
+              "css_count": 8,
+              "js_encoded_bytes": 0,
+              "css_encoded_bytes": 0,
+              "js_source_utf16_chars": 842048
+            },
+            {
+              "cycle": 1,
+              "ready_ms": 472.5780000000086,
+              "last_asset_ms": 81.2900000018999,
+              "session_start_ms": 197.7959999931045,
+              "session_finish_ms": 245.72199999238364,
+              "directory_start_ms": 268.2290000084322,
+              "directory_finish_ms": 343.0379999917932,
+              "asset_to_session_ms": 116.50599999120459,
+              "session_body_ms": 47.925999999279156,
+              "session_to_directory_ms": 22.50700001604855,
+              "directory_body_ms": 74.80899998336099,
+              "js_count": 15,
+              "css_count": 8,
+              "js_encoded_bytes": 0,
+              "css_encoded_bytes": 0,
+              "js_source_utf16_chars": 842048
+            },
+            {
+              "cycle": 2,
+              "ready_ms": 430.7253000000055,
+              "last_asset_ms": 83.07900000363588,
+              "session_start_ms": 188.3209999941755,
+              "session_finish_ms": 249.83899999642745,
+              "directory_start_ms": 266.5620000043418,
+              "directory_finish_ms": 346.6750000079628,
+              "asset_to_session_ms": 105.24199999053963,
+              "session_body_ms": 61.51800000225194,
+              "session_to_directory_ms": 16.72300000791438,
+              "directory_body_ms": 80.11300000362098,
+              "js_count": 15,
+              "css_count": 8,
+              "js_encoded_bytes": 0,
+              "css_encoded_bytes": 0,
+              "js_source_utf16_chars": 842048
+            }
+          ],
+          "statistics": {
+            "ready_ms": {
+              "minimum": 426.0780999999988,
+              "median": 430.7253000000055,
+              "maximum": 472.5780000000086
+            },
+            "last_asset_ms": {
+              "minimum": 81.2900000018999,
+              "median": 83.07900000363588,
+              "maximum": 88.29499999410473
+            },
+            "session_start_ms": {
+              "minimum": 188.3209999941755,
+              "median": 197.7959999931045,
+              "maximum": 200.66100000985898
+            },
+            "session_finish_ms": {
+              "minimum": 245.72199999238364,
+              "median": 249.83899999642745,
+              "maximum": 258.9569999836385
+            },
+            "directory_start_ms": {
+              "minimum": 266.5620000043418,
+              "median": 268.2290000084322,
+              "maximum": 276.0009999910835
+            },
+            "directory_finish_ms": {
+              "minimum": 343.0379999917932,
+              "median": 343.4070000075735,
+              "maximum": 346.6750000079628
+            },
+            "asset_to_session_ms": {
+              "minimum": 105.24199999053963,
+              "median": 112.36600001575425,
+              "maximum": 116.50599999120459
+            },
+            "session_body_ms": {
+              "minimum": 47.925999999279156,
+              "median": 58.295999973779544,
+              "maximum": 61.51800000225194
+            },
+            "session_to_directory_ms": {
+              "minimum": 16.72300000791438,
+              "median": 17.044000007444993,
+              "maximum": 22.50700001604855
+            },
+            "directory_body_ms": {
+              "minimum": 67.40600001649,
+              "median": 74.80899998336099,
+              "maximum": 80.11300000362098
+            },
+            "js_count": {
+              "minimum": 15,
+              "median": 15,
+              "maximum": 15
+            },
+            "css_count": {
+              "minimum": 8,
+              "median": 8,
+              "maximum": 8
+            },
+            "js_encoded_bytes": {
+              "minimum": 0,
+              "median": 0,
+              "maximum": 0
+            },
+            "css_encoded_bytes": {
+              "minimum": 0,
+              "median": 0,
+              "maximum": 0
+            },
+            "js_source_utf16_chars": {
+              "minimum": 842048,
+              "median": 842048,
+              "maximum": 842048
+            }
+          }
+        },
+        {
+          "viewport": "phone",
+          "wave": 0,
+          "samples": [
+            {
+              "cycle": 0,
+              "ready_ms": 997.8628999999928,
+              "last_asset_ms": 700.5770000105258,
+              "session_start_ms": 726.4340000110678,
+              "session_finish_ms": 777.6679999951739,
+              "directory_start_ms": 806.2780000036582,
+              "directory_finish_ms": 888.292999996338,
+              "asset_to_session_ms": 25.85700000054203,
+              "session_body_ms": 51.23399998410605,
+              "session_to_directory_ms": 28.61000000848435,
+              "directory_body_ms": 82.0149999926798,
+              "js_count": 15,
+              "css_count": 8,
+              "js_encoded_bytes": 257595,
+              "css_encoded_bytes": 101910,
+              "js_source_utf16_chars": 842048
+            },
+            {
+              "cycle": 1,
+              "ready_ms": 977.8462,
+              "last_asset_ms": 687.3110000160523,
+              "session_start_ms": 713.0420000175945,
+              "session_finish_ms": 767.0860000071116,
+              "directory_start_ms": 799.6580000035465,
+              "directory_finish_ms": 899.5489999942947,
+              "asset_to_session_ms": 25.73100000154227,
+              "session_body_ms": 54.04399998951703,
+              "session_to_directory_ms": 32.5719999964349,
+              "directory_body_ms": 99.89099999074824,
+              "js_count": 15,
+              "css_count": 8,
+              "js_encoded_bytes": 257595,
+              "css_encoded_bytes": 101910,
+              "js_source_utf16_chars": 842048
+            },
+            {
+              "cycle": 2,
+              "ready_ms": 971.5595999999932,
+              "last_asset_ms": 686.5019999968354,
+              "session_start_ms": 703.3399999781977,
+              "session_finish_ms": 758.6519999895245,
+              "directory_start_ms": 765.2289999823552,
+              "directory_finish_ms": 843.37799999048,
+              "asset_to_session_ms": 16.837999981362373,
+              "session_body_ms": 55.312000011326745,
+              "session_to_directory_ms": 6.576999992830679,
+              "directory_body_ms": 78.14900000812486,
+              "js_count": 15,
+              "css_count": 8,
+              "js_encoded_bytes": 257595,
+              "css_encoded_bytes": 101910,
+              "js_source_utf16_chars": 842048
+            }
+          ],
+          "statistics": {
+            "ready_ms": {
+              "minimum": 971.5595999999932,
+              "median": 977.8462,
+              "maximum": 997.8628999999928
+            },
+            "last_asset_ms": {
+              "minimum": 686.5019999968354,
+              "median": 687.3110000160523,
+              "maximum": 700.5770000105258
+            },
+            "session_start_ms": {
+              "minimum": 703.3399999781977,
+              "median": 713.0420000175945,
+              "maximum": 726.4340000110678
+            },
+            "session_finish_ms": {
+              "minimum": 758.6519999895245,
+              "median": 767.0860000071116,
+              "maximum": 777.6679999951739
+            },
+            "directory_start_ms": {
+              "minimum": 765.2289999823552,
+              "median": 799.6580000035465,
+              "maximum": 806.2780000036582
+            },
+            "directory_finish_ms": {
+              "minimum": 843.37799999048,
+              "median": 888.292999996338,
+              "maximum": 899.5489999942947
+            },
+            "asset_to_session_ms": {
+              "minimum": 16.837999981362373,
+              "median": 25.73100000154227,
+              "maximum": 25.85700000054203
+            },
+            "session_body_ms": {
+              "minimum": 51.23399998410605,
+              "median": 54.04399998951703,
+              "maximum": 55.312000011326745
+            },
+            "session_to_directory_ms": {
+              "minimum": 6.576999992830679,
+              "median": 28.61000000848435,
+              "maximum": 32.5719999964349
+            },
+            "directory_body_ms": {
+              "minimum": 78.14900000812486,
+              "median": 82.0149999926798,
+              "maximum": 99.89099999074824
+            },
+            "js_count": {
+              "minimum": 15,
+              "median": 15,
+              "maximum": 15
+            },
+            "css_count": {
+              "minimum": 8,
+              "median": 8,
+              "maximum": 8
+            },
+            "js_encoded_bytes": {
+              "minimum": 257595,
+              "median": 257595,
+              "maximum": 257595
+            },
+            "css_encoded_bytes": {
+              "minimum": 101910,
+              "median": 101910,
+              "maximum": 101910
+            },
+            "js_source_utf16_chars": {
+              "minimum": 842048,
+              "median": 842048,
+              "maximum": 842048
+            }
+          }
+        },
+        {
+          "viewport": "phone",
+          "wave": 1,
+          "samples": [
+            {
+              "cycle": 0,
+              "ready_ms": 391.97050000001036,
+              "last_asset_ms": 77.95799997984432,
+              "session_start_ms": 186.40499998582527,
+              "session_finish_ms": 234.00199998286553,
+              "directory_start_ms": 237.09499998949468,
+              "directory_finish_ms": 312.30999997933395,
+              "asset_to_session_ms": 108.44700000598095,
+              "session_body_ms": 47.59699999704026,
+              "session_to_directory_ms": 3.093000006629154,
+              "directory_body_ms": 75.21499998983927,
+              "js_count": 15,
+              "css_count": 8,
+              "js_encoded_bytes": 0,
+              "css_encoded_bytes": 0,
+              "js_source_utf16_chars": 842048
+            },
+            {
+              "cycle": 1,
+              "ready_ms": 417.25160000000324,
+              "last_asset_ms": 69.76399998529814,
+              "session_start_ms": 178.60499999369495,
+              "session_finish_ms": 224.90299999481067,
+              "directory_start_ms": 236.35799999465235,
+              "directory_finish_ms": 316.75699999323115,
+              "asset_to_session_ms": 108.8410000083968,
+              "session_body_ms": 46.298000001115724,
+              "session_to_directory_ms": 11.454999999841675,
+              "directory_body_ms": 80.3989999985788,
+              "js_count": 15,
+              "css_count": 8,
+              "js_encoded_bytes": 0,
+              "css_encoded_bytes": 0,
+              "js_source_utf16_chars": 842048
+            },
+            {
+              "cycle": 2,
+              "ready_ms": 410.3637000000017,
+              "last_asset_ms": 72.67599998158403,
+              "session_start_ms": 177.1619999781251,
+              "session_finish_ms": 234.77399998228066,
+              "directory_start_ms": 246.05599997448735,
+              "directory_finish_ms": 312.2929999954067,
+              "asset_to_session_ms": 104.48599999654107,
+              "session_body_ms": 57.61200000415556,
+              "session_to_directory_ms": 11.281999992206693,
+              "directory_body_ms": 66.23700002091937,
+              "js_count": 15,
+              "css_count": 8,
+              "js_encoded_bytes": 0,
+              "css_encoded_bytes": 0,
+              "js_source_utf16_chars": 842048
+            }
+          ],
+          "statistics": {
+            "ready_ms": {
+              "minimum": 391.97050000001036,
+              "median": 410.3637000000017,
+              "maximum": 417.25160000000324
+            },
+            "last_asset_ms": {
+              "minimum": 69.76399998529814,
+              "median": 72.67599998158403,
+              "maximum": 77.95799997984432
+            },
+            "session_start_ms": {
+              "minimum": 177.1619999781251,
+              "median": 178.60499999369495,
+              "maximum": 186.40499998582527
+            },
+            "session_finish_ms": {
+              "minimum": 224.90299999481067,
+              "median": 234.00199998286553,
+              "maximum": 234.77399998228066
+            },
+            "directory_start_ms": {
+              "minimum": 236.35799999465235,
+              "median": 237.09499998949468,
+              "maximum": 246.05599997448735
+            },
+            "directory_finish_ms": {
+              "minimum": 312.2929999954067,
+              "median": 312.30999997933395,
+              "maximum": 316.75699999323115
+            },
+            "asset_to_session_ms": {
+              "minimum": 104.48599999654107,
+              "median": 108.44700000598095,
+              "maximum": 108.8410000083968
+            },
+            "session_body_ms": {
+              "minimum": 46.298000001115724,
+              "median": 47.59699999704026,
+              "maximum": 57.61200000415556
+            },
+            "session_to_directory_ms": {
+              "minimum": 3.093000006629154,
+              "median": 11.281999992206693,
+              "maximum": 11.454999999841675
+            },
+            "directory_body_ms": {
+              "minimum": 66.23700002091937,
+              "median": 75.21499998983927,
+              "maximum": 80.3989999985788
+            },
+            "js_count": {
+              "minimum": 15,
+              "median": 15,
+              "maximum": 15
+            },
+            "css_count": {
+              "minimum": 8,
+              "median": 8,
+              "maximum": 8
+            },
+            "js_encoded_bytes": {
+              "minimum": 0,
+              "median": 0,
+              "maximum": 0
+            },
+            "css_encoded_bytes": {
+              "minimum": 0,
+              "median": 0,
+              "maximum": 0
+            },
+            "js_source_utf16_chars": {
+              "minimum": 842048,
+              "median": 842048,
+              "maximum": 842048
+            }
+          }
+        }
+      ],
+      "core_matches": [
+        {
+          "viewport": "desktop",
+          "wave": 0,
+          "cycle": 0,
+          "request_id": 33,
+          "path": "/api/v1/local-session",
+          "gateway_path": "/api/v1/local-session",
+          "gateway_elapsed_ms": 55.21510000000126
+        },
+        {
+          "viewport": "desktop",
+          "wave": 0,
+          "cycle": 0,
+          "request_id": 40,
+          "path": "/api/v1/crm/directory",
+          "gateway_path": "/api/v1/crm/:other",
+          "gateway_elapsed_ms": 98.71730000000389
+        },
+        {
+          "viewport": "desktop",
+          "wave": 0,
+          "cycle": 1,
+          "request_id": 152,
+          "path": "/api/v1/local-session",
+          "gateway_path": "/api/v1/local-session",
+          "gateway_elapsed_ms": 4.790399999998044
+        },
+        {
+          "viewport": "desktop",
+          "wave": 0,
+          "cycle": 1,
+          "request_id": 154,
+          "path": "/api/v1/crm/directory",
+          "gateway_path": "/api/v1/crm/:other",
+          "gateway_elapsed_ms": 29.590700000000652
+        },
+        {
+          "viewport": "desktop",
+          "wave": 0,
+          "cycle": 2,
+          "request_id": 269,
+          "path": "/api/v1/local-session",
+          "gateway_path": "/api/v1/local-session",
+          "gateway_elapsed_ms": 3.7942000000039116
+        },
+        {
+          "viewport": "desktop",
+          "wave": 0,
+          "cycle": 2,
+          "request_id": 274,
+          "path": "/api/v1/crm/directory",
+          "gateway_path": "/api/v1/crm/:other",
+          "gateway_elapsed_ms": 30.758499999996275
+        },
+        {
+          "viewport": "desktop",
+          "wave": 1,
+          "cycle": 0,
+          "request_id": 71,
+          "path": "/api/v1/local-session",
+          "gateway_path": "/api/v1/local-session",
+          "gateway_elapsed_ms": 8.076100000005681
+        },
+        {
+          "viewport": "desktop",
+          "wave": 1,
+          "cycle": 0,
+          "request_id": 74,
+          "path": "/api/v1/crm/directory",
+          "gateway_path": "/api/v1/crm/:other",
+          "gateway_elapsed_ms": 52.252599999992526
+        },
+        {
+          "viewport": "desktop",
+          "wave": 1,
+          "cycle": 1,
+          "request_id": 190,
+          "path": "/api/v1/local-session",
+          "gateway_path": "/api/v1/local-session",
+          "gateway_elapsed_ms": 6.107299999988754
+        },
+        {
+          "viewport": "desktop",
+          "wave": 1,
+          "cycle": 1,
+          "request_id": 196,
+          "path": "/api/v1/crm/directory",
+          "gateway_path": "/api/v1/crm/:other",
+          "gateway_elapsed_ms": 23.964500000001863
+        },
+        {
+          "viewport": "desktop",
+          "wave": 1,
+          "cycle": 2,
+          "request_id": 307,
+          "path": "/api/v1/local-session",
+          "gateway_path": "/api/v1/local-session",
+          "gateway_elapsed_ms": 4.886099999988801
+        },
+        {
+          "viewport": "desktop",
+          "wave": 1,
+          "cycle": 2,
+          "request_id": 310,
+          "path": "/api/v1/crm/directory",
+          "gateway_path": "/api/v1/crm/:other",
+          "gateway_elapsed_ms": 26.140800000008312
+        },
+        {
+          "viewport": "phone",
+          "wave": 0,
+          "cycle": 0,
+          "request_id": 389,
+          "path": "/api/v1/local-session",
+          "gateway_path": "/api/v1/local-session",
+          "gateway_elapsed_ms": 4.076199999995879
+        },
+        {
+          "viewport": "phone",
+          "wave": 0,
+          "cycle": 0,
+          "request_id": 392,
+          "path": "/api/v1/crm/directory",
+          "gateway_path": "/api/v1/crm/:other",
+          "gateway_elapsed_ms": 36.26919999999518
+        },
+        {
+          "viewport": "phone",
+          "wave": 0,
+          "cycle": 1,
+          "request_id": 487,
+          "path": "/api/v1/local-session",
+          "gateway_path": "/api/v1/local-session",
+          "gateway_elapsed_ms": 5.346899999989546
+        },
+        {
+          "viewport": "phone",
+          "wave": 0,
+          "cycle": 1,
+          "request_id": 492,
+          "path": "/api/v1/crm/directory",
+          "gateway_path": "/api/v1/crm/:other",
+          "gateway_elapsed_ms": 31.017399999996996
+        },
+        {
+          "viewport": "phone",
+          "wave": 0,
+          "cycle": 2,
+          "request_id": 586,
+          "path": "/api/v1/local-session",
+          "gateway_path": "/api/v1/local-session",
+          "gateway_elapsed_ms": 4.011700000002747
+        },
+        {
+          "viewport": "phone",
+          "wave": 0,
+          "cycle": 2,
+          "request_id": 589,
+          "path": "/api/v1/crm/directory",
+          "gateway_path": "/api/v1/crm/:other",
+          "gateway_elapsed_ms": 33.32640000000538
+        },
+        {
+          "viewport": "phone",
+          "wave": 1,
+          "cycle": 0,
+          "request_id": 418,
+          "path": "/api/v1/local-session",
+          "gateway_path": "/api/v1/local-session",
+          "gateway_elapsed_ms": 5.0798999999969965
+        },
+        {
+          "viewport": "phone",
+          "wave": 1,
+          "cycle": 0,
+          "request_id": 420,
+          "path": "/api/v1/crm/directory",
+          "gateway_path": "/api/v1/crm/:other",
+          "gateway_elapsed_ms": 35.70909999999276
+        },
+        {
+          "viewport": "phone",
+          "wave": 1,
+          "cycle": 1,
+          "request_id": 517,
+          "path": "/api/v1/local-session",
+          "gateway_path": "/api/v1/local-session",
+          "gateway_elapsed_ms": 3.8931999999913387
+        },
+        {
+          "viewport": "phone",
+          "wave": 1,
+          "cycle": 1,
+          "request_id": 519,
+          "path": "/api/v1/crm/directory",
+          "gateway_path": "/api/v1/crm/:other",
+          "gateway_elapsed_ms": 34.41929999999411
+        },
+        {
+          "viewport": "phone",
+          "wave": 1,
+          "cycle": 2,
+          "request_id": 616,
+          "path": "/api/v1/local-session",
+          "gateway_path": "/api/v1/local-session",
+          "gateway_elapsed_ms": 3.607000000003609
+        },
+        {
+          "viewport": "phone",
+          "wave": 1,
+          "cycle": 2,
+          "request_id": 621,
+          "path": "/api/v1/crm/directory",
+          "gateway_path": "/api/v1/crm/:other",
+          "gateway_elapsed_ms": 30.272600000011153
+        }
+      ],
+      "record_visits": [
+        {
+          "viewport": "desktop",
+          "cycle": 0,
+          "path": "/customers/50000000-0000-4000-8000-000000000001",
+          "ready_ms": 1377.997199999998,
+          "status": 200
+        },
+        {
+          "viewport": "desktop",
+          "cycle": 1,
+          "path": "/customers/50000000-0000-4000-8000-000000000001",
+          "ready_ms": 1104.8880999999965,
+          "status": 200
+        },
+        {
+          "viewport": "desktop",
+          "cycle": 2,
+          "path": "/customers/50000000-0000-4000-8000-000000000001",
+          "ready_ms": 1304.150800000003,
+          "status": 200
+        },
+        {
+          "viewport": "phone",
+          "cycle": 0,
+          "path": "/customers/50000000-0000-4000-8000-000000000001",
+          "ready_ms": 1269.0016000000032,
+          "status": 200
+        },
+        {
+          "viewport": "phone",
+          "cycle": 1,
+          "path": "/customers/50000000-0000-4000-8000-000000000001",
+          "ready_ms": 1313.9521999999997,
+          "status": 200
+        },
+        {
+          "viewport": "phone",
+          "cycle": 2,
+          "path": "/customers/50000000-0000-4000-8000-000000000001",
+          "ready_ms": 1257.483699999997,
+          "status": 200
+        }
+      ],
+      "frame_chunks": [
+        "/_next/static/chunks/1f02-zweupik-.js",
+        "/_next/static/chunks/09l8q3j8p1nfp.js",
+        "/_next/static/chunks/2dutiite_8_mt.js",
+        "/_next/static/chunks/1tlo7t_7-_go_.js",
+        "/_next/static/chunks/0ceqv-5k090j7.js",
+        "/_next/static/chunks/0e17lnxbjkry2.js",
+        "/_next/static/chunks/1etdourpsy2sg.js"
+      ],
+      "my_work_in_ssr_mapping": true,
+      "gateway_events": {
+        "http-closed-incomplete": 10,
+        "http-finished": 642,
+        "http-received": 652,
+        "server-runtime": 12
+      }
+    },
+    {
+      "label": "candidate",
+      "source_head": "edb486f40c4bf53f57c5fd26c62da82b48c66d13",
+      "compiled_source": "bc49ca3839e50ab61511197cac4b429f48e415b5",
+      "build_id": "wOCpjtaYTkKZUZ_-zmwQW",
+      "browser": "154.0.8037.98",
+      "server_pid": 21008,
+      "limits": "One Chrome process; three sequential fresh contexts per viewport with one cold and one warm Customers visit, then actual record navigation. 40ms latency, 1.25MB/s download and 625kB/s upload. Precise JS/CSS coverage, CDP and opt-in server diagnostics add overhead. Separate from ten-user CI, hosted/device acceptance and causal attribution of an entire loading delay. No credentials, request bodies or full headers retained.",
+      "groups": [
+        {
+          "viewport": "desktop",
+          "wave": 0,
+          "samples": [
+            {
+              "cycle": 0,
+              "ready_ms": 1271.8167000000003,
+              "last_asset_ms": 637.2489999921527,
+              "session_start_ms": 655.9100000013132,
+              "session_finish_ms": 1021.2849999952596,
+              "directory_start_ms": 1044.2130000155885,
+              "directory_finish_ms": 1146.3860000076238,
+              "asset_to_session_ms": 18.66100000916049,
+              "session_body_ms": 365.3749999939464,
+              "session_to_directory_ms": 22.92800002032891,
+              "directory_body_ms": 102.17299999203533,
+              "js_count": 13,
+              "css_count": 8,
+              "js_encoded_bytes": 225730,
+              "css_encoded_bytes": 101910,
+              "js_source_utf16_chars": 731935
+            },
+            {
+              "cycle": 1,
+              "ready_ms": 1019.9951000000001,
+              "last_asset_ms": 662.0009999896865,
+              "session_start_ms": 671.7869999993127,
+              "session_finish_ms": 727.7860000031069,
+              "directory_start_ms": 760.7600000046659,
+              "directory_finish_ms": 907.8429999935906,
+              "asset_to_session_ms": 9.78600000962615,
+              "session_body_ms": 55.99900000379421,
+              "session_to_directory_ms": 32.974000001559034,
+              "directory_body_ms": 147.0829999889247,
+              "js_count": 13,
+              "css_count": 8,
+              "js_encoded_bytes": 225730,
+              "css_encoded_bytes": 101910,
+              "js_source_utf16_chars": 731935
+            },
+            {
+              "cycle": 2,
+              "ready_ms": 951.9735000000001,
+              "last_asset_ms": 666.5649999922607,
+              "session_start_ms": 676.039000012679,
+              "session_finish_ms": 726.8669999903068,
+              "directory_start_ms": 756.1550000100397,
+              "directory_finish_ms": 843.2319999847095,
+              "asset_to_session_ms": 9.474000020418316,
+              "session_body_ms": 50.82799997762777,
+              "session_to_directory_ms": 29.288000019732863,
+              "directory_body_ms": 87.07699997466989,
+              "js_count": 13,
+              "css_count": 8,
+              "js_encoded_bytes": 225730,
+              "css_encoded_bytes": 101910,
+              "js_source_utf16_chars": 731935
+            }
+          ],
+          "statistics": {
+            "ready_ms": {
+              "minimum": 951.9735000000001,
+              "median": 1019.9951000000001,
+              "maximum": 1271.8167000000003
+            },
+            "last_asset_ms": {
+              "minimum": 637.2489999921527,
+              "median": 662.0009999896865,
+              "maximum": 666.5649999922607
+            },
+            "session_start_ms": {
+              "minimum": 655.9100000013132,
+              "median": 671.7869999993127,
+              "maximum": 676.039000012679
+            },
+            "session_finish_ms": {
+              "minimum": 726.8669999903068,
+              "median": 727.7860000031069,
+              "maximum": 1021.2849999952596
+            },
+            "directory_start_ms": {
+              "minimum": 756.1550000100397,
+              "median": 760.7600000046659,
+              "maximum": 1044.2130000155885
+            },
+            "directory_finish_ms": {
+              "minimum": 843.2319999847095,
+              "median": 907.8429999935906,
+              "maximum": 1146.3860000076238
+            },
+            "asset_to_session_ms": {
+              "minimum": 9.474000020418316,
+              "median": 9.78600000962615,
+              "maximum": 18.66100000916049
+            },
+            "session_body_ms": {
+              "minimum": 50.82799997762777,
+              "median": 55.99900000379421,
+              "maximum": 365.3749999939464
+            },
+            "session_to_directory_ms": {
+              "minimum": 22.92800002032891,
+              "median": 29.288000019732863,
+              "maximum": 32.974000001559034
+            },
+            "directory_body_ms": {
+              "minimum": 87.07699997466989,
+              "median": 102.17299999203533,
+              "maximum": 147.0829999889247
+            },
+            "js_count": {
+              "minimum": 13,
+              "median": 13,
+              "maximum": 13
+            },
+            "css_count": {
+              "minimum": 8,
+              "median": 8,
+              "maximum": 8
+            },
+            "js_encoded_bytes": {
+              "minimum": 225730,
+              "median": 225730,
+              "maximum": 225730
+            },
+            "css_encoded_bytes": {
+              "minimum": 101910,
+              "median": 101910,
+              "maximum": 101910
+            },
+            "js_source_utf16_chars": {
+              "minimum": 731935,
+              "median": 731935,
+              "maximum": 731935
+            }
+          }
+        },
+        {
+          "viewport": "desktop",
+          "wave": 1,
+          "samples": [
+            {
+              "cycle": 0,
+              "ready_ms": 405.73309999999947,
+              "last_asset_ms": 64.79800000670366,
+              "session_start_ms": 166.1420000018552,
+              "session_finish_ms": 226.80299999774434,
+              "directory_start_ms": 243.82699999841861,
+              "directory_finish_ms": 310.11799999396317,
+              "asset_to_session_ms": 101.34399999515153,
+              "session_body_ms": 60.66099999588914,
+              "session_to_directory_ms": 17.024000000674278,
+              "directory_body_ms": 66.29099999554455,
+              "js_count": 13,
+              "css_count": 8,
+              "js_encoded_bytes": 0,
+              "css_encoded_bytes": 0,
+              "js_source_utf16_chars": 731935
+            },
+            {
+              "cycle": 1,
+              "ready_ms": 402.54219999999987,
+              "last_asset_ms": 77.8009999776259,
+              "session_start_ms": 167.04899998148903,
+              "session_finish_ms": 224.67299998970702,
+              "directory_start_ms": 242.1899999899324,
+              "directory_finish_ms": 319.11899999249727,
+              "asset_to_session_ms": 89.24800000386313,
+              "session_body_ms": 57.62400000821799,
+              "session_to_directory_ms": 17.51700000022538,
+              "directory_body_ms": 76.92900000256486,
+              "js_count": 13,
+              "css_count": 8,
+              "js_encoded_bytes": 0,
+              "css_encoded_bytes": 0,
+              "js_source_utf16_chars": 731935
+            },
+            {
+              "cycle": 2,
+              "ready_ms": 421.4362000000001,
+              "last_asset_ms": 67.46299998485483,
+              "session_start_ms": 168.94100001081824,
+              "session_finish_ms": 225.63699999591336,
+              "directory_start_ms": 243.4450000000652,
+              "directory_finish_ms": 314.67500000144355,
+              "asset_to_session_ms": 101.47800002596341,
+              "session_body_ms": 56.69599998509511,
+              "session_to_directory_ms": 17.808000004151836,
+              "directory_body_ms": 71.23000000137836,
+              "js_count": 13,
+              "css_count": 8,
+              "js_encoded_bytes": 0,
+              "css_encoded_bytes": 0,
+              "js_source_utf16_chars": 731935
+            }
+          ],
+          "statistics": {
+            "ready_ms": {
+              "minimum": 402.54219999999987,
+              "median": 405.73309999999947,
+              "maximum": 421.4362000000001
+            },
+            "last_asset_ms": {
+              "minimum": 64.79800000670366,
+              "median": 67.46299998485483,
+              "maximum": 77.8009999776259
+            },
+            "session_start_ms": {
+              "minimum": 166.1420000018552,
+              "median": 167.04899998148903,
+              "maximum": 168.94100001081824
+            },
+            "session_finish_ms": {
+              "minimum": 224.67299998970702,
+              "median": 225.63699999591336,
+              "maximum": 226.80299999774434
+            },
+            "directory_start_ms": {
+              "minimum": 242.1899999899324,
+              "median": 243.4450000000652,
+              "maximum": 243.82699999841861
+            },
+            "directory_finish_ms": {
+              "minimum": 310.11799999396317,
+              "median": 314.67500000144355,
+              "maximum": 319.11899999249727
+            },
+            "asset_to_session_ms": {
+              "minimum": 89.24800000386313,
+              "median": 101.34399999515153,
+              "maximum": 101.47800002596341
+            },
+            "session_body_ms": {
+              "minimum": 56.69599998509511,
+              "median": 57.62400000821799,
+              "maximum": 60.66099999588914
+            },
+            "session_to_directory_ms": {
+              "minimum": 17.024000000674278,
+              "median": 17.51700000022538,
+              "maximum": 17.808000004151836
+            },
+            "directory_body_ms": {
+              "minimum": 66.29099999554455,
+              "median": 71.23000000137836,
+              "maximum": 76.92900000256486
+            },
+            "js_count": {
+              "minimum": 13,
+              "median": 13,
+              "maximum": 13
+            },
+            "css_count": {
+              "minimum": 8,
+              "median": 8,
+              "maximum": 8
+            },
+            "js_encoded_bytes": {
+              "minimum": 0,
+              "median": 0,
+              "maximum": 0
+            },
+            "css_encoded_bytes": {
+              "minimum": 0,
+              "median": 0,
+              "maximum": 0
+            },
+            "js_source_utf16_chars": {
+              "minimum": 731935,
+              "median": 731935,
+              "maximum": 731935
+            }
+          }
+        },
+        {
+          "viewport": "phone",
+          "wave": 0,
+          "samples": [
+            {
+              "cycle": 0,
+              "ready_ms": 914.3225999999995,
+              "last_asset_ms": 618.477999989409,
+              "session_start_ms": 639.6379999932833,
+              "session_finish_ms": 685.2850000141189,
+              "directory_start_ms": 705.8149999938905,
+              "directory_finish_ms": 814.8609999916516,
+              "asset_to_session_ms": 21.160000003874302,
+              "session_body_ms": 45.64700002083555,
+              "session_to_directory_ms": 20.529999979771674,
+              "directory_body_ms": 109.0459999977611,
+              "js_count": 13,
+              "css_count": 8,
+              "js_encoded_bytes": 225730,
+              "css_encoded_bytes": 101910,
+              "js_source_utf16_chars": 731935
+            },
+            {
+              "cycle": 1,
+              "ready_ms": 922.0332999999991,
+              "last_asset_ms": 653.6339999875054,
+              "session_start_ms": 658.964999980526,
+              "session_finish_ms": 705.3539999760687,
+              "directory_start_ms": 728.6689999746159,
+              "directory_finish_ms": 815.2549999940675,
+              "asset_to_session_ms": 5.330999993020669,
+              "session_body_ms": 46.38899999554269,
+              "session_to_directory_ms": 23.314999998547137,
+              "directory_body_ms": 86.5860000194516,
+              "js_count": 13,
+              "css_count": 8,
+              "js_encoded_bytes": 225730,
+              "css_encoded_bytes": 101910,
+              "js_source_utf16_chars": 731935
+            },
+            {
+              "cycle": 2,
+              "ready_ms": 912.7197000000015,
+              "last_asset_ms": 635.8630000031553,
+              "session_start_ms": 636.6649999981746,
+              "session_finish_ms": 689.1879999893717,
+              "directory_start_ms": 721.9429999822751,
+              "directory_finish_ms": 834.5989999943413,
+              "asset_to_session_ms": 0.8019999950192869,
+              "session_body_ms": 52.52299999119714,
+              "session_to_directory_ms": 32.75499999290332,
+              "directory_body_ms": 112.65600001206622,
+              "js_count": 13,
+              "css_count": 8,
+              "js_encoded_bytes": 225730,
+              "css_encoded_bytes": 101910,
+              "js_source_utf16_chars": 731935
+            }
+          ],
+          "statistics": {
+            "ready_ms": {
+              "minimum": 912.7197000000015,
+              "median": 914.3225999999995,
+              "maximum": 922.0332999999991
+            },
+            "last_asset_ms": {
+              "minimum": 618.477999989409,
+              "median": 635.8630000031553,
+              "maximum": 653.6339999875054
+            },
+            "session_start_ms": {
+              "minimum": 636.6649999981746,
+              "median": 639.6379999932833,
+              "maximum": 658.964999980526
+            },
+            "session_finish_ms": {
+              "minimum": 685.2850000141189,
+              "median": 689.1879999893717,
+              "maximum": 705.3539999760687
+            },
+            "directory_start_ms": {
+              "minimum": 705.8149999938905,
+              "median": 721.9429999822751,
+              "maximum": 728.6689999746159
+            },
+            "directory_finish_ms": {
+              "minimum": 814.8609999916516,
+              "median": 815.2549999940675,
+              "maximum": 834.5989999943413
+            },
+            "asset_to_session_ms": {
+              "minimum": 0.8019999950192869,
+              "median": 5.330999993020669,
+              "maximum": 21.160000003874302
+            },
+            "session_body_ms": {
+              "minimum": 45.64700002083555,
+              "median": 46.38899999554269,
+              "maximum": 52.52299999119714
+            },
+            "session_to_directory_ms": {
+              "minimum": 20.529999979771674,
+              "median": 23.314999998547137,
+              "maximum": 32.75499999290332
+            },
+            "directory_body_ms": {
+              "minimum": 86.5860000194516,
+              "median": 109.0459999977611,
+              "maximum": 112.65600001206622
+            },
+            "js_count": {
+              "minimum": 13,
+              "median": 13,
+              "maximum": 13
+            },
+            "css_count": {
+              "minimum": 8,
+              "median": 8,
+              "maximum": 8
+            },
+            "js_encoded_bytes": {
+              "minimum": 225730,
+              "median": 225730,
+              "maximum": 225730
+            },
+            "css_encoded_bytes": {
+              "minimum": 101910,
+              "median": 101910,
+              "maximum": 101910
+            },
+            "js_source_utf16_chars": {
+              "minimum": 731935,
+              "median": 731935,
+              "maximum": 731935
+            }
+          }
+        },
+        {
+          "viewport": "phone",
+          "wave": 1,
+          "samples": [
+            {
+              "cycle": 0,
+              "ready_ms": 401.53329999999914,
+              "last_asset_ms": 75.4190000006929,
+              "session_start_ms": 168.95399999339134,
+              "session_finish_ms": 222.73999999742955,
+              "directory_start_ms": 248.74199999612756,
+              "directory_finish_ms": 307.17499999445863,
+              "asset_to_session_ms": 93.53499999269843,
+              "session_body_ms": 53.786000004038215,
+              "session_to_directory_ms": 26.00199999869801,
+              "directory_body_ms": 58.43299999833107,
+              "js_count": 13,
+              "css_count": 8,
+              "js_encoded_bytes": 0,
+              "css_encoded_bytes": 0,
+              "js_source_utf16_chars": 731935
+            },
+            {
+              "cycle": 1,
+              "ready_ms": 396.9418000000005,
+              "last_asset_ms": 70.86799998069182,
+              "session_start_ms": 164.41999998642132,
+              "session_finish_ms": 226.11099999630824,
+              "directory_start_ms": 245.86999998427927,
+              "directory_finish_ms": 318.2579999847803,
+              "asset_to_session_ms": 93.5520000057295,
+              "session_body_ms": 61.69100000988692,
+              "session_to_directory_ms": 19.758999987971038,
+              "directory_body_ms": 72.38800000050105,
+              "js_count": 13,
+              "css_count": 8,
+              "js_encoded_bytes": 0,
+              "css_encoded_bytes": 0,
+              "js_source_utf16_chars": 731935
+            },
+            {
+              "cycle": 2,
+              "ready_ms": 396.7016000000003,
+              "last_asset_ms": 95.20499999052845,
+              "session_start_ms": 190.0339999992866,
+              "session_finish_ms": 237.9289999953471,
+              "directory_start_ms": 253.28000000445172,
+              "directory_finish_ms": 325.7079999893904,
+              "asset_to_session_ms": 94.82900000875816,
+              "session_body_ms": 47.894999996060506,
+              "session_to_directory_ms": 15.35100000910461,
+              "directory_body_ms": 72.42799998493865,
+              "js_count": 13,
+              "css_count": 8,
+              "js_encoded_bytes": 0,
+              "css_encoded_bytes": 0,
+              "js_source_utf16_chars": 731935
+            }
+          ],
+          "statistics": {
+            "ready_ms": {
+              "minimum": 396.7016000000003,
+              "median": 396.9418000000005,
+              "maximum": 401.53329999999914
+            },
+            "last_asset_ms": {
+              "minimum": 70.86799998069182,
+              "median": 75.4190000006929,
+              "maximum": 95.20499999052845
+            },
+            "session_start_ms": {
+              "minimum": 164.41999998642132,
+              "median": 168.95399999339134,
+              "maximum": 190.0339999992866
+            },
+            "session_finish_ms": {
+              "minimum": 222.73999999742955,
+              "median": 226.11099999630824,
+              "maximum": 237.9289999953471
+            },
+            "directory_start_ms": {
+              "minimum": 245.86999998427927,
+              "median": 248.74199999612756,
+              "maximum": 253.28000000445172
+            },
+            "directory_finish_ms": {
+              "minimum": 307.17499999445863,
+              "median": 318.2579999847803,
+              "maximum": 325.7079999893904
+            },
+            "asset_to_session_ms": {
+              "minimum": 93.53499999269843,
+              "median": 93.5520000057295,
+              "maximum": 94.82900000875816
+            },
+            "session_body_ms": {
+              "minimum": 47.894999996060506,
+              "median": 53.786000004038215,
+              "maximum": 61.69100000988692
+            },
+            "session_to_directory_ms": {
+              "minimum": 15.35100000910461,
+              "median": 19.758999987971038,
+              "maximum": 26.00199999869801
+            },
+            "directory_body_ms": {
+              "minimum": 58.43299999833107,
+              "median": 72.38800000050105,
+              "maximum": 72.42799998493865
+            },
+            "js_count": {
+              "minimum": 13,
+              "median": 13,
+              "maximum": 13
+            },
+            "css_count": {
+              "minimum": 8,
+              "median": 8,
+              "maximum": 8
+            },
+            "js_encoded_bytes": {
+              "minimum": 0,
+              "median": 0,
+              "maximum": 0
+            },
+            "css_encoded_bytes": {
+              "minimum": 0,
+              "median": 0,
+              "maximum": 0
+            },
+            "js_source_utf16_chars": {
+              "minimum": 731935,
+              "median": 731935,
+              "maximum": 731935
+            }
+          }
+        }
+      ],
+      "core_matches": [
+        {
+          "viewport": "desktop",
+          "wave": 0,
+          "cycle": 0,
+          "request_id": 31,
+          "path": "/api/v1/local-session",
+          "gateway_path": "/api/v1/local-session",
+          "gateway_elapsed_ms": 48.04809999999998
+        },
+        {
+          "viewport": "desktop",
+          "wave": 0,
+          "cycle": 0,
+          "request_id": 38,
+          "path": "/api/v1/crm/directory",
+          "gateway_path": "/api/v1/crm/:other",
+          "gateway_elapsed_ms": 81.96169999999984
+        },
+        {
+          "viewport": "desktop",
+          "wave": 0,
+          "cycle": 1,
+          "request_id": 148,
+          "path": "/api/v1/local-session",
+          "gateway_path": "/api/v1/local-session",
+          "gateway_elapsed_ms": 4.519200000000637
+        },
+        {
+          "viewport": "desktop",
+          "wave": 0,
+          "cycle": 1,
+          "request_id": 154,
+          "path": "/api/v1/crm/directory",
+          "gateway_path": "/api/v1/crm/:other",
+          "gateway_elapsed_ms": 39.10230000000047
+        },
+        {
+          "viewport": "desktop",
+          "wave": 0,
+          "cycle": 2,
+          "request_id": 264,
+          "path": "/api/v1/local-session",
+          "gateway_path": "/api/v1/local-session",
+          "gateway_elapsed_ms": 3.877699999999095
+        },
+        {
+          "viewport": "desktop",
+          "wave": 0,
+          "cycle": 2,
+          "request_id": 269,
+          "path": "/api/v1/crm/directory",
+          "gateway_path": "/api/v1/crm/:other",
+          "gateway_elapsed_ms": 26.36489999999867
+        },
+        {
+          "viewport": "desktop",
+          "wave": 1,
+          "cycle": 0,
+          "request_id": 70,
+          "path": "/api/v1/local-session",
+          "gateway_path": "/api/v1/local-session",
+          "gateway_elapsed_ms": 5.819900000000416
+        },
+        {
+          "viewport": "desktop",
+          "wave": 1,
+          "cycle": 0,
+          "request_id": 73,
+          "path": "/api/v1/crm/directory",
+          "gateway_path": "/api/v1/crm/:other",
+          "gateway_elapsed_ms": 27.755699999999706
+        },
+        {
+          "viewport": "desktop",
+          "wave": 1,
+          "cycle": 1,
+          "request_id": 185,
+          "path": "/api/v1/local-session",
+          "gateway_path": "/api/v1/local-session",
+          "gateway_elapsed_ms": 3.3060000000004948
+        },
+        {
+          "viewport": "desktop",
+          "wave": 1,
+          "cycle": 1,
+          "request_id": 188,
+          "path": "/api/v1/crm/directory",
+          "gateway_path": "/api/v1/crm/:other",
+          "gateway_elapsed_ms": 26.236899999999878
+        },
+        {
+          "viewport": "desktop",
+          "wave": 1,
+          "cycle": 2,
+          "request_id": 302,
+          "path": "/api/v1/local-session",
+          "gateway_path": "/api/v1/local-session",
+          "gateway_elapsed_ms": 3.3742999999994936
+        },
+        {
+          "viewport": "desktop",
+          "wave": 1,
+          "cycle": 2,
+          "request_id": 305,
+          "path": "/api/v1/crm/directory",
+          "gateway_path": "/api/v1/crm/:other",
+          "gateway_elapsed_ms": 26.97479999999996
+        },
+        {
+          "viewport": "phone",
+          "wave": 0,
+          "cycle": 0,
+          "request_id": 380,
+          "path": "/api/v1/local-session",
+          "gateway_path": "/api/v1/local-session",
+          "gateway_elapsed_ms": 4.559300000000803
+        },
+        {
+          "viewport": "phone",
+          "wave": 0,
+          "cycle": 0,
+          "request_id": 385,
+          "path": "/api/v1/crm/directory",
+          "gateway_path": "/api/v1/crm/:other",
+          "gateway_elapsed_ms": 38.3125
+        },
+        {
+          "viewport": "phone",
+          "wave": 0,
+          "cycle": 1,
+          "request_id": 477,
+          "path": "/api/v1/local-session",
+          "gateway_path": "/api/v1/local-session",
+          "gateway_elapsed_ms": 3.7868000000016764
+        },
+        {
+          "viewport": "phone",
+          "wave": 0,
+          "cycle": 1,
+          "request_id": 480,
+          "path": "/api/v1/crm/directory",
+          "gateway_path": "/api/v1/crm/:other",
+          "gateway_elapsed_ms": 35.14850000000297
+        },
+        {
+          "viewport": "phone",
+          "wave": 0,
+          "cycle": 2,
+          "request_id": 574,
+          "path": "/api/v1/local-session",
+          "gateway_path": "/api/v1/local-session",
+          "gateway_elapsed_ms": 3.5587000000014086
+        },
+        {
+          "viewport": "phone",
+          "wave": 0,
+          "cycle": 2,
+          "request_id": 579,
+          "path": "/api/v1/crm/directory",
+          "gateway_path": "/api/v1/crm/:other",
+          "gateway_elapsed_ms": 31.92450000000099
+        },
+        {
+          "viewport": "phone",
+          "wave": 1,
+          "cycle": 0,
+          "request_id": 409,
+          "path": "/api/v1/local-session",
+          "gateway_path": "/api/v1/local-session",
+          "gateway_elapsed_ms": 4.383999999998196
+        },
+        {
+          "viewport": "phone",
+          "wave": 1,
+          "cycle": 0,
+          "request_id": 415,
+          "path": "/api/v1/crm/directory",
+          "gateway_path": "/api/v1/crm/:other",
+          "gateway_elapsed_ms": 29.68920000000071
+        },
+        {
+          "viewport": "phone",
+          "wave": 1,
+          "cycle": 1,
+          "request_id": 506,
+          "path": "/api/v1/local-session",
+          "gateway_path": "/api/v1/local-session",
+          "gateway_elapsed_ms": 3.448499999998603
+        },
+        {
+          "viewport": "phone",
+          "wave": 1,
+          "cycle": 1,
+          "request_id": 512,
+          "path": "/api/v1/crm/directory",
+          "gateway_path": "/api/v1/crm/:other",
+          "gateway_elapsed_ms": 31.78910000000178
+        },
+        {
+          "viewport": "phone",
+          "wave": 1,
+          "cycle": 2,
+          "request_id": 604,
+          "path": "/api/v1/local-session",
+          "gateway_path": "/api/v1/local-session",
+          "gateway_elapsed_ms": 5.7708999999995285
+        },
+        {
+          "viewport": "phone",
+          "wave": 1,
+          "cycle": 2,
+          "request_id": 606,
+          "path": "/api/v1/crm/directory",
+          "gateway_path": "/api/v1/crm/:other",
+          "gateway_elapsed_ms": 33.71930000000066
+        }
+      ],
+      "record_visits": [
+        {
+          "viewport": "desktop",
+          "cycle": 0,
+          "path": "/customers/50000000-0000-4000-8000-000000000001",
+          "ready_ms": 1195.2275000000009,
+          "status": 200
+        },
+        {
+          "viewport": "desktop",
+          "cycle": 1,
+          "path": "/customers/50000000-0000-4000-8000-000000000001",
+          "ready_ms": 1114.3108999999986,
+          "status": 200
+        },
+        {
+          "viewport": "desktop",
+          "cycle": 2,
+          "path": "/customers/50000000-0000-4000-8000-000000000001",
+          "ready_ms": 1015.8522999999986,
+          "status": 200
+        },
+        {
+          "viewport": "phone",
+          "cycle": 0,
+          "path": "/customers/50000000-0000-4000-8000-000000000001",
+          "ready_ms": 1196.274400000002,
+          "status": 200
+        },
+        {
+          "viewport": "phone",
+          "cycle": 1,
+          "path": "/customers/50000000-0000-4000-8000-000000000001",
+          "ready_ms": 1194.6952999999994,
+          "status": 200
+        },
+        {
+          "viewport": "phone",
+          "cycle": 2,
+          "path": "/customers/50000000-0000-4000-8000-000000000001",
+          "ready_ms": 1183.443299999999,
+          "status": 200
+        }
+      ],
+      "frame_chunks": [
+        "/_next/static/chunks/1xljo2npoc4-l.js",
+        "/_next/static/chunks/2pmtabm3flj3o.js",
+        "/_next/static/chunks/0e17lnxbjkry2.js",
+        "/_next/static/chunks/1vnz79q5_oghw.js"
+      ],
+      "my_work_in_ssr_mapping": false,
+      "gateway_events": {
+        "http-closed-incomplete": 10,
+        "http-finished": 631,
+        "http-received": 641,
+        "server-runtime": 11
+      }
+    }
+  ],
+  "fixture": {
+    "tables": [
+      {
+        "table": "organisations",
+        "rows": 1000,
+        "sha256": "73b244706d69a922bba678e4a3ed7133416f639958cb3061dad0ffad18cba846"
+      },
+      {
+        "table": "assets",
+        "rows": 5000,
+        "sha256": "d34d80754a1be751c0312c1247d34d4242219a78644b18d2a7986d5a1bae0b5e"
+      },
+      {
+        "table": "asset_location_events",
+        "rows": 5001,
+        "sha256": "615f0b8ccad97970202ff85ef275ed15842a45e60f67fc7811b76cf278d26ae0"
+      },
+      {
+        "table": "work_orders",
+        "rows": 1012,
+        "sha256": "47fcb9cd5d6012a09bd2104afa8d4fcc06d4b2fc64e6f6579c43a38bfeeecbac"
+      },
+      {
+        "table": "work_order_tickets",
+        "rows": 1012,
+        "sha256": "9a488f6cfe1b8e1722438bec2ee82ee9374f4ffbeadf52cba2de28e4cd2ee33d"
+      },
+      {
+        "table": "scope_revisions",
+        "rows": 1013,
+        "sha256": "da28ae1966054015878eb8548d318e4607a52aecaadddb67e8be17813847c584"
+      },
+      {
+        "table": "appointments",
+        "rows": 10000,
+        "sha256": "969e5aed97cc1ce783746aa4b6f97c7d06c529e68c1d256822cf3fcc75561e22"
+      }
+    ],
+    "scope": "All rows in the seven declared load-fixture tables in the synthetic workspace; excludes authentication/session and audit activity generated by login. No reset, repair, reseed or inferred whole-database equality."
+  },
+  "method": "Statistics are min/median/max of three sequential contexts per viewport/wave, not p95 or ten-user PT-27. Ready timings use the driver wall clock; network phase offsets use the document CDP request clock. Source UTF-16 character counts are not transfer bytes; V8 coverage ranges overlap and are retained raw, not summed into an unused-byte claim. Fixture after-equality is an executed assertion; only the reference fingerprint is retained."
+}

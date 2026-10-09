@@ -114,7 +114,8 @@
         "src/components/notification-workspace.tsx",
         "src/notifications/service.ts",
         "docs/delivery/sh-platform-handover.md",
-        "docs/testing/evidence/sh-platform/README.md"
+        "docs/testing/evidence/sh-platform/README.md",
+        "src/components/notification-bell.tsx"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -9186,7 +9187,7 @@
       ],
       "dependencies": [
         "src/components/shell-controls.tsx",
-        "src/components/notification-workspace.tsx",
+        "src/components/notification-bell.tsx",
         "src/shell/search-service.ts",
         "docs/delivery/sh-platform-handover.md",
         "docs/testing/evidence/sh-platform/README.md",

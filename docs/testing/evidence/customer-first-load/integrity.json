@@ -1,0 +1,131 @@
+{
+  "reviewed_source": "f4ffad7a93f10fc5832964eadb81e0ede5b8d9fd",
+  "artifacts": [
+    {
+      "path": "artifacts.json",
+      "sha256": "3558e3c2b0d554ab3a3eedbd6c3e3508c023d4c808fdd53fa1aa774af30b3bdf",
+      "bytes": 1262
+    },
+    {
+      "path": "baseline-customer-client-manifest.json",
+      "sha256": "084a2c0231179015d20d168fbca304d564928f27f1bf77f8441a044a0c1c4e9f",
+      "bytes": 33382
+    },
+    {
+      "path": "baseline-gateway.jsonl",
+      "sha256": "3651fedd0726ab325b9f84abf927951deddee2a33757db703ec78c797ef9531d",
+      "bytes": 195086
+    },
+    {
+      "path": "baseline-results.json.gz",
+      "sha256": "3255ee9a359fb4726c1fe74dee1965a75ce4ccef7d42675592b908e7f527f695",
+      "bytes": 921342
+    },
+    {
+      "path": "baseline.txt",
+      "sha256": "9189c2ba8c623f33ecd5cf40f3f53a2fd705fe59d1629ed4c32ddf35ca4c9094",
+      "bytes": 210
+    },
+    {
+      "path": "browser.txt",
+      "sha256": "597cd50bd0661a77ad90ecdae0acc8fec0ee2ac3e6552b0a489d72d1dd7a0dff",
+      "bytes": 2075
+    },
+    {
+      "path": "build.txt",
+      "sha256": "27ed3669704926799edbac35d67d461030f0bc0d50d89fe0dc5ce06db7e9671b",
+      "bytes": 26659
+    },
+    {
+      "path": "candidate-customer-client-manifest.json",
+      "sha256": "56d543a64315b06874a345dab90d703a7dcaf8e71e99fae2f28cdc504972e6e5",
+      "bytes": 24670
+    },
+    {
+      "path": "candidate-gateway.jsonl",
+      "sha256": "78a3a5ed242adae26acf79b5d40c35d67d05639cd97c3f8577b1d9b14850bf7a",
+      "bytes": 192235
+    },
+    {
+      "path": "candidate-results.json.gz",
+      "sha256": "6a48aff72fe91e5d526f6b19d073c394aeb6b2642af1fcd99aa2e3cbdb298343",
+      "bytes": 903460
+    },
+    {
+      "path": "candidate.txt",
+      "sha256": "9fdd2b21317e02a11f30188b297b3ab8a57375f5bd522f1aaece6480ea59c52c",
+      "bytes": 210
+    },
+    {
+      "path": "check-foundation.txt",
+      "sha256": "0767cfd8a2648ace5b6d8f20e00fcf11cc92e301a9f87cf8a1a049bb16b97499",
+      "bytes": 330
+    },
+    {
+      "path": "check-lint.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "check-naming.txt",
+      "sha256": "95396e2f3eb7bd02c2f29bbe04a3f7ad8d1d811ac2e1894e750a989a974ac7aa",
+      "bytes": 296
+    },
+    {
+      "path": "check-studio.txt",
+      "sha256": "4d8f594408f63c77d2192fbc9b82491594d361a3dcefe417e7b783f116afec11",
+      "bytes": 332
+    },
+    {
+      "path": "desktop-notification-bell.png",
+      "sha256": "0e0b353ab8bd5874a10ba11686ab0b35a6f04dc90520fbce7e3272bdd80d693e",
+      "bytes": 158425
+    },
+    {
+      "path": "final-checks.json",
+      "sha256": "be556b556cbeda299bc6c9fbb06e926fc68f21b81e7dc383bf6d68b14d6f8a80",
+      "bytes": 6992
+    },
+    {
+      "path": "fixture-input.json",
+      "sha256": "824805d05041d6952a317362c052100018742c828bb19afbd2574d5f2e0ff66c",
+      "bytes": 2301
+    },
+    {
+      "path": "mobile-notification-detail.png",
+      "sha256": "076731d7fb96c70939996408fd588fe6543e2c9e2e301c6cb0e866203c7b5d61",
+      "bytes": 33295
+    },
+    {
+      "path": "navigation.txt",
+      "sha256": "c854cd9d816f5a2ee15cbc60136e810c1ee20da481ae1ead2d0b42c2b759756b",
+      "bytes": 2034
+    },
+    {
+      "path": "pr373-profile-comparison.json",
+      "sha256": "26c1a70cff38818c8f5eaf57e576298056e62fb75d55ce7fcbab985899b43724",
+      "bytes": 8591
+    },
+    {
+      "path": "README.md",
+      "sha256": "26bdd7c645a809a7ad941269ebd66545c5628f1afafaca9b1aca44e39e4adb62",
+      "bytes": 9288
+    },
+    {
+      "path": "release-snapshot.json",
+      "sha256": "61e0c08c379af62abedecf863abefa9d3e370d85c0461151693a63be0f7b339e",
+      "bytes": 30353
+    },
+    {
+      "path": "summary.json",
+      "sha256": "88afab07ae076f741f9f4c2296ffbdae2f07251cd14d55058d2f7f88903ff786",
+      "bytes": 59518
+    },
+    {
+      "path": "verification.json",
+      "sha256": "3cf86e7ec3b388935abc733b64097f5c53cb5785a75da799f4b876555521d4d1",
+      "bytes": 6080
+    }
+  ],
+  "verification": "Compare every artifact with committed Git blob bytes after staging; integrity.json excludes itself. All original seven probe artifact bytes match the independently reviewed source commit."
+}

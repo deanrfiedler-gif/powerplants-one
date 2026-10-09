@@ -2698,6 +2698,11 @@
           "id": "nav-current-page-reload",
           "label": "Same-page approval and reload",
           "description": "Real permitted Contact correction: approve exact current-record search by mouse/touch/keyboard, edit again while dirty remains true, cancel Chrome reload and retain that later draft. An actual departure still receives one review. Fixtures: tests/browser/navigation-safety.spec.ts; tests/unit/navigation-intent.test.ts."
+        },
+        {
+          "id": "notification-cold-directory",
+          "label": "Notification bell from Customers",
+          "description": "Open the real bell from a settled Customers page before visiting My Work or Notifications; verify current notice, Escape/focus return and Open Notifications handover. Desktop host in tests/browser/sh-platform.spec.ts. Phone retains the established hidden bell and direct inbox entry."
         }
       ],
       "implementation": [
@@ -2712,6 +2717,10 @@
         {
           "path": "src/components/shell-controls.tsx",
           "symbol": "ShellControls"
+        },
+        {
+          "path": "src/components/notification-bell.tsx",
+          "symbol": "NotificationBell"
         }
       ],
       "dependencies": [
@@ -2937,6 +2946,14 @@
           "actual": "Full application on main f24e50b reproduces missing reload warning on desktop and phone. The shared guard now consumes the next non-reload navigation approval before no-op checks and consumes explicit reload permission at its unload.",
           "action": "Review exact-head regression and retained navigation/recovery CI in docs/testing/evidence/navigation-current-page/README.md; owner/device acceptance remains pending.",
           "priority": "High",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "notification-first-load-boundary",
+          "expected": "Customers loads its shell without the full Notifications and My Work workspace graph; current-authority bell behaviour remains intact.",
+          "actual": "NotificationBell is extracted unchanged from the workspace; compiled boundary and sequential diagnostic evidence are recorded separately from PT-27 and owner acceptance.",
+          "action": "Review docs/testing/evidence/customer-first-load/README.md and the Notifications host regression; broader cold-load/ten-user target and owner/device review remain open.",
+          "priority": "Medium",
           "owner": "Dean Fiedler"
         }
       ],

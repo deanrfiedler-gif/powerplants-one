@@ -1,0 +1,30 @@
+[WebServer] (node:32496) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+{"node":"v24.21.0","playwright":"1.63.0","channel":"chrome","browser":"154.0.8037.98"}
+
+Running 5 tests using 1 worker
+
+(node:11020) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[warm-up] 671 routes in 17517 ms, 0 unreachable. Slowest:
+  4500 ms  200  /development/design-system
+  2512 ms  200  /development/page-register
+  2214 ms  200  /api/development/catalog
+  2069 ms  404  /api/development/reference
+   304 ms  200  /calendar
+    71 ms  200  /api/v1/health
+    62 ms  401  /api/v1/activities
+    46 ms  200  /service/work-orders
+    30 ms  200  /estimating/fertigation
+    30 ms  401  /api/v1/estimating/configurations
+  ok 1 [warm-up] › tests\browser\warm-up.setup.ts:10:1 › warm every route once before the browser projects (17.6s)
+(node:43084) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 [desktop-chromium] › tests\browser\navigation-safety.spec.ts:36:1 › N04/N05/N10 Home and Workspace follow the current synthetic identity (1.7s)
+  ok 3 [desktop-chromium] › tests\browser\navigation-safety.spec.ts:51:1 › N07/N08/N20 dirty preferences protect pointer, keyboard, touch and workspace intent (1.7s)
+(node:42956) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 4 [mobile-chromium] › tests\browser\navigation-safety.spec.ts:36:1 › N04/N05/N10 Home and Workspace follow the current synthetic identity (1.8s)
+  ok 5 [mobile-chromium] › tests\browser\navigation-safety.spec.ts:51:1 › N07/N08/N20 dirty preferences protect pointer, keyboard, touch and workspace intent (1.6s)
+
+  5 passed (34.5s)
