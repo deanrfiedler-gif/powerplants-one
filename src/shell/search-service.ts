@@ -13,6 +13,8 @@ import { listOpportunities } from "../crm/worklist";
 import { readOpportunity } from "../crm/reads";
 import { listActivities, readActivity } from "../activities/activities";
 import { listTickets, readIntake } from "../service/intake";
+import { listWorkOrders, readWorkOrder } from "../service/work-orders";
+import { listEstimates, readEstimate } from "../estimating/reads";
 import { searchQuery } from "./search";
 import type { SearchItem } from "./model";
 import { listCs, readCs } from "../shared/cs/service";
@@ -118,6 +120,31 @@ export function searchAdapters(p: Principal): SearchAdapter[] {
       label: "summary",
       list: (q) => listTickets(p, q),
       detail: (id) => readIntake(p, id),
+    },
+    // NR-10: find a record by its number. Both readers match display_number and keep their own
+    // visibility checks; the estimate register pages by offset, so search reads its first window only.
+    {
+      kind: "Work order",
+      path: "/service/work-orders",
+      label: "summary",
+      list: (q) => listWorkOrders(p, q),
+      detail: async (id) => {
+        const order = (await readWorkOrder(p, id)).items[0] as Row & { scopes: Row[]; scope_revision_id: unknown };
+        const scope = order.scopes.find((r) => r.id === order.scope_revision_id) ?? order.scopes[0];
+        return { ...order, summary: scope?.summary ?? order.display_number };
+      },
+    },
+    {
+      kind: "Estimate",
+      path: "/estimating/estimates",
+      label: "title",
+      // The estimate register accepts at most 100 search characters, so a longer query finds no estimates
+      // here instead of failing the whole search.
+      list: async (q) => ({ items: q.q.length > 100 ? [] : (await listEstimates(p, { q: q.q })).items, next_cursor: null }),
+      detail: async (id) => {
+        const estimate = (await readEstimate(p, id)) as Row & { saved: Row; context: Row };
+        return { ...estimate, title: estimate.saved.title, customer_name: estimate.context.customer, site_name: estimate.context.site };
+      },
     },
     {
       kind: "Facility / growing area",

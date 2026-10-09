@@ -75,6 +75,8 @@ export function parseViewCriteria(target: ViewTarget, input: unknown) {
       "Equipment",
       "Activity",
       "Service request",
+      "Work order",
+      "Estimate",
       "Facility / growing area",
       "Site survey",
       "Site readiness",

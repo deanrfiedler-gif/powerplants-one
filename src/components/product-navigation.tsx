@@ -10,6 +10,7 @@ import { useShell } from "./shell-provider";
 import { openShellPanel, shellPanelEvent } from "./shell-events";
 import { InstallationActions, InstallationHelp } from "./app-installation";
 import { moduleWorkspaceForPath } from "../shell/module-workspaces";
+import { documentTitle, recordTitle } from "../shell/page-title";
 import {
   canOpen,
   departmentHref,
@@ -211,16 +212,11 @@ function ProductNavigationView({
     );
   };
   // Sales phone cells keep visible names and accessible labels. Activities uses
-  // the same Sales scope and local day policy as the desktop destination.
+  // the same Sales scope and local day policy as the desktop destination. A cell
+  // this identity cannot open is hidden, as on every other surface (NR-02).
   const phoneCell = (entry: (typeof salesPhoneBar)[number]) => {
     const item = destination(entry.id);
-    const contents = (
-      <>
-        <ProductIcon name={entry.icon} />
-        <span>{entry.label}</span>
-      </>
-    );
-    return allowed(item) ? (
+    return (
       <Link
         key={entry.id}
         href={departmentHref(entry.id === "calendar" ? `${item.href}?day=${new URLSearchParams(locationQuery).get("day") ?? localDay(new Date().toISOString())}` : item.href!, "sales")}
@@ -230,12 +226,9 @@ function ProductNavigationView({
         onClick={() => setMore(false)}
         suppressHydrationWarning
       >
-        {contents}
+        <ProductIcon name={entry.icon} />
+        <span>{entry.label}</span>
       </Link>
-    ) : (
-      <span key={entry.id} className="ppo-planned-tab" aria-disabled="true" title={`${entry.label} — Unavailable for this identity`}>
-        {contents}
-      </span>
     );
   };
   const menu = (
@@ -434,7 +427,7 @@ function ProductNavigationView({
         aria-label="Mobile navigation"
       >
         {workspace.id === "sales"
-          ? salesPhoneBar.map(phoneCell)
+          ? salesPhoneBar.filter((entry) => allowed(destination(entry.id))).map(phoneCell)
           : [destination("work"), workspaceLanding(workspace.id, permitted, shell.hosted), destination(workspace.secondary)]
               .filter((item): item is ShellDestination => !!item && allowed(item))
               .filter((item, index, all) => all.findIndex(other => other.id === item.id) === index)
@@ -514,6 +507,13 @@ export function ProductHeader() {
     if (subview) crumbs.push({ key: "subview", label: subview, kind: "view" });
   }
   if (record && shell.context) crumbs.push({ key: "record", label: `${record.reference} · ${record.title}`, kind: "record" });
+  // NR-17: the same route metadata names the browser tab. React hoists this <title> into the head
+  // and updates it in the same commit as the route, before the route announcer reads document.title.
+  const title = documentTitle({
+    record: record && shell.context ? recordTitle(record.reference, record.title) : /\/new$/.test(path) ? "New record" : undefined,
+    page: subview ?? view ?? (label || "Home"),
+    department: rootLabel,
+  });
   const tabIds =
     page?.workspace === "service"
       ? []
@@ -533,6 +533,7 @@ export function ProductHeader() {
     );
   return (
     <>
+      <title>{title}</title>
       <header className="topbar ppo-shell-header">
         <Link
           className="mobile-brand"

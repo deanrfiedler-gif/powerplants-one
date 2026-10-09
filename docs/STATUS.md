@@ -14,9 +14,18 @@ Dean requested a six-domain navigation architecture, seven improvements and then
 - wireframes existing scopes RP-01, RP-05 and PJ-02 at 1440, 390 and 320 px;
 - records audit findings AU-01 to AU-23 with their resolution.
 
-Dean adopted NAD-08, the Reports workspace, as a design decision. NAD-01 to NAD-07 remain open. Seven built-app and evidence findings remain open: AU-01, AU-02, AU-07, AU-08, AU-13, AU-14 and AU-23. The captures are linked from `system:shell` and those scopes.
+Dean adopted NAD-08, the Reports workspace, as a design decision, then approved professional refinements generally. Under that approval:
 
-This is design reference only: no route, rail, capability, grant, migration or scope count changes, and no owner visual review is recorded.
+- **Adopted:** NAD-01, NAD-02 (design), NAD-03, NAD-05 and NAD-06. NAD-04 and NAD-07 remain open.
+- **Built in the shell:**
+  - per-page browser titles (AU-01);
+  - the Sales phone bar hides unavailable destinations (AU-23), and a dated /crm routing note is added;
+  - number search for work orders and estimates (AU-13, partly).
+- **Still open:** AU-02 entity indicator, AU-08 grouped Service rail, quotation and purchase-order number search, AU-07 speed and AU-14 tree test.
+
+The captures are linked from `system:shell` and those scopes.
+
+The board itself is design reference only. The shell increment adds no route, rail, capability, grant, migration or scope; no owner visual review is recorded.
 
 ## Current bounded step — Customers first load
 

@@ -64,12 +64,17 @@ Dean adopted NAD-08 on 9 October 2026 as a design decision. It adds an eighth wo
 
 Everything else on the board is a proposal. The registry in `src/shell/navigation.ts` and [Navigation consolidation](../../../decisions/navigation-consolidation.md) remain the authority.
 
-Open built-app findings:
+Built on 9 October 2026, under Dean's approval of professional refinements:
 
-- per-route page titles (NR-17);
-- an entity indicator (NR-18);
-- number search (NR-10);
-- a grouped Service rail;
-- two inconsistencies: the Sales phone bar shows unavailable destinations as disabled, and `application-shell-integration.md` still describes /crm canonical routes.
+- **Page titles (NR-17).** Each shell page renders its own `<title>` from the breadcrumb's route metadata: record, then page or view, then department, then "Powerplants One"; for example "SYN-PPO-WO-000001 · SYN Ready for scope review · Work orders · Service — Powerplants One". A create page reads "New record · …". The business layout clears the root default title so the shell's is the only one. React updates the title in the route's commit, so the route announcer reads the new name on client navigation.
+- **Sales phone bar (NR-02).** A cell the identity cannot open is hidden, as on every other surface. The bar keeps equal cells for whatever remains.
+- **Number search (NR-10).** Global search also finds work orders and estimates by number, through their existing visibility-checked readers.
+- **Routing note (NR-04).** `application-shell-integration.md` now carries a dated routing note: canonical routes are /sales/…, and /crm/… redirects.
+
+Still open:
+
+- the entity indicator and switcher (NR-18): it needs a decision on whether the selected entity filters every read;
+- a grouped Service rail: it needs a design review;
+- number search for quotations and purchase orders: no reader matches their own numbers yet.
 
 No owner visual review is recorded for the board.

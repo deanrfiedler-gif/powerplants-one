@@ -2,7 +2,7 @@
 document_id: PPO-NAV-ARCH-BOARD-DEC
 date: 2026-10-09
 owner: Dean Fiedler
-status: Proposed design reference; NAD-08 adopted as a design decision on 9 October 2026; not owner-reviewed; no implementation authorised
+status: Proposed design reference; six NAD decisions adopted (section 6); shell increment built; not owner-reviewed
 source_commit: 5005e7e1763bd53a28b47d6d48f3c87210f5cc1c
 versioning: git
 ---
@@ -98,6 +98,32 @@ Reused components: the application shell, Breadcrumb, Segmented control, Button,
 | NAD-07 | Executive and Systems owner bundles | Define before RP-01 and access governance are built |
 | NAD-08 | Where cross-department reports live | **Adopted by Dean, 9 October 2026:** an eighth workspace, Reports (proposed id `reporting`, because `reports` is the Service review destination). It holds the governed management reports RP-01 to RP-06, owns no records and edits nothing (NR-20). Shown only to people who can open the overview; Executive lands on it. Design decision only |
 
-## 6. Not authorised
+## 6. Decisions and increments under Dean's approval, 9 October 2026
 
-No application code, route, rail change, capability, grant, seed, migration, register scope or UI baseline change follows from this record. Adopting NAD-08 settles the design; adding the Reports workspace to `navigation.ts`, its capabilities and its pages needs separate approval. Owner visual review, device, accessibility and business acceptance remain separate.
+Dean then approved "any changes, improvements, and refinements" that would make the app more professional. Under that approval:
+
+| ID | Outcome |
+|---|---|
+| NAD-01 | Adopted: the seven department rails, plus Reports (NAD-08), stay the navigation. The six domains remain the specification view |
+| NAD-02 | Adopted as design: the exception desk (RP-05) covers every department. Department queues such as Finance Exceptions stay with their owners and are linked. Not built |
+| NAD-03 | Adopted and built: the Sales phone bar hides destinations the identity cannot open |
+| NAD-05 | Adopted: no continuous technician location tracking without a workforce privacy decision |
+| NAD-06 | Adopted: the payment gateway stays excluded; invoices are released in MYOB |
+| NAD-04, NAD-07 | Still open: thresholds wait on D-017, and the Executive and Systems owner bundles need defining |
+
+Built in this PR (shell only; no grant, capability, migration or seed):
+
+- **AU-01 page titles (NR-17).** Each shell page has its own title, taken from route metadata. Record pages lead with the record reference; create pages lead with "New record".
+- **AU-23.** The Sales phone-bar fix, and a dated routing note in [application-shell-integration.md](application-shell-integration.md).
+- **AU-13, partly.** Global search finds work orders and estimates by number.
+
+Still open:
+
+- AU-02 entity indicator: whether the selected entity filters every read is an architectural decision.
+- AU-08 grouped Service rail: needs a design review.
+- Quotation and purchase-order number search: needs new readers.
+- AU-07 speed and AU-14 tree test: need evidence.
+
+## 7. Not authorised
+
+Beyond the shell increment in section 6, no application code, route, rail change, capability, grant, seed, migration, register scope or UI baseline change follows from this record. Adopting NAD-08 settles the design; adding the Reports workspace to `navigation.ts`, its capabilities and its pages needs separate approval. Owner visual review, device, accessibility and business acceptance remain separate.

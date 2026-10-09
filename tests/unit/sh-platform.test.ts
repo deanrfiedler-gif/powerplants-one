@@ -3,6 +3,7 @@ import { test } from "node:test";
 import { AppError } from "../../src/platform/errors";
 import {
   collectApplicationSearch,
+  searchAdapters,
   type SearchAdapter,
 } from "../../src/shell/search-service";
 import {
@@ -94,6 +95,17 @@ test("SH05 schema changes and unknown filters cannot silently widen stored views
     parseViewCriteria("search", { kind: "Unavailable type" }),
   );
   assert.equal(sameViewCriteria({ q: "SYN", kind: "" }, { q: "SYN" }), true);
+});
+test("NR-10 search finds work orders and estimates by number, and every searchable type can be saved as a view", () => {
+  const p = { workspace_id: "w", actor_id: "a", display_name: "SYN Reader" } as Parameters<typeof searchAdapters>[0];
+  const kinds = searchAdapters(p).map((source) => source.kind);
+  assert.ok(kinds.includes("Work order") && kinds.includes("Estimate"));
+  for (const kind of kinds) assert.deepEqual(parseViewCriteria("search", { kind }), { kind });
+});
+test("NR-10 a search longer than the estimate register accepts finds no estimates instead of failing", async () => {
+  const p = { workspace_id: "w", actor_id: "a", display_name: "SYN Reader" } as Parameters<typeof searchAdapters>[0];
+  const estimates = searchAdapters(p).find((source) => source.kind === "Estimate")!;
+  assert.deepEqual(await estimates.list({ q: "SYN ".repeat(40), limit: "5" }), { items: [], next_cursor: null });
 });
 test("SH06 perspectives preserve ownership, return, handover and closed source meanings", () => {
   const t = {
