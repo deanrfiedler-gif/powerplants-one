@@ -2,7 +2,7 @@
 document_id: PPO-UI-SEQ-DEC
 date: 2026-10-09
 owner: Dean Fiedler
-status: Proposed sequence; derived from the register; not owner-reviewed
+status: Adopted sequence rules SD-01 to SD-05 (9 October 2026); placements and pages not owner-reviewed
 source_commit: 5005e7e1763bd53a28b47d6d48f3c87210f5cc1c
 versioning: git
 ---
@@ -35,11 +35,11 @@ A second, hand-made list would drift from both. The sequence is therefore **deri
 
 The bottleneck is review, not building: no entry has an owner visual review recorded yet.
 
-## Proposed departures from r02
+## Departures from r02, adopted 9 October 2026
 
-The r02 phase order and every issued rank are kept. The proposal adds five rules. Each one is a departure until Dean adopts it.
+The r02 phase order and every issued rank are kept. Five rules are added on top. Dean adopted SD-01 to SD-05 on 9 October 2026 and started the phase 00 review. Adoption covers the rules, not each placement: individual placements and every page still need owner review.
 
-| ID | Proposal | Reason |
+| ID | Rule | Reason |
 |---|---|---|
 | SD-01 | A register entry added after r05, and therefore unranked, takes the phase and rank of its first ranked related scope. This places 79 routes; each row shows its placement basis. Development tooling routes are excluded. | Every entry lands in exactly one place by a rule anyone can rerun. To move an entry, edit its register record, not the generated output. |
 | SD-02 | The four shared systems (shell, theme, guidance, offline) belong to phase 00. | They already exist and every page depends on them, so they are verified with the baseline. Changing a shared template fixes many pages at once. |
@@ -69,6 +69,5 @@ The navigation architecture canvas gains a **UI build sequence** board drawn fro
 
 ## Still open
 
-- Dean's adoption, amendment or rejection of SD-01 to SD-05.
 - Owner review of individual placements, starting with phase 00.
 - Whether any r02 rank should change now that most of phases 00 to 06 is built. No re-ranking is proposed without that review.

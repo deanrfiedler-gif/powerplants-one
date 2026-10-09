@@ -23,7 +23,7 @@ The imported baseline has 150 scopes and 110 source destinations from r05. Two n
 
 ## Build and review sequence
 
-[ui-build-sequence.md](ui-build-sequence.md) and its JSON data are generated from this register and the issued r02 build plan by `python3 scripts/build-ui-sequence.py`. Do not edit them by hand. Each row shows its placement basis; to move an entry, change its register record and regenerate. Use `--check` to confirm the committed outputs are current. The sequence and its proposed departures (SD-01 to SD-05) are recorded in [the decision](../../decisions/ui-build-sequence.md). The sequence is not an approved schedule or an effort estimate.
+[ui-build-sequence.md](ui-build-sequence.md) and its JSON data are generated from this register and the issued r02 build plan by `python3 scripts/build-ui-sequence.py`. Do not edit them by hand. Each row shows its placement basis; to move an entry, change its register record and regenerate. Use `--check` to confirm the committed outputs are current. The sequence and its adopted rules (SD-01 to SD-05) are recorded in [the decision](../../decisions/ui-build-sequence.md). The sequence is not an approved schedule or an effort estimate.
 
 ## Daily change workflow
 

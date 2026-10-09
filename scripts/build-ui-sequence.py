@@ -130,7 +130,7 @@ def build() -> dict:
 
     return {
         "title": "Powerplants One UI build and review sequence",
-        "status": "Proposed; derived from the register; not owner-reviewed",
+        "status": "Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register; pages not owner-reviewed",
         "sources": {
             "register": str(register_path.relative_to(root)), "register_sha256": sha(register_path),
             "build_plan": str(plan_path.relative_to(root)), "build_plan_revision": plan["revision"], "build_plan_sha256": sha(plan_path),

@@ -1,6 +1,6 @@
 {
  "title": "Powerplants One UI build and review sequence",
- "status": "Proposed; derived from the register; not owner-reviewed",
+ "status": "Rules SD-01 to SD-05 adopted 9 October 2026; derived from the register; pages not owner-reviewed",
  "sources": {
   "register": "docs/design/development/register.json",
   "register_sha256": "f62d990d7e56ea5f1c86056297a5fea271bb73e1088275a8893be32f41d8863b",
