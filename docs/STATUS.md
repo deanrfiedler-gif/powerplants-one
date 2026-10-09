@@ -6,13 +6,17 @@
 
 ## Navigation architecture proposal — 9 October 2026
 
-Dean requested a six-domain navigation architecture and then seven improvements to it. The [record](decisions/navigation-architecture-board.md) retains a private claude.ai board with [20 hashed captures and two Mermaid sources](reference/ui/application-shell/navigation-architecture-board-r01/README.md). The board:
+Dean requested a six-domain navigation architecture, seven improvements and then an audit. The [record](decisions/navigation-architecture-board.md) retains a private claude.ai board as [r02 captures](reference/ui/application-shell/navigation-architecture-board-r02/README.md): 33 hashed images and two Mermaid sources. The earlier r01 set is retained unchanged. The board:
 
-- maps the six domains onto the seven built department rails;
-- proposes navigation rules NR-01–NR-16 and handovers HO-01–HO-18;
-- wireframes existing scopes RP-01, RP-05 and PJ-02.
+- maps the six domains onto the seven built department rails and a Reports workspace;
+- proposes rules NR-01 to NR-20 and NR-A1 to NR-A7, and handovers HO-01 to HO-23;
+- adds a record page pattern, a record relationship map, and landing, routing and access-scope tables;
+- wireframes existing scopes RP-01, RP-05 and PJ-02 at 1440, 390 and 320 px;
+- records audit findings AU-01 to AU-23 with their resolution.
 
-The captures are linked from `system:shell` and those scopes. Decisions NAD-01–NAD-07 are open. This is design reference only: no route, rail, capability, grant, migration or scope count changes, and no owner visual review is recorded.
+Dean adopted NAD-08, the Reports workspace, as a design decision. NAD-01 to NAD-07 remain open. Seven built-app and evidence findings remain open: AU-01, AU-02, AU-07, AU-08, AU-13, AU-14 and AU-23. The captures are linked from `system:shell` and those scopes.
+
+This is design reference only: no route, rail, capability, grant, migration or scope count changes, and no owner visual review is recorded.
 
 ## Current bounded step — Customers first load
 

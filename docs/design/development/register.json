@@ -1942,12 +1942,13 @@
       "html_path": null,
       "image_paths": [
         "docs/blueprints/projects-visuals/projects-register-desktop.png",
-        "docs/reference/ui/application-shell/navigation-architecture-board-r01/18-pj02-portfolio-desktop.png",
-        "docs/reference/ui/application-shell/navigation-architecture-board-r01/19-pj02-portfolio-phone.png"
+        "docs/reference/ui/application-shell/navigation-architecture-board-r02/29-pj02-portfolio-desktop.png",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r02/30-pj02-portfolio-phone.png",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r02/31-pj02-portfolio-320.png"
       ],
       "dependencies": [
         "docs/decisions/navigation-architecture-board.md",
-        "docs/reference/ui/application-shell/navigation-architecture-board-r01/README.md"
+        "docs/reference/ui/application-shell/navigation-architecture-board-r02/README.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -4907,12 +4908,13 @@
       "design_path": "docs/design/development/pages/scope-rp-01.md",
       "html_path": null,
       "image_paths": [
-        "docs/reference/ui/application-shell/navigation-architecture-board-r01/14-rp01-overview-desktop.png",
-        "docs/reference/ui/application-shell/navigation-architecture-board-r01/15-rp01-overview-phone.png"
+        "docs/reference/ui/application-shell/navigation-architecture-board-r02/23-rp01-overview-desktop.png",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r02/24-rp01-overview-phone.png",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r02/25-rp01-overview-320.png"
       ],
       "dependencies": [
         "docs/decisions/navigation-architecture-board.md",
-        "docs/reference/ui/application-shell/navigation-architecture-board-r01/README.md"
+        "docs/reference/ui/application-shell/navigation-architecture-board-r02/README.md"
       ],
       "scope_status": "unbuilt",
       "visual_status": "Needs review",
@@ -5029,12 +5031,13 @@
       "design_path": "docs/design/development/pages/scope-rp-05.md",
       "html_path": null,
       "image_paths": [
-        "docs/reference/ui/application-shell/navigation-architecture-board-r01/16-rp05-exceptions-desktop.png",
-        "docs/reference/ui/application-shell/navigation-architecture-board-r01/17-rp05-exceptions-phone.png"
+        "docs/reference/ui/application-shell/navigation-architecture-board-r02/26-rp05-exceptions-desktop.png",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r02/27-rp05-exceptions-phone.png",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r02/28-rp05-exceptions-320.png"
       ],
       "dependencies": [
         "docs/decisions/navigation-architecture-board.md",
-        "docs/reference/ui/application-shell/navigation-architecture-board-r01/README.md"
+        "docs/reference/ui/application-shell/navigation-architecture-board-r02/README.md"
       ],
       "scope_status": "unbuilt",
       "visual_status": "Needs review",
@@ -9201,11 +9204,14 @@
       "html_path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
       "image_paths": [
         "docs/testing/evidence/sh-platform/captures/rebased-notification-bell.png",
-        "docs/reference/ui/application-shell/navigation-architecture-board-r01/01-sitemap.png",
-        "docs/reference/ui/application-shell/navigation-architecture-board-r01/02-navigation-reconciliation.png",
-        "docs/reference/ui/application-shell/navigation-architecture-board-r01/03-handover-path.png",
-        "docs/reference/ui/application-shell/navigation-architecture-board-r01/04-navigation-rules.png",
-        "docs/reference/ui/application-shell/navigation-architecture-board-r01/13-graph-overview.png"
+        "docs/reference/ui/application-shell/navigation-architecture-board-r02/01-sitemap.png",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r02/02-navigation-reconciliation.png",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r02/03-handover-path.png",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r02/04-navigation-rules.png",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r02/13-graph-overview.png",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r02/20-navigation-policies.png",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r02/21-record-page-pattern.png",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r02/22-record-relationships.png"
       ],
       "dependencies": [
         "src/components/shell-controls.tsx",
@@ -9222,9 +9228,9 @@
         "docs/design/development/navigation-fixtures.json",
         "docs/decisions/navigation-consolidation.md",
         "docs/decisions/navigation-architecture-board.md",
-        "docs/reference/ui/application-shell/navigation-architecture-board-r01/README.md",
-        "docs/reference/ui/application-shell/navigation-architecture-board-r01/navigation.mmd",
-        "docs/reference/ui/application-shell/navigation-architecture-board-r01/navigation-overview.mmd"
+        "docs/reference/ui/application-shell/navigation-architecture-board-r02/README.md",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r02/navigation.mmd",
+        "docs/reference/ui/application-shell/navigation-architecture-board-r02/navigation-overview.mmd"
       ],
       "scope_status": "Shared source",
       "visual_status": "Needs review",

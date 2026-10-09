@@ -2,8 +2,8 @@
 document_id: PPO-NAV-ARCH-BOARD-DEC
 date: 2026-10-09
 owner: Dean Fiedler
-status: Proposed design reference; not owner-reviewed; no implementation authorised
-source_commit: dcec2cf05e82e1eaf2c7f90f136701d080cb6248
+status: Proposed design reference; NAD-08 adopted as a design decision on 9 October 2026; not owner-reviewed; no implementation authorised
+source_commit: 5005e7e1763bd53a28b47d6d48f3c87210f5cc1c
 versioning: git
 ---
 
@@ -25,6 +25,8 @@ On 9 October Dean asked for seven improvements to the first board:
 6. draw return paths and fix frame sizes;
 7. register the board here.
 
+Later on 9 October Dean asked for an audit of the board for gaps, best practice and professional standard. The audit (capture 33) recorded 23 findings, AU-01 to AU-23. Dean then adopted NAD-08, a Reports workspace, and the board's design fixes were applied. The revised board is issued as capture set r02; r01 is retained unchanged as the earlier issue.
+
 This record identifies the resulting board and what it proposes. It changes no route, rail, capability, grant, migration or scope count. [Navigation consolidation](navigation-consolidation.md) and `src/shell/navigation.ts` remain the authority for navigation.
 
 ## 1. Classification
@@ -34,39 +36,41 @@ This record identifies the resulting board and what it proposes. It changes no r
 | Six-domain brief, three outputs | User request, 8 October 2026 | Session brief. The domains are a capability view; no parent requirement ID is added or renamed |
 | Seven improvements | User instruction, 9 October 2026 | Session instruction |
 | Keep the seven department rails as the navigation; use the six domains as the specification view | Proposed, not decided | Reconciliation artboard (capture 02). Built rails read from `navigation.ts:7-45, 309-333` |
-| Navigation rules NR-01 to NR-16 | Proposed inputs to the navigation consolidation review | Capture 04. "Built" rows describe source at `dcec2cf`; they are not acceptance |
-| Interaction register HO-01 to HO-18 | Proposed, built on existing journeys | Capture 05. Capability names in the gate column exist in `permissions.ts` unless marked New |
+| Reports workspace for governed management reports, NAD-08 | User decision, 9 October 2026; design only | Rule NR-20 (capture 04); sitemap, reconciliation and D5 boards; wireframes 23 to 31. Building it needs separate approval |
+| Audit findings AU-01 to AU-23 and their resolution | Audit, 9 October 2026 | Capture 33. 16 design findings resolved on the board; built-app and evidence findings (AU-01, AU-02, AU-07, AU-08, AU-13, AU-14, AU-23) stay open |
+| Navigation rules NR-01 to NR-20 and accessibility rules NR-A1 to NR-A7 | Proposed inputs to the navigation consolidation review; NR-20 adopted under NAD-08 | Capture 04. "Built" rows describe source at `dcec2cf`; they are not acceptance |
+| Interaction register HO-01 to HO-23 | Proposed, built on existing journeys; HO-19 to HO-23 added from the audit | Capture 05, drawn on capture 03. Capability names in the gate column exist in `permissions.ts` unless marked New |
 | Brief departures R1 to R15 | Proposed, for owner decision | Capture 06 |
-| Wireframes for RP-01, RP-05 and PJ-02 | Proposed composition on existing scopes | Captures 14 to 20. No new scope; the register's 150-scope count is unchanged |
-| New capability names | Proposed, not in the contract | Domain tables (captures 07 to 12). None exists in the 131-value contract |
+| Wireframes for RP-01, RP-05 and PJ-02 | Proposed composition on existing scopes | Captures 23 to 32, at 1440, 390 and 320 px. No new scope; the register's 150-scope count is unchanged |
+| Record page pattern, relationship map RL-01 to RL-06, landing, attention routing and access scope | Proposed | Captures 20 to 22 |
+| New capability names, each with a scope level | Proposed, not in the contract | Domain tables (captures 07 to 12) and capture 20. None exists in the 131-value contract |
 
 ## 2. Design reference
 
 | Reference | Identity |
 |---|---|
-| Board | Private Design artifact in Dean's claude.ai account, <https://claude.ai/artifact/UKeykdt6pNm9stkUH8JSLH>, version 24 (`1791503903-79bd`), 20 artboards, built with the Powerplants One design system. Only the owner can open it |
-| Retained captures | [Navigation architecture board r01](../reference/ui/application-shell/navigation-architecture-board-r01/README.md): 20 PNG captures with hashes, plus the two Mermaid sources. These are the repository reference |
-| Mermaid sources | `navigation-overview.mmd` (domains, working areas, handovers) and `navigation.mmd` (page level, one subgraph per domain). Both parse in Mermaid 11.4.1 |
+| Board | Private Design artifact in Dean's claude.ai account, <https://claude.ai/artifact/UKeykdt6pNm9stkUH8JSLH>, version 26 (`1791516976-d300`), 27 artboards, built with the Powerplants One design system. Only the owner can open it |
+| Retained captures | Current: [Navigation architecture board r02](../reference/ui/application-shell/navigation-architecture-board-r02/README.md), 33 PNG captures with hashes, plus the two Mermaid sources. Earlier issue: [r01](../reference/ui/application-shell/navigation-architecture-board-r01/README.md), version 24, retained unchanged |
+| Mermaid sources | `navigation-overview.mmd` (domains, working areas, handovers) and `navigation.mmd` (page level, one subgraph per domain). Both parse in Mermaid 11.4.1 and carry an accessible title and description |
 
 ## 3. Conformance declaration
 
-Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md) on the board's conformance artboard (capture 20).
+Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md) on the board's conformance artboard (capture 32).
 
 | Wireframe | Existing scope | r20 page type | Departure |
 |---|---|---|---|
-| Management overview | `scope:RP-01`, /reports | Overview / dashboard | New capability `reporting.overview.read`; synthetic stage weights |
-| Exception desk | `scope:RP-05`, /reports/reconciliation; supporting `scope:AD-04` | Work queue + persistent detail | Widens RP-05 from Supply and Finance to every department |
-| Portfolio health | `scope:PJ-02`, /projects | Overview / dashboard over Register / worklist | Synthetic health thresholds pending D-017 |
+| Management overview | `scope:RP-01`, /reports; Reports workspace landing | Overview / dashboard | New capability `reporting.overview.read`; synthetic stage weights |
+| Exception desk | `scope:RP-05`, /reports/reconciliation; Reports secondary page; supporting `scope:AD-04` | Work queue + persistent detail | Widens RP-05 from Supply and Finance to every department (NAD-02, open) |
+| Portfolio health | `scope:PJ-02`, /projects?view=health | Overview / dashboard over Register / worklist | Synthetic health thresholds pending D-017 |
 
-Reused components: the application shell, Breadcrumb, Segmented control, Button, Field, Section tabs, Status chip, Register table and the phone bottom bar. Wireframes are drawn at 1440 px and 390 px only.
+Reused components: the application shell, Breadcrumb, Segmented control, Button, Field, Section tabs, Status chip, Register table and the phone bottom bar. Wireframes are drawn at 1440 px, 390 px and 320 px; 1024 px is not drawn.
 
 ## 4. Findings from the reconciliation
 
 - The built navigation has seven department workspaces, each with its own rail. My workspace, Shared records and Administration sit in More. Of the 75 destinations, 13 are reserved and withheld.
-- Proposals from the board fill six reserved slots:
-  - Projects: Risks & issues.
-  - Finance: Project performance, Cash outlook, Reconciliation and Exceptions.
-  - More: Settings.
+- Every one of the 13 reserved slots now has a disposition (capture 02). Twelve are filled; Insights moves to Reports › Sales performance (RP-02).
+  - Reviews & approvals is filled with its own estimate review queue. The coverage ledger says My Work reviews are not a substitute, so the audit's suggestion to merge it there was not used.
+  - Finance Reconciliation and Exceptions stay Finance's own working queues; the exception desk links to them.
 - Capacity planning stays under Service operations (Schedule). The brief grouped it with finance ledgers, but Service owns the confirmed field schedule (BP-01 §5.3).
 - Two inconsistencies were found in the built navigation:
   - The Sales phone bar shows unavailable destinations as disabled; everywhere else hides them (NR-02).
@@ -92,7 +96,8 @@ Reused components: the application shell, Breadcrumb, Segmented control, Button,
 | NAD-05 | Technician location data | No continuous tracking without a workforce privacy decision |
 | NAD-06 | Payment gateway | Keep excluded; invoices are released in MYOB |
 | NAD-07 | Executive and Systems owner bundles | Define before RP-01 and access governance are built |
+| NAD-08 | Where cross-department reports live | **Adopted by Dean, 9 October 2026:** an eighth workspace, Reports (proposed id `reporting`, because `reports` is the Service review destination). It holds the governed management reports RP-01 to RP-06, owns no records and edits nothing (NR-20). Shown only to people who can open the overview; Executive lands on it. Design decision only |
 
 ## 6. Not authorised
 
-No application code, route, rail change, capability, grant, seed, migration, register scope or UI baseline change follows from this record. Owner visual review, device, accessibility and business acceptance remain separate.
+No application code, route, rail change, capability, grant, seed, migration, register scope or UI baseline change follows from this record. Adopting NAD-08 settles the design; adding the Reports workspace to `navigation.ts`, its capabilities and its pages needs separate approval. Owner visual review, device, accessibility and business acceptance remain separate.

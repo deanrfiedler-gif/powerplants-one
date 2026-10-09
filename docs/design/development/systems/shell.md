@@ -50,6 +50,26 @@ The header imports the standalone `NotificationBell`; the full Notifications wor
 
 ## Navigation architecture board (proposed)
 
-The private claude.ai design canvas "PPO Navigation Architecture", version 24, maps the six capability domains of the 8 October 2026 brief onto the seven built department rails. It also records navigation rules NR-01 to NR-16 and a cross-domain handover register HO-01 to HO-18. Retained captures and Mermaid sources: [navigation-architecture-board-r01](../../../reference/ui/application-shell/navigation-architecture-board-r01/README.md). Record and open decisions NAD-01 to NAD-07: [Navigation architecture board](../../../decisions/navigation-architecture-board.md).
+The private claude.ai design canvas "PPO Navigation Architecture", version 26, maps the six capability domains of the 8 October 2026 brief onto the seven built department rails. It also records:
 
-These are proposals. The registry in `src/shell/navigation.ts` and [Navigation consolidation](../../../decisions/navigation-consolidation.md) remain the authority. The board found two inconsistencies to resolve: the Sales phone bar shows unavailable destinations as disabled where every other surface hides them, and `application-shell-integration.md` still describes /crm canonical routes. No owner visual review is recorded for the board.
+- navigation rules NR-01 to NR-20 and accessibility rules NR-A1 to NR-A7;
+- cross-domain handovers HO-01 to HO-23;
+- a record page pattern and a record relationship map;
+- landing, attention routing and access scope tables;
+- a navigation audit, AU-01 to AU-23, with its resolution record.
+
+Current captures and Mermaid sources: [navigation-architecture-board-r02](../../../reference/ui/application-shell/navigation-architecture-board-r02/README.md). The earlier [r01](../../../reference/ui/application-shell/navigation-architecture-board-r01/README.md) set is retained unchanged. Record and decisions NAD-01 to NAD-08: [Navigation architecture board](../../../decisions/navigation-architecture-board.md).
+
+Dean adopted NAD-08 on 9 October 2026 as a design decision. It adds an eighth workspace, Reports (proposed id `reporting`), for the governed management reports RP-01 to RP-06. Reports owns no records and edits nothing (NR-20). Adding it to the registry needs separate approval.
+
+Everything else on the board is a proposal. The registry in `src/shell/navigation.ts` and [Navigation consolidation](../../../decisions/navigation-consolidation.md) remain the authority.
+
+Open built-app findings:
+
+- per-route page titles (NR-17);
+- an entity indicator (NR-18);
+- number search (NR-10);
+- a grouped Service rail;
+- two inconsistencies: the Sales phone bar shows unavailable destinations as disabled, and `application-shell-integration.md` still describes /crm canonical routes.
+
+No owner visual review is recorded for the board.
