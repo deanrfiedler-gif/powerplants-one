@@ -1,6 +1,7 @@
 import { test, expect } from "../helpers/browser-lifecycle";
 import type { Request, Response } from "@playwright/test";
-import { writeFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
+import type { Pack } from "../../src/documents/components/client/job-pack-types";
 import { financeHttpSource, httpFinanceDraft } from "../helpers/finance-http";
 import { call, identity, capture } from "../helpers/quality-browser";
 import { qualityFieldVisit } from "../helpers/quality-field";
@@ -66,7 +67,7 @@ test("P11 PT-29 pack and report queues never turn failed reads into empty or iss
 
 test("P11 PT-29 failed photo upload retains the selected original and recovers without a false available claim", async ({ page }, info) => {
   test.setTimeout(180000);
-  const { job } = await qualityFieldVisit(page, info.project.name.startsWith("mobile") ? "2031-11-10" : "2031-11-09");
+  const { job } = await qualityFieldVisit(page, info.project.name.startsWith("mobile") ? "2031-11-14" : "2031-11-13");
   await page.goto(`/my-jobs/${job.id}`);
   await page.getByRole("button", { name: "Photos", exact: true }).click();
   const bytes = png();
@@ -100,6 +101,38 @@ test("P11 PT-29 failed photo upload retains the selected original and recovers w
   expect(response.status()).toBe(200);
   expect(await response.body()).toEqual(bytes);
   await capture(page, info, "SC-10-upload-recovered-exact-original");
+});
+
+test("P11 PT-29 failed and stale output presentation never claims an issue", async ({ page }, info) => {
+  // Deliberate presentation injection into the retained synthetic fixture.
+  // Worker rollback/storage recovery is a separate PT-23 persistence proof.
+  const read = JSON.parse(await readFile("tests/fixtures/job-pack-read.json", "utf8")) as { items: Pack[] };
+  const pack = read.items[0];
+  pack.status = "Checked";
+  pack.jobs = [{ id: crypto.randomUUID(), revision_id: pack.current_revision_id!, state: "Failed",
+    attempts: 1, error_code: "RenderOrStorageFailure", requested_at: "2031-11-05T00:00:00Z",
+    recovery_owner_id: "30000000-0000-4000-8000-000000000001", recovery_owner_name: "SYN Coordinator",
+    issue_id: null, actor_name: "SYN Coordinator" }];
+  expect(pack.current_issue_id).toBeNull();
+  await call(page, "local-session", { profile: "coordinator" });
+  await page.route(`**/api/v1/packs/${pack.id}`, route => route.fulfill({ json: read }));
+  await page.route(`**/api/v1/render-jobs/${pack.jobs[0].id}/retry`, route => route.fulfill({ status: 503, json: {
+    code: "DependencyUnavailable", message: "SYN renderer unavailable. Recover the original output.", retryable: true,
+  } }));
+  await page.goto(`/service/packs/${pack.id}`);
+  await expect(page.getByText("Output recovery needed", { exact: true })).toBeVisible();
+  await expect(page.getByText("The output could not be generated or stored. Recover the original output.", { exact: false }).first()).toBeVisible();
+  await page.getByRole("button", { name: "Process or recover original output", exact: true }).click();
+  await expect(page.getByRole("alert").filter({ hasText: "SYN renderer unavailable" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Open exact issued document", exact: true })).toHaveCount(0);
+  await capture(page, info, "SC-06-render-failed-no-issue", { injection: "retained synthetic pack read and renderer 503; not worker proof" });
+  pack.jobs[0].state = "StaleSource";
+  pack.jobs[0].error_code = "StaleSource";
+  await page.reload();
+  await expect(page.getByText("The checked source changed", { exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Process or recover original output", exact: true })).toHaveCount(0);
+  await expect(page.getByText("Original attempt retained. Prepare and check a new revision with current sources.", { exact: true })).toBeVisible();
+  await capture(page, info, "SC-06-stale-output-requires-successor", { injection: "retained synthetic pack read; not worker proof" });
 });
 
 test("P11 PT-29 partial and failed account extractions keep historical totals separate from current values", async ({ page }, info) => {
@@ -164,7 +197,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
     ...base(), expected_version: account.account.version, fixture: "F-01",
   });
   // SC-09 and SC-15 must be populated even when this spec runs by itself.
-  const field = await qualityFieldVisit(page, mobile ? "2031-11-08" : "2031-11-07");
+  const field = await qualityFieldVisit(page, mobile ? "2031-11-10" : "2031-11-07");
   const grant = await call(page, `sync/context/${field.job.id}`, {});
   const retained = operation(field.principal, field.job, "Capture", entry(field.job));
   const recovery = await call(page, "sync/recovery", {
@@ -317,7 +350,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
       // this browser's exact response is actually rendered in the main region.
       if (s.id !== "SC-13" && s.id !== "SC-14") expect(original.items.length, s.id).toBeGreaterThan(0);
       const record = original.items?.[0];
-      const populatedLabel: string = s.id === "SC-13" ? original.account.fixture_key
+      const populatedLabel: string = s.id === "SC-13" ? original.current.observations[0].id
         : s.id === "SC-14" ? original.filename
         : s.id === "SC-15" ? record.operation_id
         : s.id === "SC-01" ? record.summary
