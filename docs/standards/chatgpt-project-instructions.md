@@ -50,7 +50,7 @@ Prevent duplicate work/financial effects; reconcile unknown outcomes. Distinguis
 
 ## 7. User experience and quality
 
-Use Australian English, ui-style-specification.md tokens/type and intact logo. CRM: crm-desktop-mobile-refinements.md; shell/rails: department-navigation-icons.md; icon style: ADR-0050. Show synthetic/environment context.
+Use Australian English, ui-style-specification.md tokens/type and intact logo. CRM: crm-desktop-mobile-refinements.md; shell/rails: department-navigation-icons.md; icons: ADR-0050. Show synthetic/environment context.
 
 Scope, permissions, validation/recovery and acceptance: product-quality-{register,plan}.md.
 
@@ -66,11 +66,9 @@ Repo work grants no paid service, deployment, access, transactions, migration or
 
 ## 9. Verification
 
-Run foundation/prototype/naming; test authority, conflicts/replay, integrity/reconciliation. Inspect screens; record environment.
+Run foundation/prototype/naming; test authority, conflicts/replay, integrity/reconciliation. Inspect screens; record environment. Recheck scoped access after storage, before metadata/bytes.
 
-Recheck scoped access after storage, before metadata or bytes.
-
-ES-01–10/Excel: estimating-native-programme.md / estimating-programme-handover.md; retain estimating-cost-sources.md, PJ-09 close/reopen and es0{1,2}-design-board.md. ES-08: WP-G00 before D1–D15/DEC-R1/R2. ES-04: estimating-review.md. ES-05–07: quotation-{release,response,conversion,disposition,supply-followup}-native.md. ES-07: quotation-{reservation-reconciliation,receipt-correction,allocation-shortfall,material-resolution,task-dependency}.md. Separate each affected owner’s consent; preserve receipts, unmet Demand, holds and fresh disposition.
+ES-01–10/Excel: estimating-{native-programme,programme-handover}.md; retain estimating-cost-sources.md, PJ-09 close/reopen and es0{1,2}-design-board.md. ES-08: WP-G00 before D1–D15/DEC-R1/R2. ES-04: estimating-review.md. ES-05–07: quotation-{release,response,conversion,disposition,supply-followup}-native.md. ES-07: quotation-{reservation-reconciliation,receipt-correction,allocation-shortfall,material-resolution,task-dependency}.md. Separate each affected owner’s consent; preserve receipts, unmet Demand, holds and fresh disposition.
 
 Mail: preserve private mailboxes and body separation (demo-email-crm-integration.md); CI is not Outlook acceptance. SH-01–06: docs/delivery/sh-platform-handover.md; teams/DK/delivery pending.
 

@@ -1,0 +1,103 @@
+▶ PT-13 approved 90 MIN / 2 EA corrections before processing
+  ✔ approved originals and separate financial quantities cannot be edited in place (563.2132ms)
+  ✔ reasoned successors invalidate downstream readiness and replay only their original receipts (1957.3156ms)
+  ✔ corrected report requires a new exact submission, review and issue (5703.1957ms)
+  ✔ unprocessed handoff needs a new exact allocation and independent Finance review (765.5623ms)
+✔ PT-13 approved 90 MIN / 2 EA corrections before processing (46130.2995ms)
+ℹ {"phase":"new-independent-approval","report_id":"78f119e4-3aca-4538-bc2b-136ffdca7b0f","handoff_id":"ff39a190-97c8-4c8a-be30-3fae8bd70752","original_finance_revision":"6610ef8c-a1c3-477e-94d9-651b26f9a043","successors":[{"original":"bd8f6a44-63df-4384-92c4-0be757787577","successor":"13ae2300-8f1e-414a-8e74-deb879064fb1","operation_id":"e8b7e2c6-0197-4c68-96ee-8af45cf46f88"},{"original":"3d6bc1b8-48d6-42d3-b706-a3839c51546e","successor":"9c4c2f27-fe29-4f14-a4cd-9fa7a90c3bb0","operation_id":"d7137083-d686-4178-8e29-8b3a8464d09c"}],"target_ids":[]}
+▶ PT-13 approved 90 MIN / 2 EA corrections after reconciled processing
+  ✔ approved originals and separate financial quantities cannot be edited in place (368.8667ms)
+  ✔ reasoned successors invalidate downstream readiness and replay only their original receipts (637.0938ms)
+  ✔ corrected report requires a new exact submission, review and issue (4963.513ms)
+  ✔ processed originals stay consumed and a correction request links the original outcome (129.1991ms)
+✔ PT-13 approved 90 MIN / 2 EA corrections after reconciled processing (31088.7565ms)
+ℹ {"phase":"processed-original-preserved","report_id":"765801ff-9c9f-456e-a89a-9d53dcd1ce78","handoff_id":"a4a04286-b8ce-429e-a8e2-f1553371ff40","original_finance_revision":"1f73781e-b858-4f42-8510-449903678590","successors":[{"original":"9e0906b4-4460-4b45-b383-77960c611ffe","successor":"92ab5dd4-61fd-402a-8810-94b5f97e0361","operation_id":"ecd6ca3d-61b3-42f4-bda1-24d8b6948857"},{"original":"beef8e98-eb60-4f51-9419-6179b7a44701","successor":"9e69330c-383f-43cf-8b62-4f8e4b6910ea","operation_id":"af52c635-e037-46b7-891d-6d58a9cffcd3"}],"target_ids":["f330551f-316a-4a6b-b122-424d77721b97"]}
+✔ PT-01 backend access and original recovery through actual HTTP adapters (27417.0133ms)
+ℹ ▶ PT-01 / PT-18 scoped projections, recovery and storage-time authority
+  ✔ company/site/workspace isolation applies to direct reads, search, suggestions and Finance (561.0662ms)
+  ✔ lost response, revoked authority and restored retry preserve one exact original (227.4775ms)
+  ✔ notifications and previews recheck current source access without changing saved evidence (320.0529ms)
+  ✔ issued previews, manifests and file exports retain recipient and company isolation (145.9167ms)
+  ✔ issue-html refuses authority revoked during storage and recovers exact bytes (216.7794ms)
+  ✔ generated-html refuses authority revoked during storage and recovers exact bytes (208.188ms)
+  ✔ issue-pdf refuses authority revoked during storage and recovers exact bytes (250.3566ms)
+  ✔ generated-pdf refuses authority revoked during storage and recovers exact bytes (283.8592ms)
+✔ PT-01 / PT-18 scoped projections, recovery and storage-time authority (22863.9937ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 27260.1107
+
+✔ PT-18 source identity, reviewed reconciliation and retained output recovery (70978.8874ms)
+ℹ ▶ PT-18 identity-changing source move requires an explicitly reviewed successor
+  ✔ same title and hash at a new item identity cannot silently replace a selected source (646.6246ms)
+  ✔ reconciliation cannot rewrite the original identity or skip review (3837.3305ms)
+  ✔ a missing version and different bytes at the same item never become latest-version substitutes (374.5148ms)
+✔ PT-18 identity-changing source move requires an explicitly reviewed successor (22917.3596ms)
+ℹ {"step":"explicit-reconciliation","old_source":"c2000000-0000-4000-8000-000000000001","new_source":"8bb6f414-02c3-488f-a06f-82f74ea8df9b","old_item":"c2000000-0000-4000-8000-000000000001","new_item":"2ac8a3d4-9353-458f-b8f7-85abc5f4fac6","source_hash":"363bc1e22ad3b41cb0c56f2959bf8e63e396a38ed039231ed20e65b1fffadc9a","original_issue":"5f22a287-dff8-4bd6-a760-970830f310e1","successor_issue":"011426b1-0b63-400a-bc2f-134035574902","original_pdf_hash":"89c0327be004ad4ca4942c73ae44d1b86cf45f884ae94084a5a55725db79bb1e"}
+▶ PT-18 joined source movement preserves issued pack/report/Finance bytes and access boundaries
+  ✔ renamed display metadata still resolves the same exact source identity (539.4612ms)
+  ✔ real identity-changing move and unavailable version leave all issued outputs exact (1424.5616ms)
+  ✔ restricted and anonymous identities receive no Finance or internal output metadata (508.5194ms)
+  ✔ missing retained pack bundle fails closed, then recovers without reissue (500.2081ms)
+  ✔ missing retained report bundle fails closed, then recovers without reissue (583.2457ms)
+  ✔ missing retained finance bundle fails closed, then recovers without reissue (489.2492ms)
+✔ PT-18 joined source movement preserves issued pack/report/Finance bytes and access boundaries (46288.971ms)
+ℹ {"step":"original","source":"c2000000-0000-4000-8000-000000000001","item":"c2000000-0000-4000-8000-000000000001","version":"363bc1e22ad3b41cb0c56f2959bf8e63e396a38ed039231ed20e65b1fffadc9a","outputs":[{"kind":"pack","issue":"6e736c6e-3c94-4a7d-9201-3fa3d2c71bf3","html_hash":"1de00eb7a301f480e1197ad70f7771b60b4f47167b50880e60be86b6b2ae4a15","pdf_hash":"faf897fe76f149b7976bc45311ca1d448232f6ba6f948bf6b328748957da7c54"},{"kind":"report","issue":"692dfb18-4413-4380-9aad-dd1a7269cd82","html_hash":"6c3b59f26898ca8a1818121200c98831281b98671b301b0200e204cb25edda8d","pdf_hash":"7222ffef6cd8c4975569b983e03173aa821e010eec8dec5f78b3b445084c6b3b"},{"kind":"finance","issue":"66220d79-866d-4e7e-bbac-037a54c291fe","html_hash":"be14428ebc1c77653295bc6f37fea246c52963a4b4dca2282c8b762f9dc36c7f","pdf_hash":"9ba36c802b0872cdab22835647ccd56ac449945ba63181a94bb7d5e7e7bf5603"}]}
+ℹ {"step":"renamed","source":"c2000000-0000-4000-8000-000000000001","item":"c2000000-0000-4000-8000-000000000001","version":"363bc1e22ad3b41cb0c56f2959bf8e63e396a38ed039231ed20e65b1fffadc9a","outputs":[{"kind":"pack","issue":"6e736c6e-3c94-4a7d-9201-3fa3d2c71bf3","html_hash":"1de00eb7a301f480e1197ad70f7771b60b4f47167b50880e60be86b6b2ae4a15","pdf_hash":"faf897fe76f149b7976bc45311ca1d448232f6ba6f948bf6b328748957da7c54"},{"kind":"report","issue":"692dfb18-4413-4380-9aad-dd1a7269cd82","html_hash":"6c3b59f26898ca8a1818121200c98831281b98671b301b0200e204cb25edda8d","pdf_hash":"7222ffef6cd8c4975569b983e03173aa821e010eec8dec5f78b3b445084c6b3b"},{"kind":"finance","issue":"66220d79-866d-4e7e-bbac-037a54c291fe","html_hash":"be14428ebc1c77653295bc6f37fea246c52963a4b4dca2282c8b762f9dc36c7f","pdf_hash":"9ba36c802b0872cdab22835647ccd56ac449945ba63181a94bb7d5e7e7bf5603"}]}
+ℹ {"step":"source-identity-moved","source":"c2000000-0000-4000-8000-000000000001","item":"c2000000-0000-4000-8000-000000000001","version":"363bc1e22ad3b41cb0c56f2959bf8e63e396a38ed039231ed20e65b1fffadc9a","outputs":[{"kind":"pack","issue":"6e736c6e-3c94-4a7d-9201-3fa3d2c71bf3","html_hash":"1de00eb7a301f480e1197ad70f7771b60b4f47167b50880e60be86b6b2ae4a15","pdf_hash":"faf897fe76f149b7976bc45311ca1d448232f6ba6f948bf6b328748957da7c54"},{"kind":"report","issue":"692dfb18-4413-4380-9aad-dd1a7269cd82","html_hash":"6c3b59f26898ca8a1818121200c98831281b98671b301b0200e204cb25edda8d","pdf_hash":"7222ffef6cd8c4975569b983e03173aa821e010eec8dec5f78b3b445084c6b3b"},{"kind":"finance","issue":"66220d79-866d-4e7e-bbac-037a54c291fe","html_hash":"be14428ebc1c77653295bc6f37fea246c52963a4b4dca2282c8b762f9dc36c7f","pdf_hash":"9ba36c802b0872cdab22835647ccd56ac449945ba63181a94bb7d5e7e7bf5603"}]}
+ℹ {"step":"original-version-unavailable-new-bytes-present","source":"c2000000-0000-4000-8000-000000000001","item":"c2000000-0000-4000-8000-000000000001","version":"363bc1e22ad3b41cb0c56f2959bf8e63e396a38ed039231ed20e65b1fffadc9a","outputs":[{"kind":"pack","issue":"6e736c6e-3c94-4a7d-9201-3fa3d2c71bf3","html_hash":"1de00eb7a301f480e1197ad70f7771b60b4f47167b50880e60be86b6b2ae4a15","pdf_hash":"faf897fe76f149b7976bc45311ca1d448232f6ba6f948bf6b328748957da7c54"},{"kind":"report","issue":"692dfb18-4413-4380-9aad-dd1a7269cd82","html_hash":"6c3b59f26898ca8a1818121200c98831281b98671b301b0200e204cb25edda8d","pdf_hash":"7222ffef6cd8c4975569b983e03173aa821e010eec8dec5f78b3b445084c6b3b"},{"kind":"finance","issue":"66220d79-866d-4e7e-bbac-037a54c291fe","html_hash":"be14428ebc1c77653295bc6f37fea246c52963a4b4dca2282c8b762f9dc36c7f","pdf_hash":"9ba36c802b0872cdab22835647ccd56ac449945ba63181a94bb7d5e7e7bf5603"}]}
+ℹ {"step":"source-recovered","source":"c2000000-0000-4000-8000-000000000001","item":"c2000000-0000-4000-8000-000000000001","version":"363bc1e22ad3b41cb0c56f2959bf8e63e396a38ed039231ed20e65b1fffadc9a","outputs":[{"kind":"pack","issue":"6e736c6e-3c94-4a7d-9201-3fa3d2c71bf3","html_hash":"1de00eb7a301f480e1197ad70f7771b60b4f47167b50880e60be86b6b2ae4a15","pdf_hash":"faf897fe76f149b7976bc45311ca1d448232f6ba6f948bf6b328748957da7c54"},{"kind":"report","issue":"692dfb18-4413-4380-9aad-dd1a7269cd82","html_hash":"6c3b59f26898ca8a1818121200c98831281b98671b301b0200e204cb25edda8d","pdf_hash":"7222ffef6cd8c4975569b983e03173aa821e010eec8dec5f78b3b445084c6b3b"},{"kind":"finance","issue":"66220d79-866d-4e7e-bbac-037a54c291fe","html_hash":"be14428ebc1c77653295bc6f37fea246c52963a4b4dca2282c8b762f9dc36c7f","pdf_hash":"9ba36c802b0872cdab22835647ccd56ac449945ba63181a94bb7d5e7e7bf5603"}]}
+ℹ {"step":"restricted-access","source":"c2000000-0000-4000-8000-000000000001","item":"c2000000-0000-4000-8000-000000000001","version":"363bc1e22ad3b41cb0c56f2959bf8e63e396a38ed039231ed20e65b1fffadc9a","outputs":[{"kind":"pack","issue":"6e736c6e-3c94-4a7d-9201-3fa3d2c71bf3","html_hash":"1de00eb7a301f480e1197ad70f7771b60b4f47167b50880e60be86b6b2ae4a15","pdf_hash":"faf897fe76f149b7976bc45311ca1d448232f6ba6f948bf6b328748957da7c54"},{"kind":"report","issue":"692dfb18-4413-4380-9aad-dd1a7269cd82","html_hash":"6c3b59f26898ca8a1818121200c98831281b98671b301b0200e204cb25edda8d","pdf_hash":"7222ffef6cd8c4975569b983e03173aa821e010eec8dec5f78b3b445084c6b3b"},{"kind":"finance","issue":"66220d79-866d-4e7e-bbac-037a54c291fe","html_hash":"be14428ebc1c77653295bc6f37fea246c52963a4b4dca2282c8b762f9dc36c7f","pdf_hash":"9ba36c802b0872cdab22835647ccd56ac449945ba63181a94bb7d5e7e7bf5603"}]}
+ℹ {"step":"pack-bundle-restored","source":"c2000000-0000-4000-8000-000000000001","item":"c2000000-0000-4000-8000-000000000001","version":"363bc1e22ad3b41cb0c56f2959bf8e63e396a38ed039231ed20e65b1fffadc9a","outputs":[{"kind":"pack","issue":"6e736c6e-3c94-4a7d-9201-3fa3d2c71bf3","html_hash":"1de00eb7a301f480e1197ad70f7771b60b4f47167b50880e60be86b6b2ae4a15","pdf_hash":"faf897fe76f149b7976bc45311ca1d448232f6ba6f948bf6b328748957da7c54"},{"kind":"report","issue":"692dfb18-4413-4380-9aad-dd1a7269cd82","html_hash":"6c3b59f26898ca8a1818121200c98831281b98671b301b0200e204cb25edda8d","pdf_hash":"7222ffef6cd8c4975569b983e03173aa821e010eec8dec5f78b3b445084c6b3b"},{"kind":"finance","issue":"66220d79-866d-4e7e-bbac-037a54c291fe","html_hash":"be14428ebc1c77653295bc6f37fea246c52963a4b4dca2282c8b762f9dc36c7f","pdf_hash":"9ba36c802b0872cdab22835647ccd56ac449945ba63181a94bb7d5e7e7bf5603"}]}
+ℹ {"step":"report-bundle-restored","source":"c2000000-0000-4000-8000-000000000001","item":"c2000000-0000-4000-8000-000000000001","version":"363bc1e22ad3b41cb0c56f2959bf8e63e396a38ed039231ed20e65b1fffadc9a","outputs":[{"kind":"pack","issue":"6e736c6e-3c94-4a7d-9201-3fa3d2c71bf3","html_hash":"1de00eb7a301f480e1197ad70f7771b60b4f47167b50880e60be86b6b2ae4a15","pdf_hash":"faf897fe76f149b7976bc45311ca1d448232f6ba6f948bf6b328748957da7c54"},{"kind":"report","issue":"692dfb18-4413-4380-9aad-dd1a7269cd82","html_hash":"6c3b59f26898ca8a1818121200c98831281b98671b301b0200e204cb25edda8d","pdf_hash":"7222ffef6cd8c4975569b983e03173aa821e010eec8dec5f78b3b445084c6b3b"},{"kind":"finance","issue":"66220d79-866d-4e7e-bbac-037a54c291fe","html_hash":"be14428ebc1c77653295bc6f37fea246c52963a4b4dca2282c8b762f9dc36c7f","pdf_hash":"9ba36c802b0872cdab22835647ccd56ac449945ba63181a94bb7d5e7e7bf5603"}]}
+ℹ {"step":"finance-bundle-restored","source":"c2000000-0000-4000-8000-000000000001","item":"c2000000-0000-4000-8000-000000000001","version":"363bc1e22ad3b41cb0c56f2959bf8e63e396a38ed039231ed20e65b1fffadc9a","outputs":[{"kind":"pack","issue":"6e736c6e-3c94-4a7d-9201-3fa3d2c71bf3","html_hash":"1de00eb7a301f480e1197ad70f7771b60b4f47167b50880e60be86b6b2ae4a15","pdf_hash":"faf897fe76f149b7976bc45311ca1d448232f6ba6f948bf6b328748957da7c54"},{"kind":"report","issue":"692dfb18-4413-4380-9aad-dd1a7269cd82","html_hash":"6c3b59f26898ca8a1818121200c98831281b98671b301b0200e204cb25edda8d","pdf_hash":"7222ffef6cd8c4975569b983e03173aa821e010eec8dec5f78b3b445084c6b3b"},{"kind":"finance","issue":"66220d79-866d-4e7e-bbac-037a54c291fe","html_hash":"be14428ebc1c77653295bc6f37fea246c52963a4b4dca2282c8b762f9dc36c7f","pdf_hash":"9ba36c802b0872cdab22835647ccd56ac449945ba63181a94bb7d5e7e7bf5603"}]}
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 70892.5621
+
+✔ PT-01 / PT-18 Service and Finance download authority and exact recovery over HTTP (39114.6591ms)
+ℹ ▶ Service and Finance output checks current authority after private storage
+  ✔ current role, company and workspace refusals expose no original bytes or metadata (900.6393ms)
+  ✔ issued Service report html: revoke report.read during storage, then recover the same original (550.2672ms)
+  ✔ issued Service report pdf: revoke report.read during storage, then recover the same original (564.3973ms)
+  ✔ issued Service report html: revoke field.read.own during storage, then recover the same original (420.2035ms)
+  ✔ issued Service report pdf: revoke field.read.own during storage, then recover the same original (557.396ms)
+  ✔ generated Service report html: revoke report.issue during storage, then recover the same original (315.7014ms)
+  ✔ generated Service report pdf: revoke report.issue during storage, then recover the same original (277.6372ms)
+  ✔ generated Service report html: revoke report.read during storage, then recover the same original (264.7116ms)
+  ✔ generated Service report pdf: revoke report.read during storage, then recover the same original (272.4758ms)
+  ✔ Finance evidence html: revoke finance.read during storage, then recover the same original (173.0045ms)
+  ✔ Finance evidence pdf: revoke finance.read during storage, then recover the same original (269.6523ms)
+  ✔ Finance evidence html: revoke shared.finance.read during storage, then recover the same original (198.673ms)
+  ✔ Finance evidence pdf: revoke shared.finance.read during storage, then recover the same original (251.6026ms)
+  ✔ issued report manifest also refuses authority lost during storage (284.5328ms)
+  ✔ missing storage refuses output and recovers original without reissuing (662.8187ms)
+  ✔ corrupt storage refuses output and recovers original without reissuing (874.0406ms)
+✔ Service and Finance output checks current authority after private storage (37023.7867ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 38992.8744
+
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 230883.2762
