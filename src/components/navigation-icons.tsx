@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import { FontAwesomeGlyph } from "./font-awesome";
+import { navigationFontAwesome } from "./font-awesome-icons";
 
 // Locally authored geometry from PPO-NAV-ICON-REC r02's semantic descriptions.
 // Bodies alone receive fill; detail paths retain contrast. Open symbols specify
@@ -92,11 +94,13 @@ export function isNavigationIcon(name: string): name is NavigationIconName {
 }
 export function NavigationIcon({ name, active = false }: { name: NavigationIconName; active?: boolean }) {
   const drawing: Drawing = navigationDrawings[name];
-  return <svg className="product-icon" data-icon={name} data-variant={active ? "active" : "outline"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  const variant = active ? "active" : "outline";
+  const local = <svg className="product-icon" data-icon={name} data-variant={variant} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     {active && drawing.selected ? drawing.selected : <>
       <g fill={active && !drawing.open ? "currentColor" : "none"}>{drawing.body}</g>
       {drawing.detail && <g stroke={active && !drawing.open && !outsideDetails.has(name) ? "var(--ppo-icon-cutout, #f0f6ed)" : "currentColor"}>{drawing.detail}</g>}
       {drawing.exterior && <g fill="none" stroke="currentColor">{drawing.exterior}</g>}
     </>}
   </svg>;
+  return <FontAwesomeGlyph icon={navigationFontAwesome[name]} selected={active} className="product-icon" variant={variant} fallback={local} />;
 }

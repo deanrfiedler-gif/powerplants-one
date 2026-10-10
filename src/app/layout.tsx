@@ -3,6 +3,8 @@ import { ApplicationFrame } from "../components/application-frame";
 import { appleTouchIconPath, navy } from "../platform/installation";
 import { developmentRequest } from "../development/access";
 import { headers } from "next/headers";
+import { FontAwesomeKit } from "../components/font-awesome";
+import { fontAwesomeKit } from "../platform/font-awesome";
 import "./globals.css";
 import "./shared-layout.css";
 import "./mobile-layout.css";
@@ -68,9 +70,11 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const kit = fontAwesomeKit();
   return (
     <html lang="en-AU">
       <body>
+        {kit && <FontAwesomeKit kit={kit} />}
         <a className="skip-link" href="#main">
           Skip to main content
         </a>

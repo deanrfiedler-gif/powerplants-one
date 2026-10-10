@@ -134,6 +134,13 @@ The header imports the standalone `NotificationBell`; the full Notifications wor
 - The page guide and help tooltips name what they open; the accessible names `Page guide` and `Quick Help` are unchanged for existing tests and shortcuts.
 - The search shortcut hint and panel footer use `--text-secondary`. See [the shell contract](../systems/shell.md).
 
+## Font Awesome icons (ADR-0050)
+
+- `src/components/font-awesome-icons.ts` maps every name in the navigation, shell, product, My Work and secondary-menu icon sets to a Font Awesome icon. Each map is typed against its set, so an unmapped name fails the type check.
+- `FontAwesomeGlyph` renders the local drawing until the owner's Kit is running, then an `<i>` with the same sizing class: Classic Light, or Classic Solid for a selected rail item. Font Awesome nests its SVG inside that element, so React keeps every node it rendered.
+- The Kit loads only when `PPO_FONT_AWESOME_KIT` holds a plain Kit ID. CI, copies of the repository, the offline workspace and the sign-in page keep the local drawings.
+- Module icon sets (job packs, materials, engineering changes, commissioning, acceptance, fertigation, leads and the Gantt chart) still draw locally. Visual review of the Font Awesome icons is pending.
+
 ## Session check keeps the shell context
 
 `ShellProvider` keeps its current context while `ppo-session-ready` re-reads it, so the rail toggle and other context-dependent controls no longer blank for about 100 ms after load. Identity changes still clear it through `ppo-session-lock`. Reasoning, invariant and proof: [the shell contract](../systems/shell.md#shell-context-stays-through-the-session-check--9-october-2026).
