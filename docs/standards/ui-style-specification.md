@@ -57,7 +57,7 @@ Brand colours are exact source values. UI neutrals and semantic colours are prop
 
 Render the 1254 x 1254 image at 88 x 88 CSS px. Its visible artwork bounds are approximately x110-1169 / y122-1121, giving a visible height of about 70 px, above the source's 60 px minimum. The PDF p8 clear-space diagram uses 2x the logotype letter height for the standard mark. The mockup provides at least approximately 20 px of clear space around the visible artwork, including transparent padding, and avoids shrinking the logo for phone layouts. Alwyn New is the mark's lettering reference, not the UI typeface.
 
-Use neutral line icons for application actions, always with accessible names. The prototype uses Lucide for functional controls; these are not represented as Powerplants' supplied category artwork. No decorative brand pattern sits behind CRM data.
+Use neutral line icons for application actions, always with accessible names. [ADR-0050](../decisions/ADR-0050-font-awesome-light-icons.md) adopts Font Awesome Pro Classic Light for the application's icons, with Classic Solid for a selected item, loaded through the owner's Kit on online pages; the local line drawings remain wherever the Kit is not configured or not running. The retired standalone design preview used Lucide. Neither is represented as Powerplants' supplied category artwork. No decorative brand pattern sits behind CRM data.
 
 ## 4. Shared CRM workspace and view contract
 

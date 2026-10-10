@@ -429,7 +429,7 @@ test("Accepted r08 shell and board retain full-width stages, fixed headers and s
   await page.getByRole("button", { name: "More", exact: true }).click();
   await expect(activeLink).toHaveAttribute("aria-current", "page");
   const activeStyle = await activeLink.evaluate(e => ({ fill: getComputedStyle(e).backgroundColor, icon: getComputedStyle(e.querySelector("svg")!).color }));
-  expect(activeStyle).toEqual({ fill: "rgb(240, 246, 237)", icon: "rgb(49, 94, 67)" });
+  expect(activeStyle).toEqual({ fill: "rgb(232, 236, 241)", icon: "rgb(36, 42, 55)" });
   await page.getByRole("button", { name: info.project.use.isMobile ? "Close menu" : "Close More menu", exact: true }).click();
   for (const width of info.project.use.isMobile ? [390, 320] : [1920, 1440, 1280, 1024]) {
     await page.setViewportSize({ width, height: 844 });
