@@ -190,7 +190,7 @@ function ProductNavigationView({
       </>
     );
     return allowed(item) ? (
-      <Link prefetch={mobile ? undefined : false}
+      <Link prefetch={wide && !mobile ? false : undefined}
         key={item.id}
         className={mobile ? undefined : "ppo-more-link"}
         href={departmentHref(item.href!, root?.id ?? workspaceId, new URLSearchParams(locationQuery).get("day"))}

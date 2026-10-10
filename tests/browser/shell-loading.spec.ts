@@ -19,7 +19,7 @@ test("desktop rail waits for activation; desktop and phone preserve exact naviga
   const link = menu.getByRole("link", { name: "People", exact: true });
   await expect(link).toBeVisible();
   if (!isMobile) await link.hover();
-  const destinations = new Set(await page.locator("[data-shell-navigation] a, .mobile-navigation a").evaluateAll(links => links.map(link => new URL((link as HTMLAnchorElement).href).pathname)));
+  const destinations = new Set(await page.locator(isMobile ? ".mobile-navigation a" : "[data-shell-navigation] a").evaluateAll(links => links.map(link => new URL((link as HTMLAnchorElement).href).pathname)));
   // Fixed observation of background work; this does not change a readiness deadline.
   await page.waitForTimeout(1000);
   page.off("request", observe);
