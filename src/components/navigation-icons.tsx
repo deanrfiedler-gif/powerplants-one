@@ -49,11 +49,11 @@ export const navigationDrawings = {
   "nav-assurance": { body: shield, detail: tick },
   "nav-acceptance": { body: <path d="M5 3h15l-3 5 3 5H5Z"/>, detail: <path d="M5 3v19"/> },
   "nav-requests": { body: <><rect x="3" y="10" width="4" height="8" rx="2"/><rect x="17" y="10" width="4" height="8" rx="2"/></>, detail: <path d="M3 12V10a9 9 0 0 1 18 0v7c0 3-2 4-6 4h-3"/> },
-  "nav-orders": { body: <path d="M19 10V4H5v18h8"/>, open: true, selected: <><path d="M19 10V4H5v18h8V11Z" fill="currentColor"/><path d="M9 4V2h6v2M8 10h7" stroke="var(--ppo-icon-cutout, #f0f6ed)"/><path d="m14 20 1-4 5-5 3 3-5 5-4 1ZM8 18h3"/></>, detail: <>{clip}<path d="m14 20 1-4 5-5 3 3-5 5-4 1ZM8 10h7M8 18h3"/></> },
+  "nav-orders": { body: <path d="M19 10V4H5v18h8"/>, open: true, selected: <><path d="M19 10V4H5v18h8V11Z" fill="currentColor"/><path d="M9 4V2h6v2M8 10h7" stroke="var(--ppo-icon-cutout, #ffffff)"/><path d="m14 20 1-4 5-5 3 3-5 5-4 1ZM8 18h3"/></>, detail: <>{clip}<path d="m14 20 1-4 5-5 3 3-5 5-4 1ZM8 10h7M8 18h3"/></> },
   "nav-schedule": { body: calendar, exterior: bindings, detail: <path d="M3 10h18M7 15h10M7 13v4M17 13v4"/> },
   "nav-team": { body: <><circle cx="9" cy="7" r="3"/><circle cx="18" cy="8" r="2.5"/><path d="M2 21v-3a7 7 0 0 1 14 0v3ZM17 14a5 5 0 0 1 5 5v2"/></> },
   "nav-packs": { body: <path d="M3 20V4h6l3 3h8v4H7l-4 9h15l4-9H7Z"/> },
-  "nav-service-review": { body: <path d="M13 22H5V2h9l5 5v7"/>, open: true, selected: <><path d="M13 22H5V2h9l5 5v7l-6 2Z" fill="currentColor"/><path d="M14 2v5h5M8 11h7" stroke="var(--ppo-icon-cutout, #f0f6ed)"/><path d="m14 19 3 3 5-6"/></>, detail: <>{fold}<path d="M8 11h7m-1 8 3 3 5-6"/></> },
+  "nav-service-review": { body: <path d="M13 22H5V2h9l5 5v7"/>, open: true, selected: <><path d="M13 22H5V2h9l5 5v7l-6 2Z" fill="currentColor"/><path d="M14 2v5h5M8 11h7" stroke="var(--ppo-icon-cutout, #ffffff)"/><path d="m14 19 3 3 5-6"/></>, detail: <>{fold}<path d="M8 11h7m-1 8 3 3 5-6"/></> },
   "nav-equipment": { body: <path d="m12 2 4 4-4 4-4-4Zm-6 6 4 4-4 4-4-4Zm12 0 4 4-4 4-4-4Zm-6 6 4 4-4 4-4-4Z"/> },
   "nav-demand": { body: <path d="M3 3h1v4M2 7h4M2 11h4l-4 4h4M2 18h4l-2 2 2 2H2M10 5h11M10 13h11M10 20h11"/>, open: true, selected: <path d="M3 3h1v4M2 7h4M2 11h4l-4 4h4M2 18h4l-2 2 2 2H2M10 5h11M10 13h11M10 20h11" strokeWidth="2.6"/> },
   "nav-purchasing": { body: <path d="M5 5h17l-3 10H7Z"/>, detail: <><path d="M2 2h2l4 16h11"/><circle cx="9" cy="21" r="1"/><circle cx="18" cy="21" r="1"/></> },
@@ -98,7 +98,7 @@ export function NavigationIcon({ name, active = false }: { name: NavigationIconN
   const local = <svg className="product-icon" data-icon={name} data-variant={variant} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     {active && drawing.selected ? drawing.selected : <>
       <g fill={active && !drawing.open ? "currentColor" : "none"}>{drawing.body}</g>
-      {drawing.detail && <g stroke={active && !drawing.open && !outsideDetails.has(name) ? "var(--ppo-icon-cutout, #f0f6ed)" : "currentColor"}>{drawing.detail}</g>}
+      {drawing.detail && <g stroke={active && !drawing.open && !outsideDetails.has(name) ? "var(--ppo-icon-cutout, #ffffff)" : "currentColor"}>{drawing.detail}</g>}
       {drawing.exterior && <g fill="none" stroke="currentColor">{drawing.exterior}</g>}
     </>}
   </svg>;

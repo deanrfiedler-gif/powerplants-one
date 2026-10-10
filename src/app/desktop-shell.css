@@ -17,7 +17,7 @@
 /* Shared layout coordinates. The rail width and the expanded secondary-menu width are the two numbers that
    the centred header group, the More panel's right edge and every workspace menu are measured against, so
    they are declared once here rather than repeated as literals in each module stylesheet. */
-:root { --ppo-rail-width: 76px; --ppo-secondary-menu-width: 240px; --ppo-rail-navy: #242a37; --ppo-rail-hover: #343c4c; --ppo-rail-selected: #f0f6ed; --ppo-rail-ink: #242a37; --ppo-icon-cutout: #f0f6ed; }
+:root { --ppo-rail-width: 76px; --ppo-secondary-menu-width: 240px; --ppo-rail-navy: #242a37; --ppo-rail-hover: #343c4c; --ppo-rail-selected: #ffffff; --ppo-rail-ink: #242a37; --ppo-icon-cutout: #ffffff; }
 .ppo-shell-header .product-heading { display: flex; align-items: center; align-self: center; min-width: 0; margin: 0; font-size: 16px; line-height: 1.3; white-space: nowrap; }
 .ppo-shell-header .ppo-product-name { display: block; font-size: 16px; line-height: 1.3; color: #242a37; font-weight: 700; letter-spacing: -.15px; }
 /* Breadcrumb: [Module] / [Current page]. The rail's logo is the product identity, so the product name is
@@ -190,7 +190,8 @@
   .ppo-rail .ppo-rail-group { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 4px; margin-top: 4px; padding-top: 8px; border-top: 1px solid #4a5366; }
   .ppo-rail-group-label { display: none; }
   .ppo-rail-bottom { flex: 0 0 auto; }
-  .ppo-rail .ppo-rail-item[aria-current=page], .ppo-rail .ppo-rail-item[aria-current=page]:hover { background: var(--ppo-rail-selected); color: var(--ppo-rail-ink); box-shadow: inset 3px 0 var(--ppo-rail-ink); }
+  /* The selected item is a plain white tile with a filled navy glyph: no tint and no edge bar (Dean, 10 October 2026). */
+  .ppo-rail .ppo-rail-item[aria-current=page], .ppo-rail .ppo-rail-item[aria-current=page]:hover { background: var(--ppo-rail-selected); color: var(--ppo-rail-ink); box-shadow: none; }
   .ppo-rail .ppo-rail-item[aria-expanded=true] { box-shadow: inset 0 -3px #a8d8ff; }
   .ppo-rail-tooltip { position: fixed; z-index: 110; left: 84px; max-width: min(300px, calc(100vw - 96px)); padding: 6px 10px; color: white; background: var(--ppo-rail-navy); border: 1px solid #8995a8; border-radius: 5px; font: 13px/1.5 PPOShellRoboto, Roboto, Verdana, sans-serif; pointer-events: none; }
   /* Global search and the quick-add button immediately to its right are one group, and it is that group's

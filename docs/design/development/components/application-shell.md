@@ -139,6 +139,7 @@ The header imports the standalone `NotificationBell`; the full Notifications wor
 - `src/components/font-awesome-icons.ts` maps every name in the navigation, shell, product, My Work and secondary-menu icon sets to a Font Awesome icon. Each map is typed against its set, so an unmapped name fails the type check.
 - `FontAwesomeGlyph` renders the local drawing until the owner's Kit is running, then an `<i>` with the same sizing class: Classic Light, or Classic Solid for a selected rail item. Font Awesome nests its SVG inside that element, so React keeps every node it rendered.
 - The Kit loads only when `PPO_FONT_AWESOME_KIT` holds a plain Kit ID. CI, copies of the repository, the offline workspace and the sign-in page keep the local drawings.
+- The selected rail item is a plain white tile with a navy Solid glyph. Dean asked on 10 October 2026 for the pale green tint and the 3 px left bar to be removed. Hover and focus are unchanged.
 - Module icon sets (job packs, materials, engineering changes, commissioning, acceptance, fertigation, leads and the Gantt chart) still draw locally. Visual review of the Font Awesome icons is pending.
 
 ## Session check keeps the shell context
