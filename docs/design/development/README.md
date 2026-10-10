@@ -55,7 +55,7 @@ Guides use Australian English and thirteen sections: purpose, prerequisites, qui
 
 For each new approved mockup, record its immutable path/hash, viewport, revision and scope; describe layout regions, dimensions, spacing, typography, colour tokens, control variants, table/card behaviour, responsive transformations and loading/empty/error states in the Markdown contract. Separate observed image details from proposed behaviour. Compare the actual page at the same viewport and state. Record mismatches and resolve them against the accepted reference instead of updating a screenshot merely to pass.
 
-Images alone do not specify interaction or mobile behaviour. Attach a mobile image where available and state what remains unspecified. Shared shell/theme contracts govern consistent controls; page-specific accepted exceptions must be explicit. Future richer design tooling can use these stable IDs and references without creating another source of truth.
+Images alone do not specify interaction or mobile behaviour. Attach a mobile image where available and state what remains unspecified. Shared shell/theme contracts govern consistent controls; page-specific accepted exceptions must be explicit. Pages are drawn in Claude Design on the repository-derived design system under [ADR-0051](../../decisions/ADR-0051-claude-design-page-design.md): a board for a new page or an option comparison, the running app for refining an existing page. Future richer design tooling can use these stable IDs and references without creating another source of truth.
 
 ## Theme changes and recovery
 
