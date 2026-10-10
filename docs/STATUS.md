@@ -6,7 +6,7 @@
 
 ## Icon style decision — 10 October 2026
 
-After a local comparison of the app's icons with Font Awesome Classic Light, Regular and Free, Dean chose Font Awesome Pro Classic Light, with Classic Solid for selected items. [ADR-0050](decisions/ADR-0050-font-awesome-light-icons.md) records the decision, the comparison mapping and the delivery options. Delivery is proposed: the Kit package built into the app needs annual billing, which Dean's monthly plan excludes, so the alternative is the Kit script on online pages only. Dean's billing choice, the licence terms and offline treatment remain open. No dependency, configuration or icon is changed yet; implementation needs Dean's separate go-ahead. Pro icon files and captures stay out of this public repository.
+After a local comparison of the app's icons with Font Awesome Classic Light, Regular and Free, Dean chose Font Awesome Pro Classic Light, with Classic Solid for selected items. [ADR-0050](decisions/ADR-0050-font-awesome-light-icons.md) records the decision, the comparison mapping and the delivery options. Packages need annual billing, so Dean chose to stay on the monthly plan and load the icons through his Kit script on online pages; the offline field workspace keeps its local shapes. Kit limits, licence terms after a lapse, the Kit's allowed addresses and the full icon mapping remain open. No dependency, configuration or icon is changed yet; implementation needs Dean's separate go-ahead. Pro icon files and captures stay out of this public repository.
 
 ## Parallel backend access and recovery — 9 October 2026
 

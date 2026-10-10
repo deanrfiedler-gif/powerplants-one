@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. **Status:** the icon style is accepted by the owner (10 October 2026). The delivery method is proposed. This record authorises no implementation, dependency or configuration change; that needs Dean's separate go-ahead once the open questions below are answered.
+Owner: Dean Fiedler. **Status:** the icon style and the delivery method (the Kit script, option A) are accepted by the owner (10 October 2026). This record authorises no implementation or configuration change; building it needs Dean's separate go-ahead.
 
 Related: NFR-03, NFR-05, NFR-07, NFR-08, NFR-12; BP-01 sections 8.2 and 20; [department navigation icons](department-navigation-icons.md); [shared UI specification](../standards/ui-style-specification.md).
 
@@ -12,7 +12,7 @@ Dean has a Font Awesome Pro account (version 7.3.1, monthly plan) and asked whet
 
 Accepted direction: the application's functional icons move from locally drawn shapes to Font Awesome Pro **Classic Light**. **Classic Solid** replaces the filled shape the app now draws for a selected item, such as the current page in the department navigation list.
 
-Not decided here: how the icons are delivered, the final icon-by-icon mapping, and when the change is built.
+The delivery method was decided later the same day (below). Not decided here: the final icon-by-icon mapping, and when the change is built.
 
 ## Context
 
@@ -62,11 +62,17 @@ The mapping used for the comparison is a starting point, not the final mapping:
 | D. Keep the locally drawn icons | No dependency, and the current consistent weight. | Every new icon must be drawn in-house. Dean preferred Light. |
 | E. Commit Pro icon files | Self-contained. | Forbidden by the Pro licence in a public repository, and the monthly plan has no download. |
 
-## Proposed delivery
+## Delivery decision — 10 October 2026
 
-**B** is the better technical fit: the icons are compiled into the app's own assets, which suits the offline workspace and avoids a runtime dependency. The token would be held only in local, CI and hosting secret stores. It needs Dean to switch his plan to annual billing, which is his decision.
+B was the better technical fit, but it needs annual billing. Offered the choice between annual billing with B and the monthly plan with A, Dean decided: "Stay monthly and use the Kit script."
 
-On the monthly plan, use **A** for online pages only. The offline workspace would keep its local shapes, and the outage risk would be accepted. Every control keeps its accessible name, but icon-only buttons would lose their visible cue if Font Awesome's servers were unreachable.
+- **Online pages** load the Pro icons through Dean's Kit script.
+- **The offline field workspace** keeps its current locally drawn shapes, so it never depends on Font Awesome's servers (NFR-07).
+- **Accepted risks for the private synthetic prototype:**
+  - If Font Awesome's servers are unreachable, icon-only buttons lose their visible cue. Every control keeps its accessible name (NFR-05, NFR-08).
+  - If the plan lapses, the icons disappear for every user.
+  - A third-party script runs on every online page (NFR-03). Production use would need this risk reviewed again.
+- **B remains available** if Dean later moves to annual billing. The semantic icon layer means the change would stay inside the icon components.
 
 ## Consequences
 
@@ -76,17 +82,21 @@ On the monthly plan, use **A** for online pages only. The offline workspace woul
   - an amendment note on the department navigation icons record;
   - the application-shell component guide and the design register;
   - tests that measure icon size or shape, such as `tests/ui/desktop-shell.spec.ts` and the My Work menu check in `tests/browser/engineering-changes.spec.ts`.
-- **Licence:** the prototype would depend on Dean's personal subscription. Production use needs a company-held licence and company-controlled configuration (NFR-12). If the plan lapses, option A loses its icons immediately. Under option B, existing builds keep running but new builds fail without a token. The licence position after a lapse is not verified.
+- **Kit configuration:** the Kit ID is not a secret, because it appears in every page that loads it. Even so, supplying it through configuration rather than hard-coding it keeps forks and other copies of this public repository from drawing on Dean's Kit. The Kit's website restrictions remain the control.
+- **Licence:** the prototype depends on Dean's personal monthly subscription. Production use needs a company-held licence and company-controlled configuration (NFR-12). If the plan lapses, the icons disappear immediately. The licence position after a lapse is not verified.
 - **Reversal:** the semantic icon layer stays, so returning to local shapes means restoring the previous drawings in the icon components from Git history.
 
 ## Open questions before implementation
 
-1. Will Dean switch to annual billing for option B, or keep the monthly plan and use option A? Packages need annual billing (answered by his Kit settings on 10 October 2026). What page-view or bandwidth limits apply to option A?
+1. What page-view or bandwidth limits apply to the Kit on the monthly plan?
 2. What do the licence terms say about continued use after a lapse, and about the private hosted demo?
 3. Which addresses must the Kit allow: `localhost` and the hosted demo's address?
 4. What is the final mapping for every semantic icon name in the catalogues listed above, including names with no close Light match?
-5. How should the offline workspace be treated under the chosen option?
-6. Dean's visual review of the built icons, which remains separate from this record.
+5. Which Kit technology should be used? Web Font styles React's own markup. SVG + JS replaces that markup after React renders it.
+6. Should automated tests and CI load the Kit, which adds a network dependency and uses page views, or run without icons?
+7. Dean's visual review of the built icons, which remains separate from this record.
+
+Resolved on 10 October 2026: billing stays monthly with the Kit script, and the offline workspace keeps its local shapes.
 
 ## Validation
 
