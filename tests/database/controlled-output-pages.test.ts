@@ -289,8 +289,8 @@ for (const version of [1, 2] as const) {
     assert.ok(source.ready && "source" in source && source.source);
     const work = options.works.find((w) => w.id === workId)!;
     const financeId = randomUUID();
-    const quantityEntries = (source.source.entries as SourceEntry[]).filter((e) =>
-      ["MIN", "EA"].includes(e.uom),
+    const quantityEntries = (source.source.entries as SourceEntry[]).filter(
+      (e) => ["MIN", "EA"].includes(e.uom),
     );
     assert.equal(quantityEntries.length, 9);
     await saveFinance(preparer, null, {

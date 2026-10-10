@@ -117,6 +117,15 @@ export async function controlledOutput(family: Family) {
   };
 }
 export type ControlledOutput = Awaited<ReturnType<typeof controlledOutput>>;
+export async function businessRow(q: ControlledOutput) {
+  const table =
+    q.family === "pack"
+      ? "packs"
+      : q.family === "report"
+        ? "service_reports"
+        : "finance_handoffs";
+  return (await rows(`SELECT * FROM ppo.${table} WHERE id=$1`, [q.id]))[0];
+}
 export async function jobRow(q: ControlledOutput) {
   return (
     await rows(`SELECT * FROM ppo.${q.family}_render_jobs WHERE id=$1`, [

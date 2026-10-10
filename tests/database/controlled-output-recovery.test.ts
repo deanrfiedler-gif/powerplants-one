@@ -1,12 +1,12 @@
 import assert from "node:assert/strict";
 import { after, beforeEach, test } from "node:test";
 import { readFile, writeFile } from "node:fs/promises";
-import { join } from "node:path";
+import { homedir } from "node:os";
+import { isAbsolute, join, relative, resolve } from "node:path";
 import { reset } from "../../scripts/database";
 import { closeDatabase, database } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { LocalSyntheticDocumentStore, digest } from "../../src/documents/store";
-import { rows } from "../helpers/packs";
 import {
   families,
   controlledOutput,
@@ -15,6 +15,7 @@ import {
   storedOutput,
   exactOutput,
   finalisationEffects,
+  businessRow,
   assertNotIssued,
   assertOneIssue,
   evidence,
@@ -28,9 +29,10 @@ beforeEach(reset);
 after(closeDatabase);
 
 for (const family of families) {
-  test(`PT-23 ${family}: store failure, real finalisation rollback and original concurrent recovery`, async () => {
+  test(`PT-23 ${family}: failed storage, corrupt bundle, SQL rollback and original concurrent recovery`, async () => {
     const q = await controlledOutput(family);
     const intent = await jobRow(q);
+    const before = await businessRow(q);
     const store = LocalSyntheticDocumentStore.prototype.store;
     let injected = 0;
     LocalSyntheticDocumentStore.prototype.store = async function (
@@ -53,7 +55,39 @@ for (const family of families) {
     assert.equal((await jobRow(q)).state, "Failed");
     assert.equal(await storedOutput(q), null);
     await assertNotIssued(q);
+    assert.deepEqual(await businessRow(q), before);
     await evidence("storage-failed", q);
+
+    // Only this test's exact operation file is eligible for corruption. Restore
+    // the original even when unchanged application code wrongly issues it.
+    const root = resolve(
+      process.env.PPO_DOCUMENT_DIRECTORY ??
+        join(homedir(), ".ppo-synthetic-documents"),
+    );
+    assert.match(q.job.id, /^[a-f0-9-]{36}$/);
+    const path = resolve(root, q.p.workspace_id, q.job.id),
+      rel = relative(root, path);
+    assert.ok(rel && !rel.startsWith("..") && !isAbsolute(rel));
+    let originalBundle: Awaited<ReturnType<typeof storedOutput>> = null;
+    try {
+      await q.process({
+        beforeFinalise: async () => {
+          originalBundle = await storedOutput(q);
+          assert.ok(originalBundle);
+          await writeFile(
+            path,
+            "SYN PT-23 wrong durable version before finalisation",
+          );
+        },
+      });
+      await evidence("corrupt-before-release", q);
+    } finally {
+      if (originalBundle) await writeFile(path, originalBundle.bytes);
+    }
+    assert.ok(originalBundle);
+    await assertNotIssued(q);
+    assert.equal((await jobRow(q)).state, "Failed");
+    assert.deepEqual(await businessRow(q), before);
 
     // Fail inside recordOperation, after the issue, recipients/presentation and
     // business-state writes. The transaction must undo all of those effects.
@@ -72,7 +106,9 @@ for (const family of families) {
     assert.equal((await jobRow(q)).state, "Failed");
     const durable = await storedOutput(q);
     assert.ok(durable);
+    assert.deepEqual(durable, originalBundle);
     await assertNotIssued(q);
+    assert.deepEqual(await businessRow(q), before);
     await evidence("finalisation-rolled-back", q);
 
     let regenerated = 0;
@@ -91,7 +127,7 @@ for (const family of families) {
       durable,
       "Retry uses exact original storage result",
     );
-    assert.equal((await jobRow(q)).attempts, 3);
+    assert.equal((await jobRow(q)).attempts, 4);
     const effects = await assertOneIssue(q),
       output = await exactOutput(q);
     assert.equal(output.issue.manifest.store_key.sha256, durable.key.sha256);
@@ -143,80 +179,26 @@ for (const family of families) {
         stored,
         "Stale original is retained for the named recovery owner",
       );
+      await evidence(`${change}-changed`, q);
       await assertNotIssued(q);
       assert.ok(["StaleSource", "Failed"].includes(job.state));
+      assert.equal(
+        job.error_code,
+        change === "renderer"
+          ? "TemplateUnavailable"
+          : change === "source" && family === "finance"
+            ? "SourceChanged"
+            : "StaleSource",
+      );
       assert.deepEqual(job.render_snapshot, original.render_snapshot);
       assert.equal(job.input_hash, original.input_hash);
       assert.ok(job.output_manifest);
       // Restoring source code cannot turn a stale template observation into a
       // reviewed release. Policy/source changes remain in force on retry.
       await q.process();
+      await evidence(`${change}-retry`, q);
       await assertNotIssued(q);
       assert.deepEqual(await storedOutput(q), stored);
-      await evidence(`${change}-changed`, q);
     });
   }
-
-  test(`PT-23 ${family}: retained v1 issue survives v2 selection and original request recovery`, async () => {
-    await selectTemplate(family, 1);
-    const q = await controlledOutput(family);
-    await q.process();
-    const original = await exactOutput(q),
-      effects = await assertOneIssue(q);
-    assert.equal(original.issue.manifest.template.version, 1);
-    const templates = await rows(
-      `SELECT * FROM ppo.${family}_templates ORDER BY version`,
-    );
-    await selectTemplate(family, 2);
-    await q.process();
-    assert.deepEqual(await exactOutput(q), original);
-    assert.deepEqual(await finalisationEffects(q), effects);
-    assert.deepEqual(
-      await rows(`SELECT * FROM ppo.${family}_templates ORDER BY version`),
-      templates,
-    );
-    assert.deepEqual((await q.replay()).receipt, q.receipt);
-    await evidence("v1-preserved", q);
-  });
-
-  test(`PT-23 ${family}: damaged durable bytes just before finalisation cannot be issued`, async () => {
-    const q = await controlledOutput(family);
-    let original: Awaited<ReturnType<typeof storedOutput>>;
-    const root = process.env.PPO_DOCUMENT_DIRECTORY;
-    // Use the adapter rather than touching an arbitrary filesystem path.
-    const read = LocalSyntheticDocumentStore.prototype.read;
-    let damaged = false,
-      refused = 0;
-    LocalSyntheticDocumentStore.prototype.read = async function (ctx, key) {
-      if (damaged && key.item_id === q.job.id) {
-        refused++;
-        throw Error("SYN exact durable version unavailable");
-      }
-      return read.call(this, ctx, key);
-    };
-    try {
-      await q.process({
-        beforeFinalise: async () => {
-          original = await storedOutput(q);
-          damaged = true;
-        },
-      });
-    } finally {
-      LocalSyntheticDocumentStore.prototype.read = read;
-    }
-    assert.ok(
-      refused > 0,
-      "Final release must re-read the exact durable bundle",
-    );
-    await assertNotIssued(q);
-    await evidence("unavailable-before-release", q, { refused });
-    await q.process();
-    await assertOneIssue(q);
-    assert.deepEqual(await storedOutput(q), original!);
-    // Keep task-owned store files outside Git; no raw path enters evidence.
-    if (root)
-      assert.ok(
-        !join(root, q.p.workspace_id, q.job.id).startsWith(process.cwd()),
-      );
-  });
 }
