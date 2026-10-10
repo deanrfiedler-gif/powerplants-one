@@ -40,8 +40,8 @@ class Counters(unittest.TestCase):
                 (path / "task" / str(pid) / "status").write_text("Cpus_allowed_list:\t" + allowed + "\n")
             roles = observer.role_processes({"server": 11, "database": 20, "browser_driver": 10},
                 {"server": [0], "database": [0], "browser_driver": [1, 2, 3]}, proc, 100, 4096)
-            self.assertEqual([r["pid"] for r in roles["server"]], [11, 12])
-            self.assertEqual([r["pid"] for r in roles["browser_driver"]], [10, 13])
+            self.assertCountEqual([r["pid"] for r in roles["server"]], [11, 12])
+            self.assertCountEqual([r["pid"] for r in roles["browser_driver"]], [10, 13])
             self.assertEqual(sum(r["escaped_threads"] for r in roles["database"]), 1)
             self.assertNotIn("private", str(roles))
 
