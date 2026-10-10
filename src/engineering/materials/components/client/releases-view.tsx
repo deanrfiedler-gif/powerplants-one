@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import { RegisterTable } from "../../../../components/ui/register-table";
 import { quantityText, releasePurposes, type ReleasePurpose } from "../../model";
 import type { readPeople, readReleases } from "../../reads";
 import { useMaterials } from "./materials-shell";
@@ -76,18 +77,16 @@ function PrepareDialog({ data, setId, base, initial, predecessor, onClose, onSav
         <Field label="Intended receiving audience" error={fieldError(command.error, "audience")}><input value={audience} onChange={(e) => setAudience(e.target.value)} /></Field>
       </div>
       <div className="em-panel">
-        <div className="em-table-scroll">
-          <table className="em-table">
-            <caption className="mw-sr">Lines of this material set and the quantity of each to include</caption>
-            <thead><tr><th scope="col" className="em-col-check"><span className="mw-sr">Include</span></th><th scope="col">Line</th><th scope="col">Material requirement</th><th scope="col">Remaining</th><th scope="col">Release qty</th><th scope="col">Readiness</th><th scope="col">Group</th></tr></thead>
+        <RegisterTable variant="panel" caption="Lines of this material set and the quantity of each to include">
+            <thead><tr><th scope="col" className="ppo-register-check"><span className="mw-sr">Include</span></th><th scope="col">Line</th><th scope="col">Material requirement</th><th scope="col">Remaining</th><th scope="col">Release qty</th><th scope="col">Readiness</th><th scope="col">Group</th></tr></thead>
             <tbody>
               {data.lines.map((l) => {
                 const on = l.id in picked, none = l.remaining === "0";
                 return (
                   <tr key={l.id} data-selected={on || undefined}>
-                    <td className="em-col-check"><input type="checkbox" aria-label={`Include line ${l.line_number}, ${l.description}`} checked={on} disabled={none || l.locked} onChange={() => setPicked((old) => { const next = { ...old }; if (on) delete next[l.id]; else next[l.id] = l.remaining; return next; })} /></td>
+                    <td className="ppo-register-check"><input type="checkbox" aria-label={`Include line ${l.line_number}, ${l.description}`} checked={on} disabled={none || l.locked} onChange={() => setPicked((old) => { const next = { ...old }; if (on) delete next[l.id]; else next[l.id] = l.remaining; return next; })} /></td>
                     <td>{l.line_number}</td>
-                    <td><strong>{l.description}</strong><span className="em-cell-sub">{l.location}{l.locked ? " · in a set under review" : ""}</span></td>
+                    <td><strong>{l.description}</strong><span className="ppo-register-sub">{l.location}{l.locked ? " · in a set under review" : ""}</span></td>
                     <td className="em-col-quantity">{quantityText(l.remaining, l.unit)}</td>
                     <td>{on ? <input className="em-quantity-input" aria-label={`Release quantity for line ${l.line_number} in ${l.unit}`} inputMode="decimal" value={picked[l.id]} onChange={(e) => setPicked({ ...picked, [l.id]: e.target.value })} /> : <span className="mw-muted">–</span>}</td>
                     <td><Status tone={l.readiness.tone}>{l.readiness.label}</Status></td>
@@ -96,8 +95,7 @@ function PrepareDialog({ data, setId, base, initial, predecessor, onClose, onSav
                 );
               })}
             </tbody>
-          </table>
-        </div>
+        </RegisterTable>
       </div>
       {preview && preview.blockers.length > 0 && <><h3>What stops this scope now</h3><ul className="em-blockers">{preview.blockers.map((b, i) => <li key={i}>{b.message}</li>)}</ul>
         {!structural.length && <Reason>The set can be prepared and inspected with these open. It cannot be submitted, reviewed positively, authorised or issued until they are cleared.</Reason>}</>}

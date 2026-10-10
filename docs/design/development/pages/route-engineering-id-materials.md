@@ -31,6 +31,10 @@ Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared B
 
 Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
 
+## Shared register table
+
+The materials register uses the shared house register table (`RegisterTable`, catalogue `register-table`). It is EN-06's owner-refined register made shared, with no visual change; EN-06 keeps only its line column's width and colour. See the [component specification](../components/register-table.md).
+
 ## Visual references
 
 No exact image or HTML reference is linked. Keep this gap visible.

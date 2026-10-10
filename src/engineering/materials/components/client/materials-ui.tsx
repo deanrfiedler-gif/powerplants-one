@@ -4,6 +4,7 @@ import { api, type Failure } from "../../../../components/business-ui";
 import { label as stateLabel } from "../../model";
 import { FontAwesomeGlyph } from "../../../../components/font-awesome";
 import { materialsFontAwesome } from "../../../../components/font-awesome-icons";
+import { RegisterChip, type RegisterTone } from "../../../../components/ui/register-table";
 
 // One outline family on a 24px grid at 1.7 stroke: the weight of the shell and of the shared secondary menu.
 const paths = {
@@ -123,13 +124,12 @@ export const revisionText = (n: number) => `r${String(n).padStart(2, "0")}`;
 export const lastPackageKey = "ppo.materials.last-package.v1";
 
 // A chip is a register cell's state at a glance: a check only for a completed positive state, a warning only where
-// someone must act, and plain words for everything that is merely in progress.
-export function Chip({ tone, children }: { tone: "neutral" | "attention" | "positive" | "negative"; children: React.ReactNode }) {
+// someone must act, and plain words for everything that is merely in progress. The shared register chip draws it.
+export function Chip({ tone, children }: { tone: RegisterTone; children: React.ReactNode }) {
   return (
-    <span className={`em-chip em-chip-${tone}`}>
-      {tone === "positive" ? <Icon name="check" /> : tone === "neutral" ? null : <Icon name="warning" />}
-      <span>{children}</span>
-    </span>
+    <RegisterChip tone={tone} icon={tone === "positive" ? <Icon name="check" /> : tone === "neutral" ? null : <Icon name="warning" />}>
+      {children}
+    </RegisterChip>
   );
 }
 

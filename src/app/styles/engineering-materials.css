@@ -47,14 +47,6 @@
 #ppo-materials .em-context-set select{min-height:30px;padding:0 22px 0 0;border:0;background-color:transparent;font-size:15px;font-weight:700}
 #ppo-materials .em-context-actions{display:flex;align-items:center;flex:none;gap:12px;margin-left:auto;padding-left:8px}
 #ppo-materials .em-context-actions .mw-button{min-height:42px;padding-inline:18px;font-weight:500}
-/* State chips. Green with a check only for a completed positive state, amber with a warning only where someone must
-   act, grey words for everything in progress. Colour never stands alone: the words and the icon say it too. */
-#ppo-materials .em-chip{display:inline-flex;align-items:center;gap:7px;max-width:100%;padding:3px 10px;border:1px solid transparent;border-radius:5px;background:#f0f2f5;color:#3d4757;font-size:13px;font-weight:500;line-height:20px;white-space:nowrap}
-#ppo-materials .em-chip .mw-icon{flex:none;width:15px;height:15px;stroke-width:2}
-#ppo-materials .em-chip-positive{background:#edf6e9;color:#2f6b24}
-#ppo-materials .em-chip-attention{background:#fdf1e2;color:#a3510c}
-#ppo-materials .em-chip-attention .mw-icon{color:#d9792b}
-#ppo-materials .em-chip-negative{background:#fdecec;color:var(--danger)}
 
 /* Register and inspector. The split is a container so the inspector docks only while the register keeps a usable width. */
 #ppo-materials .em-register{display:flex;flex-direction:column;flex:1;min-width:0;min-height:0;overflow-y:auto}
@@ -80,32 +72,6 @@
 #ppo-materials .em-condition .mw-icon{width:14px;height:14px}
 #ppo-materials .em-bulk{display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:8px 16px;border-top:1px solid var(--success-border);border-bottom:1px solid var(--success-border);background:var(--success-surface)}
 
-/* The table meets both edges of the register pane: no exterior padding, margin, frame, card or radius. Cells keep 14px. */
-#ppo-materials .em-table-scroll{flex:none;width:100%;overflow-x:auto;overflow-y:visible;margin:0;padding:0;border-top:1px solid var(--line)}
-#ppo-materials .em-table-scroll[data-stale]{opacity:.72;transition:opacity .15s ease}
-#ppo-materials .em-table{width:100%;min-width:860px;margin:0;border:0;border-collapse:separate;border-spacing:0;border-radius:0;table-layout:auto;font-variant-numeric:tabular-nums}
-#ppo-materials .em-table th{height:43px;padding:0;border-bottom:1px solid var(--line);border-right:1px solid var(--line-soft);background:var(--header-fill);color:var(--text-secondary);font-size:13px;font-weight:400;text-align:left;white-space:nowrap}
-#ppo-materials .em-table th:last-child{border-right:0}
-#ppo-materials .em-table th button{display:flex;align-items:center;justify-content:flex-start;width:100%;height:42px;padding:0 12px;color:inherit;font-weight:400;white-space:nowrap}
-#ppo-materials .em-table th[aria-sort] button::after{content:"";margin-left:8px;border:4px solid transparent}
-#ppo-materials .em-table th[aria-sort=ascending] button::after{border-bottom-color:var(--text-secondary);transform:translateY(-2px)}
-#ppo-materials .em-table th[aria-sort=descending] button::after{border-top-color:var(--text-secondary);transform:translateY(2px)}
-#ppo-materials .em-table td{height:50px;padding:6px 12px;border-bottom:1px solid var(--line-soft);border-right:1px solid var(--line-soft);background:var(--surface-white);vertical-align:middle;line-height:20px}
-#ppo-materials .em-table td:last-child,#ppo-materials .em-table td.em-col-check{border-right:0}
-#ppo-materials .em-table tbody tr{cursor:pointer}
-#ppo-materials .em-table tbody tr:hover td{background:var(--row-hover)}
-#ppo-materials .em-table tbody tr:is([data-inspected],[data-selected]) td{background:var(--row-emphasis)}
-#ppo-materials .em-table tbody tr[data-inspected] td:first-child{box-shadow:inset 3px 0 0 var(--navy)}
-#ppo-materials .em-table tbody tr[data-removed] td{color:var(--muted)}
-#ppo-materials .em-table tbody tr:focus-within td{background:var(--row-hover)}
-#ppo-materials .em-table tbody tr[data-inspected]:focus-within td{background:var(--row-emphasis)}
-#ppo-materials .em-col-check{width:48px;padding:0 0 0 16px!important;text-align:left;position:sticky;left:0;z-index:2}
-#ppo-materials .em-table th.em-col-check{z-index:3}
-#ppo-materials .em-col-check input{display:block;width:18px;height:18px;min-height:0;margin:0;accent-color:var(--navy);cursor:pointer}
-#ppo-materials .em-col-line{width:70px;position:sticky;left:48px;z-index:2;color:var(--text-secondary)}
-#ppo-materials .em-table th.em-col-line{position:sticky;left:48px;z-index:3}
-#ppo-materials .em-register .em-table td:not(.em-col-requirement){white-space:nowrap}
-#ppo-materials .em-table[data-wide] .em-col-requirement{min-width:360px}
 #ppo-materials :is(a,button).em-row-title{display:block;max-width:100%;color:var(--navy);font-weight:700;text-align:left;overflow-wrap:anywhere}
 #ppo-materials :is(a,button).em-row-title:hover{text-decoration:underline;text-underline-offset:3px}
 #ppo-materials .em-cell-sub{display:block;color:var(--text-secondary);font-size:13px;overflow-wrap:anywhere}
@@ -118,11 +84,13 @@
 #ppo-materials .em-status-positive .em-dot{background:#4f9a3c}
 #ppo-materials .em-status-negative{color:var(--danger)}
 #ppo-materials .em-status-negative .em-dot{background:var(--danger)}
+/* The register table, its state chips and its footer are the shared house register (src/components/ui/register-table.css).
+   EN-06 keeps only its line-number column's width and colour. */
+#ppo-materials .em-col-line{width:70px;color:var(--text-secondary)}
 #ppo-materials .em-empty{padding:40px 20px;color:var(--text-secondary);text-align:center}
 #ppo-materials .em-empty strong{display:block;margin-bottom:4px;color:var(--ink);font-size:16px}
 #ppo-materials .em-empty-page{display:flex;flex-direction:column;align-items:center;gap:10px;max-width:520px;margin:0 auto;padding-top:64px}
 #ppo-materials .em-empty-page .mw-field{width:100%;text-align:left}
-#ppo-materials .em-table-foot{display:flex;align-items:center;gap:8px;padding:8px 8px 8px 18px;color:var(--text-secondary);font-size:14px}
 #ppo-materials .em-attention{display:flex;align-items:center;gap:14px;min-height:46px;padding:8px 20px 8px 18px;border-top:1px solid var(--warning-border);background:var(--warning-surface)}
 #ppo-materials .em-attention>.mw-icon{width:20px;height:20px;color:#c9701a;flex:none}
 #ppo-materials .em-attention>p{flex:1;min-width:0}
@@ -130,7 +98,7 @@
 #ppo-materials a.em-attention-link{display:inline-flex;align-items:center;gap:8px;color:var(--link);font-weight:500;white-space:nowrap}
 #ppo-materials a.em-attention-link:hover{text-decoration:underline;text-underline-offset:3px}
 #ppo-materials .em-attention-link .mw-icon{width:18px;height:18px}
-#ppo-materials .em-attention+.em-table-scroll{border-top-color:var(--warning-border)}
+#ppo-materials .em-attention+.ppo-register{border-top-color:var(--warning-border)}
 #ppo-materials .em-page-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 16px;margin-top:auto;padding:14px 20px;color:var(--text-secondary);font-size:13px}
 
 /* Inspector: a square, closable right dock. It overlays the register when the split is too narrow for both.
@@ -165,8 +133,8 @@
 #ppo-materials .em-criteria>div{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;min-height:30px;padding:4px 0;border-top:1px solid var(--line-soft)}
 #ppo-materials .em-inspector .em-criteria>div{grid-template-columns:minmax(0,1fr) 138px;min-height:28px;padding:1px 0;border-top:0}
 #ppo-materials .em-inspector .em-criteria dt{color:var(--text-secondary)}
-#ppo-materials .em-inspector .em-criteria .em-chip:not(.em-chip-attention){padding-left:0;background:transparent}
-#ppo-materials .em-inspector .em-criteria .em-chip-positive .mw-icon{width:18px;height:18px;padding:2px;border:1.7px solid currentColor;border-radius:50%}
+#ppo-materials .em-inspector .em-criteria .ppo-register-chip:not(.ppo-register-chip--attention){padding-left:0;background:transparent}
+#ppo-materials .em-inspector .em-criteria .ppo-register-chip--positive .mw-icon{width:18px;height:18px;padding:2px;border:1.7px solid currentColor;border-radius:50%}
 #ppo-materials .em-criteria dd{display:flex;flex-direction:column;align-items:flex-start}
 #ppo-materials .em-criteria dd small{color:var(--text-secondary);font-size:12px}
 #ppo-materials .em-mandatory{color:var(--text-secondary);font-size:12px}
@@ -214,11 +182,6 @@
 #ppo-materials .em-panel-head{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;padding:12px 16px;border-bottom:1px solid var(--line-soft)}
 #ppo-materials .em-panel-head h3{margin:0;font-size:16px}
 #ppo-materials .em-panel-body{padding:14px 16px}
-#ppo-materials .em-panel .em-table-scroll{border-top:0}
-#ppo-materials .em-panel .em-table{min-width:720px}
-#ppo-materials .em-panel .em-table tbody tr{cursor:default}
-#ppo-materials .em-panel .em-table td{height:48px}
-#ppo-materials .em-panel .em-table th{padding:0 14px}
 #ppo-materials .em-two{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:14px;align-items:start}
 #ppo-materials .em-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px 20px}
 #ppo-materials .em-facts>div{display:flex;flex-direction:column;min-width:0}
@@ -273,6 +236,4 @@
  #ppo-materials .em-inspector{position:fixed;z-index:40;inset:64px 0 0 0;width:auto;border-left:0}
  #ppo-materials .em-attention{padding:8px 12px;flex-wrap:wrap}
  #ppo-materials .em-pair{grid-template-columns:120px minmax(0,1fr)}
- #ppo-materials .em-col-line{position:static}
- #ppo-materials .em-table th.em-col-line{position:static}
 }

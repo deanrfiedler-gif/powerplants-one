@@ -15,6 +15,7 @@ export const exampleIds = [
   "foundations",
   "buttons",
   "sales-table",
+  "register-table",
   "area-editor",
   "sales-board",
   "forecast",
