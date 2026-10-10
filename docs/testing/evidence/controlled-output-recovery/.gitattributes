@@ -1,0 +1,4 @@
+# Preserve the exact generated document and retained log bytes.
+*.html -text
+*.pdf -text
+*.txt text eol=lf

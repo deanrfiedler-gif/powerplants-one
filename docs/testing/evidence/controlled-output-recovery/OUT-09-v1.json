@@ -1,0 +1,72 @@
+{
+  "manifest": {
+    "job_id": "aa5b6caf-2886-4e75-80fd-3e8a2b090812",
+    "sources": [
+      {
+        "id": "c2000000-0000-4000-8000-000000000001",
+        "hash": "363bc1e22ad3b41cb0c56f2959bf8e63e396a38ed039231ed20e65b1fffadc9a",
+        "title": "SYN visual inspection reference",
+        "byte_count": 225,
+        "version_id": "363bc1e22ad3b41cb0c56f2959bf8e63e396a38ed039231ed20e65b1fffadc9a"
+      }
+    ],
+    "filename": "SYN-PPO-PACK-000001-job-pack-r01.pdf",
+    "issue_id": "3070adc9-10bb-4647-a161-d0dc95ba73b2",
+    "pdf_hash": "c85bc06ea0f7a1caeb32a8f9bb6db0f3ae8ffd332f998181fac41564ea3d773b",
+    "template": {
+      "id": "c1000000-0000-4000-8000-000000000001",
+      "hash": "b12c139ee6d5cf2e44c1bd7db8d7075c5393b209b518b6c343bd67246bbbc604",
+      "version": 1,
+      "policy_version": 3,
+      "renderer_version": "playwright-1.63.0"
+    },
+    "html_hash": "774dbf44f54ba994f33a767a100b3d607e234da25fe2295560fd4803f667d20b",
+    "pdf_bytes": 63819,
+    "store_key": {
+      "sha256": "9ad319e7370cd12cbb30c704e048d303ff0a682e5dfd0ac989517cdbe27876b8",
+      "item_id": "aa5b6caf-2886-4e75-80fd-3e8a2b090812",
+      "site_id": null,
+      "drive_id": null,
+      "provider": "Synthetic",
+      "tenant_id": null,
+      "version_id": "9ad319e7370cd12cbb30c704e048d303ff0a682e5dfd0ac989517cdbe27876b8"
+    },
+    "html_bytes": 18257,
+    "prepared_at": "2026-10-10T03:26:02.246Z",
+    "bundle_bytes": 103868,
+    "snapshot_hash": "b078521a88a037688d5e93216b5ebf7e9e6fd404fe9a70fc6a7c010f231e7d2c",
+    "schema_version": 1,
+    "browser_version": "155.0.8059.40",
+    "renderer_version": "playwright-1.63.0"
+  },
+  "html_sha256": "774dbf44f54ba994f33a767a100b3d607e234da25fe2295560fd4803f667d20b",
+  "pdf_sha256": "c85bc06ea0f7a1caeb32a8f9bb6db0f3ae8ffd332f998181fac41564ea3d773b",
+  "page_count": 6,
+  "expected_text": [
+    "IDENTIFICATIONSTART",
+    "IDENTIFICATIONEND",
+    "CUSTOMER_ARRANGEMENTSSTART",
+    "CUSTOMER_ARRANGEMENTSEND",
+    "SCOPESTART",
+    "SCOPEEND",
+    "EQUIPMENTSTART",
+    "EQUIPMENTEND",
+    "HISTORYSTART",
+    "HISTORYEND",
+    "TECHNICAL_INFORMATIONSTART",
+    "TECHNICAL_INFORMATIONEND",
+    "READINESSSTART",
+    "READINESSEND",
+    "SITE_CONTROLSSTART",
+    "SITE_CONTROLSEND",
+    "COMPLETIONSTART",
+    "COMPLETIONEND"
+  ],
+  "forbidden_text": [
+    "PT23_PRIVATE_TIME",
+    "PT23_PRIVATE_REVIEW",
+    "PT23_PRIVATE_ENTRY",
+    "PT23_PRIVATE_STOCK"
+  ],
+  "review": "Automated content/identity checks; every-page visual inspection recorded separately"
+}

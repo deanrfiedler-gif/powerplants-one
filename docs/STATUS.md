@@ -4,6 +4,12 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## Controlled output generation and recovery — 10 October 2026
+
+Dean authorised PT-23 in the isolated `codex/pt23-output-recovery` session alongside Claude's UI work. The joined OUT-09/OUT-10/OUT-14 tests challenge storage failure, corruption before release, rollback inside finalisation, concurrent original retries and source/template changes. Unchanged main reproduced a pack release without a final stored-byte check and a Finance retry that released an attempt previously observed against a changed template. The pack worker now rereads its exact bundle inside finalisation; Finance retains `TemplateUnavailable` as `StaleSource` for review. No template definition, migration, grant or UI file changes.
+
+All 12 recovery scenarios and two long journeys pass locally. Eight retained PDFs cover 89 inspected pages; sparse-page and split-row observations remain open for template review. The [scope decision](decisions/controlled-output-recovery.md) and [verification record](testing/evidence/controlled-output-recovery/README.md) distinguish actual issued long outputs, an unissued twenty-asset pagination fixture, source-bound tests and page inspection from independent/owner approval. PT-01 PR #386 is separate. This contribution does not merge or deploy either branch.
+
 ## Parallel backend access and recovery — 9 October 2026
 
 10 October continuation: Dean authorised reconciliation of #379/#380 and PT-13 approved time/material correction proof in the isolated `codex/approved-evidence-corrections` session alongside Claude's UI work. #378 is merged. #380's document-register conflict is resolved with both contributions retained; its nine scenarios pass on the integrated branch. #379's 16 download scenarios pass after its existing main integration; the blocked Copilot-triggered checks have been restarted under the owner account. Current-head CI remains separate from local verification. Neither PR is merged or deployed by this continuation.

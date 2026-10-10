@@ -92,6 +92,12 @@
       "head": "c1519ba",
       "environment": "Unchanged compiled24d19b1; local launcher cache exception; four complete80-navigation runs and one unresolved incomplete repeat retained.",
       "review": "Independent automated source/evidence review; owner/device and full PT-27 acceptance open."
+    },
+    "OUTPUT": {
+      "path": "docs/testing/evidence/controlled-output-recovery/README.md",
+      "head": "79dc341a28ed182846029a6a3e851c3b67eff04a",
+      "environment": "Windows Node24.21.0/npm11.19.0/PostgreSQL16.15/Chrome155.0.8059.40; private synthetic cluster; 12 recovery cases, two long journeys, eight PDFs and 89 inspected pages. Exact sources and artifacts in verification.json.",
+      "review": "Implementation self-review; independent visual and owner acceptance pending; pagination refinements recorded."
     }
   },
   "cases": [
@@ -932,16 +938,23 @@
       "source_ids": [
         "P09",
         "P10",
-        "P11"
+        "P11",
+        "OUTPUT"
       ],
-      "technical_disposition": "Component",
+      "technical_disposition": "Combined synthetic pass",
       "existing_evidence_scope": "Long outputs/page inspection, immutable prior templates and original storage/finalisation recovery.",
       "current_applicability": "Applicable within selected synthetic PP-01 boundary; no enterprise parent promotion",
-      "continued_validity_and_gap": "All selected OUT09/10/14 source/template-change/failure branches and every-page review must be joined.",
-      "fresh_verification_required": "Output reviewer: reconcile actual original pages and failed attempts; independent visual acceptance remains separate.",
-      "owner_next_action": "Output reviewer: reconcile actual original pages and failed attempts; independent visual acceptance remains separate.",
+      "continued_validity_and_gap": "Joined OUT-09/10/14 storage corruption, SQL rollback, concurrent original recovery and source/template changes pass. Both installed template versions retain exact outputs across the real long pack/Service/Finance journey. All 89 pages inspected; twenty-asset variants are unissued render-only fixtures. Sparse final pages and split fields/rows remain visible for independent template/owner review.",
+      "fresh_verification_required": "Review original output hashes and failed-attempt/effect records; independently inspect pagination refinements and observe the workflow. No live provider, PDF/UA, power-loss or operational acceptance is implied.",
+      "owner_next_action": "Review original output hashes and failed-attempt/effect records; independently inspect pagination refinements and observe the workflow. No live provider, PDF/UA, power-loss or operational acceptance is implied.",
       "human_acceptance": "Pending actual observations",
-      "benefit": "Unmeasured"
+      "benefit": "Unmeasured",
+      "current_execution": {
+        "result": "Passed within declared synthetic boundary; pagination observations remain open",
+        "manifest": "docs/testing/evidence/controlled-output-recovery/verification.json",
+        "test_checkpoint": "79dc341a28ed182846029a6a3e851c3b67eff04a",
+        "application_baseline": "e5a94730025cf7a1ad4c1d0b1450532f591dba32"
+      }
     },
     {
       "id": "PT-24",

@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: PT-23 pack: failed storage, corrupt bundle, SQL rollback and original concurrent recovery
+ok 1 - PT-23 pack: failed storage, corrupt bundle, SQL rollback and original concurrent recovery
+  ---
+  duration_ms: 38045.4258
+  type: 'test'
+  ...
+# Subtest: PT-23 pack: source change during generation retains original output without release
+ok 2 - PT-23 pack: source change during generation retains original output without release
+  ---
+  duration_ms: 33845.0787
+  type: 'test'
+  ...
+# Subtest: PT-23 pack: template change during generation retains original output without release
+ok 3 - PT-23 pack: template change during generation retains original output without release
+  ---
+  duration_ms: 44075.1169
+  type: 'test'
+  ...
+# Subtest: PT-23 pack: renderer change during generation retains original output without release
+ok 4 - PT-23 pack: renderer change during generation retains original output without release
+  ---
+  duration_ms: 32966.155
+  type: 'test'
+  ...
+# Subtest: PT-23 report: failed storage, corrupt bundle, SQL rollback and original concurrent recovery
+ok 5 - PT-23 report: failed storage, corrupt bundle, SQL rollback and original concurrent recovery
+  ---
+  duration_ms: 54652.7644
+  type: 'test'
+  ...
+# Subtest: PT-23 report: source change during generation retains original output without release
+ok 6 - PT-23 report: source change during generation retains original output without release
+  ---
+  duration_ms: 42117.0631
+  type: 'test'
+  ...
+# Subtest: PT-23 report: template change during generation retains original output without release
+ok 7 - PT-23 report: template change during generation retains original output without release
+  ---
+  duration_ms: 39615.6856
+  type: 'test'
+  ...
+# Subtest: PT-23 report: renderer change during generation retains original output without release
+ok 8 - PT-23 report: renderer change during generation retains original output without release
+  ---
+  duration_ms: 41865.6221
+  type: 'test'
+  ...
+# Subtest: PT-23 finance: failed storage, corrupt bundle, SQL rollback and original concurrent recovery
+ok 9 - PT-23 finance: failed storage, corrupt bundle, SQL rollback and original concurrent recovery
+  ---
+  duration_ms: 62936.8057
+  type: 'test'
+  ...
+# Subtest: PT-23 finance: source change during generation retains original output without release
+ok 10 - PT-23 finance: source change during generation retains original output without release
+  ---
+  duration_ms: 30063.8252
+  type: 'test'
+  ...
+# Subtest: PT-23 finance: template change during generation retains original output without release
+ok 11 - PT-23 finance: template change during generation retains original output without release
+  ---
+  duration_ms: 38174.856
+  type: 'test'
+  ...
+# Subtest: PT-23 finance: renderer change during generation retains original output without release
+ok 12 - PT-23 finance: renderer change during generation retains original output without release
+  ---
+  duration_ms: 58275.5444
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 524015.6744

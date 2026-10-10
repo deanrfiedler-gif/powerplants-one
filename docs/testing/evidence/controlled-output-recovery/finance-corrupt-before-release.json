@@ -1,0 +1,378 @@
+{
+  "family": "OUT-14",
+  "detail": {},
+  "job": {
+    "id": "577e5eb8-384a-4015-a3c8-416b46f123d3",
+    "workspace_id": "10000000-0000-4000-8000-000000000001",
+    "handoff_id": "ed77f4a7-3287-480a-9d4a-1b0eb85f50f2",
+    "revision_id": "a82f16cd-b8cf-4b3a-b1eb-b60b80441af9",
+    "review_id": "19022adc-580b-4d9a-be8c-e9397f249e19",
+    "reconciliation_id": "09100dbb-97d3-4011-ab3c-368829717c89",
+    "actor_id": "30000000-0000-4000-8000-000000000014",
+    "operation_id": "b12c230b-84d0-4418-a7a2-f21864653514",
+    "finalisation_operation_id": "4d2bc731-9856-400c-8e25-e3d54af03e18",
+    "render_snapshot": {
+      "output": {
+        "issue_id": "6257f29f-31f3-4b26-a451-434993d286ba",
+        "prepared_at": "2026-10-10T03:35:34.577Z",
+        "template_hash": "1fd8d16fb46f884af894ed9de9b5e65aff9848f69df660e18fb25fa4dca00f51"
+      },
+      "source": {
+        "mode": "SyntheticManual",
+        "site": "SYN Q01 Demonstration Site",
+        "lines": [
+          {
+            "id": "18f0d682-c8cf-4a03-8d53-5c03d04f1dcd",
+            "uom": "MIN",
+            "reason": "F-06 synthetic allocation: sixty minutes to the fictional target.",
+            "entry_id": "f14b3cd1-9879-4c37-b3ee-13f8fae12e1d",
+            "direction": "Labour",
+            "disposition": "Billable",
+            "revision_id": "a82f16cd-b8cf-4b3a-b1eb-b60b80441af9",
+            "target_group": "F06-LABOUR",
+            "workspace_id": "10000000-0000-4000-8000-000000000001",
+            "entry_version": 1,
+            "root_entry_id": "f14b3cd1-9879-4c37-b3ee-13f8fae12e1d",
+            "billable_quantity": "60.000000",
+            "captured_quantity": "90.000000",
+            "reviewed_quantity": "90.000000",
+            "source_entry_hash": "6f7bfa162ec3f592d7ebe0f42e977d9030b29d750e6ef3324dcecb79c1af5fb8",
+            "allocated_quantity": "60.000000",
+            "report_revision_id": "cecfc952-c83a-4cd2-83b7-5d95cd6c52bc"
+          },
+          {
+            "id": "1b5952a9-a1ae-41bb-a315-55e1011e006c",
+            "uom": "EA",
+            "reason": "F-06 synthetic service charge for two EA only; no stock movement or price.",
+            "entry_id": "bada1bac-9d40-45bd-ac04-7aaee86cb52c",
+            "direction": "Consumed",
+            "disposition": "Billable",
+            "revision_id": "a82f16cd-b8cf-4b3a-b1eb-b60b80441af9",
+            "target_group": "F06-MATERIAL",
+            "workspace_id": "10000000-0000-4000-8000-000000000001",
+            "entry_version": 1,
+            "root_entry_id": "bada1bac-9d40-45bd-ac04-7aaee86cb52c",
+            "billable_quantity": "2.000000",
+            "captured_quantity": "2.000000",
+            "reviewed_quantity": "2.000000",
+            "source_entry_hash": "80673f6be3cdbb3fdb81badc83862eeac3d25b75b67a78a24d8910e6b6fd3f20",
+            "allocated_quantity": "2.000000",
+            "report_revision_id": "cecfc952-c83a-4cd2-83b7-5d95cd6c52bc"
+          },
+          {
+            "id": "5bad302b-599e-4f04-904f-e469f34197e8",
+            "uom": "MIN",
+            "reason": "F-06 synthetic reviewed non-billable allocation remains consumed.",
+            "entry_id": "f14b3cd1-9879-4c37-b3ee-13f8fae12e1d",
+            "direction": "Labour",
+            "disposition": "NonBillable",
+            "revision_id": "a82f16cd-b8cf-4b3a-b1eb-b60b80441af9",
+            "target_group": null,
+            "workspace_id": "10000000-0000-4000-8000-000000000001",
+            "entry_version": 1,
+            "root_entry_id": "f14b3cd1-9879-4c37-b3ee-13f8fae12e1d",
+            "billable_quantity": "0.000000",
+            "captured_quantity": "90.000000",
+            "reviewed_quantity": "90.000000",
+            "source_entry_hash": "6f7bfa162ec3f592d7ebe0f42e977d9030b29d750e6ef3324dcecb79c1af5fb8",
+            "allocated_quantity": "30.000000",
+            "report_revision_id": "cecfc952-c83a-4cd2-83b7-5d95cd6c52bc"
+          }
+        ],
+        "status": "Reconciled",
+        "account": "SYN-ACCOUNT-1",
+        "currency": "AUD",
+        "customer": "SYN Greenhouse Demonstration",
+        "revision": 1,
+        "reference": "SYN-PPO-FH-000001",
+        "review_id": "19022adc-580b-4d9a-be8c-e9397f249e19",
+        "company_id": "20000000-0000-4000-8000-000000000001",
+        "definition": {
+          "id": "f1000000-0000-4000-8000-000000000002",
+          "version": 2,
+          "policy_version": 2
+        },
+        "no_posting": [
+          {
+            "uom": "MIN",
+            "reason": "F-06 synthetic reviewed non-billable allocation remains consumed.",
+            "line_id": "5bad302b-599e-4f04-904f-e469f34197e8",
+            "quantity": "30.000000"
+          }
+        ],
+        "corrections": [],
+        "source_hash": "74deb23632a08597e33098be51fa09db0a74e5f7c789950638dc785538111753",
+        "work_reference": "SYN-PPO-WO-000010",
+        "source_manifest": [
+          {
+            "issue_id": "65def2d3-41b7-43e7-b9d7-2394450f8842",
+            "report_id": "76ae2e2e-c261-4223-beca-a0ed1b3bd4bb",
+            "review_id": "44f4c607-c70c-452a-92ed-c179a6c91494",
+            "issue_hash": "083c51712f334785293fd83049590eea4676a407492458bc7a5048bdae8ab9c6",
+            "revision_id": "cecfc952-c83a-4cd2-83b7-5d95cd6c52bc",
+            "source_hash": "d3feb77cc0dce8f0a8a78826d20d6df1f5d3702e59a2d73ad27889a54351f9a9",
+            "personal_completion": {
+              "blockers": [
+                "Unresolved finding requires follow-up.",
+                "An authorised task remains incomplete.",
+                "A task result has not passed the synthetic completion check.",
+                "The synthetic site-controls completion check has not passed."
+              ],
+              "exclusions": "SYN no intervention or energised work",
+              "scope_outcome": "Partial",
+              "task_outcomes": [
+                {
+                  "reason": "SYN explicit task outcome and remaining-work reason",
+                  "outcome": "Partial",
+                  "scope_item_id": "ad000000-0000-4000-8000-000000000001"
+                }
+              ],
+              "remaining_work": "SYN remaining inspection needs service-owner review",
+              "work_performed": "SYN visual inspection performed within original scope",
+              "time_declaration": "AllRecorded",
+              "declaration_reason": "SYN explicit personal declaration, no approval or billing",
+              "material_declaration": "AllRecorded",
+              "follow_up_activity_id": "b386dddf-6415-4419-ab42-a4022aa89343"
+            },
+            "scope_and_authority": {
+              "pack": {
+                "id": "43c9bdeb-14d8-4d36-b463-d53c170fdc2e",
+                "status": "Issued",
+                "version": 4,
+                "needs_review": false,
+                "current_issue_id": "d52740b3-470a-42c4-aa7f-88ef267d6ff0"
+              },
+              "assets": [
+                {
+                  "id": "80000000-0000-4000-8000-000000000001",
+                  "version": 1,
+                  "identity_status": "Verified"
+                }
+              ],
+              "entries": [
+                {
+                  "id": "9876662a-1668-4e11-99f9-d181d42e3515",
+                  "version": 1
+                },
+                {
+                  "id": "bada1bac-9d40-45bd-ac04-7aaee86cb52c",
+                  "version": 1
+                },
+                {
+                  "id": "d4088c2e-e866-4a86-a55c-b8d42c91c18b",
+                  "version": 1
+                },
+                {
+                  "id": "f14b3cd1-9879-4c37-b3ee-13f8fae12e1d",
+                  "version": 1
+                }
+              ],
+              "controls": [
+                {
+                  "id": "ae000000-0000-4000-8000-000000000001",
+                  "outcome": "Pass",
+                  "criterion_code": "SiteAccess",
+                  "assessment_version": 1
+                },
+                {
+                  "id": "ae000000-0000-4000-8000-000000000002",
+                  "outcome": "Pass",
+                  "criterion_code": "SiteControls",
+                  "assessment_version": 1
+                },
+                {
+                  "id": "ae000000-0000-4000-8000-000000000003",
+                  "outcome": "Pass",
+                  "criterion_code": "CompetencyPlan",
+                  "assessment_version": 1
+                },
+                {
+                  "id": "ae000000-0000-4000-8000-000000000004",
+                  "outcome": "NotApplicable",
+                  "criterion_code": "MandatoryIsolation",
+                  "assessment_version": 1
+                },
+                {
+                  "id": "ae000000-0000-4000-8000-000000000005",
+                  "outcome": "NotApplicable",
+                  "criterion_code": "ShutdownAuthority",
+                  "assessment_version": 1
+                },
+                {
+                  "id": "ae000000-0000-4000-8000-000000000109",
+                  "outcome": "Pass",
+                  "criterion_code": "ToolPreparation",
+                  "assessment_version": 1
+                }
+              ],
+              "recipient": {
+                "id": "60000000-0000-4000-8000-000000000001",
+                "name": "SYN Avery Contact",
+                "version": 1
+              },
+              "site_version": 1,
+              "customer_version": 1,
+              "schedule_version": 2,
+              "service_owner_id": "30000000-0000-4000-8000-000000000001",
+              "scope_revision_id": "aa000000-0000-4000-8000-000000000001",
+              "assignment_version": 2,
+              "primary_contact_id": "60000000-0000-4000-8000-000000000001",
+              "authorised_scope_revision_id": "aa000000-0000-4000-8000-000000000001"
+            }
+          }
+        ],
+        "target_evidence": {
+          "fenced": true,
+          "reason": "Controlled synthetic fixture result.",
+          "target": {
+            "id": "c2392fd4-1f7f-49eb-91d7-30c0cb11a501",
+            "kind": "SyntheticServiceCharge",
+            "lines": [
+              {
+                "id": "e579983b-342a-4872-bbec-0f2d9f9adc14",
+                "uom": "MIN",
+                "group": "F06-LABOUR",
+                "quantity": "60",
+                "direction": "Labour",
+                "source_allocations": [
+                  {
+                    "line_id": "18f0d682-c8cf-4a03-8d53-5c03d04f1dcd",
+                    "quantity": "60"
+                  }
+                ]
+              },
+              {
+                "id": "27d1db43-ef01-489f-a25e-fa6e7f774ee7",
+                "uom": "EA",
+                "group": "F06-MATERIAL",
+                "quantity": "2",
+                "direction": "Consumed",
+                "source_allocations": [
+                  {
+                    "line_id": "1b5952a9-a1ae-41bb-a315-55e1011e006c",
+                    "quantity": "2"
+                  }
+                ]
+              }
+            ],
+            "status": "Accepted",
+            "currency": "AUD",
+            "synthetic": true,
+            "account_id": "f2000000-0000-4000-8000-000000000001",
+            "attempt_id": "6b563cb7-f41b-41ad-9ea0-f64192c851ab",
+            "company_id": "20000000-0000-4000-8000-000000000001",
+            "handoff_id": "ed77f4a7-3287-480a-9d4a-1b0eb85f50f2",
+            "input_hash": "d720d89c792b14ae067066a7c568bf3dc36dc5f55e43439ca4defdf647e396e5",
+            "customer_id": "50000000-0000-4000-8000-000000000001",
+            "source_as_at": "2026-10-10T03:35:34.218Z",
+            "workspace_id": "10000000-0000-4000-8000-000000000001",
+            "correlation_id": "1bbc9455-b40f-45ee-ad3e-af03ad41e023"
+          },
+          "provider": "PPO-SyntheticTarget-v1",
+          "synthetic": true,
+          "attempt_id": "6b563cb7-f41b-41ad-9ea0-f64192c851ab",
+          "input_hash": "d720d89c792b14ae067066a7c568bf3dc36dc5f55e43439ca4defdf647e396e5",
+          "correlation_id": "1bbc9455-b40f-45ee-ad3e-af03ad41e023"
+        },
+        "treatment_basis": "F-06 independent synthetic fixture only; bill 60 MIN and 2 EA, explicitly disposition the remaining 30 MIN. No operational charging, warranty, price or tax decision.",
+        "reconciliation_id": "09100dbb-97d3-4011-ab3c-368829717c89",
+        "reconciliation_basis": "F-06 exact 60 MIN and 2 EA posted, 30 MIN reviewed non-billable; like-unit comparisons independently checked.",
+        "remaining_work_basis": "F-06 this exact accepted Partial attendance only. The separately owned remaining task requires an authorised future visit; no project or work-order closure."
+      },
+      "template": {
+        "id": "f3000000-0000-4000-8000-000000000002",
+        "version": 2,
+        "content_hash": "1fd8d16fb46f884af894ed9de9b5e65aff9848f69df660e18fb25fa4dca00f51",
+        "policy_version": 2
+      }
+    },
+    "input_hash": "fadeebaaf0079111c73098fdf49045c49dcaf9c7534b60db49f1efc72976805d",
+    "state": "Failed",
+    "attempts": 2,
+    "lease_token": "6848c456-0b9b-4106-91fe-8c850e1a48ac",
+    "lease_until": null,
+    "error_code": "ExactDocumentUnavailable",
+    "output_manifest": {
+      "job_id": "577e5eb8-384a-4015-a3c8-416b46f123d3",
+      "audience": "CurrentScopedFinance",
+      "filename": "SYN-PPO-FH-000001-finance-evidence-r01.pdf",
+      "issue_id": "6257f29f-31f3-4b26-a451-434993d286ba",
+      "pdf_hash": "dfeeb0082bbdfc9c86732809690ed6d9a40a932cd8aa8caab24e363c88f07070",
+      "template": {
+        "id": "f3000000-0000-4000-8000-000000000002",
+        "version": 2,
+        "content_hash": "1fd8d16fb46f884af894ed9de9b5e65aff9848f69df660e18fb25fa4dca00f51",
+        "policy_version": 2
+      },
+      "html_hash": "cc0f7b058a273a7e8796f6137b90b43adfa7a45151cb678d68959ab1d7681226",
+      "pdf_bytes": 577487,
+      "review_id": "19022adc-580b-4d9a-be8c-e9397f249e19",
+      "store_key": {
+        "sha256": "ba5979e3b7e8acf4e98cd803a3abb03fbf14f9f61ea3e18529960bac24fd80ea",
+        "item_id": "577e5eb8-384a-4015-a3c8-416b46f123d3",
+        "site_id": null,
+        "drive_id": null,
+        "provider": "Synthetic",
+        "tenant_id": null,
+        "version_id": "ba5979e3b7e8acf4e98cd803a3abb03fbf14f9f61ea3e18529960bac24fd80ea"
+      },
+      "html_bytes": 808057,
+      "prepared_at": "2026-10-10T03:35:34.577Z",
+      "revision_id": "a82f16cd-b8cf-4b3a-b1eb-b60b80441af9",
+      "source_hash": "74deb23632a08597e33098be51fa09db0a74e5f7c789950638dc785538111753",
+      "bundle_bytes": 1578512,
+      "schema_version": 1,
+      "browser_version": "155.0.8059.40",
+      "renderer_version": "playwright-1.63.0",
+      "reconciliation_id": "09100dbb-97d3-4011-ab3c-368829717c89"
+    },
+    "requested_at": "2026-10-10T03:35:34.579Z"
+  },
+  "attempts": [
+    {
+      "id": "af2ec538-452a-4b91-8bda-548d3cdf450a",
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "job_id": "577e5eb8-384a-4015-a3c8-416b46f123d3",
+      "attempt": 1,
+      "outcome": "Claimed",
+      "code": null,
+      "occurred_at": "2026-10-10T03:35:34.624Z"
+    },
+    {
+      "id": "fa3bb4d0-50ce-4bef-958d-f1e76b2a79f5",
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "job_id": "577e5eb8-384a-4015-a3c8-416b46f123d3",
+      "attempt": 1,
+      "outcome": "Failed",
+      "code": "FinanceOutputUnavailable",
+      "occurred_at": "2026-10-10T03:35:37.648Z"
+    },
+    {
+      "id": "924710c4-fd48-468b-8218-4d4a30a792df",
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "job_id": "577e5eb8-384a-4015-a3c8-416b46f123d3",
+      "attempt": 2,
+      "outcome": "Claimed",
+      "code": null,
+      "occurred_at": "2026-10-10T03:35:37.709Z"
+    },
+    {
+      "id": "323eb911-f6e3-4f3f-bdb0-be2c63c3a1f3",
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "job_id": "577e5eb8-384a-4015-a3c8-416b46f123d3",
+      "attempt": 2,
+      "outcome": "Failed",
+      "code": "ExactDocumentUnavailable",
+      "occurred_at": "2026-10-10T03:35:41.650Z"
+    }
+  ],
+  "effects": {
+    "operations": [],
+    "audit": [],
+    "outbox": [],
+    "issue": [],
+    "extra": [],
+    "distribution": []
+  },
+  "stored_sha256": "a63ca28ef834456d7f247ac9a70aefc644f0bf03a4a2e624343106a48d953e4e"
+}
