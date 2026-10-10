@@ -240,8 +240,8 @@ export const plannerFixture: Schedule = {
         timezone: "Australia/Sydney",
         intervals: [1, 2, 3, 4, 5].map((weekday) => ({
           weekday,
-          start_minute: 480,
-          end_minute: 1020,
+          start_minute: 420,
+          end_minute: 1080,
         })),
       },
       skills: [],

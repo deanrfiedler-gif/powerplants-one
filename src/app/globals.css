@@ -1572,6 +1572,12 @@ button:disabled {
   width: 100%;
   margin-top: 10px;
 }
+/* Work outside the 08:00 to 17:00 standard hours is allowed but avoided, so
+   the card names it plainly in the warning colour without becoming an alert. */
+.appointment-card .card-extended {
+  color: var(--warning);
+  font-weight: 500;
+}
 /* The dispatch hold is a standing condition, not an alarm. It reads as a
    quiet footnote rule above the version line rather than bold amber body. */
 .appointment-card .card-hold {
@@ -2146,3 +2152,1148 @@ body:has(.crm-workspace) main { padding-top:18px; }
 }
 /* Retained originals are a bounded staff-review surface, never page-wide overflow. */
 .recovery-original { max-width: 100%; max-height: 28rem; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; padding: 1rem; background: var(--surface, #f4f6f8); }
+
+/* Planner Day timeline (phase 00 refinement boards; Dean, 10 October 2026). People are rows,
+   time runs 07:00 to 18:00 across, and a selected visit opens a details panel beside the board.
+   Cards are flat at rest; on hover a visit and its travel grow a fixed 3 px on every side. */
+.planner-view-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  margin: 12px 0 20px;
+}
+.planner-view-layout.with-snapshot {
+  grid-template-columns: minmax(0, 1fr) 360px;
+}
+.planner-timeline {
+  min-width: 0;
+  background: var(--white);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+.tl-scroll {
+  overflow-x: auto;
+  position: relative;
+}
+.tl-scroll:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+.tl-grid {
+  display: grid;
+  grid-template-columns: 210px minmax(880px, 1fr);
+}
+.tl-corner,
+.tl-person {
+  position: sticky;
+  left: 0;
+  z-index: 5;
+  background: var(--white);
+  border-right: 1px solid var(--line-strong);
+}
+.tl-corner {
+  height: 54px;
+  box-sizing: border-box;
+  padding: 0 14px 10px 16px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+  border-bottom: 1px solid var(--line-strong);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.tl-corner strong {
+  color: var(--ink);
+}
+.tl-axis {
+  position: relative;
+  container-type: inline-size;
+  height: 54px;
+  border-bottom: 1px solid var(--line-strong);
+  background-image: linear-gradient(to right, #aeb6c1 1px, transparent 1px),
+    linear-gradient(to right, #e3e7ed 1px, transparent 1px);
+  background-size: calc(100% / 11) 7px, calc(100% / 44) 3px;
+  background-position: 0 100%, 0 100%;
+  background-repeat: repeat-x;
+}
+.tl-axis span {
+  position: absolute;
+  top: 10px;
+  transform: translateX(-50%);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.tl-axis .tl-hour.first {
+  transform: translateX(4px);
+}
+.tl-axis .tl-hour.last {
+  transform: translateX(calc(-100% - 4px));
+}
+.tl-axis .tl-half {
+  font-size: 11px;
+  font-weight: 400;
+  color: #98a1ad;
+}
+@container (max-width: 1040px) {
+  .tl-axis .tl-half {
+    display: none;
+  }
+}
+.tl-axis .tl-now-pill {
+  top: auto;
+  bottom: 8px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: var(--navy);
+  color: var(--white);
+  font-size: 11px;
+  font-weight: 600;
+  box-shadow: 0 0 0 2px var(--white);
+  z-index: 2;
+}
+.tl-person {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  column-gap: 8px;
+  align-items: center;
+  align-content: center;
+  padding: 12px 14px 12px 16px;
+  border-bottom: 1px solid #eef1f4;
+  min-width: 0;
+}
+.tl-person > * {
+  min-width: 0;
+}
+.tl-av {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: var(--navy);
+  background: var(--surface-2);
+}
+.tl-person .tl-av {
+  grid-column: 1;
+  grid-row: 1;
+}
+.tl-name {
+  grid-column: 2;
+  grid-row: 1;
+  font-size: 13.5px;
+  line-height: 18px;
+  font-weight: 700;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+.tl-name a {
+  color: var(--ink);
+  text-decoration: none;
+}
+.tl-name a:hover {
+  text-decoration: underline;
+}
+.tl-role,
+.tl-total {
+  grid-column: 1 / -1;
+  font-size: 12px;
+  line-height: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tl-role {
+  margin-top: 6px;
+  color: var(--text-secondary);
+}
+.tl-total {
+  margin-top: 4px;
+  color: #4b5563;
+  font-variant-numeric: tabular-nums;
+}
+.tl-person.off {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.tl-person.off .tl-av {
+  opacity: 0.55;
+}
+.tl-person.off .tl-name {
+  font-weight: 500;
+}
+.tl-person.off .tl-name a {
+  color: var(--text-secondary);
+}
+.tl-lane {
+  position: relative;
+  height: 116px;
+  border-bottom: 1px solid #e4e8ee;
+  background-color: #fcfdfe;
+  background-image: linear-gradient(to right, rgba(36, 42, 55, 0.1) 1px, transparent 1px),
+    linear-gradient(to right, rgba(36, 42, 55, 0.04) 1px, transparent 1px);
+  background-size: calc(100% / 11) 100%, calc(100% / 22) 100%;
+}
+.tl-lane.off {
+  height: 56px;
+}
+.tl-band,
+.tl-past,
+.tl-now {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+.tl-band.ext {
+  background: rgba(128, 83, 14, 0.045);
+}
+.tl-band.off {
+  background: repeating-linear-gradient(135deg, rgba(148, 159, 173, 0.16) 0 1px, transparent 1px 8px), #f4f6f8;
+}
+.tl-band span {
+  position: absolute;
+  top: 7px;
+  left: 10px;
+  font-size: 10.5px;
+  font-weight: 600;
+  line-height: 14px;
+  color: #6e7784;
+  white-space: nowrap;
+}
+/* Time already gone today: a very light wash up to the Now line (Dean, 10 October 2026). */
+.tl-past {
+  left: 0;
+  background: rgba(36, 42, 55, 0.025);
+}
+.tl-now {
+  width: 2px;
+  margin-left: -1px;
+  background: var(--navy);
+  z-index: 3;
+}
+.tl-reserved,
+.tl-block {
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  z-index: 1;
+}
+.tl-reserved {
+  background: repeating-linear-gradient(135deg, rgba(148, 159, 173, 0.2) 0 1px, transparent 1px 7px);
+}
+.tl-block {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 7px 10px;
+  border: 1px solid #dce0e5;
+  background: repeating-linear-gradient(135deg, rgba(176, 185, 197, 0.28) 0 1px, transparent 1px 8px), #f6f7f9;
+  font-size: 12px;
+  line-height: 16px;
+  color: #4b5563;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tl-lane.off .tl-block {
+  top: 6px;
+  bottom: 6px;
+  align-items: center;
+}
+.tl-block b {
+  color: var(--ink);
+}
+.tl-group {
+  position: absolute;
+  left: var(--l);
+  width: var(--w);
+  top: 5px;
+  height: 106px;
+  z-index: 2;
+  transition: left 0.12s ease, width 0.12s ease, top 0.12s ease, height 0.12s ease;
+}
+.tl-group:hover,
+.tl-group:focus-within {
+  left: calc(var(--l) - 3px);
+  width: calc(var(--w) + 6px);
+  top: 2px;
+  height: 112px;
+  z-index: 4;
+}
+.tl-card,
+.tl-travel {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  box-sizing: border-box;
+}
+.tl-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 8px 10px;
+  border: 1px solid #c8d6e5;
+  border-radius: 8px;
+  background: #eef4fa;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: left;
+}
+.tl-card:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.tl-card[draggable="true"] {
+  cursor: grab;
+}
+.tl-card .t {
+  flex: none;
+  font-size: 13px;
+  line-height: 17px;
+  font-weight: 700;
+  color: var(--ink);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.tl-card .m {
+  font-size: 12px;
+  line-height: 16px;
+  color: #606977;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tl-card .m.when {
+  color: var(--ink);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.tl-card.held {
+  background: #fffbf3;
+  border-color: #ebd3a0;
+}
+.tl-card.prop {
+  background: repeating-linear-gradient(135deg, #fff 0 7px, #f6f7f9 7px 14px);
+  border: 1px dashed #a3acb8;
+}
+.tl-card.sel {
+  border-color: var(--navy);
+  box-shadow: 0 8px 20px rgba(36, 42, 55, 0.14), 0 2px 4px rgba(36, 42, 55, 0.06);
+}
+.tl-card.held.sel {
+  border-color: #fff5df;
+}
+.tl-card.tl {
+  border-left-width: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  padding-left: 11px;
+}
+.tl-card.tr {
+  border-right-width: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  padding-right: 11px;
+}
+.tl-crew {
+  margin-top: auto;
+  display: inline-flex;
+  align-self: flex-end;
+}
+.tl-crew span {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--white);
+  box-sizing: border-box;
+  margin-left: -6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  font-weight: 700;
+  color: var(--navy);
+  background: var(--surface-2);
+}
+.tl-crew span:first-child {
+  margin-left: 0;
+}
+.tl-travel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  border: 1px solid #c8d6e5;
+  background: #e2e6eb;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #4b5563;
+  font-variant-numeric: tabular-nums;
+  overflow: hidden;
+}
+.tl-travel.l {
+  border-right: 0;
+  border-radius: 8px 0 0 8px;
+  align-items: flex-end;
+  padding-right: 6px;
+}
+.tl-travel.r {
+  border-left: 0;
+  border-radius: 0 8px 8px 0;
+  align-items: flex-start;
+  padding-left: 6px;
+}
+.tl-travel.held {
+  border-color: #ebd3a0;
+}
+.tl-travel.sel {
+  border-color: var(--navy);
+}
+.tl-travel.held.sel {
+  border-color: #fff5df;
+}
+.tl-glyph {
+  width: 14px;
+  height: 14px;
+  font-size: 13px;
+}
+.tl-note {
+  margin: 0;
+  padding: 8px 16px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.tl-snapshot {
+  position: sticky;
+  top: 12px;
+  box-sizing: border-box;
+  width: 360px;
+  max-height: calc(100vh - 24px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+.tl-snapshot header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 18px 18px 8px;
+}
+.tl-snapshot h2 {
+  flex: 1;
+  margin: 0;
+  font-size: 17px;
+  line-height: 23px;
+}
+.tl-close {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-control);
+  background: var(--white);
+  color: var(--ink);
+  cursor: pointer;
+}
+.tl-snap-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 18px 12px;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: 13px;
+}
+.tl-pill {
+  padding: 2px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--neutral-surface);
+  color: var(--neutral);
+}
+.tl-pill.attention {
+  background: #fff5df;
+  color: var(--warning);
+}
+.tl-pill.ok {
+  background: var(--success-surface);
+  color: var(--success);
+}
+.tl-snapshot section {
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.tl-snapshot h3 {
+  margin: 0 0 8px;
+  font-size: 13px;
+}
+.tl-snapshot dl {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 6px 10px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 18px;
+}
+.tl-snapshot dt {
+  color: var(--text-secondary);
+}
+.tl-snapshot dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.tl-snap-crew {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.tl-snap-crew li {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 13px;
+}
+.tl-snap-crew small {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+.tl-snapshot footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 14px 18px;
+  margin-top: auto;
+}
+.tl-snapshot h2:focus {
+  outline: none;
+}
+.tl-snapshot h2:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+/* Below 1100 px there is no room beside the board, so the panel sits over its right side. */
+@media (max-width: 1100px) {
+  .planner-view-layout.with-snapshot {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .tl-snapshot {
+    position: fixed;
+    top: 72px;
+    right: 12px;
+    bottom: 12px;
+    width: min(360px, calc(100vw - 24px));
+    max-height: none;
+    z-index: 40;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tl-group {
+    transition: none;
+  }
+}
+
+/* Planner Week board, stripped back (Dean, 10 October 2026). People are rows and days are
+   columns. Cells hold only visits and unavailable time; how full a day is shows once, as a
+   soft shading that deepens as the day fills. Weekends are slim strips while nothing is
+   booked. Tiles grow 3 px each side and rise 1 px on hover. */
+.planner-week {
+  min-width: 0;
+  background: var(--white);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+.wk-scroll {
+  overflow-x: auto;
+  position: relative;
+}
+.wk-scroll:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+.wk-row {
+  display: grid;
+  min-width: 1010px;
+  border-bottom: 1px solid #e4e8ee;
+}
+.wk-row:last-child {
+  border-bottom: 0;
+}
+.wk-corner,
+.wk-person {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  background: var(--white);
+  border-right: 1px solid var(--line-strong);
+}
+.wk-corner {
+  height: 54px;
+  box-sizing: border-box;
+  padding: 0 14px 10px 16px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.wk-corner strong {
+  color: var(--ink);
+}
+.wk-head {
+  border-bottom-color: var(--line-strong);
+}
+.wk-day {
+  height: 54px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 0 12px;
+  border: 0;
+  border-left: 1px solid #e9edf2;
+  background: var(--white);
+  font: inherit;
+  text-align: left;
+  color: var(--ink);
+  cursor: pointer;
+}
+.wk-day:hover {
+  background: var(--surface-hover);
+}
+.wk-day:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+.wk-day b {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+.wk-day > span {
+  font-size: 12px;
+  color: #4b5563;
+  font-variant-numeric: tabular-nums;
+}
+.wk-today {
+  padding: 1px 7px;
+  border-radius: 9px;
+  background: var(--success-surface);
+  color: var(--success);
+  font-size: 11px;
+  font-weight: 600;
+}
+.wk-day.slim {
+  align-items: center;
+  padding: 0;
+  cursor: default;
+  background: repeating-linear-gradient(135deg, rgba(148, 159, 173, 0.16) 0 1px, transparent 1px 8px), #f4f6f8;
+}
+.wk-day.slim b {
+  font-size: 11px;
+  font-weight: 600;
+  color: #8a93a0;
+}
+.wk-person {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  column-gap: 8px;
+  align-items: center;
+  align-content: center;
+  padding: 12px 14px 12px 16px;
+  min-width: 0;
+}
+.wk-person > * {
+  min-width: 0;
+}
+.wk-person .tl-av {
+  grid-column: 1;
+  grid-row: 1;
+}
+.wk-row.off .wk-person {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.wk-row.off .tl-av {
+  opacity: 0.55;
+}
+.wk-row.off .tl-name {
+  font-weight: 500;
+}
+.wk-row.off .tl-name a {
+  color: var(--text-secondary);
+}
+.wk-cell {
+  min-width: 0;
+  min-height: 110px;
+  box-sizing: border-box;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-left: 1px solid #e9edf2;
+  background: linear-gradient(rgba(53, 101, 128, calc(var(--load, 0) * 0.14)), rgba(53, 101, 128, calc(var(--load, 0) * 0.14))), #fcfdfe;
+}
+.wk-cell.today {
+  background: linear-gradient(rgba(53, 101, 128, calc(var(--load, 0) * 0.14)), rgba(53, 101, 128, calc(var(--load, 0) * 0.14))), #f7faf6;
+}
+.wk-cell.closed,
+.wk-cell.slim {
+  background: repeating-linear-gradient(135deg, rgba(148, 159, 173, 0.16) 0 1px, transparent 1px 8px), #f4f6f8;
+}
+.wk-cell.slim {
+  padding: 0;
+}
+.wk-away {
+  margin: 6px 8px;
+  padding: 7px 12px;
+  border: 1px solid #dce0e5;
+  border-radius: 8px;
+  background: repeating-linear-gradient(135deg, rgba(176, 185, 197, 0.28) 0 1px, transparent 1px 8px), #f6f7f9;
+  font-size: 12px;
+  line-height: 18px;
+  color: #4b5563;
+  align-self: center;
+}
+.wk-away b,
+.wk-block b {
+  color: var(--ink);
+}
+.wk-block {
+  padding: 5px 8px;
+  border: 1px solid #dce0e5;
+  border-radius: 6px;
+  background: repeating-linear-gradient(135deg, rgba(176, 185, 197, 0.28) 0 1px, transparent 1px 8px), #f6f7f9;
+  font-size: 12px;
+  line-height: 16px;
+  color: #4b5563;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.wk-block.reserved {
+  background: repeating-linear-gradient(135deg, rgba(148, 159, 173, 0.2) 0 1px, transparent 1px 7px), var(--white);
+  border-style: dashed;
+}
+.wk-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 9px;
+  border: 1px solid #c8d6e5;
+  border-radius: 7px;
+  background: #eef4fa;
+  cursor: pointer;
+  transition: transform 0.12s ease, margin 0.12s ease;
+}
+.wk-tile:hover,
+.wk-tile:focus-visible {
+  transform: translateY(-1px);
+  margin-left: -3px;
+  margin-right: -3px;
+}
+.wk-tile:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.wk-tile[draggable="true"] {
+  cursor: grab;
+}
+.wk-tile.held {
+  background: #fffbf3;
+  border-color: #ebd3a0;
+}
+.wk-tile.prop {
+  background: repeating-linear-gradient(135deg, #fff 0 7px, #f6f7f9 7px 14px);
+  border: 1px dashed #a3acb8;
+}
+.wk-tile.sel {
+  border-color: var(--navy);
+  box-shadow: 0 6px 16px rgba(36, 42, 55, 0.14), 0 1px 3px rgba(36, 42, 55, 0.06);
+}
+.wk-tile.held.sel {
+  border-color: #fff5df;
+}
+.wk-tile .r1 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  font-size: 12.5px;
+  line-height: 17px;
+}
+.wk-tile .r1 b {
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.wk-tile .r1 .tl-crew {
+  margin: 0 0 0 auto;
+}
+.wk-tile .t {
+  font-size: 12.5px;
+  line-height: 17px;
+  color: #4b5563;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.wk-ext {
+  display: inline-flex;
+  color: var(--warning);
+}
+@media (prefers-reduced-motion: reduce) {
+  .wk-tile {
+    transition: none;
+  }
+}
+
+/* Planner on a phone (below 781 px; phase 00 refinement board, Dean, 10 October 2026). Day:
+   day chips, then one card per person with a 07:00 to 18:00 strip and their visits. Week:
+   one section per day. A visit's details open as a bottom sheet. */
+.planner-phone {
+  display: grid;
+  gap: 12px;
+  margin: 12px 0 20px;
+  min-width: 0;
+}
+.pq-chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+.pq-chip {
+  flex: none;
+  min-height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  background: var(--white);
+  color: var(--ink);
+  font: inherit;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+.pq-chip[aria-pressed="true"] {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--white);
+  font-weight: 600;
+}
+.pq-attn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid #ebd3a0;
+  border-radius: var(--radius-card);
+  background: #fffbf3;
+  color: var(--ink);
+  font-size: 14px;
+  text-decoration: none;
+}
+.pq-attn > span:last-child {
+  font-size: 20px;
+  color: var(--text-secondary);
+}
+.pq-person,
+.pq-day {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border-radius: var(--radius-card);
+  background: var(--surface-2);
+  min-width: 0;
+}
+.pq-person header {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+}
+.pq-person header a {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.pq-person header small {
+  font-size: 12.5px;
+  color: #4b5563;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.pq-person.off {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  background: var(--surface-3);
+  border: 1px solid var(--line-soft);
+}
+.pq-person.off .tl-av {
+  opacity: 0.55;
+}
+.pq-person.off header a {
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+.pq-strip {
+  position: relative;
+  height: 14px;
+  border-radius: 4px;
+  background: var(--white);
+  overflow: hidden;
+}
+.pq-strip i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+.pq-strip .b.ext,
+.pq-strip .b.off,
+.pq-strip .b.blk {
+  background: repeating-linear-gradient(135deg, rgba(148, 159, 173, 0.35) 0 1px, transparent 1px 5px), #eef1f5;
+}
+.pq-strip .b.ext {
+  background: repeating-linear-gradient(135deg, rgba(148, 159, 173, 0.25) 0 1px, transparent 1px 5px), #f6f7f9;
+}
+.pq-strip .v {
+  top: 2px;
+  bottom: 2px;
+  border-radius: 3px;
+}
+.pq-strip .v.ok {
+  background: var(--navy);
+}
+.pq-strip .v.held {
+  background: #d39a32;
+}
+.pq-strip .v.prop {
+  background: repeating-linear-gradient(135deg, #8a93a0 0 2px, transparent 2px 5px);
+  border: 1px solid #8a93a0;
+}
+.pq-strip .v.trv {
+  background: #c9ced6;
+}
+.pq-strip .now {
+  width: 2px;
+  margin-left: -1px;
+  background: var(--danger);
+}
+.pq-axis {
+  display: flex;
+  justify-content: space-between;
+  margin-top: -4px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+.pq-axis span:nth-child(2) {
+  /* 12:00 sits five elevenths along the 07:00 to 18:00 strip. */
+  position: relative;
+  left: calc(45.45% - 50%);
+}
+.pq-card {
+  display: grid;
+  gap: 2px;
+  padding: 10px 12px;
+  border: 1px solid #c8d6e5;
+  border-radius: var(--radius-card);
+  background: #eef4fa;
+  cursor: pointer;
+  transition: transform 0.12s ease, margin 0.12s ease;
+  min-width: 0;
+}
+.pq-card:hover,
+.pq-card:active,
+.pq-card:focus-visible {
+  transform: translateY(-1px);
+  margin-left: -3px;
+  margin-right: -3px;
+}
+.pq-card:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.pq-card.held {
+  background: #fffbf3;
+  border-color: #ebd3a0;
+}
+.pq-card.prop {
+  background: repeating-linear-gradient(135deg, #fff 0 7px, #f6f7f9 7px 14px);
+  border: 1px dashed #a3acb8;
+}
+.pq-card.sel {
+  border-color: var(--navy);
+  box-shadow: 0 8px 20px rgba(36, 42, 55, 0.14), 0 2px 4px rgba(36, 42, 55, 0.06);
+}
+.pq-card.held.sel {
+  border-color: #fff5df;
+}
+.pq-card .r1 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+.pq-card .r1 b {
+  font-variant-numeric: tabular-nums;
+}
+.pq-card .r1 .tl-crew {
+  margin: 0 0 0 auto;
+}
+.pq-card .t {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 20px;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+.pq-card .m {
+  font-size: 13px;
+  color: var(--text-secondary);
+  overflow-wrap: anywhere;
+}
+.pq-none {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.pq-day-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 10px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+.pq-day-head b {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+}
+.pq-day-head small {
+  font-size: 12.5px;
+  color: #4b5563;
+  font-variant-numeric: tabular-nums;
+}
+.pq-day.quiet {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  background: var(--surface-3);
+  border: 1px solid var(--line-soft);
+}
+/* A phone shows the details as a bottom sheet above the shell's bottom navigation. */
+@media (max-width: 780px) {
+  .tl-snapshot {
+    position: fixed;
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    max-height: 85vh;
+    border-radius: 16px 16px 0 0;
+    z-index: 70;
+    box-shadow: 0 -8px 28px rgba(36, 42, 55, 0.22);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pq-card {
+    transition: none;
+  }
+}
+/* The component catalogue shows the phone planner at phone width. */
+.catalogue-phone-frame {
+  max-width: 390px;
+  padding: 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: 16px;
+  background: var(--paper);
+}
+/* Phone planner controls: with the filters folded the plate closes on itself. */
+.planner-toolbar.folded {
+  border-bottom: 1px solid var(--line-strong);
+  border-radius: var(--radius-card);
+  margin-bottom: 16px;
+}
+@media (max-width: 780px) {
+  .planner-toolbar {
+    gap: 10px;
+    padding: 10px 12px;
+  }
+  .planner-toolbar-actions {
+    margin-left: 0;
+  }
+  /* The four counts become one compact row so the board starts on the first screen. */
+  .planner-stat-row {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+    margin: 12px 0 8px;
+  }
+  .planner-stat-row > div {
+    padding: 8px 8px;
+    box-shadow: none;
+  }
+  .planner-stat-row strong {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .planner-stat-row span {
+    font-size: 11px;
+    line-height: 14px;
+  }
+  .planner-legend {
+    gap: 4px 12px;
+    margin: 8px 0;
+  }
+}

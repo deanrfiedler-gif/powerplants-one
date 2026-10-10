@@ -125,6 +125,82 @@ Each proposal applies the adopted S5, S6 and S8 rules to its page. These proposa
 
 Nothing on these boards is adopted until Dean accepts it. The main board lists their status as "Proposed".
 
+### Planner working hours (10 October 2026)
+
+Dean described the working day: "our standard hours are from 8am to 5pm, but it's not uncommon for a technician to work from 7am to 6pm at times. We try to avoid working early and later than this though."
+
+The live booking rule (`fitsWorkingInterval` in `src/scheduling/booking-rules.ts`) refuses a visit or its travel outside the person's published calendar interval. The sample calendars (`db/seed-p05.sql`) publish 08:00 to 17:00, Monday to Friday, so work from 07:00 or until 18:00 cannot be booked today. Two options were put to Dean: publish calendars as 07:00 to 18:00 and warn outside 08:00 to 17:00, or keep 08:00 to 17:00 calendars and add a separate extended-hours rule. Dean replied: "Go with your recommendation on the calendars", which adopts the first.
+
+| Rule | Decision |
+|---|---|
+| Published calendar interval | 07:00 to 18:00 on working days. The server rule is unchanged and still refuses anything outside the published interval. |
+| Standard hours | 08:00 to 17:00. A visit or its travel outside them is allowed, with a warning that names the person and the times. |
+| Capacity and free time | Count standard hours only, so extended hours are never offered as free time. |
+
+The canvas planner and appointment boards show it as a 07:00 to 18:00 Day timeline with Extended hours bands, and the warning in "Checked as you edit".
+
+**Built (10 October 2026), in the app as it stands:**
+
+- **Sample calendars:** `db/seed-p05.sql` publishes 07:00 to 18:00 on weekdays, as "SYN weekday 07:00–18:00 Brisbane". Published calendars are immutable and seed 5 never re-runs, so only databases seeded from now on get it. Dean's local database and the hosted demo keep 08:00 to 17:00 until they are rebuilt; ADR-0030 accepted the same limit for its date shift.
+- **Standard hours:** a fixed rule in `src/scheduling/working-hours.ts`, read in each person's calendar timezone. Calendars hold one interval per weekday and have no editor, so there is nowhere to record standard hours as data yet. Move it into calendar or policy data when a calendar editor is built.
+- **Warning:** Confirm appointment, Move or reassign and Propose a schedule change show "Extended hours" when a person's visit or travel falls outside 08:00 to 17:00, naming the person and the times. It is worked out in the browser as the form changes and never blocks a save. The server rule is unchanged.
+- **Planner:** a confirmed card in a person's lane says "Extended hours" with that person's times, including travel.
+- **Not built:** the 07:00 to 18:00 Day timeline. The live planner has no time axis; that belongs to the board refinements below.
+- **Capacity:** unchanged. The app computes no calendar-based capacity or free time, so "capacity counts standard hours only" waits for those calculations.
+
+### Planner boards refined (10 October 2026)
+
+Dean refined the four playable planner boards on the canvas (Day, Week, Map and phone) through board comments and messages on 9 and 10 October. The boards share one set of rules and synthetic data. Canvas version 159 (`1791622886-4b94`) holds the result, with a notes board that separates what is decided, what is simulated and what still needs his OK. The board sources run only in the Design runtime and are not copied here. These are design decisions; nothing has changed in the app. The build rules are in the [planner design contract](../design/development/pages/route-schedule.md#phase-00-refinement-boards--10-october-2026).
+
+| Topic | Dean's words | Decision |
+|---|---|---|
+| Details | "Proceed however you believe is the most professional." (on the details pane and people column) | A selected visit opens as a snapshot in the live Deals snapshot's layout, in place of a fixed details pane. People on leave move to a short row at the bottom. |
+| Neighbouring visits | "Refine this so they look more professional." (on two touching bookings) | Neighbouring bookings keep a 4 px gap. A visit and its own travel join with no gap. |
+| Card colour | "I'm wondering if we should apply a very faint pastel blue colour to these cards that are white, as they are hard to see against the white table background." | Confirmed bookings are faint blue (`#eef4fa`, border `#c8d6e5`), lighter than any person's identity colour. Amber stays for needs attention and hatching for proposed. |
+| Borders | "make the border go around the travel time slots as well, but don't apply the border that is between the travel timeslot and the appointment timeslot"; "make the border the same colour as the background colour that has been used in the Pack needed pill, not the text colour." | A booking and its travel read as one bordered shape. A selected card that needs attention takes `#fff5df`, the Pack needed pill's background, in place of navy. |
+| At rest and on hover | "a border shadow is being applied to this two yellow cards, even when they are not selected or hovered over."; "Maybe if they jump out very slightly when hovered over"; "Don't make the hover effect based on a percentage"; "make it 3px" | Cards are flat at rest; only a selected card has a shadow. On hover a booking grows a fixed 3 px on every side, with no shadow or border change, and a visit and its travel grow together. Week tiles and phone cards grow 3 px each side and rise 1 px; map pins lift 3 px. |
+| Help button | "I think we can remove this button as we already have the "?" icon in the very top banner on the page." | The planner has no help button of its own; the shell's help icon covers it. |
+| Rail | "The left navigation rail should never scroll, so all icons must fit on the page." | All 13 Service destinations fit at 44 px, the touch minimum, with 2 px gaps. |
+| Strip-back | "Yes, strip it back as you recommend" (Week), then "Apply the same strip-back to the phone planner", "... to the Day planner" and "... to the Map planner" | Each fact shows once. People show name, role on desktop and one total, such as "4 of 9 h booked", with no bars. Free time is hover and screen-reader text, because the gaps on the board already show it. Bookings show time, title and site; Week tiles show time and title. Colour and shape give the status; the status in words, travel and extended hours are in the hover text and the snapshot. Crew initials appear only on shared visits. The Week view shows how full a day is as a soft shading, and the weekend as a slim strip while nothing is booked there. The map marks a stop that needs attention with its key's amber "!" and draws no labels on route lines. |
+| Phone and Map | "Apply the same refinements to the phone planner"; "Apply the same refinements to the Map planner" | Both follow the Day view: people on leave last, hours booked, the extended-hours marker, flat cards and the fixed hover. |
+
+### Planner Day timeline (10 October 2026)
+
+After the merges Dean asked why the live planner looked nothing like the boards: only the working hours had been built. He was offered a staged build (Day timeline, details panel, Week, phone, then Map) and replied: "Yes to both, proceed with your recommendations". That adopts the recommended answer to each open item the Day view needs:
+
+| Item | Adopted |
+|---|---|
+| Hours booked and free time | Shown. Each person shows "x of y h booked": time reserved for visits and their travel inside standard hours, out of standard hours less unavailable time and closures. Free time is gaps of 30 minutes or more in the same window, from now on for today, in hover and screen-reader text. Both use every reservation the server returns for the person, so a site or status filter never makes someone look free. |
+| Needs attention | Pack preparation or review required, or customer contact not confirmed, as on the board. The live app's scheduling policy holds and scope reviews also count, and are named first. |
+| Day drop | Dropping a visit on the timeline proposes a new start time from where it lands, snapped to 15 minutes. It opens the existing Move or reassign form with the crew unchanged; nothing is saved until the server accepts it. The Week drop still keeps the time and changes the day. |
+| Past time today | A very light wash from 07:00 to the Now line, with no label. |
+| Details panel | A selected visit opens a 360 px details panel beside the board; the board narrows rather than being covered. Below 1100 px the panel sits over the board's right side. It was built with the Day view because the stripped-back cards carry no buttons: Move or reassign and Open appointment are in the panel. |
+
+Built in the live planner the same day; see the [planner design contract](../design/development/pages/route-schedule.md#day-timeline-built--10-october-2026).
+
+### Planner Week board (10 October 2026)
+
+Dean, after stage 1: "Yes to both, proceed with the Week view" (Auto-fix on the stage 1 pull request, and stage 3). The Week view is now the stripped-back board he adopted on 10 October ("strip it back as you recommend"), built in the live planner on wide screens; see the [planner design contract](../design/development/pages/route-schedule.md#week-board-built--10-october-2026). The rules are those already adopted for the board, with three points the live data needed:
+
+- Reserved time that no displayed visit accounts for (a site or status filter hides the visit) shows as a dashed "Reserved" block, so a cell is never drawn as free when the person is booked.
+- People away for every weekday shown, and inactive people, move to short rows at the bottom with one line across the week.
+- A weekend day is a slim strip while no one has a visit, unavailable time, a closure or a reservation on it; otherwise it is a full column.
+
+### Planner phone layout (10 October 2026)
+
+Dean, after stage 3: "Yes to both, proceed with the phone layout" (Auto-fix on the Week pull request, and stage 4). Below 781 px the planner now follows the phone board he aligned on 10 October: day chips for the week, an attention row, one card per person with a 07:00 to 18:00 strip and their visits, a Week list by day, and the details as a bottom sheet; see the [planner design contract](../design/development/pages/route-schedule.md#phone-layout-built--10-october-2026). Two points the live app needed:
+
+- On a phone the Day view reads the whole week (Monday to Sunday) so the day chips can show how many visits each day has. Wide screens still read one day.
+- The attention row counts proposed visits and visits that need attention in what is loaded, and jumps to the Proposed and cancelled list on the page. The board's separate To schedule tray is not built.
+- To answer the phase 00 finding that tabs and filters filled the first phone screen, the Scheduling tabs scroll in one row on every Scheduling page, and the planner's timezone, Work orders link and filters fold behind a Filters button on phones.
+
+Still to decide on the planner:
+
+- Checks shown as you edit, and AEST times in the reservation message.
+- A rule for windows too short for the rail. (The distinct icons for five Service destinations were decided separately and built in #394.)
+- A map provider. It needs an architecture decision record before the Map view is built.
+- Opening on the current week (from the table above).
+
 ## Where it is shown
 
 The navigation architecture canvas gains a **UI build sequence** board drawn from the generated data. The repository files remain the authority. The board was added after the r02 capture set, so no capture of it is retained.

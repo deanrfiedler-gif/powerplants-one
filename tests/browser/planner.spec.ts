@@ -162,19 +162,23 @@ test("P05 SC-07 day/week lanes, explicit filters, empty/error and keyboard focus
   ).toBeAttached();
   await capture(page, info, "week");
   if (info.project.name.startsWith("mobile")) {
-    const strip = page.getByRole("region", {
-      name: "SYN Alex Lead days",
-      exact: true,
-    });
-    await strip.focus();
-    await page.keyboard.press("ArrowRight");
-    await expect
-      .poll(() => strip.evaluate((el) => el.scrollLeft))
-      .toBeGreaterThan(0);
-    await capture(page, info, "week-keyboard-scroll");
+    // The phone Week lists each day; its heading opens that day.
+    await expect(
+      page.getByRole("button", { name: "Open Mon 22 Sep 2031 in Day view", exact: true }),
+    ).toBeVisible();
   }
   await page.getByRole("button", { name: "Day", exact: true }).click();
   await capture(page, info, "day");
+  // Desktop Day is the 07:00 to 18:00 timeline and the phone a card per person. Either way a
+  // visit is a keyboard target that opens its details (a bottom sheet on the phone), and the
+  // details carry Move or reassign, the keyboard alternative to drag.
+  const visit = page.locator('[data-appointment][data-status="Confirmed"]').first();
+  await visit.focus();
+  await visit.press("Enter");
+  await expect(
+    page.getByRole("complementary", { name: /^Visit details: / }),
+  ).toBeVisible();
+  await capture(page, info, "day-details");
   const move = page
     .getByRole("button", { name: "Move or reassign", exact: true })
     .first();
@@ -312,30 +316,42 @@ test("P05 controlled move conflict keeps original position; uncertain accepted r
     aid = await ready(page, day, true);
   await page.getByLabel("Starting date").fill(day);
   await page.getByRole("button", { name: "Week", exact: true }).click();
-  await expect(
-    page.getByRole("link", { name: /SYN-PPO-APT/ }).first(),
-  ).toBeVisible();
+  // Week on desktop and phone shows each visit with its appointment ID.
+  const savedVisit = `[data-appointment="${aid}"]`;
+  await expect(page.locator(savedVisit).first()).toBeVisible();
   const lane = page.getByRole("region", {
     name: "SYN Alex Lead resource lane",
     exact: true,
   });
   if (info.project.name.startsWith("desktop")) {
-    const card = lane
-      .locator(".appointment-card")
-      .filter({ has: page.locator(`a[href="/service/appointments/${aid}"]`) });
-    await card.dragTo(lane.locator('[data-day="2031-10-10"]'));
+    await lane
+      .locator(savedVisit)
+      .dragTo(lane.locator('[data-day="2031-10-10"]'));
     await expect(page.getByRole("dialog")).toBeVisible();
     await capture(page, info, "drag-proposal");
   } else {
-    await lane
+    await page.locator(savedVisit).first().click();
+    await page
       .getByRole("button", { name: "Move or reassign", exact: true })
-      .first()
       .focus();
     await page.keyboard.press("Enter");
   }
   const dialog = page.getByRole("dialog");
+  // Dean, 10 October 2026: work outside the 08:00 to 17:00 standard hours warns but never blocks.
+  const extended = dialog.getByRole("status", { name: "Extended hours" });
+  await dialog.getByLabel("Start (site time)").fill("2031-10-10T07:30");
+  await dialog.getByLabel("Finish (site time)").fill("2031-10-10T09:30");
+  // Both crew members have reviewed zero travel (member() above).
+  for (const name of ["SYN Alex Lead", "SYN Riley Technician"])
+    await expect(extended).toContainText(
+      `${name}: 07:30 to 09:30, outside the 08:00 to 17:00 standard hours.`,
+    );
+  await expect(
+    dialog.getByRole("button", { name: "Save proposed move" }),
+  ).toBeVisible();
   await dialog.getByLabel("Start (site time)").fill("2031-10-11T10:00");
   await dialog.getByLabel("Finish (site time)").fill("2031-10-11T12:00");
+  await expect(extended).toHaveCount(0);
   await dialog
     .getByLabel("Change reason")
     .fill("SYN attempted weekend move must retain the original booking.");
@@ -423,9 +439,10 @@ test("P05 controlled move conflict keeps original position; uncertain accepted r
   expect(current.pack_requirement).toBe("ReviewRequired");
   // Prove the refreshed planner itself moved this exact appointment. A
   // response observer alone can miss a refresh already delivered to the UI.
-  const savedLink = `a[href="/service/appointments/${aid}"]`;
-  await expect(lane.locator(`[data-day="${target}"]`).locator(savedLink)).toBeVisible();
-  await expect(lane.locator(`[data-day="${day}"]`).locator(savedLink)).toHaveCount(0);
+  // Desktop cells belong to a person's lane; the phone lists each day once.
+  const area = info.project.name.startsWith("desktop") ? lane : page;
+  await expect(area.locator(`[data-day="${target}"]`).locator(savedVisit)).toBeVisible();
+  await expect(area.locator(`[data-day="${day}"]`).locator(savedVisit)).toHaveCount(0);
   await capture(page, info, "move-saved-review-held");
 });
 test("P05 project requests reject then accept through keyboard; technician request cannot confirm", async ({

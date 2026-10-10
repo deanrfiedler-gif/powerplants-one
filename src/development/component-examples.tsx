@@ -24,8 +24,15 @@ import {
 import { ProjectsGantt } from "../components/projects-gantt";
 import {
   AppointmentCard,
+  laneExtendedHours,
   PlannerBoard,
 } from "../scheduling/components/client/planner-screens.client";
+import {
+  AppointmentSnapshot,
+  PlannerTimeline,
+  PlannerWeek,
+} from "../scheduling/components/client/planner-timeline.client";
+import { PlannerPhone } from "../scheduling/components/client/planner-phone.client";
 import { AreasEditor } from "../components/configuration-editor";
 import { addDays } from "../projects/model";
 import { type ExampleId } from "./component-model";
@@ -377,10 +384,14 @@ function PlannerExample({
   const [mode, setMode] = useState<"day" | "week">(
       state === "week" ? "week" : "day",
     ),
-    [message, setMessage] = useState("");
+    [message, setMessage] = useState(""),
+    [selected, setSelected] = useState(false);
   const a = {
     ...appointmentFixture,
     status: state === "proposed" ? "Proposed" : "Confirmed",
+    ...(state === "extended-hours"
+      ? { start_at: "2026-09-22T21:30:00Z", end_at: "2026-09-22T23:30:00Z" }
+      : {}),
     scope_review_required: state === "review-required",
     policy_impacts: state === "policy-hold" ? [schedulingPolicyHoldFixture] : [],
     actions: {
@@ -405,6 +416,7 @@ function PlannerExample({
         <AppointmentCard
           a={a}
           zone="Australia/Sydney"
+          extended={laneExtendedHours(a, plannerFixture.resources[0])}
           onMove={() =>
             setMessage(
               "Move requested in the example. The saved appointment is unchanged.",
@@ -427,27 +439,94 @@ function PlannerExample({
               Week
             </Button>
           </div>
-          <PlannerBoard
-            data={data}
-            days={Array.from({ length: mode === "week" ? 7 : 1 }, (_, i) =>
-              addDays(fixtureDate, i),
-            )}
-            mode={mode}
-            zone="Australia/Sydney"
-            usable={state !== "read-only"}
-            onDrop={(e) => {
-              e.preventDefault();
-              setMessage(
-                "Move proposed in the preview. Server conflict and readiness checks are not simulated as accepted bookings.",
-              );
-            }}
-            onMove={() =>
-              setMessage(
-                "Move or reassign selected. Booking remains unchanged; this example exercises presentation only.",
-              )
-            }
-            onDragNotice={setMessage}
-          />
+          {state === "phone" ? (
+            <div className="catalogue-phone-frame">
+              <PlannerPhone
+                data={data}
+                mode={mode}
+                day={fixtureDate}
+                days={Array.from({ length: 7 }, (_, i) => addDays("2026-09-21", i))}
+                zone="Australia/Sydney"
+                selected={selected ? a.id : null}
+                now="2026-09-23T00:40:00Z"
+                onSelect={() => setSelected(!selected)}
+                onOpenDay={() => setMode("day")}
+              />
+            </div>
+          ) : state === "lane-list" ? (
+            <PlannerBoard
+              data={data}
+              days={Array.from({ length: mode === "week" ? 7 : 1 }, (_, i) =>
+                addDays(fixtureDate, i),
+              )}
+              mode={mode}
+              zone="Australia/Sydney"
+              usable
+              onDrop={(e) => {
+                e.preventDefault();
+                setMessage(
+                  "Move proposed in the preview. Server conflict and readiness checks are not simulated as accepted bookings.",
+                );
+              }}
+              onMove={() =>
+                setMessage(
+                  "Move or reassign selected. Booking remains unchanged; this example exercises presentation only.",
+                )
+              }
+              onDragNotice={setMessage}
+            />
+          ) : (
+            <div className={`planner-view-layout${selected && data.items.length ? " with-snapshot" : ""}`}>
+              {mode === "day" ? (
+                <PlannerTimeline
+                  data={data}
+                  day={fixtureDate}
+                  zone="Australia/Sydney"
+                  usable={state !== "read-only"}
+                  selected={selected ? a.id : null}
+                  now="2026-09-23T00:40:00Z"
+                  onSelect={() => setSelected(!selected)}
+                  onDropAt={(_, minute) =>
+                    setMessage(
+                      `Move proposed in the preview to start at minute ${minute} of the day. Server conflict and readiness checks are not simulated.`,
+                    )
+                  }
+                  onDragNotice={setMessage}
+                />
+              ) : (
+                <PlannerWeek
+                  data={data}
+                  days={Array.from({ length: 7 }, (_, i) => addDays(fixtureDate, i))}
+                  zone="Australia/Sydney"
+                  usable={state !== "read-only"}
+                  selected={selected ? a.id : null}
+                  now="2026-09-23T00:40:00Z"
+                  onSelect={() => setSelected(!selected)}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    setMessage(
+                      "Move proposed in the preview. Server conflict and readiness checks are not simulated as accepted bookings.",
+                    );
+                  }}
+                  onOpenDay={() => setMode("day")}
+                  onDragNotice={setMessage}
+                />
+              )}
+              {selected && data.items.length > 0 && (
+                <AppointmentSnapshot
+                  a={a}
+                  zone="Australia/Sydney"
+                  returnTo="/schedule"
+                  onClose={() => setSelected(false)}
+                  onMove={() =>
+                    setMessage(
+                      "Move or reassign selected. Booking remains unchanged; this example exercises presentation only.",
+                    )
+                  }
+                />
+              )}
+            </div>
+          )}
         </>
       )}
       <p role="status">

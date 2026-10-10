@@ -34,10 +34,19 @@ import {
   type Envelope,
 } from "../../../components/business-ui";
 import { addDays, intervalsOverlap, localDateTime, utcFromLocal } from "../../time";
+import {
+  EXTENDED_HOURS_ADVICE,
+  extendedHours,
+  extendedHoursNotice,
+} from "../../working-hours";
 import type { CrewInput } from "../../validation";
+import { clockText } from "../../day-timeline";
+import { AppointmentSnapshot, PlannerTimeline, PlannerWeek } from "./planner-timeline.client";
+import { PlannerPhone } from "./planner-phone.client";
 export type Resource = {
   id: string;
   name: string;
+  resource_type?: string;
   version: number;
   active: boolean;
   status: string;
@@ -326,6 +335,32 @@ function BookingForm({
         : "Propose a schedule change";
   const patch = (i: number, field: string, value: string) =>
     setCrew(crew.map((x, n) => (n === i ? { ...x, [field]: value } : x)));
+  // Standard-hours warning, checked as the form changes. It never blocks: the
+  // server's published-calendar check alone decides what can be booked.
+  let extended: string[] = [];
+  try {
+    const startAt =
+        mode === "confirm"
+          ? basis.start_at
+          : utcFromLocal(start, basis.site_timezone),
+      endAt =
+        mode === "confirm" ? basis.end_at : utcFromLocal(end, basis.site_timezone);
+    extended = crew.flatMap((x) => {
+      const r = resources.data?.items.find((r) => r.id === x.resource_id),
+        before = Number(x.before),
+        after = Number(x.after);
+      if (!r || x.before === "" || x.after === "" || !(before >= 0) || !(after >= 0))
+        return [];
+      const span = extendedHours(startAt, endAt, {
+        timezone: r.calendar.timezone,
+        travel_before_minutes: before,
+        travel_after_minutes: after,
+      });
+      return span ? [extendedHoursNotice(r.name, span, before + after > 0)] : [];
+    });
+  } catch {
+    /* Incomplete local dates have nothing to check yet. */
+  }
   async function save(e: React.FormEvent) {
     e.preventDefault();
     setLocalError(null);
@@ -624,6 +659,20 @@ function BookingForm({
               >
                 Add crew member
               </button>
+            )}
+            {extended.length > 0 && (
+              <div
+                className="planner-warning"
+                role="status"
+                aria-label="Extended hours"
+              >
+                <p>
+                  <strong>Extended hours.</strong> {EXTENDED_HOURS_ADVICE}
+                </p>
+                {extended.map((text) => (
+                  <p key={text}>{text}</p>
+                ))}
+              </div>
             )}
             {mode === "request" && (
               <div className="form-grid">
@@ -1310,23 +1359,40 @@ export function AppointmentScreen({ id }: { id: string }) {
     </>
   );
 }
+// A lane belongs to one person, so the marker uses that person's travel and calendar.
+// Cancelled and proposed visits reserve nothing and are not marked.
+export function laneExtendedHours(a: ScheduleAppointment, r: Resource) {
+  const x = a.assignments.find((x) => x.resource_id === r.id && x.active);
+  if (!x || a.status !== "Confirmed") return undefined;
+  const span = extendedHours(a.start_at, a.end_at, {
+    timezone: r.calendar.timezone,
+    travel_before_minutes: x.travel_before_minutes,
+    travel_after_minutes: x.travel_after_minutes,
+  });
+  return span
+    ? `${span.from} to ${span.to}${x.travel_before_minutes + x.travel_after_minutes > 0 ? " including travel" : ""}`
+    : undefined;
+}
 export function AppointmentCard({
   a,
   zone,
   drag,
   onMove,
+  extended,
 }: {
   a: ScheduleAppointment;
   zone: string;
   drag?: (event: React.DragEvent) => void;
   onMove?: (a: ScheduleAppointment) => void;
+  // This lane's person works outside standard hours, e.g. "07:30 to 12:30 including travel".
+  extended?: string;
 }) {
   return (
     <article
       className={`appointment-card ${a.status.toLowerCase()}`}
       draggable={!!drag}
       onDragStart={drag}
-      aria-label={`${a.display_number} ${a.status}`}
+      aria-label={`${a.display_number} ${a.status}${extended ? ", extended hours" : ""}`}
     >
       <div className="planner-card-head">
         <strong>
@@ -1347,6 +1413,9 @@ export function AppointmentCard({
           .map((x) => `${x.name} (${x.crew_role})`)
           .join(" · ") || "No crew reserved"}
       </small>
+      {extended && (
+        <p className="card-extended">Extended hours · {extended}</p>
+      )}
       <p className="card-hold">
         {a.scope_review_required ? "Scope review required · " : ""}{a.policy_impacts?.some(x => x.held) ? "Scheduling policy hold" : "Dispatch held"}
         · Customer {a.customer_commitment}
@@ -1554,6 +1623,7 @@ export function PlannerBoard({
                       key={a.id}
                       a={a}
                       zone={zone}
+                      extended={laneExtendedHours(a, r)}
                       drag={
                         usable &&
                         a.actions.can_manage &&
@@ -1616,11 +1686,32 @@ export function PlannerScreen() {
       crew?: CrewInput;
     } | null>(null),
     [dragNotice, setDragNotice] = useState("");
+  const [selectedId, setSelectedId] = useState<string | null>(null),
+    [showFilters, setShowFilters] = useState(false);
+  // The board views need room for their columns; narrow screens keep the lane list until the
+  // phone layout is built.
+  const [wide, setWide] = useState(true),
+    [now, setNow] = useState(() => new Date().toISOString());
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 781px)"),
+      sync = () => setWide(media.matches);
+    sync();
+    media.addEventListener("change", sync);
+    const tick = window.setInterval(() => setNow(new Date().toISOString()), 60000);
+    return () => {
+      media.removeEventListener("change", sync);
+      window.clearInterval(tick);
+    };
+  }, []);
   const days = Array.from({ length: mode === "week" ? 7 : 1 }, (_, i) =>
       addDays(day, i),
     ),
-    from = utcFromLocal(day + "T00:00", zone),
-    to = utcFromLocal(addDays(day, days.length) + "T00:00", zone);
+    // The phone Day view shows chips for the whole week, so it reads Monday to Sunday.
+    weekStart = addDays(day, -((new Date(day + "T12:00:00Z").getUTCDay() + 6) % 7)),
+    phoneWeek = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i)),
+    read = !wide && mode === "day" ? phoneWeek : days,
+    from = utcFromLocal(read[0] + "T00:00", zone),
+    to = utcFromLocal(addDays(read[read.length - 1]!, 1) + "T00:00", zone);
   const query = new URLSearchParams({
     from,
     to,
@@ -1642,6 +1733,12 @@ export function PlannerScreen() {
   );
   const data = result.data,
     usable = !!data && !result.error && !result.loading;
+  // The Day timeline and the Week board (the refinement boards) are drawn in the resources'
+  // own timezone; another display timezone, or a narrow screen, keeps the lane list.
+  const sameZone = !!data && data.resources.every((r) => r.calendar.timezone === zone),
+    boardView = wide && sameZone,
+    phoneView = !wide && sameZone;
+  const selected = boardView || phoneView ? data?.items.find((a) => a.id === selectedId) : undefined;
   const modal = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     if (move) {
@@ -1651,6 +1748,36 @@ export function PlannerScreen() {
   function close() {
     setMove(null);
     setDragNotice("");
+  }
+  // A timeline drop sets the proposed start time from where the visit lands (Dean's decision,
+  // 10 October 2026); the crew is never guessed from the lane.
+  function dropAt(a: ScheduleAppointment, startMinute: number, resource: Resource) {
+    if (!usable || a.status !== "Confirmed" || !a.actions.can_manage) return;
+    try {
+      const start = utcFromLocal(`${day}T${clockText(startMinute)}`, zone);
+      setMove({
+        a,
+        start,
+        crew: a.assignments
+          .filter((x) => x.active)
+          .map((x) => ({
+            resource_id: x.resource_id,
+            resource_version: x.resource_version,
+            calendar_version: x.calendar_version,
+            crew_role: x.crew_role,
+            travel_before_minutes: x.travel_before_minutes,
+            travel_after_minutes: x.travel_after_minutes,
+            travel_reason: x.travel_reason,
+          })),
+      });
+      setDragNotice(
+        `Move proposed to start at ${clockText(startMinute)}. ${resource.name} lane is a review target; confirm the complete crew in the form. Original booking retained until saved.`,
+      );
+    } catch {
+      setDragNotice(
+        "This local time is ambiguous or unavailable. Use Move or reassign to choose a valid site time.",
+      );
+    }
   }
   function drop(e: React.DragEvent, d: string, resource: Resource) {
     e.preventDefault();
@@ -1699,7 +1826,12 @@ export function PlannerScreen() {
           </Link>
         </p>
       )}
-      <section className="planner-toolbar" aria-label="Planner controls">
+      {/* On a phone the timezone, Work orders and filters fold behind one button, so the first
+          screen reaches the bookings (phase 00 review finding). */}
+      <section
+        className={`planner-toolbar${!wide && !showFilters ? " folded" : ""}`}
+        aria-label="Planner controls"
+      >
         <div className="planner-date">
           <button
             className="secondary"
@@ -1738,24 +1870,41 @@ export function PlannerScreen() {
             Week
           </button>
         </div>
-        <EnumField
-          name="display-timezone"
-          label="Display timezone"
-          value={zone}
-          onChange={setZone}
-          values={["Australia/Brisbane", "Australia/Melbourne", "UTC"]}
-        />
+        {(wide || showFilters) && (
+          <EnumField
+            name="display-timezone"
+            label="Display timezone"
+            value={zone}
+            onChange={setZone}
+            values={["Australia/Brisbane", "Australia/Melbourne", "UTC"]}
+          />
+        )}
         {/* The removed heading block carried the only route to work orders,
             so it moves into the control bar with the other page actions. */}
         <div className="planner-toolbar-actions">
           <button className="secondary" onClick={result.reload}>
             Refresh planner
           </button>
-          <Link className="button secondary" href="/service/work-orders">
-            Work orders
-          </Link>
+          {!wide && (
+            <button
+              className="secondary"
+              aria-expanded={showFilters}
+              onClick={() => setShowFilters(!showFilters)}
+            >
+              Filters
+              {[site, resourceFilter, status].filter(Boolean).length
+                ? ` (${[site, resourceFilter, status].filter(Boolean).length})`
+                : ""}
+            </button>
+          )}
+          {(wide || showFilters) && (
+            <Link className="button secondary" href="/service/work-orders">
+              Work orders
+            </Link>
+          )}
         </div>
       </section>
+      {(wide || showFilters) && (
       <div className="planner-filters">
         <SelectField
           name="site-filter"
@@ -1790,6 +1939,7 @@ export function PlannerScreen() {
           }))}
         />
       </div>
+      )}
       <ReadState {...result} retry={result.reload} />
       {!!sites.error && (
         <p className="planner-warning">Site choices could not be refreshed.</p>
@@ -1847,23 +1997,95 @@ export function PlannerScreen() {
             <span>Proposed = no capacity reserved</span>
             <span>Dispatch remains held</span>
           </p>
-          {mode === "week" && (
+          {mode === "week" && !boardView && !phoneView && (
             <p className="planner-scroll-hint">
               Scroll within each resource lane to compare days. Keyboard: focus
               the days and use arrow keys, or choose Day.
             </p>
           )}
-          <PlannerBoard
-            data={data}
-            days={days}
-            mode={mode}
-            zone={zone}
-            usable={usable}
-            onDrop={drop}
-            onMove={(a) => setMove({ a })}
-            onDragNotice={setDragNotice}
-          />
-          <section className="panel proposal-section">
+          {boardView ? (
+            <div className={`planner-view-layout${selected ? " with-snapshot" : ""}`}>
+              {mode === "day" ? (
+                <PlannerTimeline
+                  data={data}
+                  day={day}
+                  zone={zone}
+                  usable={usable}
+                  selected={selected?.id ?? null}
+                  now={now}
+                  onSelect={(a) => setSelectedId(a.id === selectedId ? null : a.id)}
+                  onDropAt={dropAt}
+                  onDragNotice={setDragNotice}
+                />
+              ) : (
+                <PlannerWeek
+                  data={data}
+                  days={days}
+                  zone={zone}
+                  usable={usable}
+                  selected={selected?.id ?? null}
+                  now={now}
+                  onSelect={(a) => setSelectedId(a.id === selectedId ? null : a.id)}
+                  onDrop={drop}
+                  onOpenDay={(d) => update({ day: d, mode: "day" })}
+                  onDragNotice={setDragNotice}
+                />
+              )}
+              {selected && (
+                <AppointmentSnapshot
+                  key={selected.id}
+                  a={selected}
+                  zone={zone}
+                  returnTo={returnTo}
+                  onClose={() => setSelectedId(null)}
+                  onMove={usable ? (a) => setMove({ a }) : undefined}
+                />
+              )}
+            </div>
+          ) : phoneView ? (
+            <>
+              <PlannerPhone
+                data={data}
+                mode={mode}
+                day={day}
+                days={mode === "day" ? phoneWeek : days}
+                zone={zone}
+                selected={selected?.id ?? null}
+                now={now}
+                onSelect={(a) => setSelectedId(a.id === selectedId ? null : a.id)}
+                onOpenDay={(d) => update({ day: d, mode: "day" })}
+              />
+              {selected && (
+                <AppointmentSnapshot
+                  key={selected.id}
+                  a={selected}
+                  zone={zone}
+                  returnTo={returnTo}
+                  onClose={() => setSelectedId(null)}
+                  onMove={usable ? (a) => setMove({ a }) : undefined}
+                />
+              )}
+            </>
+          ) : (
+            <>
+              {data.resources.length > 0 && (
+                <p className="planner-scroll-hint">
+                  The planner board is drawn in the resources&apos; own timezone. Choose it as the display timezone to see it; this list shows the same period.
+                </p>
+              )}
+              <PlannerBoard
+                data={data}
+                days={days}
+                mode={mode}
+                zone={zone}
+                usable={usable}
+                onDrop={drop}
+                onMove={(a) => setMove({ a })}
+                onDragNotice={setDragNotice}
+              />
+            </>
+          )}
+          <section className="panel proposal-section" id="planner-proposals">
             <h2>Proposed and cancelled appointments</h2>
             <p>
               Proposals retain exact work authority and reserve no resource.

@@ -492,6 +492,39 @@ test("calendar, leave, closed exception, skill expiry, active eligibility and ex
     code("InvalidData"),
   );
 });
+test("sample calendars publish 07:00 to 18:00: travel may reach either edge but not beyond", async () => {
+  // Dean, 10 October 2026. The 10:00-12:00 Brisbane visit with 180 minutes' travel before
+  // starts the reservation at 07:00; 360 after ends it at 18:00. Standard hours only warn.
+  const actor = await p();
+  for (const [before, after] of [
+    [181, 0],
+    [0, 361],
+  ] as const)
+    await assert.rejects(
+      confirmAppointment(actor, id("a8", 2), {
+        ...(await cmd()),
+        crew: [
+          {
+            ...crew()[0],
+            travel_before_minutes: before,
+            travel_after_minutes: after,
+          },
+        ],
+      }),
+      code("SkillOrTravelInvalid"),
+    );
+  assert.equal(
+    (
+      await confirmAppointment(actor, id("a8", 2), {
+        ...(await cmd()),
+        crew: [
+          { ...crew()[0], travel_before_minutes: 180, travel_after_minutes: 360 },
+        ],
+      })
+    ).receipt.state,
+    "Confirmed",
+  );
+});
 test("missing contact and failed/no-response attempts never imply commitment; manual exact agreement permits booking", async () => {
   const actor = await p();
   await assert.rejects(

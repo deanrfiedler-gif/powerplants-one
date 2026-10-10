@@ -79,6 +79,8 @@ export const navigationFontAwesome = {
   "nav-screen": "blinds",
   "nav-fertigation": "droplet",
   "nav-service": "wrench",
+  "nav-agreements": "file-contract",
+  "nav-maintenance": "screwdriver-wrench",
   "nav-engineering": "compass-drafting",
   "nav-sales": "briefcase",
   "nav-handover": "arrow-right-arrow-left",
