@@ -32,4 +32,6 @@ Reference: docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html
 
 ## Verification and acceptance
 
+PT-27 moves the existing DuplicateCandidates panel to `src/components/duplicate-candidates.tsx` so CustomerWorkspace no longer imports unrelated context screens. Its query, self-exclusion, exact links, loading/retry and no-auto-merge explanation remain unchanged. CS-01 remains Record detail; Overview / dashboard, with the same incoming directory and outgoing identity handovers. The [directory/receiving host contract](../components/crm-directory.md) binds P03's same-name fixture and the controlled ten-user receiving timings. Desktop/phone captures and functional checks remain distinct from owner/device approval; no new accepted image is available.
+
 The detailed page guide is `guide.page.customers.id`. [CS receiving handover](../../../delivery/cs-native-completion-handover.md) records executed behaviour, visual inspection, source hashes and open business definitions. Owner/device acceptance and deployment remain separate.

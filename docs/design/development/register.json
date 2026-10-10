@@ -5712,7 +5712,8 @@
       "source_paths": [
         "src/app/(business)/customers/[id]/page.tsx",
         "src/components/customer-workspace.tsx",
-        "src/shared/customer-360.ts"
+        "src/shared/customer-360.ts",
+        "src/components/duplicate-candidates.tsx"
       ],
       "guide_key": "guide.page.customers.id",
       "design_path": "docs/design/development/pages/route-customers-id.md",

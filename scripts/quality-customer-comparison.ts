@@ -53,10 +53,12 @@ async function settled(page: Page) {
   await page.evaluate(() => new Promise<void>(r => requestAnimationFrame(() => requestAnimationFrame(() => r()))));
 }
 try {
-  const manifestText = await readFile(".next/server/app/(business)/customers/page_client-reference-manifest.js", "utf8");
-  const scope = { globalThis: {} as { __RSC_MANIFEST?: Record<string, unknown> } };
-  runInNewContext(manifestText, scope);
-  await writeFile(`${root}/customer-client-manifest.json`, JSON.stringify(scope.globalThis.__RSC_MANIFEST, null, 2));
+  for (const [route, name] of [["customers", "customer-client"], ["customers/[id]", "customer-record"]]) {
+    const manifestText = await readFile(`.next/server/app/(business)/${route}/page_client-reference-manifest.js`, "utf8");
+    const scope = { globalThis: {} as { __RSC_MANIFEST?: Record<string, unknown> } };
+    runInNewContext(manifestText, scope);
+    await writeFile(`${root}/${name}-manifest.json`, JSON.stringify(scope.globalThis.__RSC_MANIFEST, null, 2));
+  }
   // Immutable process metadata lets an external sampler observe both logging
   // modes without enabling the application's detailed diagnostic writer.
   await writeFile(`${root}/run.json`, JSON.stringify(metadata, null, 2));

@@ -10,7 +10,7 @@ import {
 import { useCrmResource } from "./crm-state";
 import { RecordPanel, RecordTabs } from "./record-ui";
 import { useContactView } from "./contact-workspace";
-import { DuplicateCandidates } from "./context-screens";
+import { DuplicateCandidates } from "./duplicate-candidates";
 import type { Customer360, CustomerSection } from "../shared/customer-360";
 
 const tabs = [
