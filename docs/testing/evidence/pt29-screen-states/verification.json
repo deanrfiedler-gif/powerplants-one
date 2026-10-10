@@ -1,0 +1,1041 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-10",
+  "owner": "Dean Fiedler",
+  "review_status": "Implementation self-review; independent and owner review pending",
+  "test_source": "dd9573158e6c13cf964ee93655ffa5e90c74de05",
+  "test_tree": "15d0966d3557c2716947b7bfae746d9bd67fc20b",
+  "primary_test_source": "8f632cbc7e518513d8d1ba60d1de6e0a6ab70e7d",
+  "primary_test_tree": "ae4c0c88a27e691fedfa9a0586789872ce36d180",
+  "application_source": "88694370b4159134834766beaf648de4bfe16a4c",
+  "build": "T2atCaQIgtunpyW9tMi-p",
+  "application_changes": "No src, scripts, public, package or Next configuration differences from the compiled application source.",
+  "environment": {
+    "os": "Windows",
+    "node": "24.21.0",
+    "npm": "11.19.0",
+    "postgres": "16.15",
+    "database": "ppo_synthetic_test",
+    "playwright": "1.63.0",
+    "chrome": "155.0.8059.40",
+    "viewports": [
+      [
+        1440,
+        1000
+      ],
+      [
+        390,
+        844
+      ]
+    ],
+    "identity": "local-synthetic loopback",
+    "physical_device": false
+  },
+  "runs": {
+    "initial": {
+      "original_sha256": "2a0d4e139c7ad11f8d4657b05a7d726221b2d8e7a74b732418bd81216f87b873",
+      "stats": {
+        "startTime": "2026-10-10T04:30:38.867Z",
+        "duration": 312408.37100000004,
+        "expected": 16,
+        "skipped": 0,
+        "unexpected": 3,
+        "flaky": 0
+      },
+      "global_error_count": 0,
+      "cases": [
+        {
+          "title": "warm every route once before the browser projects",
+          "file": "warm-up.setup.ts",
+          "project": "warm-up",
+          "status": "passed",
+          "duration_ms": 35943,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 pack and report queues never turn failed reads into empty or issued claims",
+          "file": "quality-states.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 5241,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 failed photo upload retains the selected original and recovers without a false available claim",
+          "file": "quality-states.spec.ts",
+          "project": "desktop-chromium",
+          "status": "failed",
+          "duration_ms": 2085,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 partial and failed account extractions keep historical totals separate from current values",
+          "file": "quality-states.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 6749,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 stale Finance action preserves current cancellation and safe input",
+          "file": "quality-states.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 24355,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial",
+          "file": "quality-states.spec.ts",
+          "project": "desktop-chromium",
+          "status": "failed",
+          "duration_ms": 106035,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 pack and report queues never turn failed reads into empty or issued claims",
+          "file": "quality-states.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 4075,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 failed photo upload retains the selected original and recovers without a false available claim",
+          "file": "quality-states.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 8877,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 partial and failed account extractions keep historical totals separate from current values",
+          "file": "quality-states.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 2943,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 stale Finance action preserves current cancellation and safe input",
+          "file": "quality-states.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 11457,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial",
+          "file": "quality-states.spec.ts",
+          "project": "mobile-chromium",
+          "status": "failed",
+          "duration_ms": 11622,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-01 cross-tab identity change removes business and diagnostic records before reload",
+          "file": "quality.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 5624,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-27/29 shared validation links the actual control and retains entered values",
+          "file": "quality.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 3461,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-01/29 scoped recovery UI preserves originals and retries one uncertain disposition",
+          "file": "quality.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 11425,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 exceptions distinguish loading, failed, empty and restricted windows",
+          "file": "quality.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 3995,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-01 cross-tab identity change removes business and diagnostic records before reload",
+          "file": "quality.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 5100,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-27/29 shared validation links the actual control and retains entered values",
+          "file": "quality.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 4381,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-01/29 scoped recovery UI preserves originals and retries one uncertain disposition",
+          "file": "quality.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 13642,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 exceptions distinguish loading, failed, empty and restricted windows",
+          "file": "quality.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 3600,
+          "retry": 0,
+          "annotations": []
+        }
+      ],
+      "source": "70786b7931e5c27041543373f98ff80b880a5693"
+    },
+    "second": {
+      "original_sha256": "97f0132855f8d8f8f1cf7a0b957b6e1dccd6260ae13885bf84942566f268371b",
+      "stats": {
+        "startTime": "2026-10-10T04:37:06.734Z",
+        "duration": 708392.629,
+        "expected": 25,
+        "skipped": 0,
+        "unexpected": 2,
+        "flaky": 0
+      },
+      "global_error_count": 0,
+      "cases": [
+        {
+          "title": "warm every route once before the browser projects",
+          "file": "warm-up.setup.ts",
+          "project": "warm-up",
+          "status": "passed",
+          "duration_ms": 61264,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "SV05-I4 stale source refuses a save without opening a print or losing entries",
+          "file": "job-pack-source-print.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 4615,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "SV05-I4 stale source refuses a save without opening a print or losing entries",
+          "file": "job-pack-source-print.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 3465,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P05 controlled move conflict keeps original position; uncertain accepted result retries unchanged once",
+          "file": "planner.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 10068,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P05 controlled move conflict keeps original position; uncertain accepted result retries unchanged once",
+          "file": "planner.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 10095,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 pack and report queues never turn failed reads into empty or issued claims",
+          "file": "quality-states.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 7187,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 failed photo upload retains the selected original and recovers without a false available claim",
+          "file": "quality-states.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 26834,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 failed and stale output presentation never claims an issue",
+          "file": "quality-states.spec.ts",
+          "project": "desktop-chromium",
+          "status": "failed",
+          "duration_ms": 3094,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 partial and failed account extractions keep historical totals separate from current values",
+          "file": "quality-states.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 10187,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 stale Finance action preserves current cancellation and safe input",
+          "file": "quality-states.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 20049,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial",
+          "file": "quality-states.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 218427,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 pack and report queues never turn failed reads into empty or issued claims",
+          "file": "quality-states.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 5355,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 failed photo upload retains the selected original and recovers without a false available claim",
+          "file": "quality-states.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 19515,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 failed and stale output presentation never claims an issue",
+          "file": "quality-states.spec.ts",
+          "project": "mobile-chromium",
+          "status": "failed",
+          "duration_ms": 1921,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 partial and failed account extractions keep historical totals separate from current values",
+          "file": "quality-states.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 5564,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 stale Finance action preserves current cancellation and safe input",
+          "file": "quality-states.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 12939,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial",
+          "file": "quality-states.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 114520,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-01 cross-tab identity change removes business and diagnostic records before reload",
+          "file": "quality.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 6126,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-27/29 shared validation links the actual control and retains entered values",
+          "file": "quality.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 8337,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-01/29 scoped recovery UI preserves originals and retries one uncertain disposition",
+          "file": "quality.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 17179,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 exceptions distinguish loading, failed, empty and restricted windows",
+          "file": "quality.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 4356,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-01 cross-tab identity change removes business and diagnostic records before reload",
+          "file": "quality.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 4496,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-27/29 shared validation links the actual control and retains entered values",
+          "file": "quality.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 3747,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-01/29 scoped recovery UI preserves originals and retries one uncertain disposition",
+          "file": "quality.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 16562,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 exceptions distinguish loading, failed, empty and restricted windows",
+          "file": "quality.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 4661,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P04 forms retain invalid and stale proposals with explicit comparison; keyboard and phone layouts",
+          "file": "work-orders.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 3525,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P04 forms retain invalid and stale proposals with explicit comparison; keyboard and phone layouts",
+          "file": "work-orders.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 3448,
+          "retry": 0,
+          "annotations": []
+        }
+      ],
+      "source": "78c0f0be43fe3ebf9a394050dfbc32b86263a98a"
+    },
+    "final": {
+      "original_sha256": "27bbdaa87d3cf4943b1312d3c25603c9f9adc3a85c78edb405f22aa92858c55c",
+      "stats": {
+        "startTime": "2026-10-10T04:56:56.854Z",
+        "duration": 505738.679,
+        "expected": 27,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "global_error_count": 0,
+      "cases": [
+        {
+          "title": "warm every route once before the browser projects",
+          "file": "warm-up.setup.ts",
+          "project": "warm-up",
+          "status": "passed",
+          "duration_ms": 69670,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "SV05-I4 stale source refuses a save without opening a print or losing entries",
+          "file": "job-pack-source-print.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 3380,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "SV05-I4 stale source refuses a save without opening a print or losing entries",
+          "file": "job-pack-source-print.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 3000,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P05 controlled move conflict keeps original position; uncertain accepted result retries unchanged once",
+          "file": "planner.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 5196,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P05 controlled move conflict keeps original position; uncertain accepted result retries unchanged once",
+          "file": "planner.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 5093,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 pack and report queues never turn failed reads into empty or issued claims",
+          "file": "quality-states.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 3470,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 failed photo upload retains the selected original and recovers without a false available claim",
+          "file": "quality-states.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 11864,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 failed and stale output presentation never claims an issue",
+          "file": "quality-states.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 4662,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 partial and failed account extractions keep historical totals separate from current values",
+          "file": "quality-states.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 7170,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 stale Finance action preserves current cancellation and safe input",
+          "file": "quality-states.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 22769,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial",
+          "file": "quality-states.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 110561,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 pack and report queues never turn failed reads into empty or issued claims",
+          "file": "quality-states.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 3659,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 failed photo upload retains the selected original and recovers without a false available claim",
+          "file": "quality-states.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 12187,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 failed and stale output presentation never claims an issue",
+          "file": "quality-states.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 3622,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 partial and failed account extractions keep historical totals separate from current values",
+          "file": "quality-states.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 5643,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 stale Finance action preserves current cancellation and safe input",
+          "file": "quality-states.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 24492,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial",
+          "file": "quality-states.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 126578,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-01 cross-tab identity change removes business and diagnostic records before reload",
+          "file": "quality.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 3336,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-27/29 shared validation links the actual control and retains entered values",
+          "file": "quality.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 3437,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-01/29 scoped recovery UI preserves originals and retries one uncertain disposition",
+          "file": "quality.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 11755,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 exceptions distinguish loading, failed, empty and restricted windows",
+          "file": "quality.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 5417,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-01 cross-tab identity change removes business and diagnostic records before reload",
+          "file": "quality.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 3755,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-27/29 shared validation links the actual control and retains entered values",
+          "file": "quality.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 3578,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-01/29 scoped recovery UI preserves originals and retries one uncertain disposition",
+          "file": "quality.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 11356,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 exceptions distinguish loading, failed, empty and restricted windows",
+          "file": "quality.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 3828,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P04 forms retain invalid and stale proposals with explicit comparison; keyboard and phone layouts",
+          "file": "work-orders.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 4453,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P04 forms retain invalid and stale proposals with explicit comparison; keyboard and phone layouts",
+          "file": "work-orders.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 2662,
+          "retry": 0,
+          "annotations": []
+        }
+      ],
+      "source": "8f632cbc7e518513d8d1ba60d1de6e0a6ab70e7d"
+    },
+    "overview-desktop-attempt1": {
+      "original_sha256": "e47c4c53064276c8fb221fd6037e553bf1db205e7a5cc570d359176e8f2eaf22",
+      "stats": {
+        "startTime": "2026-10-10T04:37:36.355Z",
+        "duration": 121769.475,
+        "expected": 0,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "global_error_count": 1,
+      "cases": [],
+      "source": "78c0f0be43fe3ebf9a394050dfbc32b86263a98a"
+    },
+    "overview-mobile-attempt1": {
+      "original_sha256": "d8237805e4af3621a0e771c0d6cc5ea79e7bf738aa16bee06ba72edf8d3cb735",
+      "stats": {
+        "startTime": "2026-10-10T04:40:21.561Z",
+        "duration": 157636.33500000002,
+        "expected": 0,
+        "skipped": 0,
+        "unexpected": 1,
+        "flaky": 0
+      },
+      "global_error_count": 0,
+      "cases": [
+        {
+          "title": "an unread source is never zero, the Create control never covers a focused control, and access decides what is offered",
+          "file": "my-work-mobile.spec.ts",
+          "project": "mobile-chromium",
+          "status": "failed",
+          "duration_ms": 12016,
+          "retry": 0,
+          "annotations": [
+            {
+              "type": "serial",
+              "location": {
+                "file": "C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\pt29-screen-states\\powerplants-one\\tests\\browser\\my-work-mobile.spec.ts",
+                "line": 0,
+                "column": 0
+              }
+            }
+          ]
+        }
+      ],
+      "source": "78c0f0be43fe3ebf9a394050dfbc32b86263a98a"
+    },
+    "overview-desktop": {
+      "original_sha256": "3e8fbc3dc8d67489509f1b18042ababe7357b0656e8d1811f5b484bad22bf2d0",
+      "stats": {
+        "startTime": "2026-10-10T05:05:23.356Z",
+        "duration": 46739.544,
+        "expected": 2,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "global_error_count": 0,
+      "cases": [
+        {
+          "title": "the overview reconciles its four counts, the list, the schedule and the notices in both menu states",
+          "file": "my-work.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 15114,
+          "retry": 0,
+          "annotations": [
+            {
+              "type": "serial",
+              "location": {
+                "file": "C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\pt29-screen-states\\powerplants-one\\tests\\browser\\my-work.spec.ts",
+                "line": 0,
+                "column": 0
+              }
+            }
+          ]
+        },
+        {
+          "title": "an unread source is never shown as zero, and the team queue is closed to a read-only identity",
+          "file": "my-work.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 2822,
+          "retry": 0,
+          "annotations": [
+            {
+              "type": "serial",
+              "location": {
+                "file": "C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\pt29-screen-states\\powerplants-one\\tests\\browser\\my-work.spec.ts",
+                "line": 0,
+                "column": 0
+              }
+            }
+          ]
+        }
+      ],
+      "source": "8f632cbc7e518513d8d1ba60d1de6e0a6ab70e7d"
+    },
+    "overview-mobile": {
+      "original_sha256": "c1929358fcda945c7186d677685f0bcfffbf2b5a12ef50e391f42d5e96fa3162",
+      "stats": {
+        "startTime": "2026-10-10T05:06:10.923Z",
+        "duration": 46510.238999999994,
+        "expected": 2,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "global_error_count": 0,
+      "cases": [
+        {
+          "title": "the phone overview is one page: header, five-cell bar, Quick Actions, attention, one agenda and follow-ups",
+          "file": "my-work-mobile.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 10954,
+          "retry": 0,
+          "annotations": [
+            {
+              "type": "serial",
+              "location": {
+                "file": "C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\pt29-screen-states\\powerplants-one\\tests\\browser\\my-work-mobile.spec.ts",
+                "line": 0,
+                "column": 0
+              }
+            }
+          ]
+        },
+        {
+          "title": "an unread source is never zero, the Create control never covers a focused control, and access decides what is offered",
+          "file": "my-work-mobile.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 12465,
+          "retry": 0,
+          "annotations": [
+            {
+              "type": "serial",
+              "location": {
+                "file": "C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\pt29-screen-states\\powerplants-one\\tests\\browser\\my-work-mobile.spec.ts",
+                "line": 0,
+                "column": 0
+              }
+            }
+          ]
+        }
+      ],
+      "source": "8f632cbc7e518513d8d1ba60d1de6e0a6ab70e7d"
+    },
+    "capture-recheck": {
+      "original_sha256": "927e8eef88c56df935d280bb3cec2d7a97ce7dbd4a0b077bdcdaaa43218a87ef",
+      "stats": {
+        "startTime": "2026-10-10T05:08:38.484Z",
+        "duration": 391766.71900000004,
+        "expected": 4,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "global_error_count": 0,
+      "cases": [
+        {
+          "title": "P11 PT-29 failed photo upload retains the selected original and recovers without a false available claim",
+          "file": "quality-states.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 15066,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial",
+          "file": "quality-states.spec.ts",
+          "project": "desktop-chromium",
+          "status": "passed",
+          "duration_ms": 113381,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 failed photo upload retains the selected original and recovers without a false available claim",
+          "file": "quality-states.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 11814,
+          "retry": 0,
+          "annotations": []
+        },
+        {
+          "title": "P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial",
+          "file": "quality-states.spec.ts",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "duration_ms": 131747,
+          "retry": 0,
+          "annotations": []
+        }
+      ],
+      "source": "dd9573158e6c13cf964ee93655ffa5e90c74de05"
+    }
+  },
+  "initial_failure_disposition": [
+    "Desktop upload and mobile matrix selected weekend dates outside the published working interval. Fixtures moved to distinct working days; permission/calendar checks retained.",
+    "Desktop matrix expected the account header key inside main. Populated proof now asserts the actual transaction row returned by the selected browser read.",
+    "New output presentation test matched three legitimate status labels; assertion scoped to the Job pack tabpanel.",
+    "Initial standalone desktop overview runner timed out during server startup. Initial standalone mobile recovery lacked its serial suite fixture. Final sequential runs include each suite fixture case before recovery."
+  ],
+  "checks": {
+    "build": {
+      "command": "npm run build",
+      "status": "passed",
+      "test_source": "8f632cbc7e518513d8d1ba60d1de6e0a6ab70e7d",
+      "working_documentation": "Final evidence and ledger edits present for repository assurance checks.",
+      "original_log": "integrated-build.txt",
+      "sha256": "0bbb0c65bf85c27168e94cd98a9968e111d764ce1eb0c792f1cdffd794d7016c",
+      "detail": "Compiled application build, including TypeScript, passed."
+    },
+    "typecheck": {
+      "command": "npm run typecheck",
+      "status": "passed",
+      "test_source": "dd9573158e6c13cf964ee93655ffa5e90c74de05",
+      "working_documentation": "Final evidence and ledger edits present for repository assurance checks.",
+      "original_log": "final-typecheck-capture.txt",
+      "sha256": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28",
+      "detail": "Passed after capture assertions."
+    },
+    "eslint": {
+      "command": "npx eslint tests/browser/quality-states.spec.ts tests/browser/quality.spec.ts tests/helpers/quality-field.ts",
+      "status": "passed",
+      "test_source": "dd9573158e6c13cf964ee93655ffa5e90c74de05",
+      "working_documentation": "Final evidence and ledger edits present for repository assurance checks.",
+      "original_log": "final-lint-capture.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "detail": "Changed TypeScript files passed."
+    },
+    "studio": {
+      "command": "npm run studio:check",
+      "status": "passed",
+      "test_source": "dd9573158e6c13cf964ee93655ffa5e90c74de05",
+      "working_documentation": "Final evidence and ledger edits present for repository assurance checks.",
+      "original_log": "final-studio.txt",
+      "sha256": "66c374ae732d2051d904d9a6ce5899864c5478bdacf4173ac46f90ba8fa317d7",
+      "detail": "Zero errors; 322 unreviewed and 28 stale entries remain. No design acceptance promoted."
+    },
+    "foundation": {
+      "command": "python scripts/check_foundation.py",
+      "status": "passed",
+      "test_source": "dd9573158e6c13cf964ee93655ffa5e90c74de05",
+      "working_documentation": "Final evidence and ledger edits present for repository assurance checks.",
+      "original_log": "final-foundation.txt",
+      "sha256": "334ce84d24e37bffbd9cbb203e150a1e9ff3f2b4184c14aa4c42d0f8d3ff79d6",
+      "detail": "Passed with new evidence and disposition present; 78 parent requirements preserved."
+    },
+    "prototype": {
+      "command": "python scripts/check_prototype.py",
+      "status": "passed",
+      "test_source": "dd9573158e6c13cf964ee93655ffa5e90c74de05",
+      "working_documentation": "Final evidence and ledger edits present for repository assurance checks.",
+      "original_log": "final-prototype.txt",
+      "sha256": "f7b48b580707ab4071e3dcda23d38936db1c757240cbc5996bf54ed4fceb2ff3",
+      "detail": "Passed; authored catalogue unchanged."
+    },
+    "naming": {
+      "command": "python scripts/check_naming.py",
+      "status": "passed",
+      "test_source": "dd9573158e6c13cf964ee93655ffa5e90c74de05",
+      "working_documentation": "Final evidence and ledger edits present for repository assurance checks.",
+      "original_log": "final-naming.txt",
+      "sha256": "107c29a62142513286215b5034f9340d1bb7aa1a3c08938d3a59fe11c0a34d94",
+      "detail": "Passed after a documentation-only edit shortened copy-ready instructions from 8,012 to 7,999 characters. The inherited overflow was confirmed in unmodified origin/main.",
+      "earlier_failure": {
+        "log": "final-naming-inherited-overflow.txt",
+        "sha256": "49bef534ec939ff447b2e523d049aada40b676db3d5a7ebf90123e507b4ef969",
+        "baseline": "88694370b4159134834766beaf648de4bfe16a4c",
+        "characters": 8012,
+        "disposition": "Two phrases shortened; instruction meaning and authority unchanged."
+      }
+    },
+    "output_selector_preflight": {
+      "status": "passed",
+      "scenarios": 2,
+      "source": "8f632cbc7e518513d8d1ba60d1de6e0a6ab70e7d",
+      "original_result": "output-selector-results.json",
+      "sha256": "e4980bcb64530ba32d64cb7719558eb180dfac4d901fbb6d65befbddd65d5f14"
+    },
+    "diff": {
+      "command": "git diff --check",
+      "status": "passed"
+    }
+  },
+  "limitations": [
+    "Injected read/render failures prove presentation, not provider or worker persistence.",
+    "Real commands prove the named Finance, upload and recovery boundaries only.",
+    "Desktop and phone emulation are not physical-device or accessibility acceptance.",
+    "Original catalogue and all 78 parent IDs preserved; no owner, deployment or whole-product approval."
+  ],
+  "summary": {
+    "primary_browser_scenarios_passed": 30,
+    "warm_up_routes": 672,
+    "capture_recheck_scenarios_passed": 4,
+    "test_retries": 0,
+    "transport_retry_annotations": 0,
+    "retained_representatives_inspected": 14
+  }
+}

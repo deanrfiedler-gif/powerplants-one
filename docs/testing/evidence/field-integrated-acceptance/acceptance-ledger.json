@@ -106,6 +106,14 @@
       "baseline": "e5a94730025cf7a1ad4c1d0b1450532f591dba32",
       "environment": "Windows Node24.21.0/npm11.19.0/PostgreSQL16.15/Chrome155.0.8059.40; task-owned disposable cluster55931 and real HTTP adapters. Exact logs and source hashes in verification.json.",
       "review": "Implementation self-review; independent review and owner acceptance pending."
+    },
+    "STATES": {
+      "path": "docs/testing/evidence/pt29-screen-states/README.md",
+      "head": "dd9573158e6c13cf964ee93655ffa5e90c74de05",
+      "primary_head": "8f632cbc7e518513d8d1ba60d1de6e0a6ab70e7d",
+      "application_source": "88694370b4159134834766beaf648de4bfe16a4c",
+      "build": "T2atCaQIgtunpyW9tMi-p",
+      "environment": "Windows Node24.21.0/npm11.19.0/PostgreSQL16.15/Chrome155.0.8059.40; isolated synthetic loopback database, compiled desktop/phone emulation. Thirty browser scenarios and the 672-route warm-up pass; four affected cases pass again after improving capture placement. Injected presentation challenges are separated from real API/byte outcomes."
     }
   },
   "cases": [
@@ -1184,14 +1192,15 @@
       "source_ids": [
         "P11",
         "CV",
-        "FRESH"
+        "FRESH",
+        "STATES"
       ],
-      "technical_disposition": "Component",
-      "existing_evidence_scope": "SC01–15 state matrix/identity/recovery components and current proposal uncertain/invalid/stale recovery.",
+      "technical_disposition": "Combined synthetic pass",
+      "existing_evidence_scope": "Retained P11/CV/FRESH components plus the joined current fifteen-screen desktop/phone matrix, real denial/API outcomes, upload/save recovery, partial account observations and applicable stale-command/output states.",
       "current_applicability": "Applicable within selected synthetic PP-01 boundary; no enterprise parent promotion",
-      "continued_validity_and_gap": "Need full fifteen-screen empty/populated/loading/failed/applicable-restricted state inventory on a declared current source.",
-      "fresh_verification_required": "Technical reviewer: reconcile exact screen-state coverage; unsupported receiving actions remain unavailable, no blanket pass.",
-      "owner_next_action": "Technical reviewer: reconcile exact screen-state coverage; unsupported receiving actions remain unavailable, no blanket pass.",
+      "continued_validity_and_gap": "The selected synthetic PT-29 procedure is joined on the declared integrated source. It does not cover every later application route, external providers, physical devices or AT-23 performance/accessibility acceptance.",
+      "fresh_verification_required": "Technical reviewer: inspect the source-bound checklist and representative captures. Owner: observe the joined workflow under PT-30; independent visual/device review remains separate.",
+      "owner_next_action": "Technical reviewer: inspect the source-bound checklist and representative captures. Owner: observe the joined workflow under PT-30; independent visual/device review remains separate.",
       "human_acceptance": "Pending actual observations",
       "benefit": "Unmeasured"
     },

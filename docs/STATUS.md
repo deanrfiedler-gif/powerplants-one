@@ -4,6 +4,10 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## PT-29 screen states — 10 October 2026
+
+The authorised PT-29 continuation integrates PT-01 main `8869437` and completes the selected fifteen-screen desktop/phone state checklist. Thirty browser scenarios plus the 672-route warm-up pass: visible populated records, honest loading/error/empty or unavailable states, actual Systems denials, retained save/upload input, exact-byte recovery, partial account observations and applicable stale actions. The [decision](decisions/pt29-screen-state-verification.md), [checklist](testing/pt29-screen-states.md) and [execution evidence](testing/evidence/pt29-screen-states/README.md) record the precise source, build, injected-versus-real boundaries and corrected test-driver failures. This contribution changes tests and documentation only. Build, type/lint, studio and repository assurance are recorded separately; the existing design review status is preserved. The execution ledger records a bounded combined synthetic PT-29 pass; the original catalogue and 78 parent IDs are unchanged. PR CI, independent review, owner-led PT-30, physical devices, wider AT-23 acceptance and deployment remain separate.
+
 ## Controlled output generation and recovery — 10 October 2026
 
 Dean authorised PT-23 in the isolated `codex/pt23-output-recovery` session alongside Claude's UI work. The joined OUT-09/OUT-10/OUT-14 tests challenge storage failure, corruption before release, rollback inside finalisation, concurrent original retries and source/template changes. Unchanged main reproduced a pack release without a final stored-byte check and a Finance retry that released an attempt previously observed against a changed template. The pack worker now rereads its exact bundle inside finalisation; Finance retains `TemplateUnavailable` as `StaleSource` for review. No template definition, migration, grant or UI file changes.

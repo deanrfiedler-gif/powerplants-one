@@ -1,0 +1,13 @@
+{
+  "scenario": "SC-07-empty",
+  "full_page": false,
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "source_head": "dd9573158e6c13cf964ee93655ffa5e90c74de05",
+  "executed_checkout": "dd9573158e6c13cf964ee93655ffa5e90c74de05",
+  "executed_tree": "15d0966d3557c2716947b7bfae746d9bd67fc20b",
+  "byte_count": 62643,
+  "sha256": "1d3ef694234980a64e9b5a0390e97744a00ab9b2b46b40b734c98768b1551b4f"
+}
