@@ -18,6 +18,7 @@ class Counters(unittest.TestCase):
         self.assertEqual([p[1] for p in observer.positions_for("startup")], ["0"] * 4)
         self.assertEqual([p[2] for p in observer.positions_for("observer")], [10] * 4)
         self.assertEqual(observer.positions_for("candidate"), [("control-a1", "0", 10), ("candidate-b1", "0", 10), ("candidate-b2", "0", 10), ("control-a2", "0", 10)])
+        self.assertEqual(observer.positions_for("cpu"), [("shared-a1", "0", 10), ("partitioned-b1", "0", 10), ("partitioned-b2", "0", 10), ("shared-a2", "0", 10)])
         with self.assertRaises(AssertionError):
             observer.positions_for("unknown")
 
@@ -26,6 +27,32 @@ class Counters(unittest.TestCase):
         result = observer.process_counters("123 (SYN private (process) name) " + " ".join(fields), 100, 4096)
         self.assertEqual(result, {"cpu_ms": 290, "minor_faults": 10,
                                   "major_faults": 12, "rss_bytes": 24 * 4096})
+
+    def test_cpu_roles_resolve_server_before_driver_and_verify_every_thread(self):
+        with TemporaryDirectory() as directory:
+            proc = Path(directory)
+            for pid, parent, allowed in [(10, 1, "1-3"), (11, 10, "0"), (12, 11, "0"), (13, 10, "1,2,3"), (20, 1, "0"), (21, 20, "0-1")]:
+                path = proc / str(pid)
+                (path / "task" / str(pid)).mkdir(parents=True)
+                fields = ["S"] + [str(n) for n in range(4, 53)]
+                fields[1] = str(parent)
+                (path / "stat").write_text(f"{pid} (DO NOT EXPORT (private)) " + " ".join(fields))
+                (path / "task" / str(pid) / "status").write_text("Cpus_allowed_list:\t" + allowed + "\n")
+            roles = observer.role_processes({"server": 11, "database": 20, "browser_driver": 10},
+                {"server": [0], "database": [0], "browser_driver": [1, 2, 3]}, proc, 100, 4096)
+            self.assertEqual([r["pid"] for r in roles["server"]], [11, 12])
+            self.assertEqual([r["pid"] for r in roles["browser_driver"]], [10, 13])
+            self.assertEqual(sum(r["escaped_threads"] for r in roles["database"]), 1)
+            self.assertNotIn("private", str(roles))
+
+    def test_reused_pid_is_not_counted_as_continuous_cpu(self):
+        def point(at, started, used):
+            return {"at_ms": at, "roles": {role: [{"pid": 1, "start_ticks": started,
+                "cpu_ms": used, "threads_checked": 1, "escaped_threads": 0}] for role in ["server", "database", "browser_driver"]}}
+        result = summary.role_summary([point(0, 1, 100), point(2000, 1, 1100), point(4000, 2, 10)])
+        self.assertEqual(result["server"]["matched_process_cpu_cores"]["median"], .5)
+        self.assertEqual(result["server"]["unmatched_process_endpoints"], 2)
+        self.assertEqual(observer.cpu_list("2-4,7"), [2, 3, 4, 7])
 
     def test_missing_process_is_unknown_and_memory_fields_are_allowlisted(self):
         with TemporaryDirectory() as directory:

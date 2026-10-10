@@ -9,7 +9,7 @@ import { localConfig } from "../src/platform/config";
 import { closeDatabase } from "../src/platform/database";
 import { performanceFixtureFingerprint } from "./quality-performance-fixture";
 import { waitForSampleCoreResponse } from "./quality-core-response";
-import { comparisonProfile } from "./quality-comparison-profile";
+import { comparisonProfile, cpuAllocation } from "./quality-comparison-profile";
 
 // Bounded Customers diagnostic, separate from the complete four-view PT-27 run.
 // Ten browser processes and unchanged network/readiness limits. Original results
@@ -17,6 +17,8 @@ import { comparisonProfile } from "./quality-comparison-profile";
 const label = process.argv[2];
 assert.match(label ?? "", /^[a-z][a-z0-9-]+$/);
 const profile = comparisonProfile(process.env);
+const allocation = cpuAllocation(process.env);
+if (allocation) assert.equal(process.platform, "linux");
 const root = `verification-evidence/pt27-loading/${label}`;
 await mkdir(root, { recursive: false });
 const expected = JSON.parse(await readFile("verification-evidence/customer-loading-diagnosis/fixture.json", "utf8"));
@@ -27,13 +29,17 @@ const fixture = await performanceFixtureFingerprint();
 assert.deepEqual(fixture, expected.fixture);
 const buildId = (await readFile(".next/BUILD_ID", "utf8")).trim();
 const origin = localConfig().origin;
-const server = spawn(process.execPath, ["--env-file=.env.local", "--import", "tsx", "scripts/local-server.ts", "--compiled"], { stdio: "inherit" });
+const serverArgs = ["--env-file=.env.local", "--import", "tsx", "scripts/local-server.ts", "--compiled"];
+const server = allocation
+  ? spawn("taskset", ["--cpu-list", allocation.server.join(","), process.execPath, ...serverArgs], { stdio: "inherit" })
+  : spawn(process.execPath, serverArgs, { stdio: "inherit" });
 const browsers: Awaited<ReturnType<typeof chromium.launch>>[] = [];
 const samples: Record<string, unknown>[] = [];
 const visits: Record<string, unknown>[] = [];
 const errors: string[] = [];
 const metadata = {
   ...profile,
+  ...(allocation ? { cpu_allocation: allocation } : {}),
   label, started_at: new Date().toISOString(), comparison_block: process.env.PPO_COMPARISON_BLOCK ?? null, comparison_position: process.env.PPO_COMPARISON_POSITION ?? null, source: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(),
   compiled_source: compiledSource, driver_source: process.env.PPO_DRIVER_SOURCE ?? null, build_id: buildId, server_pid: server.pid,
   node: process.version, platform: process.platform, memory_bytes: totalmem(),
