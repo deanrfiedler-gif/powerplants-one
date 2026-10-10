@@ -76,64 +76,64 @@
   },
   "artifacts": {
     "baseline.txt": {
-      "sha256": "a3be4c8619462e7dcd4adbac3f9af3450bdd7b743ab58b48959e02b8cbab880b",
-      "bytes": 9169
+      "sha256": "bc19d16e13fe6d42d393cc0f4dacceffd36aeec8c55045244937701a7438485a",
+      "bytes": 9040
     },
     "build.txt": {
-      "sha256": "5d96d53da751a3ab812427360addd9fb343217e927a0fa1a17398b78590dfca2",
-      "bytes": 27358
+      "sha256": "b794387bb4d48a06e84cd0ebcadd16a485bf896039eff23eac2612ea86ffc60a",
+      "bytes": 26659
     },
     "download-regressions.txt": {
-      "sha256": "b3be31bf959e3ae2573392155e6dc2ca140332fe14ca3bbb935262ed1fe6f5ee",
-      "bytes": 3480
+      "sha256": "23e7db6c1bbc1c3c1599a4d55d79b32f7793aa14457e57af6e1a6d00cfc4e6cb",
+      "bytes": 3425
     },
     "final-matrix.txt": {
-      "sha256": "3c4bf518d64c917bf406decbe759771d0657ddf826b5053bdea494fcece21710",
-      "bytes": 4848
+      "sha256": "3a1415f8a3747a47899b87d07b2e032a5a55fcd3c9083f574341761c1e38ab87",
+      "bytes": 4782
     },
     "fixed-matrix.txt": {
-      "sha256": "d2b8cabb51e0b2540ea89925eab0c014c2edb34ef946e939fd6708dbe4cf5b3b",
-      "bytes": 4724
+      "sha256": "672c6387126bc6c7a7636f5faaf5f11f85ba7a5fd4faf140ecd99ac9ea056d7d",
+      "bytes": 4659
     },
     "focused-units.txt": {
-      "sha256": "bd92756f66e8c22e9cfce855c707d203ced9a632c177e4d4e93cd59edd1435bb",
-      "bytes": 1938
+      "sha256": "75215ffb6fea6ccb578302e4580028fe5f054a74564d04d25828d417f21c3997",
+      "bytes": 1913
     },
     "foundation.txt": {
-      "sha256": "918efe1767b8c66255e61cfd4d69e6f868b64995b04b8f5a970175050f1bf177",
-      "bytes": 342
+      "sha256": "a34bf2e6455694dd353f6f39e08f5ff35a45d3cbb667b2cef0abad6a98603855",
+      "bytes": 330
     },
     "lint.txt": {
-      "sha256": "9077c960f4fa58d1046c57cdaed72784616c6be28d9dd218bfced418d671d296",
-      "bytes": 43
+      "sha256": "8f0118f13844c97d75efd81d7b64eea1d158ee3bdca218bf56f7625ccce6edc6",
+      "bytes": 41
     },
     "naming.txt": {
-      "sha256": "cdcc585ad08bcc8483a9d723d2f32d52781df9f03d951cc6bfc36ef28d82ef88",
-      "bytes": 305
+      "sha256": "5b8c9001bcc90928a248cde14a0e0c721726f2cec76429f52bfb7ea5538ddf18",
+      "bytes": 296
     },
     "photo-response-regressions.txt": {
-      "sha256": "d2fcac949478a0991e7122cb6f582d0946d98bfd65cf38fbb49633914fe07918",
-      "bytes": 1181
+      "sha256": "244401f0ee3cf02b2075ec0fd97f1efcc005ac0855143d109df2a1776cd4fd8b",
+      "bytes": 1165
     },
     "prototype.txt": {
-      "sha256": "d5e1ae7906235ff15ce3453c097f66e7c6ede22922c3dc4afc81252ce1711126",
-      "bytes": 550
+      "sha256": "9b7839c713adf06d51e41256fd2e991c6acc00fca36c33caff1ef7e02d55251b",
+      "bytes": 526
     },
     "role-grants.json": {
       "sha256": "97540d85922933b4cd334571be784e49afa2cbc3255c02a94d9172152c360456",
       "bytes": 9079
     },
     "studio.txt": {
-      "sha256": "4881e8751233a87cc40e130321a9cbf895864377a46763e8cb1578b327006cab",
-      "bytes": 446
+      "sha256": "5673c3870ae08d94c04e3ecfb142a732438bd9fe32f0eed7f2047afc2030bf50",
+      "bytes": 430
     },
     "test-lint.txt": {
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "bytes": 0
     },
     "typecheck.txt": {
-      "sha256": "263510dd6cc4dbc4c07c92e73b77cba0e10afd92077c6b66ea4d7f31ebc33122",
-      "bytes": 52
+      "sha256": "ba33a711c461001825075a9a3872deaa3e393e4cc3c15731565002c473e7ee5d",
+      "bytes": 50
     }
   },
   "validation": {
@@ -171,5 +171,5 @@
       "updated_at": "2026-10-10T02:27:05.410Z"
     }
   },
-  "log_format": "Committed text logs remove trailing whitespace and blank EOF lines only; original raw logs remain in the private task evidence directory."
+  "log_format": "Committed logs use LF and remove trailing whitespace and blank EOF lines only; original raw logs remain in the private task evidence directory."
 }
