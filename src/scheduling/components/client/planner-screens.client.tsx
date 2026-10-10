@@ -40,9 +40,12 @@ import {
   extendedHoursNotice,
 } from "../../working-hours";
 import type { CrewInput } from "../../validation";
+import { clockText } from "../../day-timeline";
+import { AppointmentSnapshot, PlannerTimeline } from "./planner-timeline.client";
 export type Resource = {
   id: string;
   name: string;
+  resource_type?: string;
   version: number;
   active: boolean;
   status: string;
@@ -1682,6 +1685,22 @@ export function PlannerScreen() {
       crew?: CrewInput;
     } | null>(null),
     [dragNotice, setDragNotice] = useState("");
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  // The Day timeline needs room for its 07:00 to 18:00 axis; narrow screens keep the day list
+  // until the phone layout is built.
+  const [wide, setWide] = useState(true),
+    [now, setNow] = useState(() => new Date().toISOString());
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 781px)"),
+      sync = () => setWide(media.matches);
+    sync();
+    media.addEventListener("change", sync);
+    const tick = window.setInterval(() => setNow(new Date().toISOString()), 60000);
+    return () => {
+      media.removeEventListener("change", sync);
+      window.clearInterval(tick);
+    };
+  }, []);
   const days = Array.from({ length: mode === "week" ? 7 : 1 }, (_, i) =>
       addDays(day, i),
     ),
@@ -1708,6 +1727,12 @@ export function PlannerScreen() {
   );
   const data = result.data,
     usable = !!data && !result.error && !result.loading;
+  const timeline =
+    mode === "day" &&
+    wide &&
+    !!data &&
+    data.resources.every((r) => r.calendar.timezone === zone);
+  const selected = timeline ? data?.items.find((a) => a.id === selectedId) : undefined;
   const modal = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     if (move) {
@@ -1717,6 +1742,36 @@ export function PlannerScreen() {
   function close() {
     setMove(null);
     setDragNotice("");
+  }
+  // A timeline drop sets the proposed start time from where the visit lands (Dean's decision,
+  // 10 October 2026); the crew is never guessed from the lane.
+  function dropAt(a: ScheduleAppointment, startMinute: number, resource: Resource) {
+    if (!usable || a.status !== "Confirmed" || !a.actions.can_manage) return;
+    try {
+      const start = utcFromLocal(`${day}T${clockText(startMinute)}`, zone);
+      setMove({
+        a,
+        start,
+        crew: a.assignments
+          .filter((x) => x.active)
+          .map((x) => ({
+            resource_id: x.resource_id,
+            resource_version: x.resource_version,
+            calendar_version: x.calendar_version,
+            crew_role: x.crew_role,
+            travel_before_minutes: x.travel_before_minutes,
+            travel_after_minutes: x.travel_after_minutes,
+            travel_reason: x.travel_reason,
+          })),
+      });
+      setDragNotice(
+        `Move proposed to start at ${clockText(startMinute)}. ${resource.name} lane is a review target; confirm the complete crew in the form. Original booking retained until saved.`,
+      );
+    } catch {
+      setDragNotice(
+        "This local time is ambiguous or unavailable. Use Move or reassign to choose a valid site time.",
+      );
+    }
   }
   function drop(e: React.DragEvent, d: string, resource: Resource) {
     e.preventDefault();
@@ -1919,16 +1974,49 @@ export function PlannerScreen() {
               the days and use arrow keys, or choose Day.
             </p>
           )}
-          <PlannerBoard
-            data={data}
-            days={days}
-            mode={mode}
-            zone={zone}
-            usable={usable}
-            onDrop={drop}
-            onMove={(a) => setMove({ a })}
-            onDragNotice={setDragNotice}
-          />
+          {timeline ? (
+            <div className={`planner-day-layout${selected ? " with-snapshot" : ""}`}>
+              <PlannerTimeline
+                data={data}
+                day={day}
+                zone={zone}
+                usable={usable}
+                selected={selected?.id ?? null}
+                now={now}
+                onSelect={(a) => setSelectedId(a.id === selectedId ? null : a.id)}
+                onDropAt={dropAt}
+                onDragNotice={setDragNotice}
+              />
+              {selected && (
+                <AppointmentSnapshot
+                  key={selected.id}
+                  a={selected}
+                  zone={zone}
+                  returnTo={returnTo}
+                  onClose={() => setSelectedId(null)}
+                  onMove={usable ? (a) => setMove({ a }) : undefined}
+                />
+              )}
+            </div>
+          ) : (
+            <>
+              {mode === "day" && wide && (
+                <p className="planner-scroll-hint">
+                  The timeline is drawn in the resources&apos; own timezone. Choose it as the display timezone to see it; this list shows the same day.
+                </p>
+              )}
+              <PlannerBoard
+                data={data}
+                days={days}
+                mode={mode}
+                zone={zone}
+                usable={usable}
+                onDrop={drop}
+                onMove={(a) => setMove({ a })}
+                onDragNotice={setDragNotice}
+              />
+            </>
+          )}
           <section className="panel proposal-section">
             <h2>Proposed and cancelled appointments</h2>
             <p>

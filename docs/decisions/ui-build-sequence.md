@@ -164,15 +164,24 @@ Dean refined the four playable planner boards on the canvas (Day, Week, Map and 
 | Strip-back | "Yes, strip it back as you recommend" (Week), then "Apply the same strip-back to the phone planner", "... to the Day planner" and "... to the Map planner" | Each fact shows once. People show name, role on desktop and one total, such as "4 of 9 h booked", with no bars. Free time is hover and screen-reader text, because the gaps on the board already show it. Bookings show time, title and site; Week tiles show time and title. Colour and shape give the status; the status in words, travel and extended hours are in the hover text and the snapshot. Crew initials appear only on shared visits. The Week view shows how full a day is as a soft shading, and the weekend as a slim strip while nothing is booked there. The map marks a stop that needs attention with its key's amber "!" and draws no labels on route lines. |
 | Phone and Map | "Apply the same refinements to the phone planner"; "Apply the same refinements to the Map planner" | Both follow the Day view: people on leave last, hours booked, the extended-hours marker, flat cards and the fixed hover. |
 
-Still to decide on the planner, from the notes board:
+### Planner Day timeline (10 October 2026)
 
-- Hours booked and free time. Both are new calculations.
-- The snapshot narrowing the board rather than covering it, and its 360 px width.
-- What counts as needing attention: pack preparation or review required, or customer contact not confirmed.
+After the merges Dean asked why the live planner looked nothing like the boards: only the working hours had been built. He was offered a staged build (Day timeline, details panel, Week, phone, then Map) and replied: "Yes to both, proceed with your recommendations". That adopts the recommended answer to each open item the Day view needs:
+
+| Item | Adopted |
+|---|---|
+| Hours booked and free time | Shown. Each person shows "x of y h booked": time reserved for visits and their travel inside standard hours, out of standard hours less unavailable time and closures. Free time is gaps of 30 minutes or more in the same window, from now on for today, in hover and screen-reader text. Both use every reservation the server returns for the person, so a site or status filter never makes someone look free. |
+| Needs attention | Pack preparation or review required, or customer contact not confirmed, as on the board. The live app's scheduling policy holds and scope reviews also count, and are named first. |
+| Day drop | Dropping a visit on the timeline proposes a new start time from where it lands, snapped to 15 minutes. It opens the existing Move or reassign form with the crew unchanged; nothing is saved until the server accepts it. The Week drop still keeps the time and changes the day. |
+| Past time today | A very light wash from 07:00 to the Now line, with no label. |
+| Details panel | A selected visit opens a 360 px details panel beside the board; the board narrows rather than being covered. Below 1100 px the panel sits over the board's right side. It was built with the Day view because the stripped-back cards carry no buttons: Move or reassign and Open appointment are in the panel. |
+
+Built in the live planner the same day; see the [planner design contract](../design/development/pages/route-schedule.md#day-timeline-built--10-october-2026).
+
+Still to decide on the planner:
+
 - Checks shown as you edit, and AEST times in the reservation message.
-- Dropping on the Day timeline setting the start time. The live drop keeps the time and changes the day.
-- Distinct icons for five Service destinations, and a rule for windows too short for the rail.
-- How to shade time that has already passed today.
+- A rule for windows too short for the rail. (The distinct icons for five Service destinations were decided separately and built in #394.)
 - A map provider. It needs an architecture decision record before the Map view is built.
 - Opening on the current week (from the table above).
 

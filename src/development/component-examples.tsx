@@ -27,6 +27,10 @@ import {
   laneExtendedHours,
   PlannerBoard,
 } from "../scheduling/components/client/planner-screens.client";
+import {
+  AppointmentSnapshot,
+  PlannerTimeline,
+} from "../scheduling/components/client/planner-timeline.client";
 import { AreasEditor } from "../components/configuration-editor";
 import { addDays } from "../projects/model";
 import { type ExampleId } from "./component-model";
@@ -378,7 +382,8 @@ function PlannerExample({
   const [mode, setMode] = useState<"day" | "week">(
       state === "week" ? "week" : "day",
     ),
-    [message, setMessage] = useState("");
+    [message, setMessage] = useState(""),
+    [selected, setSelected] = useState(false);
   const a = {
     ...appointmentFixture,
     status: state === "proposed" ? "Proposed" : "Confirmed",
@@ -432,9 +437,41 @@ function PlannerExample({
               Week
             </Button>
           </div>
+          {mode === "day" ? (
+            <div className={`planner-day-layout${selected && data.items.length ? " with-snapshot" : ""}`}>
+              <PlannerTimeline
+                data={data}
+                day={fixtureDate}
+                zone="Australia/Sydney"
+                usable={state !== "read-only"}
+                selected={selected ? a.id : null}
+                now="2026-09-23T00:40:00Z"
+                onSelect={() => setSelected(!selected)}
+                onDropAt={(_, minute) =>
+                  setMessage(
+                    `Move proposed in the preview to start at minute ${minute} of the day. Server conflict and readiness checks are not simulated.`,
+                  )
+                }
+                onDragNotice={setMessage}
+              />
+              {selected && data.items.length > 0 && (
+                <AppointmentSnapshot
+                  a={a}
+                  zone="Australia/Sydney"
+                  returnTo="/schedule"
+                  onClose={() => setSelected(false)}
+                  onMove={() =>
+                    setMessage(
+                      "Move or reassign selected. Booking remains unchanged; this example exercises presentation only.",
+                    )
+                  }
+                />
+              )}
+            </div>
+          ) : (
           <PlannerBoard
             data={data}
-            days={Array.from({ length: mode === "week" ? 7 : 1 }, (_, i) =>
+            days={Array.from({ length: 7 }, (_, i) =>
               addDays(fixtureDate, i),
             )}
             mode={mode}
@@ -453,6 +490,7 @@ function PlannerExample({
             }
             onDragNotice={setMessage}
           />
+          )}
         </>
       )}
       <p role="status">

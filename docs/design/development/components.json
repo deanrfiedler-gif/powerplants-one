@@ -782,7 +782,7 @@
         {
           "id": "default",
           "label": "Default",
-          "description": "Representative synthetic content and normal interaction."
+          "description": "Day timeline, 07:00 to 18:00, with a visit, an unavailable block, the Now line and extended hours; select the visit to open its details panel."
         },
         {
           "id": "week",
@@ -814,6 +814,14 @@
         {
           "path": "src/scheduling/components/client/planner-screens.client.tsx",
           "symbol": "PlannerBoard"
+        },
+        {
+          "path": "src/scheduling/components/client/planner-timeline.client.tsx",
+          "symbol": "PlannerTimeline"
+        },
+        {
+          "path": "src/scheduling/components/client/planner-timeline.client.tsx",
+          "symbol": "AppointmentSnapshot"
         }
       ],
       "dependencies": [
@@ -832,9 +840,9 @@
         "route:/schedule",
         "scope:PL-01"
       ],
-      "desktop": "Day and Week share the same fixture. A drop proposes a move; the host still owns conflict, readiness, crew and authority checks.",
-      "mobile": "Each lane scrolls independently in Week. Day provides the simpler narrow-screen alternative.",
-      "keyboard": "Tab/Shift+Tab and visible focus throughout. Use labelled controls as alternatives to dragging and hover-only actions.",
+      "desktop": "Day is a 07:00 to 18:00 timeline with a sticky people column and a details panel beside it; Week keeps the day lanes. A drop proposes a move; the host still owns conflict, readiness, crew and authority checks.",
+      "mobile": "Each lane scrolls independently in Week. The Day timeline scrolls sideways inside its frame; the application shows the day list below 781 px until the phone layout is built.",
+      "keyboard": "Tab/Shift+Tab and visible focus throughout. A timeline visit is a button: Enter or Space opens its details, which carry Move or reassign as the alternative to dragging. Escape closes the details.",
       "limitations": "This planner is not the project Gantt. Catalogue callbacks do not prove conflict enforcement or saved booking behaviour.",
       "gaps": [
         {
