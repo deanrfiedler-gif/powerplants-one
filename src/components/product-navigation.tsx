@@ -1,6 +1,8 @@
 "use client";
 import { controlModules, controlPath } from "../engineering/control/navigation";
 import Link from "next/link";
+// Shell destinations load on activation. Speculative route renders otherwise
+// compete with the current page's session and business reads (PT-27).
 import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState, useSyncExternalStore } from "react";
@@ -61,7 +63,7 @@ function PageHierarchy({ crumbs, location }: { crumbs: HierarchyCrumb[]; locatio
       if (event.key === "Escape") { event.preventDefault(); panel.current?.hidePopover(); trigger.current?.focus(); }
     }}>
       <strong>Page hierarchy</strong>
-      <ol>{crumbs.map((crumb,index) => <li key={crumb.key}>{crumb.href ? <Link href={crumb.href}>{crumb.label}</Link> : <span aria-current={index === crumbs.length - 1 ? "page" : undefined}>{crumb.label}</span>}</li>)}</ol>
+      <ol>{crumbs.map((crumb,index) => <li key={crumb.key}>{crumb.href ? <Link prefetch={false} href={crumb.href}>{crumb.label}</Link> : <span aria-current={index === crumbs.length - 1 ? "page" : undefined}>{crumb.label}</span>}</li>)}</ol>
     </div>
   </>;
 }
@@ -188,7 +190,7 @@ function ProductNavigationView({
       </>
     );
     return allowed(item) ? (
-      <Link
+      <Link prefetch={false}
         key={item.id}
         className={mobile ? undefined : "ppo-more-link"}
         href={departmentHref(item.href!, root?.id ?? workspaceId, new URLSearchParams(locationQuery).get("day"))}
@@ -203,7 +205,7 @@ function ProductNavigationView({
         key={item.id}
         className={mobile ? "ppo-planned-tab" : "ppo-more-link"}
         aria-disabled="true"
-        title={`${label} — ${item.href ? "Unavailable for this identity" : "Planned"}`}
+        title={`${label} â€” ${item.href ? "Unavailable for this identity" : "Planned"}`}
       >
         {contents}
         {!mobile && (
@@ -220,7 +222,7 @@ function ProductNavigationView({
   const phoneCell = (entry: (typeof salesPhoneBar)[number]) => {
     const item = destination(entry.id);
     return (
-      <Link
+      <Link prefetch={false}
         key={entry.id}
         href={departmentHref(entry.id === "calendar" ? `${item.href}?day=${new URLSearchParams(locationQuery).get("day") ?? localDay(new Date().toISOString())}` : item.href!, "sales")}
         aria-label={entry.label}
@@ -343,7 +345,7 @@ function ProductNavigationView({
         aria-label="Application navigation"
         data-shell-navigation
       >
-        <Link
+        <Link prefetch={false}
           href="/"
           className="brand"
           aria-label="Powerplants One home"
@@ -368,7 +370,7 @@ function ProductNavigationView({
           else setTooltip(null);
         }}>
           {groupedRail(workspaceId, rail).map(section => {
-            const links = section.items.map(item => <Link key={item.id} href={departmentHref(item.href!, workspaceId, new URLSearchParams(locationQuery).get("day"))}
+            const links = section.items.map(item => <Link prefetch={false} key={item.id} href={departmentHref(item.href!, workspaceId, new URLSearchParams(locationQuery).get("day"))}
               className="ppo-rail-item" aria-label={item.label} aria-current={activeId === item.id ? "page" : undefined}
               onMouseEnter={e => tip(e.currentTarget, item.label)} onMouseLeave={() => setTooltip(null)}
               onFocus={e => { reveal(e.currentTarget); tip(e.currentTarget, item.label); }} onBlur={() => setTooltip(null)}>
@@ -515,7 +517,7 @@ export function ProductHeader() {
     if (view) crumbs.push({ key: "view", label: view, kind: crumb ? "page" : "view" });
     if (subview) crumbs.push({ key: "subview", label: subview, kind: "view" });
   }
-  if (record && shell.context) crumbs.push({ key: "record", label: `${record.reference} · ${record.title}`, kind: "record" });
+  if (record && shell.context) crumbs.push({ key: "record", label: `${record.reference} Â· ${record.title}`, kind: "record" });
   // NR-17: the same route metadata names the browser tab. React hoists this <title> into the head
   // and updates it in the same commit as the route, before the route announcer reads document.title.
   const title = documentTitle({
@@ -544,7 +546,7 @@ export function ProductHeader() {
     <>
       <title>{title}</title>
       <header className="topbar ppo-shell-header">
-        <Link
+        <Link prefetch={false}
           className="mobile-brand"
           href="/"
           aria-label="Powerplants One home"
@@ -568,7 +570,7 @@ export function ProductHeader() {
               {crumbs.map((crumb, index) => (
                 <li key={crumb.key} data-crumb={crumb.kind}>
                   {crumb.href ? (
-                    <Link className="ppo-crumb" href={crumb.href}>
+                    <Link prefetch={false} className="ppo-crumb" href={crumb.href}>
                       {crumb.label}
                     </Link>
                   ) : (
@@ -604,7 +606,7 @@ export function ProductHeader() {
           aria-label={`${currentModule} navigation`}
         >
           {tabs.map((item) => (
-            <Link
+            <Link prefetch={false}
               key={item.id}
               href={item.href!}
               aria-current={page?.id === item.id ? "page" : undefined}
