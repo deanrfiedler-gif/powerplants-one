@@ -24,6 +24,7 @@ import {
 import { ProjectsGantt } from "../components/projects-gantt";
 import {
   AppointmentCard,
+  laneExtendedHours,
   PlannerBoard,
 } from "../scheduling/components/client/planner-screens.client";
 import { AreasEditor } from "../components/configuration-editor";
@@ -381,6 +382,9 @@ function PlannerExample({
   const a = {
     ...appointmentFixture,
     status: state === "proposed" ? "Proposed" : "Confirmed",
+    ...(state === "extended-hours"
+      ? { start_at: "2026-09-22T21:30:00Z", end_at: "2026-09-22T23:30:00Z" }
+      : {}),
     scope_review_required: state === "review-required",
     policy_impacts: state === "policy-hold" ? [schedulingPolicyHoldFixture] : [],
     actions: {
@@ -405,6 +409,7 @@ function PlannerExample({
         <AppointmentCard
           a={a}
           zone="Australia/Sydney"
+          extended={laneExtendedHours(a, plannerFixture.resources[0])}
           onMove={() =>
             setMessage(
               "Move requested in the example. The saved appointment is unchanged.",

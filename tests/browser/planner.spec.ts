@@ -334,8 +334,21 @@ test("P05 controlled move conflict keeps original position; uncertain accepted r
     await page.keyboard.press("Enter");
   }
   const dialog = page.getByRole("dialog");
+  // Dean, 10 October 2026: work outside the 08:00 to 17:00 standard hours warns but never blocks.
+  const extended = dialog.getByRole("status", { name: "Extended hours" });
+  await dialog.getByLabel("Start (site time)").fill("2031-10-10T07:30");
+  await dialog.getByLabel("Finish (site time)").fill("2031-10-10T09:30");
+  // Both crew members have reviewed zero travel (member() above).
+  for (const name of ["SYN Alex Lead", "SYN Riley Technician"])
+    await expect(extended).toContainText(
+      `${name}: 07:30 to 09:30, outside the 08:00 to 17:00 standard hours.`,
+    );
+  await expect(
+    dialog.getByRole("button", { name: "Save proposed move" }),
+  ).toBeVisible();
   await dialog.getByLabel("Start (site time)").fill("2031-10-11T10:00");
   await dialog.getByLabel("Finish (site time)").fill("2031-10-11T12:00");
+  await expect(extended).toHaveCount(0);
   await dialog
     .getByLabel("Change reason")
     .fill("SYN attempted weekend move must retain the original booking.");

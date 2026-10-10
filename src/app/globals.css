@@ -1572,6 +1572,12 @@ button:disabled {
   width: 100%;
   margin-top: 10px;
 }
+/* Work outside the 08:00 to 17:00 standard hours is allowed but avoided, so
+   the card names it plainly in the warning colour without becoming an alert. */
+.appointment-card .card-extended {
+  color: var(--warning);
+  font-weight: 500;
+}
 /* The dispatch hold is a standing condition, not an alarm. It reads as a
    quiet footnote rule above the version line rather than bold amber body. */
 .appointment-card .card-hold {
