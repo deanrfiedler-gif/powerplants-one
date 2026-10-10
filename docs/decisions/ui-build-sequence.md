@@ -125,6 +125,20 @@ Each proposal applies the adopted S5, S6 and S8 rules to its page. These proposa
 
 Nothing on these boards is adopted until Dean accepts it. The main board lists their status as "Proposed".
 
+### Planner working hours (10 October 2026)
+
+Dean described the working day: "our standard hours are from 8am to 5pm, but it's not uncommon for a technician to work from 7am to 6pm at times. We try to avoid working early and later than this though."
+
+The live booking rule (`fitsWorkingInterval` in `src/scheduling/booking-rules.ts`) refuses a visit or its travel outside the person's published calendar interval. The sample calendars (`db/seed-p05.sql`) publish 08:00 to 17:00, Monday to Friday, so work from 07:00 or until 18:00 cannot be booked today. Two options were put to Dean: publish calendars as 07:00 to 18:00 and warn outside 08:00 to 17:00, or keep 08:00 to 17:00 calendars and add a separate extended-hours rule. Dean replied: "Go with your recommendation on the calendars", which adopts the first.
+
+| Rule | Decision |
+|---|---|
+| Published calendar interval | 07:00 to 18:00 on working days. The server rule is unchanged and still refuses anything outside the published interval. |
+| Standard hours | 08:00 to 17:00. A visit or its travel outside them is allowed, with a warning that names the person and the times. |
+| Capacity and free time | Count standard hours only, so extended hours are never offered as free time. |
+
+This is a decision, not a build. Building it needs a change to the sample calendars, the standard-hours warning in the booking form and planner, and tests. The canvas planner and appointment boards already show it: a 07:00 to 18:00 Day timeline with Extended hours bands, and the warning in "Checked as you edit".
+
 ## Where it is shown
 
 The navigation architecture canvas gains a **UI build sequence** board drawn from the generated data. The repository files remain the authority. The board was added after the r02 capture set, so no capture of it is retained.
