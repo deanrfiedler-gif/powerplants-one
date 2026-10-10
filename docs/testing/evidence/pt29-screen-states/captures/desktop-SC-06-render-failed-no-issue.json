@@ -1,0 +1,14 @@
+{
+  "scenario": "SC-06-render-failed-no-issue",
+  "full_page": false,
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "source_head": "8f632cbc7e518513d8d1ba60d1de6e0a6ab70e7d",
+  "executed_checkout": "8f632cbc7e518513d8d1ba60d1de6e0a6ab70e7d",
+  "executed_tree": "ae4c0c88a27e691fedfa9a0586789872ce36d180",
+  "byte_count": 203329,
+  "sha256": "67271f6ceb551533d90beff0518a3c810cca69b9dc39af81ac8e20f67bd88db8",
+  "injection": "retained synthetic pack read and renderer 503; not worker proof"
+}

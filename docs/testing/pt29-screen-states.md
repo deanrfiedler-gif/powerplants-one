@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. Review status: technical execution in progress; independent and owner review pending. Scope: [PT-29 / AT-23](prototype-acceptance.md#pt-29--honest-empty-error-and-partial-states), [decision](../decisions/pt29-screen-state-verification.md). The SC IDs below belong to the original BP-07/PP-01 screen catalogue; they do not refer to the later Supply page keys.
+Owner: Dean Fiedler. Review status: combined synthetic procedure passed on its declared source; independent and owner review pending. Scope: [PT-29 / AT-23](prototype-acceptance.md#pt-29--honest-empty-error-and-partial-states), [decision](../decisions/pt29-screen-state-verification.md). The SC IDs below belong to the original BP-07/PP-01 screen catalogue; they do not refer to the later Supply page keys.
 
 ## Common read-state proof
 
@@ -15,7 +15,7 @@ Owner: Dean Fiedler. Review status: technical execution in progress; independent
 | SC-03 Site and asset | `/sites/:id` | Unavailable selected record (404) | Failed refresh cannot establish current authority; current denial clears context. No empty Site object is fabricated. |
 | SC-04 Service intake | `/service/tickets/:id` | Unavailable selected record (404) | Same retained/current-authority read boundaries; intake command-specific cases remain in `intake.spec.ts`. |
 | SC-05 Work order | `/service/work-orders/:id` | Unavailable selected record (404) | Scope validation and stale proposal comparison are covered by the selected `work-orders.spec.ts` case. |
-| SC-06 Pack workbench | `/service/packs/:id` | Unavailable selected record (404) | Draft queue says Not issued. Source/save/print recovery remains distinct from an actual issued artifact. |
+| SC-06 Pack workbench | `/service/packs/:id` | Unavailable selected record (404) | Draft queue says Not issued. Injected failed rendering provides original-output recovery without an issue link; stale output requires a checked successor. Selected source/save/print refusal also retains the proposed input. |
 | SC-07 Planner | `/schedule?day=:fixtureDay&view=day` | Successful empty appointment collection; resource evidence is separate | Four statistics become unknown while loading. Controlled stale/failed move retains the original booking and proposed input (`planner.spec.ts`). |
 | SC-08 Appointment | `/service/appointments/:id` | Unavailable selected record (404) | Same appointment version and saved-booking comparison is exercised by the planner recovery case. |
 | SC-09 My Jobs | `/my-jobs` | No current assigned visits | Owned active visit ensures the populated case is not inherited from another test. Offline cached freshness has separate PT-11/12/24 procedures. |
@@ -30,6 +30,6 @@ Detail records deliberately use 404 rather than an impossible empty-success obje
 
 ## Execution and evidence
 
-The execution record will identify the exact test source, compiled application source/build, environment, first-run failures, final results and representative capture hashes. The test emits `P11-screen-state-matrix.json` per viewport, with each route, actual query, visible source label and denied status. Captures retain source/head/tree, dimensions, byte counts and SHA-256 in their adjacent JSON files.
+The [execution record](evidence/pt29-screen-states/README.md) identifies the exact test source, compiled application source/build, environment, first-run failures, final results and representative capture hashes. The test emits `P11-screen-state-matrix.json` per viewport, with each route, actual query, visible source label and denied status. Captures retain source/head/tree, dimensions, byte counts and SHA-256 in their adjacent JSON files.
 
 Automated state/overflow assertions and inspected representative captures do not grant design acceptance. Original authored catalogue status remains separate from this execution record. No blanket AT-23 or product acceptance is claimed.
