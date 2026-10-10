@@ -1,5 +1,7 @@
 "use client";
 import type { Presentation, ToneIcon } from "../../model";
+import { FontAwesomeGlyph } from "../../../../components/font-awesome";
+import { changesOutlineFontAwesome, changesToneFontAwesome } from "../../../../components/font-awesome-icons";
 // The controls, dialogs, reads and the one-command-at-a-time recovery are the shared ones EN-06 built on My Work's
 // rules. EN-07 adds only its own glyphs and the single semantic tone treatment.
 export { CommandNotice, Dialog, Field, Icon, Menu, ReadNotice, Reason, fieldError, useRead, useMaterialsCommand as useChangeCommand, type MenuItem, type IconName } from "../../../materials/components/client/materials-ui";
@@ -26,7 +28,7 @@ const outlines = {
 } as const;
 export type OutlineName = keyof typeof outlines;
 export function Outline({ name }: { name: OutlineName }) {
-  return <svg className="mw-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">{outlines[name]}</svg>;
+  return <FontAwesomeGlyph icon={changesOutlineFontAwesome[name]} className="mw-icon" fallback={<svg className="mw-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">{outlines[name]}</svg>} />;
 }
 
 // One outline glyph per mapped icon, as mockup r03 draws them, so a tone is never colour alone. The stroke takes the
@@ -42,8 +44,10 @@ const marks: Record<ToneIcon, React.ReactNode> = {
   progress: (<><circle cx="12" cy="12" r="8.6" /><path d="M12 16.2V8.4M8.8 11.4 12 8.2l3.2 3.2" /></>),
   clock: (<><circle cx="12" cy="12" r="8.6" /><path d="M12 7.4V12l3 1.8" /></>),
 };
+// Under ADR-0050 Font Awesome Light draws the marks once the Kit is running; the filled dot is drawn in Solid.
 export function ToneMark({ icon }: { icon: ToneIcon }) {
-  return <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{marks[icon]}</svg>;
+  const local = <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{marks[icon]}</svg>;
+  return <FontAwesomeGlyph icon={changesToneFontAwesome[icon]} selected={icon === "dot"} className="ec-mark" fallback={local} />;
 }
 // The single way a domain condition is shown: its mapped icon and its words, in its mapped tone. A register cell, a
 // queue cell and a header chip are the r03 pill, on the tone's own r22 surface. `plain` is the same condition set in

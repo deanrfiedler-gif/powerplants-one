@@ -5,6 +5,8 @@ import type { SeverityCounts } from "../estimating/fertigation/guidance";
 import { useIdentity } from "./business-session";
 import { useScopePreferences } from "./scope-preferences";
 import { SecondaryMenuFrame, useSecondaryMenu } from "../shell/secondary-menu";
+import { FontAwesomeGlyph } from "./font-awesome";
+import { fertigationFontAwesome } from "./font-awesome-icons";
 import "./fertigation-workbench.css";
 
 export const fertigationViews = [
@@ -37,6 +39,23 @@ const countWords = (c: SeverityCounts) =>
     .filter(Boolean)
     .join(", ");
 
+/** The conflict mark on fertigation chips and view badges: Font Awesome Light once the Kit is running
+ * (ADR-0050), the outline triangle until then. Visual only; its words always stand beside it. */
+export function ConflictMark() {
+  return (
+    <FontAwesomeGlyph
+      icon={fertigationFontAwesome.conflict}
+      className="fn-mark"
+      fallback={
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M12 4 2.5 20h19z" />
+          <path d="M12 10v4" />
+        </svg>
+      }
+    />
+  );
+}
+
 /** Visual only; the words are given by aria-describedby outside the button,
  * so each view keeps its exact accessible name. */
 function ViewBadge({ counts }: { counts?: SeverityCounts }) {
@@ -48,12 +67,7 @@ function ViewBadge({ counts }: { counts?: SeverityCounts }) {
       : "review";
   return (
     <span className={`mw-badge fn-badge-${tone}`} aria-hidden="true">
-      {tone === "conflict" && (
-        <svg viewBox="0 0 24 24" focusable="false">
-          <path d="M12 4 2.5 20h19z" />
-          <path d="M12 10v4" />
-        </svg>
-      )}
+      {tone === "conflict" && <ConflictMark />}
       {counts[tone]}
     </span>
   );

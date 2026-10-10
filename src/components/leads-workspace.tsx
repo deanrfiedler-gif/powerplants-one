@@ -9,6 +9,8 @@ import { ErrorNotice, type Envelope, type Option } from "./business-ui";
 import { LookupField } from "./record-ui";
 import { denied, useCrmCommand, useCrmResource } from "./crm-state";
 import { ProductIcon, type ProductIconName } from "./product-icons";
+import { FontAwesomeGlyph } from "./font-awesome";
+import { leadsFontAwesome } from "./font-awesome-icons";
 import { WorklistChoice, WorklistMenu } from "./crm-worklist-tools";
 import type { listLeads, readLead } from "../crm/leads/reads";
 import type { leadTransferOptions } from "../crm/leads/amendments";
@@ -49,8 +51,9 @@ const qs = (r: Record<string, string>) =>
   new URLSearchParams(
     Object.fromEntries(Object.entries(r).filter(([, v]) => v)),
   ).toString();
-function Icon({ name }: { name: "back" | "sort" | "search" }) {
-  return (
+export type LeadsIconName = "back" | "sort" | "search";
+function Icon({ name }: { name: LeadsIconName }) {
+  const local = (
     <svg
       className="product-icon"
       viewBox="0 0 24 24"
@@ -72,6 +75,7 @@ function Icon({ name }: { name: "back" | "sort" | "search" }) {
       />
     </svg>
   );
+  return <FontAwesomeGlyph icon={leadsFontAwesome[name]} className="product-icon" fallback={local} />;
 }
 function Picker({
   label,

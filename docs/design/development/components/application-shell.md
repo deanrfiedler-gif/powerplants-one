@@ -141,7 +141,8 @@ The header imports the standalone `NotificationBell`; the full Notifications wor
 - The Kit loads only when `PPO_FONT_AWESOME_KIT` holds a plain Kit ID. CI, copies of the repository, the offline workspace and the sign-in page keep the local drawings.
 - The selected rail item is a plain white tile with a navy Solid glyph. Dean asked on 10 October 2026 for the pale green tint and the 3 px left bar to be removed. Hover and focus are unchanged.
 - At Dean's request, the More panel's selected link matches it. The link is a neutral `#e8ecf1` tile with navy text and a filled glyph, in place of the green tint and green ink. This applies to the desktop panel and the phone's All modules menu. Hover stays `#f0f3f6`, and phone bar cells keep their own marker.
-- Module icon sets (job packs, materials, engineering changes, commissioning, acceptance, fertigation, leads and the Gantt chart) still draw locally. Visual review of the Font Awesome icons is pending.
+- The module icon sets are mapped in the same file and drawn the same way: job packs, materials, engineering changes, commissioning, acceptance, fertigation, leads and the Gantt chart. Only the static sign-in page keeps its drawings. Visual review of the Font Awesome icons is pending.
+- Stylesheet rules whose subject is a bare `svg` read `:is(svg, i.ppo-fa)`, so they size the Font Awesome element as they sized the drawing. Font Awesome's own SVG keeps no stroke or margin, at 84% of its box (`shared-layout.css`).
 
 ## Session check keeps the shell context
 

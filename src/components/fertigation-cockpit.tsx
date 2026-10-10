@@ -28,7 +28,7 @@ import {
   declaredCoverage,
   type Declaration,
 } from "../estimating/fertigation/declarations";
-import { fertigationViews, type FertigationView } from "./fertigation-frame";
+import { ConflictMark, fertigationViews, type FertigationView } from "./fertigation-frame";
 
 const viewLabel = (view: GuidanceView) =>
   fertigationViews.find(([id]) => id === view)?.[1] ?? "Scope review";
@@ -36,12 +36,7 @@ const viewLabel = (view: GuidanceView) =>
 export function SeverityChip({ severity }: { severity: Finding["severity"] }) {
   return (
     <span className={`fn-chip fn-chip-${severity}`}>
-      {severity === "conflict" && (
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M12 4 2.5 20h19z" />
-          <path d="M12 10v4" />
-        </svg>
-      )}
+      {severity === "conflict" && <ConflictMark />}
       {severityLabels[severity]}
     </span>
   );
