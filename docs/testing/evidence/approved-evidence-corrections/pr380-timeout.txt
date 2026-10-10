@@ -1,0 +1,29 @@
+✖ PT-18 source identity, reviewed reconciliation and retained output recovery (110049.8764ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 110754.7469
+
+✖ failing tests:
+
+test at tests\database\document-identity-recovery.test.ts:1:297
+✖ PT-18 source identity, reviewed reconciliation and retained output recovery (110049.8764ms)
+  Error: Command failed: C:\Program Files\nodejs\node.exe --conditions=react-server --import tsx --test C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\helpers\document-identity-recovery.ts
+
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at ChildProcess.exithandler (node:child_process:417:12)
+      at ChildProcess.emit (node:events:514:28)
+      at maybeClose (node:internal/child_process:1141:16)
+      at ChildProcess._handle.onexit (node:internal/child_process:306:5) {
+    code: null,
+    killed: true,
+    signal: 'SIGTERM',
+    cmd: 'C:\\Program Files\\nodejs\\node.exe --conditions=react-server --import tsx --test C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\backend-access-recovery\\powerplants-one\\tests\\helpers\\document-identity-recovery.ts',
+    stdout: '▶ PT-18 identity-changing source move requires an explicitly reviewed successor\n  ✔ same title and hash at a new item identity cannot silently replace a selected source (969.7143ms)\n  ✔ reconciliation cannot rewrite the original identity or skip review (11051.5718ms)\n  ✔ a missing version and different bytes at the same item never become latest-version substitutes (548.5683ms)\n✔ PT-18 identity-changing source move requires an explicitly reviewed successor (79201.7975ms)\nℹ {"step":"explicit-reconciliation","old_source":"c2000000-0000-4000-8000-000000000001","new_source":"e69483a5-7d3a-49b0-88f4-771adbb9bb00","old_item":"c2000000-0000-4000-8000-000000000001","new_item":"3eb09a23-4249-48b1-acbd-fbea59b59d7f","source_hash":"363bc1e22ad3b41cb0c56f2959bf8e63e396a38ed039231ed20e65b1fffadc9a","original_issue":"454688c8-0afd-4771-b56c-c4579bcda175","successor_issue":"3191ebc3-4143-4f4e-9188-129848e4ac8e","original_pdf_hash":"11636b6574fe621562cac0137e41d765f454104307a9fb562c7ebd2ea5be8779"}\n',
+    stderr: ''
+  }

@@ -1,0 +1,68 @@
+▶ PT-13 approved 90 MIN / 2 EA corrections before processing
+  ✔ approved originals and separate financial quantities cannot be edited in place (401.906ms)
+  ✔ reasoned successors invalidate downstream readiness and replay only their original receipts (892.9678ms)
+  ✔ corrected report requires a new exact submission, review and issue (4187.8582ms)
+  ✖ unprocessed handoff needs a new exact allocation and independent Finance review (21.3745ms)
+✖ PT-13 approved 90 MIN / 2 EA corrections before processing (34978.9904ms)
+▶ PT-13 approved 90 MIN / 2 EA corrections after reconciled processing
+  ✔ approved originals and separate financial quantities cannot be edited in place (312.3593ms)
+  ✔ reasoned successors invalidate downstream readiness and replay only their original receipts (771.8939ms)
+  ✔ corrected report requires a new exact submission, review and issue (4432.2149ms)
+  ✖ processed originals stay consumed and a correction request links the original outcome (39.5102ms)
+✖ PT-13 approved 90 MIN / 2 EA corrections after reconciled processing (31833.6448ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 6
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 71154.2519
+
+✖ failing tests:
+
+test at tests\database\approved-evidence-corrections.test.ts:1:10214
+✖ unprocessed handoff needs a new exact allocation and independent Finance review (21.3745ms)
+  Error: Check the highlighted details.
+      at invalid (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\src\platform\validation.ts:3:9)
+      at editCommand (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\src\finance\validation.ts:117:5)
+      at saveFinance (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\src\finance\service.ts:272:15)
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\database\approved-evidence-corrections.test.ts:493:17)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\database\approved-evidence-corrections.test.ts:414:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    status: 422,
+    code: 'InvalidData',
+    field_errors: [ { field: 'id', message: 'The route identifies the existing handoff.' } ]
+  }
+
+test at tests\database\approved-evidence-corrections.test.ts:1:10214
+✖ processed originals stay consumed and a correction request links the original outcome (39.5102ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  Error: Check the highlighted details.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\database\approved-evidence-corrections.test.ts:447:11)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\database\approved-evidence-corrections.test.ts:414:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Check the highlighted details.
+        at invalid (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\src\platform\validation.ts:3:9)
+        at editCommand (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\src\finance\validation.ts:117:5)
+        at saveFinance (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\src\finance\service.ts:272:15)
+        at TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\database\approved-evidence-corrections.test.ts:448:13)
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\database\approved-evidence-corrections.test.ts:414:5)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    operator: 'rejects',
+    diff: 'simple'
+  }
