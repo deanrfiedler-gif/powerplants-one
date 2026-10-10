@@ -89,3 +89,10 @@ test("every primary semantic glyph has a deliberate distinct active drawing on t
   }
   assert.deepEqual(["tasks", "work", "orders", "approvals", "reports"].map(id => destination(id).icon), ["nav-tasks", "nav-work", "nav-orders", "nav-approval", "nav-service-review"]);
 });
+test("the five later Service destinations each have their own rail icon", () => {
+  // Dean, 10 October 2026: "Use the distinct icons for the five Service items".
+  const five = ["incidents", "inspection-review", "agreements", "maintenance", "warranty"];
+  assert.deepEqual(five.map(id => destination(id).icon), ["nav-risks", "nav-readiness", "nav-agreements", "nav-maintenance", "nav-assurance"]);
+  const others = departmentRails.service.filter(id => !five.includes(id)).map(id => destination(id).icon);
+  for (const id of five) assert.ok(!others.includes(destination(id).icon), id);
+});

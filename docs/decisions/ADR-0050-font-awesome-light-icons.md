@@ -89,6 +89,8 @@ B was the better technical fit, but it needs annual billing. Offered the choice 
   - My Work at phone width showed the quick actions, Needs attention, the weekly agenda and the Sales phone bar in Light.
   - The Kit accepted both `localhost` and `127.0.0.1`.
 
+- **Service rail, later the same day.** Dean chose distinct icons for five Service destinations. Navigation gained `nav-agreements` (file-contract) and `nav-maintenance` (screwdriver-wrench), so the navigation set now has 64 names. The change is recorded in [department navigation icons](department-navigation-icons.md).
+
 ## Implementation — second increment, 10 October 2026
 
 Dean confirmed Option A for the selected item and asked: "Do the module icon sets next."
