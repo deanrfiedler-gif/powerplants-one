@@ -11,3 +11,13 @@ Repository writer for this scope: **Find the next project step**, isolated branc
 Use the existing pinned stack and additive synthetic benchmark fixture. A standalone compiled mode in the existing performance sampler allows a declared local port and an exact retained fixture across source builds; the default development/compiled CI procedure, ten independent browser processes, four waves, viewports, network throttling, sample deadlines and readiness assertions remain intact. Linux process-memory counters are explicitly unavailable on Windows. Source/build identity, fixture fingerprints and original failed attempts must remain visible.
 
 No new dependency, service, operational integration, deployment or production authority is included. A measured local improvement does not by itself close PT-27, the older browser timeout, owner/device/accessibility review or hosted timing obligations. Implementation choice and before/after evidence will be recorded in the contribution's execution record.
+
+## Selected correction
+
+The baseline ten-user Customers trace observes automatic shell destination requests during current-page loading, including Home before the session read finishes and Sales destinations while the directory settles. ProductNavigation links now use the existing Next Link `prefetch={false}` policy already adopted for directory links. This removes speculative destination rendering; URLs, click/keyboard/touch navigation, permissions and the unsaved-work guard remain unchanged. It is a bounded use of the existing stack, not a new technology choice.
+
+The large variable-font transfer was investigated but does not explain the warm-load delay: repeat waves transfer no font bytes. No typography change is included. Keeping eager shell prefetch would retain the observed extra work; changing session authority, database timeouts or readiness thresholds would not be justified by this evidence.
+
+## Review disposition
+
+The [final comparison](../testing/evidence/pt27-loading/README.md) removes 940 observed speculative requests and improves desktop warm p95 from 3.234 to 2.520 seconds. Cold-phone p95 worsens from 5.196 to 7.407 seconds. Keep the contribution in draft: this is a measured candidate, not an accepted overall performance improvement. Investigate cold-phone request and render timing with controlled repeats before accepting the tradeoff. Full PT-27, the four-view sampler stall and hosted/device acceptance remain open.

@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "executed_date": "2026-10-10",
+  "timezone": "Australia/Brisbane",
+  "application_source": "698286fab91fd43c01307fd233faa7fb02c1ac84",
+  "checks": [
+    {
+      "command": "npm run build (baseline 794aee6)",
+      "result": "passed",
+      "log": "verification/baseline-final-build.log.gz"
+    },
+    {
+      "command": "npm run build (candidate 698286f; includes TypeScript)",
+      "result": "passed",
+      "log": "verification/candidate-final-build.log.gz"
+    },
+    {
+      "command": "quality-customer-comparison.ts baseline-final",
+      "result": "80 directory loads and 20 record visits passed",
+      "log": "verification/baseline-final.log.gz"
+    },
+    {
+      "command": "quality-customer-comparison.ts candidate-final",
+      "result": "80 directory loads and 20 record visits passed",
+      "log": "verification/candidate-final.log.gz"
+    },
+    {
+      "command": "playwright compiled --no-deps; seven selected scenarios on desktop and phone",
+      "result": "14 passed",
+      "log": "verification/final-browser.log.gz"
+    },
+    {
+      "command": "navigation-intent, navigation-safety, shell-navigation, desktop-shell, crm-refinement-transport units",
+      "result": "23 passed",
+      "log": "verification/focused-unit.log.gz"
+    },
+    {
+      "command": "eslint on all seven changed TypeScript/TSX files",
+      "result": "passed",
+      "log": "verification/final-lint.log.gz"
+    },
+    {
+      "command": "npm run typecheck",
+      "result": "passed",
+      "log": "verification/typecheck.log.gz"
+    },
+    {
+      "command": "npm run studio:check",
+      "result": "passed",
+      "log": "verification/studio-final.log.gz"
+    },
+    {
+      "command": "python scripts/check_foundation.py",
+      "result": "passed",
+      "log": "verification/foundation-final.log.gz"
+    },
+    {
+      "command": "python scripts/check_prototype.py",
+      "result": "passed",
+      "log": "verification/prototype-final.log.gz"
+    },
+    {
+      "command": "python scripts/check_naming.py",
+      "result": "passed",
+      "log": "verification/naming-final.log.gz"
+    }
+  ],
+  "test_sources": {
+    "scripts/quality-customer-comparison.ts": "c3854219d82b779dcfe7755d152479b3bffa3d2a49531fd0e09ccec26b97f554",
+    "scripts/quality-performance-sample.ts": "ab723ef2f9173b60e342862bc5c99938c8b1ad7b05601bb56b3d8ba3695b712e",
+    "tests/browser/shell-loading.spec.ts": "308b1372148d608460c21a75b22dcd380fc0e0ada87078b03a40b8b4690e5eee",
+    "tests/browser/crm-refinements.spec.ts": "6c2cd5b896e1f21b194ed97d74b43a2a131603a6f3f37ddb1a994b282f688c52",
+    "tests/helpers/crm-refinement-call.ts": "b260ad3bb3d2e3b42c4eff0257df2fe7e21340ca4b93d266332eaa244d5e1777",
+    "tests/unit/crm-refinement-transport.test.ts": "a4671eb72d6038e9abe83b0383cddccab2aa3434ad0c4c444692f64913d1f9ea"
+  },
+  "limits": [
+    "Selected regression and local synthetic comparison only; full four-view PT-27 run stalled and remains open.",
+    "Cold-phone p95 regresses; draft contribution, no performance acceptance or deployment.",
+    "Complete local browser/database suites were not rerun for this bounded shell change; contribution CI is separate.",
+    "28 stale visual reviews preserved; no human/device/accessibility acceptance inferred."
+  ],
+  "test_source_hash_normalization": "UTF-8 LF bytes, matching Git attributes"
+}

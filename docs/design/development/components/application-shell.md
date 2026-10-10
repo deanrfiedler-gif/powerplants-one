@@ -147,3 +147,9 @@ The header imports the standalone `NotificationBell`; the full Notifications wor
 ## Session check keeps the shell context
 
 `ShellProvider` keeps its current context while `ppo-session-ready` re-reads it, so the rail toggle and other context-dependent controls no longer blank for about 100 ms after load. Identity changes still clear it through `ppo-session-lock`. Reasoning, invariant and proof: [the shell contract](../systems/shell.md#shell-context-stays-through-the-session-check--9-october-2026).
+
+## Shell destination loading — PT-27
+
+ProductNavigation loads its Home, rail, More, phone and breadcrumb destinations on activation. The incoming Customers page retains its normal session, current-company checks, directory and saved-view reads; outgoing links retain their exact URLs, permissions, dirty-state guard and Back behaviour. Hover and opening More do not fetch those destinations. This follows the existing directory-link policy.
+
+Desktop keyboard/pointer and phone touch fixtures are in `tests/browser/shell-loading.spec.ts`, `directory-navigation.spec.ts` and `navigation-safety.spec.ts`. The [loading evidence](../../../testing/evidence/pt27-loading/README.md) records source-specific timing and receiving outcomes. Geometry, fonts, labels, icons and accepted reference bytes are unchanged. No new mockup image is needed for this transport-only change; actual captures and existing references remain separate from owner/device/visual acceptance. Existing stale reviews are preserved.

@@ -76,7 +76,8 @@ async function protocolProbe(cdp: CDPSession) {
 }
 async function resourceSnapshot() {
   const processes: Record<string, { count: number; resident_kib: number }> = {};
-  for (const pid of (await readdir("/proc").catch(() => [] as string[])).filter((x) => /^\d+$/.test(x))) {
+  const processDirectories = platform() === "linux" ? await readdir("/proc") : [];
+  for (const pid of processDirectories.filter((x) => /^\d+$/.test(x))) {
     try {
       const name = (await readFile(`/proc/${pid}/comm`, "utf8")).trim();
       if (!/^(node|chrome|chromium|headless_shell|postgres)/.test(name)) continue;

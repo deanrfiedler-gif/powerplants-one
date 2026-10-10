@@ -58,6 +58,11 @@
       "id": "nav-current-page-reload",
       "fixture": "tests/browser/navigation-safety.spec.ts; tests/unit/navigation-intent.test.ts",
       "description": "Real permitted Contact correction: approve exact current-record search by mouse/touch/keyboard, edit again while dirty remains true, cancel Chrome reload and retain that later draft. An actual departure still receives one review. Fixtures: tests/browser/navigation-safety.spec.ts; tests/unit/navigation-intent.test.ts."
+    },
+    {
+      "id": "shell-activation-loading",
+      "fixture": "tests/browser/shell-loading.spec.ts; tests/browser/directory-navigation.spec.ts; tests/browser/navigation-safety.spec.ts",
+      "description": "Customers cold host and opened More menu do not prefetch shell destinations. Actual People navigation and Back retain exact department URL; existing fixtures cover record receiving, dirty cancellation and restricted identities."
     }
   ]
 }

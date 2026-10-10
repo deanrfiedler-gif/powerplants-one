@@ -2703,6 +2703,11 @@
           "id": "notification-cold-directory",
           "label": "Notification bell from Customers",
           "description": "Open the real bell from a settled Customers page before visiting My Work or Notifications; verify current notice, Escape/focus return and Open Notifications handover. Desktop host in tests/browser/sh-platform.spec.ts. Phone retains the established hidden bell and direct inbox entry."
+        },
+        {
+          "id": "shell-activation-loading",
+          "label": "Shell loads destinations on activation",
+          "description": "Customers host observes shell prefetch before activation; desktop keyboard and phone touch open the exact permitted People route and Back restores Customers. Fixture: tests/browser/shell-loading.spec.ts. Existing directory and navigation-safety tests cover receiving, saved views, authority and dirty-state recovery."
         }
       ],
       "implementation": [
@@ -2797,7 +2802,9 @@
         "route:/warranty/cases/[id]",
         "scope:MA-07",
         "route:/warranty/supplier-recovery",
-        "route:/warranty/supplier-recovery/[id]"
+        "route:/warranty/supplier-recovery/[id]",
+        "route:/customers",
+        "route:/people"
       ],
       "desktop": "76 px compact or 232 px labelled primary rail; accessible collapse button, identity/browser persistence and in-memory fallback. More contains ordinary permitted Workspace selection. Keep Home/More reachable with long and short rails; 1200 px secondary-menu docking remains.",
       "mobile": "Retain the 780/781 px boundary, visible Sales labels and global shell on Leads. More provides labelled permitted Workspace selection; equivalent destinations retain date/scope/record meaning. Check 320 px without page overflow; touch targets aim for 44 px.",
@@ -2953,6 +2960,14 @@
           "expected": "Customers loads its shell without the full Notifications and My Work workspace graph; current-authority bell behaviour remains intact.",
           "actual": "NotificationBell is extracted unchanged from the workspace; compiled boundary and sequential diagnostic evidence are recorded separately from PT-27 and owner acceptance.",
           "action": "Review docs/testing/evidence/customer-first-load/README.md and the Notifications host regression; broader cold-load/ten-user target and owner/device review remain open.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "shell-activation-loading-review",
+          "expected": "Current-page loading avoids speculative shell destination renders; deliberate navigation, keyboard/touch, Back and access remain correct.",
+          "actual": "PT-27 baseline observes shell prefetch competing with identity and directory reads. ProductNavigation now disables prefetch for its links; measured results and regression evidence remain separate from owner acceptance.",
+          "action": "Review docs/testing/evidence/pt27-loading/README.md and the real shell/record host fixtures. Retain stale visual reviews and outstanding owner/device acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
