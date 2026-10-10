@@ -4,9 +4,13 @@ import { AsyncLocalStorage } from "node:async_hooks";
 
 // Opt-in, local synthetic verification only. Never record request headers,
 // query strings, bodies, identities, output content or exception messages.
-const enabled = process.env.PPO_PROOF_DIAGNOSTICS === "1" &&
-  process.env.PPO_ENV === "local-synthetic" && process.env.PPO_EXPOSURE === "loopback" &&
-  process.env.PPO_IDENTITY === "synthetic" && process.env.NODE_ENV !== "production";
+// Read the runtime environment through a parameter. Next replaces a direct
+// process.env.NODE_ENV access at build time, even for the guarded local compiled
+// launcher (NODE_ENV=test); that previously erased route-level observations.
+export const proofDiagnosticsAllowed = (env: Record<string, string | undefined>) =>
+  env.PPO_PROOF_DIAGNOSTICS === "1" && env.PPO_ENV === "local-synthetic" &&
+  env.PPO_EXPOSURE === "loopback" && env.PPO_IDENTITY === "synthetic" && env.NODE_ENV !== "production";
+const enabled = proofDiagnosticsAllowed(process.env);
 let count = 0;
 const limit = 60000;
 type ProofRequest = { request_id: number; path: string; route_id?: number };
