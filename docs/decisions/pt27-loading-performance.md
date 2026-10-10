@@ -1,0 +1,13 @@
+# PT-27 loading performance
+
+<!-- versioning: git; committed history is authoritative -->
+
+Owner: Dean Fiedler. Direction: 10 October 2026 (Australia/Brisbane). Requirements: NFR-04, AT-23, PT-27 and the existing Customers directory/record journey. Review and owner acceptance remain separate.
+
+Dean authorised the next bounded performance increment: measure Customers first load and record navigation on a fixed compiled build, cover desktop/phone and ten concurrent virtual users, identify the largest measured delay, correct that cause and repeat the same workload. Preserve the three-second candidate target, permissions, current identity/company scope, navigation and exact saved work.
+
+Repository writer for this scope: **Find the next project step**, isolated branch `codex/pt27-loading-performance`, initially based on main `794aee6c0a540189c7fcce16c7d077c21bac68c6`. PR #390's integration and owner walkthrough remain with the existing integration session. This contribution does not duplicate that work or record human observations on Dean's behalf.
+
+Use the existing pinned stack and additive synthetic benchmark fixture. A standalone compiled mode in the existing performance sampler allows a declared local port and an exact retained fixture across source builds; the default development/compiled CI procedure, ten independent browser processes, four waves, viewports, network throttling, sample deadlines and readiness assertions remain intact. Linux process-memory counters are explicitly unavailable on Windows. Source/build identity, fixture fingerprints and original failed attempts must remain visible.
+
+No new dependency, service, operational integration, deployment or production authority is included. A measured local improvement does not by itself close PT-27, the older browser timeout, owner/device/accessibility review or hosted timing obligations. Implementation choice and before/after evidence will be recorded in the contribution's execution record.
