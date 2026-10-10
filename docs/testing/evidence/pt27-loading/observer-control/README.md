@@ -52,7 +52,9 @@ The cold directory request begins after a median 74–78% of desktop readiness t
 
 The next justified performance investigation is the cold page and session bootstrap before the directory read, while explicitly controlling for the runner's browser CPU contention. Isolate a proposed correction with the same ten-user profile and actual desktop/phone navigation before adoption. An application availability correction still requires a failing request with verified phases. The discarded prefetch policies remain withdrawn, and the current authority/deadlines remain unchanged.
 
-Screenshots and assertions cover functional directory/record state; inspected desktop directory and phone record captures do not grant visual, device, accessibility or owner approval. Full four-view PT-27, the original local stall, hosted performance and deployment remain open. The repaired mobile CI suite is a separate result and must not be inferred from this successful comparison.
+Screenshots and assertions cover functional directory/record state; inspected desktop directory and phone record captures do not grant visual, device, accessibility or owner approval. Full four-view PT-27, the original local stall, hosted performance and deployment remain open.
+
+The separate [repaired CI outcome](repair-ci.json) at source `5b0bb26` confirms full mobile **346 passed / 74 skipped** and full desktop **403 passed / 17 skipped**. The formerly failing N01 case passes in both projects; the retained-proof job also passes. Selected job-log lines and full-log hashes are recorded separately from this performance block. The recorded aggregate/newer-head status remains distinct; these successes establish neither the original socket cause nor a 503 correction.
 
 ## Reproduction and integrity
 

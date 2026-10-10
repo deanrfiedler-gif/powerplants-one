@@ -1,0 +1,536 @@
+{
+  "run": {
+    "conclusion": "",
+    "databaseId": 38051854967,
+    "event": "pull_request",
+    "headSha": "5b0bb26ce4d562f6462d3a25fb7412872c3bff98",
+    "jobs": [
+      {
+        "completedAt": "2026-10-10T12:33:19Z",
+        "conclusion": "success",
+        "databaseId": 114212419766,
+        "name": "Compiled application retained proof",
+        "startedAt": "2026-10-10T12:25:42Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-10-10T12:25:44Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-10-10T12:25:43Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:26:01Z",
+            "conclusion": "success",
+            "name": "Initialize containers",
+            "number": 2,
+            "startedAt": "2026-10-10T12:25:44Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:26:10Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "number": 3,
+            "startedAt": "2026-10-10T12:26:01Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:26:15Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+            "number": 4,
+            "startedAt": "2026-10-10T12:26:10Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:26:32Z",
+            "conclusion": "success",
+            "name": "Install exact package manager and locked dependencies",
+            "number": 5,
+            "startedAt": "2026-10-10T12:26:15Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:27:09Z",
+            "conclusion": "success",
+            "name": "Install pinned controlled PDF renderer and browser",
+            "number": 6,
+            "startedAt": "2026-10-10T12:26:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:28:31Z",
+            "conclusion": "success",
+            "name": "Compile the application",
+            "number": 7,
+            "startedAt": "2026-10-10T12:27:09Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:28:32Z",
+            "conclusion": "success",
+            "name": "Configure disposable PostgreSQL lock capacity",
+            "number": 8,
+            "startedAt": "2026-10-10T12:28:31Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:28:38Z",
+            "conclusion": "success",
+            "name": "Configure disposable loopback database",
+            "number": 9,
+            "startedAt": "2026-10-10T12:28:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:28:38Z",
+            "conclusion": "skipped",
+            "name": "Desktop and mobile browser checks against the compiled application",
+            "number": 10,
+            "startedAt": "2026-10-10T12:28:38Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:32:20Z",
+            "conclusion": "success",
+            "name": "Scheduling Steps 4\u20135 isolated publication, recovery and hold journeys",
+            "number": 11,
+            "startedAt": "2026-10-10T12:28:38Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:32:50Z",
+            "conclusion": "success",
+            "name": "Retain timer originals across real process restarts",
+            "number": 12,
+            "startedAt": "2026-10-10T12:32:20Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:33:13Z",
+            "conclusion": "success",
+            "name": "Scheduling policy originals across app and PostgreSQL restart",
+            "number": 13,
+            "startedAt": "2026-10-10T12:32:50Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:33:13Z",
+            "conclusion": "success",
+            "name": "Prepare retained browser review diagnostics immediately",
+            "number": 14,
+            "startedAt": "2026-10-10T12:33:13Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:33:16Z",
+            "conclusion": "success",
+            "name": "Preserve retained compiled-application browser evidence",
+            "number": 15,
+            "startedAt": "2026-10-10T12:33:13Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:33:16Z",
+            "conclusion": "success",
+            "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+            "number": 28,
+            "startedAt": "2026-10-10T12:33:16Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:33:16Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "number": 29,
+            "startedAt": "2026-10-10T12:33:16Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:33:16Z",
+            "conclusion": "success",
+            "name": "Stop containers",
+            "number": 30,
+            "startedAt": "2026-10-10T12:33:16Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:33:16Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 31,
+            "startedAt": "2026-10-10T12:33:16Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38051854967/job/114212419766"
+      },
+      {
+        "completedAt": "2026-10-10T13:10:22Z",
+        "conclusion": "success",
+        "databaseId": 114212419870,
+        "name": "Compiled application browser-mobile proof",
+        "startedAt": "2026-10-10T12:26:18Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-10-10T12:26:19Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-10-10T12:26:18Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:26:31Z",
+            "conclusion": "success",
+            "name": "Initialize containers",
+            "number": 2,
+            "startedAt": "2026-10-10T12:26:19Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:26:48Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "number": 3,
+            "startedAt": "2026-10-10T12:26:31Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:26:49Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+            "number": 4,
+            "startedAt": "2026-10-10T12:26:48Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:27:05Z",
+            "conclusion": "success",
+            "name": "Install exact package manager and locked dependencies",
+            "number": 5,
+            "startedAt": "2026-10-10T12:26:49Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:27:32Z",
+            "conclusion": "success",
+            "name": "Install pinned controlled PDF renderer and browser",
+            "number": 6,
+            "startedAt": "2026-10-10T12:27:05Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:28:48Z",
+            "conclusion": "success",
+            "name": "Compile the application",
+            "number": 7,
+            "startedAt": "2026-10-10T12:27:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:28:48Z",
+            "conclusion": "success",
+            "name": "Configure disposable PostgreSQL lock capacity",
+            "number": 8,
+            "startedAt": "2026-10-10T12:28:48Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:28:54Z",
+            "conclusion": "success",
+            "name": "Configure disposable loopback database",
+            "number": 9,
+            "startedAt": "2026-10-10T12:28:48Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T13:10:15Z",
+            "conclusion": "success",
+            "name": "Desktop and mobile browser checks against the compiled application",
+            "number": 10,
+            "startedAt": "2026-10-10T12:28:54Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T13:10:15Z",
+            "conclusion": "skipped",
+            "name": "Scheduling Steps 4\u20135 isolated publication, recovery and hold journeys",
+            "number": 11,
+            "startedAt": "2026-10-10T13:10:15Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T13:10:15Z",
+            "conclusion": "skipped",
+            "name": "Retain timer originals across real process restarts",
+            "number": 12,
+            "startedAt": "2026-10-10T13:10:15Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T13:10:15Z",
+            "conclusion": "skipped",
+            "name": "Scheduling policy originals across app and PostgreSQL restart",
+            "number": 13,
+            "startedAt": "2026-10-10T13:10:15Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T13:10:15Z",
+            "conclusion": "success",
+            "name": "Prepare retained browser review diagnostics immediately",
+            "number": 14,
+            "startedAt": "2026-10-10T13:10:15Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T13:10:20Z",
+            "conclusion": "success",
+            "name": "Preserve retained compiled-application browser evidence",
+            "number": 15,
+            "startedAt": "2026-10-10T13:10:15Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T13:10:20Z",
+            "conclusion": "success",
+            "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+            "number": 28,
+            "startedAt": "2026-10-10T13:10:20Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T13:10:20Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "number": 29,
+            "startedAt": "2026-10-10T13:10:20Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T13:10:21Z",
+            "conclusion": "success",
+            "name": "Stop containers",
+            "number": 30,
+            "startedAt": "2026-10-10T13:10:20Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T13:10:21Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 31,
+            "startedAt": "2026-10-10T13:10:21Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38051854967/job/114212419870"
+      },
+      {
+        "completedAt": "2026-10-10T13:09:35Z",
+        "conclusion": "success",
+        "databaseId": 114212419920,
+        "name": "Compiled application browser-desktop proof",
+        "startedAt": "2026-10-10T12:31:09Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-10-10T12:31:11Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-10-10T12:31:10Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:31:32Z",
+            "conclusion": "success",
+            "name": "Initialize containers",
+            "number": 2,
+            "startedAt": "2026-10-10T12:31:11Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:31:50Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "number": 3,
+            "startedAt": "2026-10-10T12:31:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:31:52Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+            "number": 4,
+            "startedAt": "2026-10-10T12:31:50Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:32:03Z",
+            "conclusion": "success",
+            "name": "Install exact package manager and locked dependencies",
+            "number": 5,
+            "startedAt": "2026-10-10T12:31:52Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:32:31Z",
+            "conclusion": "success",
+            "name": "Install pinned controlled PDF renderer and browser",
+            "number": 6,
+            "startedAt": "2026-10-10T12:32:03Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:33:29Z",
+            "conclusion": "success",
+            "name": "Compile the application",
+            "number": 7,
+            "startedAt": "2026-10-10T12:32:31Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:33:29Z",
+            "conclusion": "success",
+            "name": "Configure disposable PostgreSQL lock capacity",
+            "number": 8,
+            "startedAt": "2026-10-10T12:33:29Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T12:33:34Z",
+            "conclusion": "success",
+            "name": "Configure disposable loopback database",
+            "number": 9,
+            "startedAt": "2026-10-10T12:33:29Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T13:09:25Z",
+            "conclusion": "success",
+            "name": "Desktop and mobile browser checks against the compiled application",
+            "number": 10,
+            "startedAt": "2026-10-10T12:33:34Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T13:09:25Z",
+            "conclusion": "skipped",
+            "name": "Scheduling Steps 4\u20135 isolated publication, recovery and hold journeys",
+            "number": 11,
+            "startedAt": "2026-10-10T13:09:25Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T13:09:25Z",
+            "conclusion": "skipped",
+            "name": "Retain timer originals across real process restarts",
+            "number": 12,
+            "startedAt": "2026-10-10T13:09:25Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T13:09:25Z",
+            "conclusion": "skipped",
+            "name": "Scheduling policy originals across app and PostgreSQL restart",
+            "number": 13,
+            "startedAt": "2026-10-10T13:09:25Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T13:09:25Z",
+            "conclusion": "success",
+            "name": "Prepare retained browser review diagnostics immediately",
+            "number": 14,
+            "startedAt": "2026-10-10T13:09:25Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T13:09:32Z",
+            "conclusion": "success",
+            "name": "Preserve retained compiled-application browser evidence",
+            "number": 15,
+            "startedAt": "2026-10-10T13:09:25Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T13:09:32Z",
+            "conclusion": "success",
+            "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+            "number": 28,
+            "startedAt": "2026-10-10T13:09:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T13:09:32Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "number": 29,
+            "startedAt": "2026-10-10T13:09:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T13:09:33Z",
+            "conclusion": "success",
+            "name": "Stop containers",
+            "number": 30,
+            "startedAt": "2026-10-10T13:09:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-10T13:09:33Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 31,
+            "startedAt": "2026-10-10T13:09:33Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38051854967/job/114212419920"
+      },
+      {
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "databaseId": 114220661087,
+        "name": "Desktop and mobile browser suite against the compiled application",
+        "startedAt": "2026-10-10T13:10:22Z",
+        "status": "queued",
+        "steps": [],
+        "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38051854967/job/114220661087"
+      }
+    ],
+    "status": "queued",
+    "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38051854967"
+  },
+  "excerpts": [
+    {
+      "job_id": 114212419870,
+      "raw_job_log_sha256": "b25e0cc3a250a2c439bc55da71040703ffce450f6773499089425077b3dc9685",
+      "raw_job_log_bytes": 208560,
+      "selection": "N01 case and final passed/skipped count lines; ANSI sequences removed. Full logs remain with the CI job, not copied into this repository.",
+      "lines": [
+        "2026-10-10T12:39:51.2635661Z   \u2713  213 [mobile-chromium] \u203a tests/browser/navigation-context.spec.ts:16:1 \u203a N01 saved survey opens each exact Equipment record and returns to its source (6.3s)",
+        "2026-10-10T13:10:15.2081961Z   74 skipped",
+        "2026-10-10T13:10:15.2082452Z   346 passed (41.3m)"
+      ]
+    },
+    {
+      "job_id": 114212419920,
+      "raw_job_log_sha256": "9ed95ec906155a479c9b8ba54d1fe3edb4501dd744875fe43a4b32c3069c2cb9",
+      "raw_job_log_bytes": 209011,
+      "selection": "N01 case and final passed/skipped count lines; ANSI sequences removed. Full logs remain with the CI job, not copied into this repository.",
+      "lines": [
+        "2026-10-10T12:45:47.0757705Z   \u2713  213 [desktop-chromium] \u203a tests/browser/navigation-context.spec.ts:16:1 \u203a N01 saved survey opens each exact Equipment record and returns to its source (5.1s)",
+        "2026-10-10T13:09:25.5171344Z   17 skipped",
+        "2026-10-10T13:09:25.5171658Z   403 passed (35.8m)"
+      ]
+    }
+  ],
+  "boundary": "Repaired source 5b0bb26: both full browser jobs and retained proof pass. Aggregate and newer-head CI status are separate; this does not attribute the original ECONNRESET or HTTP 503 cause."
+}

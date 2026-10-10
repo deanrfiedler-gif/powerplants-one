@@ -306,5 +306,12 @@
     "sha256": "930e328c17b815edff80f9c15907940027eb1d096c6eb36374cbc8731f046770",
     "original_bytes": 343,
     "original_sha256": "4dff6e5e1c9ea95e46e74cd218f6a5c51e5245f88f902247bbbed6589e5d8cc7"
+  },
+  {
+    "path": "repair-ci.json",
+    "bytes": 20194,
+    "sha256": "6654d3e4556d2b961d4b6b879c5679a5ded6e78d929d56b90507f114598f9660",
+    "original_bytes": 20194,
+    "original_sha256": "6654d3e4556d2b961d4b6b879c5679a5ded6e78d929d56b90507f114598f9660"
   }
 ]

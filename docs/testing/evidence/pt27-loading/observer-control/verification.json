@@ -14,10 +14,11 @@
     "retained_windows_summary_regression": "all original timing, pool and runtime fields unchanged for three valid attempts",
     "typecheck": "passed",
     "changed_typescript_lint": "passed",
-    "artifact_integrity": "44 stored and original-byte hashes verified",
+    "artifact_integrity": "45 stored and original-byte hashes verified",
     "private_value_scan": "passed",
     "foundation": "passed; 7645 local links, 5060 files, no errors",
-    "naming": "passed; 522 document records, no errors"
+    "naming": "passed; 522 document records, no errors",
+    "repaired_mobile_ci": "passed at 5b0bb26: 346 passed, 74 skipped, including N01; full desktop and retained jobs also pass. Latest-head CI separate."
   },
   "limits": "Analysis code is source-hash bound separately from executed CI. Synthetic Customers-only diagnostics; no original-503 attribution, full PT-27, fresh visual/owner acceptance or deployment claim."
 }
