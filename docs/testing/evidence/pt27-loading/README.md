@@ -4,7 +4,11 @@
 
 Owner: Dean Fiedler. Executed 10 October 2026 (Australia/Brisbane). [Decision](../../../decisions/pt27-loading-performance.md). Local synthetic measurements; independent review and owner/device/accessibility acceptance remain separate.
 
-## Result and scope
+## Continuation and current scope
+
+The original pair below measures the broad shell policy. After integration of main `6c69d92`, the [first controlled block](controlled-repeat/README.md) repeats its cold-phone loss, so that broad policy is not adopted. The application change is now limited to desktop rail Home, rail destinations and desktop More; shared header, breadcrumbs and phone retain their original loading policy. The [narrowed comparison](narrowed-repeat/README.md) records the continuation's final disposition. Original samples, failures and source-specific verification below remain historical evidence.
+
+## Original pair: result and scope
 
 ProductNavigation's eight Link rendering sites now load destinations on activation. The baseline trace shows Home prefetch overlapping the identity read and Sales destination prefetch during directory loading. In the final pair, observed speculative requests fall from **940 to 0** across 80 directory samples per build. Both builds return the exact permitted directory content and pass all 20 actual record handovers. The seven declared fixture tables remain unchanged.
 
@@ -56,5 +60,7 @@ On a fresh, migrated and seeded disposable `ppo_synthetic_test`, set `PPO_BENCHM
 Build the declared application source. Set `PPO_COMPILED_SOURCE` to its full commit, `PPO_PROOF_DIAGNOSTICS=1`, and the task-owned `PPO_PORT`/database through private configuration. Run `node --env-file=.env.local --import tsx scripts/quality-customer-comparison.ts <new-label>`. The runner refuses output reuse, checks source and exact fixture equality, and records failures without substituting samples.
 
 Run `python scripts/summarize-customer-comparison.py <baseline-folder> <candidate-folder> <output-folder>` to validate sample counts, fixture equality and matching browser/network conditions, retain deterministic gzip bytes and report all six groups. [artifacts.json](artifacts.json) binds stored and uncompressed hashes, including retained attempts and verification logs. Raw traces, cookies, credentials and full request headers are not published.
+
+The frozen `attempts/original-comparison/artifacts.json` preserves its original layout: `baseline/` and `candidate/` resolve inside that retained folder, while its `attempts/` entries resolve from this PT-27 evidence root. The current root manifest binds all relocated bytes. Continuation manifests resolve paths from their own directories; the integrity check applies that explicit historical mapping without rewriting the original manifest.
 
 No merge, deployment, operational integration or human acceptance follows from this contribution. PR #390's integration and fresh PT-30 owner worksheet remain with its existing session; no H01-H11 observations are filled on anyone's behalf.

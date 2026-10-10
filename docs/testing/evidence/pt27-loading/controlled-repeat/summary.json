@@ -1,0 +1,1130 @@
+{
+  "schema_version": 1,
+  "order": "main/candidate/candidate/main",
+  "runs": [
+    {
+      "label": "abba-a1",
+      "started_at": "2026-10-10T09:00:10.991Z",
+      "comparison_position": "1",
+      "source": "9919f555d5bbd743d8928ad7ad7e002d578b539b",
+      "compiled_source": "6c69d92b8fd0913de916587f6e4cabb358868f11",
+      "build_id": "qThSo3tITjqcT7DkJfgP0",
+      "browser": "155.0.8059.40",
+      "node": "v24.21.0",
+      "platform": "win32",
+      "comparison_block": "20261010-main-candidate-abba",
+      "groups": [
+        {
+          "viewport": "desktop",
+          "phase": "cold",
+          "ready_ms": {
+            "n": 10,
+            "min": 12373.146700000001,
+            "median": 13019.411250000003,
+            "p95": 14319.441899999998,
+            "max": 14319.441899999998
+          }
+        },
+        {
+          "viewport": "desktop",
+          "phase": "warm",
+          "ready_ms": {
+            "n": 30,
+            "min": 3309.245600000002,
+            "median": 4082.5426000000043,
+            "p95": 4944.441400000003,
+            "max": 4946.184800000003
+          }
+        },
+        {
+          "viewport": "desktop",
+          "phase": "record",
+          "ready_ms": {
+            "n": 10,
+            "min": 6146.1740999999965,
+            "median": 8192.60875,
+            "p95": 9753.0403,
+            "max": 9753.0403
+          }
+        },
+        {
+          "viewport": "phone",
+          "phase": "cold",
+          "ready_ms": {
+            "n": 10,
+            "min": 6983.206400000003,
+            "median": 8311.520250000001,
+            "p95": 8745.385000000002,
+            "max": 8745.385000000002
+          }
+        },
+        {
+          "viewport": "phone",
+          "phase": "warm",
+          "ready_ms": {
+            "n": 30,
+            "min": 3682.133600000001,
+            "median": 4277.491000000002,
+            "p95": 4994.49029999999,
+            "max": 5081.469100000002
+          }
+        },
+        {
+          "viewport": "phone",
+          "phase": "record",
+          "ready_ms": {
+            "n": 10,
+            "min": 5260.249199999991,
+            "median": 5900.791300000004,
+            "p95": 6742.865000000005,
+            "max": 6742.865000000005
+          }
+        }
+      ],
+      "phone_cold_stages": {
+        "/customers": {
+          "start_ms": {
+            "n": 10,
+            "min": 0,
+            "median": 0.0,
+            "p95": 0,
+            "max": 0
+          },
+          "headers_ms": {
+            "n": 10,
+            "min": 249.62200000300072,
+            "median": 268.62249999976484,
+            "p95": 374.96899999678135,
+            "max": 374.96899999678135
+          }
+        },
+        "/api/v1/local-session": {
+          "start_ms": {
+            "n": 10,
+            "min": 4298.255000001518,
+            "median": 4760.486999999557,
+            "p95": 5784.890999999334,
+            "max": 5784.890999999334
+          },
+          "headers_ms": {
+            "n": 10,
+            "min": 4815.146000000823,
+            "median": 6190.591500000664,
+            "p95": 7115.289999997913,
+            "max": 7115.289999997913
+          },
+          "gateway_elapsed_ms": {
+            "n": 10,
+            "min": 193.13149999999587,
+            "median": 327.21780000000217,
+            "p95": 1245.089199999995,
+            "max": 1245.089199999995
+          }
+        },
+        "/api/v1/crm/directory": {
+          "start_ms": {
+            "n": 10,
+            "min": 4829.216000001907,
+            "median": 6323.027500000535,
+            "p95": 7179.638000001432,
+            "max": 7179.638000001432
+          },
+          "headers_ms": {
+            "n": 10,
+            "min": 6114.3970000011905,
+            "median": 7891.125000000102,
+            "p95": 8287.561000001006,
+            "max": 8287.561000001006
+          },
+          "gateway_elapsed_ms": {
+            "n": 10,
+            "min": 645.3125,
+            "median": 1050.403500000004,
+            "p95": 2570.3168000000005,
+            "max": 2570.3168000000005
+          }
+        }
+      },
+      "phone_cold_assets": {
+        "Script": {
+          "observed_encoded_bytes": {
+            "n": 10,
+            "min": 232549,
+            "median": 232549.0,
+            "p95": 232549,
+            "max": 232549
+          },
+          "last_finished_ms": {
+            "n": 10,
+            "min": 4168.939999999566,
+            "median": 4431.4439999980095,
+            "p95": 5084.259999999631,
+            "max": 5084.259999999631
+          },
+          "unfinished_requests": 0
+        },
+        "Stylesheet": {
+          "observed_encoded_bytes": {
+            "n": 10,
+            "min": 103569,
+            "median": 103569.0,
+            "p95": 103569,
+            "max": 103569
+          },
+          "last_finished_ms": {
+            "n": 10,
+            "min": 1936.7789999996603,
+            "median": 2070.1194999983272,
+            "p95": 2271.310000000085,
+            "max": 2271.310000000085
+          },
+          "unfinished_requests": 0
+        },
+        "Font": {
+          "observed_encoded_bytes": {
+            "n": 10,
+            "min": 332448,
+            "median": 332448.0,
+            "p95": 332448,
+            "max": 332448
+          },
+          "last_finished_ms": {
+            "n": 10,
+            "min": 6726.676000002044,
+            "median": 6875.408999998399,
+            "p95": 7372.091999997792,
+            "max": 7372.091999997792
+          },
+          "unfinished_requests": 0
+        }
+      },
+      "phone_cold_readiness": {
+        "core_headers_ms": {
+          "n": 10,
+          "min": 6189.7186,
+          "median": 7968.6038499999995,
+          "p95": 8387.159200000002,
+          "max": 8387.159200000002
+        },
+        "core_json_processed_ms": {
+          "n": 10,
+          "min": 6306.186699999998,
+          "median": 8033.233550000001,
+          "p95": 8538.906800000004,
+          "max": 8538.906800000004
+        },
+        "post_core_json_to_ready_ms": {
+          "n": 10,
+          "min": 174.83929999999236,
+          "median": 245.13435000000027,
+          "p95": 677.0197000000044,
+          "max": 677.0197000000044
+        },
+        "dom_interactive_ms": {
+          "n": 10,
+          "min": 1986.7999999970198,
+          "median": 2206.3499999996275,
+          "p95": 2517.900000002235,
+          "max": 2517.900000002235
+        }
+      },
+      "phone_cold_free_memory_bytes": {
+        "n": 10,
+        "min": 1250951168,
+        "median": 1313386496.0,
+        "p95": 1462243328,
+        "max": 1462243328
+      },
+      "prefetch_requests": 847
+    },
+    {
+      "label": "abba-b1",
+      "started_at": "2026-10-10T09:01:59.601Z",
+      "comparison_position": "2",
+      "source": "9919f555d5bbd743d8928ad7ad7e002d578b539b",
+      "compiled_source": "9919f555d5bbd743d8928ad7ad7e002d578b539b",
+      "build_id": "Zjc-mdg73j4oCbUvOe5tN",
+      "browser": "155.0.8059.40",
+      "node": "v24.21.0",
+      "platform": "win32",
+      "comparison_block": "20261010-main-candidate-abba",
+      "groups": [
+        {
+          "viewport": "desktop",
+          "phase": "cold",
+          "ready_ms": {
+            "n": 10,
+            "min": 15207.9372,
+            "median": 16295.655600000002,
+            "p95": 16427.547199999997,
+            "max": 16427.547199999997
+          }
+        },
+        {
+          "viewport": "desktop",
+          "phase": "warm",
+          "ready_ms": {
+            "n": 30,
+            "min": 3020.962599999999,
+            "median": 3772.899150000001,
+            "p95": 4621.325700000001,
+            "max": 4640.643599999996
+          }
+        },
+        {
+          "viewport": "desktop",
+          "phase": "record",
+          "ready_ms": {
+            "n": 10,
+            "min": 10585.817000000003,
+            "median": 12223.488650000003,
+            "p95": 13415.487500000003,
+            "max": 13415.487500000003
+          }
+        },
+        {
+          "viewport": "phone",
+          "phase": "cold",
+          "ready_ms": {
+            "n": 10,
+            "min": 7481.222999999998,
+            "median": 11818.592550000001,
+            "p95": 12299.724499999997,
+            "max": 12299.724499999997
+          }
+        },
+        {
+          "viewport": "phone",
+          "phase": "warm",
+          "ready_ms": {
+            "n": 30,
+            "min": 2796.7483000000066,
+            "median": 3703.9277500000026,
+            "p95": 4364.471600000004,
+            "max": 4400.045100000003
+          }
+        },
+        {
+          "viewport": "phone",
+          "phase": "record",
+          "ready_ms": {
+            "n": 10,
+            "min": 4295.232099999994,
+            "median": 6015.569300000003,
+            "p95": 6881.728700000007,
+            "max": 6881.728700000007
+          }
+        }
+      ],
+      "phone_cold_stages": {
+        "/customers": {
+          "start_ms": {
+            "n": 10,
+            "min": 0,
+            "median": 0.0,
+            "p95": 0,
+            "max": 0
+          },
+          "headers_ms": {
+            "n": 10,
+            "min": 286.25600000304985,
+            "median": 493.0110000004788,
+            "p95": 652.4910000007367,
+            "max": 652.4910000007367
+          }
+        },
+        "/api/v1/local-session": {
+          "start_ms": {
+            "n": 10,
+            "min": 3495.362000001478,
+            "median": 5752.53050000174,
+            "p95": 7874.03600000107,
+            "max": 7874.03600000107
+          },
+          "headers_ms": {
+            "n": 10,
+            "min": 3616.649999999936,
+            "median": 7921.178000000509,
+            "p95": 11162.8320000018,
+            "max": 11162.8320000018
+          },
+          "gateway_elapsed_ms": {
+            "n": 10,
+            "min": 23.108399999997346,
+            "median": 86.45704999999725,
+            "p95": 782.7403999999951,
+            "max": 782.7403999999951
+          }
+        },
+        "/api/v1/crm/directory": {
+          "start_ms": {
+            "n": 10,
+            "min": 3639.3500000012864,
+            "median": 8240.096500001528,
+            "p95": 11378.496000001178,
+            "max": 11378.496000001178
+          },
+          "headers_ms": {
+            "n": 10,
+            "min": 5835.907000000589,
+            "median": 8925.060999999914,
+            "p95": 11853.16800000146,
+            "max": 11853.16800000146
+          },
+          "gateway_elapsed_ms": {
+            "n": 10,
+            "min": 112.63529999999446,
+            "median": 474.21110000000044,
+            "p95": 3213.004799999995,
+            "max": 3213.004799999995
+          }
+        }
+      },
+      "phone_cold_assets": {
+        "Script": {
+          "observed_encoded_bytes": {
+            "n": 10,
+            "min": 232563,
+            "median": 232563.0,
+            "p95": 232563,
+            "max": 232563
+          },
+          "last_finished_ms": {
+            "n": 10,
+            "min": 3405.421000003116,
+            "median": 5675.376999999571,
+            "p95": 6790.258000000904,
+            "max": 6790.258000000904
+          },
+          "unfinished_requests": 0
+        },
+        "Stylesheet": {
+          "observed_encoded_bytes": {
+            "n": 10,
+            "min": 103569,
+            "median": 103569.0,
+            "p95": 103569,
+            "max": 103569
+          },
+          "last_finished_ms": {
+            "n": 10,
+            "min": 1321.2020000028133,
+            "median": 2055.848000001788,
+            "p95": 2588.8449999984005,
+            "max": 2588.8449999984005
+          },
+          "unfinished_requests": 0
+        },
+        "Font": {
+          "observed_encoded_bytes": {
+            "n": 10,
+            "min": 16306,
+            "median": 332448.0,
+            "p95": 332448,
+            "max": 332448
+          },
+          "last_finished_ms": {
+            "n": 10,
+            "min": 3699.842999998509,
+            "median": 8049.80550000073,
+            "p95": 11688.77699999939,
+            "max": 11688.77699999939
+          },
+          "unfinished_requests": 3
+        }
+      },
+      "phone_cold_readiness": {
+        "core_headers_ms": {
+          "n": 10,
+          "min": 7059.435599999997,
+          "median": 9032.13165,
+          "p95": 11941.065000000002,
+          "max": 11941.065000000002
+        },
+        "core_json_processed_ms": {
+          "n": 10,
+          "min": 7099.240600000005,
+          "median": 11370.271349999995,
+          "p95": 12032.665300000008,
+          "max": 12032.665300000008
+        },
+        "post_core_json_to_ready_ms": {
+          "n": 10,
+          "min": 267.0591999999888,
+          "median": 447.9340000000084,
+          "p95": 1632.1359999999986,
+          "max": 1632.1359999999986
+        },
+        "dom_interactive_ms": {
+          "n": 10,
+          "min": 1415.3999999985099,
+          "median": 2165.2000000029802,
+          "p95": 2710.199999999255,
+          "max": 2710.199999999255
+        }
+      },
+      "phone_cold_free_memory_bytes": {
+        "n": 10,
+        "min": 724918272,
+        "median": 943470592.0,
+        "p95": 1069445120,
+        "max": 1069445120
+      },
+      "prefetch_requests": 0
+    },
+    {
+      "label": "abba-b2",
+      "started_at": "2026-10-10T09:03:48.467Z",
+      "comparison_position": "3",
+      "source": "9919f555d5bbd743d8928ad7ad7e002d578b539b",
+      "compiled_source": "9919f555d5bbd743d8928ad7ad7e002d578b539b",
+      "build_id": "Zjc-mdg73j4oCbUvOe5tN",
+      "browser": "155.0.8059.40",
+      "node": "v24.21.0",
+      "platform": "win32",
+      "comparison_block": "20261010-main-candidate-abba",
+      "groups": [
+        {
+          "viewport": "desktop",
+          "phase": "cold",
+          "ready_ms": {
+            "n": 10,
+            "min": 14528.872800000001,
+            "median": 16433.6789,
+            "p95": 16511.417600000004,
+            "max": 16511.417600000004
+          }
+        },
+        {
+          "viewport": "desktop",
+          "phase": "warm",
+          "ready_ms": {
+            "n": 30,
+            "min": 2643.626199999999,
+            "median": 3493.290399999998,
+            "p95": 5932.9216000000015,
+            "max": 5938.724499999997
+          }
+        },
+        {
+          "viewport": "desktop",
+          "phase": "record",
+          "ready_ms": {
+            "n": 10,
+            "min": 6181.980899999995,
+            "median": 7347.748,
+            "p95": 8314.9695,
+            "max": 8314.9695
+          }
+        },
+        {
+          "viewport": "phone",
+          "phase": "cold",
+          "ready_ms": {
+            "n": 10,
+            "min": 5516.916399999995,
+            "median": 7013.132300000001,
+            "p95": 7275.027700000006,
+            "max": 7275.027700000006
+          }
+        },
+        {
+          "viewport": "phone",
+          "phase": "warm",
+          "ready_ms": {
+            "n": 30,
+            "min": 1778.2921999999962,
+            "median": 2334.9273500000054,
+            "p95": 2710.339399999997,
+            "max": 2816.287200000006
+          }
+        },
+        {
+          "viewport": "phone",
+          "phase": "record",
+          "ready_ms": {
+            "n": 10,
+            "min": 4189.3996999999945,
+            "median": 4785.663599999993,
+            "p95": 5139.834799999997,
+            "max": 5139.834799999997
+          }
+        }
+      ],
+      "phone_cold_stages": {
+        "/customers": {
+          "start_ms": {
+            "n": 10,
+            "min": 0,
+            "median": 0.0,
+            "p95": 0,
+            "max": 0
+          },
+          "headers_ms": {
+            "n": 10,
+            "min": 494.40300000060233,
+            "median": 540.1164999984758,
+            "p95": 714.243999998871,
+            "max": 714.243999998871
+          }
+        },
+        "/api/v1/local-session": {
+          "start_ms": {
+            "n": 10,
+            "min": 3216.8990000027406,
+            "median": 4059.2520000009245,
+            "p95": 4384.893999998894,
+            "max": 4384.893999998894
+          },
+          "headers_ms": {
+            "n": 10,
+            "min": 3655.6450000025507,
+            "median": 5525.797500000408,
+            "p95": 6381.324999998469,
+            "max": 6381.324999998469
+          },
+          "gateway_elapsed_ms": {
+            "n": 10,
+            "min": 274.54069999999774,
+            "median": 1071.1480499999998,
+            "p95": 1257.1792999999961,
+            "max": 1257.1792999999961
+          }
+        },
+        "/api/v1/crm/directory": {
+          "start_ms": {
+            "n": 10,
+            "min": 3733.1880000019737,
+            "median": 5583.787499999744,
+            "p95": 6584.899999998015,
+            "max": 6584.899999998015
+          },
+          "headers_ms": {
+            "n": 10,
+            "min": 4811.094000000594,
+            "median": 6021.889499999816,
+            "p95": 6807.981999998447,
+            "max": 6807.981999998447
+          },
+          "gateway_elapsed_ms": {
+            "n": 10,
+            "min": 151.5335999999952,
+            "median": 315.6872000000003,
+            "p95": 557.0215000000026,
+            "max": 557.0215000000026
+          }
+        }
+      },
+      "phone_cold_assets": {
+        "Script": {
+          "observed_encoded_bytes": {
+            "n": 10,
+            "min": 232563,
+            "median": 232563.0,
+            "p95": 232563,
+            "max": 232563
+          },
+          "last_finished_ms": {
+            "n": 10,
+            "min": 2810.5890000006184,
+            "median": 3671.735499998249,
+            "p95": 3851.658999999927,
+            "max": 3851.658999999927
+          },
+          "unfinished_requests": 0
+        },
+        "Stylesheet": {
+          "observed_encoded_bytes": {
+            "n": 10,
+            "min": 103569,
+            "median": 103569.0,
+            "p95": 103569,
+            "max": 103569
+          },
+          "last_finished_ms": {
+            "n": 10,
+            "min": 1837.3890000002575,
+            "median": 2101.098000001002,
+            "p95": 2277.193999998417,
+            "max": 2277.193999998417
+          },
+          "unfinished_requests": 0
+        },
+        "Font": {
+          "observed_encoded_bytes": {
+            "n": 10,
+            "min": 48726,
+            "median": 332448.0,
+            "p95": 332448,
+            "max": 332448
+          },
+          "last_finished_ms": {
+            "n": 10,
+            "min": 4428.855999998632,
+            "median": 5335.715999999593,
+            "p95": 6738.290999997844,
+            "max": 6738.290999997844
+          },
+          "unfinished_requests": 3
+        }
+      },
+      "phone_cold_readiness": {
+        "core_headers_ms": {
+          "n": 10,
+          "min": 4995.264900000002,
+          "median": 6189.202899999993,
+          "p95": 6969.2370999999985,
+          "max": 6969.2370999999985
+        },
+        "core_json_processed_ms": {
+          "n": 10,
+          "min": 5041.913900000007,
+          "median": 6544.424999999996,
+          "p95": 7072.388000000006,
+          "max": 7072.388000000006
+        },
+        "post_core_json_to_ready_ms": {
+          "n": 10,
+          "min": 202.63969999999972,
+          "median": 360.7128500000035,
+          "p95": 787.8199999999924,
+          "max": 787.8199999999924
+        },
+        "dom_interactive_ms": {
+          "n": 10,
+          "min": 2312.10000000149,
+          "median": 3095.14999999851,
+          "p95": 3206.199999999255,
+          "max": 3206.199999999255
+        }
+      },
+      "phone_cold_free_memory_bytes": {
+        "n": 10,
+        "min": 1195532288,
+        "median": 1224804352.0,
+        "p95": 1358573568,
+        "max": 1358573568
+      },
+      "prefetch_requests": 0
+    },
+    {
+      "label": "abba-a2",
+      "started_at": "2026-10-10T09:05:45.673Z",
+      "comparison_position": "4",
+      "source": "9919f555d5bbd743d8928ad7ad7e002d578b539b",
+      "compiled_source": "6c69d92b8fd0913de916587f6e4cabb358868f11",
+      "build_id": "qThSo3tITjqcT7DkJfgP0",
+      "browser": "155.0.8059.40",
+      "node": "v24.21.0",
+      "platform": "win32",
+      "comparison_block": "20261010-main-candidate-abba",
+      "groups": [
+        {
+          "viewport": "desktop",
+          "phase": "cold",
+          "ready_ms": {
+            "n": 10,
+            "min": 18390.4187,
+            "median": 19661.3346,
+            "p95": 20927.884200000004,
+            "max": 20927.884200000004
+          }
+        },
+        {
+          "viewport": "desktop",
+          "phase": "warm",
+          "ready_ms": {
+            "n": 30,
+            "min": 3638.0350999999937,
+            "median": 4381.3728999999985,
+            "p95": 7589.579399999995,
+            "max": 7833.338800000005
+          }
+        },
+        {
+          "viewport": "desktop",
+          "phase": "record",
+          "ready_ms": {
+            "n": 10,
+            "min": 5663.659399999997,
+            "median": 6889.116250000003,
+            "p95": 7815.906900000002,
+            "max": 7815.906900000002
+          }
+        },
+        {
+          "viewport": "phone",
+          "phase": "cold",
+          "ready_ms": {
+            "n": 10,
+            "min": 3775.0400999999983,
+            "median": 5307.570599999999,
+            "p95": 6236.619099999996,
+            "max": 6236.619099999996
+          }
+        },
+        {
+          "viewport": "phone",
+          "phase": "warm",
+          "ready_ms": {
+            "n": 30,
+            "min": 2376.299899999998,
+            "median": 3518.0363999999972,
+            "p95": 4215.6889999999985,
+            "max": 4582.200899999996
+          }
+        },
+        {
+          "viewport": "phone",
+          "phase": "record",
+          "ready_ms": {
+            "n": 10,
+            "min": 4450.693299999999,
+            "median": 5120.526299999998,
+            "p95": 5850.507799999992,
+            "max": 5850.507799999992
+          }
+        }
+      ],
+      "phone_cold_stages": {
+        "/customers": {
+          "start_ms": {
+            "n": 10,
+            "min": 0,
+            "median": 0.0,
+            "p95": 0,
+            "max": 0
+          },
+          "headers_ms": {
+            "n": 10,
+            "min": 276.1659999996482,
+            "median": 292.8249999986292,
+            "p95": 479.48600000017905,
+            "max": 479.48600000017905
+          }
+        },
+        "/api/v1/local-session": {
+          "start_ms": {
+            "n": 10,
+            "min": 1966.1880000021483,
+            "median": 3384.8964999997406,
+            "p95": 4334.50399999856,
+            "max": 4334.50399999856
+          },
+          "headers_ms": {
+            "n": 10,
+            "min": 2159.8049999993236,
+            "median": 3979.5909999993455,
+            "p95": 5186.698999998043,
+            "max": 5186.698999998043
+          },
+          "gateway_elapsed_ms": {
+            "n": 10,
+            "min": 32.39549999999872,
+            "median": 146.89429999999993,
+            "p95": 687.9832999999926,
+            "max": 687.9832999999926
+          }
+        },
+        "/api/v1/crm/directory": {
+          "start_ms": {
+            "n": 10,
+            "min": 2343.029999999999,
+            "median": 4044.966999999815,
+            "p95": 5260.684000000765,
+            "max": 5260.684000000765
+          },
+          "headers_ms": {
+            "n": 10,
+            "min": 3241.06600000232,
+            "median": 4830.997999999454,
+            "p95": 5838.010999999824,
+            "max": 5838.010999999824
+          },
+          "gateway_elapsed_ms": {
+            "n": 10,
+            "min": 405.3029999999999,
+            "median": 732.745799999997,
+            "p95": 1482.4131999999954,
+            "max": 1482.4131999999954
+          }
+        }
+      },
+      "phone_cold_assets": {
+        "Script": {
+          "observed_encoded_bytes": {
+            "n": 10,
+            "min": 232549,
+            "median": 232549.0,
+            "p95": 232549,
+            "max": 232549
+          },
+          "last_finished_ms": {
+            "n": 10,
+            "min": 1858.4679999985383,
+            "median": 3233.92849999982,
+            "p95": 4411.090999998123,
+            "max": 4411.090999998123
+          },
+          "unfinished_requests": 0
+        },
+        "Stylesheet": {
+          "observed_encoded_bytes": {
+            "n": 10,
+            "min": 103569,
+            "median": 103569.0,
+            "p95": 103569,
+            "max": 103569
+          },
+          "last_finished_ms": {
+            "n": 10,
+            "min": 781.5510000000359,
+            "median": 1778.5165000004781,
+            "p95": 2527.9279999995197,
+            "max": 2527.9279999995197
+          },
+          "unfinished_requests": 0
+        },
+        "Font": {
+          "observed_encoded_bytes": {
+            "n": 10,
+            "min": 48726,
+            "median": 48726.0,
+            "p95": 332448,
+            "max": 332448
+          },
+          "last_finished_ms": {
+            "n": 10,
+            "min": 2303.16799999855,
+            "median": 4249.407999999676,
+            "p95": 4674.027999997634,
+            "max": 4674.027999997634
+          },
+          "unfinished_requests": 6
+        }
+      },
+      "phone_cold_readiness": {
+        "core_headers_ms": {
+          "n": 10,
+          "min": 3325.76449999999,
+          "median": 4928.850550000003,
+          "p95": 5925.015799999994,
+          "max": 5925.015799999994
+        },
+        "core_json_processed_ms": {
+          "n": 10,
+          "min": 3435.8439999999973,
+          "median": 5002.197949999994,
+          "p95": 6010.355599999995,
+          "max": 6010.355599999995
+        },
+        "post_core_json_to_ready_ms": {
+          "n": 10,
+          "min": 165.02580000000307,
+          "median": 225.17375000000175,
+          "p95": 448.8015000000014,
+          "max": 448.8015000000014
+        },
+        "dom_interactive_ms": {
+          "n": 10,
+          "min": 872,
+          "median": 2289.1500000003725,
+          "p95": 3063.10000000149,
+          "max": 3063.10000000149
+        }
+      },
+      "phone_cold_free_memory_bytes": {
+        "n": 10,
+        "min": 1616560128,
+        "median": 1667180544.0,
+        "p95": 1826222080,
+        "max": 1826222080
+      },
+      "prefetch_requests": 1029
+    }
+  ],
+  "pooled": {
+    "main": [
+      {
+        "viewport": "desktop",
+        "phase": "cold",
+        "ready_ms": {
+          "n": 20,
+          "min": 12373.146700000001,
+          "median": 16354.930299999998,
+          "p95": 20513.083499999997,
+          "max": 20927.884200000004
+        }
+      },
+      {
+        "viewport": "desktop",
+        "phase": "warm",
+        "ready_ms": {
+          "n": 60,
+          "min": 3309.245600000002,
+          "median": 4171.572100000001,
+          "p95": 7174.4245999999985,
+          "max": 7833.338800000005
+        }
+      },
+      {
+        "viewport": "desktop",
+        "phase": "record",
+        "ready_ms": {
+          "n": 20,
+          "min": 5663.659399999997,
+          "median": 7317.4375,
+          "p95": 9628.614099999999,
+          "max": 9753.0403
+        }
+      },
+      {
+        "viewport": "phone",
+        "phase": "cold",
+        "ready_ms": {
+          "n": 20,
+          "min": 3775.0400999999983,
+          "median": 6609.9127499999995,
+          "p95": 8645.784300000007,
+          "max": 8745.385000000002
+        }
+      },
+      {
+        "viewport": "phone",
+        "phase": "warm",
+        "ready_ms": {
+          "n": 60,
+          "min": 2376.299899999998,
+          "median": 3955.7729000000036,
+          "p95": 4955.140700000004,
+          "max": 5081.469100000002
+        }
+      },
+      {
+        "viewport": "phone",
+        "phase": "record",
+        "ready_ms": {
+          "n": 20,
+          "min": 4450.693299999999,
+          "median": 5422.660200000006,
+          "p95": 6523.871100000004,
+          "max": 6742.865000000005
+        }
+      }
+    ],
+    "candidate": [
+      {
+        "viewport": "desktop",
+        "phase": "cold",
+        "ready_ms": {
+          "n": 20,
+          "min": 14528.872800000001,
+          "median": 16309.309550000002,
+          "p95": 16500.303899999995,
+          "max": 16511.417600000004
+        }
+      },
+      {
+        "viewport": "desktop",
+        "phase": "warm",
+        "ready_ms": {
+          "n": 60,
+          "min": 2643.626199999999,
+          "median": 3589.510299999998,
+          "p95": 5746.433099999995,
+          "max": 5938.724499999997
+        }
+      },
+      {
+        "viewport": "desktop",
+        "phase": "record",
+        "ready_ms": {
+          "n": 20,
+          "min": 6181.980899999995,
+          "median": 9450.393250000001,
+          "p95": 13085.645400000001,
+          "max": 13415.487500000003
+        }
+      },
+      {
+        "viewport": "phone",
+        "phase": "cold",
+        "ready_ms": {
+          "n": 20,
+          "min": 5516.916399999995,
+          "median": 7378.125350000002,
+          "p95": 12013.647599999997,
+          "max": 12299.724499999997
+        }
+      },
+      {
+        "viewport": "phone",
+        "phase": "warm",
+        "ready_ms": {
+          "n": 60,
+          "min": 1778.2921999999962,
+          "median": 2806.5177500000063,
+          "p95": 4197.132400000002,
+          "max": 4400.045100000003
+        }
+      },
+      {
+        "viewport": "phone",
+        "phase": "record",
+        "ready_ms": {
+          "n": 20,
+          "min": 4189.3996999999945,
+          "median": 4906.912599999996,
+          "p95": 6576.993000000002,
+          "max": 6881.728700000007
+        }
+      }
+    ]
+  },
+  "fixture": {
+    "tables": [
+      {
+        "table": "organisations",
+        "rows": 1000,
+        "sha256": "3768e7a4a44a8dc7fb7c92883e67dc3edc1347e94a6e797aaf20e4bbe63dd32a"
+      },
+      {
+        "table": "assets",
+        "rows": 5000,
+        "sha256": "c1bf54497f618ec8136a2a982f92d4bb0cbff839a72e621e11bcee8d09d3ba94"
+      },
+      {
+        "table": "asset_location_events",
+        "rows": 5001,
+        "sha256": "a85a6306c6013443813c3844928207e6471207b2a75dfc09a8138ef2da5fb3e2"
+      },
+      {
+        "table": "work_orders",
+        "rows": 1010,
+        "sha256": "ba2059dd9029a92ca17b9db439144024ef834c72fc7f8e2d694370c07f74ee37"
+      },
+      {
+        "table": "work_order_tickets",
+        "rows": 1010,
+        "sha256": "2d0ece8c2cc3b62ddc45790ca7c07824e91e2a826a1029190f820296b72862fc"
+      },
+      {
+        "table": "scope_revisions",
+        "rows": 1011,
+        "sha256": "88b1775a85561da6f7a27ed147055dc6f94328cedd37a7344f392b90f29e8d53"
+      },
+      {
+        "table": "appointments",
+        "rows": 10000,
+        "sha256": "744100ce8cca9daafcf694a68603ebc6d4e29f1e44b168d3bcff52c22d77a078"
+      }
+    ],
+    "scope": "All rows in the seven declared load-fixture tables in the synthetic workspace; excludes authentication/session and audit activity generated by login. No reset, repair, reseed or inferred whole-database equality."
+  },
+  "network": {
+    "latency_ms": 40,
+    "download_bytes_per_second": 1250000,
+    "upload_bytes_per_second": 625000
+  },
+  "limits": "All declared runs retained; no sample exclusions. Fixed-order replication on a shared Windows host, not a randomised trial or production/physical-device acceptance. Pooled cold/record n=20 and warm n=60 per build/viewport. Nearest-rank descriptive p95; no confidence interval or causal attribution. Asset byte/finish statistics describe observations up to readiness, with incomplete requests explicit. Full PT-27 target remains separate."
+}

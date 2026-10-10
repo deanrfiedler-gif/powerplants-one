@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "executed_date": "2026-10-10",
+  "timezone": "Australia/Brisbane",
+  "application_source": "7fd9c0f62932387c2855139dc839bc2f7ec1560d",
+  "measurement_driver_source": "a8549a1b507ad5655ab5bddd2ad7321ca89f21d9",
+  "checks": [
+    {
+      "command": "npm run build",
+      "result": "passed",
+      "log": "verification/narrow-final-build.log.gz"
+    },
+    {
+      "command": "selected compiled browser regressions",
+      "result": "14 passed",
+      "log": "verification/continuation-browser.log.gz"
+    },
+    {
+      "command": "five navigation and CRM transport unit files",
+      "result": "23 passed",
+      "log": "verification/continuation-unit.log.gz"
+    },
+    {
+      "command": "eslint on seven changed TypeScript/TSX files",
+      "result": "passed",
+      "log": "verification/continuation-lint.log.gz"
+    },
+    {
+      "command": "npm run typecheck",
+      "result": "passed",
+      "log": "verification/continuation-typecheck.log.gz"
+    },
+    {
+      "command": "final seven-table retained fixture check",
+      "result": "unchanged",
+      "log": "verification/continuation-fixture.log.gz"
+    },
+    {
+      "command": "npm run studio:check",
+      "result": "passed",
+      "log": "verification/continuation-studio.log.gz"
+    },
+    {
+      "command": "python -X utf8 scripts/check_foundation.py",
+      "result": "passed",
+      "log": "verification/continuation-foundation.log.gz"
+    },
+    {
+      "command": "python -X utf8 scripts/check_prototype.py",
+      "result": "passed",
+      "log": "verification/continuation-prototype.log.gz"
+    },
+    {
+      "command": "python -X utf8 scripts/check_naming.py",
+      "result": "passed",
+      "log": "verification/continuation-naming.log.gz"
+    },
+    {
+      "command": "completed summary preservation and failed-block reporting assertions",
+      "result": "passed",
+      "log": "verification/continuation-summary-assertions.log.gz"
+    },
+    {
+      "command": "private configured-value and credential-URL evidence scan",
+      "result": "passed",
+      "log": "verification/continuation-secret-scan.log.gz"
+    },
+    {
+      "command": "stop task-owned PostgreSQL cluster after fixture check",
+      "result": "passed",
+      "log": "verification/continuation-cleanup.log.gz"
+    },
+    {
+      "command": "stored and original hashes using the explicit retained-manifest path mapping",
+      "result": "passed",
+      "log": "verification/continuation-integrity-corrected.log.gz"
+    }
+  ],
+  "sources": {
+    "scripts/quality-customer-comparison.ts": "d8b9aedf0a7f0884ba4871e382fd5caa244e032483581a660ae531746fe65561",
+    "scripts/quality-performance-sample.ts": "ab723ef2f9173b60e342862bc5c99938c8b1ad7b05601bb56b3d8ba3695b712e",
+    "scripts/summarize-customer-block.py": "3591693fda306bea233f9721d5417fb826705af5fd74b087db81d2ca36ef6e64",
+    "tests/browser/shell-loading.spec.ts": "550a36a92eaf914dd7c92a9f15ede59c211d3dece99daedd0616f4715771517d",
+    "tests/browser/crm-refinements.spec.ts": "6c2cd5b896e1f21b194ed97d74b43a2a131603a6f3f37ddb1a994b282f688c52",
+    "tests/helpers/crm-refinement-call.ts": "b260ad3bb3d2e3b42c4eff0257df2fe7e21340ca4b93d266332eaa244d5e1777",
+    "tests/unit/crm-refinement-transport.test.ts": "a4671eb72d6038e9abe83b0383cddccab2aa3434ad0c4c444692f64913d1f9ea",
+    "src/components/product-navigation.tsx": "d940bb2b07c87dc68348a9d48a53e9068ee8877aa644b71445f932c030d28819"
+  },
+  "source_hash_normalization": "UTF-8 LF bytes, matching Git attributes",
+  "limits": [
+    "Narrowed load block is unsuccessful: six readiness failures in the candidate repeat and a main startup failure; no pooled performance claim.",
+    "Selected browser/unit regression checks passed independently of the load failures. Full local browser/database suites not rerun.",
+    "28 stale visual reviews retained. Owner/device/accessibility, hosted timing, full PT-27 and deployment remain separate."
+  ],
+  "repository_assurance": "passed; documentation and register assurance only"
+}

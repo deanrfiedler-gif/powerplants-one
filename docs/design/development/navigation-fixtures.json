@@ -62,7 +62,7 @@
     {
       "id": "shell-activation-loading",
       "fixture": "tests/browser/shell-loading.spec.ts; tests/browser/directory-navigation.spec.ts; tests/browser/navigation-safety.spec.ts",
-      "description": "Customers cold host and opened More menu do not prefetch shell destinations. Actual People navigation and Back retain exact department URL; existing fixtures cover record receiving, dirty cancellation and restricted identities."
+      "description": "Customers cold host and opened desktop More menu observe the rail loading policy. Actual desktop keyboard and phone touch navigation to People and Back retain exact department URL; phone prefetch remains the baseline. Existing fixtures cover record receiving, dirty cancellation and restricted identities."
     }
   ]
 }

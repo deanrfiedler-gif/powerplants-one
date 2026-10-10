@@ -2706,8 +2706,8 @@
         },
         {
           "id": "shell-activation-loading",
-          "label": "Shell loads destinations on activation",
-          "description": "Customers host observes shell prefetch before activation; desktop keyboard and phone touch open the exact permitted People route and Back restores Customers. Fixture: tests/browser/shell-loading.spec.ts. Existing directory and navigation-safety tests cover receiving, saved views, authority and dirty-state recovery."
+          "label": "Desktop rail loading and phone handover",
+          "description": "Customers host observes requests before activation and requires no speculative reads for rail-only destinations; desktop keyboard and phone touch open the exact permitted People route and Back restores Customers. Phone and shared-header prefetch retain the prior policy. Fixture: tests/browser/shell-loading.spec.ts; directory and navigation-safety fixtures cover receiving, saved views, authority and dirty-state recovery."
         }
       ],
       "implementation": [
@@ -2965,8 +2965,8 @@
         },
         {
           "id": "shell-activation-loading-review",
-          "expected": "Current-page loading avoids speculative shell destination renders; deliberate navigation, keyboard/touch, Back and access remain correct.",
-          "actual": "PT-27 baseline observes shell prefetch competing with identity and directory reads. ProductNavigation now disables prefetch for its links; measured results and regression evidence remain separate from owner acceptance.",
+          "expected": "Desktop rail avoids speculative destination renders; shared header and phone retain their prior policy. Deliberate navigation, keyboard/touch, Back and access remain correct.",
+          "actual": "The broad candidate is rejected after repeated cold-phone loss. The desktop-rail candidate remains a draft experiment: its completed run has mixed timings, its repeat fails session readiness and the final main repeat fails startup. All attempts are retained; no overall performance acceptance is inferred.",
           "action": "Review docs/testing/evidence/pt27-loading/README.md and the real shell/record host fixtures. Retain stale visual reviews and outstanding owner/device acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"

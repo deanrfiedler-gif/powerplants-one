@@ -1,0 +1,592 @@
+{
+  "schema_version": 1,
+  "completed_block": false,
+  "order": "main/candidate/candidate/main",
+  "runs": [
+    {
+      "label": "narrow-final-a1",
+      "started_at": "2026-10-10T09:32:29.937Z",
+      "comparison_position": "1",
+      "source": "a8549a1b507ad5655ab5bddd2ad7321ca89f21d9",
+      "compiled_source": "6c69d92b8fd0913de916587f6e4cabb358868f11",
+      "build_id": "qThSo3tITjqcT7DkJfgP0",
+      "browser": "155.0.8059.40",
+      "node": "v24.21.0",
+      "platform": "win32",
+      "comparison_block": "20261010-main-narrow-final-abba",
+      "complete": true,
+      "sample_count": 80,
+      "record_count": 20,
+      "failed_sample_count": 0,
+      "fixture_after_available": true,
+      "groups": [
+        {
+          "viewport": "desktop",
+          "phase": "cold",
+          "ready_ms": {
+            "n": 10,
+            "min": 14908.138500000001,
+            "median": 15163.859250000001,
+            "p95": 15710.616299999994,
+            "max": 15710.616299999994
+          }
+        },
+        {
+          "viewport": "desktop",
+          "phase": "warm",
+          "ready_ms": {
+            "n": 30,
+            "min": 4447.781900000002,
+            "median": 5197.246700000003,
+            "p95": 8080.884099999996,
+            "max": 8098.248099999997
+          }
+        },
+        {
+          "viewport": "desktop",
+          "phase": "record",
+          "ready_ms": {
+            "n": 10,
+            "min": 7847.636199999994,
+            "median": 10725.001799999998,
+            "p95": 11355.15920000001,
+            "max": 11355.15920000001
+          }
+        },
+        {
+          "viewport": "phone",
+          "phase": "cold",
+          "ready_ms": {
+            "n": 10,
+            "min": 10649.509300000005,
+            "median": 11851.654349999997,
+            "p95": 12789.083800000022,
+            "max": 12789.083800000022
+          }
+        },
+        {
+          "viewport": "phone",
+          "phase": "warm",
+          "ready_ms": {
+            "n": 30,
+            "min": 3644.7565999999933,
+            "median": 4016.238900000011,
+            "p95": 4240.656899999973,
+            "max": 4349.79310000001
+          }
+        },
+        {
+          "viewport": "phone",
+          "phase": "record",
+          "ready_ms": {
+            "n": 10,
+            "min": 5596.552400000015,
+            "median": 6608.3764999999985,
+            "p95": 7432.5702000000165,
+            "max": 7432.5702000000165
+          }
+        }
+      ],
+      "phone_cold_stages": {
+        "/customers": {
+          "start_ms": {
+            "n": 10,
+            "min": 0,
+            "median": 0.0,
+            "p95": 0,
+            "max": 0
+          },
+          "headers_ms": {
+            "n": 10,
+            "min": 290.2940000021772,
+            "median": 322.03450000088196,
+            "p95": 406.63499999936903,
+            "max": 406.63499999936903
+          }
+        },
+        "/api/v1/local-session": {
+          "start_ms": {
+            "n": 10,
+            "min": 3578.304999999091,
+            "median": 4940.677000000505,
+            "p95": 8089.061999999103,
+            "max": 8089.061999999103
+          },
+          "headers_ms": {
+            "n": 10,
+            "min": 4096.354000001156,
+            "median": 7354.457000001275,
+            "p95": 10598.588999997446,
+            "max": 10598.588999997446
+          },
+          "gateway_elapsed_ms": {
+            "n": 10,
+            "min": 308.29999999998836,
+            "median": 1066.3469500000065,
+            "p95": 1963.789699999994,
+            "max": 1963.789699999994
+          }
+        },
+        "/api/v1/crm/directory": {
+          "start_ms": {
+            "n": 10,
+            "min": 4156.676999999036,
+            "median": 7429.787500001112,
+            "p95": 10755.788999998913,
+            "max": 10755.788999998913
+          },
+          "headers_ms": {
+            "n": 10,
+            "min": 9588.219999997818,
+            "median": 11107.762499999808,
+            "p95": 12233.339999998861,
+            "max": 12233.339999998861
+          },
+          "gateway_elapsed_ms": {
+            "n": 10,
+            "min": 1265.6880999999994,
+            "median": 1622.8077000000048,
+            "p95": 2963.235000000015,
+            "max": 2963.235000000015
+          }
+        }
+      },
+      "phone_cold_assets": {
+        "Script": {
+          "observed_encoded_bytes": {
+            "n": 10,
+            "min": 232549,
+            "median": 232549.0,
+            "p95": 232549,
+            "max": 232549
+          },
+          "last_finished_ms": {
+            "n": 10,
+            "min": 3478.4939999990456,
+            "median": 4671.81999999957,
+            "p95": 8599.36899999957,
+            "max": 8599.36899999957
+          },
+          "unfinished_requests": 0
+        },
+        "Stylesheet": {
+          "observed_encoded_bytes": {
+            "n": 10,
+            "min": 103569,
+            "median": 103569.0,
+            "p95": 103569,
+            "max": 103569
+          },
+          "last_finished_ms": {
+            "n": 10,
+            "min": 1868.902000001981,
+            "median": 2092.0064999991155,
+            "p95": 2253.388000000996,
+            "max": 2253.388000000996
+          },
+          "unfinished_requests": 0
+        },
+        "Font": {
+          "observed_encoded_bytes": {
+            "n": 10,
+            "min": 48726,
+            "median": 190587.0,
+            "p95": 332448,
+            "max": 332448
+          },
+          "last_finished_ms": {
+            "n": 10,
+            "min": 5360.786999997799,
+            "median": 9712.20650000032,
+            "p95": 11936.815000000934,
+            "max": 11936.815000000934
+          },
+          "unfinished_requests": 5
+        }
+      },
+      "phone_cold_readiness": {
+        "core_headers_ms": {
+          "n": 10,
+          "min": 9749.957400000014,
+          "median": 11268.306499999992,
+          "p95": 12416.281799999997,
+          "max": 12416.281799999997
+        },
+        "core_json_processed_ms": {
+          "n": 10,
+          "min": 10003.569500000012,
+          "median": 11397.5187,
+          "p95": 12513.232100000023,
+          "max": 12513.232100000023
+        },
+        "post_core_json_to_ready_ms": {
+          "n": 10,
+          "min": 242.40179999999236,
+          "median": 454.13099999999395,
+          "p95": 921.5602999999828,
+          "max": 921.5602999999828
+        },
+        "dom_interactive_ms": {
+          "n": 10,
+          "min": 2016.3999999985099,
+          "median": 2256.75,
+          "p95": 2521.300000000745,
+          "max": 2521.300000000745
+        }
+      },
+      "phone_cold_free_memory_bytes": {
+        "n": 10,
+        "min": 1140555776,
+        "median": 1199429632.0,
+        "p95": 1272094720,
+        "max": 1272094720
+      },
+      "prefetch_requests": 819,
+      "prefetch_requests_by_viewport": {
+        "desktop": 420,
+        "phone": 399
+      }
+    },
+    {
+      "label": "narrow-final-b1",
+      "started_at": "2026-10-10T09:35:46.997Z",
+      "comparison_position": "2",
+      "source": "a8549a1b507ad5655ab5bddd2ad7321ca89f21d9",
+      "compiled_source": "7fd9c0f62932387c2855139dc839bc2f7ec1560d",
+      "build_id": "GU6LjRhU6f0CkwLvJ6VuS",
+      "browser": "155.0.8059.40",
+      "node": "v24.21.0",
+      "platform": "win32",
+      "comparison_block": "20261010-main-narrow-final-abba",
+      "complete": true,
+      "sample_count": 80,
+      "record_count": 20,
+      "failed_sample_count": 0,
+      "fixture_after_available": true,
+      "groups": [
+        {
+          "viewport": "desktop",
+          "phase": "cold",
+          "ready_ms": {
+            "n": 10,
+            "min": 27737.611599999997,
+            "median": 28036.751650000002,
+            "p95": 30532.811599999994,
+            "max": 30532.811599999994
+          }
+        },
+        {
+          "viewport": "desktop",
+          "phase": "warm",
+          "ready_ms": {
+            "n": 30,
+            "min": 2434.107699999993,
+            "median": 3763.264599999995,
+            "p95": 6344.996199999994,
+            "max": 6868.784299999999
+          }
+        },
+        {
+          "viewport": "desktop",
+          "phase": "record",
+          "ready_ms": {
+            "n": 10,
+            "min": 10832.943999999989,
+            "median": 11299.816999999995,
+            "p95": 13012.789099999995,
+            "max": 13012.789099999995
+          }
+        },
+        {
+          "viewport": "phone",
+          "phase": "cold",
+          "ready_ms": {
+            "n": 10,
+            "min": 12207.602400000003,
+            "median": 13128.785049999999,
+            "p95": 16475.63089999999,
+            "max": 16475.63089999999
+          }
+        },
+        {
+          "viewport": "phone",
+          "phase": "warm",
+          "ready_ms": {
+            "n": 30,
+            "min": 3760.072,
+            "median": 4488.13235,
+            "p95": 4945.600000000006,
+            "max": 5007.258600000001
+          }
+        },
+        {
+          "viewport": "phone",
+          "phase": "record",
+          "ready_ms": {
+            "n": 10,
+            "min": 10548.574899999978,
+            "median": 11833.08355000001,
+            "p95": 12658.40770000001,
+            "max": 12658.40770000001
+          }
+        }
+      ],
+      "phone_cold_stages": {
+        "/customers": {
+          "start_ms": {
+            "n": 10,
+            "min": 0,
+            "median": 0.0,
+            "p95": 0,
+            "max": 0
+          },
+          "headers_ms": {
+            "n": 10,
+            "min": 600.4060000013851,
+            "median": 696.8519999991258,
+            "p95": 904.9309999973048,
+            "max": 904.9309999973048
+          }
+        },
+        "/api/v1/local-session": {
+          "start_ms": {
+            "n": 10,
+            "min": 6036.191999999573,
+            "median": 7647.725000000719,
+            "p95": 8956.623999998556,
+            "max": 8956.623999998556
+          },
+          "headers_ms": {
+            "n": 10,
+            "min": 7598.71099999873,
+            "median": 10431.249000001117,
+            "p95": 11074.595999998564,
+            "max": 11074.595999998564
+          },
+          "gateway_elapsed_ms": {
+            "n": 10,
+            "min": 846.9481999999989,
+            "median": 1845.6475500000088,
+            "p95": 3191.9775999999983,
+            "max": 3191.9775999999983
+          }
+        },
+        "/api/v1/crm/directory": {
+          "start_ms": {
+            "n": 10,
+            "min": 7713.59499999744,
+            "median": 10537.73750000073,
+            "p95": 11198.226000000432,
+            "max": 11198.226000000432
+          },
+          "headers_ms": {
+            "n": 10,
+            "min": 11659.528000000137,
+            "median": 12522.760500000004,
+            "p95": 14529.567999998108,
+            "max": 14529.567999998108
+          },
+          "gateway_elapsed_ms": {
+            "n": 10,
+            "min": 995.245900000009,
+            "median": 1977.623550000004,
+            "p95": 3760.8956000000035,
+            "max": 3760.8956000000035
+          }
+        }
+      },
+      "phone_cold_assets": {
+        "Script": {
+          "observed_encoded_bytes": {
+            "n": 10,
+            "min": 232581,
+            "median": 232581.0,
+            "p95": 232581,
+            "max": 232581
+          },
+          "last_finished_ms": {
+            "n": 10,
+            "min": 5928.879999999481,
+            "median": 7464.7414999999455,
+            "p95": 8855.72499999762,
+            "max": 8855.72499999762
+          },
+          "unfinished_requests": 0
+        },
+        "Stylesheet": {
+          "observed_encoded_bytes": {
+            "n": 10,
+            "min": 103569,
+            "median": 103569.0,
+            "p95": 103569,
+            "max": 103569
+          },
+          "last_finished_ms": {
+            "n": 10,
+            "min": 3105.7769999970333,
+            "median": 3731.3479999993433,
+            "p95": 4124.24800000008,
+            "max": 4124.24800000008
+          },
+          "unfinished_requests": 0
+        },
+        "Font": {
+          "observed_encoded_bytes": {
+            "n": 10,
+            "min": 332448,
+            "median": 332448.0,
+            "p95": 332448,
+            "max": 332448
+          },
+          "last_finished_ms": {
+            "n": 10,
+            "min": 10627.80500000008,
+            "median": 11128.543499999068,
+            "p95": 11513.820000000123,
+            "max": 11513.820000000123
+          },
+          "unfinished_requests": 0
+        }
+      },
+      "phone_cold_readiness": {
+        "core_headers_ms": {
+          "n": 10,
+          "min": 11747.441999999995,
+          "median": 12630.922750000005,
+          "p95": 14662.3177,
+          "max": 14662.3177
+        },
+        "core_json_processed_ms": {
+          "n": 10,
+          "min": 11960.6259,
+          "median": 12758.531300000002,
+          "p95": 14746.752399999998,
+          "max": 14746.752399999998
+        },
+        "post_core_json_to_ready_ms": {
+          "n": 10,
+          "min": 190.85979999999108,
+          "median": 268.0625,
+          "p95": 1728.8784999999916,
+          "max": 1728.8784999999916
+        },
+        "dom_interactive_ms": {
+          "n": 10,
+          "min": 3222.199999999255,
+          "median": 3860.0499999988824,
+          "p95": 4233.599999997765,
+          "max": 4233.599999997765
+        }
+      },
+      "phone_cold_free_memory_bytes": {
+        "n": 10,
+        "min": 635314176,
+        "median": 656377856.0,
+        "p95": 1167409152,
+        "max": 1167409152
+      },
+      "prefetch_requests": 604,
+      "prefetch_requests_by_viewport": {
+        "desktop": 217,
+        "phone": 387
+      }
+    },
+    {
+      "label": "narrow-final-b2",
+      "started_at": "2026-10-10T09:38:36.530Z",
+      "comparison_position": "3",
+      "source": "a8549a1b507ad5655ab5bddd2ad7321ca89f21d9",
+      "compiled_source": "7fd9c0f62932387c2855139dc839bc2f7ec1560d",
+      "build_id": "GU6LjRhU6f0CkwLvJ6VuS",
+      "browser": "155.0.8059.40",
+      "node": "v24.21.0",
+      "platform": "win32",
+      "comparison_block": "20261010-main-narrow-final-abba",
+      "complete": false,
+      "sample_count": 10,
+      "record_count": 0,
+      "failed_sample_count": 6,
+      "errors": [
+        "TimeoutError: page.waitForResponse: Timeout 120000ms exceeded while waiting for event \"response\"",
+        "TimeoutError: page.waitForResponse: Timeout 120000ms exceeded while waiting for event \"response\"",
+        "TimeoutError: page.waitForResponse: Timeout 120000ms exceeded while waiting for event \"response\"",
+        "TimeoutError: page.waitForResponse: Timeout 120000ms exceeded while waiting for event \"response\"",
+        "TimeoutError: page.waitForResponse: Timeout 120000ms exceeded while waiting for event \"response\"",
+        "TimeoutError: page.waitForResponse: Timeout 120000ms exceeded while waiting for event \"response\"",
+        "AssertionError [ERR_ASSERTION]: Retain original failures; do not continue with a substituted sample\n\n6 !== 0\n"
+      ],
+      "groups": [],
+      "fixture_after_available": false,
+      "prefetch_requests": 63
+    },
+    {
+      "label": "narrow-final-a2",
+      "started_at": "2026-10-10T09:41:42.107Z",
+      "comparison_position": "4",
+      "source": "a8549a1b507ad5655ab5bddd2ad7321ca89f21d9",
+      "compiled_source": "6c69d92b8fd0913de916587f6e4cabb358868f11",
+      "build_id": "qThSo3tITjqcT7DkJfgP0",
+      "browser": null,
+      "node": "v24.21.0",
+      "platform": "win32",
+      "comparison_block": "20261010-main-narrow-final-abba",
+      "complete": false,
+      "sample_count": 0,
+      "record_count": 0,
+      "failed_sample_count": 0,
+      "errors": [
+        "AssertionError [ERR_ASSERTION]: Owned compiled server must start within 120 seconds"
+      ],
+      "groups": [],
+      "fixture_after_available": false,
+      "prefetch_requests": 0
+    }
+  ],
+  "pooled": null,
+  "fixture": {
+    "tables": [
+      {
+        "table": "organisations",
+        "rows": 1000,
+        "sha256": "3768e7a4a44a8dc7fb7c92883e67dc3edc1347e94a6e797aaf20e4bbe63dd32a"
+      },
+      {
+        "table": "assets",
+        "rows": 5000,
+        "sha256": "c1bf54497f618ec8136a2a982f92d4bb0cbff839a72e621e11bcee8d09d3ba94"
+      },
+      {
+        "table": "asset_location_events",
+        "rows": 5001,
+        "sha256": "a85a6306c6013443813c3844928207e6471207b2a75dfc09a8138ef2da5fb3e2"
+      },
+      {
+        "table": "work_orders",
+        "rows": 1010,
+        "sha256": "ba2059dd9029a92ca17b9db439144024ef834c72fc7f8e2d694370c07f74ee37"
+      },
+      {
+        "table": "work_order_tickets",
+        "rows": 1010,
+        "sha256": "2d0ece8c2cc3b62ddc45790ca7c07824e91e2a826a1029190f820296b72862fc"
+      },
+      {
+        "table": "scope_revisions",
+        "rows": 1011,
+        "sha256": "88b1775a85561da6f7a27ed147055dc6f94328cedd37a7344f392b90f29e8d53"
+      },
+      {
+        "table": "appointments",
+        "rows": 10000,
+        "sha256": "744100ce8cca9daafcf694a68603ebc6d4e29f1e44b168d3bcff52c22d77a078"
+      }
+    ],
+    "scope": "All rows in the seven declared load-fixture tables in the synthetic workspace; excludes authentication/session and audit activity generated by login. No reset, repair, reseed or inferred whole-database equality."
+  },
+  "network": {
+    "latency_ms": 40,
+    "download_bytes_per_second": 1250000,
+    "upload_bytes_per_second": 625000
+  },
+  "limits": "All declared runs retained; no sample exclusions. Any failed/incomplete run prevents pooled results and a completed-block claim. No percentile is calculated from only the successful samples of a failed run. Fixed-order replication on a shared Windows host, not a randomised trial or production/physical-device acceptance. Only complete blocks have pooled cold/record n=20 and warm n=60 per build/viewport. Nearest-rank descriptive p95; no confidence interval or causal attribution. Asset byte/finish statistics describe observations up to readiness, with incomplete requests explicit. Full PT-27 target remains separate."
+}

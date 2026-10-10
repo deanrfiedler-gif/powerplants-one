@@ -12,6 +12,12 @@ Use the existing pinned stack and additive synthetic benchmark fixture. A standa
 
 No new dependency, service, operational integration, deployment or production authority is included. A measured local improvement does not by itself close PT-27, the older browser timeout, owner/device/accessibility review or hosted timing obligations. Implementation choice and before/after evidence will be recorded in the contribution's execution record.
 
+## Current disposition
+
+The [continuation record](../testing/evidence/pt27-loading/narrowed-repeat/README.md) does not establish an acceptable improvement. The broad policy is rejected; the narrower desktop-rail change remains a draft experiment only. Its completed run removes some desktop speculative work but worsens five of six timing groups relative to the completed main run. Its repeat has six readiness failures following session HTTP 503 responses; the final main repeat exceeds the unchanged startup limit. Retain every attempt, suppress pooled results for the incomplete block and leave the three-second target open. Fourteen selected compiled browser checks and 23 focused units pass independently of these load failures.
+
+Next isolate session/context read availability before the directory GET under the same ten-user load, including unchanged-main reproduction and explicit phase timing. The retained observations do not identify a database, pool or operating-system root cause. Keep existing authority, timeout, pool, retry and font rules. No performance adoption, merge or deployment is authorised by this evidence.
+
 ## Initial broad correction (superseded)
 
 The baseline ten-user Customers trace observes automatic shell destination requests during current-page loading, including Home before the session read finishes and Sales destinations while the directory settles. ProductNavigation links now use the existing Next Link `prefetch={false}` policy already adopted for directory links. This removes speculative destination rendering; URLs, click/keyboard/touch navigation, permissions and the unsaved-work guard remain unchanged. It is a bounded use of the existing stack, not a new technology choice.
