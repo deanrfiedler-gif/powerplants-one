@@ -1,6 +1,8 @@
 "use client";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import { HeaderContent } from "../components/header-content";
+import { FontAwesomeGlyph } from "../components/font-awesome";
+import { secondaryMenuFontAwesome } from "../components/font-awesome-icons";
 
 // The secondary menu of a workspace: beside the rail and under the header. It was built for My Work
 // (design report r03, mockups r06) and is shared from here so another workspace gets the same menu,
@@ -34,10 +36,17 @@ const glyphs = {
   "chevron-left": <path d="m14 6-6 6 6 6" />,
   "chevron-right": <path d="m10 6 6 6-6 6" />,
 } as const;
-const Glyph = ({ name }: { name: keyof typeof glyphs }) => (
-  <svg className="mw-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-    {glyphs[name]}
-  </svg>
+export type SecondaryGlyphName = keyof typeof glyphs;
+const Glyph = ({ name }: { name: SecondaryGlyphName }) => (
+  <FontAwesomeGlyph
+    icon={secondaryMenuFontAwesome[name]}
+    className="mw-icon"
+    fallback={
+      <svg className="mw-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        {glyphs[name]}
+      </svg>
+    }
+  />
 );
 
 export type SecondaryMenuState = ReturnType<typeof useSecondaryMenu>;

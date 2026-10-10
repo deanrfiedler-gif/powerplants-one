@@ -273,6 +273,9 @@ export async function attachmentMetadata(p: Principal, id: string) {
     } catch (e) {
       if (!(e instanceof AppError)) throw e;
     }
+  // Storage may outlast a grant or assignment. Keep this outside the recoverable
+  // storage-error catch: refused authority must never become a metadata response.
+  await attachmentContext(database(), p, id);
   return {
     id: a.id,
     appointment_id: a.appointment_id,
@@ -300,8 +303,10 @@ export async function attachmentBytes(p: Principal, id: string) {
       "AttachmentUnavailable",
       "This photo is not yet available. Its original upload remains recoverable.",
     );
+  const bytes = await verifiedAttachmentBytes(p, a);
+  await attachmentContext(database(), p, id);
   return {
-    bytes: await verifiedAttachmentBytes(p, a),
+    bytes,
     filename: `SYN-photo-${a.id}.png`,
   };
 }

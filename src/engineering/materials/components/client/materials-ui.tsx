@@ -2,6 +2,8 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { api, type Failure } from "../../../../components/business-ui";
 import { label as stateLabel } from "../../model";
+import { FontAwesomeGlyph } from "../../../../components/font-awesome";
+import { materialsFontAwesome } from "../../../../components/font-awesome-icons";
 
 // One outline family on a 24px grid at 1.7 stroke: the weight of the shell and of the shared secondary menu.
 const paths = {
@@ -97,9 +99,15 @@ const paths = {
 export type IconName = keyof typeof paths;
 export function Icon({ name }: { name: IconName }) {
   return (
-    <svg className="mw-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      {paths[name]}
-    </svg>
+    <FontAwesomeGlyph
+      icon={materialsFontAwesome[name]}
+      className="mw-icon"
+      fallback={
+        <svg className="mw-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          {paths[name]}
+        </svg>
+      }
+    />
   );
 }
 

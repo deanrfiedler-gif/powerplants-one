@@ -1,5 +1,7 @@
 "use client";
 import type { Presentation, TagIcon } from "../../model";
+import { FontAwesomeGlyph } from "../../../../components/font-awesome";
+import { commissioningMarkFontAwesome, commissioningOutlineFontAwesome } from "../../../../components/font-awesome-icons";
 // The controls, dialogs, reads and the one-command-at-a-time recovery are the shared ones EN-06 built on My Work's
 // rules. EN-08 adds only its own glyphs and the r22 status tag.
 export { CommandNotice, Dialog, Field, Icon, Menu, ReadNotice, Reason, dateText, fieldError, stampText, useRead, useMaterialsCommand as useCommissioningCommand, type MenuItem, type IconName } from "../../../materials/components/client/materials-ui";
@@ -16,26 +18,33 @@ const outlines = {
 } as const;
 export type OutlineName = keyof typeof outlines;
 export function Outline({ name }: { name: OutlineName }) {
-  return <svg className="mw-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">{outlines[name]}</svg>;
+  return <FontAwesomeGlyph icon={commissioningOutlineFontAwesome[name]} className="mw-icon" fallback={<svg className="mw-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">{outlines[name]}</svg>} />;
 }
 
 // r22 status tag (theme style board .tag): a small rectangular tinted tag with a 13px outline icon. One shape per
 // meaning, never a filled disc or triangle, and never colour alone. "unsent" is an empty dashed ring: it is not a tick.
-const marks: Record<Exclude<TagIcon, "none">, React.ReactNode> = {
+// "step" is the plain next-requirement mark beside ordinary words; it is not a status.
+const marks: Record<Exclude<TagIcon, "none"> | "step", React.ReactNode> = {
   tick: <path d="m5 12.6 4.4 4.4L19 7.4" />,
   "tick-circle": <><circle cx="12" cy="12" r="9" /><path d="m8 12.4 2.8 2.8L16.2 9.6" /></>,
   clock: <><circle cx="12" cy="12" r="9" /><path d="M12 7v5.2l3.2 1.9" /></>,
   alert: <><path d="M12 3.6 2.6 20h18.8Z" /><path d="M12 10v4.6M12 17.3h.01" /></>,
   error: <><circle cx="12" cy="12" r="9" /><path d="M12 7.4v5.6M12 16.4h.01" /></>,
   document: <><path d="M7 3.5h7.5L19 8v12.5H7Z" /><path d="M14.5 3.5V8H19" /></>,
+  step: <><path d="M7 3.5h7.5L19 8v12.5H7Z" /><path d="M14.5 3.5V8H19M10 12.5h6M10 16h6" /></>,
   target: <><circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="2.2" /></>,
   unsent: <circle cx="12" cy="12" r="8.5" strokeDasharray="3.2 3.2" />,
 };
+export type MarkName = keyof typeof marks;
+// One mark: Font Awesome Light once the Kit is running (ADR-0050), the outline drawing until then.
+export function Mark({ icon }: { icon: MarkName }) {
+  return <FontAwesomeGlyph icon={commissioningMarkFontAwesome[icon]} className="cm-mark" fallback={<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">{marks[icon]}</svg>} />;
+}
 // The single way a condition is shown: its mapped words, tone and icon. Ordinary next steps are plain text, not tags.
 export function Tag({ view, wrap = false }: { view: Presentation; wrap?: boolean }) {
   return (
     <span className={`cm-tag cm-tag-${view.tone}${wrap ? " cm-tag-wrap" : ""}`} data-tone={view.tone}>
-      {view.icon !== "none" && <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">{marks[view.icon]}</svg>}
+      {view.icon !== "none" && <Mark icon={view.icon} />}
       <span>{view.label}</span>
     </span>
   );

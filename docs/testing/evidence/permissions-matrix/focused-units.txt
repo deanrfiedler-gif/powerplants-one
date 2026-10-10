@@ -1,0 +1,26 @@
+✔ global search omits denied domains, strips unrelated fields and bounds each result type (3.6163ms)
+✔ a dependency failure or unavailable record does not become an empty successful search (0.7828ms)
+✔ search rejects unknown inputs, control characters and unbounded queries before reading data (1.0085ms)
+✔ quick add requires both read and create permission and orders the current module first (0.6416ms)
+✔ Lead quick add requires lead read and create grants (0.3097ms)
+✔ SH04 partial sources retain authorised results; failure, denial and empty remain distinct (2.7615ms)
+✔ SH03 preference validation and quiet hours include start, exclude end and cross midnight (17.7153ms)
+✔ SH05 schema changes and unknown filters cannot silently widen stored views (1.3633ms)
+✔ NR-10 search finds work orders and estimates by number, and every searchable type can be saved as a view (1.0542ms)
+✔ NR-10 only a query with a digit reads by number, and none longer than the estimate register accepts (0.4598ms)
+✔ SH06 perspectives preserve ownership, return, handover and closed source meanings (0.3363ms)
+✔ read-only navigation does not imply creation or elevate an identity (4.5673ms)
+✔ nested pages resolve to their actual workspace instead of a remembered Sales selection (2.6105ms)
+✔ seven workspace preferences validate schema and retain r15 identifiers (2.4308ms)
+✔ More finds workspace names and existing page names, including former rail destinations (3.8516ms)
+✔ AU-08 the Service rail is grouped without reordering, and other rails stay flat (2.3226ms)
+✔ NR-18 a working company narrows scoped checks for its own actor only, and only inside a request (22.1079ms)
+✔ NR-18 a choice entered while resolving the identity reaches the rest of that request only (12.194ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6968.1545

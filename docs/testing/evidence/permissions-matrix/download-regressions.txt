@@ -1,0 +1,56 @@
+✔ PT-01 backend access and original recovery through actual HTTP adapters (69389.0398ms)
+ℹ ▶ PT-01 / PT-18 scoped projections, recovery and storage-time authority
+  ✔ company/site/workspace isolation applies to direct reads, search, suggestions and Finance (1124.5012ms)
+  ✔ lost response, revoked authority and restored retry preserve one exact original (431.0936ms)
+  ✔ notifications and previews recheck current source access without changing saved evidence (555.8678ms)
+  ✔ issued previews, manifests and file exports retain recipient and company isolation (211.063ms)
+  ✔ issue-html refuses authority revoked during storage and recovers exact bytes (301.7322ms)
+  ✔ generated-html refuses authority revoked during storage and recovers exact bytes (295.7667ms)
+  ✔ issue-pdf refuses authority revoked during storage and recovers exact bytes (301.9496ms)
+  ✔ generated-pdf refuses authority revoked during storage and recovers exact bytes (212.2047ms)
+✔ PT-01 / PT-18 scoped projections, recovery and storage-time authority (42393.3957ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 68272.8623
+
+✔ PT-01 / PT-18 Service and Finance download authority and exact recovery over HTTP (48928.9917ms)
+ℹ ▶ Service and Finance output checks current authority after private storage
+  ✔ current role, company and workspace refusals expose no original bytes or metadata (1232.7248ms)
+  ✔ issued Service report html: revoke report.read during storage, then recover the same original (909.5794ms)
+  ✔ issued Service report pdf: revoke report.read during storage, then recover the same original (642.6677ms)
+  ✔ issued Service report html: revoke field.read.own during storage, then recover the same original (815.9694ms)
+  ✔ issued Service report pdf: revoke field.read.own during storage, then recover the same original (794.5148ms)
+  ✔ generated Service report html: revoke report.issue during storage, then recover the same original (375.4259ms)
+  ✔ generated Service report pdf: revoke report.issue during storage, then recover the same original (313.8039ms)
+  ✔ generated Service report html: revoke report.read during storage, then recover the same original (262.0006ms)
+  ✔ generated Service report pdf: revoke report.read during storage, then recover the same original (255.9991ms)
+  ✔ Finance evidence html: revoke finance.read during storage, then recover the same original (243.5334ms)
+  ✔ Finance evidence pdf: revoke finance.read during storage, then recover the same original (257.0675ms)
+  ✔ Finance evidence html: revoke shared.finance.read during storage, then recover the same original (177.7544ms)
+  ✔ Finance evidence pdf: revoke shared.finance.read during storage, then recover the same original (249.5585ms)
+  ✔ issued report manifest also refuses authority lost during storage (420.089ms)
+  ✔ missing storage refuses output and recovers original without reissuing (955.681ms)
+  ✔ corrupt storage refuses output and recovers original without reissuing (1293.5701ms)
+✔ Service and Finance output checks current authority after private storage (45589.3182ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 48762.208
+
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 119984.8592

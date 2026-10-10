@@ -179,9 +179,11 @@ function ProductNavigationView({
         : item.id === "engineering" ? "Engineering"
         : item.label
       : (root?.label ?? item.menuLabel ?? item.label);
+    const selected = current?.id === item.id || (!mobile && !!root && current?.workspace === root.id);
+    // A selected More link draws its glyph filled, as the selected rail item does; phone bar cells keep their own marker.
     const contents = (
       <>
-        <ProductIcon name={root ? workspaceIcons[root.id] : item.icon} />
+        <ProductIcon name={root ? workspaceIcons[root.id] : item.icon} active={!mobile && selected} />
         <span>{label}</span>
       </>
     );
@@ -191,7 +193,7 @@ function ProductNavigationView({
         className={mobile ? undefined : "ppo-more-link"}
         href={departmentHref(item.href!, root?.id ?? workspaceId, new URLSearchParams(locationQuery).get("day"))}
         aria-label={label}
-        aria-current={current?.id === item.id || (!mobile && !!root && current?.workspace === root.id) ? "page" : undefined}
+        aria-current={selected ? "page" : undefined}
         onClick={() => setMore(false)}
       >
         {contents}

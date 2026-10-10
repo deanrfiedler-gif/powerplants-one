@@ -8,6 +8,8 @@ The two long-output journeys pass. All eight retained PDFs (89 pages) pass autom
 
 ## Source and observed failures
 
+10 October integration continuation: main `8869437` adds the merged PT-01 guards and icon implementation. Both the permissions and output source records and PT dispositions are retained when resolving the acceptance-ledger conflict. Two copy-ready instruction phrases use the same shortening as PT-29 to keep the combined main text within 8,000 characters. The original 52 passing PR checks belong to `300d6d4`; updated-source CI and the joined PT-30 rehearsal are recorded separately. This continuation authorises integration, while independent visual and owner acceptance remain pending.
+
 Main later advanced to `ad45a520ae4b42144e2a18c92507bac1c72b4711` with four documentation-only icon-decision changes. Merge `f646ab3` preserves that decision and this status entry; application and test sources are unchanged.
 
 The isolated branch starts at main `e5a94730025cf7a1ad4c1d0b1450532f591dba32`. Test checkpoints `f1a33bf` and `770b845` leave application runtime unchanged. Tests initially used an adapter-read outage; the strengthened joined sequence physically corrupts the exact task-owned bundle and restores its original bytes in `finally`.

@@ -2,6 +2,8 @@ import {
   Icon as ExistingIcon,
   type IconName,
 } from "../../engineering/materials/components/client/materials-ui";
+import { FontAwesomeGlyph } from "../../components/font-awesome";
+import { acceptanceFontAwesome } from "../../components/font-awesome-icons";
 const additional = {
   info: (
     <>
@@ -27,16 +29,23 @@ const additional = {
     </>
   ),
 };
-export function Icon({ name }: { name: IconName | keyof typeof additional }) {
+export type AdditionalIconName = keyof typeof additional;
+export function Icon({ name }: { name: IconName | AdditionalIconName }) {
   return name in additional ? (
-    <svg
+    <FontAwesomeGlyph
+      icon={acceptanceFontAwesome[name as AdditionalIconName]}
       className="mw-icon"
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-      focusable="false"
-    >
-      {additional[name as keyof typeof additional]}
-    </svg>
+      fallback={
+        <svg
+          className="mw-icon"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          focusable="false"
+        >
+          {additional[name as AdditionalIconName]}
+        </svg>
+      }
+    />
   ) : (
     <ExistingIcon name={name as IconName} />
   );

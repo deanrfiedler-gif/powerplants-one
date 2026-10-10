@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. **Status:** the icon style and the delivery method (the Kit script, option A) are accepted by the owner (10 October 2026). This record authorises no implementation or configuration change; building it needs Dean's separate go-ahead.
+Owner: Dean Fiedler. **Status:** the icon style and the delivery method (the Kit script, option A) are accepted by the owner (10 October 2026). Dean then authorised the build: "Build the icons, start with the mapping." The first increment is described below. Dean's visual review of the built icons is pending.
 
 Related: NFR-03, NFR-05, NFR-07, NFR-08, NFR-12; BP-01 sections 8.2 and 20; [department navigation icons](department-navigation-icons.md); [shared UI specification](../standards/ui-style-specification.md).
 
@@ -74,6 +74,39 @@ B was the better technical fit, but it needs annual billing. Offered the choice 
   - A third-party script runs on every online page (NFR-03). Production use would need this risk reviewed again.
 - **B remains available** if Dean later moves to annual billing. The semantic icon layer means the change would stay inside the icon components.
 
+## Implementation — first increment, 10 October 2026
+
+- **Mapping.** `src/components/font-awesome-icons.ts` maps all 198 names in the five shared icon sets: navigation 62, shell 35, product 51, My Work 45 and secondary menu 5. Each map is typed against its set, so a new name without a mapping fails the type check. All 198 Light icons and the 62 Solid navigation icons were drawn by the Kit on a review page: 260 drawn, none missing.
+- **Loading.** The root layout loads the Kit only when `PPO_FONT_AWESOME_KIT` holds a plain Kit ID. Anything else is ignored, so the setting cannot become an arbitrary script address. Hosted and local values are configuration, not code.
+- **Kit technology (open question 5).** The Kit keeps its current SVG + JS technology. Font Awesome is told to nest its SVG inside the `<i>` element React renders, so React keeps every node it owns. Each icon asks Font Awesome to draw it. Font Awesome's page watcher missed icons that appeared while the Kit was still starting, which was observed locally.
+- **Selected state.** Dean asked for the selected navigation item to look more professional, without the left accent bar or the green tint. It is now a plain white tile with a navy Solid icon. The local drawings' cut-out colour follows the tile. At his request the More panel's selected link now matches: a neutral grey tile with navy text and a Solid icon.
+- **Fallback.** Every icon renders its local drawing until the Kit's Font Awesome engine is running, and keeps it if the Kit never arrives. The offline workspace and sign-in page are static and unchanged.
+- **Tests (open question 6).** Automated tests and CI do not load the Kit, because no Kit ID is configured there. They render the local drawings, so existing assertions remain valid. A unit test covers the Kit ID check, the name format and the fallback.
+- **Scope.** This increment covers the five shared icon sets. Module drawings still draw locally: job packs, materials, engineering changes, commissioning, acceptance, fertigation, leads, the Gantt chart and the sign-in page.
+- **Local verification.** A dev server on a disposable synthetic database was checked as the Coordinator:
+  - My Work at 1440 px drew 102 Font Awesome icons, with no fallbacks and no failures.
+  - Deals showed its selected rail item in Solid.
+  - My Work at phone width showed the quick actions, Needs attention, the weekly agenda and the Sales phone bar in Light.
+  - The Kit accepted both `localhost` and `127.0.0.1`.
+
+## Implementation — second increment, 10 October 2026
+
+Dean confirmed Option A for the selected item and asked: "Do the module icon sets next."
+
+- **Mapping.** Nine module sets add 81 names:
+  - job packs (12) and Released Materials (25), which Change review, Commissioning and Acceptance reuse;
+  - Change review's menu glyphs (4) and tone marks (9);
+  - Commissioning's menu glyphs (5) and status-tag marks (9);
+  - Acceptance's additions (4);
+  - the fertigation conflict mark (1);
+  - Leads' own glyphs (3);
+  - the Programme Gantt (9).
+
+  The Kit drew all 279 Light icons and 63 Solid icons on the review page: 342 drawn, none missing.
+- **Marks.** Change review's filled status dot is drawn in Solid. Commissioning's dashed "unsent" ring maps to `circle-dashed`, so it is never mistaken for a tick. Three inline drawings in the Change review and Commissioning registers now use their module's mark component, so they are drawn the same way. Two identical inline drawings in fertigation become one shared component.
+- **Job packs.** The accepted Job Pack r03 set is drawn in Font Awesome where the Kit runs. The r03 drawings remain the fallback, and a unit test pins their first render. The [job pack record](job-pack-integration.md) notes the departure.
+- **Stylesheets.** Pages that styled every `svg` also outlined and stretched Font Awesome's filled artwork. 67 rules whose subject is a bare `svg` now also size the Font Awesome element: 59 in the first increment's branch and 8 job pack rules here. Font Awesome's own SVG keeps no stroke or margin, at 84% of its box. The sign-in page is static and keeps its drawings.
+
 ## Consequences
 
 - **Implementation** replaces the drawing inside the existing icon components and keeps their semantic names, so the pages that use them do not change. The selected state switches to Solid. Glyphs render square at today's sizes. They stay hidden from assistive technology, and every control keeps its accessible name (NFR-08).
@@ -86,18 +119,22 @@ B was the better technical fit, but it needs annual billing. Offered the choice 
 - **Licence:** the prototype depends on Dean's personal monthly subscription. Production use needs a company-held licence and company-controlled configuration (NFR-12). If the plan lapses, the icons disappear immediately. The licence position after a lapse is not verified.
 - **Reversal:** the semantic icon layer stays, so returning to local shapes means restoring the previous drawings in the icon components from Git history.
 
-## Open questions before implementation
+## Open questions
 
 1. What page-view or bandwidth limits apply to the Kit on the monthly plan?
 2. What do the licence terms say about continued use after a lapse, and about the private hosted demo?
-3. Which addresses must the Kit allow: `localhost` and the hosted demo's address?
-4. What is the final mapping for every semantic icon name in the catalogues listed above, including names with no close Light match?
-5. Which Kit technology should be used? Web Font styles React's own markup. SVG + JS replaces that markup after React renders it.
-6. Should automated tests and CI load the Kit, which adds a network dependency and uses page views, or run without icons?
-7. Dean's visual review of the built icons, which remains separate from this record.
+3. The Kit must also allow the hosted demo's address before `PPO_FONT_AWESOME_KIT` is set there.
+4. Dean's visual review of the built icons, which remains separate from this record.
 
-Resolved on 10 October 2026: billing stays monthly with the Kit script, and the offline workspace keeps its local shapes.
+Resolved on 10 October 2026:
+- Billing stays monthly with the Kit script.
+- The offline workspace keeps its local shapes.
+- The shared icon sets and the module icon sets are mapped. Only the static sign-in page keeps its own drawings.
+- The Kit keeps SVG + JS, with its SVG nested inside the app's elements.
+- Tests and CI run without the Kit.
 
 ## Validation
 
-Documentation only. `python3 scripts/check_naming.py` and `python3 scripts/check_foundation.py` are run for this record. No application behaviour changes.
+The decision record: `python3 scripts/check_naming.py` and `python3 scripts/check_foundation.py`.
+
+The first increment: `npx tsc --noEmit`, `npm run studio:check`, ESLint on the changed files, and `npm run test:unit`. The unit suite's three Windows-only file-path failures (document store and recovery) also occur on unchanged `main` locally. The browser suites run in CI without the Kit, so they exercise the local drawings.

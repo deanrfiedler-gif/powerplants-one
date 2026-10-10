@@ -8,7 +8,7 @@ Public repo, private demo; PPO is independent.
 
 Preserve BP-01 domains and shared records.
 
-Test joined journeys; distinguish runtime proof from owner acceptance.
+Test joined journeys; separate runtime proof and owner acceptance.
 
 PP-01: customer/site/equipment, intake, authorised work, issued packs, scheduling, field evidence, acknowledgement, reviewed reports and controlled Finance reconciliation.
 
@@ -16,7 +16,7 @@ Follow P01–P12, STATUS, BP-03 section 0 and BP-04. PPO-009 CRM differs from P0
 
 ## 3. Sources and continuity
 
-Read AGENTS.md, README, docs/STATUS.md and relevant ADRs/specs; verify Git.
+Read AGENTS.md, README, docs/STATUS.md and ADRs/specs; verify Git.
 
 User decisions govern. [CREMS is historical](../decisions/product-direction-quality.md); define and test PPO rules independently.
 
@@ -67,6 +67,8 @@ Repo work grants no paid service, deployment, access, transactions, migration or
 ## 9. Verification
 
 Run foundation/prototype/naming; test authority, conflicts/replay, integrity/reconciliation. Inspect screens; record environment.
+
+Recheck scoped access after storage, before metadata or bytes.
 
 ES-01–10/Excel: estimating-native-programme.md / estimating-programme-handover.md; retain estimating-cost-sources.md, PJ-09 close/reopen and es0{1,2}-design-board.md. ES-08: WP-G00 before D1–D15/DEC-R1/R2. ES-04: estimating-review.md. ES-05–07: quotation-{release,response,conversion,disposition,supply-followup}-native.md. ES-07: quotation-{reservation-reconciliation,receipt-correction,allocation-shortfall,material-resolution,task-dependency}.md. Separate each affected owner’s consent; preserve receipts, unmet Demand, holds and fresh disposition.
 
