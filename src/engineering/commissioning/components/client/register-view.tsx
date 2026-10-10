@@ -5,7 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { dueMeanings, releaseStages, workflowPresentation, workflows } from "../../model";
 import type { readOptions, readRegister } from "../../reads";
 import { useCommissioning } from "./commissioning-shell";
-import { CommandNotice, Dialog, Field, Icon, Menu, ReadNotice, Reason, Tag, fieldError, longDate, newId, siteTime, text, useCommissioningCommand, useRead, type MenuItem } from "./commissioning-ui";
+import { CommandNotice, Dialog, Field, Icon, Mark, Menu, ReadNotice, Reason, Tag, fieldError, longDate, newId, siteTime, text, useCommissioningCommand, useRead, type MenuItem } from "./commissioning-ui";
 
 type Register = Awaited<ReturnType<typeof readRegister>>;
 type Row = Register["items"][number];
@@ -208,7 +208,7 @@ function Cell({ id, row: r, today, open }: { id: ColumnId; row: Row; today: stri
     return (
       <td data-label="Next requirement">
         {r.next.kind === "condition" ? <Tag view={{ label: r.next.label, tone: r.next.tone, icon: "alert" }} />
-          : <span className="cm-step"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 3.5h7.5L19 8v12.5H7Z" /><path d="M14.5 3.5V8H19M10 12.5h6M10 16h6" /></svg>{r.next.label}</span>}
+          : <span className="cm-step"><Mark icon="step" />{r.next.label}</span>}
       </td>
     );
   // A missing date is "Date needed" with nothing invented beside it; a future date is plain; overdue says so in words.
@@ -285,7 +285,7 @@ function Inspector({ selected: s, unavailable, timezone, stale, onClose }: { sel
               {design.outstanding && (
                 <>
                   <div className="cm-callout" role="note">
-                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3.6 2.6 20h18.8Z" /><path d="M12 10v4.6M12 17.3h.01" /></svg>
+                    <Mark icon="alert" />
                     <div><strong>{design.outstanding.title}</strong><p>{design.outstanding.text}</p></div>
                   </div>
                   <span className="cm-sub">{design.outstanding.owner_name ?? "Unassigned"} · {design.outstanding.due ? `Due ${longDate(design.outstanding.due)}` : "Date needed"}</span>

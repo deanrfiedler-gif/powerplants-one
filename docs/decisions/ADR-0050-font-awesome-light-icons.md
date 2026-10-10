@@ -89,6 +89,24 @@ B was the better technical fit, but it needs annual billing. Offered the choice 
   - My Work at phone width showed the quick actions, Needs attention, the weekly agenda and the Sales phone bar in Light.
   - The Kit accepted both `localhost` and `127.0.0.1`.
 
+## Implementation — second increment, 10 October 2026
+
+Dean confirmed Option A for the selected item and asked: "Do the module icon sets next."
+
+- **Mapping.** Nine module sets add 81 names:
+  - job packs (12) and Released Materials (25), which Change review, Commissioning and Acceptance reuse;
+  - Change review's menu glyphs (4) and tone marks (9);
+  - Commissioning's menu glyphs (5) and status-tag marks (9);
+  - Acceptance's additions (4);
+  - the fertigation conflict mark (1);
+  - Leads' own glyphs (3);
+  - the Programme Gantt (9).
+
+  The Kit drew all 279 Light icons and 63 Solid icons on the review page: 342 drawn, none missing.
+- **Marks.** Change review's filled status dot is drawn in Solid. Commissioning's dashed "unsent" ring maps to `circle-dashed`, so it is never mistaken for a tick. Three inline drawings in the Change review and Commissioning registers now use their module's mark component, so they are drawn the same way. Two identical inline drawings in fertigation become one shared component.
+- **Job packs.** The accepted Job Pack r03 set is drawn in Font Awesome where the Kit runs. The r03 drawings remain the fallback, and a unit test pins their first render. The [job pack record](job-pack-integration.md) notes the departure.
+- **Stylesheets.** Pages that styled every `svg` also outlined and stretched Font Awesome's filled artwork. 67 rules whose subject is a bare `svg` now also size the Font Awesome element: 59 in the first increment's branch and 8 job pack rules here. Font Awesome's own SVG keeps no stroke or margin, at 84% of its box. The sign-in page is static and keeps its drawings.
+
 ## Consequences
 
 - **Implementation** replaces the drawing inside the existing icon components and keeps their semantic names, so the pages that use them do not change. The selected state switches to Solid. Glyphs render square at today's sizes. They stay hidden from assistive technology, and every control keeps its accessible name (NFR-08).
@@ -106,13 +124,12 @@ B was the better technical fit, but it needs annual billing. Offered the choice 
 1. What page-view or bandwidth limits apply to the Kit on the monthly plan?
 2. What do the licence terms say about continued use after a lapse, and about the private hosted demo?
 3. The Kit must also allow the hosted demo's address before `PPO_FONT_AWESOME_KIT` is set there.
-4. Which module icon sets come next, and what are their mappings?
-5. Dean's visual review of the built icons, which remains separate from this record.
+4. Dean's visual review of the built icons, which remains separate from this record.
 
 Resolved on 10 October 2026:
 - Billing stays monthly with the Kit script.
 - The offline workspace keeps its local shapes.
-- The shared icon sets are mapped.
+- The shared icon sets and the module icon sets are mapped. Only the static sign-in page keeps its own drawings.
 - The Kit keeps SVG + JS, with its SVG nested inside the app's elements.
 - Tests and CI run without the Kit.
 

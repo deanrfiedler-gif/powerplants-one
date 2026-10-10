@@ -3,6 +3,14 @@ import type { ProductPathName } from "./product-icons";
 import type { ShellShapeName } from "./shell-icon";
 import type { IconName as MyWorkIconName } from "../activities/components/client/my-work-ui";
 import type { SecondaryGlyphName } from "../shell/secondary-menu";
+import type { IconName as JobPackIconName } from "../documents/components/client/job-pack-ui";
+import type { IconName as MaterialsIconName } from "../engineering/materials/components/client/materials-ui";
+import type { OutlineName as ChangesOutlineName } from "../engineering/changes/components/client/changes-ui";
+import type { ToneIcon } from "../engineering/changes/model";
+import type { OutlineName as CommissioningOutlineName, MarkName as CommissioningMarkName } from "../engineering/commissioning/components/client/commissioning-ui";
+import type { AdditionalIconName as AcceptanceIconName } from "../projects/acceptance/icon";
+import type { LeadsIconName } from "./leads-workspace";
+import type { GanttIconName } from "./projects-gantt";
 
 // ADR-0050: each semantic icon name maps to one Font Awesome Pro icon, drawn in Classic Light,
 // and in Classic Solid where the app marks a selected item. Every catalogue keeps its own names
@@ -228,3 +236,125 @@ export const secondaryMenuFontAwesome = {
   "chevron-left": "chevron-left",
   "chevron-right": "chevron-right",
 } satisfies Record<SecondaryGlyphName, FontAwesomeIcon>;
+
+// Module icon sets (second increment). Each keeps its own names; the local drawings remain the fallback.
+
+// src/documents/components/client/job-pack-ui.tsx: the Job Pack r03 set.
+export const jobPackFontAwesome = {
+  check: "check",
+  circle: "circle-check",
+  warning: "triangle-exclamation",
+  info: "circle-info",
+  minus: "circle-minus",
+  document: "file-lines",
+  source: "link",
+  edit: "pen",
+  close: "xmark",
+  print: "print",
+  arrow: "arrow-right",
+  refresh: "arrows-rotate",
+} satisfies Record<JobPackIconName, FontAwesomeIcon>;
+
+// src/engineering/materials/components/client/materials-ui.tsx: Released Materials, reused by Change
+// review, Commissioning and Acceptance.
+export const materialsFontAwesome = {
+  register: "file-lines",
+  mapping: "cube",
+  swap: "arrow-right-arrow-left",
+  review: "circle-check",
+  truck: "truck",
+  history: "clock-rotate-left",
+  plus: "plus",
+  check: "check",
+  close: "xmark",
+  search: "magnifying-glass",
+  filter: "filter",
+  columns: "grid-2",
+  dots: "ellipsis",
+  warning: "triangle-exclamation",
+  calendar: "calendar",
+  document: "file",
+  "arrow-right": "arrow-right",
+  "chevron-down": "chevron-down",
+  "chevron-left": "chevron-left",
+  "chevron-right": "chevron-right",
+  lock: "lock",
+  download: "download",
+  link: "link",
+  cycle: "arrows-rotate",
+  info: "circle-info",
+} satisfies Record<MaterialsIconName, FontAwesomeIcon>;
+
+// src/engineering/changes/components/client/changes-ui.tsx: Change review's menu glyphs and tone marks.
+// The dot is the one filled mark, so it is drawn in Solid.
+export const changesOutlineFontAwesome = {
+  people: "users",
+  nodes: "circle-nodes",
+  flask: "flask",
+  clock: "clock",
+} satisfies Record<ChangesOutlineName, FontAwesomeIcon>;
+export const changesToneFontAwesome = {
+  dot: "circle-small",
+  info: "circle-info",
+  warning: "triangle-exclamation",
+  error: "circle-exclamation",
+  check: "circle-check",
+  tick: "check",
+  document: "file-lines",
+  progress: "circle-arrow-up",
+  clock: "clock",
+} satisfies Record<ToneIcon, FontAwesomeIcon>;
+
+// src/engineering/commissioning/components/client/commissioning-ui.tsx: Commissioning's menu glyphs and
+// r22 status-tag marks. "unsent" stays a dashed ring: it is not a tick.
+export const commissioningOutlineFontAwesome = {
+  basis: "clipboard-check",
+  results: "circle-check",
+  redline: "pen",
+  release: "file-export",
+  history: "clock",
+} satisfies Record<CommissioningOutlineName, FontAwesomeIcon>;
+export const commissioningMarkFontAwesome = {
+  tick: "check",
+  "tick-circle": "circle-check",
+  clock: "clock",
+  alert: "triangle-exclamation",
+  error: "circle-exclamation",
+  document: "file",
+  step: "file-lines",
+  target: "circle-dot",
+  unsent: "circle-dashed",
+} satisfies Record<CommissioningMarkName, FontAwesomeIcon>;
+
+// src/projects/acceptance/icon.tsx: the glyphs Acceptance adds to the Materials set.
+export const acceptanceFontAwesome = {
+  info: "circle-dot",
+  clock: "clock",
+  users: "users",
+  refresh: "arrows-rotate",
+} satisfies Record<AcceptanceIconName, FontAwesomeIcon>;
+
+// src/components/fertigation-frame.tsx: the conflict mark on fertigation chips and view badges.
+export const fertigationFontAwesome = {
+  conflict: "triangle-exclamation",
+} satisfies Record<"conflict", FontAwesomeIcon>;
+
+// src/components/leads-workspace.tsx: Leads' own back, sort and search glyphs.
+export const leadsFontAwesome = {
+  back: "arrow-left",
+  sort: "arrow-down-wide-short",
+  search: "magnifying-glass",
+} satisfies Record<LeadsIconName, FontAwesomeIcon>;
+
+// src/components/projects-gantt.tsx: the Programme Gantt toolbar and rows.
+export const ganttFontAwesome = {
+  plus: "plus",
+  gantt: "chart-gantt",
+  list: "list",
+  search: "magnifying-glass",
+  calendar: "calendar",
+  chev: "chevron-right",
+  down: "chevron-down",
+  sliders: "sliders",
+  fit: "expand",
+} satisfies Record<GanttIconName, FontAwesomeIcon>;

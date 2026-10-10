@@ -6,7 +6,7 @@ import { disciplines } from "../../../model";
 import { attentionPresentation, changeCategories, decisionChip, priorities, sourcePresentation, stagePresentation, stages, duePresentation, isOpen } from "../../model";
 import type { readPeople, readRegister } from "../../reads";
 import { useChanges } from "./changes-shell";
-import { CommandNotice, Dialog, Field, Icon, Menu, ReadNotice, Tone, dateText, fieldError, newId, stampText, text, useChangeCommand, useRead, type MenuItem } from "./changes-ui";
+import { CommandNotice, Dialog, Field, Icon, Menu, ReadNotice, Tone, ToneMark, dateText, fieldError, newId, stampText, text, useChangeCommand, useRead, type MenuItem } from "./changes-ui";
 
 type Register = Awaited<ReturnType<typeof readRegister>>;
 type Row = Register["items"][number];
@@ -294,7 +294,7 @@ function Inspector({ selected: s, unavailable, stale, onClose }: { selected: Sel
         )}
         {s.blocking && (
           <div className="ec-blocking" role="note">
-            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 4.2 3.2 19.4h17.6Z" /><path d="M12 10v4.4M12 16.8h.01" /></svg>
+            <ToneMark icon="warning" />
             <div><strong>{s.blocking.title}</strong><p>{s.blocking.text}</p></div>
           </div>
         )}
