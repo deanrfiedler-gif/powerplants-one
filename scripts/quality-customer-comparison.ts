@@ -35,7 +35,7 @@ const errors: string[] = [];
 const metadata = {
   ...profile,
   label, started_at: new Date().toISOString(), comparison_block: process.env.PPO_COMPARISON_BLOCK ?? null, comparison_position: process.env.PPO_COMPARISON_POSITION ?? null, source: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(),
-  compiled_source: compiledSource, build_id: buildId, server_pid: server.pid,
+  compiled_source: compiledSource, driver_source: process.env.PPO_DRIVER_SOURCE ?? null, build_id: buildId, server_pid: server.pid,
   node: process.version, platform: process.platform, memory_bytes: totalmem(),
   detailed_diagnostics: process.env.PPO_PROOF_DIAGNOSTICS === "1",
   network: { latency_ms: 40, download_bytes_per_second: 1250000, upload_bytes_per_second: 625000 },
@@ -85,7 +85,7 @@ try {
     for (let wave = 0; wave < 4; wave++) {
       const outcomes = await Promise.allSettled(pages.map(async (page, user) => {
         const cdp = sessions[user], network = new Map<string, Record<string, unknown>>(), applied = new Map<string, string>();
-        const beforeMetrics = Object.fromEntries((await cdp.send("Performance.getMetrics")).metrics.map(m => [m.name, m.value]));
+        const beforeMetrics = Object.fromEntries((await cdp.send("Performance.getMetrics")).metrics.filter(m => ["TaskDuration", "ScriptDuration", "LayoutDuration", "RecalcStyleDuration", "JSHeapUsedSize"].includes(m.name)).map(m => [m.name, m.value]));
         let start = 0;
         const sent = (e: { requestId: string; timestamp: number; type?: string; request: { url: string; method: string; headers: Record<string, string> } }) => {
           if (e.type === "Document" && !start) start = e.timestamp;
@@ -121,8 +121,10 @@ try {
           });
           const metrics = await cdp.send("Performance.getMetrics");
           const browserMetrics = Object.fromEntries(metrics.metrics.filter(m => ["TaskDuration", "ScriptDuration", "LayoutDuration", "RecalcStyleDuration", "JSHeapUsedSize"].includes(m.name)).map(m => [m.name, m.value]));
-          const browserWork = Object.fromEntries(metrics.metrics.filter(m => ["TaskDuration", "ScriptDuration", "LayoutDuration", "RecalcStyleDuration"].includes(m.name)).map(m => [m.name, m.value - beforeMetrics[m.name]]));
-          samples.push({ viewport: viewport.name, wave, user, started_at_ms: beganAt, ready_ms: readyMs, core_headers_ms: coreHeadersMs, core_json_processed_ms: coreJsonMs, navigation, browser_metrics: browserMetrics, browser_work_seconds: browserWork, free_memory_bytes: freemem(), network: [...network.values()] });
+          // Cross-navigation differences can be negative: these counters do not
+          // establish one continuous measurement interval. Retain raw readings
+          // without calling their difference per-action browser work.
+          samples.push({ viewport: viewport.name, wave, user, started_at_ms: beganAt, ready_ms: readyMs, core_headers_ms: coreHeadersMs, core_json_processed_ms: coreJsonMs, navigation, browser_metrics: browserMetrics, browser_metrics_before: beforeMetrics, free_memory_bytes: freemem(), network: [...network.values()] });
         } catch (error) {
           samples.push({ viewport: viewport.name, wave, user, started_at_ms: beganAt, error: error instanceof Error ? error.message : String(error), network: [...network.values()] });
           throw error;

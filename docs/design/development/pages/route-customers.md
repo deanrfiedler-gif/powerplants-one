@@ -46,6 +46,8 @@ The organisation directory calculates relationship counts after selecting a page
 
 ## Directory link loading
 
+The PT-27 candidate imports CrmDirectory and its existing customer stylesheet directly from this route, avoiding the initial ContextList entry that also imports site and facility screens. CS-01/CS-02 remain Register/worklist. The shared session/shell, scoped directory data, desktop table, mobile cards, guide tasks and outgoing record contract stay in place. The component catalogue binds the cold-start fixture, original ten-browser comparison and actual receiving navigation. Source presence does not establish speed or visual acceptance; review the compiled manifest, stylesheet order, 1440 px desktop and 390 px phone captures, plus the existing 320 px contract. No new accepted image is available.
+
 The current directory consumer is `CrmDirectory`: CS-01/CS-02 Register/worklist with the existing desktop table and phone cards. Its record names, affiliation/count links, New and local context sections load destinations on activation. Shared shell and Contacts hub view links retain their separate behaviour. Exact hrefs, department context, permission checks and unsaved-work handling are unchanged. See [component contract](../components/crm-directory.md) and `tests/browser/directory-navigation.spec.ts`; source presence and automated proof do not grant visual or device acceptance.
 
 ## Shell destination loading — PT-27

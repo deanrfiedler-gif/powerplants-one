@@ -6,7 +6,7 @@
 
 ## PT-27 loading performance — 10 October 2026
 
-Dean authorised [cold startup isolation](decisions/pt27-loading-performance.md#cold-startup-isolation--11-october-2026) on 11 October. Latest-head PR #391 checks at `ba4a4d2` pass. The next declared experiment keeps the original ten-user workload and adds explicitly diagnostic one-browser positions on the same CI build/fixture, with logging off and resource sampling in all positions. Measurement and any supported correction are in progress; no new performance acceptance is claimed.
+Dean authorised [cold startup isolation](decisions/pt27-loading-performance.md#cold-startup-isolation--11-october-2026) on 11 October. The [one/ten/ten/one CI block](testing/evidence/pt27-loading/startup-isolation/README.md) passes 176 loads and 44 record openings. Single-browser cold starts are below 1.44 seconds; ten-browser cold p95 remains 4.56–6.09 seconds with host CPU near 98%. Cross-navigation Chrome counter differences are invalid and excluded; independent readiness/network/resource observations remain retained. A direct Customers directory import now enters controlled before/after comparison under the original ten-user workload. PR #391 remains draft; the three-second target, original 503 cause, full PT-27 and acceptance are open.
 
 Dean authorised continuation of PR #391 and investigation of cold-load session/context availability. Both unsuccessful shell-prefetch experiments are withdrawn; ProductNavigation again matches main `6c69d92`. The [decision](decisions/pt27-loading-performance.md) and [session-readiness evidence](testing/evidence/pt27-loading/session-readiness/README.md) retain every attempt and separate instrumentation defects from the original 503s.
 

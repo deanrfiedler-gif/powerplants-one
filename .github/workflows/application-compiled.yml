@@ -10,9 +10,9 @@ on:
   workflow_dispatch:
     inputs:
       proof:
-        description: Existing full assurance or a separate PT-27 observer comparison
+        description: Existing full assurance or a separate PT-27 controlled comparison
         type: choice
-        options: [all, customer-observer, customer-startup]
+        options: [all, customer-observer, customer-startup, customer-candidate]
         default: all
 permissions:
   contents: read
@@ -23,7 +23,7 @@ jobs:
   compiled:
     name: Desktop and mobile browser suite against the compiled application
     needs: compiled_suites
-    if: ${{ always() && inputs.proof != 'customer-observer' && inputs.proof != 'customer-startup' }}
+    if: ${{ always() && inputs.proof != 'customer-observer' && inputs.proof != 'customer-startup' && inputs.proof != 'customer-candidate' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
@@ -34,7 +34,7 @@ jobs:
 
   compiled_suites:
     name: Compiled application ${{ matrix.suite }} proof
-    if: inputs.proof != 'customer-observer' && inputs.proof != 'customer-startup'
+    if: inputs.proof != 'customer-observer' && inputs.proof != 'customer-startup' && inputs.proof != 'customer-candidate'
     runs-on: ubuntu-24.04
     # Each browser project keeps its warm-up dependency and original deadlines.
     # Each matrix job owns a separate app and disposable database; tests within
@@ -209,7 +209,7 @@ jobs:
 
   customer_observer:
     name: PT-27 controlled customer comparison
-    if: github.event_name == 'workflow_dispatch' && (inputs.proof == 'customer-observer' || inputs.proof == 'customer-startup')
+    if: github.event_name == 'workflow_dispatch' && (inputs.proof == 'customer-observer' || inputs.proof == 'customer-startup' || inputs.proof == 'customer-candidate')
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     services:
@@ -229,7 +229,9 @@ jobs:
       PPO_SOURCE_HEAD: ${{ github.sha }}
       PPO_COMPILED_SOURCE: ${{ github.sha }}
       PPO_BENCHMARK_FIXTURE: add-synthetic-load
-      PPO_BLOCK_PROFILE: ${{ inputs.proof == 'customer-startup' && 'startup' || 'observer' }}
+      PPO_BLOCK_PROFILE: ${{ inputs.proof == 'customer-startup' && 'startup' || inputs.proof == 'customer-candidate' && 'candidate' || 'observer' }}
+      PPO_CONTROL_SOURCE: 20734e177844ea887007b4279a5edea9d205e102
+      PPO_CONTROL_ROOT: ${{ runner.temp }}/pt27-control
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -244,6 +246,15 @@ jobs:
           npm run browser:install
       - name: Build the declared source once
         run: npm run build
+      - name: Build the pinned control once with the same locked dependencies
+        if: inputs.proof == 'customer-candidate'
+        run: |
+          git fetch --depth=1 origin "$PPO_CONTROL_SOURCE"
+          git worktree add --detach "$PPO_CONTROL_ROOT" "$PPO_CONTROL_SOURCE"
+          cmp package-lock.json "$PPO_CONTROL_ROOT/package-lock.json"
+          cd "$PPO_CONTROL_ROOT"
+          npm ci
+          npm run build
       - name: Configure disposable PostgreSQL lock capacity
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
@@ -265,6 +276,13 @@ jobs:
         env:
           PPO_PROOF_DIAGNOSTICS: "1"
         run: node --env-file=.env.local --import tsx scripts/quality-database-proof-smoke.ts observer-compiled-smoke
+      - name: Bind the same driver and existing fixture to the control build
+        if: inputs.proof == 'customer-candidate'
+        run: |
+          cp .env.local "$PPO_CONTROL_ROOT/.env.local"
+          mkdir -p "$PPO_CONTROL_ROOT/verification-evidence/customer-loading-diagnosis" "$PPO_CONTROL_ROOT/verification-evidence/pt27-loading"
+          cp verification-evidence/customer-loading-diagnosis/fixture.json "$PPO_CONTROL_ROOT/verification-evidence/customer-loading-diagnosis/fixture.json"
+          cp scripts/quality-customer-comparison.ts scripts/quality-comparison-profile.ts "$PPO_CONTROL_ROOT/scripts/"
       - name: Execute the predeclared comparison block
         run: |
           node --import tsx --test tests/unit/quality-comparison-profile.test.ts

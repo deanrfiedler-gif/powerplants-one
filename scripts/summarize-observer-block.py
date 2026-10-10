@@ -52,9 +52,14 @@ def run(evidence, block, output):
     protocol = json.loads((block_root / "protocol.json").read_bytes())
     positions = protocol["positions"]
     profile = protocol.get("profile", "observer")
-    assert profile in ["observer", "startup"]
+    assert profile in ["observer", "startup", "candidate"]
     assert [p["diagnostics"] for p in positions] == (["0", "1", "1", "0"] if profile == "observer" else ["0"] * 4)
-    assert [p.get("browser_count", 10) for p in positions] == ([10] * 4 if profile == "observer" else [1, 10, 10, 1])
+    assert [p.get("browser_count", 10) for p in positions] == ([1, 10, 10, 1] if profile == "startup" else [10] * 4)
+    if profile == "candidate":
+        sources = [p["compiled_source"] for p in positions]
+        builds = [p["build_id"] for p in positions]
+        assert sources[0] == sources[3] != sources[1] == sources[2]
+        assert builds[0] == builds[3] != builds[1] == builds[2]
     assert [r["label"] for r in protocol["results"]] == [p["label"] for p in positions], "Retain incomplete block before attempting summary"
     roots = [evidence / "pt27-loading" / p["label"] for p in positions]
     subprocess.run([sys.executable, str(Path(__file__).with_name("summarize-session-readiness.py")), str(output), *map(str, roots)], check=True)
@@ -62,7 +67,10 @@ def run(evidence, block, output):
     artifacts = json.loads((output / "artifacts.json").read_bytes())
     for position, root, row, outcome in zip(positions, roots, summary["runs"], protocol["results"]):
         data = json.loads((root / "results.json").read_bytes())
-        assert data["compiled_source"] == protocol["source"] and data["build_id"] == protocol["build_id"]
+        assert data["compiled_source"] == position.get("compiled_source", protocol["source"])
+        assert data["build_id"] == position.get("build_id", protocol["build_id"])
+        if profile == "candidate":
+            assert data["driver_source"] == protocol["source"]
         assert data["fixture"] == protocol["fixture"]["fixture"]
         assert data["detailed_diagnostics"] == (position["diagnostics"] == "1")
         assert data.get("browser_count", 10) == position.get("browser_count", 10)
@@ -103,9 +111,10 @@ def run(evidence, block, output):
             }
             group["pre_core_fraction_of_readiness"] = distribution([r["start_ms"] / s["ready_ms"] for s, r in zip(samples, cores)])
             group["observed_transfer_bytes"] = {kind: distribution([sum(r.get("encoded_bytes", 0) for r in s["network"] if r.get("type") == kind) for s in samples]) for kind in ["Script", "Stylesheet", "Font", "Image"]}
-            group["browser_work_seconds"] = {key: distribution([s["browser_work_seconds"][key] for s in samples if "browser_work_seconds" in s]) for key in ["TaskDuration", "ScriptDuration", "LayoutDuration", "RecalcStyleDuration"]}
+            group["browser_work_seconds"] = None
     summary.update({"protocol": protocol, "resource_limits": "Two-second external samples, identical in both modes. Whole-run counters include startup, fixture identity setup and screenshots. Action-interior counters include only whole intervals within successful measured browser actions; missing process data are unknown, never zero. CPU values summarize sampled intervals, not isolated SQL execution. Host CPU includes browsers, database and runner work. The declared block order bounds order effects but does not eliminate caches or cloud scheduling; one block cannot establish an observer effect or an earlier failure cause."})
     summary["browser_phase_limits"] = "Core request start includes document/asset loading, hydration and client/session gating; it is not isolated network or server time. CDP finish-minus-headers is the raw event timestamp difference under emulation, which can be negative when response events are delayed; do not interpret it as physical transfer time. Percentiles of separate components are not additive."
+    summary["browser_counter_limits"] = "Cross-navigation Performance.getMetrics differences in startup block 38086160387 can be negative. All derived browser_work_seconds, including positive values, are excluded from interpretation; their original bytes remain retained. New drivers keep raw before/after counters without deriving action duration. Readiness, network events and external /proc counters have independent clocks and are unaffected by this diagnostic limitation."
     for source in sorted(block_root.iterdir()):
         if not source.is_file():
             continue

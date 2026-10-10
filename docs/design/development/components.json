@@ -4947,6 +4947,11 @@
           "id": "automatic-prefetch",
           "label": "Explicit record navigation",
           "description": "Compiled /customers then /people in one context per viewport, bounded request observation before each activation; no automatic directory record prefetch. Separate single-browser Customers probe uses fresh contexts per viewport. Existing saved/scoped views and navigation-safety fixtures remain separate."
+        },
+        {
+          "id": "customer-cold-start",
+          "label": "Customer cold start and receiving record",
+          "description": "Fresh /customers renders the existing directory through a direct page import with its existing stylesheet. scripts/quality-customer-comparison.ts exercises exact scoped data and real desktop/phone record activation; ten-user timing remains separate from one-browser diagnosis."
         }
       ],
       "implementation": [
@@ -4958,7 +4963,9 @@
       "dependencies": [
         "src/components/context-screens.tsx",
         "src/components/contacts-navigation.tsx",
-        "src/components/crm-state.ts"
+        "src/components/crm-state.ts",
+        "src/app/(business)/customers/page.tsx",
+        "src/app/styles/customers.css"
       ],
       "reference": {
         "path": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
@@ -4981,6 +4988,14 @@
           "expected": "Avoid speculative record reads while preserving exact navigation and acceptable first/next-page responsiveness.",
           "actual": "Six local Link sites disable automatic prefetch; functional and request observations are recorded separately from the unresolved whole-page target.",
           "action": "Review the retained directory experiment, CI and next-navigation tradeoff before broader rollout.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "crm-directory-startup-review",
+          "expected": "Load the directory without unrelated site/facility screen code while preserving styling, authority and actual next-record navigation.",
+          "actual": "Direct Customers import is a candidate under the original ten-user, three-second target. People and Contacts consumer bindings remain separate.",
+          "action": "Inspect source/build manifests, desktop/phone captures and control/candidate timing, including the receiving record; retain unresolved target and visual review.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

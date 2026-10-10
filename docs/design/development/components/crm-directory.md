@@ -23,3 +23,9 @@ Phone cards support taps, readable names and the existing 320/390 px layout. Loa
 `tests/browser/directory-navigation.spec.ts` observes explicit prefetch flags and exercises each Link site through real receiving pages. Existing saved/scoped directory queries, department Contacts continuation and unsaved-navigation cases provide integration checks. The one-browser request probe is separate from ten-user timing evidence.
 
 Prefetch can make later navigation faster, so suppressing it is a bounded experiment with an explicit next-navigation tradeoff. Retain actual request counts and timing limits; do not call reduced background requests a proven whole-page speedup. Owner, physical-device, assistive-technology and visual acceptance remain pending.
+
+## Customers startup boundary
+
+The PT-27 candidate mounts this existing component directly from `src/app/(business)/customers/page.tsx`, retaining `src/app/styles/customers.css`. People still enters through ContextList; Contacts keeps its existing host. This changes the Customers initial client-module boundary, not the CS-01/CS-02 page type, visible controls or guide tasks. Incoming session/current-company authority and outgoing exact record navigation remain unchanged.
+
+The cold-start host state uses `scripts/quality-customer-comparison.ts`: fresh contexts, exact scoped data, the original ten-browser workload and actual desktop/phone record activation. Compare control/candidate/candidate/control on one runner and fixture, inspect compiled manifests and captures, and retain all timing misses. The [startup isolation](../../../testing/evidence/pt27-loading/startup-isolation/README.md) is diagnostic evidence, not visual or performance acceptance. Existing HTML references remain authoritative; a new accepted mockup image is unavailable.

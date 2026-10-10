@@ -1,8 +1,9 @@
-"""Run one predeclared off/on/on/off block; never retry or replace samples."""
+"""Run one predeclared comparison block; never retry or replace samples."""
 import json
 import os
 from pathlib import Path
 import re
+import shutil
 import socket
 import subprocess
 import sys
@@ -47,6 +48,8 @@ def port_open(port):
 def positions_for(profile):
     if profile == "observer":
         return [("off-a1", "0", 10), ("on-b1", "1", 10), ("on-b2", "1", 10), ("off-a2", "0", 10)]
+    if profile == "candidate":
+        return [("control-a1", "0", 10), ("candidate-b1", "0", 10), ("candidate-b2", "0", 10), ("control-a2", "0", 10)]
     assert profile == "startup", "Unknown block profile"
     return [("single-a1", "0", 1), ("ten-b1", "0", 10), ("ten-b2", "0", 10), ("single-a2", "0", 1)]
 
@@ -59,6 +62,24 @@ def run(block, profile="observer"):
     source = os.environ["PPO_COMPILED_SOURCE"]
     assert re.fullmatch(r"[0-9a-f]{40}", source)
     assert subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip() == source
+    working = Path.cwd()
+    control = Path(os.environ["PPO_CONTROL_ROOT"]).resolve() if profile == "candidate" else working
+    if profile == "candidate":
+        assert control != working and control.is_dir()
+        # Same driver, dependencies and database/fixture contract in both sources.
+        for name in ["package.json", "package-lock.json", "scripts/quality-customer-comparison.ts",
+                     "scripts/quality-comparison-profile.ts", "scripts/quality-performance-fixture.ts",
+                     "scripts/quality-core-response.ts", "verification-evidence/customer-loading-diagnosis/fixture.json"]:
+            assert (control / name).read_bytes() == (working / name).read_bytes(), name
+        subprocess.run(["git", "diff", "--exit-code", os.environ["PPO_CONTROL_SOURCE"], source, "--", "db"], check=True)
+    attempts = []
+    for name, mode, users in positions:
+        cwd = control if name.startswith("control-") else working
+        compiled = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=cwd, text=True).strip()
+        if cwd == control and profile == "candidate":
+            assert compiled == os.environ["PPO_CONTROL_SOURCE"]
+        attempts.append({"label": block + "-" + name, "diagnostics": mode, "browser_count": users,
+                         "compiled_source": compiled, "build_id": (cwd / ".next/BUILD_ID").read_text().strip()})
     root = Path("verification-evidence/pt27-observer") / block
     root.mkdir(parents=True, exist_ok=False)
     port = int(os.environ.get("PPO_PORT", "3000"))
@@ -66,20 +87,23 @@ def run(block, profile="observer"):
     protocol = {"block": block, "profile": profile, "source": source, "build_id": Path(".next/BUILD_ID").read_text().strip(),
                 "platform": sys.platform, "logical_cpus": os.cpu_count(), "clock_ticks_per_second": os.sysconf("SC_CLK_TCK"),
                 "fixture": json.loads(Path("verification-evidence/customer-loading-diagnosis/fixture.json").read_text()),
-                "positions": [{"label": block + "-" + name, "diagnostics": mode, "browser_count": users} for name, mode, users in positions],
+                "positions": attempts,
                 "resource_interval_seconds": 2, "results": [],
-                "boundary": "One fresh runner, one build, one fixture, fresh app/browser processes per attempt. No retries, resets or substituted samples. External CPU/memory observation is identical in both modes. Separate from retained Windows samples."}
+                "boundary": "One fresh runner, one build per declared source, one fixture, fresh app/browser processes per attempt. No retries, resets or substituted samples. External CPU/memory observation is identical in all positions. Separate from retained Windows samples."}
     (root / "protocol.json").write_text(json.dumps(protocol, indent=2) + "\n")
     for position, (suffix, mode, users) in enumerate(positions, 1):
         label = block + "-" + suffix
+        cwd = control if suffix.startswith("control-") else working
         env = {**os.environ, "PPO_PROOF_DIAGNOSTICS": mode,
+               "PPO_COMPILED_SOURCE": attempts[position - 1]["compiled_source"], "PPO_DRIVER_SOURCE": source,
                "PPO_COMPARISON_PROFILE": "startup-single" if users == 1 else "ten-user",
                "PPO_COMPARISON_BLOCK": block, "PPO_COMPARISON_POSITION": str(position)}
         server_pid = None
-        metadata = Path("verification-evidence/pt27-loading") / label / "run.json"
+        attempt_root = cwd / "verification-evidence/pt27-loading" / label
+        metadata = attempt_root / "run.json"
         with (root / (label + ".log")).open("wb") as log, (root / (label + "-resources.jsonl")).open("w") as counters:
             child = subprocess.Popen(["node", "--env-file=.env.local", "--import", "tsx",
-                                      "scripts/quality-customer-comparison.ts", label], env=env, stdout=log, stderr=subprocess.STDOUT)
+                                      "scripts/quality-customer-comparison.ts", label], cwd=cwd, env=env, stdout=log, stderr=subprocess.STDOUT)
             try:
                 while True:
                     if server_pid is None and metadata.exists():
@@ -98,6 +122,8 @@ def run(block, profile="observer"):
                     child.wait(timeout=15)
         protocol["results"].append({"label": label, "exit_code": child.returncode})
         (root / "protocol.json").write_text(json.dumps(protocol, indent=2) + "\n")
+        if cwd != working and attempt_root.exists():
+            shutil.copytree(attempt_root, working / "verification-evidence/pt27-loading" / label)
         # A failed run stays failed. Continue only after its owned app is gone.
         deadline = time.monotonic() + 10
         while port_open(port) and time.monotonic() < deadline:

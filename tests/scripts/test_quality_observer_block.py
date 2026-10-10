@@ -17,6 +17,7 @@ class Counters(unittest.TestCase):
         self.assertEqual([p[2] for p in observer.positions_for("startup")], [1, 10, 10, 1])
         self.assertEqual([p[1] for p in observer.positions_for("startup")], ["0"] * 4)
         self.assertEqual([p[2] for p in observer.positions_for("observer")], [10] * 4)
+        self.assertEqual(observer.positions_for("candidate"), [("control-a1", "0", 10), ("candidate-b1", "0", 10), ("candidate-b2", "0", 10), ("control-a2", "0", 10)])
         with self.assertRaises(AssertionError):
             observer.positions_for("unknown")
 

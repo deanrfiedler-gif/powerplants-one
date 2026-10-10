@@ -5774,9 +5774,9 @@
       "source_paths": [
         "src/app/(business)/customers/page.tsx",
         "src/components/crm-directory.tsx",
-        "src/components/context-screens.tsx",
         "src/crm/directory.ts",
-        "src/app/layout.tsx"
+        "src/app/layout.tsx",
+        "src/app/styles/customers.css"
       ],
       "guide_key": "guide.page.customers",
       "design_path": "docs/design/development/pages/route-customers.md",
@@ -5795,7 +5795,7 @@
         "scope:CS-01"
       ],
       "reviewer": null,
-      "notes": "Directory record links retain deliberate activation with automatic prefetch disabled. The unsuccessful PT-27 shell experiments are withdrawn; desktop and phone shell links retain the original main policy. Exact receiving and timing evidence remain separate from visual/owner acceptance in docs/testing/evidence/pt27-loading/README.md."
+      "notes": "Directory record links retain deliberate activation with automatic prefetch disabled. The unsuccessful PT-27 shell experiments are withdrawn; desktop and phone shell links retain the original main policy. Exact receiving and timing evidence remain separate from visual/owner acceptance in docs/testing/evidence/pt27-loading/README.md. The PT-27 candidate imports CrmDirectory and the existing customer stylesheet directly. Its initial client graph and actual record handover are compared on one runner; no timing, visual or owner acceptance is inferred from the import change."
     },
     {
       "key": "route:/documents/[id]",
