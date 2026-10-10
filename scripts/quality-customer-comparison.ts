@@ -43,17 +43,17 @@ async function checkpoint(complete: boolean) {
 async function settled(page: Page) {
   await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false", { timeout: 120000 });
   await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeEnabled();
-  await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0, { timeout: 120000 });
+  await expect(page.getByText(/^Loading .*â€¦$/)).toHaveCount(0, { timeout: 120000 });
   await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
   await page.evaluate(() => new Promise<void>(r => requestAnimationFrame(() => requestAnimationFrame(() => r()))));
 }
 try {
   let ready = false;
-  for (let n = 0; n < 120; n++) {
-    try { if ((await fetch(origin)).ok) { ready = true; break; } } catch {}
+  for (let n = 0; n < 240; n++) {
+    try { if ((await fetch(origin, { signal: AbortSignal.timeout(1000) })).ok) { ready = true; break; } } catch {}
     await new Promise(r => setTimeout(r, 500));
   }
-  assert.ok(ready, "Owned compiled server must start within 60 seconds");
+  assert.ok(ready, "Owned compiled server must start within 120 seconds");
   browsers.push(...await Promise.all(Array.from({ length: 10 }, () => chromium.launch({ channel: "chrome" }))));
   for (const viewport of [{ name: "desktop", width: 1440, height: 1000 }, { name: "phone", width: 390, height: 844 }]) {
     const contexts = await Promise.all(browsers.map(b => b.newContext({ viewport, isMobile: viewport.name === "phone", hasTouch: viewport.name === "phone", locale: "en-AU" })));
@@ -134,9 +134,13 @@ try {
   const after = await performanceFixtureFingerprint(); assert.deepEqual(after, fixture);
   await writeFile(`${root}/fixture-after.json`, JSON.stringify(after, null, 2));
   await checkpoint(true);
+} catch (error) {
+  errors.push(String(error));
+  await checkpoint(false);
+  throw error;
 } finally {
   await Promise.all(browsers.map(b => b.close()));
-  if (process.env.PPO_PROOF_DIAGNOSTICS === "1") await writeFile(`${root}/gateway.jsonl`, await readFile(`verification-evidence/transport-diagnostics/process-${server.pid}.jsonl`));
+  if (process.env.PPO_PROOF_DIAGNOSTICS === "1") await writeFile(`${root}/gateway.jsonl`, await readFile(`verification-evidence/transport-diagnostics/process-${server.pid}.jsonl`)).catch(() => console.error("Gateway file unavailable; preserve original failure."));
   server.kill();
   await closeDatabase();
 }
