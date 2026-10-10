@@ -128,6 +128,16 @@ def create_browser_cgroup(label, cpus):
     return group
 
 
+def whole_core_allocation(available, topology):
+    core = cpu_list(topology[0]["thread_siblings_list"])
+    remaining = sorted(set(available) - set(core))
+    assert len(core) == len(remaining) == 2 and set(core) <= set(available)
+    assert sorted(row["cpu"] for row in topology) == available
+    assert all(cpu_list(row["thread_siblings_list"]) == (core if row["cpu"] in core else remaining)
+               for row in topology), "Require two complete sibling groups; never split a physical core"
+    return core, remaining
+
+
 def remove_browser_cgroup(group):
     assert group.parent == Path("/sys/fs/cgroup") and re.fullmatch(r"ppo-pt27-cpu-[a-z0-9-]+", group.name)
     # Only after the driver has exited; remove any surviving owned crash helpers.
@@ -144,7 +154,7 @@ def positions_for(profile):
         return [("off-a1", "0", 10), ("on-b1", "1", 10), ("on-b2", "1", 10), ("off-a2", "0", 10)]
     if profile == "candidate":
         return [("control-a1", "0", 10), ("candidate-b1", "0", 10), ("candidate-b2", "0", 10), ("control-a2", "0", 10)]
-    if profile == "cpu":
+    if profile in ["cpu", "cpu-core"]:
         return [("shared-a1", "0", 10), ("partitioned-b1", "0", 10), ("partitioned-b2", "0", 10), ("shared-a2", "0", 10)]
     assert profile == "startup", "Unknown block profile"
     return [("single-a1", "0", 1), ("ten-b1", "0", 10), ("ten-b2", "0", 10), ("single-a2", "0", 1)]
@@ -160,7 +170,7 @@ def run(block, profile="observer"):
     assert subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip() == source
     working = Path.cwd()
     cpu_protocol = None
-    if profile == "cpu":
+    if profile in ["cpu", "cpu-core"]:
         assert os.environ.get("GITHUB_ACTIONS") == "true", "Only the disposable existing CI service may be constrained"
         assert shutil.which("taskset") and shutil.which("docker")
         available = sorted(os.sched_getaffinity(0))
@@ -175,6 +185,9 @@ def run(block, profile="observer"):
                         "database_pid": int(database_pid), "original_database_cpuset": original_cpus,
                         "topology": [{"cpu": cpu, **{key: (Path(f"/sys/devices/system/cpu/cpu{cpu}/topology") / key).read_text().strip()
                                       for key in ["core_id", "physical_package_id", "thread_siblings_list"]}} for cpu in available]}
+        if profile == "cpu-core":
+            core, remaining = whole_core_allocation(available, cpu_protocol["topology"])
+            cpu_protocol.update({"service": core, "browsers": remaining, "layout": "physical-core"})
     control = Path(os.environ["PPO_CONTROL_ROOT"]).resolve() if profile == "candidate" else working
     if profile == "candidate":
         assert control != working and control.is_dir()
@@ -240,6 +253,8 @@ def run(block, profile="observer"):
             env.update({"PPO_CPU_MODE": "partitioned" if partitioned else "shared",
                         "PPO_SERVER_CPUS": service_csv, "PPO_BROWSER_CPUS": client_csv,
                         "PPO_BROWSER_WRAPPER": str(wrapper), "PPO_BROWSER_CGROUP": str(browser_group)})
+            if profile == "cpu-core":
+                env["PPO_CPU_LAYOUT"] = "physical-core"
             command = ["taskset", "--cpu-list", client_csv, *command]
         affinity_violations = 0
         with (root / (label + ".log")).open("wb") as log, (root / (label + "-resources.jsonl")).open("w") as counters:

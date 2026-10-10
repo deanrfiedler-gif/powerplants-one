@@ -76,7 +76,7 @@ def run(evidence, block, output):
     protocol = json.loads((block_root / "protocol.json").read_bytes())
     positions = protocol["positions"]
     profile = protocol.get("profile", "observer")
-    assert profile in ["observer", "startup", "candidate", "cpu"]
+    assert profile in ["observer", "startup", "candidate", "cpu", "cpu-core"]
     assert [p["diagnostics"] for p in positions] == (["0", "1", "1", "0"] if profile == "observer" else ["0"] * 4)
     assert [p.get("browser_count", 10) for p in positions] == ([1, 10, 10, 1] if profile == "startup" else [10] * 4)
     if profile == "candidate":
@@ -84,7 +84,7 @@ def run(evidence, block, output):
         builds = [p["build_id"] for p in positions]
         assert sources[0] == sources[3] != sources[1] == sources[2]
         assert builds[0] == builds[3] != builds[1] == builds[2]
-    if profile == "cpu":
+    if profile in ["cpu", "cpu-core"]:
         assert [p["label"] for p in positions] == [block + "-" + suffix for suffix in
                 ["shared-a1", "partitioned-b1", "partitioned-b2", "shared-a2"]]
         assert all(p["compiled_source"] == protocol["source"] and p["build_id"] == protocol["build_id"] for p in positions)
@@ -121,7 +121,7 @@ def run(evidence, block, output):
                     "resources_successful_action_interiors": resource_summary(resources, merged),
                     "browser_http_errors": [{"viewport": s["viewport"], "wave": s["wave"], "user": s["user"], "path": r["path"], "status": r["status"]}
                                             for s in data["samples"] for r in s["network"] if r.get("status", 0) >= 400]})
-        if profile == "cpu":
+        if profile in ["cpu", "cpu-core"]:
             index = positions.index(position)
             allocation = protocol["cpu_allocation"]
             partitioned = index in [1, 2]
@@ -141,7 +141,7 @@ def run(evidence, block, output):
                 if row["allocation_valid"]:
                     assert role["escaped_threads"] == 0
         for group in row["groups"]:
-            if profile == "cpu":
+            if profile in ["cpu", "cpu-core"]:
                 observed = [s for s in data["samples"] if s["viewport"] == group["viewport"] and
                             (s["wave"] == 0 if group["phase"] == "cold" else s["wave"] > 0)] if group["phase"] != "record" else [s for s in data["record_visits"] if s["viewport"] == group["viewport"]]
                 windows = [(s["started_at_ms"], s["started_at_ms"] + s["ready_ms"]) for s in observed if "ready_ms" in s]
@@ -167,9 +167,9 @@ def run(evidence, block, output):
     summary.update({"protocol": protocol, "resource_limits": "Two-second external samples, identical in both modes. Whole-run counters include startup, fixture identity setup and screenshots. Action-interior counters include only whole intervals within successful measured browser actions; missing process data are unknown, never zero. CPU values summarize sampled intervals, not isolated SQL execution. Host CPU includes browsers, database and runner work. The declared block order bounds order effects but does not eliminate caches or cloud scheduling; one block cannot establish an observer effect or an earlier failure cause."})
     summary["browser_phase_limits"] = "Core request start includes document/asset loading, hydration and client/session gating; it is not isolated network or server time. CDP finish-minus-headers is the raw event timestamp difference under emulation, which can be negative when response events are delayed; do not interpret it as physical transfer time. Percentiles of separate components are not additive."
     summary["browser_counter_limits"] = "Cross-navigation Performance.getMetrics differences in startup block 38086160387 can be negative. All derived browser_work_seconds, including positive values, are excluded from interpretation; their original bytes remain retained. New drivers keep raw before/after counters without deriving action duration. Readiness, network events and external /proc counters have independent clocks and are unaffected by this diagnostic limitation."
-    if profile == "cpu":
+    if profile in ["cpu", "cpu-core"]:
         summary["allocation_valid"] = all(r["allocation_valid"] for r in summary["runs"])
-        summary["cpu_allocation_limits"] = "Shared 4 versus service 1 / browsers and driver 3 logical CPUs on one existing runner. Not extra capacity, independent hardware, isolated physical cores or a representative device. Topology, shared memory/I/O, hypervisor scheduling and caches remain limits. Per-role CPU uses only identical PID/start-time pairs across two-second samples; exited/new processes are unmatched and their interval work is omitted, never inferred zero. Transient processes between samples are unseen. No CPU percentage establishes SQL execution time. Thread affinity is checked at sample times only; no kernel-wide isolation or ownership of unclassified runner work is claimed."
+        summary["cpu_allocation_limits"] = "Shared four versus the declared service/browser allocation on one existing runner. No extra capacity or independent hardware; this is not a representative device. The physical-core profile requires two complete, non-overlapping sibling groups; the earlier one/three profile shares a physical core. Shared memory/I/O, hypervisor scheduling and caches remain limits. Per-role CPU uses only identical PID/start-time pairs across two-second samples; exited/new processes are unmatched and their interval work is omitted, never inferred zero. Transient processes between samples are unseen. No CPU percentage establishes SQL execution time. Thread affinity is checked at sample times only; no kernel-wide isolation or ownership of unclassified runner work is claimed."
     for source in sorted(block_root.iterdir()):
         if not source.is_file():
             continue

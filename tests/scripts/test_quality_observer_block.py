@@ -13,12 +13,23 @@ summary_spec.loader.exec_module(summary)
 
 
 class Counters(unittest.TestCase):
+    def test_whole_core_profile_rejects_partial_or_unexpected_topology(self):
+        rows = [{"cpu": n, "thread_siblings_list": "2-3" if n < 4 else "4-5"} for n in [2, 3, 4, 5]]
+        self.assertEqual(observer.whole_core_allocation([2, 3, 4, 5], rows), ([2, 3], [4, 5]))
+        with self.assertRaises(AssertionError):
+            observer.whole_core_allocation([2, 3, 4, 5], rows[:3])
+        with self.assertRaises(AssertionError):
+            observer.whole_core_allocation([2, 3, 4, 5], [{"cpu": n, "thread_siblings_list": str(n)} for n in [2, 3, 4, 5]])
+        with self.assertRaises(AssertionError):
+            observer.whole_core_allocation([2, 3, 4, 6], rows)
+
     def test_startup_diagnostic_keeps_ten_user_positions_and_logging_off(self):
         self.assertEqual([p[2] for p in observer.positions_for("startup")], [1, 10, 10, 1])
         self.assertEqual([p[1] for p in observer.positions_for("startup")], ["0"] * 4)
         self.assertEqual([p[2] for p in observer.positions_for("observer")], [10] * 4)
         self.assertEqual(observer.positions_for("candidate"), [("control-a1", "0", 10), ("candidate-b1", "0", 10), ("candidate-b2", "0", 10), ("control-a2", "0", 10)])
         self.assertEqual(observer.positions_for("cpu"), [("shared-a1", "0", 10), ("partitioned-b1", "0", 10), ("partitioned-b2", "0", 10), ("shared-a2", "0", 10)])
+        self.assertEqual(observer.positions_for("cpu-core"), observer.positions_for("cpu"))
         with self.assertRaises(AssertionError):
             observer.positions_for("unknown")
 
