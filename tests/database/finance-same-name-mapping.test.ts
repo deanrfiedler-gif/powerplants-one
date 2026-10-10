@@ -402,6 +402,8 @@ test(
           "valid_to=clock_timestamp()-interval '1 day', version=version+1",
           "valid_from=clock_timestamp()+interval '1 day', version=version+1",
           "customer_id='000ab-C.01', version=version+1",
+          // Exact tuple integrity must not rely only on a version increment.
+          "customer_id='000ab-C.01'",
         ])
           await changedMapping(set, submit);
         assert.deepEqual(
