@@ -1,0 +1,16 @@
+▶ PT-13 approved 90 MIN / 2 EA corrections before processing
+  ✔ approved originals and separate financial quantities cannot be edited in place (264.1171ms)
+  ✔ reasoned successors invalidate downstream readiness and replay only their original receipts (696.0774ms)
+  ✔ corrected report requires a new exact submission, review and issue (4881.6397ms)
+  ✔ unprocessed handoff needs a new exact allocation and independent Finance review (550.3678ms)
+✔ PT-13 approved 90 MIN / 2 EA corrections before processing (37747.274ms)
+ℹ {"phase":"new-independent-approval","report_id":"996a12e2-e196-4d52-b3ac-c6828ed58cda","handoff_id":"678203ac-e0bc-4cf2-83eb-e44ce97eab63","original_finance_revision":"ef351f93-49ab-42d3-a754-ad69891c5302","successors":[{"original":"404a97fc-1fdc-4b22-93d3-d40873f0884f","successor":"12101ed9-3e2c-48ef-918a-21338f1dd9f0","operation_id":"1e7392ba-d352-49f3-832e-f5e636d8a07f"},{"original":"32e79fae-ef57-47e9-8807-419ffc04135d","successor":"1e2e7aae-3565-4c55-946f-28fbb4a1a1fc","operation_id":"8fd1cc62-5b93-45fb-9101-1eda06990990"}],"target_ids":[]}
+▶ PT-13 approved 90 MIN / 2 EA corrections after reconciled processing
+  ✔ approved originals and separate financial quantities cannot be edited in place (684.3347ms)
+  ✔ reasoned successors invalidate downstream readiness and replay only their original receipts (1948.3354ms)
+  ✔ corrected report requires a new exact submission, review and issue (8883.4491ms)
+  ✔ processed originals stay consumed and a correction request links the original outcome (221.2789ms)
+✔ PT-13 approved 90 MIN / 2 EA corrections after reconciled processing (69650.1872ms)
+ℹ {"phase":"processed-original-preserved","report_id":"4d090182-b4f6-4dfe-918d-fe9db0e9c42b","handoff_id":"a40b6f4e-bac9-4374-ae2d-f58d86dc169d","original_finance_revision":"ca25d674-146b-47e1-add7-23e90ea50da3","successors":[{"original":"77fde990-1dda-4852-8310-1228ea53b3d6","successor":"8fa7ff7e-05a6-45e0-8c89-de9351fa1fb6","operation_id":"bdff8468-e42f-4526-afc8-ff52c46a35a8"},{"original":"a8e2c3e7-d584-4444-9cf0-15e11ded18aa","successor":"43323b99-502a-419d-9ceb-819d3625ac73","operation_id":"8ba68654-eb4f-4517-a7ef-1a8f2e1dc022"}],"target_ids":["2832c2e9-754c-44ac-a78d-e4469dfaccf1"]}
+✖ PT-01 backend access and original recovery through actual HTTP adapters (111326.7808ms)
+✖ PT-18 source identity, reviewed reconciliation and retained output recovery (279756.2142ms)

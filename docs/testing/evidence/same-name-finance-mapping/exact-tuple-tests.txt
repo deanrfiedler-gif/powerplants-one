@@ -1,0 +1,17 @@
+▶ PT-02 same-name Q01 customer selects one exact synthetic debtor through release and target
+  ✔ wrong-company same-name debtor is refused, even when the actor can access both accounts (440.7194ms)
+  ✔ a display name, missing account or proposed ERP mapping cannot stand in for verified synthetic context (365.7724ms)
+  ✔ exact account selection saves the source hash; absent current verification blocks submission without reservations (925.942ms)
+  ✔ mapping changes after submission or approval require current verification before review and processing (567.6931ms)
+  ✔ every accepted target and allocation resolves to the exact retained connection/company/debtor tuple (56.1009ms)
+  ✔ account tuple and target are immutable; later source mapping changes preserve historical exact identity (209.4434ms)
+✔ PT-02 same-name Q01 customer selects one exact synthetic debtor through release and target (29377.8674ms)
+ℹ {"work_id":"4201dc12-2bf3-4223-b5b7-b1f1d3bbf254","site_id":"70000000-0000-4000-8000-000000000001","handoff_id":"4187102c-032d-4277-89b0-09b2ed5ce8de","account_id":"f2000000-0000-4000-8000-000000000001","mapping_id":"84000000-0000-4000-8000-000000000001","mapping_hash":"b92098a8dc545d4cab0e4a6841b416522b27e5e9de5333d843e66b8f0eda1efe","tuple":["21000000-0000-4000-8000-000000000001","SYN-A","000Ab-C.01"],"target_id":"7e9c9ab0-fae2-463b-8608-d023e3b4c178","input_hash":"c4882f9bc6ee4c46b37097daf147fd20dd3e7b5a67b4031a3662bc4311ac726c","target_lines":2}
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 37991.832

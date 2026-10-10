@@ -25,12 +25,13 @@
         "AT-02",
         "AT-30"
       ],
-      "technical_disposition": "Component",
+      "technical_disposition": "Combined synthetic pass",
       "source_ids": [
-        "P10"
+        "P10",
+        "MAPPING"
       ],
-      "remaining_boundary": "Need a single evidence record covering same-name selection, wrong company, absent mapping and correct tuple.",
-      "next_action": "Technical reviewer: assemble the existing mapping assertions and current fixture outputs into the complete PT-02 record.",
+      "remaining_boundary": "Technical reviewer: review the joined source/target record. Owner observation and operational mapping acceptance remain separate.",
+      "next_action": "Technical reviewer: review the joined source/target record. Owner observation and operational mapping acceptance remain separate.",
       "human_acceptance": "Pending actual observations"
     },
     {

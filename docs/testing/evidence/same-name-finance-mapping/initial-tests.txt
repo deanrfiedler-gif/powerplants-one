@@ -1,0 +1,43 @@
+✖ PT-02 same-name Q01 customer selects one exact synthetic debtor through release and target (22615.1068ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 30583.8856
+
+✖ failing tests:
+
+test at tests\database\finance-same-name-mapping.test.ts:1:4067
+✖ PT-02 same-name Q01 customer selects one exact synthetic debtor through release and target (22615.1068ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+    [
+      [
+  +     '21000000-0000-4000-8000-000000000001',
+  -     'PPO-SIM',
+        'SYN-A',
+        '000Ab-C.01'
+      ],
+      [
+  +     '21000000-0000-4000-8000-000000000001',
+  -     'PPO-SIM',
+        'SYN-B',
+        '000ab-C.01'
+      ]
+    ]
+
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\backend-access-recovery\powerplants-one\tests\database\finance-same-name-mapping.test.ts:178:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ [ '21000000-0000-4000-8000-000000000001', 'SYN-A', '000Ab-C.01' ], [ '21000000-0000-4000-8000-000000000001', 'SYN-B', '000ab-C.01' ] ],
+    expected: [ [ 'PPO-SIM', 'SYN-A', '000Ab-C.01' ], [ 'PPO-SIM', 'SYN-B', '000ab-C.01' ] ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

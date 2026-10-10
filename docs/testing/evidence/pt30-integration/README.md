@@ -19,6 +19,8 @@ All four existing narrative phases pass on integrated application/test source `c
 
 The initial history image was captured while a secondary panel still showed loading. It remains in the evidence alongside the corrected view; the original API assertions passed. This was a capture-timing refinement, with no runtime or deadline change.
 
+Main subsequently advances to `794aee6` with PT-02 tests/evidence and instruction edits. The final [combined PR #390](https://github.com/deanrfiedler-gif/powerplants-one/pull/390) resolves the shared document conflicts and retains the exact reviewed PT-23/PT-29 heads as ancestors. Its runtime files remain equal to the declared rehearsal source; main's exact PT-02 case/source and both document-register additions are preserved. The [review record](integration-review.json) records this integration method. Final combined-head CI and merge are separate from the earlier parent runs.
+
 ## Integration CI finding
 
 PR #389's first compiled desktop run passes 401 cases, skips 17 existing inapplicable cases and fails the existing Products historical-pricing recovery test. Its pending panel is visible while the intercepted POST is still in flight; the test could reload before the intended accepted-response loss. [The source-bound diagnosis](pricing-recovery-ci.json) retains that failure, a normal passing control on unmodified main `8869437`, and the same failure reproduced by holding the real POST for 1,500 ms on that baseline. The local trace shows the original receipt read returning 404 before the POST is forwarded and accepted with 200. The application correctly retains the unknown original.

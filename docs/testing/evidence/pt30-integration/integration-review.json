@@ -2,7 +2,7 @@
   "schema_version": 1,
   "recorded_date": "2026-10-10",
   "reviewer": "Implementing assistant; not independent human approval",
-  "decision": "No actionable source-review blocker found in the selected changes. Repository merge remains conditional on successful updated-head CI.",
+  "decision": "No actionable release-guard or screen-state source-review blocker found. The subsequent Products driver race is corrected and retained separately. Final repository integration uses PR #390 after successful checks of its combined head.",
   "pull_requests": [
     {
       "number": 387,
@@ -24,17 +24,24 @@
         "Selected fifteen-screen populated, loading, failed/recovered, empty-or-unavailable and current-denial assertions distinguish real API outcomes from injected presentation failures.",
         "Save, upload, partial-account and stale-action cases preserve their stated recovery boundaries.",
         "Fixture identifiers and dates avoid desktop/mobile collisions with retained full-suite journeys.",
-        "The branch includes reviewed PT-23 source so its updated-head CI validates the combined contribution; merge PT-23 first."
+        "The branch includes reviewed PT-23 source. Both reviewed heads remain ancestors of the final combined PT-30 integration."
       ],
       "review_limits": "PT-29 contribution is tests and documentation. Its earlier execution remains bound to its recorded source, while this rehearsal identifies the combined build. Phone emulation and role switching do not establish physical-device or owner acceptance."
     }
   ],
-  "merge_policy": "Require completed successful checks for the exact reviewed heads and recheck the remote heads before merging. Final CI and merge outcomes belong to the linked PR records; this review does not claim either merge has happened.",
+  "merge_policy": "Require completed successful checks for the exact final PR-390 head and recheck remote head and mergeability before merging. Main advanced with PT-02 evidence and instruction edits while parent CI ran; document conflicts are resolved once in the combined descendant. Parent source review and historical CI remain separately recorded. No merge or deployment is claimed by this preparation record.",
   "rehearsal": "verification.json",
   "owner_acceptance": "Pending H01-H11 and applicable prerequisite dispositions",
   "deployment": "Not requested or performed",
   "subsequent_ci_finding": {
     "evidence": "pricing-recovery-ci.json",
     "summary": "PR-389 attempt 1 fails the existing Products receipt-recovery timing assertion. The same race is reproduced with a held POST on unmodified main and corrected in the descendant PT-30 test. The unchanged PR-389 job rerun remains separate from this correction and from original local PT-29 passes."
+  },
+  "main_integration": {
+    "pull_request": 390,
+    "base": "main",
+    "integrated_main": "794aee6c0a540189c7fcce16c7d077c21bac68c6",
+    "runtime_changed_from_rehearsal": false,
+    "resolution": "Preserve PT-02 case and MAPPING source exactly from main; retain PT-01/23/29/30 evidence, bounded PT-13/18 reconciliation, both document-register entries and current instruction edits. All authored procedures and parent IDs remain unchanged."
   }
 }

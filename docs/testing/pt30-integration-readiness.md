@@ -12,6 +12,8 @@ The PT-13 summary row is reconciled with the already-retained [approved time/mat
 
 The [execution record](evidence/pt30-integration/README.md), [all thirty case dispositions](evidence/pt30-integration/prerequisites.json) and [current owner walkthrough](../delivery/field-integrated-owner-walkthrough.md) provide the concrete handover. PT-18 already has retained movement/version-loss evidence; its authenticated customer/provider boundary remains open. The later complete #373 performance profiles miss 12/16 compiled and 16/16 development groups; subsequent Customers transfer reduction is a bounded median observation, not a new p95 pass.
 
+Main's later PT-02 joined backend proof is retained with its exact source/case disposition. Combined PR #390 resolves the document conflicts with main `794aee6`; runtime bytes remain the rehearsed source. The final combined CI/merge record governs integration, separately from earlier parent checks and owner acceptance.
+
 ## Remaining acceptance work
 
 - Prior cases with component evidence still need their exact written procedure joined and reviewed. The case-by-case ledger remains authoritative; the full journey does not automatically promote them.
