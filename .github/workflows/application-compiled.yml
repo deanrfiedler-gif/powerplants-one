@@ -8,6 +8,12 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      proof:
+        description: Existing full assurance or a separate PT-27 observer comparison
+        type: choice
+        options: [all, customer-observer]
+        default: all
 permissions:
   contents: read
 defaults:
@@ -17,7 +23,7 @@ jobs:
   compiled:
     name: Desktop and mobile browser suite against the compiled application
     needs: compiled_suites
-    if: always()
+    if: ${{ always() && inputs.proof != 'customer-observer' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
@@ -28,6 +34,7 @@ jobs:
 
   compiled_suites:
     name: Compiled application ${{ matrix.suite }} proof
+    if: inputs.proof != 'customer-observer'
     runs-on: ubuntu-24.04
     # Each browser project keeps its warm-up dependency and original deadlines.
     # Each matrix job owns a separate app and disposable database; tests within
@@ -198,4 +205,82 @@ jobs:
             test-results/
             verification-evidence/
             !**/trace.zip
+          retention-days: 14
+
+  customer_observer:
+    name: PT-27 controlled observer comparison
+    if: github.event_name == 'workflow_dispatch' && inputs.proof == 'customer-observer'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    services:
+      postgres:
+        image: postgres:16.15
+        env:
+          POSTGRES_USER: ppo_local
+          POSTGRES_PASSWORD: ppo_disposable_ci_only
+          POSTGRES_DB: ppo_synthetic_test
+        ports:
+          - 127.0.0.1:5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ppo_local -d ppo_synthetic_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+      PPO_SOURCE_HEAD: ${{ github.sha }}
+      PPO_COMPILED_SOURCE: ${{ github.sha }}
+      PPO_BENCHMARK_FIXTURE: add-synthetic-load
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+      - name: Install the existing locked runtime and browser
+        run: |
+          npm install --global npm@11.19.0
+          npm ci
+          npm run browser:install
+      - name: Build the declared source once
+        run: npm run build
+      - name: Configure disposable PostgreSQL lock capacity
+        env:
+          PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: bash scripts/configure-test-postgres.sh
+      - name: Prepare the declared fresh synthetic fixture once
+        run: |
+          cp .env.example .env.local
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('.env.local')
+          p.write_text(p.read_text().replace('<local-password>','ppo_disposable_ci_only').replace('/ppo_synthetic','/ppo_synthetic_test'))
+          PY
+          npm run db:migrate
+          npm run db:seed
+          npm run db:health
+          node --env-file=.env.local --import tsx scripts/quality-customer-timeline.ts prepare
+          mkdir -p verification-evidence/pt27-loading
+      - name: Verify actual compiled diagnostic phases
+        env:
+          PPO_PROOF_DIAGNOSTICS: "1"
+        run: node --env-file=.env.local --import tsx scripts/quality-database-proof-smoke.ts observer-compiled-smoke
+      - name: Execute the fixed off-on-on-off block
+        run: |
+          python3 tests/scripts/test_quality_observer_block.py
+          python3 scripts/quality-observer-block.py "observer-ci-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+      - name: Prepare diagnostic evidence
+        if: always()
+        id: observer_review
+        run: python3 scripts/prepare-review-evidence.py
+      - name: Preserve every original attempt and resource sample
+        if: ${{ always() && steps.observer_review.outcome == 'success' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: PT27-controlled-observer-evidence
+          path: |
+            verification-evidence/review-diagnostic-redactions.json
+            verification-evidence/customer-loading-diagnosis/fixture.json
+            verification-evidence/pt27-observer/
+            verification-evidence/pt27-loading/
+            verification-evidence/transport-diagnostics/
           retention-days: 14

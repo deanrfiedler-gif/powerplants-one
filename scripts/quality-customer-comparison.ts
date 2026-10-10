@@ -36,7 +36,7 @@ const metadata = {
   detailed_diagnostics: process.env.PPO_PROOF_DIAGNOSTICS === "1",
   network: { latency_ms: 40, download_bytes_per_second: 1250000, upload_bytes_per_second: 625000 },
   fixture, target_ms: 3000,
-  limits: "Customers only; ten independent headless Chrome processes, four waves per viewport and one actual record activation per user/viewport. Fresh browser contexts for the cold wave, three warm repeats, retained database/OS caches. Local shared host, no physical-device, hosted, screen-reader or whole PT-27 acceptance. CDP path/status/transfer observations and optional gateway logging add overhead. Fonts/Kit use this build's normal configuration; no network request is exempted.",
+  limits: "Customers only; ten independent headless Chrome processes, four waves per viewport and one actual record activation per user/viewport. Fresh browser contexts for the cold wave, three warm repeats, retained database/OS caches. Results apply to the recorded run host; no physical-device, hosted, screen-reader or whole PT-27 acceptance. CDP path/status/transfer observations and optional gateway logging add overhead. Fonts/Kit use this build's normal configuration; no network request is exempted.",
 };
 async function checkpoint(complete: boolean) {
   await writeFile(`${root}/results.json`, JSON.stringify({ ...metadata, complete, browser: browsers[0]?.version(), samples, record_visits: visits, errors }, null, 2));
@@ -49,6 +49,9 @@ async function settled(page: Page) {
   await page.evaluate(() => new Promise<void>(r => requestAnimationFrame(() => requestAnimationFrame(() => r()))));
 }
 try {
+  // Immutable process metadata lets an external sampler observe both logging
+  // modes without enabling the application's detailed diagnostic writer.
+  await writeFile(`${root}/run.json`, JSON.stringify(metadata, null, 2));
   let ready = false;
   const startupDeadline = performance.now() + 120000;
   while (performance.now() < startupDeadline) {
@@ -87,7 +90,7 @@ try {
         const finished = (e: { requestId: string; timestamp: number; encodedDataLength: number }) => { const r = network.get(e.requestId); if (r) Object.assign(r, { finish_ms: 1000 * (e.timestamp - start), encoded_bytes: e.encodedDataLength }); };
         const rule = (e: { requestId: string; appliedNetworkConditionsId?: string }) => { if (e.appliedNetworkConditionsId) applied.set(e.requestId, e.appliedNetworkConditionsId); };
         cdp.on("Network.requestWillBeSent", sent).on("Network.responseReceived", responded).on("Network.loadingFinished", finished).on("Network.requestWillBeSentExtraInfo", rule);
-        const begin = performance.now();
+        const beganAt = Date.now(), begin = performance.now();
         let coreHeadersMs: number | null = null;
         try {
           const [response] = await Promise.all([waitForSampleCoreResponse(page, "/api/v1/crm/directory").then(response => { coreHeadersMs = performance.now() - begin; return response; }), page.goto(origin + "/customers", { waitUntil: "domcontentloaded", timeout: 120000 })]);
@@ -109,9 +112,9 @@ try {
           });
           const metrics = await cdp.send("Performance.getMetrics");
           const browserMetrics = Object.fromEntries(metrics.metrics.filter(m => ["TaskDuration", "ScriptDuration", "LayoutDuration", "RecalcStyleDuration", "JSHeapUsedSize"].includes(m.name)).map(m => [m.name, m.value]));
-          samples.push({ viewport: viewport.name, wave, user, ready_ms: readyMs, core_headers_ms: coreHeadersMs, core_json_processed_ms: coreJsonMs, navigation, browser_metrics: browserMetrics, free_memory_bytes: freemem(), network: [...network.values()] });
+          samples.push({ viewport: viewport.name, wave, user, started_at_ms: beganAt, ready_ms: readyMs, core_headers_ms: coreHeadersMs, core_json_processed_ms: coreJsonMs, navigation, browser_metrics: browserMetrics, free_memory_bytes: freemem(), network: [...network.values()] });
         } catch (error) {
-          samples.push({ viewport: viewport.name, wave, user, error: error instanceof Error ? error.message : String(error), network: [...network.values()] });
+          samples.push({ viewport: viewport.name, wave, user, started_at_ms: beganAt, error: error instanceof Error ? error.message : String(error), network: [...network.values()] });
           throw error;
         } finally {
           cdp.off("Network.requestWillBeSent", sent).off("Network.responseReceived", responded).off("Network.loadingFinished", finished).off("Network.requestWillBeSentExtraInfo", rule);
@@ -126,7 +129,7 @@ try {
     const outcomes = await Promise.allSettled(pages.map(async (page, user) => {
       const link = page.locator(viewport.name === "phone" ? ".crm-directory-mobile-main" : ".crm-directory-table tbody th a").first();
       const href = await link.getAttribute("href"); assert.ok(href);
-      const target = new URL(href, origin), start = performance.now();
+      const target = new URL(href, origin), beganAt = Date.now(), start = performance.now();
       const [response] = await Promise.all([waitForSampleCoreResponse(page, `/api/v1${target.pathname}/workspace`), viewport.name === "phone" ? link.tap() : link.click()]);
       assert.equal(response.status(), 200);
       const data = await response.json();
@@ -134,7 +137,7 @@ try {
       await expect(page).toHaveURL(target.href);
       await expect(page.getByRole("heading", { name: data.context.display_name, exact: true }).first()).toBeVisible();
       await settled(page);
-      visits.push({ viewport: viewport.name, user, path: target.pathname, ready_ms: performance.now() - start, status: response.status() });
+      visits.push({ viewport: viewport.name, user, started_at_ms: beganAt, path: target.pathname, ready_ms: performance.now() - start, status: response.status() });
     }));
     for (const o of outcomes) if (o.status === "rejected") errors.push(String(o.reason));
     await checkpoint(false);
