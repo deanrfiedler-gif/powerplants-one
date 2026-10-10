@@ -19,7 +19,7 @@ Not decided here: how the icons are delivered, the final icon-by-icon mapping, a
 - **Today's icons** are drawn in-house on a 24-unit grid with a 1.7 line. Seventeen source files draw them, in several catalogues: the semantic navigation set with filled selected variants (`src/components/navigation-icons.tsx`), the shell set (`shell-icon.tsx`), the product set (`product-icons.tsx`), My Work (`my-work-ui.tsx`), the shared secondary menu, and module drawings for job packs, materials, engineering changes, commissioning, acceptance, fertigation, leads, the Gantt chart and the sign-in page.
 - **The department navigation icons decision** chose locally drawn shapes. It rejected an icon dependency as unnecessary, and because no package offered a matching filled family. Font Awesome Light with Solid supplies that matching pair. This record therefore amends that decision for the source of the shapes only. Its semantic catalogue, destination IDs, 48 px targets, 25 px rail glyphs and selection rules remain.
 - **The shared UI specification** says the prototype uses Lucide for functional controls. That sentence describes the retired standalone design preview (`docs/standards/ui-assets/README.md`), not the running application.
-- **The repository is public.** Font Awesome's Pro licence forbids making Pro files publicly available, so Pro icon files cannot be committed. The monthly plan offers no downloadable bundle (Dean, 10 October 2026). Pro icons reach a project through a Kit, which Dean holds and restricts to approved websites.
+- **The repository is public.** Font Awesome's Pro licence forbids making Pro files publicly available, so Pro icon files cannot be committed. The monthly plan offers no downloadable bundle (Dean, 10 October 2026). Its Kit settings also state that packages aren't included on monthly plans and need annual billing (Dean's Kit settings, 10 October 2026). On the monthly plan, Pro icons reach a project only through the Kit script, which Dean holds and restricts to approved websites.
 - **Font Awesome Free 7.3.1** has 273 outline (Regular) icons and 2,001 filled (Solid) icons, according to the package's published file list on 10 October 2026. A Free-only set would therefore mix outline and filled icons.
 - **The offline field workspace** (`public/offline/`, FI-02) must keep working without a network connection (NFR-07).
 
@@ -57,16 +57,16 @@ The mapping used for the comparison is a starting point, not the final mapping:
 | Option | For | Against |
 |---|---|---|
 | A. Kit script from Font Awesome's servers | No build change and no secret. No Pro files in the repository. | Every page needs Font Awesome's servers, and icons are missing offline (NFR-05, NFR-07). Icons disappear for every user if the plan lapses. The Kit ID becomes public and relies on the Kit's website restrictions. A third-party script runs on every page and rewrites the page after React renders it. |
-| B. Kit package installed with npm and built into the app | Icons are served from the app's own address, so they work offline and need no runtime call. Only the icons used are included. Rendering stays with React components. | Needs a Font Awesome package token wherever the app is installed: each developer's machine, CI and the hosted-demo build. The token must stay a secret and never reach the repository, lockfile or logs (NFR-03). Adds three dependencies. Whether the monthly plan includes package access is unverified. |
+| B. Kit package installed with npm and built into the app | Icons are served from the app's own address, so they work offline and need no runtime call. Only the icons used are included. Rendering stays with React components. | Needs a Font Awesome package token wherever the app is installed: each developer's machine, CI and the hosted-demo build. The token must stay a secret and never reach the repository, lockfile or logs (NFR-03). Adds three dependencies. Not available on the monthly plan: packages need annual billing. |
 | C. Font Awesome Free, self-hosted | No account or secret. Works offline. | Too few outline icons: the set mixes outline and filled, as the comparison showed. |
 | D. Keep the locally drawn icons | No dependency, and the current consistent weight. | Every new icon must be drawn in-house. Dean preferred Light. |
 | E. Commit Pro icon files | Self-contained. | Forbidden by the Pro licence in a public repository, and the monthly plan has no download. |
 
 ## Proposed delivery
 
-Use **B** if the plan includes package access. The icons are compiled into the app's own assets, which suits the offline workspace and avoids a runtime dependency. The token is held only in local, CI and hosting secret stores.
+**B** is the better technical fit: the icons are compiled into the app's own assets, which suits the offline workspace and avoids a runtime dependency. The token would be held only in local, CI and hosting secret stores. It needs Dean to switch his plan to annual billing, which is his decision.
 
-If the plan has no package access, use **A** for online pages only. The offline workspace would keep its local shapes, and the outage risk would be accepted. Every control keeps its accessible name, but icon-only buttons would lose their visible cue if Font Awesome's servers were unreachable.
+On the monthly plan, use **A** for online pages only. The offline workspace would keep its local shapes, and the outage risk would be accepted. Every control keeps its accessible name, but icon-only buttons would lose their visible cue if Font Awesome's servers were unreachable.
 
 ## Consequences
 
@@ -81,7 +81,7 @@ If the plan has no package access, use **A** for online pages only. The offline 
 
 ## Open questions before implementation
 
-1. Does the monthly plan include a package token for option B? What page-view or bandwidth limits apply to option A?
+1. Will Dean switch to annual billing for option B, or keep the monthly plan and use option A? Packages need annual billing (answered by his Kit settings on 10 October 2026). What page-view or bandwidth limits apply to option A?
 2. What do the licence terms say about continued use after a lapse, and about the private hosted demo?
 3. Which addresses must the Kit allow: `localhost` and the hosted demo's address?
 4. What is the final mapping for every semantic icon name in the catalogues listed above, including names with no close Light match?
