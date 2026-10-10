@@ -98,3 +98,40 @@ Dean's working hours ([decision](../../../decisions/ui-build-sequence.md#planner
 - **Planner lanes:** a confirmed card in a person's lane adds the line "Extended hours · 07:30 to 12:30 including travel" in the warning colour, and its accessible name adds "extended hours". Proposed and cancelled cards are not marked.
 - **Calendar text:** lanes show the published interval, now 07:00–18:00 in freshly seeded data. Older seeded databases still show 08:00–17:00.
 - **Evidence:** [checks and captures](../../../testing/evidence/planner-working-hours/README.md): unit tests for the rule, a database test that travel can reach 07:00 and 18:00 but not a minute beyond, and element captures from a task-owned server. Visual review stays pending.
+
+## Day timeline built — 10 October 2026
+
+Stage 1 of building the refinement boards, on Dean's "Yes to both, proceed with your recommendations" ([decision](../../../decisions/ui-build-sequence.md#planner-day-timeline-10-october-2026)). Week, phone and Map follow in later stages.
+
+- **Where it shows:** Day view at 781 px and wider, when the display timezone is the resources' calendar timezone. Narrower screens keep the existing day list until the phone layout is built. With another display timezone the list shows, with a note to switch.
+- **Layout:** a sticky people column (avatar, name linking to the technician, resource type, one total such as "2 of 9 h booked"; free time in hover and screen-reader text) beside a 07:00 to 18:00 axis with hour labels, half-hour labels when there is room, and a Now pill and line on today.
+- **Lanes:** hour and half-hour hairlines. Inside the calendar but outside 08:00 to 17:00 is shaded Extended hours; outside the calendar is hatched Not working. Unavailable time, leave and closures are hatched blocks naming the kind and times. Every reservation the server returns shows as a faint hatched underlay, so time booked under a filter is never drawn as free. Time already gone today has a very light wash.
+- **Visits:** placed by time, with the person's travel joined either side and a 4 px gap to neighbours. Title (scope summary), time and site; initials only when shared. Faint blue confirmed, amber needs attention, hatched proposed. Hover text names the status, travel and extended hours. Flat at rest; hover or keyboard focus grows the visit and its travel a fixed 3 px on every side.
+- **Details panel:** clicking a visit, or Enter or Space on it, opens a 360 px panel: title and close, work order and status, Visit (S6 date range, site, appointment), Crew (role and travel), Readiness (customer contact, job pack, scope, policy, dispatch), then Close, Move or reassign and Open appointment. Focus moves to the panel heading and returns to the visit; Escape closes it.
+- **Drag:** a confirmed visit dragged along the timeline proposes the start time where it lands, snapped to 15 minutes, and opens Move or reassign with the crew unchanged. The keyboard route is the details panel.
+- **People who cannot be booked** (inactive, or away for the whole of standard hours) move to short rows at the bottom.
+- **Shared components:** `PlannerTimeline` and `AppointmentSnapshot` in `src/scheduling/components/client/planner-timeline.client.tsx`; calculations in `src/scheduling/day-timeline.ts`; styles in `src/app/globals.css`. Booking commands, guards and recovery are unchanged.
+- **Evidence:** [checks and captures](../../../testing/evidence/planner-day-timeline/README.md). No owner visual review yet.
+
+## Week board built — 10 October 2026
+
+Stage 3 of building the refinement boards ([decision](../../../decisions/ui-build-sequence.md#planner-week-board-10-october-2026)). Same conditions as the Day timeline: 781 px and wider, display timezone matching the resources' calendars; otherwise the lane list.
+
+- **Columns:** a sticky people column and one column per day. Each day heading is a button that opens that day in the Day view, and shows the team's total, such as "6 of 54 h booked", with a Today chip on today. Weekend days are 24 px hatched "S" strips while nothing is on them.
+- **People:** name, resource type and the week's total, such as "3 of 45 h booked". People away all week, and inactive people, sit last in short rows with one line across the week.
+- **Cells:** only visits and unavailable time. How full the day is shows as a soft navy shading that deepens with hours booked; hours and free time are in the cell's hover and screen-reader text. Unavailable time, leave, closures and filter-hidden reservations are hatched blocks naming the kind and times.
+- **Tiles:** time and title, crew initials only when shared, a clock only for extended hours. Faint blue confirmed, amber needs attention, hatched proposed. Hover text names the status and travel. Tiles grow 3 px each side and rise 1 px on hover or focus.
+- **Details and moves:** a tile opens the same details panel as the Day view (Enter or Space too). Dragging a confirmed tile to another day keeps its time and opens Move or reassign, as before.
+- **Evidence:** [checks and captures](../../../testing/evidence/planner-week-board/README.md). No owner visual review yet.
+
+## Phone layout built — 10 October 2026
+
+Stage 4 of building the refinement boards ([decision](../../../decisions/ui-build-sequence.md#planner-phone-layout-10-october-2026)). Below 781 px, when the display timezone is the resources' own; otherwise the lane list.
+
+- **Controls (phase 00 finding: "tabs and filters fill the first screen"):** the Scheduling tabs are one scrolling row; the date, Day/Week, Refresh and a Filters button stay in view, and the display timezone, Work orders and the three filters fold behind Filters, which shows how many are set. The four counts are one compact row. The first person's card now starts on the first screen at 390 × 844.
+
+- **Day:** chips for the week's weekdays (and weekend days with visits), each with its visit count; an attention row ("2 proposed · 1 needs attention") that jumps to the Proposed and cancelled list; then one card per person: avatar, name and one total; a 07:00 to 18:00 strip showing extended or not-working ends, unavailable time, travel, visits by status and the Now tick, with free time in its accessible name and hover text; then the person's visit cards. People away or inactive sit last in short rows.
+- **Week:** one section per day, its heading opening that day, with the team's total; visit cards for everyone that day, with crew initials always shown because the list mixes people. Weekend days with nothing on them are short.
+- **Cards:** time, title and site; faint blue confirmed, amber needs attention, hatched proposed; a clock for extended hours. They grow 3 px each side and rise 1 px on press.
+- **Details:** the shared details panel as a bottom sheet above the shell's navigation, with Close, Move or reassign and Open appointment.
+- **Evidence:** [checks and captures](../../../testing/evidence/planner-phone-layout/README.md). No device or owner review yet.

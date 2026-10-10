@@ -58,3 +58,15 @@ Automatic policy preparation must show failures without moving focus out of a da
 ## Working hours (10 October 2026)
 
 The catalogue resource calendar now publishes 07:00 to 18:00, like the sample calendars. A confirmed card in a lane shows Extended hours when its visit and that person's travel fall outside the 08:00 to 17:00 standard hours; see the appointment component. The lane's calendar text still shows the published interval only. Standard hours are a fixed rule from [Dean's decision](../../../decisions/ui-build-sequence.md#planner-working-hours-10-october-2026), not calendar data.
+
+## Day timeline (10 October 2026)
+
+`PlannerTimeline` draws the Day view as a 07:00 to 18:00 timeline and `AppointmentSnapshot` is the details panel a selected visit opens. They follow the phase 00 refinement boards ([decision](../../../decisions/ui-build-sequence.md#planner-day-timeline-10-october-2026)). The default catalogue state shows them with a fixed Now of 10:40; Week keeps `PlannerBoard`. The calculations (axis, bands, hours booked, free time, needs attention) are in `src/scheduling/day-timeline.ts` with unit tests. No owner visual review yet.
+
+## Week board (10 October 2026)
+
+`PlannerWeek` draws the Week view as the stripped-back board: one row per person, one column per day, load shading, slim weekend strips, compact tiles and the shared details panel ([decision](../../../decisions/ui-build-sequence.md#planner-week-board-10-october-2026)). The `week` catalogue state shows it; the new `lane-list` state shows `PlannerBoard`, which narrow screens and other display timezones still use. No owner visual review yet.
+
+## Phone layout (10 October 2026)
+
+`PlannerPhone` is the planner below 781 px: day chips, an attention row, one card per person with a 07:00 to 18:00 strip and their visits, and a Week list by day ([decision](../../../decisions/ui-build-sequence.md#planner-phone-layout-10-october-2026)). The shared details panel becomes a bottom sheet. The `phone` catalogue state shows it inside a phone-width frame. No device or owner review yet.
