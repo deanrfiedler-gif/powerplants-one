@@ -18,6 +18,10 @@ The [continuation record](../testing/evidence/pt27-loading/narrowed-repeat/READM
 
 Next isolate session/context read availability before the directory GET under the same ten-user load, including unchanged-main reproduction and explicit phase timing. The retained observations do not identify a database, pool or operating-system root cause. Keep existing authority, timeout, pool, retry and font rules. No performance adoption, merge or deployment is authorised by this evidence.
 
+## Authorised session-read investigation
+
+Dean authorised that next diagnostic and corrective increment. Reuse the existing isolated branch, retained synthetic fixture and compiled comparison profile. Start with unchanged main `6c69d92` and its retained build; keep every result. Extend the existing opt-in local diagnostics with fixed phase names, connection/query timing, pool counts and allowlisted error categories for session/context reads. Never log SQL, parameters, cookies, identities, connection configuration or arbitrary error messages. Distinguish uninstrumented main, main with diagnostics, and any corrective candidate explicitly. Instrumentation does not count as an unchanged source or a business fix. Use the evidence to select the smallest correction, preserve current authority and failure deadlines, and verify desktop/phone loading and actual navigation. No dependency, migration, deployment or operational integration is planned.
+
 ## Initial broad correction (superseded)
 
 The baseline ten-user Customers trace observes automatic shell destination requests during current-page loading, including Home before the session read finishes and Sales destinations while the directory settles. ProductNavigation links now use the existing Next Link `prefetch={false}` policy already adopted for directory links. This removes speculative destination rendering; URLs, click/keyboard/touch navigation, permissions and the unsaved-work guard remain unchanged. It is a bounded use of the existing stack, not a new technology choice.
