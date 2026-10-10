@@ -87,10 +87,16 @@ test("P11 PT-29 failed photo upload retains the selected original and recovers w
   await expect(page.getByRole("button", { name: "3. Verify and make available", exact: true })).toHaveCount(0);
   expect(await page.getByLabel("Synthetic photo file").evaluate((e: HTMLInputElement) => e.files?.[0]?.name)).toBe("SYN-PT29-retained.png");
   expect((await call(page, `my-jobs/${job.id}`)).items[0].attachments).toEqual(before);
+  const retry = page.getByRole("button", { name: "Retry original submission", exact: true });
+  // The phone's fixed timer controls can cover the bottom of the initial
+  // viewport. Scroll the actual recovery control into view for review evidence.
+  await retry.scrollIntoViewIfNeeded();
+  await expect(retry).toBeInViewport({ ratio: 1 });
+  await expect(page.getByRole("alert").filter({ hasText: "SYN upload unavailable" })).toBeInViewport({ ratio: 1 });
   await capture(page, info, "SC-10-upload-failed-original-retained");
   await page.unroute(path);
   // The explicit retry reuses the original command and bytes, without reselecting.
-  await page.getByRole("button", { name: "Retry original submission", exact: true }).click();
+  await retry.click();
   await page.getByRole("button", { name: "3. Verify and make available", exact: true }).click();
   await expect(page.getByRole("link", { name: "Preview original photo", exact: true })).toBeVisible();
   const after = (await call(page, `my-jobs/${job.id}`)).items[0].attachments;
@@ -524,11 +530,11 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
         );
         await page.reload({ waitUntil: "domcontentloaded" });
         await expect(screenLoading).toHaveCount(0);
-        await expect(
-          page
-            .getByText(/No (permitted|current assigned|Finance handoffs)/)
-            .first(),
-        ).toBeVisible();
+        const emptyResult = page.getByText(/No (permitted|current assigned|Finance handoffs)/).first();
+        await expect(emptyResult).toBeVisible();
+        // Capture the empty result itself, not only a tall filter panel above it.
+        await emptyResult.scrollIntoViewIfNeeded();
+        await expect(emptyResult).toBeInViewport({ ratio: 1 });
         await capture(page, info, `${s.id}-empty`);
         await page.unroute(match);
       } else if (s.id === "SC-13") {
