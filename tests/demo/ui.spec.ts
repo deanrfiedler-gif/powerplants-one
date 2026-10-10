@@ -62,6 +62,11 @@ test("invited actor: schedule lanes, demand and appointment links load with book
   await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
   await expect(page.getByRole("heading", { name: "Unassigned demand", exact: true })).toBeVisible();
   await expect(page.getByText(/Unassigned demand is unknown/)).toHaveCount(0);
+  // Wide screens show the Week board: a confirmed visit opens its details, which carry Move or reassign.
+  if ((page.viewportSize()?.width ?? 0) >= 781) {
+    await page.locator('[data-appointment][data-status="Confirmed"]').first().click();
+    await expect(page.getByRole("complementary", { name: /^Visit details: / })).toBeVisible();
+  }
   await expect(page.getByRole("button", { name: "Move or reassign", exact: true }).first()).toBeVisible();
   const schedule = await call(page, "schedule?from=2031-09-21T14%3A00%3A00Z&to=2031-09-28T14%3A00%3A00Z&timezone=Australia%2FBrisbane");
   expect(schedule.items.length).toBeGreaterThan(0);

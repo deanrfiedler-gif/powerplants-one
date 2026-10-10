@@ -61,7 +61,8 @@ test("PL01 demand to readiness, contact, full crew confirmation and retained pla
   await expect(page.getByText("Dispatch held", { exact: true })).toBeVisible();
   await page.screenshot({ path: info.outputPath("confirmed.png"), fullPage: true });
   await page.getByRole("link", { name: "Show its dates / View in planner" }).click();
-  await expect(page.locator(`a[href='/service/appointments/${appointmentId}']`).first()).toBeVisible();
+  // The Week board shows the visit as a tile; the lane list (narrow screens, other zones) as a link.
+  await expect(page.locator(`[data-appointment='${appointmentId}'], a[href='/service/appointments/${appointmentId}']`).first()).toBeVisible();
   await page.getByRole("link", { name: "Return to previous planner context" }).click();
   await expect(page).toHaveURL(new RegExp("day=2031-09-22&view=day&timezone=UTC"));
   expect(new URL(page.url()).searchParams.get("resource_id")).toBe(fixtureId("a4"));

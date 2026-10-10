@@ -5,7 +5,10 @@ import {
   dayMinute,
   hoursText,
   initials,
+  isoWeek,
+  kindText,
   laneDay,
+  subtractSpans,
   minuteAtFraction,
   visitState,
 } from "../../src/scheduling/day-timeline";
@@ -102,4 +105,15 @@ test("initials come from the person's own name", () => {
   assert.equal(initials("SYN Casey — expired skill"), "CA");
   assert.equal(initials("SYN Other site technician"), "OS");
   assert.equal(initials("Example Technician"), "ET");
+});
+
+test("ISO week numbers and span subtraction for the Week view", () => {
+  assert.equal(isoWeek("2031-09-22"), 39);
+  assert.equal(kindText("OtherWork"), "Other work");
+  assert.equal(kindText("Leave"), "Leave");
+  assert.equal(isoWeek("2026-01-01"), 1);
+  assert.equal(isoWeek("2027-01-01"), 53);
+  assert.equal(isoWeek("2024-12-30"), 1);
+  assert.deepEqual(subtractSpans([[420, 750]], [[450, 750]]), [[420, 450]]);
+  assert.deepEqual(subtractSpans([[420, 750]], [[420, 750]]), []);
 });

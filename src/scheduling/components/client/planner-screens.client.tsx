@@ -41,7 +41,7 @@ import {
 } from "../../working-hours";
 import type { CrewInput } from "../../validation";
 import { clockText } from "../../day-timeline";
-import { AppointmentSnapshot, PlannerTimeline } from "./planner-timeline.client";
+import { AppointmentSnapshot, PlannerTimeline, PlannerWeek } from "./planner-timeline.client";
 export type Resource = {
   id: string;
   name: string;
@@ -1686,8 +1686,8 @@ export function PlannerScreen() {
     } | null>(null),
     [dragNotice, setDragNotice] = useState("");
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  // The Day timeline needs room for its 07:00 to 18:00 axis; narrow screens keep the day list
-  // until the phone layout is built.
+  // The board views need room for their columns; narrow screens keep the lane list until the
+  // phone layout is built.
   const [wide, setWide] = useState(true),
     [now, setNow] = useState(() => new Date().toISOString());
   useEffect(() => {
@@ -1727,12 +1727,13 @@ export function PlannerScreen() {
   );
   const data = result.data,
     usable = !!data && !result.error && !result.loading;
-  const timeline =
-    mode === "day" &&
+  // The Day timeline and the Week board (the refinement boards) are drawn in the resources'
+  // own timezone; another display timezone, or a narrow screen, keeps the lane list.
+  const boardView =
     wide &&
     !!data &&
     data.resources.every((r) => r.calendar.timezone === zone);
-  const selected = timeline ? data?.items.find((a) => a.id === selectedId) : undefined;
+  const selected = boardView ? data?.items.find((a) => a.id === selectedId) : undefined;
   const modal = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     if (move) {
@@ -1968,25 +1969,40 @@ export function PlannerScreen() {
             <span>Proposed = no capacity reserved</span>
             <span>Dispatch remains held</span>
           </p>
-          {mode === "week" && (
+          {mode === "week" && !boardView && (
             <p className="planner-scroll-hint">
               Scroll within each resource lane to compare days. Keyboard: focus
               the days and use arrow keys, or choose Day.
             </p>
           )}
-          {timeline ? (
-            <div className={`planner-day-layout${selected ? " with-snapshot" : ""}`}>
-              <PlannerTimeline
-                data={data}
-                day={day}
-                zone={zone}
-                usable={usable}
-                selected={selected?.id ?? null}
-                now={now}
-                onSelect={(a) => setSelectedId(a.id === selectedId ? null : a.id)}
-                onDropAt={dropAt}
-                onDragNotice={setDragNotice}
-              />
+          {boardView ? (
+            <div className={`planner-view-layout${selected ? " with-snapshot" : ""}`}>
+              {mode === "day" ? (
+                <PlannerTimeline
+                  data={data}
+                  day={day}
+                  zone={zone}
+                  usable={usable}
+                  selected={selected?.id ?? null}
+                  now={now}
+                  onSelect={(a) => setSelectedId(a.id === selectedId ? null : a.id)}
+                  onDropAt={dropAt}
+                  onDragNotice={setDragNotice}
+                />
+              ) : (
+                <PlannerWeek
+                  data={data}
+                  days={days}
+                  zone={zone}
+                  usable={usable}
+                  selected={selected?.id ?? null}
+                  now={now}
+                  onSelect={(a) => setSelectedId(a.id === selectedId ? null : a.id)}
+                  onDrop={drop}
+                  onOpenDay={(d) => update({ day: d, mode: "day" })}
+                  onDragNotice={setDragNotice}
+                />
+              )}
               {selected && (
                 <AppointmentSnapshot
                   key={selected.id}
@@ -2000,9 +2016,9 @@ export function PlannerScreen() {
             </div>
           ) : (
             <>
-              {mode === "day" && wide && (
+              {wide && (
                 <p className="planner-scroll-hint">
-                  The timeline is drawn in the resources&apos; own timezone. Choose it as the display timezone to see it; this list shows the same day.
+                  The planner board is drawn in the resources&apos; own timezone. Choose it as the display timezone to see it; this list shows the same period.
                 </p>
               )}
               <PlannerBoard

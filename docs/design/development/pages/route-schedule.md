@@ -112,3 +112,14 @@ Stage 1 of building the refinement boards, on Dean's "Yes to both, proceed with 
 - **People who cannot be booked** (inactive, or away for the whole of standard hours) move to short rows at the bottom.
 - **Shared components:** `PlannerTimeline` and `AppointmentSnapshot` in `src/scheduling/components/client/planner-timeline.client.tsx`; calculations in `src/scheduling/day-timeline.ts`; styles in `src/app/globals.css`. Booking commands, guards and recovery are unchanged.
 - **Evidence:** [checks and captures](../../../testing/evidence/planner-day-timeline/README.md). No owner visual review yet.
+
+## Week board built — 10 October 2026
+
+Stage 3 of building the refinement boards ([decision](../../../decisions/ui-build-sequence.md#planner-week-board-10-october-2026)). Same conditions as the Day timeline: 781 px and wider, display timezone matching the resources' calendars; otherwise the lane list.
+
+- **Columns:** a sticky people column and one column per day. Each day heading is a button that opens that day in the Day view, and shows the team's total, such as "6 of 54 h booked", with a Today chip on today. Weekend days are 24 px hatched "S" strips while nothing is on them.
+- **People:** name, resource type and the week's total, such as "3 of 45 h booked". People away all week, and inactive people, sit last in short rows with one line across the week.
+- **Cells:** only visits and unavailable time. How full the day is shows as a soft navy shading that deepens with hours booked; hours and free time are in the cell's hover and screen-reader text. Unavailable time, leave, closures and filter-hidden reservations are hatched blocks naming the kind and times.
+- **Tiles:** time and title, crew initials only when shared, a clock only for extended hours. Faint blue confirmed, amber needs attention, hatched proposed. Hover text names the status and travel. Tiles grow 3 px each side and rise 1 px on hover or focus.
+- **Details and moves:** a tile opens the same details panel as the Day view (Enter or Space too). Dragging a confirmed tile to another day keeps its time and opens Move or reassign, as before.
+- **Evidence:** [checks and captures](../../../testing/evidence/planner-week-board/README.md). No owner visual review yet.
