@@ -76,6 +76,10 @@ export const navigationDrawings = {
   "nav-screen": { body: <rect x="3" y="3" width="16" height="15" rx="1"/>, exterior: <path d="M22 3v18M21 21h2"/>, detail: <path d="M3 7h16M3 11h16M3 15h16"/> },
   "nav-fertigation": { body: <><path d="M9 2C7 6 3 9 3 13a6 6 0 0 0 12 0c0-4-4-7-6-11Z"/><path d="M18 10c-1 3-3 4-3 7a3.5 3.5 0 0 0 7 0c0-3-3-5-4-7Z"/></> },
   "nav-service": { body: <path d="m14 3-2 5 4 4 5-2a7 7 0 0 1-8 7l-7 5-4-4 6-7a7 7 0 0 1 6-8Z"/> },
+  // Dean, 10 October 2026: each Service destination has its own icon. A signed paper for
+  // service agreements, and crossed tools for maintenance.
+  "nav-agreements": { body: paper, detail: <>{fold}<path d="M8 10h8M8 13.5h5M8 18.5c1.2-1.6 2-1.6 2.6 0s1.4 1.6 2.4 0 1.6-1.2 3 0"/></> },
+  "nav-maintenance": { body: <path d="M13.2 9.3 4 18.5a1.8 1.8 0 0 0 2.5 2.5l9.2-9.2a4.5 4.5 0 0 0 5.6-5.6l-2.6 2.6-2.4-.6-.6-2.4 2.6-2.6a4.5 4.5 0 0 0-5.1 6.1Z"/>, detail: <path d="M3 5.5 5.5 3l3 2 .4 2.5L7.5 9 5 8.6ZM9 9l7 7m-.8 1.6 1.6-1.6 3.6 3.6a1.1 1.1 0 0 1-1.6 1.6Z"/> },
   "nav-engineering": { body: <circle cx="12" cy="5" r="2"/>, detail: <path d="M12 1v2M11 7 4 22M13 7l7 15M7 15c4 2 7 2 10 0"/> },
   "nav-sales": { body: <rect x="3" y="6" width="18" height="15" rx="2"/>, exterior: <path d="M8 6V3h8v3"/>, detail: <path d="M3 11l9 4 9-4M10 13v4h4v-4"/> },
   "nav-handover": { body: <path d="M3 7h17l-4-4M20 7l-4 4M21 17H4l4-4M4 17l4 4"/>, open: true, selected: <path d="M3 7h17l-4-4M20 7l-4 4M21 17H4l4-4M4 17l4 4" strokeWidth="2.6"/> },
@@ -88,6 +92,7 @@ export type NavigationIconName = keyof typeof navigationDrawings;
 const outsideDetails: ReadonlySet<NavigationIconName> = new Set([
   "nav-workload", "nav-interfaces", "nav-materials", "nav-changes", "nav-acceptance",
   "nav-requests", "nav-purchasing", "nav-performance", "nav-reconciliation", "nav-engineering", "nav-recovery",
+  "nav-maintenance",
 ]);
 export function isNavigationIcon(name: string): name is NavigationIconName {
   return Object.hasOwn(navigationDrawings, name);

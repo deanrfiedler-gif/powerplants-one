@@ -27,7 +27,7 @@ test("only a plain Kit ID can become the Kit script address", () => {
 test("every mapped icon is a plain Font Awesome name and every catalogue is mapped", () => {
   const sizes = Object.fromEntries(Object.entries(mappings).map(([catalogue, map]) => [catalogue, Object.keys(map).length]));
   assert.deepEqual(sizes, {
-    navigationFontAwesome: 62, shellFontAwesome: 35, productFontAwesome: 51, myWorkFontAwesome: 45, secondaryMenuFontAwesome: 5,
+    navigationFontAwesome: 64, shellFontAwesome: 35, productFontAwesome: 51, myWorkFontAwesome: 45, secondaryMenuFontAwesome: 5,
     jobPackFontAwesome: 12, materialsFontAwesome: 25, changesOutlineFontAwesome: 4, changesToneFontAwesome: 9,
     commissioningOutlineFontAwesome: 5, commissioningMarkFontAwesome: 9, acceptanceFontAwesome: 4, fertigationFontAwesome: 1,
     leadsFontAwesome: 3, ganttFontAwesome: 9,

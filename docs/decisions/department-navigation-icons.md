@@ -28,3 +28,15 @@ The [handover](../delivery/department-navigation-icons.md) and [coverage registe
 This amends the [r17 shell integration](application-shell-integration.md) only as explicitly documented there.
 
 **Amended by [ADR-0050](ADR-0050-font-awesome-light-icons.md), 10 October 2026:** on online pages where the owner's Font Awesome Kit is configured and running, the glyphs come from Font Awesome Pro Classic Light, and selected items use Classic Solid in place of the filled body with cut-out details. The semantic catalogue, destination IDs, 48 px targets, 25 px glyph boxes and selection rules above are unchanged. The local drawings remain the fallback. At Dean's request the same day, the selected item is a plain white tile with a navy glyph: the pale green tile and the 3 px left bar are removed.
+
+**Amended 10 October 2026, Dean's decision "Use the distinct icons for the five Service items":** five later Service destinations no longer share another destination's glyph:
+
+| Destination | Was | Now | Font Awesome |
+|---|---|---|---|
+| Incidents and actions | `nav-service-review` | `nav-risks` | triangle-exclamation |
+| Inspection review | `nav-service-review` | `nav-readiness` | list-check |
+| Service agreements | `nav-orders` | `nav-agreements` (new) | file-contract |
+| Maintenance | `nav-schedule` | `nav-maintenance` (new) | screwdriver-wrench |
+| Warranty | `nav-service-review` | `nav-assurance` | shield-check |
+
+The design came from the canvas proposal for the Service rail (PP-RAIL). Destination IDs, routes, order, AU-08 groups and permissions are unchanged. My jobs and My inspections still share the Service glyph; they were not part of this decision.
