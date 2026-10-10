@@ -254,6 +254,9 @@ export async function processRenderJob(
           "Source, template, appointment or recipients changed during rendering. Original output retained for review.",
           "StaleSource",
         );
+      // Storage can change after the earlier durable check. Verify the exact
+      // original bundle again inside finalisation, as reports and Finance do.
+      await readBundle(p, manifest);
       const issue = await insert(c, "pack_issues", {
         id: b.issue_id,
         workspace_id: p.workspace_id,

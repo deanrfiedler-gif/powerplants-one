@@ -1,0 +1,13 @@
+{
+  "scenario": "linked-validation-retained",
+  "full_page": false,
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "source_head": "8f632cbc7e518513d8d1ba60d1de6e0a6ab70e7d",
+  "executed_checkout": "8f632cbc7e518513d8d1ba60d1de6e0a6ab70e7d",
+  "executed_tree": "ae4c0c88a27e691fedfa9a0586789872ce36d180",
+  "byte_count": 86161,
+  "sha256": "e296c07f29eb7d30a91d79e200a4b31585a7d5e7ce19c894cf15db695768f3e7"
+}

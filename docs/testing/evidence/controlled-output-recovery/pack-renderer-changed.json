@@ -1,0 +1,274 @@
+{
+  "family": "OUT-09",
+  "detail": {},
+  "job": {
+    "id": "2adabc70-5543-4899-b65e-81721fb0cfde",
+    "workspace_id": "10000000-0000-4000-8000-000000000001",
+    "pack_id": "c504938b-ed80-4b48-a498-90d6bf579e31",
+    "revision_id": "6a4b8b2b-8d26-437c-bb2e-29c1dcd4a315",
+    "check_id": "40f5c8a3-aa7f-403f-96d4-76f2aefe865c",
+    "actor_id": "30000000-0000-4000-8000-000000000001",
+    "operation_id": "41be3238-cbc5-49ab-95ab-01d76155ea71",
+    "finalisation_operation_id": "61b489ff-1aa8-4f00-8147-a091f9009676",
+    "input_hash": "9f05c52cc49983291680fa555ed7c5af7f8ef18fb45f16aed3fc0fa103518308",
+    "render_snapshot": {
+      "source": {
+        "site": {
+          "id": "70000000-0000-4000-8000-000000000001",
+          "name": "SYN Q01 Demonstration Site",
+          "version": 1
+        },
+        "work": {
+          "id": "a9000000-0000-4000-8000-000000000001",
+          "version": 1,
+          "scope_id": "aa000000-0000-4000-8000-000000000001",
+          "reference": "SYN-PPO-WO-000010",
+          "scope_hash": "6d21df669efc835ae537c8e60d6c3d02fabb54adc39e2ed67252d10155c8e511",
+          "scope_version": 1
+        },
+        "history": [],
+        "sources": [
+          {
+            "id": "c2000000-0000-4000-8000-000000000001",
+            "hash": "363bc1e22ad3b41cb0c56f2959bf8e63e396a38ed039231ed20e65b1fffadc9a",
+            "text": "Synthetic prototype — not for operational use\nVisual inspection reference version 1. Observe external condition only. Do not isolate, open, adjust or operate equipment. Stop and escalate uncertain identity or unsafe access.",
+            "title": "SYN visual inspection reference",
+            "item_id": "c2000000-0000-4000-8000-000000000001",
+            "byte_count": 225,
+            "version_id": "363bc1e22ad3b41cb0c56f2959bf8e63e396a38ed039231ed20e65b1fffadc9a",
+            "location_version": 1
+          }
+        ],
+        "customer": {
+          "id": "50000000-0000-4000-8000-000000000001",
+          "name": "SYN Greenhouse Demonstration",
+          "version": 1
+        },
+        "evidence": [
+          {
+            "id": "ab000000-0000-4000-8000-000000000001",
+            "hash": "19d8e0f738f83109ed0a0b2010290cbe93e113ca82027281e1f84300f9149ca0"
+          },
+          {
+            "id": "ab000000-0000-4000-8000-000000000001",
+            "hash": "19d8e0f738f83109ed0a0b2010290cbe93e113ca82027281e1f84300f9149ca0"
+          },
+          {
+            "id": "ab000000-0000-4000-8000-000000000001",
+            "hash": "19d8e0f738f83109ed0a0b2010290cbe93e113ca82027281e1f84300f9149ca0"
+          },
+          {
+            "id": "ab000000-0000-4000-8000-000000000001",
+            "hash": "19d8e0f738f83109ed0a0b2010290cbe93e113ca82027281e1f84300f9149ca0"
+          },
+          {
+            "id": "ab000000-0000-4000-8000-000000000001",
+            "hash": "19d8e0f738f83109ed0a0b2010290cbe93e113ca82027281e1f84300f9149ca0"
+          },
+          {
+            "id": "ab000000-0000-4000-8000-000000000001",
+            "hash": "19d8e0f738f83109ed0a0b2010290cbe93e113ca82027281e1f84300f9149ca0"
+          },
+          {
+            "id": "ab000000-0000-4000-8000-000000000001",
+            "hash": "19d8e0f738f83109ed0a0b2010290cbe93e113ca82027281e1f84300f9149ca0"
+          }
+        ],
+        "revision": 1,
+        "sections": {
+          "scope": {
+            "text": "Approved scope r01: SYN Planned controller inspection — coordination and customer date review\nExclusions: No shutdown, replacement, energised access, repair or financial approval.\nDiagnostic limits: External visual inspection only.\n\n1. Inspection: Observe controller display and external sensor identity\nCompletion: Record observations,Stop before intervention\nShutdown condition: Not recorded",
+            "notes": "SYN reviewed scope: visual inspection only; no intervention. Any change requires the service owner’s review.",
+            "source_ids": [
+              "aa000000-0000-4000-8000-000000000001"
+            ]
+          },
+          "history": {
+            "text": "No service-audience history selected. The preparation notes must explain the review or relevant absence.",
+            "notes": "SYN reviewed history: visual inspection only; no intervention. Any change requires the service owner’s review.",
+            "source_ids": []
+          },
+          "equipment": {
+            "text": "SYN-PPO-AST-000001: SYN irrigation controller\nIdentity: Verified; serial: Not recorded\nConfiguration: Not recorded",
+            "notes": "SYN reviewed equipment: visual inspection only; no intervention. Any change requires the service owner’s review.",
+            "source_ids": [
+              "aa000000-0000-4000-8000-000000000001"
+            ]
+          },
+          "readiness": {
+            "text": "Required competencies reviewed: Pass. SYN reviewed external visual scope; no shutdown or intervention.\nEvidence: SYN P05 reviewed scope and preparation; 19d8e0f738f83109ed0a0b2010290cbe93e113ca82027281e1f84300f9149ca0\n\nMandatory isolation: NotApplicable. SYN reviewed external visual scope; no shutdown or intervention.\nEvidence: SYN P05 reviewed scope and preparation; 19d8e0f738f83109ed0a0b2010290cbe93e113ca82027281e1f84300f9149ca0\n\nShutdown authority: NotApplicable. SYN reviewed external visual scope; no shutdown or intervention.\nEvidence: SYN P05 reviewed scope and preparation; 19d8e0f738f83109ed0a0b2010290cbe93e113ca82027281e1f84300f9149ca0\n\nSite access: Pass. SYN reviewed external visual scope; no shutdown or intervention.\nEvidence: SYN P05 reviewed scope and preparation; 19d8e0f738f83109ed0a0b2010290cbe93e113ca82027281e1f84300f9149ca0\n\nSite and biosecurity controls: Pass. SYN reviewed external visual scope; no shutdown or intervention.\nEvidence: SYN P05 reviewed scope and preparation; 19d8e0f738f83109ed0a0b2010290cbe93e113ca82027281e1f84300f9149ca0\n\nTools and preparation: Pass. SYN inspection kit preparation reviewed.\nEvidence: SYN P05 reviewed scope and preparation; 19d8e0f738f83109ed0a0b2010290cbe93e113ca82027281e1f84300f9149ca0",
+            "notes": "SYN reviewed readiness: visual inspection only; no intervention. Any change requires the service owner’s review.",
+            "source_ids": [
+              "aa000000-0000-4000-8000-000000000001"
+            ]
+          },
+          "completion": {
+            "text": "1. Record observations,Stop before intervention\nRecord unresolved work and escalate to the preparation owner. This pack does not grant authority outside the approved scope. Use My Jobs to record your personal work and unresolved items. Wait for each local save to complete. Offline saves still need server acceptance; keep uncertain originals for unchanged retry. Submit the exact completion draft for factual review. Pack acknowledgement, attendance acceptance, customer response and Finance approval are separate decisions.",
+            "notes": "SYN reviewed completion: visual inspection only; no intervention. Any change requires the service owner’s review.",
+            "source_ids": [
+              "aa000000-0000-4000-8000-000000000001"
+            ]
+          },
+          "site_controls": {
+            "text": "Access: SYN access to be confirmed\nBiosecurity: SYN controls require review\nRequired competencies reviewed: Pass. SYN reviewed external visual scope; no shutdown or intervention.\nEvidence: SYN P05 reviewed scope and preparation; 19d8e0f738f83109ed0a0b2010290cbe93e113ca82027281e1f84300f9149ca0\n\nMandatory isolation: NotApplicable. SYN reviewed external visual scope; no shutdown or intervention.\nEvidence: SYN P05 reviewed scope and preparation; 19d8e0f738f83109ed0a0b2010290cbe93e113ca82027281e1f84300f9149ca0\n\nShutdown authority: NotApplicable. SYN reviewed external visual scope; no shutdown or intervention.\nEvidence: SYN P05 reviewed scope and preparation; 19d8e0f738f83109ed0a0b2010290cbe93e113ca82027281e1f84300f9149ca0\n\nSite access: Pass. SYN reviewed external visual scope; no shutdown or intervention.\nEvidence: SYN P05 reviewed scope and preparation; 19d8e0f738f83109ed0a0b2010290cbe93e113ca82027281e1f84300f9149ca0\n\nSite and biosecurity controls: Pass. SYN reviewed external visual scope; no shutdown or intervention.\nEvidence: SYN P05 reviewed scope and preparation; 19d8e0f738f83109ed0a0b2010290cbe93e113ca82027281e1f84300f9149ca0\n\nTools and preparation: Pass. SYN inspection kit preparation reviewed.\nEvidence: SYN P05 reviewed scope and preparation; 19d8e0f738f83109ed0a0b2010290cbe93e113ca82027281e1f84300f9149ca0\nStop if site access, isolation, shutdown authority or competency cannot be confirmed. Tool-preparation exceptions do not waive these controls.",
+            "notes": "SYN reviewed site controls: visual inspection only; no intervention. Any change requires the service owner’s review.",
+            "source_ids": [
+              "aa000000-0000-4000-8000-000000000001"
+            ]
+          },
+          "identification": {
+            "text": "SYN-PPO-WO-000010 · SYN-PPO-APT-000012\nSYN Greenhouse Demonstration\nSYN Q01 Demonstration Site\n2031-09-24T00:00:00.000Z to 2031-09-24T02:00:00.000Z (UTC); site timezone Australia/Brisbane\nCrew: SYN Riley Technician (Technician), SYN Morgan Technician (Lead)",
+            "notes": "SYN reviewed identification: visual inspection only; no intervention. Any change requires the service owner’s review.",
+            "source_ids": [
+              "aa000000-0000-4000-8000-000000000001"
+            ]
+          },
+          "customer_arrangements": {
+            "text": "Location: Fictional site; booking address unverified\nContact: SYN Avery Contact; Not recorded; avery@example.invalid\nAccess: SYN access to be confirmed\nDate agreement: Confirmed. This is not pack acknowledgement.",
+            "notes": "SYN reviewed customer arrangements: visual inspection only; no intervention. Any change requires the service owner’s review.",
+            "source_ids": [
+              "aa000000-0000-4000-8000-000000000001"
+            ]
+          },
+          "technical_information": {
+            "text": "SYN visual inspection reference\nVersion 363bc1e22ad3b41cb0c56f2959bf8e63e396a38ed039231ed20e65b1fffadc9a; SHA-256 363bc1e22ad3b41cb0c56f2959bf8e63e396a38ed039231ed20e65b1fffadc9a\nSynthetic prototype — not for operational use\nVisual inspection reference version 1. Observe external condition only. Do not isolate, open, adjust or operate equipment. Stop and escalate uncertain identity or unsafe access.",
+            "notes": "SYN reviewed technical information: visual inspection only; no intervention. Any change requires the service owner’s review.",
+            "source_ids": [
+              "c2000000-0000-4000-8000-000000000001"
+            ]
+          }
+        },
+        "template": {
+          "id": "c1000000-0000-4000-8000-000000000002",
+          "hash": "59847178fd09746d12a5af11a1d5017fa9e41efd7124214ebd7cf3f3a279b3e2",
+          "version": 2,
+          "policy_version": 2,
+          "renderer_version": "playwright-1.63.0"
+        },
+        "synthetic": true,
+        "recipients": [
+          {
+            "name": "SYN Riley Technician",
+            "role": "Technician",
+            "user_id": "30000000-0000-4000-8000-000000000010",
+            "resource_id": "a4000000-0000-4000-8000-000000000002",
+            "assignment_id": "1f311151-01a3-4ef0-b396-f3cd4aee8960",
+            "assignment_version": 2
+          },
+          {
+            "name": "SYN Morgan Technician",
+            "role": "Lead",
+            "user_id": "30000000-0000-4000-8000-000000000011",
+            "resource_id": "a4000000-0000-4000-8000-000000000009",
+            "assignment_id": "675392a5-c3ce-4d01-be33-b4996259e609",
+            "assignment_version": 2
+          }
+        ],
+        "appointment": {
+          "id": "a8000000-0000-4000-8000-000000000009",
+          "end_at": "2031-09-24T02:00:00.000Z",
+          "version": 3,
+          "start_at": "2031-09-24T00:00:00.000Z",
+          "timezone": "Australia/Brisbane",
+          "reference": "SYN-PPO-APT-000012",
+          "booking_hash": "e265d1e798be5b301538aa5a4188f9c7f8f6a4f9e8b04b7935a67334455536a9",
+          "schedule_version": 2,
+          "assignment_version": 2
+        },
+        "pack_reference": "SYN-PPO-PACK-000001",
+        "schema_version": 1
+      },
+      "issue_id": "31f5ba54-6d80-4c1d-8fb6-e3f36db3bc47",
+      "prepared_at": "2026-10-10T03:31:38.266Z"
+    },
+    "requested_at": "2026-10-10T03:31:38.267Z",
+    "state": "StaleSource",
+    "attempts": 1,
+    "lease_until": null,
+    "lease_token": "9aad7fc0-e655-4d59-875b-0f1f01f3d021",
+    "error_code": "TemplateUnavailable",
+    "output_manifest": {
+      "job_id": "2adabc70-5543-4899-b65e-81721fb0cfde",
+      "sources": [
+        {
+          "id": "c2000000-0000-4000-8000-000000000001",
+          "hash": "363bc1e22ad3b41cb0c56f2959bf8e63e396a38ed039231ed20e65b1fffadc9a",
+          "title": "SYN visual inspection reference",
+          "byte_count": 225,
+          "version_id": "363bc1e22ad3b41cb0c56f2959bf8e63e396a38ed039231ed20e65b1fffadc9a"
+        }
+      ],
+      "filename": "SYN-PPO-PACK-000001-job-pack-r01.pdf",
+      "issue_id": "31f5ba54-6d80-4c1d-8fb6-e3f36db3bc47",
+      "pdf_hash": "ee5a35754a7e7ee453df92e7559b57bd5039a48335861b5d737fcfd907c4aeda",
+      "template": {
+        "id": "c1000000-0000-4000-8000-000000000002",
+        "hash": "59847178fd09746d12a5af11a1d5017fa9e41efd7124214ebd7cf3f3a279b3e2",
+        "version": 2,
+        "policy_version": 2,
+        "renderer_version": "playwright-1.63.0"
+      },
+      "html_hash": "dda42938909b57be4230700b8147c0e00b2907aad085111fe6de59795a8dbf67",
+      "pdf_bytes": 568581,
+      "store_key": {
+        "sha256": "49ea676bb8cb6fd70588344287b10d85df62e7b451c0caee4535a3fd74291814",
+        "item_id": "2adabc70-5543-4899-b65e-81721fb0cfde",
+        "site_id": null,
+        "drive_id": null,
+        "provider": "Synthetic",
+        "tenant_id": null,
+        "version_id": "49ea676bb8cb6fd70588344287b10d85df62e7b451c0caee4535a3fd74291814"
+      },
+      "html_bytes": 806036,
+      "prepared_at": "2026-10-10T03:31:38.266Z",
+      "bundle_bytes": 1564677,
+      "snapshot_hash": "9f05c52cc49983291680fa555ed7c5af7f8ef18fb45f16aed3fc0fa103518308",
+      "schema_version": 1,
+      "browser_version": "155.0.8059.40",
+      "renderer_version": "playwright-1.63.0"
+    },
+    "issue_id": null,
+    "recovery_owner_id": "30000000-0000-4000-8000-000000000001"
+  },
+  "attempts": [
+    {
+      "id": "48414211-7eab-4c10-b24c-7b613af38e11",
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "job_id": "2adabc70-5543-4899-b65e-81721fb0cfde",
+      "attempt": 1,
+      "outcome": "Claimed",
+      "code": null,
+      "occurred_at": "2026-10-10T03:31:38.443Z",
+      "actor_id": "30000000-0000-4000-8000-000000000001"
+    },
+    {
+      "id": "f14f2c7e-d722-4ce2-b29d-7127668a0d7b",
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "job_id": "2adabc70-5543-4899-b65e-81721fb0cfde",
+      "attempt": 1,
+      "outcome": "Durable",
+      "code": null,
+      "occurred_at": "2026-10-10T03:31:40.953Z",
+      "actor_id": "30000000-0000-4000-8000-000000000001"
+    },
+    {
+      "id": "4eb8cca6-1bcc-4fee-ab85-6f73d31d5b07",
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "job_id": "2adabc70-5543-4899-b65e-81721fb0cfde",
+      "attempt": 1,
+      "outcome": "StaleSource",
+      "code": "TemplateUnavailable",
+      "occurred_at": "2026-10-10T03:31:41.047Z",
+      "actor_id": "30000000-0000-4000-8000-000000000001"
+    }
+  ],
+  "effects": {
+    "operations": [],
+    "audit": [],
+    "outbox": [],
+    "issue": [],
+    "extra": [],
+    "distribution": []
+  },
+  "stored_sha256": "49ea676bb8cb6fd70588344287b10d85df62e7b451c0caee4535a3fd74291814"
+}

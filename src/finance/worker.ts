@@ -476,6 +476,7 @@ export async function processFinanceJob(
         "SourceChanged",
         "SourceDependencyChanged",
         "FinancePolicyChanged",
+        "TemplateUnavailable",
       ].includes(code)
         ? "StaleSource"
         : "Failed";

@@ -75,6 +75,13 @@ test("P11 PT-27/29 shared validation links the actual control and retains entere
   await expect(page.getByLabel("Display name", { exact: true })).toHaveAttribute("aria-invalid", "true");
   await expect(page.getByLabel("Display name", { exact: true })).toHaveValue("SYN retained proposed organisation");
   await capture(page, info, "linked-validation-retained");
+  await page.unroute("**/api/v1/customers");
+  const saved = page.waitForResponse(response => new URL(response.url()).pathname === "/api/v1/customers" && response.request().method() === "POST");
+  await page.getByRole("button", { name: "Save record", exact: true }).click();
+  expect((await saved).ok()).toBe(true);
+  await expect(page.getByRole("heading", { name: "SYN retained proposed organisation", exact: true })).toBeVisible();
+  await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
+  await capture(page, info, "linked-validation-recovered");
 });
 
 test("P11 PT-01/29 scoped recovery UI preserves originals and retries one uncertain disposition", async ({ page }, info) => {

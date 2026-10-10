@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "session": "PT-30 integrated rehearsal and owner review",
+  "date_prepared": "2026-10-10",
+  "owner": "Dean Fiedler",
+  "availability_evidence": "Preparation authorised; no current-session participant observation has been supplied.",
+  "participant": null,
+  "actual_role": null,
+  "available_methods": [],
+  "source": "caecf7bc787eb658a545268e507e35e257adf48f",
+  "build": "qE6dn5GfAoZAp53Forj96",
+  "review_started_at": null,
+  "device": null,
+  "browser_version": null,
+  "screen_reader": null,
+  "tasks": [
+    {
+      "id": "H01",
+      "status": "Pending",
+      "observed_at": null,
+      "actual_comment": null,
+      "assistance": null
+    },
+    {
+      "id": "H02",
+      "status": "Pending",
+      "observed_at": null,
+      "actual_comment": null,
+      "assistance": null
+    },
+    {
+      "id": "H03",
+      "status": "Pending",
+      "observed_at": null,
+      "actual_comment": null,
+      "assistance": null
+    },
+    {
+      "id": "H04",
+      "status": "Pending",
+      "observed_at": null,
+      "actual_comment": null,
+      "assistance": null
+    },
+    {
+      "id": "H05",
+      "status": "Pending",
+      "observed_at": null,
+      "actual_comment": null,
+      "assistance": null
+    },
+    {
+      "id": "H06",
+      "status": "Pending",
+      "observed_at": null,
+      "actual_comment": null,
+      "assistance": null
+    },
+    {
+      "id": "H07",
+      "status": "Pending",
+      "observed_at": null,
+      "actual_comment": null,
+      "assistance": null
+    },
+    {
+      "id": "H08",
+      "status": "Pending",
+      "observed_at": null,
+      "actual_comment": null,
+      "assistance": null
+    },
+    {
+      "id": "H09",
+      "status": "Pending",
+      "observed_at": null,
+      "actual_comment": null,
+      "assistance": null
+    },
+    {
+      "id": "H10",
+      "status": "Pending",
+      "observed_at": null,
+      "actual_comment": null,
+      "assistance": null
+    },
+    {
+      "id": "H11",
+      "status": "Pending",
+      "observed_at": null,
+      "actual_comment": null,
+      "assistance": null
+    }
+  ],
+  "owner_decision": "Not yet reviewed",
+  "independent_review": "Pending",
+  "other_participants": [],
+  "limits": [
+    "Do not infer acceptance from preparation, silence or automated role switching.",
+    "Earlier 3 October observations and private session are retained separately."
+  ]
+}

@@ -1,0 +1,317 @@
+[
+  {
+    "screen": "SC-01",
+    "route": "/work/actions",
+    "read": "work/actions",
+    "profile": "coordinator",
+    "populated_label": "SYN OEM query: intermittent sensor alarm remains unresolved",
+    "populated_source": "Actual browser GET 200; visible record asserted",
+    "query": "?owner=mine&sort=Due&status=Active",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "populated",
+      "loading",
+      "failed",
+      "recovered",
+      "empty permitted result",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": null,
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-02",
+    "route": "/customers",
+    "read": "crm/directory",
+    "profile": "coordinator",
+    "populated_label": "SYN-PPO-ORG-000001",
+    "populated_source": "Actual browser GET 200; visible record asserted",
+    "query": "?kind=organisations&q=&status=&mine=false&sort=name&direction=asc&limit=25&page=1",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "populated",
+      "loading",
+      "failed",
+      "recovered",
+      "empty permitted result",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": null,
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-03",
+    "route": "/sites/70000000-0000-4000-8000-000000000001",
+    "read": "sites/70000000-0000-4000-8000-000000000001",
+    "profile": "coordinator",
+    "populated_label": "SYN-PPO-SITE-000001",
+    "populated_source": "Actual browser GET 200; visible record asserted",
+    "query": "",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "populated",
+      "loading",
+      "failed",
+      "recovered",
+      "unavailable detail record",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": "Detail APIs return unavailable for no permitted record; an empty success object is not fabricated.",
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-04",
+    "route": "/service/tickets/40000000-0000-4000-8000-000000000001",
+    "read": "service/tickets/40000000-0000-4000-8000-000000000001",
+    "profile": "coordinator",
+    "populated_label": "SYN-PPO-TKT-000001",
+    "populated_source": "Actual browser GET 200; visible record asserted",
+    "query": "",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "populated",
+      "loading",
+      "failed",
+      "recovered",
+      "unavailable detail record",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": "Detail APIs return unavailable for no permitted record; an empty success object is not fabricated.",
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-05",
+    "route": "/service/work-orders/a9000000-0000-4000-8000-000000000001",
+    "read": "service/work-orders/a9000000-0000-4000-8000-000000000001",
+    "profile": "coordinator",
+    "populated_label": "SYN-PPO-WO-000010",
+    "populated_source": "Actual browser GET 200; visible record asserted",
+    "query": "",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "populated",
+      "loading",
+      "failed",
+      "recovered",
+      "unavailable detail record",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": "Detail APIs return unavailable for no permitted record; an empty success object is not fabricated.",
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-06",
+    "route": "/service/packs/cba4b43c-8992-4ced-8280-4258c41328be",
+    "read": "packs/cba4b43c-8992-4ced-8280-4258c41328be",
+    "profile": "coordinator",
+    "populated_label": "SYN-PPO-PACK-000002",
+    "populated_source": "Actual browser GET 200; visible record asserted",
+    "query": "",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "populated",
+      "loading",
+      "failed",
+      "recovered",
+      "unavailable detail record",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": "Detail APIs return unavailable for no permitted record; an empty success object is not fabricated.",
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-07",
+    "route": "/schedule?day=2031-11-05&view=day",
+    "read": "schedule",
+    "profile": "coordinator",
+    "populated_label": "SYN-PPO-APT-000015",
+    "populated_source": "Actual browser GET 200; visible record asserted",
+    "query": "?from=2031-11-04T14%3A00%3A00.000Z&to=2031-11-05T14%3A00%3A00.000Z&timezone=Australia%2FBrisbane",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "populated",
+      "loading",
+      "failed",
+      "recovered",
+      "empty permitted result",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": null,
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-08",
+    "route": "/service/appointments/1bdd0a3c-be49-4469-81bd-8802953c15be",
+    "read": "appointments/1bdd0a3c-be49-4469-81bd-8802953c15be",
+    "profile": "coordinator",
+    "populated_label": "SYN-PPO-APT-000015",
+    "populated_source": "Actual browser GET 200; visible record asserted",
+    "query": "",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "populated",
+      "loading",
+      "failed",
+      "recovered",
+      "unavailable detail record",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": "Detail APIs return unavailable for no permitted record; an empty success object is not fabricated.",
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-09",
+    "route": "/my-jobs",
+    "read": "my-jobs",
+    "profile": "assigned-technician",
+    "populated_label": "SYN-PPO-APT-000015",
+    "populated_source": "Actual browser GET 200; visible record asserted",
+    "query": "",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "populated",
+      "loading",
+      "failed",
+      "recovered",
+      "empty permitted result",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": null,
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-10",
+    "route": "/my-jobs/1bdd0a3c-be49-4469-81bd-8802953c15be",
+    "read": "my-jobs/1bdd0a3c-be49-4469-81bd-8802953c15be",
+    "profile": "assigned-technician",
+    "populated_label": "SYN-PPO-APT-000015",
+    "populated_source": "Actual browser GET 200; visible record asserted",
+    "query": "",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "populated",
+      "loading",
+      "failed",
+      "recovered",
+      "unavailable detail record",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": "Detail APIs return unavailable for no permitted record; an empty success object is not fabricated.",
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-11",
+    "route": "/service/reports/6a775015-2794-4769-a7e4-43cc4ccf7849",
+    "read": "reports/6a775015-2794-4769-a7e4-43cc4ccf7849",
+    "profile": "coordinator",
+    "populated_label": "SYN-PPO-RPT-000001",
+    "populated_source": "Actual browser GET 200; visible record asserted",
+    "query": "",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "populated",
+      "loading",
+      "failed",
+      "recovered",
+      "unavailable detail record",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": "Detail APIs return unavailable for no permitted record; an empty success object is not fabricated.",
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-12",
+    "route": "/finance/handoffs",
+    "read": "finance/handoffs",
+    "profile": "finance",
+    "populated_label": "SYN-PPO-FH-000001",
+    "populated_source": "Actual browser GET 200; visible record asserted",
+    "query": "",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "populated",
+      "loading",
+      "failed",
+      "recovered",
+      "empty permitted result",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": null,
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-13",
+    "route": "/customers/50000000-0000-4000-8000-000000000001/account?account_id=f2000000-0000-4000-8000-000000000001",
+    "read": "customers/50000000-0000-4000-8000-000000000001/account-observations",
+    "profile": "finance",
+    "populated_label": "SYN-F01-INVOICE",
+    "populated_source": "Actual browser GET 200; visible record asserted",
+    "query": "?account_id=f2000000-0000-4000-8000-000000000001",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "populated",
+      "loading",
+      "failed",
+      "recovered",
+      "no extraction; total unavailable",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": null,
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-14",
+    "route": "/documents/0d775772-4d0c-4e34-8dc5-6eb7aa149355",
+    "read": "pack-issues/0d775772-4d0c-4e34-8dc5-6eb7aa149355/manifest",
+    "profile": "coordinator",
+    "populated_label": "SYN-PPO-PACK-000002-job-pack-r01.pdf",
+    "populated_source": "Actual browser GET 200; visible record asserted",
+    "query": "",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "populated",
+      "loading",
+      "failed",
+      "recovered",
+      "unavailable detail record",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": "Detail APIs return unavailable for no permitted record; an empty success object is not fabricated.",
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  },
+  {
+    "screen": "SC-15",
+    "route": "/admin",
+    "read": "sync/recovery-review",
+    "profile": "coordinator",
+    "populated_label": "a975e64d-c4a0-4868-a9cc-e93599566140",
+    "populated_source": "Actual browser GET 200; visible record asserted",
+    "query": "",
+    "denied_status": 403,
+    "denial_source": "Browser GET after accepted identity POST",
+    "states": [
+      "populated",
+      "loading",
+      "failed",
+      "recovered",
+      "empty permitted result",
+      "actual Systems denial"
+    ],
+    "empty_detail_basis": null,
+    "limits": "Injected read failures prove UI states. Existing domain suites prove actual server failure/rollback. No screen-reader or whole-product conformance claim."
+  }
+]

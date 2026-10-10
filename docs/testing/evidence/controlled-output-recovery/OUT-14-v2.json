@@ -1,0 +1,61 @@
+{
+  "manifest": {
+    "job_id": "97999859-710c-4201-98c6-73eb7b215331",
+    "audience": "CurrentScopedFinance",
+    "filename": "SYN-PPO-FH-000001-finance-evidence-r01.pdf",
+    "issue_id": "587c1658-0fce-4a80-8e38-10fb4e08fe35",
+    "pdf_hash": "24c7ad00ff179add8d090172667e4a828e771987e165fe48447deb0372760f17",
+    "template": {
+      "id": "f3000000-0000-4000-8000-000000000002",
+      "version": 2,
+      "content_hash": "1fd8d16fb46f884af894ed9de9b5e65aff9848f69df660e18fb25fa4dca00f51",
+      "policy_version": 3
+    },
+    "html_hash": "36914d0bd259255112e1373ab2bddffb12b14f10ea5f4bd96f8cc05e02edcc12",
+    "pdf_bytes": 603022,
+    "review_id": "e2b33af7-68a6-4f66-9c8f-32ccfb729326",
+    "store_key": {
+      "sha256": "55d0a6e0e8df928ab19d485f4a3b2fa6e81b33436300244a7c7669c52572141b",
+      "item_id": "97999859-710c-4201-98c6-73eb7b215331",
+      "site_id": null,
+      "drive_id": null,
+      "provider": "Synthetic",
+      "tenant_id": null,
+      "version_id": "55d0a6e0e8df928ab19d485f4a3b2fa6e81b33436300244a7c7669c52572141b"
+    },
+    "html_bytes": 819551,
+    "prepared_at": "2026-10-10T03:27:58.752Z",
+    "revision_id": "f1262912-60ff-4355-bbb3-6ef6adff530b",
+    "source_hash": "c9f4394ecdeef1abdf8fc50d5c43638f2857bd12c3df8626035ab81e0f692050",
+    "bundle_bytes": 1624203,
+    "schema_version": 1,
+    "browser_version": "155.0.8059.40",
+    "renderer_version": "playwright-1.63.0",
+    "reconciliation_id": "c47d63f1-3c17-43a5-94a0-9cef0f3a44a4"
+  },
+  "html_sha256": "36914d0bd259255112e1373ab2bddffb12b14f10ea5f4bd96f8cc05e02edcc12",
+  "pdf_sha256": "24c7ad00ff179add8d090172667e4a828e771987e165fe48447deb0372760f17",
+  "page_count": 9,
+  "expected_text": [
+    "TREATMENTSTART",
+    "TREATMENTEND",
+    "REMAININGSTART",
+    "REMAININGEND",
+    "ALLOCATION01",
+    "ALLOCATION02",
+    "ALLOCATION03",
+    "ALLOCATION04",
+    "ALLOCATION05",
+    "ALLOCATION06",
+    "ALLOCATION07",
+    "ALLOCATION08",
+    "ALLOCATION09"
+  ],
+  "forbidden_text": [
+    "PT23_PRIVATE_TIME",
+    "PT23_PRIVATE_REVIEW",
+    "PT23_PRIVATE_ENTRY",
+    "PT23_PRIVATE_STOCK"
+  ],
+  "review": "Automated content/identity checks; every-page visual inspection recorded separately"
+}

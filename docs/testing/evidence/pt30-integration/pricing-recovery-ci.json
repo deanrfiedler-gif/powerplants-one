@@ -1,0 +1,224 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-10",
+  "review_status": "Implementation diagnosis; independent and owner review pending",
+  "ci": {
+    "pull_request": 389,
+    "head": "caecf7bc787eb658a545268e507e35e257adf48f",
+    "run_id": 38027819364,
+    "attempt": 1,
+    "job_id": 114142308083,
+    "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38027819364/job/114142308083",
+    "sha256": "b3aa67cf14b31841314665e2c606a183b828c298bc94c235457bcd92400e7482",
+    "stats": {
+      "startTime": "2026-10-10T05:41:26.025Z",
+      "duration": 2332832.872,
+      "expected": 401,
+      "skipped": 17,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "failed_cases": [
+      {
+        "title": "PD historical pricing handoff retains the selected revision through navigation and reload",
+        "project": "desktop-chromium",
+        "status": "failed",
+        "retry": 0,
+        "duration_ms": 6888,
+        "errors": [
+          "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Saved / recovered:')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('Saved / recovered:') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Saved / recovered:')\u001b[22m\n\n\n  235 |   await expect(\n  236 |     page.getByText(\"Saved / recovered:\", { exact: false }),\n> 237 |   ).toBeVisible();\n      |     ^\n  238 |   await page\n  239 |     .getByRole(\"link\", { name: \"Open saved result\", exact: true })\n  240 |     .click();\n    at /home/runner/work/powerplants-one/powerplants-one/tests/browser/products.spec.ts:237:5"
+        ]
+      }
+    ]
+  },
+  "baseline": {
+    "source": "88694370b4159134834766beaf648de4bfe16a4c",
+    "build": "T2atCaQIgtunpyW9tMi-p",
+    "application": "Unmodified main checkout and its retained compiled build; isolated fresh ppo_synthetic_test at port 55950, app 33950. The Products test alone is instrumented for the declared diagnostic delay/correction."
+  },
+  "candidate": {
+    "test_source": "4bcbc4ee2c58d1fd35d8df99e8c54182862de095",
+    "application_source": "caecf7bc787eb658a545268e507e35e257adf48f",
+    "build": "qE6dn5GfAoZAp53Forj96",
+    "application": "Existing unchanged integrated build, separate app 33951 on the diagnostic database; prepared owner session 33949 remains untouched."
+  },
+  "diagnostic": {
+    "delay_ms": 1500,
+    "position": "Inside the intercepted POST handler, before route.fetch forwards the real command.",
+    "baseline_patch_sha256": "babb5fe438065b9d7f43c7d2d34f2e139c85cdbf5d62f180c3fd80ae30f17cea",
+    "corrected_patch_sha256": "f33b3faf5db45d66692e4750d0eabfcf64fb9045dae0a4bffffa321f65c86c14",
+    "network": [
+      {
+        "at": "2026-10-10T06:29:02.241Z",
+        "method": "GET",
+        "path": "/api/v1/operations/db90f12c-266b-47e5-b4fb-706395bb083a",
+        "status": 404,
+        "duration_ms": 30.112000000000002
+      },
+      {
+        "at": "2026-10-10T06:29:01.681Z",
+        "method": "POST",
+        "path": "/api/v1/products/baaf0d5e-3294-43a0-9a52-594e23adabe5/pricing",
+        "status": -1,
+        "duration_ms": -1
+      },
+      {
+        "at": "2026-10-10T06:29:03.200Z",
+        "method": "POST",
+        "path": "/api/v1/products/baaf0d5e-3294-43a0-9a52-594e23adabe5/pricing",
+        "status": 200,
+        "duration_ms": 74.60699999999997
+      }
+    ]
+  },
+  "runs": {
+    "unmodified": {
+      "sha256": "a6427031d368ecad96b4d5ef6176ee534dbf59799621955d0d28c9e36e195fff",
+      "stats": {
+        "startTime": "2026-10-10T06:26:49.559Z",
+        "duration": 8431.016,
+        "expected": 0,
+        "skipped": 0,
+        "unexpected": 1,
+        "flaky": 0
+      },
+      "cases": [
+        {
+          "title": "PD historical pricing handoff retains the selected revision through navigation and reload",
+          "project": "products-desktop",
+          "status": "failed",
+          "retry": 0,
+          "duration_ms": 1691,
+          "errors": [
+            "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:33950/products/eb5619d8-37d0-409f-8232-53ce27545c44?revision_id=b9ba9bcb-920b-46a2-80a7-f2de859808d6\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:33950/products/eb5619d8-37d0-409f-8232-53ce27545c44?revision_id=b9ba9bcb-920b-46a2-80a7-f2de859808d6\", waiting until \"load\"\u001b[22m\n\n\n  165 |   });\n  166 |   await login(page, f.author.token);\n> 167 |   await page.goto(`/products/${f.variant.id}?revision_id=${first.revision.id}`);\n      |              ^\n  168 |   await page\n  169 |     .getByRole(\"link\", { name: \"Supplier pricing\", exact: true })\n  170 |     .click();\n    at C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\pt29-screen-states\\powerplants-one\\tests\\browser\\products.spec.ts:167:14"
+          ]
+        }
+      ]
+    },
+    "baseline-control": {
+      "sha256": "cc687eca86d0cfc47e0090065c01312270c84c08958e5deafc5fc572024e6f67",
+      "stats": {
+        "startTime": "2026-10-10T06:27:59.210Z",
+        "duration": 10114.574,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "cases": [
+        {
+          "title": "PD historical pricing handoff retains the selected revision through navigation and reload",
+          "project": "products-desktop",
+          "status": "passed",
+          "retry": 0,
+          "duration_ms": 5249,
+          "errors": []
+        }
+      ]
+    },
+    "delayed-baseline": {
+      "sha256": "d7767537f0175050687d8ff006c296fab2d9f1e32bbd6ad56356cc83e19e951e",
+      "stats": {
+        "startTime": "2026-10-10T06:28:54.397Z",
+        "duration": 17107.906000000003,
+        "expected": 0,
+        "skipped": 0,
+        "unexpected": 1,
+        "flaky": 0
+      },
+      "cases": [
+        {
+          "title": "PD historical pricing handoff retains the selected revision through navigation and reload",
+          "project": "products-desktop",
+          "status": "failed",
+          "retry": 0,
+          "duration_ms": 9474,
+          "errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Saved / recovered:')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('Saved / recovered:') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Saved / recovered:')\u001b[22m\n\n\n  237 |   await expect(\n  238 |     page.getByText(\"Saved / recovered:\", { exact: false }),\n> 239 |   ).toBeVisible();\n      |     ^\n  240 |   await page\n  241 |     .getByRole(\"link\", { name: \"Open saved result\", exact: true })\n  242 |     .click();\n    at C:\\Users\\Dean.Fiedler\\.codex\\worktrees\\pt29-screen-states\\powerplants-one\\tests\\browser\\products.spec.ts:239:5"
+          ]
+        }
+      ]
+    },
+    "delayed-corrected": {
+      "sha256": "cc2bc3ac66b7e110f5bc5afbcdabcb09f768b46353810c3ddefd709fcb2a661d",
+      "stats": {
+        "startTime": "2026-10-10T06:29:37.789Z",
+        "duration": 29526.818,
+        "expected": 2,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "cases": [
+        {
+          "title": "PD historical pricing handoff retains the selected revision through navigation and reload",
+          "project": "products-desktop",
+          "status": "passed",
+          "retry": 0,
+          "duration_ms": 13811,
+          "errors": []
+        },
+        {
+          "title": "PD historical pricing handoff retains the selected revision through navigation and reload",
+          "project": "products-phone",
+          "status": "passed",
+          "retry": 0,
+          "duration_ms": 7198,
+          "errors": []
+        }
+      ]
+    },
+    "candidate": {
+      "sha256": "482d5fdeb9ee00ff1ddd0231637e5f1035dc57839961844c207e305579752436",
+      "stats": {
+        "startTime": "2026-10-10T06:32:40.964Z",
+        "duration": 34895.793,
+        "expected": 2,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "cases": [
+        {
+          "title": "PD historical pricing handoff retains the selected revision through navigation and reload",
+          "project": "products-desktop",
+          "status": "passed",
+          "retry": 0,
+          "duration_ms": 10295,
+          "errors": []
+        },
+        {
+          "title": "PD historical pricing handoff retains the selected revision through navigation and reload",
+          "project": "products-phone",
+          "status": "passed",
+          "retry": 0,
+          "duration_ms": 4905,
+          "errors": []
+        }
+      ]
+    }
+  },
+  "findings": [
+    "The ordinary unchanged-main control passes. A held POST reproduces the same missing Saved / recovered assertion on unchanged application code.",
+    "The receipt lookup returns 404 before the intercepted POST is forwarded and accepted with 200. The UI retains the unknown original instead of inventing success.",
+    "The correction verifies the real POST response is successful and waits for the explicit Recover original result control to become enabled after the dropped response settles, before reload.",
+    "The initial local unmodified attempt started before the baseline listener was ready and failed navigation; it is retained separately and is not used as the causal reproduction.",
+    "No timeout, retry policy, assertion deadline, application behaviour or performance target changes. The 1500 ms injection is diagnostic only and is absent from the committed test."
+  ],
+  "checks": {
+    "eslint": {
+      "exit_code": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "typecheck": {
+      "exit_code": 0,
+      "log_sha256": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28"
+    },
+    "foundation": {
+      "command": "python scripts/check_foundation.py",
+      "exit_code": 0,
+      "log_sha256": "3cac808055af4624a5c4d30448f4d9bbb4a517b95e46cf3452ab5988468b001b"
+    }
+  },
+  "rerun_boundary": "The failed PR-389 job is rerun at unchanged caecf7b. Its original failure is retained here. The test correction is delivered in the descendant PT-30 PR; final CI outcomes remain in the linked PR/run records."
+}

@@ -1,0 +1,474 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-10",
+  "source_ledger": "docs/testing/evidence/field-integrated-acceptance/acceptance-ledger.json",
+  "review_status": "Implementation reconciliation; no owner acceptance",
+  "cases": [
+    {
+      "id": "PT-01",
+      "parent_acceptance_ids": [
+        "AT-01"
+      ],
+      "technical_disposition": "Combined synthetic server pass",
+      "source_ids": [
+        "P11",
+        "CV",
+        "PM"
+      ],
+      "remaining_boundary": "The written PT-01 server procedure is executed within the selected synthetic PP-01 boundary. Independent review, owner observation and operational role/provider approval remain separate.",
+      "next_action": "Review the exact API/grant matrix and observe the owner journey; rerun affected channels when authority or source handling changes.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-02",
+      "parent_acceptance_ids": [
+        "AT-02",
+        "AT-30"
+      ],
+      "technical_disposition": "Combined synthetic pass",
+      "source_ids": [
+        "P10",
+        "MAPPING"
+      ],
+      "remaining_boundary": "Technical reviewer: review the joined source/target record. Owner observation and operational mapping acceptance remain separate.",
+      "next_action": "Technical reviewer: review the joined source/target record. Owner observation and operational mapping acceptance remain separate.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-03",
+      "parent_acceptance_ids": [
+        "AT-30"
+      ],
+      "technical_disposition": "Component",
+      "source_ids": [
+        "P07"
+      ],
+      "remaining_boundary": "Later real field verification with preserved visit-time uncertainty is not in this two-task/one-asset journey.",
+      "next_action": "Service/data owner: select existing verification commands and complete the two-identity procedure; no guessed serial.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-04",
+      "parent_acceptance_ids": [
+        "AT-06"
+      ],
+      "technical_disposition": "Component",
+      "source_ids": [
+        "P07",
+        "S6",
+        "CV",
+        "FRESH"
+      ],
+      "remaining_boundary": "Current incident/policy/readiness restrictions add dependencies; no broad waiver.",
+      "next_action": "Technical reviewer: collate exact urgent/missing-control refusal then valid progression; fresh FI-05/06 restrictions selected here.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-05",
+      "parent_acceptance_ids": [
+        "AT-06",
+        "AT-33"
+      ],
+      "technical_disposition": "Component",
+      "source_ids": [
+        "P09",
+        "P10",
+        "FRESH"
+      ],
+      "remaining_boundary": "Full extra-work request/shutdown-authority narrative remains distinct.",
+      "next_action": "Service owner: adjudicate any missing workflow semantics before expanding the narrative.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-06",
+      "parent_acceptance_ids": [
+        "AT-07",
+        "AT-36"
+      ],
+      "technical_disposition": "Full retained",
+      "source_ids": [
+        "P07",
+        "P09",
+        "FRESH"
+      ],
+      "remaining_boundary": "Pack presentation/timer/closed guidance changed later; full historical pass retained.",
+      "next_action": "Technical reviewer: fresh current journey confirms each acknowledgement and exact bytes; current final CI retains queued-renderer test.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-07",
+      "parent_acceptance_ids": [
+        "AT-07",
+        "AT-34"
+      ],
+      "technical_disposition": "Component",
+      "source_ids": [
+        "P07",
+        "S6",
+        "FRESH"
+      ],
+      "remaining_boundary": "Need exact old-acknowledgement refusal linked to the full amendment record.",
+      "next_action": "Technical reviewer: bind existing pack amendment negative to the complete written PT-07 chain.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-08",
+      "parent_acceptance_ids": [
+        "AT-08"
+      ],
+      "technical_disposition": "Component",
+      "source_ids": [
+        "P11",
+        "S6"
+      ],
+      "remaining_boundary": "Two independent UI sessions with version3 to4 and all reservations/input as one exact record remain to reconcile.",
+      "next_action": "Technical reviewer: execute existing concurrent booking/retained-input cases and record all three evidence surfaces.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-09",
+      "parent_acceptance_ids": [
+        "AT-08"
+      ],
+      "technical_disposition": "Component",
+      "source_ids": [
+        "P11"
+      ],
+      "remaining_boundary": "Combined conflicting bookings plus adjacent buffer evidence not yet promoted.",
+      "next_action": "Technical reviewer: map existing planner concurrency cases to each written step.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-10",
+      "parent_acceptance_ids": [
+        "AT-09",
+        "AT-32"
+      ],
+      "technical_disposition": "Component",
+      "source_ids": [
+        "P11",
+        "S6",
+        "FRESH"
+      ],
+      "remaining_boundary": "Project rejection then acceptance and unchanged project source needs one joined record.",
+      "next_action": "Service reviewer: perform existing request decisions; record keyboard observations separately.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-11",
+      "parent_acceptance_ids": [
+        "AT-10"
+      ],
+      "technical_disposition": "Combined synthetic pass",
+      "source_ids": [
+        "P08",
+        "S6",
+        "FRESH",
+        "OR"
+      ],
+      "remaining_boundary": "Physical-device storage pressure and owner observation remain separate from the injected write failure.",
+      "next_action": "Review retained manifests and observe the written procedure on the intended physical device.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-12",
+      "parent_acceptance_ids": [
+        "AT-11"
+      ],
+      "technical_disposition": "Combined synthetic pass",
+      "source_ids": [
+        "P08",
+        "S6",
+        "FRESH",
+        "OR",
+        "PQ",
+        "PHOTO"
+      ],
+      "remaining_boundary": "Later PQ UI continuation saves/submits all 100 captures and retains 104 originals after reload. PHOTO adds exact revision photo inspection under current Service review authority; current field-download refusal and the 30-local-dependency bound remain. Actual owner/device observations remain open.",
+      "next_action": "Obtain actual owner/device observations of the joined handoff and exact submitted-photo inspection; no general field access grant.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-13",
+      "parent_acceptance_ids": [
+        "AT-12"
+      ],
+      "technical_disposition": "Combined synthetic backend pass",
+      "source_ids": [
+        "P09",
+        "P10",
+        "FRESH",
+        "CORRECTION"
+      ],
+      "remaining_boundary": "The earlier observation-only gap is superseded by the retained approved-evidence correction run. This source-bound backend pass does not establish current browser behaviour, physical-device or owner acceptance, or operational accounting policy.",
+      "next_action": "Technical reviewer: retain the exact approved-correction source and eight passing nested checks. Owner and Finance: observe the applicable workflow; live ERP correction/reversal remains outside the synthetic procedure.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-14",
+      "parent_acceptance_ids": [
+        "AT-14",
+        "AT-30"
+      ],
+      "technical_disposition": "Component",
+      "source_ids": [
+        "P09",
+        "S6",
+        "CV",
+        "FRESH"
+      ],
+      "remaining_boundary": "Written two-task/two-asset fixture and conceptual InProgress/whole-order closure are not implemented by this one-asset Authorised-order path.",
+      "next_action": "Dean/Service: resolve whole-order/ticket closure scope separately; do not invent API-C23 or return lineage.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-15",
+      "parent_acceptance_ids": [
+        "AT-13"
+      ],
+      "technical_disposition": "Full retained",
+      "source_ids": [
+        "P09",
+        "FRESH"
+      ],
+      "remaining_boundary": "FI-07 adds AttendanceFacts/corrections and restriction rechecks; fresh FI-07 regression addresses these extensions.",
+      "next_action": "Technical reviewer: preserve historical full pass; record current reservation and separate FI-07 alternatives/mark results.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-16",
+      "parent_acceptance_ids": [
+        "AT-13",
+        "AT-36"
+      ],
+      "technical_disposition": "Full retained",
+      "source_ids": [
+        "P09",
+        "FRESH"
+      ],
+      "remaining_boundary": "FI-07 extension does not transfer marks or acceptance.",
+      "next_action": "Technical reviewer: fresh FI-07 reassociation/old-queue regression supplements, not replaces, original full result.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-17",
+      "parent_acceptance_ids": [
+        "AT-12",
+        "AT-31"
+      ],
+      "technical_disposition": "Full retained",
+      "source_ids": [
+        "P10",
+        "FRESH"
+      ],
+      "remaining_boundary": "Fresh journey adds one whole measured Labour minute independently NonBillable, no rounding or target expansion.",
+      "next_action": "Finance reviewer: human handoff effort and understanding pending; technical source/target remains independent.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-18",
+      "parent_acceptance_ids": [
+        "AT-20",
+        "AT-36"
+      ],
+      "technical_disposition": "Component",
+      "source_ids": [
+        "P11",
+        "FRESH",
+        "IDENTITY",
+        "PM",
+        "OUTPUT"
+      ],
+      "remaining_boundary": "Rename, identity-changing move and missing-version outcomes already pass in the retained in-process synthetic-adapter proof. Authenticated customer-channel/provider evidence and independent acceptance remain open; separate sources are not a joined full PT-18 execution.",
+      "next_action": "Technical reviewer: retain the completed movement outcomes and join remaining applicable channel/content evidence to the written procedure. Provider/owner: review supported source identity behaviour and actual customer access; no live SharePoint proof is implied.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-19",
+      "parent_acceptance_ids": [
+        "AT-31"
+      ],
+      "technical_disposition": "Full retained",
+      "source_ids": [
+        "P10",
+        "S6"
+      ],
+      "remaining_boundary": "Fresh desktop journey uses SyntheticManual; phone historical SyntheticApi result remains valid.",
+      "next_action": "Technical reviewer: retain full earlier result; current final CI Finance concurrency/unknown-outcome gates verify unchanged contracts.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-20",
+      "parent_acceptance_ids": [
+        "AT-18",
+        "AT-31"
+      ],
+      "technical_disposition": "Full retained",
+      "source_ids": [
+        "P10"
+      ],
+      "remaining_boundary": "No account calculation or integration code changed.",
+      "next_action": "Finance reviewer: retain source-specific full pass; no new human/operational accounting acceptance.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-21",
+      "parent_acceptance_ids": [
+        "AT-31"
+      ],
+      "technical_disposition": "Full retained",
+      "source_ids": [
+        "P10"
+      ],
+      "remaining_boundary": "No Finance source/read-model changes.",
+      "next_action": "Finance reviewer: retain source-specific full pass; operational source definitions remain unresolved.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-22",
+      "parent_acceptance_ids": [
+        "AT-22"
+      ],
+      "technical_disposition": "Full retained",
+      "source_ids": [
+        "P12"
+      ],
+      "remaining_boundary": "Later schema55-57 not included in that old measurement; current CI exercises maintained restore. Restart here is explicitly not restore.",
+      "next_action": "Technical reviewer: retain historical full result; inspect current CI restore for current-schema regression, never rerun old rollback writers.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-23",
+      "parent_acceptance_ids": [
+        "AT-36"
+      ],
+      "technical_disposition": "Combined synthetic pass",
+      "source_ids": [
+        "P09",
+        "P10",
+        "P11",
+        "OUTPUT"
+      ],
+      "remaining_boundary": "Joined OUT-09/10/14 storage corruption, SQL rollback, concurrent original recovery and source/template changes pass. Both installed template versions retain exact outputs across the real long pack/Service/Finance journey. All 89 pages inspected; twenty-asset variants are unissued render-only fixtures. Sparse final pages and split fields/rows remain visible for independent template/owner review.",
+      "next_action": "Review original output hashes and failed-attempt/effect records; independently inspect pagination refinements and observe the workflow. No live provider, PDF/UA, power-loss or operational acceptance is implied.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-24",
+      "parent_acceptance_ids": [
+        "AT-11",
+        "AT-34"
+      ],
+      "technical_disposition": "Combined synthetic pass",
+      "source_ids": [
+        "P08",
+        "S6",
+        "CV",
+        "FRESH",
+        "OR"
+      ],
+      "remaining_boundary": "Combined synthetic recovery is demonstrated; operational revocation, physical device and actual Service/technician observation remain unaccepted.",
+      "next_action": "Review original-authority and receipt manifests with the Service owner; perform actual owner/device observation without rebasing old attendance.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-25",
+      "parent_acceptance_ids": [
+        "AT-30",
+        "AT-33"
+      ],
+      "technical_disposition": "Component",
+      "source_ids": [
+        "P07"
+      ],
+      "remaining_boundary": "Complete effective operator change/asset move with preserved historical report and future-pack review not in selected narrative.",
+      "next_action": "Service/data owner: run current effective-history commands and verify future review, recurrence remains deferred.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-26",
+      "parent_acceptance_ids": [
+        "AT-14"
+      ],
+      "technical_disposition": "Component",
+      "source_ids": [
+        "P07",
+        "CV",
+        "FRESH"
+      ],
+      "remaining_boundary": "Written future confirmed issued visit/contact/reservation release and actual-work refusal needs exact linked record.",
+      "next_action": "Technical reviewer: reconcile both existing cases; a cancelled proposal alone is insufficient.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-27",
+      "parent_acceptance_ids": [
+        "AT-23"
+      ],
+      "technical_disposition": "Open findings",
+      "source_ids": [
+        "P11",
+        "S6",
+        "CV",
+        "FRESH",
+        "OR",
+        "PQ",
+        "TIMELINE"
+      ],
+      "remaining_boundary": "Automated layouts/zoom do not provide screen-reader/physical-device/independent visual acceptance or causal performance remedy.",
+      "next_action": "Profile first-navigation asset/identity/render stages and remaining core reads against unchanged target; obtain keyboard, screen-reader and physical-device owner observations.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-28",
+      "parent_acceptance_ids": [
+        "AT-35"
+      ],
+      "technical_disposition": "Full retained",
+      "source_ids": [
+        "S6"
+      ],
+      "remaining_boundary": "Applicable only to demonstrated releases/enforcement. Current schema57 adds independent controls; do not start Step4 against it.",
+      "next_action": "Technical reviewer: retain bounded full status; future release rehearsal requires a newly proven compatible target, no new rollback executed here.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-29",
+      "parent_acceptance_ids": [
+        "AT-23"
+      ],
+      "technical_disposition": "Combined synthetic pass",
+      "source_ids": [
+        "P11",
+        "CV",
+        "FRESH",
+        "STATES"
+      ],
+      "remaining_boundary": "The selected synthetic PT-29 procedure is joined on the declared integrated source. It does not cover every later application route, external providers, physical devices or AT-23 performance/accessibility acceptance.",
+      "next_action": "Technical reviewer: inspect the source-bound checklist and representative captures. Owner: observe the joined workflow under PT-30; independent visual/device review remains separate.",
+      "human_acceptance": "Pending actual observations"
+    },
+    {
+      "id": "PT-30",
+      "parent_acceptance_ids": [
+        "AT-06",
+        "AT-07",
+        "AT-08",
+        "AT-12",
+        "AT-13",
+        "AT-14",
+        "AT-31"
+      ],
+      "technical_disposition": "Technical narrative; owner/prerequisites pending",
+      "source_ids": [
+        "S6",
+        "CV",
+        "FRESH",
+        "INTEGRATION"
+      ],
+      "remaining_boundary": "Technical rehearsal passes at schema 77 (76 installed migrations). Full PT-30 remains pending applicable prior-case disposition and actual owner/role/device observations. Restart preserves the same cluster and is not backup restore. Independent visual/accessibility and PT-27 timing findings remain open.",
+      "next_action": "Owner: use the current saved entry records and pending H01-H11 worksheet. Technical reviewer: review each remaining prerequisite disposition; no automatic acceptance from rehearsal or earlier source-bound passes.",
+      "human_acceptance": "Pending actual observations"
+    }
+  ]
+}

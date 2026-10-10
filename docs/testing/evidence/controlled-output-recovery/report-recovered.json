@@ -1,0 +1,586 @@
+{
+  "family": "OUT-10",
+  "detail": {
+    "original_bundle_sha256": "b3ad792c1c8310b54c16165f63cf91cd6c1c6da28b4babd51eeb253c9ee6cf72",
+    "regenerated": 0
+  },
+  "job": {
+    "id": "3d5e2b4d-2927-4dce-9a6c-1a104c68065c",
+    "workspace_id": "10000000-0000-4000-8000-000000000001",
+    "report_id": "347cb995-ca30-46c1-843a-96e05d86f0d9",
+    "revision_id": "8bf57905-f248-4b1c-a59c-731a7ca609c8",
+    "review_id": "e3e4d00a-b1d9-4121-85b5-c3f86c4ab0c7",
+    "actor_id": "30000000-0000-4000-8000-000000000001",
+    "recovery_owner_id": "30000000-0000-4000-8000-000000000001",
+    "operation_id": "86a25578-65f6-4539-97b7-2490a85726fb",
+    "finalisation_operation_id": "9bd34027-e4bb-458e-8ee5-b3ba09c43aa5",
+    "render_snapshot": {
+      "guard": {
+        "pack": {
+          "id": "be4c2110-e083-43df-a297-bf50d0ca4670",
+          "status": "Issued",
+          "version": 4,
+          "needs_review": false,
+          "current_issue_id": "40bb3c84-6493-4bd3-a9ac-a6ff9ff6e65f"
+        },
+        "assets": [
+          {
+            "id": "80000000-0000-4000-8000-000000000001",
+            "version": 1,
+            "identity_status": "Verified"
+          }
+        ],
+        "entries": [
+          {
+            "id": "3acbbf48-153d-48c9-848b-9a848ef30040",
+            "version": 1
+          },
+          {
+            "id": "43ee6081-4f6d-4033-99da-b48cefc55e55",
+            "version": 1
+          },
+          {
+            "id": "8731a3d8-056c-40c6-ac89-1fc3f24ced3b",
+            "version": 1
+          },
+          {
+            "id": "ece6a73b-b706-4be4-b2f6-81c41484163f",
+            "version": 1
+          }
+        ],
+        "controls": [
+          {
+            "id": "ae000000-0000-4000-8000-000000000001",
+            "outcome": "Pass",
+            "criterion_code": "SiteAccess",
+            "assessment_version": 1
+          },
+          {
+            "id": "ae000000-0000-4000-8000-000000000002",
+            "outcome": "Pass",
+            "criterion_code": "SiteControls",
+            "assessment_version": 1
+          },
+          {
+            "id": "ae000000-0000-4000-8000-000000000003",
+            "outcome": "Pass",
+            "criterion_code": "CompetencyPlan",
+            "assessment_version": 1
+          },
+          {
+            "id": "ae000000-0000-4000-8000-000000000004",
+            "outcome": "NotApplicable",
+            "criterion_code": "MandatoryIsolation",
+            "assessment_version": 1
+          },
+          {
+            "id": "ae000000-0000-4000-8000-000000000005",
+            "outcome": "NotApplicable",
+            "criterion_code": "ShutdownAuthority",
+            "assessment_version": 1
+          },
+          {
+            "id": "ae000000-0000-4000-8000-000000000109",
+            "outcome": "Pass",
+            "criterion_code": "ToolPreparation",
+            "assessment_version": 1
+          }
+        ],
+        "recipient": {
+          "id": "60000000-0000-4000-8000-000000000001",
+          "name": "SYN Avery Contact",
+          "version": 1
+        },
+        "site_version": 1,
+        "customer_version": 1,
+        "schedule_version": 2,
+        "service_owner_id": "30000000-0000-4000-8000-000000000001",
+        "scope_revision_id": "aa000000-0000-4000-8000-000000000001",
+        "assignment_version": 2,
+        "primary_contact_id": "60000000-0000-4000-8000-000000000001",
+        "authorised_scope_revision_id": "aa000000-0000-4000-8000-000000000001"
+      },
+      "output": {
+        "kind": "IssuedReport",
+        "issue_id": "9d1f6dd1-e898-4df1-b0dd-8266a119712e",
+        "prepared_at": "2026-10-10T03:32:26.589Z",
+        "template_hash": "6a77a93522e8cc96a542707ceccfd55fafa84f6cb0644e69b7660f826224238f"
+      },
+      "source": {
+        "site": {
+          "id": "70000000-0000-4000-8000-000000000001",
+          "name": "SYN Q01 Demonstration Site"
+        },
+        "work": {
+          "id": "a9000000-0000-4000-8000-000000000001",
+          "reference": "SYN-PPO-WO-000010"
+        },
+        "tasks": [
+          {
+            "id": "ad000000-0000-4000-8000-000000000001",
+            "reason": "SYN explicit task outcome and remaining-work reason",
+            "outcome": "Partial",
+            "description": "Observe controller display and external sensor identity",
+            "scope_item_id": "ad000000-0000-4000-8000-000000000001",
+            "expected_outcome": "Record observations and remaining questions"
+          }
+        ],
+        "assets": [
+          {
+            "id": "80000000-0000-4000-8000-000000000001",
+            "name": "SYN irrigation controller",
+            "identity": "Verified"
+          }
+        ],
+        "audience": {
+          "id": "60000000-0000-4000-8000-000000000001",
+          "name": "SYN Avery Contact",
+          "version": 1
+        },
+        "customer": {
+          "id": "50000000-0000-4000-8000-000000000001",
+          "name": "SYN Greenhouse Demonstration"
+        },
+        "evidence": [
+          {
+            "id": "3acbbf48-153d-48c9-848b-9a848ef30040",
+            "kind": "Time",
+            "facts": {
+              "kind": "Labour",
+              "end_at": "2026-10-10T03:02:22.000Z",
+              "start_at": "2026-10-10T01:32:22.000Z",
+              "elapsed_minutes": "90",
+              "elapsed_seconds": 5400
+            },
+            "version": 1,
+            "asset_id": "80000000-0000-4000-8000-000000000001",
+            "scope_item_id": "ad000000-0000-4000-8000-000000000001"
+          },
+          {
+            "id": "43ee6081-4f6d-4033-99da-b48cefc55e55",
+            "kind": "Photo",
+            "facts": {
+              "caption": "SYN inspection photograph",
+              "evidence": "Original photo retained privately; no filename or private location is distributed."
+            },
+            "version": 1,
+            "asset_id": "80000000-0000-4000-8000-000000000001",
+            "scope_item_id": "ad000000-0000-4000-8000-000000000001"
+          },
+          {
+            "id": "8731a3d8-056c-40c6-ac89-1fc3f24ced3b",
+            "kind": "Observation",
+            "facts": {
+              "result": "Still unclear; no identity verification",
+              "finding": "SYN visual inspection found a loose external label",
+              "confidence": "Suspected",
+              "attempted_fix": "SYN attempted to read the label without intervention",
+              "follow_up_required": true
+            },
+            "version": 1,
+            "asset_id": "80000000-0000-4000-8000-000000000001",
+            "scope_item_id": "ad000000-0000-4000-8000-000000000001"
+          },
+          {
+            "id": "ece6a73b-b706-4be4-b2f6-81c41484163f",
+            "kind": "Material",
+            "facts": {
+              "unit": "EA",
+              "movement": "Consumed",
+              "quantity": "2",
+              "description": "SYN fictional label sleeve"
+            },
+            "version": 1,
+            "asset_id": "80000000-0000-4000-8000-000000000001",
+            "scope_item_id": "ad000000-0000-4000-8000-000000000001"
+          }
+        ],
+        "revision": 1,
+        "reference": "SYN-PPO-RPT-000001",
+        "synthetic": true,
+        "attendance": {
+          "id": "a0bbb1c0-8119-49fc-88d0-be167c77b57e",
+          "name": "SYN Riley Technician",
+          "end_at": "2026-10-10T03:32:25.748Z",
+          "start_at": "2026-10-10T03:32:22.412Z"
+        },
+        "completion": {
+          "outcome": "Partial",
+          "blockers": [
+            "Unresolved finding requires follow-up.",
+            "An authorised task remains incomplete.",
+            "A task result has not passed the synthetic completion check.",
+            "The synthetic site-controls completion check has not passed."
+          ],
+          "exclusions": "SYN no intervention or energised work",
+          "remaining_work": "SYN remaining inspection needs service-owner review",
+          "work_performed": "SYN visual inspection performed within original scope",
+          "next_action_owner": "Service coordinator"
+        },
+        "appointment": {
+          "id": "a8000000-0000-4000-8000-000000000009",
+          "timezone": "Australia/Brisbane",
+          "reference": "SYN-PPO-APT-000012"
+        },
+        "schema_version": 1,
+        "authorised_scope": {
+          "id": "aa000000-0000-4000-8000-000000000001",
+          "hash": "e71ef84a2f976ee958a4101b739e58a98acf045bcf39a7b6728affd469b981c0",
+          "summary": "SYN Planned controller inspection — coordination and customer date review",
+          "version": 1,
+          "exclusions": "No shutdown, replacement, energised access, repair or financial approval."
+        },
+        "source_attachments": [
+          {
+            "id": "9d01483a-54db-4e3d-ae81-da03957c2636",
+            "sha256": "8e0e39097d1e122a86d83ed2c236f3bc8de8b82c46a945fbe71b6bf0a059203e",
+            "byte_count": 191
+          }
+        ],
+        "authority_disposition": "Current"
+      },
+      "template": {
+        "id": "e1000000-0000-4000-8000-000000000002",
+        "version": 2,
+        "content_hash": "6a77a93522e8cc96a542707ceccfd55fafa84f6cb0644e69b7660f826224238f",
+        "policy_version": 2
+      },
+      "review_id": "e3e4d00a-b1d9-4121-85b5-c3f86c4ab0c7",
+      "revision_id": "8bf57905-f248-4b1c-a59c-731a7ca609c8",
+      "source_hash": "0df73b5c3397b1ed317d75ee5d7a737abc2d57afe53d1fe2a39fa9c30483dd60",
+      "customer_hash": "c15ce50cf617b8f5057f28479ad89e38a8f0a8275a9bd6c7c33f6e2e25cfe7ac"
+    },
+    "input_hash": "d392ccea3187d695d2e5557a64f8388ae2ab73c1052e056643c333ad69218b94",
+    "state": "Issued",
+    "attempts": 4,
+    "lease_token": "22a7537a-6191-4ecb-b8ad-c67a36185b2f",
+    "lease_until": null,
+    "error_code": null,
+    "output_manifest": {
+      "job_id": "3d5e2b4d-2927-4dce-9a6c-1a104c68065c",
+      "filename": "SYN-PPO-RPT-000001-service-report-r01.pdf",
+      "issue_id": "9d1f6dd1-e898-4df1-b0dd-8266a119712e",
+      "pdf_hash": "0741deac320a2509f68e6961579a9dd793341074e16dc029f5912bfd42bfa3b4",
+      "template": {
+        "id": "e1000000-0000-4000-8000-000000000002",
+        "version": 2,
+        "content_hash": "6a77a93522e8cc96a542707ceccfd55fafa84f6cb0644e69b7660f826224238f",
+        "policy_version": 2
+      },
+      "html_hash": "4bdf5efc88513fd1bf7a3084f83781f529638306dbda0262efc6e1e5e2637dce",
+      "pdf_bytes": 565358,
+      "review_id": "e3e4d00a-b1d9-4121-85b5-c3f86c4ab0c7",
+      "store_key": {
+        "sha256": "b3ad792c1c8310b54c16165f63cf91cd6c1c6da28b4babd51eeb253c9ee6cf72",
+        "item_id": "3d5e2b4d-2927-4dce-9a6c-1a104c68065c",
+        "site_id": null,
+        "drive_id": null,
+        "provider": "Synthetic",
+        "tenant_id": null,
+        "version_id": "b3ad792c1c8310b54c16165f63cf91cd6c1c6da28b4babd51eeb253c9ee6cf72"
+      },
+      "html_bytes": 801174,
+      "prepared_at": "2026-10-10T03:32:26.589Z",
+      "revision_id": "8bf57905-f248-4b1c-a59c-731a7ca609c8",
+      "source_hash": "0df73b5c3397b1ed317d75ee5d7a737abc2d57afe53d1fe2a39fa9c30483dd60",
+      "bundle_bytes": 1555303,
+      "customer_hash": "c15ce50cf617b8f5057f28479ad89e38a8f0a8275a9bd6c7c33f6e2e25cfe7ac",
+      "schema_version": 1,
+      "browser_version": "155.0.8059.40",
+      "renderer_version": "playwright-1.63.0"
+    },
+    "issue_id": "9d1f6dd1-e898-4df1-b0dd-8266a119712e",
+    "requested_at": "2026-10-10T03:32:26.591Z"
+  },
+  "attempts": [
+    {
+      "id": "a65cba04-8465-448b-b3de-17f76b903953",
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "job_id": "3d5e2b4d-2927-4dce-9a6c-1a104c68065c",
+      "attempt": 1,
+      "outcome": "Claimed",
+      "code": null,
+      "occurred_at": "2026-10-10T03:32:26.756Z"
+    },
+    {
+      "id": "ebbcb6aa-1a3e-43bc-bd03-539de3c18948",
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "job_id": "3d5e2b4d-2927-4dce-9a6c-1a104c68065c",
+      "attempt": 1,
+      "outcome": "Failed",
+      "code": "RenderOrStorageFailure",
+      "occurred_at": "2026-10-10T03:32:29.584Z"
+    },
+    {
+      "id": "159c8659-6df2-44d0-aac0-ac5dbfc0ac14",
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "job_id": "3d5e2b4d-2927-4dce-9a6c-1a104c68065c",
+      "attempt": 2,
+      "outcome": "Claimed",
+      "code": null,
+      "occurred_at": "2026-10-10T03:32:29.633Z"
+    },
+    {
+      "id": "56a6da69-9147-4f5d-ae55-51cd94e72d34",
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "job_id": "3d5e2b4d-2927-4dce-9a6c-1a104c68065c",
+      "attempt": 2,
+      "outcome": "Durable",
+      "code": null,
+      "occurred_at": "2026-10-10T03:32:34.320Z"
+    },
+    {
+      "id": "3d6d5a11-dc19-4813-b6a3-7962b8d747c7",
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "job_id": "3d5e2b4d-2927-4dce-9a6c-1a104c68065c",
+      "attempt": 2,
+      "outcome": "Failed",
+      "code": "ExactDocumentUnavailable",
+      "occurred_at": "2026-10-10T03:32:34.483Z"
+    },
+    {
+      "id": "14743fe5-8416-4e48-8d07-a210bda7f228",
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "job_id": "3d5e2b4d-2927-4dce-9a6c-1a104c68065c",
+      "attempt": 3,
+      "outcome": "Claimed",
+      "code": null,
+      "occurred_at": "2026-10-10T03:32:34.582Z"
+    },
+    {
+      "id": "6192d8a3-ec30-4e9e-858f-6dec3c2a43b9",
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "job_id": "3d5e2b4d-2927-4dce-9a6c-1a104c68065c",
+      "attempt": 3,
+      "outcome": "Durable",
+      "code": null,
+      "occurred_at": "2026-10-10T03:32:34.695Z"
+    },
+    {
+      "id": "38850ba2-c4ef-4c5c-ac3a-d472d890b576",
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "job_id": "3d5e2b4d-2927-4dce-9a6c-1a104c68065c",
+      "attempt": 3,
+      "outcome": "Failed",
+      "code": "RenderOrStorageFailure",
+      "occurred_at": "2026-10-10T03:32:34.925Z"
+    },
+    {
+      "id": "8acb03a7-4b3a-4d7f-97aa-1da2dc271228",
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "job_id": "3d5e2b4d-2927-4dce-9a6c-1a104c68065c",
+      "attempt": 4,
+      "outcome": "Claimed",
+      "code": null,
+      "occurred_at": "2026-10-10T03:32:35.021Z"
+    },
+    {
+      "id": "344ce439-2068-4a23-9119-67632c32650f",
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "job_id": "3d5e2b4d-2927-4dce-9a6c-1a104c68065c",
+      "attempt": 4,
+      "outcome": "Durable",
+      "code": null,
+      "occurred_at": "2026-10-10T03:32:35.137Z"
+    },
+    {
+      "id": "4ebed089-ede3-44cf-a8fd-faebd8c5f208",
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "job_id": "3d5e2b4d-2927-4dce-9a6c-1a104c68065c",
+      "attempt": 4,
+      "outcome": "Issued",
+      "code": null,
+      "occurred_at": "2026-10-10T03:32:35.456Z"
+    }
+  ],
+  "effects": {
+    "operations": [
+      {
+        "row": {
+          "id": "95f485f3-320d-49a0-a0fe-ead2768e3ab5",
+          "result": {
+            "state": "Issued",
+            "task_ids": [
+              "8546991d-19d3-4bc3-aea9-ad947828b8cc"
+            ],
+            "warnings": [],
+            "record_id": "347cb995-ca30-46c1-843a-96e05d86f0d9",
+            "receipt_id": "95f485f3-320d-49a0-a0fe-ead2768e3ab5",
+            "accepted_at": "2026-10-10T03:32:35.442Z",
+            "operation_id": "9bd34027-e4bb-458e-8ee5-b3ba09c43aa5",
+            "record_version": 5
+          },
+          "actor_id": "30000000-0000-4000-8000-000000000001",
+          "record_id": "347cb995-ca30-46c1-843a-96e05d86f0d9",
+          "received_at": "2026-10-10T13:32:35.449709+10:00",
+          "operation_id": "9bd34027-e4bb-458e-8ee5-b3ba09c43aa5",
+          "payload_hash": "2f2421b55f3c436702648c39e3faab91c11c2bf7023b2a65a5b4f7ea4580342d",
+          "workspace_id": "10000000-0000-4000-8000-000000000001",
+          "schema_version": 1
+        }
+      }
+    ],
+    "audit": [
+      {
+        "row": {
+          "id": "6d3a7c43-8d79-4a2e-b6c9-3f6ef0e38802",
+          "reason": "P09 exact durable report bytes and reviewed source verified.",
+          "details": {
+            "job_id": "3d5e2b4d-2927-4dce-9a6c-1a104c68065c",
+            "command": "FinaliseReportIssue",
+            "issue_id": "9d1f6dd1-e898-4df1-b0dd-8266a119712e",
+            "output_hash": "0741deac320a2509f68e6961579a9dd793341074e16dc029f5912bfd42bfa3b4"
+          },
+          "outcome": "Accepted",
+          "actor_id": "30000000-0000-4000-8000-000000000001",
+          "object_id": "347cb995-ca30-46c1-843a-96e05d86f0d9",
+          "object_type": "ServiceReport",
+          "occurred_at": "2026-10-10T13:32:35.446228+10:00",
+          "operation_id": "9bd34027-e4bb-458e-8ee5-b3ba09c43aa5",
+          "workspace_id": "10000000-0000-4000-8000-000000000001",
+          "schema_version": 1
+        }
+      }
+    ],
+    "outbox": [
+      {
+        "row": {
+          "id": "8546991d-19d3-4bc3-aea9-ad947828b8cc",
+          "kind": "ReportIssued",
+          "status": "Ready",
+          "payload": {
+            "record_id": "347cb995-ca30-46c1-843a-96e05d86f0d9",
+            "synthetic": true,
+            "object_type": "ServiceReport",
+            "record_version": 5
+          },
+          "actor_id": "30000000-0000-4000-8000-000000000001",
+          "attempts": 0,
+          "created_at": "2026-10-10T13:32:35.451716+10:00",
+          "error_code": null,
+          "lease_until": null,
+          "operation_id": "9bd34027-e4bb-458e-8ee5-b3ba09c43aa5",
+          "workspace_id": "10000000-0000-4000-8000-000000000001",
+          "correlation_id": "9bd34027-e4bb-458e-8ee5-b3ba09c43aa5",
+          "next_attempt_at": null,
+          "payload_version": 1
+        }
+      }
+    ],
+    "issue": [
+      {
+        "id": "9d1f6dd1-e898-4df1-b0dd-8266a119712e",
+        "workspace_id": "10000000-0000-4000-8000-000000000001",
+        "report_id": "347cb995-ca30-46c1-843a-96e05d86f0d9",
+        "revision_id": "8bf57905-f248-4b1c-a59c-731a7ca609c8",
+        "review_id": "e3e4d00a-b1d9-4121-85b5-c3f86c4ab0c7",
+        "render_job_id": "3d5e2b4d-2927-4dce-9a6c-1a104c68065c",
+        "issued_by": "30000000-0000-4000-8000-000000000001",
+        "issued_at": "2026-10-10T03:32:35.396Z",
+        "manifest": {
+          "job_id": "3d5e2b4d-2927-4dce-9a6c-1a104c68065c",
+          "filename": "SYN-PPO-RPT-000001-service-report-r01.pdf",
+          "issue_id": "9d1f6dd1-e898-4df1-b0dd-8266a119712e",
+          "pdf_hash": "0741deac320a2509f68e6961579a9dd793341074e16dc029f5912bfd42bfa3b4",
+          "template": {
+            "id": "e1000000-0000-4000-8000-000000000002",
+            "version": 2,
+            "content_hash": "6a77a93522e8cc96a542707ceccfd55fafa84f6cb0644e69b7660f826224238f",
+            "policy_version": 2
+          },
+          "html_hash": "4bdf5efc88513fd1bf7a3084f83781f529638306dbda0262efc6e1e5e2637dce",
+          "pdf_bytes": 565358,
+          "review_id": "e3e4d00a-b1d9-4121-85b5-c3f86c4ab0c7",
+          "store_key": {
+            "sha256": "b3ad792c1c8310b54c16165f63cf91cd6c1c6da28b4babd51eeb253c9ee6cf72",
+            "item_id": "3d5e2b4d-2927-4dce-9a6c-1a104c68065c",
+            "site_id": null,
+            "drive_id": null,
+            "provider": "Synthetic",
+            "tenant_id": null,
+            "version_id": "b3ad792c1c8310b54c16165f63cf91cd6c1c6da28b4babd51eeb253c9ee6cf72"
+          },
+          "html_bytes": 801174,
+          "prepared_at": "2026-10-10T03:32:26.589Z",
+          "revision_id": "8bf57905-f248-4b1c-a59c-731a7ca609c8",
+          "source_hash": "0df73b5c3397b1ed317d75ee5d7a737abc2d57afe53d1fe2a39fa9c30483dd60",
+          "bundle_bytes": 1555303,
+          "customer_hash": "c15ce50cf617b8f5057f28479ad89e38a8f0a8275a9bd6c7c33f6e2e25cfe7ac",
+          "schema_version": 1,
+          "browser_version": "155.0.8059.40",
+          "renderer_version": "playwright-1.63.0"
+        },
+        "output_hash": "0741deac320a2509f68e6961579a9dd793341074e16dc029f5912bfd42bfa3b4",
+        "recipient_id": "60000000-0000-4000-8000-000000000001"
+      }
+    ],
+    "extra": [
+      {
+        "row": {
+          "id": "a7efcce6-6808-4e59-b24b-97637d99109d",
+          "html": null,
+          "kind": "IssuedReport",
+          "issue_id": "9d1f6dd1-e898-4df1-b0dd-8266a119712e",
+          "html_hash": "4bdf5efc88513fd1bf7a3084f83781f529638306dbda0262efc6e1e5e2637dce",
+          "report_id": "347cb995-ca30-46c1-843a-96e05d86f0d9",
+          "created_at": "2026-10-10T13:32:35.401645+10:00",
+          "revision_id": "8bf57905-f248-4b1c-a59c-731a7ca609c8",
+          "content_hash": "4bdf5efc88513fd1bf7a3084f83781f529638306dbda0262efc6e1e5e2637dce",
+          "workspace_id": "10000000-0000-4000-8000-000000000001"
+        }
+      }
+    ],
+    "distribution": [
+      {
+        "follow_up": {
+          "kind": "Distribution",
+          "report_id": "347cb995-ca30-46c1-843a-96e05d86f0d9",
+          "created_at": "2026-10-10T13:32:35.439667+10:00",
+          "activity_id": "f42ddcec-9402-4d4d-8ecf-4412b43acb5e",
+          "workspace_id": "10000000-0000-4000-8000-000000000001"
+        },
+        "activity": {
+          "id": "f42ddcec-9402-4d4d-8ecf-4412b43acb5e",
+          "kind": "CustomerContact",
+          "due_at": null,
+          "status": "Open",
+          "outcome": null,
+          "site_id": "70000000-0000-4000-8000-000000000001",
+          "summary": "SYN-PPO-RPT-000001 · Arrange a synthetic in-app presentation and explicit response for the named customer contact. No message has been sent.",
+          "version": 1,
+          "owner_id": "30000000-0000-4000-8000-000000000001",
+          "starts_at": null,
+          "synthetic": true,
+          "company_id": "20000000-0000-4000-8000-000000000001",
+          "created_at": "2026-10-10T13:32:35.433948+10:00",
+          "created_by": "30000000-0000-4000-8000-000000000001",
+          "due_needed": true,
+          "updated_at": "2026-10-10T13:32:35.433948+10:00",
+          "updated_by": "30000000-0000-4000-8000-000000000001",
+          "access_class": "RestrictedService",
+          "workspace_id": "10000000-0000-4000-8000-000000000001",
+          "activity_type": "Task",
+          "due_date_only": false,
+          "cancellation_reason": null
+        },
+        "links": [
+          {
+            "lead_id": null,
+            "site_id": "70000000-0000-4000-8000-000000000001",
+            "asset_id": null,
+            "object_id": "70000000-0000-4000-8000-000000000001",
+            "ticket_id": null,
+            "company_id": "20000000-0000-4000-8000-000000000001",
+            "project_id": null,
+            "activity_id": "f42ddcec-9402-4d4d-8ecf-4412b43acb5e",
+            "object_type": "Site",
+            "workspace_id": "10000000-0000-4000-8000-000000000001",
+            "opportunity_id": null,
+            "organisation_id": null
+          }
+        ]
+      }
+    ]
+  },
+  "stored_sha256": "b3ad792c1c8310b54c16165f63cf91cd6c1c6da28b4babd51eeb253c9ee6cf72"
+}

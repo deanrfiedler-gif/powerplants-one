@@ -1,0 +1,14 @@
+{
+  "scenario": "SC-06-stale-output-requires-successor",
+  "full_page": false,
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "source_head": "8f632cbc7e518513d8d1ba60d1de6e0a6ab70e7d",
+  "executed_checkout": "8f632cbc7e518513d8d1ba60d1de6e0a6ab70e7d",
+  "executed_tree": "ae4c0c88a27e691fedfa9a0586789872ce36d180",
+  "byte_count": 73650,
+  "sha256": "09405e8e381e6a2ea466cccb13bdaef469b3b27762b905237815c375c57d0bec",
+  "injection": "retained synthetic pack read; not worker proof"
+}

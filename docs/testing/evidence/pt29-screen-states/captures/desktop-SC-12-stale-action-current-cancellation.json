@@ -1,0 +1,13 @@
+{
+  "scenario": "SC-12-stale-action-current-cancellation",
+  "full_page": false,
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "source_head": "8f632cbc7e518513d8d1ba60d1de6e0a6ab70e7d",
+  "executed_checkout": "8f632cbc7e518513d8d1ba60d1de6e0a6ab70e7d",
+  "executed_tree": "ae4c0c88a27e691fedfa9a0586789872ce36d180",
+  "byte_count": 112775,
+  "sha256": "c8c9fd24aa2a880abc023ae10a79bbbbc1fb903dddc7864953a3573df7717eb5"
+}
