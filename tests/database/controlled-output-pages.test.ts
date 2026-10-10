@@ -115,7 +115,9 @@ for (const version of [1, 2] as const) {
   test(`PT-23 v${version}: long reviewed pack, Service report and reconciled Finance originals`, async () => {
     await reset();
     for (const family of families) await selectTemplate(family, version);
-    // Synthetic master-data fixtures only; all preparation, issue, personal
+    // Long labels define the initial synthetic fixture, not a later rename.
+    // Keep its declared versions; actual version changes are challenged separately.
+    // All preparation, issue, personal
     // evidence, Service approval and Finance reconciliation use domain commands.
     const customer =
       "SYN " +
@@ -124,11 +126,11 @@ for (const version of [1, 2] as const) {
       "SYN " +
       "Long eastern irrigation inspection and propagation facility ".repeat(3);
     await database().query(
-      "UPDATE ppo.organisations SET display_name=$2,version=version+1 WHERE id=$1",
+      "UPDATE ppo.organisations SET display_name=$2 WHERE id=$1",
       [id("50"), customer],
     );
     await database().query(
-      "UPDATE ppo.sites SET display_name=$2,version=version+1 WHERE id=$1",
+      "UPDATE ppo.sites SET display_name=$2 WHERE id=$1",
       [id("70"), site],
     );
     const notes = content();
