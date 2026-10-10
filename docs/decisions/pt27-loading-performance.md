@@ -12,13 +12,13 @@ Use the existing pinned stack and additive synthetic benchmark fixture. A standa
 
 No new dependency, service, operational integration, deployment or production authority is included. A measured local improvement does not by itself close PT-27, the older browser timeout, owner/device/accessibility review or hosted timing obligations. Implementation choice and before/after evidence will be recorded in the contribution's execution record.
 
-## Selected correction
+## Initial broad correction (superseded)
 
 The baseline ten-user Customers trace observes automatic shell destination requests during current-page loading, including Home before the session read finishes and Sales destinations while the directory settles. ProductNavigation links now use the existing Next Link `prefetch={false}` policy already adopted for directory links. This removes speculative destination rendering; URLs, click/keyboard/touch navigation, permissions and the unsaved-work guard remain unchanged. It is a bounded use of the existing stack, not a new technology choice.
 
 The large variable-font transfer was investigated but does not explain the warm-load delay: repeat waves transfer no font bytes. No typography change is included. Keeping eager shell prefetch would retain the observed extra work; changing session authority, database timeouts or readiness thresholds would not be justified by this evidence.
 
-## Review disposition
+## Initial pair disposition
 
 The [final comparison](../testing/evidence/pt27-loading/README.md) removes 940 observed speculative requests and improves desktop warm p95 from 3.234 to 2.520 seconds. Cold-phone p95 worsens from 5.196 to 7.407 seconds. Keep the contribution in draft: this is a measured candidate, not an accepted overall performance improvement. Investigate cold-phone request and render timing with controlled repeats before accepting the tradeoff. Full PT-27, the four-view sampler stall and hosted/device acceptance remain open.
 
@@ -29,3 +29,5 @@ Dean authorised the next step after PR #390 merged. Integrate main `6c69d92`, pr
 ## Narrowed correction after the first controlled block
 
 The main/candidate/candidate/main block repeats the cold-phone loss with the broad policy; its full samples are retained in `docs/testing/evidence/pt27-loading/controlled-repeat/`. Main cold-phone p95 is 8.745/6.237 seconds versus 12.300/7.275 for the candidate. Substantial host/download variation prevents attributing every delay, but does not justify adopting the broad change. Narrow the candidate to the desktop rail Home, rail destinations and desktop More links. Restore the shared header, breadcrumbs and phone links exactly to the prior policy. Keep the phone touch/Back regression proof and retain its observed network work. Predeclare a new main/narrow/narrow/main block using one preserved build per source and the same fixture, network, samples and deadlines; retain all four runs without replacement.
+
+The first narrowed block stops at position 2: `narrow-a1` completes, but `narrow-b1` exceeds the unchanged 120-second server-start limit before collecting samples. Its original result and log are retained; this incomplete block is not pooled into a completed comparison. Cleanup's missing-gateway read escaped the write-only catch; catch both operations and always stop the owned server/close the database. No readiness, timing or application change follows from that repair. After the compiled regression check, predeclare a whole new block `20261010-main-narrow-final-abba`, labels `narrow-final-a1`, `narrow-final-b1`, `narrow-final-b2`, `narrow-final-a2`. Reuse the same main/narrow application build IDs, preserve the fixture and every outcome, and report the interrupted block alongside it. No successful sample is substituted into the interrupted block.

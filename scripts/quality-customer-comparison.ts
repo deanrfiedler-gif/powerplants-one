@@ -151,8 +151,16 @@ try {
   throw error;
 } finally {
   try { await Promise.all(browsers.map(b => b.close())); } finally {
-  if (process.env.PPO_PROOF_DIAGNOSTICS === "1") await writeFile(`${root}/gateway.jsonl`, await readFile(`verification-evidence/transport-diagnostics/process-${server.pid}.jsonl`)).catch(() => console.error("Gateway file unavailable; preserve original failure."));
-  server.kill();
-  await closeDatabase();
+  try {
+    if (process.env.PPO_PROOF_DIAGNOSTICS === "1") {
+      try {
+        const gateway = await readFile(`verification-evidence/transport-diagnostics/process-${server.pid}.jsonl`);
+        await writeFile(`${root}/gateway.jsonl`, gateway);
+      } catch { console.error("Gateway file unavailable; preserve original failure."); }
+    }
+  } finally {
+    server.kill();
+    await closeDatabase();
+  }
   }
 }
