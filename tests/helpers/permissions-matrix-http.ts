@@ -33,6 +33,7 @@ import { GET as signature } from "../../src/app/api/v1/customer-responses/[id]/s
 import { GET as attachment } from "../../src/app/api/v1/attachments/[id]/route";
 import { GET as attachmentFile } from "../../src/app/api/v1/attachments/[id]/bytes/route";
 import { GET as finance } from "../../src/app/api/v1/finance/handoffs/[id]/route";
+import { GET as account } from "../../src/app/api/v1/customers/[id]/account-observations/route";
 import { POST as financeReview } from "../../src/app/api/v1/finance/handoffs/[id]/review/route";
 import { GET as financeFile } from "../../src/app/api/v1/finance/issues/[id]/bytes/route";
 import { POST as company } from "../../src/app/api/v1/shell/company/route";
@@ -42,6 +43,7 @@ import {
   previewPack,
 } from "../../src/documents/http";
 import { digest, LocalSyntheticDocumentStore } from "../../src/documents/store";
+import { observeAccount } from "../../src/finance/accounts";
 import {
   processFinanceJob,
   requestFinanceEvidence,
@@ -98,6 +100,7 @@ const routes: Record<
   attachment,
   attachmentFile,
   finance,
+  account,
   financeReview,
   financeFile,
   company,
@@ -501,6 +504,40 @@ test("PT-01 joined role, scope, projection, export and approval matrix", async (
       },
     );
   }
+
+  await t.test(
+    "Finance account observations require the exact scoped company/customer/account tuple",
+    async () => {
+      const [a] = await rows("SELECT * FROM ppo.finance_accounts WHERE id=$1", [
+        handoff.account_id,
+      ]);
+      await observeAccount(q.p, a.id, {
+        ...base(),
+        expected_version: a.version,
+        fixture: "F-01",
+      });
+      const path = `/account/${CRM.org}?account_id=${a.id}`;
+      for (const profile of profiles) {
+        if (financeRoles.includes(profile)) {
+          const value = await json(await call(path, profile));
+          assert.equal(value.account.id, a.id);
+          assert.equal(value.account.company_id, CRM.company);
+          assert.equal(value.account.customer_id, CRM.org);
+          assert.equal(value.account_balance, "600.00");
+          assert.ok(JSON.stringify(value).includes("SYN-F01-INVOICE"));
+        } else
+          await denied(await call(path, profile), [
+            a.id,
+            "SYN-F01-INVOICE",
+            "SYN-F01-PAYMENT",
+          ]);
+        await denied(
+          await call(`/account/${CRM.orgB}?account_id=${a.id}`, profile),
+          [a.id, "SYN-F01-INVOICE", "SYN-F01-PAYMENT"],
+        );
+      }
+    },
+  );
 
   await t.test(
     "restricted customer fields do not leak through direct or search projections",
