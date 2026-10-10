@@ -181,7 +181,19 @@ export async function finalisationEffects(q: ControlledOutput) {
             [job.render_snapshot.output.issue_id],
           )
         : [];
-  return { operations, audit, outbox, issue, extra };
+  const distribution =
+    q.family === "pack"
+      ? await rows(
+          "SELECT to_jsonb(e) AS row FROM ppo.pack_distribution_events e JOIN ppo.pack_recipients r ON r.id=e.recipient_id WHERE r.issue_id=$1 ORDER BY e.id",
+          [job.render_snapshot.issue_id],
+        )
+      : q.family === "report"
+        ? await rows(
+            "SELECT to_jsonb(f) AS follow_up,to_jsonb(a) AS activity,(SELECT jsonb_agg(to_jsonb(l) ORDER BY object_type,object_id) FROM ppo.activity_links l WHERE l.activity_id=a.id) AS links FROM ppo.report_follow_ups f JOIN ppo.activities a ON a.id=f.activity_id WHERE f.report_id=$1 AND f.kind='Distribution' ORDER BY f.activity_id",
+            [q.id],
+          )
+        : [];
+  return { operations, audit, outbox, issue, extra, distribution };
 }
 export async function assertNotIssued(q: ControlledOutput) {
   assert.notEqual((await jobRow(q)).state, "Issued");
@@ -195,8 +207,14 @@ export async function assertOneIssue(q: ControlledOutput) {
   assert.equal(effects.operations.length, 1);
   assert.equal(effects.audit.length, 1);
   assert.equal(effects.outbox.length, 1);
-  if (q.family === "pack") assert.equal(effects.extra.length, 2);
-  if (q.family === "report") assert.equal(effects.extra.length, 1);
+  if (q.family === "pack") {
+    assert.equal(effects.extra.length, 2);
+    assert.equal(effects.distribution.length, 2);
+  }
+  if (q.family === "report") {
+    assert.equal(effects.extra.length, 1);
+    assert.equal(effects.distribution.length, 1);
+  }
   const job = await jobRow(q);
   assert.equal(job.state, "Issued");
   assert.equal(

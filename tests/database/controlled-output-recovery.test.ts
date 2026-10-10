@@ -68,12 +68,14 @@ for (const family of families) {
     const path = resolve(root, q.p.workspace_id, q.job.id),
       rel = relative(root, path);
     assert.ok(rel && !rel.startsWith("..") && !isAbsolute(rel));
-    let originalBundle: Awaited<ReturnType<typeof storedOutput>> = null;
+    const captured: { bundle: Awaited<ReturnType<typeof storedOutput>> } = {
+      bundle: null,
+    };
     try {
       await q.process({
         beforeFinalise: async () => {
-          originalBundle = await storedOutput(q);
-          assert.ok(originalBundle);
+          captured.bundle = await storedOutput(q);
+          assert.ok(captured.bundle);
           await writeFile(
             path,
             "SYN PT-23 wrong durable version before finalisation",
@@ -82,9 +84,9 @@ for (const family of families) {
       });
       await evidence("corrupt-before-release", q);
     } finally {
-      if (originalBundle) await writeFile(path, originalBundle.bytes);
+      if (captured.bundle) await writeFile(path, captured.bundle.bytes);
     }
-    assert.ok(originalBundle);
+    assert.ok(captured.bundle);
     await assertNotIssued(q);
     assert.equal((await jobRow(q)).state, "Failed");
     assert.deepEqual(await businessRow(q), before);
@@ -106,7 +108,7 @@ for (const family of families) {
     assert.equal((await jobRow(q)).state, "Failed");
     const durable = await storedOutput(q);
     assert.ok(durable);
-    assert.deepEqual(durable, originalBundle);
+    assert.deepEqual(durable, captured.bundle);
     await assertNotIssued(q);
     assert.deepEqual(await businessRow(q), before);
     await evidence("finalisation-rolled-back", q);
