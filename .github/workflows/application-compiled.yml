@@ -12,7 +12,7 @@ on:
       proof:
         description: Existing full assurance or a separate PT-27 controlled comparison
         type: choice
-        options: [all, customer-observer, customer-startup, customer-candidate]
+        options: [all, customer-observer, customer-startup, customer-candidate, customer-regression]
         default: all
 permissions:
   contents: read
@@ -23,7 +23,7 @@ jobs:
   compiled:
     name: Desktop and mobile browser suite against the compiled application
     needs: compiled_suites
-    if: ${{ always() && inputs.proof != 'customer-observer' && inputs.proof != 'customer-startup' && inputs.proof != 'customer-candidate' }}
+    if: ${{ always() && inputs.proof != 'customer-observer' && inputs.proof != 'customer-startup' && inputs.proof != 'customer-candidate' && inputs.proof != 'customer-regression' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
@@ -34,7 +34,7 @@ jobs:
 
   compiled_suites:
     name: Compiled application ${{ matrix.suite }} proof
-    if: inputs.proof != 'customer-observer' && inputs.proof != 'customer-startup' && inputs.proof != 'customer-candidate'
+    if: inputs.proof != 'customer-observer' && inputs.proof != 'customer-startup' && inputs.proof != 'customer-candidate' && inputs.proof != 'customer-regression'
     runs-on: ubuntu-24.04
     # Each browser project keeps its warm-up dependency and original deadlines.
     # Each matrix job owns a separate app and disposable database; tests within
@@ -209,7 +209,7 @@ jobs:
 
   customer_observer:
     name: PT-27 controlled customer comparison
-    if: github.event_name == 'workflow_dispatch' && (inputs.proof == 'customer-observer' || inputs.proof == 'customer-startup' || inputs.proof == 'customer-candidate')
+    if: github.event_name == 'workflow_dispatch' && (inputs.proof == 'customer-observer' || inputs.proof == 'customer-startup' || inputs.proof == 'customer-candidate' || inputs.proof == 'customer-regression')
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     services:
@@ -229,7 +229,7 @@ jobs:
       PPO_SOURCE_HEAD: ${{ github.sha }}
       PPO_COMPILED_SOURCE: ${{ github.sha }}
       PPO_BENCHMARK_FIXTURE: add-synthetic-load
-      PPO_BLOCK_PROFILE: ${{ inputs.proof == 'customer-startup' && 'startup' || inputs.proof == 'customer-candidate' && 'candidate' || 'observer' }}
+      PPO_BLOCK_PROFILE: ${{ inputs.proof == 'customer-startup' && 'startup' || inputs.proof == 'customer-candidate' && 'candidate' || inputs.proof == 'customer-regression' && 'regression' || 'observer' }}
       PPO_CONTROL_SOURCE: 20734e177844ea887007b4279a5edea9d205e102
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -270,7 +270,9 @@ jobs:
           npm run db:migrate
           npm run db:seed
           npm run db:health
-          node --env-file=.env.local --import tsx scripts/quality-customer-timeline.ts prepare
+          if [ "$PPO_BLOCK_PROFILE" != regression ]; then
+            node --env-file=.env.local --import tsx scripts/quality-customer-timeline.ts prepare
+          fi
           mkdir -p verification-evidence/pt27-loading
       - name: Verify actual compiled diagnostic phases
         env:
@@ -284,10 +286,16 @@ jobs:
           cp verification-evidence/customer-loading-diagnosis/fixture.json "$PPO_CONTROL_ROOT/verification-evidence/customer-loading-diagnosis/fixture.json"
           cp scripts/quality-customer-comparison.ts scripts/quality-comparison-profile.ts "$PPO_CONTROL_ROOT/scripts/"
       - name: Execute the predeclared comparison block
+        if: inputs.proof != 'customer-regression'
         run: |
           node --import tsx --test tests/unit/quality-comparison-profile.test.ts
           python3 tests/scripts/test_quality_observer_block.py
           python3 scripts/quality-observer-block.py "${PPO_BLOCK_PROFILE}-ci-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" "${PPO_BLOCK_PROFILE}"
+      - name: Verify the changed receiving and directory journeys on desktop and phone
+        if: inputs.proof == 'customer-regression'
+        env:
+          PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/pt27-regression/results.json
+        run: node --env-file=.env.local node_modules/@playwright/test/cli.js test --config=playwright.compiled.config.ts tests/browser/intake.spec.ts tests/browser/directory-navigation.spec.ts --grep 'P03 customer|directory record links' --output verification-evidence/pt27-regression --reporter=list,json
       - name: Prepare diagnostic evidence
         if: always()
         id: observer_review
@@ -303,4 +311,6 @@ jobs:
             verification-evidence/pt27-observer/
             verification-evidence/pt27-loading/
             verification-evidence/transport-diagnostics/
+            verification-evidence/pt27-regression/
+            !**/trace.zip
           retention-days: 14

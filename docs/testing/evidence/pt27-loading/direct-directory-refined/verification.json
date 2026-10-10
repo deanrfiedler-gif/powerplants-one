@@ -1,0 +1,24 @@
+{
+  "executed_date": "2026-10-11 Australia/Brisbane",
+  "candidate_source": "6e85c288ef72704c2e4006f747013360632896a6",
+  "control_source": "20734e177844ea887007b4279a5edea9d205e102",
+  "analysis_source": "6e85c288ef72704c2e4006f747013360632896a6",
+  "analysis_script_sha256": {
+    "scripts/summarize-observer-block.py": "19efd744664ea7546b8a11bfb6574df9f7319f45d55b91205f0651b59c702cfd",
+    "scripts/summarize-session-readiness.py": "576b544eab8315e019063ab49876d19def8cfe5b2ea65dc8e375db748e3c85d4"
+  },
+  "checks": {
+    "controlled_comparison": "passed; both builds, compiled smoke, 4 Python guards, 1 TypeScript profile test, all four ten-user attempts",
+    "summary_reproduction": "exact structured summary and 45 core retained files reproduce byte-for-byte",
+    "artifact_integrity": "49 stored/original hash pairs verified; 139 across this increment including the two earlier blocks",
+    "private_value_scan": "passed",
+    "extraction": "DuplicateCandidates function body preserved exactly apart from the local response type name",
+    "typecheck": "passed",
+    "changed_typescript_lint": "passed",
+    "design_register": "passed; 350 entries, 41 components; 322 unreviewed and 28 stale; no review promoted",
+    "foundation": "passed; 7674 links and 5078 files, no errors",
+    "naming": "passed; no errors",
+    "capture_inspection": "B1 desktop/phone receiving views inspected; no owner or paired-reference approval"
+  },
+  "limits": "Full PR browser assurance runs separately. Cold-load three-second target unmet. No original-503 attribution, full PT-27, fresh owner/device/visual approval or deployment claim."
+}
