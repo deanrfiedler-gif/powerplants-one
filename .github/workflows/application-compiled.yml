@@ -231,7 +231,6 @@ jobs:
       PPO_BENCHMARK_FIXTURE: add-synthetic-load
       PPO_BLOCK_PROFILE: ${{ inputs.proof == 'customer-startup' && 'startup' || inputs.proof == 'customer-candidate' && 'candidate' || 'observer' }}
       PPO_CONTROL_SOURCE: 20734e177844ea887007b4279a5edea9d205e102
-      PPO_CONTROL_ROOT: ${{ runner.temp }}/pt27-control
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -241,6 +240,7 @@ jobs:
           node-version-file: .nvmrc
       - name: Install the existing locked runtime and browser
         run: |
+          printf 'PPO_CONTROL_ROOT=%s/pt27-control\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
           npm install --global npm@11.19.0
           npm ci
           npm run browser:install
