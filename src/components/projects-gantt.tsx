@@ -8,6 +8,8 @@ import {
   type CSSProperties,
 } from "react";
 import Link from "next/link";
+import { FontAwesomeGlyph } from "./font-awesome";
+import { ganttFontAwesome } from "./font-awesome-icons";
 import {
   addDays,
   clamp,
@@ -28,20 +30,17 @@ import {
   type Widths,
 } from "../projects/model";
 
-export function GanttIcon({
-  name,
-}: {
-  name:
-    | "plus"
-    | "gantt"
-    | "list"
-    | "search"
-    | "calendar"
-    | "chev"
-    | "down"
-    | "sliders"
-    | "fit";
-}) {
+export type GanttIconName =
+  | "plus"
+  | "gantt"
+  | "list"
+  | "search"
+  | "calendar"
+  | "chev"
+  | "down"
+  | "sliders"
+  | "fit";
+export function GanttIcon({ name }: { name: GanttIconName }) {
   const paths = {
     plus: "M12 5v14M5 12h14",
     gantt: "M3 4v16h18M7 6h7M10 11h9M15 16h6",
@@ -53,7 +52,7 @@ export function GanttIcon({
     sliders: "M4 6h5m5 0h6M4 12h10m5 0h1M4 18h2m5 0h9",
     fit: "M8 4H4v4m12-4h4v4M4 16v4h4m12-4v4h-4M8 12h8",
   };
-  return (
+  const local = (
     <svg className="ico" viewBox="0 0 24 24" aria-hidden="true">
       <path d={paths[name]} />
       {name === "search" && <circle cx="10.5" cy="10.5" r="6.5" />}
@@ -69,6 +68,7 @@ export function GanttIcon({
       )}
     </svg>
   );
+  return <FontAwesomeGlyph icon={ganttFontAwesome[name]} className="ico" fallback={local} />;
 }
 const initials = (name: string | null) =>
   name

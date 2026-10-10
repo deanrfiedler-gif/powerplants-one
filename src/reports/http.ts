@@ -198,6 +198,8 @@ export async function signatureRoute(
         "The original response mark is unavailable.",
       );
     inspectPng(bytes);
+    // A saved response or file key does not retain authority across storage I/O.
+    await reportContext(database(), p, r.report_id);
     return new NextResponse(new Uint8Array(bytes), {
       headers: { ...headers, "Content-Type": "image/png" },
     });

@@ -1,0 +1,66 @@
+✔ PT-01 complete PP-01 permissions matrix over actual HTTP adapters (36167.9827ms)
+ℹ ▶ PT-01 joined role, scope, projection, export and approval matrix
+  ✔ coordinator: direct company/site, search and suggestion matrix (586.5349ms)
+  ✔ coordinator: document previews, manifests, exports and downloads (669.1768ms)
+  ✔ assigned-technician: direct company/site, search and suggestion matrix (241.8419ms)
+  ✔ assigned-technician: document previews, manifests, exports and downloads (630.289ms)
+  ✔ finance: direct company/site, search and suggestion matrix (195.0621ms)
+  ✔ finance: document previews, manifests, exports and downloads (510.1182ms)
+  ✔ finance-reviewer: direct company/site, search and suggestion matrix (429.7704ms)
+  ✔ finance-reviewer: document previews, manifests, exports and downloads (255.2941ms)
+  ✔ finance-processor: direct company/site, search and suggestion matrix (189.5069ms)
+  ✔ finance-processor: document previews, manifests, exports and downloads (313.4094ms)
+  ✔ finance-reconciler: direct company/site, search and suggestion matrix (185.0499ms)
+  ✔ finance-reconciler: document previews, manifests, exports and downloads (208.3672ms)
+  ✔ systems: direct company/site, search and suggestion matrix (37.1754ms)
+  ✔ systems: document previews, manifests, exports and downloads (74.5133ms)
+  ✔ second-company: direct company/site, search and suggestion matrix (207.861ms)
+  ✔ second-company: document previews, manifests, exports and downloads (82.9255ms)
+  ✔ other-workspace: direct company/site, search and suggestion matrix (91.0311ms)
+  ✔ other-workspace: document previews, manifests, exports and downloads (69.8302ms)
+  ✔ site-observer: direct company/site, search and suggestion matrix (178.911ms)
+  ✔ site-observer: document previews, manifests, exports and downloads (88.3614ms)
+  ✔ workspace-observer: direct company/site, search and suggestion matrix (278.1147ms)
+  ✔ workspace-observer: document previews, manifests, exports and downloads (105.3065ms)
+  ✔ restricted customer fields do not leak through direct or search projections (1040.5975ms)
+  ✔ coordinator: notification recipient, counts, target and state matrix (176.1887ms)
+  ✔ assigned-technician: notification recipient, counts, target and state matrix (198.235ms)
+  ✔ finance: notification recipient, counts, target and state matrix (189.2361ms)
+  ✔ finance-reviewer: notification recipient, counts, target and state matrix (108.2692ms)
+  ✔ finance-processor: notification recipient, counts, target and state matrix (52.6294ms)
+  ✔ finance-reconciler: notification recipient, counts, target and state matrix (46.6174ms)
+  ✔ systems: notification recipient, counts, target and state matrix (48.0428ms)
+  ✔ second-company: notification recipient, counts, target and state matrix (173.8737ms)
+  ✔ other-workspace: notification recipient, counts, target and state matrix (91.5818ms)
+  ✔ site-observer: notification recipient, counts, target and state matrix (86.2628ms)
+  ✔ workspace-observer: notification recipient, counts, target and state matrix (98.3391ms)
+  ✔ Finance activity fields remain restricted in direct reads, previews, search and suggestions (805.1786ms)
+  ✔ Systems and non-review duties cannot approve Service or Finance, with no accepted effects (119.8198ms)
+  ✔ working company narrows every selected channel and clearing it restores only granted scope (1859.5541ms)
+  ✔ coordinator: expired grants hide every channel and restore exact originals (689.4814ms)
+  ✔ assigned-technician: expired grants hide every channel and restore exact originals (488.8923ms)
+  ✔ finance: expired grants hide every channel and restore exact originals (193.9117ms)
+  ✔ anonymous and inactive identities receive no channel data (80.6912ms)
+  ✔ notification source scope is filtered before the result window, counts and personal state (244.1951ms)
+  ✔ assigned-technician attachmentFile: storage-time revocation withholds bytes and metadata (91.1929ms)
+  ✔ assigned-technician attachment: storage-time revocation withholds bytes and metadata (91.818ms)
+  ✔ assigned-technician signature: storage-time revocation withholds bytes and metadata (135.5498ms)
+  ✔ coordinator signature: storage-time revocation withholds bytes and metadata (84.3908ms)
+✔ PT-01 joined role, scope, projection, export and approval matrix (34320.3352ms)
+ℹ tests 47
+ℹ suites 0
+ℹ pass 47
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 36088.6057
+
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 36376.1806

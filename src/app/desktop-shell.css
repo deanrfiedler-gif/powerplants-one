@@ -17,7 +17,7 @@
 /* Shared layout coordinates. The rail width and the expanded secondary-menu width are the two numbers that
    the centred header group, the More panel's right edge and every workspace menu are measured against, so
    they are declared once here rather than repeated as literals in each module stylesheet. */
-:root { --ppo-rail-width: 76px; --ppo-secondary-menu-width: 240px; --ppo-rail-navy: #242a37; --ppo-rail-hover: #343c4c; --ppo-rail-selected: #f0f6ed; --ppo-rail-ink: #242a37; --ppo-icon-cutout: #f0f6ed; }
+:root { --ppo-rail-width: 76px; --ppo-secondary-menu-width: 240px; --ppo-rail-navy: #242a37; --ppo-rail-hover: #343c4c; --ppo-rail-selected: #ffffff; --ppo-rail-ink: #242a37; --ppo-icon-cutout: #ffffff; }
 .ppo-shell-header .product-heading { display: flex; align-items: center; align-self: center; min-width: 0; margin: 0; font-size: 16px; line-height: 1.3; white-space: nowrap; }
 .ppo-shell-header .ppo-product-name { display: block; font-size: 16px; line-height: 1.3; color: #242a37; font-weight: 700; letter-spacing: -.15px; }
 /* Breadcrumb: [Module] / [Current page]. The rail's logo is the product identity, so the product name is
@@ -44,7 +44,7 @@
 .ppo-header-menu-slot .ppo-menu-toggle > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .ppo-header-menu-slot .ppo-menu-toggle:hover:not(:disabled) { background: #f0f2f5; color: #242a37; }
 .ppo-header-menu-slot .ppo-menu-toggle:focus-visible { outline: 2px solid #365d8b; outline-offset: 2px; box-shadow: none; }
-.ppo-header-menu-slot .ppo-menu-toggle svg { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.ppo-header-menu-slot .ppo-menu-toggle :is(svg, i.ppo-fa) { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .ppo-header-utilities { display: flex; align-items: center; gap: 4px; margin-left: auto; }
 .ppo-shell-header .header-tools { display: flex; margin: 0; padding: 0; gap: 0; border: 0; flex-shrink: 0; }
 .ppo-shell-header #header-search { display: none; }
@@ -85,8 +85,9 @@
 .ppo-more-link small { margin-left: auto; font-size: 10px; color: #667181; text-align: right; }
 .ppo-more-link[aria-disabled=true] { color: #788599; cursor: default; }
 .ppo-more-link:is(a,button):hover { background: #f0f3f6; color: #242a37; }
-.ppo-more-link[aria-current=page] { background: #f0f6ed; color: #315e43; font-weight: 500; }
-.ppo-more-link[aria-current=page] .product-icon { color: #315e43; }
+/* Selected: a neutral tile and navy ink with a filled glyph, matching the selected rail item (Dean, 10 October 2026). */
+.ppo-more-link[aria-current=page] { background: #e8ecf1; color: #242a37; font-weight: 500; }
+.ppo-more-link[aria-current=page] .product-icon { color: #242a37; }
 .ppo-help-link { background: transparent; width: 100%; text-align: left; }
 .ppo-more-panel > footer, .ppo-panel-footer { flex: 0 0 auto; min-height: 42px; padding: 11px 20px; border-top: 1px solid #e9edf2; background: #fafbfc; font-size: 11px; color: var(--text-secondary, #596779); display: flex; justify-content: space-between; align-items: center; gap: 18px; }
 .ppo-preview-label::before { content: ''; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: #8b98a9; margin-right: 6px; vertical-align: middle; }
@@ -190,7 +191,8 @@
   .ppo-rail .ppo-rail-group { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 4px; margin-top: 4px; padding-top: 8px; border-top: 1px solid #4a5366; }
   .ppo-rail-group-label { display: none; }
   .ppo-rail-bottom { flex: 0 0 auto; }
-  .ppo-rail .ppo-rail-item[aria-current=page], .ppo-rail .ppo-rail-item[aria-current=page]:hover { background: var(--ppo-rail-selected); color: var(--ppo-rail-ink); box-shadow: inset 3px 0 var(--ppo-rail-ink); }
+  /* The selected item is a plain white tile with a filled navy glyph: no tint and no edge bar (Dean, 10 October 2026). */
+  .ppo-rail .ppo-rail-item[aria-current=page], .ppo-rail .ppo-rail-item[aria-current=page]:hover { background: var(--ppo-rail-selected); color: var(--ppo-rail-ink); box-shadow: none; }
   .ppo-rail .ppo-rail-item[aria-expanded=true] { box-shadow: inset 0 -3px #a8d8ff; }
   .ppo-rail-tooltip { position: fixed; z-index: 110; left: 84px; max-width: min(300px, calc(100vw - 96px)); padding: 6px 10px; color: white; background: var(--ppo-rail-navy); border: 1px solid #8995a8; border-radius: 5px; font: 13px/1.5 PPOShellRoboto, Roboto, Verdana, sans-serif; pointer-events: none; }
   /* Global search and the quick-add button immediately to its right are one group, and it is that group's
@@ -313,7 +315,7 @@
   .ppo-shell-header:has(#header-menu:not(:empty)) .mobile-brand { display: none; }
   .ppo-shell-header:has(#header-menu:not(:empty)) .ppo-header-menu-slot { display: flex; }
   .ppo-header-menu-slot .ppo-menu-toggle { width: 44px; height: 44px; min-height: 44px; margin: 0; padding: 0; justify-content: center; border-color: transparent; background: transparent; }
-  .ppo-header-menu-slot .ppo-menu-toggle svg { width: 24px; height: 24px; }
+  .ppo-header-menu-slot .ppo-menu-toggle :is(svg, i.ppo-fa) { width: 24px; height: 24px; }
   .ppo-header-menu-slot .ppo-menu-toggle span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .product-heading { display: flex; flex: 1; min-width: 0; margin: 0 0 0 6px; align-self: center; grid-column: auto; grid-row: auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .ppo-crumb { font-size: 20px; line-height: 28px; font-weight: 500; color: #242a37; }
@@ -377,7 +379,7 @@
 .ppo-header-menu-slot .ppo-menu-toggle[data-menu-presentation=baseline] > span { position: static; width: auto; height: auto; overflow: visible; clip-path: none; white-space: nowrap; }
 .ppo-header-menu-slot .ppo-menu-toggle[data-menu-presentation=baseline]:hover:not(:disabled) { background: #f0f2f5; color: #242a37; }
 .ppo-header-menu-slot .ppo-menu-toggle[data-menu-presentation=baseline]:focus-visible { outline: 2px solid #365d8b; outline-offset: 2px; box-shadow: none; }
-.ppo-header-menu-slot .ppo-menu-toggle[data-menu-presentation=baseline] svg { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.ppo-header-menu-slot .ppo-menu-toggle[data-menu-presentation=baseline] :is(svg, i.ppo-fa) { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 }
 
 /* NAV-04: primary rail preference; secondary-menu docking stays at 1200 px. */

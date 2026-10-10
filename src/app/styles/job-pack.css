@@ -40,7 +40,7 @@
 #ppo-job-pack .jp-quiet{background:transparent;border-color:transparent;color:var(--muted)}
 #ppo-job-pack .jp-text-button{background:transparent;border:0;padding:0;min-height:28px;justify-content:flex-start;text-align:left;color:var(--link)}
 #ppo-job-pack .jp-text-button:hover{background:transparent;text-decoration:underline}
-#ppo-job-pack svg.jp-icon{height:18px;width:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle}
+#ppo-job-pack .jp-icon{height:18px;width:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle}
 #ppo-job-pack .jp-sr{position:absolute;height:1px;width:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
 #ppo-job-pack .jp-muted{color:var(--muted)}
 #ppo-job-pack .jp-ink{color:var(--ink);font-weight:500}
@@ -82,7 +82,7 @@
 #ppo-job-pack .jp-contents nav a[aria-current=true]{border-left-color:var(--green);background:var(--success-tint);color:var(--ink);font-weight:500}
 #ppo-job-pack .jp-nav-number{font-variant-numeric:tabular-nums;color:var(--muted);font-size:12px;min-width:16px;font-weight:400}
 #ppo-job-pack .jp-contents nav a[aria-current=true] .jp-nav-number{color:var(--ink)}
-#ppo-job-pack .jp-contents nav a svg.jp-icon{margin-left:auto;width:14px;height:14px;color:var(--warning-icon)}
+#ppo-job-pack .jp-contents nav a .jp-icon{margin-left:auto;width:14px;height:14px;color:var(--warning-icon)}
 #ppo-job-pack .jp-rail-foot{border-top:1px solid var(--line);margin:17px 10px 0;padding-top:14px;font-size:12px;color:var(--muted);line-height:1.6}
 #ppo-job-pack .jp-mobile-jump{display:none}
 #ppo-job-pack .jp-main-column{min-width:0}
@@ -97,7 +97,7 @@
 #ppo-job-pack .jp-section-head :is(h2,h3){font-size:16px;font-weight:600;display:flex;gap:10px;align-items:center;line-height:1.4}
 #ppo-job-pack .jp-section-number{color:var(--muted);font-size:12px;line-height:1.4;font-weight:400;min-width:19px;font-variant-numeric:tabular-nums}
 #ppo-job-pack .jp-source-tag{display:inline-flex;align-items:flex-start;gap:5px;color:var(--muted);font-size:12px;line-height:1.5;text-align:right;max-width:100%}
-#ppo-job-pack .jp-source-tag svg.jp-icon{width:13px;height:13px;margin-top:2px}
+#ppo-job-pack .jp-source-tag .jp-icon{width:13px;height:13px;margin-top:2px}
 #ppo-job-pack .jp-source-tag .jp-as-at{display:block;font-size:12px;line-height:1.5}
 #ppo-job-pack .jp-source-tag.changed{color:var(--warning)}
 #ppo-job-pack .jp-info-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px 24px}
@@ -110,7 +110,7 @@
 #ppo-job-pack .jp-note{padding:12px 14px;border:1px solid var(--line);border-radius:6px;background:var(--surface-2);font-size:13px;color:var(--text-secondary);line-height:1.6;margin-top:16px;overflow-wrap:anywhere}
 #ppo-job-pack .jp-note.warning{background:var(--warning-tint);border-color:var(--warning-border);color:var(--warning)}
 #ppo-job-pack .jp-notice{display:flex;gap:11px;border:1px solid var(--warning-border);border-left:3px solid var(--warning-accent);border-radius:7px;background:var(--warning-tint);padding:13px 15px;font-size:13px;line-height:1.55;color:var(--warning);margin-bottom:16px}
-#ppo-job-pack .jp-notice>svg.jp-icon{margin-top:1px}
+#ppo-job-pack .jp-notice>.jp-icon{margin-top:1px}
 #ppo-job-pack .jp-notice strong{font-weight:500;display:block;color:inherit;margin-bottom:3px}
 #ppo-job-pack .jp-notice ul{padding-left:18px;margin-top:4px}
 #ppo-job-pack .jp-notice .jp-text-button{font-size:12px;color:inherit;margin-top:5px}
@@ -145,9 +145,9 @@
 #ppo-job-pack .jp-readiness-context .changed{color:var(--warning)}
 #ppo-job-pack .jp-readiness-row{display:flex;gap:8px;align-items:flex-start;font-size:13px;padding:9px 0;border-bottom:1px solid var(--line-soft);line-height:1.45}
 #ppo-job-pack .jp-readiness-row:last-child{border-bottom:0;padding-bottom:0}
-#ppo-job-pack .jp-readiness-row svg.jp-icon{width:15px;height:15px;margin-top:2px;color:var(--success-icon)}
-#ppo-job-pack .jp-readiness-row.blocked svg.jp-icon{color:var(--warning-icon)}
-#ppo-job-pack .jp-readiness-row:is(.exception,.na) svg.jp-icon{color:var(--info)}
+#ppo-job-pack .jp-readiness-row .jp-icon{width:15px;height:15px;margin-top:2px;color:var(--success-icon)}
+#ppo-job-pack .jp-readiness-row.blocked .jp-icon{color:var(--warning-icon)}
+#ppo-job-pack .jp-readiness-row:is(.exception,.na) .jp-icon{color:var(--info)}
 #ppo-job-pack .jp-readiness-row small{display:block;font-size:12px;color:var(--muted);margin-top:3px}
 #ppo-job-pack .jp-outcome{display:inline-block;font-size:12px;font-weight:500;margin-left:6px;color:var(--muted)}
 #ppo-job-pack .jp-readiness-row.blocked .jp-outcome{color:var(--warning)}
@@ -349,7 +349,7 @@
   #ppo-job-pack .jp-paper-section{padding:16px 0;scroll-margin:0;break-inside:auto}
   #ppo-job-pack :is(.jp-section-head,.jp-subheading){break-after:avoid}
   #ppo-job-pack .jp-source-tag{display:block;font-size:8pt;color:#526176}
-  #ppo-job-pack .jp-source-tag svg{display:none}
+  #ppo-job-pack .jp-source-tag :is(svg, i.ppo-fa){display:none}
   #ppo-job-pack .jp-info-grid{grid-template-columns:1fr 1fr}
   #ppo-job-pack :is(.jp-info-grid>div,tr,.jp-document-row,.jp-history-item,.jp-note){break-inside:avoid}
   #ppo-job-pack .jp-table-wrap{overflow:visible}

@@ -110,6 +110,14 @@
       "head": "472df7eb4e8f064fb37eb232e67c0da6a4842927",
       "environment": "Windows Node24.21.0/PostgreSQL16.15; private synthetic database and real document renderer/storage. Nine synthetic source movement/version loss and retained pack/report/Finance recovery checks; customer/provider channel remains open.",
       "review": "Source self-review; independent review and owner acceptance pending."
+    },
+    "PM": {
+      "path": "docs/testing/evidence/permissions-matrix/README.md",
+      "head": "29e8807cbdb05addec6e28b542419a5199717c84",
+      "runtime": "d08d7375f96653f5085a8414270a19a80d0265dc",
+      "baseline": "e5a94730025cf7a1ad4c1d0b1450532f591dba32",
+      "environment": "Windows Node24.21.0/npm11.19.0/PostgreSQL16.15/Chrome155.0.8059.40; task-owned disposable cluster55931 and real HTTP adapters. Exact logs and source hashes in verification.json.",
+      "review": "Implementation self-review; independent review and owner acceptance pending."
     }
   },
   "cases": [
@@ -139,16 +147,23 @@
       ],
       "source_ids": [
         "P11",
-        "CV"
+        "CV",
+        "PM"
       ],
-      "technical_disposition": "Component",
-      "existing_evidence_scope": "Permission/file/receipt isolation and current-authority negatives.",
+      "technical_disposition": "Combined synthetic server pass",
+      "existing_evidence_scope": "Eleven-role joined company/site, Finance account/handoff, search/suggestions, previews, notification recipient/state/count/window, HTML/PDF/PNG and Systems approval matrix. Current grants and working-company narrowing; exact original recovery after four reproduced storage-time permission failures.",
       "current_applicability": "Applicable within selected synthetic PP-01 boundary; no enterprise parent promotion",
-      "continued_validity_and_gap": "Full combined all-channel Systems/company/site matrix not yet evidenced as one written procedure.",
-      "fresh_verification_required": "Technical reviewer: map and execute the remaining notification/search/export matrix; retain unsupported external channels.",
-      "owner_next_action": "Technical reviewer: map and execute the remaining notification/search/export matrix; retain unsupported external channels.",
+      "continued_validity_and_gap": "The written PT-01 server procedure is executed within the selected synthetic PP-01 boundary. Independent review, owner observation and operational role/provider approval remain separate.",
+      "fresh_verification_required": "Review the exact API/grant matrix and observe the owner journey; rerun affected channels when authority or source handling changes.",
+      "owner_next_action": "Review the exact API/grant matrix and observe the owner journey; rerun affected channels when authority or source handling changes.",
       "human_acceptance": "Pending actual observations",
-      "benefit": "Unmeasured"
+      "benefit": "Unmeasured",
+      "current_execution": {
+        "result": "Passed within declared synthetic server boundary",
+        "manifest": "docs/testing/evidence/permissions-matrix/verification.json",
+        "application_baseline": "e5a94730025cf7a1ad4c1d0b1450532f591dba32",
+        "application_runtime": "d08d7375f96653f5085a8414270a19a80d0265dc"
+      }
     },
     {
       "id": "PT-02",

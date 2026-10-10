@@ -510,8 +510,8 @@
   display: inline-flex;
   align-items: center;
 }
-#ppo-fertigation .mw-badge svg,
-#ppo-fertigation .fn-chip svg {
+#ppo-fertigation .mw-badge :is(svg, i.ppo-fa),
+#ppo-fertigation .fn-chip :is(svg, i.ppo-fa) {
   width: 11px;
   height: 11px;
   fill: none;
@@ -1141,7 +1141,7 @@
   background: var(--info-surface, #e9f2f8);
   color: var(--info, #346580);
 }
-.fn-dialog .fn-chip svg {
+.fn-dialog .fn-chip :is(svg, i.ppo-fa) {
   width: 11px;
   height: 11px;
   fill: none;

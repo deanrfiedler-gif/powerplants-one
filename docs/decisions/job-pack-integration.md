@@ -63,3 +63,7 @@ DP-15 to DP-21 follow the adoption of D6–D10 on 23 September 2026 (§7); DP-22
 ## Evidence and remaining decisions
 
 [Integration handover](../delivery/job-pack-integration-handover.md) and [I5 evidence](../testing/evidence/job-pack-i5/README.md) distinguish source, function, inspected appearance, device review and deployment. The three shared-core colour differences with Field Technicians r05 remain unchanged; the evidence swatch supports a separate owner decision. Physical-device and owner acceptance remain open. The original five uploaded reference PNGs cited by report Appendix E are unavailable in this session; fresh captures of the unchanged r03 are explicitly labelled with actual capture metadata, not represented as those historical uploads.
+
+## Icon departure under ADR-0050 — 10 October 2026
+
+Dean asked for the module icon sets to move to Font Awesome ([ADR-0050](ADR-0050-font-awesome-light-icons.md)). The job pack's accepted r03 icon set is therefore drawn in Font Awesome Classic Light wherever the owner's Kit is configured and running. This is a departure from the accepted r03 drawings, which remain the fallback and are unchanged in the source. Font Awesome's matches are listed in `src/components/font-awesome-icons.ts`. Snapshot, issue and output behaviour (OUT-09) are unchanged. Dean's visual review of the job pack with Font Awesome icons is pending.

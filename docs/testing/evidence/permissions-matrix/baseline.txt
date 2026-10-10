@@ -1,0 +1,130 @@
+▶ PT-01 joined role, scope, projection, export and approval matrix
+  ✔ coordinator: direct company/site, search and suggestion matrix (602.6313ms)
+  ✔ coordinator: document previews, manifests, exports and downloads (724.0657ms)
+  ✔ assigned-technician: direct company/site, search and suggestion matrix (263.2958ms)
+  ✔ assigned-technician: document previews, manifests, exports and downloads (528.6938ms)
+  ✔ finance: direct company/site, search and suggestion matrix (181.051ms)
+  ✔ finance: document previews, manifests, exports and downloads (246.321ms)
+  ✔ finance-reviewer: direct company/site, search and suggestion matrix (201.7271ms)
+  ✔ finance-reviewer: document previews, manifests, exports and downloads (235.1659ms)
+  ✔ finance-processor: direct company/site, search and suggestion matrix (128.6363ms)
+  ✔ finance-processor: document previews, manifests, exports and downloads (228.4942ms)
+  ✔ finance-reconciler: direct company/site, search and suggestion matrix (135.8163ms)
+  ✔ finance-reconciler: document previews, manifests, exports and downloads (189.2221ms)
+  ✔ systems: direct company/site, search and suggestion matrix (27.9593ms)
+  ✔ systems: document previews, manifests, exports and downloads (43.8175ms)
+  ✔ second-company: direct company/site, search and suggestion matrix (139.4963ms)
+  ✔ second-company: document previews, manifests, exports and downloads (63.7464ms)
+  ✔ other-workspace: direct company/site, search and suggestion matrix (85.7041ms)
+  ✔ other-workspace: document previews, manifests, exports and downloads (43.5323ms)
+  ✔ site-observer: direct company/site, search and suggestion matrix (127.3654ms)
+  ✔ site-observer: document previews, manifests, exports and downloads (44.1297ms)
+  ✔ workspace-observer: direct company/site, search and suggestion matrix (175.8928ms)
+  ✔ workspace-observer: document previews, manifests, exports and downloads (56.5466ms)
+  ✔ restricted customer fields do not leak through direct or search projections (627.0278ms)
+  ✔ coordinator: notification recipient, counts, target and state matrix (93.3297ms)
+  ✔ assigned-technician: notification recipient, counts, target and state matrix (87.1238ms)
+  ✔ finance: notification recipient, counts, target and state matrix (94.1984ms)
+  ✔ finance-reviewer: notification recipient, counts, target and state matrix (59.4239ms)
+  ✔ finance-processor: notification recipient, counts, target and state matrix (25.5246ms)
+  ✔ finance-reconciler: notification recipient, counts, target and state matrix (19.5233ms)
+  ✔ systems: notification recipient, counts, target and state matrix (27.4993ms)
+  ✔ second-company: notification recipient, counts, target and state matrix (137.6739ms)
+  ✔ other-workspace: notification recipient, counts, target and state matrix (85.1069ms)
+  ✔ site-observer: notification recipient, counts, target and state matrix (65.7497ms)
+  ✔ workspace-observer: notification recipient, counts, target and state matrix (85.309ms)
+  ✔ Finance activity fields remain restricted in direct reads, previews, search and suggestions (837.4291ms)
+  ✔ Systems and non-review duties cannot approve Service or Finance, with no accepted effects (164.049ms)
+  ✔ working company narrows every selected channel and clearing it restores only granted scope (1804.6012ms)
+  ✔ coordinator: expired grants hide every channel and restore exact originals (658.4199ms)
+  ✔ assigned-technician: expired grants hide every channel and restore exact originals (418.4527ms)
+  ✔ finance: expired grants hide every channel and restore exact originals (154.3465ms)
+  ✔ anonymous and inactive identities receive no channel data (41.146ms)
+  ✔ notification source scope is filtered before the result window, counts and personal state (203.2781ms)
+  ✖ assigned-technician attachmentFile: storage-time revocation withholds bytes and metadata (35.0226ms)
+  ✖ assigned-technician attachment: storage-time revocation withholds bytes and metadata (39.0333ms)
+  ✖ assigned-technician signature: storage-time revocation withholds bytes and metadata (54.3261ms)
+  ✖ coordinator signature: storage-time revocation withholds bytes and metadata (29.7233ms)
+✖ PT-01 joined role, scope, projection, export and approval matrix (32873.9749ms)
+ℹ tests 47
+ℹ suites 0
+ℹ pass 42
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 47564.5477
+
+✖ failing tests:
+
+test at tests\helpers\permissions-matrix-http.ts:5:5803
+✖ assigned-technician attachmentFile: storage-time revocation withholds bytes and metadata (35.0226ms)
+  AssertionError [ERR_ASSERTION]: Expected 403,404; got 200 (image/png)
+      at denied (C:\Users\Dean.Fiedler\.codex\worktrees\pt01-permissions-matrix\powerplants-one\tests\helpers\permissions-matrix-http.ts:253:12)
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\pt01-permissions-matrix\powerplants-one\tests\helpers\permissions-matrix-http.ts:1047:17)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\pt01-permissions-matrix\powerplants-one\tests\helpers\permissions-matrix-http.ts:1009:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\helpers\permissions-matrix-http.ts:5:5803
+✖ assigned-technician attachment: storage-time revocation withholds bytes and metadata (39.0333ms)
+  AssertionError [ERR_ASSERTION]: Expected 403,404; got 200 (application/json)
+      at denied (C:\Users\Dean.Fiedler\.codex\worktrees\pt01-permissions-matrix\powerplants-one\tests\helpers\permissions-matrix-http.ts:253:12)
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\pt01-permissions-matrix\powerplants-one\tests\helpers\permissions-matrix-http.ts:1047:17)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\pt01-permissions-matrix\powerplants-one\tests\helpers\permissions-matrix-http.ts:1009:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\helpers\permissions-matrix-http.ts:5:5803
+✖ assigned-technician signature: storage-time revocation withholds bytes and metadata (54.3261ms)
+  AssertionError [ERR_ASSERTION]: Expected 403,404; got 200 (image/png)
+      at denied (C:\Users\Dean.Fiedler\.codex\worktrees\pt01-permissions-matrix\powerplants-one\tests\helpers\permissions-matrix-http.ts:253:12)
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\pt01-permissions-matrix\powerplants-one\tests\helpers\permissions-matrix-http.ts:1047:17)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\pt01-permissions-matrix\powerplants-one\tests\helpers\permissions-matrix-http.ts:1009:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\helpers\permissions-matrix-http.ts:5:5803
+✖ coordinator signature: storage-time revocation withholds bytes and metadata (29.7233ms)
+  AssertionError [ERR_ASSERTION]: Expected 403,404; got 200 (image/png)
+      at denied (C:\Users\Dean.Fiedler\.codex\worktrees\pt01-permissions-matrix\powerplants-one\tests\helpers\permissions-matrix-http.ts:253:12)
+      at TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\pt01-permissions-matrix\powerplants-one\tests\helpers\permissions-matrix-http.ts:1047:17)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\pt01-permissions-matrix\powerplants-one\tests\helpers\permissions-matrix-http.ts:1009:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

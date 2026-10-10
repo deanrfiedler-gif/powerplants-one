@@ -2,6 +2,8 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { api, isDenied } from "../../../components/business-ui";
 import { usePendingWork } from "../../../components/pending-work";
+import { FontAwesomeGlyph } from "../../../components/font-awesome";
+import { myWorkFontAwesome } from "../../../components/font-awesome-icons";
 
 // One outline family, 24px grid, 1.7 stroke, matching the shell's icon weight.
 const paths = {
@@ -201,9 +203,15 @@ const paths = {
 export type IconName = keyof typeof paths;
 export function Icon({ name }: { name: IconName }) {
   return (
-    <svg className="mw-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      {paths[name]}
-    </svg>
+    <FontAwesomeGlyph
+      icon={myWorkFontAwesome[name]}
+      className="mw-icon"
+      fallback={
+        <svg className="mw-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          {paths[name]}
+        </svg>
+      }
+    />
   );
 }
 export function Tag({

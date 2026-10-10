@@ -1,0 +1,17 @@
+✔ P07 current capability, assignment, same-404 and receipt/file boundaries survive revoked permission (28078.8962ms)
+✔ P07 durable photo initiation is not availability; unchanged upload/finalise retry retain original identity, bytes and hash (16824.4051ms)
+✔ report photo requires current review authority and exact report/revision/photo membership without writes (25219.9936ms)
+✔ report photo refuses an actual other technician report revision and photo on the same appointment (30519.5357ms)
+✔ report photo retains historical membership instead of substituting a successor photo (24509.1262ms)
+✔ report photo rechecks actual owner, scoped grants and active actor on every retrieval (15226.9339ms)
+✔ report photo refuses missing/corrupt bytes and authority revoked while storage is being read (14726.3123ms)
+✔ P09 all five exact responses, mandatory remarks, immutable synthetic marks and original receipt recovery (19939.3486ms)
+✔ P09 issued bytes and every customer projection exclude private fields and filenames (21721.3873ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 204626.785

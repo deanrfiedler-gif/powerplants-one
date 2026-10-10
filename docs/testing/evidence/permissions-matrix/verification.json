@@ -1,0 +1,175 @@
+{
+  "schema_version": 1,
+  "owner": "Dean Fiedler",
+  "executed_on": "2026-10-10",
+  "timezone": "Australia/Brisbane",
+  "review_status": "Implementation self-review; independent review and owner acceptance pending",
+  "baseline": "e5a94730025cf7a1ad4c1d0b1450532f591dba32",
+  "test_only_checkpoint": "f4610ea",
+  "corrected_runtime": "d08d7375f96653f5085a8414270a19a80d0265dc",
+  "final_test_source": "29e8807cbdb05addec6e28b542419a5199717c84",
+  "environment": {
+    "os": "win32",
+    "node": "v24.21.0",
+    "npm": "11.19.0",
+    "postgres": "16.15",
+    "database": "ppo_synthetic_test",
+    "port": 55931,
+    "rendered_browsers": [
+      {
+        "kind": "Finance",
+        "browser": "155.0.8059.40"
+      },
+      {
+        "kind": "Pack",
+        "browser": "155.0.8059.40"
+      },
+      {
+        "kind": "Report",
+        "browser": "155.0.8059.40"
+      }
+    ],
+    "http": "Ephemeral loopback server using actual route adapters; no compiled browser/UI claim"
+  },
+  "commands": {
+    "matrix": "node --env-file=/absolute/private/proof.env --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/permissions-matrix-http.test.ts",
+    "downloads": "node --env-file=/absolute/private/proof.env --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/backend-access-http.test.ts tests/database/report-finance-download-http.test.ts",
+    "selected_regressions": "node --env-file=/absolute/private/proof.env --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-name-pattern=\"report photo|P07 current capability|P07 durable photo|P09 all five exact responses|P09 issued bytes\" tests/database/report-photo.test.ts tests/database/field.test.ts tests/database/reports.test.ts",
+    "units": "node --import tsx --test tests/unit/sh-platform.test.ts tests/unit/desktop-shell.test.ts tests/unit/shell-navigation.test.ts"
+  },
+  "results": {
+    "baseline": {
+      "scenarios": 46,
+      "passed": 42,
+      "failed": 4
+    },
+    "corrected_original_matrix": {
+      "scenarios": 46,
+      "passed": 46
+    },
+    "final_matrix": {
+      "scenarios": 47,
+      "passed": 47,
+      "child_runner_tests": 48,
+      "wrapper_tests": 1
+    },
+    "retained_downloads": {
+      "scenarios": 24,
+      "passed": 24,
+      "wrapper_tests": 2
+    },
+    "photo_response_regressions": {
+      "scenarios": 9,
+      "passed": 9
+    },
+    "units": {
+      "tests": 18,
+      "passed": 18
+    }
+  },
+  "source_working_bytes_sha256": {
+    "src/field/attachments.ts": "56e22d2dcc96107e9aadc9706c4884f9deb2a98b3562f862bb8676bd9127dc2a",
+    "src/reports/http.ts": "c88cbea8d9d2805781de35fde129d0a22948cf925f54d5ce8adee5634e23264a",
+    "tests/helpers/permissions-matrix-http.ts": "144a39d7f210f3681272bc68f4918a8daf929f5a340d59434d020dc43610db5a",
+    "tests/database/permissions-matrix-http.test.ts": "73b44f430c4d8cbd251d9c13a8f24cc0f141448f9e0494a120a79e9bc81b587a",
+    "package-lock.json": "5f7a88abb6cd16b001525d7f59ff8a7204cf40b9e1121567fdc949a65951051e"
+  },
+  "artifacts": {
+    "baseline.txt": {
+      "sha256": "bc19d16e13fe6d42d393cc0f4dacceffd36aeec8c55045244937701a7438485a",
+      "bytes": 9040
+    },
+    "build.txt": {
+      "sha256": "b794387bb4d48a06e84cd0ebcadd16a485bf896039eff23eac2612ea86ffc60a",
+      "bytes": 26659
+    },
+    "download-regressions.txt": {
+      "sha256": "23e7db6c1bbc1c3c1599a4d55d79b32f7793aa14457e57af6e1a6d00cfc4e6cb",
+      "bytes": 3425
+    },
+    "final-matrix.txt": {
+      "sha256": "3a1415f8a3747a47899b87d07b2e032a5a55fcd3c9083f574341761c1e38ab87",
+      "bytes": 4782
+    },
+    "fixed-matrix.txt": {
+      "sha256": "672c6387126bc6c7a7636f5faaf5f11f85ba7a5fd4faf140ecd99ac9ea056d7d",
+      "bytes": 4659
+    },
+    "focused-units.txt": {
+      "sha256": "75215ffb6fea6ccb578302e4580028fe5f054a74564d04d25828d417f21c3997",
+      "bytes": 1913
+    },
+    "foundation.txt": {
+      "sha256": "a34bf2e6455694dd353f6f39e08f5ff35a45d3cbb667b2cef0abad6a98603855",
+      "bytes": 330
+    },
+    "lint.txt": {
+      "sha256": "8f0118f13844c97d75efd81d7b64eea1d158ee3bdca218bf56f7625ccce6edc6",
+      "bytes": 41
+    },
+    "naming.txt": {
+      "sha256": "5b8c9001bcc90928a248cde14a0e0c721726f2cec76429f52bfb7ea5538ddf18",
+      "bytes": 296
+    },
+    "photo-response-regressions.txt": {
+      "sha256": "244401f0ee3cf02b2075ec0fd97f1efcc005ac0855143d109df2a1776cd4fd8b",
+      "bytes": 1165
+    },
+    "prototype.txt": {
+      "sha256": "9b7839c713adf06d51e41256fd2e991c6acc00fca36c33caff1ef7e02d55251b",
+      "bytes": 526
+    },
+    "role-grants.json": {
+      "sha256": "97540d85922933b4cd334571be784e49afa2cbc3255c02a94d9172152c360456",
+      "bytes": 9079
+    },
+    "studio.txt": {
+      "sha256": "5673c3870ae08d94c04e3ecfb142a732438bd9fe32f0eed7f2047afc2030bf50",
+      "bytes": 430
+    },
+    "test-lint.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "typecheck.txt": {
+      "sha256": "ba33a711c461001825075a9a3872deaa3e393e4cc3c15731565002c473e7ee5d",
+      "bytes": 50
+    }
+  },
+  "validation": {
+    "build": "Passed",
+    "typecheck": "Passed",
+    "lint": "Passed",
+    "studio": "Passed; 28 stale and 322 unreviewed entries retained",
+    "prototype": "Passed",
+    "naming": "Passed; project instructions 7990 characters",
+    "foundation": "Passed; 22 issued sources, 78 parent IDs, 7474 local links"
+  },
+  "run_logs": {
+    "baseline-final.txt": {
+      "created_at": "2026-10-10T02:23:19.462Z",
+      "updated_at": "2026-10-10T02:24:07.115Z"
+    },
+    "fixed-matrix.txt": {
+      "created_at": "2026-10-10T02:24:37.477Z",
+      "updated_at": "2026-10-10T02:25:13.908Z"
+    },
+    "final-matrix.txt": {
+      "created_at": "2026-10-10T02:32:22.045Z",
+      "updated_at": "2026-10-10T02:33:20.967Z"
+    },
+    "download-regressions.txt": {
+      "created_at": "2026-10-10T02:25:55.858Z",
+      "updated_at": "2026-10-10T02:27:56.016Z"
+    },
+    "photo-response-regressions.txt": {
+      "created_at": "2026-10-10T02:28:28.326Z",
+      "updated_at": "2026-10-10T02:31:53.022Z"
+    },
+    "focused-units.txt": {
+      "created_at": "2026-10-10T02:26:58.254Z",
+      "updated_at": "2026-10-10T02:27:05.410Z"
+    }
+  },
+  "log_format": "Committed logs use LF and remove trailing whitespace and blank EOF lines only; original raw logs remain in the private task evidence directory."
+}
