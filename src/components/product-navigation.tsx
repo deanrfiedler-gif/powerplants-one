@@ -205,7 +205,7 @@ function ProductNavigationView({
         key={item.id}
         className={mobile ? "ppo-planned-tab" : "ppo-more-link"}
         aria-disabled="true"
-        title={`${label} â€” ${item.href ? "Unavailable for this identity" : "Planned"}`}
+        title={`${label} — ${item.href ? "Unavailable for this identity" : "Planned"}`}
       >
         {contents}
         {!mobile && (
@@ -517,7 +517,7 @@ export function ProductHeader() {
     if (view) crumbs.push({ key: "view", label: view, kind: crumb ? "page" : "view" });
     if (subview) crumbs.push({ key: "subview", label: subview, kind: "view" });
   }
-  if (record && shell.context) crumbs.push({ key: "record", label: `${record.reference} Â· ${record.title}`, kind: "record" });
+  if (record && shell.context) crumbs.push({ key: "record", label: `${record.reference} · ${record.title}`, kind: "record" });
   // NR-17: the same route metadata names the browser tab. React hoists this <title> into the head
   // and updates it in the same commit as the route, before the route announcer reads document.title.
   const title = documentTitle({
