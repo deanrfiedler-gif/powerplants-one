@@ -2,7 +2,7 @@ import { test, expect, type Request } from "@playwright/test";
 import { writeFile } from "node:fs/promises";
 import { keyActivate } from "../helpers/quality-keyboard";
 
-test("desktop rail waits for activation; desktop and phone preserve exact navigation and Back", async ({ page, isMobile }, info) => {
+test("desktop and phone preserve exact shell navigation and Back with the baseline prefetch policy", async ({ page, isMobile }, info) => {
   const origin = new URL(info.project.use.baseURL!).origin;
   expect((await page.request.post("/api/v1/local-session", { headers: { Origin: origin }, data: { profile: "coordinator" } })).status()).toBe(200);
   const requests: { path: string; prefetch: boolean }[] = [];
@@ -26,14 +26,13 @@ test("desktop rail waits for activation; desktop and phone preserve exact naviga
   page.off("request", observe);
   const speculative = requests.filter(request => request.prefetch && destinations.has(request.path) && !sharedDestinations.has(request.path));
   await writeFile(info.outputPath("shell-requests.json"), JSON.stringify({ viewport: page.viewportSize(), destinations: [...destinations], shared_destinations: [...sharedDestinations], requests, speculative }, null, 2));
-  // Shared-header links may still request overlapping paths. Assert the rail-only
-  // destinations, and prove that the actual hovered People link is in that set.
-  // Phone retains the baseline policy; all its requests remain in the capture.
+  // The prefetch trials did not establish a performance improvement. Preserve
+  // the baseline policy on both viewports and retain observations without
+  // imposing a speculative-request count as a navigation requirement.
   const target = new URL((await link.getAttribute("href"))!, origin);
   if (!isMobile) {
     expect(destinations.has(target.pathname)).toBe(true);
     expect(sharedDestinations.has(target.pathname)).toBe(false);
-    expect(speculative).toEqual([]);
   }
   if (isMobile) await link.tap(); else await keyActivate(page, link);
   await expect(page).toHaveURL(target.href);

@@ -8,14 +8,23 @@ import {
 } from "../../../../platform/http";
 import { createSession, sessionCookie } from "../../../../platform/identity";
 import { object, label } from "../../../../platform/validation";
+import { proofReadPhase, proofReadRequest } from "../../../../platform/proof-diagnostics";
 export const dynamic = "force-dynamic";
 export async function GET(request: NextRequest) {
-  try {
-    localRequest(request);
-    return reply(await identity(request));
-  } catch (error) {
-    return failure(error);
-  }
+  return proofReadRequest("/api/v1/local-session", async () => {
+    try {
+      proofReadPhase("route-entered");
+      localRequest(request);
+      const principal = await identity(request);
+      proofReadPhase("reply-start");
+      const response = reply(principal);
+      proofReadPhase("route-complete");
+      return response;
+    } catch (error) {
+      proofReadPhase("route-failed");
+      return failure(error);
+    }
+  });
 }
 export async function POST(request: NextRequest) {
   try {

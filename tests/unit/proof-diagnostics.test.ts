@@ -8,4 +8,7 @@ test("transport diagnostics retain asset paths but discard query, identity and a
   assert.equal(proofPath("/api/v1/customers/PRIVATE_NAME"), "/api/v1/customers/:other");
   assert.equal(proofPath("/api/v1/customers/" + "a".repeat(64)), "/api/v1/customers/:other");
   assert.equal(proofPath("/PRIVATE_NAME"), "/other");
+  for (const path of ["/api/v1/local-session", "/api/v1/shell/context", "/api/v1/crm/directory"])
+    assert.equal(proofPath(`${path}?token=PRIVATE`), path);
+  assert.equal(proofPath("/api/v1/shell/PRIVATE_NAME"), "/api/v1/:other/:other");
 });

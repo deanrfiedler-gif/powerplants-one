@@ -1,8 +1,6 @@
 "use client";
 import { controlModules, controlPath } from "../engineering/control/navigation";
 import Link from "next/link";
-// Desktop rail destinations load on activation (PT-27). Shared header and phone
-// links retain their existing policy; the broader change regressed cold phone loads.
 import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState, useSyncExternalStore } from "react";
@@ -190,7 +188,7 @@ function ProductNavigationView({
       </>
     );
     return allowed(item) ? (
-      <Link prefetch={wide && !mobile ? false : undefined}
+      <Link
         key={item.id}
         className={mobile ? undefined : "ppo-more-link"}
         href={departmentHref(item.href!, root?.id ?? workspaceId, new URLSearchParams(locationQuery).get("day"))}
@@ -345,7 +343,7 @@ function ProductNavigationView({
         aria-label="Application navigation"
         data-shell-navigation
       >
-        <Link prefetch={false}
+        <Link
           href="/"
           className="brand"
           aria-label="Powerplants One home"
@@ -370,7 +368,7 @@ function ProductNavigationView({
           else setTooltip(null);
         }}>
           {groupedRail(workspaceId, rail).map(section => {
-            const links = section.items.map(item => <Link prefetch={false} key={item.id} href={departmentHref(item.href!, workspaceId, new URLSearchParams(locationQuery).get("day"))}
+            const links = section.items.map(item => <Link key={item.id} href={departmentHref(item.href!, workspaceId, new URLSearchParams(locationQuery).get("day"))}
               className="ppo-rail-item" aria-label={item.label} aria-current={activeId === item.id ? "page" : undefined}
               onMouseEnter={e => tip(e.currentTarget, item.label)} onMouseLeave={() => setTooltip(null)}
               onFocus={e => { reveal(e.currentTarget); tip(e.currentTarget, item.label); }} onBlur={() => setTooltip(null)}>
