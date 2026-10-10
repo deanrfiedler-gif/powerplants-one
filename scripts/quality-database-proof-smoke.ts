@@ -32,7 +32,7 @@ try {
   assert.ok(ready, "Owned compiled server must start within 120 seconds");
   assert.equal((await client.post("/api/v1/local-session", { data: { profile: "coordinator" } })).status(), 200);
   for (const path of paths) {
-    const response = await client.get(path + (path.includes("/directory") ? "?kind=customers" : ""));
+    const response = await client.get(path + (path.includes("/directory") ? "?kind=organisations" : ""));
     assert.equal(response.status(), 200, path);
     assert.equal(response.headers()["cache-control"], "private, no-store");
     await response.json();

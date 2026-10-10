@@ -33,6 +33,7 @@ const metadata = {
   label, started_at: new Date().toISOString(), comparison_block: process.env.PPO_COMPARISON_BLOCK ?? null, comparison_position: process.env.PPO_COMPARISON_POSITION ?? null, source: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(),
   compiled_source: compiledSource, build_id: buildId, server_pid: server.pid,
   node: process.version, platform: process.platform, memory_bytes: totalmem(),
+  detailed_diagnostics: process.env.PPO_PROOF_DIAGNOSTICS === "1",
   network: { latency_ms: 40, download_bytes_per_second: 1250000, upload_bytes_per_second: 625000 },
   fixture, target_ms: 3000,
   limits: "Customers only; ten independent headless Chrome processes, four waves per viewport and one actual record activation per user/viewport. Fresh browser contexts for the cold wave, three warm repeats, retained database/OS caches. Local shared host, no physical-device, hosted, screen-reader or whole PT-27 acceptance. CDP path/status/transfer observations and optional gateway logging add overhead. Fonts/Kit use this build's normal configuration; no network request is exempted.",
