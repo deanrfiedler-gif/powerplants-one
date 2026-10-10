@@ -1,8 +1,8 @@
 "use client";
 import { controlModules, controlPath } from "../engineering/control/navigation";
 import Link from "next/link";
-// Shell destinations load on activation. Speculative route renders otherwise
-// compete with the current page's session and business reads (PT-27).
+// Desktop rail destinations load on activation (PT-27). Shared header and phone
+// links retain their existing policy; the broader change regressed cold phone loads.
 import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState, useSyncExternalStore } from "react";
@@ -63,7 +63,7 @@ function PageHierarchy({ crumbs, location }: { crumbs: HierarchyCrumb[]; locatio
       if (event.key === "Escape") { event.preventDefault(); panel.current?.hidePopover(); trigger.current?.focus(); }
     }}>
       <strong>Page hierarchy</strong>
-      <ol>{crumbs.map((crumb,index) => <li key={crumb.key}>{crumb.href ? <Link prefetch={false} href={crumb.href}>{crumb.label}</Link> : <span aria-current={index === crumbs.length - 1 ? "page" : undefined}>{crumb.label}</span>}</li>)}</ol>
+      <ol>{crumbs.map((crumb,index) => <li key={crumb.key}>{crumb.href ? <Link href={crumb.href}>{crumb.label}</Link> : <span aria-current={index === crumbs.length - 1 ? "page" : undefined}>{crumb.label}</span>}</li>)}</ol>
     </div>
   </>;
 }
@@ -190,7 +190,7 @@ function ProductNavigationView({
       </>
     );
     return allowed(item) ? (
-      <Link prefetch={false}
+      <Link prefetch={mobile ? undefined : false}
         key={item.id}
         className={mobile ? undefined : "ppo-more-link"}
         href={departmentHref(item.href!, root?.id ?? workspaceId, new URLSearchParams(locationQuery).get("day"))}
@@ -222,7 +222,7 @@ function ProductNavigationView({
   const phoneCell = (entry: (typeof salesPhoneBar)[number]) => {
     const item = destination(entry.id);
     return (
-      <Link prefetch={false}
+      <Link
         key={entry.id}
         href={departmentHref(entry.id === "calendar" ? `${item.href}?day=${new URLSearchParams(locationQuery).get("day") ?? localDay(new Date().toISOString())}` : item.href!, "sales")}
         aria-label={entry.label}
@@ -546,7 +546,7 @@ export function ProductHeader() {
     <>
       <title>{title}</title>
       <header className="topbar ppo-shell-header">
-        <Link prefetch={false}
+        <Link
           className="mobile-brand"
           href="/"
           aria-label="Powerplants One home"
@@ -570,7 +570,7 @@ export function ProductHeader() {
               {crumbs.map((crumb, index) => (
                 <li key={crumb.key} data-crumb={crumb.kind}>
                   {crumb.href ? (
-                    <Link prefetch={false} className="ppo-crumb" href={crumb.href}>
+                    <Link className="ppo-crumb" href={crumb.href}>
                       {crumb.label}
                     </Link>
                   ) : (
@@ -606,7 +606,7 @@ export function ProductHeader() {
           aria-label={`${currentModule} navigation`}
         >
           {tabs.map((item) => (
-            <Link prefetch={false}
+            <Link
               key={item.id}
               href={item.href!}
               aria-current={page?.id === item.id ? "page" : undefined}
