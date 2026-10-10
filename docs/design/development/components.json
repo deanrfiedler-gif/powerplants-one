@@ -356,7 +356,7 @@
         },
         {
           "id": "buttons-maintenance-adaptation",
-          "expected": "Paired MA-01â€“MA-07 source and native consumer review across required widths",
+          "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
           "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
           "action": "Review the MA handover and retained images before baseline adoption",
           "priority": "Medium",
@@ -1218,7 +1218,7 @@
         },
         {
           "id": "fields-maintenance-adaptation",
-          "expected": "Paired MA-01â€“MA-07 source and native consumer review across required widths",
+          "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
           "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
           "action": "Review the MA handover and retained images before baseline adoption",
           "priority": "Medium",
@@ -1602,7 +1602,7 @@
         },
         {
           "id": "validation-maintenance-adaptation",
-          "expected": "Paired MA-01â€“MA-07 source and native consumer review across required widths",
+          "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
           "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
           "action": "Review the MA handover and retained images before baseline adoption",
           "priority": "Medium",
@@ -1788,7 +1788,7 @@
         },
         {
           "id": "tabs-maintenance-adaptation",
-          "expected": "Paired MA-01â€“MA-07 source and native consumer review across required widths",
+          "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
           "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
           "action": "Review the MA handover and retained images before baseline adoption",
           "priority": "Medium",
@@ -2302,7 +2302,7 @@
         },
         {
           "id": "read-state-maintenance-adaptation",
-          "expected": "Paired MA-01â€“MA-07 source and native consumer review across required widths",
+          "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
           "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
           "action": "Review the MA handover and retained images before baseline adoption",
           "priority": "Medium",
@@ -2461,7 +2461,7 @@
         },
         {
           "id": "status-maintenance-adaptation",
-          "expected": "Paired MA-01â€“MA-07 source and native consumer review across required widths",
+          "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
           "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
           "action": "Review the MA handover and retained images before baseline adoption",
           "priority": "Medium",
@@ -2582,7 +2582,7 @@
         },
         {
           "id": "mobile-form-maintenance-adaptation",
-          "expected": "Paired MA-01â€“MA-07 source and native consumer review across required widths",
+          "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
           "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
           "action": "Review the MA handover and retained images before baseline adoption",
           "priority": "Medium",
@@ -2612,7 +2612,7 @@
         {
           "id": "engineering-host",
           "label": "Native Engineering host",
-          "description": "Use the real permitted EN-01â€“EN-08 routes through the shared business layout to inspect rail, breadcrumbs, secondary menu, information guidance and restricted states. This is host evidence, not an isolated component example."
+          "description": "Use the real permitted EN-01–EN-08 routes through the shared business layout to inspect rail, breadcrumbs, secondary menu, information guidance and restricted states. This is host evidence, not an isolated component example."
         },
         {
           "id": "service-phone-identity",
@@ -2835,7 +2835,7 @@
         },
         {
           "id": "engineering-native-shell-review",
-          "expected": "Native EN-02â€“EN-05 rail, module/view breadcrumbs, menu and information guide at desktop/mobile widths.",
+          "expected": "Native EN-02–EN-05 rail, module/view breadcrumbs, menu and information guide at desktop/mobile widths.",
           "actual": "Native consumer added; owner and visual acceptance pending.",
           "action": "Use native Engineering evidence for paired review against r17 and EN-02 sources.",
           "priority": "Medium",
@@ -2923,7 +2923,7 @@
         },
         {
           "id": "application-shell-maintenance-adaptation",
-          "expected": "Paired MA-01â€“MA-07 source and native consumer review across required widths",
+          "expected": "Paired MA-01–MA-07 source and native consumer review across required widths",
           "actual": "Native consumers and synthetic state examples added; owner/device acceptance pending",
           "action": "Review the MA handover and retained images before baseline adoption",
           "priority": "Medium",
@@ -4426,17 +4426,17 @@
         {
           "id": "chain-receiving",
           "label": "Six decisions for three tasks",
-          "description": "A â†’ B â†’ C; both FS/SS relationships, distinct Third task receiving, current/withdrawn dates, extra-edge holds and four-receipt atomic outcome. Real host: tests/browser/quotation-task-chain.spec.ts."
+          "description": "A → B → C; both FS/SS relationships, distinct Third task receiving, current/withdrawn dates, extra-edge holds and four-receipt atomic outcome. Real host: tests/browser/quotation-task-chain.spec.ts."
         },
         {
           "id": "branch-receiving",
           "label": "Six decisions for a Project branch",
-          "description": "A â†’ B and A â†’ C; explicit topology, both FS/SS relationships, distinct Branch task C receiving, current/proposed dates, extra-edge holds and four-receipt atomic outcome. Real host: tests/browser/quotation-task-branch.spec.ts."
+          "description": "A → B and A → C; explicit topology, both FS/SS relationships, distinct Branch task C receiving, current/proposed dates, extra-edge holds and four-receipt atomic outcome. Real host: tests/browser/quotation-task-branch.spec.ts."
         },
         {
           "id": "merge-receiving",
           "label": "Six decisions for a Project merge with retained B",
-          "description": "A â†’ C and B â†’ C; current native B position, two exact FS/SS links, independent B retention decision, A/C effects, extra-edge holds and three-receipt atomic outcome. Real host: tests/browser/quotation-task-merge.spec.ts."
+          "description": "A → C and B → C; current native B position, two exact FS/SS links, independent B retention decision, A/C effects, extra-edge holds and three-receipt atomic outcome. Real host: tests/browser/quotation-task-merge.spec.ts."
         },
         {
           "id": "diamond-seven-receiving",
