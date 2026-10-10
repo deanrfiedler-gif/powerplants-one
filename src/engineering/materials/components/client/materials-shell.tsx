@@ -5,6 +5,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 import { useIdentity } from "../../../../components/business-session";
 import { materialViews, materialsHref, materialsPath, type MaterialViewId } from "../../../../shell/navigation";
 import { SecondaryMenuFrame, useSecondaryMenu } from "../../../../shell/secondary-menu";
+import { RegisterChip } from "../../../../components/ui/register-table";
 import type { readEntry, readRegister } from "../../reads";
 import { Icon, ReadNotice, lastPackageKey, revisionText, useRead, type IconName } from "./materials-ui";
 
@@ -150,7 +151,7 @@ export function MaterialsShell({ packageId, children }: { packageId: string; chi
                     {data.sets.map((s) => <option key={s.id} value={s.id}>{s.code} · {revisionText(s.revision)}</option>)}
                   </select>
                 ) : <strong>{set ? `${set.code} · ${revisionText(set.revision)}` : data ? "None yet" : "…"}</strong>}
-                {set && <span className="em-chip em-chip-neutral">{set.status}</span>}
+                {set && <RegisterChip tone="neutral">{set.status}</RegisterChip>}
               </div>
               <div className="em-context-actions">
                 {data?.can.edit && set && <Link className="mw-button" href={href("register", { new: "1" })}><Icon name="plus" /><span>Add material requirement</span></Link>}

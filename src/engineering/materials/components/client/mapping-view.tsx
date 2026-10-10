@@ -1,6 +1,7 @@
 "use client";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { RegisterEmpty, RegisterTable } from "../../../../components/ui/register-table";
 import { convertQuantity, mappingConditions, quantityText, units, type MappingCondition, type Unit } from "../../model";
 import type { readMapping } from "../../reads";
 import { useMaterials } from "./materials-shell";
@@ -33,27 +34,24 @@ export function MappingView() {
             </dl>
           </section>
           <section className="em-panel" aria-label="Bindings">
-            <div className="em-table-scroll">
-              <table className="em-table">
-                <caption className="mw-sr">Item and unit binding of each material line</caption>
+            <RegisterTable variant="panel" caption="Item and unit binding of each material line"
+              empty={!data.items.length && <RegisterEmpty title="No material lines"><p>Add requirements in the materials register first.</p></RegisterEmpty>}>
                 <thead><tr><th scope="col">Line</th><th scope="col">Material requirement</th><th scope="col">Design qty</th><th scope="col">Target item</th><th scope="col">Condition</th><th scope="col">Procurement qty</th><th scope="col">Conversion basis</th><th scope="col"><span className="mw-sr">Actions</span></th></tr></thead>
                 <tbody>
                   {data.items.map((r) => (
                     <tr key={r.line.id} data-inspected={r.line.id === focus || undefined}>
                       <td>{r.line.line_number}</td>
-                      <td><strong>{r.line.description}</strong><span className="em-cell-sub">{[r.line.product_ref, r.line.model].filter(Boolean).join(" · ") || "No product identity recorded"}</span></td>
+                      <td><strong>{r.line.description}</strong><span className="ppo-register-sub">{[r.line.product_ref, r.line.model].filter(Boolean).join(" · ") || "No product identity recorded"}</span></td>
                       <td className="em-col-quantity">{quantityText(r.line.quantity, r.line.unit)}</td>
-                      <td>{r.binding.item_key ? <><strong>{r.binding.item_key}</strong><span className="em-cell-sub">{r.binding.entity} · {r.binding.configuration} · v{r.binding.version}</span></> : <span className="mw-muted">None</span>}</td>
-                      <td><Status tone={toneFor(r.binding.condition)}>{text(r.binding.condition)}</Status>{r.binding.observed_at && <span className="em-cell-sub">Observed {stampText(r.binding.observed_at)}</span>}</td>
-                      <td className="em-col-quantity">{r.binding.conversion?.ok ? <>{quantityText(r.binding.conversion.quantity, r.binding.conversion.unit)}{r.binding.conversion.overage && <span className="em-cell-sub">overage {quantityText(r.binding.conversion.overage, r.line.unit)}</span>}</> : <span className="em-status-attention">Unresolved</span>}</td>
-                      <td>{r.binding.conversion && !r.binding.conversion.ok ? <span className="em-cell-sub">{r.binding.conversion.message}</span> : r.binding.target_unit && r.binding.target_unit !== r.line.unit ? <span className="em-cell-sub">{r.binding.conversion_numerator} {r.line.unit} per {r.binding.conversion_denominator} {r.binding.target_unit}. {r.binding.conversion_evidence}</span> : <span className="em-cell-sub">{r.binding.target_unit ? "Same unit; no conversion" : "No target unit"}</span>}</td>
+                      <td>{r.binding.item_key ? <><strong>{r.binding.item_key}</strong><span className="ppo-register-sub">{r.binding.entity} · {r.binding.configuration} · v{r.binding.version}</span></> : <span className="mw-muted">None</span>}</td>
+                      <td><Status tone={toneFor(r.binding.condition)}>{text(r.binding.condition)}</Status>{r.binding.observed_at && <span className="ppo-register-sub">Observed {stampText(r.binding.observed_at)}</span>}</td>
+                      <td className="em-col-quantity">{r.binding.conversion?.ok ? <>{quantityText(r.binding.conversion.quantity, r.binding.conversion.unit)}{r.binding.conversion.overage && <span className="ppo-register-sub">overage {quantityText(r.binding.conversion.overage, r.line.unit)}</span>}</> : <span className="em-status-attention">Unresolved</span>}</td>
+                      <td>{r.binding.conversion && !r.binding.conversion.ok ? <span className="ppo-register-sub">{r.binding.conversion.message}</span> : r.binding.target_unit && r.binding.target_unit !== r.line.unit ? <span className="ppo-register-sub">{r.binding.conversion_numerator} {r.line.unit} per {r.binding.conversion_denominator} {r.binding.target_unit}. {r.binding.conversion_evidence}</span> : <span className="ppo-register-sub">{r.binding.target_unit ? "Same unit; no conversion" : "No target unit"}</span>}</td>
                       <td><button type="button" className="mw-button" onClick={() => setEditing(r)} disabled={r.locked || !(data.can.edit || data.can.source)}>{data.can.edit || data.can.source ? "Edit binding" : "Read only"}</button></td>
                     </tr>
                   ))}
                 </tbody>
-              </table>
-              {!data.items.length && <div className="em-empty"><strong>No material lines</strong><p>Add requirements in the materials register first.</p></div>}
-            </div>
+            </RegisterTable>
           </section>
           {!data.can.source && <Reason>Verifying an item for {data.target.entity} is the item owner&rsquo;s act, reached through the synthetic item adapter. Authors propose, flag or mark a mapping missing; they cannot verify one.</Reason>}
         </>

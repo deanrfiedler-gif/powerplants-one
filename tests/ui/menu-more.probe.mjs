@@ -16,7 +16,7 @@ const read = () => page.evaluate(() => {
   const strip = document.querySelector(".mw-menu-strip")?.getBoundingClientRect();
   const edge = document.querySelector(".mw-menu-edge")?.getBoundingClientRect();
   const content = document.querySelector(".mw-content")?.getBoundingClientRect();
-  const first = document.querySelector(".em-table-scroll, .mw-content table")?.getBoundingClientRect();
+  const first = document.querySelector(".ppo-register, .em-table-scroll, .mw-content table")?.getBoundingClientRect();
   const more = document.querySelector("#desktop-more-panel");
   const moreBox = more && !more.hidden ? more.getBoundingClientRect() : null;
   const search = document.querySelector(".ppo-header-centre .ppo-global-search")?.getBoundingClientRect();

@@ -475,6 +475,109 @@
       "review": null
     },
     {
+      "id": "register-table",
+      "title": "House register table",
+      "category": "Tables & grids",
+      "module": "Shared",
+      "purpose": "The shared register: a flush table with a grey sortable header, pinned checkbox and key columns, row emphasis, state chips, an empty message and a footer.",
+      "owner": "Dean Fiedler",
+      "example": "register-table",
+      "coverage": "Runnable",
+      "states": [
+        {
+          "id": "default",
+          "label": "Default",
+          "description": "A sorted column, one inspected row, one selected row, a removed row and all four chip tones."
+        },
+        {
+          "id": "panel",
+          "label": "Panel",
+          "description": "The variant inside a working-page panel: plain headers, 48 px rows and no row pointer."
+        },
+        {
+          "id": "empty",
+          "label": "No matches",
+          "description": "Rows exist but none match; the message says how to bring them back."
+        },
+        {
+          "id": "loading",
+          "label": "Loading",
+          "description": "First read in progress: no rows, and no result is inferred."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/ui/register-table.tsx",
+          "symbol": "RegisterTable"
+        },
+        {
+          "path": "src/components/ui/register-table.tsx",
+          "symbol": "RegisterSortHeader"
+        },
+        {
+          "path": "src/components/ui/register-table.tsx",
+          "symbol": "RegisterChip"
+        }
+      ],
+      "dependencies": [
+        "src/app/layout.tsx",
+        "src/app/globals.css",
+        "src/components/ui/register-table.css",
+        "src/development/component-examples.tsx",
+        "src/development/component-fixtures.ts"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/engineering-changes/PPO-EN-07-Engineering-Change-Impact-Review-Desktop-UI-Mockup-r03.png",
+        "anchor": "",
+        "status": "Retained design reference for the house register pattern. The implemented baseline is EN-06's owner-refined register of 20 September 2026; paired acceptance not recorded"
+      },
+      "specification": "docs/design/development/components/register-table.md",
+      "used_on": [
+        "route:/engineering/[id]/materials",
+        "route:/engineering/[id]/materials/mapping",
+        "route:/engineering/[id]/materials/releases"
+      ],
+      "desktop": "Flush to its pane in one horizontal scroller: no exterior padding, frame or radius. Grey 43 px sentence-case header with column rules; 50 px rows (48 px in a panel). Opening a row inspects it and ticking its checkbox selects it; the two are independent. Sort state is in aria-sort. The footer states the count, the selection and paging.",
+      "mobile": "At 780 px and below the key column unpins and the table scrolls sideways with only the checkbox pinned. Check 390 and 320 px for readable text, reachable selection and a footer that wraps.",
+      "keyboard": "Sort buttons, row-title buttons and checkboxes are native, labelled controls with the shared focus ring. A row opens from its title, so inspecting never needs a pointer; the row click is only a larger target.",
+      "limitations": "No sticky header, scroll edge shadows, column resizing or phone row layout yet. The host owns data, sorting, paging and selection, and supplies chip icons from its own icon set.",
+      "gaps": [
+        {
+          "id": "register-table-adoption",
+          "expected": "Every register uses the shared table (ADR-0051, group 2).",
+          "actual": "EN-07, EN-08, Service requests, PJ-09 acceptance, the CRM directory and the CRM Grid keep their own copies, with four header treatments and three chip classes.",
+          "action": "Adopt the shared table one module per small PR, recording each module's departures before removing its copy.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-scroll-cues",
+          "expected": "A sticky header and scroll edge shadows (EN-07 build plan section 5.2; Service requests R13).",
+          "actual": "EN-06's register has neither, so the shared table does not yet.",
+          "action": "Add them as options when the first module that needs them adopts the table, leaving EN-06 unchanged.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-phone",
+          "expected": "One phone pattern for registers.",
+          "actual": "The table scrolls sideways on phones; EN-07 uses labelled rows instead.",
+          "action": "Decide the phone pattern with the EN-07 adoption.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-alignment",
+          "expected": "Verify the shared table against the linked design and desktop/mobile rules.",
+          "actual": "Visual parity with EN-06 was checked by automated captures; no owner review is recorded.",
+          "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "review": null
+    },
+    {
       "id": "area-editor",
       "title": "Selectable table and area editing",
       "category": "Tables & grids",

@@ -1,6 +1,8 @@
 "use client";
 import { useMemo, useRef, useState } from "react";
 import { Button, ButtonLink } from "../components/ui/button";
+import { RegisterChip, RegisterEmpty, RegisterFooter, RegisterSortHeader, RegisterTable } from "../components/ui/register-table";
+import { ShellIcon } from "../components/shell-icon";
 import {
   ErrorNotice,
   Field,
@@ -44,6 +46,7 @@ import {
   plannerFixture,
   longSchedulingResourceName,
   projectFixture,
+  registerTableFixture,
   salesFixture,
 } from "./component-fixtures";
 import "../components/discovery.css";
@@ -515,6 +518,89 @@ function AreasExample({ state }: { state: string }) {
     </section>
   );
 }
+function RegisterTableExample({ state }: { state: string }) {
+  const [sort, setSort] = useState<{ column: "key" | "title"; direction: "ascending" | "descending" }>({ column: "key", direction: "ascending" }),
+    [selected, setSelected] = useState<string[]>([registerTableFixture[0].id]),
+    [inspected, setInspected] = useState(registerTableFixture[1].id);
+  const rows = state === "empty" || state === "loading" ? [] : [...registerTableFixture].sort((a, b) => {
+    const order = sort.column === "key" ? a.key.localeCompare(b.key) : a.title.localeCompare(b.title);
+    return sort.direction === "ascending" ? order : -order;
+  });
+  const chip = (s: (typeof registerTableFixture)[number]["state"]) => (
+    <RegisterChip tone={s.tone} icon={s.tone === "positive" ? <ShellIcon name="check" /> : s.tone === "neutral" ? null : <ShellIcon name="warning" />}>{s.label}</RegisterChip>
+  );
+  const sortBy = (column: "key" | "title") =>
+    setSort((s) => ({ column, direction: s.column === column && s.direction === "ascending" ? "descending" : "ascending" }));
+  if (state === "panel")
+    return (
+      <RegisterTable variant="panel" caption="Synthetic lines and their mapping state">
+        <thead>
+          <tr><th scope="col">Line</th><th scope="col">Material requirement</th><th scope="col">Design qty</th><th scope="col">Condition</th></tr>
+        </thead>
+        <tbody>
+          {registerTableFixture.map((r) => (
+            <tr key={r.id} data-inspected={r.id === inspected || undefined}>
+              <td>{r.key}</td>
+              <td><strong>{r.title}</strong><span className="ppo-register-sub">{r.source ?? "No drawing recorded"}</span></td>
+              <td>{r.quantity}</td>
+              <td>{chip(r.state)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </RegisterTable>
+    );
+  return (
+    <RegisterTable
+      caption="Synthetic material lines. Opening a line inspects it; ticking a line selects it. The two are independent."
+      stale={state === "loading"}
+      empty={state === "empty" ? <RegisterEmpty title="No lines match"><p>4 lines exist in this example. Clear the search to see them.</p></RegisterEmpty>
+        : state === "loading" ? <RegisterEmpty><p>Loading the example register…</p></RegisterEmpty> : null}
+      footer={
+        <RegisterFooter>
+          <span>{rows.length} material{rows.length === 1 ? "" : "s"} · {selected.length} selected</span>
+          <span className="ppo-register-spacer" />
+          <span>{rows.length ? `1–${rows.length} of ${rows.length}` : "0 of 0"}</span>
+          <Button variant="quiet" disabled>Previous page</Button>
+          <Button variant="quiet" disabled>Next page</Button>
+        </RegisterFooter>
+      }>
+      <thead>
+        <tr>
+          <th scope="col" className="ppo-register-check">
+            <input type="checkbox" aria-label={`Select the ${rows.length} lines in this example`} checked={rows.length > 0 && selected.length === rows.length} disabled={!rows.length}
+              onChange={() => setSelected(selected.length === rows.length ? [] : rows.map((r) => r.id))} />
+          </th>
+          <RegisterSortHeader label="Line" className="ppo-register-key" direction={sort.column === "key" ? sort.direction : undefined} onSort={() => sortBy("key")} />
+          <RegisterSortHeader label="Material requirement" className="ppo-register-wrap" direction={sort.column === "title" ? sort.direction : undefined} onSort={() => sortBy("title")} />
+          <th scope="col"><span className="ppo-register-label">Design qty</span></th>
+          <th scope="col"><span className="ppo-register-label">Drawing</span></th>
+          <th scope="col"><span className="ppo-register-label">Readiness</span></th>
+          <th scope="col"><span className="ppo-register-label">Next owner</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((r) => (
+          <tr key={r.id} data-inspected={r.id === inspected || undefined} data-selected={selected.includes(r.id) || undefined} data-removed={r.removed || undefined}
+            onClick={(e) => { if (!(e.target as HTMLElement).closest("input,button,a,label")) setInspected(r.id); }}>
+            <td className="ppo-register-check">
+              <input type="checkbox" aria-label={`Select line ${r.key}, ${r.title}`} checked={selected.includes(r.id)} disabled={r.removed}
+                onChange={() => setSelected(selected.includes(r.id) ? selected.filter((x) => x !== r.id) : [...selected, r.id])} />
+            </td>
+            <td className="ppo-register-key">{r.key}</td>
+            <td className="ppo-register-wrap">
+              <button type="button" className="ppo-register-row-title" onClick={() => setInspected(r.id)} aria-label={`Inspect line ${r.key}, ${r.title}`}>{r.title}</button>
+              {r.sub && <span className="ppo-register-sub">{r.sub}</span>}
+            </td>
+            <td>{r.quantity}</td>
+            <td>{r.source ?? "No drawing"}</td>
+            <td>{chip(r.state)}</td>
+            <td>{r.owner}</td>
+          </tr>
+        ))}
+      </tbody>
+    </RegisterTable>
+  );
+}
 function NavigationExample({
   menu = false,
   state = "default",
@@ -716,6 +802,8 @@ export function ComponentExample({
       return <LookupExample state={state} />;
     case "tabs":
       return <NavigationExample state={state} />;
+    case "register-table":
+      return <RegisterTableExample state={state} />;
     case "menu":
       return <NavigationExample menu />;
     case "dialog":

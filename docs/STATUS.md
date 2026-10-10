@@ -22,6 +22,14 @@ Dean authorised PT-23 in the isolated `codex/pt23-output-recovery` session along
 
 All 12 recovery scenarios and two long journeys pass locally. Eight retained PDFs cover 89 inspected pages; sparse-page and split-row observations remain open for template review. The [scope decision](decisions/controlled-output-recovery.md) and [verification record](testing/evidence/controlled-output-recovery/README.md) distinguish actual issued long outputs, an unissued twenty-asset pagination fixture, source-bound tests and page inspection from independent/owner approval. PT-01 PR #386 is separate. This contribution does not merge or deploy either branch.
 
+## Shared register table — 10 October 2026
+
+Dean approved building group 2 of the design kit, starting with the register table (ADR-0051, PR #395). EN-06's owner-refined materials register is now the shared house register table. `src/components/ui/register-table.tsx` provides `RegisterTable`, `RegisterSortHeader`, `RegisterEmpty`, `RegisterFooter` and `RegisterChip`. Its stylesheet loads globally after the module stylesheets, and every rule starts from an id-weight root (`:is(.ppo-register, #ppo-shared)`), so the table keeps its look inside the id-scoped My Work workspaces.
+
+EN-06's register, mapping and releases tables use it. On the same synthetic package, six EN-06 views render pixel-identically to `main` at 1440 × 900 and 390 × 844, and the EN-06 browser spec passes. The component catalogue gains `register-table`, making 21 runnable examples.
+
+EN-07, EN-08, Service requests, PJ-09 and the CRM tables keep their own copies until each adopts the shared table. A sticky header, scroll edge shadows and a phone row layout are recorded gaps. Nothing changes in data, permissions or behaviour. Owner visual review is pending.
+
 ## Icon style decision — 10 October 2026
 
 After a local comparison of the app's icons with Font Awesome Classic Light, Regular and Free, Dean chose Font Awesome Pro Classic Light, with Classic Solid for selected items. [ADR-0050](decisions/ADR-0050-font-awesome-light-icons.md) records the decision, the comparison mapping and the delivery options. Packages need annual billing, so Dean chose to stay on the monthly plan and load the icons through his Kit script on online pages; the offline field workspace keeps its local shapes. Kit limits, licence terms after a lapse, the Kit's allowed addresses and the full icon mapping remain open. Dean then asked for the build. The first increment maps the 198 names in the five shared icon sets and loads the Kit when `PPO_FONT_AWESOME_KIT` is set. Every icon keeps its local drawing until the Kit is running, so CI, offline use and outages are unaffected. A second increment maps the nine module icon sets (81 names), keeping the job pack's accepted r03 drawings as the fallback. The hosted demo's Kit address and Dean's visual review remain. Pro icon files and captures stay out of this public repository.
