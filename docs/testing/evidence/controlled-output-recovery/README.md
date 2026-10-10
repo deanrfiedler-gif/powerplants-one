@@ -8,6 +8,8 @@ The two long-output journeys pass. All eight retained PDFs (89 pages) pass autom
 
 ## Source and observed failures
 
+Main later advanced to `ad45a520ae4b42144e2a18c92507bac1c72b4711` with four documentation-only icon-decision changes. Merge `f646ab3` preserves that decision and this status entry; application and test sources are unchanged.
+
 The isolated branch starts at main `e5a94730025cf7a1ad4c1d0b1450532f591dba32`. Test checkpoints `f1a33bf` and `770b845` leave application runtime unchanged. Tests initially used an adapter-read outage; the strengthened joined sequence physically corrupts the exact task-owned bundle and restores its original bytes in `finally`.
 
 1. OUT-09 verified storage before finalisation but did not reread it immediately before inserting the issue. The physical corruption challenge retained an `Issued` job and issue despite the wrong stored version. The correction adds the same final bundle check already present for reports and Finance.
@@ -59,4 +61,4 @@ node --env-file=<private-env> --import tsx --test --test-reporter=tap --test-con
 python scripts/check-controlled-output-pages.py <evidence-directory> --pdftoppm <installed-pdftoppm>
 ```
 
-The larger timeout describes this local host only. Existing CI retains its command, serial file execution and 120-second limit; both new files are discovered by its database wildcard. PDF inspection dependencies remain local review tools. Retained text logs have LF line endings and trailing whitespace removed; original generated HTML/PDF bytes are unchanged. Artifact and source SHA-256 values are in `verification.json`.
+The larger timeout describes this local host only. Existing CI retains its command, serial file execution and 120-second limit; both new files are discovered by its database wildcard. PDF inspection dependencies remain local review tools. Retained text logs and JSON use LF line endings; logs have trailing whitespace removed; original generated HTML/PDF bytes are unchanged. Artifact and source SHA-256 values are in `verification.json`.

@@ -4,7 +4,7 @@
   "standing_exceptions": 9,
   "metadata_documents_compared": 356,
   "git_masters": 234,
-  "project_instruction_characters": 7926,
+  "project_instruction_characters": 7948,
   "errors": [],
   "scope": "Naming and documentation consistency only; runtime behaviour is verified separately"
 }

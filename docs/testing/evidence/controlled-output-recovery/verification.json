@@ -154,8 +154,8 @@
   "artifacts": [
     {
       "path": ".gitattributes",
-      "bytes": 107,
-      "sha256": "c1c0e547b2b390dee28c8ffd3c834aa6e8f0e0dd6e012f39b2e45ba7fdf8619c"
+      "bytes": 154,
+      "sha256": "842e54f49b4bbc08dbc44bda7ddd0e4c60b612e4ac4a1dcc571bdec30313eff0"
     },
     {
       "path": "baseline/pack-corrupt-before-release.json",
@@ -179,8 +179,8 @@
     },
     {
       "path": "build.txt",
-      "bytes": 26714,
-      "sha256": "2b1530df1cf1f52ef7121293101bd636f8548fb2368911194a87a35f59befa00"
+      "bytes": 26713,
+      "sha256": "1e09b7502ba124b0913cc683ed08ea2caec84a1d98e9013f6df23d4fe2f23658"
     },
     {
       "path": "changed-lint.txt",
@@ -260,7 +260,7 @@
     {
       "path": "naming.txt",
       "bytes": 296,
-      "sha256": "954ffa0775783044cce4451f6e78190a327e6116db674d8b99392eef8da86353"
+      "sha256": "3fc8722aa78504e65b7e215ab62ebb4a0b90893d901ba6a9dc2c23e783b48b7f"
     },
     {
       "path": "OUT-09-v1.html",
@@ -434,8 +434,8 @@
     },
     {
       "path": "page-checks.json",
-      "bytes": 37658,
-      "sha256": "1cfc6cf4d1cdc111ad800984e1edf830b872e39c13116daa6b481395a55b9d74"
+      "bytes": 36714,
+      "sha256": "c90b65af442d04ff87fe957ca0ed156cb798453c9a5f31a1a6485c6b11e68d97"
     },
     {
       "path": "page-review.md",
@@ -454,8 +454,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 8419,
-      "sha256": "e53b0320e7f31654b4013bb2c7391eb5bd1a3be58e3740bc95614ea86276a4bc"
+      "bytes": 8660,
+      "sha256": "4fd08b3268263a175c25ec290093ba467ecd4e344d7667bb95cd5b7d26ab9945"
     },
     {
       "path": "report-corrupt-before-release.json",
@@ -512,5 +512,10 @@
       "bytes": 430,
       "sha256": "5673c3870ae08d94c04e3ecfb142a732438bd9fe32f0eed7f2047afc2030bf50"
     }
-  ]
+  ],
+  "main_integration": {
+    "main": "ad45a520ae4b42144e2a18c92507bac1c72b4711",
+    "merge": "f646ab3",
+    "scope": "Four documentation-only files; both STATUS entries preserved. Application and tests unchanged."
+  }
 }

@@ -1,4 +1,5 @@
-# Preserve the exact generated document and retained log bytes.
-*.html -text
-*.pdf -text
+# Preserve exact generated output bytes; these archives are not mergeable source.
+*.html binary
+*.pdf binary
 *.txt text eol=lf
+.gitattributes text eol=lf
