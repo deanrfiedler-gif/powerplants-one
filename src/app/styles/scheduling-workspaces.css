@@ -171,3 +171,17 @@
 .policy-publication .button-row > a { display: inline-flex; align-items: center; min-height: 44px; }
 .policy-publication .scheduling-card > a { display: inline-block; margin: 0 8px 8px 0; }
 .policy-publication fieldset { border: 1px solid var(--ppo-divider); border-radius: 6px; padding: 12px; }
+
+/* On a phone the Scheduling tabs are one scrolling row rather than three wrapped rows, so the
+   first screen reaches the page's content (phase 00 review finding, 10 October 2026). */
+@media (max-width: 780px) {
+  .scheduling-navigation {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+  .scheduling-navigation a {
+    flex: none;
+    white-space: nowrap;
+  }
+}

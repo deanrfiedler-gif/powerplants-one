@@ -294,6 +294,8 @@ function Visit({
         style={inner(s, f)}
         role="button"
         tabIndex={0}
+        data-appointment={a.id}
+        data-status={a.status}
         aria-pressed={selected}
         aria-label={`${a.display_number}, ${a.scope_summary}, ${time}, ${state.long}${extended ? ", extended hours" : ""}`}
         title={tip}

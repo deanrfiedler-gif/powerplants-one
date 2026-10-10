@@ -44119,7 +44119,8 @@
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
             "Use labelled controls and Tab/Shift+Tab; Enter or Space activates buttons. Travel order has Earlier/Later alternatives without dragging. Cards and comparisons stack on phones.",
-            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations."
+            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations.",
+            "On a phone, Day shows a chip for each day of the week and one card per person with a 07:00 to 18:00 strip and their visits; Week lists each day's visits. Tap a visit to open its details as a sheet, then Move or reassign or Open appointment. The attention row jumps to proposed visits."
           ],
           "steps": [],
           "rows": [],

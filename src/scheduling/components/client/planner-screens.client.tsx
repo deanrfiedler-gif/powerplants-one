@@ -42,6 +42,7 @@ import {
 import type { CrewInput } from "../../validation";
 import { clockText } from "../../day-timeline";
 import { AppointmentSnapshot, PlannerTimeline, PlannerWeek } from "./planner-timeline.client";
+import { PlannerPhone } from "./planner-phone.client";
 export type Resource = {
   id: string;
   name: string;
@@ -1685,7 +1686,8 @@ export function PlannerScreen() {
       crew?: CrewInput;
     } | null>(null),
     [dragNotice, setDragNotice] = useState("");
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null),
+    [showFilters, setShowFilters] = useState(false);
   // The board views need room for their columns; narrow screens keep the lane list until the
   // phone layout is built.
   const [wide, setWide] = useState(true),
@@ -1704,8 +1706,12 @@ export function PlannerScreen() {
   const days = Array.from({ length: mode === "week" ? 7 : 1 }, (_, i) =>
       addDays(day, i),
     ),
-    from = utcFromLocal(day + "T00:00", zone),
-    to = utcFromLocal(addDays(day, days.length) + "T00:00", zone);
+    // The phone Day view shows chips for the whole week, so it reads Monday to Sunday.
+    weekStart = addDays(day, -((new Date(day + "T12:00:00Z").getUTCDay() + 6) % 7)),
+    phoneWeek = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i)),
+    read = !wide && mode === "day" ? phoneWeek : days,
+    from = utcFromLocal(read[0] + "T00:00", zone),
+    to = utcFromLocal(addDays(read[read.length - 1]!, 1) + "T00:00", zone);
   const query = new URLSearchParams({
     from,
     to,
@@ -1729,11 +1735,10 @@ export function PlannerScreen() {
     usable = !!data && !result.error && !result.loading;
   // The Day timeline and the Week board (the refinement boards) are drawn in the resources'
   // own timezone; another display timezone, or a narrow screen, keeps the lane list.
-  const boardView =
-    wide &&
-    !!data &&
-    data.resources.every((r) => r.calendar.timezone === zone);
-  const selected = boardView ? data?.items.find((a) => a.id === selectedId) : undefined;
+  const sameZone = !!data && data.resources.every((r) => r.calendar.timezone === zone),
+    boardView = wide && sameZone,
+    phoneView = !wide && sameZone;
+  const selected = boardView || phoneView ? data?.items.find((a) => a.id === selectedId) : undefined;
   const modal = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     if (move) {
@@ -1821,7 +1826,12 @@ export function PlannerScreen() {
           </Link>
         </p>
       )}
-      <section className="planner-toolbar" aria-label="Planner controls">
+      {/* On a phone the timezone, Work orders and filters fold behind one button, so the first
+          screen reaches the bookings (phase 00 review finding). */}
+      <section
+        className={`planner-toolbar${!wide && !showFilters ? " folded" : ""}`}
+        aria-label="Planner controls"
+      >
         <div className="planner-date">
           <button
             className="secondary"
@@ -1860,24 +1870,41 @@ export function PlannerScreen() {
             Week
           </button>
         </div>
-        <EnumField
-          name="display-timezone"
-          label="Display timezone"
-          value={zone}
-          onChange={setZone}
-          values={["Australia/Brisbane", "Australia/Melbourne", "UTC"]}
-        />
+        {(wide || showFilters) && (
+          <EnumField
+            name="display-timezone"
+            label="Display timezone"
+            value={zone}
+            onChange={setZone}
+            values={["Australia/Brisbane", "Australia/Melbourne", "UTC"]}
+          />
+        )}
         {/* The removed heading block carried the only route to work orders,
             so it moves into the control bar with the other page actions. */}
         <div className="planner-toolbar-actions">
           <button className="secondary" onClick={result.reload}>
             Refresh planner
           </button>
-          <Link className="button secondary" href="/service/work-orders">
-            Work orders
-          </Link>
+          {!wide && (
+            <button
+              className="secondary"
+              aria-expanded={showFilters}
+              onClick={() => setShowFilters(!showFilters)}
+            >
+              Filters
+              {[site, resourceFilter, status].filter(Boolean).length
+                ? ` (${[site, resourceFilter, status].filter(Boolean).length})`
+                : ""}
+            </button>
+          )}
+          {(wide || showFilters) && (
+            <Link className="button secondary" href="/service/work-orders">
+              Work orders
+            </Link>
+          )}
         </div>
       </section>
+      {(wide || showFilters) && (
       <div className="planner-filters">
         <SelectField
           name="site-filter"
@@ -1912,6 +1939,7 @@ export function PlannerScreen() {
           }))}
         />
       </div>
+      )}
       <ReadState {...result} retry={result.reload} />
       {!!sites.error && (
         <p className="planner-warning">Site choices could not be refreshed.</p>
@@ -1969,7 +1997,7 @@ export function PlannerScreen() {
             <span>Proposed = no capacity reserved</span>
             <span>Dispatch remains held</span>
           </p>
-          {mode === "week" && !boardView && (
+          {mode === "week" && !boardView && !phoneView && (
             <p className="planner-scroll-hint">
               Scroll within each resource lane to compare days. Keyboard: focus
               the days and use arrow keys, or choose Day.
@@ -2014,9 +2042,33 @@ export function PlannerScreen() {
                 />
               )}
             </div>
+          ) : phoneView ? (
+            <>
+              <PlannerPhone
+                data={data}
+                mode={mode}
+                day={day}
+                days={mode === "day" ? phoneWeek : days}
+                zone={zone}
+                selected={selected?.id ?? null}
+                now={now}
+                onSelect={(a) => setSelectedId(a.id === selectedId ? null : a.id)}
+                onOpenDay={(d) => update({ day: d, mode: "day" })}
+              />
+              {selected && (
+                <AppointmentSnapshot
+                  key={selected.id}
+                  a={selected}
+                  zone={zone}
+                  returnTo={returnTo}
+                  onClose={() => setSelectedId(null)}
+                  onMove={usable ? (a) => setMove({ a }) : undefined}
+                />
+              )}
+            </>
           ) : (
             <>
-              {wide && (
+              {data.resources.length > 0 && (
                 <p className="planner-scroll-hint">
                   The planner board is drawn in the resources&apos; own timezone. Choose it as the display timezone to see it; this list shows the same period.
                 </p>
@@ -2033,7 +2085,7 @@ export function PlannerScreen() {
               />
             </>
           )}
-          <section className="panel proposal-section">
+          <section className="panel proposal-section" id="planner-proposals">
             <h2>Proposed and cancelled appointments</h2>
             <p>
               Proposals retain exact work authority and reserve no resource.
