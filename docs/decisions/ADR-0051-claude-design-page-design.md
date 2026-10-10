@@ -64,3 +64,56 @@ On 10 October 2026 the design system artifact was resynced from `main@ed3ccb8`, 
 The resync found ten en dashes and six arrows double-encoded in `docs/design/development/components.json` on `main`, introduced by `d29c020`. The design system carries the correct characters; this decision does not change the repository file.
 
 This record implies no owner visual review of any page or component.
+
+## Design kit — 10 October 2026
+
+Dean asked how the design system should be used. He had noticed that the boards were inconsistent with each other, and that pages built from a board did not always match it. Claude found two causes:
+
+- The design system gave boards little to build with: seven previews and no page templates, so each board redrew tables, cards, panels and headers.
+- Boards and the app were made from different parts, and built pages were not compared with their boards before being called done.
+
+Claude recommended a kit captured from the app. Dean replied "Yes, start with the kit". He then approved the proposed contents and references: "Yes, approve both, go ahead".
+
+These rules are added to the Decision above:
+
+6. **The design system describes only what the app has.** A part joins the kit when it exists in the app as a shared component. Boards are assembled from the kit. When a board needs something the kit lacks, the board labels it as a proposed component. When it is built, it is built as a shared component, added to the component catalogue, and then added to the kit at the next resync.
+7. **Kit previews are captured, not drawn.** Each preview is markup from the running app or its component catalogue. Its stylesheet is the app's own CSS rules for that markup, in the app's cascade order. [`scripts/design-system/`](../../scripts/design-system/README.md) regenerates them at each resync.
+8. **Compare the built page with its board before calling it done.** Use the board's viewport and data, then fix or record each difference, as the [image-to-implementation workflow](../design/development/README.md) already requires.
+
+### Group 1: built 10 October 2026
+
+The kit has twelve parts. All of them already exist in the app as shared parts. They were captured from `main@ed3ccb8` and published as design system version 9 (`1791637382-b3c7`).
+
+| Part | Captured from |
+|---|---|
+| Application shell, desktop and phone | `/estimating` at 1440 × 900 and 390 × 844 |
+| Module navigation | `/estimating` |
+| Page header (record) | A synthetic customer record |
+| Buttons, fields (including `LocalDateTimeField`), lookup, validation, status, read states, section tabs | The component catalogue's examples |
+| Segmented control | `/schedule` |
+
+All 385 rules came from the app's shared stylesheet; none came from a module stylesheet. Font Awesome was blocked during the capture, and no Pro artwork reached the markup. Each preview was rendered with the design system's tokens and compared with the app at the same width. They match, with these exceptions:
+
+- **The phone header's title.** On `/estimating` the app cuts the title off sooner, because of an Estimating-only override of the shared header (`.workspace:has(.est-workload) .product-heading { max-width: 22% }`).
+- **Fieldset borders.** The in-app catalogue draws a border around fieldsets as presentation; real pages use the app's borderless fieldset, as the kit does.
+
+The capture also showed that the app's page text is 14/1.45 (16px on phones): `shared-layout.css` overrides the 15/1.6 in `globals.css`. The design system's `body` and `label` styles are corrected. The "last loaded" timestamp is formatted text without markup of its own, so it is not a kit part.
+
+### Group 2: references approved, to be built
+
+These parts are repeated in each module, and the app has no shared version yet. Each one becomes a small PR. The PR builds the shared component in the app, switches the reference module to it, and adds it to the catalogue with its guide, fixtures and consumer links. The kit picks it up at the next resync.
+
+| Order | Part | Approved reference |
+|---|---|---|
+| 1 | Register table | The house register from EN-06/EN-07 (`em-table`, `em-chip`, `src/app/styles/engineering-materials.css`) |
+| 2 | Context strip | The compact EN-06/EN-07 context row (`em-context`) |
+| 3 | Right-hand inspection panel | The Deals side panel: 448px, and 480px at 1600px and wider |
+| 4 | Record cards | Sales board cards |
+| 5 | Dialog | `WorklistPanel`, moved out of CRM |
+| 6 | Filter bar, metric tiles, pills | No clear reference. Claude compares the module versions and brings Dean a recommendation first |
+
+Two parts exist only on boards, not in code: the 292px supporting column and the action footer. They stay proposals until a page needs them.
+
+### Group 3: page templates
+
+Templates follow once groups 1 and 2 exist. Each template is the shell plus kit parts, laid out as one of the r20 page types. The first two are the most common on boards: a register list, and a work queue with a detail panel. A record page and a form follow.
