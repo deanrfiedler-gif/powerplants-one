@@ -130,6 +130,10 @@ All 78 parent IDs and issued reference bytes remain unchanged. The 24 Core, 25 P
 
 Earlier snapshots remain in [STATUS-log.md](STATUS-log.md) and Git history. This current snapshot replaces accumulated pre-merge chronology; earlier failures, repairs and source-specific evidence remain in their original handovers and ledgers. Historical branch, migration reservation, deployment and writing-slot statements do not override current source or GitHub observations.
 
+## Document identity and recovery — 10 October 2026
+
+The authorised PT-18 continuation adds regression proof on unchanged main `184b933`, independently of PRs #378/#379 and Claude's UI work. Actual synthetic source movement, missing/changed versions, explicit reviewed successor selection and exact retained pack/report/Finance recovery are exercised. [Decision](decisions/document-identity-recovery.md), [evidence](testing/evidence/document-identity-recovery/README.md). The tested runtime already enforces these boundaries; this contribution changes tests/evidence only. Authenticated customer-channel, live SharePoint and independent owner/device acceptance remain open; no merge or deployment is included.
+
 ## Service and Finance download access — 10 October 2026
 
 The authorised backend continuation runs independently from main `184b933` alongside Claude's UI work and the separate job-pack PR #378. Thirteen storage-time access failures were reproduced for Service issued/generated HTML/PDF, the issued manifest and Finance evidence; three existing context rechecks now pass all sixteen focused HTTP scenarios, including unchanged-original recovery. [Decision](decisions/report-finance-download-access.md), [execution evidence](testing/evidence/report-finance-download-access/README.md). No UI, schema, grant, dependency or integration change; code delivery and synthetic verification remain separate from merge/deployment, independent review, full PT-01/18/23/29 coverage and owner-led PT-30.
