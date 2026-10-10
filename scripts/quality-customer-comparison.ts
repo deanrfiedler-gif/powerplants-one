@@ -43,13 +43,14 @@ async function checkpoint(complete: boolean) {
 async function settled(page: Page) {
   await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false", { timeout: 120000 });
   await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeEnabled();
-  await expect(page.getByText(/^Loading .*â€¦$/)).toHaveCount(0, { timeout: 120000 });
+  await expect(page.getByText(/^Loading .*\u2026$/)).toHaveCount(0, { timeout: 120000 });
   await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
   await page.evaluate(() => new Promise<void>(r => requestAnimationFrame(() => requestAnimationFrame(() => r()))));
 }
 try {
   let ready = false;
-  for (let n = 0; n < 240; n++) {
+  const startupDeadline = performance.now() + 120000;
+  while (performance.now() < startupDeadline) {
     try { if ((await fetch(origin, { signal: AbortSignal.timeout(1000) })).ok) { ready = true; break; } } catch {}
     await new Promise(r => setTimeout(r, 500));
   }
@@ -139,8 +140,9 @@ try {
   await checkpoint(false);
   throw error;
 } finally {
-  await Promise.all(browsers.map(b => b.close()));
+  try { await Promise.all(browsers.map(b => b.close())); } finally {
   if (process.env.PPO_PROOF_DIAGNOSTICS === "1") await writeFile(`${root}/gateway.jsonl`, await readFile(`verification-evidence/transport-diagnostics/process-${server.pid}.jsonl`)).catch(() => console.error("Gateway file unavailable; preserve original failure."));
   server.kill();
   await closeDatabase();
+  }
 }
