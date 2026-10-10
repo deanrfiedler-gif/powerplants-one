@@ -85,8 +85,9 @@
 .ppo-more-link small { margin-left: auto; font-size: 10px; color: #667181; text-align: right; }
 .ppo-more-link[aria-disabled=true] { color: #788599; cursor: default; }
 .ppo-more-link:is(a,button):hover { background: #f0f3f6; color: #242a37; }
-.ppo-more-link[aria-current=page] { background: #f0f6ed; color: #315e43; font-weight: 500; }
-.ppo-more-link[aria-current=page] .product-icon { color: #315e43; }
+/* Selected: a neutral tile and navy ink with a filled glyph, matching the selected rail item (Dean, 10 October 2026). */
+.ppo-more-link[aria-current=page] { background: #e8ecf1; color: #242a37; font-weight: 500; }
+.ppo-more-link[aria-current=page] .product-icon { color: #242a37; }
 .ppo-help-link { background: transparent; width: 100%; text-align: left; }
 .ppo-more-panel > footer, .ppo-panel-footer { flex: 0 0 auto; min-height: 42px; padding: 11px 20px; border-top: 1px solid #e9edf2; background: #fafbfc; font-size: 11px; color: var(--text-secondary, #596779); display: flex; justify-content: space-between; align-items: center; gap: 18px; }
 .ppo-preview-label::before { content: ''; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: #8b98a9; margin-right: 6px; vertical-align: middle; }

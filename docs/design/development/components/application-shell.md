@@ -140,6 +140,7 @@ The header imports the standalone `NotificationBell`; the full Notifications wor
 - `FontAwesomeGlyph` renders the local drawing until the owner's Kit is running, then an `<i>` with the same sizing class: Classic Light, or Classic Solid for a selected rail item. Font Awesome nests its SVG inside that element, so React keeps every node it rendered.
 - The Kit loads only when `PPO_FONT_AWESOME_KIT` holds a plain Kit ID. CI, copies of the repository, the offline workspace and the sign-in page keep the local drawings.
 - The selected rail item is a plain white tile with a navy Solid glyph. Dean asked on 10 October 2026 for the pale green tint and the 3 px left bar to be removed. Hover and focus are unchanged.
+- At Dean's request, the More panel's selected link matches it. The link is a neutral `#e8ecf1` tile with navy text and a filled glyph, in place of the green tint and green ink. This applies to the desktop panel and the phone's All modules menu. Hover stays `#f0f3f6`, and phone bar cells keep their own marker.
 - Module icon sets (job packs, materials, engineering changes, commissioning, acceptance, fertigation, leads and the Gantt chart) still draw locally. Visual review of the Font Awesome icons is pending.
 
 ## Session check keeps the shell context
