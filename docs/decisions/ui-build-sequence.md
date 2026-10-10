@@ -125,6 +125,48 @@ Each proposal applies the adopted S5, S6 and S8 rules to its page. These proposa
 
 Nothing on these boards is adopted until Dean accepts it. The main board lists their status as "Proposed".
 
+### Planner working hours (10 October 2026)
+
+Dean described the working day: "our standard hours are from 8am to 5pm, but it's not uncommon for a technician to work from 7am to 6pm at times. We try to avoid working early and later than this though."
+
+The live booking rule (`fitsWorkingInterval` in `src/scheduling/booking-rules.ts`) refuses a visit or its travel outside the person's published calendar interval. The sample calendars (`db/seed-p05.sql`) publish 08:00 to 17:00, Monday to Friday, so work from 07:00 or until 18:00 cannot be booked today. Two options were put to Dean: publish calendars as 07:00 to 18:00 and warn outside 08:00 to 17:00, or keep 08:00 to 17:00 calendars and add a separate extended-hours rule. Dean replied: "Go with your recommendation on the calendars", which adopts the first.
+
+| Rule | Decision |
+|---|---|
+| Published calendar interval | 07:00 to 18:00 on working days. The server rule is unchanged and still refuses anything outside the published interval. |
+| Standard hours | 08:00 to 17:00. A visit or its travel outside them is allowed, with a warning that names the person and the times. |
+| Capacity and free time | Count standard hours only, so extended hours are never offered as free time. |
+
+This is a decision, not a build. Building it needs a change to the sample calendars, the standard-hours warning in the booking form and planner, and tests. The canvas planner and appointment boards already show it: a 07:00 to 18:00 Day timeline with Extended hours bands, and the warning in "Checked as you edit".
+
+### Planner boards refined (10 October 2026)
+
+Dean refined the four playable planner boards on the canvas (Day, Week, Map and phone) through board comments and messages on 9 and 10 October. The boards share one set of rules and synthetic data. Canvas version 159 (`1791622886-4b94`) holds the result, with a notes board that separates what is decided, what is simulated and what still needs his OK. The board sources run only in the Design runtime and are not copied here. These are design decisions; nothing has changed in the app. The build rules are in the [planner design contract](../design/development/pages/route-schedule.md#phase-00-refinement-boards--10-october-2026).
+
+| Topic | Dean's words | Decision |
+|---|---|---|
+| Details | "Proceed however you believe is the most professional." (on the details pane and people column) | A selected visit opens as a snapshot in the live Deals snapshot's layout, in place of a fixed details pane. People on leave move to a short row at the bottom. |
+| Neighbouring visits | "Refine this so they look more professional." (on two touching bookings) | Neighbouring bookings keep a 4 px gap. A visit and its own travel join with no gap. |
+| Card colour | "I'm wondering if we should apply a very faint pastel blue colour to these cards that are white, as they are hard to see against the white table background." | Confirmed bookings are faint blue (`#eef4fa`, border `#c8d6e5`), lighter than any person's identity colour. Amber stays for needs attention and hatching for proposed. |
+| Borders | "make the border go around the travel time slots as well, but don't apply the border that is between the travel timeslot and the appointment timeslot"; "make the border the same colour as the background colour that has been used in the Pack needed pill, not the text colour." | A booking and its travel read as one bordered shape. A selected card that needs attention takes `#fff5df`, the Pack needed pill's background, in place of navy. |
+| At rest and on hover | "a border shadow is being applied to this two yellow cards, even when they are not selected or hovered over."; "Maybe if they jump out very slightly when hovered over"; "Don't make the hover effect based on a percentage"; "make it 3px" | Cards are flat at rest; only a selected card has a shadow. On hover a booking grows a fixed 3 px on every side, with no shadow or border change, and a visit and its travel grow together. Week tiles and phone cards grow 3 px each side and rise 1 px; map pins lift 3 px. |
+| Help button | "I think we can remove this button as we already have the "?" icon in the very top banner on the page." | The planner has no help button of its own; the shell's help icon covers it. |
+| Rail | "The left navigation rail should never scroll, so all icons must fit on the page." | All 13 Service destinations fit at 44 px, the touch minimum, with 2 px gaps. |
+| Strip-back | "Yes, strip it back as you recommend" (Week), then "Apply the same strip-back to the phone planner", "... to the Day planner" and "... to the Map planner" | Each fact shows once. People show name, role on desktop and one total, such as "4 of 9 h booked", with no bars. Free time is hover and screen-reader text, because the gaps on the board already show it. Bookings show time, title and site; Week tiles show time and title. Colour and shape give the status; the status in words, travel and extended hours are in the hover text and the snapshot. Crew initials appear only on shared visits. The Week view shows how full a day is as a soft shading, and the weekend as a slim strip while nothing is booked there. The map marks a stop that needs attention with its key's amber "!" and draws no labels on route lines. |
+| Phone and Map | "Apply the same refinements to the phone planner"; "Apply the same refinements to the Map planner" | Both follow the Day view: people on leave last, hours booked, the extended-hours marker, flat cards and the fixed hover. |
+
+Still to decide on the planner, from the notes board:
+
+- Hours booked and free time. Both are new calculations.
+- The snapshot narrowing the board rather than covering it, and its 360 px width.
+- What counts as needing attention: pack preparation or review required, or customer contact not confirmed.
+- Checks shown as you edit, and AEST times in the reservation message.
+- Dropping on the Day timeline setting the start time. The live drop keeps the time and changes the day.
+- Distinct icons for five Service destinations, and a rule for windows too short for the rail.
+- How to shade time that has already passed today.
+- A map provider. It needs an architecture decision record before the Map view is built.
+- Opening on the current week (from the table above).
+
 ## Where it is shown
 
 The navigation architecture canvas gains a **UI build sequence** board drawn from the generated data. The repository files remain the authority. The board was added after the r02 capture set, so no capture of it is retained.
