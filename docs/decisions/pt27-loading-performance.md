@@ -21,3 +21,7 @@ The large variable-font transfer was investigated but does not explain the warm-
 ## Review disposition
 
 The [final comparison](../testing/evidence/pt27-loading/README.md) removes 940 observed speculative requests and improves desktop warm p95 from 3.234 to 2.520 seconds. Cold-phone p95 worsens from 5.196 to 7.407 seconds. Keep the contribution in draft: this is a measured candidate, not an accepted overall performance improvement. Investigate cold-phone request and render timing with controlled repeats before accepting the tradeoff. Full PT-27, the four-view sampler stall and hosted/device acceptance remain open.
+
+## Authorised continuation
+
+Dean authorised the next step after PR #390 merged. Integrate main `6c69d92`, preserve both contribution histories and compare unchanged main with the shell candidate in a predeclared main/candidate/candidate/main block. Build each source once, retain its build ID, restore the same build for repeats, use fresh server/browser processes and keep the existing fixture, device/network profile, readiness assertions and deadlines. Add diagnostic phase observations after the measured readiness boundary; no diagnostic may exempt a network request. The earlier evidence remains unchanged. Adopt a narrower correction only if the controlled observations support it.

@@ -30,7 +30,7 @@ const samples: Record<string, unknown>[] = [];
 const visits: Record<string, unknown>[] = [];
 const errors: string[] = [];
 const metadata = {
-  label, source: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(),
+  label, started_at: new Date().toISOString(), comparison_block: process.env.PPO_COMPARISON_BLOCK ?? null, comparison_position: process.env.PPO_COMPARISON_POSITION ?? null, source: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(),
   compiled_source: compiledSource, build_id: buildId, server_pid: server.pid,
   node: process.version, platform: process.platform, memory_bytes: totalmem(),
   network: { latency_ms: 40, download_bytes_per_second: 1250000, upload_bytes_per_second: 625000 },
@@ -64,6 +64,7 @@ try {
     const rules: string[] = [];
     for (const cdp of sessions) {
       await cdp.send("Network.enable");
+      await cdp.send("Performance.enable");
       const conditions = { offline: false, latency: 40, downloadThroughput: 1250000, uploadThroughput: 625000, connectionType: "wifi" as const };
       const { ruleIds } = await cdp.send("Network.emulateNetworkConditionsByRule", { offline: false, matchedNetworkConditions: [{ urlPattern: "", ...conditions }] });
       rules.push(ruleIds[0]);
@@ -86,11 +87,13 @@ try {
         const rule = (e: { requestId: string; appliedNetworkConditionsId?: string }) => { if (e.appliedNetworkConditionsId) applied.set(e.requestId, e.appliedNetworkConditionsId); };
         cdp.on("Network.requestWillBeSent", sent).on("Network.responseReceived", responded).on("Network.loadingFinished", finished).on("Network.requestWillBeSentExtraInfo", rule);
         const begin = performance.now();
+        let coreHeadersMs: number | null = null;
         try {
-          const [response] = await Promise.all([waitForSampleCoreResponse(page, "/api/v1/crm/directory"), page.goto(origin + "/customers", { waitUntil: "domcontentloaded", timeout: 120000 })]);
+          const [response] = await Promise.all([waitForSampleCoreResponse(page, "/api/v1/crm/directory").then(response => { coreHeadersMs = performance.now() - begin; return response; }), page.goto(origin + "/customers", { waitUntil: "domcontentloaded", timeout: 120000 })]);
           assert.equal(response.status(), 200);
           assert.equal(response.headers()["cache-control"], "private, no-store");
           const { observed_at, ...data } = await response.json(); void observed_at;
+          const coreJsonMs = performance.now() - begin;
           assert.equal(createHash("sha256").update(JSON.stringify(data)).digest("hex"), expected.expected_sha256);
           await settled(page);
           const readyMs = performance.now() - begin;
@@ -98,7 +101,14 @@ try {
           const core = [...network].filter(([, r]) => r.path === "/api/v1/crm/directory" && r.method === "GET");
           assert.equal(core.length, 1);
           assert.equal(applied.get(core[0][0]), rules[user]);
-          samples.push({ viewport: viewport.name, wave, user, ready_ms: readyMs, free_memory_bytes: freemem(), network: [...network.values()] });
+          // Read diagnostics after the unchanged readiness boundary and assertions.
+          const navigation = await page.evaluate(() => {
+            const entry = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming;
+            return { response_start_ms: entry.responseStart, response_end_ms: entry.responseEnd, dom_interactive_ms: entry.domInteractive, dom_content_loaded_ms: entry.domContentLoadedEventEnd, load_event_ms: entry.loadEventEnd };
+          });
+          const metrics = await cdp.send("Performance.getMetrics");
+          const browserMetrics = Object.fromEntries(metrics.metrics.filter(m => ["TaskDuration", "ScriptDuration", "LayoutDuration", "RecalcStyleDuration", "JSHeapUsedSize"].includes(m.name)).map(m => [m.name, m.value]));
+          samples.push({ viewport: viewport.name, wave, user, ready_ms: readyMs, core_headers_ms: coreHeadersMs, core_json_processed_ms: coreJsonMs, navigation, browser_metrics: browserMetrics, free_memory_bytes: freemem(), network: [...network.values()] });
         } catch (error) {
           samples.push({ viewport: viewport.name, wave, user, error: error instanceof Error ? error.message : String(error), network: [...network.values()] });
           throw error;
