@@ -186,6 +186,14 @@ Dean, after stage 1: "Yes to both, proceed with the Week view" (Auto-fix on the 
 - People away for every weekday shown, and inactive people, move to short rows at the bottom with one line across the week.
 - A weekend day is a slim strip while no one has a visit, unavailable time, a closure or a reservation on it; otherwise it is a full column.
 
+### Planner phone layout (10 October 2026)
+
+Dean, after stage 3: "Yes to both, proceed with the phone layout" (Auto-fix on the Week pull request, and stage 4). Below 781 px the planner now follows the phone board he aligned on 10 October: day chips for the week, an attention row, one card per person with a 07:00 to 18:00 strip and their visits, a Week list by day, and the details as a bottom sheet; see the [planner design contract](../design/development/pages/route-schedule.md#phone-layout-built--10-october-2026). Two points the live app needed:
+
+- On a phone the Day view reads the whole week (Monday to Sunday) so the day chips can show how many visits each day has. Wide screens still read one day.
+- The attention row counts proposed visits and visits that need attention in what is loaded, and jumps to the Proposed and cancelled list on the page. The board's separate To schedule tray is not built.
+- To answer the phase 00 finding that tabs and filters filled the first phone screen, the Scheduling tabs scroll in one row on every Scheduling page, and the planner's timezone, Work orders link and filters fold behind a Filters button on phones.
+
 Still to decide on the planner:
 
 - Checks shown as you edit, and AEST times in the reservation message.

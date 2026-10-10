@@ -32,6 +32,7 @@ import {
   PlannerTimeline,
   PlannerWeek,
 } from "../scheduling/components/client/planner-timeline.client";
+import { PlannerPhone } from "../scheduling/components/client/planner-phone.client";
 import { AreasEditor } from "../components/configuration-editor";
 import { addDays } from "../projects/model";
 import { type ExampleId } from "./component-model";
@@ -438,7 +439,21 @@ function PlannerExample({
               Week
             </Button>
           </div>
-          {state === "lane-list" ? (
+          {state === "phone" ? (
+            <div className="catalogue-phone-frame">
+              <PlannerPhone
+                data={data}
+                mode={mode}
+                day={fixtureDate}
+                days={Array.from({ length: 7 }, (_, i) => addDays("2026-09-21", i))}
+                zone="Australia/Sydney"
+                selected={selected ? a.id : null}
+                now="2026-09-23T00:40:00Z"
+                onSelect={() => setSelected(!selected)}
+                onOpenDay={() => setMode("day")}
+              />
+            </div>
+          ) : state === "lane-list" ? (
             <PlannerBoard
               data={data}
               days={Array.from({ length: mode === "week" ? 7 : 1 }, (_, i) =>

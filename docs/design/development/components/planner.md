@@ -66,3 +66,7 @@ The catalogue resource calendar now publishes 07:00 to 18:00, like the sample ca
 ## Week board (10 October 2026)
 
 `PlannerWeek` draws the Week view as the stripped-back board: one row per person, one column per day, load shading, slim weekend strips, compact tiles and the shared details panel ([decision](../../../decisions/ui-build-sequence.md#planner-week-board-10-october-2026)). The `week` catalogue state shows it; the new `lane-list` state shows `PlannerBoard`, which narrow screens and other display timezones still use. No owner visual review yet.
+
+## Phone layout (10 October 2026)
+
+`PlannerPhone` is the planner below 781 px: day chips, an attention row, one card per person with a 07:00 to 18:00 strip and their visits, and a Week list by day ([decision](../../../decisions/ui-build-sequence.md#planner-phone-layout-10-october-2026)). The shared details panel becomes a bottom sheet. The `phone` catalogue state shows it inside a phone-width frame. No device or owner review yet.

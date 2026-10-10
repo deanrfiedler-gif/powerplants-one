@@ -813,6 +813,11 @@
           "id": "lane-list",
           "label": "Lane list",
           "description": "The lane list that narrow screens and other display timezones show, in Day and Week."
+        },
+        {
+          "id": "phone",
+          "label": "Phone",
+          "description": "Phone Day and Week: day chips, one card per person with a 07:00 to 18:00 strip, and the list by day."
         }
       ],
       "implementation": [
@@ -831,6 +836,10 @@
         {
           "path": "src/scheduling/components/client/planner-timeline.client.tsx",
           "symbol": "PlannerWeek"
+        },
+        {
+          "path": "src/scheduling/components/client/planner-phone.client.tsx",
+          "symbol": "PlannerPhone"
         }
       ],
       "dependencies": [
@@ -850,7 +859,7 @@
         "scope:PL-01"
       ],
       "desktop": "Day is a 07:00 to 18:00 timeline and Week a board with one row per person and one column per day; a selected visit opens a details panel beside either. A drop proposes a move; the host still owns conflict, readiness, crew and authority checks.",
-      "mobile": "The Day timeline and Week board scroll sideways inside their frame; the application shows the lane list below 781 px until the phone layout is built.",
+      "mobile": "Below 781 px the planner shows the phone layout: day chips, one card per person with a 07:00 to 18:00 strip, a Week list by day and details as a bottom sheet. The lane list remains for other display timezones.",
       "keyboard": "Tab/Shift+Tab and visible focus throughout. Visits are buttons: Enter or Space opens their details, which carry Move or reassign as the alternative to dragging; Week day headings open the Day view. Escape closes the details.",
       "limitations": "This planner is not the project Gantt. Catalogue callbacks do not prove conflict enforcement or saved booking behaviour.",
       "gaps": [
