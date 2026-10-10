@@ -30,8 +30,12 @@ for root in roots:
         fixture = data["fixture"]
     assert data["fixture"] == fixture
     complete = data["complete"] and not data["errors"]
+    users = data.get("browser_count", 10)
+    assert users in [1, 10]
+    if users == 1:
+        assert data["single_browser_diagnostic"] and data["profile"] == "startup-single"
     if complete:
-        assert len(data["samples"]) == 80 and len(data["record_visits"]) == 20
+        assert len(data["samples"]) == users * 8 and len(data["record_visits"]) == users * 2
         assert json.loads((root / "fixture-after.json").read_bytes()) == fixture
     rows = [json.loads(line) for line in (root / "gateway.jsonl").read_text(encoding="utf-8").splitlines()] if (root / "gateway.jsonl").exists() else []
     observed = {r["proof_request_id"]: r["path"] for s in data["samples"] for r in s["network"] if "proof_request_id" in r}
@@ -61,10 +65,11 @@ for root in roots:
     runtime = [r for r in rows if r["event"] == "server-runtime"]
     run = {k: data.get(k) for k in ["label", "source", "compiled_source", "build_id", "started_at", "comparison_block", "comparison_position", "node", "browser", "platform", "network", "detailed_diagnostics"]}
     run.update({"complete": complete, "sample_count": len(data["samples"]), "failed_samples": sum("error" in s for s in data["samples"]), "record_count": len(data["record_visits"]), "errors": data["errors"], "groups": groups,
+                "browser_count": users, "single_browser_diagnostic": users == 1,
                 "route_phase_count": sum(r["event"] == "read-phase" for r in rows), "diagnostic_cap_reached": any(r["event"] == "diagnostic-cap-reached" for r in rows), "pools": pools, "http_failures": failures,
                 "runtime": {key: distribution([r[key] for r in runtime if key in r]) for key in ["interval_ms", "event_loop_active_ms", "event_loop_idle_ms", "cpu_user_ms", "cpu_system_ms", "system_free_bytes"]}})
     runs.append(run)
-    for name in ["run.json", "results.json", "gateway.jsonl", "fixture-after.json", "desktop-directory.png", "desktop-record.png", "phone-directory.png", "phone-record.png"]:
+    for name in ["run.json", "results.json", "customer-client-manifest.json", "gateway.jsonl", "fixture-after.json", "desktop-directory.png", "desktop-record.png", "phone-directory.png", "phone-record.png"]:
         source = root / name
         if not source.exists():
             continue

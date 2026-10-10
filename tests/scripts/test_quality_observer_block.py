@@ -13,6 +13,13 @@ summary_spec.loader.exec_module(summary)
 
 
 class Counters(unittest.TestCase):
+    def test_startup_diagnostic_keeps_ten_user_positions_and_logging_off(self):
+        self.assertEqual([p[2] for p in observer.positions_for("startup")], [1, 10, 10, 1])
+        self.assertEqual([p[1] for p in observer.positions_for("startup")], ["0"] * 4)
+        self.assertEqual([p[2] for p in observer.positions_for("observer")], [10] * 4)
+        with self.assertRaises(AssertionError):
+            observer.positions_for("unknown")
+
     def test_spaced_private_process_name_is_not_exported(self):
         fields = ["S"] + [str(n) for n in range(4, 53)]
         result = observer.process_counters("123 (SYN private (process) name) " + " ".join(fields), 100, 4096)

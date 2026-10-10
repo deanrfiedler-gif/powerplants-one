@@ -1,10 +1,12 @@
 # Current prototype status
 
-**Updated:** 10 October 2026 (Australia/Brisbane). **Owner:** Dean Fiedler. Public repository; private synthetic prototype and demo. Code delivery, automated verification, visual review, owner acceptance and deployment are separate facts.
+**Updated:** 11 October 2026 (Australia/Brisbane). **Owner:** Dean Fiedler. Public repository; private synthetic prototype and demo. Code delivery, automated verification, visual review, owner acceptance and deployment are separate facts.
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
 ## PT-27 loading performance — 10 October 2026
+
+Dean authorised [cold startup isolation](decisions/pt27-loading-performance.md#cold-startup-isolation--11-october-2026) on 11 October. Latest-head PR #391 checks at `ba4a4d2` pass. The next declared experiment keeps the original ten-user workload and adds explicitly diagnostic one-browser positions on the same CI build/fixture, with logging off and resource sampling in all positions. Measurement and any supported correction are in progress; no new performance acceptance is claimed.
 
 Dean authorised continuation of PR #391 and investigation of cold-load session/context availability. Both unsuccessful shell-prefetch experiments are withdrawn; ProductNavigation again matches main `6c69d92`. The [decision](decisions/pt27-loading-performance.md) and [session-readiness evidence](testing/evidence/pt27-loading/session-readiness/README.md) retain every attempt and separate instrumentation defects from the original 503s.
 

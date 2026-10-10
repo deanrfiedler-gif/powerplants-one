@@ -3,17 +3,20 @@ import { createHash } from "node:crypto";
 import { execFileSync, spawn } from "node:child_process";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { freemem, totalmem } from "node:os";
+import { runInNewContext } from "node:vm";
 import { chromium, expect, type Page } from "@playwright/test";
 import { localConfig } from "../src/platform/config";
 import { closeDatabase } from "../src/platform/database";
 import { performanceFixtureFingerprint } from "./quality-performance-fixture";
 import { waitForSampleCoreResponse } from "./quality-core-response";
+import { comparisonProfile } from "./quality-comparison-profile";
 
 // Bounded Customers diagnostic, separate from the complete four-view PT-27 run.
 // Ten browser processes and unchanged network/readiness limits. Original results
 // are written after every wave; a failed run is never silently retried.
 const label = process.argv[2];
 assert.match(label ?? "", /^[a-z][a-z0-9-]+$/);
+const profile = comparisonProfile(process.env);
 const root = `verification-evidence/pt27-loading/${label}`;
 await mkdir(root, { recursive: false });
 const expected = JSON.parse(await readFile("verification-evidence/customer-loading-diagnosis/fixture.json", "utf8"));
@@ -30,13 +33,14 @@ const samples: Record<string, unknown>[] = [];
 const visits: Record<string, unknown>[] = [];
 const errors: string[] = [];
 const metadata = {
+  ...profile,
   label, started_at: new Date().toISOString(), comparison_block: process.env.PPO_COMPARISON_BLOCK ?? null, comparison_position: process.env.PPO_COMPARISON_POSITION ?? null, source: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(),
   compiled_source: compiledSource, build_id: buildId, server_pid: server.pid,
   node: process.version, platform: process.platform, memory_bytes: totalmem(),
   detailed_diagnostics: process.env.PPO_PROOF_DIAGNOSTICS === "1",
   network: { latency_ms: 40, download_bytes_per_second: 1250000, upload_bytes_per_second: 625000 },
   fixture, target_ms: 3000,
-  limits: "Customers only; ten independent headless Chrome processes, four waves per viewport and one actual record activation per user/viewport. Fresh browser contexts for the cold wave, three warm repeats, retained database/OS caches. Results apply to the recorded run host; no physical-device, hosted, screen-reader or whole PT-27 acceptance. CDP path/status/transfer observations and optional gateway logging add overhead. Fonts/Kit use this build's normal configuration; no network request is exempted.",
+  limits: `Customers only; ${profile.browser_count} independent headless Chrome process(es), four waves per viewport and one actual record activation per user/viewport. A one-browser run is a startup diagnostic and cannot satisfy the ten-user target. Fresh browser contexts for the cold wave, three warm repeats, retained database/OS caches. Results apply to the recorded run host; no physical-device, hosted, screen-reader or whole PT-27 acceptance. CDP path/status/transfer observations and optional gateway logging add overhead. Fonts/Kit use this build's normal configuration; no network request is exempted.`,
 };
 async function checkpoint(complete: boolean) {
   await writeFile(`${root}/results.json`, JSON.stringify({ ...metadata, complete, browser: browsers[0]?.version(), samples, record_visits: visits, errors }, null, 2));
@@ -49,6 +53,10 @@ async function settled(page: Page) {
   await page.evaluate(() => new Promise<void>(r => requestAnimationFrame(() => requestAnimationFrame(() => r()))));
 }
 try {
+  const manifestText = await readFile(".next/server/app/(business)/customers/page_client-reference-manifest.js", "utf8");
+  const scope = { globalThis: {} as { __RSC_MANIFEST?: Record<string, unknown> } };
+  runInNewContext(manifestText, scope);
+  await writeFile(`${root}/customer-client-manifest.json`, JSON.stringify(scope.globalThis.__RSC_MANIFEST, null, 2));
   // Immutable process metadata lets an external sampler observe both logging
   // modes without enabling the application's detailed diagnostic writer.
   await writeFile(`${root}/run.json`, JSON.stringify(metadata, null, 2));
@@ -59,7 +67,7 @@ try {
     await new Promise(r => setTimeout(r, 500));
   }
   assert.ok(ready, "Owned compiled server must start within 120 seconds");
-  browsers.push(...await Promise.all(Array.from({ length: 10 }, () => chromium.launch({ channel: "chrome" }))));
+  browsers.push(...await Promise.all(Array.from({ length: profile.browser_count }, () => chromium.launch({ channel: "chrome" }))));
   for (const viewport of [{ name: "desktop", width: 1440, height: 1000 }, { name: "phone", width: 390, height: 844 }]) {
     const contexts = await Promise.all(browsers.map(b => b.newContext({ viewport, isMobile: viewport.name === "phone", hasTouch: viewport.name === "phone", locale: "en-AU" })));
     for (const context of contexts) assert.equal((await context.request.post(`${origin}/api/v1/local-session`, { headers: { Origin: origin }, data: { profile: "coordinator" } })).status(), 200);
@@ -77,6 +85,7 @@ try {
     for (let wave = 0; wave < 4; wave++) {
       const outcomes = await Promise.allSettled(pages.map(async (page, user) => {
         const cdp = sessions[user], network = new Map<string, Record<string, unknown>>(), applied = new Map<string, string>();
+        const beforeMetrics = Object.fromEntries((await cdp.send("Performance.getMetrics")).metrics.map(m => [m.name, m.value]));
         let start = 0;
         const sent = (e: { requestId: string; timestamp: number; type?: string; request: { url: string; method: string; headers: Record<string, string> } }) => {
           if (e.type === "Document" && !start) start = e.timestamp;
@@ -112,7 +121,8 @@ try {
           });
           const metrics = await cdp.send("Performance.getMetrics");
           const browserMetrics = Object.fromEntries(metrics.metrics.filter(m => ["TaskDuration", "ScriptDuration", "LayoutDuration", "RecalcStyleDuration", "JSHeapUsedSize"].includes(m.name)).map(m => [m.name, m.value]));
-          samples.push({ viewport: viewport.name, wave, user, started_at_ms: beganAt, ready_ms: readyMs, core_headers_ms: coreHeadersMs, core_json_processed_ms: coreJsonMs, navigation, browser_metrics: browserMetrics, free_memory_bytes: freemem(), network: [...network.values()] });
+          const browserWork = Object.fromEntries(metrics.metrics.filter(m => ["TaskDuration", "ScriptDuration", "LayoutDuration", "RecalcStyleDuration"].includes(m.name)).map(m => [m.name, m.value - beforeMetrics[m.name]]));
+          samples.push({ viewport: viewport.name, wave, user, started_at_ms: beganAt, ready_ms: readyMs, core_headers_ms: coreHeadersMs, core_json_processed_ms: coreJsonMs, navigation, browser_metrics: browserMetrics, browser_work_seconds: browserWork, free_memory_bytes: freemem(), network: [...network.values()] });
         } catch (error) {
           samples.push({ viewport: viewport.name, wave, user, started_at_ms: beganAt, error: error instanceof Error ? error.message : String(error), network: [...network.values()] });
           throw error;
@@ -145,7 +155,7 @@ try {
     await pages[0].screenshot({ path: `${root}/${viewport.name}-record.png`, timeout: 10000 });
     await Promise.all(contexts.map(c => c.close()));
   }
-  assert.equal(samples.length, 80); assert.equal(visits.length, 20);
+  assert.equal(samples.length, profile.browser_count * 8); assert.equal(visits.length, profile.browser_count * 2);
   const after = await performanceFixtureFingerprint(); assert.deepEqual(after, fixture);
   await writeFile(`${root}/fixture-after.json`, JSON.stringify(after, null, 2));
   await checkpoint(true);

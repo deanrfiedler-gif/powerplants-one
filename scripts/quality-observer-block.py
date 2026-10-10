@@ -44,9 +44,17 @@ def port_open(port):
         return False
 
 
-def run(block):
+def positions_for(profile):
+    if profile == "observer":
+        return [("off-a1", "0", 10), ("on-b1", "1", 10), ("on-b2", "1", 10), ("off-a2", "0", 10)]
+    assert profile == "startup", "Unknown block profile"
+    return [("single-a1", "0", 1), ("ten-b1", "0", 10), ("ten-b2", "0", 10), ("single-a2", "0", 1)]
+
+
+def run(block, profile="observer"):
     assert sys.platform == "linux", "External runner sampling requires Linux /proc"
-    assert re.fullmatch(r"observer-[a-z0-9-]+", block)
+    positions = positions_for(profile)
+    assert re.fullmatch(profile + r"-[a-z0-9-]+", block)
     assert os.environ.get("PPO_BENCHMARK_FIXTURE") == "add-synthetic-load"
     source = os.environ["PPO_COMPILED_SOURCE"]
     assert re.fullmatch(r"[0-9a-f]{40}", source)
@@ -55,17 +63,17 @@ def run(block):
     root.mkdir(parents=True, exist_ok=False)
     port = int(os.environ.get("PPO_PORT", "3000"))
     assert not port_open(port), "An earlier app must not be reused"
-    positions = [("off-a1", "0"), ("on-b1", "1"), ("on-b2", "1"), ("off-a2", "0")]
-    protocol = {"block": block, "source": source, "build_id": Path(".next/BUILD_ID").read_text().strip(),
+    protocol = {"block": block, "profile": profile, "source": source, "build_id": Path(".next/BUILD_ID").read_text().strip(),
                 "platform": sys.platform, "logical_cpus": os.cpu_count(), "clock_ticks_per_second": os.sysconf("SC_CLK_TCK"),
                 "fixture": json.loads(Path("verification-evidence/customer-loading-diagnosis/fixture.json").read_text()),
-                "positions": [{"label": block + "-" + name, "diagnostics": mode} for name, mode in positions],
+                "positions": [{"label": block + "-" + name, "diagnostics": mode, "browser_count": users} for name, mode, users in positions],
                 "resource_interval_seconds": 2, "results": [],
                 "boundary": "One fresh runner, one build, one fixture, fresh app/browser processes per attempt. No retries, resets or substituted samples. External CPU/memory observation is identical in both modes. Separate from retained Windows samples."}
     (root / "protocol.json").write_text(json.dumps(protocol, indent=2) + "\n")
-    for position, (suffix, mode) in enumerate(positions, 1):
+    for position, (suffix, mode, users) in enumerate(positions, 1):
         label = block + "-" + suffix
         env = {**os.environ, "PPO_PROOF_DIAGNOSTICS": mode,
+               "PPO_COMPARISON_PROFILE": "startup-single" if users == 1 else "ten-user",
                "PPO_COMPARISON_BLOCK": block, "PPO_COMPARISON_POSITION": str(position)}
         server_pid = None
         metadata = Path("verification-evidence/pt27-loading") / label / "run.json"
@@ -100,4 +108,4 @@ def run(block):
 
 
 if __name__ == "__main__":
-    sys.exit(run(sys.argv[1]))
+    sys.exit(run(sys.argv[1], sys.argv[2] if len(sys.argv) > 2 else "observer"))

@@ -12,7 +12,7 @@ on:
       proof:
         description: Existing full assurance or a separate PT-27 observer comparison
         type: choice
-        options: [all, customer-observer]
+        options: [all, customer-observer, customer-startup]
         default: all
 permissions:
   contents: read
@@ -23,7 +23,7 @@ jobs:
   compiled:
     name: Desktop and mobile browser suite against the compiled application
     needs: compiled_suites
-    if: ${{ always() && inputs.proof != 'customer-observer' }}
+    if: ${{ always() && inputs.proof != 'customer-observer' && inputs.proof != 'customer-startup' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
@@ -34,7 +34,7 @@ jobs:
 
   compiled_suites:
     name: Compiled application ${{ matrix.suite }} proof
-    if: inputs.proof != 'customer-observer'
+    if: inputs.proof != 'customer-observer' && inputs.proof != 'customer-startup'
     runs-on: ubuntu-24.04
     # Each browser project keeps its warm-up dependency and original deadlines.
     # Each matrix job owns a separate app and disposable database; tests within
@@ -208,8 +208,8 @@ jobs:
           retention-days: 14
 
   customer_observer:
-    name: PT-27 controlled observer comparison
-    if: github.event_name == 'workflow_dispatch' && inputs.proof == 'customer-observer'
+    name: PT-27 controlled customer comparison
+    if: github.event_name == 'workflow_dispatch' && (inputs.proof == 'customer-observer' || inputs.proof == 'customer-startup')
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     services:
@@ -229,6 +229,7 @@ jobs:
       PPO_SOURCE_HEAD: ${{ github.sha }}
       PPO_COMPILED_SOURCE: ${{ github.sha }}
       PPO_BENCHMARK_FIXTURE: add-synthetic-load
+      PPO_BLOCK_PROFILE: ${{ inputs.proof == 'customer-startup' && 'startup' || 'observer' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -264,10 +265,11 @@ jobs:
         env:
           PPO_PROOF_DIAGNOSTICS: "1"
         run: node --env-file=.env.local --import tsx scripts/quality-database-proof-smoke.ts observer-compiled-smoke
-      - name: Execute the fixed off-on-on-off block
+      - name: Execute the predeclared comparison block
         run: |
+          node --import tsx --test tests/unit/quality-comparison-profile.test.ts
           python3 tests/scripts/test_quality_observer_block.py
-          python3 scripts/quality-observer-block.py "observer-ci-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          python3 scripts/quality-observer-block.py "${PPO_BLOCK_PROFILE}-ci-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" "${PPO_BLOCK_PROFILE}"
       - name: Prepare diagnostic evidence
         if: always()
         id: observer_review

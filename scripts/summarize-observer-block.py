@@ -51,7 +51,10 @@ def run(evidence, block, output):
     block_root = evidence / "pt27-observer" / block
     protocol = json.loads((block_root / "protocol.json").read_bytes())
     positions = protocol["positions"]
-    assert [p["diagnostics"] for p in positions] == ["0", "1", "1", "0"]
+    profile = protocol.get("profile", "observer")
+    assert profile in ["observer", "startup"]
+    assert [p["diagnostics"] for p in positions] == (["0", "1", "1", "0"] if profile == "observer" else ["0"] * 4)
+    assert [p.get("browser_count", 10) for p in positions] == ([10] * 4 if profile == "observer" else [1, 10, 10, 1])
     assert [r["label"] for r in protocol["results"]] == [p["label"] for p in positions], "Retain incomplete block before attempting summary"
     roots = [evidence / "pt27-loading" / p["label"] for p in positions]
     subprocess.run([sys.executable, str(Path(__file__).with_name("summarize-session-readiness.py")), str(output), *map(str, roots)], check=True)
@@ -62,6 +65,7 @@ def run(evidence, block, output):
         assert data["compiled_source"] == protocol["source"] and data["build_id"] == protocol["build_id"]
         assert data["fixture"] == protocol["fixture"]["fixture"]
         assert data["detailed_diagnostics"] == (position["diagnostics"] == "1")
+        assert data.get("browser_count", 10) == position.get("browser_count", 10)
         if outcome["exit_code"] != 0:
             row["complete"], row["groups"] = False, []
         if row["complete"] and data["detailed_diagnostics"]:
@@ -86,15 +90,21 @@ def run(evidence, block, output):
                 continue
             samples = [s for s in data["samples"] if s["viewport"] == group["viewport"] and (s["wave"] == 0 if group["phase"] == "cold" else s["wave"] > 0)]
             cores = [next(r for r in s["network"] if r["path"] == "/api/v1/crm/directory") for s in samples]
+            sessions = [next(r for r in s["network"] if r["path"] == "/api/v1/local-session" and r["method"] == "GET") for s in samples]
             group["browser_phases_ms"] = {
                 "core_request_start_from_document": distribution([r["start_ms"] for r in cores]),
                 "core_response_headers_after_request": distribution([r["response_ms"] - r["start_ms"] for r in cores]),
                 "cdp_finish_minus_headers": distribution([r["finish_ms"] - r["response_ms"] for r in cores if "finish_ms" in r]),
                 "ready_after_core_json": distribution([s["ready_ms"] - s["core_json_processed_ms"] for s in samples]),
                 "document_response_start": distribution([s["navigation"]["response_start_ms"] for s in samples]),
+                "session_request_start_from_document": distribution([r["start_ms"] for r in sessions]),
+                "session_headers_after_request": distribution([r["response_ms"] - r["start_ms"] for r in sessions]),
+                "core_request_after_session_headers": distribution([c["start_ms"] - s["response_ms"] for c, s in zip(cores, sessions)]),
             }
             group["pre_core_fraction_of_readiness"] = distribution([r["start_ms"] / s["ready_ms"] for s, r in zip(samples, cores)])
-    summary.update({"protocol": protocol, "resource_limits": "Two-second external samples, identical in both modes. Whole-run counters include startup, fixture identity setup and screenshots. Action-interior counters include only whole intervals within successful measured browser actions; missing process data are unknown, never zero. CPU values summarize sampled intervals, not isolated SQL execution. Host CPU includes browsers, database and runner work. Off/on/on/off bounds order effects but does not eliminate caches or cloud scheduling; one block cannot establish an observer effect or an earlier failure cause."})
+            group["observed_transfer_bytes"] = {kind: distribution([sum(r.get("encoded_bytes", 0) for r in s["network"] if r.get("type") == kind) for s in samples]) for kind in ["Script", "Stylesheet", "Font", "Image"]}
+            group["browser_work_seconds"] = {key: distribution([s["browser_work_seconds"][key] for s in samples if "browser_work_seconds" in s]) for key in ["TaskDuration", "ScriptDuration", "LayoutDuration", "RecalcStyleDuration"]}
+    summary.update({"protocol": protocol, "resource_limits": "Two-second external samples, identical in both modes. Whole-run counters include startup, fixture identity setup and screenshots. Action-interior counters include only whole intervals within successful measured browser actions; missing process data are unknown, never zero. CPU values summarize sampled intervals, not isolated SQL execution. Host CPU includes browsers, database and runner work. The declared block order bounds order effects but does not eliminate caches or cloud scheduling; one block cannot establish an observer effect or an earlier failure cause."})
     summary["browser_phase_limits"] = "Core request start includes document/asset loading, hydration and client/session gating; it is not isolated network or server time. CDP finish-minus-headers is the raw event timestamp difference under emulation, which can be negative when response events are delayed; do not interpret it as physical transfer time. Percentiles of separate components are not additive."
     for source in sorted(block_root.iterdir()):
         if not source.is_file():
