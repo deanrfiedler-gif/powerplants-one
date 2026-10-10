@@ -1,0 +1,13 @@
+{
+  "scenario": "reconciled-source-target",
+  "full_page": false,
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "source_head": "caecf7bc787eb658a545268e507e35e257adf48f",
+  "executed_checkout": "caecf7bc787eb658a545268e507e35e257adf48f",
+  "executed_tree": "0c4a8bd4453c26e6fd5c5c426b50b0fa8fd97207",
+  "byte_count": 141051,
+  "sha256": "11e4170940ebb7c94db283bf5713b5f3ff646c87b747e724f142daa2845aeacc"
+}

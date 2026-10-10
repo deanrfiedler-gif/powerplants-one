@@ -2,37 +2,41 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. Review: pending actual observations. Prepared 3 October 2026. [Acceptance/prerequisite ledger](../testing/field-integrated-acceptance-ledger.md), [executed evidence](../testing/evidence/field-integrated-acceptance/README.md), [measurement sheet](../testing/field-benefit-measurement.md).
+Owner: Dean Fiedler. Review: pending actual observations. Prepared 10 October 2026; the 3 October session remains retained separately. [Acceptance/prerequisite ledger](../testing/field-integrated-acceptance-ledger.md), [current rehearsal](../testing/evidence/pt30-integration/README.md), [measurement sheet](../testing/field-benefit-measurement.md).
 
-## Start the retained session
+## Start the prepared session
 
-This is a local, private synthetic session. Use the **field-acceptance** worktree, its compiled build and matching private `journey.env`, `journey-pg`, `journey-documents` and `journey/private` profiles. This run is under `C:/Users/Dean.Fiedler/.codex/tmp/field-acceptance-20261003`. Do not substitute the regression database, an earlier proof environment or an old rollback release. [Entry records](../testing/evidence/field-integrated-acceptance/entry-records.json) identify the actual work order, original/proposed/separate visits, reports and Finance handoff; use those exact UUIDs.
+This is a local, private synthetic session on integrated application source `caecf7b`, build `qE6dn5GfAoZAp53Forj96`. The existing four-phase rehearsal and saved-point restart passed; the settled history recheck at test source `8f2039c` uses the same application. [Readiness and remaining findings](../testing/pt30-integration-readiness.md) must stay visible during review. This is not full PT-30 acceptance.
 
-Saved entry links: [original closed visit](http://127.0.0.1:3022/my-jobs/97a4254d-ea7a-4448-9c85-280fc6a322b0), [work-order visits](http://127.0.0.1:3022/service/work-orders/06e126ae-c3f5-4245-a86e-961281426c70#planned-visits), [separate completed visit](http://127.0.0.1:3022/my-jobs/bbf7bcf6-35a8-465e-9b7b-61ee8515ec42), [original reserved report](http://127.0.0.1:3022/service/reports/9b993939-3432-411e-acf4-6b9a7ce024b0). Select the task's stated identity before opening a restricted handover.
+The `codex/pt30-integration` branch reuses the completed PT-01 worktree at `C:/Users/Dean.Fiedler/.codex/worktrees/pt01-permissions-matrix/powerplants-one`. Its new private environment is `C:/Users/Dean.Fiedler/.codex/tmp/pt30-integration-20261010`: `journey.env`, `data`, `documents` and `journey/private` remain together. [Entry records](../testing/evidence/pt30-integration/entry-records.json) identify the exact saved UUIDs. Do not substitute another regression database or an old rollback release.
 
-From PowerShell in the isolated worktree:
+The earlier `field-acceptance-20261003` environment, [evidence](../testing/evidence/field-integrated-acceptance/README.md), [entry records](../testing/evidence/field-integrated-acceptance/entry-records.json) and [human worksheet](../testing/evidence/field-integrated-acceptance/human-session.json) are retained without alteration.
+
+Saved entry links: [original closed visit](http://127.0.0.1:33949/my-jobs/d68593d9-962e-4ae2-abf9-136997d6c5fb), [work-order visits](http://127.0.0.1:33949/service/work-orders/91e866b8-5e30-4507-86bd-ee240ec4f902#planned-visits), [separate completed visit](http://127.0.0.1:33949/my-jobs/e2c631cf-433d-4d99-845a-ad18bca1b5e8), [original reserved report](http://127.0.0.1:33949/service/reports/29277fc2-3f54-439c-8a1b-e9b55dc9ca1a), [Finance handoff](http://127.0.0.1:33949/finance/handoffs/073a7bef-d473-4187-a0d5-2ab9539bccfd). Select the task's stated synthetic role before opening a restricted record.
+
+If already running, check `http://127.0.0.1:33949/api/v1/health`. The task's `app.pid` identifies its own app, and `data/postmaster.pid` identifies its own cluster. An unexpected listener is a stop condition, not permission to kill it. If the owned database is stopped, start only it; launch the app from the stated checkout:
 
 ```powershell
-$sessionRoot = 'C:/Users/Dean.Fiedler/.codex/tmp/field-acceptance-20261003'
+Set-Location 'C:/Users/Dean.Fiedler/.codex/worktrees/pt01-permissions-matrix/powerplants-one'
+$sessionRoot = 'C:/Users/Dean.Fiedler/.codex/tmp/pt30-integration-20261010'
 $cfg = "$sessionRoot/journey.env"
-Get-NetTCPConnection -State Listen -LocalPort 55810,3022 -ErrorAction SilentlyContinue
-```
-
-If already running, check `http://127.0.0.1:3022/api/v1/health` and open [local My Jobs](http://127.0.0.1:3022/my-jobs). An unexpected listener is a stop condition, not permission to kill it. The retained PID file identifies the task's own app. If the owned database is stopped, start only it with `& 'C:/Program Files/PostgreSQL/16/bin/pg_ctl.exe' -D "$sessionRoot/journey-pg" -l "$sessionRoot/owner-pg.log" -w start`. Then start the compiled app in a terminal:
-
-```powershell
+Get-NetTCPConnection -State Listen -LocalPort 55949,33949 -ErrorAction SilentlyContinue
+# Only if this owned cluster and app are stopped:
+& 'C:/Program Files/PostgreSQL/16/bin/pg_ctl.exe' -D "$sessionRoot/data" -l "$sessionRoot/owner-pg.log" -w start
 node "--env-file=$cfg" --import tsx scripts/local-server.ts --compiled
 ```
 
-Wait for the explicit `3022 · compiled build` listener message and successful health response before opening records. The retained dependency pins are Node 24.21.0, npm 11.19.0, PostgreSQL 16.15 and the unchanged lockfile; observed Chrome version and build ID are in the verification manifest. To prepare a **new** session, use fresh empty task-owned directories and a new cluster named `ppo_synthetic_test`, apply registered migrations/seeds, `npm ci` and `npm run build`, then run the four explicit phases below. Never reset this retained session to manufacture a pass.
+Wait for the explicit `33949 · compiled build` listener and a successful health response. Retained pins: Node 24.21.0, npm 11.19.0, PostgreSQL 16.15, Playwright 1.63.0 and observed Chrome 155.0.8059.40. A new rehearsal requires fresh empty task-owned directories and a separately configured `ppo_synthetic_test`; never reset this completed session to manufacture a pass.
 
-Accepted timer reference: [unchanged r05](../reference/ui/field-work-timer/powerplants-one-field-work-timer-r05.html). The current inspection host also disables attempt selection while the original receipt is being checked or remains unresolved; wait for recovery before selecting an attempt. Record that availability in H07/H09 without treating it as technical acceptance.
+The booked visits use November 2031 synthetic dates, while the timer's measured minute uses the actual capture clock. Their separation is intentional evidence that booking allowance is not recorded labour; the resulting expanded timeline and wrapped correction control need owner layout review. Generic manual-time guidance on the closed non-attendee view is also visible. Use the settled history capture in the current evidence; the earlier transient loading capture is retained separately.
+
+Accepted timer reference: [unchanged r05](../reference/ui/field-work-timer/powerplants-one-field-work-timer-r05.html). Pending visual review remains separate from source presence and functional checks. Wait for any original receipt recovery to finish before selecting another attempt.
 
 ## Identity and review record
 
 Use **Change identity** and the labelled synthetic profile selector. `assigned-technician` is the original attendee; `second-technician` is the crew member without original attendance and the later attendee. `coordinator` owns Service preparation/review; `finance`, `finance-reviewer`, `finance-processor`, `finance-reconciler` have distinct existing duties. A local role switch does not turn one reviewer into several human participants. Do not use Systems or broader grants to bypass a refused action.
 
-Before starting, record reviewer/role, date/time and timezone, source/build, OS/device model, browser/version, viewport, actual zoom, input method and assistive technology/version (or Not used). Record comments verbatim and Pass/Fail/Blocked for each task in [human-session.json](../testing/evidence/field-integrated-acceptance/human-session.json), or supply them in chat for transcription. Availability and assisted explanation are distinct from independent success. Do not infer acceptance from silence.
+Before starting, record reviewer/role, date/time and timezone, source/build, OS/device model, browser/version, viewport, actual zoom, input method and assistive technology/version (or Not used). Record comments verbatim and Pass/Fail/Blocked for each task in the [current human-session.json](../testing/evidence/pt30-integration/human-session.json), or supply them in chat for transcription. Availability and assisted explanation are distinct from independent success. Do not infer acceptance from silence.
 
 ## Ordered tasks and observable outcomes
 
@@ -66,4 +70,4 @@ node "--env-file=$cfg" node_modules/@playwright/test/cli.js test --config=playwr
 
 For the saved-point restart, close clients, run `scripts/step6-preservation.ts before-restart <private-run>`, stop only owned app/PostgreSQL processes, verify both ports closed, restart the same cluster/current compiled app, observe health, then run `scripts/step6-preservation.ts after-restart <private-run> before-restart exact`. Invoke through `node "--env-file=$cfg" --import tsx`. Compare process IDs/postmaster start times as well as all table/file hashes before continuing `prepare`. Keep the app/store/database/profile together. No backup restore is implied; actual restore uses the separately controlled [P12 runbook](p12-recovery-runbook.md).
 
-If the listener does not become ready, retain logs/PIDs and stop that attempt before a documented fresh launch; do not run commands against an unverified port or broaden its Origin gate. No old release, database downgrade, orphan deletion or profile clearing is an authorised recovery method. Preparation, scheduling, review/issue, inspection/incident workflow and Finance processing remain online only. No live MYOB/SharePoint/CAD operation, external message, merge or deployment is part of this session.
+If the listener does not become ready, retain logs/PIDs and stop that attempt before a documented fresh launch; do not run commands against an unverified port or broaden its Origin gate. No old release, database downgrade, orphan deletion or profile clearing is an authorised recovery method. Preparation, scheduling, review/issue, inspection/incident workflow and Finance processing remain online only. This owner walkthrough performs no live MYOB/SharePoint/CAD operation, external message or deployment. Repository integration is separately authorised and recorded in the current rehearsal evidence.

@@ -114,6 +114,28 @@
       "application_source": "88694370b4159134834766beaf648de4bfe16a4c",
       "build": "T2atCaQIgtunpyW9tMi-p",
       "environment": "Windows Node24.21.0/npm11.19.0/PostgreSQL16.15/Chrome155.0.8059.40; isolated synthetic loopback database, compiled desktop/phone emulation. Thirty browser scenarios and the 672-route warm-up pass; four affected cases pass again after improving capture placement. Injected presentation challenges are separated from real API/byte outcomes."
+    },
+    "CORRECTION": {
+      "path": "docs/testing/evidence/approved-evidence-corrections/README.md",
+      "head": "9dae751c4db4de2e94ebaba0043950af537071f0",
+      "runtime": "8d3b5093b8561ef2c75374621be9143ae49aadd4",
+      "environment": "Retained 10 October synthetic PostgreSQL/domain-command proof; eight nested checks across two parent journeys. Reconciled into the ledger by PT-30 preparation; not re-executed here.",
+      "review": "Implementation evidence reconciliation; independent and owner review pending."
+    },
+    "IDENTITY": {
+      "path": "docs/testing/evidence/document-identity-recovery/README.md",
+      "head": "472df7eb4e8f064fb37eb232e67c0da6a4842927",
+      "runtime": "184b933836b9790b4ffb6565552475a1af1eec24",
+      "environment": "Retained nine-scenario synthetic source movement and exact issued output proof using in-process exported route adapters. Reconciled during PT-30 preparation; not re-executed here.",
+      "review": "Implementation evidence reconciliation; independent and owner review pending."
+    },
+    "INTEGRATION": {
+      "path": "docs/testing/evidence/pt30-integration/README.md",
+      "head": "caecf7bc787eb658a545268e507e35e257adf48f",
+      "history_test_head": "8f2039cc92e3b41d10734c0db206be1500b0b34d",
+      "build": "qE6dn5GfAoZAp53Forj96",
+      "environment": "Windows Node24.21.0/npm11.19.0/PostgreSQL16.15/Chrome155.0.8059.40; compiled desktop loopback. Four phases plus settled history repeat pass; actual restart preserves 368 compared tables, eight files and migration ledger.",
+      "review": "Implementation rehearsal and representative capture inspection; no owner participation or independent acceptance recorded."
     }
   },
   "cases": [
@@ -598,14 +620,15 @@
       "source_ids": [
         "P09",
         "P10",
-        "FRESH"
+        "FRESH",
+        "CORRECTION"
       ],
-      "technical_disposition": "Component",
-      "existing_evidence_scope": "Original correction lineage, exact Service review and independent Finance allocation.",
+      "technical_disposition": "Combined synthetic backend pass",
+      "existing_evidence_scope": "Joined written PT-13 backend procedure at 9dae751: approved 90 MIN / 2 EA originals, refused in-place edits, reasoned 75 MIN / 3 EA successors, immediate downstream invalidation, fresh review, and preservation of processed outcomes.",
       "current_applicability": "Applicable within selected synthetic PP-01 boundary; no enterprise parent promotion",
-      "continued_validity_and_gap": "Current selected observation correction is not the written approved time/material correction with downstream invalidation.",
-      "fresh_verification_required": "Technical reviewer: run exact90 MIN/2 EA approved successor case and verify dependent readiness/processed-history preservation.",
-      "owner_next_action": "Technical reviewer: run exact90 MIN/2 EA approved successor case and verify dependent readiness/processed-history preservation.",
+      "continued_validity_and_gap": "The earlier observation-only gap is superseded by the retained approved-evidence correction run. This source-bound backend pass does not establish current browser behaviour, physical-device or owner acceptance, or operational accounting policy.",
+      "fresh_verification_required": "Technical reviewer: retain the exact approved-correction source and eight passing nested checks. Owner and Finance: observe the applicable workflow; live ERP correction/reversal remains outside the synthetic procedure.",
+      "owner_next_action": "Technical reviewer: retain the exact approved-correction source and eight passing nested checks. Owner and Finance: observe the applicable workflow; live ERP correction/reversal remains outside the synthetic procedure.",
       "human_acceptance": "Pending actual observations",
       "benefit": "Unmeasured"
     },
@@ -781,14 +804,17 @@
       ],
       "source_ids": [
         "P11",
-        "FRESH"
+        "FRESH",
+        "IDENTITY",
+        "PM",
+        "OUTPUT"
       ],
       "technical_disposition": "Component",
-      "existing_evidence_scope": "Exact pack/report/Finance bytes, scoped downloads and original-operation recovery.",
+      "existing_evidence_scope": "Retained nine-scenario synthetic source-movement and exact-output chain, supplemented by PT-01 current-authority HTTP guards and PT-23 original-output recovery. Sources remain separately identified.",
       "current_applicability": "Applicable within selected synthetic PP-01 boundary; no enterprise parent promotion",
-      "continued_validity_and_gap": "Full simulated rename/identity-changing move/missing-version chain remains a separate source-adapter proof.",
-      "fresh_verification_required": "Technical reviewer: execute each movement outcome; SharePoint live evidence remains outside scope.",
-      "owner_next_action": "Technical reviewer: execute each movement outcome; SharePoint live evidence remains outside scope.",
+      "continued_validity_and_gap": "Rename, identity-changing move and missing-version outcomes already pass in the retained in-process synthetic-adapter proof. Authenticated customer-channel/provider evidence and independent acceptance remain open; separate sources are not a joined full PT-18 execution.",
+      "fresh_verification_required": "Technical reviewer: retain the completed movement outcomes and join remaining applicable channel/content evidence to the written procedure. Provider/owner: review supported source identity behaviour and actual customer access; no live SharePoint proof is implied.",
+      "owner_next_action": "Technical reviewer: retain the completed movement outcomes and join remaining applicable channel/content evidence to the written procedure. Provider/owner: review supported source identity behaviour and actual customer access; no live SharePoint proof is implied.",
       "human_acceptance": "Pending actual observations",
       "benefit": "Unmeasured"
     },
@@ -1127,7 +1153,6 @@
       "owner_next_action": "Profile first-navigation asset/identity/render stages and remaining core reads against unchanged target; obtain keyboard, screen-reader and physical-device owner observations.",
       "human_acceptance": "Pending actual observations",
       "benefit": "Unmeasured",
-      "current_measurement": "PR #368 head 31d8fe0 (same application tree as main 11e8298): 320 samples/profile, zero failures. Development misses 16/16 groups at p95 5.392–12.702s; compiled misses 15/16 at 2.858–9.596s against unchanged 3s candidate. Source job and exact groups in offline-recovery-acceptance/release-checks.json; not Azure timing.",
       "focused_current_measurement": "PQ retained-load comparison: 20 service outputs equal; final 40-call service p95 792.51 to 212.64 ms. 80 browser navigations: desktop ready p95 5185.87 to 6625.56 ms, phone 3297.61 to 3320.60 ms. Mixed page result; full target and accessibility acceptance remain open. Raw before/after and initial attempts retained.",
       "customer_loading_execution": {
         "manifest": "docs/testing/evidence/customer-loading-diagnosis/verification.json",
@@ -1135,6 +1160,38 @@
         "final_desktop_p95_ms": 4420.887500000001,
         "final_phone_p95_ms": 2469.364800000003,
         "unresolved_attempt": "An intervening candidate repeat timed out on a phone core response after40 completed desktop checks; no complete JSON or causal diagnosis for that attempt."
+      },
+      "retained_measurement": "PR #368 head 31d8fe0 (same application tree as main 11e8298): 320 samples/profile, zero failures. Development misses 16/16 groups at p95 5.392–12.702s; compiled misses 15/16 at 2.858–9.596s against unchanged 3s candidate. Source job and exact groups in offline-recovery-acceptance/release-checks.json; not Azure timing.",
+      "current_measurement": "Latest complete profile reconciled in this ledger: PR #373 head 473857209ba30cad05456b08ee1a3589ade22cbe, run 37785243405. Development misses 16/16 and compiled 12/16 groups against unchanged 3s; 320 samples/profile and zero request failures. These are retained source-specific CI observations, not measurements of the PT-30 build.",
+      "latest_complete_profile": {
+        "path": "docs/testing/evidence/customer-first-load/pr373-profile-comparison.json",
+        "source": "473857209ba30cad05456b08ee1a3589ade22cbe",
+        "run_id": "37785243405",
+        "summary": [
+          {
+            "profile": "development",
+            "samples": 320,
+            "failures": 0,
+            "misses": 16,
+            "groups": 16,
+            "p95_min_ms": 6292.087544000009,
+            "p95_max_ms": 13244.478465000007
+          },
+          {
+            "profile": "compiled",
+            "samples": 320,
+            "failures": 0,
+            "misses": 12,
+            "groups": 16,
+            "p95_min_ms": 2074.3429689999903,
+            "p95_max_ms": 5987.727986000002
+          }
+        ]
+      },
+      "later_bounded_experiment": {
+        "path": "docs/testing/evidence/customer-first-load/README.md",
+        "source": "edb486f40c4bf53f57c5fd26c62da82b48c66d13",
+        "result": "Both builds pass 12 Customers directory samples and six actual record visits; cold JavaScript transfer decreases 12.37%. Three observations/cell support medians only, not a new p95 or ten-user target pass."
       }
     },
     {
@@ -1237,14 +1294,15 @@
       "source_ids": [
         "S6",
         "CV",
-        "FRESH"
+        "FRESH",
+        "INTEGRATION"
       ],
       "technical_disposition": "Technical narrative; owner/prerequisites pending",
-      "existing_evidence_scope": "Fresh deterministic current-build original→separate visit, saved-point restart, exact preservation and next-technician history.",
+      "existing_evidence_scope": "Fresh four-phase compiled narrative on integrated PT-01/23/29 source caecf7b: original customer-to-Finance journey, exact saved-point app/database restart, explicitly prepared separate return, completion and next-technician history. Settled history recheck passes at test source 8f2039c on the unchanged application.",
       "current_applicability": "Applicable within selected synthetic PP-01 boundary; no enterprise parent promotion",
-      "continued_validity_and_gap": "Full acceptance needs every applicable prior-case disposition plus actual owner demonstration; prepared material is not participation.",
-      "fresh_verification_required": "Dean: execute owner worksheet; technical reviewer: finish prior-case ledger; Service/technician/device/visual/screen-reader sessions pending.",
-      "owner_next_action": "Dean: execute owner worksheet; technical reviewer: finish prior-case ledger; Service/technician/device/visual/screen-reader sessions pending.",
+      "continued_validity_and_gap": "Technical rehearsal passes at schema 77 (76 installed migrations). Full PT-30 remains pending applicable prior-case disposition and actual owner/role/device observations. Restart preserves the same cluster and is not backup restore. Independent visual/accessibility and PT-27 timing findings remain open.",
+      "fresh_verification_required": "Owner: use the current saved entry records and pending H01-H11 worksheet. Technical reviewer: review each remaining prerequisite disposition; no automatic acceptance from rehearsal or earlier source-bound passes.",
+      "owner_next_action": "Owner: use the current saved entry records and pending H01-H11 worksheet. Technical reviewer: review each remaining prerequisite disposition; no automatic acceptance from rehearsal or earlier source-bound passes.",
       "human_acceptance": "Pending actual observations",
       "benefit": "Unmeasured"
     }

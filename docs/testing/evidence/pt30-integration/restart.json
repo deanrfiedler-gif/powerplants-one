@@ -1,0 +1,23 @@
+{
+  "initial-process": {
+    "pid": 26232,
+    "at": "2026-10-10T05:27:49.1279528Z",
+    "source": "caecf7bc787eb658a545268e507e35e257adf48f",
+    "build": "qE6dn5GfAoZAp53Forj96"
+  },
+  "stopped-processes": {
+    "app_pid_before": 26232,
+    "stopped_at": "2026-10-10T05:32:50.6919861Z",
+    "ports_closed": [
+      33949,
+      55949
+    ],
+    "database_stop": "pg_ctl fast; same retained cluster"
+  },
+  "restarted-process": {
+    "pid": 32648,
+    "at": "2026-10-10T05:32:51.3625889Z",
+    "source": "caecf7bc787eb658a545268e507e35e257adf48f",
+    "build": "qE6dn5GfAoZAp53Forj96"
+  }
+}

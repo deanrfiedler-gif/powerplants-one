@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-10",
+  "reviewer": "Implementing assistant; not independent human approval",
+  "decision": "No actionable source-review blocker found in the selected changes. Repository merge remains conditional on successful updated-head CI.",
+  "pull_requests": [
+    {
+      "number": 387,
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/pull/387",
+      "reviewed_head": "d0be6b0e5346b8c3b2b180e834718155c972d24d",
+      "scope": [
+        "Job-pack finalisation validates the retained bundle inside finalisation, after current authority/source checks and before recording the issue.",
+        "Finance treats an unavailable template as stale source, preventing reuse of an old attempt after renderer restoration.",
+        "Corruption, rollback, restored-byte and duplicate-effect checks retain original identities and outcomes.",
+        "Main integration preserves both PT-01 and PT-23 ledger source records and dispositions."
+      ],
+      "review_limits": "Prior 89-page inspection remains source-bound implementation evidence. Sparse final pages and split fields/rows remain independent template/owner review observations."
+    },
+    {
+      "number": 389,
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/pull/389",
+      "reviewed_head": "caecf7bc787eb658a545268e507e35e257adf48f",
+      "scope": [
+        "Selected fifteen-screen populated, loading, failed/recovered, empty-or-unavailable and current-denial assertions distinguish real API outcomes from injected presentation failures.",
+        "Save, upload, partial-account and stale-action cases preserve their stated recovery boundaries.",
+        "Fixture identifiers and dates avoid desktop/mobile collisions with retained full-suite journeys.",
+        "The branch includes reviewed PT-23 source so its updated-head CI validates the combined contribution; merge PT-23 first."
+      ],
+      "review_limits": "PT-29 contribution is tests and documentation. Its earlier execution remains bound to its recorded source, while this rehearsal identifies the combined build. Phone emulation and role switching do not establish physical-device or owner acceptance."
+    }
+  ],
+  "merge_policy": "Require completed successful checks for the exact reviewed heads and recheck the remote heads before merging. Final CI and merge outcomes belong to the linked PR records; this review does not claim either merge has happened.",
+  "rehearsal": "verification.json",
+  "owner_acceptance": "Pending H01-H11 and applicable prerequisite dispositions",
+  "deployment": "Not requested or performed"
+}
