@@ -4,6 +4,20 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## Page design tooling — 10 October 2026
+
+Dean confirmed that he designs the pages himself and no one else is involved. [ADR-0051](decisions/ADR-0051-claude-design-page-design.md) records his decision to keep Claude Design, with Git as the authority, and not to adopt Figma. It sets when to draw a board and when to refine in the running app, and when to revisit the choice. The Powerplants One design system artifact was resynced from `main@ed3ccb8` (version 8) for the white selected rail tile, the Font Awesome icon guidance and 17 new catalogue components. The resync found double-encoded dashes and arrows in `components.json`, which remain unchanged in the repository. No page, scope or parent ID changes, and no visual review is implied.
+
+Dean then approved a design kit, adding three rules to ADR-0051:
+
+- The design system describes only what the app has.
+- Kit previews are captured from the running app, not drawn.
+- A built page is compared with its board before it is called done.
+
+Group 1 is published as design system version 9: twelve shared parts captured from `main@ed3ccb8`, with the app's own 385 CSS rules for them. [`scripts/design-system/`](../scripts/design-system/README.md) regenerates the kit.
+
+Group 2's references are approved. The register table, context strip, inspection panel, record cards and dialog will each be built as a shared app component in a small PR, and page templates follow. The capture also corrected the design system's page text to the app's effective 14/1.45. It found an Estimating-only override of the shared header. Nothing in the app changed.
+
 ## PT-30 integration rehearsal — 10 October 2026
 
 Dean authorised review/integration of PT-23 #387 and PT-29 #389 and preparation of the next owner walkthrough. The [decision](decisions/pt30-integration-rehearsal.md) joins both with PT-01 on candidate `caecf7b`; updated-head PR checks and merge remain separately recorded. The [fresh execution](testing/evidence/pt30-integration/README.md) passes all four compiled narrative phases and a settled-history recheck. Actual app/database restart preserves 368 compared tables, eight stored files and the migration ledger; the separate return preserves original Service/Finance outcomes and stored bytes. No runtime change is required. Test refinements wait for the completed history panel before capture and for a dropped Products response to settle before receipt recovery. The latter CI race is reproduced on unchanged main; its failure, correction and rerun remain separate in the execution record.
