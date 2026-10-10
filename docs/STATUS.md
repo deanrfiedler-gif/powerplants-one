@@ -1,8 +1,12 @@
 # Current prototype status
 
-**Updated:** 9 October 2026 (Australia/Brisbane). **Owner:** Dean Fiedler. Public repository; private synthetic prototype and demo. Code delivery, automated verification, visual review, owner acceptance and deployment are separate facts.
+**Updated:** 10 October 2026 (Australia/Brisbane). **Owner:** Dean Fiedler. Public repository; private synthetic prototype and demo. Code delivery, automated verification, visual review, owner acceptance and deployment are separate facts.
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
+
+## Icon style decision — 10 October 2026
+
+After a local comparison of the app's icons with Font Awesome Classic Light, Regular and Free, Dean chose Font Awesome Pro Classic Light, with Classic Solid for selected items. [ADR-0050](decisions/ADR-0050-font-awesome-light-icons.md) records the decision, the comparison mapping and the delivery options. The preferred delivery is the Kit package built into the app, with the Kit script as a fallback; it is proposed until plan entitlements, licence terms and offline treatment are confirmed. No dependency, configuration or icon is changed yet; implementation needs Dean's separate go-ahead. Pro icon files and captures stay out of this public repository.
 
 ## Parallel backend access and recovery — 9 October 2026
 
