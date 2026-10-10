@@ -60,7 +60,7 @@ function intersect(a: Span[], b: Span[]): Span[] {
     }
   return merge(out);
 }
-function subtract(a: Span[], b: Span[]): Span[] {
+export function subtractSpans(a: Span[], b: Span[]): Span[] {
   let out = merge(a);
   for (const y of merge(b))
     out = out.flatMap((x): Span[] =>
@@ -110,6 +110,12 @@ function calendarSpans(
   return merge(spans);
 }
 
+// Stored kinds such as "OtherWork" read as "Other work".
+export const kindText = (kind: string) => {
+  const words = kind.replace(/([a-z])([A-Z])/g, "$1 $2").toLowerCase();
+  return words.charAt(0).toUpperCase() + words.slice(1);
+};
+
 export type LaneBand = { kind: "NotWorking" | "Extended"; span: Span };
 
 export type LaneDay = {
@@ -146,20 +152,20 @@ export function laneDay(input: {
   });
   const axis: Span[] = [[AXIS_START_MINUTE, AXIS_END_MINUTE]];
   const bands: LaneBand[] = [
-    ...subtract(axis, working).map((s) => ({ kind: "NotWorking" as const, span: s })),
-    ...subtract(intersect(axis, working), standard).map((s) => ({ kind: "Extended" as const, span: s })),
+    ...subtractSpans(axis, working).map((s) => ({ kind: "NotWorking" as const, span: s })),
+    ...subtractSpans(intersect(axis, working), standard).map((s) => ({ kind: "Extended" as const, span: s })),
   ].sort((a, b) => a.span[0] - b.span[0]);
   const blocks = input.blocks.map((b) => ({ ...b, s: span(b) })).filter((b) => b.s[1] > 0 && b.s[0] < 1440);
   const closed = merge(input.exceptions.map(span).filter((s) => s[1] > 0 && s[0] < 1440));
   const reserved = merge(input.busy.map(span).filter((s) => s[1] > 0 && s[0] < 1440));
   const unavailableSpans = merge([...blocks.map((b) => b.s), ...closed]);
-  const open = subtract(standard, unavailableSpans);
+  const open = subtractSpans(standard, unavailableSpans);
   const capacityMinutes = total(open);
   const bookedMinutes = total(intersect(open, reserved));
   let from = Math.min(...open.map((s) => s[0]), Infinity);
   const today = input.now ? localDateTime(input.now, zone).slice(0, 10) === day : false;
   if (today) from = Math.max(from, Math.ceil(dayMinute(input.now!, zone, day) / 15) * 15);
-  const gaps = subtract(open, reserved).filter((s) => s[1] > from).map((s): Span => [Math.max(s[0], from), s[1]]).filter((s) => s[1] - s[0] >= FREE_GAP_MINUTES);
+  const gaps = subtractSpans(open, reserved).filter((s) => s[1] > from).map((s): Span => [Math.max(s[0], from), s[1]]).filter((s) => s[1] - s[0] >= FREE_GAP_MINUTES);
   const end = Math.max(...open.map((s) => s[1]), -Infinity);
   let free = "";
   if (capacityMinutes > 0) {
@@ -181,7 +187,7 @@ export function laneDay(input: {
     bands,
     unavailable: blocks.map((b) => ({
       span: b.s,
-      label: b.kind,
+      label: kindText(b.kind),
       time:
         b.s[0] <= AXIS_START_MINUTE && b.s[1] >= AXIS_END_MINUTE
           ? "All day"
@@ -230,4 +236,13 @@ export function initials(name: string) {
     .filter((w) => /^[A-Za-z]/.test(w) && w !== "SYN");
   if (!words.length) return "?";
   return (words.length === 1 ? words[0]!.slice(0, 2) : words[0]![0]! + words[1]![0]!).toUpperCase();
+}
+
+// ISO 8601 week number of a civil day (YYYY-MM-DD), for the Week view's corner label.
+export function isoWeek(day: string) {
+  const d = new Date(day + "T00:00:00Z"),
+    weekday = (d.getUTCDay() + 6) % 7;
+  d.setUTCDate(d.getUTCDate() - weekday + 3);
+  const jan4 = new Date(Date.UTC(d.getUTCFullYear(), 0, 4));
+  return 1 + Math.round(((d.getTime() - jan4.getTime()) / 86400000 - 3 + ((jan4.getUTCDay() + 6) % 7)) / 7);
 }

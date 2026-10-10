@@ -326,18 +326,20 @@ test("P05 controlled move conflict keeps original position; uncertain accepted r
     aid = await ready(page, day, true);
   await page.getByLabel("Starting date").fill(day);
   await page.getByRole("button", { name: "Week", exact: true }).click();
-  await expect(
-    page.getByRole("link", { name: /SYN-PPO-APT/ }).first(),
-  ).toBeVisible();
+  // Desktop Week is the refinement board: a visit is a tile carrying its appointment ID. The
+  // narrow lane list keeps a link per appointment.
+  const savedVisit = info.project.name.startsWith("desktop")
+    ? `[data-appointment="${aid}"]`
+    : `a[href="/service/appointments/${aid}"]`;
+  await expect(page.locator(savedVisit).first()).toBeVisible();
   const lane = page.getByRole("region", {
     name: "SYN Alex Lead resource lane",
     exact: true,
   });
   if (info.project.name.startsWith("desktop")) {
-    const card = lane
-      .locator(".appointment-card")
-      .filter({ has: page.locator(`a[href="/service/appointments/${aid}"]`) });
-    await card.dragTo(lane.locator('[data-day="2031-10-10"]'));
+    await lane
+      .locator(savedVisit)
+      .dragTo(lane.locator('[data-day="2031-10-10"]'));
     await expect(page.getByRole("dialog")).toBeVisible();
     await capture(page, info, "drag-proposal");
   } else {
@@ -450,9 +452,8 @@ test("P05 controlled move conflict keeps original position; uncertain accepted r
   expect(current.pack_requirement).toBe("ReviewRequired");
   // Prove the refreshed planner itself moved this exact appointment. A
   // response observer alone can miss a refresh already delivered to the UI.
-  const savedLink = `a[href="/service/appointments/${aid}"]`;
-  await expect(lane.locator(`[data-day="${target}"]`).locator(savedLink)).toBeVisible();
-  await expect(lane.locator(`[data-day="${day}"]`).locator(savedLink)).toHaveCount(0);
+  await expect(lane.locator(`[data-day="${target}"]`).locator(savedVisit)).toBeVisible();
+  await expect(lane.locator(`[data-day="${day}"]`).locator(savedVisit)).toHaveCount(0);
   await capture(page, info, "move-saved-review-held");
 });
 test("P05 project requests reject then accept through keyboard; technician request cannot confirm", async ({

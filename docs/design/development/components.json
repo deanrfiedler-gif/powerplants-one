@@ -787,7 +787,7 @@
         {
           "id": "week",
           "label": "Week",
-          "description": "Seven-day resource lanes with a continuing calendar closure across three days; the exclusive end boundary is not closed."
+          "description": "Week board with a continuing calendar closure across three days; the exclusive end boundary is not closed, so that Sunday stays a slim strip."
         },
         {
           "id": "empty",
@@ -808,6 +808,11 @@
           "id": "policy-hold",
           "label": "Published policy hold",
           "description": "Unresolved durable publication impact remains visible while the original reservation and policy pin are retained."
+        },
+        {
+          "id": "lane-list",
+          "label": "Lane list",
+          "description": "The lane list that narrow screens and other display timezones show, in Day and Week."
         }
       ],
       "implementation": [
@@ -822,6 +827,10 @@
         {
           "path": "src/scheduling/components/client/planner-timeline.client.tsx",
           "symbol": "AppointmentSnapshot"
+        },
+        {
+          "path": "src/scheduling/components/client/planner-timeline.client.tsx",
+          "symbol": "PlannerWeek"
         }
       ],
       "dependencies": [
@@ -840,9 +849,9 @@
         "route:/schedule",
         "scope:PL-01"
       ],
-      "desktop": "Day is a 07:00 to 18:00 timeline with a sticky people column and a details panel beside it; Week keeps the day lanes. A drop proposes a move; the host still owns conflict, readiness, crew and authority checks.",
-      "mobile": "Each lane scrolls independently in Week. The Day timeline scrolls sideways inside its frame; the application shows the day list below 781 px until the phone layout is built.",
-      "keyboard": "Tab/Shift+Tab and visible focus throughout. A timeline visit is a button: Enter or Space opens its details, which carry Move or reassign as the alternative to dragging. Escape closes the details.",
+      "desktop": "Day is a 07:00 to 18:00 timeline and Week a board with one row per person and one column per day; a selected visit opens a details panel beside either. A drop proposes a move; the host still owns conflict, readiness, crew and authority checks.",
+      "mobile": "The Day timeline and Week board scroll sideways inside their frame; the application shows the lane list below 781 px until the phone layout is built.",
+      "keyboard": "Tab/Shift+Tab and visible focus throughout. Visits are buttons: Enter or Space opens their details, which carry Move or reassign as the alternative to dragging; Week day headings open the Day view. Escape closes the details.",
       "limitations": "This planner is not the project Gantt. Catalogue callbacks do not prove conflict enforcement or saved booking behaviour.",
       "gaps": [
         {
