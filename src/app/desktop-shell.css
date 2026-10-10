@@ -44,7 +44,7 @@
 .ppo-header-menu-slot .ppo-menu-toggle > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .ppo-header-menu-slot .ppo-menu-toggle:hover:not(:disabled) { background: #f0f2f5; color: #242a37; }
 .ppo-header-menu-slot .ppo-menu-toggle:focus-visible { outline: 2px solid #365d8b; outline-offset: 2px; box-shadow: none; }
-.ppo-header-menu-slot .ppo-menu-toggle svg { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.ppo-header-menu-slot .ppo-menu-toggle :is(svg, i.ppo-fa) { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .ppo-header-utilities { display: flex; align-items: center; gap: 4px; margin-left: auto; }
 .ppo-shell-header .header-tools { display: flex; margin: 0; padding: 0; gap: 0; border: 0; flex-shrink: 0; }
 .ppo-shell-header #header-search { display: none; }
@@ -315,7 +315,7 @@
   .ppo-shell-header:has(#header-menu:not(:empty)) .mobile-brand { display: none; }
   .ppo-shell-header:has(#header-menu:not(:empty)) .ppo-header-menu-slot { display: flex; }
   .ppo-header-menu-slot .ppo-menu-toggle { width: 44px; height: 44px; min-height: 44px; margin: 0; padding: 0; justify-content: center; border-color: transparent; background: transparent; }
-  .ppo-header-menu-slot .ppo-menu-toggle svg { width: 24px; height: 24px; }
+  .ppo-header-menu-slot .ppo-menu-toggle :is(svg, i.ppo-fa) { width: 24px; height: 24px; }
   .ppo-header-menu-slot .ppo-menu-toggle span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .product-heading { display: flex; flex: 1; min-width: 0; margin: 0 0 0 6px; align-self: center; grid-column: auto; grid-row: auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .workspace .ppo-shell-header:has(#header-menu:not(:empty)) .ppo-crumb { font-size: 20px; line-height: 28px; font-weight: 500; color: #242a37; }
@@ -379,7 +379,7 @@
 .ppo-header-menu-slot .ppo-menu-toggle[data-menu-presentation=baseline] > span { position: static; width: auto; height: auto; overflow: visible; clip-path: none; white-space: nowrap; }
 .ppo-header-menu-slot .ppo-menu-toggle[data-menu-presentation=baseline]:hover:not(:disabled) { background: #f0f2f5; color: #242a37; }
 .ppo-header-menu-slot .ppo-menu-toggle[data-menu-presentation=baseline]:focus-visible { outline: 2px solid #365d8b; outline-offset: 2px; box-shadow: none; }
-.ppo-header-menu-slot .ppo-menu-toggle[data-menu-presentation=baseline] svg { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.ppo-header-menu-slot .ppo-menu-toggle[data-menu-presentation=baseline] :is(svg, i.ppo-fa) { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 }
 
 /* NAV-04: primary rail preference; secondary-menu docking stays at 1200 px. */

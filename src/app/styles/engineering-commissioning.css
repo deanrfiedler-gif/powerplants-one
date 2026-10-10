@@ -13,7 +13,7 @@
 /* r22 .tag verbatim: inline-flex, 5px gap, 3px 8px padding, 5px corners, 12px/500, line-height 1.5, 13px outline icon
    at stroke 1.7. One condition has one tone, one icon and one label; colour never carries a rule that words do not. */
 #ppo-commissioning .cm-tag{display:inline-flex;align-items:center;gap:5px;max-width:100%;padding:3px 8px;border-radius:5px;background:var(--neutral-surface);color:var(--neutral);font-size:12px;font-weight:500;line-height:1.5;white-space:nowrap}
-#ppo-commissioning .cm-tag svg{flex:none;width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+#ppo-commissioning .cm-tag :is(svg, i.ppo-fa){flex:none;width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 #ppo-commissioning .cm-tag>span{min-width:0;overflow:hidden;text-overflow:ellipsis}
 #ppo-commissioning .cm-tag-neutral{background:#edf0f5;color:#526078}
 #ppo-commissioning .cm-tag-information{background:var(--information-surface);color:var(--information)}
@@ -24,7 +24,7 @@
 #ppo-commissioning .cm-tag-wrap>span{overflow:visible}
 /* An ordinary next step is plain words with a quiet document glyph. It is not a status and is not dressed as one. */
 #ppo-commissioning .cm-step{display:inline-flex;align-items:center;gap:6px;color:var(--ink);font-size:14px;line-height:20px}
-#ppo-commissioning .cm-step svg{flex:none;width:16px;height:16px;fill:none;stroke:#667181;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+#ppo-commissioning .cm-step :is(svg, i.ppo-fa){flex:none;width:16px;height:16px;fill:none;stroke:#667181;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 
 /* Register: six default columns on the readable 14/20 working-text profile. r22 List header (#eef0f3, #606977, 43px);
    rows are content-led (reference under title, date under owner), typically 60-68px. Flush to both edges of its
@@ -79,7 +79,7 @@
 #ppo-commissioning .cm-link-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;font-size:14px}
 #ppo-commissioning .cm-link-row .mw-muted{font-size:13px}
 #ppo-commissioning .cm-callout{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;padding:12px 14px;border:1px solid #efdbb6;border-radius:6px;background:#fff2d9;color:#80530e}
-#ppo-commissioning .cm-callout svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+#ppo-commissioning .cm-callout :is(svg, i.ppo-fa){width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 #ppo-commissioning .cm-callout strong{display:block;font-weight:500;color:#80530e}
 #ppo-commissioning .cm-callout p{margin:2px 0 0;font-size:13px;line-height:18px}
 #ppo-commissioning .cm-inspector-foot{flex:none;display:flex;flex-direction:column;gap:12px;padding:16px 24px 20px;border-top:1px solid #e1e5eb;background:#fff}

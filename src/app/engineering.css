@@ -13,7 +13,7 @@
 #ppo-engineering :focus-visible{outline:2px solid var(--focus);outline-offset:3px}
 #ppo-engineering [hidden]{display:none!important}
 #ppo-engineering .eng-sr{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
-#ppo-engineering svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;flex:none}
+#ppo-engineering :is(svg, i.ppo-fa){width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;flex:none}
 #ppo-engineering .eng-row{display:flex;align-items:center;gap:8px;min-width:0}
 #ppo-engineering .eng-muted{color:var(--muted)}
 #ppo-engineering .eng-meta{font-size:13px;color:var(--muted)}
@@ -29,13 +29,13 @@
 #ppo-engineering .eng-count{display:inline-block;min-width:20px;text-align:center;background:#e9edf2;color:#5f6a7a;padding:1px 5px;border-radius:4px;font-size:12px;font-weight:400}
 #ppo-engineering [aria-selected=true] .eng-count{background:#edf5e9;color:#3d692f}
 #ppo-engineering .eng-stamp{display:flex;align-items:center;gap:6px;margin-left:auto;font-size:12px;color:var(--muted);padding-bottom:10px;white-space:nowrap}
-#ppo-engineering .eng-stamp svg{width:14px;height:14px}
+#ppo-engineering .eng-stamp :is(svg, i.ppo-fa){width:14px;height:14px}
 #ppo-engineering .eng-workspace{margin-top:16px;display:flex;flex:1;min-height:0;flex-direction:column;border:1px solid #dce2e9;border-radius:8px;background:white;overflow:hidden;box-shadow:0 1px 2px #14243e03}
 #ppo-engineering .eng-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line);flex:none}
 #ppo-engineering :is(input,select,textarea){border:1px solid #cbd2dc;border-radius:6px;padding:9px 11px;min-height:39px;background:white;max-width:100%;font-weight:400;outline-offset:2px}
 #ppo-engineering input::placeholder,#ppo-engineering textarea::placeholder{color:#727d8d}
 #ppo-engineering .eng-search{position:relative;flex:1;max-width:355px;min-width:180px}
-#ppo-engineering .eng-search>svg{position:absolute;left:11px;top:11px;color:#7a8493;width:17px;height:17px}
+#ppo-engineering .eng-search>:is(svg, i.ppo-fa){position:absolute;left:11px;top:11px;color:#7a8493;width:17px;height:17px}
 #ppo-engineering .eng-search input{padding-left:37px;width:100%}
 #ppo-engineering .eng-toolbar select{min-width:158px;max-width:205px}
 #ppo-engineering .eng-sort{display:flex;align-items:center;gap:7px;margin-left:auto;color:var(--muted)}
@@ -46,7 +46,7 @@
 #ppo-engineering .eng-context .eng-sep{height:13px;border-left:1px solid #ccd3dd}
 #ppo-engineering .eng-attention{margin-left:auto!important;color:#8a5a13!important;border:1px solid #eeddbd!important;background:#fff7e8!important;min-height:27px!important;padding:3px 8px!important;font-size:13px!important;border-radius:4px!important}
 #ppo-engineering .eng-attention[aria-pressed=true]{box-shadow:inset 0 0 0 1px #8a5a13}
-#ppo-engineering .eng-attention svg{height:15px;width:15px}
+#ppo-engineering .eng-attention :is(svg, i.ppo-fa){height:15px;width:15px}
 #ppo-engineering .eng-scroll{flex:1;min-height:0;overflow:auto;scrollbar-width:thin;scrollbar-color:#b6bec8 #f4f6f8;overscroll-behavior:contain;scroll-padding:54px 12px 10px}
 #ppo-engineering table{width:100%;min-width:1140px;border-spacing:0;border-collapse:separate;table-layout:fixed;background:white}
 #ppo-engineering th{position:sticky;top:0;z-index:1;background:var(--surface);border-bottom:1px solid var(--line);border-right:1px solid var(--line);text-align:left;padding:13px 15px;color:#667181;font-size:13px;font-weight:500;line-height:1.35}
@@ -71,7 +71,7 @@
 #ppo-engineering .eng-status.wait{background:#fff2d9;color:#80530e}
 #ppo-engineering .eng-status.ready{background:#edf5e9;color:#466c3c}
 #ppo-engineering .eng-status.released{background:#e9f3e5;color:#37682c}
-#ppo-engineering .eng-status svg{width:13px;height:13px}
+#ppo-engineering .eng-status :is(svg, i.ppo-fa){width:13px;height:13px}
 #ppo-engineering .eng-progress-label{font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap}
 #ppo-engineering .eng-progress-label span{color:var(--muted);font-size:13px}
 #ppo-engineering .eng-progress{height:4px;background:#e9edf1;border-radius:3px;max-width:88px;margin-top:8px;overflow:hidden}
@@ -81,7 +81,7 @@
 #ppo-engineering .eng-overdue{color:#9b5220}
 #ppo-engineering .eng-next{font-size:14px;line-height:1.4}
 #ppo-engineering .eng-next-sub{display:flex;align-items:center;gap:5px;margin-top:5px;color:var(--muted);font-size:13px}
-#ppo-engineering .eng-next-sub svg{height:13px;width:13px}
+#ppo-engineering .eng-next-sub :is(svg, i.ppo-fa){height:13px;width:13px}
 #ppo-engineering .eng-resizer{position:absolute;right:-5px;top:0;height:100%;width:10px;min-height:0;padding:0;border:0;border-radius:0;background:transparent;cursor:col-resize;touch-action:none;z-index:3}
 #ppo-engineering .eng-resizer::after{content:'';position:absolute;width:2px;left:4px;top:8px;bottom:8px;background:transparent}
 #ppo-engineering .eng-resizer:hover,#ppo-engineering .eng-resizer:focus-visible{background:transparent}
@@ -91,7 +91,7 @@
 #ppo-engineering .eng-page-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-top:12px;color:var(--muted);font-size:12px;flex:none}
 #ppo-engineering .eng-page-foot button{font-size:12px;min-height:22px;padding:0}
 #ppo-engineering .eng-empty{padding:64px 24px;text-align:center;color:var(--muted)}
-#ppo-engineering .eng-empty>svg{height:32px;width:32px;color:#8b97a6}
+#ppo-engineering .eng-empty>:is(svg, i.ppo-fa){height:32px;width:32px;color:#8b97a6}
 #ppo-engineering .eng-empty h2{font-size:20px;color:var(--navy);margin:12px 0 8px;font-weight:500}
 #ppo-engineering .eng-empty p{margin-bottom:16px}
 #ppo-engineering .eng-cards{display:none}
@@ -129,11 +129,11 @@
 #ppo-engineering .eng-note strong{display:block;font-weight:500;color:inherit;margin-bottom:3px}
 #ppo-engineering .eng-checklist{display:grid;gap:12px}
 #ppo-engineering .eng-check-item{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:#455164}
-#ppo-engineering .eng-check-item svg{margin-top:1px;color:#648b56;width:17px;height:17px}
-#ppo-engineering .eng-check-item.wait svg{color:#a77c34}
+#ppo-engineering .eng-check-item :is(svg, i.ppo-fa){margin-top:1px;color:#648b56;width:17px;height:17px}
+#ppo-engineering .eng-check-item.wait :is(svg, i.ppo-fa){color:#a77c34}
 #ppo-engineering .eng-doc{border:1px solid var(--line);border-radius:6px;padding:15px;margin-bottom:12px;display:grid;grid-template-columns:35px 1fr auto;gap:11px;align-items:start}
 #ppo-engineering .eng-file-icon{display:grid;place-items:center;width:34px;height:40px;background:#f0f3f7;border-radius:5px;color:#62748a}
-#ppo-engineering .eng-file-icon svg{width:21px;height:21px}
+#ppo-engineering .eng-file-icon :is(svg, i.ppo-fa){width:21px;height:21px}
 #ppo-engineering .eng-doc-title{font-weight:500;font-size:15px;line-height:1.4}
 #ppo-engineering .eng-doc small{display:block;color:var(--muted);font-size:12px;margin-top:4px}
 #ppo-engineering .eng-doc .eng-link{font-size:13px;margin-top:7px}
@@ -188,7 +188,7 @@
 #ppo-engineering .eng-manifest-line{display:grid;grid-template-columns:20px 1fr auto;gap:9px;padding:12px 0;border-bottom:1px solid var(--line)}
 #ppo-engineering .eng-manifest-line strong{font-weight:500;font-size:14px;display:block}
 #ppo-engineering .eng-manifest-line small{font-size:12px;color:var(--muted);display:block;margin-top:4px}
-#ppo-engineering .eng-check-item.pending svg{color:#a77c34}
+#ppo-engineering .eng-check-item.pending :is(svg, i.ppo-fa){color:#a77c34}
 #ppo-engineering .eng-state-note{padding:10px 12px;border-radius:5px;background:#f0f6ec;color:#416436;font-size:14px;margin-bottom:16px}
 #ppo-engineering .eng-form-hint{line-height:1.5}
 #ppo-engineering .eng-doc-title{overflow-wrap:anywhere}
