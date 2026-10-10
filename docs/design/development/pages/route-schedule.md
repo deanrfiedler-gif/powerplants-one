@@ -89,3 +89,12 @@ Automatic policy preparation must show failures without moving focus out of a da
 ### Proposed departures awaiting Dean
 
 The snapshot narrowing the board rather than covering it, and its 360 px width; the hours-booked and free-time calculations; what counts as needing attention; checks shown as you edit; a Day drop that sets the start time; distinct rail icons and a short-window rule; past-time shading; and a map provider, which needs an architecture decision record first. Until Dean decides, these remain proposals.
+
+## Working hours built — 10 October 2026
+
+Dean's working hours ([decision](../../../decisions/ui-build-sequence.md#planner-working-hours-10-october-2026)) are built in the existing screens. No layout changes.
+
+- **Desktop and mobile booking form:** under the crew rows, an Extended hours panel in the existing `planner-warning` style appears when a person's visit or travel falls outside 08:00 to 17:00 in their calendar timezone. It states the standard hours, then one line per person with the times. It updates as times, crew or travel change, is announced as a status and never blocks a save.
+- **Planner lanes:** a confirmed card in a person's lane adds the line "Extended hours · 07:30 to 12:30 including travel" in the warning colour, and its accessible name adds "extended hours". Proposed and cancelled cards are not marked.
+- **Calendar text:** lanes show the published interval, now 07:00–18:00 in freshly seeded data. Older seeded databases still show 08:00–17:00.
+- **Evidence:** [checks and captures](../../../testing/evidence/planner-working-hours/README.md): unit tests for the rule, a database test that travel can reach 07:00 and 18:00 but not a minute beyond, and element captures from a task-owned server. Visual review stays pending.

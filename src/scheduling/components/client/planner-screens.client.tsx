@@ -34,6 +34,11 @@ import {
   type Envelope,
 } from "../../../components/business-ui";
 import { addDays, intervalsOverlap, localDateTime, utcFromLocal } from "../../time";
+import {
+  EXTENDED_HOURS_ADVICE,
+  extendedHours,
+  extendedHoursNotice,
+} from "../../working-hours";
 import type { CrewInput } from "../../validation";
 export type Resource = {
   id: string;
@@ -326,6 +331,32 @@ function BookingForm({
         : "Propose a schedule change";
   const patch = (i: number, field: string, value: string) =>
     setCrew(crew.map((x, n) => (n === i ? { ...x, [field]: value } : x)));
+  // Standard-hours warning, checked as the form changes. It never blocks: the
+  // server's published-calendar check alone decides what can be booked.
+  let extended: string[] = [];
+  try {
+    const startAt =
+        mode === "confirm"
+          ? basis.start_at
+          : utcFromLocal(start, basis.site_timezone),
+      endAt =
+        mode === "confirm" ? basis.end_at : utcFromLocal(end, basis.site_timezone);
+    extended = crew.flatMap((x) => {
+      const r = resources.data?.items.find((r) => r.id === x.resource_id),
+        before = Number(x.before),
+        after = Number(x.after);
+      if (!r || x.before === "" || x.after === "" || !(before >= 0) || !(after >= 0))
+        return [];
+      const span = extendedHours(startAt, endAt, {
+        timezone: r.calendar.timezone,
+        travel_before_minutes: before,
+        travel_after_minutes: after,
+      });
+      return span ? [extendedHoursNotice(r.name, span, before + after > 0)] : [];
+    });
+  } catch {
+    /* Incomplete local dates have nothing to check yet. */
+  }
   async function save(e: React.FormEvent) {
     e.preventDefault();
     setLocalError(null);
@@ -624,6 +655,20 @@ function BookingForm({
               >
                 Add crew member
               </button>
+            )}
+            {extended.length > 0 && (
+              <div
+                className="planner-warning"
+                role="status"
+                aria-label="Extended hours"
+              >
+                <p>
+                  <strong>Extended hours.</strong> {EXTENDED_HOURS_ADVICE}
+                </p>
+                {extended.map((text) => (
+                  <p key={text}>{text}</p>
+                ))}
+              </div>
             )}
             {mode === "request" && (
               <div className="form-grid">
@@ -1310,23 +1355,40 @@ export function AppointmentScreen({ id }: { id: string }) {
     </>
   );
 }
+// A lane belongs to one person, so the marker uses that person's travel and calendar.
+// Cancelled and proposed visits reserve nothing and are not marked.
+export function laneExtendedHours(a: ScheduleAppointment, r: Resource) {
+  const x = a.assignments.find((x) => x.resource_id === r.id && x.active);
+  if (!x || a.status !== "Confirmed") return undefined;
+  const span = extendedHours(a.start_at, a.end_at, {
+    timezone: r.calendar.timezone,
+    travel_before_minutes: x.travel_before_minutes,
+    travel_after_minutes: x.travel_after_minutes,
+  });
+  return span
+    ? `${span.from} to ${span.to}${x.travel_before_minutes + x.travel_after_minutes > 0 ? " including travel" : ""}`
+    : undefined;
+}
 export function AppointmentCard({
   a,
   zone,
   drag,
   onMove,
+  extended,
 }: {
   a: ScheduleAppointment;
   zone: string;
   drag?: (event: React.DragEvent) => void;
   onMove?: (a: ScheduleAppointment) => void;
+  // This lane's person works outside standard hours, e.g. "07:30 to 12:30 including travel".
+  extended?: string;
 }) {
   return (
     <article
       className={`appointment-card ${a.status.toLowerCase()}`}
       draggable={!!drag}
       onDragStart={drag}
-      aria-label={`${a.display_number} ${a.status}`}
+      aria-label={`${a.display_number} ${a.status}${extended ? ", extended hours" : ""}`}
     >
       <div className="planner-card-head">
         <strong>
@@ -1347,6 +1409,9 @@ export function AppointmentCard({
           .map((x) => `${x.name} (${x.crew_role})`)
           .join(" · ") || "No crew reserved"}
       </small>
+      {extended && (
+        <p className="card-extended">Extended hours · {extended}</p>
+      )}
       <p className="card-hold">
         {a.scope_review_required ? "Scope review required · " : ""}{a.policy_impacts?.some(x => x.held) ? "Scheduling policy hold" : "Dispatch held"}
         · Customer {a.customer_commitment}
@@ -1554,6 +1619,7 @@ export function PlannerBoard({
                       key={a.id}
                       a={a}
                       zone={zone}
+                      extended={laneExtendedHours(a, r)}
                       drag={
                         usable &&
                         a.actions.can_manage &&

@@ -898,6 +898,11 @@
           "id": "policy-hold",
           "label": "Published policy hold",
           "description": "Unresolved durable publication impact remains visible while the original reservation and policy pin are retained."
+        },
+        {
+          "id": "extended-hours",
+          "label": "Extended hours",
+          "description": "A confirmed visit at 07:30 to 09:30, outside the 08:00 to 17:00 standard hours. The calendar allows it; the card names the times."
         }
       ],
       "implementation": [

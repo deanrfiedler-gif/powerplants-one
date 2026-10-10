@@ -137,7 +137,16 @@ The live booking rule (`fitsWorkingInterval` in `src/scheduling/booking-rules.ts
 | Standard hours | 08:00 to 17:00. A visit or its travel outside them is allowed, with a warning that names the person and the times. |
 | Capacity and free time | Count standard hours only, so extended hours are never offered as free time. |
 
-This is a decision, not a build. Building it needs a change to the sample calendars, the standard-hours warning in the booking form and planner, and tests. The canvas planner and appointment boards already show it: a 07:00 to 18:00 Day timeline with Extended hours bands, and the warning in "Checked as you edit".
+The canvas planner and appointment boards show it as a 07:00 to 18:00 Day timeline with Extended hours bands, and the warning in "Checked as you edit".
+
+**Built (10 October 2026), in the app as it stands:**
+
+- **Sample calendars:** `db/seed-p05.sql` publishes 07:00 to 18:00 on weekdays, as "SYN weekday 07:00–18:00 Brisbane". Published calendars are immutable and seed 5 never re-runs, so only databases seeded from now on get it. Dean's local database and the hosted demo keep 08:00 to 17:00 until they are rebuilt; ADR-0030 accepted the same limit for its date shift.
+- **Standard hours:** a fixed rule in `src/scheduling/working-hours.ts`, read in each person's calendar timezone. Calendars hold one interval per weekday and have no editor, so there is nowhere to record standard hours as data yet. Move it into calendar or policy data when a calendar editor is built.
+- **Warning:** Confirm appointment, Move or reassign and Propose a schedule change show "Extended hours" when a person's visit or travel falls outside 08:00 to 17:00, naming the person and the times. It is worked out in the browser as the form changes and never blocks a save. The server rule is unchanged.
+- **Planner:** a confirmed card in a person's lane says "Extended hours" with that person's times, including travel.
+- **Not built:** the 07:00 to 18:00 Day timeline. The live planner has no time axis; that belongs to the board refinements below.
+- **Capacity:** unchanged. The app computes no calendar-based capacity or free time, so "capacity counts standard hours only" waits for those calculations.
 
 ### Planner boards refined (10 October 2026)
 

@@ -54,3 +54,7 @@ The `policy-hold` catalogue fixture keeps the original appointment and reservati
 Review policy preparation and impact reason/owner/publication at desktop and 390/320 px. Shared Button, fields, ReadState and ErrorNotice retain their contracts; legacy planner buttons remain an existing exception. There is no issued Step 4 mockup. Owner visual/device acceptance is pending. See `docs/testing/evidence/scheduling-policy-enforcement/README.md` for actual functional evidence; no review fingerprint is granted.
 
 Automatic policy preparation must show failures without moving focus out of a date being edited. Save stays unavailable until complete preparation succeeds; explicit command errors retain normal focus and recovery.
+
+## Working hours (10 October 2026)
+
+The catalogue resource calendar now publishes 07:00 to 18:00, like the sample calendars. A confirmed card in a lane shows Extended hours when its visit and that person's travel fall outside the 08:00 to 17:00 standard hours; see the appointment component. The lane's calendar text still shows the published interval only. Standard hours are a fixed rule from [Dean's decision](../../../decisions/ui-build-sequence.md#planner-working-hours-10-october-2026), not calendar data.
