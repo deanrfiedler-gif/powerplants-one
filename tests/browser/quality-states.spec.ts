@@ -3,6 +3,9 @@ import type { Request, Response } from "@playwright/test";
 import { writeFile } from "node:fs/promises";
 import { financeHttpSource, httpFinanceDraft } from "../helpers/finance-http";
 import { call, identity, capture } from "../helpers/quality-browser";
+import { qualityFieldVisit } from "../helpers/quality-field";
+import { base, entry, png } from "../helpers/field";
+import { operation } from "../helpers/offline";
 
 test.use({ actionTimeout: 15000, navigationTimeout: 60000 });
 
@@ -61,6 +64,89 @@ test("P11 PT-29 pack and report queues never turn failed reads into empty or iss
   await capture(page, info, "draft-pack-not-issued");
 });
 
+test("P11 PT-29 failed photo upload retains the selected original and recovers without a false available claim", async ({ page }, info) => {
+  test.setTimeout(180000);
+  const { job } = await qualityFieldVisit(page, info.project.name.startsWith("mobile") ? "2031-11-10" : "2031-11-09");
+  await page.goto(`/my-jobs/${job.id}`);
+  await page.getByRole("button", { name: "Photos", exact: true }).click();
+  const bytes = png();
+  await page.getByLabel("Synthetic photo file").setInputFiles({ name: "SYN-PT29-retained.png", mimeType: "image/png", buffer: bytes });
+  await page.getByRole("button", { name: "1. Register photo", exact: true }).click();
+  const upload = page.getByRole("button", { name: "2. Upload original bytes", exact: true });
+  await expect(upload).toBeVisible();
+  const before = (await call(page, `my-jobs/${job.id}`)).items[0].attachments;
+  expect(before).toHaveLength(1);
+  const path = `**/api/v1/attachments/${before[0].id}/upload`;
+  await page.route(path, route => route.fulfill({ status: 503, contentType: "application/json", body: JSON.stringify({
+    code: "DependencyUnavailable", message: "SYN upload unavailable. Retry the original photo.", retryable: true,
+  }) }));
+  await upload.click();
+  await expect(page.getByRole("alert").filter({ hasText: "SYN upload unavailable" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Preview original photo", exact: true })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "3. Verify and make available", exact: true })).toHaveCount(0);
+  expect(await page.getByLabel("Synthetic photo file").evaluate((e: HTMLInputElement) => e.files?.[0]?.name)).toBe("SYN-PT29-retained.png");
+  expect((await call(page, `my-jobs/${job.id}`)).items[0].attachments).toEqual(before);
+  await capture(page, info, "SC-10-upload-failed-original-retained");
+  await page.unroute(path);
+  // The explicit retry reuses the original command and bytes, without reselecting.
+  await page.getByRole("button", { name: "Retry original submission", exact: true }).click();
+  await page.getByRole("button", { name: "3. Verify and make available", exact: true }).click();
+  await expect(page.getByRole("link", { name: "Preview original photo", exact: true })).toBeVisible();
+  const after = (await call(page, `my-jobs/${job.id}`)).items[0].attachments;
+  expect(after).toHaveLength(1);
+  expect(after[0].id).toBe(before[0].id);
+  expect(after[0].status).toBe("Available");
+  const response = await page.request.get(`/api/v1/attachments/${after[0].id}/bytes`);
+  expect(response.status()).toBe(200);
+  expect(await response.body()).toEqual(bytes);
+  await capture(page, info, "SC-10-upload-recovered-exact-original");
+});
+
+test("P11 PT-29 partial and failed account extractions keep historical totals separate from current values", async ({ page }, info) => {
+  await call(page, "local-session", { profile: "finance" });
+  const account = (await call(page, "finance/options")).accounts[0];
+  await page.goto(`/customers/${account.customer_id}/account?account_id=${account.id}`);
+  const balance = page.getByText("Supplied account balance", { exact: true }).locator("..").locator("strong");
+  for (const fixture of ["F-01", "F-04", "Failed", "F-01"]) {
+    await page.getByLabel("Independent fixture", { exact: true }).selectOption(fixture);
+    await page.getByRole("button", { name: "Record synthetic extraction", exact: true }).click();
+    await expect(page.getByRole("button", { name: "Record synthetic extraction", exact: true })).toBeEnabled();
+    const original = await call(page, `customers/${account.customer_id}/account-observations?account_id=${account.id}`);
+    expect(original.current.completeness).toBe(fixture === "F-01" ? "Complete" : fixture === "F-04" ? "Partial" : "Failed");
+    await expect(balance).toHaveText(fixture === "F-01" ? "AUD 600.00" : "Unavailable");
+    if (fixture !== "F-01") {
+      await expect(page.getByText(/Last good observation:/)).toContainText("This is historical; the current total is unavailable.");
+      await expect(page.getByText("Separate unapplied cash", { exact: true }).locator("..").locator("strong")).toHaveText("Unknown");
+      expect(original.account_balance).toBeNull();
+      await capture(page, info, `SC-13-${fixture === "F-04" ? "partial" : "failed-extraction"}`);
+    }
+  }
+  await capture(page, info, "SC-13-complete-extraction-recovered");
+});
+
+test("P11 PT-29 stale Finance action preserves current cancellation and safe input", async ({ page }, info) => {
+  test.setTimeout(180000);
+  const mobile = info.project.name.startsWith("mobile");
+  const source = await financeHttpSource((p, b) => call(page, p, b), mobile ? "2031-11-12" : "2031-11-11", mobile ? 81 : 80);
+  const input = await httpFinanceDraft((p, b) => call(page, p, b), source);
+  await call(page, "finance/handoffs", input);
+  await page.goto(`/finance/handoffs/${input.id}`);
+  const reason = "SYN retain this review proposal while comparing the concurrent cancellation.";
+  await page.getByLabel("Precise action / correction reason", { exact: true }).fill(reason);
+  const current = await call(page, `finance/handoffs/${input.id}`);
+  await call(page, `finance/handoffs/${input.id}/cancel`, { ...base(), expected_version: current.handoff.version });
+  const refused = page.waitForResponse(response => response.request().method() === "POST" && new URL(response.url()).pathname === `/api/v1/finance/handoffs/${input.id}/submit`);
+  await page.getByRole("button", { name: "Submit for Finance review", exact: true }).click();
+  expect((await refused).status()).toBe(409);
+  await expect(page.locator('.business-error[role="alert"]')).toBeVisible();
+  await expect(page.getByText("Cancelled", { exact: true }).first()).toBeVisible();
+  await expect(page.getByLabel("Precise action / correction reason", { exact: true })).toHaveValue(reason);
+  const after = await call(page, `finance/handoffs/${input.id}`);
+  expect(after.handoff.status).toBe("Cancelled");
+  expect(after.attempts).toHaveLength(0);
+  await capture(page, info, "SC-12-stale-action-current-cancellation");
+});
+
 test("P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial", async ({
   page,
 }, info) => {
@@ -73,6 +159,18 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
   );
   const cmd = await httpFinanceDraft((p, b) => call(page, p, b), source);
   await call(page, "finance/handoffs", cmd);
+  const account = await call(page, `customers/${(await call(page, "finance/options")).accounts.find((a: { id: string }) => a.id === cmd.account_id).customer_id}/account-observations?account_id=${cmd.account_id}`);
+  await call(page, `finance/accounts/${cmd.account_id}/observe`, {
+    ...base(), expected_version: account.account.version, fixture: "F-01",
+  });
+  // SC-09 and SC-15 must be populated even when this spec runs by itself.
+  const field = await qualityFieldVisit(page, mobile ? "2031-11-08" : "2031-11-07");
+  const grant = await call(page, `sync/context/${field.job.id}`, {});
+  const retained = operation(field.principal, field.job, "Capture", entry(field.job));
+  const recovery = await call(page, "sync/recovery", {
+    grant_id: grant.recovery.id, token: grant.recovery.token, operation: retained,
+  });
+  expect(recovery.normal_acceptance).toBe(false);
   await call(page, "local-session", { profile: "coordinator" });
   const report = (await call(page, `reports/${source.report_id}`)).items[0];
   const appointment = report.appointment.id;
@@ -127,9 +225,10 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
     },
     {
       id: "SC-07",
-      url: "/schedule",
+      url: `/schedule?day=${mobile ? "2031-11-06" : "2031-11-05"}&view=day`,
       api: "schedule",
       profile: "coordinator",
+      list: true,
       refresh: "Refresh planner",
     },
     {
@@ -197,28 +296,38 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
         .locator("main")
         .getByText(/^(?:.*\s)?Loading .*…$/);
       await call(page, "local-session", { profile: s.profile });
-      const query =
-        s.id === "SC-02" ? "?kind=organisations" :
-        s.id === "SC-13"
-          ? `?account_id=${cmd.account_id}`
-          : s.id === "SC-07"
-            ? "?from=2031-09-21T14:00:00Z&to=2031-09-28T14:00:00Z&timezone=Australia%2FBrisbane"
-            : "";
-      const original = await call(page, s.api + query);
       const loadedRead = page.waitForResponse((response) =>
         new URL(response.url()).pathname === `/api/v1/${s.api}` &&
         response.request().method() === "GET" && response.status() === 200,
         { timeout: 60000 });
       // The screen contract is the authorised read and rendered state. A dev
       // document's unrelated load event is not the selected record's readiness.
-      await Promise.all([
+      const [loaded] = await Promise.all([
         loadedRead,
         page.goto(s.url, { waitUntil: "domcontentloaded" }),
       ]);
+      const query = new URL(loaded.url()).search;
+      const original = await loaded.json();
+      expect(loaded.headers()["cache-control"]).toBe("private, no-store");
       await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
       await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeEnabled();
       await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
       await expect(screenLoading).toHaveCount(0);
+      // Successful status alone is not populated proof. Assert a record from
+      // this browser's exact response is actually rendered in the main region.
+      if (s.id !== "SC-13" && s.id !== "SC-14") expect(original.items.length, s.id).toBeGreaterThan(0);
+      const record = original.items?.[0];
+      const populatedLabel: string = s.id === "SC-13" ? original.account.fixture_key
+        : s.id === "SC-14" ? original.filename
+        : s.id === "SC-15" ? record.operation_id
+        : s.id === "SC-01" ? record.summary
+        : record.display_number ?? record.reference ?? record.display_name;
+      expect(populatedLabel, `${s.id}: visible source label`).toBeTruthy();
+      await expect(page.locator("main")).toContainText(populatedLabel);
+      if (s.id === "SC-13") {
+        expect(original.current.observations.length).toBeGreaterThan(0);
+        await expect(page.locator("tbody tr").first()).toBeVisible();
+      }
       if (s.id === "SC-08") {
         await expect(page.getByRole("banner").locator(".ppo-crumb-current")).toHaveText("Schedule");
         await expect(page.getByRole("banner").locator(".ppo-crumb-current")).toBeVisible();
@@ -377,7 +486,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
           route.fulfill({
             status: 200,
             contentType: "application/json",
-            body: JSON.stringify({ ...original, items: [], next_cursor: null }),
+            body: JSON.stringify({ ...original, items: [], total: 0, next_cursor: null }),
           }),
         );
         await page.reload({ waitUntil: "domcontentloaded" });
@@ -388,6 +497,16 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
             .first(),
         ).toBeVisible();
         await capture(page, info, `${s.id}-empty`);
+        await page.unroute(match);
+      } else if (s.id === "SC-13") {
+        await page.route(match, route => route.fulfill({ status: 200, contentType: "application/json",
+          body: JSON.stringify({ ...original, current: null, last_good: null, history: [], account_balance: null, unapplied_cash: null, balance_status: "Unavailable" }),
+        }));
+        await page.reload({ waitUntil: "domcontentloaded" });
+        await expect(page.getByText("No extraction recorded. Account total unavailable.", { exact: true })).toBeVisible();
+        await expect(page.getByText("Supplied account balance", { exact: true }).locator("..").locator("strong")).toHaveText("Unavailable");
+        await expect(page.locator("tbody tr")).toHaveCount(0);
+        await capture(page, info, `${s.id}-no-extraction`);
         await page.unroute(match);
       } else {
         let unavailableRequested = false;
@@ -494,17 +613,20 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
         route: s.url,
         read: s.api,
         profile: s.profile,
+        populated_label: populatedLabel,
+        populated_source: "Actual browser GET 200; visible record asserted",
+        query,
         denied_status: denied.status(),
         denial_source: "Browser GET after accepted identity POST",
         states: [
-          "loaded",
+          "populated",
           "loading",
           "failed",
           "recovered",
-          s.list ? "empty permitted result" : "unavailable detail record",
+          s.list ? "empty permitted result" : s.id === "SC-13" ? "no extraction; total unavailable" : "unavailable detail record",
           "actual Systems denial",
         ],
-        empty_detail_basis: s.list
+        empty_detail_basis: s.list || s.id === "SC-13"
           ? null
           : "Detail APIs return unavailable for no permitted record; an empty success object is not fabricated.",
         limits:
