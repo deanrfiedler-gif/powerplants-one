@@ -2984,3 +2984,316 @@ body:has(.crm-workspace) main { padding-top:18px; }
     transition: none;
   }
 }
+
+/* Planner on a phone (below 781 px; phase 00 refinement board, Dean, 10 October 2026). Day:
+   day chips, then one card per person with a 07:00 to 18:00 strip and their visits. Week:
+   one section per day. A visit's details open as a bottom sheet. */
+.planner-phone {
+  display: grid;
+  gap: 12px;
+  margin: 12px 0 20px;
+  min-width: 0;
+}
+.pq-chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+.pq-chip {
+  flex: none;
+  min-height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  background: var(--white);
+  color: var(--ink);
+  font: inherit;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+.pq-chip[aria-pressed="true"] {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--white);
+  font-weight: 600;
+}
+.pq-attn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid #ebd3a0;
+  border-radius: var(--radius-card);
+  background: #fffbf3;
+  color: var(--ink);
+  font-size: 14px;
+  text-decoration: none;
+}
+.pq-attn > span:last-child {
+  font-size: 20px;
+  color: var(--text-secondary);
+}
+.pq-person,
+.pq-day {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border-radius: var(--radius-card);
+  background: var(--surface-2);
+  min-width: 0;
+}
+.pq-person header {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+}
+.pq-person header a {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.pq-person header small {
+  font-size: 12.5px;
+  color: #4b5563;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.pq-person.off {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  background: var(--surface-3);
+  border: 1px solid var(--line-soft);
+}
+.pq-person.off .tl-av {
+  opacity: 0.55;
+}
+.pq-person.off header a {
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+.pq-strip {
+  position: relative;
+  height: 14px;
+  border-radius: 4px;
+  background: var(--white);
+  overflow: hidden;
+}
+.pq-strip i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+.pq-strip .b.ext,
+.pq-strip .b.off,
+.pq-strip .b.blk {
+  background: repeating-linear-gradient(135deg, rgba(148, 159, 173, 0.35) 0 1px, transparent 1px 5px), #eef1f5;
+}
+.pq-strip .b.ext {
+  background: repeating-linear-gradient(135deg, rgba(148, 159, 173, 0.25) 0 1px, transparent 1px 5px), #f6f7f9;
+}
+.pq-strip .v {
+  top: 2px;
+  bottom: 2px;
+  border-radius: 3px;
+}
+.pq-strip .v.ok {
+  background: var(--navy);
+}
+.pq-strip .v.held {
+  background: #d39a32;
+}
+.pq-strip .v.prop {
+  background: repeating-linear-gradient(135deg, #8a93a0 0 2px, transparent 2px 5px);
+  border: 1px solid #8a93a0;
+}
+.pq-strip .v.trv {
+  background: #c9ced6;
+}
+.pq-strip .now {
+  width: 2px;
+  margin-left: -1px;
+  background: var(--danger);
+}
+.pq-axis {
+  display: flex;
+  justify-content: space-between;
+  margin-top: -4px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+.pq-axis span:nth-child(2) {
+  /* 12:00 sits five elevenths along the 07:00 to 18:00 strip. */
+  position: relative;
+  left: calc(45.45% - 50%);
+}
+.pq-card {
+  display: grid;
+  gap: 2px;
+  padding: 10px 12px;
+  border: 1px solid #c8d6e5;
+  border-radius: var(--radius-card);
+  background: #eef4fa;
+  cursor: pointer;
+  transition: transform 0.12s ease, margin 0.12s ease;
+  min-width: 0;
+}
+.pq-card:hover,
+.pq-card:active,
+.pq-card:focus-visible {
+  transform: translateY(-1px);
+  margin-left: -3px;
+  margin-right: -3px;
+}
+.pq-card:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.pq-card.held {
+  background: #fffbf3;
+  border-color: #ebd3a0;
+}
+.pq-card.prop {
+  background: repeating-linear-gradient(135deg, #fff 0 7px, #f6f7f9 7px 14px);
+  border: 1px dashed #a3acb8;
+}
+.pq-card.sel {
+  border-color: var(--navy);
+  box-shadow: 0 8px 20px rgba(36, 42, 55, 0.14), 0 2px 4px rgba(36, 42, 55, 0.06);
+}
+.pq-card.held.sel {
+  border-color: #fff5df;
+}
+.pq-card .r1 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+.pq-card .r1 b {
+  font-variant-numeric: tabular-nums;
+}
+.pq-card .r1 .tl-crew {
+  margin: 0 0 0 auto;
+}
+.pq-card .t {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 20px;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+.pq-card .m {
+  font-size: 13px;
+  color: var(--text-secondary);
+  overflow-wrap: anywhere;
+}
+.pq-none {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.pq-day-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 10px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+.pq-day-head b {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+}
+.pq-day-head small {
+  font-size: 12.5px;
+  color: #4b5563;
+  font-variant-numeric: tabular-nums;
+}
+.pq-day.quiet {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  background: var(--surface-3);
+  border: 1px solid var(--line-soft);
+}
+/* A phone shows the details as a bottom sheet above the shell's bottom navigation. */
+@media (max-width: 780px) {
+  .tl-snapshot {
+    position: fixed;
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    max-height: 85vh;
+    border-radius: 16px 16px 0 0;
+    z-index: 70;
+    box-shadow: 0 -8px 28px rgba(36, 42, 55, 0.22);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pq-card {
+    transition: none;
+  }
+}
+/* The component catalogue shows the phone planner at phone width. */
+.catalogue-phone-frame {
+  max-width: 390px;
+  padding: 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: 16px;
+  background: var(--paper);
+}
+/* Phone planner controls: with the filters folded the plate closes on itself. */
+.planner-toolbar.folded {
+  border-bottom: 1px solid var(--line-strong);
+  border-radius: var(--radius-card);
+  margin-bottom: 16px;
+}
+@media (max-width: 780px) {
+  .planner-toolbar {
+    gap: 10px;
+    padding: 10px 12px;
+  }
+  .planner-toolbar-actions {
+    margin-left: 0;
+  }
+  /* The four counts become one compact row so the board starts on the first screen. */
+  .planner-stat-row {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+    margin: 12px 0 8px;
+  }
+  .planner-stat-row > div {
+    padding: 8px 8px;
+    box-shadow: none;
+  }
+  .planner-stat-row strong {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .planner-stat-row span {
+    font-size: 11px;
+    line-height: 14px;
+  }
+  .planner-legend {
+    gap: 4px 12px;
+    margin: 8px 0;
+  }
+}

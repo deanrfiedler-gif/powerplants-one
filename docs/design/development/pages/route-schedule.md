@@ -123,3 +123,15 @@ Stage 3 of building the refinement boards ([decision](../../../decisions/ui-buil
 - **Tiles:** time and title, crew initials only when shared, a clock only for extended hours. Faint blue confirmed, amber needs attention, hatched proposed. Hover text names the status and travel. Tiles grow 3 px each side and rise 1 px on hover or focus.
 - **Details and moves:** a tile opens the same details panel as the Day view (Enter or Space too). Dragging a confirmed tile to another day keeps its time and opens Move or reassign, as before.
 - **Evidence:** [checks and captures](../../../testing/evidence/planner-week-board/README.md). No owner visual review yet.
+
+## Phone layout built — 10 October 2026
+
+Stage 4 of building the refinement boards ([decision](../../../decisions/ui-build-sequence.md#planner-phone-layout-10-october-2026)). Below 781 px, when the display timezone is the resources' own; otherwise the lane list.
+
+- **Controls (phase 00 finding: "tabs and filters fill the first screen"):** the Scheduling tabs are one scrolling row; the date, Day/Week, Refresh and a Filters button stay in view, and the display timezone, Work orders and the three filters fold behind Filters, which shows how many are set. The four counts are one compact row. The first person's card now starts on the first screen at 390 × 844.
+
+- **Day:** chips for the week's weekdays (and weekend days with visits), each with its visit count; an attention row ("2 proposed · 1 needs attention") that jumps to the Proposed and cancelled list; then one card per person: avatar, name and one total; a 07:00 to 18:00 strip showing extended or not-working ends, unavailable time, travel, visits by status and the Now tick, with free time in its accessible name and hover text; then the person's visit cards. People away or inactive sit last in short rows.
+- **Week:** one section per day, its heading opening that day, with the team's total; visit cards for everyone that day, with crew initials always shown because the list mixes people. Weekend days with nothing on them are short.
+- **Cards:** time, title and site; faint blue confirmed, amber needs attention, hatched proposed; a clock for extended hours. They grow 3 px each side and rise 1 px on press.
+- **Details:** the shared details panel as a bottom sheet above the shell's navigation, with Close, Move or reassign and Open appointment.
+- **Evidence:** [checks and captures](../../../testing/evidence/planner-phone-layout/README.md). No device or owner review yet.

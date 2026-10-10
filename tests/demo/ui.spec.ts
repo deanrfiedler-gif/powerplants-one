@@ -62,12 +62,11 @@ test("invited actor: schedule lanes, demand and appointment links load with book
   await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
   await expect(page.getByRole("heading", { name: "Unassigned demand", exact: true })).toBeVisible();
   await expect(page.getByText(/Unassigned demand is unknown/)).toHaveCount(0);
-  // Wide screens show the Week board: a confirmed visit opens its details, which carry Move or reassign.
-  if ((page.viewportSize()?.width ?? 0) >= 781) {
-    await page.locator('[data-appointment][data-status="Confirmed"]').first().click();
-    await expect(page.getByRole("complementary", { name: /^Visit details: / })).toBeVisible();
-  }
+  // The Week board (desktop) and the phone list both open a visit's details, which carry Move or reassign.
+  await page.locator('[data-appointment][data-status="Confirmed"]').first().click();
+  await expect(page.getByRole("complementary", { name: /^Visit details: / })).toBeVisible();
   await expect(page.getByRole("button", { name: "Move or reassign", exact: true }).first()).toBeVisible();
+  await page.getByRole("button", { name: "Close visit details", exact: true }).click();
   const schedule = await call(page, "schedule?from=2031-09-21T14%3A00%3A00Z&to=2031-09-28T14%3A00%3A00Z&timezone=Australia%2FBrisbane");
   expect(schedule.items.length).toBeGreaterThan(0);
   expect(schedule.resources.length).toBeGreaterThan(0);
@@ -82,7 +81,8 @@ test("invited actor: schedule lanes, demand and appointment links load with book
   await page.getByRole("button", { name: "Week", exact: true }).click();
   await expect(page.getByText("Loading permitted records…", { exact: true })).toHaveCount(0);
   const appointment = schedule.items[0];
-  await page.locator(`a[href="/service/appointments/${appointment.id}"]`).first().click();
+  await page.locator(`[data-appointment="${appointment.id}"]`).first().click();
+  await page.getByRole("link", { name: "Open appointment", exact: true }).click();
   await expect(page.getByRole("heading", { name: appointment.display_number, exact: true })).toBeVisible();
   const packEntry = page.getByRole("region", { name: "Visit job pack", exact: true });
   await expect(packEntry.getByRole("status")).toHaveText("Job pack access is unavailable to this identity.");
