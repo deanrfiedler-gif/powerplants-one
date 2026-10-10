@@ -5,17 +5,21 @@ import { mkdir, writeFile, readFile, readdir } from "node:fs/promises";
 import { createHash, randomUUID } from "node:crypto";
 import { once } from "node:events";
 import { chromium, expect, type BrowserContext, type CDPSession, type Page } from "@playwright/test";
+import { localConfig } from "../src/platform/config";
 import { closeDatabase, database } from "../src/platform/database";
 import { qualityLoadFixture } from "./quality-load-fixture";
 import { performanceFixtureFingerprint } from "./quality-performance-fixture";
 import { netlogDirectory, prepareNetlog } from "./netlog-metadata";
 import { waitForSampleCoreResponse } from "./quality-core-response";
 
-const compiled = process.argv.includes("--compiled");
-const baseRoot = "verification-evidence/p11-performance";
+// A standalone compiled comparison retains an explicitly supplied fixture across
+// source builds. The default CI development/compiled procedure is unchanged.
+const standaloneCompiled = process.argv.includes("--compiled-only");
+const compiled = standaloneCompiled || process.argv.includes("--compiled");
+const baseRoot = process.env.PPO_PERFORMANCE_EVIDENCE ?? "verification-evidence/p11-performance";
 const root = compiled ? `${baseRoot}/compiled` : baseRoot;
 await mkdir(root, { recursive: true });
-const origin = "http://127.0.0.1:3000";
+const origin = localConfig().origin;
 // Both Chromium implementations have reproduced the stall. Keep the current
 // selection fixed while observing the internal network pipeline.
 const channel = "chrome";
@@ -48,7 +52,7 @@ async function protocolProbe(cdp: CDPSession) {
       catch { return { completed: false, ms: Math.round(performance.now() - started) }; }
       finally { clearTimeout(timer); }
     };
-    const [same_host, other_host] = await Promise.all([probe("${origin}/brand/powerplants-logo-green-white.png"), probe("http://localhost:3000/brand/powerplants-logo-green-white.png")]);
+    const [same_host, other_host] = await Promise.all([probe("${origin}/brand/powerplants-logo-green-white.png"), probe("${origin.replace("127.0.0.1", "localhost")}/brand/powerplants-logo-green-white.png")]);
     return JSON.stringify({ same_host, other_host });
   })()`;
   try {
@@ -72,7 +76,8 @@ async function protocolProbe(cdp: CDPSession) {
 }
 async function resourceSnapshot() {
   const processes: Record<string, { count: number; resident_kib: number }> = {};
-  for (const pid of (await readdir("/proc")).filter((x) => /^\d+$/.test(x))) {
+  const processDirectories = platform() === "linux" ? await readdir("/proc") : [];
+  for (const pid of processDirectories.filter((x) => /^\d+$/.test(x))) {
     try {
       const name = (await readFile(`/proc/${pid}/comm`, "utf8")).trim();
       if (!/^(node|chrome|chromium|headless_shell|postgres)/.test(name)) continue;
@@ -86,7 +91,7 @@ async function resourceSnapshot() {
   const cgroup: Record<string, string | null> = {};
   for (const name of ["memory.current", "memory.peak", "memory.max", "memory.events"])
     cgroup[name] = await readFile(`/sys/fs/cgroup/${name}`, "utf8").then((x) => x.trim()).catch(() => null);
-  return { free_memory_bytes: freemem(), load_average: loadavg(), processes, cgroup };
+  return { free_memory_bytes: freemem(), load_average: loadavg(), processes, cgroup, process_memory_available: platform() === "linux" };
 }
 const resourceObservations: unknown[] = [];
 const provenance = {
@@ -102,13 +107,22 @@ const provenance = {
   comparison_id: process.env.PPO_PERFORMANCE_COMPARISON_ID ?? randomUUID(),
   server_profile: compiled ? "compiled" : "development",
   measurement_pid: process.pid,
+  compiled_source: compiled ? process.env.PPO_COMPILED_SOURCE ?? null : null,
+  standalone_compiled: standaloneCompiled,
   run_id: process.env.GITHUB_RUN_ID ?? null,
   run_attempt: process.env.GITHUB_RUN_ATTEMPT ?? null,
 };
 await writeFile(`${root}/provenance.json`, JSON.stringify(provenance, null, 2));
 let fixture: Awaited<ReturnType<typeof qualityLoadFixture>>;
 try {
-  if (compiled) {
+  if (standaloneCompiled) {
+    assert.ok(process.env.PPO_PERFORMANCE_FIXTURE, "Supply the original retained fixture manifest");
+    assert.match(process.env.PPO_COMPILED_SOURCE ?? "", /^[0-9a-f]{40}$/);
+    execFileSync("git", ["diff", "--exit-code", process.env.PPO_COMPILED_SOURCE!, "--", "src", "db", "public", "package.json", "package-lock.json", "scripts/build-offline.ts", "next.config.ts"]);
+    const retained = JSON.parse(await readFile(process.env.PPO_PERFORMANCE_FIXTURE!, "utf8"));
+    fixture = retained.fixture;
+    assert.deepEqual(await performanceFixtureFingerprint(), retained.fingerprint, "Standalone comparison requires the exact unchanged fixture");
+  } else if (compiled) {
     const retained = JSON.parse(await readFile(`${baseRoot}/fixture.json`, "utf8"));
     assert.equal(retained.executed_tree, provenance.executed_tree, "Both profiles must measure the same source tree");
     assert.equal(retained.comparison_id, provenance.comparison_id, "Never reuse an earlier invocation's fixture evidence");
@@ -570,12 +584,13 @@ try {
             download_bytes_per_second: 1250000,
             upload_bytes_per_second: 625000,
             server_database:
-              "same disposable CI runner; loopback PostgreSQL 16.15",
+              "Same declared measurement host; disposable loopback PostgreSQL. Actual server version is recorded below.",
           },
           build: compiled
             ? "Completed pinned Next.js build served through the same guarded loopback synthetic launcher with --compiled. NODE_ENV=test; production client bundle, development React on the server. This is not the hosted Entra container."
             : "Pinned Next.js guarded development server after successful production compilation check. The development compiler cache is cleared at every server start; filesystem snapshots within that process allow automatic compiler memory eviction. Production hosting/start remains prohibited.",
-          comparison_order: "Development first, compiled second, with distinct server/browser processes and fresh browser contexts. Same exact fixture is checked before each profile. Database and OS caches are retained; no randomised order or causal production-performance inference.",
+          database_version: (await database().query("SHOW server_version")).rows[0].server_version,
+          comparison_order: standaloneCompiled ? "Standalone compiled run on a retained fingerprinted fixture. Compare only separately declared original runs; database/OS caches retained, no production inference." : "Development first, compiled second, with distinct server/browser processes and fresh browser contexts. Same exact fixture is checked before each profile. Database and OS caches are retained; no randomised order or causal production-performance inference.",
           concurrency:
             "10 independent Chromium browser processes (one per virtual user, each with its own network service and DevTools sessions), each opening a fresh context and server-issued session per view wave; role-appropriate existing synthetic Coordinator or assigned Technician identity. These are 10 virtual users, not 10 distinct staff identities.",
           cold_warm:

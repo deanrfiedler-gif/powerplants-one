@@ -1,0 +1,282 @@
+[
+  {
+    "path": "1-abba-a1/desktop-directory.png",
+    "bytes": 147185,
+    "sha256": "8bd4aef7ad7b643f88531668eff4c71964fd3ddd5e6240ca3669129334d27e66",
+    "original_bytes": 147185,
+    "original_sha256": "8bd4aef7ad7b643f88531668eff4c71964fd3ddd5e6240ca3669129334d27e66"
+  },
+  {
+    "path": "1-abba-a1/desktop-record.png",
+    "bytes": 104044,
+    "sha256": "be0663cda35157821e447a49f2980cccfe6d9c88f87eb38608987ef58d8877ad",
+    "original_bytes": 104044,
+    "original_sha256": "be0663cda35157821e447a49f2980cccfe6d9c88f87eb38608987ef58d8877ad"
+  },
+  {
+    "path": "1-abba-a1/fixture-after.json.gz",
+    "bytes": 613,
+    "sha256": "3a82434c18dcb323ef1e66bf9bce30225106c57cec432d469da4d00dec921e2a",
+    "original_bytes": 1288,
+    "original_sha256": "3872820585ce937bc4fa5b4775d63fed084d8dc0c008ceec6d593f2cf6416a85"
+  },
+  {
+    "path": "1-abba-a1/gateway.jsonl.gz",
+    "bytes": 88729,
+    "sha256": "7d3d647dd2cc9b48bb23071e3e0a54e4cb1c74560bea79af9ccaa7b902cbffab",
+    "original_bytes": 870828,
+    "original_sha256": "98e33de4eb177619e8e12fedb8f38e59ccdac31b97dc019834f2255a25fc0a4a"
+  },
+  {
+    "path": "1-abba-a1/phone-directory.png",
+    "bytes": 59910,
+    "sha256": "9dd3af10ba385a3b0b71d95930110b6d5a092ccad646aeac89e6f59136e57638",
+    "original_bytes": 59910,
+    "original_sha256": "9dd3af10ba385a3b0b71d95930110b6d5a092ccad646aeac89e6f59136e57638"
+  },
+  {
+    "path": "1-abba-a1/phone-record.png",
+    "bytes": 52465,
+    "sha256": "3b37e0dc2bdce6aa7fb28161045921fb7099c1a7e64f25418e4b5fe54e20d832",
+    "original_bytes": 52465,
+    "original_sha256": "3b37e0dc2bdce6aa7fb28161045921fb7099c1a7e64f25418e4b5fe54e20d832"
+  },
+  {
+    "path": "1-abba-a1/results.json.gz",
+    "bytes": 107536,
+    "sha256": "8f9a28dd79206bf9c82fb28c85b70c88d5306c3458809de9376486264fa6ec82",
+    "original_bytes": 1195032,
+    "original_sha256": "b11f9b9b7d00ac5864c853d63eb8eba86e407d911e60c3f3c513c5e2fa948b96"
+  },
+  {
+    "path": "2-abba-b1/desktop-directory.png",
+    "bytes": 147242,
+    "sha256": "6d09b5276cc99d01307027c9950eeb9426d6a64dac7e51b835092e85708e8bfa",
+    "original_bytes": 147242,
+    "original_sha256": "6d09b5276cc99d01307027c9950eeb9426d6a64dac7e51b835092e85708e8bfa"
+  },
+  {
+    "path": "2-abba-b1/desktop-record.png",
+    "bytes": 104044,
+    "sha256": "be0663cda35157821e447a49f2980cccfe6d9c88f87eb38608987ef58d8877ad",
+    "original_bytes": 104044,
+    "original_sha256": "be0663cda35157821e447a49f2980cccfe6d9c88f87eb38608987ef58d8877ad"
+  },
+  {
+    "path": "2-abba-b1/fixture-after.json.gz",
+    "bytes": 613,
+    "sha256": "3a82434c18dcb323ef1e66bf9bce30225106c57cec432d469da4d00dec921e2a",
+    "original_bytes": 1288,
+    "original_sha256": "3872820585ce937bc4fa5b4775d63fed084d8dc0c008ceec6d593f2cf6416a85"
+  },
+  {
+    "path": "2-abba-b1/gateway.jsonl.gz",
+    "bytes": 49040,
+    "sha256": "e1b434fa8d453a2affd002c146889eec2ea78c561183864e81bec45ae325bd2e",
+    "original_bytes": 486975,
+    "original_sha256": "ade0b1fb97cfaf7021cf17f0827c53b7fb1a887a02563063903c4a819baa8ca9"
+  },
+  {
+    "path": "2-abba-b1/phone-directory.png",
+    "bytes": 60021,
+    "sha256": "59fadbff193053fa430dc01c901a6637206e1345bc0febc30df29ab66d210f9b",
+    "original_bytes": 60021,
+    "original_sha256": "59fadbff193053fa430dc01c901a6637206e1345bc0febc30df29ab66d210f9b"
+  },
+  {
+    "path": "2-abba-b1/phone-record.png",
+    "bytes": 52465,
+    "sha256": "3b37e0dc2bdce6aa7fb28161045921fb7099c1a7e64f25418e4b5fe54e20d832",
+    "original_bytes": 52465,
+    "original_sha256": "3b37e0dc2bdce6aa7fb28161045921fb7099c1a7e64f25418e4b5fe54e20d832"
+  },
+  {
+    "path": "2-abba-b1/results.json.gz",
+    "bytes": 93046,
+    "sha256": "31ff5b579bc404789c23e7d5429203226b526b3359ea4e34ae23ccf4ab281985",
+    "original_bytes": 1002095,
+    "original_sha256": "d106cac338b59b0df631b1fcf828080ebf8a0d86e3bfdc60219ba50c292c02ea"
+  },
+  {
+    "path": "3-abba-b2/desktop-directory.png",
+    "bytes": 147159,
+    "sha256": "52e44fd772ca0297cc15e40ac6a867380b83a4aff3051d451f9ea5f2f03cd223",
+    "original_bytes": 147159,
+    "original_sha256": "52e44fd772ca0297cc15e40ac6a867380b83a4aff3051d451f9ea5f2f03cd223"
+  },
+  {
+    "path": "3-abba-b2/desktop-record.png",
+    "bytes": 104044,
+    "sha256": "be0663cda35157821e447a49f2980cccfe6d9c88f87eb38608987ef58d8877ad",
+    "original_bytes": 104044,
+    "original_sha256": "be0663cda35157821e447a49f2980cccfe6d9c88f87eb38608987ef58d8877ad"
+  },
+  {
+    "path": "3-abba-b2/fixture-after.json.gz",
+    "bytes": 613,
+    "sha256": "3a82434c18dcb323ef1e66bf9bce30225106c57cec432d469da4d00dec921e2a",
+    "original_bytes": 1288,
+    "original_sha256": "3872820585ce937bc4fa5b4775d63fed084d8dc0c008ceec6d593f2cf6416a85"
+  },
+  {
+    "path": "3-abba-b2/gateway.jsonl.gz",
+    "bytes": 48305,
+    "sha256": "249bf1fb00090989a946060881febd395474bbdf4ef0afdf31f72116d3693b54",
+    "original_bytes": 484322,
+    "original_sha256": "c5322a41798760e252d9fa3eca720bc44a404d82fe462867fa3567c2cf2b5a0a"
+  },
+  {
+    "path": "3-abba-b2/phone-directory.png",
+    "bytes": 59984,
+    "sha256": "fffe5e105bd539435749fbd05ad464ea7d0fd10ebcbd9e9c11dd01928b0ad2ef",
+    "original_bytes": 59984,
+    "original_sha256": "fffe5e105bd539435749fbd05ad464ea7d0fd10ebcbd9e9c11dd01928b0ad2ef"
+  },
+  {
+    "path": "3-abba-b2/phone-record.png",
+    "bytes": 52465,
+    "sha256": "3b37e0dc2bdce6aa7fb28161045921fb7099c1a7e64f25418e4b5fe54e20d832",
+    "original_bytes": 52465,
+    "original_sha256": "3b37e0dc2bdce6aa7fb28161045921fb7099c1a7e64f25418e4b5fe54e20d832"
+  },
+  {
+    "path": "3-abba-b2/results.json.gz",
+    "bytes": 92867,
+    "sha256": "4cb6e26f4254f4500a77a810c6279dab60d08735d419fdd4a7cf023fcc0f531b",
+    "original_bytes": 1001913,
+    "original_sha256": "d028e08a9c2899e5a499767472520dd2bba88826e953032d024320fa3cc7f67e"
+  },
+  {
+    "path": "4-abba-a2/desktop-directory.png",
+    "bytes": 147199,
+    "sha256": "bc9dd30be2579c4326148149810e8767a6dc9bc04ce72f9993f14b81c1f788f7",
+    "original_bytes": 147199,
+    "original_sha256": "bc9dd30be2579c4326148149810e8767a6dc9bc04ce72f9993f14b81c1f788f7"
+  },
+  {
+    "path": "4-abba-a2/desktop-record.png",
+    "bytes": 104044,
+    "sha256": "be0663cda35157821e447a49f2980cccfe6d9c88f87eb38608987ef58d8877ad",
+    "original_bytes": 104044,
+    "original_sha256": "be0663cda35157821e447a49f2980cccfe6d9c88f87eb38608987ef58d8877ad"
+  },
+  {
+    "path": "4-abba-a2/fixture-after.json.gz",
+    "bytes": 613,
+    "sha256": "3a82434c18dcb323ef1e66bf9bce30225106c57cec432d469da4d00dec921e2a",
+    "original_bytes": 1288,
+    "original_sha256": "3872820585ce937bc4fa5b4775d63fed084d8dc0c008ceec6d593f2cf6416a85"
+  },
+  {
+    "path": "4-abba-a2/gateway.jsonl.gz",
+    "bytes": 96150,
+    "sha256": "8e54fd436a1ce496fd2d8353d1c7dc9f718212eeae385ed0f5cd010a64ef66eb",
+    "original_bytes": 941607,
+    "original_sha256": "bcedd0d15fde9b604bc014ddc3541c97c20b4f184c8acbee579a4549ffe476c3"
+  },
+  {
+    "path": "4-abba-a2/phone-directory.png",
+    "bytes": 59947,
+    "sha256": "6f700381cfd9f76ab5f4082723e0da9a66c6f713e420b66eba83261f8c03c80e",
+    "original_bytes": 59947,
+    "original_sha256": "6f700381cfd9f76ab5f4082723e0da9a66c6f713e420b66eba83261f8c03c80e"
+  },
+  {
+    "path": "4-abba-a2/phone-record.png",
+    "bytes": 52465,
+    "sha256": "3b37e0dc2bdce6aa7fb28161045921fb7099c1a7e64f25418e4b5fe54e20d832",
+    "original_bytes": 52465,
+    "original_sha256": "3b37e0dc2bdce6aa7fb28161045921fb7099c1a7e64f25418e4b5fe54e20d832"
+  },
+  {
+    "path": "4-abba-a2/results.json.gz",
+    "bytes": 112944,
+    "sha256": "60f5daf584fbbb2640ed6098fded1fc58d5d0fe7bc1cb83224d8af66d393df7a",
+    "original_bytes": 1239992,
+    "original_sha256": "b0f127a2cd7b116fd73907ffb6400d75b59d577104cc78648af16165823253fa"
+  },
+  {
+    "path": "README.md",
+    "bytes": 3343,
+    "sha256": "540d6c9a439dedc54fe0960064872272c1ba5ab4c06d6ba017231887ff34b96f",
+    "original_bytes": 3343,
+    "original_sha256": "540d6c9a439dedc54fe0960064872272c1ba5ab4c06d6ba017231887ff34b96f"
+  },
+  {
+    "path": "summary.json",
+    "bytes": 31596,
+    "sha256": "3c5211418d914607cf93feddf341de6892a9c0c6e240d369a3d4757c0033b737",
+    "original_bytes": 31596,
+    "original_sha256": "3c5211418d914607cf93feddf341de6892a9c0c6e240d369a3d4757c0033b737"
+  },
+  {
+    "path": "verification/abba-a1-host.json.gz",
+    "bytes": 194,
+    "sha256": "c59c5ff408d73fdd797cbb39eda4a6bdbb974c3e5a11b2d4a41387606df5b438",
+    "original_bytes": 254,
+    "original_sha256": "87e3d05bf21ba33b261a4559aeed7118554bb50e5206ea2b3a38c83a3aa25c35"
+  },
+  {
+    "path": "verification/abba-a1.log.gz",
+    "bytes": 235,
+    "sha256": "adf4f64cc5c2ebc7e4807532dd839e056fe9831b6d8071ef57e1fb8e2e9c01f3",
+    "original_bytes": 629,
+    "original_sha256": "7b03e537e4c8d31a0332aa45d3f9e30d1aee83b0de37ea4a7ad46f4f6bd62a6e"
+  },
+  {
+    "path": "verification/abba-a2-host.json.gz",
+    "bytes": 196,
+    "sha256": "2f477145673738b1bcf7b8cfdd227cbbc024550ca5cd6dc439688b8923e176f5",
+    "original_bytes": 254,
+    "original_sha256": "1291b67b0e5248d72a274e47479f6964e9d0f2b2a9a06eec6099826eb75d79c4"
+  },
+  {
+    "path": "verification/abba-a2.log.gz",
+    "bytes": 235,
+    "sha256": "b706fbd4f27f807c72689fa6162fbaf59feb45a42290ddf5577d6782fdd43ffa",
+    "original_bytes": 629,
+    "original_sha256": "167a99bf47524fa6467b9c4b445c4badf3814ad6920be14ffe45ce22d2b1a150"
+  },
+  {
+    "path": "verification/abba-b1-host.json.gz",
+    "bytes": 195,
+    "sha256": "1d1b4ea33a1c153df12939cd41e197736b7d13bb19df1cd388ce1b52fff399b5",
+    "original_bytes": 254,
+    "original_sha256": "fb53984d1595098db8718a7a23025d4132db2b162e14c76fad346fbc51b43fa9"
+  },
+  {
+    "path": "verification/abba-b1.log.gz",
+    "bytes": 235,
+    "sha256": "27ccca87d53201634526536e79354e29d9676db0969f83ab578e2890319a6335",
+    "original_bytes": 629,
+    "original_sha256": "7e5ece4f5a05c0c046b92c1d5e5af825cdaa62e973c738528d169c8b0f6df156"
+  },
+  {
+    "path": "verification/abba-b2-host.json.gz",
+    "bytes": 194,
+    "sha256": "1b785080705e716b57061714d7c37b7f77c6323592206a9a57762f930cb20ef0",
+    "original_bytes": 254,
+    "original_sha256": "1bb83b60b796f60b87b2c16909574e43ae489bd97c8607005ac4ea536fe00cbb"
+  },
+  {
+    "path": "verification/abba-b2.log.gz",
+    "bytes": 235,
+    "sha256": "fbb22573309dd83bd9d9f41fac2a4273c114c1541f59d78a3d79d890c0faf7c3",
+    "original_bytes": 629,
+    "original_sha256": "3ed0a2d7acc1162d9268944aa77936e89f480963177a633810f66786caf457af"
+  },
+  {
+    "path": "verification/abba-candidate-build.log.gz",
+    "bytes": 4118,
+    "sha256": "9de350626092b63f4f7e44957971160be28485a4675796d663431ddf90c587f7",
+    "original_bytes": 27390,
+    "original_sha256": "ff485ad7d59e96fddcfd2cbf1ed7d1da26c9682c55e94fd643bfc3a1beaf50cc"
+  },
+  {
+    "path": "verification/abba-main-build.log.gz",
+    "bytes": 4121,
+    "sha256": "23c992237ead54079bd4cd10a70ab0f1507dbbb3c773c83b867bd15969486db7",
+    "original_bytes": 27396,
+    "original_sha256": "2110a93e1ab98b1f52331d1bbe8f064e90535a6eac7f749ab27e2999074d2341"
+  }
+]

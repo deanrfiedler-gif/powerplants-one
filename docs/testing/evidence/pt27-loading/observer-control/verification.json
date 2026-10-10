@@ -1,0 +1,24 @@
+{
+  "executed_date": "2026-10-10",
+  "source": "ea2a82b50371f636d4d84cb6396750fec2b1779e",
+  "build_id": "F1kIbkoqn-pZX7EH8T_fh",
+  "analysis_script_sha256": {
+    "scripts/quality-observer-block.py": "9648d981e9bb2e542a4516b4dbd90984a1f4f0dc99b39d67e04f76cd90dfa3bc",
+    "scripts/summarize-observer-block.py": "fd89b0360dffdc6e2ac7b8a1f674ccc02cb5599ef1364a0100d4f54a3a9a0d0d",
+    "scripts/summarize-session-readiness.py": "ab19d62fd089159eded3ff760639b48b8e8d39587663e814ec44adceaf60ff8d",
+    "tests/scripts/test_quality_observer_block.py": "fe176c358603ebe36181b0ed2f496868dd4d1f396d83a9596de043680d2ade07"
+  },
+  "checks": {
+    "comparison_ci": "passed; compiled smoke and all four attempts",
+    "counter_and_summary_units": "3 passed locally; 2 counter tests at executed CI source",
+    "retained_windows_summary_regression": "all original timing, pool and runtime fields unchanged for three valid attempts",
+    "typecheck": "passed",
+    "changed_typescript_lint": "passed",
+    "artifact_integrity": "45 stored and original-byte hashes verified",
+    "private_value_scan": "passed",
+    "foundation": "passed; 7645 local links, 5060 files, no errors",
+    "naming": "passed; 522 document records, no errors",
+    "repaired_mobile_ci": "passed at 5b0bb26: 346 passed, 74 skipped, including N01; full desktop and retained jobs also pass. Latest-head CI separate."
+  },
+  "limits": "Analysis code is source-hash bound separately from executed CI. Synthetic Customers-only diagnostics; no original-503 attribution, full PT-27, fresh visual/owner acceptance or deployment claim."
+}

@@ -5775,7 +5775,8 @@
         "src/app/(business)/customers/page.tsx",
         "src/components/crm-directory.tsx",
         "src/components/context-screens.tsx",
-        "src/crm/directory.ts"
+        "src/crm/directory.ts",
+        "src/app/layout.tsx"
       ],
       "guide_key": "guide.page.customers",
       "design_path": "docs/design/development/pages/route-customers.md",
@@ -5794,7 +5795,7 @@
         "scope:CS-01"
       ],
       "reviewer": null,
-      "notes": "Directory host uses deliberate link activation with automatic prefetch disabled; exact receiving and timing evidence remain separate from visual/owner acceptance."
+      "notes": "Directory record links retain deliberate activation with automatic prefetch disabled. The unsuccessful PT-27 shell experiments are withdrawn; desktop and phone shell links retain the original main policy. Exact receiving and timing evidence remain separate from visual/owner acceptance in docs/testing/evidence/pt27-loading/README.md."
     },
     {
       "key": "route:/documents/[id]",
@@ -6532,7 +6533,8 @@
         "src/app/(business)/people/page.tsx",
         "src/components/crm-directory.tsx",
         "src/components/context-screens.tsx",
-        "src/crm/directory.ts"
+        "src/crm/directory.ts",
+        "src/app/layout.tsx"
       ],
       "guide_key": "guide.page.people",
       "design_path": "docs/design/development/pages/route-people.md",
@@ -9230,7 +9232,8 @@
         "docs/decisions/navigation-architecture-board.md",
         "docs/reference/ui/application-shell/navigation-architecture-board-r02/README.md",
         "docs/reference/ui/application-shell/navigation-architecture-board-r02/navigation.mmd",
-        "docs/reference/ui/application-shell/navigation-architecture-board-r02/navigation-overview.mmd"
+        "docs/reference/ui/application-shell/navigation-architecture-board-r02/navigation-overview.mmd",
+        "docs/testing/evidence/pt27-loading/README.md"
       ],
       "scope_status": "Shared source",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -9241,7 +9244,8 @@
       "owner": "Dean Fiedler",
       "build_rank": null,
       "related_keys": [],
-      "reviewer": "Dean Fiedler"
+      "reviewer": "Dean Fiedler",
+      "notes": "PT-27: both shell prefetch experiments are withdrawn and the original main policy is restored on desktop and phone. See docs/testing/evidence/pt27-loading/README.md for retained failures, session-read diagnosis and actual navigation proof. Existing review records remain unchanged."
     },
     {
       "key": "system:theme",
