@@ -132,9 +132,14 @@ def run(evidence, block, output):
             row["cpu_allocation"] = data["cpu_allocation"]
             row["roles_whole_run"] = role_summary(resources)
             row["roles_successful_action_interiors"] = role_summary(resources, merged)
-            assert outcome["affinity_violations"] == 0
+            row["allocation_valid"] = outcome["affinity_violations"] == 0
+            if allocation.get("browser_constraint"):
+                assert data["browser_cpu_constraint"] == allocation["browser_constraint"]
+                assert all(r["browser_cgroup"]["effective_cpus"] == data["cpu_allocation"]["browser_driver"] for r in resources if "browser_cgroup" in r)
             for role in row["roles_whole_run"].values():
-                assert role["escaped_threads"] == 0 and role["threads_checked"] > 0
+                assert role["threads_checked"] > 0
+                if row["allocation_valid"]:
+                    assert role["escaped_threads"] == 0
         for group in row["groups"]:
             if profile == "cpu":
                 observed = [s for s in data["samples"] if s["viewport"] == group["viewport"] and
@@ -163,6 +168,7 @@ def run(evidence, block, output):
     summary["browser_phase_limits"] = "Core request start includes document/asset loading, hydration and client/session gating; it is not isolated network or server time. CDP finish-minus-headers is the raw event timestamp difference under emulation, which can be negative when response events are delayed; do not interpret it as physical transfer time. Percentiles of separate components are not additive."
     summary["browser_counter_limits"] = "Cross-navigation Performance.getMetrics differences in startup block 38086160387 can be negative. All derived browser_work_seconds, including positive values, are excluded from interpretation; their original bytes remain retained. New drivers keep raw before/after counters without deriving action duration. Readiness, network events and external /proc counters have independent clocks and are unaffected by this diagnostic limitation."
     if profile == "cpu":
+        summary["allocation_valid"] = all(r["allocation_valid"] for r in summary["runs"])
         summary["cpu_allocation_limits"] = "Shared 4 versus service 1 / browsers and driver 3 logical CPUs on one existing runner. Not extra capacity, independent hardware, isolated physical cores or a representative device. Topology, shared memory/I/O, hypervisor scheduling and caches remain limits. Per-role CPU uses only identical PID/start-time pairs across two-second samples; exited/new processes are unmatched and their interval work is omitted, never inferred zero. Transient processes between samples are unseen. No CPU percentage establishes SQL execution time. Thread affinity is checked at sample times only; no kernel-wide isolation or ownership of unclassified runner work is claimed."
     for source in sorted(block_root.iterdir()):
         if not source.is_file():

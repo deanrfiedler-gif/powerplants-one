@@ -55,7 +55,7 @@ def cpu_list(text):
     return sorted(cpus)
 
 
-def role_processes(roots, allocations, proc=Path("/proc"), ticks=None, page_size=None):
+def role_processes(roots, allocations, proc=Path("/proc"), ticks=None, page_size=None, browser_members=()):
     """Allowlisted counters only; process identity includes start time, never args."""
     ticks = ticks or os.sysconf("SC_CLK_TCK")
     page_size = page_size or os.sysconf("SC_PAGE_SIZE")
@@ -82,6 +82,8 @@ def role_processes(roots, allocations, proc=Path("/proc"), ticks=None, page_size
         # Server is also a driver descendant: take the most specific role first.
         role = next((role for role in ["server", "database", "browser_driver"]
                      if roots.get(role) and descendant(pid, roots[role])), None)
+        if role is None and pid in browser_members:
+            role = "browser_driver"  # Include reparented Chrome helpers in the owned cgroup.
         if role is None:
             continue
         checked, escaped = 0, 0
@@ -104,6 +106,37 @@ def role_processes(roots, allocations, proc=Path("/proc"), ticks=None, page_size
                              "allowed_cpus": sorted(allowed), "threads_checked": checked,
                              "escaped_threads": escaped})
     return result
+
+
+def create_browser_cgroup(label, cpus):
+    assert os.environ.get("GITHUB_ACTIONS") == "true" and re.fullmatch(r"cpu-[a-z0-9-]+", label)
+    root = Path("/sys/fs/cgroup")
+    # Docker's CPU-set update must already have enabled this existing controller.
+    assert "cpuset" in (root / "cgroup.subtree_control").read_text().split()
+    group = root / ("ppo-pt27-" + label)
+    assert not group.exists()
+    subprocess.run(["sudo", "-n", "mkdir", str(group)], check=True)
+    try:
+        for name, value in [("cpuset.mems", (root / "cpuset.mems.effective").read_text()),
+                            ("cpuset.cpus", ",".join(map(str, cpus)))]:
+            subprocess.run(["sudo", "-n", "tee", str(group / name)], input=value + "\n", text=True,
+                           check=True, stdout=subprocess.DEVNULL)
+        assert cpu_list((group / "cpuset.cpus.effective").read_text()) == cpus
+    except BaseException:
+        subprocess.run(["sudo", "-n", "rmdir", str(group)], check=True)
+        raise
+    return group
+
+
+def remove_browser_cgroup(group):
+    assert group.parent == Path("/sys/fs/cgroup") and re.fullmatch(r"ppo-pt27-cpu-[a-z0-9-]+", group.name)
+    # Only after the driver has exited; remove any surviving owned crash helpers.
+    subprocess.run(["sudo", "-n", "tee", str(group / "cgroup.kill")], input="1\n", text=True,
+                   check=True, stdout=subprocess.DEVNULL)
+    deadline = time.monotonic() + 10
+    while "populated 1" in (group / "cgroup.events").read_text() and time.monotonic() < deadline:
+        time.sleep(.1)
+    subprocess.run(["sudo", "-n", "rmdir", str(group)], check=True)
 
 
 def positions_for(profile):
@@ -138,6 +171,7 @@ def run(block, profile="observer"):
             ["docker", "inspect", "--format", "{{.Config.Image}}|{{.State.Pid}}|{{.HostConfig.CpusetCpus}}", container], text=True).strip().split("|")
         assert image == "postgres:16.15" and int(database_pid) > 0
         cpu_protocol = {"available": available, "service": available[:1], "browsers": available[1:],
+                        "browser_constraint": "cgroup-v2-cpuset",
                         "database_pid": int(database_pid), "original_database_cpuset": original_cpus,
                         "topology": [{"cpu": cpu, **{key: (Path(f"/sys/devices/system/cpu/cpu{cpu}/topology") / key).read_text().strip()
                                       for key in ["core_id", "physical_package_id", "thread_siblings_list"]}} for cpu in available]}
@@ -182,6 +216,7 @@ def run(block, profile="observer"):
         attempt_root = cwd / "verification-evidence/pt27-loading" / label
         metadata = attempt_root / "run.json"
         allocations = None
+        browser_group = None
         command = ["node", "--env-file=.env.local", "--import", "tsx", "scripts/quality-customer-comparison.ts", label]
         if cpu_protocol:
             partitioned = suffix.startswith("partitioned-")
@@ -190,8 +225,21 @@ def run(block, profile="observer"):
             allocations = {"server": service, "database": service, "browser_driver": clients}
             service_csv, client_csv = (",".join(map(str, group)) for group in [service, clients])
             subprocess.run(["docker", "update", "--cpuset-cpus", service_csv, container], check=True, stdout=subprocess.DEVNULL)
+            try:
+                browser_group = create_browser_cgroup(label, clients)
+            except BaseException:
+                subprocess.run(["docker", "update", "--cpuset-cpus", original_cpus, container], check=True, stdout=subprocess.DEVNULL)
+                raise
+            wrapper = (root / (label + "-browser-wrapper.py")).resolve()
+            shutil.copyfile("scripts/quality-browser-cpuset.py", wrapper)
+            wrapper.chmod(0o700)
+            (root / (label + "-browser-constraint.json")).write_text(json.dumps({
+                "group": browser_group.name, "requested_cpus": clients,
+                "effective_cpus": cpu_list((browser_group / "cpuset.cpus.effective").read_text()),
+                "chrome": "/opt/google/chrome/chrome", "launcher": "same-uid-exec", "shared_memory_and_io": True}, indent=2) + "\n")
             env.update({"PPO_CPU_MODE": "partitioned" if partitioned else "shared",
-                        "PPO_SERVER_CPUS": service_csv, "PPO_BROWSER_CPUS": client_csv})
+                        "PPO_SERVER_CPUS": service_csv, "PPO_BROWSER_CPUS": client_csv,
+                        "PPO_BROWSER_WRAPPER": str(wrapper), "PPO_BROWSER_CGROUP": str(browser_group)})
             command = ["taskset", "--cpu-list", client_csv, *command]
         affinity_violations = 0
         with (root / (label + ".log")).open("wb") as log, (root / (label + "-resources.jsonl")).open("w") as counters:
@@ -206,7 +254,11 @@ def run(block, profile="observer"):
                             pass
                     sample = resource_sample(server_pid)
                     if allocations and server_pid is not None:
-                        sample["roles"] = role_processes({"server": server_pid, "database": cpu_protocol["database_pid"], "browser_driver": child.pid}, allocations)
+                        effective = cpu_list((browser_group / "cpuset.cpus.effective").read_text())
+                        assert effective == clients
+                        members = [int(pid) for pid in (browser_group / "cgroup.procs").read_text().split()]
+                        sample["browser_cgroup"] = {"effective_cpus": effective, "processes": members}
+                        sample["roles"] = role_processes({"server": server_pid, "database": cpu_protocol["database_pid"], "browser_driver": child.pid}, allocations, browser_members=members)
                         affinity_violations += sum(p["escaped_threads"] for group in sample["roles"].values() for p in group)
                     counters.write(json.dumps(sample) + "\n")
                     counters.flush()
@@ -214,11 +266,17 @@ def run(block, profile="observer"):
                         break
                     time.sleep(2)
             finally:
-                if child is not None and child.poll() is None:
-                    child.terminate()
-                    child.wait(timeout=15)
-                if cpu_protocol:
-                    subprocess.run(["docker", "update", "--cpuset-cpus", original_cpus, container], check=True, stdout=subprocess.DEVNULL)
+                try:
+                    if child is not None and child.poll() is None:
+                        child.terminate()
+                        child.wait(timeout=15)
+                finally:
+                    try:
+                        if cpu_protocol:
+                            subprocess.run(["docker", "update", "--cpuset-cpus", original_cpus, container], check=True, stdout=subprocess.DEVNULL)
+                    finally:
+                        if browser_group:
+                            remove_browser_cgroup(browser_group)
         protocol["results"].append({"label": label, "exit_code": child.returncode or int(affinity_violations > 0),
                                     **({"affinity_violations": affinity_violations} if cpu_protocol else {})})
         (root / "protocol.json").write_text(json.dumps(protocol, indent=2) + "\n")

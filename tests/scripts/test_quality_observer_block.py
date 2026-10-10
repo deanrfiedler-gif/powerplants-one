@@ -31,7 +31,7 @@ class Counters(unittest.TestCase):
     def test_cpu_roles_resolve_server_before_driver_and_verify_every_thread(self):
         with TemporaryDirectory() as directory:
             proc = Path(directory)
-            for pid, parent, allowed in [(10, 1, "1-3"), (11, 10, "0"), (12, 11, "0"), (13, 10, "1,2,3"), (20, 1, "0"), (21, 20, "0-1")]:
+            for pid, parent, allowed in [(10, 1, "1-3"), (11, 10, "0"), (12, 11, "0"), (13, 10, "1,2,3"), (14, 1, "1-3"), (20, 1, "0"), (21, 20, "0-1")]:
                 path = proc / str(pid)
                 (path / "task" / str(pid)).mkdir(parents=True)
                 fields = ["S"] + [str(n) for n in range(4, 53)]
@@ -39,9 +39,9 @@ class Counters(unittest.TestCase):
                 (path / "stat").write_text(f"{pid} (DO NOT EXPORT (private)) " + " ".join(fields))
                 (path / "task" / str(pid) / "status").write_text("Cpus_allowed_list:\t" + allowed + "\n")
             roles = observer.role_processes({"server": 11, "database": 20, "browser_driver": 10},
-                {"server": [0], "database": [0], "browser_driver": [1, 2, 3]}, proc, 100, 4096)
+                {"server": [0], "database": [0], "browser_driver": [1, 2, 3]}, proc, 100, 4096, browser_members=[14])
             self.assertCountEqual([r["pid"] for r in roles["server"]], [11, 12])
-            self.assertCountEqual([r["pid"] for r in roles["browser_driver"]], [10, 13])
+            self.assertCountEqual([r["pid"] for r in roles["browser_driver"]], [10, 13, 14])
             self.assertEqual(sum(r["escaped_threads"] for r in roles["database"]), 1)
             self.assertNotIn("private", str(roles))
 

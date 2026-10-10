@@ -19,6 +19,7 @@ assert.match(label ?? "", /^[a-z][a-z0-9-]+$/);
 const profile = comparisonProfile(process.env);
 const allocation = cpuAllocation(process.env);
 if (allocation) assert.equal(process.platform, "linux");
+if (process.env.PPO_BROWSER_WRAPPER) assert.ok(allocation, "Browser constraint requires the explicit CPU diagnostic");
 const root = `verification-evidence/pt27-loading/${label}`;
 await mkdir(root, { recursive: false });
 const expected = JSON.parse(await readFile("verification-evidence/customer-loading-diagnosis/fixture.json", "utf8"));
@@ -40,6 +41,7 @@ const errors: string[] = [];
 const metadata = {
   ...profile,
   ...(allocation ? { cpu_allocation: allocation } : {}),
+  ...(process.env.PPO_BROWSER_WRAPPER ? { browser_cpu_constraint: "cgroup-v2-cpuset" } : {}),
   label, started_at: new Date().toISOString(), comparison_block: process.env.PPO_COMPARISON_BLOCK ?? null, comparison_position: process.env.PPO_COMPARISON_POSITION ?? null, source: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(),
   compiled_source: compiledSource, driver_source: process.env.PPO_DRIVER_SOURCE ?? null, build_id: buildId, server_pid: server.pid,
   node: process.version, platform: process.platform, memory_bytes: totalmem(),
@@ -75,7 +77,7 @@ try {
     await new Promise(r => setTimeout(r, 500));
   }
   assert.ok(ready, "Owned compiled server must start within 120 seconds");
-  browsers.push(...await Promise.all(Array.from({ length: profile.browser_count }, () => chromium.launch({ channel: "chrome" }))));
+  browsers.push(...await Promise.all(Array.from({ length: profile.browser_count }, () => chromium.launch({ channel: "chrome", ...(process.env.PPO_BROWSER_WRAPPER ? { executablePath: process.env.PPO_BROWSER_WRAPPER } : {}) }))));
   for (const viewport of [{ name: "desktop", width: 1440, height: 1000 }, { name: "phone", width: 390, height: 844 }]) {
     const contexts = await Promise.all(browsers.map(b => b.newContext({ viewport, isMobile: viewport.name === "phone", hasTouch: viewport.name === "phone", locale: "en-AU" })));
     for (const context of contexts) assert.equal((await context.request.post(`${origin}/api/v1/local-session`, { headers: { Origin: origin }, data: { profile: "coordinator" } })).status(), 200);
