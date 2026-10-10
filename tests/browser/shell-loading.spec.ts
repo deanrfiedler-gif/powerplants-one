@@ -20,15 +20,21 @@ test("desktop rail waits for activation; desktop and phone preserve exact naviga
   await expect(link).toBeVisible();
   if (!isMobile) await link.hover();
   const destinations = new Set(await page.locator(isMobile ? ".mobile-navigation a" : "[data-shell-navigation] a").evaluateAll(links => links.map(link => new URL((link as HTMLAnchorElement).href).pathname)));
+  const sharedDestinations = new Set(await page.locator(".ppo-shell-header a:visible, .module-navigation a:visible").evaluateAll(links => links.map(link => new URL((link as HTMLAnchorElement).href).pathname)));
   // Fixed observation of background work; this does not change a readiness deadline.
   await page.waitForTimeout(1000);
   page.off("request", observe);
-  const speculative = requests.filter(request => request.prefetch && destinations.has(request.path));
-  await writeFile(info.outputPath("shell-requests.json"), JSON.stringify({ viewport: page.viewportSize(), destinations: [...destinations], requests, speculative }, null, 2));
-  // The desktop rail is the changed surface. Phone policy remains the baseline;
-  // retain its observed requests and prove real touch receiving and Back.
-  if (!isMobile) expect(speculative).toEqual([]);
+  const speculative = requests.filter(request => request.prefetch && destinations.has(request.path) && !sharedDestinations.has(request.path));
+  await writeFile(info.outputPath("shell-requests.json"), JSON.stringify({ viewport: page.viewportSize(), destinations: [...destinations], shared_destinations: [...sharedDestinations], requests, speculative }, null, 2));
+  // Shared-header links may still request overlapping paths. Assert the rail-only
+  // destinations, and prove that the actual hovered People link is in that set.
+  // Phone retains the baseline policy; all its requests remain in the capture.
   const target = new URL((await link.getAttribute("href"))!, origin);
+  if (!isMobile) {
+    expect(destinations.has(target.pathname)).toBe(true);
+    expect(sharedDestinations.has(target.pathname)).toBe(false);
+    expect(speculative).toEqual([]);
+  }
   if (isMobile) await link.tap(); else await keyActivate(page, link);
   await expect(page).toHaveURL(target.href);
   await expect(page.getByRole("heading", { name: "People", exact: true })).toBeVisible();
