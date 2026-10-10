@@ -120,11 +120,11 @@ test("P11 PT-29 failed and stale output presentation never claims an issue", asy
     code: "DependencyUnavailable", message: "SYN renderer unavailable. Recover the original output.", retryable: true,
   } }));
   await page.goto(`/service/packs/${pack.id}`);
-  await expect(page.getByText("Output recovery needed", { exact: true })).toBeVisible();
+  await expect(page.getByRole("tabpanel", { name: "Job pack, 9 sections", exact: true }).getByText("Output recovery needed", { exact: true })).toBeVisible();
   await expect(page.getByText("The output could not be generated or stored. Recover the original output.", { exact: false }).first()).toBeVisible();
   await page.getByRole("button", { name: "Process or recover original output", exact: true }).click();
   await expect(page.getByRole("alert").filter({ hasText: "SYN renderer unavailable" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Open exact issued document", exact: true })).toHaveCount(0);
+  await expect(page.locator('a[href^="/documents/"]')).toHaveCount(0);
   await capture(page, info, "SC-06-render-failed-no-issue", { injection: "retained synthetic pack read and renderer 503; not worker proof" });
   pack.jobs[0].state = "StaleSource";
   pack.jobs[0].error_code = "StaleSource";
