@@ -178,6 +178,14 @@ After the merges Dean asked why the live planner looked nothing like the boards:
 
 Built in the live planner the same day; see the [planner design contract](../design/development/pages/route-schedule.md#day-timeline-built--10-october-2026).
 
+### Planner Week board (10 October 2026)
+
+Dean, after stage 1: "Yes to both, proceed with the Week view" (Auto-fix on the stage 1 pull request, and stage 3). The Week view is now the stripped-back board he adopted on 10 October ("strip it back as you recommend"), built in the live planner on wide screens; see the [planner design contract](../design/development/pages/route-schedule.md#week-board-built--10-october-2026). The rules are those already adopted for the board, with three points the live data needed:
+
+- Reserved time that no displayed visit accounts for (a site or status filter hides the visit) shows as a dashed "Reserved" block, so a cell is never drawn as free when the person is booked.
+- People away for every weekday shown, and inactive people, move to short rows at the bottom with one line across the week.
+- A weekend day is a slim strip while no one has a visit, unavailable time, a closure or a reservation on it; otherwise it is a full column.
+
 Still to decide on the planner:
 
 - Checks shown as you edit, and AEST times in the reservation message.

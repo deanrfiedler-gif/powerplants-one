@@ -2156,14 +2156,14 @@ body:has(.crm-workspace) main { padding-top:18px; }
 /* Planner Day timeline (phase 00 refinement boards; Dean, 10 October 2026). People are rows,
    time runs 07:00 to 18:00 across, and a selected visit opens a details panel beside the board.
    Cards are flat at rest; on hover a visit and its travel grow a fixed 3 px on every side. */
-.planner-day-layout {
+.planner-view-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 16px;
   align-items: start;
   margin: 12px 0 20px;
 }
-.planner-day-layout.with-snapshot {
+.planner-view-layout.with-snapshot {
   grid-template-columns: minmax(0, 1fr) 360px;
 }
 .planner-timeline {
@@ -2705,7 +2705,7 @@ body:has(.crm-workspace) main { padding-top:18px; }
 }
 /* Below 1100 px there is no room beside the board, so the panel sits over its right side. */
 @media (max-width: 1100px) {
-  .planner-day-layout.with-snapshot {
+  .planner-view-layout.with-snapshot {
     grid-template-columns: minmax(0, 1fr);
   }
   .tl-snapshot {
@@ -2720,6 +2720,267 @@ body:has(.crm-workspace) main { padding-top:18px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .tl-group {
+    transition: none;
+  }
+}
+
+/* Planner Week board, stripped back (Dean, 10 October 2026). People are rows and days are
+   columns. Cells hold only visits and unavailable time; how full a day is shows once, as a
+   soft shading that deepens as the day fills. Weekends are slim strips while nothing is
+   booked. Tiles grow 3 px each side and rise 1 px on hover. */
+.planner-week {
+  min-width: 0;
+  background: var(--white);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+.wk-scroll {
+  overflow-x: auto;
+  position: relative;
+}
+.wk-scroll:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+.wk-row {
+  display: grid;
+  min-width: 1010px;
+  border-bottom: 1px solid #e4e8ee;
+}
+.wk-row:last-child {
+  border-bottom: 0;
+}
+.wk-corner,
+.wk-person {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  background: var(--white);
+  border-right: 1px solid var(--line-strong);
+}
+.wk-corner {
+  height: 54px;
+  box-sizing: border-box;
+  padding: 0 14px 10px 16px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.wk-corner strong {
+  color: var(--ink);
+}
+.wk-head {
+  border-bottom-color: var(--line-strong);
+}
+.wk-day {
+  height: 54px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 0 12px;
+  border: 0;
+  border-left: 1px solid #e9edf2;
+  background: var(--white);
+  font: inherit;
+  text-align: left;
+  color: var(--ink);
+  cursor: pointer;
+}
+.wk-day:hover {
+  background: var(--surface-hover);
+}
+.wk-day:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+.wk-day b {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+.wk-day > span {
+  font-size: 12px;
+  color: #4b5563;
+  font-variant-numeric: tabular-nums;
+}
+.wk-today {
+  padding: 1px 7px;
+  border-radius: 9px;
+  background: var(--success-surface);
+  color: var(--success);
+  font-size: 11px;
+  font-weight: 600;
+}
+.wk-day.slim {
+  align-items: center;
+  padding: 0;
+  cursor: default;
+  background: repeating-linear-gradient(135deg, rgba(148, 159, 173, 0.16) 0 1px, transparent 1px 8px), #f4f6f8;
+}
+.wk-day.slim b {
+  font-size: 11px;
+  font-weight: 600;
+  color: #8a93a0;
+}
+.wk-person {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  column-gap: 8px;
+  align-items: center;
+  align-content: center;
+  padding: 12px 14px 12px 16px;
+  min-width: 0;
+}
+.wk-person > * {
+  min-width: 0;
+}
+.wk-person .tl-av {
+  grid-column: 1;
+  grid-row: 1;
+}
+.wk-row.off .wk-person {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.wk-row.off .tl-av {
+  opacity: 0.55;
+}
+.wk-row.off .tl-name {
+  font-weight: 500;
+}
+.wk-row.off .tl-name a {
+  color: var(--text-secondary);
+}
+.wk-cell {
+  min-width: 0;
+  min-height: 110px;
+  box-sizing: border-box;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-left: 1px solid #e9edf2;
+  background: linear-gradient(rgba(53, 101, 128, calc(var(--load, 0) * 0.14)), rgba(53, 101, 128, calc(var(--load, 0) * 0.14))), #fcfdfe;
+}
+.wk-cell.today {
+  background: linear-gradient(rgba(53, 101, 128, calc(var(--load, 0) * 0.14)), rgba(53, 101, 128, calc(var(--load, 0) * 0.14))), #f7faf6;
+}
+.wk-cell.closed,
+.wk-cell.slim {
+  background: repeating-linear-gradient(135deg, rgba(148, 159, 173, 0.16) 0 1px, transparent 1px 8px), #f4f6f8;
+}
+.wk-cell.slim {
+  padding: 0;
+}
+.wk-away {
+  margin: 6px 8px;
+  padding: 7px 12px;
+  border: 1px solid #dce0e5;
+  border-radius: 8px;
+  background: repeating-linear-gradient(135deg, rgba(176, 185, 197, 0.28) 0 1px, transparent 1px 8px), #f6f7f9;
+  font-size: 12px;
+  line-height: 18px;
+  color: #4b5563;
+  align-self: center;
+}
+.wk-away b,
+.wk-block b {
+  color: var(--ink);
+}
+.wk-block {
+  padding: 5px 8px;
+  border: 1px solid #dce0e5;
+  border-radius: 6px;
+  background: repeating-linear-gradient(135deg, rgba(176, 185, 197, 0.28) 0 1px, transparent 1px 8px), #f6f7f9;
+  font-size: 12px;
+  line-height: 16px;
+  color: #4b5563;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.wk-block.reserved {
+  background: repeating-linear-gradient(135deg, rgba(148, 159, 173, 0.2) 0 1px, transparent 1px 7px), var(--white);
+  border-style: dashed;
+}
+.wk-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 9px;
+  border: 1px solid #c8d6e5;
+  border-radius: 7px;
+  background: #eef4fa;
+  cursor: pointer;
+  transition: transform 0.12s ease, margin 0.12s ease;
+}
+.wk-tile:hover,
+.wk-tile:focus-visible {
+  transform: translateY(-1px);
+  margin-left: -3px;
+  margin-right: -3px;
+}
+.wk-tile:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.wk-tile[draggable="true"] {
+  cursor: grab;
+}
+.wk-tile.held {
+  background: #fffbf3;
+  border-color: #ebd3a0;
+}
+.wk-tile.prop {
+  background: repeating-linear-gradient(135deg, #fff 0 7px, #f6f7f9 7px 14px);
+  border: 1px dashed #a3acb8;
+}
+.wk-tile.sel {
+  border-color: var(--navy);
+  box-shadow: 0 6px 16px rgba(36, 42, 55, 0.14), 0 1px 3px rgba(36, 42, 55, 0.06);
+}
+.wk-tile.held.sel {
+  border-color: #fff5df;
+}
+.wk-tile .r1 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  font-size: 12.5px;
+  line-height: 17px;
+}
+.wk-tile .r1 b {
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.wk-tile .r1 .tl-crew {
+  margin: 0 0 0 auto;
+}
+.wk-tile .t {
+  font-size: 12.5px;
+  line-height: 17px;
+  color: #4b5563;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.wk-ext {
+  display: inline-flex;
+  color: var(--warning);
+}
+@media (prefers-reduced-motion: reduce) {
+  .wk-tile {
     transition: none;
   }
 }

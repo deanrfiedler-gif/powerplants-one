@@ -62,3 +62,7 @@ The catalogue resource calendar now publishes 07:00 to 18:00, like the sample ca
 ## Day timeline (10 October 2026)
 
 `PlannerTimeline` draws the Day view as a 07:00 to 18:00 timeline and `AppointmentSnapshot` is the details panel a selected visit opens. They follow the phase 00 refinement boards ([decision](../../../decisions/ui-build-sequence.md#planner-day-timeline-10-october-2026)). The default catalogue state shows them with a fixed Now of 10:40; Week keeps `PlannerBoard`. The calculations (axis, bands, hours booked, free time, needs attention) are in `src/scheduling/day-timeline.ts` with unit tests. No owner visual review yet.
+
+## Week board (10 October 2026)
+
+`PlannerWeek` draws the Week view as the stripped-back board: one row per person, one column per day, load shading, slim weekend strips, compact tiles and the shared details panel ([decision](../../../decisions/ui-build-sequence.md#planner-week-board-10-october-2026)). The `week` catalogue state shows it; the new `lane-list` state shows `PlannerBoard`, which narrow screens and other display timezones still use. No owner visual review yet.

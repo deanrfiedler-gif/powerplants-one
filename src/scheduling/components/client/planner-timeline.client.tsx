@@ -1,5 +1,6 @@
 "use client";
-// The Day view as a 07:00 to 18:00 timeline, and the details panel a selected visit opens in.
+// The Day view as a 07:00 to 18:00 timeline, the stripped-back Week view, and the details
+// panel a selected visit opens in.
 // Built to the phase 00 refinement boards (Dean, 10 October 2026); see the planner design
 // contract, docs/design/development/pages/route-schedule.md. Booking rules stay on the server:
 // a drop only opens the existing Move or reassign form with a proposal.
@@ -16,8 +17,10 @@ import {
   dayMinute,
   hoursText,
   initials,
+  isoWeek,
   laneDay,
   minuteAtFraction,
+  subtractSpans,
   visitState,
 } from "../../day-timeline";
 import { extendedHours } from "../../working-hours";
@@ -324,6 +327,267 @@ function Visit({
         </div>
       )}
     </div>
+  );
+}
+
+const isWeekend = (day: string) => [0, 6].includes(new Date(day + "T12:00:00Z").getUTCDay());
+const clockGlyph = "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18 M12 7v5l3 2";
+
+// The Week view, stripped back (Dean, 10 October 2026: "strip it back as you recommend").
+// Cells hold only visits and unavailable time. How full a day is shows once, as a soft
+// shading that deepens as the day fills; hours and free time are in the cell's hover text.
+// A drop keeps the visit's time and changes the day, as before.
+export function PlannerWeek({
+  data,
+  days,
+  zone,
+  usable,
+  selected,
+  now,
+  onSelect,
+  onDrop,
+  onOpenDay,
+  onDragNotice,
+}: {
+  data: Schedule;
+  days: string[];
+  zone: string;
+  usable: boolean;
+  selected: string | null;
+  now: string;
+  onSelect: (a: ScheduleAppointment) => void;
+  onDrop: (event: React.DragEvent, day: string, resource: Resource) => void;
+  onOpenDay: (day: string) => void;
+  onDragNotice: (message: string) => void;
+}) {
+  const today = dayMinute(now, zone, days[0]!),
+    todayIndex = today >= 0 ? Math.floor(today / 1440) : -1;
+  const rows = data.resources
+    .map((r, index) => {
+      const cells = days.map((d) => {
+        const lane = laneDay({ calendar: r.calendar, blocks: r.blocks ?? [], exceptions: r.exceptions ?? [], busy: r.busy ?? [], day: d, zone, now });
+        const visits = data.items
+          .filter((a) => a.assignments.some((x) => x.resource_id === r.id && x.active))
+          .filter((a) => {
+            const s = dayMinute(a.start_at, zone, d);
+            return s >= 0 && s < 1440;
+          })
+          .sort((a, b) => Date.parse(a.start_at) - Date.parse(b.start_at));
+        // Reserved time no displayed visit accounts for (a site or status filter hides it).
+        const shown = visits
+          .filter((a) => a.status === "Confirmed")
+          .map((a) => {
+            const me = a.assignments.find((x) => x.resource_id === r.id && x.active)!;
+            return [dayMinute(a.start_at, zone, d) - me.travel_before_minutes, dayMinute(a.end_at, zone, d) + me.travel_after_minutes] as [number, number];
+          });
+        const hidden = subtractSpans(lane.reserved, shown).filter((s) => s[1] - s[0] >= 15);
+        return { d, lane, visits, hidden };
+      });
+      const off =
+        !r.active ||
+        (cells.every((c) => !c.visits.length) &&
+          cells.filter((c) => !isWeekend(c.d)).every((c) => c.lane.away || !c.lane.capacityMinutes));
+      return { r, cells, off, colour: identity[index % identity.length] };
+    })
+    .sort((a, b) => Number(a.off) - Number(b.off));
+  // A weekend day stays a slim strip while nothing is booked, blocked or closed on it.
+  const slim = days.map(
+    (d, i) =>
+      isWeekend(d) &&
+      rows.every(({ cells }) => !cells[i]!.visits.length && !cells[i]!.lane.unavailable.length && !cells[i]!.lane.closed.length && !cells[i]!.lane.reserved.length),
+  );
+  const columns = `210px ${slim.map((s) => (s ? "24px" : "minmax(150px, 1fr)")).join(" ")}`;
+  const sum = (i: number, key: "bookedMinutes" | "capacityMinutes") =>
+    rows.filter((x) => x.r.active).reduce((a, x) => a + x.cells[i]!.lane[key], 0);
+  const last = days[days.length - 1]!;
+  return (
+    <section className="planner-week" aria-label="Week resource planner">
+      {!rows.length && (
+        <p className="empty-state">No permitted resources in this filter. Availability is not assumed.</p>
+      )}
+      <div
+        className="wk-scroll"
+        role="region"
+        aria-label={`Week, ${formatCivilDay(days[0]!, { weekday: true })} to ${formatCivilDay(last, { weekday: true })}`}
+        tabIndex={0}
+      >
+        <div className="wk-row wk-head" style={{ gridTemplateColumns: columns }}>
+          <div className="wk-corner">
+            <span>
+              {rows.length} {rows.length === 1 ? "person" : "people"}
+            </span>
+            <strong>Week {isoWeek(days[0]!)}</strong>
+          </div>
+          {days.map((d, i) =>
+            slim[i] ? (
+              <div key={d} className="wk-day slim" title={`${formatCivilDay(d, { weekday: true })} · no work booked`}>
+                <b aria-hidden="true">S</b>
+                <span className="sr-only">{formatCivilDay(d, { weekday: true })}, no work booked</span>
+              </div>
+            ) : (
+              <button
+                key={d}
+                type="button"
+                className={`wk-day${i === todayIndex ? " today" : ""}`}
+                onClick={() => onOpenDay(d)}
+                aria-label={`Open ${formatCivilDay(d, { weekday: true })} in Day view`}
+              >
+                <b>
+                  {formatCivilDay(d, { weekday: true }).replace(/ \d{4}$/, "")}
+                  {i === todayIndex && <span className="wk-today">Today</span>}
+                </b>
+                <span>
+                  {hoursText(sum(i, "bookedMinutes"))} of {hoursText(sum(i, "capacityMinutes"))} h booked
+                </span>
+              </button>
+            ),
+          )}
+        </div>
+        {rows.map(({ r, cells, off, colour }) => {
+          const booked = cells.reduce((a, c) => a + c.lane.bookedMinutes, 0),
+            capacity = cells.reduce((a, c) => a + c.lane.capacityMinutes, 0),
+            away = off && r.active ? cells.find((c) => c.lane.unavailable.length)?.lane.unavailable[0]?.label ?? "Calendar closed" : "";
+          return (
+            <section
+              key={r.id}
+              className={`wk-row${off ? " off" : ""}`}
+              style={{ gridTemplateColumns: columns }}
+              aria-label={`${r.name} resource lane`}
+            >
+              <div className="wk-person" title={off ? undefined : `${hoursText(booked)} of ${hoursText(capacity)} h booked this week`}>
+                <span className="tl-av" style={{ background: colour }} aria-hidden="true">
+                  {initials(r.name)}
+                </span>
+                <span className="tl-name">
+                  <Link href={`/service/technicians/${r.id}`}>{r.name}</Link>
+                </span>
+                {!off && r.resource_type && <small className="tl-role">{r.resource_type}</small>}
+                <small className="tl-total">
+                  {!r.active ? "Inactive · cannot book" : off ? away : `${hoursText(booked)} of ${hoursText(capacity)} h booked`}
+                </small>
+              </div>
+              {off ? (
+                <div className="wk-away" style={{ gridColumn: `2 / span ${days.length}` }}>
+                  {r.active ? (
+                    <>
+                      <b>{away}</b> · all week · not bookable
+                    </>
+                  ) : (
+                    <b>Inactive · cannot book</b>
+                  )}
+                </div>
+              ) : (
+                cells.map(({ d, lane, visits, hidden }, i) => {
+                  const tip = lane.capacityMinutes
+                    ? `${hoursText(lane.bookedMinutes)} of ${hoursText(lane.capacityMinutes)} h booked · ${lane.free}`
+                    : "Not working";
+                  return (
+                    <div
+                      key={d}
+                      className={`wk-cell${slim[i] ? " slim" : ""}${!lane.capacityMinutes ? " closed" : ""}${i === todayIndex ? " today" : ""}`}
+                      data-day={d}
+                      style={{ "--load": lane.capacityMinutes ? Math.min(1, lane.bookedMinutes / lane.capacityMinutes).toFixed(2) : "0" } as React.CSSProperties}
+                      title={slim[i] ? undefined : tip}
+                      aria-label={`${r.name} ${formatCivilDay(d, { weekday: true })}`}
+                      onDragOver={(e) => {
+                        if (usable && r.active) e.preventDefault();
+                      }}
+                      onDrop={(e) => onDrop(e, d, r)}
+                    >
+                      {!slim[i] && <span className="sr-only">{tip}</span>}
+                      {lane.closed.length > 0 && <div className="wk-block">Calendar closed</div>}
+                      {lane.unavailable.map((b) => (
+                        <div key={`${b.label}${b.span[0]}`} className="wk-block" title={`${b.label} · ${b.time}`}>
+                          <b>{b.label}</b> · {b.time}
+                        </div>
+                      ))}
+                      {hidden.map((s) => (
+                        <div key={`h${s[0]}`} className="wk-block reserved" title="Reserved for a visit not shown by the current filter">
+                          Reserved · {clockText(Math.max(s[0], 0))}–{clockText(Math.min(s[1], 1439))}
+                        </div>
+                      ))}
+                      {visits.map((a) => {
+                        const me = a.assignments.find((x) => x.resource_id === r.id && x.active)!,
+                          state = visitState(a),
+                          confirmed = a.status === "Confirmed",
+                          s = dayMinute(a.start_at, zone, d),
+                          f = dayMinute(a.end_at, zone, d),
+                          time = `${clockText(s)}–${clockText(((f % 1440) + 1440) % 1440)}`,
+                          ext = confirmed
+                            ? extendedHours(a.start_at, a.end_at, { timezone: r.calendar.timezone, travel_before_minutes: me.travel_before_minutes, travel_after_minutes: me.travel_after_minutes })
+                            : null,
+                          crew = a.assignments.filter((x) => x.active),
+                          drag = usable && a.actions.can_manage && confirmed,
+                          isSelected = selected === a.id;
+                        const tile = [
+                          a.scope_summary,
+                          a.site_name,
+                          state.long,
+                          confirmed && (me.travel_before_minutes || me.travel_after_minutes)
+                            ? `travel ${me.travel_before_minutes} min before, ${me.travel_after_minutes} min after`
+                            : "",
+                          ext ? "runs into extended hours" : "",
+                        ]
+                          .filter(Boolean)
+                          .join(" · ");
+                        return (
+                          <div
+                            key={a.id}
+                            className={`wk-tile${state.kind === "attention" ? " held" : state.kind === "proposed" ? " prop" : ""}${isSelected ? " sel" : ""}`}
+                            role="button"
+                            tabIndex={0}
+                            data-appointment={a.id}
+                            data-status={a.status}
+                            aria-pressed={isSelected}
+                            aria-label={`${a.display_number}, ${a.scope_summary}, ${formatCivilDay(d, { weekday: true })} ${time}, ${state.long}${ext ? ", extended hours" : ""}`}
+                            title={tile}
+                            draggable={drag}
+                            onDragStart={
+                              drag
+                                ? (e) => {
+                                    e.dataTransfer.setData("text/plain", a.id);
+                                    onDragNotice("Dragging proposes a move. The original booking remains saved.");
+                                  }
+                                : undefined
+                            }
+                            onClick={() => onSelect(a)}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter" || e.key === " ") {
+                                e.preventDefault();
+                                onSelect(a);
+                              }
+                            }}
+                          >
+                            <span className="r1">
+                              <b>{time}</b>
+                              {ext && (
+                                <span className="wk-ext" title="Runs into extended hours (outside 08:00–17:00)">
+                                  <Glyph icon="clock" path={clockGlyph} />
+                                </span>
+                              )}
+                              {crew.length > 1 && (
+                                <span className="tl-crew" aria-hidden="true">
+                                  {crew.map((x) => (
+                                    <span key={x.resource_id} title={x.name}>
+                                      {initials(x.name)}
+                                    </span>
+                                  ))}
+                                </span>
+                              )}
+                            </span>
+                            <span className="t">{a.scope_summary}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })
+              )}
+            </section>
+          );
+        })}
+      </div>
+    </section>
   );
 }
 
