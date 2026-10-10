@@ -98,3 +98,17 @@ Dean's working hours ([decision](../../../decisions/ui-build-sequence.md#planner
 - **Planner lanes:** a confirmed card in a person's lane adds the line "Extended hours · 07:30 to 12:30 including travel" in the warning colour, and its accessible name adds "extended hours". Proposed and cancelled cards are not marked.
 - **Calendar text:** lanes show the published interval, now 07:00–18:00 in freshly seeded data. Older seeded databases still show 08:00–17:00.
 - **Evidence:** [checks and captures](../../../testing/evidence/planner-working-hours/README.md): unit tests for the rule, a database test that travel can reach 07:00 and 18:00 but not a minute beyond, and element captures from a task-owned server. Visual review stays pending.
+
+## Day timeline built — 10 October 2026
+
+Stage 1 of building the refinement boards, on Dean's "Yes to both, proceed with your recommendations" ([decision](../../../decisions/ui-build-sequence.md#planner-day-timeline-10-october-2026)). Week, phone and Map follow in later stages.
+
+- **Where it shows:** Day view at 781 px and wider, when the display timezone is the resources' calendar timezone. Narrower screens keep the existing day list until the phone layout is built. With another display timezone the list shows, with a note to switch.
+- **Layout:** a sticky people column (avatar, name linking to the technician, resource type, one total such as "2 of 9 h booked"; free time in hover and screen-reader text) beside a 07:00 to 18:00 axis with hour labels, half-hour labels when there is room, and a Now pill and line on today.
+- **Lanes:** hour and half-hour hairlines. Inside the calendar but outside 08:00 to 17:00 is shaded Extended hours; outside the calendar is hatched Not working. Unavailable time, leave and closures are hatched blocks naming the kind and times. Every reservation the server returns shows as a faint hatched underlay, so time booked under a filter is never drawn as free. Time already gone today has a very light wash.
+- **Visits:** placed by time, with the person's travel joined either side and a 4 px gap to neighbours. Title (scope summary), time and site; initials only when shared. Faint blue confirmed, amber needs attention, hatched proposed. Hover text names the status, travel and extended hours. Flat at rest; hover or keyboard focus grows the visit and its travel a fixed 3 px on every side.
+- **Details panel:** clicking a visit, or Enter or Space on it, opens a 360 px panel: title and close, work order and status, Visit (S6 date range, site, appointment), Crew (role and travel), Readiness (customer contact, job pack, scope, policy, dispatch), then Close, Move or reassign and Open appointment. Focus moves to the panel heading and returns to the visit; Escape closes it.
+- **Drag:** a confirmed visit dragged along the timeline proposes the start time where it lands, snapped to 15 minutes, and opens Move or reassign with the crew unchanged. The keyboard route is the details panel.
+- **People who cannot be booked** (inactive, or away for the whole of standard hours) move to short rows at the bottom.
+- **Shared components:** `PlannerTimeline` and `AppointmentSnapshot` in `src/scheduling/components/client/planner-timeline.client.tsx`; calculations in `src/scheduling/day-timeline.ts`; styles in `src/app/globals.css`. Booking commands, guards and recovery are unchanged.
+- **Evidence:** [checks and captures](../../../testing/evidence/planner-day-timeline/README.md). No owner visual review yet.
