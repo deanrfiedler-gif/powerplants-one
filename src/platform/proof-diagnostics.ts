@@ -4,13 +4,13 @@ import { AsyncLocalStorage } from "node:async_hooks";
 
 // Opt-in, local synthetic verification only. Never record request headers,
 // query strings, bodies, identities, output content or exception messages.
-// Read the runtime environment through a parameter. Next replaces a direct
-// process.env.NODE_ENV access at build time, even for the guarded local compiled
-// launcher (NODE_ENV=test); that previously erased route-level observations.
+// Read the runtime environment through an opaque lookup. Next substitutes
+// NODE_ENV even through an inlined helper argument, which can erase enabled
+// branches while leaving a dynamic condition in the guarded compiled launcher.
 export const proofDiagnosticsAllowed = (env: Record<string, string | undefined>) =>
   env.PPO_PROOF_DIAGNOSTICS === "1" && env.PPO_ENV === "local-synthetic" &&
   env.PPO_EXPOSURE === "loopback" && env.PPO_IDENTITY === "synthetic" && env.NODE_ENV !== "production";
-const enabled = proofDiagnosticsAllowed(process.env);
+const enabled = proofDiagnosticsAllowed(Reflect.get(process, "env"));
 let count = 0;
 const limit = 60000;
 type ProofRequest = { request_id: number; path: string; route_id?: number };
@@ -23,7 +23,7 @@ const diagnosticGlobal = globalThis as typeof globalThis & {
 const scope = diagnosticGlobal[scopeKey] ??= new AsyncLocalStorage<ProofRequest>();
 let routeId = 0;
 export const proofDiagnosticsEnabled = () => enabled;
-const measuredRead = (path: string) => /^\/api\/v1\/(?:reports\/:id|my-jobs\/:id|local-session|shell\/context|crm\/directory)$/.test(path);
+const measuredRead = (path: string) => /^\/api\/v1\/(?:reports\/:id|my-jobs\/:id|local-session|shell\/context|crm\/directory(?:\/views)?)$/.test(path);
 // Capture only the existing numeric/sanitised context, never the request itself.
 export function captureDatabaseProof() {
   const current = scope.getStore();
@@ -61,7 +61,7 @@ export function proofEvent(event: string, fields: Record<string, string | number
 
 export function proofPath(raw: string) {
   const path = raw.split("?")[0].replace(/[0-9a-f]{32,}/gi, "opaque");
-  if (["/api/v1/local-session", "/api/v1/shell/context", "/api/v1/crm/directory"].includes(path)) return path;
+  if (["/api/v1/local-session", "/api/v1/shell/context", "/api/v1/crm/directory", "/api/v1/crm/directory/views"].includes(path)) return path;
   if (/^\/_next\/static\/[a-zA-Z0-9_./%\[\]@()+-]+$/.test(path)) return path.slice(0, 240);
   if (/^\/(api\/v1\/|customers|sites|schedule|my-jobs|service|documents|finance|crm|work|people|equipment)/.test(path) &&
       /^\/[a-zA-Z0-9_/-]+$/.test(path))
