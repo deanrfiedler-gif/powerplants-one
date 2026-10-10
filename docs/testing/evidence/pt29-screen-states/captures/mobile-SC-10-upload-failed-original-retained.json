@@ -1,0 +1,13 @@
+{
+  "scenario": "SC-10-upload-failed-original-retained",
+  "full_page": false,
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "source_head": "dd9573158e6c13cf964ee93655ffa5e90c74de05",
+  "executed_checkout": "dd9573158e6c13cf964ee93655ffa5e90c74de05",
+  "executed_tree": "15d0966d3557c2716947b7bfae746d9bd67fc20b",
+  "byte_count": 50514,
+  "sha256": "6e69f5cbc3f22b462e9c096e2a514a0d43358d47f5d024ef3fcdd30037249cb1"
+}

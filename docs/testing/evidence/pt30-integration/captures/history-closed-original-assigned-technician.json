@@ -1,0 +1,13 @@
+{
+  "scenario": "closed-original-assigned-technician",
+  "full_page": false,
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "source_head": "caecf7bc787eb658a545268e507e35e257adf48f",
+  "executed_checkout": "caecf7bc787eb658a545268e507e35e257adf48f",
+  "executed_tree": "0c4a8bd4453c26e6fd5c5c426b50b0fa8fd97207",
+  "byte_count": 147687,
+  "sha256": "2d1a3561bcaa3e66da22770eea516cc94f2f73295b60dc41302274d1726e7621"
+}

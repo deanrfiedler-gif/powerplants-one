@@ -1,0 +1,258 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-10",
+  "owner": "Dean Fiedler",
+  "review_status": "Implementation rehearsal; independent and owner observations pending",
+  "application_and_test_source": "caecf7bc787eb658a545268e507e35e257adf48f",
+  "source_tree": "0c4a8bd4453c26e6fd5c5c426b50b0fa8fd97207",
+  "build": "qE6dn5GfAoZAp53Forj96",
+  "environment": {
+    "os": "Windows",
+    "node": "24.21.0",
+    "npm": "11.19.0",
+    "postgres": "16.15",
+    "playwright": "1.63.0",
+    "chrome": "155.0.8059.40",
+    "database": "ppo_synthetic_test",
+    "port": 33949,
+    "database_port": 55949,
+    "identity": "local-synthetic loopback",
+    "viewport": [
+      1440,
+      1000
+    ],
+    "locale": "en-AU",
+    "timezone": "UTC",
+    "schema_latest": 77,
+    "installed_migrations": 76,
+    "physical_device": false
+  },
+  "phases": [
+    {
+      "phase": "initial",
+      "source": "caecf7bc787eb658a545268e507e35e257adf48f",
+      "build": "qE6dn5GfAoZAp53Forj96",
+      "stats": {
+        "startTime": "2026-10-10T05:27:59.738Z",
+        "duration": 238636.058,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "result_sha256": "48f8806ce0c0b5a358ab5b17a25ea8bbf1fc437e4bd4f12d733b92a990b835df",
+      "log_sha256": "9c1b07d695550c67ea3595ac54aae24cfec02d391397dfb2cf169399002e6c1c",
+      "cases": [
+        {
+          "title": "Current Field Work narrative keeps original and separate attendance through explicit restart phases",
+          "status": "passed",
+          "retry": 0,
+          "duration_ms": 225899,
+          "annotations": []
+        }
+      ],
+      "page_errors": []
+    },
+    {
+      "phase": "prepare",
+      "source": "caecf7bc787eb658a545268e507e35e257adf48f",
+      "build": "qE6dn5GfAoZAp53Forj96",
+      "stats": {
+        "startTime": "2026-10-10T05:33:54.753Z",
+        "duration": 20121.666,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "result_sha256": "7ba96cff98563a304f0d601fbf3938080c61b5ee4e3af94d2016151c01e73867",
+      "log_sha256": "985a7c7134c6d90b4ced8f4af0b2f48acb8d571182f30f5cfdd4633f13f93b91",
+      "cases": [
+        {
+          "title": "Current Field Work narrative keeps original and separate attendance through explicit restart phases",
+          "status": "passed",
+          "retry": 0,
+          "duration_ms": 18194,
+          "annotations": []
+        }
+      ],
+      "page_errors": []
+    },
+    {
+      "phase": "finish",
+      "source": "caecf7bc787eb658a545268e507e35e257adf48f",
+      "build": "qE6dn5GfAoZAp53Forj96",
+      "stats": {
+        "startTime": "2026-10-10T05:34:15.503Z",
+        "duration": 25654.023,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "result_sha256": "1c3199ab918ec7ad832957e94fc1451bb09aeec3f8087be39576804a606f8d39",
+      "log_sha256": "6f069372d09c81cd02aaadbeec361fd435dbef23a5623ac216a9b98c64317308",
+      "cases": [
+        {
+          "title": "Current Field Work narrative keeps original and separate attendance through explicit restart phases",
+          "status": "passed",
+          "retry": 0,
+          "duration_ms": 22978,
+          "annotations": []
+        }
+      ],
+      "page_errors": []
+    },
+    {
+      "phase": "history",
+      "source": "caecf7bc787eb658a545268e507e35e257adf48f",
+      "build": "qE6dn5GfAoZAp53Forj96",
+      "stats": {
+        "startTime": "2026-10-10T05:34:41.702Z",
+        "duration": 12196.165,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "result_sha256": "9b84bf9f80543c85c345e2084cc1382145122600df3af108a0eb7304d19208b0",
+      "log_sha256": "702211adc53fa65cde03aa4a460f11d982ffd453c7435a7b79fcd30302333692",
+      "cases": [
+        {
+          "title": "Current Field Work narrative keeps original and separate attendance through explicit restart phases",
+          "status": "passed",
+          "retry": 0,
+          "duration_ms": 9863,
+          "annotations": []
+        }
+      ],
+      "page_errors": []
+    },
+    {
+      "phase": "history-settled",
+      "source": "8f2039cc92e3b41d10734c0db206be1500b0b34d",
+      "build": "qE6dn5GfAoZAp53Forj96",
+      "stats": {
+        "startTime": "2026-10-10T05:38:09.987Z",
+        "duration": 19701.272999999997,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "result_sha256": "27c1adab8792c0ab0de113849d0532d135aaa165d0d44ec41e2b130295a11a7e",
+      "log_sha256": "58dc6bf81452ec2f4b46e9a4ac0c4e4779dc4bc4be6a516e287376def5e86d4b",
+      "cases": [
+        {
+          "title": "Current Field Work narrative keeps original and separate attendance through explicit restart phases",
+          "status": "passed",
+          "retry": 0,
+          "duration_ms": 6884,
+          "annotations": []
+        }
+      ],
+      "page_errors": []
+    }
+  ],
+  "preservation": {
+    "before-restart": {
+      "path": "before-restart-preservation.json",
+      "sha256": "7cbd8274a86f213cea7927205cc919e374185f91c67b37f081878945278ce1a0",
+      "tables": 368,
+      "files": 8,
+      "compared_files": 0,
+      "process_started": "2026-10-10T05:25:14.364Z",
+      "schema": 77,
+      "migration_count": 76,
+      "mode": "exact",
+      "changes": 0
+    },
+    "after-restart": {
+      "path": "after-restart-preservation.json",
+      "sha256": "a3d560a61b7141bdea3adbadfd90407490f2044c635c1145f8fb1fb244e330ce",
+      "tables": 368,
+      "files": 8,
+      "compared_files": 8,
+      "process_started": "2026-10-10T05:32:51.072Z",
+      "schema": 77,
+      "migration_count": 76,
+      "mode": "exact",
+      "changes": 0
+    },
+    "after-return": {
+      "path": "after-return-preservation.json",
+      "sha256": "0efafeface5aefb79a8e9e5ec34fc11fec33cabbe8ce8bf2e8d47200305524c4",
+      "tables": 368,
+      "files": 11,
+      "compared_files": 8,
+      "process_started": "2026-10-10T05:32:51.072Z",
+      "schema": 77,
+      "migration_count": 76,
+      "mode": "originals",
+      "changes": 48
+    }
+  },
+  "checks": {
+    "foundation": {
+      "command": "python scripts/check_foundation.py",
+      "exit_code": 0,
+      "log_sha256": "da50b2aa6940eb62c240a6fc87243185363dc578f1aeaf951bea0c7cbb9bdfc2"
+    },
+    "prototype": {
+      "command": "python scripts/check_prototype.py",
+      "exit_code": 0,
+      "log_sha256": "f7b48b580707ab4071e3dcda23d38936db1c757240cbc5996bf54ed4fceb2ff3"
+    },
+    "naming": {
+      "command": "python scripts/check_naming.py",
+      "exit_code": 0,
+      "log_sha256": "55baadf485442b503f26e6eeec6e0cbb71b25cc7dd96d8aa828de4fbf6ab8f24"
+    },
+    "studio": {
+      "command": "npm run studio:check",
+      "exit_code": 0,
+      "log_sha256": "66c374ae732d2051d904d9a6ce5899864c5478bdacf4173ac46f90ba8fa317d7",
+      "limits": {
+        "unreviewed": 322,
+        "stale": 28,
+        "visual_acceptance_granted": false
+      }
+    },
+    "typecheck": {
+      "command": "npm run typecheck",
+      "exit_code": 0,
+      "log_sha256": "4d37be83b7575a44716281e85309852cb911b9c643aca2ab587009447420ff28"
+    },
+    "eslint": {
+      "command": "npx eslint tests/acceptance-browser/journey.spec.ts",
+      "exit_code": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "integrity": {
+      "status": "passed",
+      "changed_case_dispositions": [
+        "PT-13",
+        "PT-18",
+        "PT-27",
+        "PT-30"
+      ],
+      "authored_cases_preserved": 30,
+      "parent_ids_preserved": 78,
+      "human_observations_pending": 11,
+      "application_and_issued_sources_unchanged": true
+    },
+    "build": {
+      "command": "npm run build",
+      "exit_code": 0,
+      "source": "caecf7bc787eb658a545268e507e35e257adf48f",
+      "log_sha256": "1de7b02884f5ce16a4794e8f8e3eabec1829a3dc501a64224cb1dd7b5dde69ce"
+    }
+  },
+  "limits": [
+    "Four successful automated phases are not an owner demonstration.",
+    "The same retained cluster was restarted; no backup restore or power-loss test.",
+    "Sessions and Session audit events are deliberately excluded from the preservation comparison.",
+    "Separate source-bound prerequisites, PT-27 targets, physical devices and independent accessibility/visual review remain open.",
+    "No hosted deployment, live ERP/provider operation or customer message."
+  ]
+}

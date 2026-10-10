@@ -1,0 +1,13 @@
+{
+  "scenario": "closed-original-second-technician",
+  "full_page": false,
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "source_head": "caecf7bc787eb658a545268e507e35e257adf48f",
+  "executed_checkout": "caecf7bc787eb658a545268e507e35e257adf48f",
+  "executed_tree": "0c4a8bd4453c26e6fd5c5c426b50b0fa8fd97207",
+  "byte_count": 144031,
+  "sha256": "8bce7c35be5db467059a44a78aa5caa3de5ed4a714014f0d6ca73d69384d295e"
+}

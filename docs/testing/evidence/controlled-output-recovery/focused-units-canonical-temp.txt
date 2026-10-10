@@ -1,0 +1,31 @@
+✔ P06 private adapter is write-once by original operation and verifies exact retrieved hashes (860.8739ms)
+✖ P06 source lookup never substitutes a latest version; symlink and in-repository stores are refused (248.2137ms)
+✔ P10 quantities preserve exact six-place decimal conservation without floating point (4.913ms)
+✔ P10 independently specified account fixtures do not sum visible pages or net unapplied cash (1.2826ms)
+✔ P09 strict submission rejects malformed versions, unknown fields and unbound local placeholders (11.6823ms)
+✔ P09 response choices retain exact context and refuse fabricated unavailable identities (2.398ms)
+✔ P09 entry review refuses duplicate IDs and private override fields (28.5643ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15324.4635
+
+✖ failing tests:
+
+test at tests\unit\document-store.test.ts:1:1128
+✖ P06 source lookup never substitutes a latest version; symlink and in-repository stores are refused (248.2137ms)
+  Error: EPERM: operation not permitted, symlink 'C:\Users\Dean.Fiedler\.codex\tmp\pt23-output-recovery-20261010\unit-temp\ppo-store-lRuHSq' -> 'C:\Users\Dean.Fiedler\.codex\tmp\pt23-output-recovery-20261010\unit-temp\ppo-store-lRuHSq\alias'
+      at async symlink (node:internal/fs/promises:1707:10)
+      at async TestContext.<anonymous> (C:\Users\Dean.Fiedler\.codex\worktrees\pt23-output-recovery\powerplants-one\tests\unit\document-store.test.ts:48:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -4048,
+    code: 'EPERM',
+    syscall: 'symlink',
+    path: 'C:\\Users\\Dean.Fiedler\\.codex\\tmp\\pt23-output-recovery-20261010\\unit-temp\\ppo-store-lRuHSq',
+    dest: 'C:\\Users\\Dean.Fiedler\\.codex\\tmp\\pt23-output-recovery-20261010\\unit-temp\\ppo-store-lRuHSq\\alias'
+  }

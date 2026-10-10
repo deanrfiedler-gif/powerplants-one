@@ -1,0 +1,532 @@
+{
+  "schema_version": 1,
+  "scope": "PT-23 / AT-36 / OUT-09 OUT-10 OUT-14; synthetic technical verification only",
+  "execution_date": "2026-10-10",
+  "owner": "Dean Fiedler",
+  "review": "Implementation self-review and every-page technical inspection; independent visual and owner acceptance pending",
+  "application_baseline": "e5a94730025cf7a1ad4c1d0b1450532f591dba32",
+  "runtime_correction_checkpoint": "c853271839197b358bec036ba721a013d0b24872",
+  "test_checkpoint": "79dc341a28ed182846029a6a3e851c3b67eff04a",
+  "baseline_test_checkpoints": [
+    "f1a33bf1dcb2790f56adf9c62c3966f45ecd7af5",
+    "770b8459ce4f2ee53b5dbbb3178832b803a874ea"
+  ],
+  "environment": {
+    "os": "Windows",
+    "node": "24.21.0",
+    "npm": "11.19.0",
+    "postgresql": "16.15",
+    "database": "ppo_synthetic_test",
+    "chrome": "155.0.8059.40",
+    "playwright": "1.63.0",
+    "max_locks_per_transaction": 512,
+    "durability_settings": "Unchanged",
+    "local_per_test_timeout_ms": 300000,
+    "ci_per_test_timeout_ms": 120000,
+    "compiled_build_id": "vCSLKVdqwB6OxcG1Rx9Al"
+  },
+  "sources": [
+    {
+      "path": "src/documents/worker.ts",
+      "sha256": "e79f8c0e3157f69bdd54da842164ba2f39a5d009f5818026f40e275d6eb32a32"
+    },
+    {
+      "path": "src/finance/worker.ts",
+      "sha256": "9e77f96228ebab21eeb0b29d0c1ea5e0f717f77bcde42f1fbc559dab2c2bf713"
+    },
+    {
+      "path": "tests/helpers/controlled-outputs.ts",
+      "sha256": "d03f07d2e39b89b98f7b0b620c4180f1a8501eb9c9146d5cd1303c3a17ef6f60"
+    },
+    {
+      "path": "tests/database/controlled-output-recovery.test.ts",
+      "sha256": "968cadf0990d77e95c6167612e193a7d5be5397b22d3a5936d13b68605718d90"
+    },
+    {
+      "path": "tests/database/controlled-output-pages.test.ts",
+      "sha256": "f5e63f0137b92870cd31c2b09d768dc42111a47da38da35a54cc64692d73ed74"
+    },
+    {
+      "path": "scripts/check-controlled-output-pages.py",
+      "sha256": "bbbdffcd89e96ebaa405d497cdcf77a4593e6496cdac54645eb6623df3507e22"
+    },
+    {
+      "path": "src/documents/store.ts",
+      "sha256": "23600cd38a122ee7d9e67ed21e8ba2e0b1d7cd1564bc5bd6cdc971b8dbf4e8c7"
+    },
+    {
+      "path": "tests/unit/document-store.test.ts",
+      "sha256": "7fd999c35cc2653c6b854b957e10b92ce051aaac315245eb06349f21a33a70be"
+    },
+    {
+      "path": "src/documents/p11-render.ts",
+      "sha256": "c78abc71cca67c8b900721f5b67755c01255bde74febc08a2f1d2373a55a8171"
+    }
+  ],
+  "checks": [
+    {
+      "name": "physical corruption on unchanged main",
+      "passed": 0,
+      "failed": 1,
+      "expected": "Failure reproduces pack release with corrupt stored bytes",
+      "log": "baseline-physical.txt"
+    },
+    {
+      "name": "targeted unchanged-main final read and restored renderer retry",
+      "passed": 0,
+      "failed": 2,
+      "expected": "Failures reproduce missing pack final read and stale Finance release",
+      "log": "baseline-targeted.txt"
+    },
+    {
+      "name": "corrected recovery matrix",
+      "passed": 12,
+      "failed": 0,
+      "skipped": 0,
+      "log": "final-recovery.txt"
+    },
+    {
+      "name": "long journeys",
+      "passed": 2,
+      "failed": 0,
+      "log": "long-pages-corrected.txt"
+    },
+    {
+      "name": "PDF content/footer/geometry",
+      "documents": 8,
+      "pages": 89,
+      "failures": 0,
+      "results": "page-checks.json"
+    },
+    {
+      "name": "every-page inspection",
+      "pages": 89,
+      "contact_sheets": 26,
+      "result": "No clipping/overlap observed; sparse final pages and split rows/fields recorded for review",
+      "record": "page-review.md"
+    },
+    {
+      "name": "application build including TypeScript",
+      "result": "Passed",
+      "log": "build.txt"
+    },
+    {
+      "name": "changed-source eslint",
+      "result": "Passed",
+      "log": "changed-lint.txt"
+    },
+    {
+      "name": "focused existing units on unchanged source",
+      "passed": 6,
+      "failed": 1,
+      "limit": "Windows EPERM creating a symlink; same store/test source as main",
+      "log": "focused-units-canonical-temp.txt"
+    },
+    {
+      "name": "affected existing database regressions",
+      "passed": 4,
+      "failed": 0,
+      "log": "existing-regressions.txt"
+    },
+    {
+      "name": "studio",
+      "result": "Passed; 28 stale and 322 unreviewed records remain",
+      "log": "studio.txt"
+    },
+    {
+      "name": "naming",
+      "result": "Passed",
+      "log": "naming.txt"
+    },
+    {
+      "name": "prototype",
+      "result": "Passed",
+      "log": "prototype.txt"
+    },
+    {
+      "name": "foundation on integrated branch documentation",
+      "result": "Passed; all 78 requirements and 22 issued sources retained",
+      "log": "foundation.txt"
+    }
+  ],
+  "boundaries": [
+    "Twenty-asset report variants are unissued render-only fixtures, not authorised work or Finance sources.",
+    "Version-1 issue bytes remain exact after policy selects installed version 2.",
+    "No renderer/template, migration, grant or UI source changes.",
+    "No live provider, operational Finance, power-loss, accessibility or PDF/UA acceptance.",
+    "CI, independent/owner acceptance, merge and deployment remain separate."
+  ],
+  "artifacts": [
+    {
+      "path": ".gitattributes",
+      "bytes": 154,
+      "sha256": "842e54f49b4bbc08dbc44bda7ddd0e4c60b612e4ac4a1dcc571bdec30313eff0"
+    },
+    {
+      "path": "baseline/pack-corrupt-before-release.json",
+      "bytes": 22800,
+      "sha256": "e8e4320951f446bac58b13248ec9146926960c7aebf3f40c5a341c831c92703b"
+    },
+    {
+      "path": "baseline/pack-storage-failed.json",
+      "bytes": 13682,
+      "sha256": "dea49f6d51fa5070f61213f8ee9bdef44922642bcaa871448e01446010767ffc"
+    },
+    {
+      "path": "baseline-physical.txt",
+      "bytes": 1222,
+      "sha256": "199d7c5fd9e0d8dee8385a2ff149ab1b24356a1a614577d7f087d7607ab7060d"
+    },
+    {
+      "path": "baseline-targeted.txt",
+      "bytes": 2104,
+      "sha256": "c5aa8d16eb8bd83f45852b4a453cc8ab5eab00af19554c87b15645d53693fc8f"
+    },
+    {
+      "path": "build.txt",
+      "bytes": 26713,
+      "sha256": "1e09b7502ba124b0913cc683ed08ea2caec84a1d98e9013f6df23d4fe2f23658"
+    },
+    {
+      "path": "changed-lint.txt",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "existing-regressions.txt",
+      "bytes": 1104,
+      "sha256": "5a695c69ecd4fb9e2474abba08b813229ac897cdf635411f0a5b29ea9833af8a"
+    },
+    {
+      "path": "final-recovery.txt",
+      "bytes": 3092,
+      "sha256": "43f92362df858a25579bf581794b5d5d2135bd63c61beaf66d5fe39550a54bd1"
+    },
+    {
+      "path": "finance-corrupt-before-release.json",
+      "bytes": 16171,
+      "sha256": "10b5c19b1c87349dca01e8d2d90b0299053ccbddc1c3f90ba7c0327de0f1bd82"
+    },
+    {
+      "path": "finance-finalisation-rolled-back.json",
+      "bytes": 16790,
+      "sha256": "63915b4e3a4d2c6c33e02d27e775ab03452b507d0949855b0081938eb1052806"
+    },
+    {
+      "path": "finance-recovered.json",
+      "bytes": 22524,
+      "sha256": "c6adf6d0ee540bb530183c3b6ffaa380594aadcae795d4aa327b691b30184097"
+    },
+    {
+      "path": "finance-renderer-changed.json",
+      "bytes": 15552,
+      "sha256": "349a21d4189a888db4ab58dc0e3c5c6f2b0b79e40a2f709d6eae2de20b21932a"
+    },
+    {
+      "path": "finance-renderer-retry.json",
+      "bytes": 15552,
+      "sha256": "349a21d4189a888db4ab58dc0e3c5c6f2b0b79e40a2f709d6eae2de20b21932a"
+    },
+    {
+      "path": "finance-source-changed.json",
+      "bytes": 15540,
+      "sha256": "0ece781ea6d314f760b3a13abacf4a7f85bfe0f286b8c98ad295af4efbcd1149"
+    },
+    {
+      "path": "finance-source-retry.json",
+      "bytes": 15540,
+      "sha256": "0ece781ea6d314f760b3a13abacf4a7f85bfe0f286b8c98ad295af4efbcd1149"
+    },
+    {
+      "path": "finance-storage-failed.json",
+      "bytes": 13968,
+      "sha256": "5988c9b4f0d063ed0e3e47c24fea02be58c49950b911e454970c93c4a14bec22"
+    },
+    {
+      "path": "finance-template-changed.json",
+      "bytes": 15533,
+      "sha256": "eaa078a01aedba5eaf0592ee83cd9822620a10cc337a743c67ef7d70dfe69d57"
+    },
+    {
+      "path": "finance-template-retry.json",
+      "bytes": 15533,
+      "sha256": "eaa078a01aedba5eaf0592ee83cd9822620a10cc337a743c67ef7d70dfe69d57"
+    },
+    {
+      "path": "focused-units-canonical-temp.txt",
+      "bytes": 1923,
+      "sha256": "972bf9fcc1544ad1eb5587f3023c0e16e12cafbc38b425895a53502fac8a2426"
+    },
+    {
+      "path": "foundation.txt",
+      "bytes": 330,
+      "sha256": "0f3baa297188849b48373fa38f3337959e7d546042f1bfc101c4bd2642299280"
+    },
+    {
+      "path": "long-pages-corrected.txt",
+      "bytes": 575,
+      "sha256": "a2355b2165380c3670f252b592bd719af5709de32d8aabbd5bb09470b6db35c5"
+    },
+    {
+      "path": "naming.txt",
+      "bytes": 296,
+      "sha256": "3fc8722aa78504e65b7e215ab62ebb4a0b90893d901ba6a9dc2c23e783b48b7f"
+    },
+    {
+      "path": "OUT-09-v1.html",
+      "bytes": 18257,
+      "sha256": "774dbf44f54ba994f33a767a100b3d607e234da25fe2295560fd4803f667d20b"
+    },
+    {
+      "path": "OUT-09-v1.json",
+      "bytes": 2512,
+      "sha256": "88d593b5942bb4612bf1a765906f0bb22aab08d9a92d029ba502e01f24115fd7"
+    },
+    {
+      "path": "OUT-09-v1.pdf",
+      "bytes": 63819,
+      "sha256": "c85bc06ea0f7a1caeb32a8f9bb6db0f3ae8ffd332f998181fac41564ea3d773b"
+    },
+    {
+      "path": "OUT-09-v2.html",
+      "bytes": 813607,
+      "sha256": "f8a776c3905c5288ce428996463427553168fe394ed6b24afb2c50fe2b3b5e69"
+    },
+    {
+      "path": "OUT-09-v2.json",
+      "bytes": 2515,
+      "sha256": "a6698305a8298573e944ff8ed6e27730cf07bd8794ec609611f6efa169b90347"
+    },
+    {
+      "path": "OUT-09-v2.pdf",
+      "bytes": 576805,
+      "sha256": "aaf8339aa41d62bd901a34381356b8a5556afd66220611a38ae68ab198178698"
+    },
+    {
+      "path": "OUT-10-assets-v1.html",
+      "bytes": 26460,
+      "sha256": "c63fb7ad697212cc55f3b3e32da25ea8c4283006533ce14d4ba1803036c91f4b"
+    },
+    {
+      "path": "OUT-10-assets-v1.json",
+      "bytes": 1540,
+      "sha256": "03bc901ce6bb91379c06feb9b0cd94fd8f6cb9bba9634d48676de2fcab828b28"
+    },
+    {
+      "path": "OUT-10-assets-v1.pdf",
+      "bytes": 168629,
+      "sha256": "3133d2c4aa3d88e692b7ede2e0d86437a99ece7c8e346d09039a3d9cd4b50ac2"
+    },
+    {
+      "path": "OUT-10-assets-v2.html",
+      "bytes": 821574,
+      "sha256": "82496feb264c3b2c139a3bb96dbaabf733106fa06e1d32f43c3cd02fe6acc9f7"
+    },
+    {
+      "path": "OUT-10-assets-v2.json",
+      "bytes": 1540,
+      "sha256": "dcfc0dd7b3e8918613c2fe95c5d054454f4f3e25fc92d0fa7d85435bf5078f18"
+    },
+    {
+      "path": "OUT-10-assets-v2.pdf",
+      "bytes": 690723,
+      "sha256": "92060d48229d6e2b6ef27e058fc1ad4b2f3abf23bbe9a6cb7fd29aecb929cbee"
+    },
+    {
+      "path": "OUT-10-v1.html",
+      "bytes": 23720,
+      "sha256": "211e633918098aae63a0c16627eac8a20aa5d11e41c88de8e86b94b516336a00"
+    },
+    {
+      "path": "OUT-10-v1.json",
+      "bytes": 2487,
+      "sha256": "2b5bb37bc96fe6d36060d769957934aa90e6e378d53ef2e6ceba90930924ea7b"
+    },
+    {
+      "path": "OUT-10-v1.pdf",
+      "bytes": 148719,
+      "sha256": "769448d62a0da7d59d7885b2b4992b98c1bfe3a204ba68003a6909e10f464ee1"
+    },
+    {
+      "path": "OUT-10-v2.html",
+      "bytes": 818834,
+      "sha256": "61447bcbcd77fa0ce90e032c61f5204f6d4393ef49eab334193667d38e04c48e"
+    },
+    {
+      "path": "OUT-10-v2.json",
+      "bytes": 2489,
+      "sha256": "a08e4064eb5f93a75451750749816b3c5dc711398071d561149287ed4097ef7f"
+    },
+    {
+      "path": "OUT-10-v2.pdf",
+      "bytes": 671852,
+      "sha256": "21ef6831b64865625a1082dc3af156f9273bae49eb814349f180d5253bec5537"
+    },
+    {
+      "path": "OUT-14-v1.html",
+      "bytes": 24437,
+      "sha256": "78197ca139c0cc212caf519d12b871d07ed39b1a4751eb7aa3e2ce7aa22dff1a"
+    },
+    {
+      "path": "OUT-14-v1.json",
+      "bytes": 2183,
+      "sha256": "9442b5083842e7fbf2e7fbd5772d9c4547984081671abb2f8f4c6a44f3b66f7e"
+    },
+    {
+      "path": "OUT-14-v1.pdf",
+      "bytes": 117777,
+      "sha256": "c38890180e20a5021343f3e5bbce8f73bc339c3e4dbff3f64d31480b51333bcc"
+    },
+    {
+      "path": "OUT-14-v2.html",
+      "bytes": 819551,
+      "sha256": "36914d0bd259255112e1373ab2bddffb12b14f10ea5f4bd96f8cc05e02edcc12"
+    },
+    {
+      "path": "OUT-14-v2.json",
+      "bytes": 2185,
+      "sha256": "710112accba2e679f65647102b06d04fd824d705559e4ff0bf8317d9977f663c"
+    },
+    {
+      "path": "OUT-14-v2.pdf",
+      "bytes": 603022,
+      "sha256": "24c7ad00ff179add8d090172667e4a828e771987e165fe48447deb0372760f17"
+    },
+    {
+      "path": "pack-corrupt-before-release.json",
+      "bytes": 16556,
+      "sha256": "95c9ee17a72967c636ca5af0caa6c18a775684f52504cc703b01633ee6d944f6"
+    },
+    {
+      "path": "pack-finalisation-rolled-back.json",
+      "bytes": 17644,
+      "sha256": "b4a8a31d297fe04b1224842822242b4168a6c5f7899a27fb3cf87e4fdeeb0d80"
+    },
+    {
+      "path": "pack-recovered.json",
+      "bytes": 26116,
+      "sha256": "d00ff097f248e24739bb92f1ea12bd6606a6049f380f00b9f65026029fc1b30e"
+    },
+    {
+      "path": "pack-renderer-changed.json",
+      "bytes": 15823,
+      "sha256": "3b61cd4a11c2a7fde4a2f116ef55faf623be201081fb70ac4def0f2fcca26524"
+    },
+    {
+      "path": "pack-renderer-retry.json",
+      "bytes": 15823,
+      "sha256": "3b61cd4a11c2a7fde4a2f116ef55faf623be201081fb70ac4def0f2fcca26524"
+    },
+    {
+      "path": "pack-source-changed.json",
+      "bytes": 15807,
+      "sha256": "42fdffe66b407dbf03e1b34d172a75ab92e3a99f078ea51cb87a4a3f7dcfc88f"
+    },
+    {
+      "path": "pack-source-retry.json",
+      "bytes": 15807,
+      "sha256": "42fdffe66b407dbf03e1b34d172a75ab92e3a99f078ea51cb87a4a3f7dcfc88f"
+    },
+    {
+      "path": "pack-storage-failed.json",
+      "bytes": 13706,
+      "sha256": "28c72860cdcb8000db01f58bfe0bcb9bff6c3094e8e2421be2ed48b03c450213"
+    },
+    {
+      "path": "pack-template-changed.json",
+      "bytes": 15567,
+      "sha256": "6102698235b22bc16d7991259edf1897fc1aae2f3a373e7ad595dd875b52803f"
+    },
+    {
+      "path": "pack-template-retry.json",
+      "bytes": 15567,
+      "sha256": "6102698235b22bc16d7991259edf1897fc1aae2f3a373e7ad595dd875b52803f"
+    },
+    {
+      "path": "page-checks.json",
+      "bytes": 36714,
+      "sha256": "c90b65af442d04ff87fe957ca0ed156cb798453c9a5f31a1a6485c6b11e68d97"
+    },
+    {
+      "path": "page-review.md",
+      "bytes": 4426,
+      "sha256": "8ead2456757fa62f6fd3662d5b1a7392b872e506a171b48d163a8345a34b402c"
+    },
+    {
+      "path": "pdf-checks.txt",
+      "bytes": 3752,
+      "sha256": "a6e6ea9b5acedc6703a0351dff04206dcedce39b8e79dd4a197a2eecef5606eb"
+    },
+    {
+      "path": "prototype.txt",
+      "bytes": 526,
+      "sha256": "9b7839c713adf06d51e41256fd2e991c6acc00fca36c33caff1ef7e02d55251b"
+    },
+    {
+      "path": "README.md",
+      "bytes": 8739,
+      "sha256": "b52aed2e39d25617bcbdaa1833d5d4e70e33c5e29cfe6d430d0cadddd6d9d247"
+    },
+    {
+      "path": "report-corrupt-before-release.json",
+      "bytes": 12985,
+      "sha256": "b992e8293951c42c8c18cec07cb0a2fe0b5a0f88494abb21e0e30d25b5210def"
+    },
+    {
+      "path": "report-finalisation-rolled-back.json",
+      "bytes": 13899,
+      "sha256": "01c627d9b999aecb17f4633324df715531b4f4d10e02bbfe9451b51dec6997a2"
+    },
+    {
+      "path": "report-recovered.json",
+      "bytes": 22778,
+      "sha256": "b2b32533602f7ab42aebe8cd22620420e4e1f136a9006de408f2a8f5c9bb350c"
+    },
+    {
+      "path": "report-renderer-changed.json",
+      "bytes": 12368,
+      "sha256": "3392f5703843dbb1fb03037d5acb5a4c34701ad28b6ce66c94cf079cd25cad7e"
+    },
+    {
+      "path": "report-renderer-retry.json",
+      "bytes": 12368,
+      "sha256": "3392f5703843dbb1fb03037d5acb5a4c34701ad28b6ce66c94cf079cd25cad7e"
+    },
+    {
+      "path": "report-source-changed.json",
+      "bytes": 12352,
+      "sha256": "36b3ea9ad5db1a9b6b382d7dc80c16ce1fc83dc8249c020f6151e04db8a8ebd0"
+    },
+    {
+      "path": "report-source-retry.json",
+      "bytes": 12352,
+      "sha256": "36b3ea9ad5db1a9b6b382d7dc80c16ce1fc83dc8249c020f6151e04db8a8ebd0"
+    },
+    {
+      "path": "report-storage-failed.json",
+      "bytes": 10500,
+      "sha256": "6ba74b68587290f208e4ceef336ed951641875967bd000f5362eeed165b31afc"
+    },
+    {
+      "path": "report-template-changed.json",
+      "bytes": 12347,
+      "sha256": "42b86a859cdbc40822cb165c1275753d3fa5e439124f14bfe047a96aff7c5402"
+    },
+    {
+      "path": "report-template-retry.json",
+      "bytes": 12347,
+      "sha256": "42b86a859cdbc40822cb165c1275753d3fa5e439124f14bfe047a96aff7c5402"
+    },
+    {
+      "path": "studio.txt",
+      "bytes": 430,
+      "sha256": "5673c3870ae08d94c04e3ecfb142a732438bd9fe32f0eed7f2047afc2030bf50"
+    }
+  ],
+  "main_integration": {
+    "main": "ad45a520ae4b42144e2a18c92507bac1c72b4711",
+    "merge": "f646ab3",
+    "scope": "Four documentation-only files; both STATUS entries preserved. Application and tests unchanged."
+  },
+  "local_cluster_cleanup": "Task-owned PostgreSQL cluster stopped after verification; private evidence and configuration retained outside Git."
+}

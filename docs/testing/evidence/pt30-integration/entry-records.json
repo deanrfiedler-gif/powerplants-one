@@ -1,0 +1,50 @@
+{
+  "source": "caecf7bc787eb658a545268e507e35e257adf48f",
+  "build": "qE6dn5GfAoZAp53Forj96",
+  "base_url": "http://127.0.0.1:33949",
+  "original": {
+    "work_order_id": "91e866b8-5e30-4507-86bd-ee240ec4f902",
+    "appointment_id": "d68593d9-962e-4ae2-abf9-136997d6c5fb",
+    "pack_id": "957125a4-3fe1-4da9-94d9-f9128e07c9c3",
+    "old_issue_id": "9d34aa6a-449b-417f-94f9-50ae32edd97e",
+    "current_issue_id": "91d1b479-e1dd-418c-922f-876a7d543d18",
+    "report_id": "29277fc2-3f54-439c-8a1b-e9b55dc9ca1a"
+  },
+  "original_presentation_id": "57461b7e-e288-4902-b9fd-d648c5ce1f04",
+  "cancelled_proposal_id": "9e1a3a28-e1c1-4587-8af0-8a22f8b5d8f3",
+  "finance_handoff_id": "073a7bef-d473-4187-a0d5-2ab9539bccfd",
+  "finance_issue_id": "790259ea-fab9-4654-b5eb-e52941c35990",
+  "return_visit": {
+    "appointment_id": "e2c631cf-433d-4d99-845a-ad18bca1b5e8",
+    "attendance_id": "3fc68c5d-08b8-4a68-b5eb-c518dc93d0db",
+    "actor_id": "30000000-0000-4000-8000-000000000011",
+    "pack_id": "6de8cc59-1eaa-4c79-a588-6892f4932e76",
+    "issue_id": "83544819-753c-45f9-affd-b264c8eee9a8",
+    "report_id": "59233156-f1ce-46ba-be9c-929f1732cb7c",
+    "appointment_status": "Completed",
+    "scope_outcome": "Complete",
+    "original_finance_status": "Reconciled"
+  },
+  "offline_original_count": 5,
+  "preserved_outputs": {
+    "pack-issues/9d34aa6a-449b-417f-94f9-50ae32edd97e/html": "261dff0bef3f9f40b54f9576c657dd6ceddaea957f64a4fda81899c63fc7fe69",
+    "pack-issues/9d34aa6a-449b-417f-94f9-50ae32edd97e/pdf": "55a86355509a0628edcd8728f57ccc0f8679a9fd6f17162656c3af3e598dec9e",
+    "pack-issues/9d34aa6a-449b-417f-94f9-50ae32edd97e/manifest": "944762d5c57765d9c563b356eb603b30d4c09561db7fb7088a061caecab86984",
+    "pack-issues/91d1b479-e1dd-418c-922f-876a7d543d18/html": "f006806243fd3b84827767bee26de7375a9edbb6244f6ca61529d6f4e084f3da",
+    "pack-issues/91d1b479-e1dd-418c-922f-876a7d543d18/pdf": "853694a07bf046487e99d71b754d7ad930baee2480eb985ccf707d3925c87dec",
+    "pack-issues/91d1b479-e1dd-418c-922f-876a7d543d18/manifest": "a6c77e0bb49148ce04a152157e272f5bbe92cd4552270c0f5adc2c30cec637c4",
+    "reports/29277fc2-3f54-439c-8a1b-e9b55dc9ca1a/html?presentation_id=57461b7e-e288-4902-b9fd-d648c5ce1f04": "65c8e676ef87eae01f344fc4804eecf5916bd863dc1cae7218d5a6cc41b694ce",
+    "reports/29277fc2-3f54-439c-8a1b-e9b55dc9ca1a/pdf?presentation_id=57461b7e-e288-4902-b9fd-d648c5ce1f04": "e44d87164abd406d8c131640450a5057d62fcffde181b040ca79446b3fd71290",
+    "reports/29277fc2-3f54-439c-8a1b-e9b55dc9ca1a/manifest?presentation_id=57461b7e-e288-4902-b9fd-d648c5ce1f04": "941b554dc156647281eca81dea3cc5e0607fc18f8661a026e84c2c3083f2b91c",
+    "finance/issues/790259ea-fab9-4654-b5eb-e52941c35990/bytes?format=html": "38b9fa35dbf96185fc5ebd4f7f1bffb8ba23cbb5a9f6dc4986376496d2ac74e9",
+    "finance/issues/790259ea-fab9-4654-b5eb-e52941c35990/bytes?format=pdf": "abb6ec1bcf3e31b2823af68a6272f36c64518e588cbed4290a6eeffd483077b1"
+  },
+  "return_outputs": {
+    "pack-issues/83544819-753c-45f9-affd-b264c8eee9a8/html": "73de2df4de1e5a8a6270c3d7660adb371ae7e295a3a77828ca7c6bbc8b02688f",
+    "pack-issues/83544819-753c-45f9-affd-b264c8eee9a8/pdf": "04e99af41990a6b6caf5ec05685b7bfb9bacae13c2e7f0c04123fc5f0c384166",
+    "pack-issues/83544819-753c-45f9-affd-b264c8eee9a8/manifest": "b804e121f9184dec0d784b764abfa3cb3878eec24577e42c959dc71cc54022f4",
+    "reports/59233156-f1ce-46ba-be9c-929f1732cb7c/html?presentation_id=ff7e9cf2-98bf-4471-bd40-42e37ee28ae5": "e1fbcc31c15e9791d814825db5eeab1efbacaa2b2437635afe8ac72be903e8b9",
+    "reports/59233156-f1ce-46ba-be9c-929f1732cb7c/pdf?presentation_id=ff7e9cf2-98bf-4471-bd40-42e37ee28ae5": "6f84d1e80a99a16ed5ba2f41093a9c9928844b93e52118322dccd8c831364764",
+    "reports/59233156-f1ce-46ba-be9c-929f1732cb7c/manifest?presentation_id=ff7e9cf2-98bf-4471-bd40-42e37ee28ae5": "5daccf70f6a528cf4784c78fb7658dbd7d5e0afbc64c25c7850d8f5b9b2ccce3"
+  }
+}

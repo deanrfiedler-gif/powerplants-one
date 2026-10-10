@@ -1,0 +1,330 @@
+{
+  "family": "OUT-10",
+  "detail": {},
+  "job": {
+    "id": "4aa24298-4fff-4080-bb1a-110218ebf869",
+    "workspace_id": "10000000-0000-4000-8000-000000000001",
+    "report_id": "2304a22a-b647-4d22-87ae-4b1b318b601e",
+    "revision_id": "04a14686-a968-42a6-89c8-51446bea33e1",
+    "review_id": "0ed7696b-2b02-49e1-abe7-25e7465cfed0",
+    "actor_id": "30000000-0000-4000-8000-000000000001",
+    "recovery_owner_id": "30000000-0000-4000-8000-000000000001",
+    "operation_id": "8f8b74cd-113e-46b1-ad4a-6070d1ecf32b",
+    "finalisation_operation_id": "ec153a79-17cd-4697-ac27-f4070e443cc5",
+    "render_snapshot": {
+      "guard": {
+        "pack": {
+          "id": "9c9a869c-1b09-41fd-be96-7f022a5a69cd",
+          "status": "Issued",
+          "version": 4,
+          "needs_review": false,
+          "current_issue_id": "f70a277e-f3fe-4b12-be65-3f9ed56f3f10"
+        },
+        "assets": [
+          {
+            "id": "80000000-0000-4000-8000-000000000001",
+            "version": 1,
+            "identity_status": "Verified"
+          }
+        ],
+        "entries": [
+          {
+            "id": "0c099409-ae94-46f1-b32e-049f423573ff",
+            "version": 1
+          },
+          {
+            "id": "27e48a07-0b02-47ee-b3ef-f202b8be6bae",
+            "version": 1
+          },
+          {
+            "id": "d96293d0-ff5c-4938-a9fb-f5b1c7bc5818",
+            "version": 1
+          },
+          {
+            "id": "e3797412-d522-4b05-a27b-ce9e2618f8ab",
+            "version": 1
+          }
+        ],
+        "controls": [
+          {
+            "id": "ae000000-0000-4000-8000-000000000001",
+            "outcome": "Pass",
+            "criterion_code": "SiteAccess",
+            "assessment_version": 1
+          },
+          {
+            "id": "ae000000-0000-4000-8000-000000000002",
+            "outcome": "Pass",
+            "criterion_code": "SiteControls",
+            "assessment_version": 1
+          },
+          {
+            "id": "ae000000-0000-4000-8000-000000000003",
+            "outcome": "Pass",
+            "criterion_code": "CompetencyPlan",
+            "assessment_version": 1
+          },
+          {
+            "id": "ae000000-0000-4000-8000-000000000004",
+            "outcome": "NotApplicable",
+            "criterion_code": "MandatoryIsolation",
+            "assessment_version": 1
+          },
+          {
+            "id": "ae000000-0000-4000-8000-000000000005",
+            "outcome": "NotApplicable",
+            "criterion_code": "ShutdownAuthority",
+            "assessment_version": 1
+          },
+          {
+            "id": "ae000000-0000-4000-8000-000000000109",
+            "outcome": "Pass",
+            "criterion_code": "ToolPreparation",
+            "assessment_version": 1
+          }
+        ],
+        "recipient": {
+          "id": "60000000-0000-4000-8000-000000000001",
+          "name": "SYN Avery Contact",
+          "version": 1
+        },
+        "site_version": 1,
+        "customer_version": 1,
+        "schedule_version": 2,
+        "service_owner_id": "30000000-0000-4000-8000-000000000001",
+        "scope_revision_id": "aa000000-0000-4000-8000-000000000001",
+        "assignment_version": 2,
+        "primary_contact_id": "60000000-0000-4000-8000-000000000001",
+        "authorised_scope_revision_id": "aa000000-0000-4000-8000-000000000001"
+      },
+      "output": {
+        "kind": "IssuedReport",
+        "issue_id": "4e8f83af-b91e-4bac-a5b1-52884774623a",
+        "prepared_at": "2026-10-10T03:34:36.669Z",
+        "template_hash": "6a77a93522e8cc96a542707ceccfd55fafa84f6cb0644e69b7660f826224238f"
+      },
+      "source": {
+        "site": {
+          "id": "70000000-0000-4000-8000-000000000001",
+          "name": "SYN Q01 Demonstration Site"
+        },
+        "work": {
+          "id": "a9000000-0000-4000-8000-000000000001",
+          "reference": "SYN-PPO-WO-000010"
+        },
+        "tasks": [
+          {
+            "id": "ad000000-0000-4000-8000-000000000001",
+            "reason": "SYN explicit task outcome and remaining-work reason",
+            "outcome": "Partial",
+            "description": "Observe controller display and external sensor identity",
+            "scope_item_id": "ad000000-0000-4000-8000-000000000001",
+            "expected_outcome": "Record observations and remaining questions"
+          }
+        ],
+        "assets": [
+          {
+            "id": "80000000-0000-4000-8000-000000000001",
+            "name": "SYN irrigation controller",
+            "identity": "Verified"
+          }
+        ],
+        "audience": {
+          "id": "60000000-0000-4000-8000-000000000001",
+          "name": "SYN Avery Contact",
+          "version": 1
+        },
+        "customer": {
+          "id": "50000000-0000-4000-8000-000000000001",
+          "name": "SYN Greenhouse Demonstration"
+        },
+        "evidence": [
+          {
+            "id": "0c099409-ae94-46f1-b32e-049f423573ff",
+            "kind": "Material",
+            "facts": {
+              "unit": "EA",
+              "movement": "Consumed",
+              "quantity": "2",
+              "description": "SYN fictional label sleeve"
+            },
+            "version": 1,
+            "asset_id": "80000000-0000-4000-8000-000000000001",
+            "scope_item_id": "ad000000-0000-4000-8000-000000000001"
+          },
+          {
+            "id": "27e48a07-0b02-47ee-b3ef-f202b8be6bae",
+            "kind": "Observation",
+            "facts": {
+              "result": "Still unclear; no identity verification",
+              "finding": "SYN visual inspection found a loose external label",
+              "confidence": "Suspected",
+              "attempted_fix": "SYN attempted to read the label without intervention",
+              "follow_up_required": true
+            },
+            "version": 1,
+            "asset_id": "80000000-0000-4000-8000-000000000001",
+            "scope_item_id": "ad000000-0000-4000-8000-000000000001"
+          },
+          {
+            "id": "d96293d0-ff5c-4938-a9fb-f5b1c7bc5818",
+            "kind": "Photo",
+            "facts": {
+              "caption": "SYN inspection photograph",
+              "evidence": "Original photo retained privately; no filename or private location is distributed."
+            },
+            "version": 1,
+            "asset_id": "80000000-0000-4000-8000-000000000001",
+            "scope_item_id": "ad000000-0000-4000-8000-000000000001"
+          },
+          {
+            "id": "e3797412-d522-4b05-a27b-ce9e2618f8ab",
+            "kind": "Time",
+            "facts": {
+              "kind": "Labour",
+              "end_at": "2026-10-10T03:04:34.000Z",
+              "start_at": "2026-10-10T01:34:34.000Z",
+              "elapsed_minutes": "90",
+              "elapsed_seconds": 5400
+            },
+            "version": 1,
+            "asset_id": "80000000-0000-4000-8000-000000000001",
+            "scope_item_id": "ad000000-0000-4000-8000-000000000001"
+          }
+        ],
+        "revision": 1,
+        "reference": "SYN-PPO-RPT-000001",
+        "synthetic": true,
+        "attendance": {
+          "id": "881d39cf-1c04-4609-b9cf-5fe54d3fd27a",
+          "name": "SYN Riley Technician",
+          "end_at": "2026-10-10T03:34:36.226Z",
+          "start_at": "2026-10-10T03:34:34.420Z"
+        },
+        "completion": {
+          "outcome": "Partial",
+          "blockers": [
+            "Unresolved finding requires follow-up.",
+            "An authorised task remains incomplete.",
+            "A task result has not passed the synthetic completion check.",
+            "The synthetic site-controls completion check has not passed."
+          ],
+          "exclusions": "SYN no intervention or energised work",
+          "remaining_work": "SYN remaining inspection needs service-owner review",
+          "work_performed": "SYN visual inspection performed within original scope",
+          "next_action_owner": "Service coordinator"
+        },
+        "appointment": {
+          "id": "a8000000-0000-4000-8000-000000000009",
+          "timezone": "Australia/Brisbane",
+          "reference": "SYN-PPO-APT-000012"
+        },
+        "schema_version": 1,
+        "authorised_scope": {
+          "id": "aa000000-0000-4000-8000-000000000001",
+          "hash": "d8459628e108fbd5b8029a491c40d577653da88cc43b5ec14a450c5060d8379c",
+          "summary": "SYN Planned controller inspection — coordination and customer date review",
+          "version": 1,
+          "exclusions": "No shutdown, replacement, energised access, repair or financial approval."
+        },
+        "source_attachments": [
+          {
+            "id": "ec6a3ac8-b9c6-47de-b476-65b714808783",
+            "sha256": "8e0e39097d1e122a86d83ed2c236f3bc8de8b82c46a945fbe71b6bf0a059203e",
+            "byte_count": 191
+          }
+        ],
+        "authority_disposition": "Current"
+      },
+      "template": {
+        "id": "e1000000-0000-4000-8000-000000000002",
+        "version": 2,
+        "content_hash": "6a77a93522e8cc96a542707ceccfd55fafa84f6cb0644e69b7660f826224238f",
+        "policy_version": 2
+      },
+      "review_id": "0ed7696b-2b02-49e1-abe7-25e7465cfed0",
+      "revision_id": "04a14686-a968-42a6-89c8-51446bea33e1",
+      "source_hash": "7b12817694b1a9aeb3509e64233d7f4f781238064eb7d1b2893a001f5849e338",
+      "customer_hash": "efac5cfb556d09316c37c4549e8f26ce16644bd7dae28be3e26abbd6124e50fc"
+    },
+    "input_hash": "73b8bd842a60659d8d41a1e50ad586f92828ffacf83ea061bb51ac9f7c8a02df",
+    "state": "StaleSource",
+    "attempts": 1,
+    "lease_token": "9865172e-83e3-4a2e-a879-38b64fb36746",
+    "lease_until": null,
+    "error_code": "TemplateUnavailable",
+    "output_manifest": {
+      "job_id": "4aa24298-4fff-4080-bb1a-110218ebf869",
+      "filename": "SYN-PPO-RPT-000001-service-report-r01.pdf",
+      "issue_id": "4e8f83af-b91e-4bac-a5b1-52884774623a",
+      "pdf_hash": "134f73decbff70a7ef063723851f9445ffad80293fffbc63eb8a7f5f47986f0b",
+      "template": {
+        "id": "e1000000-0000-4000-8000-000000000002",
+        "version": 2,
+        "content_hash": "6a77a93522e8cc96a542707ceccfd55fafa84f6cb0644e69b7660f826224238f",
+        "policy_version": 2
+      },
+      "html_hash": "b05c223c231abdb531560cc80642ba63029acff4674490e39136d61924680556",
+      "pdf_bytes": 565338,
+      "review_id": "0ed7696b-2b02-49e1-abe7-25e7465cfed0",
+      "store_key": {
+        "sha256": "046186ace97d8df257e9a2aab606ac834b250bf877802b4202170047561f12d9",
+        "item_id": "4aa24298-4fff-4080-bb1a-110218ebf869",
+        "site_id": null,
+        "drive_id": null,
+        "provider": "Synthetic",
+        "tenant_id": null,
+        "version_id": "046186ace97d8df257e9a2aab606ac834b250bf877802b4202170047561f12d9"
+      },
+      "html_bytes": 801174,
+      "prepared_at": "2026-10-10T03:34:36.669Z",
+      "revision_id": "04a14686-a968-42a6-89c8-51446bea33e1",
+      "source_hash": "7b12817694b1a9aeb3509e64233d7f4f781238064eb7d1b2893a001f5849e338",
+      "bundle_bytes": 1555275,
+      "customer_hash": "efac5cfb556d09316c37c4549e8f26ce16644bd7dae28be3e26abbd6124e50fc",
+      "schema_version": 1,
+      "browser_version": "155.0.8059.40",
+      "renderer_version": "playwright-1.63.0"
+    },
+    "issue_id": null,
+    "requested_at": "2026-10-10T03:34:36.671Z"
+  },
+  "attempts": [
+    {
+      "id": "58fe87ad-4205-42c7-b465-ad79b4e2161d",
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "job_id": "4aa24298-4fff-4080-bb1a-110218ebf869",
+      "attempt": 1,
+      "outcome": "Claimed",
+      "code": null,
+      "occurred_at": "2026-10-10T03:34:36.775Z"
+    },
+    {
+      "id": "6244f818-cefb-4e34-9457-f40b57ed1c07",
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "job_id": "4aa24298-4fff-4080-bb1a-110218ebf869",
+      "attempt": 1,
+      "outcome": "Durable",
+      "code": null,
+      "occurred_at": "2026-10-10T03:34:39.227Z"
+    },
+    {
+      "id": "416ad979-bf88-4561-85b6-7818ed9b5709",
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "job_id": "4aa24298-4fff-4080-bb1a-110218ebf869",
+      "attempt": 1,
+      "outcome": "StaleSource",
+      "code": "TemplateUnavailable",
+      "occurred_at": "2026-10-10T03:34:39.291Z"
+    }
+  ],
+  "effects": {
+    "operations": [],
+    "audit": [],
+    "outbox": [],
+    "issue": [],
+    "extra": [],
+    "distribution": []
+  },
+  "stored_sha256": "046186ace97d8df257e9a2aab606ac834b250bf877802b4202170047561f12d9"
+}

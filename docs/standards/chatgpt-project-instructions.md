@@ -8,7 +8,7 @@ Public repo, private demo; PPO is independent.
 
 Preserve BP-01 domains and shared records.
 
-Test joined journeys; distinguish runtime proof from owner acceptance.
+Test joined journeys; separate runtime proof and owner acceptance.
 
 PP-01: customer/site/equipment, intake, authorised work, issued packs, scheduling, field evidence, acknowledgement, reviewed reports and controlled Finance reconciliation.
 
@@ -16,7 +16,7 @@ Follow P01–P12, STATUS, BP-03 section 0 and BP-04. PPO-009 CRM differs from P0
 
 ## 3. Sources and continuity
 
-Read AGENTS.md, README, docs/STATUS.md and relevant ADRs/specs; verify Git.
+Read AGENTS.md, README, docs/STATUS.md and ADRs/specs; verify Git.
 
 User decisions govern. [CREMS is historical](../decisions/product-direction-quality.md); define and test PPO rules independently.
 

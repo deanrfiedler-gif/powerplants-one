@@ -1,0 +1,13 @@
+{
+  "scenario": "SC-13-partial",
+  "full_page": false,
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "source_head": "8f632cbc7e518513d8d1ba60d1de6e0a6ab70e7d",
+  "executed_checkout": "8f632cbc7e518513d8d1ba60d1de6e0a6ab70e7d",
+  "executed_tree": "ae4c0c88a27e691fedfa9a0586789872ce36d180",
+  "byte_count": 58642,
+  "sha256": "dcf01f311d715a44b2418c0c9f12e6dcf6921b1af6da4f6e4675877bf0af3f4d"
+}

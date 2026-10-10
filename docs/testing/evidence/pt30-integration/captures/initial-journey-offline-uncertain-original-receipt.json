@@ -1,0 +1,13 @@
+{
+  "scenario": "journey-offline-uncertain-original-receipt",
+  "full_page": false,
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "source_head": "caecf7bc787eb658a545268e507e35e257adf48f",
+  "executed_checkout": "caecf7bc787eb658a545268e507e35e257adf48f",
+  "executed_tree": "0c4a8bd4453c26e6fd5c5c426b50b0fa8fd97207",
+  "byte_count": 85510,
+  "sha256": "e60e779de46052464a4aec4e30351bfe6d433af466fc5f7fa8ff30a84f7ee13b"
+}

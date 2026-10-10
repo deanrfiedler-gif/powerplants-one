@@ -220,7 +220,8 @@ test("PD historical pricing handoff retains the selected revision through naviga
     async (route) => {
       if (route.request().method() === "POST" && !lost) {
         lost = true;
-        await route.fetch();
+        const response = await route.fetch();
+        expect(response.ok()).toBeTruthy();
         await route.abort("connectionreset");
       } else await route.continue();
     },
@@ -231,6 +232,11 @@ test("PD historical pricing handoff retains the selected revision through naviga
   await expect(
     page.getByRole("heading", { name: "Outcome unknown", exact: true }),
   ).toBeVisible();
+  // Pending recovery is shown before the POST settles; wait for the dropped
+  // accepted response before reloading to recover that original receipt.
+  await expect(
+    page.getByRole("button", { name: "Recover original result", exact: true }),
+  ).toBeEnabled();
   await page.reload();
   await expect(
     page.getByText("Saved / recovered:", { exact: false }),
