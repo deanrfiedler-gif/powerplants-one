@@ -4,6 +4,10 @@
 
 **Naming authority:** [PPO-STD-001](standards/naming-conventions.md) and [ADR-0005](decisions/ADR-0005-project-naming-adoption.md).
 
+## Icon style decision — 10 October 2026
+
+After a local comparison of the app's icons with Font Awesome Classic Light, Regular and Free, Dean chose Font Awesome Pro Classic Light, with Classic Solid for selected items. [ADR-0050](decisions/ADR-0050-font-awesome-light-icons.md) records the decision, the comparison mapping and the delivery options. Packages need annual billing, so Dean chose to stay on the monthly plan and load the icons through his Kit script on online pages; the offline field workspace keeps its local shapes. Kit limits, licence terms after a lapse, the Kit's allowed addresses and the full icon mapping remain open. No dependency, configuration or icon is changed yet; implementation needs Dean's separate go-ahead. Pro icon files and captures stay out of this public repository.
+
 ## Parallel backend access and recovery — 9 October 2026
 
 10 October continuation: Dean authorised reconciliation of #379/#380 and PT-13 approved time/material correction proof in the isolated `codex/approved-evidence-corrections` session alongside Claude's UI work. #378 is merged. #380's document-register conflict is resolved with both contributions retained; its nine scenarios pass on the integrated branch. #379's 16 download scenarios pass after its existing main integration; the blocked Copilot-triggered checks have been restarted under the owner account. Current-head CI remains separate from local verification. Neither PR is merged or deployed by this continuation.
