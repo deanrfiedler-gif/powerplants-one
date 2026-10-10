@@ -1,0 +1,10 @@
+{
+  "source": "6c69d92b8fd0913de916587f6e4cabb358868f11",
+  "run_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/38036877649",
+  "run_id": 38036877649,
+  "attempt": 1,
+  "artifact": "P11-performance-evidence",
+  "artifact_id": 11664473585,
+  "retrieved": "2026-10-10",
+  "scope": "Existing main CI compiled four-view profile, not this local Customers/record profile. Retain as context only; no pooled comparison or original failure attribution."
+}

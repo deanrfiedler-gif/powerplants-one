@@ -14,9 +14,9 @@ No new dependency, service, operational integration, deployment or production au
 
 ## Current disposition
 
-The [continuation record](../testing/evidence/pt27-loading/narrowed-repeat/README.md) does not establish an acceptable improvement. The broad policy is rejected; the narrower desktop-rail change remains a draft experiment only. Its completed run removes some desktop speculative work but worsens five of six timing groups relative to the completed main run. Its repeat has six readiness failures following session HTTP 503 responses; the final main repeat exceeds the unchanged startup limit. Retain every attempt, suppress pooled results for the incomplete block and leave the three-second target open. Fourteen selected compiled browser checks and 23 focused units pass independently of these load failures.
+Both prefetch policies are withdrawn. ProductNavigation again matches main `6c69d92`; the original pair and controlled/narrowed attempts remain retained. The [session investigation](../testing/evidence/pt27-loading/session-readiness/README.md) reproduces readiness/HTTP 503 failures on unchanged main, corrects two compiled-observer defects, and verifies actual phase/pool observations before using them. The final build completes two traced runs and one untraced run (240 directory loads and 60 record openings) without a failure; every final p95 group still misses three seconds.
 
-Next isolate session/context read availability before the directory GET under the same ten-user load, including unchanged-main reproduction and explicit phase timing. The retained observations do not identify a database, pool or operating-system root cause. Keep existing authority, timeout, pool, retry and font rules. No performance adoption, merge or deployment is authorised by this evidence.
+One pool is observed and no acquisition timeout fires in the valid traces. Host memory pressure and observer effects remain plausible, but the original 503 cause is not established. No pool, query, authentication, retry or timeout change is justified by these outcomes. The next boundary is a controlled traced/untraced resource profile that captures the actual failure with verified phases. Keep PR #391 in draft; no performance acceptance, merge or deployment is claimed.
 
 ## Authorised session-read investigation
 

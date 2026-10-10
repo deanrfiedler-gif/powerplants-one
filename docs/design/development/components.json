@@ -2966,7 +2966,7 @@
         {
           "id": "shell-activation-loading-review",
           "expected": "Baseline shell prefetch policy is restored; deliberate navigation, keyboard/touch, Back and access remain correct. Loading availability and performance require separate measured evidence.",
-          "actual": "Both shell prefetch experiments are withdrawn. Unchanged main also reproduces cold-wave session/context failures. All attempts remain retained while opt-in database/read timing investigates availability; no overall performance acceptance is inferred.",
+          "actual": "Both shell prefetch experiments are withdrawn. Unchanged main reproduces cold-wave readiness failures. Verified compiled traces and an untraced repeat complete without reproducing the 503s; the original cause remains unresolved. All attempts remain retained and no overall performance acceptance is inferred.",
           "action": "Review docs/testing/evidence/pt27-loading/README.md and the real shell/record host fixtures. Retain stale visual reviews and outstanding owner/device acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"

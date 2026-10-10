@@ -59,7 +59,7 @@ for root in roots:
                            if s["viewport"] == viewport and (phase == "record" or (s["wave"] == 0 if phase == "cold" else s["wave"] > 0))]
                 groups.append({"viewport": viewport, "phase": phase, "ready_ms": distribution(samples)})
     runtime = [r for r in rows if r["event"] == "server-runtime"]
-    run = {k: data.get(k) for k in ["label", "source", "compiled_source", "build_id", "started_at", "comparison_block", "comparison_position", "node", "browser", "platform", "network"]}
+    run = {k: data.get(k) for k in ["label", "source", "compiled_source", "build_id", "started_at", "comparison_block", "comparison_position", "node", "browser", "platform", "network", "detailed_diagnostics"]}
     run.update({"complete": complete, "sample_count": len(data["samples"]), "failed_samples": sum("error" in s for s in data["samples"]), "record_count": len(data["record_visits"]), "errors": data["errors"], "groups": groups,
                 "route_phase_count": sum(r["event"] == "read-phase" for r in rows), "pools": pools, "http_failures": failures,
                 "runtime": {key: distribution([r[key] for r in runtime if key in r]) for key in ["interval_ms", "event_loop_active_ms", "event_loop_idle_ms", "cpu_user_ms", "cpu_system_ms", "system_free_bytes"]}})

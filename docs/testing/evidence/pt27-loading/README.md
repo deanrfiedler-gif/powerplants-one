@@ -6,7 +6,7 @@ Owner: Dean Fiedler. Executed 10 October 2026 (Australia/Brisbane). [Decision](.
 
 ## Continuation and current scope
 
-The original pair below measures the broad shell policy. After integration of main `6c69d92`, the [first controlled block](controlled-repeat/README.md) repeats its cold-phone loss, so that broad policy is not adopted. The application change is now limited to desktop rail Home, rail destinations and desktop More; shared header, breadcrumbs and phone retain their original loading policy. The [narrowed comparison](narrowed-repeat/README.md) records the continuation's final disposition. Original samples, failures and source-specific verification below remain historical evidence.
+The original pair below measures the broad shell policy. The [controlled block](controlled-repeat/README.md) repeats its cold-phone loss, and the [narrowed comparison](narrowed-repeat/README.md) also fails to establish an acceptable improvement. Both experiments are now withdrawn; ProductNavigation matches main `6c69d92` on desktop and phone. The [session-readiness investigation](session-readiness/README.md) retains unchanged-main 503s, corrected compiled diagnostics, two successful traced repeats and one successful untraced repeat. The original cause remains unproven and the three-second target remains open. Historical samples and verification below remain source-specific evidence.
 
 ## Original pair: result and scope
 
