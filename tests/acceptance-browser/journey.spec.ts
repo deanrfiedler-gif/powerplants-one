@@ -143,6 +143,10 @@ test("Current Field Work narrative keeps original and separate attendance throug
           (await call(page, `my-jobs/${completed.appointment_id}`)).items[0]
             .attendance,
         ).toBeNull();
+        // A successful API read does not settle every browser panel. Retain the
+        // completed history view rather than a transient loading capture.
+        await expect(page.getByText("Loading permitted records…", { exact: true })).toHaveCount(0);
+        await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
         await capture(page, info, "next-technician-history");
         await page.goto("/offline/index.html");
         await page
